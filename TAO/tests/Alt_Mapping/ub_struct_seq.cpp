@@ -134,7 +134,9 @@ Test_Unbounded_Struct_Sequence::compare (
           || !ACE::is_equal (vs1.f, vs2.f)
           || vs1.b != vs2.b
           || !ACE::is_equal (vs1.d, vs2.d))
+      {
         return false;
+      }
     }
 
   return true; // success

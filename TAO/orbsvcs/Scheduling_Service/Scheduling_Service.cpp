@@ -39,7 +39,9 @@ TAO_Scheduling_Service::init (int argc, ACE_TCHAR * argv[])
       int const result =
         this->parse_args (command_line.get_argc (), command_line.get_TCHAR_argv ());
       if (result < 0)
+      {
         return result;
+      }
 
       // Construct a scheduler implementation of the specified type.
       POA_RtecScheduler::Scheduler *scheduler_impl {};
@@ -213,7 +215,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   "%s; initializing scheduling service\n", __FILE__));
 
       if (scheduling_service.init (argc, argv) < 0)
+      {
         ORBSVCS_ERROR_RETURN ((LM_ERROR, "%p\n", "init"), 1);
+      }
 
       ORBSVCS_DEBUG ((LM_DEBUG,
                   "%s; running scheduling service\n", __FILE__));

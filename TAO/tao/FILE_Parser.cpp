@@ -35,14 +35,18 @@ TAO_FILE_Parser::parse_string (const char *ior, CORBA::ORB_ptr orb)
                               ACE_TEXT("r"));
 
   if (file == nullptr)
+  {
     return CORBA::Object::_nil ();
+  }
 
   ACE_Read_Buffer reader (file, true);
 
   char* string = reader.read ();
 
   if (string == nullptr)
+  {
     return CORBA::Object::_nil ();
+  }
 
   CORBA::Object_ptr object = CORBA::Object::_nil ();
   try

@@ -133,7 +133,9 @@ testTSSGestalt (int, ACE_TCHAR *[])
   };
 
   if (global_instance == one.get ())
+  {
     ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT ("Invalid global gestalt\n")), -1);
+  }
 
   {
     // Make one be the ACE_Service_Config::instance () ...
@@ -144,19 +146,27 @@ testTSSGestalt (int, ACE_TCHAR *[])
     };
 
     if (global_instance == global_instance2)
+    {
       ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT ("Expected to see a different global from before\n")), -1);
+    }
 
     if (global_instance2 != one.get ())
+    {
       ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT ("Expected one to be the global gestalt instance\n")), -1);
+    }
 
     // The guard is dead! Long live the global gestalt that was previously global!
   }
 
   if (global_instance != ACE_Service_Config::instance ())
+  {
     ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT ("Expected the original global gestalt\n")), -1);
+  }
 
   if (global_instance == one.get ())
+  {
     ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT ("Found the wrong instance is still being global\n")), -1);
+  }
 
   return 0;
 }

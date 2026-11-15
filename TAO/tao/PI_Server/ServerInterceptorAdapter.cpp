@@ -424,7 +424,9 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_exception (
       // LOCATION_FORWARD).
       if (status == PortableInterceptor::SYSTEM_EXCEPTION
           || status == PortableInterceptor::USER_EXCEPTION)
+      {
         throw;
+      }
     }
 }
 

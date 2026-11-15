@@ -48,7 +48,9 @@ TAO_Log_i::init ()
     logmgr_i_.get_log_record_store (this->logid_);
 
   if (this->recordstore_->open () ==-1)
+  {
     throw CORBA::UNKNOWN ();
+  }
 
   // fetch the capacity alarm thresholds from the log record store
   DsLogAdmin::CapacityAlarmThresholdList_var const thresholds =
@@ -150,7 +152,9 @@ TAO_Log_i::set_log_qos (DsLogAdmin::QoSList const &qos)
   // In the mean time, we're interepreting it to mean that events are
   // only sent when the value has changed.
   if (qos == old_qos.in ())
+  {
     return;
+  }
 
   this->recordstore_->set_log_qos (qos);
 
@@ -197,14 +201,18 @@ TAO_Log_i::set_max_record_life (CORBA::ULong life)
   // In the mean time, we're interepreting it to mean that events are
   // only sent when the value has changed.
   if (life == old_life)
+  {
     return;
+  }
 
   this->recordstore_->set_max_record_life (life);
 
   if (life != 0)
     this->log_compaction_handler_.schedule();
   else
+  {
     this->log_compaction_handler_.cancel();
+  }
 
   if (notifier_)
     {
@@ -246,7 +254,9 @@ TAO_Log_i::set_max_size (CORBA::ULongLong size)
   // In the mean time, we're interepreting it to mean that events are
   // only sent when the value has changed.
   if (size == old_size)
+  {
     return;
+  }
 
   // size == 0 => infinite size.
   if (size != 0)
@@ -255,7 +265,9 @@ TAO_Log_i::set_max_size (CORBA::ULongLong size)
         this->recordstore_->get_current_size ();
 
       if (size < current_size)
+      {
         throw DsLogAdmin::InvalidParam ();
+      }
     }
 
   this->recordstore_->set_max_size (size);
@@ -328,7 +340,9 @@ TAO_Log_i::set_log_full_action (DsLogAdmin::LogFullActionType action)
                             CORBA::INTERNAL ());
 
   if (action != DsLogAdmin::wrap && action != DsLogAdmin::halt)
+  {
     throw DsLogAdmin::InvalidLogFullAction ();
+  }
 
   DsLogAdmin::LogFullActionType const old_action =
     this->recordstore_->get_log_full_action ();
@@ -342,7 +356,9 @@ TAO_Log_i::set_log_full_action (DsLogAdmin::LogFullActionType action)
   // In the mean time, we're interepreting it to mean that events are
   // only sent when the value has changed.
   if (action == old_action)
+  {
     return;
+  }
 
   this->recordstore_->set_log_full_action (action);
 
@@ -403,7 +419,9 @@ TAO_Log_i::set_administrative_state (DsLogAdmin::AdministrativeState state)
   // In the mean time, we're interepreting it to mean that events are
   // only sent when the value has changed.
   if (state == old_state)
+  {
     return;
+  }
 
   this->recordstore_->set_administrative_state (state);
 
@@ -447,7 +465,9 @@ TAO_Log_i::set_forwarding_state (DsLogAdmin::ForwardingState state)
   // In the mean time, we're interepreting it to mean that events are
   // only sent when the value has changed.
   if (state == old_state)
+  {
     return;
+  }
 
   this->recordstore_->set_forwarding_state (state);
 
@@ -490,7 +510,9 @@ TAO_Log_i::set_interval (DsLogAdmin::TimeInterval const &interval)
   if (interval.start != 0)
     {
       if (interval.start >= interval.stop)
+      {
         throw DsLogAdmin::InvalidTimeInterval ();
+      }
     }
 
   DsLogAdmin::TimeInterval const old_interval =
@@ -505,7 +527,9 @@ TAO_Log_i::set_interval (DsLogAdmin::TimeInterval const &interval)
   // In the mean time, we're interepreting it to mean that events are
   // only sent when the value has changed.
   if (interval == old_interval)
+  {
     return;
+  }
 
   this->recordstore_->set_interval (interval);
 
@@ -563,7 +587,9 @@ TAO_Log_i::get_availability_status_i ()
 
     }
   else
+  {
     this->avail_status_.off_duty = 1;
+  }
   // The log_full flag is set by the write operations.
   return this->avail_status_;
 }
@@ -593,7 +619,9 @@ TAO_Log_i::set_capacity_alarm_thresholds (const
     TAO_Log_i::validate_capacity_alarm_thresholds (threshs);
 
   if (!validated)
+  {
     throw DsLogAdmin::InvalidThreshold ();
+  }
 
   DsLogAdmin::CapacityAlarmThresholdList_var const old_threshs =
     this->recordstore_->get_capacity_alarm_thresholds ();
@@ -607,7 +635,9 @@ TAO_Log_i::set_capacity_alarm_thresholds (const
   // In the mean time, we're interepreting it to mean that events are
   // only sent when the value has changed.
   if (threshs == old_threshs.in ())
-      return;
+  {
+    return;
+  }
 
   this->recordstore_->set_capacity_alarm_thresholds (threshs);
 
@@ -671,7 +701,9 @@ TAO_Log_i::set_week_mask (DsLogAdmin::WeekMask const &masks)
   // In the mean time, we're interepreting it to mean that events are
   // only sent when the value has changed.
   if (masks == old_masks.in ())
+  {
     return;
+  }
 
   this->recordstore_->set_week_mask (masks);
 
@@ -876,7 +908,9 @@ TAO_Log_i::write_recordlist (DsLogAdmin::RecordList const &reclist)
           // records. let the record store decide how many.
 
           if (this->recordstore_->purge_old_records () == -1)
+          {
             throw CORBA::PERSIST_STORE ();
+          }
 
           // Now, we want to attempt to write the same record again
           // so decrement the index to balance the inc. in the for loop.
@@ -1162,7 +1196,9 @@ TAO_Log_i::validate_capacity_alarm_thresholds (
 {
   for (CORBA::ULong i {}; i < threshs.length (); ++i)
     if (threshs[i] > 100)
+    {
       return false;
+    }
 
   // @@ The current revision of the specification (formal/03-07-01)
   // does not require theshold values be in order or unique.  This
@@ -1173,7 +1209,9 @@ TAO_Log_i::validate_capacity_alarm_thresholds (
   if (threshs.length () > 1)
     for (CORBA::ULong i {}; i < threshs.length () - 1; ++i)
       if (threshs[i] >= threshs[i + 1])
+      {
         return false;
+      }
 
   return true;
 }
@@ -1202,7 +1240,9 @@ TAO_Log_i::reset_log_qos (DsLogAdmin::QoSList const & qos)
   if (this->qostype_ == DsLogAdmin::QoSFlush)
     this->log_flush_handler_.schedule ();
   else
+  {
     this->log_flush_handler_.cancel ();
+  }
 }
 
 void
@@ -1285,7 +1325,9 @@ TAO_Log_i::validate_week_mask (DsLogAdmin::WeekMask const & masks)
                            DsLogAdmin::Friday +
                            DsLogAdmin::Saturday)
           )
+      {
         throw DsLogAdmin::InvalidMask ();
+      }
 
       for (CORBA::ULong j {}; j < masks[i].intervals.length (); ++j)
         {
@@ -1293,17 +1335,23 @@ TAO_Log_i::validate_week_mask (DsLogAdmin::WeekMask const & masks)
               masks[i].intervals[j].start.minute > 59 ||
               masks[i].intervals[j].stop.hour > 23 ||
               masks[i].intervals[j].stop.minute > 59)
+          {
             throw DsLogAdmin::InvalidTime ();
+          }
 
           if (masks[i].intervals[j].stop.hour <
               masks[i].intervals[j].start.hour)
+          {
             throw DsLogAdmin::InvalidTimeInterval ();
+          }
 
           if (masks[i].intervals[j].stop.hour ==
               masks[i].intervals[j].start.hour &&
               masks[i].intervals[j].stop.minute <=
               masks[i].intervals[j].start.minute)
+          {
             throw DsLogAdmin::InvalidTimeInterval ();
+          }
         }
     }
 }

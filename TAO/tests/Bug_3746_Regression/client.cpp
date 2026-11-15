@@ -36,7 +36,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       std::basic_string<ACE_TCHAR> ior {ACE_TEXT ("file://test.ior")};
       if (parse_args (argc, argv, ior) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var const tmp = orb->string_to_object (ior.c_str ());
 
@@ -87,7 +89,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       ((10 == sequence.length ()) ? "C" : "**** Inc"),
                       sequence.length ()));
           if (10 != sequence.length ())
+          {
             error = true;
+          }
         }
       catch (::CORBA::Exception const &ex)
         {

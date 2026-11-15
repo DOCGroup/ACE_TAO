@@ -777,7 +777,10 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           tmp.usval = (ACE_CDR::UShort) ev->u.oval;
           break;
         case AST_Expression::EV_int8:
-          if (ev->u.int8val < 0) return nullptr;
+          if (ev->u.int8val < 0)
+          {
+            return nullptr;
+          }
           tmp.usval = static_cast<ACE_CDR::UShort> (ev->u.int8val);
           break;
         case AST_Expression::EV_uint8:
@@ -936,7 +939,10 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           tmp.ulval = (ACE_CDR::ULong) ev->u.oval;
           break;
         case AST_Expression::EV_int8:
-          if (ev->u.int8val < 0) return nullptr;
+          if (ev->u.int8val < 0)
+          {
+            return nullptr;
+          }
           tmp.ulval = static_cast<ACE_CDR::ULong> (ev->u.int8val);
           break;
         case AST_Expression::EV_uint8:
@@ -1080,7 +1086,10 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           tmp.ullval = ev->u.oval;
           break;
         case AST_Expression::EV_int8:
-          if (ev->u.int8val < 0) return nullptr;
+          if (ev->u.int8val < 0)
+          {
+            return nullptr;
+          }
           tmp.ullval = static_cast<ACE_CDR::ULongLong> (ev->u.int8val);
           break;
         case AST_Expression::EV_uint8:
@@ -1720,7 +1729,10 @@ do_eval_bin_op (AST_Expression::ExprComb op, Type a, Type b, Type &result)
       result = a * b;
       break;
     case AST_Expression::EC_div:
-      if (!b) return false;
+      if (!b)
+      {
+        return false;
+      }
       result = a / b;
       break;
     default:
@@ -1762,7 +1774,10 @@ AST_Expression::eval_bin_op (AST_Expression::EvalKind ek)
 
   ExprType const expr_type = ek == EK_const ?
     pd_v1->ev ()->et : eval_kind_to_expr_type (ek);
-  if (expr_type == EV_none) return nullptr;
+  if (expr_type == EV_none)
+  {
+    return nullptr;
+  }
 
   ACE_NEW_RETURN (retval,
                   AST_ExprValue,
@@ -1877,7 +1892,10 @@ AST_Expression::eval_mod_op (AST_Expression::EvalKind ek)
 
   ExprType const expr_type = ek == EK_const ?
     pd_v1->ev ()->et : eval_kind_to_expr_type (ek);
-  if (expr_type == EV_none) return nullptr;
+  if (expr_type == EV_none)
+  {
+    return nullptr;
+  }
 
   ACE_NEW_RETURN (retval,
                   AST_ExprValue,
@@ -2012,7 +2030,10 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
     }
 
   ExprType const expr_type = eval_kind_to_expr_type (ek);
-  if (expr_type == EV_none) return nullptr;
+  if (expr_type == EV_none)
+  {
+    return nullptr;
+  }
 
   ACE_NEW_RETURN (retval,
                   AST_ExprValue,
@@ -2856,7 +2877,9 @@ AST_Expression::dump (ACE_OSTREAM_TYPE &o)
       if (this->pd_n)
         this->pd_n->dump (o);
       else
+      {
         o << ACE_TEXT ("(nil symbolic name)");
+      }
       break;
     case EC_none:
       o << ACE_TEXT ("(none)");

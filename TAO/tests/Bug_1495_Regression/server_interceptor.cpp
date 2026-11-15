@@ -53,7 +53,9 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
   // Same goes for the shutdown call
   if (std::strcmp ("_is_a", operation.in ()) == 0 ||
       std::strcmp ("shutdown", operation.in ()) == 0)
+  {
     return;
+  }
 
   this->forward_location_done_ = true;
 
@@ -95,7 +97,9 @@ Echo_Server_Request_Interceptor::send_other (
   CORBA::Object_var const forward = ri->forward_reference ();
 
   if (CORBA::is_nil (forward.in ()))
+  {
     throw CORBA::INTERNAL ();
+  }
 }
 
 bool

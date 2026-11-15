@@ -812,7 +812,9 @@ test_map_manager (size_t table_size,
     {
       MAP_MANAGER::iterator iter = map.begin ();
       if (iter == end)
+      {
         break;
+      }
       ACE_TEST_ASSERT (map.unbind ((*iter).ext_id_) != -1);
     }
 
@@ -863,7 +865,9 @@ run_test (int (*ptf) (size_t, size_t, int),
 
   ACE_timer_t time_result = 0.0;
   if (iterations != 0)
+  {
     time_result = (et.real_time / ACE_timer_t (iterations)) * 1000000;
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("time per call = %f usecs\n"),
@@ -883,13 +887,19 @@ run_main (int argc, ACE_TCHAR *argv[])
   int test_iterators = 1;
 
   if (argc > 1)
+  {
     table_size = ACE_OS::atoi (argv[1]);
+  }
 
   if (argc > 2)
+  {
     iterations = ACE_OS::atoi (argv[2]);
+  }
 
   if (argc > 3)
+  {
     test_iterators = ACE_OS::atoi (argv[3]);
+  }
 
   if (table_size == 0)
     {

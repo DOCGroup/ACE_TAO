@@ -38,7 +38,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
       ACE_TCHAR const *output_file = ACE_TEXT ("MessengerConsumer.ready");
       if (parse_args (argc, argv, output_file) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var naming_obj = orb->resolve_initial_references ("NameService");
       CosNaming::NamingContext_var naming_context =

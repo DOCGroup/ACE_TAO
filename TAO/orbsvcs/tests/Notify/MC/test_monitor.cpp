@@ -120,19 +120,25 @@ MonitorTestInterface_i::running (MonitorTestInterface::Which proc)
       data = this->nsm_->get_statistic (str.c_str ());
       num = data->data_union.num ();
       if (!ACE::is_equal (num.dlist[0].value, 1.0))
+      {
         ACE_ERROR ((LM_ERROR, "Monitor: ERROR: There should be only one Consumer\n"));
+      }
 
       str = this->base_ + NotifyMonitoringExt::EventChannelConsumerAdminCount;
       data = this->nsm_->get_statistic (str.c_str ());
       num = data->data_union.num ();
       if (!ACE::is_equal (num.dlist[0].value, 1.0))
+      {
         ACE_ERROR ((LM_ERROR, "Monitor: ERROR: There should be only one ConsumerAdmin\n"));
+      }
 
       str = this->base_ + NotifyMonitoringExt::EventChannelQueueElementCount;
       data = this->nsm_->get_statistic (str.c_str ());
       num = data->data_union.num ();
       if (!ACE::is_equal (num.dlist[0].value, 0.0))
+      {
         ACE_ERROR ((LM_ERROR, "Monitor: ERROR: There should be no events queued\n"));
+      }
 
       brain_dump ("Running Consumer");
 
@@ -145,7 +151,9 @@ MonitorTestInterface_i::running (MonitorTestInterface::Which proc)
       num = data->data_union.num ();
 
       if (!ACE::is_equal (num.dlist[0].value, 1.0))
+      {
         ACE_ERROR ((LM_ERROR, "Monitor: ERROR: There should be only one Supplier\n"));
+      }
 
       str = this->base_ + NotifyMonitoringExt::EventChannelSupplierAdminCount;
       data = this->nsm_->get_statistic (str.c_str ());
@@ -314,7 +322,9 @@ MonitorTestInterface_i::finished (MonitorTestInterface::Which proc)
           this->nsm_->get_statistic (consumer_count_name.c_str ());
         Monitor::Numeric const consumer_count_num = consumer_count_data->data_union.num ();
         if (!ACE::is_equal (consumer_count_num.last, 1.0))
+        {
           ACE_ERROR ((LM_ERROR, "Monitor: ERROR: There should still be one Consumer\n"));
+        }
 
         ACE_CString const queue_element_name =
           this->base_ + NotifyMonitoringExt::EventChannelQueueElementCount;

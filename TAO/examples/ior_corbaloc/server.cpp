@@ -28,7 +28,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (poa.in ()))
+      {
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot narrow RootPOA\n")), 1);
+      }
 
       // Set a POA Manager
       PortableServer::POAManager_var const poa_manager =
@@ -51,7 +53,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         corbaloc::Status::_narrow (object.in ());
 
       if (CORBA::is_nil (status.in ()))
+      {
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot narrow Status servant\n")), 1);
+      }
 
       // Get a reference to Naming Context
       CORBA::Object_var const naming_context_object =

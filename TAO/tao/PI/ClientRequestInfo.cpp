@@ -158,7 +158,9 @@ TAO_ClientRequestInfo::received_exception ()
     invocation_->caught_exception ();
 
   if (caught_exception != nullptr)
+  {
     *temp <<= *(caught_exception);
+  }
 
   return caught_exception_var._retn ();
 }
@@ -413,7 +415,9 @@ TAO_ClientRequestInfo::arguments ()
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
 
   if (this->parameter_list (*parameter_list) == false)
+  {
     throw ::CORBA::MARSHAL ();
+  }
 
   return safe_parameter_list._retn ();
 }
@@ -454,7 +458,9 @@ TAO_ClientRequestInfo::exceptions ()
   Dynamic::ExceptionList_var safe_exception_list = exception_list;
 
   if (this->exception_list (*exception_list) == false)
+  {
     throw ::CORBA::MARSHAL ();
+  }
 
   return safe_exception_list._retn ();
 }
@@ -510,7 +516,9 @@ TAO_ClientRequestInfo::result ()
   CORBA::Any_var safe_result_any = result_any;
 
   if (this->result (result_any) == false)
+  {
     throw ::CORBA::MARSHAL ();
+  }
 
   return safe_result_any._retn ();
 }
@@ -610,7 +618,9 @@ void
 TAO_ClientRequestInfo::check_validity ()
 {
   if (this->invocation_ == nullptr)
+  {
     throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
+  }
 }
 
 void

@@ -616,7 +616,9 @@ int queue_priority_test (ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>& q)
 {
   int status = 0;
   if (!q.is_empty ())
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Prio test queue not empty\n")), 1);
+  }
 
   // Set up a few objects with names for how they should come out of the queue.
   std::unique_ptr<User_Class> b1, b2, b3, b4;
@@ -629,15 +631,23 @@ int queue_priority_test (ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>& q)
 
   prio += 1;
   if (-1 == q.enqueue_prio (b2.get (), nullptr, prio))
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("b2")), 1);
+  }
   if (-1 == q.enqueue_prio (b3.get (), nullptr, prio))
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("b3")), 1);
+  }
   prio -= 1;
   if (-1 == q.enqueue_prio (b4.get (), nullptr, prio))
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("b4")), 1);
+  }
   prio += 5;
   if (-1 == q.enqueue_prio (b1.get (), nullptr, prio))
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("b1")), 1);
+  }
 
   User_Class *b {};
   if (q.dequeue_head (b) == -1)
@@ -702,7 +712,9 @@ int queue_priority_test (ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>& q)
     }
 
   if (status == 0)
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Priority queueing test: OK\n")));
+  }
   return status;
 }
 
@@ -750,7 +762,9 @@ int queue_iterator_test (ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>& q)
 {
   int status = 0;
   if (!q.is_empty ())
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Iterator test queue not empty\n")), 1);
+  }
 
   // Set up a few objects with names for how they should come out of the queue.
   std::unique_ptr<User_Class> b1 = std::make_unique<User_Class> ("first");
@@ -758,13 +772,21 @@ int queue_iterator_test (ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>& q)
   std::unique_ptr<User_Class> b3 = std::make_unique<User_Class> ("third");
   std::unique_ptr<User_Class> b4 = std::make_unique<User_Class> ("fourth");
   if (-1 == q.enqueue_tail (b1.get (), nullptr))
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("b1")), 1);
+  }
   if (-1 == q.enqueue_tail (b2.get (), nullptr))
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("b2")), 1);
+  }
   if (-1 == q.enqueue_tail (b3.get (), nullptr))
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("b3")), 1);
+  }
   if (-1 == q.enqueue_tail (b4.get (), nullptr))
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("b4")), 1);
+  }
 
   User_Class* b {};
   {
@@ -801,7 +823,9 @@ int queue_iterator_test (ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>& q)
     q.dequeue_head (b, nullptr);
 
   if (status == 0)
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Iterator test: OK\n")));
+  }
   return status;
 }
 

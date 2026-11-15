@@ -69,7 +69,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Server_Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       Receiver_Factory *receiver_factory_impl {};
       ACE_NEW_RETURN (receiver_factory_impl,
@@ -89,7 +91,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->object_to_string (receiver_factory.in ());
 
       if (write_ior (options.ior_output_file, ior.in ()) != 0)
+      {
         return 1;
+      }
 
       poa_manager->activate ();
 

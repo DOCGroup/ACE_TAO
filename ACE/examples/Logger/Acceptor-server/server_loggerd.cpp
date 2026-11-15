@@ -185,11 +185,15 @@ Logging_Handler::open (void *)
   ACE_INET_Addr addr;
 
   if (this->peer ().get_remote_addr (addr) == -1)
+  {
     return -1;
+  }
 
   char const *const peer_name = addr.get_host_name ();
   if (peer_name == nullptr)
+  {
     return -1;
+  }
   this->peer_name_ = peer_name;
 
   if (REACTOR::instance ()->schedule_timer

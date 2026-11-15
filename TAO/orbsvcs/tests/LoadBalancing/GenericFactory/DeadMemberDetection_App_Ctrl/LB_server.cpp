@@ -17,13 +17,19 @@ LB_server::destroy ()
   try
     {
       if (this->object_group_created_ && !CORBA::is_nil (this->lm_.in ()))
+      {
         this->lm_->delete_object (this->fcid_.in ());
+      }
 
       if (!CORBA::is_nil (this->root_poa_.in ()))
+      {
         this->root_poa_->destroy (true, true);
+      }
 
       if (!CORBA::is_nil (this->orb_.in ()))
+      {
         this->orb_->destroy ();
+      }
     }
   catch (const CORBA::Exception &ex)
     {
@@ -145,7 +151,9 @@ LB_server::create_object_group ()
         this->orb_->object_to_string (this->object_group_.in ());
 
       if (this->write_ior_to_file (ior.in ()) == -1)
+      {
         return -1;
+      }
     }
   catch (const CORBA::Exception &ex)
     {
@@ -163,7 +171,9 @@ LB_server::get_object_group ()
     {
       this->object_group_ = this->orb_->string_to_object (this->options_.group_ior);
       if (CORBA::is_nil (this->object_group_.in ()))
+      {
         return -1;
+      }
     }
   catch (const CORBA::Exception &ex)
     {

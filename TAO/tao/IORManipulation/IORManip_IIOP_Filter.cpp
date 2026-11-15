@@ -69,7 +69,9 @@ TAO_IORManip_IIOP_Filter::filter_and_add (TAO_Profile *profile,
         void operator() (TAO_IIOP_Profile *profile) const
         {
           if (profile != nullptr)
+          {
             profile->_decr_refcnt ();
+          }
         }
       };
       std::unique_ptr<TAO_IIOP_Profile, Profile_Deleter> new_profile {
@@ -184,13 +186,17 @@ TAO_IORManip_IIOP_Filter::get_endpoints (TAO_Profile *profile,
       // Extract the Byte Order.
       CORBA::Boolean byte_order {};
       if (!(in_cdr >> ACE_InputCDR::to_boolean (byte_order)))
+      {
         return;
+      }
 
       in_cdr.reset_byte_order (static_cast<int> (byte_order));
 
       // Extract endpoints sequence.
       if (!(in_cdr >> endpoints))
+      {
         return;
+      }
     }
   else
     {
@@ -219,7 +225,9 @@ TAO_IORManip_IIOP_Filter::create_profile (TAO_Profile *profile)
     void operator() (TAO_IIOP_Profile *profile) const
     {
       if (profile != nullptr)
+      {
         profile->_decr_refcnt ();
+      }
     }
   };
   std::unique_ptr<TAO_IIOP_Profile, Profile_Deleter> profile_owner {new_profile};

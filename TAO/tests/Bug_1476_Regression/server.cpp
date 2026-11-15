@@ -64,7 +64,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       Sender_i *sender_impl {};
       ACE_NEW_RETURN (sender_impl,

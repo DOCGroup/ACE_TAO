@@ -53,7 +53,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var const poa_manager = root_poa->the_POAManager ();
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       Ping_Service *ping_service_impl {};
       ACE_NEW_RETURN (ping_service_impl,

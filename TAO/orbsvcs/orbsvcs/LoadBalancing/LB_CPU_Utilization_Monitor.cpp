@@ -23,7 +23,9 @@ static double calc_cpu_loading ()
   std::unique_ptr<FILE, int (*) (FILE *)> file_ptr (
     ACE_OS::fopen ("/proc/stat", "r"), ACE_OS::fclose);
   if (!file_ptr)
+  {
     return 0.0;
+  }
 
   unsigned long user {};
   unsigned long nice {};
@@ -36,7 +38,9 @@ static double calc_cpu_loading ()
       char * const arg = ACE_OS::strtok (nullptr, "\n");
 
       if (item == nullptr || arg == nullptr)
+      {
         continue;
+      }
       if (item[0] == 'c' && std::strlen (item) == 3)
         {
           std::sscanf (arg, "%lu %lu %lu %lu", &user, &nice, &sys, &idle);
@@ -87,7 +91,9 @@ TAO_LB_CPU_Utilization_Monitor::TAO_LB_CPU_Utilization_Monitor (char const * loc
       this->location_[0].id = CORBA::string_dup (location_id);
 
       if (location_kind != nullptr)
+      {
         this->location_[0].kind = CORBA::string_dup (location_kind);
+      }
     }
 }
 

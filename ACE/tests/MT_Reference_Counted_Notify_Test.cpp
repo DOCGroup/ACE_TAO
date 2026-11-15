@@ -141,13 +141,17 @@ Simple_Event_Handler::Simple_Event_Handler (int notifies)
   : notifies_ (notifies)
 {
   if (debug)
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Simple_Event_Handler()\n")));
+  }
 }
 
 Simple_Event_Handler::~Simple_Event_Handler ()
 {
   if (debug)
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("~Simple_Event_Handler()\n")));
+  }
 }
 
 int
@@ -160,7 +164,9 @@ Simple_Event_Handler::handle_input (ACE_HANDLE)
   --this->notifies_;
 
   if (this->notifies_ == 0)
+  {
     delete this;
+  }
 
   return 0;
 }
@@ -209,7 +215,9 @@ Event_Loop_Thread::svc ()
 
       if (counter ==
           iterations + this->extra_iterations_needed_)
+      {
         break;
+      }
     }
 
   return 0;
@@ -373,7 +381,9 @@ run_main (int argc, ACE_TCHAR *argv[])
   int result =
     parse_args (argc, argv);
   if (result != 0)
+  {
     return result;
+  }
 
   int extra_iterations_needed = 1;
   int extra_iterations_not_needed = 0;

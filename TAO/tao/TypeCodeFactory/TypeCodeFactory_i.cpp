@@ -340,7 +340,9 @@ TAO_TypeCodeFactory_i::create_union_tc (
                       dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
                     if (!unk)
+                    {
                       throw CORBA::INTERNAL ();
+                    }
 
                     // We don't want unk's rd_ptr to move, in case we
                     // are shared by another Any, so we use this to
@@ -947,7 +949,9 @@ TAO_TypeCodeFactory_i::compute_default_label (
                     dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
                   if (!unk)
+                  {
                     throw CORBA::INTERNAL ();
+                  }
 
                   // We don't want unk's rd_ptr to move, in case
                   // we are shared by another Any, so we use this
@@ -1608,7 +1612,9 @@ TAO_TypeCodeFactory_i::unique_label_values (
                     dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
                   if (!unk)
+                  {
                     throw CORBA::INTERNAL ();
+                  }
 
                   // We don't want unk's rd_ptr to move, in case
                   // we are shared by another Any, so we use this
@@ -1669,7 +1675,9 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
       && kind != CORBA::tk_union
       && kind != CORBA::tk_value
       && kind != CORBA::tk_event)
+  {
     return false;
+  }
 
   CORBA::TypeCode_var unaliased_member =
     TAO::unaliased_typecode (member);

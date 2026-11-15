@@ -84,7 +84,9 @@ TAO::HTIOP::Transport::recv (char *buf,
   if (n == -1)
     {
       if (errno == EWOULDBLOCK)
+      {
         return 0;
+      }
 
       return -1;
     }
@@ -113,7 +115,9 @@ TAO::HTIOP::Transport::register_handler ()
 
   ACE_Reactor *r = this->orb_core_->reactor ();
   if (r == this->connection_handler_->reactor ())
+  {
     return 0;
+  }
 
   // Set the flag in the Connection Handler and in the Wait Strategy
   // @@Maybe we should set these flags after registering with the
@@ -122,7 +126,9 @@ TAO::HTIOP::Transport::register_handler ()
 
   ACE::HTBP::Session *s = this->connection_handler_->peer().session();
   if (s)
+  {
     s->reactor(r);
+  }
   ACE::HTBP::Channel *ch = s->inbound();
   return r->register_handler (ch->notifier(),
                               ACE_Event_Handler::READ_MASK);
@@ -199,13 +205,17 @@ TAO::HTIOP::Transport::tear_listen_point_list (TAO_InputCDR &cdr)
 {
   CORBA::Boolean byte_order;
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+  {
     return -1;
+  }
 
   cdr.reset_byte_order (static_cast<int> (byte_order));
 
   ::HTIOP::ListenPointList listen_list;
   if ((cdr >> listen_list) == 0)
+  {
     ORBSVCS_ERROR_RETURN ((LM_ERROR,"tear_listen_point_list: no list\n"),-1);
+  }
   //return -1;
 
   // As we have received a bidirectional information, set the flag to
@@ -248,7 +258,9 @@ TAO::HTIOP::Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
   // Marshall the information into the stream
   if (!(cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
       || !(cdr << listen_point_list))
+  {
     return;
+  }
 
   // Add this info in to the svc_list
   opdetails.request_service_context ().set_context (IOP::BI_DIR_IIOP, cdr);

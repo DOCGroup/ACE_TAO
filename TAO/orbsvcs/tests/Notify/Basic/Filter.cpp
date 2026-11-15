@@ -46,7 +46,9 @@ void
 Filter::run_test ()
 {
   if (TAO_debug_level)
+  {
     ACE_DEBUG ((LM_DEBUG, " Obtaining FilterAdmin interface from ConsumerAdmin\n"));
+  }
 
   CosNotifyFilter::FilterAdmin_var ca_filter_admin =
     CosNotifyFilter::FilterAdmin::_narrow (consumer_admin_.in ());
@@ -60,7 +62,9 @@ void
 Filter::run_filter_test (CosNotifyFilter::FilterAdmin_ptr filter_admin)
 {
   if (TAO_debug_level)
+  {
     ACE_DEBUG ((LM_DEBUG, " Calling remove_all_filters\n"));
+  }
 
   // Clear all filters.
   filter_admin->remove_all_filters ();
@@ -68,14 +72,18 @@ Filter::run_filter_test (CosNotifyFilter::FilterAdmin_ptr filter_admin)
   this->verify_filter_count (filter_admin, 0);
 
   if (TAO_debug_level)
+  {
     ACE_DEBUG ((LM_DEBUG, "Adding a filter\n"));
+  }
 
   CosNotifyFilter::FilterID id_1 = this->add_filter (filter_admin);
 
   this->verify_filter_count (filter_admin, 1);
 
   if (TAO_debug_level)
+  {
     ACE_DEBUG ((LM_DEBUG, "Adding another filter\n"));
+  }
 
   this->add_filter (filter_admin);
 
@@ -88,7 +96,9 @@ Filter::run_filter_test (CosNotifyFilter::FilterAdmin_ptr filter_admin)
     }
 
   if (TAO_debug_level)
+  {
     ACE_DEBUG ((LM_DEBUG, "Calling remove_filter\n"));
+  }
 
   // remove the filter.
   filter_admin->remove_filter (id_1);
@@ -102,7 +112,9 @@ Filter::run_filter_test (CosNotifyFilter::FilterAdmin_ptr filter_admin)
     }
 
   if (TAO_debug_level)
+  {
     ACE_DEBUG ((LM_DEBUG, "Calling remove_all_filters\n"));
+  }
 
   filter_admin->remove_all_filters ();
 
@@ -149,7 +161,9 @@ Filter::add_filter (CosNotifyFilter::FilterAdmin_ptr filter_admin)
 
   // Print the ID
   if (TAO_debug_level)
+  {
     ACE_DEBUG ((LM_DEBUG, "Added Filter %d\n", id));
+  }
 
   return id;
 }

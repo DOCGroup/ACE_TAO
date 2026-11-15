@@ -26,7 +26,9 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
     {
       // First parse our command line options
       if (this->parse_args (argc, argv) != 0)
+      {
         return -1;
+      }
 
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
@@ -144,7 +146,9 @@ Supplier::parse_args (int argc, ACE_TCHAR *argv[])
           arg_shifter.consume_arg ();
         }
       else
+      {
         arg_shifter.ignore_arg ();
+      }
     }
 
   // Indicates successful parsing of the command line

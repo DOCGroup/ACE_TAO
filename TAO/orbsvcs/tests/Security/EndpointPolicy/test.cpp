@@ -49,7 +49,9 @@ parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
       else if (ACE_OS::strstr (argv[c], ACE_TEXT ("-ORB")) == argv[c])
         {
           if (c + 1 < argc && argv[c + 1][0] != ACE_TEXT ('-'))
+          {
             ++c;
+          }
         }
       else
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -66,7 +68,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Server_Options options;
   if (parse_args (argc, argv, options) != 0)
+  {
     return 1;
+  }
 
   std::array<ACE_TCHAR, 100> first_endpoint {};
   std::array<ACE_TCHAR, 100> second_endpoint {};

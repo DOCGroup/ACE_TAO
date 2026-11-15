@@ -97,7 +97,9 @@ TAO_MIOP_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                   this->max_fragments_ = TAO_DEFAULT_MIOP_MAX_FRAGMENTS;
                 }
               else
+              {
                 this->max_fragments_ = static_cast<u_long> (max);
+              }
             }
           else
             ORBSVCS_DEBUG ((LM_ERROR,
@@ -124,7 +126,9 @@ TAO_MIOP_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                   this->max_fragment_size_ = TAO_DEFAULT_MIOP_FRAGMENT_SIZE;
                 }
               else
+              {
                 this->max_fragment_size_ = static_cast<u_long> (size);
+              }
             }
           else
             ORBSVCS_DEBUG ((LM_ERROR,
@@ -147,7 +151,9 @@ TAO_MIOP_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                   this->max_fragment_rate_= 0u; // Zero uses configured max_fragment_size_
                 }
               else
+              {
                 this->max_fragment_rate_= static_cast<u_long> (tx_time);
+              }
             }
           else
             ORBSVCS_DEBUG ((LM_ERROR,
@@ -182,7 +188,9 @@ TAO_MIOP_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                   this->send_hi_water_mark_ = 0u; // Zero sets this to actual -ORBSndSock
                 }
               else
+              {
                 this->send_hi_water_mark_ = static_cast<u_long> (hwm);
+              }
             }
           else
             ORBSVCS_DEBUG ((LM_ERROR,
@@ -205,7 +213,9 @@ TAO_MIOP_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                   this->send_buffer_size_= 0u; // Zero is unspecified
                 }
               else
+              {
                 this->send_buffer_size_= static_cast<u_long> (bytes);
+              }
             }
           else
             ORBSVCS_DEBUG ((LM_ERROR,
@@ -227,7 +237,9 @@ TAO_MIOP_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                   this->receive_buffer_size_= 0u; // Zero is unspecified
                 }
               else
+              {
                 this->receive_buffer_size_= static_cast<u_long> (bytes);
+              }
             }
           else
             ORBSVCS_DEBUG ((LM_ERROR,
@@ -291,7 +303,9 @@ TAO_MIOP_Resource_Factory::fragments_cleanup_strategy () const
         {
           int bound = this->fragments_cleanup_bound_;
           if (bound == -1)
+          {
             bound = TAO_DEFAULT_MIOP_FRAGMENTS_CLEANUP_DELAY;
+          }
 
           TAO_PG::Time_Bound_Fragments_Cleanup_Strategy *strategy {};
           ACE_NEW_RETURN (strategy,
@@ -305,7 +319,9 @@ TAO_MIOP_Resource_Factory::fragments_cleanup_strategy () const
         {
           int bound = this->fragments_cleanup_bound_;
           if (bound == -1)
+          {
             bound = TAO_DEFAULT_MIOP_FRAGMENTS_CLEANUP_NUMBER;
+          }
 
           TAO_PG::Number_Bound_Fragments_Cleanup_Strategy *strategy {};
           ACE_NEW_RETURN (strategy,
@@ -319,7 +335,9 @@ TAO_MIOP_Resource_Factory::fragments_cleanup_strategy () const
         {
           int bound = this->fragments_cleanup_bound_;
           if (bound == -1)
+          {
             bound = TAO_DEFAULT_MIOP_FRAGMENTS_CLEANUP_MEMORY;
+          }
 
           TAO_PG::Memory_Bound_Fragments_Cleanup_Strategy *strategy {};
           ACE_NEW_RETURN (strategy,

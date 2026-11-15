@@ -72,7 +72,9 @@ namespace ACE
         // get version
         ch = this->read_ws_field (str, version, MAX_VERSION_LENGTH);
         if (ch == eof_  || !ACE_OS::ace_isspace (ch))
+        {
           return false; // invalid HTTP version string
+        }
         // skip whitespace
         while (ACE_OS::ace_isspace (str.peek ()))
           {
@@ -81,7 +83,9 @@ namespace ACE
         // get status
         ch = this->read_ws_field (str, status, MAX_STATUS_LENGTH);
         if (ch == eof_ || !ACE_OS::ace_isspace (ch))
+        {
           return false; // invalid HTTP status code
+        }
         // skip whitespace
         while (ACE_OS::ace_isspace (str.peek ()))
           {
@@ -102,7 +106,9 @@ namespace ACE
 
         // get header lines
         if (!Header::read (str))
+        {
           return false;
+        }
         // skip empty line
         ch = str.get ();
         while (ch != '\n' && ch != eof_)

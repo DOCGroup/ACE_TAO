@@ -31,7 +31,9 @@ Logger_Client::init (int argc, ACE_TCHAR *argv[])
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
+      {
         return -1;
+      }
 
       // Initialize the naming service
       int ret = this->init_naming_service ();

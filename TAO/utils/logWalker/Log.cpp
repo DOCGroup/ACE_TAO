@@ -28,7 +28,9 @@ Log::process_file (const ACE_TCHAR *filename, const char *alias)
   ACE_Mem_Map mapped_file;
   int result = mapped_file.map(filename);
   if (result == -1)
+  {
     return false;
+  }
 
   size_t mapsize = mapped_file.size();
   char *base = reinterpret_cast<char *>(mapped_file.addr());
@@ -56,12 +58,16 @@ Log::process_file (const ACE_TCHAR *filename, const char *alias)
       buffer[linelen] = '\0';
       this->line_ = buffer.get ();
       if (linelen > 0)
+      {
         this->parse_line ();
+      }
       base = text+1;
       ++this->offset_;
       remainder -= linelen;
       if (remainder < 1)
+      {
         break;
+      }
     }
 
   mapped_file.close();
@@ -78,7 +84,9 @@ Log::get_preamble ()
   this->info_ = this->line_;
 
   if (p == nullptr)
+  {
     return;
+  }
 
   if (p != this->line_)
     {
@@ -87,13 +95,17 @@ Log::get_preamble ()
         {
           x = std::strstr (this->line_, "@(");
           if (x + 1 != p)
+          {
             return;
+          }
         }
     }
 
   long pid = std::strtol(p + 1, &t, 10);
   if (pid == 0)
+  {
     return;
+  }
 
   long tid {};
   if ( *t == '|' )
@@ -116,7 +128,9 @@ Log::get_preamble ()
     }
 
   if (this->hostproc_ == nullptr)
+  {
     this->hostproc_ = this->session_.find_process(pid);
+  }
 
   if (this->hostproc_ == nullptr)
     {
@@ -136,7 +150,9 @@ Log::get_preamble ()
             ACE_CString a2 = procname + "_1";
             HostProcess *first;
             if (this->procs_.get(first) == 0)
+            {
               first->proc_name(a2);
+            }
           }
           ACE_FALLTHROUGH;
         default:
@@ -169,7 +185,9 @@ Log::handle_msg_octets ()
           t_iter.next(th);
           GIOP_Buffer *waiter = th->giop_target();
           if (waiter == nullptr)
+          {
             continue;
+          }
           if (waiter->matches (this->dump_target_))
             {
               waiter->transfer_from (this->dump_target_);
@@ -187,12 +205,16 @@ Log::handle_msg_octets ()
           size_t len {};
           const char *oid = this->dump_target_->target_oid(len);
           if (oid != nullptr)
+          {
             inv->set_target (oid, len);
+          }
         }
       else
         {
           if (this->dump_target_ == std::addressof (this->unknown_msg_))
+          {
             ACE_ERROR ((LM_ERROR, "%d dump ended with no target owner\n", this->offset_));
+          }
         }
       this->dump_target_ = nullptr;
       this->unknown_msg_.reset();
@@ -439,7 +461,9 @@ Log::parse_wait_for_event_i ()
 
   PeerProcess *pp = this->thr_->incoming();
   if (pp == nullptr)
+  {
     pp = this->thr_->peek_new_connection();
+  }
   if (pp != nullptr && done)
     {
       this->thr_->exit_wait(pp, this->offset_);
@@ -536,7 +560,9 @@ Log::parse_cleanup_queue_i ()
       size_t len {};
       const char *oid = target->target_oid(len);
       if (mtype == 0 && len > 0)
+      {
         inv->set_target (oid, len);
+      }
     }
 
 }
@@ -545,7 +571,9 @@ void
 Log::parse_complete_connection_i ()
 {
   if (std::strstr (this->info_, "failed") == nullptr)
+  {
     return;
+  }
   char *addr = std::strrchr (this->info_, '<') + 1;
   char *c = std::strchr (addr, '>');
   *c = '\0';
@@ -599,7 +627,9 @@ Log::parse_handler_open_i (bool is_ssl)
   c = std::strstr (c + 1, "on ");
   c += 3;
   if (*c == '[')
+  {
     ++c;
+  }
   long handle = std::strtol (c, nullptr, 10);
   PeerProcess *pp = this->thr_->peek_new_connection();
   if (this->conn_waiters_.size() > 0)
@@ -764,7 +794,9 @@ Log::parse_connection_not_complete_i ()
       //             offset_, pp->offset()));
     }
   else
+  {
     ACE_ERROR ((LM_ERROR,"%d: connection_not_complete: no pending peer\n", offset_));
+  }
 }
 
 void
@@ -958,7 +990,9 @@ Log::parse_notify_object_i ()
 
   ACE_CString text (note);
   if (inv)
+  {
     inv->add_notify_incident (text, this->offset_);
+  }
 }
 
 void

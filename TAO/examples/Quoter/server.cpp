@@ -67,10 +67,14 @@ Quoter_Server::init (int argc,
         this->argv_[i] = argv[i];
 
       if (this->parse_args () != 0)
+      {
         return -1;
+      }
 
       if (this->options_.num_of_objects <= 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "The number of Quoter objects must be positive\n"), -1);
+      }
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =
@@ -95,7 +99,9 @@ Quoter_Server::init (int argc,
 
       exception_message = "While initing the quoter factory";
       if (this->quoter_Factory_i_ptr_->init () != 0)
+      {
         return -1;
+      }
 
       PortableServer::ObjectId_var quoter_Factory_oid =
         PortableServer::string_to_ObjectId ("Quoter_Factory");
@@ -118,7 +124,9 @@ Quoter_Server::init (int argc,
 
       // Print the IOR.
       if (this->options_.debug_level >= 2)
+      {
         ACE_DEBUG ((LM_DEBUG, "Quoter Server: IOR is: <%C>\n", quoter_Factory_ior.in ()));
+      }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -206,11 +214,15 @@ Quoter_Server::~Quoter_Server ()
       factory_name[0].id = CORBA::string_dup ("IDL_Quoter");
       factory_name[1].id = CORBA::string_dup ("Quoter_Factory");
       if (!CORBA::is_nil (this->namingContext_var_.in ()))
+      {
         this->namingContext_var_->unbind (factory_name);
+      }
 
       factory_name.length (1);
       if (!CORBA::is_nil (this->namingContext_var_.in ()))
+      {
         this->namingContext_var_->unbind (factory_name);
+      }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -230,7 +242,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       int const result = quoter_server.init (argc, argv);
 
       if (result == -1)
+      {
         return 1;
+      }
 
       quoter_server.run ();
     }

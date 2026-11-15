@@ -47,7 +47,9 @@ test_write_octet (TAO_OutputCDR &cdr,
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
   if (!(cdr << os))
+  {
     return -1;
+  }
   return 0;
 }
 
@@ -59,7 +61,9 @@ test_read_octet (TAO_InputCDR &cdr,
   Test::OctetSeq os;
 
   if (!(cdr >> os))
+  {
     return -1;
+  }
   return 0;
 }
 
@@ -71,7 +75,9 @@ test_write_char (TAO_OutputCDR &cdr,
   Test::CharSeq cs (bufsize, bufsize, buf);
 
   if (!(cdr << cs))
+  {
     return -1;
+  }
   return 0;
 }
 
@@ -83,7 +89,9 @@ test_read_char (TAO_InputCDR &cdr,
   Test::CharSeq cs;
 
   if (!(cdr >> cs))
+  {
     return -1;
+  }
   return 0;
 }
 
@@ -102,26 +110,36 @@ test_octet_sequence_copy_move ()
 
   for (CORBA::ULong i = 0; i != original.length (); ++i)
     if (copied[i] != original[i] || copy_assigned[i] != original[i])
+    {
       return false;
+    }
 
   copied[0] = 42;
   if (original[0] != 1 || copy_assigned[0] != 1)
+  {
     return false;
+  }
 
   Test::OctetSeq moved (std::move (original));
   if (original.length () != 0 || moved.length () != 4)
+  {
     return false;
+  }
 
   Test::OctetSeq move_assigned (2);
   move_assigned.length (2);
   move_assigned = std::move (copied);
   if (copied.length () != 0 || move_assigned.length () != 4)
+  {
     return false;
+  }
 
   for (CORBA::ULong i = 0; i != moved.length (); ++i)
     if (moved[i] != i + 1 ||
         move_assigned[i] != (i == 0 ? 42 : i + 1))
+    {
       return false;
+    }
 
   return true;
 }
@@ -137,32 +155,46 @@ test_message_block_sequence_copy_move ()
   {
     ACE_Message_Block message_block (sizeof (payload));
     if (message_block.copy (payload, sizeof (payload)) == -1)
+    {
       return false;
+    }
 
     Test::OctetSeq original (sizeof (payload), &message_block);
     copied = original;
     if (copied.length () != sizeof (payload))
+    {
       return false;
+    }
 
     copied[0] = 42;
     if (original[0] != 1)
+    {
       return false;
+    }
 
     Test::OctetSeq move_constructed (std::move (original));
     if (original.length () != 0 || move_constructed.length () != sizeof (payload))
+    {
       return false;
+    }
     moved = std::move (move_constructed);
     if (move_constructed.length () != 0)
+    {
       return false;
+    }
   }
 
   if (copied.length () != sizeof (payload) || copied[0] != 42 ||
       moved.length () != sizeof (payload) || moved[0] != 1)
+  {
     return false;
+  }
   for (CORBA::ULong i = 1; i != moved.length (); ++i)
     if (copied[i] != static_cast<CORBA::Octet> (i + 1) ||
         moved[i] != static_cast<CORBA::Octet> (i + 1))
+    {
       return false;
+    }
 
   return true;
 }
@@ -193,13 +225,17 @@ run (char *buf, size_t bufsize,
           TAO_OutputCDR output;
 
           if (writer (output, buf, x) != 0)
+          {
             return -1;
+          }
           writing.stop_incr ();
 
           TAO_InputCDR input (output);
           reading.start_incr ();
           if (reader (input, buf, x) != 0)
+          {
             return -1;
+          }
           reading.stop_incr ();
         }
 
@@ -297,7 +333,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Options options {};
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       if (!test_octet_sequence_copy_move ())
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -329,12 +367,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (run (buf.get (), options.high,
                options.iterations, options.low, options.step, options.quiet,
                ACE_TEXT ("OCTET"), test_write_octet, test_read_octet) != 0)
+      {
         return 1;
+      }
 
       if (run (buf.get (), options.high,
                options.iterations, options.low, options.step, options.quiet,
                ACE_TEXT ("CHAR"), test_write_char, test_read_char) != 0)
+      {
         return 1;
+      }
 
       orb->destroy ();
     }

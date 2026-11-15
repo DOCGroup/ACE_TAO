@@ -104,11 +104,15 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
                                 context->context_data.length ());
               CORBA::Boolean byte_order;
               if (!(cdr >> ACE_InputCDR::to_boolean (byte_order)))
+              {
                 throw ::CORBA::MARSHAL ();
+              }
               cdr.reset_byte_order (static_cast<int> (byte_order));
 
               if (!(cdr >> target_priority))
+              {
                 throw ::CORBA::MARSHAL ();
+              }
 
               // Save the target priority in the response service
               // context to propagate back to the client as specified
@@ -137,7 +141,9 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
           if (thread_pool == nullptr)
             thread_pool_id = "default thread pool";
           else
+          {
             thread_pool_id = "thread pool " + std::to_string (thread_pool->id ());
+          }
         }
 
       // Target priority is invalid.
@@ -296,14 +302,18 @@ TAO_RT_Servant_Dispatcher::pre_invoke_collocated_request (TAO_Root_POA &poa,
       if (tph->get_thread_CORBA_and_native_priority (
             pre_invoke_state.original_CORBA_priority_,
             pre_invoke_state.original_native_priority_) == -1)
+      {
         throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
+      }
 
       // Change the priority of the current thread for the duration of
       // request.
       if (servant_priority != pre_invoke_state.original_CORBA_priority_)
         {
           if (tph->set_thread_CORBA_priority (servant_priority) == -1)
+          {
             throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
+          }
 
           pre_invoke_state.state_ =
             TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State::PRIORITY_RESET_REQUIRED;

@@ -128,7 +128,9 @@ public:
             }
 
             if (c >= this->call_count_)
+            {
               break;
+            }
 
             this->hello_->say_hello (c);
 
@@ -187,7 +189,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Client_Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return 2;
+      }
 
       // create UIPMC reference
       CORBA::Object_var const miop_ref =

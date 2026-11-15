@@ -159,7 +159,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Parse the command-line arguments to get the IOR
       int const result = parse_args (argc, argv, options);
       if (result != 0)
+      {
         return result;
+      }
 
       // Read the file, and get the IOR
       ACE_HANDLE const input_file = ACE_OS::open (options.ior_file.c_str (), 0);

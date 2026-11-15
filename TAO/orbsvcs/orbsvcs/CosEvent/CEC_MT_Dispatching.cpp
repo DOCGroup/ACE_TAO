@@ -23,7 +23,9 @@ TAO_CEC_MT_Dispatching::activate ()
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   if (this->active_)
+  {
     return;
+  }
 
   this->active_ = true;
 
@@ -47,7 +49,9 @@ TAO_CEC_MT_Dispatching::shutdown ()
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   if (!this->active_)
+  {
     return;
+  }
 
   if (wait_for_shutdown_thread_completion_)
     {
@@ -78,7 +82,9 @@ TAO_CEC_MT_Dispatching::push_nocopy (TAO_CEC_ProxyPushSupplier *proxy,
 {
   // Double checked locking....
   if (!this->active_)
+  {
     this->activate ();
+  }
 
   this->task_.push (proxy, event);
 }
@@ -98,7 +104,9 @@ TAO_CEC_MT_Dispatching::invoke_nocopy (TAO_CEC_ProxyPushSupplier *proxy,
 {
   // Double checked locking....
   if (!this->active_)
+  {
     this->activate ();
+  }
 
   this->task_.invoke (proxy, typed_event);
 }

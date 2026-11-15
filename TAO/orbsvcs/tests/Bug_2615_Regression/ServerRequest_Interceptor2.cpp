@@ -32,7 +32,9 @@ ServerRequest_Interceptor2::receive_request (
   CORBA::String_var const op = ri->operation ();
 
   if (std::strcmp (op.in (), "has_ft_request_service_context") != 0)
+  {
     return;
+  }
 
   try
     {

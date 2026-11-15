@@ -28,7 +28,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                              ACE_OS::getpid ());
 
   if (connector.connect (logger, addr) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
+  }
 
   log_record.msg_data (DATA);
   size_t const max_payload_size =

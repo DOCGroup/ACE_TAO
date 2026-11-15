@@ -693,10 +693,14 @@ TAO_Notify_Consumer::dispatch_updates_i (const CosNotification::EventTypeSeq& ad
     {
       this->have_not_yet_verified_publish_ = false; // no need to check again
       if (! this->publish_->_is_a ("IDL:omg.org/CosNotifyComm/NotifyPublish:1.0"))
+      {
         this->publish_ = CosNotifyComm::NotifyPublish::_nil();
+      }
     }
   if (! CORBA::is_nil (this->publish_.in ()))
+  {
     this->publish_->offer_change (added, removed);
+  }
 }
 
 TAO_SYNCH_MUTEX*
@@ -751,7 +755,9 @@ TAO_Notify_Consumer::is_alive (bool allow_nil_consumer)
     if (allow_nil_consumer)
       return true;
     else
+    {
       return status;
+    }
   }
 
   CORBA::PolicyList policy_list;
@@ -803,7 +809,9 @@ TAO_Notify_Consumer::is_alive (bool allow_nil_consumer)
         status = !rtt_obj_->_non_existent ();
       }
       else
+      {
         status = true;
+      }
     }
   catch (const CORBA::TIMEOUT&)
     {

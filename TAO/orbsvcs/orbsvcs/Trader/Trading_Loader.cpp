@@ -46,13 +46,17 @@ TAO_Trading_Loader::TAO_Trading_Loader ()
                         ACE_TEXT ("- %p\n\n"),
                         ACE_TEXT ("cannot determine hostname")));
       else
+      {
         std::snprintf (host_name.data (), host_name.size (), "%s", host_address);
+      }
     }
 
   std::string trader_name (host_name.data ());
   for (char &character : trader_name)
     if (character == '.')
+    {
       character = '_';
+    }
 
   trader_name += '_';
   trader_name += std::to_string (static_cast<long> (ACE_OS::getpid ()));
@@ -204,7 +208,9 @@ TAO_Trading_Loader::create_object (CORBA::ORB_ptr orb_ptr,
 
   // Parse the args
   if (this->parse_args (argc, argv) == -1)
+  {
     return CORBA::Object::_nil ();
+  }
 
   // Dump the ior to a file.
   if (this->ior_output_file_ != nullptr)
@@ -241,10 +247,14 @@ TAO_Trading_Loader::create_object (CORBA::ORB_ptr orb_ptr,
       int rc = this->bootstrap_to_federation ();
 
       if (rc == -1)
+      {
         this->init_multicast_server ();
+      }
     }
   else
+  {
     this->init_multicast_server ();
+  }
 
   return CORBA::Object::_nil ();
 }
@@ -371,7 +381,9 @@ TAO_Trading_Loader::init_multicast_server ()
       if (port_number != nullptr)
         port = static_cast<u_short> (std::atoi (port_number));
       else
+      {
         port = TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT;
+      }
     }
 
   // Instantiate a server that will receive requests for an ior
@@ -380,7 +392,9 @@ TAO_Trading_Loader::init_multicast_server ()
       if (this->ior_multicast_.init ((char *) this->ior_.in (),
                                      mde.c_str (),
                                      TAO_SERVICEID_TRADINGSERVICE) == -1)
+      {
         return -1;
+      }
     }
   else
     {
@@ -448,7 +462,9 @@ TAO_Trading_Loader::parse_args (int &argc, ACE_TCHAR *argv [])
         }
 
       else
+      {
         arg_shifter.ignore_arg ();
+      }
     }
 
   return 0;

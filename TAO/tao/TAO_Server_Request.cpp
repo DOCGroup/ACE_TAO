@@ -153,7 +153,9 @@ TAO_ServerRequest::~TAO_ServerRequest ()
     }
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
   if (this->release_operation_)
+  {
     CORBA::string_free (const_cast<char*> (this->operation_));
+  }
 }
 
 CORBA::ORB_ptr
@@ -179,7 +181,9 @@ void
 TAO_ServerRequest::init_reply ()
 {
   if (!this->outgoing_)
+  {
     return;  // Collocated
+  }
 
   // Construct our reply generator.
   TAO_Pluggable_Reply_Params_Base reply_params;
@@ -303,7 +307,9 @@ void
 TAO_ServerRequest::tao_send_reply ()
 {
   if (this->collocated ())
+  {
     return;  // No transport in the collocated case.
+  }
 
   this->outgoing_->more_fragments (false);
 
@@ -366,7 +372,9 @@ TAO_ServerRequest::tao_send_reply_exception (CORBA::Exception const &ex)
 #endif /* ACE_INITIALIZE_MEMORY_BEFORE_USE */
       TAO_GIOP_Message_Version gv;
       if (this->outgoing_)
+      {
         this->outgoing_->get_version (gv);
+      }
 
       TAO_OutputCDR output (repbuf,
                             sizeof repbuf,

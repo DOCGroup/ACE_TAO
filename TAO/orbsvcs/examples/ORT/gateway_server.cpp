@@ -42,7 +42,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                             "gateway_server_orb");
 
       if (parse_args (argc, argv, ior_output_file) != 0)
+      {
         return -1;
+      }
 
       /// Resolve reference to RootPOA
       CORBA::Object_var obj =

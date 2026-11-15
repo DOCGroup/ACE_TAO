@@ -91,7 +91,9 @@ reader (void *)
       current_readers.fetch_add (1, std::memory_order_relaxed);
 
       if (current_writers.load (std::memory_order_relaxed) > 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "(%t) writers found!!!\n"));
+      }
 
       ACE_thread_t thr_id = shared_thr_id;
 
@@ -129,10 +131,14 @@ writer (void *)
       current_writers.fetch_add (1, std::memory_order_relaxed);
 
       if (current_writers.load (std::memory_order_relaxed) > 1)
+      {
         ACE_DEBUG ((LM_DEBUG, "(%t) other writers found!!!\n"));
+      }
 
       if (current_readers.load (std::memory_order_relaxed) > 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "(%t) readers found!!!\n"));
+      }
 
       ACE_thread_t self = ACE_Thread::self ();
       shared_thr_id = self;
@@ -167,7 +173,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   if (thr_mgr.spawn_n (n_readers, reader, nullptr, THR_NEW_LWP) == -1
       || thr_mgr.spawn_n (n_writers, writer, nullptr, THR_NEW_LWP) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), 1);
+  }
 
   thr_mgr.wait ();
 

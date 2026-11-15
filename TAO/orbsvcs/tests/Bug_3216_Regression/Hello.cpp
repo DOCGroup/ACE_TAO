@@ -21,12 +21,16 @@ void
 Hello::check_normal_context ()
 {
   if (!normal_context_ok_)
+  {
     throw Test::MyException ();
+  }
 }
 
 void
 Hello::check_extended_context ()
 {
   if (!extended_context_ok_)
+  {
     throw Test::MyException ();
+  }
 }

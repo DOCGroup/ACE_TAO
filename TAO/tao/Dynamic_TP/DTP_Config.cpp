@@ -208,7 +208,9 @@ TAO_DTP_Config::init (int argc, ACE_TCHAR* argv[])
     }
 
   if (overwrite)
+  {
     return registry->rebind (name_str, entry);
+  }
   return registry->bind (name_str, entry);
 }
 
@@ -220,7 +222,9 @@ TAO_DTP_Config::parse_long (int &curarg,
   ACE_TCHAR const *str {};
   int const result = this->parse_string (curarg, argc, argv, match, str);
   if (result < 1)
+  {
     return result;
+  }
 
   ACE_TCHAR *err {};
   value = ACE_OS::strtol (str, &err, 10);
@@ -240,7 +244,9 @@ TAO_DTP_Config::parse_bool (int &curarg,
   long num {};
   int const result = this->parse_long (curarg, argc, argv, match, num);
   if (result < 1)
+  {
     return result;
+  }
 
   value = num != 0;
   return 1;
@@ -252,7 +258,9 @@ TAO_DTP_Config::parse_string (int &curarg,
                               ACE_TCHAR const *match, ACE_TCHAR const *&value)
 {
   if (ACE_OS::strcasecmp (argv[curarg], match) != 0)
+  {
     return 0;
+  }
 
   ++curarg;
   if (curarg >= argc)

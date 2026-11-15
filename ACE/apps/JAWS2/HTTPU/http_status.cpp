@@ -38,7 +38,9 @@ HTTP_SCode_Node::HTTP_SCode_Node (int code, const char *code_str)
 {
   if ((HTTP_SCode::MIN_STATUS_CODE <= code)
       && (code <= HTTP_SCode::MAX_STATUS_CODE))
+  {
     HTTP_SCode::table_[code - HTTP_SCode::MIN_STATUS_CODE] = code_str;
+  }
 }
 
 const char *
@@ -47,7 +49,9 @@ HTTP_SCode::operator[] (int i) const
   const char *s = "Unknown";
 
   if (MIN_STATUS_CODE <= i && i <= MAX_STATUS_CODE)
+  {
     s = this->table_[i - MIN_STATUS_CODE];
+  }
 
   return s;
 }
@@ -70,7 +74,9 @@ HTTP_SCode::HTTP_SCode ()
   for (int i = 0; i < SC_TABLE_SIZE; ++i)
     {
       if (this->table_[i] == nullptr)
+      {
         this->table_[i] = this->table_[(i/100) * 100];
+      }
     }
 }
 

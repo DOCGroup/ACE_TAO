@@ -53,7 +53,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       std::basic_string<ACE_TCHAR> ior_file {};
       if (::parse_args (argc, argv, ior_file) != 0)
+      {
         return -1;
+      }
 
       // Servant
       test_i *servant {};

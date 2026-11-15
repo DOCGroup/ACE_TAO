@@ -91,7 +91,9 @@ create_compressor_id_level_list_policy (CORBA::ORB_ptr orb, bool add_zlib_for_te
       if (add_zlib_for_test_1)
         compressor_id_list.length(2);
       else
+      {
         compressor_id_list.length(1);
+      }
       compressor_id_list[0].compressor_id = ::Compression::COMPRESSORID_LZO;
       compressor_id_list[0].compression_level = CLIENT_COMPRESSION_LEVEL;
       if (add_zlib_for_test_1)
@@ -130,7 +132,9 @@ create_low_value_policy (CORBA::ORB_ptr orb)
   // make sure everything gets compressed.
   CORBA::ULong compression_low_value = 10;
   if (test == 3)
+  {
     compression_low_value = 5000000;
+  }
 
   CORBA::Any low_value_any;
   low_value_any <<= compression_low_value;
@@ -239,7 +243,9 @@ check_results (CORBA::ORB_ptr orb)
                                  ACE_TEXT ("during test 1a\n")),
                                 1);
             else
-               return 0;
+            {
+              return 0;
+            }
           }
         else
           {
@@ -268,7 +274,9 @@ check_results (CORBA::ORB_ptr orb)
                                  ACE_TEXT ("during test %d\n"), test),
                                 1);
             else
+            {
               return 0;
+            }
           }
         else
           {
@@ -404,7 +412,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       Test::Hello_var hello = prepare_tests (orb.in ());
 

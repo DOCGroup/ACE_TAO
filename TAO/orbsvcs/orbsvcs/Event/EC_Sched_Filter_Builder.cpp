@@ -222,7 +222,9 @@ TAO_EC_Sched_Filter_Builder:: recursive_name (
           if (i == 0)
             name += "(";
           else
+          {
             name += "&&";
+          }
           name += child_name;
         }
       name += ")";
@@ -245,7 +247,9 @@ TAO_EC_Sched_Filter_Builder:: recursive_name (
           if (i == 0)
             name += "(";
           else
+          {
             name += "||";
+          }
           name += child_name;
         }
       name += ")";
@@ -289,7 +293,9 @@ TAO_EC_Sched_Filter_Builder::
       RtecEventComm::Event const &e = qos.dependencies[i].event;
       if (e.header.type == ACE_ES_CONJUNCTION_DESIGNATOR
           || e.header.type == ACE_ES_DISJUNCTION_DESIGNATOR)
+      {
         break;
+      }
     }
   return i - 1;
 }

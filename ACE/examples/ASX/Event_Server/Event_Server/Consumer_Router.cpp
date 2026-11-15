@@ -112,7 +112,9 @@ Consumer_Router::put (ACE_Message_Block *mb,
             ACE_TEXT ("(%t) send_peers failed in Consumer_Router\n")),
            -1);
       else
+      {
         return 0;
+      }
     }
   else // if (this->is_writer ())
     // Queue up the message to processed by <Consumer_Router::svc>
@@ -132,7 +134,9 @@ Consumer_Router::info (ACE_TCHAR **strp, size_t length) const
   ACE_TCHAR const * const module_name = this->name ();
 
   if (this->context ()->acceptor ().get_local_addr (addr) == -1)
+  {
     return -1;
+  }
 
   ACE_OS::sprintf (buf,
                    ACE_TEXT ("%") ACE_TEXT_PRIs
@@ -148,7 +152,9 @@ Consumer_Router::info (ACE_TCHAR **strp, size_t length) const
   if (*strp == nullptr && (*strp = ACE_OS::strdup (module_name)) == nullptr)
     return -1;
   else
+  {
     ACE_OS::strncpy (*strp, module_name, length);
+  }
 
   return ACE_Utils::truncate_cast<int> (ACE_OS::strlen (module_name));
 }

@@ -21,7 +21,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       int c {};
       while ((c = get_opts ()) != -1)
         if (c == 'o')
+        {
           readiness_file = get_opts.opt_arg ();
+        }
 
       CORBA::Object_var const naming_obj = orb->resolve_initial_references ("NameService");
       if (CORBA::is_nil (naming_obj.in ()))

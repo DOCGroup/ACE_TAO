@@ -85,7 +85,9 @@ TAO_Notify_Constraint_Visitor::bind_structured_event (CosNotification::Structure
         );
 
     if (status != 0)
+    {
       return -1;
+    }
   }
 
   length = s_event.header.variable_header.length ();
@@ -101,7 +103,9 @@ TAO_Notify_Constraint_Visitor::bind_structured_event (CosNotification::Structure
         );
 
     if (status != 0)
+    {
       return -1;
+    }
   }
 
   this->domain_name_ =

@@ -117,10 +117,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       if (options.init_in_main)
+      {
         initORB (0, argc, argv, options);
+      }
 
       Worker worker (argc, argv, options);
       if (worker.activate (THR_NEW_LWP | THR_JOINABLE, options.n_threads) != 0)

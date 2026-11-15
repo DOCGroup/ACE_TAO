@@ -59,7 +59,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         root_poa->the_POAManager ();
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       std::unique_ptr<Receiver> servant = std::make_unique<Receiver> (orb.in ());
       Receiver *const receiver_impl = servant.get ();

@@ -90,18 +90,24 @@ UDP_PerformanceClient::svc ()
                 }
 
               if (micro_seconds >= delta_micro_seconds)
+              {
                 micro_seconds -= delta_micro_seconds;
+              }
             }
           else  // current_wrong_messages != 0
             {
               if (last_wrong_messages_ != 0)
                 {
                   if (delta_micro_seconds < ACE_INT32_MAX)
+                  {
                     delta_micro_seconds *= 2;
+                  }
                 }
 
               if (micro_seconds < (ACE_UINT32_MAX - delta_micro_seconds))
+              {
                 micro_seconds += delta_micro_seconds;
+              }
             }
           last_wrong_messages_ = current_wrong_messages;
 
@@ -133,7 +139,9 @@ UDP_PerformanceClient::svc ()
           }
 
           if (current_wrong_messages == 0)
+          {
             break;
+          }
         }
 
       // shut down remote ORB

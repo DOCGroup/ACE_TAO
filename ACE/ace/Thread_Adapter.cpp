@@ -116,10 +116,14 @@ ACE_Thread_Adapter::invoke_i ()
       int old = 0;
       int val = cancel_flags & (THR_CANCEL_ENABLE | THR_CANCEL_DISABLE);
       if (val == THR_CANCEL_ENABLE || val == THR_CANCEL_DISABLE)
+      {
         ACE_OS::thr_setcancelstate (val, &old);
+      }
       val = cancel_flags & (THR_CANCEL_DEFERRED | THR_CANCEL_ASYNCHRONOUS);
       if (val == THR_CANCEL_DEFERRED || val == THR_CANCEL_ASYNCHRONOUS)
+      {
         ACE_OS::thr_setcanceltype (val, &old);
+      }
     }
 
   ACE_THR_FUNC_RETURN status = ACE_THR_FUNC_RETURN_NULL;

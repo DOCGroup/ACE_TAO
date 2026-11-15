@@ -60,7 +60,9 @@ public:
                             this,
                             THR_JOINABLE,
                             &thread_) != 0)
+    {
       ACE_OS::abort ();
+    }
   }
 
 private:

@@ -79,7 +79,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       Simple_Server_i server_impl (orb.in (), options.iterations);
       PortableServer::ObjectId_var const id =
@@ -111,7 +113,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           CORBA::Boolean const pending = orb->work_pending ();
           if (pending)
+          {
             orb->perform_work ();
+          }
 
           result = server_impl.call_client ();
         }

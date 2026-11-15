@@ -22,10 +22,14 @@ int
 ACE_Blob_Handler::open (void *)
 {
   if (this->send_request () != 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Blob_Handler::open():send_request failed"), -1);
+  }
 
   if (this->receive_reply () != 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Blob_Handler::open():receive_reply failed"), -1);
+  }
   return 0;
 }
 
@@ -78,7 +82,9 @@ ACE_Blob_Reader::send_request ()
   if (MAX_HEADER_SIZE < (std::strlen (request_prefix_)
                          + ACE_OS::strlen (filename_.c_str ())
                          + std::strlen (request_suffix_) + 4))
+  {
     ACE_ERROR_RETURN((LM_ERROR,"Request too large!"), -1);
+  }
 
   // Create a message to send to the server requesting retrieval of the file
   int const len = std::snprintf (mesg, sizeof mesg, "%s %s %s",
@@ -86,11 +92,15 @@ ACE_Blob_Reader::send_request ()
                                  ACE_TEXT_ALWAYS_CHAR (filename_.c_str ()),
                                  request_suffix_);
   if (len < 0 || static_cast<size_t> (len) >= sizeof mesg)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Request too large!"), -1);
+  }
 
   // Send the message to server
   if (peer ().send_n (mesg, len) != len)
+  {
     ACE_ERROR_RETURN((LM_ERROR,"Error sending request"), -1);
+  }
 
   return 0;
 }
@@ -120,14 +130,18 @@ ACE_Blob_Reader::receive_reply ()
       else if ((buf_ptr = std::strstr (buf, "\n\n")) != nullptr)
         buf_ptr += 2;
       else
+      {
         buf_ptr = buf;
+      }
 
       // Determine number of data bytes read. This is equal to the
       // total bytes read minus number of header bytes.
       bytes_read = (buf + len) - buf_ptr;
     }
   else
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Blob_Reader::receiveReply():Error while reading header"), -1);
+  }
 
   // ***************************************************************
   // At this point, we have stripped off the header and are ready to
@@ -192,7 +206,9 @@ ACE_Blob_Reader::receive_reply ()
       if (offset_left < (sizeof buf))
         len = offset_left;
       else
+      {
         len = sizeof buf;
+      }
       if (peer().recv_n (buf, len) != len)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
                            "ACE_Blob_Reader::receiveReply():Read error" ),
@@ -255,7 +271,9 @@ ACE_Blob_Writer::send_request ()
   // Allocate a buffer to hold the header
   std::unique_ptr<char[]> mesg (new (std::nothrow) char[buffer_size]);
   if (!mesg)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Unable to allocate request header"), -1);
+  }
 
   // Create the header and store its actual length.
   int const message_length =
@@ -264,13 +282,17 @@ ACE_Blob_Writer::send_request ()
                    request_prefix_, ACE_TEXT_ALWAYS_CHAR (filename_.c_str ()),
                    request_suffix_, length_);
   if (message_length < 0 || static_cast<size_t> (message_length) >= buffer_size)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Request too large!"), -1);
+  }
 
   // Send the header followed by the data
 
   // First send the header
   if (peer ().send_n (mesg.get (), message_length) == -1)
+  {
     ACE_ERROR_RETURN((LM_ERROR, "%p\n", "Error sending request"), -1);
+  }
 
   // "Consume" the offset by moving the read pointer of the message
   // buffer
@@ -278,7 +300,9 @@ ACE_Blob_Writer::send_request ()
 
   // Now send the data
   if (peer ().send_n (mb_->rd_ptr (), length_) != (int)length_)
+  {
     ACE_ERROR_RETURN((LM_ERROR, "%p\n", "Error sending file"), -1);
+  }
 
   // Adjust the read pointer of the mesage buffer
   mb_->rd_ptr (length_);
@@ -296,7 +320,9 @@ ACE_Blob_Writer::receive_reply ()
   size_t num_recvd = 0;
   ssize_t len = peer ().recv_n (buf, sizeof buf - 1, 0, &num_recvd); // reserve one byte to store the \0
   if (len ==-1)
+  {
     ACE_ERROR_RETURN((LM_ERROR, "%p\n", "Error reading header"), -1);
+  }
 
   buf [num_recvd] = 0;
 
@@ -307,7 +333,9 @@ ACE_Blob_Writer::receive_reply ()
   char *token = ACE_OS::strtok_r (buf, " \t", &lasts);
 
   if ((token == nullptr) || (ACE_OS::strcasecmp (token, "HTTP/1.0") != 0))
+  {
     ACE_ERROR_RETURN((LM_ERROR, "%p\n", "Did not receive a HTTP/1.0 response"), -1);
+  }
 
   // Get the return code.
   int const return_code = ACE_OS::atoi (ACE_OS::strtok_r (nullptr, " \t", &lasts));

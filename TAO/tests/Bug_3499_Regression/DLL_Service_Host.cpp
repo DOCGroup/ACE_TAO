@@ -11,7 +11,9 @@
     void operator() (ACE_DLL_Service *service) const
     {
       if (service != nullptr)
+      {
         service->destroy ();
+      }
     }
   };
 

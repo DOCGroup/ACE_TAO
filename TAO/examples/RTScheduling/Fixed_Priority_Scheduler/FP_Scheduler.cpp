@@ -130,7 +130,9 @@ Fixed_Priority_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_p
   ACE_hthread_t current;
   ACE_Thread::self (current);
   if (ACE_Thread::getprio (current, priority) == -1)
+  {
     return;
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               "Request thread priority is %d %d\n",

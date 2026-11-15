@@ -234,7 +234,9 @@ namespace
   void set_connect_timeout (ORB_ptr orb)
   {
     if (connect_timeout <= 0)
+    {
       return;
+    }
     Object_var obj = orb->resolve_initial_references ("PolicyCurrent");
     PolicyCurrent_var policy_current = PolicyCurrent::_narrow (obj.in ());
     Any a;
@@ -259,7 +261,9 @@ namespace
         if (make_request_queued)
           a <<= Messaging::SYNC_NONE;
         else
+        {
           a <<= sync_scope;
+        }
         pols[0] = orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE, a);
         policy_current->set_policy_overrides (pols, ADD_OVERRIDE);
         pols[0]->destroy ();
@@ -349,7 +353,9 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
           ACE_DEBUG ((LM_DEBUG, "Connected...\n"));
         }
       else
+      {
         tmp_tester = Tester::_unchecked_narrow (obj.in ());
+      }
 
       Tester_var tester = set_request_timeout (tmp_tester.in (), orb.in ());
 
@@ -398,7 +404,9 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
               if (retry_transients)
                 ACE_DEBUG ((LM_DEBUG,"retrying\n"));
               else
+              {
                 throw;
+              }
             }
           catch (CORBA::TIMEOUT const &)
             {
@@ -415,7 +423,9 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
               if (retry_timeouts)
                 ACE_DEBUG ((LM_DEBUG,"retrying\n"));
               else
+              {
                 throw;
+              }
             }
 
           ++num_requests_sent;

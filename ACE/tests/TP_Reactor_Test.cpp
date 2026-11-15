@@ -312,7 +312,9 @@ Acceptor::on_delete_receiver (Receiver &rcvr)
 
   if (rcvr.index_ < MAX_RECEIVERS
       && this->list_receivers_[rcvr.index_] == &rcvr)
+  {
     this->list_receivers_[rcvr.index_] = nullptr;
+  }
 
   ACE_TCHAR bufs [256];
   ACE_TCHAR bufr [256];
@@ -352,7 +354,9 @@ Acceptor::make_svc_handler (Receiver *&sh)
   ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, this->mutex_, -1);
 
   if (sessions_ >= MAX_RECEIVERS)
+  {
     return -1;
+  }
 
   for (size_t i = 0; i < MAX_RECEIVERS; ++i)
     if (this->list_receivers_ [i] == nullptr)
@@ -377,14 +381,18 @@ Receiver::Receiver (Acceptor * acceptor, size_t index)
     total_r_  (0)
 {
   if (acceptor_ != nullptr)
+  {
     acceptor_->on_new_receiver (*this);
+  }
 }
 
 Receiver::~Receiver ()
 {
   this->reactor (nullptr);
   if (acceptor_ != nullptr)
+  {
     acceptor_->on_delete_receiver (*this);
+  }
 
   this->index_ = 0;
 
@@ -394,7 +402,9 @@ Receiver::~Receiver ()
       ACE_Message_Block *mb {};
 
       if (this->getq (mb, &tv) < 0)
+      {
         break;
+      }
 
       ACE_Message_Block::release (mb);
     }
@@ -404,7 +414,9 @@ int
 Receiver::check_destroy ()
 {
   if (flg_mask_ == ACE_Event_Handler::NULL_MASK)
+  {
     return -1;
+  }
 
   return 0;
 }
@@ -421,7 +433,9 @@ Receiver::open (void *)
   flg_mask_ = ACE_Event_Handler::NULL_MASK ;
 
   if (TPReactor->register_handler (this, flg_mask_) == -1)
+  {
     return -1;
+  }
 
   initiate_io (ACE_Event_Handler::READ_MASK);
 
@@ -432,10 +446,14 @@ int
 Receiver::initiate_io (ACE_Reactor_Mask mask)
 {
   if (ACE_BIT_ENABLED (flg_mask_, mask))
+  {
     return 0;
+  }
 
   if (ACE_Reactor::instance ()->schedule_wakeup  (this, mask) == -1)
+  {
     return -1;
+  }
 
   ACE_SET_BITS (flg_mask_, mask);
   return 0;
@@ -445,10 +463,14 @@ int
 Receiver::terminate_io (ACE_Reactor_Mask mask)
 {
   if (ACE_BIT_DISABLED (flg_mask_, mask))
+  {
     return 0;
+  }
 
   if (ACE_Reactor::instance ()->cancel_wakeup (this, mask) == -1)
+  {
     return -1;
+  }
 
   ACE_CLR_BITS (flg_mask_, mask);
   return 0;
@@ -488,7 +510,9 @@ Receiver::handle_input (ACE_HANDLE h)
       this->total_rcv_ += res;
     }
   else
+  {
     err = errno ;
+  }
 
   mb->wr_ptr ()[0] = '\0';
 
@@ -537,15 +561,21 @@ Receiver::handle_input (ACE_HANDLE h)
       if (qcount >= 20 )   // flow control, stop read
         rc = this->terminate_io (ACE_Event_Handler::READ_MASK);
       else
+      {
         rc = this->initiate_io (ACE_Event_Handler::READ_MASK);
+      }
     }
 
   if (rc == -1)
+  {
     return -1;
+  }
 
   //initiate write
   if (this->initiate_io (ACE_Event_Handler::WRITE_MASK) != 0)
+  {
     return -1;
+  }
 
   return check_destroy ();
 }
@@ -574,7 +604,9 @@ Receiver::handle_output (ACE_HANDLE h)
       if (res < 0)
         err = errno ;
       else
+      {
         this->total_snd_ += res;
+      }
 
       if (loglevel == 0 || res <= 0 || err!= 0)
         {
@@ -593,15 +625,21 @@ Receiver::handle_output (ACE_HANDLE h)
   ACE_Message_Block::release (mb);
 
   if (err != 0  || res < 0)
+  {
     return -1;
+  }
 
   if (qcount <= 0)  // no more message blocks in queue
     {
       if (this->terminate_io (ACE_Event_Handler::WRITE_MASK) != 0)
+      {
         return -1;
+      }
 
       if (this->initiate_io (ACE_Event_Handler::READ_MASK) != 0)
+      {
         return -1;
+      }
     }
 
   return check_destroy ();
@@ -669,7 +707,9 @@ Connector::on_delete_sender (Sender & sndr)
 
   if (sndr.index_ < MAX_SENDERS
       && this->list_senders_[sndr.index_] == &sndr)
+  {
     this->list_senders_[sndr.index_] = nullptr;
+  }
 
   ACE_TCHAR bufs [256];
   ACE_TCHAR bufr [256];
@@ -724,7 +764,9 @@ Connector::make_svc_handler (Sender * & sh)
   ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, this->mutex_, -1);
 
   if (sessions_ >= MAX_SENDERS)
+  {
     return -1;
+  }
 
   for (size_t i = 0; i < MAX_SENDERS; ++i)
     if (this->list_senders_ [i] == nullptr)
@@ -750,7 +792,9 @@ Sender::Sender (Connector* connector, size_t index)
     total_r_  (0)
 {
   if (connector_ != nullptr)
+  {
     connector_->on_new_sender (*this);
+  }
 
   ACE_OS::snprintf (send_buf_, 1024, "%s", data);
 }
@@ -759,7 +803,9 @@ Sender::~Sender ()
 {
   this->reactor (nullptr);
   if (connector_ != nullptr)
+  {
     connector_->on_delete_sender (*this);
+  }
 
   this->index_ = 0;
 
@@ -769,7 +815,9 @@ Sender::~Sender ()
       ACE_Message_Block *mb {};
 
       if (this->getq (mb, &tv) < 0)
+      {
         break;
+      }
 
       ACE_Message_Block::release (mb);
     }
@@ -779,7 +827,9 @@ int
 Sender::check_destroy ()
 {
   if (flg_mask_ == ACE_Event_Handler::NULL_MASK)
+  {
     return -1;
+  }
 
   return 0;
 }
@@ -795,13 +845,19 @@ int Sender::open (void *)
   flg_mask_ = ACE_Event_Handler::NULL_MASK ;
 
   if (TPReactor->register_handler (this,flg_mask_) == -1)
+  {
     return -1;
+  }
 
   if (this->initiate_write () == -1)
+  {
     return -1;
+  }
 
   if (duplex != 0)
+  {
     initiate_io (ACE_Event_Handler::READ_MASK);
+  }
 
   return check_destroy ();
 }
@@ -841,10 +897,14 @@ int
 Sender::initiate_io (ACE_Reactor_Mask mask)
 {
   if (ACE_BIT_ENABLED (flg_mask_, mask))
+  {
     return 0;
+  }
 
   if (ACE_Reactor::instance ()->schedule_wakeup (this, mask) == -1)
+  {
     return -1;
+  }
 
   ACE_SET_BITS (flg_mask_, mask);
   return 0;
@@ -854,10 +914,14 @@ int
 Sender::terminate_io (ACE_Reactor_Mask mask)
 {
   if (ACE_BIT_DISABLED (flg_mask_, mask))
+  {
     return 0;
+  }
 
   if (ACE_Reactor::instance ()->cancel_wakeup (this, mask) == -1)
+  {
     return -1;
+  }
 
   ACE_CLR_BITS (flg_mask_, mask);
   return 0;
@@ -897,7 +961,9 @@ Sender::handle_input (ACE_HANDLE h)
       this->total_rcv_ += res;
     }
   else
+  {
     err = errno ;
+  }
 
   mb->wr_ptr ()[0] = '\0';
 
@@ -924,21 +990,29 @@ Sender::handle_input (ACE_HANDLE h)
     }
 
   if (err !=0  || res <= 0)
+  {
     return -1;
+  }
 
   int rc = 0;
 
   if (duplex != 0)  // full duplex, continue read
     rc = initiate_io (ACE_Event_Handler::READ_MASK);
   else
+  {
     rc = terminate_io (ACE_Event_Handler::READ_MASK);
+  }
 
   if (rc != 0)
+  {
     return -1 ;
+  }
 
   rc = initiate_write ();
   if (rc != 0)
+  {
     return -1;
+  }
 
   return check_destroy ();
 }
@@ -967,7 +1041,9 @@ Sender::handle_output (ACE_HANDLE h)
       if (res < 0)
         err = errno ;
       else
+      {
         this->total_snd_ += res;
+      }
 
       if (loglevel == 0 || res <= 0 || err!= 0)
         {
@@ -986,7 +1062,9 @@ Sender::handle_output (ACE_HANDLE h)
   ACE_Message_Block::release (mb);
 
   if (err != 0  || res < 0)
+  {
     return -1;
+  }
 
   int rc = 0;
 
@@ -996,15 +1074,21 @@ Sender::handle_output (ACE_HANDLE h)
           (this->total_snd_ - this->total_rcv_ ) < 1024*32 )  // flow control
         rc = initiate_write ();
       else
+      {
         rc = terminate_io (ACE_Event_Handler::WRITE_MASK);
+      }
 
       if (rc == -1)
+      {
         return -1;
+      }
     }
 
   rc = initiate_io (ACE_Event_Handler::READ_MASK);
   if (rc == -1)
+  {
     return -1;
+  }
 
   return check_destroy ();
 }
@@ -1050,7 +1134,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
       seconds = 20;           // time to run in seconds
 #if defined(SOMAXCONN) // The test is invalid if senders > SOMAXCONN
       if(SOMAXCONN < senders)
+      {
         senders = SOMAXCONN;
+      }
 #endif
       return 0;
     }
@@ -1065,9 +1151,13 @@ parse_args (int argc, ACE_TCHAR *argv[])
         case 'i':  // time to run
           seconds = ACE_OS::atoi (get_opt.opt_arg());
           if (seconds < MIN_TIME)
+          {
             seconds = MIN_TIME;
+          }
           if (seconds > MAX_TIME)
+          {
             seconds = MAX_TIME;
+          }
           break;
         case 'b':  // both client and server
           both = 1;
@@ -1090,7 +1180,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
         case 's':     // number of senders
           senders = ACE_OS::atoi (get_opt.opt_arg());
           if (size_t (senders) > MAX_SENDERS)
+          {
             senders = MAX_SENDERS;
+          }
           break;
         case 'u':
         default:
@@ -1143,7 +1235,9 @@ run_main (int argc, ACE_TCHAR *argv[])
 
 #if defined(ACE_HAS_THREADS) && !defined ACE_LACKS_ACCEPT
   if (::parse_args (argc, argv) == -1)
+  {
     return -1;
+  }
 
   disable_signal (SIGPIPE, SIGPIPE);
 
@@ -1162,15 +1256,21 @@ run_main (int argc, ACE_TCHAR *argv[])
       if (both != 0 || host != nullptr)
         {
           if (host == nullptr)
+          {
             host = ACE_LOCALHOST;
+          }
 
           if (addr.set (port, host, 1, addr.get_type ()) == -1)
+          {
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), host));
+          }
           rc += connector.start (addr, senders);
         }
 
       if (rc > 0)
+      {
         ACE_OS::sleep (seconds);
+      }
     }
 
   task1.stop ();

@@ -164,7 +164,9 @@ listener ()
           dynamic_cast<Checkpointable*> (servant.in ());
 
         if (target != nullptr)
+        {
           target->set_state (state);
+        }
       }
     }
   }
@@ -321,7 +323,10 @@ ReplicaController::send_reply (
         {
           CORBA::Any_var tmp = target->get_state ();
 
-          if (tmp.ptr () != nullptr) state = tmp._retn ();
+          if (tmp.ptr () != nullptr)
+          {
+            state = tmp._retn ();
+          }
         }
       }
 
@@ -358,7 +363,10 @@ ReplicaController::send_reply (
 
     // Crash point 1.
     //
-    if (crash_point == 1 && ftr->retention_id > 2) std::exit (1);
+    if (crash_point == 1 && ftr->retention_id > 2)
+    {
+      std::exit (1);
+    }
 
     try
     {
@@ -394,7 +402,10 @@ ReplicaController::send_reply (
 
   // Crash point 2.
   //
-  if (crash_point == 2 && ftr->retention_id > 2) std::exit (1);
+  if (crash_point == 2 && ftr->retention_id > 2)
+  {
+    std::exit (1);
+  }
 }
 
 namespace

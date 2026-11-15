@@ -86,7 +86,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, context) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var const tmp = orb->string_to_object (context.ior.c_str ());
       Test::Oneway_Receiver_var const oneway_receiver =
@@ -128,7 +130,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       orb->run (time);
 
       if (context.successful_calls == 0)
+      {
         ACE_ERROR ((LM_ERROR, "ERROR: No requests were successful\n"));
+      }
 
       if (context.failed_calls != 0)
         ACE_ERROR ((LM_ERROR, "ERROR: At least %d requests failed\n",
@@ -239,21 +243,27 @@ run_test_sync_with_target (Test::Oneway_Receiver_ptr oneway_receiver,
           if (context.server_status == Server_Status::alive)
             ++context.successful_calls;
           else
+          {
             call_failed (ex, context);
+          }
         }
       catch (CORBA::OBJECT_NOT_EXIST const &ex)
         {
           if (context.server_status == Server_Status::destroyed)
             ++context.successful_calls;
           else
+          {
             call_failed (ex, context);
+          }
         }
       catch (CORBA::COMM_FAILURE const &ex)
         {
           if (context.server_status == Server_Status::shutdown && !had_comm_failure)
             ++context.successful_calls;
           else
+          {
             call_failed (ex, context);
+          }
           had_comm_failure = true;
         }
       catch (CORBA::TRANSIENT const &ex)
@@ -261,7 +271,9 @@ run_test_sync_with_target (Test::Oneway_Receiver_ptr oneway_receiver,
           if (context.server_status == Server_Status::shutdown)
             ++context.successful_calls;
           else
+          {
             call_failed (ex, context);
+          }
         }
       catch (CORBA::SystemException const &ex)
         {
@@ -291,7 +303,9 @@ run_test_sync_with_server (Test::Oneway_Receiver_ptr oneway_receiver,
               || context.server_status == Server_Status::shutdown)
             ++context.failed_calls;
           else
+          {
             ++context.successful_calls;
+          }
         }
       catch (CORBA::NO_PERMISSION const &ex)
         {
@@ -302,14 +316,18 @@ run_test_sync_with_server (Test::Oneway_Receiver_ptr oneway_receiver,
           if (context.server_status == Server_Status::destroyed)
             ++context.successful_calls;
           else
+          {
             call_failed (ex, context);
+          }
         }
       catch (CORBA::COMM_FAILURE const &ex)
         {
           if (context.server_status == Server_Status::shutdown && !had_comm_failure)
             ++context.successful_calls;
           else
+          {
             call_failed (ex, context);
+          }
           had_comm_failure = true;
         }
       catch (CORBA::TRANSIENT const &ex)
@@ -317,7 +335,9 @@ run_test_sync_with_server (Test::Oneway_Receiver_ptr oneway_receiver,
           if (context.server_status == Server_Status::shutdown)
             ++context.successful_calls;
           else
+          {
             call_failed (ex, context);
+          }
         }
       catch (CORBA::SystemException const &ex)
         {
@@ -366,13 +386,17 @@ run_test_unreliable (Test::Oneway_Receiver_ptr oneway_receiver,
 
           // A few failures can go undetected...
           if (context.server_status == Server_Status::shutdown)
+          {
             ++undetected;
+          }
 
           // Once a TRANSIENT is raised all future calls should fail.
           if (had_transient)
             ++context.failed_calls;
           else
+          {
             ++context.successful_calls;
+          }
         }
       catch (CORBA::NO_PERMISSION const &ex)
         {
@@ -391,7 +415,9 @@ run_test_unreliable (Test::Oneway_Receiver_ptr oneway_receiver,
           if (context.server_status == Server_Status::shutdown)
             ++context.successful_calls;
           else
+          {
             call_failed (ex, context);
+          }
           had_transient = true;
         }
       catch (CORBA::SystemException const &ex)

@@ -112,7 +112,9 @@ bool TestClient::run ()
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("* Client started.\n")));
 
   if (!buildIORList ())
+  {
     return false;
+  }
 
   if (this->activate (THR_NEW_LWP, options_.thread_count) == -1)
   {
@@ -144,7 +146,9 @@ bool TestClient::buildIORList ()
       if (ior.length () > 0)
         iors_.push_back (ior);
       else
+      {
         break;
+      }
     }
   return true;
 }
@@ -228,7 +232,9 @@ int TestClient::svc ()
                             }
                         }
                       if (options_.shutdown_orb)
+                      {
                         test->shutdownOrb ();
+                      }
                     }
                 }
             }

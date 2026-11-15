@@ -247,7 +247,9 @@ Cubit_i::cube_long_sequence (const Cubit::long_seq &input,
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_LONG_SEQUENCE_START);
 
   if (output.ptr () == nullptr)
+  {
     output = new Cubit::long_seq (input.length ());
+  }
 
   output->length (input.length ());
 
@@ -311,7 +313,9 @@ Cubit_i::cube_many_sequence (const Cubit::many_seq & input,
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_MANY_SEQUENCE_START);
 
   if (output.ptr () == nullptr)
+  {
     output = new Cubit::many_seq (input.length ());
+  }
 
   output->length (input.length ());
 
@@ -350,7 +354,9 @@ Cubit_i::cube_rti_data (const Cubit::RtiPacket &input,
     }
 
   if (output.ptr () == nullptr)
+  {
     output = new Cubit::RtiPacket (input);
+  }
 
   output->packetHeader.packetColor
     = input.packetHeader.packetColor

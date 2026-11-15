@@ -36,7 +36,9 @@ ServantActivator::incarnate (PortableServer::ObjectId const &oid,
   // test_i.
 
   if (std::strstr (s.in (), "test") == nullptr)
+  {
     throw CORBA::OBJECT_NOT_EXIST ();
+  }
   return new test_i (this->orb_.in (), poa, this->thr_id_);
 }
 
@@ -52,5 +54,7 @@ ServantActivator::etherealize (PortableServer::ObjectId const &,
   // If there are no remaining activations i.e ObjectIds associated
   // with test_i delete it.
   if (!remaining_activations)
+  {
     delete servant;
+  }
 }

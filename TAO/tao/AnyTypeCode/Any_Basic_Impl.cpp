@@ -121,7 +121,9 @@ namespace TAO
           dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
         if (!unk)
+        {
           return false;
+        }
 
         // Get the kind of the type where we are extracting in ie. the
         // aliased  type if there are any. Passing the aliased kind

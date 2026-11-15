@@ -98,7 +98,9 @@ Task::svc ()
           CORBA::Long const result = test->method (pid, i, current_thread_count);
 
           if (i % 2 == 0)
+          {
             ACE_OS::sleep (5);
+          }
 
           ACE_ASSERT (result == i);
           ACE_UNUSED_ARG (result);
@@ -156,7 +158,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Client_Options options;
       int result = parse_args (argc, argv, options);
       if (result != 0)
+      {
         return result;
+      }
 
       if (options.shutdown_server)
         {
@@ -184,14 +188,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                    sched_policy_name (orb->orb_core ()->orb_params ()->ace_sched_policy ())),
                                   2);
               else
+              {
                 ACE_ASSERT (0);
+              }
             }
 
           result = thread_manager.wait ();
           ACE_ASSERT (result != -1);
 
           if (!task.decreased ())
+          {
             ACE_ERROR_RETURN ((LM_ERROR, "ERROR: Number of threads didn't decrease\n"), -1);
+          }
         }
     }
   catch (CORBA::Exception const &ex)

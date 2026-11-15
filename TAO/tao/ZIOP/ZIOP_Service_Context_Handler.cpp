@@ -126,10 +126,14 @@ TAO_ZIOP_Service_Context_Handler::generate_service_context (
 
           TAO_OutputCDR out_CDR;
           if (!(out_CDR << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
+          {
             return 0;
+          }
 
           if (!(idpolicyp->_tao_encode (out_CDR)))
+          {
             return 0;
+          }
 
           size_t const length = out_CDR.total_length ();
           policy_value_seq[i].pvalue.length (static_cast<CORBA::ULong> (length));
@@ -154,10 +158,14 @@ TAO_ZIOP_Service_Context_Handler::generate_service_context (
 
           TAO_OutputCDR out_CDR;
           if (!(out_CDR << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
+          {
             return 0;
+          }
 
           if (!(enabledpolicyp->_tao_encode (out_CDR)))
+          {
             return 0;
+          }
 
           size_t const length = out_CDR.total_length ();
           policy_value_seq[i].pvalue.length (static_cast<CORBA::ULong> (length));

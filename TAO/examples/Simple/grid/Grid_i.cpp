@@ -30,10 +30,14 @@ Grid_i::set (CORBA::Short x,
       || y < 0
       || x >= this->width_
       || y >= this->height_)
+  {
     throw Grid::RANGE_ERROR ();
+  }
 
   if (!this->array_)
+  {
     this->array_ = allocate_array (this->width_, this->height_);
+  }
   this->array_[this->width_ * y + x] = value;
 }
 
@@ -46,10 +50,14 @@ Grid_i::get (CORBA::Short x,
       || y < 0
       || x >= this->width_
       || y >= this->height_)
+  {
     throw Grid::RANGE_ERROR ();
+  }
 
   if (!this->array_)
+  {
     this->array_ = allocate_array (this->width_, this->height_);
+  }
   return this->array_[this->width_ * y + x];
 }
 
@@ -154,11 +162,15 @@ Grid_Factory_i::make_grid (CORBA::Short width,
 
   // Set a default value for width.
   if (width <= 0)
+  {
     width = Grid_Factory::DEFAULT_WIDTH;
+  }
 
   // Set a default value for height.
   if (height <= 0)
+  {
     height = Grid_Factory::DEFAULT_HEIGHT;
+  }
 
   // This attempts to create a new Grid_i and throws an exception and
   // returns a null value if it fails

@@ -113,7 +113,9 @@ Scheduler_Generic::register_task (RT_Info *rt_info [],
           for (u_int i = 1; i < number_of_modes; ++i)
             {
               if (rt_info [i] != nullptr)
+              {
                 rt_info [i]->handle = handle;
+              }
             }
 
           if (number_of_modes > modes ())

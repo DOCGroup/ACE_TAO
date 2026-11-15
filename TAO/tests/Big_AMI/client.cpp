@@ -141,7 +141,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       // We reuse the object_var smart pointer!
       CORBA::Object_var const ior_object = orb->string_to_object (options.ior);

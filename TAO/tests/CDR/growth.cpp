@@ -112,7 +112,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_High_Res_Timer writing;
       ACE_High_Res_Timer reading;
       if (TAO_debug_level > 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "\nx= %d\n", x));
+      }
 
       for (int i = 0; i < n; ++i)
         {

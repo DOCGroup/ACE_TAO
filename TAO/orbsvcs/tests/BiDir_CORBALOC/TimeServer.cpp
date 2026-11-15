@@ -31,7 +31,9 @@ Time_impl::get_gmt ()
 
   TimeModule::TimeOfDay tod {};
   if (time_value == nullptr)
+  {
     return tod;
+  }
 
   tod.hour = time_value->tm_hour;
   tod.minute = time_value->tm_min;

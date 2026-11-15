@@ -16,10 +16,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       LB_server lb_server (argc, argv);
 
       if (lb_server.start_orb_and_poa () != 0)
+      {
         return 1;
+      }
 
       if (lb_server.create_object_group () != 0)
+      {
         return 1;
+      }
 
       CosNaming::Name name (1);
       name.length (1);
@@ -104,7 +108,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
 
       if (lb_server.destroy () == -1)
+      {
         return 1;
+      }
     }
   catch (const CORBA::Exception& ex)
     {

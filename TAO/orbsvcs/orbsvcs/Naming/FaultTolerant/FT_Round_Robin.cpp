@@ -36,7 +36,9 @@ TAO_FT_Round_Robin::next_location (
 
   // No locations exist, so we can't get the next one
   if (len == 0)
+  {
     return false;
+  }
 
   TAO_FT_Location_Index_Map::ENTRY * entry;
   if (this->location_index_map_.find (id, entry) == 0)
@@ -44,7 +46,9 @@ TAO_FT_Round_Robin::next_location (
       CORBA::ULong & i = entry->int_id_;
 
       if (len <= i)
+      {
         i = 0;  // Reset, i.e. wrap around
+      }
 
       location = locations[i];
 

@@ -57,7 +57,9 @@ bind (ACE_Naming_Context *const ns_context, int const result)
   for (int i = 1; i <= ACE_NS_MAX_ENTRIES; ++i)
     {
       if (i % 50 == 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "."));
+      }
       format_entry (name, "name", i);
       ACE_NS_WString w_name (name.data ());
 

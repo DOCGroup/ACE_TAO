@@ -72,7 +72,9 @@ public:
     MC_ADMINMANAGER * const mgr =
       ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
     if (mgr == nullptr)
+    {
       ACE_ERROR_RETURN ((LM_ERROR, "Monitor service is unavailable\n"), -1);
+    }
 
     /// Call on the administrator class to look up the desired monitors.
     Monitor_Base_Unique_Ptr const bytes_monitor (
@@ -106,12 +108,16 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */[])
   MC_ADMINMANAGER * const mgr =
     ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
   if (mgr == nullptr)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Monitor service is unavailable\n"), 1);
+  }
 
   Monitor_Base_Unique_Ptr const bytes_monitor (
     create_os_monitor<BYTES_RECEIVED_MONITOR> (nullptr, ACE_Time_Value (2)));
   if (bytes_monitor == nullptr)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Unable to create bytes-received monitor\n"), 1);
+  }
 
   /// Add two constraints, each with its own triggered action.
 

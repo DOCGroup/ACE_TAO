@@ -20,7 +20,9 @@ TAO_Notify_Service::load_default ()
       notify_service =
         ACE_Dynamic_Service<TAO_Notify_Service>::instance (services[i]);
       if (notify_service != nullptr)
+      {
         break;
+      }
     }
   return notify_service;
 }

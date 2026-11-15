@@ -85,7 +85,9 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
                                     "SERVER");
 
       if (CORBA::is_nil (this->orb_.in ()))
+      {
         return -1;
+      }
 
       CORBA::Object_var const poa_object =
         this->orb_->resolve_initial_references ("RootPOA");
@@ -105,7 +107,9 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
       ACE_Argv_Type_Converter converter (new_argc, new_argv.get_buffer ());
       ACE_TString ior_file {ACE_TEXT ("test.ior")};
       if (::parse_args (new_argc, converter.get_TCHAR_argv (), ior_file) != 0)
+      {
         return -1;
+      }
 
       PortableServer::ObjectId_var const id =
         this->poa_->activate_object (&servant_);

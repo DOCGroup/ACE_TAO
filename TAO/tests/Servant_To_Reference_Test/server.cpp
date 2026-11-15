@@ -111,7 +111,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       One_Impl *one_impl {};
       ACE_NEW_RETURN (one_impl, One_Impl (), 1);

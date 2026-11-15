@@ -30,7 +30,9 @@ TAO_Connector_Registry::get_connector (CORBA::ULong tag) const
   for (std::unique_ptr<TAO_Connector> const& connector : this->connectors_)
     {
       if (connector->tag () == tag)
+      {
         return connector.get ();
+      }
     }
 
   return nullptr;
@@ -45,7 +47,9 @@ TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
   // The vector containing the TAO_Connectors will never contain more
   // than the number of loaded protocols in the ORB core.
   if (pfs->size () > this->connectors_.max_size () - this->connectors_.size ())
+  {
     return -1;
+  }
 
   try
     {
@@ -80,7 +84,9 @@ TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
           this->connectors_.push_back (std::move (connector));
         }
       else
+      {
         return -1;
+      }
     }
 
   return 0;
@@ -92,7 +98,9 @@ TAO_Connector_Registry::close_all ()
   for (std::unique_ptr<TAO_Connector> const& connector : this->connectors_)
     {
       if (connector != nullptr)
+      {
         connector->close ();
+      }
     }
 
   this->connectors_.clear ();
@@ -121,7 +129,9 @@ TAO_Connector_Registry::make_mprofile (const char *ior,
                                       mprofile);
 
           if (mp_result == 0)
+          {
             return 0;  // Success
+          }
         }
       else
         // Failure: Null pointer to connector in connector registry.
@@ -252,7 +262,9 @@ TAO_Connector_Registry::object_key_delimiter (const char *ior)
       if (connector != nullptr)
         {
           if (connector->check_prefix (ior) == 0)
+          {
             return connector->object_key_delimiter ();
+          }
         }
     }
 

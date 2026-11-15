@@ -113,7 +113,9 @@ Dump_Restore::handle_input (ACE_HANDLE)
     case 'f':
       {
         if (!(input >> this->filename_))
+        {
           break;
+        }
         this->infile_.reset (ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR (this->filename_.c_str ()),
                                             ACE_TEXT ("r")));
         if (!this->infile_)
@@ -133,7 +135,9 @@ Dump_Restore::handle_input (ACE_HANDLE)
       break;
     case 'd':
       if (input >> this->dump_filename_)
+      {
         this->dump ();
+      }
       break;
     case 'q':
       this->quit ();
@@ -353,7 +357,9 @@ Dump_Restore::populate (Dump_Restore::Operation_Type op)
                                   -1);
               type = field_value;
               if (this->doit (op, name, value, type) != 0)
+              {
                 return -1;
+              }
               name.clear ();
               value.clear ();
               type.clear ();

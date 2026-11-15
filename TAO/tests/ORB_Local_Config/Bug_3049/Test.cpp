@@ -60,7 +60,9 @@ testBug3049 (int, ACE_TCHAR *[])
       orb_c->destroy ();
 
       if (failed)
+      {
         return -1;
+      }
     }
   catch (CORBA::Exception const &ex)
     {

@@ -22,7 +22,9 @@ Quoter_Generic_Factory_Server::~Quoter_Generic_Factory_Server ()
       generic_Factory_Name[0].id = CORBA::string_dup ("IDL_Quoter");
       generic_Factory_Name[1].id = CORBA::string_dup ("Quoter_Generic_Factory");
       if (!CORBA::is_nil (this->quoterNamingContext_var_.in ()))
+      {
         this->quoterNamingContext_var_->unbind (generic_Factory_Name);
+      }
     }
   catch (CORBA::SystemException const &sysex)
     {
@@ -48,7 +50,9 @@ Quoter_Generic_Factory_Server::init (int argc,
       result = this->orb_manager_.init (argc, argv);
 
       if (result == -1)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "init"), -1);
+      }
 
       // ORB_init removes ORB options, so preserve the remaining app args.
       this->argc_ = argc;
@@ -63,10 +67,14 @@ Quoter_Generic_Factory_Server::init (int argc,
       result = this->orb_manager_.activate_poa_manager ();
 
       if (result == -1)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "activate_poa_manager"), -1);
+      }
 
       if (this->parse_args () != 0)
+      {
         return -1;
+      }
 
       Quoter_Generic_Factory_i *factory {};
       ACE_NEW_RETURN (factory,
@@ -81,7 +89,9 @@ Quoter_Generic_Factory_Server::init (int argc,
 
       // Print the IOR.
       if (this->options_.debug_level >= 2)
+      {
         ACE_DEBUG ((LM_DEBUG, "Generic_Factory: IOR is: <%C>\n", str.in ()));
+      }
 
       // Register the Quoter GenericFactory with the Naming Service.
       if (this->options_.debug_level >= 2)
@@ -164,7 +174,9 @@ Quoter_Generic_Factory_Server::init (int argc,
           LifeCycleService::Life_Cycle_Service::_narrow (life_Cycle_Service_Obj_var.in ());
 
         if (this->options_.debug_level >= 2)
+        {
           ACE_DEBUG ((LM_DEBUG, "Generic_Factory: Have a proper reference to Life Cycle Service.\n"));
+        }
 
         exception_message = "While _this on Generic Factory";
         CORBA::Object_var object_var = this->quoter_Generic_Factory_i_ptr_->_this ();

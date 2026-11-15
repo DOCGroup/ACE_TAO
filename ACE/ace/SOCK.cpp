@@ -39,7 +39,9 @@ ACE_SOCK::get_remote_addr (ACE_Addr &sa) const
   if (ACE_OS::getpeername (this->get_handle (),
                            addr,
                            &len) == -1)
+  {
     return -1;
+  }
 
   sa.set_size (len);
   sa.set_type (addr->sa_family);
@@ -57,7 +59,9 @@ ACE_SOCK::get_local_addr (ACE_Addr &sa) const
   if (ACE_OS::getsockname (this->get_handle (),
                            addr,
                            &len) == -1)
+  {
     return -1;
+  }
 
   sa.set_type (addr->sa_family);
   sa.set_size (len);
@@ -157,7 +161,9 @@ ACE_SOCK::open (int type,
       return -1;
     }
   else
+  {
     return 0;
+  }
 }
 
 ACE_SOCK::ACE_SOCK (int type,

@@ -82,7 +82,9 @@ Input_Task::svc ()
     // call back to the driver's implementation on how to read and
     // parse input.
     if (this->driver_.get_next_request () == -1)
+    {
       break;
+    }
 
   // we are done.
   this->queue_->deactivate ();

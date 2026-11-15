@@ -9,7 +9,9 @@ TAO_CosEventChannelFactory_i::init (PortableServer::POA_ptr poa,
 {
   // Check if we have a parent poa.
   if (CORBA::is_nil (poa))
+  {
     return -1;
+  }
 
   this->naming_ = CosNaming::NamingContext::_duplicate (naming);
   // Save the naming context.

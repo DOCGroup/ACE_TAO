@@ -253,13 +253,17 @@ int be_visitor_args_marshal_ss::visit_fixed (be_fixed *)
   be_argument * const arg = dynamic_cast<be_argument*> (this->ctx_->node ());
 
   if (arg == nullptr)
+  {
     return -1;
+  }
 
   if ((this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT
        && this->direction () != AST_Argument::dir_OUT)
       || (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT
           && this->direction () != AST_Argument::dir_IN))
+  {
     *os << arg->local_name ();
+  }
 
   return 0;
 }

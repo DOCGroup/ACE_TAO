@@ -104,7 +104,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       int const result = parse_args (argc, argv);
       if (result != 0)
+      {
         return result;
+      }
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =
@@ -141,7 +143,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       int const write_result = write_iors_to_file (ior_output_file, ior.in ());
       if (write_result != 0)
+      {
         return write_result;
+      }
 
       poa_manager->activate ();
 

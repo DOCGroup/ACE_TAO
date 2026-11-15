@@ -86,7 +86,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Server_Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       Test_i server_impl (orb.in ());
 

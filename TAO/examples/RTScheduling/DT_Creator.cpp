@@ -63,7 +63,9 @@ DT_Creator::dt_task_init (ACE_Arg_Shifter& arg_shifter)
                            dist,
                            job_name));
   if (!task)
+  {
     return -1;
+  }
   this->dt_list_.push_back (std::move (task));
 
   return 0;
@@ -74,9 +76,13 @@ DT_Creator::init (int argc, ACE_TCHAR *argv [])
 {
   gsf_ = ACE_High_Res_Timer::global_scale_factor ();
   if (!this->state_lock_)
+  {
     this->state_lock_ = std::make_unique<ACE_Lock_Adapter<TAO_SYNCH_MUTEX>> ();
+  }
   if (!this->shutdown_lock_)
+  {
     this->shutdown_lock_ = std::make_unique<ACE_Lock_Adapter<TAO_SYNCH_MUTEX>> ();
+  }
   active_dt_count_ = 0;
   active_job_count_ = 0;
   this->log_.clear ();
@@ -97,7 +103,9 @@ DT_Creator::init (int argc, ACE_TCHAR *argv [])
         {
           int const count = ACE_OS::atoi (current_arg);
           if (count < 0)
+          {
             return -1;
+          }
           this->dt_list_.reserve (static_cast<size_t> (count));
           arg_shifter.consume_arg ();
         }
@@ -105,7 +113,9 @@ DT_Creator::init (int argc, ACE_TCHAR *argv [])
         {
           int const count = ACE_OS::atoi (current_arg);
           if (count < 0)
+          {
             return -1;
+          }
           this->poa_list_.reserve (static_cast<size_t> (count));
           arg_shifter.consume_arg ();
         }
@@ -113,7 +123,9 @@ DT_Creator::init (int argc, ACE_TCHAR *argv [])
         {
           int const count = ACE_OS::atoi (current_arg);
           if (count < 0)
+          {
             return -1;
+          }
           this->job_list_.reserve (static_cast<size_t> (count));
           arg_shifter.consume_arg ();
         }
@@ -121,7 +133,9 @@ DT_Creator::init (int argc, ACE_TCHAR *argv [])
         {
           arg_shifter.consume_arg ();
           if (this->dt_task_init (arg_shifter) == -1)
+          {
             return -1;
+          }
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-POA")) == 0)
         {
@@ -131,7 +145,9 @@ DT_Creator::init (int argc, ACE_TCHAR *argv [])
           ACE_NEW_RETURN (holder, POA_Holder (), -1);
           std::unique_ptr<POA_Holder> holder_ptr (holder);
           if (holder_ptr->init (arg_shifter) == -1)
+          {
             return -1;
+          }
           this->poa_list_.push_back (std::move (holder_ptr));
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Job")) == 0)
@@ -142,7 +158,9 @@ DT_Creator::init (int argc, ACE_TCHAR *argv [])
           ACE_NEW_RETURN (job, Job_i (this), -1);
           PortableServer::ServantBase_var job_servant (job);
           if (job->init (arg_shifter) == -1)
+          {
             return -1;
+          }
           this->job_list_.push_back (job_servant);
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-OutFile"))))
@@ -290,7 +308,9 @@ DT_Creator::activate_job_list ()
       Job_i * const job = dynamic_cast<Job_i *> (job_servant.in ());
 
       if (TAO_debug_level > 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "Activating job:%C\n", job->name ().c_str ()));
+      }
 
       // find your poa
       PortableServer::POA_var host_poa =
@@ -485,7 +505,9 @@ DT_Creator::dt_ended ()
     ACE_GUARD (ACE_Lock, ace_mon, *state_lock_);
     --active_dt_count_;
     if (TAO_debug_level > 0)
+    {
       ACE_DEBUG ((LM_DEBUG, "Active dt count = %d\n",active_dt_count_));
+    }
     char buf [BUFSIZ];
     ACE_OS::sprintf (buf,"Active dt count = %d\n",active_dt_count_);
     this->log_.emplace_back (buf);
@@ -500,7 +522,9 @@ DT_Creator::job_ended ()
     ACE_GUARD (ACE_Lock, ace_mon, *state_lock_);
     --active_job_count_;
     if (TAO_debug_level > 0)
+    {
       ACE_DEBUG ((LM_DEBUG, "Active job count = %d\n",active_job_count_));
+    }
     char buf [BUFSIZ];
     ACE_OS::sprintf (buf,"Active job count = %d\n",active_job_count_);
     this->log_.emplace_back (buf);
@@ -621,7 +645,9 @@ void
 DT_Creator::base_time (ACE_Time_Value* base_time)
 {
   if (this->base_time_.get () != base_time)
+  {
     this->base_time_.reset (base_time);
+  }
 }
 
 Synch_i*

@@ -106,7 +106,9 @@ public:
       if (IP_MAX_MEMBERSHIPS == 0)
         this->groups_ = MCT_GROUPS;
       else
+      {
         this->groups_ = (std::min) (IP_MAX_MEMBERSHIPS, MCT_GROUPS);
+      }
     }
 
   ~MCT_Config ()
@@ -506,7 +508,9 @@ MCT_Event_Handler::find (const char *buf)
   for (ACE_CString const &address : this->address_vec_)
     {
       if (ACE_OS::strcasecmp (buf, address.c_str ()) == 0)
+      {
         return 0;
+      }
     }
 
   // Not found, so output message we received along with a list of groups
@@ -606,7 +610,9 @@ MCT_Event_Handler::handle_close (ACE_HANDLE /*fd*/,
   // If this is the last handler, use the finished flag to signal
   // the task to exit.
   if (--MCT_Event_Handler::active_handlers_ == 0)
+  {
     finished = 1;
+  }
 
   // The DONT_CALL flag keeps the reactor from calling handle_close ()
   // again, since we commit suicide below.
@@ -683,7 +689,9 @@ MCT_Task::open (void *)
               if (j > 0
                   && ACE_BIT_ENABLED (ACE_SOCK_Dgram_Mcast::OPT_BINDADDR_YES,
                                       this->config_.options ()))
+              {
                 break;
+              }
 
               if (handler->join (addr) == -1)
                 ACE_ERROR_RETURN ((LM_ERROR,
@@ -747,7 +755,9 @@ int send_dgram (ACE_SOCK_Dgram &socket, ACE_INET_Addr addr, int done = 0)
       if (done)
         buf[0] = 0;
       else
+      {
         ACE_OS::snprintf (buf, MAX_STRING_SIZE, "%s/%d", address, port);
+      }
       //ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("sending (%s)\n"), buf));
       if (socket.send (buf, ACE_OS::strlen (buf),addr) == -1)
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
@@ -780,7 +790,9 @@ int producer (MCT_Config &config)
                     ACE_TEXT ("= %d\n"),
                     ttl));
       else
+      {
         ACE_DEBUG ((LM_INFO, ACE_TEXT ("set IP_MULTICAST_TTL = %d\n"), ttl));
+      }
     }
 #if defined (ACE_HAS_IPV6)
   else
@@ -827,7 +839,9 @@ int producer (MCT_Config &config)
         {
           if ((retval += send_dgram (socket, addr,
                                      ((i + 1) == iterations))) == -1)
+          {
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("Calling send_dgram.\n")));
+          }
           if ((retval += advance_addr (addr)) == -1)
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("Calling advance_addr.\n")));
@@ -922,7 +936,9 @@ run_main (int argc, ACE_TCHAR *argv[])
   MCT_Config config;
   retval = config.open (argc, argv);
   if (retval != 0)
+  {
     return 1;
+  }
 
   const ACE_TCHAR *temp = ACE_TEXT ("Multicast_Test_IPV6");
   ACE_TString test = temp;
@@ -934,7 +950,9 @@ run_main (int argc, ACE_TCHAR *argv[])
       if (ACE_BIT_ENABLED (role, MCT_Config::PRODUCER))
         test += ACE_TEXT ("-PRODUCER");
       else
+      {
         test += ACE_TEXT ("-CONSUMER");
+      }
     }
 
   // Start test only if options are valid.

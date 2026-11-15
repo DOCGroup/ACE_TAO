@@ -68,14 +68,18 @@ TAO_Notify_Tests_Command_Builder::_register (ACE_CString command_factory_name, T
   if (this->factory_map_.bind (command_factory_name, command_factory) == -1)
     ACE_DEBUG ((LM_DEBUG, "Failed to register command factory for %s\n", command_factory_name.c_str ()));
   else
+  {
     ACE_DEBUG ((LM_DEBUG, "Registered command factory for %s\n", command_factory_name.c_str ()));
+  }
 }
 
 void
 TAO_Notify_Tests_Command_Builder::execute ()
 {
   if (this->start_command_)
+  {
     this->start_command_->execute ();
+  }
 }
 
 ACE_STATIC_SVC_DEFINE(TAO_Notify_Tests_Command_Builder,

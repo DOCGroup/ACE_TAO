@@ -189,7 +189,9 @@ Task::svc ()
       RTCORBA::PriorityMappingManager_var const mapping_manager =
         RTCORBA::PriorityMappingManager::_narrow (object.in ());
       if (check_for_nil (mapping_manager.in (), "Mapping Manager") == -1)
+      {
         return -1;
+      }
 
       // The mapping manager owns this mapping object.
       RTCORBA::PriorityMapping * const pm =
@@ -201,14 +203,18 @@ Task::svc ()
       RTCORBA::Current_var const current =
         RTCORBA::Current::_narrow (object.in ());
       if (check_for_nil (current.in (), "RTCurrent") == -1)
+      {
         return -1;
+      }
 
       // Obtain Test object reference.
       object =
         this->orb_->string_to_object (this->options_.ior);
       Test_var const server = Test::_narrow (object.in ());
       if (check_for_nil (server.in (), "Test object") == -1)
+      {
         return -1;
+      }
 
       // Check that test object is configured with CLIENT_PROPAGATED
       // PriorityModelPolicy.
@@ -219,7 +225,9 @@ Task::svc ()
         RTCORBA::PriorityModelPolicy::_narrow (policy.in ());
 
       if (check_for_nil (priority_policy.in (), "PriorityModelPolicy") == -1)
+      {
         return -1;
+      }
 
       RTCORBA::PriorityModel const priority_model =
         priority_policy->priority_model ();
@@ -311,12 +319,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Parse arguments.
       if (parse_args (argc, argv, options) != 0)
+      {
         return -1;
+      }
 
       // Make sure we can support multiple priorities that are required
       // for this test.
       if (!check_supported_priorities (orb.in ()))
+      {
         return 2;
+      }
 
       // Thread Manager for managing task.
       ACE_Thread_Manager thread_manager;
@@ -391,7 +403,9 @@ Worker_Thread::svc ()
         this->orb_->resolve_initial_references ("RTORB");
       RTCORBA::RTORB_var const rt_orb = RTCORBA::RTORB::_narrow (object.in ());
       if (check_for_nil (rt_orb.in (), "RTORB") == -1)
+      {
         return 0;
+      }
 
       // PolicyCurrent.
       object =
@@ -400,7 +414,9 @@ Worker_Thread::svc ()
         CORBA::PolicyCurrent::_narrow (object.in ());
       if (check_for_nil (policy_current.in (), "PolicyCurrent")
           == -1)
+      {
         return 0;
+      }
 
       object =
         this->orb_->resolve_initial_references ("RTCurrent");

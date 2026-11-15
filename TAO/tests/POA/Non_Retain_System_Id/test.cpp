@@ -73,7 +73,9 @@ ID_Check_i::check_servant_id (CORBA::Short index)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
 
   if (oid->length () != this->oids_[object_index]->length ())
+  {
     return false;
+  }
   for (size_t i = 0; i < oid->length (); ++i)
     {
       if (oid[i] != this->oids_[object_index][i])

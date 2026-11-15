@@ -98,7 +98,9 @@ Server_i::init (int argc, ACE_TCHAR** argv)
 
     int retval = this->parse_args (argc, argv);
     if (retval != 0)
+    {
       return retval;
+    }
 
     CORBA::Object_var obj =
       this->orb_->resolve_initial_references ("RootPOA");

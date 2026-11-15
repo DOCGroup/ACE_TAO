@@ -124,7 +124,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           if (options.unique_low_priority_event)
             event_range = 1 + options.low_priority_consumers;
           else
+          {
             event_range = 2;
+          }
         }
 
       Client_Group high_priority_group;
@@ -147,7 +149,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       int per_thread_period = options.low_priority_period;
       if (options.global_low_priority_rate)
+      {
         per_thread_period = options.low_priority_period * options.nthreads;
+      }
 
       Low_Priority_Setup<Client_Group> low_priority_setup (
           options.low_priority_consumers,

@@ -143,7 +143,9 @@ Server_Info::is_server (char const *name) const
   for (CORBA::ULong i {}; i < peers.length(); ++i)
     {
       if (std::strcmp (peers[i], name) == 0)
+      {
         return true;
+      }
     }
   return false;
 }

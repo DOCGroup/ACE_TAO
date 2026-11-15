@@ -145,7 +145,9 @@ void Hello::test_objref_arg (
     ::Test::Simple_Test_ptr test)
 {
   if (debug)
+  {
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_objref_arg\n")));
+  }
 
   if (CORBA::is_nil (test))
     ERROR_COUNT ("Hello::test_objref_arg")
@@ -167,7 +169,9 @@ void Hello::test_object_arg (
     ::CORBA::Object_ptr o)
 {
   if (debug)
+  {
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_object_arg\n")));
+  }
   ::Test::Simple_Test_var const simple_test = ::Test::Simple_Test::_narrow (o);
 
   CORBA::ULong error_count {};
@@ -185,7 +189,9 @@ void Hello::test_args_1 (
     ::Test::Simple_Test_ptr arg3)
 {
   if (debug)
+  {
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_args_1\n")));
+  }
   ::Test::Simple_Test_var const simple_test = ::Test::Simple_Test::_narrow (arg1);
 
   CORBA::ULong error_count {};
@@ -209,7 +215,9 @@ void Hello::test_args_2 (
     ::Test::TimeOfDay const &arg3)
 {
   if (debug)
+  {
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_args_2\n")));
+  }
   if (std::strcmp (arg1, TEST_STR) != 0)
     ERROR_COUNT ("Hello::test_args_2")
 
@@ -232,7 +240,9 @@ void Hello::test_args_3 (
     ::Test::Var_Array const arg4)
 {
   if (debug)
+  {
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_args_3\n")));
+  }
   if (std::strncmp (arg1, TEST_STR, std::strlen (arg1)) != 0)
     ERROR_COUNT ("Hello::test_args_3")
   if (std::strncmp (arg2.get_buffer (), TEST_STR, ::Test::BOUNDED_VAR_SIZE) != 0)

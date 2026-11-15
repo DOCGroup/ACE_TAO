@@ -129,7 +129,9 @@ public:
         {
           ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
           if (this->stopped_)
+          {
             return;
+          }
         }
 
         try{
@@ -206,7 +208,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       int per_thread_period = options.low_priority_period;
       if (options.global_low_priority_rate)
+      {
         per_thread_period = options.low_priority_period * options.nthreads;
+      }
       Low_Priority_Task low_priority (roundtrip.in (), &the_barrier,
                                       per_thread_period,
                                       options.low_priority_workload);

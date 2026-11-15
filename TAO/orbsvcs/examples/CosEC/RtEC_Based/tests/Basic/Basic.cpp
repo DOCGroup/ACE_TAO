@@ -76,7 +76,9 @@ Basic::init_CosEC ()
   int const retval = ec->activate ();
 
   if (retval == -1)
+  {
     throw CORBA::UNKNOWN ();
+  }
   // @@ look for more descriptive exception to throw here
 
   CORBA::Object_var obj =

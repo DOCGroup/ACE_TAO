@@ -38,7 +38,9 @@ MPC_Generator::write_prolog (ACE_CString const &path)
   ACE_DEBUG ((LM_DEBUG, "writing file %s\n",fname.c_str()));
   mpcfile_.open(fname.c_str());
   if (!mpcfile_)
+  {
     ACE_DEBUG ((LM_DEBUG,"mpc file open failed\n"));
+  }
 
   mpcfile_
     << "// Generated mpc file for producing a subset of the "
@@ -161,7 +163,9 @@ Library::Library (ACE_TCHAR const *name)
   else if (name_ == "TAO")
     mpcfile_ = std::make_unique<MPC_TAO_Lib> (name_);
   else
+  {
     mpcfile_ = std::make_unique<MPC_TAO_Dep_Lib> (name_);
+  }
 }
 
 void
@@ -221,7 +225,9 @@ Library::load_modules ()
                                            &dent, selector, comparator);
 
   if (num_modules < 0)
+  {
     return;
+  }
 
   modules_.clear ();
   for (size_t i = 0; i < static_cast<size_t> (num_modules); ++i) {
@@ -239,7 +245,9 @@ void
 Library::resolve (Sig_List &undefs)
 {
   if (modules_.empty ())
+  {
     return;
+  }
 
   for (Signature const *uname = undefs.first ();
        undefs.hasmore ();
@@ -258,7 +266,9 @@ Library::resolve (Sig_List &undefs)
                  modules_[i]->imports ().hasmore ();
                  needed = modules_[i]->imports ().next ())
               if (!exported_.find_and_mark_used (needed))
+              {
                 undefs.add (needed->name ());
+              }
             modules_[i]->add_extref ();
             ++num_extrefs_;
             break;
@@ -270,7 +280,9 @@ void
 Library::write_export_list (bool show_ref_counts)
 {
   if (modules_.empty ())
+  {
     return;
+  }
 
   ACE_CString const excludedfilename = path_ + "/excluded_modules";
   ACE_CString const rcpath = path_ + "/usage_metrics";
@@ -284,7 +296,9 @@ Library::write_export_list (bool show_ref_counts)
     ACE_DEBUG ((LM_DEBUG, "Making directory %s\n", rcpath.c_str ()));
     if (ACE_OS::mkdir (ACE_TEXT_CHAR_TO_TCHAR (rcpath.c_str ())) == -1 &&
         errno != EEXIST)
+    {
       ACE_ERROR ((LM_ERROR, "%p\n", "mkdir"));
+    }
   }
 
   ACE_DEBUG ((LM_DEBUG, "%s: %B out of %B modules required\n",

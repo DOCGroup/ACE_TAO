@@ -50,15 +50,21 @@ FTP_Client_Callback::handle_timeout (void *)
                 }
             }
           else
+          {
             return 0;
+          }
         }
       else
+      {
         ACE_ERROR_RETURN ((LM_ERROR,"FTP_Client_Flow_Handler::fread error\n"),-1);
+      }
     }
   mb.wr_ptr (n);
   int const result = this->protocol_object_->send_frame (&mb);
   if (result < 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,"send failed:%p","FTP_Client_Flow_Handler::send\n"),-1);
+  }
   ACE_DEBUG ((LM_DEBUG,"handle_timeout::buffer sent successfully\n"));
   return 0;
 }
@@ -77,7 +83,9 @@ FTP_Client_Producer::set_protocol_object (char const *,
                                           TAO_AV_Protocol_Object *object)
 {
   if (!this->callback_)
+  {
     return -1;
+  }
   this->callback_->set_protocol_object (object);
   return 0;
 }
@@ -87,7 +95,9 @@ FTP_Client_Producer::get_callback (char const *,
                                    TAO_AV_Callback *&callback)
 {
   if (!this->callback_)
+  {
     this->callback_ = std::make_unique<FTP_Client_Callback> ();
+  }
   callback = this->callback_.get ();
    return 0;
 }
@@ -207,7 +217,9 @@ Client::init (int argc, ACE_TCHAR *argv[])
       mgr->activate ();
 
       if (this->parse_args (argc, argv) != 0)
+      {
         return -1;
+      }
 
       ACE_DEBUG ((LM_DEBUG, "(%N,%l) Parsed Address  %C\n",
                   this->options_.address.c_str ()));
@@ -231,7 +243,9 @@ Client::init (int argc, ACE_TCHAR *argv[])
 
       this->fp_.reset (ACE_OS::fopen (this->options_.filename.c_str (), "r"));
       if (!this->fp_)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "ERROR: input file could not be opened\n"), -1);
+      }
       ACE_DEBUG ((LM_DEBUG, "file opened successfully\n"));
     }
   catch (CORBA::Exception const &ex)
@@ -274,7 +288,9 @@ Client::run ()
                                      flow_spec);
 
       if (result == 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,"streamctrl::bind_devs for client_mmdevice failed\n"),-1);
+      }
       if (this->bind_to_server ("Server_MMDevice1") == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) Error binding to the naming service\n"),
@@ -285,7 +301,9 @@ Client::run ()
                                             flow_spec);
 
       if (result == 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,"(%N,%l) streamctrl::bind_devs for mmdevice 1 failed\n"),-1);
+      }
       if (this->bind_to_server ("Server_MMDevice2") == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) Error binding to the naming service\n"),
@@ -296,7 +314,9 @@ Client::run ()
                                             flow_spec);
 
       if (result == 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,"(%N,%l) streamctrl::bind_devs for mmdevice 2 failed\n"),-1);
+      }
       AVStreams::flowSpec start_spec (1);
       start_spec.length (1);
       start_spec [0] = CORBA::string_dup ("Data");
@@ -341,10 +361,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   int result = CLIENT::instance ()->init (argc, argv);
   if (result < 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,"client::init failed\n"),1);
+  }
   result = CLIENT::instance ()->run ();
   if (result < 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,"client::run failed\n"),1);
+  }
 
   CLIENT::close ();  // Explicitly finalize the Unmanaged_Singleton.
 

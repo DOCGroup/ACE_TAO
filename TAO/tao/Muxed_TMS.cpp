@@ -41,7 +41,9 @@ TAO_Muxed_TMS::request_id ()
 
   if ((bidir_flag == 1 && ACE_ODD (this->request_id_generator_))
        || (bidir_flag == 0 && ACE_EVEN (this->request_id_generator_)))
+  {
     ++this->request_id_generator_;
+  }
 
   if (TAO_debug_level > 4)
     TAOLIB_DEBUG ((LM_DEBUG,
@@ -218,7 +220,9 @@ TAO_Muxed_TMS::idle_after_send ()
   // return true. If *this* class is not successful in idling the
   // transport no one can.
   if (this->transport_ != nullptr)
+  {
     (void) this->transport_->make_idle ();
+  }
 
   return true;
 }
@@ -248,7 +252,9 @@ int
 TAO_Muxed_TMS::clear_cache_i ()
 {
   if (this->dispatcher_table_.current_size () == 0)
+  {
     return -1;
+  }
 
   REQUEST_DISPATCHER_TABLE::ITERATOR const end =
     this->dispatcher_table_.end ();

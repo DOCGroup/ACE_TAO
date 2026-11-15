@@ -79,7 +79,9 @@ TAO_SSLIOP_Profile::decode (TAO_InputCDR & cdr)
 {
   int r = this->TAO_IIOP_Profile::decode (cdr);
   if (r != 1)
+  {
     return r;
+  }
 
   // Attempt to decode SSLIOP::SSL tagged component.  It may not be
   // there if we are dealing with pure IIOP profile.
@@ -93,13 +95,17 @@ TAO_SSLIOP_Profile::decode (TAO_InputCDR & cdr)
                                   component.component_data.length ());
       CORBA::Boolean byte_order {};
       if (!(cdr_component >> ACE_InputCDR::to_boolean (byte_order)))
+      {
         return -1;
+      }
       cdr_component.reset_byte_order (static_cast<int> (byte_order));
 
       if (cdr_component >> this->ssl_endpoint_.ssl_component_)
         ssl_component_found = true;
       else
+      {
         return -1;
+      }
     }
 
   // Since IIOP portion of the profile has already been decoded, we
@@ -122,7 +128,9 @@ TAO_SSLIOP_Profile::decode (TAO_InputCDR & cdr)
           // ssl endpoints encoded.
 
           if (this->decode_tagged_endpoints () == -1)
+          {
             return -1;
+          }
 
           return 1;
         }
@@ -170,7 +178,9 @@ TAO_SSLIOP_Profile::do_is_equivalent (TAO_Profile const * other_profile)
 
   // Make sure we have a TAO_SSLIOP_Profile.
   if (op == nullptr)
+  {
     return false;
+  }
 
   // Now verify TAO_SSLIOP_Endpoint equivalence.
   TAO_SSLIOP_Endpoint const *other_endp = std::addressof (op->ssl_endpoint_);
@@ -181,7 +191,9 @@ TAO_SSLIOP_Profile::do_is_equivalent (TAO_Profile const * other_profile)
       if (endp->is_equivalent (other_endp))
         other_endp = other_endp->next_;
       else
+      {
         return false;
+      }
     }
 
   return true;
@@ -203,7 +215,9 @@ TAO_SSLIOP_Profile::add_endpoint (TAO_SSLIOP_Endpoint * endp)
   // decoding a profile, and IIOP endpoints have been added before we
   // even get to SSLIOP-specific decoding.
   if (endp->iiop_endpoint () != nullptr)
+  {
     this->TAO_IIOP_Profile::add_endpoint (endp->iiop_endpoint ());
+  }
 }
 
 int
@@ -232,7 +246,9 @@ TAO_SSLIOP_Profile::encode_endpoints ()
       TAO_OutputCDR out_cdr;
       if (!(out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
           || !(out_cdr << endpoints))
+      {
         return -1;
+      }
 
       CORBA::ULong const length = static_cast<CORBA::ULong> (out_cdr.total_length ());
 
@@ -277,13 +293,17 @@ TAO_SSLIOP_Profile::decode_tagged_endpoints ()
       // Extract the Byte Order.
       CORBA::Boolean byte_order;
       if (!(in_cdr >> ACE_InputCDR::to_boolean (byte_order)))
+      {
         return -1;
+      }
       in_cdr.reset_byte_order (static_cast<int> (byte_order));
 
       // Extract endpoints sequence.
       TAO_SSLEndpointSequence endpoints;
       if (!(in_cdr >> endpoints))
+      {
         return -1;
+      }
 
       // Use information extracted from the tagged component to
       // populate the profile.  Begin from the end of the sequence to
@@ -345,7 +365,9 @@ void
 TAO_SSLIOP_Profile::remove_endpoint (TAO_SSLIOP_Endpoint *endp)
 {
   if (endp == nullptr)
+  {
     return;
+  }
 
   // special handling for the target matching the base endpoint
   if (endp == std::addressof (this->ssl_endpoint_))
@@ -372,7 +394,9 @@ TAO_SSLIOP_Profile::remove_endpoint (TAO_SSLIOP_Endpoint *endp)
   while (cur != nullptr)
   {
     if (cur == endp)
+    {
       break;
+    }
     last = cur;
     cur = cur->next_;
   }

@@ -206,7 +206,9 @@ TAO_GIOP_Message_Base::generate_fragment_header (TAO_OutputCDR & cdr,
   // supports them in 1.2 or better since GIOP 1.1 fragments do not
   // have a fragment message header.
   if (giop_version.major == 1 && giop_version.minor < 2)
+  {
     return -1;
+  }
 
   // Get the parser we need to use
   TAO_GIOP_Message_Generator_Parser *generator_parser =
@@ -666,7 +668,9 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   if (qd->state ().compressed ())
     {
       if (!this->decompress (&db, *qd, rd_pos, wr_pos))
+      {
         return -1;
+      }
       if (qd->msg_block ()->data_block () != db)
         {
           // qd still owns the original compressed buffer, db now has
@@ -735,7 +739,9 @@ TAO_GIOP_Message_Base::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
   if (adapter)
     {
       if (!adapter->decompress (db, qd, *this->orb_core_))
+      {
         return false;
+      }
       rd_pos = TAO_GIOP_MESSAGE_HEADER_LEN;
       wr_pos = (*db)->size();
     }
@@ -788,7 +794,9 @@ TAO_GIOP_Message_Base::process_reply_message (
   if (qd->state ().compressed ())
     {
       if (!this->decompress (&db, *qd, rd_pos, wr_pos))
+      {
         return -1;
+      }
       if (qd->msg_block ()->data_block () != db)
         {
           // qd still owns the original compressed buffer, db now has
@@ -842,7 +850,9 @@ TAO_GIOP_Message_Base::process_reply_message (
     }
 
   if (retval == -1)
+  {
     return retval;
+  }
 
   params.input_cdr_ = std::addressof (input_cdr);
   params.transport_->assign_translators (params.input_cdr_, nullptr);
@@ -958,7 +968,9 @@ TAO_GIOP_Message_Base::process_request (
 
       // Throw an exception if the
       if (parse_error != 0)
+      {
         throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_NO);
+      }
 
       TAO_Codeset_Manager *csm = request.orb_core ()->codeset_manager ();
       if (csm)
@@ -1480,7 +1492,9 @@ TAO_GIOP_Message_Base::send_reply_exception (
     }
 
   if (this->generate_exception_reply (output, reply_params, *x) == -1)
+  {
     return -1;
+  }
 
   output.more_fragments (false);
 
@@ -1514,7 +1528,9 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
     const char *message_name = "UNKNOWN MESSAGE";
     u_long slot = ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET];
     if (slot < sizeof (names) / sizeof (names[0]))
+    {
       message_name = names[slot];
+    }
 
     // Byte order.
     int const byte_order = ptr[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x01;
@@ -2018,7 +2034,9 @@ TAO_GIOP_Message_Base::set_giop_flags (TAO_OutputCDR & msg) const
   //
   // Only supported in GIOP 1.1 or better.
   if (!(major <= 1 && minor == 0))
+  {
     ACE_SET_BITS (flags, msg.more_fragments () << 1);
+  }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -94,7 +94,9 @@ ACE_DEV_Addr::operator= (ACE_DEV_Addr const &sa)
   ACE_TRACE ("ACE_DEV_Addr::operator=");
 
   if (this != std::addressof (sa))
+  {
     this->set (sa);
+  }
 
   return *this;
 }

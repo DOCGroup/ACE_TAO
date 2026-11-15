@@ -24,7 +24,9 @@ JAWS_Concurrency_Impl::svc ()
   while (this->getq (ph) != -1)
     {
       if (ph == nullptr)
+      {
         continue;
+      }
 
       if (ph->service () == -1)
         {
@@ -47,7 +49,9 @@ JAWS_Concurrency_Bridge<JAWS_Concurrency_Impl>
       char const *concurrency;
       concurrency = JAWS_Options::instance ()->getenv ("JAWS_CONCURRENCY");
       if (concurrency == nullptr)
+      {
         concurrency = JAWS_DEFAULT_CONCURRENCY;
+      }
 
       if (ACE_OS::strcasecmp (concurrency, "TPR") == 0)
         this->impl_ = JAWS_TPR_Concurrency::instance ();
@@ -56,7 +60,9 @@ JAWS_Concurrency_Bridge<JAWS_Concurrency_Impl>
       else if (ACE_OS::strcasecmp (concurrency, "THYBRID") == 0)
         this->impl_ = JAWS_THYBRID_Concurrency::instance ();
       else
+      {
         this->impl_ = JAWS_THYBRID_Concurrency::instance ();
+      }
         // Since synchronous IO is the default IO, need an aggressive
         // default concurrency mechanism.
     }

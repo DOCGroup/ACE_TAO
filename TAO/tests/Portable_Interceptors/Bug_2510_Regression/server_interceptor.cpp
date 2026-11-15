@@ -33,7 +33,9 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
 
   // Ignore the shutdown operation.
   if (std::strcmp ("shutdown", operation.in ()) == 0)
+  {
     return;
+  }
 
   // retrieve the context
   IOP::ServiceId const id = ::service_id;

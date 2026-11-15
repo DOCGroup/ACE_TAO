@@ -39,7 +39,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, ior) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var const object = orb->string_to_object (ior);
 
@@ -49,7 +51,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           CORBA::InterfaceDef::FullInterfaceDescription * const description =
             interface_def->describe_interface ();
           if (description == nullptr)
+          {
             ACE_ERROR ((LM_ERROR, ACE_TEXT("Null interface description returned\n")));
+          }
           CORBA::InterfaceDef::FullInterfaceDescription_var const description_owner {
             description
           };

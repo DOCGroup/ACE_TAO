@@ -51,7 +51,9 @@ parse_args (int argc, ACE_TCHAR *argv[], ConsumerOptions &options)
 
   int const argument_index = get_opts.opt_ind ();
   if (argument_index < argc)
+  {
     options.num_events = ACE_OS::atoi (argv[argument_index]);
+  }
   if (argument_index + 1 < argc)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("usage: %s [-o <iorfile>] [-h <host>] [-p <port>] [num_events]\n"),
@@ -82,7 +84,9 @@ public:
       orb_ (CORBA::ORB::_duplicate (orb))
   {
     if (CORBA::is_nil (event_channel_factory))
+    {
       throw std::invalid_argument ("TestConsumer: nil event channel factory");
+    }
 
     CosNotifyChannelAdmin::ChannelID channel_id {};
     CosNotification::QoSProperties initial_qos {};
@@ -95,7 +99,9 @@ public:
       ACE_OS::fopen (ior_output_file, ACE_TEXT ("w")),
       ACE_OS::fclose);
     if (!ior_file)
+    {
       throw std::invalid_argument ("Cannot open channel IOR output file");
+    }
     ACE_OS::fprintf (ior_file.get (), "%s", ior.in ());
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TestConsumer: wrote channel IOR to file %s\n"),
@@ -172,7 +178,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       CORBA::ValueFactoryBase_var const factory = new MyEventFactory;
       CORBA::String_var const repository_id = _tc_MyEvent->id ();
@@ -191,7 +199,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CosNotifyChannelAdmin::EventChannelFactory_var const event_channel_factory =
         CosNotifyChannelAdmin::EventChannelFactory::_unchecked_narrow (notify_object.in ());
       if (CORBA::is_nil (event_channel_factory.in ()))
+      {
         throw std::invalid_argument ("No event channel factory");
+      }
 
       poa_manager->activate ();
       {

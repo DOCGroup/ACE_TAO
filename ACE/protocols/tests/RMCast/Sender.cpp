@@ -14,7 +14,10 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   try
   {
-    if (argc < 2) throw args ();
+    if (argc < 2)
+    {
+      throw args ();
+    }
 
     ACE_INET_Addr addr (argv[1]);
 

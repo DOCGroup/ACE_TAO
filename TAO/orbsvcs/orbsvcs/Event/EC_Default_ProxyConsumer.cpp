@@ -28,7 +28,9 @@ TAO_EC_Default_ProxyPushConsumer::connect_push_supplier (
     if (this->is_connected_i ())
       {
         if (!this->event_channel_->supplier_reconnect ())
+        {
           throw RtecEventChannelAdmin::AlreadyConnected ();
+        }
 
         // Re-connections are allowed, go ahead and disconnect the
         // consumer...
@@ -51,7 +53,9 @@ TAO_EC_Default_ProxyPushConsumer::connect_push_supplier (
         // this is probably an application error, handle it as
         // gracefully as possible
         if (this->is_connected_i ())
+        {
           return; // @@ Should we throw
+        }
       }
 
     this->supplier_ =
@@ -81,7 +85,9 @@ TAO_EC_Default_ProxyPushConsumer::push (const RtecEventComm::EventSet& event)
                                           this->event_channel_,
                                           this);
   if (!ace_mon.locked ())
+  {
     return;
+  }
 
   ace_mon.filter->push (event, this);
 }
@@ -103,7 +109,9 @@ TAO_EC_Default_ProxyPushConsumer::disconnect_push_consumer ()
     this->connected_ = false;
 
     if (connected)
+    {
       this->cleanup_i ();
+    }
   }
 
   // Notify the event channel...

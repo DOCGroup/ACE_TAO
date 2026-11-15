@@ -53,7 +53,9 @@ Malloc::instance ()
           else if (options->use_shmem ())
             return std::make_unique<ACE_Allocator_Adapter<ST_ALLOCATOR>> ();
           else
+          {
             return std::make_unique<ACE_Allocator_Adapter<L_ALLOCATOR>> ();
+          }
         }
       else if (options->use_mmap ())
         return std::make_unique<ACE_Allocator_Adapter<M_ALLOCATOR>> ();

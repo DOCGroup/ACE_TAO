@@ -88,7 +88,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var const poa_manager {root_poa->the_POAManager ()};
 
       if (parse_args (argc, argv, ior_output_file, srv_shutdown_file, nthreads) != 0)
+      {
         return 1;
+      }
 
       Simple_Server_i server_impl (orb.in ());
 

@@ -46,7 +46,9 @@ namespace PortableServer
     // Allocate an extra slot if the id's length is not "aligned" on a
     // CORBA::WChar.
     if (id.length () % sizeof (CORBA::WChar))
+    {
       ++string_length;
+    }
 
     // Create space - note that this method adds + 1 for the '\0'.
     CORBA::WChar* string = CORBA::wstring_alloc (string_length);

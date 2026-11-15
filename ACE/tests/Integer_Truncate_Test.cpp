@@ -340,7 +340,9 @@ struct Caller
   void operator() (T f)
   {
     if (!f ())
+    {
       success = false;
+    }
   }
 
   /// Flag that indicates success of all tests.

@@ -153,14 +153,18 @@ FTEC_Gateway::FTEC_Gateway (CORBA::ORB_ptr orb,
 {
   impl_->local_orb = CORBA::is_nil(orb);
   if (!impl_->local_orb)
+  {
     impl_->orb = CORBA::ORB::_duplicate(orb);
+  }
   impl_->ftec = FtRtecEventChannelAdmin::EventChannel::_duplicate(ftec);
 }
 
 FTEC_Gateway::~FTEC_Gateway()
 {
   if (impl_->local_orb)
+  {
     impl_->orb->shutdown();
+  }
 }
 
 RtecEventChannelAdmin::EventChannel_ptr

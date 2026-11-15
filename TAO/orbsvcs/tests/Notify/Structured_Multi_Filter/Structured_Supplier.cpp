@@ -204,7 +204,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       Supplier_Client client;
       if (client.init (argc, argv) != 0)
+      {
         return 1;
+      }
 
       Supplier_Options const& options = client.options ();
       CosNotifyChannelAdmin::EventChannel_var ec =
@@ -222,7 +224,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_ASSERT (!CORBA::is_nil (admin.in ()));
 
       if (options.use_filter)
+      {
         add_admin_filter (admin.in (), ec.in ());
+      }
 
       Notify_Push_Supplier* supplier =
         create_supplier (admin.in (), ec.in (), client.root_poa (), options);
@@ -239,7 +243,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "Supplier sending %d events...\n", options.event_count));
       for (int i {}; i < options.event_count; ++i)
         if (send_event (*supplier, i) != 0)
+        {
           return 1;
+        }
       ACE_DEBUG ((LM_DEBUG, "\nSupplier sent %d events.\n", options.event_count));
 
       sig_impl->wait_for_completion ();

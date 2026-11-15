@@ -12,5 +12,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   if (consumer.init (argc, argv) == -1)
     return -1;
   else
+  {
     return consumer.run ();
+  }
 }

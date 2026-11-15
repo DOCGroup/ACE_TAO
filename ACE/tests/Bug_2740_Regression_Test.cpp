@@ -140,7 +140,9 @@ ClientSvcHandler::handle_input (ACE_HANDLE handle)
         // more data and await more echo.
         size_t ubc = (size_t)bc;
         if (ubc <= this->echo_cnt_)
+        {
           this->echo_cnt_ -= ubc;
+        }
         if (this->echo_cnt_ == 0)
           {
             ACE_DEBUG ((LM_DEBUG,

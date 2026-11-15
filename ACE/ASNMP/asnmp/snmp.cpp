@@ -132,14 +132,18 @@ int Snmp::run_transaction (Pdu &pdu, UdpTarget &target)
       trans.result (pdu);
       // verify this is the pdu we are after
       if (pdu.get_request_id() == hold_req_id)
+      {
         return 0;
+      }
     }
 }
 
 int Snmp::run_transaction (Pdu &pdu, UdpTarget &target, Snmp_Result *cb)
 {
   if (cb == nullptr)
-     return run_transaction (pdu, target);
+  {
+    return run_transaction (pdu, target);
+  }
 
   // 1. set unique id to match this packet on return
   hold_req_id_ = req_id_++;
@@ -152,7 +156,9 @@ int Snmp::run_transaction (Pdu &pdu, UdpTarget &target, Snmp_Result *cb)
     std::make_unique<transaction> (pdu, target, iv_snmp_session_);
   int const result = trans->run (this);
   if (result == 0)
+  {
     trans.release ();
+  }
   return result;
 }
 
@@ -174,7 +180,9 @@ void Snmp::result (transaction *t, int rc)
             result_->result (this, rc);
         }
         else
-            transaction_owner.release ();
+        {
+          transaction_owner.release ();
+        }
     }
 }
 
@@ -182,11 +190,15 @@ int Snmp::validate_args (Pdu const &pdu, UdpTarget const &target) const
 {
   // 0. check object status
   if (construct_status_ != SNMP_CLASS_SUCCESS)
-     return construct_status_;
+  {
+    return construct_status_;
+  }
 
   // 1. check args passed
   if ( !pdu.valid() || !target.valid() )
-     return SNMP_INVALID_ARGS;
+  {
+    return SNMP_INVALID_ARGS;
+  }
   return 0;
 }
 
@@ -196,7 +208,9 @@ int Snmp::get (Pdu &pdu, UdpTarget &target, Snmp_Result *cb)
   ACE_TRACE ("Snmp::get");
   int const rc = validate_args (pdu, target);
   if (rc != 0)
-     return rc;
+  {
+    return rc;
+  }
 
   pdu.set_type (sNMP_PDU_GET);
   check_default_port (target);
@@ -208,7 +222,9 @@ int Snmp::get_next (Pdu &pdu, UdpTarget &target, Snmp_Result *cb)
   ACE_TRACE ("Snmp::get_next");
   int const rc = validate_args (pdu, target);
   if (rc != 0)
-     return rc;
+  {
+    return rc;
+  }
 
   pdu.set_type (sNMP_PDU_GETNEXT);
   check_default_port (target);
@@ -220,7 +236,9 @@ int Snmp::set (Pdu &pdu, UdpTarget &target, Snmp_Result *cb)
   ACE_TRACE ("Snmp::set");
   int const rc = validate_args (pdu, target);
   if (rc != 0)
-     return rc;
+  {
+    return rc;
+  }
 
   pdu.set_type (sNMP_PDU_SET);
   check_default_port (target);
@@ -233,7 +251,9 @@ int Snmp::trap (Pdu &pdu, UdpTarget &target)
   ACE_TRACE ("Snmp::trap");
   int const rc = validate_args (pdu, target);
   if (rc != 0)
-     return rc;
+  {
+    return rc;
+  }
 
   pdu.set_type (sNMP_PDU_V1TRAP);
   check_default_port (target, DEF_TRAP_PORT);
@@ -274,7 +294,9 @@ void Snmp::get_host_name (char *name, int len)
     else
     {
       if (ACE_OS::hostname(name, len-1) == -1)
+      {
         name[0] = 0;
+      }
     }
   }
 }

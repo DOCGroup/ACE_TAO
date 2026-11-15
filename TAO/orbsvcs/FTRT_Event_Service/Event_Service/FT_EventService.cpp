@@ -42,7 +42,9 @@ FT_EventService::run (int argc, ACE_TCHAR *argv [])
       this->orb_ = CORBA::ORB_init (argc, argv);
 
       if (this->parse_args (argc, argv) == -1)
+      {
         result = 1;
+      }
 
       if (result == 0)
         {
@@ -86,7 +88,9 @@ FT_EventService::run (int argc, ACE_TCHAR *argv [])
                   if (this->report_factory (this->orb_.in (), ec_ior.in ()) == -1)
                     result = -1;
                   else
+                  {
                     this->orb_->run ();
+                  }
                 }
             }
         }
@@ -100,10 +104,14 @@ FT_EventService::run (int argc, ACE_TCHAR *argv [])
   FTRTEC::Fault_Detector_Loader * const detector_loader =
     ACE_Dynamic_Service<FTRTEC::Fault_Detector_Loader>::instance ("FTRTEC_Fault_Detector");
   if (detector_loader != nullptr)
+  {
     detector_loader->stop ();
+  }
 
   if (!CORBA::is_nil (this->orb_.in ()))
+  {
     this->orb_->destroy ();
+  }
 
   ACE_Thread_Manager::instance ()->wait ();
   return result;
@@ -126,7 +134,9 @@ FT_EventService::parse_args (int argc, ACE_TCHAR *argv [])
 
   char const * const n_threads = std::getenv ("FTEC_NUM_THREAD");
   if (n_threads != nullptr)
+  {
     this->num_threads_ = std::atoi (n_threads);
+  }
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("d:jn:ps:"));
   int opt {};
@@ -175,7 +185,9 @@ FT_EventService::parse_args (int argc, ACE_TCHAR *argv [])
     }
 
   if (this->num_threads_ < 1)
+  {
     ORBSVCS_ERROR_RETURN ((LM_ERROR, "Invalid number of threads specified\n"), -1);
+  }
 
   return 0;
 }
@@ -195,7 +207,9 @@ FT_EventService::setup_scheduler (CosNaming::NamingContext_ptr naming_context)
       scheduler = scheduler_impl->_this ();
 
       if (ACE_Scheduler_Factory::server (scheduler.in ()) == -1)
+      {
         ORBSVCS_ERROR ((LM_ERROR, "Unable to install scheduler\n"));
+      }
     }
   else
     {
@@ -238,7 +252,9 @@ FT_EventService::report_factory (CORBA::ORB_ptr orb,
 
           ORBSVCS_DEBUG ((LM_DEBUG, "connecting to %s\n", addr));
           if (connector.connect (stream, factory_addr) == -1)
+          {
             ORBSVCS_ERROR_RETURN ((LM_ERROR, "(%P|%t) Invalid Factory Address\n"), -1);
+          }
 
           ORBSVCS_DEBUG ((LM_DEBUG, "Factory connected\n"));
           CORBA::String_var const my_ior_string = orb->object_to_string (ec);
@@ -246,7 +262,9 @@ FT_EventService::report_factory (CORBA::ORB_ptr orb,
           size_t const len = std::strlen (my_ior_string.in ());
           ssize_t const bytes_sent = stream.send_n (my_ior_string.in (), len);
           if (bytes_sent < 0 || static_cast<size_t> (bytes_sent) != len)
+          {
             ORBSVCS_ERROR_RETURN ((LM_ERROR, "(%P|%t) IOR Transmission Error\n"), -1);
+          }
 
           stream.close ();
         }
@@ -262,6 +280,8 @@ void
 FT_EventService::become_primary ()
 {
   if (this->num_threads_ > 1)
+  {
     this->task_.activate (THR_NEW_LWP | THR_JOINABLE, this->num_threads_ - 1);
+  }
 }
 

@@ -43,7 +43,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Options options;
   if (parse_args (argc, argv, options) == -1)
+  {
     return -1;
+  }
 
   char const server_orb[] = "server_orb";
   char const client_orb[] = "client_orb";

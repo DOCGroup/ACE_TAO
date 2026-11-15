@@ -108,7 +108,9 @@ Low_Priority_Null_Task::Low_Priority_Null_Task() :
 
   if (this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
                       1, 0, LOW_PRIORITY))
+  {
     ACE_OS::perror (ACE_TEXT("activate"));
+  }
 
 #if ACE_DEBUG_CST > 0
   ACE_DEBUG ((LM_DEBUG, "Low_Priority_Null_Task ctor, activated\n"));
@@ -189,7 +191,9 @@ Suspend_Resume_Test::Suspend_Resume_Test (ACE_UINT32 const iterations) :
 
   if (this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
                   1, 0, HIGH_PRIORITY))
+  {
     ACE_OS::perror (ACE_TEXT("activate"));
+  }
 }
 
 int
@@ -289,7 +293,9 @@ High_Priority_Simple_Task::High_Priority_Simple_Task() :
 
   if (this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
                   1, 0, HIGH_PRIORITY))
+  {
     ACE_OS::perror (ACE_TEXT("activate"));
+  }
 
 #if ACE_DEBUG_CST > 0
   ACE_DEBUG ((LM_DEBUG, "High_Priority_Simple_Task ctor, activated\n"));
@@ -390,7 +396,9 @@ Ping_Suspend_Resume_Test::Ping_Suspend_Resume_Test (
 
   if (this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
                   1, 0, LOW_PRIORITY))
+  {
     ACE_OS::perror (ACE_TEXT("activate"));
+  }
 }
 
 int
@@ -520,7 +528,9 @@ Yield_Test::Yield_Test (ACE_UINT32 const iterations) :
 
   if (this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
                   2, 0, LOW_PRIORITY))
+  {
     ACE_OS::perror (ACE_TEXT("activate"));
+  }
 
 #if !defined (VXWORKS)
   timer_barrier_.wait ();
@@ -748,7 +758,9 @@ High_Priority_Synchronized_Task::High_Priority_Synchronized_Task (
 
   if (this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
                   1, 0, HIGH_PRIORITY))
+  {
     ACE_OS::perror (ACE_TEXT("activate"));
+  }
 
 #if ACE_DEBUG_CST > 0
   ACE_DEBUG ((LM_DEBUG, "High_Priority_Synchronized_Task ctor, activated\n"));
@@ -904,7 +916,9 @@ Synchronized_Suspend_Resume_Test::Synchronized_Suspend_Resume_Test (
 
   if (this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
                   1, 0, LOW_PRIORITY))
+  {
     ACE_OS::perror (ACE_TEXT("activate"));
+  }
 }
 
 int
@@ -963,7 +977,9 @@ Synchronized_Suspend_Resume_Test::svc ()
         // Release the semaphore so that the high priority thread can
         // proceed.
         if (sem_.release () != 0)
+        {
           ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "sem_.release"), -1);
+        }
 
         timer_.start ();
 
@@ -978,7 +994,9 @@ Synchronized_Suspend_Resume_Test::svc ()
   // The high priority thread will be block on the semaphore, so
   // release it.
   if (sem_.release () != 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "sem_.release"), -1);
+  }
 
 #if ACE_DEBUG_CST > 0
   ACE_DEBUG ((LM_DEBUG,
@@ -1085,7 +1103,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
   ACE_LOG_MSG->open (argv[0] != nullptr  ?  argv[0] : ACE_TEXT("context_switch_time"));
 
   if (get_options (argc, argv))
+  {
     ACE_OS::exit (-1);
+  }
 
   // Disable LM_DEBUG.
   ACE_Log_Msg::instance ()->priority_mask (ACE_LOG_MSG->priority_mask () ^
@@ -1141,12 +1161,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
   // Check to see if thr_continue (), and therefore thr_suspend (),
   // probably, are supported.
   if (ACE_OS::thr_continue (self) == 0  ||  errno != ENOTSUP)
+  {
     suspend_resume_supported = true;
+  }
 
   while (forever || counter > 0)
     {
       if (!forever)
+      {
         --counter;
+      }
       if (suspend_resume_supported)
         {
           // Run suspend/resume test first . . .

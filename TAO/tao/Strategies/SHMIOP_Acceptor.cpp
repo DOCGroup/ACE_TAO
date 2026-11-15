@@ -44,7 +44,9 @@ TAO_SHMIOP_Acceptor::create_profile (const TAO::ObjectKey &object_key,
   if (priority == TAO_INVALID_PRIORITY)
     return this->create_new_profile (object_key, mprofile, priority);
   else
+  {
     return this->create_shared_profile (object_key, mprofile, priority);
+  }
 }
 
 int
@@ -56,7 +58,9 @@ TAO_SHMIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
   int const count = mprofile.profile_count ();
   if ((mprofile.size () - count) < 1
       && mprofile.grow (count + 1) == -1)
+  {
     return -1;
+  }
 
   TAO_SHMIOP_Profile *pfile {};
   ACE_NEW_RETURN (pfile,
@@ -82,12 +86,16 @@ TAO_SHMIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
   // the same convention for SHMIOP).
   if (this->orb_core_->orb_params ()->std_profile_components () == 0
       || (this->version_.major == 1 && this->version_.minor == 0))
+  {
     return 0;
+  }
 
   pfile->tagged_components ().set_orb_type (TAO_ORB_TYPE);
   TAO_Codeset_Manager *csm = this->orb_core_->codeset_manager();
   if (csm)
+  {
     csm->set_codeset(pfile->tagged_components());
+  }
   return 0;
 }
 
@@ -141,10 +149,14 @@ TAO_SHMIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 
   // Make sure the dynamically cast pointer is valid.
   if (endp == nullptr)
+  {
     return false;
+  }
 
   if (endp->port () != this->address_.get_port_number ())
+  {
     return false;
+  }
 
   return this->address_.same_host (endp->object_addr ());
 }
@@ -168,12 +180,16 @@ TAO_SHMIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                                 static_cast <CORBA::Octet>(minor));
   // Parse options
   if (this->parse_options (options) == -1)
+  {
     return -1;
+  }
 
   if (port)
     {
       if (ACE_OS::ace_isdigit (*port) == 0)
+      {
         return -1;                  // Port number must consist of digits
+      }
 
       this->address_.set (ACE_TEXT_CHAR_TO_TCHAR(port));
     }
@@ -194,7 +210,9 @@ TAO_SHMIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
 
   // Parse options
   if (this->parse_options (options) == -1)
+  {
     return -1;
+  }
 
   // @@ Until we can support multihomed machines correctly we must
   //    pick the "default interface" and only listen on that IP
@@ -254,7 +272,9 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core, ACE_Reactor *reactor)
   this->base_acceptor_.acceptor().init_buffer_size (this->mmap_size_);
 
   if (orb_core->server_factory ()->activate_server_connections () != 0)
+  {
     this->base_acceptor_.acceptor().preferred_strategy (ACE_MEM_IO::MT);
+  }
 
   // @@ Should this be a catastrophic error???
   if (this->base_acceptor_.acceptor ().get_local_addr (this->address_) != 0)
@@ -375,7 +395,9 @@ TAO_SHMIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
 
   // ... and object key.
   if ((cdr >> object_key) == 0)
+  {
     return -1;
+  }
 
   // We are NOT bothered about the rest.
 
@@ -395,7 +417,9 @@ int
 TAO_SHMIOP_Acceptor::parse_options (const char *str)
 {
   if (str == nullptr)
+  {
     return 0;  // No options to parse.  Not a problem.
+  }
 
   // Use an option format similar to the one used for CGI scripts in
   // HTTP URLs.
@@ -416,7 +440,9 @@ TAO_SHMIOP_Acceptor::parse_options (const char *str)
   // before the object key.
   for (size_t i {}; i < len; ++i)
     if (options[i] == option_delimiter)
+    {
       ++option_count;
+    }
 
   ACE_CString::size_type const begin {};
   ACE_CString::size_type const end = (option_count > 1) ? options.find (option_delimiter, begin) : len;

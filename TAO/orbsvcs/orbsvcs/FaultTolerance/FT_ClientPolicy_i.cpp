@@ -29,7 +29,9 @@ TAO_FT_Request_Duration_Policy::create (CORBA::Any const &val)
 {
   TimeBase::TimeT value {};
   if (!(val >>= value))
+  {
     throw CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
+  }
 
   TAO_FT_Request_Duration_Policy *tmp {};
   ACE_NEW_THROW_EX (tmp,
@@ -101,7 +103,9 @@ TAO_FT_Heart_Beat_Policy::create (CORBA::Any const &val)
 {
   FT::HeartbeatPolicyValue const *value {};
   if (!(val >>= value))
+  {
     throw CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
+  }
 
   TAO_FT_Heart_Beat_Policy *tmp {};
   ACE_NEW_THROW_EX (tmp,

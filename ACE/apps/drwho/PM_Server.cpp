@@ -35,7 +35,9 @@ PM_Server::insert_protocol_info (Protocol_Record &protocol_record)
   Drwho_Node *current_node = protocol_record.get_drwho_list ();
 
   if (current_node->get_idle_time () < MAX_USER_TIMEOUT)
-        this->increment_total_users ();
+  {
+    this->increment_total_users ();
+  }
 
   if (prp)
     {
@@ -46,7 +48,9 @@ PM_Server::insert_protocol_info (Protocol_Record &protocol_record)
       if (current_node->get_idle_time () >= MAX_USER_TIMEOUT)
         ++np->inactive_count_;
       else
+      {
         ++np->active_count_;
+      }
     }
 
   return prp;

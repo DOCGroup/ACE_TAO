@@ -141,7 +141,9 @@ ACE_Service_Manager::fini ()
   ACE_TRACE ("ACE_Service_Manager::fini");
 
   if (this->get_handle () == ACE_INVALID_HANDLE)
+  {
     return 0;
+  }
 
   int const retv =
     ACE_Reactor::instance ()->remove_handler (

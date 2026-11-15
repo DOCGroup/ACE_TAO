@@ -120,7 +120,9 @@ TAO_Notify_Tests_LookupManager::resolve (CosNaming::NamingContextExt_var& naming
 
   // Need to check return value for errors.
   if (CORBA::is_nil (naming_obj.in ()))
+  {
     throw CORBA::UNKNOWN ();
+  }
 
   this->naming_ = CosNaming::NamingContextExt::_narrow (naming_obj.in ());
 

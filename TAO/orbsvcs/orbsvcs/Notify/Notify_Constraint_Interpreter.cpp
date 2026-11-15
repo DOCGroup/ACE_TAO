@@ -56,7 +56,9 @@ TAO_Notify_Constraint_Interpreter::build_tree (
     }
 
     if (has_et_exp)
+    {
       et_exp += " or ";
+    }
     et_exp += "(";
 
     has_et_exp = has_et_exp || 1;
@@ -71,7 +73,9 @@ TAO_Notify_Constraint_Interpreter::build_tree (
     if (! t)
     {
       if (!d)
+      {
         et_exp += " and ";
+      }
 
       et_exp += "$type_name=='";
       et_exp += exp.event_types [ii].type_name.in ();

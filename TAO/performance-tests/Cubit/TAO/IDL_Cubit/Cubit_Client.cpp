@@ -226,32 +226,42 @@ Cubit_Client::parse_args ()
                              get_opts.opt_arg ()),
                             -1);
         else
+        {
           this->bytes_in_octet_sequence_ = (u_int) result;
+        }
         break;
       case 't':
         test_mask = this->opt_to_mask (get_opts.opt_arg ());
         if (test_mask == 0)
+        {
           return -1;
+        }
         this->enable_test (test_mask);
         break;
       case 'z':
         test_mask = this->opt_to_mask (get_opts.opt_arg ());
         if (test_mask == 0)
+        {
           return -1;
+        }
         this->disable_test (test_mask);
         break;
       case 'v':
         // For backward compatibility
         test_mask = this->opt_to_mask (ACE_TEXT("void"));
         if (test_mask == 0)
+        {
           return -1;
+        }
         this->enable_test (test_mask);
         break;
       case 'o':
         // For backward compatibility
         test_mask = this->opt_to_mask (ACE_TEXT("one_way"));
         if (test_mask == 0)
+        {
           return -1;
+        }
         this->enable_test (test_mask);
         break;
       case 'd':  // debug flag
@@ -266,7 +276,9 @@ Cubit_Client::parse_args ()
                              get_opts.opt_arg ()),
                             -1);
         else
+        {
           this->loop_count_ = (u_int) result;
+        }
         break;
       case 'f': // read the IOR from the file.
         result = this->read_ior (get_opts.opt_arg ());
@@ -399,7 +411,9 @@ Cubit_Client::cube_union ()
       }
 
       if (TAO_debug_level > 2)
+      {
         ACE_DEBUG ((LM_DEBUG, "cube union ..."));
+      }
       u.l (u.l () * u.l () * u.l ()) ;
 
       if (u.l () != r.l ())
@@ -424,7 +438,9 @@ Cubit_Client::cube_union ()
       }
 
       if (TAO_debug_level > 2)
+      {
         ACE_DEBUG ((LM_DEBUG, "cube union ..."));
+      }
       u.cm ().l = u.cm ().l * u.cm ().l * u.cm ().l;
       u.cm ().s = u.cm ().s * u.cm ().s * u.cm ().s;
       u.cm ().o = u.cm ().o * u.cm ().o * u.cm ().o;
@@ -1593,11 +1609,15 @@ Cubit_Client::init (int argc, ACE_TCHAR **argv)
         {
           // Enable all tests if none were specified.
           if (this->test_enable_bitset_ == 0)
+          {
             this->enable_test (TAO_ENABLE_CUBIT_ALL);
+          }
 
           // Disable tests that were explicitly disabled.
           if (this->test_disable_bitset_ != 0)
+          {
             this->test_enable_bitset_ &= ~this->test_disable_bitset_;
+          }
         }
 
       if (this->cubit_factory_key_ == 0)

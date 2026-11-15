@@ -29,14 +29,18 @@ Widget_Impl::~Widget_Impl ()
 void Widget_Impl::add_part (std::unique_ptr<Widget_Part> part)
 {
   if (parts_.enqueue_tail (part.get ()) == 0)
+  {
     part.release ();
+  }
 }
 
 std::unique_ptr<Widget_Part> Widget_Impl::remove_part ()
 {
   Widget_Part *part {};
   if (parts_.dequeue_head (part) == -1)
+  {
     return {};
+  }
 
   // Ownership of the part object is released and transferred to the caller.
   return std::unique_ptr<Widget_Part> {part};

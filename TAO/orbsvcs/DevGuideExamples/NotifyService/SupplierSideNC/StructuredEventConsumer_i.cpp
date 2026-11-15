@@ -16,7 +16,9 @@ StructuredEventConsumer_i::push_structured_event (
   for (CORBA::ULong i {}; i < length; ++i)
     {
       if (event.filterable_data[i].value >>= value)
+      {
         std::cout << event.filterable_data[i].name << "\t" << value << std::endl;
+      }
     }
 
   std::cerr << "MessengerConsumer: success" << std::endl;

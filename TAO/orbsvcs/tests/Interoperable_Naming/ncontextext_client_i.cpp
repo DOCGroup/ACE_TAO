@@ -210,7 +210,9 @@ NContextExt_Client_i::init (int argc, ACE_TCHAR *argv[])
       // There must be at least one argument, the file that has to be
       // retrieved
       if (this->parse_args (argc, argv) == -1)
+      {
         return 1;
+      }
 
       // Get a reference to the Naming Service
       CORBA::Object_var const naming_context_object =

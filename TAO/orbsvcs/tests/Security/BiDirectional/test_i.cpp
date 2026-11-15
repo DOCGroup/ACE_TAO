@@ -22,14 +22,18 @@ void
 Callback_i::callback_method ()
 {
   if (TAO_debug_level > 0)
+  {
     ACE_DEBUG ((LM_DEBUG, "Callback method called\n"));
+  }
 }
 
 CORBA::Long
 Simple_Server_i::test_method (CORBA::Boolean do_callback)
 {
   if (do_callback)
+  {
     this->flag_ = true;
+  }
 
   return 0;
 }

@@ -18,7 +18,9 @@ PushSupplier_impl::ReactorTask::svc ()
   extern ACE_Time_Value timer_interval;
 
   if (reactor_->schedule_timer (handler_, nullptr, ACE_Time_Value::zero, timer_interval) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Cannot schedule timer\n"), -1);
+  }
 
   reactor_->run_reactor_event_loop ();
   ACE_DEBUG ((LM_DEBUG, "Reactor Thread ended\n"));
@@ -67,7 +69,9 @@ PushSupplier_impl::init (RtecEventChannelAdmin::EventChannel_ptr channel)
 
   if (reactor_task_.thr_count () == 0
       && reactor_task_.activate (THR_NEW_LWP | THR_JOINABLE, 1) != 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Cannot activate reactor thread\n"), -1);
+  }
 
   return 0;
 }

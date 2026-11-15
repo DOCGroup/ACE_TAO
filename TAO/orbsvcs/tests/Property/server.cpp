@@ -33,7 +33,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Using naming server.
       TAO_Naming_Client my_name_client;
       if (my_name_client.init (orb.in ()) < 0)
+      {
         return 1;
+      }
 
       // These raw servant pointers become borrowed after _this () activates
       // the servants; the RootPOA retains them.

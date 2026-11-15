@@ -113,7 +113,9 @@ Test_Var_Array::check_validity ()
       this->compare (this->in_, this->ret_.in ()))
     return 1;
   else
+  {
     return 0;
+  }
 }
 
 CORBA::Boolean
@@ -129,7 +131,9 @@ Test_Var_Array::compare (const Param_Test::Var_Array_slice *a1,
   for (CORBA::ULong i=0; i < Param_Test::DIM2; i++)
     {
       if (std::strcmp (a1[i].in (), a2[i].in ()))
+      {
         return 0;
+      }
     }
   return 1; // success
 }

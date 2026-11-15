@@ -18,7 +18,10 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   try
   {
-    if (argc < 2) throw args ();
+    if (argc < 2)
+    {
+      throw args ();
+    }
 
     ACE_INET_Addr addr (argv[1]);
 
@@ -84,19 +87,31 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
         }
       }
 
-      if (msg.sn + 1 == message_count) break;
+      if (msg.sn + 1 == message_count)
+      {
+        break;
+      }
     }
 
     unsigned long lost_count (0), damaged_count (0), duplicate_count (0);
 
     for (unsigned char const e : received)
-      if (e == 0) ++lost_count;
+      if (e == 0)
+      {
+        ++lost_count;
+      }
 
     for (unsigned char const e : damaged)
-      if (e == 1) ++damaged_count;
+      if (e == 1)
+      {
+        ++damaged_count;
+      }
 
     for (unsigned char const e : duplicate)
-      if (e == 1) ++duplicate_count;
+      if (e == 1)
+      {
+        ++duplicate_count;
+      }
 
     ACE_DEBUG ((LM_DEBUG,
                 "lost      : %d\n"
@@ -107,7 +122,9 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
                 duplicate_count));
 
     if (damaged_count != 0 || duplicate_count != 0)
+    {
       return 1;
+    }
 
     if (lost_count != 0)
     {
@@ -120,11 +137,15 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
         if (e == 0)
           ++count;
         else
+        {
           break; // Seen first ok message.
+        }
       }
 
       if (lost_count != count)
+      {
         return 1;
+      }
     }
 
     return 0;

@@ -54,7 +54,9 @@ EC_Consumer::push (RtecEventComm::EventSet const& events)
     }
 
   if (this->n_events_ >= 100)
+  {
     this->disconnect ();
+  }
 }
 
 void
@@ -102,7 +104,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::POA_var poa =
         PortableServer::POA::_narrow (obj.in ());
       if (check_for_nil (poa.in (), "POA") == -1)
+      {
         return 1;
+      }
 
       PortableServer::POAManager_var manager =
         poa->the_POAManager ();
@@ -112,14 +116,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       RtecEventChannelAdmin::EventChannel_var ec =
         RtecEventChannelAdmin::EventChannel::_narrow (obj.in ());
       if (check_for_nil (ec.in (), "EC") == -1)
+      {
         return 1;
+      }
 
       // Create the consumer and register it with POA.
       PortableServer::Servant_var<EC_Consumer> consumer_impl =
         new EC_Consumer (orb, ec);
 
       if (!consumer_impl.in ())
+      {
         return 1;
+      }
 
       RtecEventComm::PushConsumer_var consumer;
       TAO_EC_Object_Deactivator consumer_deactivator;

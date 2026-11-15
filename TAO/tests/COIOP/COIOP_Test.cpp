@@ -52,7 +52,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   bool result {};
 
   if (parse_args (argc, argv, output, input, server_orb, client_orb, result) == -1)
+  {
     return -1;
+  }
 
   try
     {

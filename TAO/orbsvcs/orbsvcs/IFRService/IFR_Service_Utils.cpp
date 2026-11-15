@@ -393,13 +393,17 @@ TAO_IFR_Server::init_multicast_server ()
         ACE_OS::getenv ("InterfaceRepoServicePort");
 
       if (port_number != nullptr)
+      {
         port = static_cast<u_short> (std::atoi (port_number));
+      }
     }
 
   // Port wasn't specified on the command-line or in environment -
   // use the default.
   if (port == 0)
+  {
     port = TAO_DEFAULT_INTERFACEREPO_SERVER_REQUEST_PORT;
+  }
 
   // Instantiate a handler which will handle client requests for
   // the IFR ior, received on the multicast port.

@@ -61,7 +61,9 @@ Benchmark_Method_Base::exec (ACE_Service_Repository_Iterator *sri)
             }
         }
       else
+      {
         return 0;
+      }
     }
   return 0;
 }

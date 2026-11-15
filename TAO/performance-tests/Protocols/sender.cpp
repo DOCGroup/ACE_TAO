@@ -279,17 +279,26 @@ Worker::Worker (CORBA::ORB_ptr orb,
 
   if (ACE_OS::strcmp (options.test_protocol, ACE_TEXT ("DIOP")) == 0)
     {
-      if (TAO_debug_level) ACE_DEBUG ((LM_DEBUG, "test protocol is DIOP\n"));
+      if (TAO_debug_level)
+      {
+        ACE_DEBUG ((LM_DEBUG, "test protocol is DIOP\n"));
+      }
       protocols[0].protocol_type = TAO_TAG_DIOP_PROFILE;
     }
   else if (ACE_OS::strcmp (options.test_protocol, ACE_TEXT ("SCIOP")) == 0)
     {
-      if (TAO_debug_level) ACE_DEBUG ((LM_DEBUG, "test protocol is SCIOP\n"));
+      if (TAO_debug_level)
+      {
+        ACE_DEBUG ((LM_DEBUG, "test protocol is SCIOP\n"));
+      }
       protocols[0].protocol_type = TAO_TAG_SCIOP_PROFILE;
     }
   else
     {
-      if (TAO_debug_level) ACE_DEBUG ((LM_DEBUG, "test protocol is IIOP\n"));
+      if (TAO_debug_level)
+      {
+        ACE_DEBUG ((LM_DEBUG, "test protocol is IIOP\n"));
+      }
       protocols[0].protocol_type = IOP::TAG_INTERNET_IOP;
     }
 
@@ -632,7 +641,9 @@ Worker::run ()
           if (options.test_type == Test_Type::latency)
             this->history_.sample ((time_after_call - time_before_call) / 2);
           else
+          {
             this->history_.sample (time_after_call - time_before_call);
+          }
 
           if (options.test_type == Test_Type::paced)
             {
@@ -696,7 +707,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       int const parse_args_result =
         parse_args (argc, argv);
       if (parse_args_result != 0)
+      {
         return parse_args_result;
+      }
 
       // Resolve the Network priority Mapping Manager
       object =
@@ -738,7 +751,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       worker.run ();
 
       if (options.print_statistics)
+      {
         worker.print_stats ();
+      }
 
       if (options.shutdown_server)
         {

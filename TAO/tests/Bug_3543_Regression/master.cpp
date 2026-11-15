@@ -139,15 +139,25 @@ void Dispatcher_step (int id, int i)
         }
     }
   if (ok != 0)
+  {
     ACE_ERROR ((LM_ERROR, "Ok: %d\n", ok));
+  }
   if (timeout != 0)
+  {
     ACE_ERROR ((LM_ERROR, "TIMEOUT: %d\n", timeout));
+  }
   if (transient != 0)
+  {
     ACE_ERROR ((LM_ERROR, "TRANSIENT: %d\n", transient));
+  }
   if (corba != 0)
+  {
     ACE_ERROR ((LM_ERROR, "CORBA: %d\n", corba));
+  }
   if (unknown != 0)
+  {
     ACE_ERROR ((LM_ERROR, "UNKNOWN: %d\n", unknown));
+  }
 }
 
 ACE_THR_FUNC_RETURN Dispatcher_run (void *arg)
@@ -187,7 +197,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
       if (parse_args (argc, argv, ior_output_file) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");

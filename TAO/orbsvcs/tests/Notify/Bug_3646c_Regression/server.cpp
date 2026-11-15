@@ -123,7 +123,9 @@ load_unload_cycle ()
   if (notify_service == nullptr)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Could not resolve testNotifyService\n")));
   else
+  {
     notify_service->run ();
+  }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) loadunloadcycle - unloading\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) loadunloadcycle - unloading NotifyService ...\n")));
@@ -145,7 +147,9 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) main - entered\n")));
 
   if (parse_args (argc, argv) != 0)
+  {
     return 1;
+  }
 
   for (int cycle {}; cycle < 2; ++cycle)
     {

@@ -151,7 +151,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       int result = runStatic (orb.in ());
       if (result == 0)
+      {
         result = runDynamic (orb.in ());
+      }
 
       orb->destroy ();
       return result;

@@ -15,5 +15,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   argv) == -1)
     return -1;
   else
+  {
     return 0;
+  }
 }

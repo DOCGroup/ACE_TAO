@@ -51,9 +51,13 @@ TAO_SHMIOP_Transport::send (iovec *iov, int iovcnt,
                                                  iov[i].iov_len,
                                                  max_wait_time);
       if (retval > 0)
+      {
         bytes_transferred += retval;
+      }
       if (retval <= 0)
+      {
         return retval;
+      }
     }
   return bytes_transferred;
 }
@@ -184,7 +188,9 @@ TAO_SHMIOP_Transport::handle_input (TAO_Resume_Handle &rh,
     // performed by the messaging objects.
     if (this->messaging_object ()->parse_next_message (qd,
                                                        mesg_length) == -1)
+    {
       return -1;
+    }
 
     if (qd.missing_data () == TAO_MISSING_DATA_UNDEFINED)
       {

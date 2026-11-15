@@ -44,14 +44,18 @@ TAO_EC_TPC_Dispatching::add_consumer (RtecEventComm::PushConsumer_ptr consumer)
     RtecEventComm::PushConsumer::_duplicate(consumer);
 
   if (TAO_EC_TPC_debug_level > 0)
+  {
     ORBSVCS_DEBUG ((LM_DEBUG, "EC (%P|%t) TPC_Dispatching::add_consumer(%@)\n", pc.in()));
+  }
 
   TAO_EC_Dispatching_Task* dtask =
     new TAO_EC_TPC_Dispatching_Task (std::addressof (this->thread_manager_),
                                      this->queue_full_service_object_);
 
   if (TAO_EC_TPC_debug_level > 0)
+  {
     ORBSVCS_DEBUG ((LM_DEBUG, "EC (%P|%t) TPC_Dispatching::add_consumer(%@): new task %@\n", pc.in(), dtask));
+  }
 
   if ((dtask->activate (this->thread_creation_flags_,
                        1, // we only want one thread to dispatch to a consumer
@@ -136,7 +140,9 @@ TAO_EC_TPC_Dispatching::shutdown ()
     {
       MAPTYPE::ENTRY* entry {};
       if (! iter.next(entry))
+      {
         continue;
+      }
 
       entry->int_id_->putq (new TAO_EC_Shutdown_Task_Command);
       iter.advance ();
@@ -151,7 +157,9 @@ TAO_EC_TPC_Dispatching::shutdown ()
     {
       MAPTYPE::ENTRY* entry {};
       if (! iter.next(entry))
+      {
         continue;
+      }
 
       CORBA::release (entry->ext_id_);
       iter.advance ();
@@ -177,7 +185,9 @@ TAO_EC_TPC_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                                     TAO_EC_QOS_Info&)
 {
   if (TAO_EC_TPC_debug_level > 0)
+  {
     ORBSVCS_DEBUG ((LM_DEBUG, "EC (%P|%t) TPC_Dispatching::push_nocopy(supplier=%@,consumer=%@)\n", proxy, consumer));
+  }
 
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   TAO_EC_Dispatching_Task* dtask {};

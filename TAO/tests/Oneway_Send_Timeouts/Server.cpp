@@ -71,7 +71,9 @@ Server::Server (int, ACE_TCHAR *argv[])
     }
 
     if (!this->parse_args (my_argc, my_argv))
+    {
       return;
+    }
 
     CORBA::Object_var obj = orb_->resolve_initial_references ("RootPOA");
     PortableServer::POA_var root_poa =

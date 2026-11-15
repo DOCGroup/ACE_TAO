@@ -61,7 +61,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_TCHAR const * location = ACE_TEXT("MyLocation");
       if (parse_args (argc, argv, location) != 0)
+      {
         return 1;
+      }
 
       // Obtain a reference to the LoadManager.
       CORBA::Object_var obj =

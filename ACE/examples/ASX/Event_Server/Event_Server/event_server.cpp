@@ -224,7 +224,9 @@ Event_Server::svc ()
   else if (this->run_event_loop () == -1)
     return -1;
   else
+  {
     return 0;
+  }
 }
 
 int

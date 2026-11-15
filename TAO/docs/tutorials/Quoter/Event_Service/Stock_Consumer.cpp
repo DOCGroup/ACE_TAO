@@ -27,7 +27,9 @@ Stock_Consumer::push (CORBA::Any const &data)
 {
   const Quoter::Event *event {};
   if (!(data >>= event))
+  {
     return; // Invalid event
+  }
 
   cout << "The new price for one stock in \""
        << event->full_name.in ()

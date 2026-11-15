@@ -79,7 +79,9 @@ TAO_Profile *
 TAO_Connector::corbaloc_scan (const char *str, size_t &len)
 {
   if (this->check_prefix (str) != 0)
+  {
     return nullptr;
+  }
   const char *comma_pos = std::strchr (str,',');
   const char *slash_pos = std::strchr (str,'/');
   if (comma_pos == nullptr && slash_pos == nullptr)
@@ -88,7 +90,10 @@ TAO_Connector::corbaloc_scan (const char *str, size_t &len)
     }
   else if (comma_pos == nullptr || comma_pos > slash_pos)
     len = (slash_pos - str);
-  else len = comma_pos - str;
+  else
+  {
+    len = comma_pos - str;
+  }
   return this->make_profile();
 }
 
@@ -175,7 +180,9 @@ TAO_Connector::make_mprofile (const char *string, TAO_MProfile &mprofile)
   for (ACE_CString::size_type i = ior_index; i < objkey_index; ++i)
     {
       if (ior[i] == endpoint_delimiter)
+      {
         ++profile_count;
+      }
     }
 
   // Tell the MProfile object how many Profiles it should hold.
@@ -288,7 +295,9 @@ TAO_Connector::parallel_connect (TAO::Profile_Transport_Resolver *r,
 
   errno = 0; // need to clear errno to ensure a stale enotsup is not set
   if (desc == nullptr)
+  {
     return nullptr;
+  }
   TAO_Endpoint *root_ep = desc->endpoint();
   TAO_Transport *base_transport {};
 
@@ -330,9 +339,13 @@ TAO_Connector::parallel_connect (TAO::Profile_Transport_Resolver *r,
        ep != nullptr;
        ep = ep->next_filtered(this->orb_core(),root_ep))
     if (this->set_validate_endpoint (ep) == 0)
+    {
       ++endpoint_count;
+    }
   if (endpoint_count == 0)
+  {
     return nullptr;
+  }
   return this->make_parallel_connection (r,*desc,timeout);
 }
 
@@ -407,7 +420,9 @@ TAO_Connector::wait_for_transport (TAO::Profile_Transport_Resolver *r,
           result = this->active_connect_strategy_->wait (transport, std::addressof (tv));
         }
       else
+      {
         result = this->active_connect_strategy_->wait (transport, timeout);
+      }
 
       if (result == -1 && errno == ETIME)
         {
@@ -538,7 +553,9 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
 
               // If connected return.
               if (base_transport->is_connected ())
+              {
                 return base_transport;
+              }
 
               // Is it possible to get a transport from the cache that
               // is not connected? If not, then the following code is
@@ -637,7 +654,9 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
         {
           if (desc == nullptr ||
               (this->set_validate_endpoint (desc->endpoint ()) == -1))
+          {
             return nullptr;
+          }
 
           // @todo: This is not the right place for this! (bugzilla 3023)
           // Purge connections (if necessary)
@@ -888,7 +907,9 @@ TAO_Connector::cleanup_pending (TAO_Transport *&the_winner,
   for (unsigned int i {}; i < count; ++i)
     {
       if (transport[i] != the_winner)
+      {
         this->check_connection_closure (transport[i]->connection_handler());
+      }
       // since we are doing this on may connections, the result isn't
       // particularly important.
     }
@@ -1022,7 +1043,9 @@ bool
 TAO_Connector::new_connection_is_ok (size_t busy_count)
 {
   if (this->orb_core_ == nullptr)
+  {
     return true;
+  }
 
   unsigned int mux_limit = this->orb_core_->resource_factory ()
     ->max_muxed_connections ();
@@ -1044,7 +1067,9 @@ TAO_Connector::check_connection_closure (
     {
       // First, cancel from connector.
       if (this->cancel_svc_handler (connection_handler) == -1)
+      {
         return -1;
+      }
 
       // Double check to make sure the handler has not been closed
       // yet.  This double check is required to ensure that the

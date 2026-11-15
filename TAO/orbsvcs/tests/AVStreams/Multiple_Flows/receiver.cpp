@@ -21,12 +21,16 @@ Receiver_StreamEndPoint::get_callback (char const *flow_name,
   std::unique_ptr<Receiver_Callback> callback_owner (
     new (std::nothrow) Receiver_Callback);
   if (!callback_owner)
+  {
     return -1;
+  }
 
   // Return the receiver application callback to the AVStreams for
   // future upcalls.
   if (callback_owner->flowname (flow_name) != 0)
+  {
     return -1;
+  }
   callback = callback_owner.release ();
   return 0;
 }
@@ -38,7 +42,9 @@ Receiver_StreamEndPoint::set_protocol_object (char const *flowname,
   // Set the sender protocol object corresponding to the transport
   // protocol selected.
   if (std::strcmp (flowname, "Data_Receiver_One") == 0)
+  {
     RECEIVER::instance ()->protocol_object (object);
+  }
   return 0;
 }
 
@@ -76,7 +82,9 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
               this->flowname_.c_str ()));
 
   if (!this->output_file_)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Output file is not open\n"), -1);
+  }
 
   while (frame != nullptr)
     {
@@ -150,14 +158,18 @@ Receiver::init (int argc,
     this->reactive_strategy_.init (TAO_AV_CORE::instance ()->orb (),
                                    TAO_AV_CORE::instance ()->poa ());
   if (result != 0)
+  {
     return result;
+  }
 
   // Parse the command line arguments
   result =
     this->parse_args (argc,
                       argv);
   if (result != 0)
+  {
     return result;
+  }
   // Register the receiver mmdevice object with the ORB
   ACE_NEW_RETURN (this->mmdevice_,
                   TAO_MMDevice (&this->reactive_strategy_),
@@ -227,7 +239,9 @@ ACE_TMAIN (int argc,
                                      argv);
 
       if (result != 0)
+      {
         return result;
+      }
 
       while (endstream != 2)
         {

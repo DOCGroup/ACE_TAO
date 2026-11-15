@@ -34,7 +34,9 @@ Server_Timer::handle_timeout (ACE_Time_Value const &, void const *)
   try
     {
       if (CORBA::is_nil (this->echo_.in ()))
+      {
         return -1;
+      }
 
       Test::Echo_var const echo =
         Test::Echo::_duplicate (this->echo_.in ());

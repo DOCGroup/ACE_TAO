@@ -280,7 +280,9 @@ namespace TAO
       // by the oid parameter and its servant to be removed from the
       // Active Object Map.
       if (this->poa_->unbind_using_user_id (user_id) != 0)
+      {
         throw ::CORBA::OBJ_ADAPTER ();
+      }
     }
 
     void

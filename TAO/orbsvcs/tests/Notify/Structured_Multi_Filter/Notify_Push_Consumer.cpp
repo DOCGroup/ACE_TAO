@@ -11,21 +11,37 @@ expected_event_count (int sent, NS_FilterType consumer_filter, NS_FilterType sup
   ACE_ASSERT (sent % 9 == 0);
 
   if (consumer_filter == NS_FilterType::and_op && supplier_filter == NS_FilterType::and_op)
+  {
     return sent / 9;
+  }
   if (consumer_filter == NS_FilterType::and_op && supplier_filter == NS_FilterType::or_op)
+  {
     return sent * 3 / 9;
+  }
   if (consumer_filter == NS_FilterType::and_op && supplier_filter == NS_FilterType::none)
+  {
     return sent * 4 / 9;
+  }
   if (consumer_filter == NS_FilterType::or_op && supplier_filter == NS_FilterType::and_op)
+  {
     return sent * 3 / 9;
+  }
   if (consumer_filter == NS_FilterType::or_op && supplier_filter == NS_FilterType::or_op)
+  {
     return sent * 7 / 9;
+  }
   if (consumer_filter == NS_FilterType::or_op && supplier_filter == NS_FilterType::none)
+  {
     return sent * 8 / 9;
+  }
   if (consumer_filter == NS_FilterType::none && supplier_filter == NS_FilterType::or_op)
+  {
     return sent * 8 / 9;
+  }
   if (consumer_filter == NS_FilterType::none && supplier_filter == NS_FilterType::and_op)
+  {
     return sent * 4 / 9;
+  }
 
   return sent;
 }
@@ -78,7 +94,9 @@ static void
 validate_expression (bool expr, char const* msg)
 {
   if (!expr)
+  {
     ACE_ERROR ((LM_ERROR, "Error: %s\n", msg));
+  }
 }
 
 #define validate(expr) validate_expression (expr, #expr)

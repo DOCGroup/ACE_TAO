@@ -66,7 +66,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var group1 =
         orb->string_to_object (group_ior);
@@ -106,7 +108,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            "Multicast Servant did not receive expected requests!\n"),
                           1);
       else
+      {
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - Success!\n"));
+      }
     }
   catch (const CORBA::Exception& ex)
     {

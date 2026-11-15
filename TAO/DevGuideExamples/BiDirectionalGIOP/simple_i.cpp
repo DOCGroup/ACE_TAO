@@ -19,7 +19,9 @@ CORBA::Long
 Simple_i::test_method (CORBA::Boolean do_callback)
 {
   if (do_callback)
+  {
     this->ready_for_callback_ = true;
+  }
   return 0;
 }
 
@@ -40,7 +42,9 @@ bool
 Simple_i::call_client ()
 {
   if (!this->ready_for_callback_)
+  {
     return false;
+  }
 
   this->ready_for_callback_ = false;
   for (int iteration = 0; iteration < this->callback_count_; ++iteration)

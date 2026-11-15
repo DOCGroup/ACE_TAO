@@ -62,7 +62,9 @@ ServantActivator::incarnate (PortableServer::ObjectId const &oid,
   if (servant != nullptr)
     return servant;
   else
+  {
     throw CORBA::OBJECT_NOT_EXIST ();
+  }
 }
 
 // This is the method invoked when the object is deactivated or the

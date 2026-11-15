@@ -43,7 +43,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, ior) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var const object =
         orb->string_to_object (ior);
@@ -64,7 +66,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (non_existent)
         result = 3;
       else
+      {
         result = 2;
+      }
 
       ACE_DEBUG ((LM_DEBUG,
                   "client (%P) _non_existent() returned %d\n",

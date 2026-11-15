@@ -28,7 +28,9 @@ Smart_Messenger_Proxy_Factory::create_proxy (
 {
   Messenger_ptr smart_proxy = nullptr;
   if (!CORBA::is_nil (proxy))
+  {
     smart_proxy = new Smart_Messenger_Proxy (proxy, logger_.in ());
+  }
   return smart_proxy;
 }
 

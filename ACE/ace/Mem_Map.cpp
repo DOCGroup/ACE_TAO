@@ -125,7 +125,9 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
           if (static_cast<ACE_UINT64> (length_request)
               + static_cast<ACE_UINT64> (offset)
               > static_cast<ACE_UINT64> ((ACE_Numeric_Limits<ACE_OFF_T>::max) ()))
+          {
             return -1;
+          }
 
           // File length implicitly requested by user
           requested_file_length = static_cast<ACE_OFF_T> (length_request) + offset;
@@ -162,7 +164,9 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
                               "",
                               1,
                               null_byte_position) == -1)
+          {
             return -1;
+          }
         }
       }
     else
@@ -329,7 +333,9 @@ ACE_Mem_Map::remove ()
 #endif /* __QNXNTO__ */
 
   else
+  {
     return 0;
+  }
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

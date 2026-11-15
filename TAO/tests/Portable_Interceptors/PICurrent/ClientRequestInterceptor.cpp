@@ -30,7 +30,9 @@ ClientRequestInterceptor::send_request (
   CORBA::String_var op = ri->operation ();
 
   if (std::strcmp (op.in (), "invoke_me") != 0)
+  {
     return; // Don't mess with PICurrent if not invoking test method.
+  }
 
   try
     {

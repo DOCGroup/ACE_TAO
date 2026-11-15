@@ -117,7 +117,9 @@ TAO_CEC_ProxyPushConsumer::shutdown ()
   this->deactivate ();
 
   if (CORBA::is_nil (supplier.in ()))
+  {
     return;
+  }
 
   try
     {
@@ -152,7 +154,9 @@ TAO_CEC_ProxyPushConsumer::_decr_refcnt ()
     ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
     --this->refcount_;
     if (this->refcount_ != 0)
+    {
       return this->refcount_;
+    }
   }
 
   // Notify the event channel
@@ -173,7 +177,9 @@ TAO_CEC_ProxyPushConsumer::connect_push_supplier (
     if (this->is_connected_i ())
       {
         if (!this->event_channel_->supplier_reconnect ())
+        {
           throw CosEventChannelAdmin::AlreadyConnected ();
+        }
 
         // Re-connections are allowed, go ahead and disconnect the
         // consumer...
@@ -194,7 +200,9 @@ TAO_CEC_ProxyPushConsumer::connect_push_supplier (
 
         // What if a second thread connected us after this?
         if (this->is_connected_i ())
+        {
           return;
+        }
       }
     this->supplier_ = apply_policy (push_supplier);
     this->connected_ = true;
@@ -207,7 +215,10 @@ TAO_CEC_ProxyPushConsumer::connect_push_supplier (
 CosEventComm::PushSupplier_ptr
 TAO_CEC_ProxyPushConsumer::apply_policy (CosEventComm::PushSupplier_ptr pre)
 {
-  if (CORBA::is_nil (pre)) return pre;
+  if (CORBA::is_nil (pre))
+  {
+    return pre;
+  }
   this->nopolicy_supplier_ = CosEventComm::PushSupplier::_duplicate (pre);
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
   CosEventComm::PushSupplier_var post =
@@ -240,7 +251,9 @@ TAO_CEC_ProxyPushConsumer::push (CORBA::Any const &event)
                                                  this->event_channel_,
                                                  this);
   if (!ace_mon.locked ())
+  {
     return;
+  }
 
   this->event_channel_->consumer_admin ()->push (event);
 }
@@ -257,7 +270,9 @@ TAO_CEC_ProxyPushConsumer::disconnect_push_consumer ()
     // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
 
     if (!this->is_connected_i ())
+    {
       throw CORBA::BAD_INV_ORDER (); // @@ add user exception?
+    }
 
     supplier = this->supplier_._retn ();
 
@@ -268,7 +283,9 @@ TAO_CEC_ProxyPushConsumer::disconnect_push_consumer ()
   this->event_channel_->disconnected (this);
 
   if (CORBA::is_nil (supplier.in ()))
+  {
     return;
+  }
 
   if (this->event_channel_->disconnect_callbacks ())
     {
@@ -323,7 +340,9 @@ TAO_CEC_ProxyPushConsumer_Guard::
   // logged though!
 
   if (!proxy->is_connected_i ())
+  {
     return;
+  }
 
   this->locked_ = true;
   ++this->refcount_;
@@ -335,7 +354,9 @@ TAO_CEC_ProxyPushConsumer_Guard::
   // This access is safe because guard objects are created on the
   // stack, only one thread has access to them
   if (!this->locked_)
+  {
     return;
+  }
 
   {
     ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
@@ -348,7 +369,9 @@ TAO_CEC_ProxyPushConsumer_Guard::
 
     --this->refcount_;
     if (this->refcount_ != 0)
+    {
       return;
+    }
   }
   this->event_channel_->destroy_proxy (this->proxy_);
 }

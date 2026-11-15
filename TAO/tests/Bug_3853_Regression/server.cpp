@@ -50,7 +50,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       std::basic_string<ACE_TCHAR> ior_output_file {};
       std::basic_string<ACE_TCHAR> shutdown_ior_output_file {};
       if (parse_args (argc, argv, ior_output_file, shutdown_ior_output_file) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var const poa_object = orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var const root_poa = PortableServer::POA::_narrow (poa_object.in ());

@@ -93,7 +93,9 @@ namespace ACE
     int extern_C_passwd_callback (char* buf, int size, int /*rwflag*/, void* user_data)
       {
         if (user_data == nullptr)
+        {
           return 0;
+        }
 
         SSL_CallbackManager* cbmngr = reinterpret_cast<SSL_CallbackManager*> (user_data);
 
@@ -104,12 +106,16 @@ namespace ACE
             std::strncpy (buf, pwd.c_str (), size);
             buf[size - 1] = '\0';
             if (size > ACE_Utils::truncate_cast<int> (pwd.length ()))
+            {
               size = ACE_Utils::truncate_cast<int> (pwd.length ());
+            }
 
             return size;
           }
         else
+        {
           return 0;
+        }
       }
 
   }

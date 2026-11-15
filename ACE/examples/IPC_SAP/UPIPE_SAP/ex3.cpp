@@ -101,7 +101,9 @@ consumer (void *)
     {
       result = c_stream.recv (mybuf.get (), size);
       if (result <= 0)
+      {
         break;
+      }
     }
 
   if (result == -1)

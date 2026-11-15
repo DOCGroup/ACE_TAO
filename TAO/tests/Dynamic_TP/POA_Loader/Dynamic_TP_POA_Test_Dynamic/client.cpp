@@ -162,7 +162,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var const tmp =
         orb->string_to_object (options.ior.c_str ());
@@ -220,7 +222,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                           ACE_TEXT ("Client: max_queue test, got %d overages, expected %d\n"),
                           ct.nis_, options.goal));
               if (ct.nis_ != options.goal)
+              {
                 result = -1;
+              }
             }
         }
       orb->destroy ();
@@ -228,7 +232,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   catch (CORBA::Exception const &ex)
     {
       if (options.report_exception)
+      {
         ex._tao_print_exception (ACE_TEXT ("Exception caught:"));
+      }
       return -1;
     }
 

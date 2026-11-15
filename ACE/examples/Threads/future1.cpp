@@ -233,12 +233,16 @@ Scheduler::svc ()
       std::unique_ptr<ACE_Method_Request> mo (this->activation_queue_.dequeue ());
 
       if (!mo)
+      {
         break;
+      }
 
       ACE_DEBUG ((LM_DEBUG, "(%t) calling method object\n"));
       // Call it.
       if (mo->call () == -1)
+      {
         break;
+      }
     }
 
   /* NOTREACHED */
@@ -249,7 +253,9 @@ void
 Scheduler::end ()
 {
   if (this->enqueue (std::make_unique<Method_Request_end> ()) == -1)
+  {
     ACE_ERROR ((LM_ERROR, "(%t) failed to enqueue end request\n"));
+  }
 }
 
 // Here's where the Work takes place.
@@ -273,7 +279,9 @@ Scheduler::enqueue (std::unique_ptr<ACE_Method_Request> request)
 {
   int const result = this->activation_queue_.enqueue (request.get ());
   if (result != -1)
+  {
     request.release ();
+  }
   return result;
 }
 
@@ -287,7 +295,9 @@ Scheduler::name ()
     {
       ACE_Future<std::string> new_future;
       if (this->enqueue (std::make_unique<Method_Request_name> (this, new_future)) == -1)
+      {
         ACE_ERROR ((LM_ERROR, "(%t) failed to enqueue name request\n"));
+      }
 
       return new_future;
     }
@@ -298,12 +308,16 @@ Scheduler::work (u_long newparam,
                  int newcount)
 {
   if (this->scheduler_)
+  {
     return this->scheduler_->work (newparam, newcount);
+  }
 
   ACE_Future<u_long> new_future;
   if (this->enqueue (std::make_unique<Method_Request_work> (
         this, newparam, newcount, new_future)) == -1)
+  {
     ACE_ERROR ((LM_ERROR, "(%t) failed to enqueue work request\n"));
+  }
   return new_future;
 }
 
@@ -323,11 +337,15 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   Scheduler helmut ("helmut");
   Scheduler matias ("matias", &andres);
   if (andres.open () == -1 || peter.open () == -1 || helmut.open () == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "failed to open a scheduler\n"), -1);
+  }
 
   // Matias passes all asynchronous method calls on to Andres...
   if (matias.open () == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "failed to open the delegating scheduler\n"), -1);
+  }
 
   for (size_t i = 0; i < n_loops; ++i)
     {
@@ -345,7 +363,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
         // see if the result is available...
         if (fresulta.ready ())
+        {
           ACE_DEBUG ((LM_DEBUG, "(%t) wow.. work is ready.....\n"));
+        }
 
         ACE_DEBUG ((LM_DEBUG, "(%t) non-blocking call done... now blocking...\n"));
 

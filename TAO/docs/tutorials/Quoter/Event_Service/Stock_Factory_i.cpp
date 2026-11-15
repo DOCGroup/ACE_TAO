@@ -37,7 +37,9 @@ Quoter_Stock_Factory_i::load_stock_objects (
   CosEventChannelAdmin::SupplierAdmin_ptr supplier_admin)
 {
   if (!CORBA::is_nil (this->stock_factory_poa_.in ()))
+  {
     return;
+  }
 
   CORBA::PolicyList policies (2);
   policies.length (2);

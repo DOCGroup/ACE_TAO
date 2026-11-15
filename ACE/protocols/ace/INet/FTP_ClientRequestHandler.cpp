@@ -145,7 +145,9 @@ namespace ACE
                     ftp_url.get_user_info () != this->current_user_))
               {
                 if (!this->session ()->is_new_connection ())
+                {
                   rc = this->logout ();
+                }
 
                 if (rc)
                   {
@@ -153,11 +155,17 @@ namespace ACE
                         anonymous_user_ : ftp_url.get_user_info ();
                     ACE_CString password = user;
                     rc = this->handle_credentials (ftp_url, user, password);
-                    if (rc) rc = this->login (user, password);
+                    if (rc)
+                    {
+                      rc = this->login (user, password);
+                    }
                   }
               }
 
-            if (rc) rc = this->finish_transfer ();
+            if (rc)
+            {
+              rc = this->finish_transfer ();
+            }
 
             if (rc)
               {
@@ -209,7 +217,9 @@ namespace ACE
             return true;
           }
         else
+        {
           return false;
+        }
       }
 
     bool ClientRequestHandler::handle_credentials (const URL& url,
@@ -356,12 +366,16 @@ namespace ACE
             if (std::unique_ptr<stream_type> old_stream (
                   dynamic_cast<stream_type*> (this->in_data_stream_.set_stream (nullptr)));
                 old_stream != nullptr)
+            {
               old_stream->stream ().remove_reference ();
+            }
 
             if (std::unique_ptr<stream_type> old_stream (
                   dynamic_cast<stream_type*> (this->out_data_stream_.set_stream (nullptr)));
                 old_stream != nullptr)
+            {
               old_stream->stream ().remove_reference ();
+            }
 
             this->transfer_active_ = false;
 
@@ -378,17 +392,23 @@ namespace ACE
             this->session ()->send_interrupt ();
             this->process_command (Request::FTP_ABOR);
             if (this->response_.status () == 426)
+            {
               this->session ()->receive_response (this->response_);
+            }
 
             if (std::unique_ptr<stream_type> old_stream (
                   dynamic_cast<stream_type*> (this->in_data_stream_.set_stream (nullptr)));
                 old_stream != nullptr)
+            {
               old_stream->stream ().remove_reference ();
+            }
 
             if (std::unique_ptr<stream_type> old_stream (
                   dynamic_cast<stream_type*> (this->out_data_stream_.set_stream (nullptr)));
                 old_stream != nullptr)
+            {
               old_stream->stream ().remove_reference ();
+            }
 
             this->transfer_active_ = false;
 
@@ -472,7 +492,9 @@ namespace ACE
                 if (data_stream_owner != nullptr)
                   {
                     if (this->process_command (cmd, arg) == Response::PRELIM_OK)
+                    {
                       return data_stream_owner.release ();
+                    }
                     data_stream_owner.reset ();
                   }
                 // remove last ref count -> delete
@@ -541,7 +563,9 @@ namespace ACE
                                       stream_type (data_connection));
                     std::unique_ptr<stream_type> data_stream_owner (data_stream);
                     if (data_stream_owner != nullptr)
+                    {
                       return data_stream_owner.release ();
+                    }
                     // remove last ref count -> delete
                     data_connection->remove_reference ();
                   }

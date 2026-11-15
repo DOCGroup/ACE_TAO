@@ -21,28 +21,38 @@ void
 EC_Shutdown::execute_test ()
 {
   if (this->verbose ())
+  {
     ACE_DEBUG ((LM_DEBUG, "EC_Shutdown (%P|%t) destroying EC\n"));
+  }
 
   this->destroy_ec ();
 
   if (this->verbose ())
+  {
     ACE_DEBUG ((LM_DEBUG, "EC_Shutdown (%P|%t) ec destroyed\n"));
+  }
 
   this->deactivate_ec ();
 
   if (this->verbose ())
+  {
     ACE_DEBUG ((LM_DEBUG, "EC_Shutdown (%P|%t) ec deactivated\n"));
+  }
 
   this->cleanup_ec ();
 
   if (this->verbose ())
+  {
     ACE_DEBUG ((LM_DEBUG, "EC_Shutdown (%P|%t) ec cleanup\n"));
+  }
 
   this->initialize_ec_impl ();
   this->connect_consumers ();
   this->connect_suppliers ();
   if (this->verbose ())
+  {
     ACE_DEBUG ((LM_DEBUG, "EC_Shutdown (%P|%t) status reset\n"));
+  }
 
   // this->EC_Driver::execute_test ();
 }
@@ -66,7 +76,9 @@ EC_Shutdown::consumer_disconnect (void* cookie)
 {
   ++this->consumer_disconnects_;
   if (this->verbose ())
+  {
     ACE_DEBUG ((LM_DEBUG, "Consumer %x has been disconnected\n", cookie));
+  }
 }
 
 void
@@ -74,5 +86,7 @@ EC_Shutdown::supplier_disconnect (void* cookie)
 {
   ++this->supplier_disconnects_;
   if (this->verbose ())
+  {
     ACE_DEBUG ((LM_DEBUG, "Supplier %x has been disconnected\n", cookie));
+  }
 }

@@ -42,7 +42,9 @@ TAO_Reactive_Connect_Strategy::wait_i (TAO_LF_Event *ev,
 {
   int result {};
   if (ev == nullptr)
+  {
     return -1;
+  }
 
   if (TAO_debug_level > 2)
     {
@@ -74,7 +76,9 @@ TAO_Reactive_Connect_Strategy::wait_i (TAO_LF_Event *ev,
 
           // Other errors? If so, stop running the loop.
           if (result == -1)
+          {
             break;
+          }
         }
     }
   catch (const ::CORBA::Exception&)

@@ -181,7 +181,9 @@ ACE_Framework_Repository::remove_dll_components (const ACE_TCHAR *dll_name)
   ACE_TRACE ("ACE_Framework_Repository::remove_dll_components");
 
   if (this->shutting_down_)
+  {
     return this->remove_dll_components_i (dll_name);
+  }
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
 
   return this->remove_dll_components_i (dll_name);
@@ -239,7 +241,9 @@ ACE_Framework_Repository::compact ()
                   end_hole = i;
                 }
               else
+              {
                 end_hole = i;
+              }
             }
           else if (end_hole != this->current_size_)
             break;

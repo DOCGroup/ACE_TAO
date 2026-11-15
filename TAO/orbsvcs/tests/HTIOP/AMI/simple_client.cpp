@@ -148,7 +148,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       poa_manager_var->activate ();
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       // We reuse the object_var smart pointer!
       object_var = orb->string_to_object (ior);

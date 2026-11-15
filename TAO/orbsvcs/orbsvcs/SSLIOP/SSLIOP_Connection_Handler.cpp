@@ -78,7 +78,9 @@ int
 TAO::SSLIOP::Connection_Handler::open (void *)
 {
   if (this->shared_open() == -1)
+  {
     return -1;
+  }
 
   TAO_IIOP_Protocol_Properties protocol_properties;
 
@@ -116,14 +118,18 @@ TAO::SSLIOP::Connection_Handler::open (void *)
   if (this->set_socket_option (this->peer (),
                                protocol_properties.send_buffer_size_,
                                protocol_properties.recv_buffer_size_) == -1)
+  {
     return -1;
+  }
 
 #if !defined (ACE_LACKS_TCP_NODELAY)
   if (this->peer ().set_option (ACE_IPPROTO_TCP,
                                 TCP_NODELAY,
                                 std::addressof (protocol_properties.no_delay_),
                                 sizeof (protocol_properties.no_delay_)) == -1)
+  {
     return -1;
+  }
 #endif /* ! ACE_LACKS_TCP_NODELAY */
 
   //support ORBKeepalive in SSL mode
@@ -143,7 +149,9 @@ TAO::SSLIOP::Connection_Handler::open (void *)
   if (this->transport ()->wait_strategy ()->non_blocking ())
     {
       if (this->peer ().enable (ACE_NONBLOCK) == -1)
+      {
         return -1;
+      }
 
       // Enable partial SSL writes.
       //
@@ -175,11 +183,15 @@ TAO::SSLIOP::Connection_Handler::open (void *)
   // completely connected.
   ACE_INET_Addr remote_addr;
   if (this->peer ().get_remote_addr (remote_addr) == -1)
+  {
     return -1;
+  }
 
   ACE_INET_Addr local_addr;
   if (this->peer ().get_local_addr (local_addr) == -1)
+  {
     return -1;
+  }
 
   if (local_addr == remote_addr)
     {
@@ -237,7 +249,9 @@ TAO::SSLIOP::Connection_Handler::open (void *)
   // Use C-style cast b/c otherwise we get warnings on lots of
   // compilers
   if (!this->transport ()->post_open ((size_t) this->get_handle ()))
+  {
     return -1;
+  }
 
   // @@ Not needed
   this->state_changed (TAO_LF_Event::LFS_SUCCESS,
@@ -324,7 +338,9 @@ void
 TAO::SSLIOP::Connection_Handler::pos_io_hook (int & return_value)
 {
   if (return_value == 0 && ::SSL_pending (this->peer ().ssl ()))
+  {
     return_value = 1;
+  }
 }
 
 int
@@ -337,7 +353,9 @@ TAO::SSLIOP::Connection_Handler::add_transport_to_cache ()
   // Note that the port set in the ACE_INET_Addr is actually the SSL
   // port!
   if (this->peer ().get_remote_addr (addr) == -1)
+  {
     return -1;
+  }
 
   // Construct an  IIOP_Endpoint object
   TAO_IIOP_Endpoint tmpoint (
@@ -418,7 +436,9 @@ TAO::SSLIOP::Connection_Handler::process_listen_point_list (
       // The property for this handler has changed. Recache the
       // handler with this property
       if (this->transport ()->recache_transport (&prop) == -1)
+      {
         return -1;
+      }
 
       // Make the handler idle and ready for use
       this->transport ()->make_idle ();

@@ -27,7 +27,9 @@ TAO::PICurrent_Impl::get_slot (PortableInterceptor::SlotId identifier)
       && (std::addressof (this->lazy_copy_->current_slot_table ()) == std::addressof (this->slot_table_)))
   {
     if (TAO_debug_level > 0)
+    {
       TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) Lazy copy of self detected at %N,%l\n")));
+    }
     throw ::CORBA::INTERNAL ();
   }
 
@@ -72,7 +74,9 @@ TAO::PICurrent_Impl::set_slot (PortableInterceptor::SlotId identifier,
   // Break any existing ties that another PICurrent has with our table
   // since our table is changing.
   if (nullptr != this->impending_change_callback_)
+  {
     this->impending_change_callback_->convert_from_lazy_to_real_copy ();
+  }
 
   // Ensure that we have a real physical copy of the table before
   // making any changes to it.
@@ -83,7 +87,9 @@ TAO::PICurrent_Impl::set_slot (PortableInterceptor::SlotId identifier,
   // slots for the reason stated above.
   if (identifier >= this->slot_table_.size ()
       && this->slot_table_.size (identifier + 1) != 0)
+  {
     throw ::CORBA::INTERNAL ();
+  }
 
   this->slot_table_[identifier] = data;
 }
@@ -102,13 +108,17 @@ TAO::PICurrent_Impl::take_lazy_copy (
       // Break any existing ties that another PICurrent has with our table
       // since our table is changing.
       if (nullptr != this->impending_change_callback_)
+      {
         this->impending_change_callback_->convert_from_lazy_to_real_copy ();
+      }
 
       // If we have previously logically copied another table, ensure it is
       // told that we are no longer interested in it so that it will not
       // call our conver_from_lazy_to_real_copy() when it changes/destructs.
       if (nullptr != this->lazy_copy_)
+      {
         this->lazy_copy_->set_callback_for_impending_change (nullptr);
+      }
 
       // Are we being asked to copy ourself (or nothing)
       if ((nullptr == p) || (this == p))
@@ -148,13 +158,17 @@ TAO::PICurrent_Impl::~PICurrent_Impl ()
   // Break any existing ties that another PICurrent has with our table
   // since our table will no longer exists once this destructor completes.
   if (nullptr != this->impending_change_callback_)
+  {
     this->impending_change_callback_->convert_from_lazy_to_real_copy ();
+  }
 
   // If we have logically copied another table, ensure it is told about our
   // demise so that it will not call our non-existent
   // convert_from_lazy_to_real_copy() when it changes/destructs.
   if (nullptr != this->lazy_copy_)
+  {
     this->lazy_copy_->set_callback_for_impending_change (nullptr);
+  }
 
   if (this->pop_)
     {
@@ -194,7 +208,9 @@ TAO::PICurrent_Impl::push ()
       this->orb_core_->set_tss_resource (this->tss_slot_, currentHead->push_);
     }
   else
+  {
     throw ::CORBA::INTERNAL (); // Should only call push if we have a stack
+  }
 }
 
 void
@@ -208,10 +224,14 @@ TAO::PICurrent_Impl::pop ()
       if (currentHead->pop_)
         orb_core_->set_tss_resource (tss_slot_, currentHead->pop_);
       else
+      {
         throw ::CORBA::INTERNAL (); // Too many pop's
+      }
     }
   else
+  {
     throw ::CORBA::INTERNAL (); // Should only call push if we have a stack
+  }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

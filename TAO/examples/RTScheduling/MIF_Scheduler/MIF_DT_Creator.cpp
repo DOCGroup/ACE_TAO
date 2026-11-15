@@ -58,7 +58,9 @@ MIF_DT_Creator::yield (time_t suspend_time,
                                               sched_param.in ());
           now = ACE_OS::gettimeofday ();
           if (suspend_time == 1)
+          {
             break;
+          }
         }
     }
   catch (const CORBA::Exception& ex)

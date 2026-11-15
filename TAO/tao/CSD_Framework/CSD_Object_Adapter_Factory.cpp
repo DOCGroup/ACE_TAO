@@ -42,7 +42,9 @@ TAO_CSD_Object_Adapter_Factory::init (int /* argc */, ACE_TCHAR * /* argv */ [])
     ACE_Dynamic_Service<TAO_CSD_Strategy_Repository>::instance ("TAO_CSD_Strategy_Repository");
 
   if (repo != nullptr)
+  {
     repo->init (0, nullptr);
+  }
 
   return 0;
 }

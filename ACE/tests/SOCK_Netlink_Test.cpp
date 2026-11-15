@@ -514,7 +514,9 @@ Secondary_Ipaddr_Handler::handle_timeout (ACE_Time_Value const &,
                         -1);
     }
   else
+  {
     this->command_status_ = COMMAND_TIMEOUT; //invalidate command status
+  }
 
   switch (this->state_)
     {
@@ -630,7 +632,9 @@ Secondary_Ipaddr_Handler::fill_inet_prefix (
   ACE_OS::memset (&inet_prefix, 0, sizeof inet_prefix);
   char* slash =  const_cast <char *> (ACE_OS::strchr (ip_slash_netmask,  '/'));
   if (slash)
+  {
     *slash = '\0'; // The idea from Igor Potulnitsky
+  }
 
   inet_prefix.family = AF_INET; // another option is AF_UNSPEC
   inet_prefix.bytelen = 4;
@@ -649,16 +653,22 @@ Secondary_Ipaddr_Handler::fill_inet_prefix (
           if (!dot || !ACE_OS::strlen (to_search))
             return -1;
           else
+          {
             *dot = '\0';
+          }
         }
       int num = ACE_OS::atoi (to_search);
       if (num < 0 || num > 255)
         return -1;
       else
+      {
         ((u_char *) &inet_prefix.data)[i] = (u_char)num;
+      }
 
       if (i < 3)
+      {
         to_search = dot + 1;
+      }
     }
 
   inet_prefix.bitlen = 32; // AF_INET: 32
@@ -668,7 +678,9 @@ Secondary_Ipaddr_Handler::fill_inet_prefix (
       int mask_len = 0;
       mask_len = ACE_OS::atoi (slash + 1);
       if (mask_len >= 0)
+      {
         inet_prefix.bitlen = mask_len;
+      }
       *slash = '/';
     }
   return 0;
@@ -823,7 +835,9 @@ static int run_test (char*const ip_slash_netmask,
   ACE_Reactor::instance()->run_reactor_event_loop (wait_time);
 
   if (sec_ip_handler.get_state () != Secondary_Ipaddr_Handler::SUCCESS)
+  {
     return -1;
+  }
 
   return 0;
 }

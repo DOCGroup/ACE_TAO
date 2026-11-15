@@ -47,7 +47,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     orb_ = CORBA::ORB_init (argc, argv, "myorb-server");
 
     if (parse_args (argc, argv) != 0)
+    {
       return 1;
+    }
 
     CORBA::Object_var poa_object =
       orb_->resolve_initial_references("RootPOA");
@@ -96,7 +98,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     // Running ORB in separate thread
     Worker worker (orb_.in ());
     if (worker.activate (THR_NEW_LWP | THR_JOINABLE, nr_threads) != 0)
+    {
       ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "Cannot activate server thread(s)"), -1);
+    }
 
     ACE_DEBUG((LM_INFO,"(%P|%t) Await client initialization\n"));
     poll ("./client.ior");

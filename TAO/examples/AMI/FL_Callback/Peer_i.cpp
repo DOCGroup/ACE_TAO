@@ -12,7 +12,9 @@ Peer_Handler_i::request (CORBA::Long retval)
   static int i {};
   ++i;
   if (i % 100 == 0)
+  {
     ACE_DEBUG ((LM_DEBUG, "(%P|%t) %d replies received\n", i));
+  }
   this->peer_->reply (retval);
 }
 
@@ -125,7 +127,9 @@ Peer_Task::svc ()
             }
         }
       if (i % 100 == 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) %d requests sent\n", i));
+      }
     }
   return 0;
 }

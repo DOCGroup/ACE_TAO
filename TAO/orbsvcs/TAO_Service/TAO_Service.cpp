@@ -40,7 +40,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       ACE_Service_Config::reconfig_occurred ()));
 
           if (ACE_Service_Config::reconfig_occurred ())
+          {
             ACE_Service_Config::reconfigure ();
+          }
         }
 
     }

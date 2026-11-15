@@ -107,7 +107,9 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                                          ACE_TEXT("thread-per-connection")) == 0)
               this->activate_server_connections_ = 1;
             else
+            {
               this->report_option_value_error (ACE_TEXT("-ORBConcurrency"), name);
+            }
           }
       }
 
@@ -210,7 +212,9 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
               this->active_object_map_creation_parameters_.object_lookup_strategy_for_user_id_policy_ =
                 TAO_LINEAR;
             else
+            {
               this->report_option_value_error (ACE_TEXT("-ORBUseridPolicyDemuxStrategy"), name);
+            }
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -234,7 +238,9 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
               this->active_object_map_creation_parameters_.object_lookup_strategy_for_system_id_policy_ =
                 TAO_ACTIVE_DEMUX;
             else
+            {
               this->report_option_value_error (ACE_TEXT("-ORBSystemidPolicyDemuxStrategy"), name);
+            }
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -255,7 +261,9 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
               this->active_object_map_creation_parameters_.poa_lookup_strategy_for_persistent_id_policy_ =
                 TAO_LINEAR;
             else
+            {
               this->report_option_value_error (ACE_TEXT("-ORBPersistentidPolicyDemuxStrategy"), name);
+            }
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -279,7 +287,9 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
               this->active_object_map_creation_parameters_.poa_lookup_strategy_for_transient_id_policy_ =
                 TAO_ACTIVE_DEMUX;
             else
+            {
               this->report_option_value_error (ACE_TEXT("-ORBTransientidPolicyDemuxStrategy"), name);
+            }
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -299,7 +309,9 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
               this->active_object_map_creation_parameters_.reverse_object_lookup_strategy_for_unique_id_policy_ =
                 TAO_LINEAR;
             else
+            {
               this->report_option_value_error (ACE_TEXT("-ORBUniqueidPolicyReverseDemuxStrategy"), name);
+            }
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -308,7 +320,9 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
         ++curarg;
 
         if (curarg < argc)
+        {
           this->tokenize (argv[curarg]);
+        }
       }
 
     else if (ACE_OS::strncmp (argv[curarg], ACE_TEXT("-ORB"), 4) == 0)

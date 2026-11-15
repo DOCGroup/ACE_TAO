@@ -927,7 +927,9 @@ ace_yydestruct (const char *ace_yymsg,
   ACE_YY_USE (ace_yyvaluep);
   ACE_YY_USE (ACE_YYLEX_PARAM);
   if (!ace_yymsg)
+  {
     ace_yymsg = "Deleting";
+  }
   ACE_YY_SYMBOL_PRINT (ace_yymsg, ace_yykind, ace_yyvaluep, ace_yylocationp);
 
   ACE_YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN
@@ -1089,7 +1091,9 @@ ace_yysetstate:
 
 
   if (ace_yystate == ACE_YYFINAL)
+  {
     ACE_YYACCEPT;
+  }
 
   goto ace_yybackup;
 
@@ -1104,7 +1108,9 @@ ace_yybackup:
   /* First try to decide what to do without reference to lookahead token.  */
   ace_yyn = ace_yypact[ace_yystate];
   if (ace_yypact_value_is_default (ace_yyn))
+  {
     goto ace_yydefault;
+  }
 
   /* Not known => get a lookahead token if don't already have one.  */
 
@@ -1141,12 +1147,16 @@ ace_yybackup:
      detect an error, take that action.  */
   ace_yyn += ace_yytoken;
   if (ace_yyn < 0 || ACE_YYLAST < ace_yyn || ace_yycheck[ace_yyn] != ace_yytoken)
+  {
     goto ace_yydefault;
+  }
   ace_yyn = ace_yytable[ace_yyn];
   if (ace_yyn <= 0)
     {
       if (ace_yytable_value_is_error (ace_yyn))
+      {
         goto ace_yyerrlab;
+      }
       ace_yyn = -ace_yyn;
       goto ace_yyreduce;
     }
@@ -1154,7 +1164,9 @@ ace_yybackup:
   /* Count tokens shifted since error; after three, turn off error
      status.  */
   if (ace_yyerrstatus)
+  {
     ace_yyerrstatus--;
+  }
 
   /* Shift the lookahead token.  */
   ACE_YY_SYMBOL_PRINT ("Shifting", ace_yytoken, &ace_yylval, &ace_yylloc);
@@ -1174,7 +1186,9 @@ ace_yybackup:
 ace_yydefault:
   ace_yyn = ace_yydefact[ace_yystate];
   if (ace_yyn == 0)
+  {
     goto ace_yyerrlab;
+  }
   goto ace_yyreduce;
 
 
@@ -1221,7 +1235,9 @@ ace_yyreduce:
       if ((ace_yyvsp[-1].svc_record_) != nullptr)
         (ace_yyval.parse_node_) = new ACE_Dynamic_Node ((ace_yyvsp[-1].svc_record_), (ace_yyvsp[0].ident_));
       else
+      {
         (ace_yyval.parse_node_) = nullptr;
+      }
     }
     break;
 
@@ -1333,7 +1349,9 @@ ace_yyreduce:
                                             sn->name (),
                                             ACE_SVC_CONF_PARAM->yyerrno);
       if (mt != nullptr)
+      {
         mt->suspend ();
+      }
     }
     break;
 
@@ -1344,7 +1362,9 @@ ace_yyreduce:
                                             (ace_yyvsp[0].static_node_)->name (),
                                             ACE_SVC_CONF_PARAM->yyerrno);
       if (mt != nullptr)
+      {
         mt->resume ();
+      }
     }
     break;
 
@@ -1492,7 +1512,9 @@ ace_yyerrlab:
         {
           /* Return failure if at end of input.  */
           if (ace_yychar == ACE_YYEOF)
+          {
             ACE_YYABORT;
+          }
         }
       else
         {
@@ -1514,7 +1536,9 @@ ace_yyerrorlab:
   /* Pacify compilers when the user code never invokes ACE_YYERROR and the
      label ace_yyerrorlab therefore never appears in user code.  */
   if (0)
+  {
     ACE_YYERROR;
+  }
   ++ace_yynerrs;
 
   /* Do not reclaim the symbols of the rule whose action triggered
@@ -1543,13 +1567,17 @@ ace_yyerrlab1:
             {
               ace_yyn = ace_yytable[ace_yyn];
               if (0 < ace_yyn)
+              {
                 break;
+              }
             }
         }
 
       /* Pop the current state because it cannot handle the error token.  */
       if (ace_yyssp == ace_yyss)
+      {
         ACE_YYABORT;
+      }
 
 
       ace_yydestruct ("Error: popping",
@@ -1620,7 +1648,9 @@ ace_yyreturnlab:
     }
 #ifndef ace_yyoverflow
   if (ace_yyss != ace_yyssa)
+  {
     ACE_YYSTACK_FREE (ace_yyss);
+  }
 #endif
 
   return ace_yyresult;

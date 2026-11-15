@@ -177,7 +177,9 @@ ACE_SOCK_SEQPACK_Association::get_local_addrs (ACE_INET_Addr *addrs, size_t &siz
   if (ACE_OS::getsockname (this->get_handle (),
                            reinterpret_cast<sockaddr *> (addr_structs.get()),
                            &name_size) == -1)
+  {
     return -1;
+  }
 
   /* Calculate the NEW physical size of the array */
   name_size /= sizeof (sockaddr_in);
@@ -314,7 +316,9 @@ ACE_SOCK_SEQPACK_Association::get_remote_addrs (ACE_INET_Addr *addrs, size_t &si
   if (ACE_OS::getpeername (this->get_handle (),
                            reinterpret_cast<sockaddr *> (addr_structs.get()),
                            &name_size) == -1)
+  {
     return -1;
+  }
 
   /* Calculate the NEW physical size of the array */
   name_size /= sizeof (sockaddr_in);

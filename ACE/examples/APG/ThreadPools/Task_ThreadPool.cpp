@@ -33,7 +33,9 @@ public:
           }
         ACE_Message_Block_Unique_Ptr message_block {raw_message_block};
         if (!message_block)
+        {
           break;
+        }
 
         // Process the message.
         process_message (message_block);
@@ -101,11 +103,15 @@ public:
           }
         ACE_Message_Block_Unique_Ptr message_block {raw_message_block};
         if (!message_block)
+        {
           continue;
+        }
 
         // On success, the worker queue owns the message block and releases it.
         if (pool.putq (message_block.get ()) != -1)
+        {
           message_block.release ();
+        }
       }
 
     return 0;
@@ -142,7 +148,9 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 
       // On success, the manager queue owns the message block.
       if (tp.putq (message_block.get ()) == -1)
+      {
         return -1;
+      }
       message_block.release ();
     }
 

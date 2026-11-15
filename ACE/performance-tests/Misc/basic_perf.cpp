@@ -451,7 +451,9 @@ Virtual_Member_Call_Test::run ()
   if (iterations < 2)
     fv = std::make_unique<Foo_v> ();
   else
+  {
     fv = std::make_unique<Foo_d_v> ();
+  }
 
   this->start_timing ();
 
@@ -527,7 +529,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int const option_status = get_options (argc, argv);
   if (option_status != 0)
+  {
     return option_status == 2 ? 0 : 1;
+  }
 
   ACE_utsname name {};
 

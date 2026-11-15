@@ -99,17 +99,23 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
   struct ifaddrs *p_if {};
 
   if (::getifaddrs (&ifap) != 0)
+  {
     return -1;
+  }
 
   for (p_if = ifap; p_if != nullptr; p_if = p_if->ifa_next)
     {
       if (p_if->ifa_addr == nullptr)
+      {
         continue;
+      }
 
       // Check to see if it's up and is not either PPP or loopback
       if ((p_if->ifa_flags & IFF_UP) == IFF_UP &&
           (p_if->ifa_flags & (IFF_LOOPBACK | IFF_POINTOPOINT)) == 0)
+      {
         break;
+      }
     }
   if (p_if == nullptr)
     {
@@ -126,7 +132,9 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
     ACE_OS::socket (PF_INET, SOCK_DGRAM, 0);
 
   if (handle == ACE_INVALID_HANDLE)
+  {
     return -1;
+  }
 
 # ifdef ACE_LACKS_IOCTL
   int info = 0;

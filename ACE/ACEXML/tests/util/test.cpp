@@ -15,11 +15,17 @@ constexpr size_t NUM_TEST_STRS = 6;
 static bool is_escaped (ACEXML_String const &s)
 {
   if (s.length () == 0)
+  {
     return false;
+  }
   if (s[0] != ACE_TEXT('&'))
+  {
     return false;
+  }
   if (s[s.length() - 1] != ACE_TEXT(';'))
+  {
     return false;
+  }
   return true;
 }
 
@@ -100,7 +106,9 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   };
 
   if (run_tests (test_strings, MAX_ITERATIONS) != 0)
+  {
     return 1;
+  }
 
   ACE_DEBUG ((LM_DEBUG, "Rerun tests with larger strings\n"));
   for (size_t i {}; i < NUM_TEST_STRS; ++i)
@@ -112,7 +120,9 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   }
 
   if (run_tests (test_strings, MAX_ITERATIONS / 10) != 0)
+  {
     return 1;
+  }
 
   return 0;
 }

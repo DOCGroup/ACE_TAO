@@ -126,7 +126,9 @@ TAO_Hash_LogRecordStore::log (DsLogAdmin::LogRecord const &const_rec)
 
   // Check if we are allowed to write...
   if (max_size_ !=0 && ((current_size_ + record_size) >= max_size_))
+  {
     return 1; // return code for log rec. full
+  }
 
   // Copy record...
   DsLogAdmin::LogRecord rec = const_rec;
@@ -218,7 +220,9 @@ TAO_Hash_LogRecordStore::purge_old_records ()
   CORBA::ULongLong num_records_to_purge = this->num_records_ * 5U / 100U;
 
   if (num_records_to_purge < 1)
+  {
     num_records_to_purge = 1;
+  }
 
   CORBA::ULong count {}; // count of matches found.
 
@@ -594,7 +598,9 @@ TAO_Hash_LogRecordStore::check_grammar (char const *grammar)
   if (std::strcmp (grammar, "TCL") != 0 &&
       std::strcmp (grammar, "ETCL") != 0 &&
       std::strcmp (grammar, "EXTENDED_TCL") != 0)
+  {
     throw DsLogAdmin::InvalidGrammar ();
+  }
 }
 
 DsLogAdmin::AdministrativeState

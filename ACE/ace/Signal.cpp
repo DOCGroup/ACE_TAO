@@ -38,7 +38,9 @@ ACE_Sig_Guard::~ACE_Sig_Guard ()
 {
   //ACE_TRACE ("ACE_Sig_Guard::~ACE_Sig_Guard");
   if (!this->condition_)
+  {
     return;
+  }
 
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
 #if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
@@ -95,7 +97,9 @@ ACE_Sig_Action::ACE_Sig_Action (ACE_SignalHandler sig_handler,
   if (sig_mask == nullptr)
     ACE_OS::sigemptyset (&this->sa_.sa_mask);
   else
+  {
     this->sa_.sa_mask = *sig_mask; // Structure assignment...
+  }
 
   this->sa_.sa_handler = ACE_SignalHandlerV (sig_handler);
 }
@@ -123,7 +127,9 @@ ACE_Sig_Action::ACE_Sig_Action (ACE_SignalHandler sig_handler,
   if (sig_mask == nullptr)
     ACE_OS::sigemptyset (&this->sa_.sa_mask);
   else
+  {
     this->sa_.sa_mask = *sig_mask; // Structure assignment...
+  }
 
   this->sa_.sa_handler = ACE_SignalHandlerV (sig_handler);
   ACE_OS::sigaction (signum, &this->sa_, nullptr);
@@ -158,7 +164,9 @@ ACE_Sig_Action::ACE_Sig_Action (const ACE_Sig_Set &signals,
 #if (ACE_NSIG > 0)
   for (int s = 1; s < ACE_NSIG; ++s)
     if ((signals.is_member (s)) == 1)
+    {
       ACE_OS::sigaction (s, &this->sa_, nullptr);
+    }
 #else  /* ACE_NSIG <= 0  */
   ACE_UNUSED_ARG (signals);
 #endif /* ACE_NSIG <= 0  */
@@ -175,14 +183,18 @@ ACE_Sig_Action::ACE_Sig_Action (const ACE_Sig_Set &signals,
   if (sig_mask == nullptr)
     ACE_OS::sigemptyset (&this->sa_.sa_mask);
   else
+  {
     this->sa_.sa_mask = *sig_mask; // Structure assignment...
+  }
 
   this->sa_.sa_handler = ACE_SignalHandlerV (sig_handler);
 
 #if (ACE_NSIG > 0)
   for (int s = 1; s < ACE_NSIG; ++s)
     if ((signals.is_member (s)) == 1)
+    {
       ACE_OS::sigaction (s, &this->sa_, nullptr);
+    }
 #else  /* ACE_NSIG <= 0  */
   ACE_UNUSED_ARG (signals);
 #endif /* ACE_NSIG <= 0  */

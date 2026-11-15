@@ -97,14 +97,18 @@ namespace TAO
     CORBA::Boolean byte_order {};
 
     if (!(cdr >> ACE_InputCDR::to_boolean (byte_order)))
+    {
       return;
+    }
 
     cdr.reset_byte_order (static_cast<int> (byte_order));
 
     FT::FTGroupVersionServiceContext fgvsc;
 
     if (!(cdr >> fgvsc))
+    {
       throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
+    }
 
     if (fgvsc.object_group_ref_version >
         this->object_group_ref_version_)
@@ -162,7 +166,9 @@ namespace TAO
     // which accepts three parameters, i.e.,an iogr as a string,
     // a version object and a boolean.
     if (param->length () != 3 )
+    {
       throw CORBA::TRANSIENT ();
+    }
 
     char const* str {};
 
@@ -179,7 +185,9 @@ namespace TAO
     // received and updated the IOGR. We will add a special minor code
     // soon.
     if (this->iogr_.in ())
+    {
       throw CORBA::TRANSACTION_ROLLEDBACK ();
+    }
   }
 }
 

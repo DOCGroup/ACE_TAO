@@ -16,7 +16,9 @@ SM_Client::demux (char *packet,
   if (this->pm_client_->decode (packet, packet_length) < 0)
     return -1;
   else
+  {
     return 1;
+  }
 }
 
 // Call-back function that invokes the appropriate encode function.
@@ -50,7 +52,9 @@ SM_Client::mux (char *packet, int &packet_length)
   this->pm_client_.reset (manager);
 
   if (this->pm_client_->encode (packet, packet_length) < 0)
+  {
     return -1;
+  }
   return 1;
 }
 

@@ -30,7 +30,9 @@ Client_Task::svc ()
           int const retval = this->one_iteration ();
 
           if (retval != 0)
+          {
             ++successful_calls;
+          }
 
           if (i % 10 == 0)
             {

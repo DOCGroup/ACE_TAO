@@ -16,7 +16,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (server.init ("Grid",
                        argc,
                        argv) == -1)
+      {
         return 1;
+      }
       server.run ();
     }
   catch (CORBA::UserException const &userex)

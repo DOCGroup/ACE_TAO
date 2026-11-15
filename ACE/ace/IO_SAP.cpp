@@ -65,7 +65,9 @@ ACE_IO_SAP::enable (int value) const
                          ACE_OS::getpid ()) == -1
           || ACE::set_flags (this->handle_,
                              FASYNC) == -1)
+      {
         return -1;
+      }
       break;
 #else
       ACE_NOTSUP_RETURN (-1);
@@ -76,7 +78,9 @@ ACE_IO_SAP::enable (int value) const
     case ACE_NONBLOCK:
       if (ACE::set_flags (this->handle_,
                           ACE_NONBLOCK) == -1)
+      {
         return -1;
+      }
       break;
     default:
       return -1;
@@ -98,7 +102,9 @@ ACE_IO_SAP::disable (int value) const
 #if defined (F_SETOWN)
       if (ACE_OS::fcntl (this->handle_,
                          F_SETOWN, 0) == -1)
+      {
         return -1;
+      }
       break;
 #else
       ACE_NOTSUP_RETURN (-1);
@@ -112,7 +118,9 @@ ACE_IO_SAP::disable (int value) const
                          F_SETOWN,
                          0) == -1
           || ACE::clr_flags (this->handle_, FASYNC) == -1)
+      {
         return -1;
+      }
       break;
 #else
       ACE_NOTSUP_RETURN (-1);
@@ -123,7 +131,9 @@ ACE_IO_SAP::disable (int value) const
     case ACE_NONBLOCK:
       if (ACE::clr_flags (this->handle_,
                                      ACE_NONBLOCK) == -1)
+      {
         return -1;
+      }
       break;
     default:
       return -1;

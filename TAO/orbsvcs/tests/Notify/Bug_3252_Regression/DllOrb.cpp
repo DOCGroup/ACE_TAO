@@ -19,11 +19,15 @@ DllOrb::init (int argc, ACE_TCHAR *argv[])
       {
         int const num = ACE_OS::atoi (current_arg);
         if (num >= 1)
+        {
           thread_count = num;
+        }
         as.consume_arg ();
       }
       else
+      {
         as.ignore_arg ();
+      }
     }
 
     // Initialize the ORB

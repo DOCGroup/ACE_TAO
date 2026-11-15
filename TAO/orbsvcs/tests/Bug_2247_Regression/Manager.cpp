@@ -24,7 +24,9 @@ struct Read_Buffer_Deleter
   void operator() (char *buffer) const
   {
     if (buffer != nullptr)
+    {
       this->allocator->free (buffer);
+    }
   }
 };
 
@@ -74,7 +76,9 @@ Manager::parse_args (int argc, ACE_TCHAR *argv[])
       || this->options_.second_ior == nullptr
       || this->options_.second_key == nullptr
       || this->options_.ior_output_file == nullptr)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "All IOR files, keys, and output file are required\n"), -1);
+  }
 
   return 0;
 }
@@ -89,7 +93,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       manager.init (argc, argv);
 
       if (manager.parse_args (argc, argv) == -1)
+      {
         return -1;
+      }
 
       manager.make_merged_iors ();
 
@@ -222,7 +228,9 @@ Manager::write_to_file ()
                            this->options_.ior_output_file),
                           1);
       if (std::fprintf (output_file.get (), "%s", iorref.in ()) < 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot write IOR to output file\n")), 1);
+      }
     }
 
   return 0;
@@ -481,7 +489,9 @@ Client_i::init ()
   std::unique_ptr<char, Read_Buffer_Deleter> const data (
     ior_buffer.read (), Read_Buffer_Deleter {ior_buffer.alloc ()});
   if (!data)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Unable to read IOR file\n")), -1);
+  }
 
   CORBA::Object_var const object = this->orb_->string_to_object (data.get ());
 

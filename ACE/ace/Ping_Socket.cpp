@@ -306,7 +306,9 @@ ACE_Ping_Socket::send_echo_check (ACE_INET_Addr &remote_addr,
                            remote_addr.get_size ()) == -1)
         {
           if (errno != EINTR)
+          {
             return -1;
+          }
        }
       this->connected_socket_ = true;
     }
@@ -333,7 +335,9 @@ ACE_Ping_Socket::send_echo_check (ACE_INET_Addr &remote_addr,
 
   ssize_t const rval_send = send (icmp_send_buff_, length_icmp, remote_addr);
   if (rval_send != length_icmp)
+  {
     return -1;
+  }
 
   return 0;
 }
@@ -345,7 +349,9 @@ ACE_Ping_Socket::make_echo_check (ACE_INET_Addr & remote_addr,
 {
   int const rval_send = this->send_echo_check (remote_addr, to_connect);
   if (rval_send == -1)
+  {
     return -1;
+  }
 
   ACELIB_DEBUG
     ((LM_DEBUG,

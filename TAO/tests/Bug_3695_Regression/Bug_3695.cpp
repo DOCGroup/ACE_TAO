@@ -18,7 +18,9 @@ struct IIOP_Profile_Deleter
   void operator() (TAO_IIOP_Profile *profile) const
   {
     if (profile != nullptr)
+    {
       profile->_decr_refcnt ();
+    }
   }
 };
 

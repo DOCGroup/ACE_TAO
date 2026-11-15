@@ -25,13 +25,19 @@ TAO_RT_Stub::TAO_RT_Stub (char const *repository_id,
 TAO_RT_Stub::~TAO_RT_Stub ()
 {
   if (this->priority_model_policy_.in ())
+  {
     this->priority_model_policy_->destroy ();
+  }
 
   if (this->priority_banded_connection_policy_.in ())
+  {
     this->priority_banded_connection_policy_->destroy ();
+  }
 
   if (this->client_protocol_policy_.in ())
+  {
     this->client_protocol_policy_->destroy ();
+  }
 }
 
 void
@@ -185,7 +191,9 @@ TAO_RT_Stub::set_policy_overrides (CORBA::PolicyList const & policies,
           if (type == RTCORBA::PRIORITY_MODEL_POLICY_TYPE ||
               type == RTCORBA::THREADPOOL_POLICY_TYPE ||
               type == RTCORBA::SERVER_PROTOCOL_POLICY_TYPE)
+          {
             throw ::CORBA::NO_PERMISSION ();
+          }
         }
     }
 
@@ -207,10 +215,14 @@ TAO_RT_Stub::effective_priority_banded_connection ()
 
   // Reconcile client-exposed and locally set values.
   if (CORBA::is_nil (exposed.in ()))
+  {
     return override._retn ();
+  }
 
   if (CORBA::is_nil (override.in ()))
+  {
     return exposed._retn ();
+  }
 
   RTCORBA::PriorityBandedConnectionPolicy_var override_policy_var =
     RTCORBA::PriorityBandedConnectionPolicy::_narrow (override.in ());
@@ -232,10 +244,14 @@ TAO_RT_Stub::effective_priority_banded_connection ()
   // Both override and exposed have been set.
   // See if either of them has empty priority bands.
   if (exposed_policy->priority_bands_rep ().length () == 0)
+  {
     return override._retn ();
+  }
 
   if (override_policy->priority_bands_rep ().length () == 0)
+  {
     return exposed._retn ();
+  }
 
   // Both override and exposed have been set and neither has empty
   // priority bands.  This is illegal (ptc/99-05-03, sec. 4.12.1).
@@ -255,10 +271,14 @@ TAO_RT_Stub::effective_client_protocol ()
 
   // Reconcile client-exposed and locally set values.
   if (CORBA::is_nil (exposed.in ()))
+  {
     return override._retn ();
+  }
 
   if (CORBA::is_nil (override.in ()))
+  {
     return exposed._retn ();
+  }
 
   RTCORBA::ClientProtocolPolicy_var override_policy_var =
     RTCORBA::ClientProtocolPolicy::_narrow (override.in ());
@@ -283,10 +303,14 @@ TAO_RT_Stub::effective_client_protocol ()
     exposed_policy->protocols_rep ();
 
   if (protocols_rep_var.length () == 0)
+  {
     return override._retn ();
+  }
 
   if (override_policy->protocols_rep ().length () == 0)
+  {
     return exposed._retn ();
+  }
 
   // Both override and exposed have been set and neither has empty
   // protocols.  This is illegal (ptc/99-05-03, sec. 4.15.4).

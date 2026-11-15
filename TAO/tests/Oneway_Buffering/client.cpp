@@ -117,7 +117,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var tmp =
         orb->string_to_object(server_ior);
@@ -505,7 +507,9 @@ run_message_count (CORBA::ORB_ptr orb,
                         oneway_buffering, flusher.out ());
 
   if (test_failed != 0)
+  {
     return test_failed;
+  }
 
   Test::Payload payload (PAYLOAD_LENGTH);
   payload.length (PAYLOAD_LENGTH);
@@ -586,7 +590,9 @@ run_message_count (CORBA::ORB_ptr orb,
                        oneway_buffering_admin);
 
   if (liveness_test_failed)
+  {
     test_failed = 1;
+  }
 
   return test_failed;
 }
@@ -608,7 +614,9 @@ run_timeout (CORBA::ORB_ptr orb,
                         oneway_buffering, flusher.out ());
 
   if (test_failed != 0)
+  {
     return test_failed;
+  }
 
   Test::Payload payload (PAYLOAD_LENGTH);
   payload.length (PAYLOAD_LENGTH);
@@ -680,7 +688,9 @@ run_timeout (CORBA::ORB_ptr orb,
                        oneway_buffering_admin);
 
   if (liveness_test_failed)
+  {
     test_failed = 1;
+  }
 
   return test_failed;
 }
@@ -702,7 +712,9 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
                         oneway_buffering, flusher.out ());
 
   if (test_failed != 0)
+  {
     return test_failed;
+  }
 
   Test::Payload payload (PAYLOAD_LENGTH);
   payload.length (PAYLOAD_LENGTH);
@@ -782,7 +794,9 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
                        oneway_buffering_admin);
 
   if (liveness_test_failed)
+  {
     test_failed = 1;
+  }
 
   return test_failed;
 }
@@ -804,7 +818,9 @@ run_buffer_size (CORBA::ORB_ptr orb,
                         oneway_buffering, flusher.out ());
 
   if (test_failed != 0)
+  {
     return test_failed;
+  }
 
   Test::Payload payload (PAYLOAD_LENGTH);
   payload.length (PAYLOAD_LENGTH);
@@ -884,7 +900,9 @@ run_buffer_size (CORBA::ORB_ptr orb,
                        oneway_buffering_admin);
 
   if (liveness_test_failed)
+  {
     test_failed = 1;
+  }
 
   return test_failed;
 }

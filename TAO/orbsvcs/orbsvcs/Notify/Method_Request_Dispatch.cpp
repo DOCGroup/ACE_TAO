@@ -59,7 +59,9 @@ TAO_Notify_Method_Request_Dispatch::~TAO_Notify_Method_Request_Dispatch () = def
 int TAO_Notify_Method_Request_Dispatch::execute_i ()
 {
   if (this->proxy_supplier_->has_shutdown ())
+  {
     return 0; // If we were shutdown while waiting in the queue, return with no action.
+  }
 
   if (this->filtering_)
     {
@@ -76,7 +78,9 @@ int TAO_Notify_Method_Request_Dispatch::execute_i ()
 
       // Filter failed - do nothing.
       if (!val)
+      {
         return 0;
+      }
     }
 
   try

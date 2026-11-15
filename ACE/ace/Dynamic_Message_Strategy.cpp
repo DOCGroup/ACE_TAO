@@ -45,7 +45,9 @@ ACE_Dynamic_Message_Strategy::priority_status (ACE_Message_Block & mb,
       // upward above the late priority range
       priority += pending_shift_;
       if (priority < min_pending_)
+      {
         priority = min_pending_;
+      }
     }
   // otherwise, if the priority is greater than the maximum late
   // priority value that can be represented, it is beyond late
@@ -57,7 +59,9 @@ ACE_Dynamic_Message_Strategy::priority_status (ACE_Message_Block & mb,
     }
   // otherwise, the message is late, but its priority is correct
   else
+  {
     status = ACE_Dynamic_Message_Strategy::LATE;
+  }
 
   // use (fast) bitwise operators to isolate and replace
   // the dynamic portion of the message's priority

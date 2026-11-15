@@ -334,7 +334,9 @@ server (void *arg)
       errno = 0;
       got = sock_str.recv (buffer, sizeof (buffer));
       if (got < 0)
-          break;
+      {
+        break;
+      }
       total_recv += got;
     }
 

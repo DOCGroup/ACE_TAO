@@ -44,7 +44,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
       Server_Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
@@ -79,7 +81,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                              options.ior_output_file.c_str ()),
                             1);
         if (std::fprintf (output_file.get (), "%s", ior.in ()) < 0)
+        {
           ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot write IOR to output file\n")), 1);
+        }
       }
 
       root_poa->destroy (true, true);

@@ -102,7 +102,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_TString simple_servant_ior_file (ACE_TEXT("simple_servant.ior"));
       if (parse_args (argc, argv, simple_servant_ior_file) != 0)
+      {
         return 1;
+      }
 
       // RootPOA.
       CORBA::Object_var const object =
@@ -151,7 +153,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                          orb.in (),
                          servant,
                          simple_servant_ior_file.c_str ()) != 0)
+      {
         return 1;
+      }
 
       // Activate POA manager.
       poa_manager->activate ();

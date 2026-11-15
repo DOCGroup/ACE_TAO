@@ -113,7 +113,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                          argv);
 
       if (parse_args (options, argc, argv) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var object = orb->string_to_object (options.ior);
       if (options.register_smart_proxy)
@@ -156,7 +158,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_hrtime_t const latency_base = ACE_OS::gethrtime ();
           price = server->box_prices ();
           if (price < 300)
+          {
             cost = server->tickets (5);
+          }
           ACE_hrtime_t const now = ACE_OS::gethrtime ();
           marker.sample (now - throughput_base, now - latency_base);
           if (TAO_debug_level > 0 && i % 100 == 0)

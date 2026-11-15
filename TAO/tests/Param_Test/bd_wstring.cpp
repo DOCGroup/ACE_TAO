@@ -137,7 +137,9 @@ Test_Bounded_WString::check_validity ()
       ACE_OS::wslen (this->inout_) == 2*len &&
       !ACE_OS::wsncmp (this->in_, this->inout_, len) &&
       !ACE_OS::wsncmp (this->in_, &this->inout_[len], len))
+  {
     return 1;
+  }
 
   return 0; // otherwise
 }

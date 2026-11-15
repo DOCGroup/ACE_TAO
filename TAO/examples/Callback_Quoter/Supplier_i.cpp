@@ -21,7 +21,9 @@
 Supplier::~Supplier ()
 {
   if (this->timer_id_ != -1)
+  {
     this->reactor_used ()->cancel_timer (this->timer_id_);
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               "Market Status Supplier daemon exiting!\n"));
@@ -230,7 +232,9 @@ Supplier::init (int argc, ACE_TCHAR **argv)
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
+      {
         return -1;
+      }
 
       // Create the Timer_Handler.
       Supplier_Timer_Handler *timer_handler {};
@@ -242,7 +246,9 @@ Supplier::init (int argc, ACE_TCHAR **argv)
       this->supplier_timer_handler_.reset (timer_handler);
 
       if (this->use_naming_service_)
+      {
         return via_naming_service ();
+      }
 
       if (this->ior_.empty ())
         ACE_ERROR_RETURN ((LM_ERROR,

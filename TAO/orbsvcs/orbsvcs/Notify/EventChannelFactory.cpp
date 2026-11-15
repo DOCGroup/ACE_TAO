@@ -38,7 +38,9 @@ namespace
   {
     if (std::find (routing_slips.begin (), routing_slips.end (), routing_slip)
         != routing_slips.end ())
+    {
       return 1;
+    }
 
     try
       {
@@ -79,7 +81,9 @@ void
 TAO_Notify_EventChannelFactory::destroy ()
 {
   if (this->shutdown () == 1)
+  {
     return;
+  }
 
   TAO_Notify_Properties* properties = TAO_Notify_PROPERTIES::instance();
 
@@ -177,7 +181,9 @@ TAO_Notify_EventChannelFactory::shutdown ()
   this->stop_validator();
 
   if (TAO_Notify_Object::shutdown () == 1)
+  {
     return 1;
+  }
 
   this->ec_container().shutdown ();
 
@@ -252,7 +258,9 @@ TAO_Notify_EventChannelFactory::load_topology ()
   else
   {
     if (TAO_debug_level > 0)
+    {
       ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Topology persistence disabled.\n")));
+    }
   }
   this->loading_topology_ = false;
 }

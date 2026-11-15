@@ -77,7 +77,9 @@ run_main (int, ACE_TCHAR *[])
         {
           try_ace_new (&blocks[i]);
           if (blocks[i] == nullptr)
+          {
             break;
+          }
         }
       if (i == MAX_ALLOCS_IN_TEST)
         {
@@ -111,7 +113,9 @@ run_main (int, ACE_TCHAR *[])
         {
           blocks[i] = try_ace_new_return ();
           if (blocks[i] == nullptr)
+          {
             break;
+          }
         }
 
       if (i == MAX_ALLOCS_IN_TEST)
@@ -144,7 +148,9 @@ run_main (int, ACE_TCHAR *[])
         {
           blocks[i] = try_ace_new_noreturn ();
           if (blocks[i] == nullptr)
+          {
             break;
+          }
         }
 
       if (i == MAX_ALLOCS_IN_TEST)

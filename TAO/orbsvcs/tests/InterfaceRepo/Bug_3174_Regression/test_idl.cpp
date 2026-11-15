@@ -48,12 +48,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, ifr_ior_file) == -1)
+      {
         return -1;
+      }
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Get IFR\n")));
       CORBA::Object_var const objref = orb->string_to_object (ifr_ior_file);
       if (CORBA::is_nil (objref.in ()))
+      {
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("The received objref is nil\n")), -1);
+      }
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Narrow IFR\n")));
       CORBA::ComponentIR::Repository_var const repository =

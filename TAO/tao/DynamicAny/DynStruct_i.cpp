@@ -81,7 +81,9 @@ TAO_DynStruct_i::set_from_any (CORBA::Any const& any)
       unk = dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
       if (unk == nullptr)
+      {
         throw CORBA::INTERNAL ();
+      }
 
       in = unk->_tao_get_cdr ();
     }
@@ -434,7 +436,9 @@ TAO_DynStruct_i::from_any (CORBA::Any const& any)
           unk = dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
           if (unk == nullptr)
+          {
             throw CORBA::INTERNAL ();
+          }
 
           in = unk->_tao_get_cdr ();
         }
@@ -531,7 +535,9 @@ TAO_DynStruct_i::to_any ()
             dynamic_cast<TAO::Unknown_IDL_Type *> (field_impl);
 
           if (field_unk == nullptr)
+          {
             throw CORBA::INTERNAL ();
+          }
 
           field_in_cdr = field_unk->_tao_get_cdr ();
         }

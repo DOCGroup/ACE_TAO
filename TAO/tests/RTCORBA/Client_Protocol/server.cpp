@@ -111,7 +111,9 @@ check_for_nil (CORBA::Object_ptr obj, char const *msg)
                        msg),
                       -1);
   else
+  {
     return 0;
+  }
 }
 
 int
@@ -161,14 +163,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Parse arguments.
       Server_Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return -1;
+      }
 
       // RTORB.
       CORBA::Object_var object =
         orb->resolve_initial_references ("RTORB");
       RTCORBA::RTORB_var const rt_orb = RTCORBA::RTORB::_narrow (object.in ());
       if (check_for_nil (rt_orb.in (), "RTORB") == -1)
+      {
         return -1;
+      }
 
       // RootPOA.
       object =
@@ -176,7 +182,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (object.in ());
       if (check_for_nil (root_poa.in (), "RootPOA") == -1)
+      {
         return -1;
+      }
 
       // POAManager.
       PortableServer::POAManager_var const poa_manager =
@@ -212,14 +220,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       result = create_object (poa.in (), orb.in (), &server_impl,
                               options.server_policy_ior);
       if (result == -1)
+      {
         return -1;
+      }
 
       // Create object 2.
       ACE_DEBUG ((LM_DEBUG, "\nActivated object two as "));
       result = create_object (root_poa.in (), orb.in (), &server_impl,
                               options.default_policy_ior);
       if (result == -1)
+      {
         return -1;
+      }
 
       // Run ORB Event loop.
       poa_manager->activate ();

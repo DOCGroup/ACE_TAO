@@ -29,7 +29,9 @@ TAO_PG::override_properties (
 {
   CORBA::ULong const num_overrides = overrides.length ();
   if (num_overrides == 0)
+  {
     return;
+  }
 
   CORBA::ULong const old_length = properties.length ();
 

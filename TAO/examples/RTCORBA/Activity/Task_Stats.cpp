@@ -34,12 +34,16 @@ Task_Stats::init ()
   std::unique_ptr<ACE_UINT64[]> time_inv (
     new (std::nothrow) ACE_UINT64[this->max_samples_]);
   if (!time_inv)
+  {
     return -1;
+  }
 
   std::unique_ptr<ACE_UINT64[]> time_exec (
     new (std::nothrow) ACE_UINT64[this->max_samples_]);
   if (!time_exec)
+  {
     return -1;
+  }
 
   this->time_inv_ = std::move (time_inv);
   this->time_exec_ = std::move (time_exec);

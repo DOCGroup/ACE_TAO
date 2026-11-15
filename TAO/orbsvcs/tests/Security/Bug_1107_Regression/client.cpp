@@ -105,7 +105,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   Client_Options options;
   for (int c = 1; c < argc; ++c)
     if (ACE_OS::strcmp (argv[c], ACE_TEXT ("-n")) == 0)
+    {
       options.use_certificate = false;
+    }
 
   std::string cert_environment;
   if (options.use_certificate)
@@ -118,7 +120,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var object = orb->string_to_object (options.ior);
       int status = 0;
@@ -157,7 +161,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
       if (status == 0)
+      {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nBug_1107_Regression test passed.\n")));
+      }
       return status;
     }
   catch (const CORBA::Exception &ex)

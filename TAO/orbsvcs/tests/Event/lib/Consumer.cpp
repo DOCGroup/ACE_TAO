@@ -32,7 +32,9 @@ EC_Consumer::connect (
     int shutdown_event_type)
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
+  {
     return; // @@ Throw?
+  }
 
   this->shutdown_event_type_ = shutdown_event_type;
 
@@ -56,7 +58,9 @@ void
 EC_Consumer::disconnect ()
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
+  {
     return;
+  }
 
   this->supplier_proxy_->disconnect_push_supplier ();
 
@@ -68,7 +72,9 @@ void
 EC_Consumer::shutdown ()
 {
   if (!this->is_active_)
+  {
     return;
+  }
 
   // Deactivate the servant
   PortableServer::POA_var poa =
@@ -107,7 +113,9 @@ EC_Consumer::push (const RtecEventComm::EventSet& events)
 
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   if (this->push_count_ == 0)
+  {
     this->throughput_start_ = ACE_OS::gethrtime ();
+  }
 
   this->push_count_ += events.length ();
 
@@ -132,7 +140,9 @@ EC_Consumer::push (const RtecEventComm::EventSet& events)
                                 now - creation);
 
       if (e.header.type == this->shutdown_event_type_)
+      {
         this->driver_->consumer_shutdown (this->cookie_);
+      }
     }
 }
 

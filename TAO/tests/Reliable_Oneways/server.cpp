@@ -54,7 +54,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var const poa_manager = root_poa->the_POAManager ();
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       Oneway_Receiver *new_receiver {};
       ACE_NEW_RETURN (new_receiver,

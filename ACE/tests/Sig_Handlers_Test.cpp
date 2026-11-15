@@ -113,7 +113,9 @@ run_main (int, ACE_TCHAR *[])
     {
       ACE_DEBUG ((LM_DEBUG,"\nwaiting for SIGINT\n"));
       if (ACE_Reactor::instance ()->handle_events () == -1)
+      {
         ACE_ERROR ((LM_ERROR,"%p\n","handle_events"));
+      }
     }
 
   ACE_END_TEST;

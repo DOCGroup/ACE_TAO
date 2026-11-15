@@ -36,7 +36,9 @@ namespace TAO
         Transport_Selection_Guard::current (this->core_, this->tss_slot_id_);
 
       if (topguard == nullptr)
+      {
         throw NoContext ();
+      }
 
       return topguard->get ();
     }

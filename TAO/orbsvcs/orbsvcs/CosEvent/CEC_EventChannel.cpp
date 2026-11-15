@@ -66,7 +66,9 @@ TAO_CEC_EventChannel::~TAO_CEC_EventChannel ()
   this->supplier_control_ = nullptr;
 
   if (this->own_factory_)
+  {
     delete this->factory_;
+  }
 }
 
 void

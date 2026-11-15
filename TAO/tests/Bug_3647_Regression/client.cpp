@@ -80,7 +80,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, ior, verbose, timeout) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var tmp = orb->string_to_object (ior.c_str ());
 
@@ -122,7 +124,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           middle->ping ();
           if (i % interval == 0 && i > 0)
+          {
             ACE_DEBUG ((LM_DEBUG, "."));
+          }
         }
       ACE_DEBUG ((LM_DEBUG, "done\n"));
 

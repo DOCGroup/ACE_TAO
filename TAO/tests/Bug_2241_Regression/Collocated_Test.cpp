@@ -47,7 +47,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_CString client_orb;
 
   if (parse_args (argc, argv, input, output, server_orb, client_orb) != 0)
+  {
     return -1;
+  }
 
   try
     {

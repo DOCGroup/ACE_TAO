@@ -131,7 +131,9 @@ Read_Handler::handle_close (ACE_HANDLE handle,
 
   // If no connections are open.
   if (waiting_ == 0)
+  {
     ACE_Reactor::instance ()->end_reactor_event_loop ();
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Read_Handler::handle_close closing down\n")));
@@ -280,7 +282,9 @@ print_results (ACE_Profile_Timer::ACE_Elapsed_Time &et)
   else if (opt_select_reactor)
     reactor_type = ACE_TEXT ("Select_Reactor");
   else
+  {
     reactor_type = ACE_TEXT ("Platform's default Reactor");
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\n\tReactor_Performance Test statistics:\n\n")));

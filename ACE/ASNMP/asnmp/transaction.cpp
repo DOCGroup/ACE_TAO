@@ -44,7 +44,9 @@ int transaction::run ()
   // 1. register io port for read access
   if (reactor->register_handler (session_.get_handle (), this,
                                  ACE_Event_Handler::READ_MASK) == -1)
+  {
     return SNMP_CLASS_INTERNAL_ERROR;
+  }
 
   // register a time handler and a socket with this
 
@@ -54,7 +56,9 @@ int transaction::run ()
       if (send_result < 0) // send pkt to agent
         return send_result;
       if (retry_counter++ > params_.get_retry ())
+      {
         return SNMP_CLASS_TIMEOUT;
+      }
 
       // 2. wait for events (timeout, returned msg)
       int const rc = reactor->handle_events (to);
@@ -63,7 +67,9 @@ int transaction::run ()
       if (rc == 0)
         to.set (params_.get_timeout (), 0);
       else
+      {
         return SNMP_CLASS_INTERNAL_ERROR;
+      }
     }
 }
 
@@ -77,14 +83,18 @@ int transaction::run (transaction_result *r)
     if (reactor->register_handler (session_.get_handle (),
                                   this,
                                   READ_MASK) == -1)
-        return SNMP_CLASS_INTERNAL_ERROR;
+    {
+      return SNMP_CLASS_INTERNAL_ERROR;
+    }
 
     retry_counter_ = 0;
 
     // register a time handler and a socket with this
     ACE_Time_Value to (params_.get_timeout ());
     if (reactor->schedule_timer (this, nullptr, to, to) == -1)
-        return SNMP_CLASS_INTERNAL_ERROR;
+    {
+      return SNMP_CLASS_INTERNAL_ERROR;
+    }
 
     int const rc = this->send ();
     if (rc < 0) // send pkt to agent
@@ -104,11 +114,15 @@ int transaction::handle_input (ACE_HANDLE)
       receive_buffer_.reset ();
       receive_iovec_ = {};
       if (this->result_ != nullptr)
+      {
         this->result_->result (this, SNMP_CLASS_RESOURCE_UNAVAIL);
+      }
       return SNMP_CLASS_RESOURCE_UNAVAIL;
     }
   if (this->result_ != nullptr)
+  {
     this->result_->result (this, rc);
+  }
 
   return 0;
 }
@@ -120,7 +134,9 @@ int transaction::handle_timeout (ACE_Time_Value const &,
         result_->result (this, 0);
     else
         if (retry_counter_++ > params_.get_retry())
-            result_->result (this, SNMP_CLASS_TIMEOUT);
+        {
+          result_->result (this, SNMP_CLASS_TIMEOUT);
+        }
 
     return 0;
 }
@@ -140,7 +156,9 @@ int transaction::result (Pdu &pdu, char *comm_str, ACE_INET_Addr *from)
 
  // any data to return?
  if (receive_iovec_.iov_len == 0)
+ {
    return -1;
+ }
 
  wpdu tmp(receive_iovec_);
 
@@ -149,9 +167,13 @@ int transaction::result (Pdu &pdu, char *comm_str, ACE_INET_Addr *from)
  // return comm str and from address of incoming pdu if requested
  int rc = tmp.get_pdu(pdu, ver);
  if (comm_str != nullptr)
+ {
    std::strcpy (comm_str, reinterpret_cast<char const *> (tmp.get_community ()));
+ }
  if (from != nullptr)
-  *from = receive_addr_;
+ {
+   *from = receive_addr_;
+ }
  return rc;
 }
 

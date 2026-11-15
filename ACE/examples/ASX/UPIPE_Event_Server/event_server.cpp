@@ -83,14 +83,18 @@ consumer (void *)
   time_t currsec {};
 
   if (verb)
+  {
     cout << "consumer starting connect" << endl;
+  }
 
   ACE_UPIPE_Connector con;
 
   if (con.connect (c_stream, c_addr) == -1)
     ACE_DEBUG ((LM_INFO, " (%t) connect failed\n"));
   else
+  {
     cout << "consumer :we're connected" << endl;
+  }
 
   bool done {};
   size_t cnt {};
@@ -129,7 +133,9 @@ consumer (void *)
   secs = par2 - par1;
 
   if (secs <= 0)
+  {
     secs = 1;
+  }
 
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("consumer got %B messages of size %B ")
@@ -154,7 +160,9 @@ supplier (void *dummy)
   cout << "supplier starting connect" << endl;
 
   if (con.connect (s_stream, serv_addr) == -1)
+  {
     ACE_DEBUG ((LM_INFO, " (%t) connect failed\n"));
+  }
 
   cout << "supplier : we're connected" << endl;
   size_t n {};
@@ -174,7 +182,9 @@ supplier (void *dummy)
         }
       mb_p->length (msiz);
       if (verb)
+      {
         cout << "supplier sending 1 message_block" << endl;
+      }
       if (s_stream.send (mb_p) == -1)
         {
           cout << "supplier send failed" << endl;
@@ -204,7 +214,9 @@ supplier (void *dummy)
   mb_p->length (0);
 
   if (verb)
+  {
     cout << "supplier sending very last message_block" << endl;
+  }
 
   if (s_stream.send (mb_p) == -1)
     {

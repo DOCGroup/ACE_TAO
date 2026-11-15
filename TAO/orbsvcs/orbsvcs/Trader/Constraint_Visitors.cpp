@@ -180,11 +180,15 @@ visit_and (TAO_Binary_Constraint* boolean_and)
             }
         }
       else
+      {
         return_value = 0;
+      }
     }
 
   if (return_value != -1)
+  {
     this->queue_.push_front (TAO_Literal_Constraint (result));
+  }
 
   return return_value;
 }
@@ -215,11 +219,15 @@ visit_or (TAO_Binary_Constraint* boolean_or)
             }
         }
       else
+      {
         return_value = 0;
+      }
     }
 
   if (return_value != -1)
+  {
     this->queue_.push_front (TAO_Literal_Constraint (result));
+  }
 
   return return_value;
 }
@@ -332,7 +340,9 @@ TAO_Constraint_Evaluator::visit_bin_op (TAO_Binary_Constraint* op,
           return_value = 0;
         }
       else
+      {
         this->queue_.dequeue_operand ();
+      }
     }
 
   return return_value;
@@ -393,7 +403,9 @@ visit_twiddle (TAO_Binary_Constraint* binary_twiddle)
           return_value = 0;
         }
       else
+      {
         this->queue_.dequeue_operand ();
+      }
     }
 
   return return_value;
@@ -428,7 +440,9 @@ visit_in(TAO_Binary_Constraint* binary_in)
               return_value = 0;
             }
           else
+          {
             this->queue_.dequeue_operand ();
+          }
         }
     }
 
@@ -549,7 +563,9 @@ sequence_does_contain (CORBA::Any const* sequence,
     }
 
   if (sequence_type == CORBA::tk_void)
+  {
     return return_value;
+  }
 
   switch (sequence_type)
     {
@@ -817,7 +833,9 @@ TAO_Constraint_Validator::visit_constraint (TAO_Unary_Constraint* constraint)
   this->extract_type (operand, type);
 
   if (this->expr_returns_boolean (type))
+  {
     return_value =  operand->accept (this);
+  }
 
   return return_value;
 }
@@ -869,7 +887,9 @@ visit_and (TAO_Binary_Constraint* boolean_and)
     {
       if (left->accept (this) == 0 &&
           right->accept (this) == 0)
+      {
         return_value = 0;
+      }
     }
 
   return return_value;
@@ -894,7 +914,9 @@ visit_not (TAO_Unary_Constraint* unary_not)
   this->extract_type (operand, type);
 
   if (this->expr_returns_boolean (type))
+  {
     return_value = operand->accept (this);
+  }
 
   return return_value;
 }
@@ -910,7 +932,9 @@ visit_exist (TAO_Unary_Constraint* unary_exist)
   TAO_Expression_Type type = operand->expr_type ();
 
   if (type == TAO_IDENT)
+  {
     return_value = operand->accept (this);
+  }
 
   return return_value;
 }
@@ -926,7 +950,9 @@ visit_unary_minus (TAO_Unary_Constraint* unary_minus)
   this->extract_type (operand, type);
 
   if (this->expr_returns_number (type))
+  {
     return_value = operand->accept (this);
+  }
 
   return return_value;
 }
@@ -948,7 +974,9 @@ visit_add (TAO_Binary_Constraint* boolean_add)
     {
       if (left->accept (this) == 0 &&
           right->accept (this) == 0)
+      {
         return_value = 0;
+      }
     }
 
   return return_value;
@@ -1013,7 +1041,9 @@ visit_div (TAO_Binary_Constraint* boolean_div)
         {
           if (left->accept (this) == 0 &&
               right->accept (this) == 0)
+          {
             return_value = 0;
+          }
         }
     }
 
@@ -1037,7 +1067,9 @@ visit_twiddle (TAO_Binary_Constraint* binary_twiddle)
     {
       if (left->accept (this) == 0 &&
           right->accept (this) == 0)
+      {
         return_value = 0;
+      }
     }
 
   return return_value;
@@ -1092,7 +1124,9 @@ visit_in (TAO_Binary_Constraint* binary_in)
             types_match = (seq_type == CORBA::tk_string);
 
           if (types_match)
+          {
             return_value = left->accept (this);
+          }
         }
     }
 
@@ -1119,7 +1153,9 @@ visit_less_than(TAO_Binary_Constraint* boolean_lt)
     {
       if (left->accept (this) == 0 &&
           right->accept (this) == 0)
+      {
         return_value = 0;
+      }
     }
 
   return return_value;
@@ -1166,7 +1202,9 @@ visit_equal (TAO_Binary_Constraint* boolean_eq)
     {
       if (left->accept (this) == 0 &&
           right->accept (this) == 0)
+      {
         return_value = 0;
+      }
     }
 
   return return_value;
@@ -1207,7 +1245,9 @@ TAO_Constraint_Validator::extract_type (TAO_Constraint* expr,
       CORBA::String_var prop_name (prop->name ());
 
       if (this->type_map_.find (prop_name, return_value) == 0)
+      {
         type = TAO_Literal_Constraint::comparable_type (return_value);
+      }
     }
 
   return return_value;
@@ -1221,7 +1261,9 @@ TAO_Constraint_Validator::expr_returns_boolean (TAO_Expression_Type expr_type)
   int return_value {};
 
   if (expr_type <= TAO_BOOLEAN)
+  {
     return_value = 1;
+  }
 
   return return_value;
 }
@@ -1235,7 +1277,9 @@ TAO_Constraint_Validator::expr_returns_number (TAO_Expression_Type expr_type)
 
   if ((expr_type >= TAO_PLUS && expr_type <= TAO_NUMBER) ||
       (expr_type >= TAO_SIGNED && expr_type <= TAO_DOUBLE))
+  {
     return_value = 1;
+  }
 
   return return_value;
 }
@@ -1248,7 +1292,9 @@ TAO_Constraint_Validator::expr_returns_string (TAO_Expression_Type expr_type)
   int return_value {};
 
   if (expr_type == TAO_STRING)
+  {
     return_value = 1;
+  }
 
   return return_value;
 }

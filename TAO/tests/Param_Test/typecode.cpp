@@ -84,7 +84,9 @@ Test_TypeCode::init_parameters (Param_Test_ptr)
 
   ++index;
   if (index >= sizeof(tc_table)/sizeof(tc_table[0]))
+  {
     index = 0;
+  }
 
   return 0;
 }
@@ -135,7 +137,9 @@ Test_TypeCode::check_validity ()
       if (one && two && three)
         return 1;
       else
+      {
         return 0;
+      }
     }
   catch (const CORBA::Exception& ex)
     {

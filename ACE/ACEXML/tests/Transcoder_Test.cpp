@@ -17,12 +17,16 @@ void dump_utf16 (ACEXML_UTF16 const *data, size_t len)
       ACE_DEBUG ((LM_DEBUG, "%04x", data[i]));
 
       if (i + 1 == len)
+      {
         continue;
+      }
 
       if ((i + 1) % 4 == 0)
         ACE_DEBUG ((LM_DEBUG, "\n"));
       else
+      {
         ACE_DEBUG ((LM_DEBUG, "  "));
+      }
     }
   ACE_DEBUG ((LM_DEBUG, "\n"));
 }
@@ -71,7 +75,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     ACEXML_Base64::decode (encoded.get (), &decoded_len)};
   if (!base64_decoded || decoded_len != 1 ||
       base64_decoded[0] != static_cast<ACEXML_Char> ('A'))
+  {
     return 1;
+  }
 
   return 0;
 }

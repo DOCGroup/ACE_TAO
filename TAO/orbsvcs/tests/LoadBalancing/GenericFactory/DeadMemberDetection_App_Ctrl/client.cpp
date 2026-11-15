@@ -91,7 +91,9 @@ dead_member_rr_test (CORBA::ORB_ptr orb,
         basic->exit ();
       }
       else
+      {
         direct_basic->exit ();
+      }
 
       if (iter == 3)
       {
@@ -244,10 +246,14 @@ dead_member_rand_test (CORBA::ORB_ptr orb,
       // this request.
       for (size_t j {}; j < location_count; ++j)
         if (location == locations[j])
+        {
           status = 1;
+        }
 
       if (status == 0)
+      {
         locations[location_count++] = location;
+      }
 
       if (iter == 3)
       {
@@ -313,10 +319,14 @@ hang_member_rand_test (CORBA::ORB_ptr orb,
 
       for (size_t j {}; j < location_count; ++j)
         if (location == locations[j])
+        {
           status = 1;
+        }
 
       if (status == 0)
+      {
         locations[location_count++] = location;
+      }
 
       if (iter == 3)
       {
@@ -376,7 +386,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var tmp =
         orb->string_to_object (options.group_ior);
@@ -410,14 +422,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           if (options.ping_timedout)
             status = hang_member_rr_test (orb.in (), options, direct_basic.in ());
           else
+          {
             status = dead_member_rr_test (orb.in (), options, direct_basic.in ());
+          }
         }
       else if (ACE_OS::strcasecmp (options.strategy, ACE_TEXT ("random")) == 0)
         {
           if (options.ping_timedout)
             status = hang_member_rand_test (orb.in (), options, direct_basic.in ());
           else
+          {
             status = dead_member_rand_test (orb.in (), options, direct_basic.in ());
+          }
         }
       else
         {

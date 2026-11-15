@@ -71,7 +71,9 @@ RtecEventChannelAdmin::ConsumerAdmin_ptr
 EC_Wrapper::for_consumers ()
 {
   if (this->ec_impl_)
+  {
     return this->ec_impl_->for_consumers ();
+  }
   throw CORBA::OBJECT_NOT_EXIST ();
 }
 
@@ -79,7 +81,9 @@ RtecEventChannelAdmin::SupplierAdmin_ptr
 EC_Wrapper::for_suppliers ()
 {
   if (this->ec_impl_)
+  {
     return this->ec_impl_->for_suppliers ();
+  }
   throw CORBA::OBJECT_NOT_EXIST ();
 }
 
@@ -117,7 +121,9 @@ RtecEventChannelAdmin::Observer_Handle
 EC_Wrapper::append_observer (RtecEventChannelAdmin::Observer_ptr observer)
 {
   if (this->ec_impl_)
+  {
     return this->ec_impl_->append_observer (observer);
+  }
   throw CORBA::OBJECT_NOT_EXIST ();
 }
 
@@ -125,6 +131,8 @@ void
 EC_Wrapper::remove_observer (RtecEventChannelAdmin::Observer_Handle handle)
 {
   if (!this->ec_impl_)
+  {
     throw CORBA::OBJECT_NOT_EXIST ();
+  }
   this->ec_impl_->remove_observer (handle);
 }

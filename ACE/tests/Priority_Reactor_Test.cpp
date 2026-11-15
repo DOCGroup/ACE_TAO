@@ -114,7 +114,9 @@ Read_Handler::handle_input (ACE_HANDLE h)
   if (result <= 0)
     {
       if (result < 0 && errno == EWOULDBLOCK)
+      {
         return 0;
+      }
 
       if (result != 0)
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) %p\n"),
@@ -381,7 +383,9 @@ run_main (int argc, ACE_TCHAR *argv[])
 #endif // ACE_LACKS_ACCEPT
 
   if (orig_reactor != nullptr)
+  {
     ACE_Reactor::instance (orig_reactor);
+  }
 
   ACE_END_TEST;
   return 0;

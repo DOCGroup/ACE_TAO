@@ -107,7 +107,9 @@ TAO_LB_IORInterceptor::register_load_alert ()
     ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
 
     if (!CORBA::is_nil (this->la_ref_.in ()))
+    {
       return;
+    }
   }
 
   try
@@ -127,7 +129,9 @@ TAO_LB_IORInterceptor::register_load_alert ()
   catch (const CORBA::Exception& ex)
     {
       if (TAO_debug_level > 0)
+      {
         ex._tao_print_exception ("LoadAlert::_this()");
+      }
     }
 
   try
@@ -142,14 +146,18 @@ TAO_LB_IORInterceptor::register_load_alert ()
   catch (const CosLoadBalancing::LoadAlertAlreadyPresent& ex)
     {
       if (TAO_debug_level > 0)
+      {
         ex._tao_print_exception ("LoadManager::register_load_alert");
+      }
 
       throw CORBA::BAD_INV_ORDER ();
     }
   catch (const CosLoadBalancing::LoadAlertNotAdded& ex)
     {
       if (TAO_debug_level > 0)
+      {
         ex._tao_print_exception ("LoadManager::register_load_alert");
+      }
 
       throw CORBA::INTERNAL ();
     }

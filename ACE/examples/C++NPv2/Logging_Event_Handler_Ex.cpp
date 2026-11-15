@@ -28,7 +28,9 @@ int Logging_Event_Handler_Ex::open () {
 int Logging_Event_Handler_Ex::handle_timeout
   (const ACE_Time_Value &now, const void *) {
   if (now - time_of_last_log_record_ >= max_client_timeout_)
+  {
     reactor ()->remove_handler (this, ACE_Event_Handler::READ_MASK);
+  }
   return 0;
 }
 

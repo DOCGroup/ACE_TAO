@@ -133,7 +133,9 @@ void
 ServerApp::collocated_setup()
 {
   if (this->num_collocated_clients_ == 0)
+  {
     return;
+  }
 
   this->cb_servants_.create_and_activate(1, // number of callback servants
                                          this->cb_poa_.in());

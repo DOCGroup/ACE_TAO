@@ -231,21 +231,29 @@ namespace TAO
           CORBA::Boolean byte_order {};
 
           if (!(cdr >> ACE_InputCDR::to_boolean (byte_order)))
+          {
             return;
+          }
 
           cdr.reset_byte_order (static_cast<int> (byte_order));
 
           FT::TagFTGroupTaggedComponent gtc;
 
           if (!(cdr >> gtc))
+          {
             throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
+          }
 
           TAO_OutputCDR ocdr;
           if (!(ocdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
+          {
             return;
+          }
 
           if (!(ocdr << gtc.object_group_ref_version))
+          {
             return;
+          }
 
           CORBA::ULong const length =
             static_cast<CORBA::ULong> (ocdr.total_length ());
@@ -315,10 +323,14 @@ namespace TAO
 
       TAO_OutputCDR ocdr;
       if (!(ocdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
+      {
         return;
+      }
 
       if (!(ocdr << ftrsc))
+      {
         return;
+      }
 
       // Make a *copy* of the CDR stream...
       CORBA::ULong length =

@@ -199,7 +199,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
             std::unique_ptr<FILE, int (*) (FILE*)> output_file (
               ACE_OS::fopen (client.ior_output_file (), "w"), ACE_OS::fclose);
             if (output_file)
+            {
               ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+            }
           }
 
           CosNotifyChannelAdmin::SupplierAdmin_var admin =

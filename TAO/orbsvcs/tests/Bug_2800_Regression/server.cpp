@@ -111,7 +111,9 @@ TestTask::svc ()
                              options_.ior_output_file),
                             1);
         if (std::fprintf (output_file.get (), "%s", ior.in ()) < 0)
+        {
           ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot write IOR to output file\n")), 1);
+        }
       }
 
       ACE_DEBUG ((LM_INFO, ACE_TEXT ("Wrote IOR file\n")));

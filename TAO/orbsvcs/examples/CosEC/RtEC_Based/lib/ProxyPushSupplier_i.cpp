@@ -114,10 +114,14 @@ void
 TAO_CosEC_ProxyPushSupplier_i::connect_push_consumer (CosEventComm::PushConsumer_ptr push_consumer)
 {
   if (this->connected ())
+  {
     throw CosEventChannelAdmin::AlreadyConnected ();
+  }
 
   if (push_consumer == CosEventComm::PushConsumer::_nil ())
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   TAO_CosEC_PushConsumerWrapper *wrapper {};
   ACE_NEW_THROW_EX (wrapper,

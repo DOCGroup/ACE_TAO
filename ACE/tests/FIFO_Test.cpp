@@ -41,7 +41,9 @@ client (void *arg)
   ACE_FIFO_Send_Msg fifo;
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) client opening %s\n"), fifo_path));
   if (fifo.open (fifo_path) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), fifo_path), 0);
+  }
 
   // Try some transfers - the server part is expecting this data.
   // First, try a nice, easy send.
@@ -68,7 +70,9 @@ client (void *arg)
                         ACE_TEXT ("%p\n"),
                         send_count, expect, ACE_TEXT ("send")));
           else
+          {
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) All sends ok\n")));
+          }
         }
       else
         {
@@ -86,7 +90,9 @@ client (void *arg)
     }
 
   if (fifo.close () != 0)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("fifo close")));
+  }
 
   return nullptr;
 }
@@ -169,7 +175,9 @@ server (void *arg)
                 ACE_TEXT ("(%P|%t) Recv 3 expected alphabet; got %s\n"),
                 buf));
   else
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) All receives ok\n")));
+  }
   return nullptr;
 }
 

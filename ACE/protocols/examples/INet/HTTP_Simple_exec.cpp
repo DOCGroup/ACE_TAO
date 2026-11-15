@@ -145,7 +145,9 @@ class My_HTTP_RequestHandler
                           static_cast<size_t> (this->in_length_)) << "%";
           }
         else
+        {
           std::cout << "???]";
+        }
         std::cout.flush ();
       }
 
@@ -205,7 +207,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
                       ACE::HTTPS::Context::instance ().has_trusted_ca ()));
     }
   if (options.ignore_verify)
+  {
     ACE::INet::SSL_CallbackManager::instance ()->set_certificate_callback (new ACE::INet::SSL_CertificateAcceptor);
+  }
 #endif
 
   std::cout << "Starting..." << std::endl;
@@ -268,11 +272,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
               if (my_rh.response ().get_content_length () != ACE::HTTP::Response::UNKNOWN_CONTENT_LENGTH)
                 std::cout << my_rh.response ().get_content_length () << " [";
               else
+              {
                 std::cout << "(unknown) [";
+              }
               if (my_rh.response ().get_content_type () != ACE::HTTP::Response::UNKNOWN_CONTENT_TYPE)
                 std::cout << my_rh.response ().get_content_type ().c_str ();
               else
+              {
                 std::cout << "(unknown)";
+              }
               std::cout  << "]" << std::endl;
             }
 
@@ -280,7 +288,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
           if (!options.outfile.empty ())
             std::cout << '\'' << options.outfile.c_str () << '\'' << std::endl;
           else
+          {
             std::cout << "(stdout)" << std::endl;
+          }
 
           (*sout) << urlin->rdbuf ();
           sout->flush ();

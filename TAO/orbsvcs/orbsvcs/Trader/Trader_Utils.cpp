@@ -19,7 +19,9 @@ namespace
   insert_string (TAO_String_Set & values, CORBA::String_var const & value)
   {
     if (std::find (values.begin (), values.end (), value) != values.end ())
+    {
       return 1;
+    }
 
     try
       {
@@ -169,7 +171,9 @@ TAO_Policy_Creator::fetch_next_policy (TAO_Policies::POLICY_TYPE pol_type)
       ++this->num_policies_;
 
       if (length < this->num_policies_)
+      {
         this->policies_.length (this->num_policies_);
+      }
 
       index = this->num_policies_ - 1;
 
@@ -208,7 +212,9 @@ TAO_Policy_Creator::fetch_next_policy (TAO_Policies::POLICY_TYPE pol_type)
         }
     }
   else
+  {
     index = this->poltable_[pol_type];
+  }
 
   return this->policies_[index];
 }
@@ -250,7 +256,9 @@ TAO_Property_Evaluator::is_dynamic_property (int index)
       CORBA::Boolean equal = type->equal (CosTradingDynamic::_tc_DynamicProp);
 
       if (equal)
+      {
         return_value = true;
+      }
     }
 
   return return_value;
@@ -347,11 +355,15 @@ TAO_Property_Evaluator_By_Name (const CosTrading::PropertySeq& properties
       const CosTrading::Property& prop = this->props_[i];
 
       if (! TAO_Trader_Base::is_valid_property_name (prop.name))
+      {
         throw CosTrading::IllegalPropertyName (prop.name);
+      }
 
       CORBA::String_var prop_name = prop.name.in ();
       if (this->table_.bind (prop_name, i))
+      {
         throw CosTrading::DuplicatePropertyName (prop.name);
+      }
     }
 }
 
@@ -380,7 +392,9 @@ is_dynamic_property(const char* property_name)
   // If the property name is in the map, delegate evaluation to our
   // superclass. Otherwise, throw an exception.
   if (this->table_.find (prop_name, index) == 0)
+  {
     predicate = this->TAO_Property_Evaluator::is_dynamic_property(index);
+  }
 
   return predicate;
 }
@@ -413,7 +427,9 @@ TAO_Property_Evaluator_By_Name::property_type (const char* property_name)
   // If the property name is in the map, delegate evaluation to our
   // superclass. Otherwise, throw an exception.
   if (this->table_.find (prop_name, index) == 0)
+  {
     prop_type = this->TAO_Property_Evaluator::property_type (index);
+  }
 
   return prop_type;
 }
@@ -426,7 +442,9 @@ TAO_Property_Evaluator_By_Name::get_property (char const* property_name)
   CORBA::String_var prop_name (property_name);
 
   if (this->table_.find (prop_name, index) == 0)
+  {
     property = std::addressof (this->props_[index]);
+  }
 
   return property;
 }
@@ -507,7 +525,9 @@ TAO_Policies::TAO_Policies (TAO_Trader_Base& trader,
       int index = -1;
 
       if (length < std::strlen (POLICY_NAMES[HOP_COUNT]))
+      {
         throw CosTrading::Lookup::IllegalPolicyName (pol_name);
+      }
 
       switch (pol_name[0])
         {
@@ -537,11 +557,17 @@ TAO_Policies::TAO_Policies (TAO_Trader_Base& trader,
           break;
         case 'u':
           if (pol_name[4] == 'd')
+          {
             index = USE_DYNAMIC_PROPERTIES;
+          }
           if (pol_name[4] == 'm')
+          {
             index = USE_MODIFIABLE_PROPERTIES;
+          }
           if (pol_name[4] == 'p')
+          {
             index = USE_PROXY_OFFERS;
+          }
         }
 
       // Match the name of the policy, and insert its value into the
@@ -551,7 +577,9 @@ TAO_Policies::TAO_Policies (TAO_Trader_Base& trader,
       else if (this->policies_[index] != nullptr)
         throw CosTrading::DuplicatePolicyName (pol_name);
       else
+      {
         this->policies_[index] = std::addressof (policies[j]);
+      }
     }
 }
 
@@ -600,10 +628,14 @@ TAO_Policies::ulong_prop (POLICY_TYPE pol) const
       if (!equal_ulong)
         throw CosTrading::Lookup::PolicyTypeMismatch (*policy);
       else
+      {
         value >>= return_value;
+      }
 
       if (max_value < return_value)
+      {
         return_value = max_value;
+      }
     }
 
   return return_value;
@@ -664,14 +696,20 @@ TAO_Policies::boolean_prop (POLICY_TYPE pol) const
       if (!equal_boolean)
         throw CosTrading::Lookup::PolicyTypeMismatch (*policy);
       else
+      {
         value >>= CORBA::Any::to_boolean (return_value);
+      }
 
       if (!def_value &&
           pol != EXACT_TYPE_MATCH)
+      {
         return_value = false;
+      }
     }
   else
+  {
     return_value = def_value;
+  }
 
   return return_value;
 }
@@ -721,7 +759,9 @@ TAO_Policies::starting_trader () const
           !equal_linknameseq)
         throw CosTrading::Lookup::PolicyTypeMismatch (*policy);
       else
+      {
         value >>= trader_name;
+      }
     }
 
   return trader_name;
@@ -749,10 +789,14 @@ TAO_Policies::link_follow_rule () const
       if (!type_equal)
         throw CosTrading::Lookup::PolicyTypeMismatch (*policy);
       else
+      {
         value >>= return_value;
+      }
 
       if (return_value > max_follow_policy)
+      {
         return_value = max_follow_policy;
+      }
     }
 
   return return_value;
@@ -802,7 +846,9 @@ TAO_Policies::request_id () const
       if (!equal_octetseq)
         throw CosTrading::Lookup::PolicyTypeMismatch (*policy);
       else
+      {
         value >>= request_id;
+      }
     }
 
   return request_id;
@@ -864,7 +910,9 @@ copy_to_pass (CosTrading::PolicySeq& policy_seq,
     CosTrading::PolicySeq::allocbuf (REQUEST_ID + 1);
 
   if (policy_buffer == nullptr)
+  {
     return;
+  }
 
   for (int i {}; i <= REQUEST_ID; ++i)
     {
@@ -895,7 +943,9 @@ copy_to_pass (CosTrading::PolicySeq& policy_seq,
 
           // Don't count hop count twice.
           if (this->policies_[i] == nullptr)
+          {
             ++counter;
+          }
         }
     }
 
@@ -917,7 +967,9 @@ TAO_Policies::copy_to_forward (CosTrading::PolicySeq& policy_seq,
     CosTrading::PolicySeq::allocbuf (REQUEST_ID + 1);
 
   if (policy_buffer == nullptr)
+  {
     return;
+  }
 
   for (int i {}; i <= REQUEST_ID; ++i)
     {
@@ -1114,14 +1166,20 @@ merge_properties (const CosTrading::PropertySeq& modifies)
                 type_def->equal (prop_type.in ());
 
               if (!td_equal)
+              {
                 throw CosTrading::PropertyTypeMismatch (mname, modifies[i]);
+              }
             }
 
           if (insert_string (modify_me, prop_name) == 1)
+          {
             throw CosTrading::DuplicatePropertyName (mname);
+          }
         }
       else
+      {
         throw CosTrading::IllegalPropertyName (mname);
+      }
     }
 }
 
@@ -1165,7 +1223,9 @@ TAO_Offer_Modifier::affect_change (const CosTrading::PropertySeq& modifies)
       const char* name = this->offer_->properties[i].name;
       CORBA::String_var prop_name (name);
       if (this->props_.unbind (prop_name, prop_value) == 0)
+      {
         prop_seq[num_modified++] = *prop_value;
+      }
     }
 
   for (i = 0; i < merge_length; ++i)
@@ -1174,7 +1234,9 @@ TAO_Offer_Modifier::affect_change (const CosTrading::PropertySeq& modifies)
       const char* name = modifies[i].name;
       CORBA::String_var prop_name (name);
       if (this->props_.unbind (prop_name, prop_value) == 0)
+      {
         prop_seq[num_modified++] = *prop_value;
+      }
     }
 
   this->offer_->properties.length (total_length);
@@ -1272,7 +1334,9 @@ TAO_Offer_Filter::ok_to_consider (CosTrading::Offer* offer)
             }
 
           if (!return_value)
+          {
             break;
+          }
         }
     }
 
@@ -1366,10 +1430,14 @@ TAO_Property_Filter (const SPECIFIED_PROPS& desired_props)
             {
               CORBA::String_var prop_name (pname);
               if (insert_string (this->props_, prop_name) == 1)
+              {
                 throw CosTrading::DuplicatePropertyName (pname);
+              }
             }
           else
+          {
             throw CosTrading::IllegalPropertyName (pname);
+          }
         }
     }
 }
@@ -1405,7 +1473,9 @@ TAO_Property_Filter::filter_offer (CosTrading::Offer const* source,
 
               // Save those property that match.
               if (find_string (this->props_, prop_name) == 0)
+              {
                 prop_queue.push_back (std::addressof (s_props[i]));
+              }
             }
         }
 

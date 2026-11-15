@@ -13,7 +13,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       int const init_status = client.init (argc, argv);
       if (init_status != 0)
+      {
         return init_status;
+      }
 
       return client.run ();
     }

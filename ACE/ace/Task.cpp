@@ -67,7 +67,9 @@ ACE_Task_Base::wait ()
   if (this->thr_mgr () != nullptr)
     return this->thr_mgr ()->wait_task (this);
   else
+  {
     return 0;
+  }
 }
 
 /// Suspend a task.
@@ -77,7 +79,9 @@ ACE_Task_Base::suspend ()
   ACE_TRACE ("ACE_Task_Base::suspend");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
   if (this->thr_count_ > 0)
+  {
     return this->thr_mgr_->suspend_task (this);
+  }
 
   return 0;
 }
@@ -89,7 +93,9 @@ ACE_Task_Base::resume ()
   ACE_TRACE ("ACE_Task_Base::resume");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
   if (this->thr_count_ > 0)
+  {
     return this->thr_mgr_->resume_task (this);
+  }
 
   return 0;
 }
@@ -114,7 +120,9 @@ ACE_Task_Base::activate (long flags,
 
   // If the task passed in is zero, we will use <this>
   if (task == nullptr)
+  {
     task = this;
+  }
 
   if (this->thr_count_ > 0 && force_active == 0)
     return 1; // Already active.
@@ -179,7 +187,9 @@ ACE_Task_Base::activate (long flags,
     }
 
   if (this->grp_id_ == -1)
+  {
     this->grp_id_ = grp_spawned;
+  }
 
 #if defined (ACE_THREAD_T_IS_A_STRUCT)
   std::memset (&this->last_thread_id_, 0, sizeof (this->last_thread_id_));
@@ -219,7 +229,9 @@ ACE_Task_Base::cleanup (void *object, void *)
     ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, t->lock_));
     --t->thr_count_;
     if (0 == t->thr_count_)
+    {
       t->last_thread_id_ = ACE_Thread::self ();
+    }
   }
 
   // @@ Is it possible to pass in the exit status somehow?

@@ -28,7 +28,9 @@ AddrServer::get_addr (RtecEventComm::EventHeader const&,
                       RtecUDPAdmin::UDP_Addr& addr)
 {
   if (this->addr_._d() == RtecUDPAdmin::Rtec_inet6)
+  {
     throw CORBA::DATA_CONVERSION(0, CORBA::COMPLETED_YES);
+  }
   addr = this->addr_.v4_addr();
 }
 

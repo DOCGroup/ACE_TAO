@@ -65,7 +65,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       CDR_Out_Arg_i server_impl (orb.in ());
 

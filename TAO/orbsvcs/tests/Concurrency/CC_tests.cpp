@@ -53,7 +53,9 @@ Test_Single_Lock_With_Mode::run (int /* times_to_run */)
 
   CosConcurrencyControl::LockSet_var cc_lock_set = this->create_lock_set ();
   if (CORBA::is_nil (cc_lock_set.in ()))
+  {
     return CC_FAIL;
+  }
 
   try
     {
@@ -119,7 +121,9 @@ Test_Setup_LockSet::run (int /* times_to_run */)
     {
       CosConcurrencyControl::LockSet_var cc_lock_set = this->create_lock_set ();
       if (CORBA::is_nil (cc_lock_set.in ()))
+      {
         return CC_FAIL;
+      }
       this->naming_service_->bind_name (this->my_name_, cc_lock_set.in ());
 
       ACE_DEBUG ((LM_DEBUG,
@@ -211,7 +215,9 @@ Test_Release_Not_Held_Lock::run (int /* times_to_run */)
 
   CosConcurrencyControl::LockSet_var cc_lock_set = this->create_lock_set ();
   if (CORBA::is_nil (cc_lock_set.in ()))
+  {
     return CC_FAIL;
+  }
   try
     {
       cc_lock_set->lock (mode_);

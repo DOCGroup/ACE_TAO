@@ -104,7 +104,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                           failed= true;
                         }
                       else
+                      {
                         nameService = *argv;
+                      }
                     }
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--quiet")))
@@ -126,7 +128,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       failed = true;
                     }
                   else
+                  {
                     name = *(++argv);
+                  }
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--ctxsep")))
                 {
@@ -143,7 +147,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       failed = true;
                     }
                   else
+                  {
                     ctxsep[0] = (*argv)[0];
+                  }
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--kindsep")))
                 {
@@ -160,7 +166,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       failed = true;
                     }
                   else
+                  {
                     kindsep = (*argv)[0];
+                  }
                 }
               else if (0 == ACE_OS::strcmp(*argv, ACE_TEXT ("--rtt")))
                 {
@@ -177,7 +185,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       failed = true;
                     }
                  else
-                  rtt.set (std::atoi (ACE_TEXT_ALWAYS_CHAR (*argv)), 0);
+                 {
+                   rtt.set (std::atoi (ACE_TEXT_ALWAYS_CHAR (*argv)), 0);
+                 }
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--destroy")))
                 {
@@ -220,7 +230,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (nameService)
         nc_obj = orb->string_to_object (nameService);
       else
+      {
         nc_obj = orb->resolve_initial_references ("NameService");
+      }
 
       nc_obj = set_rtt(orb.in(), nc_obj.in (), rtt);
       CosNaming::NamingContext_var root_nc =
@@ -286,7 +298,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               if (destroy)
                 {
                   if (!quiet)
+                  {
                     ACE_DEBUG ((LM_DEBUG,"Destroying\n"));
+                  }
                   this_nc->destroy( );
                 }
               else if (!quiet)
@@ -303,19 +317,25 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       catch (const CORBA::OBJECT_NOT_EXIST&)
         {
           if (!quiet)
+          {
             ACE_DEBUG ((LM_DEBUG, "{Object does not exist!}\n"));
+          }
           failure = true;
         }
       catch (const CORBA::TRANSIENT&)
         {
           if (!quiet)
+          {
             ACE_DEBUG ((LM_DEBUG, "{Object is transient!}\n"));
+          }
           failure = true;
         }
       catch (const CORBA::TIMEOUT&)
         {
           if (!quiet)
+          {
             ACE_DEBUG ((LM_DEBUG, "{Operation timed out!}\n"));
+          }
           failure = true;
         }
 

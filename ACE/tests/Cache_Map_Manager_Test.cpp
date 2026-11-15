@@ -196,7 +196,9 @@ run_reverse_iterator_cache (MAP_CACHE &cache)
     }
 
   if (debug)
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
+  }
 
   ACE_TEST_ASSERT (counter == 0);
 }
@@ -223,7 +225,9 @@ run_reverse_iterator_hash_cache (HASH_MAP_CACHE &cache)
     }
 
   if (debug)
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
+  }
 
   ACE_TEST_ASSERT (counter == 0);
 }
@@ -240,7 +244,9 @@ find_test_cache (MAP_CACHE &cache)
       ACE_TEST_ASSERT (j == lookup_array[i]);
 
       if (debug)
+      {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d  "), j));
+      }
 
       // Once more, with only the key. Test Bugzilla #4029.
       result = cache.find (lookup_array[i]);
@@ -250,7 +256,9 @@ find_test_cache (MAP_CACHE &cache)
     }
 
   if (debug)
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
+  }
 }
 
 static void
@@ -265,13 +273,17 @@ find_test_hash_cache (HASH_MAP_CACHE &cache)
       ACE_TEST_ASSERT (j == lookup_array[i]);
 
       if (debug)
+      {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d  "), j));
+      }
 
       ACE_UNUSED_ARG (result);
     }
 
   if (debug)
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
+  }
 }
 
 static void
@@ -295,7 +307,9 @@ purge_test_cache (MAP_CACHE &cache)
   if (caching_strategy_type == ACE_NULL)
     resultant_size = current_map_size;
   else
+  {
     resultant_size = current_map_size - entries_to_remove;
+  }
 
   // Make sure the purge took out the appropriate number of entries.
   ACE_TEST_ASSERT (cache.current_size () == resultant_size);
@@ -323,7 +337,9 @@ purge_test_hash_cache (HASH_MAP_CACHE &cache)
   if (caching_strategy_type == ACE_NULL)
     resultant_size = current_map_size;
   else
+  {
     resultant_size = current_map_size - entries_to_remove;
+  }
 
   // Make sure the purge took out the appropriate number of entries.
   ACE_TEST_ASSERT (cache.current_size () == resultant_size);
@@ -481,13 +497,21 @@ parse_args (int argc, ACE_TCHAR *argv[])
       {
       case 'c':
         if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("null")) == 0)
+        {
           caching_strategy_type = ACE_NULL;
+        }
         if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("lru")) == 0)
+        {
           caching_strategy_type = ACE_LRU;
+        }
         if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("lfu")) == 0)
+        {
           caching_strategy_type = ACE_LFU;
+        }
         if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("fifo")) == 0)
+        {
           caching_strategy_type = ACE_FIFO;
+        }
         break;
       case 'i':
         iterations = ACE_OS::atoi (get_opt.opt_arg ());
@@ -528,7 +552,9 @@ run_main (int argc, ACE_TCHAR *argv[])
   // Validate options.
   int result = parse_args (argc, argv);
   if (result != 0)
+  {
     return result;
+  }
 
   // Start the test only if options are valid.
   ACE_START_TEST (ACE_TEXT ("Cache_Map_Manager_Test"));
@@ -557,7 +583,9 @@ run_main (int argc, ACE_TCHAR *argv[])
       if (randomize_lookups != 0)
         lookup_array[k] = ACE_OS::rand () % iterations;
       else
+      {
         lookup_array[k] = k % iterations;
+      }
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("%d  "),

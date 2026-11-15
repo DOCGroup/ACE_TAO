@@ -80,7 +80,9 @@ ThreadFlagsTest::runtest (ExpectedValues &results) const
       if (results.flags != expected_values_.flags
           || results.scope != expected_values_.scope
           || results.sched != expected_values_.sched)
+      {
         result |= INIT;
+      }
     }
   if (assign_ & ASSIGN)
     {
@@ -93,7 +95,9 @@ ThreadFlagsTest::runtest (ExpectedValues &results) const
       if (results.flags != expected_values_.flags
           || results.scope != expected_values_.scope
           || results.sched != expected_values_.sched)
+      {
         result |= ASSIGN;
+      }
     }
 
   return result;
@@ -213,10 +217,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           returnval = 1;
           ACE_DEBUG ((LM_DEBUG, "FAILED -- details: "));
           if (result & ThreadFlagsTest::INIT)
+          {
             print_results (ThreadFlagsTest::INIT, test.expected_values_, results);
+          }
 
           if (result & ThreadFlagsTest::ASSIGN)
+          {
             print_results (ThreadFlagsTest::ASSIGN, test.expected_values_, results);
+          }
 
           ACE_DEBUG ((LM_DEBUG, "\n"));
         }

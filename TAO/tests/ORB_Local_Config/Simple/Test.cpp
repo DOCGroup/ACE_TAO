@@ -25,19 +25,25 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     ACE_Dynamic_Service<TAO_Protocol_Factory>::instance (one.get (), "IIOP_Factory");
 
   if (p1 != nullptr)
+  {
     ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT ("Unexpected to find IIOP_Factory\n")), -1);
+  }
 
   ACE_Service_Object const * const p2 =
     ACE_Dynamic_Service<ACE_Service_Object>::instance (one.get (), "CORBANAME_Parser");
 
   if (p2 == nullptr)
+  {
     ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT ("Expected to find CORBANAME_Parser\n")), -1);
+  }
 
   ACE_Service_Object const * const p3 =
     ACE_Dynamic_Service<ACE_Service_Object>::instance (one.get (), "CORBALOC_Parser");
 
   if (p3 == nullptr)
+  {
     ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT ("Expected to find CORBALOC_Parser\n")), -1);
+  }
 
   return 0;
 }

@@ -19,13 +19,17 @@ check_group_version (PortableInterceptor::ServerRequestInfo_ptr request_info)
 
   CORBA::Boolean byte_order {};
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+  {
     return;
+  }
 
   cdr.reset_byte_order (static_cast<int> (byte_order));
 
   CORBA::ULong version {};
   if ((cdr >> version) == 0)
+  {
     return;
+  }
 
   if (version != expected_version)
     {
@@ -79,7 +83,9 @@ Server_Request_Interceptor::receive_request_service_contexts (
   ++this->request_count_;
 
   if (this->forward_request_thrown_)
+  {
     check_group_version (ri);
+  }
 }
 
 void

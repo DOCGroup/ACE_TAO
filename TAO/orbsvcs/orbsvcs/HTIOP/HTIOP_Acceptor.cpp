@@ -60,7 +60,9 @@ TAO::HTIOP::Acceptor::create_profile (const TAO::ObjectKey &object_key,
 {
   // Sanity check.
   if (this->endpoint_count_ == 0)
+  {
     return -1;
+  }
 
   // Check if multiple endpoints should be put in one profile or
   // if they should be spread across multiple profiles.
@@ -86,7 +88,9 @@ TAO::HTIOP::Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
   int count = mprofile.profile_count ();
   if ((mprofile.size () - count) < this->endpoint_count_
       && mprofile.grow (count + this->endpoint_count_) == -1)
+  {
     return -1;
+  }
 
   // Create a profile for each acceptor endpoint.
   for (CORBA::ULong i {}; i < this->endpoint_count_; ++i)
@@ -115,13 +119,17 @@ TAO::HTIOP::Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
       // created (TAO_HTIOP 1.0 did not support tagged components).
       if (this->orb_core_->orb_params ()->std_profile_components () == 0
           || (this->version_.major == 1 && this->version_.minor == 0))
+      {
         continue;
+      }
 
       pfile->tagged_components ().set_orb_type (TAO_ORB_TYPE);
 
       TAO_Codeset_Manager *csm = this->orb_core_->codeset_manager();
       if (csm)
+      {
         csm->set_codeset(pfile->tagged_components());
+      }
     }
 
   return 0;
@@ -178,7 +186,9 @@ TAO::HTIOP::Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
           htiop_profile->tagged_components ().set_orb_type (TAO_ORB_TYPE);
           TAO_Codeset_Manager *csm = this->orb_core_->codeset_manager();
           if (csm)
+          {
             csm->set_codeset(htiop_profile->tagged_components());
+          }
         }
 
       index = 1;
@@ -211,7 +221,9 @@ TAO::HTIOP::Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 
   // Make sure the dynamically cast pointer is valid.
   if (endp == nullptr)
+  {
     return false;
+  }
 
   for (CORBA::ULong i {}; i < this->endpoint_count_; ++i)
     {
@@ -278,14 +290,18 @@ TAO::HTIOP::Acceptor::open (TAO_ORB_Core *orb_core,
                       -1);
 
   if (address == nullptr)
+  {
     return -1;
+  }
 
   if (major >=0 && minor >= 0)
     this->version_.set_version (static_cast<CORBA::Octet> (major),
                                 static_cast<CORBA::Octet> (minor));
   // Parse options
   if (this->parse_options (options) == -1)
+  {
     return -1;
+  }
 
   ACE::HTBP::Addr addr;
 
@@ -314,11 +330,15 @@ TAO::HTIOP::Acceptor::open (TAO_ORB_Core *orb_core,
 
       // Check for multiple network interfaces.
       if (this->probe_interfaces (orb_core) == -1)
+      {
         return -1;
+      }
 
       // First convert the port into a usable form.
       if (addr.ACE_INET_Addr::set (address + sizeof (':')) != 0)
+      {
         return -1;
+      }
 
       // Now reset the port and set the host.
       if (addr.ACE_INET_Addr::set (addr.get_port_number (),
@@ -335,7 +355,9 @@ TAO::HTIOP::Acceptor::open (TAO_ORB_Core *orb_core,
       // The address is a hostname.  No port was specified, so assume
       // port zero (port will be chosen for us).
       if (addr.ACE_INET_Addr::set ((unsigned short) 0, address) != 0)
+      {
         return -1;
+      }
 
       specified_hostname = address;
     }
@@ -343,7 +365,9 @@ TAO::HTIOP::Acceptor::open (TAO_ORB_Core *orb_core,
     {
       // Host and port were specified.
       if (addr.ACE_INET_Addr::set (address) != 0)
+      {
         return -1;
+      }
 
       // Extract out just the host part of the address.
       size_t len = port_separator_loc - address;
@@ -382,7 +406,9 @@ TAO::HTIOP::Acceptor::open (TAO_ORB_Core *orb_core,
                           addr,
                           this->hosts_[0],
                           this->hostname_in_ior_.c_str ()) != 0)
+      {
         return -1;
+      }
     }
   else
     {
@@ -390,13 +416,17 @@ TAO::HTIOP::Acceptor::open (TAO_ORB_Core *orb_core,
                           addr,
                           this->hosts_[0],
                           specified_hostname) != 0)
+      {
         return -1;
+      }
     }
 
   // Copy the addr.  The port is (re)set in
   // TAO::HTIOP::Acceptor::open_i().
   if (this->addrs_[0].ACE_INET_Addr::set (addr) != 0)
+  {
     return -1;
+  }
 
   return this->open_i (addr,
                        reactor);
@@ -428,7 +458,9 @@ TAO::HTIOP::Acceptor::open_default (TAO_ORB_Core *orb_core,
 
   // Parse options
   if (this->parse_options (options) == -1)
+  {
     return -1;
+  }
 
   unsigned proxy_port {};
   if (this->inside_ == 1 ||
@@ -460,7 +492,9 @@ TAO::HTIOP::Acceptor::open_default (TAO_ORB_Core *orb_core,
 
   // Check for multiple network interfaces.
   if (this->probe_interfaces (orb_core) == -1)
+  {
     return -1;
+  }
 
   // Now that each network interface's hostname has been cached, open
   // an endpoint on each network interface using the INADDR_ANY
@@ -470,7 +504,9 @@ TAO::HTIOP::Acceptor::open_default (TAO_ORB_Core *orb_core,
   if (addr.ACE_INET_Addr::set (static_cast<u_short> (0),
                                static_cast<ACE_UINT32> (INADDR_ANY),
                                1) != 0)
+  {
     return -1;
+  }
 
   return this->open_i (addr,
                        reactor);
@@ -616,7 +652,9 @@ TAO::HTIOP::Acceptor::dotted_decimal_address (ACE_INET_Addr &addr,
       tmp = new_addr.get_host_addr ();
     }
   else
+  {
     tmp = addr.get_host_addr ();
+  }
 
   if (tmp == nullptr || result != 0)
     {
@@ -679,7 +717,9 @@ TAO::HTIOP::Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
   size_t lo_cnt {};  // Loopback interface count
   for (size_t j {}; j < if_cnt; ++j)
     if (inet_addrs[j].is_loopback ())
+    {
       ++lo_cnt;
+    }
 
   // If the loopback interface is the only interface then include it
   // in the list of interfaces to query for a hostname, otherwise
@@ -687,7 +727,9 @@ TAO::HTIOP::Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
   if (if_cnt == lo_cnt)
     this->endpoint_count_ = static_cast<CORBA::ULong> (if_cnt);
   else
+  {
     this->endpoint_count_ = static_cast<CORBA::ULong> (if_cnt - lo_cnt);
+  }
 
   ACE::HTBP::Addr *addrs {};
   ACE_NEW_RETURN (addrs,
@@ -714,7 +756,9 @@ TAO::HTIOP::Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
       // non-loopback interfaces.
       if (if_cnt != lo_cnt &&
           inet_addrs[i].is_loopback ())
+      {
         continue;
+      }
 
       if (!this->hostname_in_ior_.empty ())
         {
@@ -728,20 +772,26 @@ TAO::HTIOP::Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
                               inet_addrs[i],
                               this->hosts_[host_cnt],
                               this->hostname_in_ior_.c_str ()) != 0)
+          {
             return -1;
+          }
         }
       else
         {
           if (this->hostname (orb_core,
                               inet_addrs[i],
                               this->hosts_[host_cnt]) != 0)
+          {
             return -1;
+          }
         }
 
       // Copy the addr.  The port is (re)set in
       // HTIOP_Acceptor::open_i().
       if (this->addrs_[host_cnt].ACE_INET_Addr::set (inet_addrs[i]) != 0)
+      {
         return -1;
+      }
 
       ++host_cnt;
     }
@@ -804,7 +854,9 @@ TAO::HTIOP::Acceptor::object_key (IOP::TaggedProfile &profile,
 
   // ... and object key.
   if ((cdr >> object_key) == 0)
+  {
     return -1;
+  }
 
   // We are NOT bothered about the rest.
 
@@ -815,7 +867,9 @@ int
 TAO::HTIOP::Acceptor::parse_options (const char *str)
 {
   if (str == nullptr)
+  {
     return 0;  // No options to parse.  Not a problem.
+  }
 
   // Use an option format similar to the one used for CGI scripts in
   // HTTP URLs.
@@ -833,7 +887,9 @@ TAO::HTIOP::Acceptor::parse_options (const char *str)
   // before the object key.
   for (size_t i {}; i < len; ++i)
     if (options[i] == option_delimiter)
+    {
       ++option_count;
+    }
 
   // The idea behind the following loop is to split the options into
   // (option, name) pairs.
@@ -851,7 +907,9 @@ TAO::HTIOP::Acceptor::parse_options (const char *str)
       if (j < option_count - 1)
         end = options.find (option_delimiter, begin);
       else
+      {
         end = len;
+      }
 
       if (end == begin)
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
@@ -892,7 +950,9 @@ TAO::HTIOP::Acceptor::parse_options (const char *str)
           begin = end + 1;
         }
       else
+      {
         break;  // No other options.
+      }
     }
   return 0;
 }

@@ -42,7 +42,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (options, argc, argv) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var obj = orb->string_to_object (options.ior);
 
@@ -74,7 +76,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                              "Not a Messenger object reference\n"),
                             1);
         else
+        {
           ACE_DEBUG ((LM_DEBUG, "Successfully called _non_existent()\n"));
+        }
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
         server->shutdown ();

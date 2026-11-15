@@ -59,7 +59,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       std::basic_string<ACE_TCHAR> ior {ACE_TEXT ("corbaloc::localhost:5678/Test")};
       if (parse_args (argc, argv, ior) != 0)
+      {
         return 1;
+      }
 
       orb = CORBA::ORB_init (argc, argv);
       CORBA::Object_var object =

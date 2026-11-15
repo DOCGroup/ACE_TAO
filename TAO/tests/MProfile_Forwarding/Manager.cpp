@@ -55,7 +55,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       manager.init (argc, argv);
 
       if (parse_args (argc, argv, options) == -1)
+      {
         return -1;
+      }
 
       manager.activate_servant ();
 

@@ -15,7 +15,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_Get_Opt cmd_opts {argc, argv, options, 1, 0, ACE_Get_Opt::PERMUTE_ARGS, 1};
   if (cmd_opts.long_option
       (ACE_TEXT ("config"), 'f', ACE_Get_Opt::ARG_REQUIRED) == -1)
+  {
     return -1;
+  }
 
   int option {};
   std::basic_string<ACE_TCHAR> config_file {ACE_TEXT ("HAStatus.conf")};

@@ -87,7 +87,9 @@ int
 Common_Task::open (void *)
 {
   if (this->activate (THR_NEW_LWP | THR_DETACHED) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn")), -1);
+  }
   return 0;
 }
 
@@ -139,7 +141,9 @@ Supplier::svc ()
 
   ACE_NEW_RETURN(mb, ACE_Message_Block, -1);
   if (this->put_next (mb) == -1)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"), ACE_TEXT ("put_next")));
+  }
 
   return 0;
 }
@@ -175,7 +179,9 @@ Consumer::svc ()
       result = this->getq (mb, &this->timeout_);
 
       if (result == -1)
+      {
         break;
+      }
 
       size_t const length = mb->length ();
 
@@ -188,7 +194,9 @@ Consumer::svc ()
       mb->release ();
 
       if (length == 0)
+      {
         break;
+      }
     }
 
   ACE_TEST_ASSERT (result == 0 || errno == EWOULDBLOCK);

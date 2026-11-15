@@ -39,7 +39,9 @@ void
 CEC_Counting_Supplier::push (const CORBA::Any&)
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
+  {
     return;
+  }
 
   CORBA::Any event {};
   event <<= CORBA::Long {0};
@@ -165,7 +167,9 @@ CORBA::Any*
 CEC_Pull_Counting_Supplier::pull ()
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
+  {
     throw CosEventComm::Disconnected ();
+  }
 
   if (this->event_count % 2)
     {
@@ -185,7 +189,9 @@ CORBA::Any*
 CEC_Pull_Counting_Supplier::try_pull (CORBA::Boolean_out has_event)
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
+  {
     throw CosEventComm::Disconnected ();
+  }
 
   if (this->event_count % 2)
     {

@@ -34,7 +34,9 @@ HTML_Body_Iterator::next (ACE_CString &url)
       href_index = ACE_Utils::truncate_cast<int> (buffer.find ("HREF"));
 
       if (href_index < 0)
+      {
         href_index = ACE_Utils::truncate_cast<int> (buffer.find ("href"));
+      }
 
       // Grep fpr " and grab the string until end-"
       if ( href_index > 0)
@@ -48,7 +50,9 @@ HTML_Body_Iterator::next (ACE_CString &url)
               buffer.find ('\"', href_index));
 
           if (start_index <= 0)
+          {
             break;
+          }
 
           start_index += href_index;
 
@@ -57,7 +61,9 @@ HTML_Body_Iterator::next (ACE_CString &url)
               buffer.find ('\"', start_index + 1));
 
           if (end_index <= 0)
+          {
             break;
+          }
 
           end_index += start_index + 1;
 

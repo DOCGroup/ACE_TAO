@@ -109,7 +109,9 @@ TAO_Transient_Bindings_Map::shared_bind (char const *id,
         return -2;
 
       else
+      {
         return this->map_.rebind (new_name, new_entry);
+      }
     }
 }
 
@@ -214,7 +216,9 @@ TAO_Transient_Naming_Context::list (CORBA::ULong how_many,
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
   if (this->destroyed_)
+  {
     throw CORBA::OBJECT_NOT_EXIST ();
+  }
 
   // Dynamically allocate iterator for traversing the underlying hash map.
   HASH_MAP::ITERATOR *hash_iter {};
@@ -244,7 +248,9 @@ TAO_Transient_Naming_Context::list (CORBA::ULong how_many,
   if (this->context_->current_size () > how_many)
     n = how_many;
   else
+  {
     n = static_cast<CORBA::ULong> (this->context_->current_size ());
+  }
 
   // Use the hash map iterator to populate <bl> with bindings.
   bl->length (n);
@@ -257,7 +263,9 @@ TAO_Transient_Naming_Context::list (CORBA::ULong how_many,
       hash_iter->advance ();
 
       if (ITER_SERVANT::populate_binding (hash_entry, bl[i]) == 0)
-          throw CORBA::NO_MEMORY();
+      {
+        throw CORBA::NO_MEMORY();
+      }
     }
 
   // Now we are done with the BindingsList, and we can follow up on

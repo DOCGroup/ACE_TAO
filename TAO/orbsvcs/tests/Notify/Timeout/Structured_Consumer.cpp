@@ -90,7 +90,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
       status = client.init (argc, argv);
       if (status != 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "Error: Client init failed.\n"),1);
+      }
 
       CosNotifyChannelAdmin::EventChannel_var ec =
         client.create_event_channel ("MyEventChannel", 1);
@@ -105,7 +107,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
         create_consumeradmin (ec.in ());
 
       if (CORBA::is_nil (admin.in ()))
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "Error: nil ConsumerAdmin.\n"),1);
+      }
 
       create_consumers (admin.in (), &client);
 

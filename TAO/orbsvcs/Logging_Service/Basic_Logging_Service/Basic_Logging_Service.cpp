@@ -80,7 +80,9 @@ Basic_Logging_Service::init (int argc, ACE_TCHAR * argv[])
   this->init_ORB (argc, argv);
 
   if (this->parse_args (argc, argv) == -1)
+  {
     return -1;
+  }
 
   // Activate the basic log factory
   DsLogAdmin::BasicLogFactory_var const obj =
@@ -150,7 +152,9 @@ Basic_Logging_Service::resolve_naming_service ()
 
   // Need to check return value for errors.
   if (CORBA::is_nil (naming_obj.in ()))
+  {
     throw CORBA::UNKNOWN ();
+  }
 
   this->naming_ =
     CosNaming::NamingContext::_narrow (naming_obj.in ());
@@ -162,7 +166,9 @@ Basic_Logging_Service::run ()
   if (this->nthreads_ > 0)
     {
       if (this->activate ((THR_NEW_LWP | THR_JOINABLE), this->nthreads_) != 0)
+      {
         return -1;
+      }
 
       this->thr_mgr ()->wait ();
       return 0;
@@ -202,5 +208,7 @@ Basic_Logging_Service::shutdown ()
 
   // shutdown the ORB.
   if (!CORBA::is_nil (this->orb_.in ()))
+  {
     this->orb_->shutdown ();
+  }
 }

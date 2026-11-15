@@ -42,7 +42,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv, "MY_TEST_ORB");
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       try
         {

@@ -107,7 +107,9 @@ parse_args (int argc,
       }
 
   if (number_of_threads <= 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "The number of server threads must be positive.\n"), -1);
+  }
 
   return 0;
 }
@@ -121,7 +123,9 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
 
       int const parse_result = parse_args (argc, argv);
       if (parse_result != 0)
+      {
         return parse_result;
+      }
 
       CORBA::Object_var object = orb->resolve_initial_references ("RootPOA");
 
@@ -147,7 +151,9 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
 
       int result = write_ior_to_file (ior.in ());
       if (result != 0)
+      {
         return result;
+      }
 
       Server_Task server_tasks (orb.in ());
 
@@ -155,12 +161,16 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
                                       number_of_threads);
 
       if (result != 0)
+      {
         return result;
+      }
 
       result = ACE_Thread_Manager::instance ()->wait ();
 
       if (result != 0)
+      {
         return result;
+      }
 
       root_poa->destroy (true, true);
     }

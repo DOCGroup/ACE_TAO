@@ -44,7 +44,9 @@ test_i::method (CORBA::Long client_id,
   if (lane)
     thread_count = lane->current_threads ();
   else
+  {
     thread_count = 0;
+  }
 
   return iteration;
 }

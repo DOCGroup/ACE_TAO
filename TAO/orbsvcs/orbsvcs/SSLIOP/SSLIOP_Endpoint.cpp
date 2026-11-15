@@ -98,7 +98,9 @@ TAO_SSLIOP_Endpoint::operator= (TAO_SSLIOP_Endpoint const &other)
 TAO_SSLIOP_Endpoint::~TAO_SSLIOP_Endpoint ()
 {
   if (this->destroy_iiop_endpoint_)
+  {
     delete this->iiop_endpoint_;
+  }
 }
 
 int
@@ -111,7 +113,9 @@ TAO_SSLIOP_Endpoint::addr_to_string (char *buffer, size_t length)
     + sizeof ('\0');
 
   if (length < actual_len)
+  {
     return -1;
+  }
 
   ACE_OS::sprintf (buffer,
                    "%s:%d",
@@ -135,7 +139,9 @@ TAO_SSLIOP_Endpoint::is_equivalent (TAO_Endpoint const *other_endpoint)
   TAO_SSLIOP_Endpoint *const endpoint = dynamic_cast<TAO_SSLIOP_Endpoint *> (endpt);
 
   if (!endpoint)
+  {
     return false;
+  }
 
   ::Security::EstablishTrust const t = endpoint->trust ();
 
@@ -158,11 +164,15 @@ TAO_SSLIOP_Endpoint::is_equivalent (TAO_Endpoint const *other_endpoint)
   // Therefore, we only need to directly compare the hosts. See also the
   // comments in the hash() method.
   if (this->iiop_endpoint () == nullptr || endpoint->iiop_endpoint () == nullptr)
+  {
     return false;
+  }
 
   if (std::strcmp (this->iiop_endpoint ()->host (),
                    endpoint->iiop_endpoint ()->host ()) != 0)
+  {
     return false;
+  }
 
   return true;
 }
@@ -180,7 +190,9 @@ TAO_SSLIOP_Endpoint::duplicate ()
                   nullptr);
 
   if (this->credentials_set_)
+  {
     endpoint->set_sec_attrs (this->qop_,this->trust_, this->credentials_.in());
+  }
 
   endpoint->iiop_endpoint (this->iiop_endpoint_, true);
   endpoint->hash_val_ = this->hash_val_;
@@ -195,7 +207,9 @@ TAO_SSLIOP_Endpoint::hash ()
   // it is possible this test to pass, but then have the hash reset
   // before the value is returned.
   if (this->hash_val_ != 0)
+  {
     return this->hash_val_;
+  }
 
   // Do this with no locks held, as it may try to acquire it, too.
   ACE_INET_Addr const &oaddr = this->object_addr();
@@ -207,7 +221,9 @@ TAO_SSLIOP_Endpoint::hash ()
                       this->hash_val_);
     // .. DCL
     if (this->hash_val_ != 0)
+    {
       return this->hash_val_;
+    }
 
     // Note that we are not using the underlying IIOP endpoint's hash
     // value in order to avoid the influence of the IIOP port number,
@@ -268,7 +284,9 @@ TAO_SSLIOP_Endpoint::set_sec_attrs (::Security::QOP q,
                                     TAO::SSLIOP::OwnCredentials_ptr const c)
 {
   if (this->credentials_set_)
+  {
     return;
+  }
 
   ACE_GUARD (TAO_SYNCH_MUTEX,
              guard,
@@ -276,7 +294,9 @@ TAO_SSLIOP_Endpoint::set_sec_attrs (::Security::QOP q,
 
   // double-check
   if (this->credentials_set_)
+  {
     return;
+  }
 
   this->qop_ = q;
   this->trust_ = t;
@@ -308,7 +328,9 @@ TAO_SSLIOP_Synthetic_Endpoint::is_equivalent (TAO_Endpoint const *other_endpoint
     dynamic_cast<TAO_SSLIOP_Endpoint *> (endpt);
 
   if (endpoint == nullptr)
+  {
     return false;
+  }
 
   if ((this->ssl_component ().port != 0
        && endpoint->ssl_component ().port != 0
@@ -323,11 +345,15 @@ TAO_SSLIOP_Synthetic_Endpoint::is_equivalent (TAO_Endpoint const *other_endpoint
   // Therefore, directly comparing the hosts at this point. See also the
   // comments in the hash() method
   if (this->iiop_endpoint() == nullptr || endpoint->iiop_endpoint() == nullptr)
+  {
     return false;
+  }
 
   if ((std::strcmp (this->iiop_endpoint()->host (),
                     endpoint->iiop_endpoint()->host ()) != 0))
+  {
     return false;
+  }
 
   return true;
 }
@@ -344,7 +370,9 @@ TAO_SSLIOP_Synthetic_Endpoint::duplicate ()
                   nullptr);
 
   if (this->credentials_set())
+  {
     endpoint->set_sec_attrs (this->qop (),this->trust (), this->credentials ());
+  }
 
   endpoint->iiop_endpoint (this->iiop_endpoint (), true);
   endpoint->hash_val_ = this->hash ();

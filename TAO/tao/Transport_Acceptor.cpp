@@ -30,13 +30,17 @@ TAO_Acceptor::handle_accept_error (ACE_Event_Handler* base_acceptor)
       // If the user has decided to stop accepting when the file handles
       // run out, just return -1;
       if (this->error_retry_delay_ == 0)
+      {
         return -1;
+      }
 
       // Get the reactor.  If there isn't one, which isn't very likely,
       // then just return -1.
       ACE_Reactor* reactor = base_acceptor->reactor ();
       if (reactor == nullptr)
+      {
         return -1;
+      }
 
       // So that the reactor doesn't completely remove this handler from
       // the reactor, register it with the except mask.  It should be
@@ -67,7 +71,9 @@ TAO_Acceptor::handle_expiration (ACE_Event_Handler* base_acceptor)
   // just return -1;
   ACE_Reactor* reactor = base_acceptor->reactor ();
   if (reactor == nullptr)
+  {
     return -1;
+  }
 
   if (TAO_debug_level > 0)
     TAOLIB_DEBUG ((LM_DEBUG, "TAO (%P|%t) - "

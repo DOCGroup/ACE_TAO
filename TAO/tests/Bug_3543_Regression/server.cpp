@@ -58,7 +58,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
       ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
       if (parse_args (argc, argv, ior) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var const poa_object = orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var const root_poa = PortableServer::POA::_narrow (poa_object.in ());

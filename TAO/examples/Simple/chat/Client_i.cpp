@@ -78,7 +78,9 @@ Client_i::init (int argc, ACE_TCHAR *argv[])
 
       // Check if the command line arguments are ok.
       if (this->parse_args (argc, argv) == -1)
+      {
         return -1;
+      }
 
       // set the orb in the receiver_i_ object.
       this->receiver_i_->orb (orb.in ());
@@ -165,7 +167,9 @@ Client_i::handle_input (ACE_HANDLE)
   char buf[BUFSIZ];
 
   if (ACE_OS::fgets (buf, BUFSIZ, stdin) == nullptr)
+  {
     return 0;
+  }
 
   try
     {

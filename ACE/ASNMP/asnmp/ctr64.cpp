@@ -118,7 +118,9 @@ SnmpSyntax& Counter64::operator=( SnmpSyntax &val)
 {
   // protect against assignment from itself
   if (this == std::addressof (val))
-      return *this;
+  {
+    return *this;
+  }
 
   smival.value.hNumber.lopart = 0;      // pessimsitic - assume no mapping
   smival.value.hNumber.hipart = 0;
@@ -195,6 +197,8 @@ char const *Counter64::to_string ()
                     static_cast<unsigned int> (high()),
                     static_cast<unsigned int> (low()));
   else
+  {
     std::snprintf (output_buffer, sizeof output_buffer, "%lu", low());
+  }
   return output_buffer;
 }

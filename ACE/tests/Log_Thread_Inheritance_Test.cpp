@@ -94,7 +94,10 @@ struct MyThread : ACE_Task_Base
         for (int i = 0; i < 100; ++i)
           {
             ACE_DEBUG ((LM_DEBUG, "(%P|%t) - loop %d\n", i));
-            if (!(i % 10)) ACE_OS::thr_yield ();
+            if (!(i % 10))
+            {
+              ACE_OS::thr_yield ();
+            }
           }
       }
     return 0;
@@ -116,7 +119,10 @@ int run_main (int, ACE_TCHAR *[])
   MyThread::childthread_.wait ();
   ACE_LOG_MSG->msg_ostream (initial_stream, false);
 #ifdef ACE_HAS_PTHREADS
-  if (!test_inherited_attributes ()) return -1;
+  if (!test_inherited_attributes ())
+  {
+    return -1;
+  }
 #endif /* ACE_HAS_PTHREADS */
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Test passed.\n"));
   ACE_END_TEST;

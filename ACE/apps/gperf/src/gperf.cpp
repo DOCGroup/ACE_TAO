@@ -34,7 +34,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Sets the Options.
   if (option.parse_args (argc, argv) == -1)
+  {
     return 1;
+  }
 
   time_t clock;
   ACE_OS::time (&clock);

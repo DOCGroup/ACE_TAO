@@ -74,7 +74,9 @@ TAO_EC_Dispatching*
 TAO_EC_TPC_Factory::create_dispatching (TAO_EC_Event_Channel_Base *)
 {
   if (TAO_EC_TPC_debug_level > 0)
+  {
     ORBSVCS_DEBUG ((LM_DEBUG, "EC (%P|%t) EC_TPC_Factory::create_dispatching\n"));
+  }
 
   TAO_EC_Queue_Full_Service_Object* so =
     this->find_service_object (this->queue_full_service_object_name_.fast_rep(),
@@ -91,7 +93,9 @@ TAO_EC_ProxyPushSupplier*
 TAO_EC_TPC_Factory::create_proxy_push_supplier (TAO_EC_Event_Channel_Base *ec)
 {
   if (TAO_EC_TPC_debug_level > 0)
+  {
     ORBSVCS_DEBUG ((LM_DEBUG, "EC (%P|%t) EC_TPC_Factory::create_proxy_push_supplier\n"));
+  }
   return new TAO_EC_TPC_ProxyPushSupplier (ec, this->consumer_validate_connection_);
 }
 
@@ -99,7 +103,9 @@ TAO_EC_ProxyPushConsumer*
 TAO_EC_TPC_Factory::create_proxy_push_consumer (TAO_EC_Event_Channel_Base *ec)
 {
   if (TAO_EC_TPC_debug_level > 0)
+  {
     ORBSVCS_DEBUG ((LM_DEBUG, "EC (%P|%t) EC_TPC_Factory::create_proxy_push_consumer\n"));
+  }
   return new TAO_EC_TPC_ProxyPushConsumer (ec);
 }
 

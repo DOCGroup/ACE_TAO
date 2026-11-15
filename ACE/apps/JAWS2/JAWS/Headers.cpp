@@ -111,11 +111,15 @@ JAWS_Headers::find_next (const char *const &header_name)
       if (data != nullptr)
         {
           if (ACE_OS::strcasecmp (data->header_name (), header_name) != 0)
+          {
             data = nullptr;
+          }
         }
       i.advance ();
       if (data != nullptr)
+      {
         break;
+      }
     }
 
   return data;
@@ -144,7 +148,9 @@ JAWS_Headers::remove_all (const char *const &header_name)
               break;
             }
           else
+          {
             i.advance ();
+          }
         }
     }
   while (! done);

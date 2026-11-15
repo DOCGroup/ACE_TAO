@@ -62,10 +62,14 @@ HTTP_URL::send_request ()
       if (retval <= 0)
         return -1;
       else
+      {
         return retval;
+      }
     }
   else
+  {
     return -1;
+  }
 }
 
 int

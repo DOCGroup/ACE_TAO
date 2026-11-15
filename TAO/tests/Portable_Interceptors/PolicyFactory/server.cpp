@@ -37,7 +37,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Sanity check.
       if (ptype != Test::POLICY_TYPE)
+      {
         throw CORBA::INTERNAL ();
+      }
 
       Test::Policy_var policy (Test::Policy::_narrow (p.in ()));
 
@@ -45,7 +47,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Sanity check.
       if (val != pval)
+      {
         throw CORBA::INTERNAL ();
+      }
 
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA");

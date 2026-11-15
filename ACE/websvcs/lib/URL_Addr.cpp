@@ -98,7 +98,9 @@ ACE_URL_Addr::addr_to_string (ACE_TCHAR *s,
                               int) const
 {
   if (size < ACE_OS::strlen (this->url_.get ()))
+  {
     return -1;
+  }
   ACE_OS::strcpy (s, this->url_.get ());
   return 0;
 }
@@ -114,7 +116,9 @@ ACE_URL_Addr*
 ACE_URL_Addr::create_address (const ACE_TCHAR *url)
 {
   if (url == nullptr)
+  {
     return nullptr;
+  }
 
   ACE_URL_Addr *raw_addr {};
   if (ACE_OS::strncasecmp (http, url, http_size) == 0)
@@ -124,11 +128,15 @@ ACE_URL_Addr::create_address (const ACE_TCHAR *url)
   else if (ACE_OS::strncasecmp (mailto, url, mailto_size) == 0)
     ACE_NEW_RETURN (raw_addr, ACE_Mailto_Addr (), nullptr);
   else
+  {
     ACE_NEW_RETURN (raw_addr, ACE_URL_Addr (), nullptr);
+  }
 
   std::unique_ptr<ACE_URL_Addr> addr (raw_addr);
   if (addr->string_to_addr (url) != 0)
+  {
     return nullptr;
+  }
   return addr.release ();
 }
 
@@ -241,18 +249,24 @@ ACE_HTTP_Addr::set (const ACE_TCHAR *host_name,
                     u_short port)
 {
   if (host_name == nullptr || path == nullptr)
+  {
     return -1;
+  }
 
   URL_String hostname;
   URL_String path_copy;
   URL_String query_copy;
   if (!duplicate_url_string (hostname, host_name)
       || !duplicate_url_string (path_copy, path))
+  {
     return -1;
+  }
   if (query != nullptr)
     {
       if (!duplicate_url_string (query_copy, query))
+      {
         return -1;
+      }
     }
 
   this->hostname_ = std::move (hostname);
@@ -268,7 +282,9 @@ ACE_HTTP_Addr::set (const ACE_TCHAR *host_name,
                         -1);
   URL_String buffer (raw_buffer);
   if (this->addr_to_string (buffer.get (), size, 1) == -1)
+  {
     return -1;
+  }
   this->set_url (buffer.release ());
   return 0;
 }
@@ -277,38 +293,54 @@ int
 ACE_HTTP_Addr::set (const ACE_HTTP_Addr &addr)
 {
   if (this == std::addressof (addr))
+  {
     return 0;
+  }
 
   if (this->ACE_URL_Addr::set (addr) != 0)
+  {
     return -1;
+  }
   if (addr.hostname_ != nullptr)
     {
       if (!duplicate_url_string (this->hostname_, addr.hostname_.get ()))
+      {
         return -1;
+      }
     }
   else
     {
       if (!duplicate_url_string (this->hostname_, ACE_TEXT ("")))
+      {
         return -1;
+      }
     }
   if (addr.path_ != nullptr)
     {
       if (!duplicate_url_string (this->path_, addr.path_.get ()))
+      {
         return -1;
+      }
     }
   else
     {
       if (!duplicate_url_string (this->path_, ACE_TEXT ("")))
+      {
         return -1;
+      }
     }
   this->port_number_ = addr.port_number_;
   if (addr.query_ != nullptr)
     {
       if (!duplicate_url_string (this->query_, addr.query_.get ()))
+      {
         return -1;
+      }
     }
   else
+  {
     this->query_.reset ();
+  }
   return 0;
 }
 
@@ -398,7 +430,9 @@ ACE_URL_Addr*
 ACE_HTTP_Addr::create_relative_address (const ACE_TCHAR *url) const
 {
   if (ACE_URL_Addr::known_scheme (url))
+  {
     return ACE_URL_Addr::create_address (url);
+  }
 
   ACE_HTTP_Addr *addr {};
   if (url[0] == '/')
@@ -441,7 +475,9 @@ ACE_HTTP_Addr::create_relative_address (const ACE_TCHAR *url) const
             }
 
           if (p != buffer.get ())
+          {
             target = p;
+          }
         }
       else
         {
@@ -492,16 +528,22 @@ int
 ACE_HTTP_Addr::string_to_addr (const ACE_TCHAR *address)
 {
   if (address == nullptr)
+  {
     return -1;
+  }
 
   if (ACE_OS::strncasecmp (http, address, http_size) != 0)
+  {
     return -1;
+  }
 
   this->clear ();
 
   // Save the original URL....
   if (this->ACE_URL_Addr::string_to_addr (address) != 0)
+  {
     return -1;
+  }
 
   const ACE_TCHAR *string = address;
   string += http_size;
@@ -509,7 +551,9 @@ ACE_HTTP_Addr::string_to_addr (const ACE_TCHAR *address)
 
   // Make a copy of the string to manipulate it.
   if (!duplicate_url_string (this->hostname_, string))
+  {
     return -1;
+  }
 
   ACE_TCHAR *path_start = ACE_OS::strchr (this->hostname_.get (), '/');
   if (path_start != nullptr)
@@ -523,10 +567,14 @@ ACE_HTTP_Addr::string_to_addr (const ACE_TCHAR *address)
           query_start[0] = '\0';
           ++query_start;
           if (!duplicate_url_string (this->query_, query_start))
+          {
             return -1;
+          }
         }
       if (!duplicate_url_string (this->path_, path_start))
+      {
         return -1;
+      }
     }
 
   // By now t is null terminated at the start of the path, find the
@@ -550,10 +598,14 @@ ACE_HTTP_Addr::addr_to_string (ACE_TCHAR *buffer,
                                int flags) const
 {
   if (size < this->url_size (flags))
+  {
     return -1;
+  }
 
   if (this->hostname_ == nullptr)
+  {
     return -1;
+  }
 
   size_t n = ACE_OS::sprintf (buffer,
                               ACE_TEXT ("http://"));
@@ -634,7 +686,9 @@ ACE_FTP_Addr::set (const ACE_TCHAR *host_name,
                    const ACE_TCHAR *password)
 {
   if (host_name == nullptr || path == nullptr)
+  {
     return -1;
+  }
 
   URL_String hostname;
   URL_String path_copy;
@@ -642,16 +696,22 @@ ACE_FTP_Addr::set (const ACE_TCHAR *host_name,
   URL_String password_copy;
   if (!duplicate_url_string (hostname, host_name)
       || !duplicate_url_string (path_copy, path))
+  {
     return -1;
+  }
   if (user != nullptr)
     {
       if (!duplicate_url_string (user_copy, user))
+      {
         return -1;
+      }
     }
   if (password != nullptr)
     {
       if (!duplicate_url_string (password_copy, password))
+      {
         return -1;
+      }
     }
 
   this->hostname_ = std::move (hostname);
@@ -667,7 +727,9 @@ ACE_FTP_Addr::set (const ACE_TCHAR *host_name,
                         -1);
   URL_String buffer (raw_buffer);
   if (this->addr_to_string (buffer.get (), size, 1) == -1)
+  {
     return -1;
+  }
   this->set_url (buffer.release ());
   return 0;
 }
@@ -676,27 +738,41 @@ int
 ACE_FTP_Addr::set (const ACE_FTP_Addr& addr)
 {
   if (this == std::addressof (addr))
+  {
     return 0;
+  }
 
   if (this->ACE_URL_Addr::set (addr) != 0)
+  {
     return -1;
+  }
   if (!duplicate_url_string (this->hostname_, addr.hostname_.get ())
       || !duplicate_url_string (this->path_, addr.path_.get ()))
+  {
     return -1;
+  }
   if (addr.user_ != nullptr)
     {
       if (!duplicate_url_string (this->user_, addr.user_.get ()))
+      {
         return -1;
+      }
     }
   else
+  {
     this->user_.reset ();
+  }
   if (addr.password_ != nullptr)
     {
       if (!duplicate_url_string (this->password_, addr.password_.get ()))
+      {
         return -1;
+      }
     }
   else
+  {
     this->password_.reset ();
+  }
   return 0;
 }
 
@@ -742,7 +818,9 @@ ACE_FTP_Addr::addr_to_string (ACE_TCHAR *buffer,
                               int flags) const
 {
   if (size < this->url_size (flags))
+  {
     return -1;
+  }
 
   size_t n = ACE_OS::sprintf (buffer,
                               ACE_TEXT ("ftp://"));
@@ -785,14 +863,20 @@ int
 ACE_FTP_Addr::string_to_addr (const ACE_TCHAR *address)
 {
   if (address == nullptr)
+  {
     return -1;
+  }
   if (ACE_OS::strncasecmp (ftp, address, ftp_size) != 0)
+  {
     return -1;
+  }
 
   this->clear ();
   // Save the original URL....
   if (this->ACE_URL_Addr::string_to_addr (address) != 0)
+  {
     return -1;
+  }
 
   const ACE_TCHAR *string = address;
   string += ftp_size;
@@ -813,7 +897,9 @@ ACE_FTP_Addr::string_to_addr (const ACE_TCHAR *address)
       path_start[0] = '\0';
       ++path_start;
       if (!duplicate_url_string (this->path_, path_start))
+      {
         return -1;
+      }
     }
 
   ACE_TCHAR *host_start = ACE_OS::strchr (t.get (), '@');
@@ -822,14 +908,18 @@ ACE_FTP_Addr::string_to_addr (const ACE_TCHAR *address)
       host_start[0] = '\0';
       ++host_start;
       if (!duplicate_url_string (this->hostname_, host_start))
+      {
         return -1;
+      }
       ACE_TCHAR *pass_start = ACE_OS::strchr (t.get (), ':');
       if (pass_start != nullptr)
         {
           pass_start[0] = '\0';
           ++pass_start;
           if (!duplicate_url_string (this->password_, pass_start))
+          {
             return -1;
+          }
         }
       this->user_ = std::move (t);
     }
@@ -884,18 +974,24 @@ ACE_Mailto_Addr::set (const ACE_TCHAR *user,
                       const ACE_TCHAR *headers)
 {
   if (user == nullptr || hostname == nullptr)
+  {
     return -1;
+  }
 
   URL_String user_copy;
   URL_String hostname_copy;
   URL_String headers_copy;
   if (!duplicate_url_string (user_copy, user)
       || !duplicate_url_string (hostname_copy, hostname))
+  {
     return -1;
+  }
   if (headers != nullptr)
     {
       if (!duplicate_url_string (headers_copy, headers))
+      {
         return -1;
+      }
     }
 
   this->user_ = std::move (user_copy);
@@ -908,7 +1004,9 @@ ACE_Mailto_Addr::set (const ACE_TCHAR *user,
                         -1);
   URL_String buffer (raw_buffer);
   if (this->addr_to_string (buffer.get (), size, 1) == -1)
+  {
     return -1;
+  }
   this->set_url (buffer.release ());
   return 0;
 }
@@ -917,20 +1015,30 @@ int
 ACE_Mailto_Addr::set (const ACE_Mailto_Addr &addr)
 {
   if (this == std::addressof (addr))
+  {
     return 0;
+  }
 
   if (this->ACE_URL_Addr::set (addr) != 0)
+  {
     return -1;
+  }
   if (!duplicate_url_string (this->user_, addr.user_.get ())
       || !duplicate_url_string (this->hostname_, addr.hostname_.get ()))
+  {
     return -1;
+  }
   if (addr.headers_ != nullptr)
     {
       if (!duplicate_url_string (this->headers_, addr.headers_.get ()))
+      {
         return -1;
+      }
     }
   else
+  {
     this->headers_.reset ();
+  }
   return 0;
 }
 
@@ -965,9 +1073,13 @@ ACE_Mailto_Addr::addr_to_string (ACE_TCHAR *buffer,
                                  int flags) const
 {
   if (size < this->url_size (flags))
+  {
     return -1;
+  }
   if (this->user_ == nullptr || this->hostname_ == nullptr)
+  {
     return -1;
+  }
 
   size_t n = ACE_OS::sprintf (buffer,
                               ACE_TEXT ("mailto:%") ACE_TEXT_PRIs
@@ -986,15 +1098,21 @@ int
 ACE_Mailto_Addr::string_to_addr (const ACE_TCHAR *address)
 {
   if (address == nullptr)
+  {
     return -1;
+  }
 
   if (ACE_OS::strncasecmp (mailto, address, mailto_size) != 0)
+  {
     return -1;
+  }
 
   this->clear ();
   // Save the original URL....
   if (this->ACE_URL_Addr::string_to_addr (address) != 0)
+  {
     return -1;
+  }
 
   const ACE_TCHAR *string = address;
   string += mailto_size;
@@ -1019,13 +1137,19 @@ ACE_Mailto_Addr::string_to_addr (const ACE_TCHAR *address)
           headers_start[0] = '\0';
           ++headers_start;
           if (!duplicate_url_string (this->headers_, headers_start))
+          {
             return -1;
+          }
         }
       if (!duplicate_url_string (this->hostname_, host_start))
+      {
         return -1;
+      }
     }
   else
+  {
     return -1;
+  }
   this->user_ = std::move (t);
 
   return 0;

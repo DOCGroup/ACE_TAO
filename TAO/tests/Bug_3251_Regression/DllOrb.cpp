@@ -23,11 +23,15 @@ DllOrb::init (int argc, ACE_TCHAR *argv[])
       {
         int const num_threads = ACE_OS::atoi (current_arg);
         if (num_threads >= 1)
+        {
           thread_count = num_threads;
+        }
         as.consume_arg ();
       }
       else
+      {
         as.ignore_arg ();
+      }
     }
 
     // Initialize the ORB
@@ -66,7 +70,9 @@ DllOrb::init (int argc, ACE_TCHAR *argv[])
   ma_barrier_ = std::make_unique<ACE_Thread_Barrier> (thread_count + 1);
 
   if (this->activate (THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED, thread_count) != 0)
+  {
     return -1;
+  }
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("init mp_barrier->wait() ...\n")));
   ma_barrier_->wait ();
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("init mp_barrier->wait() done\n")));

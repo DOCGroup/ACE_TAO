@@ -54,7 +54,9 @@ Identity_Server::init (int argc,
       result = this->orb_manager_.init (argc,
                                         argv);
       if (result == -1)
+      {
         return result;
+      }
 
       CORBA::PolicyList policies (2);
       policies.length (2);
@@ -222,18 +224,24 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   Identity_Server server;
 
   if (server.init (argc, argv) == -1)
+  {
     return 1;
+  }
 
   // Check the non-ORB arguments.
   if (server.parse_args (argc, argv) == -1)
+  {
     return -1;
+  }
 
   try
     {
       result = server.register_groups ();
 
       if (result != 0)
+      {
         return 1;
+      }
 
       result = server.run ();
     }
@@ -246,5 +254,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   if (result == -1)
     return 1;
   else
+  {
     return 0;
+  }
 }

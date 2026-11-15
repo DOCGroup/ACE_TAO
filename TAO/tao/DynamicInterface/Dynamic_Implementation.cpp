@@ -170,7 +170,9 @@ TAO_DynamicImplementation::_dispatch (
               return;
             }
           else
+          {
             request.tao_send_reply_exception (ex);
+          }
         }
     }
 }

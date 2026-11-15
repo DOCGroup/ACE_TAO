@@ -84,7 +84,9 @@ TAO_DTP_Thread_Pool_Threads::svc ()
 
   TAO_ORB_Core &orb_core = this->pool_.manager ().orb_core ();
   if (orb_core.has_shutdown ())
+  {
     return 0;
+  }
 
   try
     {
@@ -471,7 +473,9 @@ TAO_DTP_Thread_Pool_Manager::destroy_threadpool (CORBA::ULong threadpool)
 
     // If the thread pool is not found in our map.
     if (result != 0)
+    {
       return; //throw RTCORBA::RTORB::InvalidThreadpool ();
+    }
   }
 
   std::unique_ptr<TAO_DTP_Thread_Pool> safe_thread_pool (tao_thread_pool);
@@ -534,7 +538,9 @@ TAO_DTP_Thread_Pool_Manager::create_threadpool_helper (TAO_DTP_Thread_Pool *thre
   //
   // Throw exception in case of errors.
   if (result != 0)
+  {
     throw ::CORBA::INTERNAL ();
+  }
 
   //
   // Success.

@@ -26,10 +26,14 @@ TAO_Constraint_Interpreter::TAO_Constraint_Interpreter (
   else
     {
       if (this->build_tree (constraints) != 0)
+      {
         throw CosTrading::IllegalConstraint (constraints);
+      }
 
       if (type_checker.validate (this->root_.get ()) == -1)
+      {
         throw CosTrading::IllegalConstraint (constraints);
+      }
     }
 }
 
@@ -48,10 +52,14 @@ TAO_Constraint_Interpreter (TAO_Constraint_Validator& validator,
   else
     {
       if (this->build_tree (constraints) != 0)
+      {
         throw CosTrading::IllegalConstraint (constraints);
+      }
 
       if (validator.validate (this->root_.get ()) == -1)
+      {
         throw CosTrading::IllegalConstraint (constraints);
+      }
     }
 }
 
@@ -88,10 +96,14 @@ TAO_Preference_Interpreter::TAO_Preference_Interpreter (
   else
     {
       if (this->build_tree (preference) != 0)
+      {
         throw CosTrading::Lookup::IllegalPreference (preference);
+      }
 
       if (type_checker.validate (this->root_.get ()) == -1)
+      {
         throw CosTrading::Lookup::IllegalPreference (preference);
+      }
     }
 }
 
@@ -111,10 +123,14 @@ TAO_Preference_Interpreter (TAO_Constraint_Validator& validator,
   else
     {
       if (this->build_tree (preference) != 0)
+      {
         throw CosTrading::Lookup::IllegalPreference (preference);
+      }
 
       if (validator.validate (this->root_.get ()) == -1)
+      {
         throw CosTrading::Lookup::IllegalPreference (preference);
+      }
     }
 }
 
@@ -154,7 +170,9 @@ order_offer (TAO_Constraint_Evaluator& evaluator,
                   && ! static_cast<CORBA::Boolean> (pref_info.value_)))
             this->offers_.push_back (pref_info);
           else
+          {
             this->offers_.push_front (pref_info);
+          }
 
           if (expr_type == TAO_MIN || expr_type == TAO_MAX)
             {
@@ -177,7 +195,9 @@ order_offer (TAO_Constraint_Evaluator& evaluator,
                       this->offers_[i] = pref_info;
                     }
                   else
+                  {
                     break;
+                  }
                 }
             }
         }

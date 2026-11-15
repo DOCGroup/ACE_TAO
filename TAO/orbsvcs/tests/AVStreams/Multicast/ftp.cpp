@@ -27,7 +27,9 @@ FTP_Client_Callback::handle_timeout (void *)
   if (n == 0)
     {
       if (std::ferror (input_file))
+      {
         ACE_ERROR_RETURN ((LM_ERROR,"FTP_Client_Flow_Handler::fread error\n"),-1);
+      }
 
       if (std::feof (input_file))
         {
@@ -52,16 +54,22 @@ FTP_Client_Callback::handle_timeout (void *)
                 }
             }
           else
+          {
             return 0;
+          }
         }
       return 0;
     }
   mb.wr_ptr (n);
   if (this->protocol_object_ == nullptr)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,"No protocol object is configured\n"),-1);
+  }
   int const result = this->protocol_object_->send_frame (&mb);
   if (result < 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,"send failed:%p","FTP_Client_Flow_Handler::send\n"),-1);
+  }
   ACE_DEBUG ((LM_DEBUG,"handle_timeout::buffer sent successfully\n"));
   return 0;
 }
@@ -185,7 +193,9 @@ Client::init (int argc, ACE_TCHAR *argv[])
   mgr->activate ();
 
   if (this->parse_args (argc, argv) != 0)
+  {
     return -1;
+  }
 
   if (this->my_naming_client_.init (TAO_AV_CORE::instance ()->orb ()) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -253,7 +263,9 @@ Client::run ()
                                             flow_spec);
 
       if (result == 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,"streamctrl::bind_devs failed\n"),-1);
+      }
       AVStreams::flowSpec start_spec (1);
       start_spec.length (1);
       start_spec [0] = CORBA::string_dup (flowname.c_str ());
@@ -292,10 +304,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       int result = CLIENT::instance ()->init (argc, argv);
       if (result < 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,"client::init failed\n"),1);
+      }
       result = CLIENT::instance ()->run ();
       if (result < 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,"client::run failed\n"),1);
+      }
     }
   catch (CORBA::Exception const &ex)
     {

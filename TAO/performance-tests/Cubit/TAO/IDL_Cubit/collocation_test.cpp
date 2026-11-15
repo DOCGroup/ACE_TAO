@@ -33,7 +33,9 @@ svr_worker (void *arg)
   ACE_TCHAR cmd_line[BUFSIZ];
   ACE_OS::strcpy (cmd_line, ACE_TEXT("server "));
   if (server_cmd != nullptr)
+  {
     ACE_OS::strcat (cmd_line, server_cmd);
+  }
   ACE_OS::strcat (cmd_line, ACE_TEXT(" -f ") THE_IOR);
   ACE_ARGV args (cmd_line);
 
@@ -43,7 +45,9 @@ svr_worker (void *arg)
                                       args.argv ());
 
       if (result == -1)
+      {
         return (void *) 1;
+      }
 
       thread_barrier->server_init_.wait ();
       cubit_server.run ();
@@ -90,7 +94,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   ACE_TCHAR cmd_line[1024];
   ACE_OS::strcpy (cmd_line, ACE_TEXT("client "));
   if (client_cmd != nullptr)
+  {
     ACE_OS::strcat (cmd_line, client_cmd);
+  }
   ACE_OS::strcat (cmd_line, ACE_TEXT(" -f ") THE_IOR);
   ACE_ARGV args (cmd_line);
 
@@ -113,7 +119,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   if (cubit_client.init (args.argc (), args.argv ()) == -1)
     return 1;
   else
+  {
     retv = cubit_client.run ();
+  }
 
   thread_barrier.client_fini_.wait ();
   tm.wait ();

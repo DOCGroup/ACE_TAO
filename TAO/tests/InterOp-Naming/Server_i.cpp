@@ -81,11 +81,15 @@ Server_i::init (int argc, ACE_TCHAR *argv[])
   int const result = this->orb_manager_.init_child_poa (argc, argv, "child_poa");
 
   if (result == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "init_child_poa"), -1);
+  }
 
   Server_Options options {};
   if (parse_args (argc, argv, options) != 0)
+  {
     return -1;
+  }
 
   try
     {
@@ -95,7 +99,9 @@ Server_i::init (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("The IOR is: <%C>\n"), ior.in ()));
 
       if (!options.ins.empty () && this->add_IOR_to_table (ior.in (), options.ins) != 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("test_for_ins (): failed\n")), -1);
+      }
 
       if (options.ior_output_file != nullptr)
         {
@@ -130,7 +136,9 @@ Server_i::run ()
   int const result = this->orb_manager_.run ();
 
   if (result == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Server_i::run")), -1);
+  }
 
   return 0;
 }

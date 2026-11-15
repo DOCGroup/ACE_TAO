@@ -73,7 +73,9 @@ Consumer_Client::parse_args (int argc, ACE_TCHAR* argv[])
 #endif
               }
             else
+            {
               ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Unknown ordering policy\n")), -1);
+            }
             break;
           }
         default:
@@ -121,7 +123,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       Consumer_Client client;
       int const status = client.init (argc, argv);
       if (status != 0)
+      {
         return status;
+      }
 
       CosNotifyChannelAdmin::EventChannel_var const ec =
         client.create_event_channel ("MyEventChannel", 1);

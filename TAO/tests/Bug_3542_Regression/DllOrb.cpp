@@ -30,11 +30,15 @@ DllOrb::init (int argc, ACE_TCHAR * argv[])
           {
             int const requested_thread_count { ACE_OS::atoi (current_arg) };
             if (requested_thread_count >= 1)
+            {
               thread_count = requested_thread_count;
+            }
             as.consume_arg ();
           }
         else
+        {
           as.ignore_arg ();
+        }
       }
 
     // Initialize the ORB

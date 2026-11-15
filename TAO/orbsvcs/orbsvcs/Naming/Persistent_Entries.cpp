@@ -42,7 +42,9 @@ TAO_Persistent_IntId::operator= (TAO_Persistent_IntId const &rhs)
 {
   // check for self assignment.
   if (std::addressof (rhs) == this)
+  {
     return;
+  }
 
   type_ = rhs.type_;
   ref_ = rhs.ref_;
@@ -77,7 +79,9 @@ TAO_Persistent_ExtId::operator= (TAO_Persistent_ExtId const &rhs)
 {
   // Check for self assignment.
   if (std::addressof (rhs) == this)
+  {
     return;
+  }
 
   id_ = rhs.id_;
   kind_ = rhs.kind_;
@@ -147,7 +151,9 @@ TAO_Persistent_Index_IntId::operator= (TAO_Persistent_Index_IntId const &rhs)
 {
   // check for self assignment.
   if (std::addressof (rhs) == this)
+  {
     return;
+  }
 
   counter_ = rhs.counter_;
   hash_map_ = rhs.hash_map_;
@@ -177,7 +183,9 @@ TAO_Persistent_Index_ExtId::operator= (TAO_Persistent_Index_ExtId const &rhs)
 {
   // Check for self assignment.
   if (std::addressof (rhs) == this)
+  {
     return;
+  }
 
   poa_id_ = rhs.poa_id_;
 }

@@ -32,7 +32,9 @@ TAO_Server_Protocol_Acceptor_Filter::fill_profile (
             (acceptor->create_profile (object_key,
                                           mprofile,
                                           priority) == -1))
+        {
           return -1;
+        }
     }
 
   return 0;
@@ -46,7 +48,9 @@ TAO_Server_Protocol_Acceptor_Filter::encode_endpoints (TAO_MProfile &mprofile)
     {
       TAO_Profile * const profile = mprofile.get_profile (i);
       if (profile->encode_endpoints () == -1)
+      {
         return -1;
+      }
     }
 
   return 0;

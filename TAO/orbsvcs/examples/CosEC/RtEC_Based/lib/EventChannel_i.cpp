@@ -28,7 +28,9 @@ TAO_CosEC_EventChannel_i::init (RtecEventChannelAdmin::ConsumerQOS const &consum
 
   if (auto_consumer_.get ()->init (consumerqos,
                                    rtec_consumeradmin.in ()) == -1)
+  {
     return -1;
+  }
 
   this->consumeradmin_ =
     auto_consumer_.get ()->_this ();
@@ -41,7 +43,9 @@ TAO_CosEC_EventChannel_i::init (RtecEventChannelAdmin::ConsumerQOS const &consum
 
   if (auto_supplier_.get ()->init (supplierqos,
                                    rtec_supplieradmin.in ()) == -1)
+  {
     return -1;
+  }
 
   this->supplieradmin_ =
     auto_supplier_.get ()->_this ();

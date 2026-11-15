@@ -210,7 +210,9 @@ Reactor_Timer_Queue_Test_Driver::run_test ()
               "TIMER TEST STARTED\n"));
 
   if (this->init () == -1)
+  {
     return -1;
+  }
 
   // Run until we say stop.
   while (!thandler_.done ())

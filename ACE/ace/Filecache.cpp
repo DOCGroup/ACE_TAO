@@ -106,7 +106,9 @@ ACE_Filecache_Handle::error () const
   if (this->file_ == nullptr)
     return -1;
   else
+  {
     return this->file_->error ();
+  }
 }
 
 ACE_OFF_T
@@ -115,7 +117,9 @@ ACE_Filecache_Handle::size () const
   if (this->file_ == nullptr)
     return -1;
   else
+  {
     return this->file_->size ();
+  }
 }
 
 // ------------------
@@ -241,7 +245,9 @@ ACE_Filecache::insert_i (const ACE_TCHAR *filename,
         }
     }
   else
+  {
     handle = nullptr;
+  }
 
   return handle;
 }
@@ -265,7 +271,9 @@ ACE_Filecache::remove_i (const ACE_TCHAR *filename)
         }
     }
   else
+  {
     handle = nullptr;
+  }
 
   return handle;
 }
@@ -333,7 +341,9 @@ ACE_Filecache::fetch (const ACE_TCHAR *filename, int mapit)
       handle = this->insert_i (filename, filelock, mapit);
 
       if (handle == nullptr)
+      {
         filelock.release ();
+      }
     }
   else
     {
@@ -350,7 +360,9 @@ ACE_Filecache::fetch (const ACE_TCHAR *filename, int mapit)
             handle = this->update_i (filename, filelock, mapit);
 
             if (handle == nullptr)
+            {
               filelock.release ();
+            }
           }
         }
       //      ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("   (%t) CVF: found %s\n"), filename));
@@ -379,7 +391,9 @@ ACE_Filecache_Object *
 ACE_Filecache::finish (ACE_Filecache_Object *&file)
 {
   if (file == nullptr)
+  {
     return file;
+  }
 
   ACE_OFF_T loc = ACE::hash_pjw (file->filename_) % this->size_;
   ACE_SYNCH_RW_MUTEX &hashlock = this->hash_lock_[loc];
@@ -680,7 +694,9 @@ ACE_Filecache_Object::update () const
   if (ACE_OS::stat (this->filename_, &statbuf) == -1)
     result = 1;
   else
+  {
     result = ACE_OS::difftime (this->stat_.st_mtime, statbuf.st_mtime) < 0;
+  }
 
   return result;
 }

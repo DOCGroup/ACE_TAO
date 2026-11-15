@@ -165,7 +165,9 @@ Consumer::push (const RtecEventComm::EventSet& events)
     ++this->event_count;
 
     if (this->event_count != this->shutdown_count_)
+    {
       return;
+    }
   }
 
   this->deactivate ();

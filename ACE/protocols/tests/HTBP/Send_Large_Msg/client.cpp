@@ -54,14 +54,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_OS::socket_init (ACE_WSOCK_VERSION);
 
   if (parse_args(argc, argv) != 0)
+  {
     return 1;
+  }
   if (remote_host == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Client: No remote host specified\n")),1);
 
   ACE::HTBP::Environment env;
   if (config_file != nullptr)
+  {
     env.import_config (config_file);
+  }
 
   ACE::HTBP::ID_Requestor req (&env);
   ACE::HTBP::Addr local(ACE_TEXT_ALWAYS_CHAR(req.get_HTID()));

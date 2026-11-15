@@ -27,7 +27,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   std::unique_ptr<REACTOR_TIMER_QUEUE_TEST_DRIVER> driver (
     new (std::nothrow) Reactor_Timer_Queue_Test_Driver);
   if (!driver)
+  {
     return -1;
+  }
 
   return driver->run_test ();
 }

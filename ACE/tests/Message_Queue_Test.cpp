@@ -142,7 +142,9 @@ Counting_Test_Producer::svc ()
         {
           ACE_NEW_NORETURN (b, ACE_Message_Block (1));
           if (b == nullptr)
+          {
             break;
+          }
           prev->next (b);
           b->prev (prev);
           prev = b;
@@ -182,7 +184,9 @@ Counting_Test_Producer::svc ()
         }
       produced += seq;
       if (delay_ms)
+      {
         ACE_OS::sleep (delay);
+      }
     }
   this->produced_ += produced;
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Producer done\n")));
@@ -234,7 +238,9 @@ Counting_Test_Consumer::svc ()
       ++consumed;
       b->release ();
       if (delay_ms)
+      {
         ACE_OS::sleep (delay);
+      }
     }
   this->consumed_ += consumed;
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Consumer done\n")));
@@ -483,7 +489,9 @@ chained_block_test ()
     }
 
   if (status == 0)
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Chained block test OK\n")));
+  }
   return status;
 }
 
@@ -831,7 +839,9 @@ prio_test ()
       && std::strcmp (mb2p->rd_ptr (), S2) == 0)
     status = 0;
   else
+  {
     status = 1;
+  }
 
   return status;
 }
@@ -902,24 +912,34 @@ run_main (int argc, ACE_TCHAR *argv[])
   // The iterator test occasionally causes a page fault or a hang on
   // VxWorks.
   if (status == 0)
+  {
     status = iterator_test ();
+  }
 
   ACE_NEW_RETURN (timer,
                   ACE_High_Res_Timer,
                   -1);
 
   if (status == 0)
+  {
     status = close_test ();
+  }
 
 #if defined (ACE_HAS_THREADS)
   if (status == 0)
+  {
     status = timeout_test ();
+  }
 
   if (status == 0)
+  {
     status = chained_block_test ();
+  }
 
   if (status == 0)
+  {
     status = single_thread_performance_test ();
+  }
 
 # if defined (ACE_VXWORKS) || defined (ACE_HAS_WIN32_OVERLAPPED_IO)
   // Test ACE_Message_Queue_Vx. or ACE_Message_Queue_NT
@@ -928,7 +948,9 @@ run_main (int argc, ACE_TCHAR *argv[])
 # endif /* ACE_VXWORKS */
 
   if (status == 0)
+  {
     status = performance_test ();
+  }
 
 # if defined (ACE_VXWORKS) || defined (ACE_HAS_WIN32_OVERLAPPED_IO)
   // Test ACE_Message_Queue_Vx or ACE_Message_Queue_NT
@@ -937,7 +959,9 @@ run_main (int argc, ACE_TCHAR *argv[])
 # endif /* ACE_VXWORKS */
 
   if (counting_test () != 0)
+  {
     status = -1;
+  }
 #endif /* ACE_HAS_THREADS */
 
   if (status != 0)

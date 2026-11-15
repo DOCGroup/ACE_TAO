@@ -54,10 +54,14 @@ JAWS_IO_Synch_Acceptor::open (const ACE_HANDLE &socket)
 {
   ACE_HANDLE handle = this->acceptor_.get_handle ();
   if (handle == socket)
+  {
     return 0;
+  }
 
   if (handle != ACE_INVALID_HANDLE)
+  {
     ACE_OS::closesocket (this->acceptor_.get_handle ());
+  }
   this->acceptor_.set_handle (socket);
 
   return 0;
@@ -100,7 +104,9 @@ JAWS_IO_Asynch_Acceptor::open (const ACE_INET_Addr &address, int backlog)
 {
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   if (!this->acceptor_)
+  {
     this->acceptor_ = std::make_unique<ACE_Asynch_Acceptor<JAWS_Asynch_Handler>> ();
+  }
 
   // Tell the acceptor to listen on this->port_, which sets up an
   // asynchronous I/O request to the OS.
@@ -127,14 +133,20 @@ JAWS_IO_Asynch_Acceptor::open (const ACE_HANDLE &socket)
 {
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   if (!this->acceptor_)
+  {
     this->acceptor_ = std::make_unique<ACE_Asynch_Acceptor<JAWS_Asynch_Handler>> ();
+  }
 
   ACE_HANDLE handle = this->handle_;
   if (handle == socket)
+  {
     return 0;
+  }
 
   if (handle != ACE_INVALID_HANDLE)
+  {
     ACE_OS::closesocket (handle);
+  }
   this->handle_ = socket;
 
   return 0;

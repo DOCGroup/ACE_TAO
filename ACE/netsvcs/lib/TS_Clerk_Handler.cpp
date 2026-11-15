@@ -43,7 +43,9 @@ ACE_TS_Clerk_Handler::timeout (long to)
 {
   ACE_TRACE ("ACE_TS_Clerk_Handler::timeout");
   if (to > this->max_timeout_)
+  {
     to = this->max_timeout_;
+  }
 
   this->timeout_ = to;
 }
@@ -59,7 +61,9 @@ ACE_TS_Clerk_Handler::timeout ()
   this->timeout_ *= 2;
 
   if (this->timeout_ > this->max_timeout_)
+  {
     this->timeout_ = this->max_timeout_;
+  }
 
   return old_timeout;
 }
@@ -429,7 +433,9 @@ ACE_TS_Clerk_Processor::fini ()
 
   // Cancel the timer
   if (this->timer_id_ != -1)
+  {
     ACE_Reactor::instance ()->cancel_timer (this->timer_id_);
+  }
 
   // Destroy all the handlers
   ACE_TS_Clerk_Handler **handler {};

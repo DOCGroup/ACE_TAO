@@ -62,7 +62,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                           failed= true;
                         }
                       else
+                      {
                         nameService = *argv;
+                      }
                     }
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT("--quiet")))
@@ -84,7 +86,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       failed = true;
                     }
                   else
+                  {
                     name = *++argv;
+                  }
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--ctxsep")))
                 {
@@ -101,7 +105,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       failed = true;
                     }
                   else
+                  {
                     ctxsep[0] = (*argv)[0];
+                  }
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--kindsep")))
                 {
@@ -118,7 +124,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       failed = true;
                     }
                   else
+                  {
                     kindsep = (*argv)[0];
+                  }
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--ior")))
                 {
@@ -135,7 +143,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       failed = true;
                     }
                   else
+                  {
                     ior = *++argv;
+                  }
                 }
               else if ((0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--ctx")))
                        ||(0 == ACE_OS::strcmp(*argv, ACE_TEXT ("--newcontext"))))
@@ -189,7 +199,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (nameService)
         nc_obj = orb->string_to_object (nameService);
       else
+      {
         nc_obj = orb->resolve_initial_references ("NameService");
+      }
 
       CosNaming::NamingContext_var root_nc =
         CosNaming::NamingContext::_narrow (nc_obj.in ());
@@ -237,12 +249,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               if (rebind)
                 root_nc->rebind_context (the_name, this_nc.in ());
               else
+              {
                 root_nc->bind_context (the_name, this_nc.in ());
+              }
             }
           else if (rebind)
             root_nc->rebind (the_name, obj.in ());
           else
+          {
             root_nc->bind (the_name, obj.in ());
+          }
           if (!quiet)
             {
               unsigned int index;
@@ -261,7 +277,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               else if (rebind)
                 ACE_DEBUG ((LM_DEBUG, "ReBound"));
               else
+              {
                 ACE_DEBUG ((LM_DEBUG, "Bound"));
+              }
               ACE_DEBUG ((LM_DEBUG, " ID: %C",
                          the_name[index].id.in()));
               if (the_name[index].kind && the_name[index].kind[0])
@@ -273,7 +291,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       catch (const CosNaming::NamingContext::NotFound& nf)
         {
           if (CosNaming::NamingContext::missing_node != nf.why)
+          {
             throw; // report error to outer try/catch
+          }
 
           CosNaming::Name fullName (the_name);
           int
@@ -333,7 +353,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               if (!quiet)
                 {
                   if (rebind)
+                  {
                     ACE_DEBUG ((LM_DEBUG, "Re"));
+                  }
                   ACE_DEBUG ((LM_DEBUG, "Binding ID: %C",
                              the_name[index].id.in()));
                   if (the_name[index].kind && the_name[index].kind[0])
@@ -351,12 +373,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   if (rebind)
                     root_nc->rebind_context (the_name, this_nc.in ());
                   else
+                  {
                     root_nc->bind_context (the_name, this_nc.in ());
+                  }
                 }
               else if (rebind)
                 root_nc->rebind (the_name, obj.in ());
               else
+              {
                 root_nc->bind (the_name, obj.in ());
+              }
             }
         }
     }

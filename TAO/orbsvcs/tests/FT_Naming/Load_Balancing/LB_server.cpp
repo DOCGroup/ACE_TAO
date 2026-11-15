@@ -154,7 +154,9 @@ LB_server::create_object_group ()
   try
     {
       if (this->parse_args (argc_, argv_) != 0)
+      {
         return -1;
+      }
 
       PortableGroup::Criteria criteria (1);
       criteria.length (1);
@@ -177,7 +179,9 @@ LB_server::create_object_group ()
         this->orb_->object_to_string (this->object_group_.in ());
 
       if (this->write_ior_to_file (ior.in ()) != 0)
+      {
         return -1;
+      }
     }
   catch (const CORBA::Exception& ex)
     {

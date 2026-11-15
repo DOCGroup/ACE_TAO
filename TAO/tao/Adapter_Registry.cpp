@@ -152,7 +152,9 @@ TAO_Adapter_Registry::find_adapter (char const *name) const
 {
   for (adapter_type const &adapter : this->adapters_)
     if (std::strcmp (adapter->name (), name) == 0)
+    {
       return adapter.get ();
+    }
 
   return nullptr;
 }

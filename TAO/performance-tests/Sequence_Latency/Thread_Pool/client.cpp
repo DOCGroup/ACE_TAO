@@ -36,7 +36,9 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
             ACE_OS::strcmp (options.data_type, ACE_TEXT("short")) != 0 &&
             ACE_OS::strcmp (options.data_type, ACE_TEXT("double")) != 0 &&
             ACE_OS::strcmp (options.data_type, ACE_TEXT("longlong")) != 0)
+        {
           return -1;
+        }
         break;
 
       case 's':
@@ -96,7 +98,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Client_Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var object = orb->string_to_object (options.ior);
       Test::Roundtrip_var roundtrip = Test::Roundtrip::_narrow (object.in ());

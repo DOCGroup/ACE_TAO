@@ -87,7 +87,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     orb_ = CORBA::ORB_init (argc, argv);
 
     if (parse_args (argc, argv) != 0)
+    {
       return 1;
+    }
 
     CORBA::Object_var obj = orb_->resolve_initial_references ("RootPOA");
     PortableServer::POA_var root_poa =

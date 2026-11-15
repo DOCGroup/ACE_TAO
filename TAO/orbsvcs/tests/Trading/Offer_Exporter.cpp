@@ -189,7 +189,9 @@ TAO_Offer_Exporter::describe_offers ()
           CORBA::ULong const length = offer_id_seq->length ();
 
           if (this->verbose_)
+          {
             ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
+          }
 
           for (CORBA::ULong i {}; i < length; ++i)
             {
@@ -262,7 +264,9 @@ withdraw_offers_using_constraints ()
     "(not exist Description) and (Location == 'MODIFIED') and (exist Name)";
 
   if (this->verbose_)
+  {
     ACE_DEBUG ((LM_DEBUG, "Constraint: %C\n", constraint));
+  }
 
   try
     {
@@ -289,7 +293,9 @@ CosTrading::OfferIdSeq*
 TAO_Offer_Exporter::grab_offerids ()
 {
   if (this->verbose_)
+  {
     ACE_DEBUG ((LM_DEBUG, "TAO_Offer_Exporter::Grabbing all offer ids.\n"));
+  }
 
   CosTrading::OfferIdSeq_var offer_id_seq_result;
   try

@@ -111,7 +111,9 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
 
   //  First check for rir
   if (std::strncmp (ior, rir_token, rir_token_len) == 0)
+  {
     return this->parse_string_rir_helper (ior,orb);
+  }
 
   // set up space for parsed endpoints. there will be at least 1, and
   // most likely commas will separate endpoints, although they could be
@@ -137,7 +139,9 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
     for (std::unique_ptr<TAO_Connector> const& connector : *conn_reg)
       {
         if (endpoints[ndx].profile_ != nullptr)
+        {
           break;
+        }
 
         endpoints[ndx].profile_ =
           connector->corbaloc_scan(ior,len);
@@ -254,7 +258,9 @@ TAO_CORBALOC_Parser::make_canonical (const char *ior,
       addr_base = separator + 1;
     }
   else
+  {
     canonical_endpoint.clear ();
+  }
 
   ACE_CString raw_host;
   ACE_CString raw_port;
@@ -299,7 +305,9 @@ TAO_CORBALOC_Parser::make_canonical (const char *ior,
     {
       // we must default port #
       if (addr_base < addr_tail)
+      {
         raw_host.set (addr_base, (addr_tail - addr_base), true);
+      }
       raw_port.set (":2809");
     }
 

@@ -71,7 +71,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       policies[0]->destroy ();
 
       if (parse_args (argc, argv, ior) != 0)
+      {
         return 1;
+      }
 
       PortableServer::Servant_var<Echo> impl;
       {

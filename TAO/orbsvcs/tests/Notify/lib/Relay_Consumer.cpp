@@ -30,5 +30,7 @@ TAO_Notify_Tests_Relay_Consumer::push_structured_event (const CosNotification::S
   if (CORBA::is_nil (this->destination_object_.in ()))
     ACE_DEBUG ((LM_DEBUG, "(%P,%t) Cannot Relay - Destination object %s is nil", this->destination_.c_str ()));
   else
+  {
     this->destination_object_->push_structured_event (notification);
+  }
 }

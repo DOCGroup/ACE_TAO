@@ -43,7 +43,9 @@ Iterator_Handler::next_chunk (CORBA::Boolean pending_data,
           return;
         }
       else
+      {
         this->offset_ += chunk->length ();
+      }
 
       this->contents_->sendc_next_chunk (this->ami_handler_.in (),
                                          this->offset_);
@@ -112,7 +114,9 @@ Iterator_Handler::initialize_content_iterator
                 ACE_TEXT ("Could not open file %p\n"),
                 this->file_.get_path_name ()));
   else
+  {
     ++this->request_count_;
+  }
 }
 
 void

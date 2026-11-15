@@ -73,7 +73,9 @@ waiter (void *)
   if (condition_.wait () == 0)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) woken up!!!\n")));
   else
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"), ACE_TEXT ("wait")));
+  }
 
   int const copy_int = protected_int;  // Copy it in case it's erroneously changing
   if (copy_int != 0)
@@ -81,7 +83,9 @@ waiter (void *)
                 copy_int));
 
   if (mutex_.release () != 0)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"), ACE_TEXT ("release")));
+  }
 
   return ACE_THR_FUNC_RETURN_NULL;
 }
@@ -131,7 +135,9 @@ test_2 ()
                       1);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) signaling condition...\n")));
   if (condition_.signal () == -1)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("test 2 signal")));
+  }
 
   // Wait to clear protected_int to be sure cv properly reacquires the
   // mutex before returning control to caller.
@@ -242,22 +248,30 @@ run_main (int, ACE_TCHAR *[])
   /* Test 1 - Simple test */
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Test 1...\n")));
   if (test_1 () != 0)
+  {
     ++status;
+  }
 
   /* Test #2 - Sleep 2 seconds before releasing mutex */
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Test 2...\n")));
   if (test_2 () != 0)
+  {
     ++status;
+  }
 
   /* Test #3 - One main thread - 4 subthreads */
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Test 3...\n")));
   if (test_3 () != 0)
+  {
     ++status;
+  }
 
   /* Test #4 - Multiple calls to mutex_.acquire and mutex_.release */
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Test 4...\n")));
   if (test_4 () != 0)
+  {
     ++status;
+  }
 
   // Timer queue usage.
   Thread_Timer_Queue timer_queue;
@@ -286,7 +300,9 @@ run_main (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Caught %d timer expirations\n"),
               expirations));
   if (expirations < 9)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("Should have caught at least 9\n")));
+  }
 
 #else
   ACE_ERROR ((LM_ERROR,

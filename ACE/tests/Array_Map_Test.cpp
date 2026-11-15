@@ -346,14 +346,18 @@ public:
   ~RefCounted ()
   {
     if (this->refcount_)
+    {
       --(*this->refcount_);
+    }
   }
 
   RefCounted (RefCounted const & r)
     : refcount_ (r.refcount_ptr ())
   {
     if (this->refcount_)
+    {
       ++(*this->refcount_);
+    }
   }
 
   RefCounted &

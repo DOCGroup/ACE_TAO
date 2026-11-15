@@ -74,7 +74,9 @@ pid_t
 ACE_Process::spawn (ACE_Process_Options &options)
 {
   if (this->prepare (options) < 0)
+  {
     return ACE_INVALID_PID;
+  }
 
   // Stash the passed/duped handle sets away in this object for later
   // closing if needed or requested. At the same time, figure out which
@@ -356,7 +358,9 @@ ACE_Process::spawn (ACE_Process_Options &options)
   // If we're not supposed to exec, return the process id.
   if (ACE_BIT_ENABLED (options.creation_flags (),
                        ACE_Process_Options::NO_EXEC))
+  {
     return this->child_id_;
+  }
 
   switch (this->child_id_)
     {
@@ -389,7 +393,9 @@ ACE_Process::spawn (ACE_Process_Options &options)
             for (int i = ACE::max_handles () - 1; i >= 0; --i)
               {
                 if (i == ACE_STDIN || i == ACE_STDOUT || i == ACE_STDERR)
+                {
                   continue;
+                }
                 ACE_OS::fcntl (i, F_SETFD, FD_CLOEXEC);
               }
           }
@@ -397,7 +403,9 @@ ACE_Process::spawn (ACE_Process_Options &options)
         // If we must, set the working directory for the child
         // process.
         if (options.working_directory () != nullptr)
+        {
           ACE_OS::chdir (options.working_directory ());
+        }
         // Should check for error here!
 
         // Child process executes the command.
@@ -439,7 +447,9 @@ ACE_Process::spawn (ACE_Process_Options &options)
             // context of the context before doing an <execvp>.
             for (size_t i = 0; procenv[i] != nullptr; ++i)
               if (ACE_OS::putenv (procenv[i]) != 0)
+              {
                 return ACE_INVALID_PID;
+              }
 
             // Now the forked process has both inherited variables and
             // the user's supplied variables.
@@ -587,13 +597,17 @@ ACE_Process::wait (const ACE_Time_Value &tv,
                          &this->exit_code_,
                          WNOHANG);
       if (status != nullptr)
+      {
         *status = this->exit_code_;
+      }
 
       return retv;
     }
 
   if (tv == ACE_Time_Value::max_time)
+  {
     return this->wait (status);
+  }
 
   // Need to wait but limited to specified time.
   // Force generation of SIGCHLD, even though we don't want to
@@ -614,10 +628,14 @@ ACE_Process::wait (const ACE_Time_Value &tv,
                              &this->exit_code_,
                              WNOHANG);
       if (status != nullptr)
+      {
         *status = this->exit_code_;
+      }
 
       if (pid > 0 || pid == ACE_INVALID_PID)
+      {
         break;          // Got a child or an error - all done
+      }
 
       // pid 0, nothing is ready yet, so wait.
       // Do a sleep (only this thread sleeps) til something
@@ -625,7 +643,9 @@ ACE_Process::wait (const ACE_Time_Value &tv,
       // If SIGCHLD isn't delivered, we'll need to do something
       // with sigaction to force it.
       if (-1 == ACE_OS::sleep (tmo) && errno == EINTR)
+      {
         continue;
+      }
       // Timed out
       pid = 0;
       break;
@@ -847,7 +867,9 @@ ACE_Process_Options::setenv (ACE_TCHAR *envp[])
   while (envp[i])
     {
       if (this->setenv_i (envp[i], ACE_OS::strlen (envp[i])) == -1)
+      {
         return -1;
+      }
       ++i;
     }
 
@@ -875,11 +897,15 @@ ACE_Process_Options::setenv (const ACE_TCHAR *format, ...)
   va_end (argp);
 
   if (status == -1)
+  {
     return -1;
+  }
 
   // Append the string to are environment buffer.
   if (this->setenv_i (stack_buf, ACE_OS::strlen (stack_buf)) == -1)
+  {
     return -1;
+  }
 
 #if defined (ACE_WIN32)
   if (inherit_environment_)
@@ -935,7 +961,9 @@ ACE_Process_Options::setenv (const ACE_TCHAR *variable_name,
           safe_stack_buf.reset (stack_buf);
         }
       else
+      {
         break;
+      }
     }
   while (true);
 
@@ -965,7 +993,9 @@ ACE_Process_Options::setenv (const ACE_TCHAR *variable_name,
   // Append the string to our environment buffer.
   if (this->setenv_i (safe_stack_buf.get (),
                       ACE_OS::strlen (safe_stack_buf.get ())) == -1)
+  {
     return -1;
+  }
 
 #if defined (ACE_WIN32)
   if (inherit_environment_)
@@ -987,7 +1017,9 @@ ACE_Process_Options::setenv_i (ACE_TCHAR *assignment,
   // make sure we have enough room.
   if (environment_argv_index_ == max_environ_argv_index_
       || (len + environment_buf_index_) >= environment_buf_len_)
+  {
     return -1;
+  }
 
   // Copy the new environment string.
   std::memcpy (environment_buf_ + environment_buf_index_, assignment, len * sizeof (ACE_TCHAR));
@@ -1225,7 +1257,9 @@ ACE_Process_Options::env_buf ()
   if (environment_buf_[0] == '\0')
     return nullptr;
   else
+  {
     return environment_buf_;
+  }
 }
 
 ACE_TCHAR * const *
@@ -1276,7 +1310,9 @@ int
 ACE_Process_Options::dup_handles (ACE_Handle_Set &set) const
 {
   if (this->dup_handles_.num_set () == 0)
+  {
     return 0;
+  }
   set.reset ();
   set = this->dup_handles_;
   return 1;
@@ -1288,7 +1324,9 @@ int
 ACE_Process_Options::passed_handles (ACE_Handle_Set &set) const
 {
   if (this->handles_passed_.num_set () == 0)
+  {
     return 0;
+  }
   set.reset ();
   set = this->handles_passed_;
   return 1;

@@ -134,7 +134,9 @@ public:
     if (n == 5)
       ACE_DEBUG ((LM_DEBUG, "State value is correctly %d.\n", n));
     else
+    {
       ACE_ERROR ((LM_ERROR, "ERROR: State value is incorrectly %d.\n", n));
+    }
   }
 
   void send_reply (ServerRequestInfo_ptr ri) override
@@ -142,7 +144,9 @@ public:
     CORBA::String_var op = ri->operation ();
 
     if (std::strcmp (op.in (), "number") != 0)
+    {
       return; // Don't mess with PICurrent if not invoking test method.
+    }
 
     Any_var state (ri->get_slot (slot_id));
     CORBA::Long n {};
@@ -151,7 +155,9 @@ public:
     if (n == 5)
       ACE_DEBUG ((LM_DEBUG, "State value is correctly %d.\n", n));
     else
+    {
       ACE_ERROR ((LM_ERROR, "ERROR: State value is incorrectly %d.\n", n));
+    }
   }
 
   void send_exception (ServerRequestInfo_ptr) override
@@ -208,7 +214,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ORB_var orb (ORB_init (argc, argv));
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       Object_var obj (orb->resolve_initial_references ("RootPOA"));
 

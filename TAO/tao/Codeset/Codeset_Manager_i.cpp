@@ -187,7 +187,9 @@ TAO_Codeset_Manager_i::process_service_context (TAO_ServerRequest &request)
   else
     {
       if (request.transport()->is_tcs_set())
+      {
         return;
+      }
       if (TAO_debug_level > 0)
         TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT("TAO (%P|%t) - ")
@@ -270,7 +272,9 @@ TAO_Codeset_Manager_i::isElementOf (CONV_FRAME::CodeSetId id,
        ++i )
     {
       if (id == cs_comp.conversion_code_sets[i])
+      {
         return true;
+      }
     }
 
   return false;
@@ -454,7 +458,9 @@ TAO_Codeset_Manager_i::init_ccs (TAO_Codeset_Descriptor& cd,
 
       // this is a special case for the utf16 bom translator.
       if (tlist.translator_factory_->tcs() ==  cs_comp.native_code_set)
+      {
         continue;
+      }
 
       cs_comp.conversion_code_sets[index++] =
         tlist.translator_factory_->tcs();
@@ -479,7 +485,9 @@ TAO_Codeset_Translator_Base *
 TAO_Codeset_Manager_i::get_char_trans (CONV_FRAME::CodeSetId tcs)
 {
   if (this->codeset_info_.ForCharData.native_code_set == tcs)
+  {
     return nullptr;
+  }
   return this->get_translator_i (this->char_descriptor_,tcs);
 }
 
@@ -488,7 +496,9 @@ TAO_Codeset_Manager_i::get_wchar_trans (CONV_FRAME::CodeSetId tcs)
 {
   if (tcs == this->codeset_info_.ForWcharData.native_code_set &&
       tcs != ACE_CODESET_ID_ISO_UTF_16)
+  {
     return nullptr;
+  }
   return this->get_translator_i (this->wchar_descriptor_,tcs);
 }
 
@@ -500,7 +510,9 @@ TAO_Codeset_Manager_i::get_translator_i (TAO_Codeset_Descriptor const &cd,
     {
       TAO_Codeset_Translator_Factory * const fact = tlist.translator_factory_;
       if (fact != nullptr && tcs == fact->tcs ())
+      {
         return fact;
+      }
     }
   return nullptr;
 }

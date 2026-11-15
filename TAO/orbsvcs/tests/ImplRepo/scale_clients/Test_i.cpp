@@ -15,7 +15,9 @@ Test_i::Test_i (CORBA::ORB_ptr orb, CORBA::Short num_requests_expected)
 Test_i::~Test_i ()
 {
   if (this->num_requests_expected_ == this->num_requests_made_)
+  {
     Test_i::expected_requests_made_ = true;
+  }
 }
 
 CORBA::Short

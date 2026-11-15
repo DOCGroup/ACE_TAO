@@ -12,5 +12,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   if (supplier.init (argc, argv) == -1)
     return -1;
   else
+  {
     return supplier.run ();
+  }
 }

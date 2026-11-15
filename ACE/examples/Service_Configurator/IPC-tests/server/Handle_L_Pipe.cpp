@@ -11,7 +11,9 @@ Handle_L_Pipe::upper_case (char s[], int n)
 {
   while (--n >= 0)
     if (ACE_OS::ace_islower (s[n]))
+    {
       s[n] = ACE_OS::ace_toupper (s[n]);
+    }
 
   return s;
 }
@@ -26,7 +28,9 @@ Handle_L_Pipe::handle_input (ACE_HANDLE)
   char buf[BUFSIZ];
 
   if (this->accept (new_local_stream) == -1)
+  {
     return -1;
+  }
 
   if (new_local_stream.recv_handle (fd1) == -1
       || new_local_stream.recv_handle (fd2) == -1)
@@ -43,9 +47,13 @@ Handle_L_Pipe::handle_input (ACE_HANDLE)
     return -1;
   if (ACE_OS::close (fd1) == -1
       || ACE_OS::close (fd2) == -1)
+  {
     return -1;
+  }
   if (new_local_stream.close () == -1)
+  {
     return -1;
+  }
 
   return 0;
 }

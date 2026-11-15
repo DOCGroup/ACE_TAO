@@ -74,13 +74,17 @@ client (void *arg)
   if (!opt_pass_notify_data)
     handler = nullptr;
   else
+  {
     handler = (Handler *) arg;
+  }
 
   for (int i = 0; i < opt_nloops; i++)
     ACE_Reactor::instance ()->notify (handler);
 
   if (--thread_counter == 0)
+  {
     ACE_Reactor::instance()->end_reactor_event_loop ();
+  }
 
   return nullptr;
 }
@@ -124,7 +128,9 @@ print_results (ACE_Profile_Timer::ACE_Elapsed_Time &et)
   else if (opt_dev_poll_reactor)
     reactor_type = ACE_TEXT ("Dev_Poll_Reactor");
   else
+  {
     reactor_type = ACE_TEXT ("Platform's default Reactor");
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\nNotify_Performance Test statistics:\n\n")));
@@ -209,7 +215,9 @@ run_main (int argc, ACE_TCHAR *argv[])
        ACE_THR_FUNC (client),
        (void *) &handler,
        THR_NEW_LWP | THR_DETACHED) == -1)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n%a"), ACE_TEXT ("thread create failed")));
+  }
 
   // Timer business
   ACE_Profile_Timer timer;

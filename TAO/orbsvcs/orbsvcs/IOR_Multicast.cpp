@@ -47,7 +47,9 @@ TAO_IOR_Multicast::init (char const *ior,
                          TAO_Service_ID service_id)
 {
   if (this->mcast_addr_.set (port, mcast_addr) == -1)
+  {
     ORBSVCS_ERROR_RETURN ((LM_ERROR, "TAO_IOR_Multicast::init() %p\n", "set"), -1);
+  }
   return this->common_init (ior, service_id);
 }
 
@@ -120,7 +122,9 @@ TAO_IOR_Multicast::common_init (char const *ior,
       if (this->mcast_dgram_.join (this->mcast_addr_,
                                    1,
                                    ACE_TEXT_CHAR_TO_TCHAR(this->mcast_nic_.c_str())) == -1)
-      ORBSVCS_ERROR_RETURN ((LM_ERROR, "TAO_IOR_Multicast::common_init() %p\n", "join"),-1);
+      {
+        ORBSVCS_ERROR_RETURN ((LM_ERROR, "TAO_IOR_Multicast::common_init() %p\n", "join"),-1);
+      }
     }
   else
     {
@@ -144,7 +148,9 @@ int
 TAO_IOR_Multicast::handle_input (ACE_HANDLE)
 {
   if (TAO_debug_level > 0)
+  {
     ORBSVCS_DEBUG ((LM_DEBUG, "Entered TAO_IOR_Multicast::handle_input\n"));
+  }
 
   // The length of the service name string that follows.
   CORBA::Short header {};
@@ -266,7 +272,9 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
 
   // Connect.
   if (connector.connect (stream, peer_addr) == -1)
+  {
     ORBSVCS_ERROR_RETURN ((LM_ERROR, "IOR_Multicast::connect failed\n"), 0);
+  }
   // Send the IOR back to the client.  (Send iovec, which contains ior
   // length as the first element, and ior itself as the second.)
 
@@ -292,7 +300,9 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
 
   // Check for error.
   if (result == -1)
+  {
     ORBSVCS_ERROR_RETURN ((LM_ERROR, "IOR_Multicast::send failed\n"), 0);
+  }
 
   if (TAO_debug_level > 0)
     ORBSVCS_DEBUG ((LM_DEBUG,

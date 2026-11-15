@@ -19,7 +19,9 @@ TAO_Bind_Dispatcher_Guard::TAO_Bind_Dispatcher_Guard (CORBA::ULong request_id,
       this->request_id_, ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> {rd});
 
   if (retval == -1)
+  {
     this->status_ = TAO_Bind_Dispatcher_Guard::NO_UNBIND;
+  }
 }
 
 TAO_Bind_Dispatcher_Guard::~TAO_Bind_Dispatcher_Guard ()
@@ -27,7 +29,9 @@ TAO_Bind_Dispatcher_Guard::~TAO_Bind_Dispatcher_Guard ()
   // We try unbinding. If it works it works, else cant do much about
   // it..
   if (this->status_ == TAO_Bind_Dispatcher_Guard::UNBIND)
+  {
     (void) this->tms_->unbind_dispatcher (this->request_id_);
+  }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

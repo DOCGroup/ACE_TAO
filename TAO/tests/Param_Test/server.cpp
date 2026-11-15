@@ -92,7 +92,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Parse remaining command line and verify parameters.
       Server_Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
       TAO_debug_level += options.debug_level;
 
       // initialize a param_test target object and register it with the object

@@ -23,7 +23,9 @@ Options::Options ()
   char * const timeout = std::getenv ("TIMEOUT");
 
   if (timeout != nullptr)
+  {
     this->timeout_ = std::atoi (timeout);
+  }
 }
 
 Options *

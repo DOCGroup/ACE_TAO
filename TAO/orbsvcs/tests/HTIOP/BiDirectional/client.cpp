@@ -89,7 +89,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var object =
         orb->string_to_object (ior);
@@ -135,7 +137,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
 
   if (!CORBA::is_nil(root_poa.in()))
+  {
     root_poa->destroy (true, true);
+  }
   delete servant;
 
   return 0;

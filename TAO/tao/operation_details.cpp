@@ -61,7 +61,9 @@ TAO_Operation_Details::marshal_args (TAO_OutputCDR &cdr)
     for (CORBA::ULong i {}; i != this->num_args_; ++i)
       {
       if (!((*this->args_[i]).marshal (cdr)))
+      {
         return false;
+      }
       }
 
     // Nothing else to fragment.  We're also guaranteed to have
@@ -88,7 +90,9 @@ TAO_Operation_Details::demarshal_args (TAO_InputCDR &cdr)
     for (CORBA::ULong i {}; i != this->num_args_; ++i)
       {
         if (!((*this->args_[i]).demarshal (cdr)))
+        {
           return false;
+        }
       }
 
     cdr.reset_vt_indirect_maps ();

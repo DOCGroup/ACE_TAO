@@ -18,7 +18,9 @@ namespace TAO
       PortableGroup::TagGroupTaggedComponent &tg)
   {
     if (ior->_stubobj () == nullptr)
+    {
       return false;
+    }
 
     // We need to apply the property for every profile in the IOR
     TAO_MProfile &tmp_pfiles =
@@ -36,7 +38,9 @@ namespace TAO
                                    tg);
 
     if (!retval)
+    {
       return retval;
+    }
 
     // Get the length of the CDR stream
     CORBA::ULong length = static_cast<CORBA::ULong> (cdr.total_length ());
@@ -83,7 +87,9 @@ namespace TAO
       PortableGroup::TagGroupTaggedComponent &tg)
   {
     if (ior->_stubobj () == nullptr)
+    {
       return false;
+    }
 
     TAO_MProfile &mprofile =
       ior->_stubobj ()->base_profiles ();
@@ -115,14 +121,18 @@ namespace TAO
             cdr >> ACE_InputCDR::to_boolean (byte_order);
 
             if (!cdr.good_bit ())
+            {
               return false;
+            }
 
             cdr.reset_byte_order (static_cast<int> (byte_order));
 
             cdr >> tg;
 
             if (cdr.good_bit ())
+            {
               return true;
+            }
           }
       }
 
@@ -137,31 +147,41 @@ namespace TAO
     cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
 
     if (!cdr.good_bit ())
+    {
       return false;
+    }
 
     // the version info
     cdr << tg.component_version;
 
     if (!cdr.good_bit ())
+    {
       return false;
+    }
 
     // the domain id
     cdr << tg.group_domain_id.in ();
 
     if (!cdr.good_bit ())
+    {
       return false;
+    }
 
     // Object group id
     cdr << tg.object_group_id;
 
     if (!cdr.good_bit ())
+    {
       return false;
+    }
 
     // Object group reference version
     cdr << tg.object_group_ref_version;
 
     if (!cdr.good_bit ())
+    {
       return false;
+    }
 
     return cdr.good_bit ();
   }

@@ -94,10 +94,14 @@ Notify_Logging_Service::init (int argc, ACE_TCHAR * argv[])
 {
   // initialize the ORB.
   if (this->init_ORB (argc, argv) != 0)
+  {
     return -1;
+  }
 
   if (this->parse_args (argc, argv) == -1)
+  {
     return -1;
+  }
 
   this->notify_service_->init_service (this->orb_.in ());
 
@@ -179,7 +183,9 @@ Notify_Logging_Service::resolve_naming_service ()
 
   // Need to check return value for errors.
   if (CORBA::is_nil (naming_obj.in ()))
+  {
     throw CORBA::UNKNOWN ();
+  }
 
   this->naming_ =
     CosNaming::NamingContext::_narrow (naming_obj.in ());
@@ -191,7 +197,9 @@ Notify_Logging_Service::run ()
   if (this->nthreads_ > 0)
     {
       if (this->activate ((THR_NEW_LWP | THR_JOINABLE), this->nthreads_) != 0)
+      {
         return -1;
+      }
 
       this->thr_mgr ()->wait ();
       return 0;
@@ -231,5 +239,7 @@ Notify_Logging_Service::shutdown ()
 
   // shutdown the ORB.
   if (!CORBA::is_nil (this->orb_.in ()))
+  {
     this->orb_->shutdown ();
+  }
 }

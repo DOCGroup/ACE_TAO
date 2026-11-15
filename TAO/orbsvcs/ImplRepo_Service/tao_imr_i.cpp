@@ -55,7 +55,9 @@ TAO_IMR_i::init (int argc, ACE_TCHAR **argv)
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
+      {
         return -1;
+      }
 
       // Get the ImplRepo object
       CORBA::Object_var obj =
@@ -503,17 +505,23 @@ TAO_IMR_Op_Link::parse (int argc, ACE_TCHAR **argv)
               ++num;
               c2 = std::strchr (c2, ',');
               if (c2 != 0)
+              {
                 ++c2;
+              }
             }
           num += last;
           this->peers_.length (num);
           while (last < num)
             {
               if ((c2 = std::strchr (arg, ',')) != 0)
+              {
                 *c2 = 0;
+              }
               this->peers_[last++] = CORBA::string_dup (arg);
               if (c2 != 0)
+              {
                 arg = c2+1;
+              }
             }
           break;
         }
@@ -825,7 +833,9 @@ TAO_IMR_Op_Register::parse (int argc, ACE_TCHAR **argv)
           this->set_retry_count_ = true;
           int rc = ACE_OS::atoi(get_opts.optarg);
           if (rc > 0)
+          {
             this->retry_count_ = rc;
+          }
         }
         break;
       case 'l': /// hostname of the activator
@@ -1361,19 +1371,29 @@ TAO_IMR_Op_Register::run ()
         }
 
       if (this->set_command_line_)
+      {
         options->command_line = CORBA::string_dup (this->command_line_.c_str ());
+      }
 
       if (this->set_environment_vars_)
+      {
         options->environment = this->environment_vars_;
+      }
 
       if (this->set_working_dir_)
+      {
         options->working_directory = CORBA::string_dup (this->working_dir_.c_str ());
+      }
 
       if (this->set_activation_ || is_add_)
+      {
         options->activation = this->activation_;
+      }
 
       if (this->set_retry_count_ || is_add_)
+      {
         options->start_limit = this->retry_count_ + 1;
+      }
 
       if (this->set_activator_)
         options->activator = CORBA::string_dup(this->activator_.c_str ());
@@ -1444,6 +1464,8 @@ TAO_IMR_Op_List::display_server_information (const ImplementationRepository::Ser
       if (this->terse_)
         ORBSVCS_DEBUG ((LM_DEBUG, "%C\n", info.server.in ()));
       else
+      {
         ORBSVCS_DEBUG ((LM_DEBUG, "<%C> %C\n", info.server.in (), maybe));
+      }
     }
 }

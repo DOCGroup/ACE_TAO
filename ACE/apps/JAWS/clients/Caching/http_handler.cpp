@@ -31,10 +31,14 @@ HTTP_Handler::HTTP_Handler (char const *path)
           || static_cast<size_t> (request_length) >= sizeof this->request_)
         this->request_size_ = 0;
       else
+      {
         this->request_size_ = static_cast<size_t> (request_length);
+      }
     }
   else
+  {
     this->request_size_ = 0;
+  }
 
   // Find the filename.
   char const *last = std::strrchr (path, '/');
@@ -44,20 +48,26 @@ HTTP_Handler::HTTP_Handler (char const *path)
   else if (last[1] == '\0')
     last = "index.html";
   else
+  {
     last = last + 1;
+  }
 
   int const filename_length =
     std::snprintf (this->filename_, sizeof this->filename_, "%s", last);
   if (filename_length < 0
       || static_cast<size_t> (filename_length) >= sizeof this->filename_)
+  {
     this->request_size_ = 0;
+  }
 }
 
 int
 HTTP_Handler::open (void *)
 {
   if (this->request_size_ == 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "HTTP request exceeds buffer size\n"), -1);
+  }
 
   // If you want threads, use the activate stuff.
 #if 0
@@ -82,7 +92,9 @@ HTTP_Handler::svc ()
 
   if (this->peer ().send_n (this->request_, this->request_size_)
       != static_cast<ssize_t> (this->request_size_))
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Failed to send HTTP request\n"), -1);
+  }
 
   // Read in characters until encounter \r\n\r\n
   bool done {};
@@ -96,25 +108,35 @@ HTTP_Handler::svc ()
           buf[count] = '\0';
 
           if (count >= 2)
+          {
             done = std::strcmp (buf + count - 2, "\n\n") == 0;
+          }
 
           if (done)
+          {
             break;
+          }
 
           if (count < 4)
+          {
             continue;
+          }
 
           done = std::strcmp (buf + count - 4, "\r\n\r\n") == 0;
 
           if (done)
+          {
             break;
+          }
         }
 
       if (!done)
         {
           char *last = std::strrchr (buf, '\n');
           if (last == nullptr)
+          {
             ACE_ERROR_RETURN ((LM_ERROR, "Malformed HTTP response header\n"), -1);
+          }
           last[0] = '\0';
 
           if ((contentlength = std::strstr (buf, "\nContent-length:"))
@@ -152,7 +174,9 @@ HTTP_Handler::svc ()
 
       if (this->peer ().recv_n (afh.address (), this->response_size_)
           != static_cast<ssize_t> (this->response_size_))
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "Failed to receive HTTP response body\n"), -1);
+      }
 
       ACE_DEBUG ((LM_DEBUG,
                   "  ``%s'' is now cached.\n",
@@ -238,9 +262,14 @@ HTTP_Connector::parseurl (char const *url,
                 }
             }
           else
+          {
             *port = DEFAULT_SERVER_PORT;
+          }
         }
-      else std::strcpy (path, "/");
+      else
+      {
+        std::strcpy (path, "/");
+      }
     }
 
   // 0 => success

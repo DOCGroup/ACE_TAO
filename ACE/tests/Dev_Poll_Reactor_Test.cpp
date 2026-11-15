@@ -134,7 +134,9 @@ Client::handle_output (ACE_HANDLE)
       else if (bytes_sent == 0)
         return -1;
       else
+      {
         ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%t) Sent %s"), buffer));
+      }
     }
 
   return 0;
@@ -229,7 +231,9 @@ Server::handle_input (ACE_HANDLE /* handle */)
               if (buf == buffer)
                 return 0;
               else
+              {
                 break;
+              }
             }
           else
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -374,7 +378,9 @@ public:
                                                              perms);
 
     if (result != 0)
+    {
       return result;
+    }
 
     ACE_TCHAR hostname[MAXHOSTNAMELEN];
     if (remote_addr.get_host_name (hostname,

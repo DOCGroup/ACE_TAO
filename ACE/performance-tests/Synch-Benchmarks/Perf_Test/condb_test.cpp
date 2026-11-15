@@ -56,7 +56,9 @@ Cond_Brdcast_Test::svc ()
         ++performance_test_options.thr_work_count[ni];
         ++buffer;
         if (--resources == 0)
-        notfull.signal ();
+        {
+          notfull.signal ();
+        }
         mutex.release ();
       }
 

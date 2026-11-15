@@ -22,7 +22,10 @@ namespace ACE_RMCast
 
   void Out_Element::send (Message_ptr m)
   {
-    if (out_) out_->send (m);
+    if (out_)
+    {
+      out_->send (m);
+    }
   }
 
   void Out_Element::
@@ -50,7 +53,10 @@ namespace ACE_RMCast
 
   void In_Element::recv (Message_ptr m)
   {
-    if (in_) in_->recv (m);
+    if (in_)
+    {
+      in_->recv (m);
+    }
   }
 
   void In_Element::

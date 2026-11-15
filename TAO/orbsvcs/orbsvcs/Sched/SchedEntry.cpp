@@ -62,13 +62,17 @@ Task_Entry::merge_dispatches (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_ent
       // caller calls one OR the other, but this is problematic: how
       // do we map the dispatches for this ?
       if (prohibit_dispatches (RtecBase::TWO_WAY_CALL) < 0)
+      {
         result = TWO_WAY_DISJUNCTION;
+      }
 
       if (disjunctive_merge (RtecBase::ONE_WAY_CALL,
                              dispatch_entries,
                              unresolved_locals,
                              unresolved_remotes) < 0)
+      {
         result = INTERNAL_ERROR;
+      }
       break;
 
     case RtecScheduler::CONJUNCTION:
@@ -82,12 +86,16 @@ Task_Entry::merge_dispatches (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_ent
       //       conjunctions of two-ways, but not disjunctions does not
       //       buy us anything, anyway).
       if (prohibit_dispatches (RtecBase::TWO_WAY_CALL) < 0)
+      {
         result = TWO_WAY_CONJUNCTION;
+      }
       if (conjunctive_merge (RtecBase::ONE_WAY_CALL,
                              dispatch_entries,
                              unresolved_locals,
                              unresolved_remotes) < 0)
+      {
         result = INTERNAL_ERROR;
+      }
       break;
 
     case RtecScheduler::OPERATION:
@@ -99,12 +107,16 @@ Task_Entry::merge_dispatches (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_ent
                              dispatch_entries,
                              unresolved_locals,
                              unresolved_remotes) < 0)
+      {
         result = INTERNAL_ERROR;
+      }
       if (conjunctive_merge (RtecBase::ONE_WAY_CALL,
                              dispatch_entries,
                              unresolved_locals,
                              unresolved_remotes) < 0)
+      {
         result = INTERNAL_ERROR;
+      }
       break;
 
     default:
@@ -135,7 +147,9 @@ Task_Entry::prohibit_dispatches (Dependency_Type dt)
       Task_Entry_Link **link {};
       if (iter.next (link) == 0 || link == nullptr || *link == nullptr ||
           (*link)->dependency_type () == dt)
+      {
         return -1;
+      }
     }
 
   return 0;
@@ -161,7 +175,9 @@ Task_Entry::disjunctive_merge (Dependency_Type dt,
     {
       Task_Entry_Link **link;
       if (iter.next (link) == 0 || link == nullptr || *link == nullptr)
+      {
         return -1;
+      }
 
       // The link matches the dependency type given
       if ((*link)->dependency_type () == dt)
@@ -219,7 +235,9 @@ Task_Entry::disjunctive_merge (Dependency_Type dt,
                             (*link)->caller ().dispatches_, effective_period_,
                             (*link)->caller ().effective_period_,
                             (*link)->number_of_calls ()) < 0)
+          {
             return -1;
+          }
         }
     }
 
@@ -254,7 +272,9 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
     {
       Task_Entry_Link **link;
       if (dep_iter.next (link) == 0 || link == nullptr || *link == nullptr)
+      {
         return -1;
+      }
 
       // The link matches the dependency type given.
       if ((*link)->dependency_type () == dt)
@@ -315,7 +335,9 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
                *this, dispatches_,
                effective_period_,
                frame_size) < 0)
+  {
     return -1;
+  }
 
   // A container and iterator for virtual dispatch sets over which the
   // conjunction will operate
@@ -337,7 +359,9 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
       for (iter.first (); iter.done () == 0; iter.advance ())
         {
           if (iter.next (proxy) != 0 && proxy != nullptr && *proxy != nullptr)
+          {
             delete *proxy;
+          }
         }
     }
 
@@ -359,7 +383,9 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
     {
       Task_Entry_Link **link;
       if (dep_iter.next (link) == 0 || link == nullptr || *link == nullptr)
+      {
         return -1;
+      }
 
       // The link matches the dependency type given.
       if ((*link)->dependency_type () == dt)
@@ -422,13 +448,19 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
           if (conj_set_iter.next (proxy_iter) == 0
               || proxy_iter == nullptr
               || *proxy_iter == nullptr)
+          {
             return -1;
+          }
 
           // Use latest arrival, latest deadline, lowest priority (0 is highest).
           if (arrival <= (*proxy_iter)->arrival ())
+          {
             arrival = (*proxy_iter)->arrival ();
+          }
           if (deadline <= (*proxy_iter)->deadline ())
+          {
             deadline = (*proxy_iter)->deadline ();
+          }
           if (priority <= (*proxy_iter)->priority ())
             {
               priority = (*proxy_iter)->priority ();
@@ -438,7 +470,9 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
           (*proxy_iter)->advance ();
 
           if ((*proxy_iter)->done ())
+          {
             more_dispatches = false;
+          }
         }
 
       Dispatch_Entry *entry_ptr {};
@@ -458,7 +492,9 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
       // Add the new dispatch entry to the set of all dispatches, and
       // a link to it to the dispatch links for this task entry.
       if (dispatch_entries.insert (entry_ptr) < 0)
+      {
         return -1;
+      }
       // The dispatch set now owns the entry; dispatch links are non-owning.
       entry_owner.release ();
 
@@ -466,7 +502,9 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
       ACE_Ordered_MultiSet_Iterator <Dispatch_Entry_Link> insert_iter (dispatches_);
       if (dispatches_.insert (Dispatch_Entry_Link (*entry_ptr),
                               insert_iter) < 0)
+      {
         return -1;
+      }
 
       // TBD - Clients are not assigned priority, but rather obtain it
       // from their call dependencies.  We could complain here if
@@ -564,7 +602,9 @@ Task_Entry::merge_frames (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries
                dest_period,
                ACE::minimum_frame_size (dest_period,
                                         src_period)) < 0)
-      return -1;
+  {
+    return -1;
+  }
 
   // use iterator for efficient insertion into the destination set
   ACE_Ordered_MultiSet_Iterator <Dispatch_Entry_Link> dest_iter (dest);
@@ -603,12 +643,16 @@ Task_Entry::merge_frames (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries
       // add the new dispatch entry to the set of all dispatches, and
       // a link to it to the dispatch links for this task entry
       if (dispatch_entries.insert (entry_ptr) < 0)
+      {
         return -1;
+      }
       // The dispatch set now owns the entry; dispatch links are non-owning.
       entry_owner.release ();
 
       if (dest.insert (Dispatch_Entry_Link (*entry_ptr), dest_iter) < 0)
+      {
         return -1;
+      }
 
       // TBD - Clients are not assigned priority, but rather obtain it
       // from their call dependencies.  We could complain here if
@@ -672,11 +716,15 @@ Dispatch_Entry::operator < (Dispatch_Entry const &d) const
 
   // lowest arrival time first
   if (this->arrival_ != d.arrival_)
+  {
     return this->arrival_ < d.arrival_ ? true : false;
+  }
 
   // highest priority second
   if (this->priority_ != d.priority_)
+  {
     return this->priority_ > d.priority_ ? true : false;
+  }
 
   // lowest laxity (highest dynamic sub-priority) third Just use low
   // 32 bits of worst_case_execution_time.  This will have to change
@@ -691,7 +739,9 @@ Dispatch_Entry::operator < (Dispatch_Entry const &d) const
   that_laxity -= d.task_entry ().rt_info ()->worst_case_execution_time;
 
   if (this_laxity != that_laxity)
+  {
     return (this_laxity < that_laxity) ? true : false;
+  }
 
   // finally, by higher importance
   return (task_entry ().rt_info ()->importance >
@@ -797,7 +847,9 @@ Dispatch_Proxy_Iterator::advance ()
               result = iter_.first ();
             }
           else
+          {
             result = 0; // cannot advance if we're already at the end
+          }
         }
     }
 
@@ -836,7 +888,9 @@ Dispatch_Proxy_Iterator::retreat ()
               result = iter_.last ();
             }
           else
+          {
             result = 0; // cannot retreat if we're already at the start
+          }
         }
     }
 
@@ -852,7 +906,9 @@ Dispatch_Proxy_Iterator::arrival () const
   if (iter_.done ()
       || iter_.next(link) == 0
       || link == nullptr)
+  {
     return 0;
+  }
 
   // Just use low 32 bits of arrival.  This will have to change when
   // TimeBase.idl is finalized.
@@ -869,7 +925,9 @@ Dispatch_Proxy_Iterator::deadline () const
   if (iter_.done ()
       || iter_.next(link) == 0
       || link == nullptr)
+  {
     return 0;
+  }
 
   // Just use low 32 bits of deadline.  This will have to change when
   // TimeBase.idl is finalized.
@@ -887,7 +945,9 @@ Dispatch_Proxy_Iterator::priority () const
   if (iter_.done ()
       || iter_.next(link) == 0
       || link == nullptr)
+  {
     return 0;
+  }
 
   return link->dispatch_entry ().priority ();
 }
@@ -901,7 +961,9 @@ Dispatch_Proxy_Iterator::OS_priority () const
   if (iter_.done ()
       || iter_.next(link) == 0
       || link == nullptr)
+  {
     return 0;
+  }
 
   return link->dispatch_entry ().OS_priority ();
 }

@@ -26,11 +26,15 @@ ACEXML_FileCharStream::use_stream_i (FILE* open_file, ACEXML_Char const *name)
 
   this->infile_ = open_file;
   if (this->infile_ == nullptr)
+  {
     return -1;
+  }
 
   ACE_stat statbuf;
   if (ACE_OS::stat (name, &statbuf) < 0)
+  {
     return -1;
+  }
 
   this->size_ = ACE_Utils::truncate_cast<ACE_OFF_T> (statbuf.st_size);
   this->filename_.reset (ACE::strnew (name));
@@ -41,7 +45,9 @@ int
 ACEXML_FileCharStream::use_stream (FILE* open_file, ACEXML_Char const *name)
 {
   if (open_file != nullptr)
+  {
     ACE_OS::rewind(open_file);
+  }
 
   this->close_infile_ = false;
   return use_stream_i(open_file, name);
@@ -58,7 +64,9 @@ int
 ACEXML_FileCharStream::determine_encoding ()
 {
   if (this->infile_ == nullptr)
+  {
     return -1;
+  }
 
   char input[4];
   int retval = 0;
@@ -66,7 +74,9 @@ ACEXML_FileCharStream::determine_encoding ()
   for (; i < 4 && retval != -1; ++i)
     retval = this->getchar_i(input[i]);
   if (i < 4)
+  {
     return -1;
+  }
 
   // Rewind the stream
   ACE_OS::rewind (this->infile_);
@@ -83,7 +93,9 @@ ACEXML_FileCharStream::determine_encoding ()
   for (int j = 0; j < 3; ++j)
     {
       if (this->getchar_i (ch) < 0)
+      {
         return -1;
+      }
       if (ch == '\xFF' || ch == '\xFE' || ch == '\xEF' || ch == '\xBB' ||
           ch == '\xBF')
         continue;
@@ -100,7 +112,9 @@ void
 ACEXML_FileCharStream::rewind()
 {
   if (this->infile_ == nullptr)
+  {
     return;
+  }
   ACE_OS::rewind (this->infile_);
   this->determine_encoding();
 }
@@ -109,11 +123,15 @@ int
 ACEXML_FileCharStream::available ()
 {
   if (this->infile_ == nullptr)
+  {
     return -1;
+  }
 
   long curr;
   if ((curr = ACE_OS::ftell (this->infile_)) < 0)
+  {
     return -1;
+  }
   return static_cast<int> (this->size_ - curr);
 }
 
@@ -147,7 +165,9 @@ ACEXML_FileCharStream::read (ACEXML_Char *str,
                              size_t len)
 {
   if (this->infile_ == nullptr)
+  {
     return -1;
+  }
 
   return static_cast<int> (ACE_OS::fread (str, sizeof (ACEXML_Char), len, this->infile_));
 }
@@ -156,7 +176,9 @@ int
 ACEXML_FileCharStream::get (ACEXML_Char& ch)
 {
   if (this->infile_ == nullptr)
+  {
     return -1;
+  }
 #if defined (ACE_USES_WCHAR)
   return this->get_i (ch);
 #else
@@ -169,7 +191,9 @@ int
 ACEXML_FileCharStream::peek ()
 {
   if (this->infile_ == nullptr)
+  {
     return -1;
+  }
 #if defined (ACE_USES_WCHAR)
   return this->peek_i();
 #else

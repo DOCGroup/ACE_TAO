@@ -150,7 +150,9 @@ namespace ACE
             return stream;
           }
         else
+        {
           return URLStream (nullptr);
+        }
       }
 
     URLStream URL_Base::open (ClientRequestHandler& rh) const
@@ -218,7 +220,9 @@ namespace ACE
             factories_ = URL_Base::TURLFactorySingleton::instance ();
           }
         if (url_factory)
+        {
           factories_->bind (url_factory->protocol (), url_factory);
+        }
       }
 
     void URL_Base::deregister_factory (Factory* url_factory)
@@ -308,7 +312,9 @@ namespace ACE
             if (ch == '/' || ch == '?' || ch == '#' || ch == eof)
               this->set_port (port);
             else
+            {
               this->set_port (0);
+            }
           }
         else
           {
@@ -333,7 +339,9 @@ namespace ACE
         ACE::IOS::CString_OStream sos;
         sos << this->get_host().c_str ();
         if (this->get_port () != this->default_port ())
+        {
           sos << ':' << this->get_port ();
+        }
         return sos.str ();
       }
 
@@ -350,10 +358,14 @@ namespace ACE
       {
         ACE::IOS::CString_OStream sos;
         if (!this->get_user_info ().empty ())
+        {
           sos << this->get_user_info ().c_str () << "@";
+        }
         sos << this->get_host().c_str ();
         if (this->get_port () != this->default_port ())
+        {
           sos << ':' << this->get_port ();
+        }
         return sos.str ();
       }
 
@@ -430,14 +442,20 @@ namespace ACE
 
             // release lock before calling user code
             if (URL_INetAuthBase::authenticators_.mutex ().release () != 0)
+            {
               return false;
+            }
 
             if (auth_ptr->authenticate (authentication))
+            {
               return true;
+            }
 
             // re-acquire lock
             if (URL_INetAuthBase::authenticators_.mutex ().acquire () != 0)
+            {
               return false;
+            }
           }
 
         return false;

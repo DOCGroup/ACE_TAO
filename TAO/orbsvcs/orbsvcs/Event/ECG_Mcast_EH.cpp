@@ -23,7 +23,9 @@ TAO_ECG_Mcast_EH::TAO_ECG_Mcast_EH (TAO_ECG_Dgram_Handler *recv,
   , auto_observer_disconnect_ ()
 {
   if (net_if != nullptr)
+  {
     this->net_if_ = net_if;
+  }
 
   ACE_ASSERT (this->receiver_);
 }
@@ -78,7 +80,9 @@ TAO_ECG_Mcast_EH::shutdown ()
 {
   // Already shut down.
   if (!this->receiver_)
+  {
     return -1;
+  }
 
   // Disconnect Observer from EC.
   this->auto_observer_disconnect_.execute ();
@@ -213,7 +217,9 @@ TAO_ECG_Mcast_EH::delete_unwanted_subscriptions (
       // Move the last subscription into the removed subscription's place.
       size_t const last = this->subscriptions_.size () - 1;
       if (i != last)
+      {
         this->subscriptions_[i] = std::move (this->subscriptions_[last]);
+      }
       this->subscriptions_.pop_back ();
     }
 
@@ -289,7 +295,9 @@ TAO_ECG_Mcast_EH::Observer::update_consumer (
         RtecEventChannelAdmin::ConsumerQOS const &sub)
 {
   if (this->eh_)
+  {
     this->eh_->update_consumer (sub);
+  }
 }
 
 void

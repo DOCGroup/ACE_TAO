@@ -39,7 +39,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Initialize the ORB.
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
       if (parse_args (argc, argv, options) != 0)
+      {
         return -1;
+      }
 
       // Get an object reference from the argument string.
       CORBA::Object_var object = orb->string_to_object (options.ior.c_str ());

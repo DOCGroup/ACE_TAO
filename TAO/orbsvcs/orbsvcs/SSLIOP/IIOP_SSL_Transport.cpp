@@ -30,7 +30,9 @@ TAO::IIOP_SSL_Transport::handle_input (TAO_Resume_Handle &rh,
   TAO::Null_SSL_State_Guard guard (this->current_.in (), result);
 
   if (result != 0)
+  {
     return -1;
+  }
 
   return this->TAO_IIOP_Transport::handle_input (rh, max_wait_time);
 }

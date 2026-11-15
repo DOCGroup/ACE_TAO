@@ -55,7 +55,9 @@ void
 One::intrusive_remove_ref (One *one) {
   one->ref--;
   if (one->ref == 0)
+  {
     delete one;
+  }
 }
 
 int run_main (int, ACE_TCHAR *[])

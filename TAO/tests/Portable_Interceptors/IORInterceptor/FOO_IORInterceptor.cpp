@@ -82,7 +82,9 @@ FOO_IORInterceptor::establish_components (
   catch (CORBA::INV_POLICY const &ex)
     {
       if (ex.minor () != (CORBA::OMGVMCID | 3))
+      {
         throw;
+      }
     }
 }
 

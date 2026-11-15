@@ -119,7 +119,9 @@ Supplier_Client::parse_args (int argc, ACE_TCHAR* argv[])
 #endif
               }
             else
+            {
               ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Unknown ordering policy\n")), -1);
+            }
             break;
           }
         case 'e':
@@ -193,7 +195,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       Supplier_Client client;
       int const status = client.init (argc, argv);
       if (status != 0)
+      {
         return status;
+      }
       Supplier_Options const& options = client.options ();
 
       CosNotifyChannelAdmin::EventChannel_var const ec =
@@ -211,7 +215,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
         std::unique_ptr<FILE, int (*) (FILE *)> output_file (
           ACE_OS::fopen (options.ior_output_file, ACE_TEXT ("w")), ACE_OS::fclose);
         if (!output_file)
+        {
           ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot open output file for writing IOR\n")), 1);
+        }
         ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
       }
 

@@ -220,7 +220,9 @@ Distributer::stream_destroyed ()
   --this->stream_count_;
 
   if (this->stream_count_ == 0)
+  {
     this->done_ = true;
+  }
 }
 
 Connection_Manager &
@@ -263,27 +265,35 @@ Distributer::init (int argc,
   int result =
     this->connection_manager_.init (TAO_AV_CORE::instance ()->orb ());
   if (result != 0)
+  {
     return result;
+  }
 
   // Initialize the endpoint strategy with the orb and poa.
   result =
     this->sender_endpoint_strategy_.init (TAO_AV_CORE::instance ()->orb (),
                                           TAO_AV_CORE::instance ()->poa ());
   if (result != 0)
+  {
     return result;
+  }
 
   result =
     this->receiver_endpoint_strategy_.init (TAO_AV_CORE::instance ()->orb (),
                                             TAO_AV_CORE::instance ()->poa ());
   if (result != 0)
+  {
     return result;
+  }
 
   // Parse the command line arguments
   result =
     this->parse_args (argc,
                       argv);
   if (result != 0)
+  {
     return result;
+  }
 
   ACE_Reactor *reactor =
     TAO_AV_CORE::instance ()->reactor ();
@@ -401,7 +411,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       int result = DISTRIBUTER::instance ()->init (argc, argv);
 
       if (result != 0)
+      {
         return result;
+      }
 
       while (!DISTRIBUTER::instance ()->done ())
         {

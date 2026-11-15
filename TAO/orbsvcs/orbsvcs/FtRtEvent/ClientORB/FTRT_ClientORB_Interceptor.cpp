@@ -47,11 +47,15 @@ FTRT_ClientORB_Interceptor::send_request (
       TAO_OutputCDR cdr;
 
       if (!(cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
+      {
         return;
+      }
 
       // Add Transaction Depth Context
       if (!(cdr << transaction_depth_))
+      {
         return;
+      }
       sc.context_id = FTRT::FT_TRANSACTION_DEPTH;
 
       ACE_Message_Block mb;

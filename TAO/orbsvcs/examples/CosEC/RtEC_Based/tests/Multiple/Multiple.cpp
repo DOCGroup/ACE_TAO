@@ -106,5 +106,7 @@ void
 Multiple::shutdown ()
 {
   if (!CORBA::is_nil (this->orb_.in ()))
+  {
     this->orb_->shutdown ();
+  }
 }

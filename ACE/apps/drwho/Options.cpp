@@ -153,5 +153,7 @@ Options::set_options (int argc, char *argv[])
     }
 
   if (Options::get_opt (Options::REMOTE_USAGE) && add_default_hosts)
+  {
     Multicast_Manager::insert_default_hosts ();
+  }
 }

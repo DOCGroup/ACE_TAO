@@ -51,7 +51,9 @@ TAO::CSI_Utils::extract_sas_service_context (
   ACE_CDR::Boolean byte_order {};
 
   if (!(cdr >> ACE_InputCDR::to_boolean (byte_order)))
+  {
     return false;
+  }
 
   cdr.reset_byte_order (static_cast<int> (byte_order));
 

@@ -56,7 +56,9 @@ TAO_LB_Random::get_loads (CosLoadBalancing::LoadManager_ptr load_manager,
                           PortableGroup::Location const & the_location)
 {
   if (CORBA::is_nil (load_manager))
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   return load_manager->get_loads (the_location);
 }
@@ -67,7 +69,9 @@ TAO_LB_Random::next_member (
     CosLoadBalancing::LoadManager_ptr load_manager)
 {
   if (CORBA::is_nil (load_manager))
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   PortableGroup::Locations_var locations =
     load_manager->locations_of_members (object_group);
@@ -98,7 +102,9 @@ TAO_LB_Random::_tao_next_member (
 {
   CORBA::ULong const len = locations.length ();
   if (len == 0)
+  {
     throw CORBA::TRANSIENT ();
+  }
 
   // Pick a random location in the sequence using the higher order
   // bits (zero based indexing).

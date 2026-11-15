@@ -25,7 +25,9 @@ TAO_Fault_Tolerance_Service::init (TAO_ORB_Core *orb_core)
 
       // Activate the callback
       if (service)
+      {
         this->ft_service_callback_.reset (service->activate_services (orb_core));
+      }
     }
 }
 

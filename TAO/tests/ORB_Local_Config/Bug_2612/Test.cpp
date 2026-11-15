@@ -23,24 +23,32 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nbefore first load process directive\n")));
   if (ACE_Service_Config::process_directive (scpc_loadOrb) < 0)
+  {
     return -1;
+  }
 
   ACE_OS::sleep (2);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nbefore first unload process directive\n")));
   if (ACE_Service_Config::process_directive (scpc_unloadOrb) < 0)
+  {
     return -1;
+  }
 
   ACE_OS::sleep (2);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nMAIN (%P|%t) Lather, Rinse, Repeat ...\n")));
 
   if (ACE_Service_Config::process_directive (scpc_loadOrb) < 0)
+  {
     return -1;
+  }
 
   ACE_OS::sleep (2);
 
   if (ACE_Service_Config::process_directive (scpc_unloadOrb) < 0)
+  {
     return -1;
+  }
 
   return 0;
 }

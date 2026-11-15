@@ -294,7 +294,9 @@ WUCS4_UTF16::read_wstring (ACE_InputCDR &cdr,
   x = nullptr;
   ACE_CDR::ULong len {};
   if (!this->read_4 (cdr, &len))
+  {
     return false;
+  }
 
   // A check for the length being too great is done later in the
   // call to read_char_array but we want to have it done before
@@ -357,7 +359,9 @@ WUCS4_UTF16::read_wchar_array_i (ACE_InputCDR & cdr,
                                  bool adjust_len)
 {
   if (length == 0)
+  {
     return true;
+  }
   char *buf {};
   constexpr size_t align = ACE_CDR::SHORT_ALIGN;
   if (cdr.adjust (ACE_UTF16_CODEPOINT_SIZE * length, align, buf) == 0)
@@ -375,7 +379,9 @@ WUCS4_UTF16::read_wchar_array_i (ACE_InputCDR & cdr,
             }
           buf += ACE_UTF16_CODEPOINT_SIZE;
           if (adjust_len)
+          {
             length -= 1;
+          }
         }
       size_t bpos {};
       for (size_t xpos = 0; xpos < length; ++xpos)
@@ -394,18 +400,24 @@ WUCS4_UTF16::read_wchar_array (ACE_InputCDR & cdr,
                                ACE_CDR::ULong length)
 {
   if (length == 0)
+  {
     return true;
+  }
 
   if (static_cast<ACE_CDR::Short> (this->major_version(cdr)) == 1
       && static_cast<ACE_CDR::Short> (this->minor_version(cdr)) > 1)
     {
       for (size_t i = 0; i < length; ++i)
         if (!this->read_wchar (cdr, x[i]))
+        {
           return false;
+        }
       return true;
     }
   else
+  {
     return this->read_wchar_array_i (cdr, x, length);
+  }
 }
 
 ACE_CDR::Boolean
@@ -437,7 +449,9 @@ WUCS4_UTF16::write_wchar_i (ACE_OutputCDR &cdr,
   unsigned long const ul_x = static_cast<unsigned long> (x);
   if (ul_x >= ACE_UTF16_RAW_END &&
       ul_x < ACE_UTF16_END)
+  {
     return false;
+  }
 
   int len {};
   ACE_CDR::UShort buffer[2] {};
@@ -454,7 +468,9 @@ WUCS4_UTF16::write_wchar_i (ACE_OutputCDR &cdr,
         ACE_CDR::swap_2 (reinterpret_cast<char const *> (&x),
                          reinterpret_cast<char *> (buffer));
       else
+      {
         buffer[0] = static_cast<ACE_CDR::Short> (x);
+      }
     }
 
   if (encode_len)
@@ -463,12 +479,18 @@ WUCS4_UTF16::write_wchar_i (ACE_OutputCDR &cdr,
       if (this->write_1 (cdr, &tcsize))
         return this->write_array (cdr, &buffer, tcsize, 1, 1);
       else
+      {
         return false;
+      }
     }
   if (!this->write_2 (cdr, buffer))
+  {
     return false;
+  }
   if (len == 2)
+  {
     return this->write_2 (cdr, buffer + 1);
+  }
   return true;
 }
 
@@ -490,7 +512,9 @@ WUCS4_UTF16::write_wstring (ACE_OutputCDR & cdr,
       if (this->write_4 (cdr, &l) && x != nullptr)
         {
           if (!this->write_2 (cdr, &bom))
+          {
             return false;
+          }
           return this->write_measured_wchar_array (cdr, x, len, length);
         }
     }
@@ -531,7 +555,9 @@ WUCS4_UTF16::write_wchar_array (ACE_OutputCDR & cdr,
 
   for (size_t i = 0; i < length; ++i)
     if (!this->write_wchar_i (cdr, x[i], false, encode_len))
+    {
       return false;
+    }
   return true;
 }
 
@@ -542,7 +568,9 @@ WUCS4_UTF16::write_measured_wchar_array (ACE_OutputCDR & cdr,
                                          ACE_CDR::ULong transmission_length)
 {
   if (length == 0)
+  {
     return true;
+  }
   char *buf {};
   constexpr size_t align = ACE_CDR::SHORT_ALIGN;
   if (cdr.adjust (ACE_UTF16_CODEPOINT_SIZE * transmission_length, align, buf)

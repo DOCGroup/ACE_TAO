@@ -15,7 +15,9 @@ Server_i::request (Test::TimeStamp time_stamp,
                    Test::Payload const &payload)
 {
   if (CORBA::is_nil (this->callback_.in ()))
+  {
     return;
+  }
 
   this->callback_->response (time_stamp, payload);
 }

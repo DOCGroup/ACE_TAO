@@ -61,7 +61,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                          "client_orb"));
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       {
         ACE_Manual_Event me;

@@ -116,7 +116,9 @@ namespace TAO
                                           wait_occurred_restart_call);
 
           if (wait_occurred_restart_call)
+          {
             return TAO_Adapter::DS_FAILED;
+          }
 #if (TAO_HAS_MINIMUM_CORBA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
         }
       catch (const ::PortableServer::ForwardRequest& forward_request)
@@ -135,7 +137,9 @@ namespace TAO
       // For servants from Servant Locators, there is no active object map
       // entry.
       if (this->active_object_map_entry ())
+      {
         this->current_context_.priority (this->active_object_map_entry ()->priority_);
+      }
 
       if (this->state_ != OBJECT_ADAPTER_LOCK_RELEASED)
         {
@@ -316,7 +320,9 @@ namespace TAO
     {
       // Cleanup servant related stuff.
       if (this->active_object_map_entry_ != nullptr)
+      {
         ++this->active_object_map_entry_->reference_count_;
+      }
     }
 
     void

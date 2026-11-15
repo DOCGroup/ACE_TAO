@@ -582,13 +582,19 @@ int run_main (int, ACE_TCHAR *[])
     }
 
   if (!test_tao_use ())
+  {
     status = 1;
+  }
 
   if (!test_multiple ())
+  {
     status = 1;
+  }
 
   if (!test_port_assignment ())
+  {
     status = 1;
+  }
 
   ACE_INET_Addr a1 (80, "127.0.0.1");
   ACE_INET_Addr a2 = a1;
@@ -600,7 +606,9 @@ int run_main (int, ACE_TCHAR *[])
     }
 
   if (!test_port_names ())
+  {
     status = 1;
+  }
 
   ACE_END_TEST;
 

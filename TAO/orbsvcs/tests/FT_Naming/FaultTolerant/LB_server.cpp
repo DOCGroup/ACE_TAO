@@ -152,7 +152,9 @@ LB_server::create_object_group (const char *group_name)
   try
     {
       if (this->parse_args (argc_, argv_) != 0)
+      {
         return -1;
+      }
 
       PortableGroup::Criteria criteria (2);
       criteria.length (1);

@@ -420,9 +420,15 @@ annotation_tests ()
 
     // Get Sequence
     AST_Typedef *typedef_node = dynamic_cast<AST_Typedef *> (value->field_type ());
-    if (!typedef_node) t.failed ("Could not get AST_Typedef");
+    if (!typedef_node)
+    {
+      t.failed ("Could not get AST_Typedef");
+    }
     AST_Sequence *seq = dynamic_cast<AST_Sequence *> (typedef_node->base_type ());
-    if (!seq) t.failed ("Could get AST_Sequence");
+    if (!seq)
+    {
+      t.failed ("Could get AST_Sequence");
+    }
 
     // Verify Annotation on Base Type
     AST_Annotation_Appls &annotations = seq->base_type_annotations ();
@@ -735,7 +741,10 @@ annotation_tests ()
     ).assert_node<AST_Typedef> ("::struct12Array");
     AST_Array *struct12Array =
       dynamic_cast<AST_Array *> (thetypedef->base_type ());
-    if (!struct12Array) t.failed ("Could not get AST_Array");
+    if (!struct12Array)
+    {
+      t.failed ("Could not get AST_Array");
+    }
 
     // Verify Annotation on Base Type
     AST_Annotation_Appls &annotations =

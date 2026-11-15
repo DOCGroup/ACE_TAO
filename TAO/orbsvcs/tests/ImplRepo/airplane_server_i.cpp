@@ -72,7 +72,9 @@ Airplane_Server_i::init (int argc, ACE_TCHAR** argv)
       int const retval = this->parse_args ();
 
       if (retval != 0)
+      {
         return retval;
+      }
 
       // Get the POA from the ORB.
       CORBA::Object_var obj =
@@ -123,14 +125,18 @@ Airplane_Server_i::init (int argc, ACE_TCHAR** argv)
       CORBA::String_var const ior =
         this->orb_->object_to_string (obj.in ());
       if (TAO_debug_level > 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "The ImRified IOR is: <%C>\n", ior.in ()));
+      }
 
       TAO_Root_POA * const tmp_poa = dynamic_cast<TAO_Root_POA *> (airplane_poa_.in ());
       obj = tmp_poa->id_to_reference_i (server_id.in (), false);
       CORBA::String_var const plain_ior =
         this->orb_->object_to_string (obj.in ());
       if (TAO_debug_level > 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "The plain IOR is: <%C>\n", plain_ior.in ()));
+      }
 
       // Note : The IORTable will only be used for those clients who try to
       // invoke indirectly using a simple object_key reference
@@ -182,7 +188,9 @@ Airplane_Server_i::run ()
       this->orb_->destroy ();
 
       if (tv_end - tv_start > tv - ACE_Time_Value (5))
+      {
         return 1;
+      }
     }
   catch (CORBA::Exception const &ex)
     {

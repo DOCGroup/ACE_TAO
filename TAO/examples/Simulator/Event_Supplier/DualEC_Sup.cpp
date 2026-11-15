@@ -342,7 +342,9 @@ DualEC_Supplier::run_nav_thread (void *arg)
                       "Everything is running. Going to be mute.\n"));
 
         if (++nav_index == sup->navigation_data_.size ())
+        {
           nav_index = 0;
+        }
       }
       while (++total_sent < sup->total_messages_);
     }
@@ -404,7 +406,9 @@ DualEC_Supplier::run_weap_thread (void *arg)
                       "Everything is running. Going to be mute.\n"));
 
         if (++weap_index == sup->weapons_data_.size ())
+        {
           weap_index = 0;
+        }
       }
       while (++total_sent < sup->total_messages_);
     }
@@ -1004,7 +1008,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Initialize everthing
       if (event_Supplier_ptr->init () == -1)
+      {
         ACE_OS::exit (1);
+      }
 
       // now we can go ahead
       event_Supplier_ptr->start_generating_events ();

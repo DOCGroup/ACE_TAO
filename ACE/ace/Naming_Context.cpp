@@ -43,7 +43,9 @@ ACE_Naming_Context::info (ACE_TCHAR **strp,
   if (*strp == nullptr && (*strp = ACE_OS::strdup (buf)) == nullptr)
     return -1;
   else
+  {
     ACE_OS::strsncpy (*strp, buf, length);
+  }
   return static_cast<int> (ACE_OS::strlen (buf));
 }
 
@@ -246,7 +248,9 @@ ACE_Naming_Context::resolve (const char *name_in,
   if (this->resolve (ACE_NS_WString (name_in),
                      val_str,
                      type_out) == -1)
+  {
     return -1;
+  }
 
   // Note that <char_rep> *allocates* the memory!  Thus, caller is
   // responsible for deleting it!
@@ -579,7 +583,9 @@ ACE_Name_Options::parse_args (int argc, ACE_TCHAR *argv[])
 
   // Argc can be 0 on some platforms like VxWorks.
   if (argc > 0)
+  {
     program_name = argv[0];
+  }
 
   ACE_LOG_MSG->open (program_name);
   this->process_name (program_name);

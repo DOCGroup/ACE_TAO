@@ -60,7 +60,9 @@ worker (void *c)
                 "(%t) %p\n",
                 "ACE_Thread::setspecific"));
   else
+  {
     owned_ip.release ();
+  }
 
   for (intptr_t i = 0; i < count; ++i)
     {
@@ -98,7 +100,9 @@ worker (void *c)
                       "(%t) %p\n",
                       "ACE_Thread::setspecific"));
         else
+        {
           owned_ip.reset ();
+        }
       }
 
       if (ACE_Thread::keyfree (key) == -1)
@@ -164,7 +168,9 @@ worker (void *c)
                       "(%t) %p\n",
                       "ACE_Thread::setspecific"));
         else
+        {
           owned_ip_second.reset ();
+        }
       }
 
       if (ACE_Thread::keyfree (key) == -1)

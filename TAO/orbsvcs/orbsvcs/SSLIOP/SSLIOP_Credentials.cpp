@@ -96,7 +96,9 @@ TAO::SSLIOP_Credentials::creds_state ()
   // The pointer to the underlying X509 structure should only be zero
   // if destroy() was called on this Credentials object.
   if (x == nullptr)
+  {
     throw CORBA::BAD_OPERATION ();
+  }
 
   if (this->creds_state_ == SecurityLevel3::CS_Valid)
     {
@@ -195,7 +197,9 @@ TAO::SSLIOP::Credentials_ptr
 TAO::SSLIOP_Credentials::_duplicate (TAO::SSLIOP::Credentials_ptr obj)
 {
   if (!CORBA::is_nil (obj))
+  {
     obj->_add_ref ();
+  }
 
   return obj;
 }

@@ -18,7 +18,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     << " [corbaloc URL] [-ORB options]" << std::endl;
         }
       else
+      {
         url = argv[1];
+      }
 
       CORBA::Object_var const naming_object = orb->string_to_object (url);
       CosNaming::NamingContextExt_var const root =

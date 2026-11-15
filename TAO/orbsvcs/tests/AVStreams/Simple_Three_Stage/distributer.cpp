@@ -129,20 +129,26 @@ Distributer::init (int /*argc*/,
   int result =
     this->naming_client_.init (TAO_AV_CORE::instance ()->orb ());
   if (result != 0)
+  {
     return result;
+  }
 
   // Initialize the endpoint strategy with the orb and poa.
   result =
     this->sender_endpoint_strategy_.init (TAO_AV_CORE::instance ()->orb (),
                                           TAO_AV_CORE::instance ()->poa ());
   if (result != 0)
+  {
     return result;
+  }
 
   result =
     this->receiver_endpoint_strategy_.init (TAO_AV_CORE::instance ()->orb (),
                                             TAO_AV_CORE::instance ()->poa ());
   if (result != 0)
+  {
     return result;
+  }
 
   // Bind to the receiver mmdevice
   ACE_CString mmdevice_name ("Receiver");
@@ -238,7 +244,9 @@ Distributer::init (int /*argc*/,
                                   flow_spec);
 
   if (res == 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,"Streamctrl::bind_devs failed\n"),-1);
+  }
 
   return 0;
 }
@@ -293,7 +301,9 @@ ACE_TMAIN (int argc,
                                         argv);
 
       if (result != 0)
+      {
         return result;
+      }
 
       while (!DISTRIBUTER::instance ()->done ())
         {

@@ -64,7 +64,9 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
     if (ACE_OS::strlen(argv[0]) < Options_Manager::string_len)
       __program_name = argv[0];
     else
+    {
       __program_name.assign (argv[0], Options_Manager::string_len - 1);
+    }
 
     // Declare options with ACE_Get_Opt
     int c;
@@ -132,7 +134,9 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
             else if (!ACE_OS::strcmp (str, ACE_TEXT ("sctp")))
               test_transport_protocol = IPPROTO_SCTP;
             else
+            {
               test_transport_protocol = -1;
+            }
             break;
           }
           case 'm':
@@ -369,7 +373,9 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
             if (ACE_OS::strlen (str) < Options_Manager::string_len)
               server_host = str;
             else
+            {
               server_host.assign (str, Options_Manager::string_len - 1);
+            }
             break;
           }
           case 's':

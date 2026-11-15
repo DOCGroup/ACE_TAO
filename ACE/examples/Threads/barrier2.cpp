@@ -207,7 +207,9 @@ Worker_Task<BARRIER>::producer ()
       ACE_Message_Block_Unique_Ptr message_block {mb};
 
       if (this->input (message_block) == -1)
+      {
         return -1;
+      }
     }
 
   ACE_NOTREACHED (return 0);
@@ -224,7 +226,9 @@ Worker_Task<BARRIER>::put_owned (ACE_Message_Block_Unique_Ptr &mb)
 {
   int const result = this->put (mb.get ());
   if (!this->inp_serialize_ || result != -1)
+  {
     mb.release ();
+  }
   return result;
 }
 
@@ -241,11 +245,15 @@ Worker_Task<BARRIER>::input (ACE_Message_Block_Unique_Ptr &message_block)
   size_t n = std::strlen (str);
 
   if (l == 1000)
+  {
     n = 1;
+  }
   ++l;
 
   if (l == 0 || (l % 100 == 0))
+  {
     ACE_OS::sleep (5);
+  }
   if (n <= 1)
 #else
     ACE_DEBUG ((LM_DEBUG,

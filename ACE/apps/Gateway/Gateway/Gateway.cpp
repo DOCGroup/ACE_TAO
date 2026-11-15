@@ -163,7 +163,9 @@ Gateway::info (ACE_TCHAR **strp, size_t length) const
   if (*strp == nullptr && (*strp = ACE_OS::strdup (buf)) == nullptr)
     return -1;
   else
+  {
     ACE_OS::strncpy (*strp, buf, length);
+  }
   return ACE_OS::strlen (buf);
 }
 

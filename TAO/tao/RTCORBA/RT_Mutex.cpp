@@ -14,14 +14,18 @@ void
 TAO_RT_Mutex::lock ()
 {
   if (this->mu_.acquire () != 0)
+  {
     throw ::CORBA::INTERNAL ();
+  }
 }
 
 void
 TAO_RT_Mutex::unlock ()
 {
   if (this->mu_.release () != 0)
+  {
     throw ::CORBA::INTERNAL ();
+  }
 }
 
 CORBA::Boolean

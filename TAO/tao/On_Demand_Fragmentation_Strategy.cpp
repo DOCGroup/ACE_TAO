@@ -25,7 +25,9 @@ TAO_On_Demand_Fragmentation_Strategy::fragment (
   ACE_CDR::ULong pending_length)
 {
   if (this->transport_ == nullptr)
+  {
     return 0;  // No transport.  Can't fragment.
+  }
 
   TAO_GIOP_Message_Version giop_version;
 
@@ -35,7 +37,9 @@ TAO_On_Demand_Fragmentation_Strategy::fragment (
   // supports them in 1.2 or better since GIOP 1.1 fragments do not
   // have a fragment message header.
   if (giop_version.major == 1 && giop_version.minor < 2)
+  {
     return -1;
+  }
 
   // Determine increase in CDR stream length if pending data is
   // marshaled, taking into account the alignment for the given data
@@ -61,7 +65,9 @@ TAO_On_Demand_Fragmentation_Strategy::fragment (
     {
       // Pad the outgoing fragment if necessary.
       if (cdr.align_write_ptr (ACE_CDR::MAX_ALIGNMENT) != 0)
+      {
         return -1;
+      }
 
       // More fragments to come.
       cdr.more_fragments (true);
@@ -85,7 +91,9 @@ TAO_On_Demand_Fragmentation_Strategy::fragment (
           || this->transport_->messaging_object ()->generate_fragment_header (
                cdr,
                cdr.request_id ()) != 0)
+      {
         return -1;
+      }
     }
 
   return 0;

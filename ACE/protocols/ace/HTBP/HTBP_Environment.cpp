@@ -17,7 +17,9 @@ ACE::HTBP::Environment::~Environment ()
   if (!own_config_)
     this->clear();
   else
+  {
     delete this->config_;
+  }
 
 }
 
@@ -38,9 +40,13 @@ ACE::HTBP::Environment::initialize (bool use_registry,
     {
       int result = -1;
       if (use_registry)
+      {
         result = this->open_registry_config();
+      }
       if (result == -1)
+      {
         result = this->open_persistent_config (persistent_file);
+      }
       if (result != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -169,7 +175,9 @@ ACE::HTBP::Environment::get_proxy_port (unsigned int &proxy_port) const
                                                 ACE_TEXT("proxy_port"),
                                                 port_str);
       if (result == 0)
+      {
         proxy_port = ACE_OS::strtol(port_str.c_str(),0,10);
+      }
     }
   return result;
 }

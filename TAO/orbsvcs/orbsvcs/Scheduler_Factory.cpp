@@ -150,7 +150,9 @@ static_server ()
       (ace_scheduler_factory_data =
          ACE_Singleton<ACE_Scheduler_Factory_Data,
                        ACE_Null_Mutex>::instance ()) == nullptr)
-        return nullptr;
+  {
+    return nullptr;
+  }
 
   try
     {
@@ -212,7 +214,9 @@ int
 ACE_Scheduler_Factory::server (RtecScheduler::Scheduler_ptr sptr)
 {
   if (server_ != nullptr || TAO_SF_entry_count != -1)
+  {
     return -1;
+  }
 
   server_ = RtecScheduler::Scheduler::_duplicate (sptr);
   return 0;
@@ -222,7 +226,9 @@ RtecScheduler::Scheduler_ptr
 ACE_Scheduler_Factory::server ()
 {
   if (server_ == nullptr && TAO_SF_entry_count != -1)
+  {
     server_ = static_server ();
+  }
 
   if (server_ == nullptr)
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
@@ -335,7 +341,9 @@ int ACE_Scheduler_Factory::dump_schedule
     {
       file = ACE_OS::fopen (file_name, ACE_TEXT("w"));
       if (file == nullptr)
-          return -1;
+      {
+        return -1;
+      }
     }
   ACE_OS::fprintf (file, "%s", header);
 
@@ -434,7 +442,9 @@ int ACE_Scheduler_Factory::dump_schedule
   if (infos.length () > 0)
     ACE_OS::fprintf (file, "%s", end_infos);
   else
+  {
     ACE_OS::fprintf (file, "%s", end_infos_empty);
+  }
 
   // Print out banner indicating which dependencies are dumped.
   if (dump_disabled_dependencies)
@@ -481,7 +491,9 @@ int ACE_Scheduler_Factory::dump_schedule
   if (dependencies.length () > 0)
     ACE_OS::fprintf (file, "%s", end_dependencies);
   else
+  {
     ACE_OS::fprintf (file, "%s", end_dependencies_empty);
+  }
 
   // Print out queue configuration info.
   ACE_OS::fprintf (file, "%s", start_configs);
@@ -508,7 +520,9 @@ int ACE_Scheduler_Factory::dump_schedule
   if (configs.length () > 0)
     ACE_OS::fprintf (file, "%s", end_configs);
   else
+  {
     ACE_OS::fprintf (file, "%s", end_configs_empty);
+  }
 
   ACE_OS::fprintf (file, "%s", footer);
   ACE_OS::fclose (file);
@@ -650,7 +664,9 @@ ACE_Scheduler_Factory::log_scheduling_entries(TAO_Reconfig_Scheduler_Entry ** en
    {
       file = ACE_OS::fopen (file_name, ACE_TEXT ("w"));
       if (file == nullptr)
+      {
         return -1;
+      }
     }
 
    // Iterate through the array.  The index is the (handle - 1) of the rt_info in the array
@@ -678,7 +694,9 @@ ACE_Scheduler_Factory::log_scheduling_tuples(
    {
       file = ACE_OS::fopen (file_name, ACE_TEXT ("w"));
       if (file == nullptr)
+      {
         return;
+      }
     }
 
    static const char subset_tuple_format[] =
@@ -723,7 +741,9 @@ ACE_Scheduler_Factory::preemption_priority ()
       return preemption_priority;
     }
   else
+  {
     return static_cast<RtecScheduler::Preemption_Priority_t> (-1);
+  }
 }
 
 void
@@ -737,7 +757,9 @@ ACE_Scheduler_Factory::set_preemption_priority
       && (ace_scheduler_factory_data =
           ACE_Singleton<ACE_Scheduler_Factory_Data,
           ACE_Null_Mutex>::instance ()) == nullptr)
-        return;
+  {
+    return;
+  }
 
   ace_scheduler_factory_data->preemption_priority_->
     operator RtecScheduler::Preemption_Priority_t & () = preemption_priority;

@@ -138,7 +138,9 @@ Test_Unbounded_String::check_validity ()
       std::strlen (this->inout_) == 2*len &&
       !std::strncmp (this->in_, this->inout_, len) &&
       !std::strncmp (this->in_, &this->inout_[len], len))
+  {
     return 1;
+  }
 
   return 0; // otherwise
 }

@@ -30,7 +30,9 @@ FTP_Server_FlowEndPoint::get_callback (char const *,
 {
   ACE_DEBUG ((LM_DEBUG, "FTP_Server_FlowEndPoint::get_callback\n"));
   if (!this->callback_)
+  {
     this->callback_ = std::make_unique<FTP_Server_Callback> ();
+  }
   callback = this->callback_.get ();
   return 0;
 }
@@ -57,7 +59,9 @@ FTP_Server_Callback::receive_frame (ACE_Message_Block *frame,
                                                1,
                                                FTP_SERVER::instance ()->file ());
       if (written != 1)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "FTP_Server_Flow_Handler::fwrite failed\n"), -1);
+      }
       frame = frame->cont ();
     }
   return 0;
@@ -102,16 +106,22 @@ Server::init (int argc, ACE_TCHAR *argv[])
 
       int result = this->parse_args (argc, argv);
       if (result == -1)
+      {
         ACE_ERROR_RETURN  ((LM_ERROR,"parse args failed\n"),-1);
+      }
 
       this->fp_.reset (ACE_OS::fopen (this->options_.filename.c_str (), "w"));
       if (!this->fp_)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "Unable to open output file\n"), -1);
+      }
 
       result = this->reactive_strategy_.init (TAO_AV_CORE::instance ()->orb (),
                                               TAO_AV_CORE::instance ()->poa ());
       if (result != 0)
+      {
         return result;
+      }
 
       // Initialize the naming services
       if (my_naming_client_.init (TAO_AV_CORE::instance ()->orb ()) != 0)
@@ -233,10 +243,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   int result = FTP_SERVER::instance ()->init (argc, argv);
   if (result < 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,"FTP_SERVER::init failed\n"),1);
+  }
   result = FTP_SERVER::instance ()->run ();
   if (result < 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,"FTP_SERVER::run failed\n"),1);
+  }
 
   FTP_SERVER::close ();  // Explicitly finalize the Unmanaged_Singleton.
 

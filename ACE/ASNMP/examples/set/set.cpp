@@ -81,7 +81,9 @@ set::set (int argc, char *argv[])
    Vb vb {}; // construct a Vb object
    Oid req {};
    if (argc < 2)
+   {
      return;
+   }
    target_.get_write_community (community_);
    address_ = UdpAddress (argv[argc - 1]);
    if (!address_.valid ())
@@ -226,7 +228,9 @@ int set::run ()
 
    //--------[ build up ASNMP object needed ]-------------------------------
    if (address_.get_port () == 0)
+   {
      address_.set_port (DEF_AGENT_PORT);
+   }
    target_.set_address (address_); // make a target using the address
 
    //-------[ issue the request, blocked mode ]-----------------------------

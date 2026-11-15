@@ -41,7 +41,9 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request)
       if (std::strcmp (arg, "IDL:Test/Roundtrip:1.0") == 0
           || std::strcmp (arg, "IDL:omg.org/CORBA/Object:1.0") == 0
           || std::strcmp (arg, "") == 0)
+      {
         type_matches = 1;
+      }
 
       CORBA::Any result;
       result <<= CORBA::Any::from_boolean (type_matches);

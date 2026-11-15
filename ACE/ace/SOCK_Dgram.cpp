@@ -100,7 +100,9 @@ ACE_SOCK_Dgram::recv (iovec *io_vec,
       return rcv_len;
     }
   else
+  {
     return 0;
+  }
 #else
   ACE_UNUSED_ARG (flags);
   ACE_UNUSED_ARG (addr);
@@ -146,7 +148,9 @@ ACE_SOCK_Dgram::shared_open (const ACE_Addr &local,
           )
         {
           if (ACE::bind_port (this->get_handle (), INADDR_ANY, protocol_family) == -1)
+          {
             error = true;
+          }
         }
     }
   else if (ACE_OS::bind (this->get_handle (),
@@ -155,7 +159,9 @@ ACE_SOCK_Dgram::shared_open (const ACE_Addr &local,
     error = true;
 
   if (error)
+  {
     this->close ();
+  }
 
   return error ? -1 : 0;
 }
@@ -181,7 +187,9 @@ ACE_SOCK_Dgram::open (const ACE_Addr &local,
   else if (this->shared_open (local, protocol_family, ipv6_only) == -1)
     return -1;
   else
+  {
     return 0;
+  }
 }
 
 // Here's the general-purpose open routine.
@@ -208,7 +216,9 @@ ACE_SOCK_Dgram::open (const ACE_Addr &local,
   if (ACE_SOCK::open (SOCK_DGRAM, protocol_family, protocol, reuse_addr) == -1)
     return -1;
   else
+  {
     return this->shared_open (local, protocol_family, ipv6_only);
+  }
 }
 
 // Here's the general-purpose constructor used by a connectionless
@@ -617,12 +627,16 @@ ACE_SOCK_Dgram::set_nic (const ACE_TCHAR *net_if,
   if (this->make_multicast_ifaddr (&send_mreq,
                                    addr,
                                    net_if) == -1)
+  {
     return -1;
+  }
   if (this->ACE_SOCK::set_option (IPPROTO_IP,
                                   IP_MULTICAST_IF,
                                   &(send_mreq.imr_interface),
                                   sizeof send_mreq.imr_interface) == -1)
+  {
     return -1;
+  }
 # endif /* !ACE_HAS_IPV6 */
 #else /* IP_MULTICAST_IF */
   // Send interface option not supported - ignore it.
@@ -713,7 +727,9 @@ ACE_SOCK_Dgram::make_multicast_ifaddr (ip_mreq *ret_mreq,
           // that instead, similar to the above for windows.
           ACE_INET_Addr interface_addr;
           if (interface_addr.set (mcast_addr.get_port_number (), net_if) == -1)
+          {
             return -1;  // Still doesn't work, unknown device specified.
+          }
           lmreq.imr_interface.s_addr =
             ACE_HTONL (interface_addr.get_ip_address ());
         }
@@ -726,13 +742,17 @@ ACE_SOCK_Dgram::make_multicast_ifaddr (ip_mreq *ret_mreq,
 #endif /* ACE_WIN32 */
     }
   else
+  {
     lmreq.imr_interface.s_addr = INADDR_ANY;
+  }
 
   lmreq.IMR_MULTIADDR.s_addr = ACE_HTONL (mcast_addr.get_ip_address ());
 
   // Set return info, if requested.
   if (ret_mreq)
+  {
     *ret_mreq = lmreq;
+  }
 
   return 0;
 }

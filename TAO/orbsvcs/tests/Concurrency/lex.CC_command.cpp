@@ -610,13 +610,19 @@ ACE_CC_YY_DECL
 #endif
 
     if ( ! ace_cc_yy_start )
+    {
       ace_cc_yy_start = 1;  /* first start state */
+    }
 
     if ( ! ace_cc_yyin )
+    {
       ace_cc_yyin = stdin;
+    }
 
     if ( ! ace_cc_yyout )
+    {
       ace_cc_yyout = stdout;
+    }
 
     if ( ! ace_cc_yy_current_buffer )
       ace_cc_yy_current_buffer =
@@ -654,7 +660,9 @@ ace_cc_yy_match:
         {
         ace_cc_yy_current_state = (int) ace_cc_yy_def[ace_cc_yy_current_state];
         if ( ace_cc_yy_current_state >= 124 )
+        {
           ace_cc_yy_c = ace_cc_yy_meta[(unsigned int) ace_cc_yy_c];
+        }
         }
       ace_cc_yy_current_state = ace_cc_yy_nxt[ace_cc_yy_base[ace_cc_yy_current_state] + (unsigned int) ace_cc_yy_c];
       ++ace_cc_yy_cp;
@@ -1001,7 +1009,9 @@ static int ace_cc_yy_get_next_buffer()
         if ( new_size <= 0 )
           b->ace_cc_yy_buf_size += b->ace_cc_yy_buf_size / 8;
         else
+        {
           b->ace_cc_yy_buf_size *= 2;
+        }
 
         b->ace_cc_yy_ch_buf = (char *)
           /* Include room in for 2 EOB chars. */
@@ -1024,7 +1034,9 @@ static int ace_cc_yy_get_next_buffer()
       }
 
     if ( num_to_read > ACE_CC_YY_READ_BUF_SIZE )
+    {
       num_to_read = ACE_CC_YY_READ_BUF_SIZE;
+    }
 
     /* Read in more data. */
     ACE_CC_YY_INPUT( (&ace_cc_yy_current_buffer->ace_cc_yy_ch_buf[number_to_move]),
@@ -1050,7 +1062,9 @@ static int ace_cc_yy_get_next_buffer()
     }
 
   else
+  {
     ret_val = EOB_ACT_CONTINUE_SCAN;
+  }
 
   ace_cc_yy_n_chars += number_to_move;
   ace_cc_yy_current_buffer->ace_cc_yy_ch_buf[ace_cc_yy_n_chars] = ACE_CC_YY_END_OF_BUFFER_CHAR;
@@ -1083,7 +1097,9 @@ static ace_cc_yy_state_type ace_cc_yy_get_previous_state()
       {
       ace_cc_yy_current_state = (int) ace_cc_yy_def[ace_cc_yy_current_state];
       if ( ace_cc_yy_current_state >= 124 )
+      {
         ace_cc_yy_c = ace_cc_yy_meta[(unsigned int) ace_cc_yy_c];
+      }
       }
     ace_cc_yy_current_state = ace_cc_yy_nxt[ace_cc_yy_base[ace_cc_yy_current_state] + (unsigned int) ace_cc_yy_c];
     }
@@ -1117,7 +1133,9 @@ ace_cc_yy_state_type ace_cc_yy_current_state;
     {
     ace_cc_yy_current_state = (int) ace_cc_yy_def[ace_cc_yy_current_state];
     if ( ace_cc_yy_current_state >= 124 )
+    {
       ace_cc_yy_c = ace_cc_yy_meta[(unsigned int) ace_cc_yy_c];
+    }
     }
   ace_cc_yy_current_state = ace_cc_yy_nxt[ace_cc_yy_base[ace_cc_yy_current_state] + (unsigned int) ace_cc_yy_c];
   ace_cc_yy_is_jam = (ace_cc_yy_current_state == 123);
@@ -1251,7 +1269,9 @@ FILE *input_file;
 #endif
   {
   if ( ! ace_cc_yy_current_buffer )
+  {
     ace_cc_yy_current_buffer = ace_cc_yy_create_buffer( ace_cc_yyin, ACE_CC_YY_BUF_SIZE );
+  }
 
   ace_cc_yy_init_buffer( ace_cc_yy_current_buffer, input_file );
   ace_cc_yy_load_buffer_state();
@@ -1265,7 +1285,9 @@ ACE_CC_YY_BUFFER_STATE new_buffer;
 #endif
   {
   if ( ace_cc_yy_current_buffer == new_buffer )
+  {
     return;
+  }
 
   if ( ace_cc_yy_current_buffer )
     {
@@ -1312,7 +1334,9 @@ int size;
 
   b = (ACE_CC_YY_BUFFER_STATE) ace_cc_yy_flex_alloc( sizeof( struct ace_cc_yy_buffer_state ) );
   if ( ! b )
+  {
     ACE_CC_YY_FATAL_ERROR( "out of dynamic memory in ace_cc_yy_create_buffer()" );
+  }
 
   b->ace_cc_yy_buf_size = size;
 
@@ -1321,7 +1345,9 @@ int size;
    */
   b->ace_cc_yy_ch_buf = (char *) ace_cc_yy_flex_alloc( b->ace_cc_yy_buf_size + 2 );
   if ( ! b->ace_cc_yy_ch_buf )
+  {
     ACE_CC_YY_FATAL_ERROR( "out of dynamic memory in ace_cc_yy_create_buffer()" );
+  }
 
   b->ace_cc_yy_is_our_buffer = 1;
 
@@ -1338,13 +1364,19 @@ ACE_CC_YY_BUFFER_STATE b;
 #endif
   {
   if ( ! b )
+  {
     return;
+  }
 
   if ( b == ace_cc_yy_current_buffer )
+  {
     ace_cc_yy_current_buffer = (ACE_CC_YY_BUFFER_STATE) 0;
+  }
 
   if ( b->ace_cc_yy_is_our_buffer )
+  {
     ace_cc_yy_flex_free( (void *) b->ace_cc_yy_ch_buf );
+  }
 
   ace_cc_yy_flex_free( (void *) b );
   }
@@ -1383,7 +1415,9 @@ ACE_CC_YY_BUFFER_STATE b;
 
   {
   if ( ! b )
+  {
     return;
+  }
 
   b->ace_cc_yy_n_chars = 0;
 
@@ -1400,7 +1434,9 @@ ACE_CC_YY_BUFFER_STATE b;
   b->ace_cc_yy_buffer_status = ACE_CC_YY_BUFFER_NEW;
 
   if ( b == ace_cc_yy_current_buffer )
+  {
     ace_cc_yy_load_buffer_state();
+  }
   }
 
 #ifndef ACE_CC_YY_NO_SCAN_BUFFER
@@ -1422,7 +1458,9 @@ ace_cc_yy_size_t size;
 
   b = (ACE_CC_YY_BUFFER_STATE) ace_cc_yy_flex_alloc( sizeof( struct ace_cc_yy_buffer_state ) );
   if ( ! b )
+  {
     ACE_CC_YY_FATAL_ERROR( "out of dynamic memory in ace_cc_yy_scan_buffer()" );
+  }
 
   b->ace_cc_yy_buf_size = size - 2; /* "- 2" to take care of EOB's */
   b->ace_cc_yy_buf_pos = b->ace_cc_yy_ch_buf = base;
@@ -1474,7 +1512,9 @@ int len;
   n = len + 2;
   buf = (char *) ace_cc_yy_flex_alloc( n );
   if ( ! buf )
+  {
     ACE_CC_YY_FATAL_ERROR( "out of dynamic memory in ace_cc_yy_scan_bytes()" );
+  }
 
   for ( i = 0; i < len; ++i )
     buf[i] = bytes[i];
@@ -1483,7 +1523,9 @@ int len;
 
   b = ace_cc_yy_scan_buffer( buf, n );
   if ( ! b )
+  {
     ACE_CC_YY_FATAL_ERROR( "bad buffer in ace_cc_yy_scan_bytes()" );
+  }
 
   /* It's okay to grow etc. this buffer, and we should throw it
    * away when we're done.

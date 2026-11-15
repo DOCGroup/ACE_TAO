@@ -12,7 +12,9 @@ Smart_Diamond_Top_Factory::create_proxy (Diamond::Top_ptr proxy)
 {
   ACE_DEBUG ((LM_DEBUG, "create_smart_proxy\n"));
   if (!CORBA::is_nil (proxy))
+  {
     ACE_NEW_RETURN (proxy, Smart_Diamond_Top_Proxy (proxy), nullptr);
+  }
   return proxy;
 }
 

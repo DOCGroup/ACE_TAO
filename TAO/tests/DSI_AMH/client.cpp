@@ -52,7 +52,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var const object =
         orb->string_to_object (options.ior.c_str ());
@@ -74,7 +76,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_hrtime_t const retval = roundtrip->test_method (start);
 
           if (TAO_debug_level > 0)
+          {
             ACE_DEBUG ((LM_DEBUG, "test return value: %Q\n", retval));
+          }
         }
       ACE_DEBUG ((LM_DEBUG, "test finished\n"));
 

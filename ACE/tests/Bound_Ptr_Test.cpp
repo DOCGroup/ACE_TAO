@@ -131,7 +131,9 @@ void Child::do_something ()
   // case it is not strictly necessary since the child will only exist if the
   // parent still exists).
   if (strong_parent == nullptr)
+  {
     return;
+  }
 
   for (int i = 0; i < 5; ++i)
     strong_parent->do_something ();
@@ -300,7 +302,9 @@ Scheduler::svc ()
                   ACE_TEXT ("(%t) calling method request\n")));
       // Call it.
       if (mo->call () == -1)
+      {
         break;
+      }
 
       // Destructor automatically deletes it.
     }
@@ -467,7 +471,9 @@ run_main (int, ACE_TCHAR *[])
               ACE_TEXT ("(%t) Printer instance count is %d, expecting 0\n"),
               Printer::instance_count_));
   if (Printer::instance_count_ != 0)
+  {
     return -1;
+  }
 
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;

@@ -44,7 +44,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references ("RootPOA");
@@ -89,7 +91,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       if (options.ior.empty ())
+      {
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("The IOR must not be empty.\n")), 1);
+      }
 
       CORBA::Object_var object = orb->string_to_object (options.ior.c_str ());
 

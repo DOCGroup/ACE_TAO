@@ -36,7 +36,9 @@ SO_Group::add_executable (char const *path)
 
   proc.spawn (opts);
   if (ACE_OS::close(pipe[1]) == -1)
+  {
     ACE_DEBUG ((LM_DEBUG, "%p\n", "close"));
+  }
   opts.release_handles();
 
   size_t constexpr max_line_length = 1000;

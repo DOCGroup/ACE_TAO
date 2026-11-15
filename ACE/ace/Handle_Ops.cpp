@@ -35,7 +35,9 @@ ACE::handle_timed_open (ACE_Time_Value *timeout,
       return handle;
     }
   else
+  {
     return ACE_OS::open (name, flags, static_cast<mode_t> (perms), sa);
+  }
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

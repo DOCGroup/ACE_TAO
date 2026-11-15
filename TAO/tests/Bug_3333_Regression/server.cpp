@@ -47,7 +47,9 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - parse args\n"));
       if (parse_args (argc, argv, ior_output_file, ior_output_file2) != 0)
+      {
         return 1;
+      }
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - Obtain RootPOA\n"));
       CORBA::Object_var const poa_object =

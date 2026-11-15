@@ -54,7 +54,9 @@ Notify_Structured_Push_Consumer::_connect (
   if (blocking_timeout_ < CONSUMER_DELAY * 1000 * 1000 * 10)
     properties[0].value <<= (CORBA::Long) expected_ - 1;
   else
+  {
     properties[0].value <<= (CORBA::Long) 10;
+  }
 
   properties[1].name = CORBA::string_dup (TAO_Notify_Extensions::BlockingPolicy);
   properties[1].value <<= this->blocking_timeout_;
@@ -94,6 +96,8 @@ Notify_Structured_Push_Consumer::push_structured_event (
   // A BlockingPolicy > 1 second should allow the first event.
   // A BlockingPolicy < 1 second should discard the first event.
   if (this->count_ == 1)
+  {
     ACE_OS::sleep (CONSUMER_DELAY);
+  }
 }
 

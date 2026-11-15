@@ -65,10 +65,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       if (options.debug)
+      {
         ++TAO_debug_level;
+      }
 
       CORBA::Object_var const object =
         orb->string_to_object (options.ior);

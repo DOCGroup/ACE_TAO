@@ -27,7 +27,9 @@ public:
     MC_ADMINMANAGER * const mgr =
       ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
     if (mgr == nullptr)
+    {
       ACE_ERROR_RETURN ((LM_ERROR, "Monitor service is unavailable\n"), -1);
+    }
 
     /// Call on the administrator class to look up the desired monitors.
     ACE::Monitor_Control::Monitor_Base_Unique_Ptr const cpu_monitor (
@@ -64,14 +66,18 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
   MC_ADMINMANAGER * const mgr =
     ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
   if (mgr == nullptr)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Monitor service is unavailable\n"), 1);
+  }
   mgr->admin ().reactor (&new_reactor);
 
   /// Set the timer for CPU load check at 2 sec.
   ACE::Monitor_Control::Monitor_Base_Unique_Ptr const cpu_monitor (
     create_os_monitor<CPU_LOAD_MONITOR> (nullptr, ACE_Time_Value (2)));
   if (cpu_monitor == nullptr)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Unable to create CPU monitor\n"), 1);
+  }
 
   /// Runs the reactor's event loop in a separate thread so the timer(s)
   /// can run concurrently with the application.

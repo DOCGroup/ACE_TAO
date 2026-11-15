@@ -266,7 +266,9 @@ TAO::PG_Object_Group::add_member (PortableGroup::Location const & the_location,
     }
 
   if (CORBA::is_nil (new_reference.in ()))
+  {
     throw PortableGroup::ObjectNotAdded ();
+  }
 
   // Convert new member back to a (non group) ior.
   CORBA::Object_var member_ior =
@@ -304,7 +306,9 @@ TAO::PG_Object_Group::add_member (PortableGroup::Location const & the_location,
         }
       // Must unbind the new member and delete it.
       if (this->members_.unbind (the_location, info) == 0)
+      {
         delete info;
+      }
       throw PortableGroup::ObjectNotAdded ();
     }
 
@@ -505,7 +509,9 @@ TAO::PG_Object_Group::distribute_iogr ()
 {
   // Check if the object group is configured to distribute
   if (!this->distribute_)
+  {
     return;
+  }
 
   // assume internals is locked
   CORBA::String_var iogr =
@@ -887,7 +893,9 @@ TAO::PG_Object_Group::set_name (char const * group_name)
   if (group_name == nullptr)
     this->group_name_.reset ();
   else
+  {
     this->group_name_ = group_name;
+  }
 }
 
 char const *

@@ -147,7 +147,9 @@ TAO_Notify_Tests_Application_Command::handle_run ()
   if (act_mgr->activate_suppliers () == 0)
     ACE_DEBUG ((LM_DEBUG, "Suppliers activated...\n"));
   else
+  {
     ACE_DEBUG ((LM_DEBUG, "Suppliers activation failed!...\n"));
+  }
 }
 
 void

@@ -25,7 +25,9 @@ CC_naming_service::Init (CORBA::ORB_ptr orb)
 
   int const success = this->init_naming_service ();
   if (success < 0)
+  {
     throw CORBA::INTERNAL ();
+  }
 
   CC_naming_service::instance_ = this;
 }
@@ -33,7 +35,9 @@ CC_naming_service::Init (CORBA::ORB_ptr orb)
 CC_naming_service::~CC_naming_service ()
 {
   if (CC_naming_service::instance_ == this)
+  {
     CC_naming_service::instance_ = nullptr;
+  }
 }
 
 CC_naming_service *
@@ -75,7 +79,9 @@ CC_naming_service::get_obj_from_name (std::string const &context,
           obj = my_name_client_->resolve (ns_name);
         }
       if (CORBA::is_nil (obj.in ()))
+      {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OBJ was nil (aieee)\n")));
+      }
     }
   catch (CORBA::Exception const &ex)
     {

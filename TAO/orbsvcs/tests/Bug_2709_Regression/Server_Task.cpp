@@ -50,9 +50,13 @@ Server_Task::svc ()
         std::unique_ptr<FILE, decltype (&ACE_OS::fclose)> output_file (
           ACE_OS::fopen (this->output_.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
         if (!output_file)
+        {
           ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot open IOR output file.\n")), 1);
+        }
         if (ACE_OS::fprintf (output_file.get (), "%s", ior.in ()) < 0)
+        {
           ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot write IOR output file.\n")), 1);
+        }
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P): Server's IOR was written to file: %s.\n"),
                     this->output_.c_str ()));

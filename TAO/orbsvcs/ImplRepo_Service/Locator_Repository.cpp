@@ -83,7 +83,9 @@ Locator_Repository::report_ior (PortableServer::POA_ptr )
     {
       ACE_Reactor* reactor = this->orb_->orb_core ()->reactor ();
       if (this->setup_multicast (reactor, this->imr_ior_.in ()) != 0)
+      {
         return -1;
+      }
     }
 
   // We write the ior file last so that the tests can know we are ready.
@@ -150,7 +152,9 @@ Locator_Repository::recover_ior ()
   // Check if the file exists. If not, then return 1 indicating
   // we cannot recover our state.
   if (ACE_OS::access (combined_ior_file.c_str (), F_OK) != 0)
+  {
     return -1;
+  }
 
   try {
     ACE_TString combined_ior = ACE_TEXT ("file://") + combined_ior_file;
@@ -184,7 +188,9 @@ Locator_Repository::recover_ior ()
     {
       ACE_Reactor* reactor = this->orb_->orb_core ()->reactor ();
       if (this->setup_multicast (reactor, this->imr_ior_.in ()) != 0)
+      {
         return -1;
+      }
     }
 
   registered_ = true;
@@ -221,10 +227,14 @@ Locator_Repository::setup_multicast (ACE_Reactor* reactor, const char* ior)
           const char* port_number = ACE_OS::getenv ("ImplRepoServicePort");
 
           if (port_number != nullptr)
+          {
             port = static_cast<CORBA::UShort> (std::atoi (port_number));
+          }
         }
       if (port == 0)
+      {
         port = TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT;
+      }
 
       if (this->ior_multicast_.init (ior, port,
                                      ACE_DEFAULT_MULTICAST_ADDR, TAO_SERVICEID_IMPLREPOSERVICE) == -1)
@@ -238,7 +248,9 @@ Locator_Repository::setup_multicast (ACE_Reactor* reactor, const char* ior)
                                  ACE_Event_Handler::READ_MASK) == -1)
     {
       if (this->opts_.debug() > 0)
+      {
         ORBSVCS_DEBUG ((LM_DEBUG, "ImR: cannot register Event handler\n"));
+      }
       return -1;
     }
 #else /* ACE_HAS_IP_MULTICAST*/

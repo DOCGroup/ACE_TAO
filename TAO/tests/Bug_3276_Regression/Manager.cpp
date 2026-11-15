@@ -42,7 +42,9 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
       manager.init (argc, argv);
 
       if (parse_args (argc, argv, control_ior, proxy_ior) == -1)
+      {
         return -1;
+      }
 
       manager.activate_servant ();
 

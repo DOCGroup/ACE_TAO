@@ -60,7 +60,9 @@ Object_A_Server::init (int argc,
   this->argv_ = argv;
 
   if (this->parse_args () != 0)
+  {
     return -1;
+  }
 
   CORBA::String_var const str =
     this->orb_manager_.activate_under_child_poa ("object_A",
@@ -101,7 +103,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       int const retval = object_A_Server.init (argc, argv);
 
       if (retval == -1)
+      {
         return 1;
+      }
       return object_A_Server.run () == 0 ? 0 : 1;
     }
   catch (CORBA::SystemException const &sysex)

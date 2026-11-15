@@ -148,7 +148,9 @@ namespace TAO_Notify
         parser.parse (&input);
         ACE_ASSERT (object_stack_.size () == 1);
         if (! object_stack_.empty ())
+        {
           object_stack_.pop_back ();
+        }
       }
       catch (ACEXML_Exception const &ex)
       {

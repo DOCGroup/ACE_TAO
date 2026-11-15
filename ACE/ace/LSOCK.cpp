@@ -177,13 +177,17 @@ ACE_LSOCK::recv_handle (ACE_HANDLE &handle, char *pbuf, ssize_t *len) const
       else
         {
           if (len != nullptr)
+          {
             *len = nbytes;
+          }
           return 0;
         }
     }
 #endif /* ACE_HAS_STREAMS */
   else
+  {
     return ACE_INVALID_HANDLE;
+  }
 }
 #endif /* ACE_HAS_MSG */
 

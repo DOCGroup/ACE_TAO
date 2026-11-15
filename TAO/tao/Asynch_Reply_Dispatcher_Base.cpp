@@ -39,14 +39,18 @@ TAO_Asynch_Reply_Dispatcher_Base::~TAO_Asynch_Reply_Dispatcher_Base ()
 {
   // Release the transport that we own
   if (this->transport_ != nullptr)
+  {
     this->transport_->remove_reference ();
+  }
 }
 
 void
 TAO_Asynch_Reply_Dispatcher_Base::transport (TAO_Transport *t)
 {
   if (this->transport_ != nullptr)
+  {
     this->transport_->remove_reference ();
+  }
 
   this->transport_ = t;
 

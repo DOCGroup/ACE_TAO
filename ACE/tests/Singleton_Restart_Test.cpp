@@ -45,11 +45,15 @@ int main ()
 
   int *i1 = Singleton1::instance ();
   if (!i1)
+  {
     report_error (ACE_TEXT ("ACE_SYNCH_MUTEX"));
+  }
 
   int *i2 = Singleton2::instance ();
   if (!i2)
+  {
     report_error (ACE_TEXT ("ACE_SYNCH_RECURSIVE_MUTEX"));
+  }
 
   ACE_END_TEST;
   ACE::fini ();

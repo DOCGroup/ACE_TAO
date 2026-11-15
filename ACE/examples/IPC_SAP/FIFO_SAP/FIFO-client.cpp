@@ -16,11 +16,15 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       ssize_t n = ACE_Utils::truncate_cast<ssize_t> (ACE_OS::strlen (buf));
 
       if (client.send (buf, n) != n)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"), 1);
+      }
     }
 
   if (client.close () == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "close"), 1);
+  }
 
   return 0;
 }

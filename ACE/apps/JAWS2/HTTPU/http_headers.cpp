@@ -133,7 +133,9 @@ HTTP_Headers::value_next (int index)
       hs = this->header (index);
       data = this->table ()->find_next (hs);
       if (data != nullptr)
+      {
         hv = data->header_value ();
+      }
     }
 
   return hv;

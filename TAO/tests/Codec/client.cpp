@@ -36,7 +36,9 @@ int
 verify_data (Foo::Bar const *const original, Foo::Bar const *const extracted)
 {
   if (!original || !extracted)
+  {
     return -1;
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               "Original\n"
@@ -65,7 +67,9 @@ verify_data (Foo::Bar const *const original, Foo::Bar const *const extracted)
       || original->C != extracted->C
       || (std::strcmp (original->D, extracted->D) != 0)
       || (std::wcscmp (original->E, extracted->E) != 0))
+  {
     return -1;
+  }
 
   return 0;
 }

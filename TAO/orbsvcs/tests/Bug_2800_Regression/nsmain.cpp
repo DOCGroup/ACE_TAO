@@ -83,7 +83,9 @@ TestTask::svc ()
                              options_.ior_output_file),
                             1);
         if (std::fprintf (output_file.get (), "%s", namingServiceA_.ior ()) < 0)
+        {
           ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot write IOR to output file\n")), 1);
+        }
       }
 
       CORBA::Object_var obj = orb_->resolve_initial_references ("RootPOA");
@@ -149,14 +151,18 @@ TestTask::svc ()
                              options_.ior_shutdown_file),
                             1);
         if (std::fprintf (output_file.get (), "%s", ior.in ()) < 0)
+        {
           ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot write IOR to output file\n")), 1);
+        }
       }
 
       orb_->run ();
       orb_->destroy ();
       namingServiceA_.end ();
       if (!options_.shutdown_ns)
+      {
         namingServiceB_.end ();
+      }
       return 0;
     }
   catch (CORBA::Exception const &ex)

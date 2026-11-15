@@ -266,7 +266,9 @@ TAO_CEC_Reactive_SupplierControl::activate ()
                                                     this->rate_,
                                                     this->rate_);
         if (timer_id_ == -1)
+        {
           return -1;
+        }
       }
     }
   catch (CORBA::Exception const &)

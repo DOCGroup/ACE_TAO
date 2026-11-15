@@ -122,7 +122,9 @@ TAO_Persistent_Context_Index::open (ACE_TCHAR const *file_name,
 
   index_file_ = ACE_OS::strdup (file_name);
   if (index_file_ == nullptr)
+  {
     return -1;
+  }
 
   return create_index ();
 }
@@ -173,7 +175,9 @@ TAO_Persistent_Context_Index::recreate_all ()
   IND_DEF::ENTRY *entry {};
 
   if (TAO_debug_level > 0)
+  {
     ORBSVCS_DEBUG ((LM_DEBUG, "Starting to recreate Naming Contexts from the file...\n"));
+  }
 
   // For each entry in <index_>, create a Naming Context servant.
   do
@@ -217,7 +221,9 @@ TAO_Persistent_Context_Index::recreate_all ()
 
       // If this is the root Naming Context, take a note of it.
       if (context_impl->root ())
-          this->root_context_= result._retn ();
+      {
+        this->root_context_= result._retn ();
+      }
     } while (index_iter->advance ());
 
   return 0;

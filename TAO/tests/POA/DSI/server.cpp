@@ -78,7 +78,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Server_Options options {};
       int const result = parse_args (argc, argv, options);
       if (result != 0)
+      {
         return result;
+      }
 
       CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var root_poa = PortableServer::POA::_narrow (obj.in ());
@@ -116,7 +118,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       int const write_result = write_iors_to_file (options.ior_output_file,
                                                    database_agent_ior.in ());
       if (write_result != 0)
+      {
         return write_result;
+      }
 
       poa_manager->activate ();
       orb->run ();

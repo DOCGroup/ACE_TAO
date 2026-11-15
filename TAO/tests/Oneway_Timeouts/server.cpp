@@ -45,7 +45,9 @@ public:
     // Ignore the extra message that were used for making messages
     // queued for SYNC_DELAYED_BUFFERING test cases.
     if (id == -3)
+    {
       return;
+    }
 
     testShared (id);
   }

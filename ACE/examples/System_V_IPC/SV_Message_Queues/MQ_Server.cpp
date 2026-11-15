@@ -19,7 +19,9 @@ extern "C" void
 handler (int)
 {
   if (ace_sv_message_queue.remove () < 0)
+  {
     ACE_OS::perror ("ace_sv_message_queue.close"), ACE_OS::exit (1);
+  }
   ACE_OS::exit (0);
 }
 
@@ -42,7 +44,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       if (ace_sv_message_queue.recv (recv_msg,
                                      sizeof (Message_Data),
                                      recv_msg.type ()) == -1)
+      {
         ACE_OS::perror ("ace_sv_message_queue.recv"), ACE_OS::exit (1);
+      }
 
       cout << "a msg of length "
            << recv_msg.length ()
@@ -58,7 +62,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
       if (ace_sv_message_queue.send (send_msg,
                                      send_msg.length ()) == -1)
+      {
         ACE_OS::perror ("ace_sv_message_queue.send"), ACE_OS::exit (1);
+      }
     }
 
   ACE_NOTREACHED (return 0;)

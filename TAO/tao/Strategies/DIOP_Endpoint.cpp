@@ -100,7 +100,9 @@ TAO_DIOP_Endpoint::set (const ACE_INET_Addr &addr,
         }
     }
   else
+  {
     this->host_ = CORBA::string_dup (tmp_host);
+  }
 
   this->port_ = addr.get_port_number ();
 
@@ -122,7 +124,9 @@ TAO_DIOP_Endpoint::addr_to_string (char *buffer, size_t length)
 #endif /* ACE_HAS_IPV6 */
 
   if (length < actual_len)
+  {
     return -1;
+  }
 
 #if defined (ACE_HAS_IPV6)
   if (this->is_ipv6_decimal_)
@@ -176,7 +180,9 @@ TAO_DIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 
   TAO_DIOP_Endpoint *endpoint = dynamic_cast<TAO_DIOP_Endpoint *> (endpt);
   if (endpoint == nullptr)
+  {
     return false;
+  }
 
   return (this->port () == endpoint->port ()
           && std::strcmp (this->host (), endpoint->host ()) == 0);
@@ -186,7 +192,9 @@ CORBA::ULong
 TAO_DIOP_Endpoint::hash ()
 {
   if (this->hash_val_ != 0)
+  {
     return this->hash_val_;
+  }
 
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
@@ -195,7 +203,9 @@ TAO_DIOP_Endpoint::hash ()
                       this->hash_val_);
     // .. DCL
     if (this->hash_val_ != 0)
+    {
       return this->hash_val_;
+    }
 
     this->hash_val_ =
       ACE::hash_pjw (this->host ()) + this->port ();

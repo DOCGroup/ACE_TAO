@@ -50,7 +50,9 @@ namespace ACE
                                               once ? 1 : 0,
                                               depth);
             if (ssl_cbmngr != nullptr)
+            {
               ssl_cbmngr->initialize_callbacks (this->ssl_ctx_);
+            }
             // do this to be sure that these settings have been properly set
             // ACE_SSL_Context does not handle this quite correctly
             ::SSL_CTX_set_verify (this->ssl_ctx_->context (),
@@ -75,10 +77,14 @@ namespace ACE
         if (this->ssl_ctx_ != nullptr)
           {
             if (release)
+            {
               this->alloc_safe.reset (this->ssl_ctx_);
+            }
 
             if (ssl_cbmngr != nullptr)
+            {
               ssl_cbmngr->initialize_callbacks (this->ssl_ctx_);
+            }
           }
       }
 
@@ -98,7 +104,9 @@ namespace ACE
             if (this->ssl_ctx_->load_trusted_ca (is_dir ? nullptr : ca_location,
                                                  is_dir ? ca_location : nullptr,
                                                  false) == 0)
+            {
               return true;
+            }
           }
         else
           {

@@ -137,15 +137,21 @@ TAO_ORBInitInfo::register_initial_reference (
   this->check_validity ();
 
   if (id == nullptr || std::strlen (id) == 0)
+  {
     throw PortableInterceptor::ORBInitInfo::InvalidName ();
+  }
 
   if (CORBA::is_nil (obj))
+  {
     throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 27, CORBA::COMPLETED_NO);
+  }
 
   TAO_Object_Ref_Table &table = this->orb_core_->object_ref_table ();
 
   if (table.register_initial_reference (id, obj) == -1)
+  {
     throw PortableInterceptor::ORBInitInfo::InvalidName ();
+  }
 }
 
 CORBA::Object_ptr
@@ -154,7 +160,9 @@ TAO_ORBInitInfo::resolve_initial_references (char const *id)
   this->check_validity ();
 
   if (id == nullptr || std::strlen (id) == 0)
+  {
     throw PortableInterceptor::ORBInitInfo::InvalidName ();
+  }
 
   // The ORB is practically fully initialized by the time this point
   // is reached so just use the ORB's resolve_initial_references()

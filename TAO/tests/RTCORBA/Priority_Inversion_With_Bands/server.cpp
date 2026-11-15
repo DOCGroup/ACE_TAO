@@ -253,7 +253,9 @@ Task::svc ()
                                          rt_orb.in (),
                                          this->options_);
       if (result != 0)
+      {
         return result;
+      }
 
       result =
         create_POA_and_register_servant (threadpool_policy_2.in (),
@@ -264,7 +266,9 @@ Task::svc ()
                                          rt_orb.in (),
                                          this->options_);
       if (result != 0)
+      {
         return result;
+      }
 
       this->orb_->run ();
 
@@ -291,12 +295,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Server_Options options;
       int result = parse_args (argc, argv, options);
       if (result != 0)
+      {
         return result;
+      }
 
       // Make sure we can support multiple priorities that are required
       // for this test.
       if (!check_supported_priorities (orb.in ()))
+      {
         return 2;
+      }
 
       // Thread Manager for managing task.
       ACE_Thread_Manager thread_manager;

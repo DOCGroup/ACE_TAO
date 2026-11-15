@@ -48,10 +48,15 @@ int TPC_Logging_Acceptor::open
            int flags, int use_select, int reuse_addr) {
   if (PARENT::open (local_addr, reactor, flags,
                     use_select, reuse_addr) != 0)
+  {
     return -1;
+  }
   OpenSSL_add_ssl_algorithms ();
   ssl_ctx_ = SSL_CTX_new (SSLv23_server_method ());
-  if (ssl_ctx_ == nullptr) return -1;
+  if (ssl_ctx_ == nullptr)
+  {
+    return -1;
+  }
 
   if (SSL_CTX_use_certificate_file (ssl_ctx_,
                                     TPC_CERTIFICATE_FILENAME,
@@ -60,7 +65,9 @@ int TPC_Logging_Acceptor::open
                                       TPC_KEY_FILENAME,
                                       SSL_FILETYPE_PEM) <= 0
       || !SSL_CTX_check_private_key (ssl_ctx_))
+  {
     return -1;
+  }
   ssl_ = SSL_new (ssl_ctx_);
   return ssl_ == nullptr ? -1 : 0;
 }
@@ -74,7 +81,10 @@ int TPC_Logging_Acceptor::handle_close (ACE_HANDLE h,
 
 int TPC_Logging_Acceptor::accept_svc_handler
     (TPC_Logging_Handler *sh) {
-  if (PARENT::accept_svc_handler (sh) == -1) return -1;
+  if (PARENT::accept_svc_handler (sh) == -1)
+  {
+    return -1;
+  }
   SSL_clear (ssl_);  // Reset for new SSL connection.
 #if defined (ACE_WIN32)
   // ACE_WIN32 is the only platform where ACE_HANDLE is not an int.
@@ -89,7 +99,10 @@ int TPC_Logging_Acceptor::accept_svc_handler
      SSL_VERIFY_PEER | SSL_VERIFY_FAIL_IF_NO_PEER_CERT,
      nullptr);
   if (SSL_accept (ssl_) == -1
-      || SSL_shutdown (ssl_) == -1) return -1;
+      || SSL_shutdown (ssl_) == -1)
+  {
+    return -1;
+  }
   return 0;
 }
 

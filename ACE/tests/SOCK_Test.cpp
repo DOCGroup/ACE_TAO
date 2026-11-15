@@ -41,7 +41,9 @@ client (void *arg)
                    (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
     {
       if (errno != EWOULDBLOCK)
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("connection failed")));
+      }
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) starting timed connect\n")));
 
@@ -57,7 +59,9 @@ client (void *arg)
     }
 
   if (cli_stream.disable (ACE_NONBLOCK) == -1)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("disable")));
+  }
 
   // Test Bug 3606
   const ACE_Time_Value def_timeout (ACE_DEFAULT_TIMEOUT);
@@ -68,26 +72,36 @@ client (void *arg)
                                   false);
   // we expect the handle to be at least write_ready since it is freshly connected.
   if (result == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("ACE::handle_ready")), 0);
+  }
 
   // Send data to server (correctly handles "incomplete writes").
   for (const char *c = ACE_ALPHABET; *c != '\0'; c++)
     if (cli_stream.send_n (c, 1) == -1)
+    {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("send_n")));
+    }
 
   // Explicitly close the writer-side of the connection.
   if (cli_stream.close_writer () == -1)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("close_writer")));
+  }
 
   char buf[1];
 
   // Wait for handshake with server.
   if (cli_stream.recv_n (buf, 1) != 1)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("recv_n")));
+  }
 
   // Close the connection completely.
   if (cli_stream.close () == -1)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("close")));
+  }
 
   return nullptr;
 }
@@ -98,7 +112,9 @@ server (void *arg)
   ACE_SOCK_Acceptor *peer_acceptor = (ACE_SOCK_Acceptor *) arg;
 
   if (peer_acceptor->enable (ACE_NONBLOCK) == -1)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("enable")));
+  }
 
   // Keep these objects out here to prevent excessive constructor
   // calls...
@@ -115,7 +131,9 @@ server (void *arg)
   ACE_TEST_ASSERT (tv == def_timeout);
 
   if (result == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("handle_read_ready")), 0);
+  }
 
   // Create a new ACE_SOCK_Stream endpoint (note automatic restart
   // if errno == EINTR).
@@ -127,13 +145,17 @@ server (void *arg)
 
       // Enable non-blocking I/O.
       if (new_stream.enable (ACE_NONBLOCK) == -1)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("enable")), 0);
+      }
 
       // Read data from client (terminate on error).
       for (ssize_t r_bytes; ;)
         {
           if (ACE::handle_read_ready (new_stream.get_handle (), nullptr) == -1)
+          {
             ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("handle_read_ready")), 0);
+          }
 
           while ((r_bytes = new_stream.recv (buf, 1)) > 0)
             {
@@ -148,11 +170,15 @@ server (void *arg)
 
               // Handshake back with client.
               if (new_stream.send_n ("", 1) != 1)
+              {
                 ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("send_n")));
+              }
 
               // Close endpoint.
               if (new_stream.close () == -1)
+              {
                 ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("close")));
+              }
               return nullptr;
             }
           else if (r_bytes == -1)
@@ -160,7 +186,9 @@ server (void *arg)
               if (errno == EAGAIN || errno == EWOULDBLOCK)
                 ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) no input available, going back to reading\n")));
               else
+              {
                 ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("recv_n")), 0);
+              }
             }
         }
     }
@@ -170,7 +198,9 @@ server (void *arg)
       if (errno == EWOULDBLOCK)
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) no connections available, shutting down\n")));
       else
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("accept")));
+      }
     }
 
   return nullptr;

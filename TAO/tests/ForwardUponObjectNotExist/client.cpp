@@ -50,7 +50,9 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
   if (ACE_OS::strncmp (options.ior.c_str (),
                         corbaloc_prefix,
                         ACE_OS::strlen (corbaloc_prefix)) != 0)
+  {
     return 1;
+  }
 
   // Indicates successful parsing of the command line
   return 0;
@@ -93,7 +95,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       Worker worker (orb.in (), options);
 
@@ -129,7 +133,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       orb->destroy ();
 
       if (worker.got_object_not_exist () != options.expected_object_not_exist)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t)client: test failed.\n"), 1);
+      }
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t)client: test passed.\n"));
     }

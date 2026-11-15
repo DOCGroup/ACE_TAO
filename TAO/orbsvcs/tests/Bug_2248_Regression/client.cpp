@@ -71,13 +71,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Client_Options options {};
       if (parse_args (argc, argv, options) == -1)
+      {
         return -1;
+      }
 
       if (manager.make_merged_iors (options) != 0)
+      {
         return -1;
+      }
 
       if (manager.write_to_files (options) != 0)
+      {
         return -1;
+      }
 
       ACE_OS::sleep (options.sleep_delay);
 
@@ -121,19 +127,25 @@ Manager::make_merged_iors (Client_Options const &options)
     this->orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION, nullptr);
 
   if (CORBA::is_nil (iorm_object.in ()))
+  {
     return -1;
+  }
 
   TAO_IOP::TAO_IOR_Manipulation_var const iorm =
     TAO_IOP::TAO_IOR_Manipulation::_narrow (iorm_object.in ());
 
   if (CORBA::is_nil (iorm.in ()))
+  {
     return -1;
+  }
 
   CORBA::Object_var first {this->orb_->string_to_object (
     ACE_TEXT_ALWAYS_CHAR (options.first_ior))};
 
   if (CORBA::is_nil (first.in ()))
+  {
     return -1;
+  }
 
   TAO_IOP::TAO_IOR_Manipulation::IORList iors {};
   iors.length (1);
@@ -256,7 +268,9 @@ Manager::write_to_file (CORBA::Object_ptr ior, ACE_TCHAR const *ior_output_file)
                            ior_output_file),
                           1);
       if (std::fprintf (output_file.get (), "%s", iorref.in ()) < 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot write IOR to output file\n")), 1);
+      }
     }
 
   return 0;

@@ -55,7 +55,9 @@ Criteria_Evaluator::getCriteriaMember (char const *member_name) const
 {
   for (CORBA::ULong i {}; i < this->criteria_.length (); ++i)
     if (std::strcmp (member_name, this->criteria_[i].name) == 0)
+    {
       return std::addressof (this->criteria_[i].value);
+    }
 
   return nullptr;
 }

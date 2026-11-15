@@ -63,7 +63,9 @@ TAO249_ServerRequest_Interceptor2::receive_request (
   FT::FTRequestServiceContext ftrsc;
 
   if ((cdr >> ftrsc) == 0)
+  {
     throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
+  }
 
   TimeBase::TimeT const now = get_now ();
 

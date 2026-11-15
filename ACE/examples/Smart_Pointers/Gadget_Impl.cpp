@@ -29,7 +29,9 @@ Gadget_Part_var Gadget_Impl::remove_part ()
 {
   Gadget_Part_var removed_part;
   if (parts_.dequeue_head (removed_part) == -1)
+  {
     return Gadget_Part_var (nullptr);
+  }
   return removed_part;
 }
 

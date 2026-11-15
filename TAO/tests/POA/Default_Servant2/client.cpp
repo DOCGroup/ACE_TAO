@@ -79,7 +79,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Client_Options options;
       // Parse the command-line arguments to get the IOR
       if (parse_args (argc, argv, options) != 0)
+      {
         return -1;
+      }
 
       // Read the file, and get the IOR
       ACE_HANDLE const input_file = ACE_OS::open (options.ior_file, 0);

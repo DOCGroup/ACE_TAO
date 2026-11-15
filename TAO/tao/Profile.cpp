@@ -213,7 +213,9 @@ IOP::TaggedProfile *
 TAO_Profile::create_tagged_profile ()
 {
   if (this->tagged_profile_created_)
+  {
     return this->tagged_profile_.get ();
+  }
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
@@ -326,10 +328,14 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
       policy_value_seq[i].ptype = (*policy_list)[i]->policy_type ();
 
       if (!(out_CDR << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
+      {
         return;
+      }
 
       if (!((*policy_list)[i]->_tao_encode (out_CDR)))
+      {
         return;
+      }
 
       size_t const length = out_CDR.total_length ();
       policy_value_seq[i].pvalue.length (static_cast <CORBA::ULong>(length));
@@ -355,10 +361,14 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
   tagged_component.tag = Messaging::TAG_POLICIES;
 
   if (!(out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
+  {
     return;
+  }
 
   if (!(out_cdr << policy_value_seq))
+  {
     return;
+  }
 
   size_t const length = out_cdr.total_length ();
 
@@ -441,12 +451,16 @@ TAO_Profile::get_policies (CORBA::PolicyList &pl)
                         policy_value_seq[i].pvalue.length ());
 
                       if (!(in_cdr_policy >> ACE_InputCDR::to_boolean (byte_order)))
+                      {
                         throw ::CORBA::INV_OBJREF ();
+                      }
 
                       in_cdr_policy.reset_byte_order (static_cast <int> (byte_order));
 
                       if (!policy->_tao_decode (in_cdr_policy))
+                      {
                         throw ::CORBA::INV_OBJREF ();
+                      }
 
                       // Increase the policy length with 1 when we know we support
                       // this policy, this way we don't get nil values in the list
@@ -679,7 +693,9 @@ TAO_Endpoint *
 TAO_Profile::next_filtered_endpoint (TAO_Endpoint *source)
 {
   if (source == nullptr)
+  {
     return this->first_filtered_endpoint ();
+  }
   return source->next_filtered (this->orb_core_, this->endpoint ());
 }
 

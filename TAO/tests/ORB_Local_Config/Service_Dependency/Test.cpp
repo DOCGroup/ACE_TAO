@@ -350,7 +350,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (testServiceDependency (argc, argv) != 0
       || testOpenDynamicServices (argc, argv) != 0)
+  {
     return -1;
+  }
 
   return testORBInitializer_Registry (argc, argv);
 }

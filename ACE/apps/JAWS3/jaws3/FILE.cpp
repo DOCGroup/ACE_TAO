@@ -26,7 +26,9 @@ JAWS_FILE::mem_map (int length,
                     LPSECURITY_ATTRIBUTES sa) const
 {
   if (!this->can_map_)
+  {
     return nullptr;
+  }
 
   JAWS_FILE *mutable_this = const_cast<JAWS_FILE *> (this);
   return mutable_this->mem_map (length, prot, share, addr, offset, sa);
@@ -41,7 +43,9 @@ JAWS_FILE::mem_map (int length,
                     LPSECURITY_ATTRIBUTES sa)
 {
   if (!this->can_map_)
+  {
     return nullptr;
+  }
 
   if (this->map_ == nullptr)
     {

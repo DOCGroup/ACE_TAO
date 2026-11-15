@@ -40,10 +40,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, options) != 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Wrong arguments\n")), -1);
+      }
 
       if (!options.ior_server)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Missing server IOR\n")), -1);
+      }
 
       CORBA::Object_var const tmp = orb->string_to_object (options.ior_server->c_str ());
 
@@ -51,7 +55,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         Test::Server::_unchecked_narrow (tmp.in ());
 
       if (CORBA::is_nil (server.in ()))
+      {
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Nil reference\n")), -1);
+      }
 
       server->shutdown ();
 

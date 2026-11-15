@@ -51,7 +51,9 @@ Event_Transceiver::parse_args (int argc, ACE_TCHAR *argv[])
   // hack...
   if (this->options_.role == Role::Supplier
       && this->options_.port_number == ACE_DEFAULT_SERVER_PORT)
+  {
     ++this->options_.port_number;
+  }
   return 0;
 }
 
@@ -156,7 +158,9 @@ Event_Transceiver::handle_input (ACE_HANDLE handle)
   if (handle == ACE_STDIN)
     return this->transmitter ();
   else
+  {
     return this->receiver ();
+  }
 }
 
 int
@@ -171,7 +175,9 @@ Event_Transceiver::transmitter ()
   int result {};
 
   if (n <= 0 || this->peer ().send_n (buffer.data (), n) != n)
+  {
     result = -1;
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) leaving %s transmitter\n"),
@@ -193,7 +199,9 @@ Event_Transceiver::receiver ()
 
   if (n <= 0
       || ACE_OS::write (ACE_STDOUT, buffer.data (), n) != n)
+  {
     result = -1;
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) leaving %s receiver\n"),

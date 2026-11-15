@@ -39,7 +39,9 @@ IBM1047_ISO8859::read_string (ACE_InputCDR& in,
 {
   ACE_CDR::ULong len {};
   if (!in.read_ulong (len))
+  {
     return false;
+  }
 
   if (len > 0 && len <= in.length ())
     {
@@ -51,7 +53,9 @@ IBM1047_ISO8859::read_string (ACE_InputCDR& in,
       std::unique_ptr<ACE_CDR::Char[]> owned_buffer (buffer);
 
       if (!this->read_char_array (in, buffer, len))
+      {
         return false;
+      }
 
       x = owned_buffer.release ();
       return true;

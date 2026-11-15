@@ -28,9 +28,13 @@ namespace {
         ACE_TString const s (argv[i]);
         if (s == ACE_TEXT ("-h") || s == ACE_TEXT ("-help") || s == ACE_TEXT ("--help") ||
             s == ACE_TEXT ("-?"))
+        {
           return false;
+        }
         if (s == ACE_TEXT ("-r"))
+        {
           return true;
+        }
         if (s == ACE_TEXT ("-c") && ++i < argc)
           {
             directive = argv[i];

@@ -50,7 +50,9 @@ int agent_impl::handle_get (Pdu &pdu, UdpTarget &target)
           done = true;
         }
       else
+      {
         pdu.set_vb (vb, i);
+      }
     }
 
   // 3. lastly, return the pkt to the caller
@@ -110,7 +112,9 @@ int agent_impl::get_response (Vb &vb)
       vb.set_value (svcs);
     }
   else
+  {
     return 1; // noSuchName
+  }
 
   return 0;
 }
@@ -149,7 +153,9 @@ int agent_impl::process_requests ()
 
   // Read data from other side.
   if (reactor.register_handler (this, ACE_Event_Handler::READ_MASK) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "ACE_Reactor::register_handler"), -1);
+  }
 
   // TODO: register signal handler to shut down gracefully here
 

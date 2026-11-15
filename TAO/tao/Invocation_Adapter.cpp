@@ -374,7 +374,9 @@ namespace TAO
         stubobj = effective_target->_stubobj ();
 
         if (stubobj && stubobj->base_profiles ().size () == 0)
+        {
           nil_forward_ref = true;
+        }
       }
 
     if (nil_forward_ref)

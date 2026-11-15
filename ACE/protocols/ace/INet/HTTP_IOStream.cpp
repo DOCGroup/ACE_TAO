@@ -23,7 +23,9 @@ namespace ACE
         policy_ (std::move (policy))
       {
         if (this->policy_)
+        {
           this->policy_->set_stream_buffer (this);
+        }
       }
 
     StreamBuffer::~StreamBuffer () = default;
@@ -33,7 +35,9 @@ namespace ACE
         if (this->policy_)
           return this->policy_->read_from_stream (buffer, length);
         else
+        {
           return this->read_from_stream_i (buffer, length);
+        }
       }
 
     int StreamBuffer::read_from_stream_i (char* buffer, std::streamsize length)
@@ -47,7 +51,9 @@ namespace ACE
         if (this->policy_)
           return this->policy_->write_to_stream (buffer, length);
         else
+        {
           return this->write_to_stream_i (buffer, length);
+        }
       }
 
     int StreamBuffer::write_to_stream_i (const char* buffer, std::streamsize length)
@@ -59,7 +65,9 @@ namespace ACE
     int StreamBuffer::sync ()
       {
         if (ACE::IOS::BufferedStreamBuffer::sync () == -1)
+        {
           return -1;
+        }
         return this->stream_.sync ();
       }
 

@@ -112,7 +112,9 @@ spawn ()
             &worker,
             reinterpret_cast<void *> (static_cast<intptr_t> (iteration_count)),
             THR_BOUND) == -1)
+      {
         ACE_ERROR ((LM_ERROR, "%p\n%a", "thread create failed"));
+      }
 #else
       if (options->spawn_count () > 1)
         ACE_ERROR ((LM_ERROR,
@@ -148,7 +150,9 @@ spawn ()
 
           if (ACE_OS::execv (options->program_name ().c_str (),
                              const_cast<char *const *> (argv)) == -1)
+          {
             ACE_ERROR ((LM_ERROR, "%p\n", "exec failed"));
+          }
           ACE_OS::_exit (1);
         }
       else

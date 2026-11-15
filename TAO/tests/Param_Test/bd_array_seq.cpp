@@ -136,7 +136,9 @@ Test_Bounded_Array_Sequence::check_validity ()
       this->compare (this->in_, this->ret_.in ()))
     return 1;
   else
+  {
     return 0;
+  }
 }
 
 CORBA::Boolean

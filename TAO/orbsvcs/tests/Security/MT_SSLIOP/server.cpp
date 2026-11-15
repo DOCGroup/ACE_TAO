@@ -45,7 +45,9 @@ parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
           options.ior_table_name = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
           options.another_table_name = options.ior_table_name;
           if (!options.another_table_name.empty ())
+          {
             options.another_table_name.back () = '1';
+          }
           break;
         }
       case 'o':
@@ -53,7 +55,9 @@ parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
           options.ior_output_file = get_opts.opt_arg ();
           options.another_output_file = options.ior_output_file;
           if (!options.another_output_file.empty ())
+          {
             options.another_output_file[options.another_output_file.length () - 1] = '1';
+          }
           break;
         }
       case 'n':
@@ -97,7 +101,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         root_poa->the_POAManager ();
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       Simple_Server_i server_impl (orb.in ());
       Another_One_i another_one_impl (orb.in ());
@@ -142,7 +148,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           if (write_ior (options.ior_output_file.c_str (), ior.in ()) != 0 ||
               write_ior (options.another_output_file.c_str (), another_ior.in ()) != 0)
+          {
             return 1;
+          }
         }
 
       poa_manager->activate ();

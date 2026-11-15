@@ -72,7 +72,9 @@ RPS_Monitor::loads ()
     static_cast<CORBA::Float> (request_count / elapsed_time.msec () * 1000);
 
   if (TAO_debug_level > 0)
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%f\n"), load_list[0].value));
+  }
 
   return load_list._retn ();
 }

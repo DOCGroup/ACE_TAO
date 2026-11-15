@@ -219,7 +219,9 @@ TAO_DIOP_Profile::parse_string_i (const char *ior)
       length_host = ACE_Utils::truncate_cast<CORBA::ULong> (cp_pos - ior);
     }
   else
+  {
     length_host = ACE_Utils::truncate_cast<CORBA::ULong> (okd - ior);
+  }
 
 #if defined (ACE_HAS_IPV6)
   if (ipv6_in_host)
@@ -271,7 +273,9 @@ TAO_DIOP_Profile::parse_string_i (const char *ior)
                        CORBA::COMPLETED_NO);
         }
       else
+      {
         this->endpoint_.host_ = CORBA::string_dup (tmp_host);
+      }
     }
 
   TAO::ObjectKey ok;
@@ -290,7 +294,9 @@ TAO_DIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
 
   // Make sure we have a TAO_DIOP_Profile.
   if (op == nullptr)
+  {
     return false;
+  }
 
   // Check endpoints equivalence.
   const TAO_DIOP_Endpoint *other_endp = std::addressof (op->endpoint_);
@@ -301,7 +307,9 @@ TAO_DIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
       if (endp->is_equivalent (other_endp))
         other_endp = other_endp->next_;
       else
+      {
         return false;
+      }
     }
 
   return true;
@@ -403,7 +411,9 @@ TAO_DIOP_Profile::to_string () const
   for (endp = std::addressof (this->endpoint_); endp != nullptr; endp = endp->next_)
     {
       if (std::addressof (this->endpoint_) != endp)
-      std::strcat (buf, ",");
+      {
+        std::strcat (buf, ",");
+      }
 
 #if defined (ACE_HAS_IPV6)
       if (endp->is_ipv6_decimal_)
@@ -490,7 +500,9 @@ TAO_DIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
 
   if (this->version_.major > 1
       || this->version_.minor > 0)
+  {
     this->tagged_components ().encode (encap);
+  }
 }
 
 int
@@ -539,7 +551,9 @@ TAO_DIOP_Profile::encode_endpoints ()
   TAO_OutputCDR out_cdr;
   if ((out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)) == 0
       || (out_cdr << endpoints) == 0)
+  {
     return -1;
+  }
 
   this->set_tagged_components (out_cdr);
 
@@ -563,14 +577,18 @@ TAO_DIOP_Profile::decode_endpoints ()
       // Extract the Byte Order.
       CORBA::Boolean byte_order;
       if ((in_cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+      {
         return -1;
+      }
       in_cdr.reset_byte_order (static_cast<int> (byte_order));
 
       // Extract endpoints sequence.
       TAO::IIOPEndpointSequence endpoints;
 
       if (! (in_cdr >> endpoints))
+      {
         return -1;
+      }
 
       // Get the priority of the first endpoint (head of the list.
       // It's other data is extracted as part of the standard profile

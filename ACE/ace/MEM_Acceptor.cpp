@@ -128,7 +128,9 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
   if (this->shared_accept_finish (new_stream,
                                   in_blocking_mode,
                                   reset_new_handle) == -1)
+  {
     return -1;
+  }
 
   // Allocate 2 * MAXPATHLEN so we can accomodate the unique
   // name that gets appended later
@@ -136,7 +138,9 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
 
   ACE_INET_Addr local_addr;
   if (new_stream.get_local_addr (local_addr) == -1)
+  {
     return -1;
+  }
 
   if (this->mmap_prefix_ != nullptr)
     {
@@ -199,7 +203,9 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
 
   // Ensure minimum buffer size
   if (this->malloc_options_.minimum_bytes_ < ACE_MEM_STREAM_MIN_BUFFER)
+  {
     this->malloc_options_.minimum_bytes_ = ACE_MEM_STREAM_MIN_BUFFER;
+  }
 
   // Client will decide what signaling strategy to use.
 
@@ -207,7 +213,9 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
   if (new_stream.init (buf,
                        static_cast<ACE_MEM_IO::Signal_Strategy> (client_signaling),
                        &this->malloc_options_) == -1)
+  {
     return -1;
+  }
 
   // @@ Need to handle timeout here.
   ACE_UINT16 buf_len = static_cast<ACE_UINT16> ((ACE_OS::strlen (buf) + 1) *
@@ -216,11 +224,15 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
   // No need to worry about byte-order because both parties should always
   // be on the same machine.
   if (ACE::send (new_handle, &buf_len, sizeof (ACE_UINT16)) == -1)
+  {
     return -1;
+  }
 
   // Now send the pathname of the mmap file.
   if (ACE::send (new_handle, buf, buf_len) == -1)
+  {
     return -1;
+  }
   return 0;
 }
 
@@ -257,7 +269,9 @@ ACE_MEM_Acceptor::shared_accept_finish (const ACE_MEM_Stream &new_stream,
   ACE_UNUSED_ARG (reset_new_handle);
 #endif /* ACE_WIN32 */
   if (new_handle == ACE_INVALID_HANDLE)
+  {
     return -1;
+  }
 
   return 0;
 }

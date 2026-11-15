@@ -42,7 +42,9 @@ namespace TAO
     s = this->send_request_interception ();
 
     if (s != TAO_INVOKE_SUCCESS)
+    {
       return s;
+    }
 #endif /*TAO_HAS_INTERCEPTORS */
 
     try
@@ -103,7 +105,9 @@ namespace TAO
             this->response_expected_ == false)
           {
             if (this->reply_status_ == GIOP::LOCATION_FORWARD)
+            {
               this->invoke_status (TAO_INVOKE_RESTART);
+            }
 
             s = this->receive_other_interception ();
           }
@@ -115,14 +119,18 @@ namespace TAO
             s = this->receive_reply_interception ();
           }
         if (s != TAO_INVOKE_SUCCESS)
+        {
           return s;
+        }
 #endif /*TAO_HAS_INTERCEPTORS */
       }
     catch ( ::CORBA::UserException& ex)
       {
         // Ignore CORBA exceptions for oneways
         if (this->response_expected_ == false)
+        {
           return TAO_INVOKE_SUCCESS;
+        }
 
 #if TAO_HAS_INTERCEPTORS == 1
         PortableInterceptor::ReplyStatus const status =
@@ -151,7 +159,9 @@ namespace TAO
       {
         // Ignore CORBA exceptions for oneways
         if (this->response_expected_ == false)
+        {
           return TAO_INVOKE_SUCCESS;
+        }
 
 #if TAO_HAS_INTERCEPTORS == 1
         PortableInterceptor::ReplyStatus const status =
@@ -176,12 +186,16 @@ namespace TAO
             st == PortableInterceptor::TRANSPORT_RETRY)
           s = TAO_INVOKE_RESTART;
         else
+        {
           throw;
+        }
       }
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
     if (this->reply_status_ == GIOP::LOCATION_FORWARD)
+    {
       s =  TAO_INVOKE_RESTART;
+    }
 
     return s;
   }

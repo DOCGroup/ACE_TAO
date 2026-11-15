@@ -38,7 +38,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       int cache_size {512};
 
       if (parse_args (argc, argv, cache_size) != 0)
-          return 1;
+      {
+        return 1;
+      }
 
       CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");

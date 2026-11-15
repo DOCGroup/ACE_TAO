@@ -12,7 +12,9 @@ ACE_Hashable::hash () const
   // relative to the simple comparison.
 
   if (this->hash_value_ == 0)
+  {
     this->hash_value_ = this->hash_i ();
+  }
 
   return this->hash_value_;
 }

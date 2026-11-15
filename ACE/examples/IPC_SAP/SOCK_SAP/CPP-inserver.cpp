@@ -383,7 +383,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   u_short port = ACE_DEFAULT_SERVER_PORT;
 
   if (argc > 1)
+  {
     port = ACE_OS::atoi (argv[1]);
+  }
 
   return run_event_loop (port);
 }

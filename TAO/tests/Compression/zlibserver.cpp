@@ -175,29 +175,43 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                           1);
 
       if (!test_compressor_factories (manager.in (), 0))
+      {
         retval = 1;
+      }
 
       Compression::CompressorFactory_var const compr_fact =
         new TAO::Zlib_CompressorFactory ();
       manager->register_factory (compr_fact.in ());
 
       if (!test_duplicate_compression_factory (manager.in (), compr_fact.in ()))
+      {
         retval = 1;
+      }
 
       if (!test_compressor_factories (manager.in (), 1))
+      {
         retval = 1;
+      }
 
       if (!test_register_nil_compression_factory (manager.in ()))
+      {
         retval = 1;
+      }
 
       if (!test_compression (1024, manager.in ()))
+      {
         retval = 1;
+      }
 
       if (!test_compression (5, manager.in ()))
+      {
         retval = 1;
+      }
 
       if (!test_invalid_compression_factory (manager.in ()))
+      {
         retval = 1;
+      }
 
       orb->destroy ();
     }

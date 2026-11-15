@@ -71,7 +71,9 @@ struct Worker : ACE_Task_Base
   {
     CORBA::String_var str = CORBA::string_alloc (200 * 2000 + 1);
     if (!str.in ())
+    {
       return 1;
+    }
     str.inout ()[0] = CORBA::Char ('\0');
     for (int i {}; i < 2000; ++i)
       {
@@ -84,7 +86,9 @@ struct Worker : ACE_Task_Base
           {
             CORBA::String_var const ret = this->server_->test_method (str.in ());
             if (std::strcmp (str.in (), ret.in ()) != 0)
+            {
               return 1;
+            }
           }
         catch (CORBA::Exception const &ex)
           {
@@ -109,7 +113,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, ior, nthreads, do_shutdown) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var const object = orb->string_to_object (ior);
 
@@ -131,7 +137,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           Worker worker (server.in ());
           if (worker.activate (THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED,
                                nthreads) != 0)
+          {
             ACE_ERROR_RETURN ((LM_ERROR, "Cannot activate client threads\n"), 1);
+          }
           worker.thr_mgr ()->wait ();
         }
     }

@@ -46,7 +46,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       int port_number {27530};
 
       if (parse_args (argc, argv, cache_size, port_number) != 0)
-          return 1;
+      {
+        return 1;
+      }
 
       // Get the RTORB.
       CORBA::Object_var const obj = orb->resolve_initial_references ("RTORB");
@@ -103,7 +105,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
       //shutdown the server
       if (!hello_array.empty ())
+      {
         hello_array.front ()->shutdown ();
+      }
 
       orb->destroy ();
     }

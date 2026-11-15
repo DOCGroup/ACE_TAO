@@ -83,7 +83,9 @@ RtEC_Based_CosEC::startup (int argc, ACE_TCHAR *argv[])
   this->init_ORB (argc, argv);
 
   if (this->parse_args (argc, argv) == -1)
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   this->resolve_naming_service ();
 
@@ -124,7 +126,9 @@ RtEC_Based_CosEC::create_rtec ()
 {
   // see if the user wants a local RtEC..
   if (this->remote_rtec_)
+  {
     return nullptr;
+  }
 
   return CosEC_ServantBase::create_rtec ();
 }
@@ -182,7 +186,9 @@ RtEC_Based_CosEC::resolve_naming_service ()
 
   // Need to check return value for errors.
   if (CORBA::is_nil (naming_obj.in ()))
+  {
     throw CORBA::UNKNOWN ();
+  }
 
   this->naming_ =
     CosNaming::NamingContext::_narrow (naming_obj.in ());
@@ -220,7 +226,9 @@ RtEC_Based_CosEC::shutdown ()
 
   // shutdown the ORB.
   if (!CORBA::is_nil (this->orb_.in ()))
+  {
     this->orb_->shutdown ();
+  }
 }
 
 int

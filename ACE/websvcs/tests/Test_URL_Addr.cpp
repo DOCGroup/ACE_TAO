@@ -65,7 +65,9 @@ bool test_ftp_set_components ()
       || ACE_OS::strcmp (addr.get_user (), user) != 0
       || ACE_OS::strcmp (addr.get_passwd (), password) != 0
       || addr.addr_to_string (buffer, BUFSIZ, 1) != 0)
+  {
     return false;
+  }
 
   ACE_TCHAR const expected[] =
     ACE_TEXT ("ftp://a-long-user-name-that-is-longer-than-the-path:secret@ftp.example.org/x");

@@ -45,7 +45,9 @@ TAO_Optimized_Connection_Endpoint_Selector::hook (TAO_ORB_Core *,
     TAO_Optimized_Connection_Endpoint_Selector::
     timeout_ > ACE_Time_Value::zero;
   if (has_timeout)
+  {
     tv = TAO_Optimized_Connection_Endpoint_Selector::timeout_;
+  }
 }
 
 int
@@ -61,7 +63,9 @@ TAO_Optimized_Connection_Endpoint_Selector::check_profile (TAO_Profile *p,
     {
       TAO_Base_Transport_Property desc (effective_endpoint);
       if (r->find_transport (std::addressof (desc)))
+      {
         return 1;
+      }
       // Go to the next endpoint in this profile
       effective_endpoint = effective_endpoint->next();
     }
@@ -80,7 +84,9 @@ TAO_Optimized_Connection_Endpoint_Selector::select_endpoint
   // if that is available then go for it.
 
   if (this->check_profile (p, r) != 0)
+  {
     return;
+  }
 
   // next, look for any other profiles. If the stub has any forward profiles,
   // use those, otherwise look at the base profiles. This separation is
@@ -101,7 +107,9 @@ TAO_Optimized_Connection_Endpoint_Selector::select_endpoint
                   stub->reset_profiles();
                   while (stub->profile_in_use() != p)
                     if (stub->next_profile_retry() == 0)
+                    {
                       break;
+                    }
                 }
               return;
             }
@@ -113,7 +121,9 @@ TAO_Optimized_Connection_Endpoint_Selector::select_endpoint
         {
           p = stub->profile_in_use();
           if (this->check_profile(p, r) != 0)
+          {
             return;
+          }
         }
       while (stub->next_profile_retry () != 0);
     }
@@ -143,7 +153,9 @@ TAO_Optimized_Connection_Endpoint_Selector::select_endpoint
 
               // Check if the connect has completed.
               if (retval)
+              {
                 return;
+              }
 
               // Go to the next endpoint in this profile.
               ep = ep->next ();

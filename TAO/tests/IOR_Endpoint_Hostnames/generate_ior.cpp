@@ -53,10 +53,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::POA_var const rp =
         PortableServer::POA::_narrow (poa_object.in ());
       if (CORBA::is_nil (rp.in ()))
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) panic: nil root poa\n"), 1);
+      }
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       bogus *bogus_impl {};
       ACE_NEW_RETURN (bogus_impl, bogus (), 1);

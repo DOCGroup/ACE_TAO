@@ -56,7 +56,9 @@ TAO_LB_RoundRobin::get_loads (CosLoadBalancing::LoadManager_ptr load_manager,
                               PortableGroup::Location const & the_location)
 {
   if (CORBA::is_nil (load_manager))
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   return load_manager->get_loads (the_location);
 }
@@ -67,7 +69,9 @@ TAO_LB_RoundRobin::next_member (
     CosLoadBalancing::LoadManager_ptr load_manager)
 {
   if (CORBA::is_nil (load_manager))
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   PortableGroup::ObjectGroupId const id =
     load_manager->get_object_group_id (object_group);
@@ -88,7 +92,9 @@ TAO_LB_RoundRobin::next_member (
   CORBA::ULong const len = locations->length ();
 
   if (len == 0)
+  {
     throw CORBA::TRANSIENT ();
+  }
 
   TAO_LB_Location_Index_Map::ENTRY * entry;
   if (this->location_index_map_.find (id, entry) == 0)
@@ -127,10 +133,14 @@ TAO_LB_RoundRobin::next_member (
       }
 
       if (!found)
+      {
         i = 0;
+      }
 
       if (len <= i)
+      {
         i = 0;  // Reset, i.e. wrap around
+      }
 
       // No need to release the lock since the LoadManager is
       // collocated.
@@ -156,7 +166,9 @@ TAO_LB_RoundRobin::next_member (
 
   CORBA::ULong const index {};
   if (this->location_index_map_.bind (id, index + 1) != 0)
+  {
     throw CORBA::INTERNAL ();
+  }
 
   this->copy_locations (locations);
   return load_manager->get_member_ref (object_group,

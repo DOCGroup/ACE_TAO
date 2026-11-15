@@ -96,7 +96,9 @@ prof_ace_process (size_t iteration)
       iteration *= multiply_factor;
 
       if (!do_exec_after_fork)
+      {
         popt.creation_flags (ACE_Process_Options::NO_EXEC);
+      }
 
       ACE_Profile_Timer ptimer;
       ACE_Profile_Timer::ACE_Elapsed_Time et;
@@ -124,7 +126,9 @@ prof_ace_process (size_t iteration)
       return time / iteration;
     }
   else
+  {
     return -1.0;
+  }
 }
 
 static double
@@ -161,7 +165,9 @@ prof_fork (size_t iteration)
       return time / iteration;
     }
   else
+  {
     return -1.0;
+  }
 #else
   ACE_UNUSED_ARG (iteration);
   ACE_ERROR_RETURN ((LM_ERROR, "fork () is not supported on this platform."), -1);
@@ -230,7 +236,9 @@ prof_ace_os_thread (size_t iteration)
                                     nullptr,
                                     THR_SUSPENDED,
                                     nullptr) == -1)
+            {
               ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "CreateThread"), -1);
+            }
 
           ptimer.stop ();
           ptimer.elapsed_time (et);
@@ -240,7 +248,9 @@ prof_ace_os_thread (size_t iteration)
       return time / iteration;
     }
   else
+  {
     return -1.0;
+  }
 #else
   ACE_UNUSED_ARG (iteration);
   ACE_ERROR_RETURN ((LM_ERROR, "Threads are not supported on this platform.\n"), -1);
@@ -266,7 +276,9 @@ prof_tm_thread (size_t iteration)
                                                         ace_empty,
                                                         nullptr,
                                                         THR_SUSPENDED) == -1)
+          {
             ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "CreateThread"), -1);
+          }
 
           ptimer.stop ();
           ptimer.elapsed_time (et);
@@ -276,7 +288,9 @@ prof_tm_thread (size_t iteration)
       return time / iteration;
     }
   else
+  {
     return -1.0;
+  }
 #else
   ACE_UNUSED_ARG (iteration);
   ACE_ERROR_RETURN ((LM_ERROR, "Threads are not supported on this platform."), -1);
@@ -313,7 +327,9 @@ prof_mutex_base (size_t iteration)
       return time / iteration;
     }
   else
+  {
     return -1.0;
+  }
 #else
   ACE_UNUSED_ARG (iteration);
   ACE_ERROR_RETURN ((LM_ERROR, "Threads are not supported on this platform."), -1);
@@ -337,7 +353,9 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
           {
             int const value = ACE_OS::atoi (get_opt.opt_arg ());
             if (value <= 0)
+            {
               ACE_ERROR_RETURN ((LM_ERROR, "The iteration count must be positive.\n"), 1);
+            }
             iteration = static_cast<size_t> (value);
           }
           break;
@@ -345,7 +363,9 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
           {
             int const value = ACE_OS::atoi (get_opt.opt_arg ());
             if (value <= 0)
+            {
               ACE_ERROR_RETURN ((LM_ERROR, "The multiply factor must be positive.\n"), 1);
+            }
             multiply_factor = static_cast<size_t> (value);
           }
           break;

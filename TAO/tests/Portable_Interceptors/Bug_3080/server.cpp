@@ -59,7 +59,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Options options {};
       if (::parse_args (argc, argv, options) != 0)
+      {
         return -1;
+      }
 
       test_i *test_impl {};
       ACE_NEW_RETURN (test_impl, test_i (1, orb.in ()), 1);

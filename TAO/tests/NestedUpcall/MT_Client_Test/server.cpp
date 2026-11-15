@@ -98,13 +98,17 @@ MT_Object_Server::init (int argc, ACE_TCHAR** argv)
   // Call the init of TAO_ORB_Manager to create a child POA
   // under the root POA.
   if (this->orb_manager_.init_child_poa (argc, argv, "child_poa") == -1)
+  {
     return -1;
+  }
 
   this->argc_ = argc;
   this->argv_ = argv;
 
   if (this->parse_args () == -1)
+  {
     return -1;
+  }
 
   CORBA::String_var str;
   str = this->orb_manager_.activate_under_child_poa ("MT_Object",
@@ -146,7 +150,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       int const init_result = mt_object_server.init (argc, argv);
 
       if (init_result == -1)
+      {
         return init_result;
+      }
       return mt_object_server.run ();
     }
   catch (CORBA::SystemException const &sysex)

@@ -416,7 +416,9 @@ run_main (int, ACE_TCHAR *[])
   wrapper_mb->release ();
   wrapper_mb = nullptr;
   if (!user_data_dtor_called)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("User-defined data block not freed correctly.\n")));
+  }
 
 #if defined (ACE_HAS_THREADS)
   int n_threads = ACE_MAX_THREADS;

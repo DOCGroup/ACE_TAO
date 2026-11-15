@@ -71,7 +71,9 @@ namespace XML
   bool XStr::append (XMLCh const *tail)
   {
     if (tail == nullptr)
+    {
       return false;
+    }
 
     XMLSize_t const iTailLen (xercesc::XMLString::stringLen (tail));
     XMLSize_t const iWorkLen (
@@ -83,11 +85,15 @@ namespace XML
     };
 
     if (!result)
+    {
       return false;
+    }
 
     XMLCh *target = result.get ();
     if (iWorkLen != 0)
+    {
       xercesc::XMLString::moveChars (target, _wstr.get (), iWorkLen);
+    }
     target += iWorkLen;
     xercesc::XMLString::moveChars (target, tail, iTailLen);
     target += iTailLen;
@@ -100,7 +106,9 @@ namespace XML
   {
     bool const bOK = head <= tail && head >= begin () && tail <= end ();
     if (!bOK)
+    {
       return false;
+    }
 
     XMLSize_t const bytes ((size () - (tail - head) + 1) * sizeof (XMLCh));
     detail::Xerces_String result {
@@ -108,7 +116,9 @@ namespace XML
     };
 
     if (!result)
+    {
       return false;
+    }
 
     XMLCh *target = result.get ();
     XMLCh const *cursor = begin ();
@@ -127,7 +137,9 @@ namespace XML
   XMLSize_t XStr::size () const
   {
     if (_wstr == nullptr)
+    {
       return XMLSize_t{};
+    }
 
     return xercesc::XMLString::stringLen (_wstr.get ());
   }

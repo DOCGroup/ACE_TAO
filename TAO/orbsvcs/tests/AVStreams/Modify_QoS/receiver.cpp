@@ -147,7 +147,9 @@ Receiver::init (int,
     this->reactive_strategy_.init (TAO_AV_CORE::instance ()->orb (),
                                    TAO_AV_CORE::instance ()->poa ());
   if (result != 0)
+  {
     return result;
+  }
 
   // Register the receiver mmdevice object with the ORB
   ACE_NEW_RETURN (this->mmdevice_,
@@ -239,7 +241,9 @@ ACE_TMAIN (int argc,
                     argv);
 
       if (result == -1)
+      {
         return -1;
+      }
 
       // Make sure we have a valid <output_file>
       output_file.reset (ACE_OS::fopen (output_file_name,
@@ -260,7 +264,9 @@ ACE_TMAIN (int argc,
                        argv);
 
       if (result != 0)
+      {
         return result;
+      }
 
       orb->run ();
 

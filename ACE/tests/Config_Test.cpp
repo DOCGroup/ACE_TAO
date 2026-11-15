@@ -75,7 +75,9 @@ test (ACE_Configuration *config,
                                 ACE_TEXT ("binvalue"),
                                 data,
                                 data_len))
+  {
     return -5;
+  }
 
   // Get the values and compare
   if (config->get_string_value (testsection,
@@ -104,7 +106,9 @@ test (ACE_Configuration *config,
                                   ACE_TEXT ("binvalue"),
                                   data_tmp,
                                   length))
+    {
       return -10;
+    }
 
     data_out = reinterpret_cast <u_char *> (data_tmp);
   }
@@ -114,7 +118,9 @@ test (ACE_Configuration *config,
   // compare em
   for (size_t j = 0; j < data_len; ++j)
     if (the_data[j] != data[j])
+    {
       return -11;
+    }
 
   delete [] the_data;
 
@@ -132,25 +138,37 @@ test (ACE_Configuration *config,
       if (name == ACE_TEXT ("stvalue"))
         {
           if (type != ACE_Configuration::STRING)
+          {
             return -12;
+          }
           if (found[0] != 0)
+          {
             return -12;
+          }
           found[0] = 1;
         }
       else if (name == ACE_TEXT ("intvalue"))
         {
           if (type != ACE_Configuration::INTEGER)
+          {
             return -13;
+          }
           if (found[1] != 0)
+          {
             return -13;
+          }
           found[1] = 1;
         }
       else if (name == ACE_TEXT ("binvalue"))
         {
           if (type != ACE_Configuration::BINARY)
+          {
             return -14;
+          }
           if (found[2] != 0)
+          {
             return -14;
+          }
           found[2] = 1;
         }
       ++index;
@@ -158,7 +176,9 @@ test (ACE_Configuration *config,
 
   // Make sure we got three values.
   if (index != 3 || !found[0] || !found[1] || !found[2])
+  {
     return -15;
+  }
 
   {
     // Add some subsections. This part is a separate scope to be sure
@@ -220,7 +240,9 @@ test (ACE_Configuration *config,
     }
 
   if (index != 3 || !found[0] || !found[1] || !found[2])
+  {
     return -19;
+  }
 
   // Remove a subsection
   if (config->remove_section (testsection,
@@ -235,7 +257,9 @@ test (ACE_Configuration *config,
   if (!config->remove_section (testsection,
                                ACE_TEXT ("test2"),
                                false))
+  {
     return -21;
+  }
 
   return 0;
 }
@@ -254,11 +278,15 @@ test (ACE_Configuration *config)
                               ACE_TEXT ("test"),
                               true,
                               testsection))
+    {
       return -2;
+    }
 
     int const ret_val = test (config, testsection);
     if (ret_val)
+    {
       return ret_val;
+    }
   }
 
   // Try to remove the testsection root, it should fail since it still
@@ -266,7 +294,9 @@ test (ACE_Configuration *config)
   if (!config->remove_section (root,
                                ACE_TEXT ("test"),
                                false))
+  {
     return -22;
+  }
 
   {
     // Test find section, and be sure the key is closed before testing the
@@ -277,14 +307,18 @@ test (ACE_Configuration *config)
                               ACE_TEXT ("test"),
                               false,
                               result))
+    {
       return -23;
+    }
   }
 
   // Now test the recursive remove.
   if (config->remove_section (root,
                               ACE_TEXT ("test"),
                               true))
+  {
     return -24;
+  }
 
   // Make sure its not there
   ACE_Configuration_Section_Key testsectiongone;
@@ -292,7 +326,9 @@ test (ACE_Configuration *config)
                              ACE_TEXT ("test"),
                              false,
                              testsectiongone))
+  {
     return -25;
+  }
 
   return 0;
 }
@@ -312,18 +348,24 @@ test_subkey_path (ACE_Configuration* config)
 
   int const ret_val = test (config, testsection);
   if (ret_val)
+  {
     return ret_val;
+  }
 
   if (config->open_section (root,
                             ACE_TEXT ("Software"),
                             false,
                             testsection))
+  {
     return -27;
+  }
 
   if (config->remove_section (testsection,
                               ACE_TEXT ("ACETEST"),
                               true))
+  {
     return -28;
+  }
 
   return 0;
 }
@@ -662,7 +704,9 @@ build_config_object (ACE_Configuration& cfg)
                         ACE_TEXT ("network"),
                         true,
                         NetworkSection))
+  {
     return -1;
+  }
 
   if (cfg.set_integer_value (NetworkSection,
                              ACE_TEXT ("TimeToLive"),
@@ -689,7 +733,9 @@ build_config_object (ACE_Configuration& cfg)
                         ACE_TEXT ("logger"),
                         true,
                         LoggerSection))
+  {
     return -7;
+  }
 
   if (cfg.set_string_value (LoggerSection,
                             ACE_TEXT ("Heading"),
@@ -720,7 +766,9 @@ build_config_object (ACE_Configuration& cfg)
                         ACE_TEXT ("binary"),
                         true,
                         BinarySection))
+  {
     return -14;
+  }
 
   u_char data[80];
 
@@ -731,7 +779,9 @@ build_config_object (ACE_Configuration& cfg)
                             ACE_TEXT ("data"),
                             data,
                             80))
+  {
     return -15;
+  }
 
   ACE_TString string((ACE_TCHAR*) nullptr);// = '0';
   // Try to set the unnamed, default value.
@@ -829,7 +879,9 @@ Config_Test::testEquality ()
                        ACE_TEXT ("when lhs contains data not in rhs\n")),
                       -1);
   else
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("And they do not ;-)\n")));
+  }
 
   //
   // add same section to heap2
@@ -864,7 +916,9 @@ Config_Test::testEquality ()
                        ACE_TEXT ("when rhs contains value not in lhs\n")),
                       -1);
   else
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("And they do not ;-)\n")));
+  }
 
   // add new value in heap 1
   if (heap1.set_integer_value (NewSection,
@@ -909,7 +963,9 @@ Config_Test::testEquality ()
                        ACE_TEXT ("when rhs contains data not in lhs\n")),
                       -1);
   else
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("And they do not :-)\n")));
+  }
 
   // add section back to heap1
   ACE_Configuration_Section_Key AnotherNewSection1;
@@ -1055,7 +1111,9 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
                               while (binary_length)
                                 {
                                   if (ptr != binary_data)
+                                  {
                                     originalString += ACE_TEXT (",");
+                                  }
 
                                   ACE_OS::snprintf (bin_value, 3,
                                                     ACE_TEXT ("%02x"),
@@ -1142,12 +1200,16 @@ int Config_Test::change_one (ACE_Configuration &cfg, u_int a)
                         ACE_TEXT ("network"),
                         true,
                         NetworkSection))
+  {
     return -1;
+  }
 
   if (cfg.set_integer_value (NetworkSection,
                              ACE_TEXT ("TimeToLive"),
                              a))
+  {
     return -2;
+  }
 
   return 0;
 }
@@ -1328,7 +1390,9 @@ Config_Test::testIniFormat ()
     }// end of "logger" section
 
   if (!rc)
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("INI Format Import/Export Works ;-)\n")));
+  }
   return rc;
 }
 
@@ -1522,7 +1586,9 @@ Config_Test::get_section_boolean (ACE_Configuration&             config,
            pSrc++)
         // Convert to uppercase
         if (ACE_OS::ace_islower (*pSrc))
+        {
           *pSrc = ACE_OS::ace_tolower (*pSrc);
+        }
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("%s = %s\n"),
@@ -1546,16 +1612,24 @@ run_main (int, ACE_TCHAR *[])
   Config_Test manager;
 
   if ((errors += manager.testEquality ()) != 0)
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Failed the equality Test\n")));
+  }
 
   if ((errors += manager.testRegFormat ()) != 0)
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Failed the REG Format Test\n")));
+  }
 
   if ((errors += manager.testIniFormat ()) != 0)
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Failed the INI Format Test\n")));
+  }
 
   if ((errors += run_tests ()) != 0)
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Failed in run_tests\n")));
+  }
 
   ACE_END_TEST;
   return errors == 0 ? 0 : 1;

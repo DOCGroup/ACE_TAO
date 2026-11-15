@@ -56,10 +56,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       if (options.client_count <= 0 || options.iterations <= 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Client count and iterations must be positive.\n")), 1);
+      }
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references ("RootPOA");

@@ -150,11 +150,15 @@ Logging_Handler::open ()
   ACE_INET_Addr addr;
 
   if (this->cli_stream_.get_remote_addr (addr) == -1)
+  {
     return -1;
+  }
 
   char const *const host_name = addr.get_host_name ();
   if (host_name == nullptr)
+  {
     return -1;
+  }
   this->host_name_ = host_name;
 
   if (REACTOR::instance ()->schedule_timer

@@ -18,7 +18,9 @@ TAO::CSD::TP_Strategy_Factory::init (int argc,
 
   // Only allow initialization once.
   if (initialized)
+  {
     return 0;
+  }
 
   initialized = true;
   TAO_CSD_Strategy_Repository *repo =

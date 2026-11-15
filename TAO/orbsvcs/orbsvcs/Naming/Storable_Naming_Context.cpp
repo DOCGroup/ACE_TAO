@@ -48,7 +48,9 @@ TAO_Storable_IntId::operator= (TAO_Storable_IntId const &rhs)
 {
   // check for self assignment.
   if (std::addressof (rhs) == this)
+  {
     return;
+  }
 
   type_ = rhs.type_;
   ref_ = rhs.ref_;
@@ -79,7 +81,9 @@ TAO_Storable_ExtId::operator= (TAO_Storable_ExtId const &rhs)
 {
   // Check for self assignment.
   if (std::addressof (rhs) == this)
+  {
     return;
+  }
 
   id_ = rhs.id_;
   kind_ = rhs.kind_;
@@ -237,7 +241,9 @@ TAO_Storable_Bindings_Map::shared_bind (char const *id,
         return -2;
 
       else
+      {
         return this->map_.rebind (new_name, new_entry);
+      }
     }
 }
 
@@ -446,7 +452,9 @@ TAO_Storable_Naming_Context::verify_not_destroyed ()
 {
   File_Open_Lock_and_Check flck (this, SFG::ACCESSOR, false);
   if (this->destroyed_)
+  {
     throw CORBA::OBJECT_NOT_EXIST ();
+  }
 }
 
 bool
@@ -456,7 +464,9 @@ TAO_Storable_Naming_Context::nested_context (CosNaming::Name const &n,
   CORBA::ULong name_len = n.length ();
 
   if (name_len == 0)
+  {
     throw CosNaming::NamingContext::InvalidName();
+  }
 
   if (name_len > 1)
     {
@@ -489,7 +499,9 @@ TAO_Storable_Naming_Context::make_new_context (
                                              pers_factory);
 
   if (context_impl == nullptr)
+  {
     throw CORBA::NO_MEMORY ();
+  }
 
   // Put <context_impl> into the unique pointer temporarily, in case next
   // allocation fails.
@@ -547,7 +559,9 @@ TAO_Storable_Naming_Context::new_context ()
 
     File_Open_Lock_and_Check flck (this, SFG::MUTATOR);
     if (this->destroyed_)
+    {
       throw CORBA::OBJECT_NOT_EXIST ();
+    }
 
     TAO_NS_Persistence_Global global;
     TAO_Storable_Naming_Context_ReaderWriter rw (*gfl_.get ());
@@ -582,7 +596,9 @@ TAO_Storable_Naming_Context::new_context ()
       {
         // and release our lock
         if (gfl_->funlock(0, 0, 0) != 0)
+        {
           throw CORBA::INTERNAL();
+        }
         gfl_->close();
       }
   }
@@ -629,7 +645,9 @@ TAO_Storable_Naming_Context::rebind (CosNaming::Name const &n,
                                 CORBA::INTERNAL ());
       File_Open_Lock_and_Check flck (this, SFG::MUTATOR);
       if (this->destroyed_)
+      {
         throw CORBA::OBJECT_NOT_EXIST ();
+      }
 
       int result = this->context_->rebind (n[0].id,
                                            n[0].kind,
@@ -655,7 +673,9 @@ TAO_Storable_Naming_Context::bind_context (CosNaming::Name const &n,
   ACE_TRACE("TAO_Storable_Naming_Context::bind_context");
 
   if (CORBA::is_nil (nc))
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   CosNaming::NamingContext_var context;
   if (this->nested_context (n, context.out ()))
@@ -672,7 +692,9 @@ TAO_Storable_Naming_Context::bind_context (CosNaming::Name const &n,
                                 CORBA::INTERNAL ());
       File_Open_Lock_and_Check flck (this, SFG::MUTATOR);
       if (this->destroyed_)
+      {
         throw CORBA::OBJECT_NOT_EXIST ();
+      }
 
       int result = this->context_->bind (n[0].id,
                                          n[0].kind,
@@ -695,7 +717,9 @@ TAO_Storable_Naming_Context::rebind_context (CosNaming::Name const &n,
 {
   ACE_TRACE("TAO_Storable_Naming_Context::rebind_context");
   if (CORBA::is_nil (nc))
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   CosNaming::NamingContext_var context;
   if (this->nested_context (n, context.out ()))
@@ -713,7 +737,9 @@ TAO_Storable_Naming_Context::rebind_context (CosNaming::Name const &n,
 
       File_Open_Lock_and_Check flck (this, SFG::MUTATOR);
       if (this->destroyed_)
+      {
         throw CORBA::OBJECT_NOT_EXIST ();
+      }
 
       int result = this->context_->rebind (n[0].id,
                                            n[0].kind,
@@ -784,7 +810,9 @@ TAO_Storable_Naming_Context::unbind (CosNaming::Name const &n)
 
       File_Open_Lock_and_Check flck (this, SFG::MUTATOR);
       if (this->destroyed_)
+      {
         throw CORBA::OBJECT_NOT_EXIST ();
+      }
 
       if (this->context_->unbind (n[0].id,
                                   n[0].kind) == -1)
@@ -816,7 +844,9 @@ TAO_Storable_Naming_Context::bind (CosNaming::Name const &n,
                                 CORBA::INTERNAL ());
       File_Open_Lock_and_Check flck(this, SFG::MUTATOR);
       if (this->destroyed_)
+      {
         throw CORBA::OBJECT_NOT_EXIST ();
+      }
 
       int result = this->context_->bind (n[0].id,
                                          n[0].kind,
@@ -841,10 +871,14 @@ TAO_Storable_Naming_Context::destroy ()
                             CORBA::INTERNAL ());
   File_Open_Lock_and_Check flck(this, SFG::MUTATOR);
   if (this->destroyed_)
+  {
     throw CORBA::OBJECT_NOT_EXIST ();
+  }
 
   if (this->context_->current_size () != 0)
+  {
     throw CosNaming::NamingContext::NotEmpty ();
+  }
 
   if (!root ())
     {
@@ -868,7 +902,9 @@ TAO_Storable_Naming_Context::resolve (CosNaming::Name const &n)
 
   CORBA::ULong name_len = n.length ();
   if (name_len == 0)
+  {
     throw CosNaming::NamingContext::InvalidName();
+  }
 
   CosNaming::BindingType type;
   CORBA::Object_var result;
@@ -971,7 +1007,9 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
   if (this->context_->current_size () > how_many)
     n = how_many;
   else
+  {
     n = static_cast<CORBA::ULong> (this->context_->current_size ());
+  }
 
   // Use the hash map iterator to populate <bl> with bindings.
   bl->length (n);
@@ -984,7 +1022,9 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
       hash_iter->advance ();
 
       if (ITER_SERVANT::populate_binding (hash_entry, bl[i]) == 0)
-          throw CORBA::NO_MEMORY();
+      {
+        throw CORBA::NO_MEMORY();
+      }
     }
 
   // Now we are done with the BindingsList, and we can follow up on

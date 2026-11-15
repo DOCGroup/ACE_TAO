@@ -88,7 +88,9 @@ TAO_MCAST_Parser::multicast_to_service (const char *service_name,
       // If the IOR didn't fit into <buf>, memory for it was dynamically
       // allocated - make sure it gets deallocated.
       if (ior != buf)
+      {
         cleaner = ior;
+      }
 
       // Convert IOR to an object reference.
       return_value =
@@ -194,7 +196,9 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
                 IP_MULTICAST_TTL,
                 std::addressof (mcast_ttl_optval),
                 sizeof (mcast_ttl_optval)) != 0)
+          {
             result = -1;
+          }
 
           // Convert the acceptor port into network byte order.
           ACE_UINT16 response_port =
@@ -448,7 +452,9 @@ TAO_MCAST_Parser::assign_to_variables (char const * mcast_name)
         std::atoi (mcast_name_cstring.substring (0, pos_colon2).c_str ());
 
       if (the_port >= 0 && the_port <= ACE_MAX_DEFAULT_PORT)
+      {
         this->mcast_port_ = static_cast<unsigned short> (the_port);
+      }
     }
 
   mcast_name_cstring =

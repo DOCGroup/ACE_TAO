@@ -89,7 +89,9 @@ static int dead_member_rr_test (CORBA::ORB_ptr orb,
         simple->exit ();
       }
       else
+      {
         direct_simple->exit ();
+      }
 
       if (iter == 3)
       {
@@ -246,7 +248,9 @@ static int dead_member_rand_test (CORBA::ORB_ptr orb,
       }
 
       if (status == 0)
+      {
         locations.push_back (location);
+      }
 
       if (iter == 3)
       {
@@ -317,7 +321,9 @@ static int hang_member_rand_test (CORBA::ORB_ptr orb,
       }
 
       if (status == 0)
+      {
         locations.push_back (location);
+      }
 
       if (iter == 3)
       {
@@ -378,7 +384,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var tmp =
         orb->string_to_object (options.direct_obj2_ior);
@@ -399,13 +407,17 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         if (options.ping_timedout)
           status = hang_member_rr_test (orb.in (), options, direct_simple.in ());
         else
+        {
           status = dead_member_rr_test (orb.in (), options, direct_simple.in ());
+        }
       }
       else if (ACE_OS::strcasecmp (options.strategy, ACE_TEXT ("random")) == 0)
         if (options.ping_timedout)
           status = hang_member_rand_test (orb.in (), options, direct_simple.in ());
         else
+        {
           status = dead_member_rand_test (orb.in (), options, direct_simple.in ());
+        }
       else
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t)Invalid strategy \n")));

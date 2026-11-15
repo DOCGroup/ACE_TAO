@@ -91,14 +91,18 @@ Gateway_EC::run (int argc, ACE_TCHAR ** argv)
       orb_destroyer.init (orb);
 
       if (parse_args (argc, argv) == -1)
+      {
         return -1;
+      }
 
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var poa =
         PortableServer::POA::_narrow (obj.in ());
       if (check_for_nil (poa.in (), "POA") == -1)
+      {
         return -1;
+      }
       PortableServer::POAManager_var manager =
         poa->the_POAManager ();
       manager->activate ();
@@ -106,11 +110,15 @@ Gateway_EC::run (int argc, ACE_TCHAR ** argv)
       // Set up EC.
       PortableServer::Servant_var<EC_Wrapper> ec_wrapper {EC_Wrapper::create ()};
       if (!ec_wrapper.in ())
+      {
         return -1;
+      }
 
       if (ec_wrapper->init (orb.in (),
                             poa.in ()) != 0)
+      {
         return -1;
+      }
 
       RtecEventChannelAdmin::EventChannel_var ec;
       TAO_EC_Object_Deactivator ec_deactivator;

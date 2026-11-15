@@ -185,7 +185,9 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR **argv)
           else if (ACE_OS::strcasecmp (current_arg, ACE_TEXT ("single_input")) == 0)
             this->reactor_type_ = TAO_REACTOR_SINGLE_INPUT;
           else
+          {
             this->report_option_value_error (ACE_TEXT ("-ORBReactorType"), current_arg);
+          }
 
           arg_shifter.consume_arg ();
         }
@@ -249,7 +251,9 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR **argv)
           else if (ACE_OS::strcasecmp (current_arg, ACE_TEXT ("FIFO")) == 0)
             this->threadqueue_type_ = TAO_THREAD_QUEUE_FIFO;
           else
+          {
             this->report_option_value_error (ACE_TEXT ("-ORBReactorThreadQueue"), current_arg);
+          }
 
           arg_shifter.consume_arg ();
         }
@@ -287,7 +291,9 @@ TAO_Advanced_Resource_Factory::load_default_protocols ()
   this->TAO_Default_Resource_Factory::protocol_factories_.reset ();
 
   if (r == -1)
+  {
     return -1;
+  }
   // Load the UIOP and SHMIOP protocols...
 
   return 0;
@@ -316,24 +322,32 @@ TAO_Advanced_Resource_Factory::init_protocol_factories ()
       int const r = this->load_default_protocols ();
 
       if (r == -1)
+      {
         return -1;
+      }
 
 #if TAO_HAS_UIOP == 1
       if (TAO::details::load_protocol_factory <TAO_UIOP_Protocol_Factory> (
           this->protocol_factories_, "UIOP_Factory") == -1)
+      {
         return -1;
+      }
 #endif /* TAO_HAS_UIOP == 1 */
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
       if (TAO::details::load_protocol_factory <TAO_SHMIOP_Protocol_Factory> (
           this->protocol_factories_, "SHMIOP_Factory") == -1)
+      {
         return -1;
+      }
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
 
 #if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
       if (TAO::details::load_protocol_factory <TAO_DIOP_Protocol_Factory> (
           this->protocol_factories_, "DIOP_Factory") == -1)
+      {
         return -1;
+      }
 #endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */
 
 #if defined (TAO_HAS_SCIOP) && (TAO_HAS_SCIOP != 0)

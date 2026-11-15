@@ -158,7 +158,9 @@ Test_Bounded_String_Sequence::print_values ()
                   this->in_[i]? (const char *)this->in_[i]:"<nul>"));
     }
   if (!this->in_.ptr ())
+  {
     ACE_DEBUG ((LM_DEBUG, "\nin sequence is NUL\n"));
+  }
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
   for (i=0; this->inout_.ptr () && (i < this->inout_->length ()); i++)
     {
@@ -169,7 +171,9 @@ Test_Bounded_String_Sequence::print_values ()
                   (this->inout_[i]? (const char *)this->inout_[i]:"<nul>")));
     }
   if (!this->inout_.ptr ())
+  {
     ACE_DEBUG ((LM_DEBUG, "\ninout sequence is NUL\n"));
+  }
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
   for (i=0; this->out_.ptr () && (i < this->out_->length ()); i++)
     {
@@ -180,7 +184,9 @@ Test_Bounded_String_Sequence::print_values ()
                   (this->out_[i]? (const char *)this->out_[i]:"<nul>")));
     }
   if (!this->out_.ptr ())
+  {
     ACE_DEBUG ((LM_DEBUG, "\nout sequence is NUL\n"));
+  }
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
   for (i=0; this->ret_.ptr () && (i < this->ret_->length ()); i++)
     {
@@ -191,6 +197,8 @@ Test_Bounded_String_Sequence::print_values ()
                   (this->ret_[i]? (const char *)this->ret_[i]:"<nul>")));
     }
   if (!this->ret_.ptr ())
+  {
     ACE_DEBUG ((LM_DEBUG, "\nin sequence is NUL\n"));
+  }
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
 }

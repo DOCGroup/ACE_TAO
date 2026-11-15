@@ -80,7 +80,9 @@ TAO_LogMgr_i::init (CORBA::ORB_ptr orb,
       this->logstore_.reset (fallback.create_log_store (this));
     }
   else
+  {
     this->logstore_.reset (strategy->create_log_store (this));
+  }
 }
 
 PortableServer::ObjectId *
@@ -180,7 +182,9 @@ TAO_LogMgr_i::create_i (DsLogAdmin::LogFullActionType full_action,
 {
   // Validate log_full_action before creating log
   if (full_action != DsLogAdmin::wrap && full_action != DsLogAdmin::halt)
+  {
     throw DsLogAdmin::InvalidLogFullAction ();
+  }
 
   if (thresholds)
     {
@@ -201,7 +205,9 @@ TAO_LogMgr_i::create_with_id_i (DsLogAdmin::LogId id,
 {
   // Validate log_full_action before creating log
   if (full_action != DsLogAdmin::wrap && full_action != DsLogAdmin::halt)
+  {
     throw DsLogAdmin::InvalidLogFullAction ();
+  }
 
   if (thresholds)
     {

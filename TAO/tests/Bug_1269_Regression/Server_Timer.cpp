@@ -35,7 +35,9 @@ Server_Timer::handle_timeout (ACE_Time_Value const &, void const *)
         Test::Echo::_duplicate (this->echo_.in ());
 
       if (CORBA::is_nil (echo.in ()))
+      {
         return 0;
+      }
 
       echo->echo_payload (pload);
 

@@ -54,7 +54,9 @@ Server_i::init (int argc,
 {
   // Parse the command line options.
   if (this->parse_args(argc, argv) == -1)
+  {
     return -1;
+  }
 
   if (this->orb_manager_.init (argc,
                                argv) == -1)

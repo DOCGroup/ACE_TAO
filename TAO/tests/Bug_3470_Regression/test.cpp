@@ -24,7 +24,9 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
       CORBA::ULong const service_count = listsrv->length ();
       for (CORBA::ULong index {}; index < service_count; ++index)
         if (std::strcmp (listsrv[index], "MyObjectId") == 0)
+        {
           retcode = 0;
+        }
 
       orb->destroy ();
     }

@@ -100,7 +100,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Test_Options options;
       int result = parse_args (argc, argv, options);
       if (result != 0)
+      {
         return result;
+      }
 
       Threadpool_Options threadpool_options;
       threadpool_options.default_thread_priority =

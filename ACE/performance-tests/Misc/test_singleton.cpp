@@ -61,7 +61,9 @@ Mutex_Singleton::instance ()
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, Mutex_Singleton::lock_, nullptr);
 
   if (!Mutex_Singleton::instance_)
+  {
     Mutex_Singleton::instance_ = std::make_unique<Mutex_Singleton> ();
+  }
 
   return Mutex_Singleton::instance_.get ();
 }
@@ -80,7 +82,9 @@ DC_Singleton::instance ()
 
       // Perform the Double-Check.
       if (!DC_Singleton::instance_)
+      {
         DC_Singleton::instance_ = std::make_unique<DC_Singleton> ();
+      }
     }
 
   return DC_Singleton::instance_.get ();
@@ -94,7 +98,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_Profile_Timer timer;
   int const iterations {argc > 1 ? ACE_OS::atoi (argv[1]) : DEFAULT_ITERATIONS};
   if (iterations <= 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Iterations must be greater than 0\n"), 1);
+  }
 
   ACE_DEBUG ((LM_DEBUG, "iterations = %d\n", iterations));
 

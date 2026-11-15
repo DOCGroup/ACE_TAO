@@ -65,7 +65,9 @@ ACE_Mutex::ACE_Mutex (int type, const ACE_TCHAR *name,
           if (errno == EEXIST)
             fd = ACE_OS::shm_open (name, O_RDWR | O_CREAT, mode);
           else
+          {
             return;
+          }
         }
       else
         {
@@ -93,7 +95,9 @@ ACE_Mutex::ACE_Mutex (int type, const ACE_TCHAR *name,
                                       0);
       ACE_OS::close (fd);
       if (this->process_lock_ == MAP_FAILED)
+      {
         return;
+      }
 
       if (this->lockname_
           && ACE_OS::mutex_init (this->process_lock_,

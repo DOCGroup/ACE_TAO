@@ -63,7 +63,9 @@ int parse_args (
         naming_context.in (), name);
 
       if (CORBA::is_nil (ftec.in ()))
+      {
         ORBSVCS_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot Find FT_EventService\n")), -1);
+      }
     }
   }
   catch (CORBA::Exception const &)
@@ -82,7 +84,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
     Options options {};
 
     if (parse_args (argc, argv, orb.in (), options, ftec) != 0)
+    {
       return 1;
+    }
 
     PortableServer::POA_var
       root_poa = resolve_init<PortableServer::POA> (orb.in (), "RootPOA");

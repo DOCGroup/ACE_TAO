@@ -444,7 +444,9 @@ TAO_Thread_Lane_Resources::close_all_transports ()
   // If we have no-drop-reply strategy or already fininalized simply return.
   if (!this->orb_core_.resource_factory ()->drop_replies_during_shutdown () ||
        this->transport_cache_ == nullptr)
+  {
     return;
+  }
 
   // Set of handlers still in the connection cache.
   TAO::Connection_Handler_Set handlers;

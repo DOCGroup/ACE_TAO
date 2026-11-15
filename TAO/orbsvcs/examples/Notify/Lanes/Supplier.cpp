@@ -139,7 +139,9 @@ TAO_Notify_Lanes_Supplier::subscription_change (CosNotification::EventTypeSeq co
   if (added.length () > 0)
     {
       if (++this->consumer_count_ == this->expected_consumer_count_)
+      {
         this->consumers_connected_.signal ();
+      }
     }
 }
 

@@ -33,7 +33,9 @@ JAWS_Synch_IO::JAWS_Synch_IO ()
 JAWS_Synch_IO::~JAWS_Synch_IO ()
 {
   if (this->handle_ != ACE_INVALID_HANDLE)
+  {
     ACE_OS::closesocket (this->handle_);
+  }
 }
 
 void
@@ -46,7 +48,9 @@ JAWS_Synch_IO::accept (JAWS_IO_Handler *ioh,
   if (this->acceptor_->accept (new_stream) == -1)
     ioh->accept_error ();
   else
+  {
     ioh->accept_complete (new_stream.get_handle ());
+  }
 }
 
 void
@@ -99,11 +103,15 @@ JAWS_Synch_IO::receive_file (JAWS_IO_Handler *ioh,
       if (bytes == bytes_to_read)
         ioh->receive_file_complete ();
       else
+      {
         result = -1;
+      }
     }
 
   if (result != ACE_Filecache_Handle::ACE_SUCCESS)
+  {
     ioh->receive_file_error (result);
+  }
 }
 
 void
@@ -134,7 +142,9 @@ JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
             {
               count = ACE_OS::read (handle, buf, sizeof (buf));
               if (count <= 0)
+              {
                 break;
+              }
 
               if (stream.send_n (buf, count) < count)
                 {
@@ -154,7 +164,9 @@ JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
   if (result == 0)
     ioh->transmit_file_complete ();
   else
+  {
     ioh->transmit_file_error (result);
+  }
 }
 
 void
@@ -299,7 +311,9 @@ JAWS_Asynch_IO::JAWS_Asynch_IO ()
 JAWS_Asynch_IO::~JAWS_Asynch_IO ()
 {
   if (this->handle_ != ACE_INVALID_HANDLE)
+  {
     ACE_OS::closesocket (this->handle_);
+  }
 }
 
 void
@@ -320,7 +334,9 @@ JAWS_Asynch_IO::accept (JAWS_IO_Handler *ioh,
   size_t bytes_to_read = JAWS_Data_Block::JAWS_DATA_BLOCK_SIZE;
 
   if (db->policy ()->acceptor ()->accept (bytes_to_read, ioh) == -1)
+  {
     ioh->accept_error ();
+  }
 }
 
 void
@@ -339,7 +355,9 @@ JAWS_Asynch_IO::read (JAWS_IO_Handler *ioh,
 
   if (ar.open (*(aioh->handler ()), aioh->handle ()) == -1
       || ar.read (*mb, size) == -1)
+  {
     aioh->read_error ();
+  }
 }
 
 void
@@ -383,7 +401,9 @@ JAWS_Asynch_IO::receive_file (JAWS_IO_Handler *ioh,
 
           if (ar.open (*(aioh->handler ()), aioh->handle ()) == -1
               || ar.read (*mb, mb->size () - mb->length (), handle) == -1)
+          {
             result = -1;
+          }
         }
     }
 
@@ -437,7 +457,9 @@ JAWS_Asynch_IO::transmit_file (JAWS_IO_Handler *ioh,
                                0,  // flags
                                0 // act
                                ) == -1)
+      {
         result = -1;
+      }
     }
 
   if (result != 0)
@@ -487,7 +509,9 @@ JAWS_Asynch_IO::transmit_file (JAWS_IO_Handler *ioh,
                                0,  // flags
                                cf // act
                                ) == -1)
+      {
         result = -1;
+      }
     }
 
   if (result != 0)
@@ -543,7 +567,9 @@ JAWS_Asynch_IO::send_message (JAWS_IO_Handler *ioh,
       if (act == CONFIRMATION)
         ioh->confirmation_message_complete ();
       else
+      {
         ioh->error_message_complete ();
+      }
     }
 }
 

@@ -148,6 +148,8 @@ FP_Task::perform_task ()
     }
 
   if (dist_)
+  {
     job_->shutdown ();
+  }
   return 0;
 }

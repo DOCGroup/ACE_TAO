@@ -166,7 +166,9 @@ TAO_Linear_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
     {
       // There is only one native priority.
       if (native_priority != this->min_)
+      {
         return false;
+      }
       corba_priority = RTCORBA::minPriority;
     }
 

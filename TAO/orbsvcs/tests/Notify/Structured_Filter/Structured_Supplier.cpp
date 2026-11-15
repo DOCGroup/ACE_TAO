@@ -181,7 +181,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       Supplier_Client client;
       if (client.init (argc, argv) != 0)
+      {
         return 1;
+      }
 
       CosNotifyChannelAdmin::EventChannel_var ec =
         client.create_event_channel ("MyEventChannel", 0);
@@ -221,7 +223,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "Supplier sending %d events...\n", event_count));
       for (int i {}; i < event_count; ++i)
         if (send_event (*supplier, i) != 0)
+        {
           return 1;
+        }
       ACE_DEBUG ((LM_DEBUG, "\nSupplier sent %d events.\n", event_count));
 
       sig_impl->wait_for_completion ();

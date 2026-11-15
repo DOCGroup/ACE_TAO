@@ -237,7 +237,9 @@ int FTClientMain::pass (
       {
         str_ = std::strrchr (str_, '\n');
         if ( str_ )
+        {
           *str_ = '\0';
+        }
       }
       command = buffer;
     }

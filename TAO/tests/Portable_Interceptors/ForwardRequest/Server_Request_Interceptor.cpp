@@ -166,5 +166,7 @@ Server_Request_Interceptor::send_other (
   CORBA::Object_var const forward (ri->forward_reference ());
 
   if (CORBA::is_nil (forward.in ()))
+  {
     throw CORBA::INTERNAL ();
+  }
 }

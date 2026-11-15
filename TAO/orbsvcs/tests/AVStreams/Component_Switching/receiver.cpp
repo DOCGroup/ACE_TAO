@@ -136,13 +136,17 @@ Receiver::init (int,
     this->reactive_strategy_.init (TAO_AV_CORE::instance ()->orb (),
                                    TAO_AV_CORE::instance ()->poa ());
   if (result != 0)
+  {
     return result;
+  }
 
   // Initialize the connection manager.
   result =
     this->connection_manager_.init (TAO_AV_CORE::instance ()->orb ());
   if (result != 0)
+  {
     return result;
+  }
 
   connection_manager = &this->connection_manager_;
 
@@ -270,7 +274,9 @@ ACE_TMAIN (int argc,
       Receiver receiver;
       int result = receiver.parse_args (argc, argv);
       if (result == -1)
+      {
         return -1;
+      }
 
       // Make sure we have a valid <output_file>
       std::unique_ptr<FILE, int (*) (FILE *)> output_file_owner (nullptr,
@@ -292,7 +298,9 @@ ACE_TMAIN (int argc,
                        argv);
 
       if (result != 0)
+      {
         return result;
+      }
 
       while (!done)
         {

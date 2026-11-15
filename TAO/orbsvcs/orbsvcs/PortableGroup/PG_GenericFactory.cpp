@@ -96,7 +96,9 @@ TAO_PG_GenericFactory::create_object (
         // that over 4 billion object groups are being managed by this
         // generic factory!
         if (this->next_fcid_ == fcid)
+        {
           throw PortableGroup::ObjectNotCreated ();
+        }
       }
 
     // Just in case this->next_fcid_ was modified in the above search,
@@ -131,7 +133,9 @@ TAO_PG_GenericFactory::create_object (
                                        factory_set);
 
           if (this->factory_map_.bind (fcid, factory_set) != 0)
+          {
             throw PortableGroup::ObjectNotCreated ();
+          }
         }
 
       // Allocate a new FactoryCreationId for use as an "out" parameter.
@@ -196,11 +200,15 @@ TAO_PG_GenericFactory::delete_object (
                                  0  /* Do not ignore exceptions */);
 
           if (this->factory_map_.unbind (fcid) != 0)
+          {
             throw CORBA::INTERNAL ();
+          }
         }
     }
   else
+  {
     throw PortableGroup::ObjectNotFound ();  // @@
+  }
                                                    //    CORBA::BAD_PARAM
                                                    //    instead?
 
@@ -248,7 +256,9 @@ TAO_PG_GenericFactory::delete_object_i (TAO_PG_Factory_Set &factory_set,
           // members have been destroyed, and minimize the number of
           // object group members that have not been destroyed.
           if (!ignore_exceptions)
+          {
             throw;
+          }
         }
 
       // Since GenericFactory::delete_object() can throw an exception,
@@ -559,7 +569,9 @@ TAO_PG_GenericFactory::check_minimum_number_members (
   // used.
   TAO_PG_Factory_Map::ENTRY *entry {};
   if (this->factory_map_.find (group_id, entry) != 0)
+  {
     return;
+  }
 
   TAO_PG_Factory_Set & factory_set = entry->int_id_;
 
@@ -590,7 +602,9 @@ TAO_PG_GenericFactory::check_minimum_number_members (
         this->object_group_manager_.member_count (object_group);
 
       if (count >= static_cast<CORBA::ULong> (minimum_number_members))
+      {
         return;
+      }
 
       CORBA::ULong const gap =
         static_cast<CORBA::ULong> (minimum_number_members) - count;
@@ -611,7 +625,9 @@ TAO_PG_GenericFactory::check_minimum_number_members (
           // Check if the application supplied GenericFactory was
           // already invoked.
           if (tmp_fcid != nil_fcid)
+          {
             continue;
+          }
 
           try
             {
@@ -628,7 +644,9 @@ TAO_PG_GenericFactory::check_minimum_number_members (
               // Check if the MinimumNumberMembers threshold gap has
               // been filled.
               if (gap == creation_count)
+              {
                 return;
+              }
             }
           catch (PortableGroup::MemberAlreadyPresent const &)
             {

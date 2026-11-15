@@ -38,7 +38,9 @@ Hash_Table::Hash_Table (size_t s)
     collisions_ (0)
 {
   if (this->size_ == 0)
+  {
     this->size_ = 1;
+  }
   List_Node **table {};
   ACE_NEW (table, List_Node*[this->size_]);
   this->table_.reset (table);

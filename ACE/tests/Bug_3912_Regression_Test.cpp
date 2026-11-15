@@ -64,7 +64,9 @@ run_test (int argc, ACE_TCHAR *argv[])
                         status);
     }
   else
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Service config opened\n")));
+  }
 
   ACE_Service_Repository *asr = ACE_Service_Repository::instance ();
   if (asr == nullptr)

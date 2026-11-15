@@ -83,7 +83,9 @@ make_iogr (TAO_IOP::TAO_IOR_Manipulation_ptr iorm,
   CORBA::Boolean const has_property = iorm->set_property (&iogr_prop, new_ref.in ());
 
   if (has_property)
+  {
     iorm->set_primary (&iogr_prop, new_ref.in (), new_ref.in ());
+  }
 
   return new_ref._retn ();
 }
@@ -155,7 +157,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Server_Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       Hello *hello_impl {};
       ACE_NEW_RETURN (hello_impl,
@@ -177,7 +181,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->object_to_string (hello.in ());
 
       if (write_ior (options.ior_output_file.c_str (), ior.in ()) != 0)
+      {
         return 1;
+      }
 
       // Get a ref to the IORManipulation object
       CORBA::Object_var const iorm_object =
@@ -195,7 +201,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->object_to_string (iogr.in ());
 
       if (write_ior (options.iogr_output_file.c_str (), iorgr_string.in ()) != 0)
+      {
         return 1;
+      }
 
       poa_manager->activate ();
 

@@ -34,7 +34,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           bm->exec (&sri);
         }
       else
+      {
         sri.advance ();
+      }
     }
   return 0;
 }

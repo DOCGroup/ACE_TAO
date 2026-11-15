@@ -124,7 +124,9 @@ Test_Fixed_Struct::check_validity ()
       ACE::is_equal (this->in_.d, this->ret_.d))
     return 1;
   else
+  {
     return 0;
+  }
 }
 
 CORBA::Boolean

@@ -6,7 +6,9 @@ HTTP_Response::parse_line ()
 {
   this->response_.init (this->line ());
   if (this->response_.error () != Parse_HTTP_Response::HTTPU_OK)
+  {
     this->status_ = STATUS_INTERNAL_SERVER_ERROR;
+  }
 }
 
 int
@@ -27,7 +29,9 @@ HTTP_Response::espouse_line ()
   // client.  This information should be obtained from the config.
 
   if (count < 0 || static_cast<size_t> (count) >= this->mb_->space ())
+  {
     return -1;
+  }
 
   this->mb_->wr_ptr (count);
   return 0;

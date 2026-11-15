@@ -121,7 +121,9 @@ High_Priority_Task::open (void *)
       ACE_Thread::self (thr_handle);
 
       if (ACE_Thread::setprio (thr_handle, priority_) == -1)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "setprio failed"), -1);
+      }
 
       return svc ();
     }
@@ -148,7 +150,9 @@ High_Priority_Task::svc ()
   int prio {};
 
   if (ACE_Thread::getprio (thr_handle, prio) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "getprio failed"), -1);
+  }
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) High: prio = %d, priority_ = %d\n",
               prio, this->priority_));
@@ -224,7 +228,9 @@ Low_Priority_Task::open (void *)
       ACE_Thread::self (thr_handle);
 
       if (ACE_Thread::setprio (thr_handle, priority_) == -1)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "setprio failed"), -1);
+      }
 
       return svc ();
     }
@@ -249,7 +255,9 @@ Low_Priority_Task::svc ()
   int prio {};
 
   if (ACE_Thread::getprio (thr_handle, prio) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "getprio failed"), -1);
+  }
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Low: prio = %d, priority_ = %d\n",
               prio, this->priority_));
@@ -269,7 +277,9 @@ Low_Priority_Task::svc ()
                      n/2 /* max_factor */);
 
       if (low_yield)
+      {
         ACE_OS::thr_yield ();
+      }
     }
 
   ACE_DEBUG ((LM_INFO, "Low completed %u iterations\n",
@@ -302,7 +312,9 @@ get_options (int argc, ACE_TCHAR *argv[])
             if (value >= 2)
               high_iterations = static_cast<u_int> (value);
             else
+            {
               ACE_ERROR_RETURN ((LM_ERROR, "%n: high iterations must be >= 2\n"), -1);
+            }
           }
           break;
         case 'l':
@@ -311,7 +323,9 @@ get_options (int argc, ACE_TCHAR *argv[])
             if (value >= 2)
               low_iterations = static_cast<u_int> (value);
             else
+            {
               ACE_ERROR_RETURN ((LM_ERROR, "%n: low iterations must be >= 2\n"), -1);
+            }
           }
           break;
         case 'n':
@@ -320,7 +334,9 @@ get_options (int argc, ACE_TCHAR *argv[])
             if (value >= 1)
               high_priority_tasks = static_cast<u_int> (value);
             else
+            {
               ACE_ERROR_RETURN ((LM_ERROR, "%n: number of high priority threads must be >= 1\n"), -1);
+            }
           }
           break;
         case 'p':
@@ -329,7 +345,9 @@ get_options (int argc, ACE_TCHAR *argv[])
             if (value > 0)
               read_period = static_cast<u_long> (value);
             else
+            {
               ACE_ERROR_RETURN ((LM_ERROR, "%n: read period must be > 0\n"), -1);
+            }
           }
           break;
         case 'y':
@@ -377,7 +395,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   u_int i {};
 
   if (get_options (argc, argv))
+  {
     ACE_OS::exit (-1);
+  }
 
   // Enable FIFO scheduling
   if (ACE_OS::sched_params (
@@ -404,7 +424,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   for (u_int task_index {}; task_index < high_priority_tasks; ++task_index)
     if (!high_priority_task[task_index].valid ())
+    {
       ACE_ERROR_RETURN ((LM_ERROR, "Unable to allocate high-priority task timing data\n"), 1);
+    }
 
   Low_Priority_Task low_priority_task (high_priority_task[0]);
 

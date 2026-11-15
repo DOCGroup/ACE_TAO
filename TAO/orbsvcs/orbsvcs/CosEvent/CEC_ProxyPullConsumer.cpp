@@ -88,7 +88,9 @@ TAO_CEC_ProxyPullConsumer::try_pull_from_supplier (
     // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
 
     if (!this->is_connected_i ())
+    {
       return nullptr; // ACE_THROW (CosEventComm::Disconnected ());????
+    }
 
     supplier =
       CosEventComm::PullSupplier::_duplicate (this->supplier_.in ());
@@ -134,7 +136,9 @@ TAO_CEC_ProxyPullConsumer::pull_from_supplier ()
     // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
 
     if (!this->is_connected_i ())
+    {
       return nullptr; // ACE_THROW (CosEventComm::Disconnected ());????
+    }
 
     supplier =
       CosEventComm::PullSupplier::_duplicate (this->supplier_.in ());
@@ -203,7 +207,9 @@ TAO_CEC_ProxyPullConsumer::shutdown ()
   this->deactivate ();
 
   if (CORBA::is_nil (supplier.in ()))
+  {
     return;
+  }
 
   try
     {
@@ -237,7 +243,9 @@ TAO_CEC_ProxyPullConsumer::_decr_refcnt ()
     ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
     --this->refcount_;
     if (this->refcount_ != 0)
+    {
       return this->refcount_;
+    }
   }
 
   // Notify the event channel
@@ -251,7 +259,9 @@ TAO_CEC_ProxyPullConsumer::connect_pull_supplier (
 {
   // Nil PullSuppliers are illegal
   if (CORBA::is_nil (pull_supplier))
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   {
     ACE_GUARD_THROW_EX (
@@ -262,7 +272,9 @@ TAO_CEC_ProxyPullConsumer::connect_pull_supplier (
     if (this->is_connected_i ())
       {
         if (!this->event_channel_->supplier_reconnect ())
+        {
           throw CosEventChannelAdmin::AlreadyConnected ();
+        }
 
         // Re-connections are allowed, go ahead and disconnect the
         // consumer...
@@ -283,7 +295,9 @@ TAO_CEC_ProxyPullConsumer::connect_pull_supplier (
 
         // What if a second thread connected us after this?
         if (this->is_connected_i ())
+        {
           return;
+        }
       }
     this->supplier_ = apply_policy (pull_supplier);
   }
@@ -331,7 +345,9 @@ TAO_CEC_ProxyPullConsumer::disconnect_pull_consumer ()
     // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
 
     if (!this->is_connected_i ())
+    {
       throw CORBA::BAD_INV_ORDER (); // @@ add user exception?
+    }
 
     supplier = this->supplier_._retn ();
 

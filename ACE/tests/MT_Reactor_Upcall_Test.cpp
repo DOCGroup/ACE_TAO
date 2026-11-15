@@ -36,13 +36,17 @@ public:
     : lock_ (lock)
   {
     if (lock_upcall)
+    {
       lock.acquire ();
+    }
   }
 
   ~Guard ()
   {
     if (lock_upcall)
+    {
       this->lock_.release ();
+    }
   }
 
   ACE_SYNCH_MUTEX &lock_;
@@ -94,7 +98,9 @@ Handler::Handler (ACE_Reactor &reactor)
                     ACE_TEXT ("%p\n"),
                     ACE_TEXT ("Can't register pipe for READ")));
       else
+      {
         this->shutdown_ = 0;
+      }
     }
 }
 
@@ -105,7 +111,9 @@ Handler::handle_input (ACE_HANDLE fd)
 
   // If we have been shutdown, return.
   if (this->shutdown_)
+  {
     return 0;
+  }
 
   // Read fixed parts of message.
   Message message;
@@ -233,19 +241,25 @@ test_reactor_upcall (ACE_Reactor &reactor)
                      &data_message.type_,
                      sizeof (data_message.type_));
       if (sent == -1)
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t): %p\n"), ACE_TEXT ("send 1")));
+      }
       sent =
         ACE::send_n (handler.pipe_.write_handle (),
                      &data_message.size_,
                      sizeof (data_message.size_));
       if (sent == -1)
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t): %p\n"), ACE_TEXT ("send 2")));
+      }
       sent =
         ACE::send_n (handler.pipe_.write_handle (),
                      &data_message.data_,
                      data_message.size_);
       if (sent == -1)
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t): %p\n"), ACE_TEXT ("send 3")));
+      }
     }
 
   // We are done: send shutdown message.
@@ -259,12 +273,16 @@ test_reactor_upcall (ACE_Reactor &reactor)
                               &shutdown_message.type_,
                               sizeof (shutdown_message.type_));
   if (sent == -1)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t): %p\n"), ACE_TEXT ("send 4")));
+  }
   sent = ACE::send_n (handler.pipe_.write_handle (),
                       &shutdown_message.size_,
                       sizeof (shutdown_message.size_));
   if (sent == -1)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t): %p\n"), ACE_TEXT ("send 5")));
+  }
 
   // Wait for the event loop tasks to exit.
   event_loop_task.wait ();
@@ -329,7 +347,9 @@ run_main (int argc, ACE_TCHAR *argv[])
     parse_args (argc, argv);
 
   if (result != 0)
+  {
     return result;
+  }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing TP Reactor\n")));
 

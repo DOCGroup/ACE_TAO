@@ -80,7 +80,9 @@ TAO_UTO::compare_time (CosTime::ComparisonType comparison_type,
           return CosTime::TCGreaterThan;
         }
       else
+      {
         return CosTime::TCLessThan;
+      }
     }
   else if (this->time () == uto_time)
     {

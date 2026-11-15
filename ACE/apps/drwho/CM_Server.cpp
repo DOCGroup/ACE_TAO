@@ -16,7 +16,9 @@ CM_Server::open (short port_number)
   this->sokfd_ = ACE_OS::socket (PF_INET, SOCK_DGRAM, 0);
 
   if (this->sokfd_ == ACE_INVALID_HANDLE)
+  {
     return -1;
+  }
 
   this->sin_.sin_family = AF_INET;
   this->sin_.sin_port = htons (port_number);
@@ -26,14 +28,18 @@ CM_Server::open (short port_number)
   if (ACE_OS::bind (this->sokfd_,
                     reinterpret_cast<sockaddr *> (&this->sin_),
                     sizeof this->sin_) < 0)
+  {
     return -1;
+  }
 
   if (ACE_OS::setsockopt (this->sokfd_,
                           SOL_SOCKET,
                           SO_SNDBUF,
                           (char *) &max_packet_size,
                           sizeof max_packet_size) < 0)
+  {
     return -1;
+  }
 
   return 1;
 }
@@ -44,7 +50,9 @@ CM_Server::receive (int)
   int sin_len = sizeof this->sin_;
 
   if (Options::get_opt (Options::DEBUGGING) != 0)
+  {
     ACE_DEBUG ((LM_DEBUG, "waiting for client to send...\n"));
+  }
 
   int n = ACE_OS::recvfrom (this->sokfd_,
                             this->recv_packet_,
@@ -53,7 +61,9 @@ CM_Server::receive (int)
                             reinterpret_cast<sockaddr *> (&this->sin_),
                             (int *) &sin_len);
   if (n == -1)
+  {
     return -1;
+  }
 
   if (Options::get_opt (Options::DEBUGGING) != 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -61,7 +71,9 @@ CM_Server::receive (int)
                 ACE_OS::inet_ntoa (this->sin_.sin_addr)));
 
   if (this->demux (this->recv_packet_, n) < 0)
+  {
     return -1;
+  }
 
   return 1;
 }
@@ -73,7 +85,9 @@ CM_Server::send ()
 
   if (this->mux (this->send_packet_,
                  packet_length) < 0)
+  {
     return -1;
+  }
 
   if (Options::get_opt (Options::DEBUGGING) != 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -86,7 +100,9 @@ CM_Server::send ()
                       0,
                       reinterpret_cast<sockaddr *> (&this->sin_),
                       sizeof this->sin_) < 0)
+  {
     return -1;
+  }
 
   return 1;
 }
@@ -98,5 +114,7 @@ CM_Server::~CM_Server ()
                 "CM_Server\n"));
 
   if (this->sokfd_ != ACE_INVALID_HANDLE)
+  {
     ACE_OS::closesocket (this->sokfd_);
+  }
 }

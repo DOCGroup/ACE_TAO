@@ -34,7 +34,10 @@ void
 Server_Request_Interceptor::send_reply (
     PortableInterceptor::ServerRequestInfo_ptr)
 {
-  if (crash_point == 1 && this->request_count_ == 2) ACE_OS::exit (1);
+  if (crash_point == 1 && this->request_count_ == 2)
+  {
+    ACE_OS::exit (1);
+  }
 }
 
 void

@@ -89,7 +89,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                          argv);
 
       if (parse_args (options, argc, argv) != 0)
+      {
         return 1;
+      }
 
       // To use the smart proxy it is necessary to allocate the
       // user-defined smart factory on the heap as the smart proxy

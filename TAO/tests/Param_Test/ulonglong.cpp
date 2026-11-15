@@ -93,7 +93,9 @@ Test_ULongLong::check_validity ()
       this->ret_ == this->in_ * 4)
     return 1; // success
   else
+  {
     return 0;
+  }
 }
 
 CORBA::Boolean

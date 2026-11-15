@@ -38,7 +38,9 @@ Options *
 Options::instance ()
 {
   if (Options::instance_ == nullptr)
+  {
     ACE_NEW_RETURN (Options::instance_, Options, nullptr);
+  }
 
   return Options::instance_;
 }

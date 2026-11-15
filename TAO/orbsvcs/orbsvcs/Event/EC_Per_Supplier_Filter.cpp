@@ -47,7 +47,9 @@ TAO_EC_Per_Supplier_Filter::unbind (TAO_EC_ProxyPushConsumer* consumer)
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   if (this->consumer_ == nullptr || this->consumer_ != consumer)
+  {
     return;
+  }
 
   this->consumer_ = nullptr;
 
@@ -174,7 +176,9 @@ TAO_EC_Per_Supplier_Filter::_decr_refcnt ()
 
     --this->refcnt_;
     if (this->refcnt_ != 0)
+    {
       return this->refcnt_;
+    }
   }
   this->event_channel_->supplier_filter_builder ()->destroy (this);
   return 0;

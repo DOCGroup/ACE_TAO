@@ -251,7 +251,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return -1;
     }
   else
+  {
     ACE_DEBUG ((LM_DEBUG, "IORManipulation Tests Successfully Completed!\n"));
+  }
   ACE_DEBUG ((LM_DEBUG, "---------------------------------------------\n"));
 
   return 0;

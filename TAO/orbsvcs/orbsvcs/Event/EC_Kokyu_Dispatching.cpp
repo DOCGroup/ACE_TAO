@@ -38,7 +38,9 @@ void
 TAO_EC_Kokyu_Dispatching::activate ()
 {
   if (!lanes_setup_)
+  {
     setup_lanes ();
+  }
 
   this->dispatcher_->activate ();
 
@@ -117,13 +119,17 @@ TAO_EC_Kokyu_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                                        TAO_EC_QOS_Info& qos_info)
 {
     if (this->dispatcher_.get () == nullptr)
-        this->setup_lanes ();
+    {
+      this->setup_lanes ();
+    }
 
     void* buf =
       this->allocator_->malloc (sizeof (TAO_EC_Kokyu_Push_Command ));
 
     if (buf == nullptr)
+    {
       throw CORBA::NO_MEMORY (TAO::VMCID, CORBA::COMPLETED_NO);
+    }
 
   // Create Dispatch_Command
   TAO_EC_Kokyu_Push_Command *cmd =

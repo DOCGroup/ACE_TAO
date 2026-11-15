@@ -138,7 +138,9 @@ u_long SnmpTarget::get_timeout () const
 SnmpTarget &SnmpTarget::operator= (SnmpTarget const &lhs)
 {
   if (this == std::addressof (lhs))
+  {
     return *this;
+  }
 
   validity_ = lhs.validity_;
   timeout_ = lhs.timeout_;
@@ -151,16 +153,24 @@ SnmpTarget &SnmpTarget::operator= (SnmpTarget const &lhs)
 bool operator== (SnmpTarget const &lhs, SnmpTarget const &rhs)
 {
   if (lhs.timeout_ != rhs.timeout_)
-     return false;
+  {
+    return false;
+  }
 
   if (lhs.retries_ != rhs.retries_)
-     return false;
+  {
+    return false;
+  }
 
   if (lhs.max_pdu_size_ != rhs.max_pdu_size_)
+  {
     return false;
+  }
 
   if (lhs.version_ != rhs.version_)
+  {
     return false;
+  }
 
   return true;
 }
@@ -252,7 +262,9 @@ int UdpTarget::set_address (UdpAddress &udp_address)
 UdpTarget &UdpTarget::operator= (UdpTarget const &lhs)
 {
   if (this == std::addressof (lhs))
-     return *this;
+  {
+    return *this;
+  }
 
   // assign base part
   SnmpTarget::operator= (lhs);
@@ -282,19 +294,29 @@ bool operator== (UdpTarget const &lhs, UdpTarget const &rhs)
 {
   // need to compare all the members of a UdpTarget
   if ( lhs.read_community_ != rhs.read_community_)
+  {
     return false;  // !=
+  }
 
   if ( lhs.write_community_ != rhs.write_community_)
+  {
     return false;  // !=
+  }
 
   if ( lhs.udp_address_ != rhs.udp_address_)
+  {
     return false;
+  }
 
   if ( lhs.timeout_ != rhs.timeout_)
+  {
     return false;
+  }
 
   if ( lhs.retries_ != rhs.retries_)
+  {
     return false;
+  }
 
   return true;  // they are equal
 }

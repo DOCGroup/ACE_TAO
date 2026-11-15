@@ -21,7 +21,9 @@ int
 Notifier_i::close_consumer_map ()
 {
   if (this->notifier_exited_)
+  {
     return 0;
+  }
 
   this->notifier_exited_ = true;
 
@@ -123,7 +125,9 @@ Notifier_i::unregister_callback (Callback_Quoter::Consumer_ptr consumer)
   // Check to see whether the hash_map still exists. Chances are there
   // that the notifier has exited closing the hash map.
   if (notifier_exited_)
+  {
     return;
+  }
 
   for (CONSUMER_MAP::ITERATOR iter = this->consumer_map_.begin ();
        iter != this->consumer_map_.end ();

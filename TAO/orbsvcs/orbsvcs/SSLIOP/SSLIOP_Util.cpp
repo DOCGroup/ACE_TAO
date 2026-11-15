@@ -24,7 +24,9 @@ TAO::SSLIOP::Util::current (TAO_ORB_Core *orb_core)
         TAO::SSLIOP::Current::_narrow (obj.in ());
 
       if (CORBA::is_nil (tao_current.in ()))
+      {
         throw CORBA::INV_OBJREF ();
+      }
 
       return tao_current._retn ();
     }

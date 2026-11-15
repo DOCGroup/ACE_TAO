@@ -72,13 +72,17 @@ namespace TAO
       PortableInterceptor::ObjectId const &)
   {
     if (CORBA::is_nil (this->poa_.in ()))
+    {
       throw ::CORBA::BAD_INV_ORDER ();
+    }
 
     TAO_Root_POA * const tao_poa =
       dynamic_cast<TAO_Root_POA *> (this->poa_.in());
 
     if (tao_poa == nullptr)
+    {
       throw ::CORBA::INTERNAL ();
+    }
 
     return tao_poa->invoke_key_to_object ();
   }

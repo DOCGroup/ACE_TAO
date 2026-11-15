@@ -38,7 +38,9 @@ ACE_Read_Buffer::ACE_Read_Buffer (FILE *fp,
 {
   ACE_TRACE ("ACE_Read_Buffer::ACE_Read_Buffer");
   if (this->allocator_ == nullptr)
+  {
     this->allocator_ = ACE_Allocator::instance ();
+  }
 }
 
 ACE_Read_Buffer::ACE_Read_Buffer (ACE_HANDLE handle,
@@ -53,7 +55,9 @@ ACE_Read_Buffer::ACE_Read_Buffer (ACE_HANDLE handle,
   ACE_TRACE ("ACE_Read_Buffer::ACE_Read_Buffer");
 
   if (this->allocator_ == nullptr)
+  {
     this->allocator_ = ACE_Allocator::instance ();
+  }
 }
 
 ACE_Read_Buffer::~ACE_Read_Buffer ()
@@ -61,7 +65,9 @@ ACE_Read_Buffer::~ACE_Read_Buffer ()
   ACE_TRACE ("ACE_Read_Buffer::~ACE_Read_Buffer");
 
   if (this->close_on_delete_)
+  {
     ACE_OS::fclose (this->stream_);
+  }
 }
 
 // Input: term        the character to terminate on
@@ -121,14 +127,18 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
           ++this->occurrences_;
 
           if (replace >= 0)
+          {
             c = replace;
+          }
         }
 
       buf[slot++] = (char) c;
 
       // Substitutions must be made before checking for termination.
       if (done)
+      {
         break;
+      }
     }
 
   // Increment the number of bytes.
@@ -136,7 +146,9 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
 
   // Don't bother going any farther if the total size is 0.
   if (this->size_ == 0)
+  {
     return nullptr;
+  }
 
   char *result {};
 

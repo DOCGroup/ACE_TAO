@@ -111,14 +111,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Client_Options options {};
       if (parse_args (argc, argv, options) == -1)
+      {
         return -1;
+      }
 
       if (options.ior.empty ())
         {
           current_operation = "read IOR file";
           int const result = read_IOR_from_file (options.ior_file, options.ior);
           if (result != 0)
+          {
             return result;
+          }
         }
 
       current_operation = "CORBA::ORB::string_to_object";
@@ -159,7 +163,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           duplicate_key_rejected = true;
         }
       if (!duplicate_key_rejected)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "Duplicate key was accepted\n"), -1);
+      }
 
       current_operation = "Database::Employee::_narrow";
       Database::Employee_var employee = Database::Employee::_narrow (entry.in ());
@@ -182,7 +188,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       current_operation = "Shutdown server";
       if (options.shutdown_server)
+      {
         database_agent->shutdown ();
+      }
 
       orb->destroy ();
     }

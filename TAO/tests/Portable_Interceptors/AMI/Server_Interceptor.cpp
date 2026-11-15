@@ -28,7 +28,9 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
     ri->operation ();
 
   if (std::strcmp ("_is_a", operation.in ()) == 0)
+  {
     return;
+  }
 
   IOP::ServiceId const id = ::service_id;
   IOP::ServiceContext_var sc =

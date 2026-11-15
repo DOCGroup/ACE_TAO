@@ -54,7 +54,9 @@ add_default_av_factory (Set &factories,
       default_factory.reset (factory);
     }
   else
+  {
     factory->ref_count = 1;
+  }
 
   Item *item {};
   ACE_NEW_RETURN (item,
@@ -64,7 +66,9 @@ add_default_av_factory (Set &factories,
   item->factory (factory);
 
   if (factories.insert (item) != 0)
+  {
     return -1;
+  }
 
   item_owner.release ();
   default_factory.release ();
@@ -191,7 +195,10 @@ int
 TAO_AV_Core::init (CORBA::ORB_ptr orb,
                    PortableServer::POA_ptr poa)
 {
-  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_Core::init "));
+  if (TAO_debug_level > 0)
+  {
+    ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_Core::init "));
+  }
   this->orb_ = CORBA::ORB::_duplicate (orb);
   this->poa_ = PortableServer::POA::_duplicate (poa);
   this->reactor (this->orb_->orb_core ()->reactor ());
@@ -263,7 +270,9 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
           address_flow_set.insert (entry);
         }
       else
+      {
         flow_set.insert (entry);
+      }
     } //End of For Loop
 
   int result = -1;
@@ -336,7 +345,9 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
                                                       this,
                                                       address_flow_set);
             if (result == -1)
+            {
               ORBSVCS_ERROR_RETURN ((LM_ERROR,"TAO_AV_Core::init_Forward_flows: connector_registry open failed\n"),-1);
+            }
             TAO_AV_FlowSpecSetItor end = address_flow_set.end ();
             for (TAO_AV_FlowSpecSetItor start = address_flow_set.begin ();
                  start != end; ++start)
@@ -393,7 +404,9 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
                                                      this,
                                                      flow_set);
             if (result == -1)
+            {
               ORBSVCS_ERROR_RETURN ((LM_ERROR,"TAO_AV_Core::init_Forward_flows: Acceptor_registry open failed\n"),-1);
+            }
             end = address_flow_set.end ();
             start = address_flow_set.begin ();
             for (; start != end; ++start)
@@ -457,10 +470,14 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
                 */
                 int len = new_flowspec.length ();
                 if (i == len)
+                {
                   new_flowspec.length (len+1);
+                }
                 new_flowspec [i++] = entry.entry_to_string ();
                 if (TAO_debug_level > 0)
+                {
                   ORBSVCS_DEBUG ((LM_DEBUG, "reverse Flow Spec Is %s\n", entry.entry_to_string ()));
+                }
               }
           }
         connect_end = flow_set.end ();
@@ -483,7 +500,9 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
 
                 int len = new_flowspec.length ();
                 if (i == len)
+                {
                   new_flowspec.length (len+1);
+                }
                 new_flowspec [i++] = entry.entry_to_string ();
               }
           }
@@ -509,7 +528,10 @@ TAO_AV_Core::init_reverse_flows (TAO_Base_StreamEndPoint *endpoint,
                                  TAO_AV_FlowSpecSet &reverse_flow_spec_set,
                                  TAO_AV_Core::EndPoint direction)
 {
-  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t)TAO_AV_Core::init_reverse_flows\n"));
+  if (TAO_debug_level > 0)
+  {
+    ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t)TAO_AV_Core::init_reverse_flows\n"));
+  }
   TAO_AV_FlowSpecSet acceptor_flow_set;
   TAO_AV_FlowSpecSet connector_flow_set;
   TAO_AV_FlowSpecSetItor end = reverse_flow_spec_set.end ();
@@ -558,10 +580,14 @@ TAO_AV_Core::init_reverse_flows (TAO_Base_StreamEndPoint *endpoint,
                 this->get_flow_spec_entry (forward_flow_spec_set,
                                            entry->flowname ());
               if (forward_entry != nullptr)
+              {
                 forward_entry->set_peer_addr (address);
+              }
             }
           else
+          {
             connector_flow_set.insert (entry);
+          }
         }
     }
   int result = -1;
@@ -578,7 +604,9 @@ TAO_AV_Core::init_reverse_flows (TAO_Base_StreamEndPoint *endpoint,
       break;
     }
   if (result == -1)
+  {
     ORBSVCS_ERROR_RETURN ((LM_ERROR,"acceptor_registry::open"),-1);
+  }
   return 0;
 }
 
@@ -593,7 +621,9 @@ TAO_AV_Core::get_flow_spec_entry (TAO_AV_FlowSpecSet &flow_spec_set,
        ++begin)
     {
       if (std::strcmp ((*begin)->flowname (),flowname) == 0)
+      {
         return (*begin);
+      }
     }
   return nullptr;
 }
@@ -611,7 +641,9 @@ TAO_AV_Core::get_acceptor (char const *flowname)
       for (;acceptor != end; ++acceptor)
         {
           if (std::strcmp ((*acceptor)->flowname (),flowname) == 0)
+          {
             return *acceptor;
+          }
         }
     }
   catch (CORBA::Exception const &ex)
@@ -658,7 +690,9 @@ TAO_AV_Core::get_connector (char const *flowname)
   for (;connector != end; ++connector)
     {
       if (std::strcmp ((*connector)->flowname (),flowname) == 0)
+      {
         return *connector;
+      }
     }
   return nullptr;
 }
@@ -686,7 +720,9 @@ TAO_AV_Flow_Protocol_Factory *
 TAO_AV_Core::get_flow_protocol_factory(char const *flow_protocol)
 {
   if (flow_protocol == nullptr)
+  {
     return nullptr;
+  }
 
   for (TAO_AV_Flow_ProtocolFactorySetItor control_flow_factory =
          this->flow_protocol_factories_.begin ();
@@ -708,7 +744,9 @@ TAO_AV_Transport_Factory *
 TAO_AV_Core::get_transport_factory(char const *transport_protocol)
 {
   if (transport_protocol == nullptr)
+  {
     return nullptr;
+  }
 
   for (TAO_AV_TransportFactorySetItor transport_factory =
          this->transport_factories_.begin ();
@@ -742,7 +780,9 @@ TAO_AV_Core::load_default_transport_factories ()
         "TCP_Factory",
         "TCP_Factory",
         "TCP Factory") != 0)
+  {
     return -1;
+  }
 
 #if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
   if (add_default_av_factory<TAO_AV_Transport_Factory,
@@ -826,7 +866,9 @@ TAO_AV_Core::load_default_flow_protocol_factories ()
         "UDP_Flow_Factory",
         "UDP_Flow_Factory",
         "UDP Flow Factory") != 0)
+  {
     return -1;
+  }
 
 #if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
   if (add_default_av_factory<TAO_AV_Flow_Protocol_Factory,
@@ -880,7 +922,9 @@ TAO_AV_Core::load_default_flow_protocol_factories ()
         "SFP_Flow_Factory",
         "SFP_Flow_Factory",
         "SFP Flow Factory") != 0)
+  {
     return -1;
+  }
 
   return 0;
 }
@@ -967,7 +1011,9 @@ TAO_AV_Core::get_flowname (char const *flow_spec_entry_str)
   if (slash_pos != flow_spec_entry.npos)
     flow_name = flow_spec_entry.substring (0, slash_pos);
   else
+  {
     flow_name = flow_spec_entry_str;
+  }
   return CORBA::string_dup (flow_name.c_str ());
 }
 

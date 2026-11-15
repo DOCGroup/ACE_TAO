@@ -81,7 +81,9 @@ PMC_All::insert_protocol_info (Protocol_Record &protocol_record)
   const int length = std::strlen (prp->set_real (ACE::strnew (protocol_record.get_real ())));
 
   if (length > this->max_key_length)
+  {
     this->max_key_length = length;
+  }
 
   return prp;
 }

@@ -151,7 +151,9 @@ FileImpl::Descriptor::write (const File::Descriptor::DataBuffer &buffer)
                                      buffer.get_buffer (),
                                      buffer.length ());
   if (len > 0)
+  {
     return len;
+  }
 
   throw File::IOError ();
 }
@@ -184,7 +186,9 @@ FileImpl::Descriptor::lseek (CORBA::ULong offset,
                                                     offset,
                                                     whence);
   if (result == -1)
+  {
     throw File::IOError ();
+  }
 
   return (CORBA::ULong) result;
 }

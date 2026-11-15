@@ -87,7 +87,9 @@ namespace TAO
     for (CORBA::ULong i {}; i < len; ++i)
       {
         if (this->x_->item (i)->value () == nullptr)
+        {
           return;
+        }
 
         (*lst)[i].argument.replace (this->x_->item (i)->value ()->impl ());
 

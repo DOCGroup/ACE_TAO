@@ -49,7 +49,9 @@ std::unique_ptr<Widget_Part> Widget_Part_Impl::remove_from_owner ()
     {
       std::unique_ptr<Widget_Part> part = owner_->remove_part ();
       if (!part)
+      {
         break;
+      }
       if (part.get () == this)
         detached_part = std::move (part);
       else

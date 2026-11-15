@@ -73,7 +73,9 @@ Push_Iterator_Factory_i::modification_date
   // Get the modification time from the file status structure/
   struct tm const *const t_gmt = ACE_OS::gmtime (&file_status.st_mtime);
   if (t_gmt == nullptr)
+  {
     return -1;
+  }
 
   // A time string is probably never going to exceed 256 bytes.
   constexpr size_t buflen = 256;
@@ -84,7 +86,9 @@ Push_Iterator_Factory_i::modification_date
                      buf.size (),
                      "%a, %d %b %Y %H:%M:%S GMT",
                      t_gmt) == 0)
+  {
     return -1;
+  }
 
   metadata.modification_date = CORBA::string_dup (buf.data ());
 

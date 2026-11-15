@@ -69,7 +69,9 @@ Client_Options::option (ACE_Arg_Shifter &arg_shifter,
                         int &option_value)
 {
   if (ACE_OS::strcmp (arg_shifter.get_current (), option_name) != 0)
+  {
     return 0;
+  }
   arg_shifter.consume_arg ();
   if (arg_shifter.is_parameter_next ())
     {
@@ -90,7 +92,9 @@ Client_Options::boolean_option (ACE_Arg_Shifter &arg_shifter,
                                 int &option_value)
 {
   if (ACE_OS::strcmp (arg_shifter.get_current (), option_name) != 0)
+  {
     return 0;
+  }
   arg_shifter.consume_arg ();
   option_value = 1;
   return 1;

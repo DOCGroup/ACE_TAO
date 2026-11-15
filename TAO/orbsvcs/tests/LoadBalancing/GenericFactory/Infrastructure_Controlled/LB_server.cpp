@@ -104,7 +104,9 @@ LB_server::start_orb_and_poa ()
       this->orb_ = CORBA::ORB_init (this->argc_, this->argv_);
 
       if (this->parse_args (this->argc_, this->argv_) != 0)
+      {
         return -1;
+      }
 
       CORBA::Object_var poa_object =
         this->orb_->resolve_initial_references ("RootPOA");
@@ -220,7 +222,9 @@ LB_server::create_object_group (char const *loc_1, char const *loc_2)
         this->orb_->object_to_string (this->object_group_.in ());
 
       if (this->write_ior_to_file (ior.in ()) != 0)
+      {
         return -1;
+      }
     }
   catch (const CORBA::Exception& ex)
     {

@@ -133,7 +133,9 @@ void
 TAO_CosEC_ProxyPushConsumer_i::connect_push_supplier (CosEventComm::PushSupplier_ptr push_supplier)
 {
   if (this->connected ())
+  {
     throw CosEventChannelAdmin::AlreadyConnected ();
+  }
 
   TAO_CosEC_PushSupplierWrapper *wrapper {};
 

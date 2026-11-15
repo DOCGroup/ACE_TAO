@@ -42,7 +42,9 @@ HTTP_Helper::HTTP_mktime (const char *httpdate)
       if (*ptr1 == ' ')
         *ptr2++ = ';';
       else
+      {
         *ptr2++ = *ptr1;
+      }
     }
   while (*ptr1++ != '\0');
 
@@ -93,7 +95,9 @@ HTTP_Helper::HTTP_mktime (const char *httpdate)
   tms.tm_mon = HTTP_Helper::HTTP_month (month);
 
   if (tms.tm_mon == -1)
+  {
     return (time_t) -1;
+  }
 
   // mktime is a Standard C function.
   {
@@ -151,7 +155,9 @@ HTTP_Helper::HTTP_date (char *s)
                      tms.tm_year + 1900, tms.tm_hour, tms.tm_min, tms.tm_sec);
   }
   else
+  {
     date_string = nullptr;
+  }
 
   return date_string;
 }
@@ -161,7 +167,9 @@ HTTP_Helper::HTTP_month (const char *month)
 {
   for (size_t i = 0; i < 12; i++)
     if (std::strcmp (month, HTTP_Helper::months_[i]) == 0)
+    {
       return i;
+    }
 
   return -1;
 }
@@ -170,7 +178,9 @@ const char *
 HTTP_Helper::HTTP_month (int month)
 {
   if (month < 0 || month >= 12)
+  {
     return 0;
+  }
 
   return HTTP_Helper::months_[month];
 }
@@ -194,7 +204,9 @@ HTTP_Helper::HTTP_decode_string (char *path)
           path[j] = (char) ACE_OS::strtol (percentcode, (char **) 0, 16);
         }
       else
+      {
         path[j] = path[i];
+      }
     }
 
   path[j] = path[i];
@@ -229,9 +241,13 @@ HTTP_Helper::HTTP_decode_base64 (char *data)
   while ((c = *indata++) != '\0')
     {
       if (c == '=')
+      {
         break;
+      }
       if (c > 255 || ! inalphabet[c])
+      {
         continue;
+      }
       bits += decoder[c];
       ++char_count;
       if (char_count == 4)
@@ -243,7 +259,9 @@ HTTP_Helper::HTTP_decode_base64 (char *data)
           char_count = 0;
         }
       else
+      {
         bits <<= 6;
+      }
     }
 
   if (c == '\0')
@@ -313,7 +331,9 @@ HTTP_Helper::HTTP_encode_base64 (char *data)
           char_count = 0;
         }
       else
-          bits <<= 8;
+      {
+        bits <<= 8;
+      }
     }
 
   if (!error)
@@ -359,16 +379,22 @@ HTTP_Helper::fixyear (int year)
           ACE_OS::gmtime_r (&tloc, &tms);
 
           if (tms.tm_year % 100 == year)
+          {
             year = tms.tm_year;
+          }
 
           // The last two cases check boundary conditions, in case the
           // year just changed at the moment we checked to see if we
           // need to fix it.
           if ((year+1) % 100 == tms.tm_year % 100)
+          {
             year = tms.tm_year - 1;
+          }
 
           if (year == (tms.tm_year + 1) % 100)
+          {
             year = tms.tm_year + 1;
+          }
 
           // What to do if none of the above?
         }

@@ -57,7 +57,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         root_poa->the_POAManager ();
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       obj =
         orb->resolve_initial_references ("SecurityLevel3:SecurityCurrent");

@@ -88,7 +88,9 @@ TAO_CEC_ProxyPullSupplier::shutdown ()
   this->deactivate ();
 
   if (CORBA::is_nil (consumer.in ()))
+  {
     return;
+  }
 
   try
     {
@@ -135,7 +137,9 @@ void
 TAO_CEC_ProxyPullSupplier::push (CORBA::Any const &event)
 {
   if (!this->is_connected ())
+  {
     return;
+  }
 
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->queue_lock_);
 
@@ -156,7 +160,9 @@ CORBA::Any *
 TAO_CEC_ProxyPullSupplier::pull ()
 {
   if (!this->is_connected ())
+  {
     throw CosEventComm::Disconnected ();
+  }
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, queue_lock_, nullptr);
   while (this->queue_.empty ())
@@ -174,7 +180,9 @@ TAO_CEC_ProxyPullSupplier::try_pull (CORBA::Boolean_out has_event)
 {
   has_event = false;
   if (!this->is_connected ())
+  {
     throw CosEventComm::Disconnected ();
+  }
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, queue_lock_, nullptr);
   CORBA::Any any;
@@ -212,7 +220,9 @@ TAO_CEC_ProxyPullSupplier::_decr_refcnt ()
     ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
     --this->refcount_;
     if (this->refcount_ != 0)
+    {
       return this->refcount_;
+    }
   }
 
   // Notify the event channel
@@ -233,7 +243,9 @@ TAO_CEC_ProxyPullSupplier::connect_pull_consumer (
     if (this->is_connected_i ())
       {
         if (!this->event_channel_->consumer_reconnect ())
+        {
           throw CosEventChannelAdmin::AlreadyConnected ();
+        }
 
         // Re-connections are allowed....
         this->cleanup_i ();
@@ -265,7 +277,10 @@ TAO_CEC_ProxyPullSupplier::connect_pull_consumer (
 CosEventComm::PullConsumer_ptr
 TAO_CEC_ProxyPullSupplier::apply_policy (CosEventComm::PullConsumer_ptr pre)
 {
-  if (CORBA::is_nil (pre)) return pre;
+  if (CORBA::is_nil (pre))
+  {
+    return pre;
+  }
   this->nopolicy_consumer_ = CosEventComm::PullConsumer::_duplicate (pre);
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
   CosEventComm::PullConsumer_var post =
@@ -302,7 +317,9 @@ TAO_CEC_ProxyPullSupplier::disconnect_pull_supplier ()
     // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
 
     if (!this->is_connected_i ())
+    {
       throw CORBA::BAD_INV_ORDER ();
+    }
 
     consumer = this->consumer_._retn ();
 
@@ -313,7 +330,9 @@ TAO_CEC_ProxyPullSupplier::disconnect_pull_supplier ()
   this->event_channel_->disconnected (this);
 
   if (CORBA::is_nil (consumer.in ()))
+  {
     return;
+  }
 
   if (this->event_channel_->disconnect_callbacks ())
     {

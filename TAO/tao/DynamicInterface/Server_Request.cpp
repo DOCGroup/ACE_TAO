@@ -31,7 +31,9 @@ CORBA::ServerRequest::_decr_refcount ()
   CORBA::ULong const new_count = --this->refcount_;
 
   if (new_count == 0)
+  {
     delete this;
+  }
 
   return new_count;
 }

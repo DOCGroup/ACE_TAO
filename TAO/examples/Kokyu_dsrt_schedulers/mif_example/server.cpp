@@ -91,7 +91,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (sched_policy == ACE_SCHED_RR)
     flags = THR_NEW_LWP | THR_BOUND | THR_JOINABLE | THR_SCHED_RR;
   else
+  {
     flags = THR_NEW_LWP | THR_BOUND | THR_JOINABLE | THR_SCHED_FIFO;
+  }
 
   task_stats.init (100000);
 
@@ -103,7 +105,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");
@@ -207,7 +211,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "shutting down scheduler\n"));
       if (scheduler != nullptr)
+      {
         scheduler->shutdown ();
+      }
 
       orb->destroy ();
     }

@@ -39,7 +39,9 @@ int
 Event_Analyzer::put (ACE_Message_Block *mb, ACE_Time_Value *)
 {
   if (mb->msg_type () == ACE_Message_Block::MB_IOCTL)
+  {
     this->control (mb);
+  }
 
   return this->put_next (mb);
 }
@@ -64,7 +66,9 @@ Event_Analyzer::info (ACE_TCHAR **strp, size_t length) const
   if (*strp == nullptr && (*strp = ACE_OS::strdup (module_name)) == nullptr)
     return -1;
   else
+  {
     ACE_OS::strncpy (*strp, module_name, length);
+  }
 
   return ACE_Utils::truncate_cast<int> (ACE_OS::strlen (module_name));
 }

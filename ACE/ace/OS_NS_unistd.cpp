@@ -32,7 +32,9 @@ ACE_OS::argv_to_string (ACE_TCHAR **argv,
                         bool quote_args)
 {
   if (argv == nullptr || argv[0] == nullptr)
+  {
     return 0;
+  }
 
   int argc;
   for (argc = 0; argv[argc] != nullptr; ++argc)
@@ -53,7 +55,9 @@ ACE_OS::argv_to_string (int argc,
                         bool quote_args)
 {
   if (argc <= 0 || argv == nullptr || argv[0] == nullptr)
+  {
     return 0;
+  }
 
   size_t buf_len = 0;
 
@@ -122,7 +126,9 @@ ACE_OS::argv_to_string (int argc,
             {
               for (int j = 0; temp[j] != 0; ++j)
                 if (temp[j] == ACE_TEXT ('"'))
+                {
                   ++quotes;
+                }
             }
           argv_p[i] =
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -152,12 +158,16 @@ ACE_OS::argv_to_string (int argc,
                    *p != 0;
                    *end++ = *p++)
                 if (*p == ACE_TEXT ('"'))
+                {
                   *end++ = ACE_TEXT ('\\');
+                }
 
               *end++ = ACE_TEXT ('\0');
             }
           else
+          {
             end = ACE_OS::strecpy (end, temp);
+          }
 
           end[-1] = ACE_TEXT ('"');
 
@@ -756,7 +766,9 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
   argc = 0;
 
   if (buf == nullptr)
+  {
     return -1;
+  }
 
   ACE_TCHAR *cp = buf;
 
@@ -792,10 +804,14 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
                   break;
                 }
               else
+              {
                 ++cp;
+              }
             }
           else
+          {
             ++cp;
+          }
         }
     }
 
@@ -850,10 +866,14 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
               }
 
             if (*ptr == quote)
+            {
               ++ptr;
+            }
           }
         else
+        {
           *cp++ = *ptr++;
+        }
 
       *cp = ACE_TEXT ('\0');
 

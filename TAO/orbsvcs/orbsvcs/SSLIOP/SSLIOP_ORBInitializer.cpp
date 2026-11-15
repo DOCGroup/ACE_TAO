@@ -31,7 +31,9 @@ TAO::SSLIOP::ORBInitializer::pre_init (
   TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info);
 
   if (CORBA::is_nil (tao_info.in ()))
+  {
     throw CORBA::INV_OBJREF ();
+  }
 
   // SSLIOP doesn't use the ORB Core until a request invocation occurs
   // so there is no problem in retrieving the ORB Core pointer in this

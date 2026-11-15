@@ -41,7 +41,9 @@ server ()
     ACE_OS::sleep (1);
 
   if (shm_server.remove () < 0)
+  {
     ACE_ERROR ((LM_ERROR, "%p\n", "remove"));
+  }
 }
 
 int

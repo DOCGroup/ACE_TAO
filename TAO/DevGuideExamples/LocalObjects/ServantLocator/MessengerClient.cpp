@@ -38,7 +38,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
       std::basic_string<ACE_TCHAR> ior { ACE_TEXT ("file://test.ior") };
 
       if (parse_args (argc, argv, ior) != 0)
+      {
         return 1;
+      }
 
       // Converts the contents of the file to an object reference
       CORBA::Object_var const obj = orb->string_to_object (ior.c_str ());

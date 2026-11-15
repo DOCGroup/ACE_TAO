@@ -172,7 +172,9 @@ Producer::svc ()
                         ACE_TEXT ("(%t) %p\n"),
                         ACE_TEXT ("put_next")));
           else
+          {
             message.release ();
+          }
           break;
         }
 
@@ -189,7 +191,9 @@ Producer::svc ()
                         ACE_TEXT ("(%t) %p\n"),
                         ACE_TEXT ("put_next")));
           else
+          {
             message.release ();
+          }
         }
     }
 
@@ -228,7 +232,9 @@ Consumer::svc ()
       result = this->getq (mb, &this->timeout_);
 
       if (result == -1)
+      {
         break;
+      }
 
       Message_Block_Owner message {mb};
       int const length = ACE_Utils::truncate_cast<int> (mb->length ());
@@ -239,7 +245,9 @@ Consumer::svc ()
                        std::strlen (mb->rd_ptr ()));
 
       if (length == 0)
+      {
         break;
+      }
     }
 
   if (result == -1 && errno == EWOULDBLOCK)

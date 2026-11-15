@@ -14,7 +14,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 CORBA::Environment::Environment (CORBA::Environment const &rhs)
 {
   if (rhs.exception_)
+  {
     this->exception_.reset (rhs.exception_->_tao_duplicate ());
+  }
 }
 
 CORBA::Environment::Environment (TAO_ORB_Core * const orb_core)
@@ -42,7 +44,9 @@ CORBA::Environment::~Environment ()
   // with the ORB, it shouldn't try to pop because the ORB is being
   // destroyed also.
   if (this->previous_ != nullptr)
+  {
     TAO_ORB_Core_instance ()->default_environment (this->previous_);
+  }
 }
 
 void
@@ -70,7 +74,9 @@ CORBA::Environment::exception (CORBA::Exception *ex)
   this->exception_.reset (ex);
 
   if (this->exception_ != nullptr)
+  {
     this->exception_->_raise ();
+  }
 }
 
 void
@@ -136,14 +142,18 @@ CORBA::Environment::exception_type () const
                         sizeof typecode_extra - 1) != 0))
     return CORBA::SYSTEM_EXCEPTION;
   else
+  {
     return CORBA::USER_EXCEPTION;
+  }
 }
 
 char const *
 CORBA::Environment::exception_id () const
 {
   if (this->exception_ == nullptr)
+  {
     return nullptr;
+  }
 
   return this->exception_->_rep_id ();
 }

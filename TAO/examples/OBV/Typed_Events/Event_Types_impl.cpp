@@ -514,7 +514,9 @@ Criterion_List_impl::is_critical (Event *e)
           e_c->origin_id_ () == 0)
         {
           if (c->is_critical (e))
+          {
             return true;
+          }
         }
     }
   return false;

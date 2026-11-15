@@ -89,7 +89,9 @@ Handler::Handler (ACE_Reactor &reactor, bool close_other)
       // closing the other pipe sets up the spinner error.
       // leaving it open sets up the segv.
       if (close_other)
+      {
         this->other_pipe_.close();
+      }
     }
 }
 

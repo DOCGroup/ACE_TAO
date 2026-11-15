@@ -16,7 +16,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       int const result = clerk.init (argc, argv);
       if (result == -1)
+      {
         return 1;
+      }
 
       clerk.run ();
     }

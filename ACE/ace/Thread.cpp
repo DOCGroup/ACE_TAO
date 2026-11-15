@@ -36,7 +36,9 @@ ACE_Thread::spawn_n (size_t n,
                               stack_size == nullptr ? ACE_DEFAULT_THREAD_STACKSIZE : stack_size[i],
                               thread_adapter,
                               thr_name == nullptr ? nullptr : thr_name + i) != 0)
+      {
         break;
+      }
    }
 
   return i;
@@ -78,9 +80,13 @@ ACE_Thread::spawn_n (ACE_thread_t thread_ids[],
       if (result == 0)
         {
           if (thread_ids != nullptr)
+          {
             thread_ids[i] = t_id;
+          }
           if (thread_handles != nullptr)
+          {
             thread_handles[i] = t_handle;
+          }
         }
       else
         // Bail out if error occurs.

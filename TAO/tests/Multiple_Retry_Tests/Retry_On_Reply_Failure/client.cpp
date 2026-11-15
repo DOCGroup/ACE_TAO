@@ -45,7 +45,9 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
   if (ACE_OS::strncmp (options.ior.c_str (),
                        corbaloc_prefix,
                        ACE_OS::strlen (corbaloc_prefix)) != 0)
+  {
     return false;
+  }
 
   // Indicates successful parsing of the command line
   return true;
@@ -100,7 +102,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Client_Options options;
       if (!parse_args (argc, argv, options))
+      {
         return 1;
+      }
 
       Worker worker (orb.in (), options.ior);
 

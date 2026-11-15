@@ -144,17 +144,25 @@ int run_main (int, ACE_TCHAR *[])
   v1.push_back (2);
   v2.push_back (2);
   if (v1 != v2)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("Inequality test failed!\n")));
+  }
   if (!(v1 == v2))
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("Equality test failed!\n")));
+  }
 
   v1.push_back (3);
   if (v1.size () != 3)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("v1's size should be 3\n")));
+  }
 
   v1.swap (v2);
   if (v2.size () != 3)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("v2's size should be 3\n")));
+  }
 
   // Assert that vector standard iterators work
   {

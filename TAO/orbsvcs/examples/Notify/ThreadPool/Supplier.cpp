@@ -158,7 +158,9 @@ TAO_Notify_ThreadPool_Supplier::subscription_change (
                   added[0].type_name.in ()));
 
       if (this->consumer_count_ == this->expected_consumer_count_)
+      {
         this->consumers_connected_.signal ();
+      }
     }
 }
 

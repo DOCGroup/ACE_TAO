@@ -138,7 +138,9 @@ server_main (int argc,
 
       Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return -1;
+      }
 
       Current_Test_Impl server_impl (orb.in (),
                                      root_poa.in (),
@@ -197,7 +199,9 @@ server_main (int argc,
 #endif
 
       if (TAO_debug_level >= 1)
+      {
         ACE_DEBUG ((LM_INFO, ACE_TEXT ("Server (%P|%t) Event loop finished.\n")));
+      }
 
       if (!cri->self_test ())
         ACE_ERROR ((LM_ERROR,

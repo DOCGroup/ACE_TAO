@@ -65,7 +65,9 @@ TAO_Connection_Handler::set_socket_option (ACE_SOCK &sock,
                   ACE_TEXT ("'%m'\n")));
 
     if (errno != ENOTSUP)
+    {
       return -1;
+    }
   }
 #endif /* !ACE_LACKS_SO_SNDBUF */
 
@@ -83,7 +85,9 @@ TAO_Connection_Handler::set_socket_option (ACE_SOCK &sock,
                     ACE_TEXT ("'%m'\n")));
 
     if (errno != ENOTSUP)
+    {
       return -1;
+    }
   }
 #endif /* !ACE_LACKS_SO_RCVBUF */
 
@@ -286,7 +290,9 @@ TAO_Connection_Handler::handle_input_internal (
   this->pre_io_hook (return_value);
 
   if (return_value != 0)
+  {
     return return_value;
+  }
 
   return_value = this->transport ()->handle_input (resume_handle);
 
@@ -348,7 +354,9 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
           // If the ORB is nil, get the reactor from orb_core which gets it
           // from LF.
           if (eh_reactor == nullptr)
+          {
             eh_reactor = this->transport()->orb_core()->reactor ();
+          }
         }
 
       // The Reactor must not be null, otherwise something else is
@@ -371,7 +379,9 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
       // will make things safer.
       ACE_HANDLE tmp_handle = handle;
       if (this->orb_core_->has_shutdown ())
+      {
         tmp_handle = (ACE_HANDLE) id;
+      }
 
       eh_reactor->remove_handler (tmp_handle,
                                   ACE_Event_Handler::ALL_EVENTS_MASK |

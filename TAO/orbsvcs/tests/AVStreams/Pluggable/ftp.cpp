@@ -106,7 +106,9 @@ Client::init (int argc,
                                  TAO_AV_CORE::instance ()->poa ());
 
   if (this->parse_args (argc, argv) != 0)
+  {
     return -1;
+  }
 
   this->fp_.reset (ACE_OS::fopen (this->options_.filename.c_str (), "rb"));
   if (!this->fp_)
@@ -127,14 +129,18 @@ Client::init (int argc,
   if (!this->options_.address.empty ())
     {
       if (addr.set (this->options_.address.c_str ()) != 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "Invalid local address\n"), -1);
+      }
     }
   else
     {
       char hostname[BUFSIZ] {};
       if (ACE_OS::hostname (hostname, sizeof hostname) != 0 ||
           addr.set ("5000", hostname) != 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "Unable to determine local address\n"), -1);
+      }
     }
 
   std::string const flowname = "Data_" + this->options_.protocol;
@@ -149,14 +155,18 @@ Client::init (int argc,
   if (!this->options_.peer_address.empty ())
     {
       if (peer_addr.set (this->options_.peer_address.c_str ()) != 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "Invalid peer address\n"), -1);
+      }
     }
   else
     {
       char hostname[BUFSIZ] {};
       if (ACE_OS::hostname (hostname, sizeof hostname) != 0 ||
           peer_addr.set ("5050", hostname) != 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "Unable to determine peer address\n"), -1);
+      }
     }
   entry.set_peer_addr (&peer_addr);
 
@@ -171,7 +181,9 @@ Client::init (int argc,
                                  the_qos.inout (),
                                  flow_spec);
   if (!bind_result)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "streamctrl::bind_devs failed\n"), -1);
+  }
 
   return 0;
 }
@@ -180,9 +192,13 @@ int
 Client::pace_data ()
 {
   if (this->options_.frame_rate <= 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Frame rate must be positive\n"), -1);
+  }
   if (this->protocol_object_ == nullptr)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "No protocol object was configured\n"), -1);
+  }
 
   double const frame_time = 1.0 / this->options_.frame_rate;
   ACE_Time_Value const inter_frame_time (frame_time);
@@ -206,7 +222,9 @@ Client::pace_data ()
           if (bytes_read == 0)
             {
               if (std::ferror (this->fp_.get ()))
+              {
                 ACE_ERROR_RETURN ((LM_ERROR, "Error reading input file\n"), -1);
+              }
               break;
             }
           this->mb_.wr_ptr (bytes_read);
@@ -232,7 +250,9 @@ Client::pace_data ()
 
           ++this->count_;
           if (TAO_debug_level > 0)
+          {
             ACE_DEBUG ((LM_DEBUG, "Client::pace_data buffer sent successfully\n"));
+          }
         }
 
       AVStreams::flowSpec stop_spec (1);

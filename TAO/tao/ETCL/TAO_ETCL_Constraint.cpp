@@ -404,7 +404,9 @@ TAO_ETCL_Literal_Constraint::operator/ (TAO_ETCL_Literal_Constraint const &rhs)
     case ACE_ETCL_DOUBLE:
       {
         if (ACE::is_equal (static_cast<ACE_CDR::Double> (rhs), 0.0))
+        {
           return TAO_ETCL_Literal_Constraint (ACE_CDR::Double {});
+        }
 
         CORBA::Double const result = static_cast<CORBA::Double> (*this)
           / static_cast<CORBA::Double> (rhs);
@@ -414,7 +416,9 @@ TAO_ETCL_Literal_Constraint::operator/ (TAO_ETCL_Literal_Constraint const &rhs)
     case ACE_ETCL_SIGNED:
       {
         if (static_cast<ACE_CDR::Long> (rhs) == 0)
+        {
           return TAO_ETCL_Literal_Constraint (ACE_CDR::Long {});
+        }
 
         CORBA::Long const result = static_cast<CORBA::Long> (*this)
           / static_cast<CORBA::Long> (rhs);
@@ -423,7 +427,9 @@ TAO_ETCL_Literal_Constraint::operator/ (TAO_ETCL_Literal_Constraint const &rhs)
     case ACE_ETCL_UNSIGNED:
       {
         if (static_cast<ACE_CDR::ULong> (rhs) == 0)
+        {
           return TAO_ETCL_Literal_Constraint (ACE_CDR::ULong {});
+        }
 
         CORBA::ULong const result = static_cast<CORBA::ULong> (*this)
           / static_cast<CORBA::ULong> (rhs);
@@ -476,9 +482,13 @@ TAO_ETCL_Literal_Constraint::copy (TAO_ETCL_Literal_Constraint const &lit)
 {
   Value value = ETCL_Literal_Constraint::copy_value (lit.op_);
   if (lit.any_ != nullptr)
+  {
     lit.any_->_add_ref ();
+  }
   if (this->any_ != nullptr)
+  {
     this->any_->_remove_ref ();
+  }
   this->op_ = std::move (value);
   this->any_ = lit.any_;
 }

@@ -124,7 +124,9 @@ Activity::activate_job_list ()
   for (Job_i * const job : this->builder_->job_list ())
     {
       if (TAO_debug_level > 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "Activating job:%C\n", job->name ().c_str ()));
+      }
 
       // find your poa
       PortableServer::POA_var host_poa =
@@ -289,7 +291,9 @@ Activity::get_server_priority (CORBA::Object_ptr server)
   RTCORBA::PriorityModel priority_model =
     priority_policy->priority_model ();
   if (priority_model != RTCORBA::SERVER_DECLARED)
+  {
     return -1;
+  }
 
   // Return the server priority.
   return priority_policy->server_priority ();
@@ -301,7 +305,9 @@ Activity::run (int argc, ACE_TCHAR *argv[])
   this->init (argc, argv);
 
   if (this->resolve_naming_service () == -1)
+  {
     return;
+  }
 
   this->activate_poa_list ();
 

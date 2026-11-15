@@ -64,7 +64,9 @@ ServerInterceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr r
   if (permission_granted)
     std::cout << "Permission Granted " << std::endl;
   else
+  {
     std::cout << "Permission Denied " << std::endl;
+  }
 }
 
 void

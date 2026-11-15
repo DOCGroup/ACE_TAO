@@ -104,7 +104,9 @@ TimeStamp_Protocol_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
 {
   TAO_AV_Callback *callback {};
   if (endpoint->get_callback (entry->flowname (), callback) != 0 || callback == nullptr)
+  {
     return nullptr;
+  }
 
   TimeStamp_Protocol_Object *object {};
   ACE_NEW_RETURN (object,

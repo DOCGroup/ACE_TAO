@@ -96,7 +96,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       // Get the sender reference..
       CORBA::Object_var const tmp =
@@ -176,7 +178,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       orb->destroy ();
 
       if (!transport_with_queue)
+      {
         return 1;
+      }
     }
   catch (CORBA::Exception const &ex)
     {

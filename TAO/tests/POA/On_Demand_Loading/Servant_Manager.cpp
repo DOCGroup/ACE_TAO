@@ -43,7 +43,9 @@ ServantManager_i::obtain_servant (ACE_TCHAR const *str,
   ACE_TString dllname;
   ACE_TString create_symbol;
   if (!this->parse_string (str, dllname, create_symbol))
+  {
     return nullptr;
+  }
 
   ACE_DLL *raw_dll {};
   ACE_NEW_RETURN (raw_dll, ACE_DLL, nullptr);
@@ -82,7 +84,9 @@ ServantManager_i::obtain_servant (ACE_TCHAR const *str,
   PortableServer::Servant const servant = (*servant_creator) (this->orb_.in (), poa);
 
   if (servant == nullptr)
+  {
     return nullptr;
+  }
 
   std::unique_ptr<PortableServer::ServantBase> servant_owner (servant);
   if (this->servant_map_.bind (oid.in (), dll.get ()) == -1)
@@ -106,7 +110,9 @@ ServantManager_i::parse_string (ACE_TCHAR const *s,
                                 ACE_TString &create_symbol) const
 {
   if (s == nullptr)
+  {
     return false;
+  }
 
   // The format of the objectid is <dll:factory_function>.  This
   // string is parsed to obtain the dll name and the function name
@@ -130,7 +136,9 @@ ServantManager_i::parse_string (ACE_TCHAR const *s,
   // the location of ':'.
   create_symbol = str.substr (index + 1);
   if (dllname.empty () || create_symbol.empty ())
+  {
     return false;
+  }
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,

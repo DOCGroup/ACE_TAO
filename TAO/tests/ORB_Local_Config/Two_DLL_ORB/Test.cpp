@@ -48,7 +48,9 @@ testLoadingTwoOrbs (int, ACE_TCHAR *argv[])
       if (errno == ENOENT)
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("No service config file found\n")));
       else
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Service Config open failed: %m\n")));
+      }
 
       return -1;
     }

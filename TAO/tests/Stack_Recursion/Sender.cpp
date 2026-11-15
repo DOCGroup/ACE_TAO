@@ -68,6 +68,8 @@ Sender::shutdown ()
                  this->mutex_);
 
       if (!this->is_done_)
+      {
         this->is_done_ = true;
+      }
     }
 }

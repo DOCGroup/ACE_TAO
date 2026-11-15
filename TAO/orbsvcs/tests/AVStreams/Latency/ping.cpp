@@ -91,7 +91,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       int const result = parse_args (argc, argv);
       if (result != 0)
+      {
         return result;
+      }
 
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA");
@@ -226,7 +228,9 @@ Ping_Recv_Callback::receive_frame (ACE_Message_Block *frame,
           ACE_hrtime_t stamp;
 
           if (i->length () < sizeof(stamp))
+          {
             return 0;
+          }
 
           std::memcpy (&stamp, i->rd_ptr (), sizeof(stamp));
 
@@ -242,11 +246,15 @@ Ping_Recv_Callback::receive_frame (ACE_Message_Block *frame,
             }
 
           if (respond)
+          {
             pong_callback.send_response (stamp);
+          }
         }
     }
   else
+  {
     TAO_AV_CORE::instance ()->orb ()->shutdown ();
+  }
   return 0;
 }
 

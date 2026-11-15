@@ -41,7 +41,9 @@ operator<< (std::ostream& os, CCS::Thermometer_ptr t)
 
     // If device is a thermostat, show nominal temperature.
     if (!CORBA::is_nil (tmstat.in ()))
-        os << "\tNominal temp: " << tmstat->get_nominal () << std::endl;
+    {
+      os << "\tNominal temp: " << tmstat->get_nominal () << std::endl;
+    }
     return os;
 }
 
@@ -180,12 +182,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ULong const len = list->length ();
         std::cout << "Controller has " << len << " device";
         if (len != 1)
+        {
           std::cout << "s";
+        }
         std::cout << "." << std::endl;
 
         // If there are no devices at all, we are finished.
         if (len == 0)
-            return 0;
+        {
+          return 0;
+        }
 
         // Show details for each device.
         for (CORBA::ULong i {}; i < list->length (); ++i)
@@ -253,7 +259,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
             tmstat = CCS::Thermostat::_narrow (list[l]);
             if (CORBA::is_nil (tmstat.in ()))
-                continue;                   // Skip thermometers
+            {
+              continue;                   // Skip thermometers
+            }
             CORBA::ULong const len = tss.length ();
             tss.length (len + 1);
             tss[len] = tmstat;

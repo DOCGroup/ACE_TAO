@@ -54,7 +54,9 @@ void
 Coordinator::add_peer (Test::Peer_ptr peer)
 {
   if (this->peers_.size () >= this->peer_max_)
+  {
     return;
+  }
 
   this->peers_.emplace_back (Test::Peer::_duplicate (peer));
 }

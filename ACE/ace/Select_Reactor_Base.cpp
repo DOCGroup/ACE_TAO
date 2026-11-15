@@ -90,7 +90,9 @@ ACE_Select_Reactor_Handler_Repository::open (size_type size)
     return -1;
 #else
   if (this->event_handlers_.size (size) == -1)
+  {
     return -1;
+  }
 
   // Initialize the ACE_Event_Handler pointers to 0.
   std::fill (this->event_handlers_.begin (),
@@ -179,7 +181,9 @@ ACE_Select_Reactor_Handler_Repository::find_eh (ACE_HANDLE handle)
   map_type::iterator const tmp = std::addressof (this->event_handlers_[handle]);
 
   if (*tmp != nullptr)
+  {
     pos = tmp;
+  }
 #endif /* ACE_SELECT_REACTOR_BASE_USES_HASH_MAP */
 
   return pos;
@@ -194,13 +198,19 @@ ACE_Select_Reactor_Handler_Repository::bind (ACE_HANDLE handle,
   ACE_TRACE ("ACE_Select_Reactor_Handler_Repository::bind");
 
   if (event_handler == nullptr)
+  {
     return -1;
+  }
 
   if (handle == ACE_INVALID_HANDLE)
+  {
     handle = event_handler->get_handle ();
+  }
 
   if (this->invalid_handle (handle))
+  {
     return -1;
+  }
 
   // Is this handle already in the Reactor?
   bool existing_handle = false;
@@ -241,7 +251,9 @@ ACE_Select_Reactor_Handler_Repository::bind (ACE_HANDLE handle,
     {
       // Cannot use a different handler for an existing handle.
       if (current_handler != event_handler)
+      {
         return -1;
+      }
 
       // Remember that this handle is already registered in the
       // Reactor.
@@ -251,7 +263,9 @@ ACE_Select_Reactor_Handler_Repository::bind (ACE_HANDLE handle,
   this->event_handlers_[handle] = event_handler;
 
   if (this->max_handlep1_ < handle + 1)
+  {
     this->max_handlep1_ = handle + 1;
+  }
 
 #endif /* ACE_SELECT_REACTOR_BASE_USES_HASH_MAP */
 
@@ -277,7 +291,9 @@ ACE_Select_Reactor_Handler_Repository::bind (ACE_HANDLE handle,
 
   // If new entry, call add_reference() if needed.
   if (!existing_handle)
+  {
     event_handler->add_reference ();
+  }
 
   return 0;
 }
@@ -361,16 +377,26 @@ ACE_Select_Reactor_Handler_Repository::unbind (
           // Compute the maximum of six values.
           this->max_handlep1_ = wait_rd_max;
           if (this->max_handlep1_ < wait_wr_max)
+          {
             this->max_handlep1_ = wait_wr_max;
+          }
           if (this->max_handlep1_ < wait_ex_max)
+          {
             this->max_handlep1_ = wait_ex_max;
+          }
 
           if (this->max_handlep1_ < suspend_rd_max)
+          {
             this->max_handlep1_ = suspend_rd_max;
+          }
           if (this->max_handlep1_ < suspend_wr_max)
+          {
             this->max_handlep1_ = suspend_wr_max;
+          }
           if (this->max_handlep1_ < suspend_ex_max)
+          {
             this->max_handlep1_ = suspend_ex_max;
+          }
 
           ++this->max_handlep1_;
         }
@@ -382,7 +408,9 @@ ACE_Select_Reactor_Handler_Repository::unbind (
     }
 
   if (event_handler == nullptr)
+  {
     return -1;
+  }
 
   bool const requires_reference_counting =
     event_handler->reference_counting_policy ().value () ==
@@ -391,7 +419,9 @@ ACE_Select_Reactor_Handler_Repository::unbind (
   // Close down the <Event_Handler> unless we've been instructed not
   // to.
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::DONT_CALL) == 0)
+  {
     (void) event_handler->handle_close (handle, mask);
+  }
 
   // Call remove_reference() if the removal is complete and reference
   // counting is needed.
@@ -434,7 +464,9 @@ ACE_Select_Reactor_Handler_Repository_Iterator::next (
   if (this->done ())
     result = false;
   else
+  {
     next_item = ACE_SELECT_REACTOR_EVENT_HANDLER (this->current_);
+  }
 
   return result;
 }
@@ -456,7 +488,9 @@ ACE_Select_Reactor_Handler_Repository_Iterator::advance ()
 #endif  /* ACE_SELECT_REACTOR_BASE_USES_HASH_MAP */
 
   if (this->current_ != end)
+  {
     ++this->current_;
+  }
 
 #ifndef ACE_SELECT_REACTOR_BASE_USES_HASH_MAP
   // Advance to the next element containing a non-zero event handler.
@@ -545,7 +579,9 @@ ACE_Select_Reactor_Notify::max_notify_iterations (int iterations)
 {
   // Must always be > 0 or < 0 to optimize the loop exit condition.
   if (iterations == 0)
+  {
     iterations = 1;
+  }
 
   this->max_notify_iterations_ = iterations;
 }
@@ -610,7 +646,9 @@ ACE_Select_Reactor_Notify::open (ACE_Reactor_Impl *r,
         }
 
       if (this->notification_pipe_.open () == -1)
+      {
         return -1;
+      }
 #if defined (F_SETFD) && !defined (ACE_LACKS_FCNTL)
       if (ACE_OS::fcntl (this->notification_pipe_.read_handle (), F_SETFD, 1) == -1)
         {
@@ -696,7 +734,9 @@ ACE_Select_Reactor_Notify::notify (ACE_Event_Handler *event_handler,
   // Just consider this method a "no-op" if there's no
   // <ACE_Select_Reactor> configured.
   if (this->select_reactor_ == nullptr)
+  {
     return 0;
+  }
 
   ACE_Event_Handler_var safe_handler (event_handler);
 
@@ -760,7 +800,9 @@ ACE_Select_Reactor_Notify::dispatch_notifications (int &number_of_active_handles
       return this->handle_input (read_handle);
     }
   else
+  {
     return 0;
+  }
 }
 
 ACE_HANDLE
@@ -916,7 +958,9 @@ ACE_Select_Reactor_Notify::read_notify_pipe (ACE_HANDLE handle,
           if (ACE::recv_n (handle,
                            ((char *) &buffer) + n,
                            remainder) != remainder)
+          {
             return -1;
+          }
         }
 
       return 1;
@@ -924,7 +968,9 @@ ACE_Select_Reactor_Notify::read_notify_pipe (ACE_HANDLE handle,
 
   // Return -1 if things have gone seriously  wrong.
   if (n <= 0 && (errno != EWOULDBLOCK && errno != EAGAIN))
+  {
     return -1;
+  }
 
   return 0;
 }
@@ -948,19 +994,25 @@ ACE_Select_Reactor_Notify::handle_input (ACE_HANDLE handle)
       // Dispatch the buffer
       // NOTE: We count only if we made any dispatches ie. upcalls.
       if (this->dispatch_notify (buffer) > 0)
+      {
         ++number_dispatched;
+      }
 
       // Bail out if we've reached the <notify_threshold_>.  Note that
       // by default <notify_threshold_> is -1, so we'll loop until all
       // the notifications in the pipe have been dispatched.
       if (number_dispatched == this->max_notify_iterations_)
+      {
         break;
+      }
     }
 
   // Reassign number_dispatched to -1 if things have gone seriously
   // wrong.
   if (result < 0)
+  {
     number_dispatched = -1;
+  }
 
   // Enqueue ourselves into the list of waiting threads.  When we
   // reacquire the token we'll be off and running again with ownership
@@ -979,7 +1031,9 @@ ACE_Select_Reactor_Impl::purge_pending_notifications (ACE_Event_Handler *eh,
   if (this->notify_handler_ == nullptr)
     return 0;
   else
+  {
     return this->notify_handler_->purge_pending_notifications (eh, mask);
+  }
 }
 
 // Perform GET, CLR, SET, and ADD operations on the Handle_Sets.
@@ -1000,7 +1054,9 @@ ACE_Select_Reactor_Impl::bit_ops (ACE_HANDLE handle,
 {
   ACE_TRACE ("ACE_Select_Reactor_Impl::bit_ops");
   if (this->handler_rep_.handle_in_range (handle) == 0)
+  {
     return -1;
+  }
 
 #if !defined (ACE_WIN32)
   ACE_Sig_Guard sb (nullptr,
@@ -1013,11 +1069,17 @@ ACE_Select_Reactor_Impl::bit_ops (ACE_HANDLE handle,
   // Find the old reactor masks.  This automatically does the work of
   // the GET_MASK operation.
   if (handle_set.rd_mask_.is_set (handle))
+  {
     ACE_SET_BITS (omask, ACE_Event_Handler::READ_MASK);
+  }
   if (handle_set.wr_mask_.is_set (handle))
+  {
     ACE_SET_BITS (omask, ACE_Event_Handler::WRITE_MASK);
+  }
   if (handle_set.ex_mask_.is_set (handle))
+  {
     ACE_SET_BITS (omask, ACE_Event_Handler::EXCEPT_MASK);
+  }
 
   switch (ops)
     {

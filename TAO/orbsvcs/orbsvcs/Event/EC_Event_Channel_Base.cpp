@@ -111,7 +111,9 @@ TAO_EC_Event_Channel_Base::activate ()
     // return right away...
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
     if (this->status_ != Status::idle)
+    {
       return;
+    }
     this->status_ = Status::activating;
   }
   this->dispatching_->activate ();
@@ -135,7 +137,9 @@ TAO_EC_Event_Channel_Base::shutdown ()
     // need to return right away...
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
     if (this->status_ != Status::active)
+    {
       return;
+    }
     this->status_ = Status::destroying;
   }
   this->dispatching_->shutdown ();

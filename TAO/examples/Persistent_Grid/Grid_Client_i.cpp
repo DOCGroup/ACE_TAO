@@ -26,11 +26,17 @@ Grid_Client_i::parse_args (int argc,
       }
 
   if (this->width_ == 0)
+  {
     this->width_ = Grid::DEFAULT_SIZE;
+  }
   if (this->height_ == 0)
+  {
     this->height_ = Grid::DEFAULT_SIZE;
+  }
   if (this->value_ == 0)
+  {
     this->value_ = Grid::DEFAULT_VALUE;
+  }
   return 0;
 }
 
@@ -41,10 +47,14 @@ Grid_Client_i::run (char const *name,
 {
   // Initialize the client.
   if (this->client.init (name, argc, argv) == -1)
+  {
     return -1;
+  }
 
   if (this->parse_args (argc, argv) == -1)
+  {
     return -1;
+  }
   try
     {
       // Make the Grid.

@@ -71,13 +71,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Parse the command-line arguments to get the IOR
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       // If ior_input_file exists, Read the file, and get the IOR
       // else, it must have been specified on the command line
       ACE_TString ior;
       if (options.ior != nullptr)
+      {
         ior = options.ior;
+      }
       if (options.ior_input_file != nullptr)
         {
           std::unique_ptr<FILE, int (*) (FILE *)> input_file (

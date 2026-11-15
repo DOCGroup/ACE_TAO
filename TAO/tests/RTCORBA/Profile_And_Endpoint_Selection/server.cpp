@@ -387,12 +387,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       int const parse_args_result = parse_args (argc, argv, options);
       if (parse_args_result != 0)
+      {
         return parse_args_result;
+      }
 
       // Make sure we can support multiple priorities that are required
       // for this test.
       if (!check_supported_priorities (orb.in ()))
+      {
         return 2;
+      }
 
       // Thread Manager for managing task.
       ACE_Thread_Manager thread_manager;

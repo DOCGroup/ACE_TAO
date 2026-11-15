@@ -57,10 +57,14 @@ ECM_Driver::run (int argc, ACE_TCHAR* argv[])
         root_poa->the_POAManager ();
 
       if (this->parse_args (argc, argv))
+      {
         return 1;
+      }
 
       if (this->parse_config_file ())
+      {
         return 1;
+      }
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Execution parameters:\n"
@@ -195,7 +199,9 @@ ECM_Driver::federation_has_shutdown (ECM_Local_Federation *federation)
             count,
             count - 1,
             std::memory_order_relaxed))
+      {
         break;
+      }
     }
 }
 
@@ -408,17 +414,23 @@ ECM_Driver::parse_config_file ()
   for (size_t i {}; i < this->all_federations_count_; ++i)
     {
       if (this->skip_blanks (cfg, "reading federation name"))
+      {
         return -1;
+      }
       ACE_Read_Buffer reader (cfg);
       std::unique_ptr<char, ECM_Read_Buffer_Deleter> buf (
         reader.read (' ', ' ', '\0'), ECM_Read_Buffer_Deleter {reader.alloc ()});
       if (!buf)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "problem reading federation name\n"), -1);
+      }
       std::string name (buf.get ());
 
       int port {};
       if (this->skip_blanks (cfg, "reading federation port number"))
+      {
         return -1;
+      }
       s = fscanf (cfg, "%d", &port);
       if (s != 1 || port < 0 || port > 65535)
         {
@@ -430,7 +442,9 @@ ECM_Driver::parse_config_file ()
 
       int ns {}, nc {};
       if (this->skip_blanks (cfg, "reading supplier count"))
+      {
         return -1;
+      }
       s = fscanf (cfg, "%d", &ns);
       if (s != 1 || ns < 0)
         {
@@ -439,7 +453,9 @@ ECM_Driver::parse_config_file ()
                              i), -1);
         }
       if (this->skip_blanks (cfg, "reading constumer count"))
+      {
         return -1;
+      }
       s = fscanf (cfg, "%d", &nc);
       if (s != 1 || nc < 0)
         {
@@ -448,7 +464,9 @@ ECM_Driver::parse_config_file ()
                              i), -1);
         }
       if (ns == 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "federation requires at least one supplier\n"), -1);
+      }
 
       std::vector<std::string> supplier_names;
       std::vector<std::string> consumer_names;
@@ -659,7 +677,9 @@ void
 ECM_Supplier::close ()
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
+  {
     return;
+  }
 
   this->consumer_proxy_->disconnect_push_consumer ();
 
@@ -702,7 +722,9 @@ ECM_Supplier::push (RtecEventComm::EventSet const& events)
     {
       RtecEventComm::Event const& e = events[i];
       if (e.header.type != ACE_ES_EVENT_INTERVAL_TIMEOUT)
+      {
         continue;
+      }
 
       this->federation_->supplier_timeout (this->consumer_proxy_.in ());
     }
@@ -739,7 +761,9 @@ void
 ECM_Consumer::connect (unsigned int *seed)
 {
   if (CORBA::is_nil (this->consumer_admin_.in ()))
+  {
     return;
+  }
 
   this->supplier_proxy_ =
     this->consumer_admin_->obtain_push_supplier ();
@@ -779,7 +803,9 @@ ECM_Consumer::disconnect ()
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ())
       || CORBA::is_nil (this->consumer_admin_.in ()))
+  {
     return;
+  }
 
   RtecEventChannelAdmin::ProxyPushSupplier_var tmp =
     this->supplier_proxy_._retn ();
@@ -939,12 +965,16 @@ ECM_Local_Federation::consumer_push (ACE_hrtime_t,
           if (type == this->federation_->consumer_ipaddr(j))
             {
               if (this->subscribed_bit (j) == 0)
+              {
                 ++this->unfiltered_count_;
+              }
               break;
             }
         }
       if (j == this->federation_->consumer_types ())
+      {
         ++this->invalid_count_;
+      }
     }
 }
 
@@ -996,10 +1026,14 @@ ECM_Local_Federation::dump_results () const
 {
   double unfiltered_ratio {};
   if (this->recv_count_ != 0)
+  {
     unfiltered_ratio = double(this->unfiltered_count_)/this->recv_count_;
+  }
   double invalid_ratio {};
   if (this->recv_count_ != 0)
+  {
     invalid_ratio = double(this->invalid_count_)/this->recv_count_;
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               "Federation: %s\n"
@@ -1022,7 +1056,9 @@ void
 ECM_Local_Federation::subscribed_bit (size_t i, CORBA::Boolean x)
 {
   if (i >= this->consumer_types ())
+  {
     return;
+  }
   this->subscription_subset_[i] = x;
 }
 
@@ -1030,7 +1066,9 @@ CORBA::Boolean
 ECM_Local_Federation::subscribed_bit (size_t i) const
 {
   if (i >= this->consumer_types ())
+  {
     return 0;
+  }
   return this->subscription_subset_[i];
 }
 

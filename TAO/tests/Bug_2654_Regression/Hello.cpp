@@ -37,6 +37,8 @@ Hello::method (CORBA::Short count)
       if (ACE_Thread_Manager::instance ()->spawn_n (1, killer, orb.in ()) == -1)
         ACE_ERROR ((LM_ERROR, "Unable to start server shutdown thread\n"));
       else
+      {
         (void) orb._retn ();
+      }
     }
 }

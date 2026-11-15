@@ -82,7 +82,9 @@ Task_Test::svc ()
     if (max_count.load (std::memory_order_relaxed) >= n_threads)
       break;
     else
+    {
       ACE_Thread::yield ();
+    }
 
   ACE_DEBUG ((LM_DEBUG, "(%t) svc: finished waiting\n"));
   return 0;

@@ -18,7 +18,9 @@ int
 ClientService::open (void *p)
 {
   if (super::open (p) == -1)
+  {
     return -1;
+  }
 
   ACE_TCHAR peer_name[MAXHOSTNAMELEN] {};
   ACE_INET_Addr peer_addr {};
@@ -52,14 +54,18 @@ ClientService::handle_input (ACE_HANDLE)
     this->peer ().send (buffer,
                         static_cast<size_t> (recv_cnt));
   if (send_cnt == recv_cnt)
+  {
     return 0;
+  }
   if (send_cnt == -1 && ACE_OS::last_error () != EWOULDBLOCK)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%P|%t) %p\n"),
                        ACE_TEXT ("send")),
                       0);
   if (send_cnt == -1)
+  {
     send_cnt = 0;
+  }
   ACE_Message_Block *raw_message_block {};
   size_t const remaining =
     static_cast<size_t> ((recv_cnt - send_cnt));
@@ -100,11 +106,15 @@ ClientService::handle_output (ACE_HANDLE)
                     ACE_TEXT ("(%P|%t) %p\n"),
                     ACE_TEXT ("send")));
       else
+      {
         message_block->rd_ptr (static_cast<size_t> (send_cnt));
+      }
       if (message_block->length () > 0)
         {
           if (this->ungetq (message_block.get ()) == -1)
+          {
             return -1;
+          }
           message_block.release ();
           break;
         }
@@ -118,7 +128,9 @@ int
 ClientService::handle_close (ACE_HANDLE h, ACE_Reactor_Mask mask)
 {
   if (mask == ACE_Event_Handler::WRITE_MASK)
+  {
     return 0;
+  }
   return super::handle_close (h, mask);
 }
 // Listing 7
@@ -131,7 +143,9 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   if (acceptor.open (port_to_listen,
                      ACE_Reactor::instance (),
                      ACE_NONBLOCK) == -1)
+  {
     return 1;
+  }
 
   ACE_Reactor::instance ()->run_reactor_event_loop ();
 

@@ -68,7 +68,9 @@ private:
                                              buffer.data (),
                                              buffer.size () - 1);
         if (length <= 0)
+        {
           break;
+        }
         buffer[static_cast<size_t> (length)] = '\0';
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%C\n"), buffer.data ()));
       }
@@ -87,7 +89,9 @@ private:
     options.command_line (ACE_TEXT ("%s 1"), this->program_name_.c_str ());
     if (this->setStdHandles (options) == -1 ||
         this->setEnvVariable (options) == -1)
+    {
       return -1;
+    }
 #if !defined (ACE_WIN32) && !defined (ACE_LACKS_PWD_FUNCTIONS)
     return this->setUserID (options);
 #else
@@ -121,7 +125,9 @@ private:
     ACE_TRACE ("Manager::setUserID");
     struct passwd const *pw = ACE_OS::getpwnam ("nobody");
     if (pw == nullptr)
+    {
       return -1;
+    }
     options.seteuid (pw->pw_uid);
     return 0;
   }
@@ -171,7 +177,9 @@ public:
 #if !defined (ACE_LACKS_PWD_FUNCTIONS)
     struct passwd const *pw = ::getpwuid (ACE_OS::geteuid ());
     if (pw == nullptr)
+    {
       return;
+    }
     ACE_DEBUG ((LM_INFO,
                 ACE_TEXT ("(%P) Running this process as:%C\n"),
                 pw->pw_name));
@@ -196,7 +204,9 @@ public:
             ++i;
           }
         else
+        {
           return str;
+        }
       }
   }
 };

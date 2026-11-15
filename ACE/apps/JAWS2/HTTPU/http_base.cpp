@@ -12,14 +12,20 @@ HTTP_Base::receive (ACE_Message_Block &mb)
   if (this->line () == nullptr)
     {
       if (this->extract_line (mb) == 0)
+      {
         return 0;
+      }
       if (this->status () != STATUS_OK)
+      {
         return 1;
+      }
 
       // Call into the receive hook.
       this->parse_line ();
       if (this->status_ == STATUS_INTERNAL_SERVER_ERROR || this->no_headers_)
+      {
         return 1;
+      }
     }
 
   // Parse headers
@@ -58,10 +64,14 @@ HTTP_Base::deliver (ACE_Message_Block &mb)
       // Call into the deliver hook
       int const r = this->espouse_line ();
       if (r == -1)
+      {
         return -1;
+      }
 
       if (r == 1)
+      {
         this->deliver_state_ = 2;
+      }
 
       this->iter_.first ();
     }
@@ -80,7 +90,9 @@ HTTP_Base::deliver (ACE_Message_Block &mb)
         }
 
       if (mb.space () == 0)
+      {
         return 0;
+      }
 
       // Arriving here means this->mb_ has been emptied.
       this->mb_->crunch ();
@@ -120,7 +132,9 @@ HTTP_Base::receive_payload (ACE_Message_Block &mb)
       mb.crunch ();
     }
   else
+  {
     this->status_ = STATUS_INTERNAL_SERVER_ERROR;
+  }
 
   return result;
 }
@@ -131,10 +145,14 @@ HTTP_Base::receive_payload (ACE_Message_Block &mb, long length)
   int result = 0;
 
   if (length == -1)
+  {
     return this->receive_payload (mb);
+  }
 
   if (this->payload_.size () < (unsigned long) length)
+  {
     result = this->payload_.size (length);
+  }
 
   if (result == -1)
     {
@@ -248,7 +266,9 @@ HTTP_Base::deliver_header_name (JAWS_Header_Data *&data)
         }
 
       if (data->header_name ())
+      {
         break;
+      }
 
       this->iter_.advance ();
     }
@@ -282,7 +302,9 @@ HTTP_Base::extract_line (ACE_Message_Block &mb)
   JAWS_Parse_Headers *parser = JAWS_Parse_Headers_Singleton::instance ();
   char *p = parser->skipset ("\n", mb.rd_ptr (), mb.wr_ptr ());
   if (p == mb.wr_ptr ())
+  {
     return 0;
+  }
 
   this->status_ = STATUS_OK;
 
@@ -296,7 +318,9 @@ HTTP_Base::extract_line (ACE_Message_Block &mb)
   else
     {
       if (this->line_ != nullptr)
+      {
         ACE_OS::free (this->line_);
+      }
       this->line_ = line;
     }
 

@@ -46,7 +46,9 @@ TAO_Set_Update_Interceptor::send_request (
       IOP::ServiceContext const *scp {};
 
       if (!(a.in () >>= scp))
+      {
         return;
+      }
 
       IOP::ServiceContext sc = *scp;
       ri->add_request_service_context (sc, 0);
@@ -58,11 +60,15 @@ TAO_Set_Update_Interceptor::send_request (
 
       if (transaction_depth) {
         if (!(cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
+        {
           throw CORBA::MARSHAL ();
+        }
 
         // Add Transaction Depth Context
         if (!(cdr << transaction_depth))
+        {
           throw CORBA::MARSHAL ();
+        }
         sc.context_id = FTRT::FT_TRANSACTION_DEPTH;
 
         ACE_CDR::consolidate(&mb, cdr.begin());
@@ -95,9 +101,13 @@ TAO_Set_Update_Interceptor::send_request (
       ORBSVCS_DEBUG((LM_DEBUG, "send_request : sequence_number = %d\n", sequence_number));
       if (sequence_number != 0) {
         if (!(cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
+        {
           throw CORBA::MARSHAL ();
+        }
         if (!(cdr << sequence_number))
+        {
           throw CORBA::MARSHAL ();
+        }
         sc.context_id = FTRT::FT_SEQUENCE_NUMBER;
 
         ACE_CDR::consolidate(&mb, cdr.begin());

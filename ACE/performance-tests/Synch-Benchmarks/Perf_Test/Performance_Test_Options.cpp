@@ -20,7 +20,9 @@ Performance_Test_Options::count () const
   size_t total {};
 
   if (performance_test_options.verbose ())
+  {
     ACE_DEBUG ((LM_DEBUG, "Thread work count size = %B\n", performance_test_options.thr_work_count.size ()));
+  }
 
   for (size_t i {}; i < performance_test_options.thr_work_count.size (); ++i)
     {
@@ -68,7 +70,9 @@ Performance_Test_Options::parse_args (int argc, ACE_TCHAR *argv[])
           else if (connections > 0)
             this->logical_connections (size_t (connections));
           else
+          {
             ACE_DEBUG ((LM_WARNING, "warning, 0 connections!\n"));
+          }
 
           break;
         }
@@ -445,7 +449,9 @@ Performance_Test_Options::print_results ()
 #endif /* ACE_HAS_PRUSAGE_T */
     }
   if (performance_test_options.do_eager_exit ())
+  {
     ACE_OS::_exit (0);
+  }
 }
 #endif /* ACE_HAS_THREADS */
 

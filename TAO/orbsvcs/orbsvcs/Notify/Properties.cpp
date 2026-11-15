@@ -20,7 +20,9 @@ TAO_Notify_Properties::TAO_Notify_Properties ()
   this->ec_qos_[0].value <<= tp_params;
 
   if (TAO_debug_level > 1)
+  {
     ORBSVCS_DEBUG ((LM_DEBUG, "in TAO_Properties ctos %x\n", this));
+  }
 }
 
 TAO_Notify_Properties::~TAO_Notify_Properties () = default;

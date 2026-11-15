@@ -107,7 +107,9 @@ TAO_ConnectionTimeoutPolicy::create (CORBA::Any const &val)
 
   TimeBase::TimeT value {};
   if (!(val >>= value))
+  {
     throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
+  }
 
   TAO_ConnectionTimeoutPolicy *tmp {};
   ACE_NEW_THROW_EX (tmp,

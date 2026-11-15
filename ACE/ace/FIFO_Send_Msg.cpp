@@ -46,7 +46,9 @@ ACE_FIFO_Send_Msg::send (const ACE_Str_Buf &send_msg)
 
   ssize_t sent = ACE_OS::writev (this->get_handle (), iov, 2);
   if (sent > 0)
+  {
     sent -= iov[0].iov_len;       // Don't count the length we added.
+  }
   return sent;
 #endif /* ACE_HAS_STREAM_PIPES */
 }
@@ -73,7 +75,9 @@ ACE_FIFO_Send_Msg::ACE_FIFO_Send_Msg (const ACE_TCHAR *fifo_name,
 {
   ACE_TRACE ("ACE_FIFO_Send_Msg::ACE_FIFO_Send_Msg");
   if (this->ACE_FIFO_Send_Msg::open (fifo_name, flags, perms, sa) == -1)
+  {
     ACELIB_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_FIFO_Send_Msg")));
+  }
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

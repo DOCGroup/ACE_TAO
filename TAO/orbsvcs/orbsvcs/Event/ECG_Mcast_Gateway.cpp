@@ -202,7 +202,9 @@ TAO_ECG_Mcast_Gateway::init (int argc, ACE_TCHAR* argv[])
   if (this->validate_configuration () == -1)
     return -1;
   else
+  {
     return result;
+  }
 }
 
 int
@@ -360,7 +362,9 @@ TAO_ECG_Mcast_Gateway::init_address_server ()
       PortableServer::Servant_var<TAO_ECG_Simple_Address_Server> impl =
         TAO_ECG_Simple_Address_Server::create ();
       if (!impl.in ())
+      {
         return nullptr;
+      }
 
       if (impl->init (address_server_arg) == -1)
         {
@@ -374,7 +378,9 @@ TAO_ECG_Mcast_Gateway::init_address_server ()
       PortableServer::Servant_var<TAO_ECG_Complex_Address_Server> impl =
         TAO_ECG_Complex_Address_Server::create (true);
       if (!impl.in ())
+      {
         return nullptr;
+      }
 
       if (impl->init (address_server_arg) == -1)
         {
@@ -388,7 +394,9 @@ TAO_ECG_Mcast_Gateway::init_address_server ()
       PortableServer::Servant_var<TAO_ECG_Complex_Address_Server> impl =
         TAO_ECG_Complex_Address_Server::create (false);
       if (!impl.in ())
+      {
         return nullptr;
+      }
 
       if (impl->init (address_server_arg) == -1)
         {
@@ -429,7 +437,9 @@ TAO_ECG_Mcast_Gateway::init_handler (TAO_ECG_Dgram_Handler *receiver,
 
       h->reactor (reactor);
       if (h->open (address_server_arg, nic) != 0)
+      {
         return TAO_ECG_Refcounted_Handler ();
+      }
     }
 
   else if (this->handler_type_ == ECG_HANDLER_COMPLEX)
@@ -463,7 +473,9 @@ TAO_ECG_Mcast_Gateway::init_handler (TAO_ECG_Dgram_Handler *receiver,
           return TAO_ECG_Refcounted_Handler ();
         }
       if (h->open (ipaddr) != 0)
+      {
         return TAO_ECG_Refcounted_Handler ();
+      }
     }
 
   else
@@ -486,7 +498,9 @@ TAO_ECG_Mcast_Gateway::init_sender (
   PortableServer::Servant_var<TAO_ECG_UDP_Sender>
     sender (TAO_ECG_UDP_Sender::create ());
   if (!sender.in ())
+  {
     return sender;
+  }
 
   sender->init (ec,
                 address_server,
@@ -529,7 +543,9 @@ TAO_ECG_Mcast_Gateway::init_receiver (
   PortableServer::Servant_var<TAO_ECG_UDP_Receiver>
     receiver (TAO_ECG_UDP_Receiver::create ());
   if (!receiver.in ())
+  {
     return receiver;
+  }
 
   receiver->init (ec,
                   endpoint_rptr,

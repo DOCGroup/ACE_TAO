@@ -68,7 +68,9 @@ Exchange_Tester<T>::svc ()
               ACE_TEXT ("Thread %t %s claim.\n"),
               claimed ? ACE_TEXT ("DID") : ACE_TEXT ("DID NOT")));
   if (claimed)
+  {
     ++this->claimed_;
+  }
   return 0;
 }
 
@@ -276,10 +278,22 @@ int test (const ACE_TCHAR* type, int iterations)
   diff = ACE_OS::gettimeofday ();
   for (i = 0; i < iterations; ++i)
     {
-      if (foo != true) ++retval;
-      if (foo == false) ++retval;
-      if (foo != true) ++retval;
-      if (foo == false) ++retval;
+      if (foo != true)
+      {
+        ++retval;
+      }
+      if (foo == false)
+      {
+        ++retval;
+      }
+      if (foo != true)
+      {
+        ++retval;
+      }
+      if (foo == false)
+      {
+        ++retval;
+      }
     }
   diff = ACE_OS::gettimeofday () - diff;
   diff.to_usec (usec);

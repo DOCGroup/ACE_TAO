@@ -126,26 +126,34 @@ Distributer::init (int argc, ACE_TCHAR *argv[])
   int result =
     this->connection_manager_.init (TAO_AV_CORE::instance ()->orb ());
   if (result != 0)
+  {
     return result;
+  }
 
   // Initialize the endpoint strategy with the orb and poa.
   result =
     this->sender_endpoint_strategy_.init (TAO_AV_CORE::instance ()->orb (),
                                           TAO_AV_CORE::instance ()->poa ());
   if (result != 0)
+  {
     return result;
+  }
 
   result =
     this->receiver_endpoint_strategy_.init (TAO_AV_CORE::instance ()->orb (),
                                             TAO_AV_CORE::instance ()->poa ());
   if (result != 0)
+  {
     return result;
+  }
 
   // Parse the command line arguments
   result =
     this->parse_args (argc, argv);
   if (result != 0)
+  {
     return result;
+  }
 
   this->connection_manager_.load_ep_addr (
     ACE_TEXT_ALWAYS_CHAR (this->options_.addr_file.c_str ()));
@@ -233,7 +241,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         DISTRIBUTER::instance ()->init (argc, argv);
 
       if (result != 0)
+      {
         return result;
+      }
 
       while (!DISTRIBUTER::instance ()->done ())
         {

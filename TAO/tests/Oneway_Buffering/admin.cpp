@@ -53,7 +53,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       Oneway_Buffering_Admin *oneway_buffering_admin_impl;
       ACE_NEW_RETURN (oneway_buffering_admin_impl,

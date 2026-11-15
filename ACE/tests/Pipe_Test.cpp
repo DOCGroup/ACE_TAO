@@ -80,7 +80,9 @@ open_pipe (ACE_Pipe &pipe,
   ACE_TEST_ASSERT (result == 1);
 
   if (close_pipe)
+  {
     pipe.close ();
+  }
 }
 #endif
 

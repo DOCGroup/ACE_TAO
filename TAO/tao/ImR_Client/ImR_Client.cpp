@@ -20,18 +20,24 @@ namespace
   char *find_delimiter (char * const ior, char const delimiter)
   {
     if (ior == nullptr)
+    {
       return nullptr;
+    }
 
     // Search for "corbaloc:" alone, without the protocol.  This code
     // should be protocol neutral.
     char const corbaloc[] = "corbaloc:";
     char *pos = std::strstr (ior, corbaloc);
     if (pos == nullptr)
+    {
       return nullptr;
+    }
 
     pos = std::strchr (pos + sizeof (corbaloc), ':');
     if (pos == nullptr)
+    {
       return nullptr;
+    }
 
     pos = std::strchr (pos + 1, delimiter);
 
@@ -326,7 +332,9 @@ namespace TAO
       char * const pos = find_delimiter (ior.inout (),
                                          profile.object_key_delimiter ());
       if (pos == nullptr)
+      {
         throw ::CORBA::INTERNAL ();
+      }
 
       std::string const partial_ior (ior.in (), (pos - ior.in ()) + 1);
 
@@ -347,7 +355,9 @@ namespace TAO
           ACE_CString const server_id = poa->orb_core ().server_id ();
           std::string name (server_id.c_str ());
           if (!server_id.empty ())
+          {
             name += ':';
+          }
           name += poa->name ().c_str ();
 
           imr_locator->server_is_running (name.c_str (),
@@ -381,7 +391,9 @@ namespace TAO
       // Check to see if there was an imr returned.
       // If none, return ourselves.
       if (CORBA::is_nil (imr.in ()))
+      {
         return;
+      }
 
       try
         {

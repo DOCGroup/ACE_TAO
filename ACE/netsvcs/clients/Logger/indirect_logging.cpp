@@ -23,7 +23,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_ERROR ((LM_ERROR, "Cannot open logger, using STDERR\n"));
 
       if (ACE_LOG_MSG->open (prog_name, ACE_Log_Msg::STDERR | verbose) == -1)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "Cannot open logger\n"), -1);
+      }
     }
 
   ACE_DEBUG ((LM_STARTUP, "starting up the test\n"));

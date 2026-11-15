@@ -67,7 +67,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       poa_manager_var->activate ();
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       // Create two handlers
       ChildHandler child_handler;

@@ -76,7 +76,9 @@ TAO_Notify_Buffering_Strategy::oldest_event ()
         {
           const ACE_Time_Value& etime = event->creation_time ();
           if (etime < tv)
+          {
             tv = etime;
+          }
         }
       itr.advance ();
     }
@@ -124,7 +126,9 @@ TAO_Notify_Buffering_Strategy::enqueue (TAO_Notify_Method_Request_Queueable* met
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->global_queue_lock_, -1);
 
   if (this->shutdown_)
+  {
     return -1;
+  }
 
   bool discarded_existing {};
 
@@ -213,21 +217,29 @@ TAO_Notify_Buffering_Strategy::dequeue (TAO_Notify_Method_Request_Queueable* &me
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->global_queue_lock_, -1);
 
   if ( this->shutdown_ )
+  {
     return -1;
+  }
 
   while (this->msg_queue_.message_count () == 0)
     {
       this->local_not_empty_.wait (abstime);
 
       if (this->shutdown_)
+      {
         return -1;
+      }
 
       if (errno == ETIME)
+      {
         return 0;
+      }
     }
 
   if (this->msg_queue_.dequeue (mb) == -1)
+  {
     return -1;
+  }
 
   if (this->tracker_ != nullptr)
     {
@@ -237,7 +249,9 @@ TAO_Notify_Buffering_Strategy::dequeue (TAO_Notify_Method_Request_Queueable* &me
   method_request = dynamic_cast<TAO_Notify_Method_Request_Queueable*>(mb);
 
   if (method_request == nullptr)
+  {
     return -1;
+  }
 
   --this->global_queue_length_;
   local_not_full_.signal();
@@ -264,7 +278,9 @@ int
 TAO_Notify_Buffering_Strategy::queue (TAO_Notify_Method_Request_Queueable* method_request)
 {
   if ( this->shutdown_ )
+  {
     return -1;
+  }
 
   CORBA::Short order = this->order_policy_.value();
 
@@ -273,26 +289,34 @@ TAO_Notify_Buffering_Strategy::queue (TAO_Notify_Method_Request_Queueable* metho
       order == CosNotification::FifoOrder)
     {
       if (TAO_debug_level > 0)
+      {
         ORBSVCS_DEBUG ((LM_DEBUG, "Notify (%P|%t) - enqueue in fifo order\n"));
+      }
       return this->msg_queue_.enqueue_tail (method_request);
     }
 
   if (order == CosNotification::PriorityOrder)
     {
       if (TAO_debug_level > 0)
+      {
         ORBSVCS_DEBUG ((LM_DEBUG, "Notify (%P|%t) - enqueue in priority order\n"));
+      }
       return this->msg_queue_.enqueue_prio (method_request);
     }
 
   if (order == CosNotification::DeadlineOrder)
     {
       if (TAO_debug_level > 0)
+      {
         ORBSVCS_DEBUG ((LM_DEBUG, "Notify (%P|%t) - enqueue in deadline order\n"));
+      }
       return this->msg_queue_.enqueue_deadline (method_request);
     }
 
   if (TAO_debug_level > 0)
+  {
     ORBSVCS_DEBUG ((LM_DEBUG, "Notify (%P|%t) - Invalid order policy\n"));
+  }
   return this->msg_queue_.enqueue_tail (method_request);
 }
 
@@ -335,7 +359,9 @@ TAO_Notify_Buffering_Strategy::discard (TAO_Notify_Method_Request_Queueable* met
   else
     {
       if (TAO_debug_level > 0)
+      {
         ORBSVCS_DEBUG ((LM_DEBUG, "Notify (%P|%t) - Invalid discard policy\n"));
+      }
       result = this->msg_queue_.dequeue_head (mb);
     }
 

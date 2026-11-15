@@ -25,7 +25,9 @@ TAO_EC_MT_Dispatching::activate ()
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   if (this->active_)
+  {
     return;
+  }
 
   this->active_ = true;
 
@@ -52,7 +54,9 @@ TAO_EC_MT_Dispatching::shutdown ()
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   if (!this->active_)
+  {
     return;
+  }
 
   for (int i {}; i < this->nthreads_; ++i)
     {
@@ -79,7 +83,9 @@ TAO_EC_MT_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
 {
   // Double checked locking....
   if (!this->active_)
+  {
     this->activate ();
+  }
 
   this->task_.push (proxy, consumer, event);
 }

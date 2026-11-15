@@ -139,12 +139,16 @@ namespace ACE_RMCast
           if (errno != ETIME)
             ACE_OS::abort ();
           else
+          {
             break;
+          }
         }
       }
 
       if (stop_)
+      {
         break;
+      }
     }
   }
 }

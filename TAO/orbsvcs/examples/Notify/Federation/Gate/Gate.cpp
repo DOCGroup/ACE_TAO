@@ -107,16 +107,22 @@ tracker ()
         ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
 
         if (this->stop_)
+        {
           return;
+        }
       }
 
       if (n == -1)
       {
         if (errno != ETIME)
+        {
           ACE_OS::abort ();
+        }
       }
       else
+      {
         break;
+      }
     }
 
     CORBA::ULong const seqn {ACE_Utils::truncate_cast<CORBA::ULong> (n)};
@@ -144,7 +150,9 @@ tracker ()
     for (; i < e.header.variable_header.length (); ++i)
     {
       if (std::strcmp (e.header.variable_header[i].name.in (), id_.in ()) == 0)
+      {
         break;
+      }
     }
 
     if (i == e.header.variable_header.length ())

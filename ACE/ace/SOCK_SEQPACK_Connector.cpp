@@ -48,7 +48,9 @@ ACE_SOCK_SEQPACK_Connector::shared_open (ACE_SOCK_SEQPACK_Association &new_assoc
                                reuse_addr) == -1)
     return -1;
   else
+  {
     return 0;
+  }
 }
 
 int
@@ -77,7 +79,9 @@ ACE_SOCK_SEQPACK_Connector::shared_open (ACE_SOCK_SEQPACK_Association &new_assoc
                                reuse_addr) == -1)
       return -1;
   else
+  {
     return 0;
+  }
 }
 
 int
@@ -108,7 +112,9 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
       && new_association.enable (ACE_NONBLOCK) == -1)
     return -1;
   else
+  {
     return 0;
+  }
 }
 
 // Multihomed version of same
@@ -135,7 +141,9 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
       ACE_NEW_NORETURN (local_inet_addrs, sockaddr_in[num_addresses]);
 #endif
       if (!local_inet_addrs)
+      {
         return -1;
+      }
 
       // Populate the array by invoking the get_addresses method on
       // the Multihomed_INET_Addr
@@ -227,7 +235,9 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
       && new_association.enable (ACE_NONBLOCK) == -1)
     return -1;
   else
+  {
     return 0;
+  }
 }
 
 int
@@ -253,7 +263,9 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_finish (ACE_SOCK_SEQPACK_Association 
                                    timeout) == -1)
             error = errno;
           else
+          {
             return 0;
+          }
         }
     }
 

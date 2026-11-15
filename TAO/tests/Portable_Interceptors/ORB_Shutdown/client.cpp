@@ -16,7 +16,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case 'k':
 
         if (ior == nullptr)
+        {
           ior = get_opts.opt_arg ();
+        }
 
         break;
       default:
@@ -38,7 +40,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var const orb (CORBA::ORB_init (argc, argv, "Client ORB"));
 
       if (::parse_args (argc, argv) != 0)
+      {
         return -1;
+      }
 
       CORBA::Object_var const object (orb->string_to_object (ior));
 

@@ -77,7 +77,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (options, argc, argv) != 0)
+      {
         return 1;
+      }
 
       // Obtain RootPOA.
       CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
@@ -114,7 +116,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
         }
       else
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "ior file name is null\n"), 1);
+      }
 
       orb->run ();
 

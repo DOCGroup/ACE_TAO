@@ -50,5 +50,7 @@ TAO_Notify_Tests_Command::execute ()
     }
 
   if (this->next_)
+  {
     this->next_->execute ();
+  }
 }

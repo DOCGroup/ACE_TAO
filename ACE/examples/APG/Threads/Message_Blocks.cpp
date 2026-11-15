@@ -29,7 +29,9 @@ int ACE_TMAIN (int, ACE_TCHAR **)
   int const written = std::snprintf (mb->wr_ptr (), mb->space (), "%s",
                                      command_sequence);
   if (written < 0 || static_cast<size_t> (written) >= mb->space ())
+  {
     return -1;
+  }
   // Move the wr_ptr() forward in the buffer by the
   // amount of data we just put in.
   mb->wr_ptr (static_cast<size_t> (written) + 1);

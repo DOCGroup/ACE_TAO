@@ -109,7 +109,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       policies[0]->destroy ();
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       ACE_DEBUG ((LM_DEBUG, "SEED = %u\n", options.seed));
       std::unique_ptr<Server_Peer> servant =

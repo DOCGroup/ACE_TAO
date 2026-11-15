@@ -44,7 +44,9 @@ TAO_Service_Type_Exporter::remove_all_types ()
           if (this->verbose_)
             {
               if (excp.type.in () != nullptr)
+              {
                 ACE_DEBUG ((LM_DEBUG, "Service type not yet registered: %C\n", excp.type.in ()));
+              }
             }
           // Don't re-throw, this one is expected in the test.
         }
@@ -129,7 +131,9 @@ add_all_types_to (CosTradingRepos::ServiceTypeRepository_ptr repos)
             "TAO_Service_Type_Exporter::add_all_types_to");
 
           if (ste.name.in () != 0)
+          {
             ACE_DEBUG ((LM_DEBUG, "Invalid name: %C\n", ste.name.in ()));
+          }
           throw;
         }
       catch (const CosTrading::IllegalPropertyName& excp)
@@ -138,7 +142,9 @@ add_all_types_to (CosTradingRepos::ServiceTypeRepository_ptr repos)
             "TAO_Service_Type_Exporter::add_all_types_to");
 
           if (excp.name.in () != 0)
+          {
             ACE_DEBUG ((LM_DEBUG, "Invalid name: %C\n", excp.name.in ()));
+          }
           throw;
         }
       catch (
@@ -148,9 +154,13 @@ add_all_types_to (CosTradingRepos::ServiceTypeRepository_ptr repos)
             "TAO_Service_Type_Exporter::add_all_types_to");
 
           if (vtr.type_1.in () != 0)
+          {
             ACE_DEBUG ((LM_DEBUG, "Type One: %C\n", vtr.type_2.in ()));
+          }
           if (vtr.type_2.in () != 0)
+          {
             ACE_DEBUG ((LM_DEBUG, "Type Two: %C\n", vtr.type_2.in ()));
+          }
           throw;
         }
       catch (const CORBA::Exception& e)

@@ -34,7 +34,9 @@ TAO_RT_ORB::TAO_RT_ORB (TAO_ORB_Core *orb_core,
     dynamic_cast <TAO_RT_Thread_Lane_Resources_Manager *> (thread_lane_resources_manager);
 
   if (rt_thread_lane_resources_manager == nullptr)
+  {
     throw CORBA::INTERNAL ();
+  }
 
   this->tp_manager_ =
     std::addressof (rt_thread_lane_resources_manager->tp_manager ());

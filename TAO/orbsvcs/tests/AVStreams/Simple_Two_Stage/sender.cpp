@@ -153,23 +153,31 @@ Sender::init (int argc,
     this->endpoint_strategy_.init (TAO_AV_CORE::instance ()->orb (),
                                    TAO_AV_CORE::instance ()->poa ());
   if (result != 0)
+  {
     return result;
+  }
 
   // Initialize the naming services
   result =
     this->naming_client_.init (TAO_AV_CORE::instance ()->orb ());
   if (result != 0)
+  {
     return result;
+  }
 
   // Parse the command line arguments
   result =
     this->parse_args (argc,
                       argv);
   if (result != 0)
+  {
     return result;
+  }
 
   if (this->options_.buffer_size <= 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Buffer size must be positive\n"), -1);
+  }
 
   this->mb_.size (this->options_.buffer_size);
 
@@ -313,7 +321,9 @@ Sender::pace_data ()
             {
               // At end of file break the loop and end the sender.
               if (TAO_debug_level > 0)
+              {
                 ACE_DEBUG ((LM_DEBUG,"End of file\n"));
+              }
               break;
             }
 
@@ -364,7 +374,9 @@ Sender::pace_data ()
             this->protocol_object_->send_frame (&this->mb_);
 
           if (result < 0)
+          {
             ACE_ERROR_RETURN ((LM_ERROR, "Sender::pace_data send failed\n"), -1);
+          }
 
           ++this->frame_count_;
           ACE_DEBUG ((LM_DEBUG,

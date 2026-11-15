@@ -53,7 +53,9 @@ Server::init (int argc,
               ACE_TCHAR *argv[])
 {
   if (this->parse_args (argc, argv) != 0)
+  {
     return -1;
+  }
 
   this->output_file_.reset (ACE_OS::fopen (this->options_.filename.c_str (), "wb"));
   if (!this->output_file_)
@@ -64,7 +66,9 @@ Server::init (int argc,
 
   if (this->reactive_strategy_.init (TAO_AV_CORE::instance ()->orb (),
                                      TAO_AV_CORE::instance ()->poa ()) != 0)
+  {
     return -1;
+  }
 
   try
     {
@@ -100,7 +104,9 @@ Server::write_frame (ACE_Message_Block *frame)
                                                      bytes_to_write,
                                                      this->output_file_.get ());
       if (bytes_written != bytes_to_write)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "Writing received frame failed\n"), -1);
+      }
       frame = frame->cont ();
     }
   return 0;
@@ -118,7 +124,9 @@ Server::run ()
   CORBA::ORB_ptr const orb = TAO_AV_CORE::instance ()->orb ();
   while (!this->done_)
     if (orb->work_pending ())
+    {
       orb->perform_work ();
+    }
   orb->shutdown (true);
   return 0;
 }
@@ -139,7 +147,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Server * const server = FTP_SERVER::instance ();
       result = server->init (argc, argv);
       if (result == 0)
+      {
         result = server->run ();
+      }
       orb->destroy ();
     }
   catch (CORBA::Exception const &ex)

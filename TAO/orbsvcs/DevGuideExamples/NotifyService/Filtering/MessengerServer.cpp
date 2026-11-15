@@ -39,7 +39,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var const orb = CORBA::ORB_init (conv.get_argc (), conv.get_TCHAR_argv ());
       ACE_TCHAR const *ior_output_file = ACE_TEXT ("");
       if (parse_args (argc, argv, ior_output_file) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var const naming_obj = orb->resolve_initial_references ("NameService");
       CosNaming::NamingContext_var const naming_context =

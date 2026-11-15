@@ -126,7 +126,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       PortableServer::Servant_var<Simple_C> const simple_c_impl (
         new Simple_C (orb.in ()));

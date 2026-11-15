@@ -55,7 +55,9 @@ TAO_IOR_Table_Impl::find (char const *object_key)
         return CORBA::string_dup (iter->second.c_str ());
       }
     if (CORBA::is_nil (this->locator_.in ()))
+    {
       throw IORTable::NotFound ();
+    }
   }
 
   return this->locator_->locate (object_key);
@@ -66,7 +68,9 @@ TAO_IOR_Table_Impl::bind (char const *object_key, char const *IOR)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   if (!this->map_.emplace (object_key, IOR).second)
+  {
     throw IORTable::AlreadyBound ();
+  }
 }
 
 void
@@ -81,7 +85,9 @@ TAO_IOR_Table_Impl::unbind (char const *object_key)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   if (this->map_.erase (object_key) == 0)
+  {
     throw IORTable::NotFound ();
+  }
 }
 
 void

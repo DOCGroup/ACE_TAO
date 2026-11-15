@@ -87,7 +87,9 @@ CosNaming_Client::parse_args ()
           {
             this->test_.reset (new (std::nothrow) Simple_Test);
             if (!this->test_)
+            {
               return -1;
+            }
           }
         break;
       case 'm':
@@ -95,11 +97,15 @@ CosNaming_Client::parse_args ()
           {
             int size = ACE_OS::atoi (get_opts.opt_arg ());
             if (size <= 0)
+            {
               size = 10;
+            }
 
             this->test_.reset (new (std::nothrow) MT_Test (this->orbmgr_.orb (), size));
             if (!this->test_)
+            {
               return -1;
+            }
           }
 
         break;
@@ -108,7 +114,9 @@ CosNaming_Client::parse_args ()
           {
             this->test_.reset (new (std::nothrow) Tree_Test);
             if (!this->test_)
+            {
               return -1;
+            }
           }
         break;
       case 'i':
@@ -116,7 +124,9 @@ CosNaming_Client::parse_args ()
           {
             this->test_.reset (new (std::nothrow) Iterator_Test);
             if (!this->test_)
+            {
               return -1;
+            }
           }
         break;
       case 'e':
@@ -124,7 +134,9 @@ CosNaming_Client::parse_args ()
           {
             this->test_.reset (new (std::nothrow) Exceptions_Test);
             if (!this->test_)
+            {
               return -1;
+            }
           }
         break;
       case 'y':
@@ -132,7 +144,9 @@ CosNaming_Client::parse_args ()
           {
             this->test_.reset (new (std::nothrow) Destroy_Test);
             if (!this->test_)
+            {
               return -1;
+            }
           }
         break;
       case 'p':
@@ -160,7 +174,9 @@ CosNaming_Client::parse_args ()
             this->test_.reset (new (std::nothrow) Persistent_Test_End (
               this->orbmgr_.orb (), get_opts.opt_arg ()));
             if (!this->test_)
+            {
               return -1;
+            }
           }
         break;
       default:
@@ -178,7 +194,9 @@ CosNaming_Client::parse_args ()
     {
       this->test_.reset (new (std::nothrow) Simple_Test);
       if (!this->test_)
+      {
         return -1;
+      }
     }
 
   // Indicates successful parsing of command line.
@@ -216,7 +234,9 @@ CosNaming_Client::init (int argc, ACE_TCHAR **argv)
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
+      {
         return -1;
+      }
 
       CORBA::ORB_var orb = this->orbmgr_.orb ();
 
@@ -275,7 +295,9 @@ MT_Test::svc ()
     }
 
   if (CORBA::is_nil (name_service.in ()))
+  {
     return -1;
+  }
 
   // Bind the object.
   try
@@ -353,7 +375,9 @@ int
 MT_Test::execute (TAO_Naming_Client &root_context)
 {
   if (CORBA::is_nil (this->orb_.in ()))
+  {
     return -1;
+  }
 
   // Create data which will be used by all threads.
 
@@ -389,7 +413,9 @@ MT_Test::execute (TAO_Naming_Client &root_context)
                                size_);
 
   if (status == -1)
+  {
     return -1;
+  }
 
   status = this->wait ();
   return status;
@@ -421,7 +447,9 @@ Simple_Test::execute (TAO_Naming_Client &root_context)
         {
           CORBA::Short id = result_object->id ();
           if (id == CosNaming_Client::OBJ1_ID)
+          {
             ACE_DEBUG ((LM_DEBUG, "Resolved name OK\n"));
+          }
         }
 
       // Unbind the object from the Naming Context.
@@ -1027,7 +1055,9 @@ Persistent_Test_End::execute (TAO_Naming_Client &root_context)
 
       // Make sure we got the same answer through both methods.
       if (obj2->_is_equivalent (obj.in ()))
+      {
         ACE_DEBUG ((LM_DEBUG, "Persistent Naming test (part 2) OK.\n"));
+      }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -1054,7 +1084,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   CosNaming_Client cosnaming_client;
 
   if (cosnaming_client.init (argc, argv) == -1)
+  {
     return 1;
+  }
 
   return cosnaming_client.run ();
 }

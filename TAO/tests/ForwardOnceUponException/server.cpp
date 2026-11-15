@@ -69,7 +69,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         root_poa->the_POAManager ();
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       Simple_Server_i server_impl (orb.in (), options.raise_exception);
 
@@ -119,7 +121,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
            && server_impl.ncalls () > options.num_requests)
           || (options.expect_servant_calls > 0
               && server_impl.ncalls () == options.expect_servant_calls))
+      {
         return 0;
+      }
 
       ACE_ERROR_RETURN ((LM_ERROR,
                          "server: Test failed - expected %d servant calls but got %d calls\n",

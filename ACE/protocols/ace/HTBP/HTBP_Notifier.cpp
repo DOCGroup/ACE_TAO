@@ -56,7 +56,9 @@ ACE::HTBP::Notifier::handle_input(ACE_HANDLE )
                         h,this->reactor()));
         }
       else
+      {
         this->channel_->flush_buffer();
+      }
     }
   else
     ACE_ERROR ((LM_ERROR,

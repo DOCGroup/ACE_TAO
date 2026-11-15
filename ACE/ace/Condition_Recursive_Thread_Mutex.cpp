@@ -73,7 +73,9 @@ ACE_Condition<ACE_Recursive_Thread_Mutex>::wait (ACE_Recursive_Thread_Mutex &mut
 
   if (ACE_OS::recursive_mutex_cond_unlock (&recursive_mutex,
                                            mutex_state_holder) == -1)
+  {
     return -1;
+  }
 
   // We wait on the condition, specifying the nesting mutex. For platforms
   // with ACE_HAS_RECURSIVE_MUTEXES, this is the recursive mutex itself,

@@ -40,7 +40,9 @@ TAO_LF_Connect_Strategy::wait_i (TAO_LF_Event *ev,
                                  ACE_Time_Value *max_wait_time)
 {
   if (transport == nullptr)
+  {
     return -1;
+  }
 
   TAO::Nested_Upcall_Guard guard(transport, this->no_upcall_);
 
@@ -51,7 +53,9 @@ TAO_LF_Connect_Strategy::wait_i (TAO_LF_Event *ev,
     leader_follower.wait_for_event (ev, transport, max_wait_time);
 
   if (ev->error_detected (leader_follower) && result != -1)
+  {
     result = -1;
+  }
 
   return result;
 }

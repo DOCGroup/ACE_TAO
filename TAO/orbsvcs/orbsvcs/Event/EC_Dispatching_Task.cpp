@@ -39,7 +39,9 @@ TAO_EC_Simple_Queue_Full_Action::init (int argc, ACE_TCHAR* argv[])
 
   do {
     if (argc == 0)
+    {
       break;
+    }
 
     if (ACE_OS::strcasecmp (ACE_TEXT("wait"), argv[0]) == 0)
       this->queue_full_action_return_value_ = WAIT_TO_EMPTY;
@@ -154,19 +156,25 @@ TAO_EC_Dispatching_Task::push (TAO_EC_ProxyPushSupplier *proxy,
                                                                  consumer, event);
 
           if (action == TAO_EC_Queue_Full_Service_Object::SILENTLY_DISCARD)
+          {
             return;
+          }
           // if action == WAIT_TO_EMPTY then we just go ahead and queue it
         }
         // else go ahead and queue it
     }
 
   if (this->allocator_ == nullptr)
+  {
     this->allocator_ = ACE_Allocator::instance ();
+  }
 
   void* buf = this->allocator_->malloc (sizeof (TAO_EC_Push_Command));
 
   if (buf == nullptr)
+  {
     throw CORBA::NO_MEMORY (TAO::VMCID, CORBA::COMPLETED_NO);
+  }
 
   ACE_Message_Block *mb =
     new (buf) TAO_EC_Push_Command (proxy,

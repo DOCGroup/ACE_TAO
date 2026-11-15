@@ -58,7 +58,9 @@ check_policy (Test_ptr server)
   RTCORBA::PriorityModelPolicy_var const priority_policy = RTCORBA::PriorityModelPolicy::_narrow (policy.in ());
 
   if (check_for_nil (priority_policy.in (), "PriorityModelPolicy") == -1)
+  {
     return -1;
+  }
 
   RTCORBA::PriorityModel const priority_model = priority_policy->priority_model ();
   if (priority_model != RTCORBA::SERVER_DECLARED)
@@ -77,25 +79,35 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
       Client_Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return -1;
+      }
 
       CORBA::Object_var object = orb->string_to_object (options.ior1);
       Test_var const server1 = Test::_narrow (object.in ());
       if (check_for_nil (server1.in (), "server1") == -1)
+      {
         return -1;
+      }
 
       object = orb->string_to_object (options.ior2);
       Test_var const server2 = Test::_narrow (object.in ());
       if (check_for_nil (server2.in (), "server2") == -1)
+      {
         return -1;
+      }
 
       CORBA::Short const server1_priority = check_policy (server1.in ());
       if (server1_priority == -1)
+      {
         return -1;
+      }
 
       CORBA::Short const server2_priority = check_policy (server2.in ());
       if (server2_priority == -1)
+      {
         return -1;
+      }
 
       for (int i {}; i < 5; ++i)
         {

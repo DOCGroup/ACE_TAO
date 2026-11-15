@@ -95,7 +95,9 @@ Test_Task::svc ()
       // ACE_DEBUG ((LM_DEBUG, "(%t) calling notify %d\n", i));
 
       if (this->reactor ()->notify (this, ACE_Event_Handler::READ_MASK) == -1)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "notify"), -1);
+      }
 
       // ACE_DEBUG ((LM_DEBUG, "(%t) leaving notify %d\n", i));
     }

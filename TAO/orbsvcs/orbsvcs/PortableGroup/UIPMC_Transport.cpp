@@ -159,7 +159,9 @@ TAO_UIPMC_Transport::throttle_send_rate (
           // and means we can initialy exceed the HWM; will simply wait
           // longer before the next fragment, after this current one.)
           if (bytes_over_by > this->total_bytes_outstanding_)
+          {
             bytes_over_by = this->total_bytes_outstanding_;
+          }
 
           // How much time does it take for "bytes_over_by" data to be
           // processed?
@@ -199,7 +201,9 @@ TAO_UIPMC_Transport::send (
   for (int i {}; i < iovcnt; ++i)
     bytes_to_send += iov[i].iov_len;
   if (!bytes_to_send)
+  {
     return 0; // Nothing to send, we are done.
+  }
 
   // Determine the number of MIOP packets that we have to send (add one
   // if "bytes_to_send" is not a multiple of "max_fragment_payload").
@@ -240,7 +244,9 @@ TAO_UIPMC_Transport::send (
                         ACE_TEXT (" or -ORBMaxFragmentSize %u\n"),
                         max_fragment_size));
           else
+          {
             ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
+          }
         }
 
       return bytes_transferred;
@@ -304,7 +310,9 @@ TAO_UIPMC_Transport::send (
 
           // Check if we have maxed out this fragment's payload.
           if (this_fragment_size == max_fragment_payload)
+          {
             break;
+          }
 
           // Just a safety check for building iovec.
           if (this_fragment_iovcnt >= ACE_IOV_MAX)
@@ -320,7 +328,9 @@ TAO_UIPMC_Transport::send (
       // Now we have the payload length for this fragment, update the MIOP header
       *packet_length = static_cast<CORBA::UShort> (this_fragment_size);
       if (*packet_number == number_of_packets_required-1uL)
+      {
         *flags_field |= 0x02;
+      }
 
       ssize_t already_sent {}; // No data sent yet!
       iovec *current_iov = this_fragment_iov;
@@ -383,7 +393,9 @@ TAO_UIPMC_Transport::send (
 
           // Keep a note of the number of bytes we have just buffered
           if (factory->enable_throttling ())
+          {
             this->total_bytes_outstanding_+= static_cast<u_long> (already_sent);
+          }
         } // Keep sending the rest of the fragment
 
       // Increment the number of bytes of payload transferred.

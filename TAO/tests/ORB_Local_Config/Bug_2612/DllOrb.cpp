@@ -30,11 +30,15 @@ int DllOrb::init (int argc, ACE_TCHAR *argv[])
           {
             int const num = ACE_OS::atoi (current_arg);
             if (num >= 1)
+            {
               thread_count = num;
+            }
             as.consume_arg ();
           }
         else
+        {
           as.ignore_arg ();
+        }
       }
 
     ACE_DEBUG ((LM_DEBUG, "TEST (%P|%t) Pre-ORB initialization ...\n"));
@@ -48,23 +52,31 @@ int DllOrb::init (int argc, ACE_TCHAR *argv[])
     TAO_Singleton_Manager * const tsm = TAO_Singleton_Manager::instance ();
     int const result = tsm->init (register_with_object_manager);
     if (result == -1)
+    {
       return -1;
+    }
 
     // Initialize the ORB.
     this->mv_orb_ = CORBA::ORB_init (argc, argv);
     if (CORBA::is_nil (this->mv_orb_.in ()))
+    {
       return -1;
+    }
 
     CORBA::Object_var const poa_object (
       this->mv_orb_->resolve_initial_references ("RootPOA"));
 
     this->mv_root_poa_ = PortableServer::POA::_narrow (poa_object.in ());
     if (CORBA::is_nil (this->mv_root_poa_.in ()))
+    {
       return -1;
+    }
 
     this->mv_poa_manager_ = this->mv_root_poa_->the_POAManager ();
     if (CORBA::is_nil (this->mv_poa_manager_.in ()))
+    {
       return -1;
+    }
 
     this->mv_poa_manager_->activate ();
   }

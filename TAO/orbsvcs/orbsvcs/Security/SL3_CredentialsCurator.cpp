@@ -49,7 +49,9 @@ TAO::SL3::CredentialsCurator_ptr
 TAO::SL3::CredentialsCurator::_duplicate (TAO::SL3::CredentialsCurator_ptr obj)
 {
   if (!CORBA::is_nil (obj))
+  {
     obj->_add_ref ();
+  }
 
   return obj;
 }
@@ -216,7 +218,9 @@ TAO::SL3::CredentialsCurator::register_acquirer_factory (
   TAO::SL3::CredentialsAcquirerFactory * factory)
 {
   if (acquisition_method == nullptr || factory == nullptr)
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   CORBA::String_var method = CORBA::string_dup (acquisition_method);
 

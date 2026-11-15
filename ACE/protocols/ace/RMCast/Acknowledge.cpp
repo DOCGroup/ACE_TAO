@@ -60,7 +60,10 @@ namespace ACE_RMCast
     {
       Queue::ENTRY* e {};
 
-      if (q.find (sn, e) == -1 || e->int_id_.lost ()) break;
+      if (q.find (sn, e) == -1 || e->int_id_.lost ())
+      {
+        break;
+      }
 
       Message_ptr m (e->int_id_.msg ());
       q.unbind (sn);
@@ -82,7 +85,9 @@ namespace ACE_RMCast
         Lock l (mutex_);
 
         if (stop_)
+        {
           break;
+        }
 
         if (hold_.current_size () != 0)
         {
@@ -92,7 +97,10 @@ namespace ACE_RMCast
           {
             Queue& q = (*i).int_id_;
 
-            if (q.current_size () == 0) continue;
+            if (q.current_size () == 0)
+            {
+              continue;
+            }
 
             track_queue ((*i).ext_id_, q, msgs);
           }
@@ -150,12 +158,16 @@ namespace ACE_RMCast
             if (errno != ETIME)
               ACE_OS::abort ();
             else
+            {
               break;
+            }
           }
         }
 
         if (stop_)
+        {
           break;
+        }
       }
     }
   }
@@ -334,7 +346,9 @@ namespace ACE_RMCast
           Profile_ptr nrtm (create_nrtm (max_elem));
 
           if (nrtm.get ())
+          {
             m->add (nrtm);
+          }
         }
       }
 
@@ -364,14 +378,18 @@ namespace ACE_RMCast
         nrtm->insert (addr, q.sn ());
 
         if (--max_elem == 0)
+        {
           break;
+        }
       }
     }
 
     if (nrtm->empty ())
       return Profile_ptr (nullptr);
     else
+    {
       return Profile_ptr (nrtm.release ());
+    }
   }
 
   ACE_THR_FUNC_RETURN Acknowledge::

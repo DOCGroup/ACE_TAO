@@ -79,7 +79,9 @@ Headers::complete_header_line (char *const header_line)
   int offset;
 
   if (!this->end_of_line (ptr, offset))
+  {
     return 0;
+  }
 
   if (ptr == header_line)
     {
@@ -106,7 +108,9 @@ Headers::complete_header_line (char *const header_line)
           if (ACE_OS::ace_isalpha (ptr[offset]))
             return 1;
           else
+          {
             return -1;
+          }
         }
     }
   while (this->end_of_line (ptr, offset) != 0);
@@ -139,7 +143,9 @@ Headers::end_of_line (char *&line, int &offset) const
   char *ptr = std::strchr (old_line, '\n');
 
   if (ptr == nullptr)
+  {
     return 0;
+  }
 
   line = ptr;
   offset = 1;
@@ -218,7 +224,9 @@ Headers_Map::operator[] (const char * const header)
   item_ptr = this->find (header);
 
   if (item_ptr == nullptr)
+  {
     item_ptr = this->place (header);
+  }
 
   return *item_ptr;
 }
@@ -232,7 +240,9 @@ Headers_Map::operator[] (const char * const header) const
   item_ptr = this->find (header);
 
   if (item_ptr == nullptr)
+  {
     item_ptr = mutable_this->place (header);
+  }
 
   return *item_ptr;
 }
@@ -268,12 +278,16 @@ Headers_Map::find (const char * const header) const
       if (Headers_Map::compare (&this->garbage_, this->map_+k) < 0)
         j = k;
       else
+      {
         i = k;
+      }
     }
 
   Headers_Map_Item *mi_ptr = mutable_this->map_ + i;
   if (Headers_Map::compare (&this->garbage_, mi_ptr) != 0)
+  {
     mi_ptr = nullptr;
+  }
 #endif
 
   mutable_this->garbage_.header_ = nullptr;
@@ -297,7 +311,9 @@ Headers_Map::place (const char *const header)
     {
       if (Headers_Map::compare (&this->garbage_,
                                 &this->map_[i - 1]) > 0)
+      {
         break;
+      }
 
       this->map_[i].header_ = this->map_[i - 1].header_;
       this->map_[i].value_ = this->map_[i - 1].value_;
@@ -332,10 +348,14 @@ Headers_Map::compare (const void *item1,
       else if (a->header_ == nullptr)
         result = 1;
       else
+      {
         result = -1;
+      }
     }
   else
+  {
     result = ACE_OS::strcasecmp (a->header_, b->header_);
+  }
 
   return (result < 0) ? -1 : (result > 0);
 }

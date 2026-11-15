@@ -76,12 +76,16 @@ TAO::PICurrent::check_validity (PortableInterceptor::SlotId const &identifier)
   // no slots, then the PICurrent_impl object is not created as there is no
   // data to copy).
   if (0 == this->slot_count_)
+  {
     throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
+  }
 
   // No need to acquire a lock for this check.  At this point, these
   // attributes are read only.
   if (identifier >= this->slot_count_)
+  {
     throw PortableInterceptor::InvalidSlot ();
+  }
 }
 
 CORBA::ORB_ptr

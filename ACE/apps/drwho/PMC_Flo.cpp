@@ -108,7 +108,9 @@ PMC_Flo::insert_protocol_info (Protocol_Record &protocol_record)
   const int length = std::strlen (prp->get_real ());
 
   if (length > this->max_key_length)
+  {
     this->max_key_length = length;
+  }
 
   return prp;
 }

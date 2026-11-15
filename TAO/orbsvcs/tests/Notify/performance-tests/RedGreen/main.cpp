@@ -9,7 +9,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   RedGreen_Test client;
 
   if (client.parse_args (argc, argv) != 0)
+  {
     return 1;
+  }
 
   try
     {

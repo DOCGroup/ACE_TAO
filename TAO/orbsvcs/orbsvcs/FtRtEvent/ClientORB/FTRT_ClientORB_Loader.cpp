@@ -32,7 +32,9 @@ namespace TAO_FTRT {
               {
                 ++curarg;
                 if (curarg < argc)
+                {
                   transaction_depth = ACE_OS::atoi (argv[curarg]);
+                }
               }
           }
 

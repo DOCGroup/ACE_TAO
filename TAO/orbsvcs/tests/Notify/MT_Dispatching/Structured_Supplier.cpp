@@ -206,7 +206,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     Supplier_Client client;
     int status = client.init (argc, argv);
     if (status != 0)
+    {
       return 1;
+    }
 
     CosNotifyChannelAdmin::EventChannel_var ec =
       client.create_event_channel ("MyEventChannel", 0);

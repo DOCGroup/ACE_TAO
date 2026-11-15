@@ -134,7 +134,9 @@ namespace ACE_RMCast
       }
     }
     else
+    {
       send_ (m);
+    }
 
     // Reliable loop.
     //
@@ -208,13 +210,17 @@ namespace ACE_RMCast
         {
           Lock l (mutex_);
           if (stop_)
+          {
             return;
+          }
         }
 
         if (r == -1)
         {
           if (errno != ETIME)
+          {
             ACE_OS::abort ();
+          }
         }
         else
         {
@@ -270,7 +276,10 @@ namespace ACE_RMCast
       {
         u16 id, size;
 
-        if (!((is >> id) && (is >> size))) break;
+        if (!((is >> id) && (is >> size)))
+        {
+          break;
+        }
 
         //cerr << 6 << "reading profile with id " << id << " "
         //     << size << " bytes long" << endl;

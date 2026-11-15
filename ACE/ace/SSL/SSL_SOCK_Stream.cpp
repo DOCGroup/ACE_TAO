@@ -89,7 +89,9 @@ ACE_SSL_SOCK_Stream::sendv (const iovec iov[],
           if (bytes_sent > 0)
             break;
           else
+          {
             return -1;
+          }
         }
       else
         {
@@ -101,7 +103,9 @@ ACE_SSL_SOCK_Stream::sendv (const iovec iov[],
           // stream would occur if partial sends of a given buffer in
           // the iovec array occurred.
           if (static_cast<size_t> (result) < static_cast<size_t> (iov[i].iov_len))
+          {
             break;
+          }
         }
 
       (void) countdown.update ();
@@ -164,7 +168,9 @@ ACE_SSL_SOCK_Stream::recvv (iovec *io_vec,
       return io_vec->iov_len;
     }
   else
+  {
     return 0;
+  }
 #else
   ACE_UNUSED_ARG (io_vec);
   ACE_UNUSED_ARG (timeout);
@@ -183,13 +189,17 @@ ACE_SSL_SOCK_Stream::send (const void *buf,
   // If SSL has data in the buffer, i.e. SSL_pending() returns a
   // non-zero value, then don't block on select().
   if (timeout == nullptr || ::SSL_pending (this->ssl_.get ()))
+  {
     return this->send (buf, len, flags);
+  }
 
   int val {};
   if (ACE::enter_send_timedwait (this->get_handle (),
                                  timeout,
                                  val) == -1)
+  {
     return -1;
+  }
 
   ssize_t const bytes_transferred = this->send (buf, len, flags);
 
@@ -256,7 +266,9 @@ ACE_SSL_SOCK_Stream::send (size_t n, ...) const
           // data stream would occur if partial sends of a given
           // buffer in the varargs occurred.
           if (result < data_len)
+          {
             break;
+          }
         }
     }
 

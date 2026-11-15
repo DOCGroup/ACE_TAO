@@ -128,7 +128,9 @@ ACE_Get_Opt::ACE_Get_Opt (int argc,
   char const *env_check = "POSIXLY_CORRECT";
 #endif
   if (ACE_OS::getenv (env_check) != nullptr)
+  {
     this->ordering_ = REQUIRE_ORDER;
+  }
 
   // Now, check to see if any or the following were passed at
   // the beginning of optstring: '+' same as POSIXLY_CORRECT;
@@ -190,7 +192,9 @@ ACE_Get_Opt::nextchar_i ()
 
   if (this->ordering_ == PERMUTE_ARGS)
     if (this->permute () == EOF)
+    {
       return EOF;
+    }
 
   // Update scanning pointer.
   if (this->optind >= this->argc_)
@@ -226,7 +230,9 @@ ACE_Get_Opt::nextchar_i ()
 
   // If it's a long option, and we allow long options advance nextchar_.
   if (*this->nextchar_ == '-' && this->long_opts_.size () != 0)
+  {
     ++this->nextchar_;
+  }
 
   return 0;
 }
@@ -405,7 +411,9 @@ ACE_Get_Opt::short_option_i ()
               ++this->optind;
             }
           else
+          {
             this->optarg = nullptr;
+          }
           this->nextchar_ = nullptr;
         }
       else
@@ -458,12 +466,16 @@ ACE_Get_Opt::operator () ()
     {
       int retval = this->nextchar_i ();
       if (retval != 0)
+      {
         return retval;
+      }
     }
 
   if (((this->argv_[this->optind][0] == '-')
        && (this->argv_[this->optind][1] == '-')) || this->long_only_)
+  {
     return this->long_option_i ();
+  }
 
   return this->short_option_i ();
 }
@@ -574,7 +586,9 @@ ACE_Get_Opt::long_option () const
 {
   ACE_TRACE ("ACE_Get_Opt::long_option ()");
   if (this->long_option_)
+  {
     return this->long_option_->name_;
+  }
   return nullptr;
 }
 
@@ -655,7 +669,9 @@ ACE_Get_Opt::permute_args ()
           if (pos >= this->nonopt_end_)
             pos -= nnonopts;
           else
+          {
             pos += nopts;
+          }
           swap = this->argv_[pos];
 
           ((ACE_TCHAR **)this->argv_)[pos] = argv_[cstart];
@@ -672,7 +688,9 @@ ACE_Get_Opt::permute ()
 
   if (this->nonopt_start_ != this->nonopt_end_
       && this->nonopt_start_ != this->optind)
+  {
     this->permute_args ();
+  }
 
   this->nonopt_start_ = this->optind;
 
@@ -694,13 +712,17 @@ ACE_Get_Opt::permute ()
 
       if (this->nonopt_start_ != this->nonopt_end_
           && this->nonopt_end_ != this->optind)
+      {
         this->permute_args ();
+      }
     }
 
   if (this->optind == this->argc_)
     {
       if (this->nonopt_start_ != this->nonopt_end_)
+      {
         this->optind = this->nonopt_start_;
+      }
       return EOF;
     }
   return 0;

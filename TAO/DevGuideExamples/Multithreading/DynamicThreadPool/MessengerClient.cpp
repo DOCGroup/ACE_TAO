@@ -44,7 +44,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
     Options options;
     if (parse_args (argc, argv, options) != 0)
-        return 1;
+    {
+      return 1;
+    }
 
     // Read and destringify the Messenger object's IOR.
     CORBA::Object_var const obj = orb->string_to_object (options.ior.c_str ());

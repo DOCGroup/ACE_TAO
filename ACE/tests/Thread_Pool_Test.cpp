@@ -197,7 +197,9 @@ int
 Thread_Pool::test_queue_deactivation_shutdown ()
 {
   if (this->open () == -1)
+  {
     return -1;
+  }
 
   ACE_Message_Block *mb {};
 
@@ -239,10 +241,14 @@ Thread_Pool::test_queue_deactivation_shutdown ()
           if (count == n_iterations)
             n = 1; // Indicate that we need to shut down.
           else
+          {
             ++count;
+          }
 
           if (count == 0 || (count % 20 == 0))
+          {
             ACE_OS::sleep (1);
+          }
         }
 
       if (n > 1)
@@ -285,7 +291,9 @@ int
 Thread_Pool::test_empty_message_shutdown ()
 {
   if (this->open () == -1)
+  {
     return -1;
+  }
 
   ACE_Message_Block *mb {};
 
@@ -326,10 +334,14 @@ Thread_Pool::test_empty_message_shutdown ()
           if (count == n_iterations)
             n = 1; // Indicate that we need to shut down.
           else
+          {
             ++count;
+          }
 
           if (count == 0 || (count % 20 == 0))
+          {
             ACE_OS::sleep (1);
+          }
         }
 
       if (n > 1)
@@ -412,7 +424,9 @@ run_main (int, ACE_TCHAR *[])
   // thread pool, and demonstrate how to shutdown by enqueueing
   // "empty" messages into the queue.
   if (thread_pool.test_empty_message_shutdown () == -1)
+  {
     return 1;
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) waiting for worker tasks to finish...\n")));
@@ -420,7 +434,9 @@ run_main (int, ACE_TCHAR *[])
   // point the barrier in the destructor of the <ACE_Task> portion of
   // <Thread_Pool> will return.
   if (thread_pool.wait () == -1)
+  {
     return 1;
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) starting queue deactivation shutdown test\n")));
@@ -429,7 +445,9 @@ run_main (int, ACE_TCHAR *[])
   // consumed by the threads in the thread pool, and demonstate how to
   // shutdown using the <ACE_Message_Queue::deactivate> method.
   if (thread_pool.test_queue_deactivation_shutdown () == -1)
+  {
     return 1;
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) waiting for worker tasks to finish...\n")));
@@ -437,7 +455,9 @@ run_main (int, ACE_TCHAR *[])
   // point the barrier in the destructor of the <ACE_Task> portion of
   // <Thread_Pool> will return.
   if (thread_pool.wait () == -1)
+  {
     return 1;
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) all worker tasks destroyed, exiting test...\n")));

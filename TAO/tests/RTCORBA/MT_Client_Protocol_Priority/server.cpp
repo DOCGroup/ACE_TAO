@@ -130,7 +130,9 @@ Task::svc ()
         this->orb_->resolve_initial_references ("RTORB");
       RTCORBA::RTORB_var const rt_orb = RTCORBA::RTORB::_narrow (object.in ());
       if (check_for_nil (rt_orb.in (), "RTORB") == -1)
+      {
         return -1;
+      }
 
       // RootPOA.
       object =
@@ -138,7 +140,9 @@ Task::svc ()
       PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (object.in ());
       if (check_for_nil (root_poa.in (), "RootPOA") == -1)
+      {
         return -1;
+      }
 
       // POAManager.
       PortableServer::POAManager_var const poa_manager =
@@ -213,12 +217,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Parse arguments.
       if (parse_args (argc, argv, options) != 0)
+      {
         return -1;
+      }
 
       // Make sure we can support multiple priorities that are required
       // for this test.
       if (!check_supported_priorities (orb.in ()))
+      {
         return 2;
+      }
 
       // Thread Manager for managing task.
       ACE_Thread_Manager thread_manager;

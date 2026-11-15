@@ -37,14 +37,18 @@ Supplier_Router::svc ()
   ACE_ASSERT (this->is_writer ());
 
   if (options.debug ())
+  {
     ACE_DEBUG ((LM_DEBUG, "(%t) starting svc in %s\n", this->name ()));
+  }
 
   ACE_Message_Block *message_block {};
   while (this->getq (message_block) > 0)
     {
       UPIPE_Event_Server::Message_Block_Owner message {message_block};
       if (this->put_next (message_block) == -1)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "(%t) put_next failed in %s\n", this->name ()), -1);
+      }
       message.release ();
     }
 
@@ -61,7 +65,9 @@ Supplier_Router::open (void *)
   ACE_TCHAR *argv[] = {file_arg.data ()};
 
   if (this->init (1, argv) == -1)
+  {
     return -1;
+  }
 
   // Make this an active object.
   //   return this->activate (options.t_flags ());
@@ -111,7 +117,9 @@ Supplier_Router::info (ACE_TCHAR **strp, size_t length) const
   ACE_UPIPE_Acceptor &sa = this->acceptor_->acceptor ();
 
   if (sa.get_local_addr (addr) == -1)
+  {
     return -1;
+  }
 
   ACE_OS::sprintf (buf,
                    ACE_TEXT ("%") ACE_TEXT_PRIs
@@ -123,7 +131,9 @@ Supplier_Router::info (ACE_TCHAR **strp, size_t length) const
   if (*strp == nullptr && (*strp = ACE_OS::strdup (module_name)) == nullptr)
     return -1;
   else
+  {
     ACE_OS::strncpy (*strp, module_name, length);
+  }
 
   return ACE_Utils::truncate_cast<int> (ACE_OS::strlen (module_name));
 }

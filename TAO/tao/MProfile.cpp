@@ -45,7 +45,9 @@ TAO_MProfile::cleanup ()
   for (TAO_PHandle i {}; i < this->last_; ++i)
     {
       if (this->pfiles_[i] != nullptr)
+      {
         this->pfiles_[i]->_decr_refcnt ();
+      }
     }
 
   std::vector<TAO_Profile *> ().swap (this->pfiles_);
@@ -72,7 +74,9 @@ TAO_MProfile::set (CORBA::ULong sz)
     }
 
   if (static_cast<size_t> (sz) > this->pfiles_.max_size ())
+  {
     return -1;
+  }
 
   if (this->pfiles_.size () < sz)
     {
@@ -96,7 +100,9 @@ TAO_MProfile::set (const TAO_MProfile &mprofile)
 {
   // Copy only the used profiles, not the source's unused capacity.
   if (this->set (mprofile.last_) < 0)
+  {
     return -1;
+  }
 
   // set indexes ...
   this->last_ = mprofile.last_;
@@ -110,7 +116,9 @@ TAO_MProfile::set (const TAO_MProfile &mprofile)
     {
       this->pfiles_[h] = mprofile.pfiles_[h];
       if (this->pfiles_[h] != nullptr)
+      {
         this->pfiles_[h]->_incr_refcnt ();
+      }
     }
 
   return 1;
@@ -121,10 +129,14 @@ int
 TAO_MProfile::grow (CORBA::ULong sz)
 {
   if (sz <= this->pfiles_.size ())
+  {
     return 0;
+  }
 
   if (static_cast<size_t> (sz) > this->pfiles_.max_size ())
+  {
     return -1;
+  }
 
   try
     {
@@ -145,7 +157,9 @@ TAO_MProfile::add_profile (TAO_Profile *pfile)
   if (last_ == this->pfiles_.size ()) // full!
     {
       if (this->grow (static_cast<CORBA::ULong> (this->pfiles_.size () + 1)) < 0)
+      {
         return -1;
+      }
     }
 
   pfiles_[last_++] = pfile;
@@ -171,14 +185,18 @@ TAO_MProfile::add_profiles (TAO_MProfile *pfiles)
     {
       // we need to grow!
      if (this->grow (this->last_ + pfiles->last_) < 0)
+     {
        return -1;
+     }
     }
 
   // copy over profiles
   for (TAO_PHandle h {}; h < pfiles->last_; ++h)
     {
       if (this->add_profile (pfiles->pfiles_[h]) < 0)
+      {
         return -1;
+      }
     }
   return 0;
 }
@@ -219,7 +237,9 @@ TAO_MProfile::remove_profile (const TAO_Profile *pfile)
         }
     }
   if (!found)
+  {
     return -1; // profile not found.
+  }
   return 0;
 }
 
@@ -229,7 +249,9 @@ TAO_MProfile::remove_profiles (const TAO_MProfile *pfiles)
   for (TAO_PHandle h {}; h < pfiles->last_; ++h)
     {
       if (this->remove_profile (pfiles->pfiles_[h]) < 0)
+      {
         return -1;
+      }
     }
   return 0;
 }
@@ -243,7 +265,9 @@ TAO_MProfile::is_equivalent (const TAO_MProfile *rhs)
   for (TAO_PHandle h1 {}; h1 < this->last_; ++h1)
     for (TAO_PHandle h2 {}; h2 < rhs->last_; ++h2)
       if (this->pfiles_[h1]->is_equivalent (rhs->pfiles_[h2]))
+      {
         return true;
+      }
 
   return false;
 }
@@ -254,7 +278,9 @@ TAO_MProfile::hash (CORBA::ULong max)
   CORBA::ULong hashval {};
 
   if (this->last_ == 0)
+  {
     return 0;
+  }
 
   for (TAO_PHandle h {}; h < this->last_ ; ++h)
     {
@@ -321,7 +347,9 @@ void
 TAO_MProfile::policy_list (CORBA::PolicyList *policy_list)
 {
   if (this->policy_list_.get () != policy_list)
+  {
     this->policy_list_.reset (policy_list);
+  }
 }
 
 int

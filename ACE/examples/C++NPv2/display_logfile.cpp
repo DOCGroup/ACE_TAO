@@ -55,7 +55,9 @@ public:
     ACE_FILE_Addr name (filename_.c_str ());
     ACE_FILE_Connector connector;
     if (connector.connect (logfile_, name) == -1)
+    {
       return -1;
+    }
     return activate ();
   }
 
@@ -68,7 +70,9 @@ public:
       ssize_t const bytes_read = logfile_.recv (mblk.wr_ptr (),
                                                 mblk.space ());
       if (bytes_read <= 0)
+      {
         break;
+      }
       mblk.wr_ptr (static_cast<size_t> (bytes_read));
 
       // We have a bunch of data from the log file. The data is
@@ -86,7 +90,10 @@ public:
       for (;;) {
         size_t const name_len = ACE_OS::strnlen
                                   (mblk.rd_ptr (), mblk.length ());
-        if (name_len == mblk.length ()) break;
+        if (name_len == mblk.length ())
+        {
+          break;
+        }
 
         char * const name_p = mblk.rd_ptr ();
         ACE_Message_Block *head {};
@@ -176,7 +183,10 @@ public:
         temp->wr_ptr (text_len);
 
         // Forward the whole lot to the next module.
-        if (put_next (head_owner.get ()) == -1) break;
+        if (put_next (head_owner.get ()) == -1)
+        {
+          break;
+        }
         head_owner.release ();
 
         // Move the file-content block's read pointer up past whatever
@@ -195,7 +205,9 @@ public:
        0);
     ACE_Message_Block_Unique_Ptr stop_owner {stop};
     if (put_next (stop_owner.get ()) != -1)
+    {
       stop_owner.release ();
+    }
     return 0;
   }
 };
@@ -234,9 +246,13 @@ public:
       if (mb->msg_type () == ACE_Message_Block::MB_STOP)
         stop = true;
       else
+      {
         ACE::write_n (ACE_STDOUT, mb);
+      }
       if (put_next (mb) != -1)
+      {
         mb_owner.release ();
+      }
     }
     return 0;
   }
@@ -340,7 +356,9 @@ public:
       for (ACE_Message_Block *temp = mblk; temp != nullptr; ) {
         dup = separator->duplicate ();
         if (dup == nullptr)
+        {
           return -1;
+        }
         ACE_Message_Block * const next = temp->cont ();
         dup->cont (next);
         temp->cont (dup);
@@ -355,7 +373,9 @@ public:
     }
     int const result = put_next (mblk_owner.get ());
     if (result != -1)
+    {
       mblk_owner.release ();
+    }
     return result;
   }
 };
@@ -379,7 +399,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       (new Logrec_Formatter_Module (ACE_TEXT ("Formatter"))) != -1
       && stream.push
       (new Logrec_Reader_Module (logfile)) != -1)
+  {
     return ACE_Thread_Manager::instance ()->wait () == 0 ? 0 : 1;
+  }
   return 1;
 }
 

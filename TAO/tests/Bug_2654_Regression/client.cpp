@@ -83,7 +83,9 @@ Worker::svc ()
         return 0;
       }
     else
+    {
       ++this->busy_threads_;
+    }
   }
   bool excep {};
   ACE_DEBUG ((LM_DEBUG, "(%t) starting loop\n"));
@@ -112,13 +114,17 @@ Worker::svc ()
         }
     }
   if (!excep)
+  {
     ACE_DEBUG ((LM_DEBUG, "(%t) Did all iterations\n"));
+  }
 
   {
     ACE_GUARD_RETURN (ACE_Mutex, ace_mon, this->lock_, 0);
     --this->busy_threads_;
     if (this->busy_threads_)
+    {
       return 0;
+    }
   }
 
   try
@@ -234,7 +240,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 
       if (parse_args (argc, argv, ior) != 0)
+      {
         return 1;
+      }
 
       ACE_DEBUG ((LM_DEBUG, "using ior = %s\n", ior));
 

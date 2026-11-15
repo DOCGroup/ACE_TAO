@@ -236,7 +236,9 @@ Test_AnySeq::check_validity ()
               return 0;
             }
           else
+          {
             continue;
+          }
         }
       else if ((this->in_[i] >>= str_in) &&
                (this->inout_[i] >>= str_inout) &&
@@ -252,7 +254,9 @@ Test_AnySeq::check_validity ()
               return 0;
             }
           else
+          {
             continue;
+          }
         }
       else if ((this->in_[i] >>= obj_in) &&
                (this->inout_[i] >>= obj_inout) &&
@@ -269,7 +273,9 @@ Test_AnySeq::check_validity ()
             }
         }
       else
+      {
         continue;
+      }
     }
 
   // Everything checks out.

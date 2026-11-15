@@ -51,7 +51,9 @@ Pseudo_Barrier::wait ()
   if (this->counter_.fetch_sub (1, std::memory_order_relaxed) == 1)
     return this->event_.signal ();
   else
+  {
     return this->event_.wait ();
+  }
 }
 
 static ACE_THR_FUNC_RETURN
@@ -90,13 +92,17 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
 
   // create workers
   if (tm.spawn_n (n_threads, worker, &thread_barrier) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "thread creates for worker failed"), -1);
+  }
 
   // wait for all workers to exit
   if (tm.wait () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "thread wait failed"), -1);
   else
+  {
     ACE_DEBUG ((LM_ERROR, "graceful exit\n"));
+  }
 
   return 0;
 }

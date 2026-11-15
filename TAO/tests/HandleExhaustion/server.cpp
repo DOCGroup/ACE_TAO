@@ -180,7 +180,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                           1);
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       Test_i *test_i {};
       // ServantBase_var takes ownership of this reference-counted TAO servant.

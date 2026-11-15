@@ -114,7 +114,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Client_Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       // Get the event channel object reference
       CORBA::Object_var object = orb->string_to_object (options.ior);
@@ -259,7 +261,9 @@ Task::svc ()
 
           --this->remaining_messages_;
           if (this->remaining_messages_ == 0)
+          {
             return 0;
+          }
         }
     }
   catch (CORBA::SystemException const &ex)

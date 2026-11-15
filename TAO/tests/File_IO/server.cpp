@@ -100,7 +100,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       int const result = parse_args (argc, argv, options);
       if (result != 0)
+      {
         return result;
+      }
 
       // Obtain the RootPOA.
       CORBA::Object_var const obj =

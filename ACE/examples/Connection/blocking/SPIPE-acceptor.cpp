@@ -25,7 +25,9 @@ Svc_Handler::open (void *)
               this->peer ().get_handle ()));
   if (this->ar_.open (*this,
                       this->peer ().get_handle ()) == -1)
+  {
     return -1;
+  }
   return this->ar_.read (this->mb_,
                          this->mb_.size ());
 }
@@ -51,7 +53,9 @@ Svc_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
       this->ar_.read (this->mb_, this->mb_.size ());
     }
   else
+  {
     ACE_Proactor::end_event_loop ();
+  }
 }
 
 int
@@ -72,7 +76,9 @@ int
 IPC_Server::init (int argc, ACE_TCHAR *argv[])
 {
   if (this->parse_args (argc, argv) == -1)
+  {
     return -1;
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Opening %s\n"),
@@ -89,7 +95,9 @@ IPC_Server::init (int argc, ACE_TCHAR *argv[])
       (SIGINT, this) == -1)
     return -1;
   else
+  {
     return 0;
+  }
 }
 
 int

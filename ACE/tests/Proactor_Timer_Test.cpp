@@ -140,7 +140,9 @@ Repeat_Timer_Handler::handle_time_out (const ACE_Time_Value &, const void *)
 {
   // Let the first one go.
   if (++this->expirations_ == 1)
+  {
     return;
+  }
 
   if (this->expirations_ == 2)
     {
@@ -181,7 +183,9 @@ test_registering_all_handlers ()
         ACE_Proactor::instance ()->schedule_timer
             (rt[i], &which[i], ACE_Time_Value (2 * secs + 1));
       if (t_id[i] == -1)
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("schedule_timer")));
+      }
       rt[i].timer_id (t_id[i]);
     }
 
@@ -210,7 +214,9 @@ test_registering_one_handler ()
         ACE_Proactor::instance ()->schedule_timer
           (rt[0], &which[i], ACE_Time_Value (2 * secs + 1));
       if (t_id[i] == -1)
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("schedule_timer")));
+      }
     }
 
   while (!done)
@@ -238,7 +244,9 @@ test_canceling_odd_timers ()
       t_id[i] = ACE_Proactor::instance ()->schedule_timer
         (rt[i], &which[i], ACE_Time_Value (2 * secs + 1));
       if (t_id[i] == -1)
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("schedule_timer")));
+      }
       rt[i].timer_id (t_id[i]);
     }
 
@@ -247,7 +255,9 @@ test_canceling_odd_timers ()
     if (ACE_ODD (rt[i].timer_id ()))
       {
         if (ACE_Proactor::instance ()->cancel_timer (rt[i].timer_id ()) == -1)
+        {
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("cancel_timer")));
+        }
       }
 
   while (!done)
@@ -272,7 +282,9 @@ test_cancel_repeat_timer ()
 
   ACE_Time_Value test_timer (4 * Repeat_Timer_Handler::REPEAT_INTERVAL);
   if (-1 == ACE_Proactor::instance ()->proactor_run_event_loop (test_timer))
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("proactor loop fail")));
+  }
 
   // handler should be deleted by its own handle_time_out().
   return;

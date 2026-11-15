@@ -18,7 +18,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       ++failure_count;
     }
   else
+  {
     cout << "Succeeded" << endl;
+  }
 
   // Test out the export of a function.  Like above,
   // I don't know how this can fail at runtime.
@@ -30,7 +32,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       ++failure_count;
     }
   else
+  {
     cout << "Succeeded" << endl;
+  }
 
   // Also test out the export of data.
 
@@ -41,7 +45,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       ++failure_count;
     }
   else
+  {
     cout << "Succeeded" << endl;
+  }
 
   // Test out the ACE_Singleton export by checking to see
   // that we have the same instance pointer as the DLL does.
@@ -54,7 +60,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       ++failure_count;
     }
   else
+  {
     cout << "Succeeded" << endl;
+  }
 
   // Return the number of failures
   return failure_count;

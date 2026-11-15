@@ -111,7 +111,9 @@ TAO_AV_Protocol_Object::handle_control_input (ACE_Message_Block *,
                                               ACE_Addr const &)
 {
   if (TAO_debug_level > 0)
+  {
     ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_Protocol_Object::handle_control_input\n"));
+  }
   return 0;
 }
 

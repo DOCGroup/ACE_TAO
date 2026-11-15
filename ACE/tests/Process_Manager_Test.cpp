@@ -92,7 +92,9 @@ const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE
   if (debug_test)
     ACE_OS::strcpy (cmd, ACE_TEXT ("-d"));
   else
+  {
     cmd[0] = ACE_TEXT ('\0');
+  }
 
 #if defined (ACE_HAS_WIN32_PRIORITY_CLASS)
   if (my_process_id == 1)
@@ -152,7 +154,9 @@ const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE
                 ACE_TEXT ("(%P) spawned child: pid %d time %d %s\n"),
                 int (result), sleep_time, prio));
   else
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn failed")));
+  }
 
   return result;
 }
@@ -198,7 +202,9 @@ public:
                     my_child,
                     result));
         if (result == ACE_INVALID_PID)
+        {
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P) %p\n"), ACE_TEXT ("error")));
+        }
         //test_status = 1;
       }
     else
@@ -350,7 +356,9 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   int result = 0;
   if ((result = command_line_test ()) != 0)
+  {
     test_status = result;
+  }
 
   // Try the explicit <ACE_Process_Manager::wait> functions
   ACE_Process_Manager mgr;
@@ -375,7 +383,9 @@ run_main (int argc, ACE_TCHAR *argv[])
                   child1,
                   result));
       if (result == ACE_INVALID_PID)
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P) %p\n"), ACE_TEXT ("error")));
+      }
       test_status = 1;
     }
   else
@@ -404,7 +414,9 @@ run_main (int argc, ACE_TCHAR *argv[])
                   child3,
                   result));
       if (result == ACE_INVALID_PID)
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P) %p\n"), ACE_TEXT ("error")));
+      }
       test_status = 1;
     }
   else
@@ -424,7 +436,9 @@ run_main (int argc, ACE_TCHAR *argv[])
                   child2,
                   result));
       if (result == ACE_INVALID_PID)
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P) %p\n"), ACE_TEXT ("error")));
+      }
       test_status = 1;
     }
   else
@@ -450,7 +464,9 @@ run_main (int argc, ACE_TCHAR *argv[])
                   child4,
                   result));
       if (result == ACE_INVALID_PID)
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P) %p\n"), ACE_TEXT ("error")));
+      }
       test_status = 1;
     }
   else
@@ -471,7 +487,9 @@ run_main (int argc, ACE_TCHAR *argv[])
                   ACE_TEXT ("(%P) Error: expected wait to time out; got %d\n"),
                   result));
       if (result == ACE_INVALID_PID)
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P) %p\n"), ACE_TEXT ("error")));
+      }
       test_status = 1;
     }
   else
@@ -488,7 +506,9 @@ run_main (int argc, ACE_TCHAR *argv[])
                   child5,
                   result));
       if (result == ACE_INVALID_PID)
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P) %p\n"), ACE_TEXT ("error")));
+      }
       test_status = 1;
     }
   else

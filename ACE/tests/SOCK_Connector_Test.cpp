@@ -105,10 +105,14 @@ find_another_host (ACE_TCHAR other_host[])
       while ((h = gethostent ()) != nullptr)
         {
           if (std::strcmp (h->h_name, ACE_TEXT_ALWAYS_CHAR (ACE_DEFAULT_SERVER_HOST)) == 0)
+          {
             continue;
+          }
 
           if (std::strcmp (h->h_name, "loopback") == 0)
+          {
             continue;
+          }
 
           // If not me.
           if (std::strcmp
@@ -118,7 +122,9 @@ find_another_host (ACE_TCHAR other_host[])
                ACE_OS::strcpy (candidate[candidate_count].host_name,
                                ACE_TEXT_CHAR_TO_TCHAR (h->h_name));
                if (++candidate_count >= MAX_CANDIDATES)
+               {
                  break;
+               }
             }
         }
 
@@ -137,7 +143,9 @@ find_another_host (ACE_TCHAR other_host[])
       ACE_OS::strcpy (cached_other_host, other_host);
     }
   else
+  {
     ACE_OS::strcpy (other_host, cached_other_host);
+  }
 }
 
 static int
@@ -183,7 +191,9 @@ fail_no_listener_nonblocking ()
            errno == ENETUNREACH)
     {
       if (sock.get_handle () != ACE_INVALID_HANDLE)
+      {
         status = con.complete (sock);
+      }
 
       if (status != -1)
         {
@@ -304,10 +314,14 @@ run_main (int, ACE_TCHAR *[])
   int status = 0;
 
   if (fail_no_listener_nonblocking () == -1)
+  {
     status = 1;
+  }
 
   if (succeed_nonblocking () == -1)
+  {
     status = 1;
+  }
 
   ACE_END_TEST;
   return status;

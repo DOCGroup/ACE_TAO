@@ -11,7 +11,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Notify_Test_Client client;
       int const status = client.init (argc, argv);
       if (status != 0)
+      {
         return status;
+      }
 
       CosNotifyChannelAdmin::EventChannelFactory_ptr ecf = client.notify_factory ();
 

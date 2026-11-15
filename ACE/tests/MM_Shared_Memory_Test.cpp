@@ -209,7 +209,9 @@ run_main (int, ACE_TCHAR *[])
   // Get the temporary directory,
   // The - 24 is for the filename, mm_shared_mem_testXXXXXX
   if (ACE::get_temp_dir (temp_file, MAXPATHLEN - 24) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Temporary path too long\n")), -1);
+  }
 
   // Add the filename to the end
   ACE_OS::strcat (temp_file, ACE_TEXT ("mm_shared_mem_testXXXXXX"));

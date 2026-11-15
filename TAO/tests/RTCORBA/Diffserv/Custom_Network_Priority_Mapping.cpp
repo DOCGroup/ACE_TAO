@@ -51,7 +51,9 @@ Custom_Network_Priority_Mapping::to_network (
      double (RTCORBA::maxPriority - RTCORBA::minPriority)) * total_slots);
 
   if (array_slot == total_slots)
+  {
     --array_slot;
+  }
 
   network_priority = dscp[array_slot];
 

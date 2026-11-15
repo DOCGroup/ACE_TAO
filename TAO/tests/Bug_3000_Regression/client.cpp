@@ -86,7 +86,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       }
 
       if (parse_args (argc, argv, ior, shutdown_server) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var const tmp =
         orb->string_to_object (ior);
@@ -132,7 +134,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           orb->perform_work ();
         }
       if (shutdown_server)
+      {
         service->shutdown ();
+      }
 
       root_poa->destroy (true, true);
 

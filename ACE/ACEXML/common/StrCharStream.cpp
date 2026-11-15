@@ -21,10 +21,14 @@ ACEXML_StrCharStream::open (ACEXML_Char const *str, ACEXML_Char const *name)
     {
       this->start_.reset (ACE::strnew (str));
       if (this->start_ == nullptr)
+      {
         return -1;
+      }
       this->name_.reset (ACE::strnew (name));
       if (this->name_ == nullptr)
+      {
         return -1;
+      }
       this->ptr_ = this->start_.get ();
       this->end_ = this->start_.get () + ACE_OS::strlen (this->start_.get ());
       return this->determine_encoding();
@@ -36,7 +40,9 @@ int
 ACEXML_StrCharStream::available ()
 {
   if (this->start_ != nullptr)
+  {
     return static_cast<int> (this->end_ - this->start_.get ()); // @@ Will this work on all platforms?
+  }
   return -1;
 }
 
@@ -54,7 +60,9 @@ int
 ACEXML_StrCharStream::determine_encoding ()
 {
   if (this->start_ == nullptr)
+  {
     return -1;
+  }
   char input[4] = {0,0,0,0};
   char* sptr  = (char*)this->start_.get ();
   int i = 0;
@@ -95,7 +103,9 @@ ACEXML_StrCharStream::read (ACEXML_Char *str, size_t len)
       this->ptr_ != this->end_)
     {
       if (len * sizeof (ACEXML_Char) > (size_t) (this->end_ - this->ptr_))
+      {
         len = this->end_ - this->ptr_;
+      }
       ACE_OS::strncpy (str, this->ptr_, len);
       this->ptr_ += len;
       return static_cast<int> (len);
@@ -107,7 +117,9 @@ int
 ACEXML_StrCharStream::peek ()
 {
   if (this->start_ != nullptr && this->ptr_ != this->end_)
+  {
     return *this->ptr_;
+  }
   return -1;
 }
 

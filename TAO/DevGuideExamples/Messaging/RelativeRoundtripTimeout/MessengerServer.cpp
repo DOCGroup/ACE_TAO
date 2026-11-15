@@ -39,7 +39,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
     std::basic_string<ACE_TCHAR> ior_output_file {ACE_TEXT ("MessengerServer.ior")};
 
     if (parse_args (argc, argv, ior_output_file) != 0)
+    {
       return 1;
+    }
 
     // Get reference to Root POA.
     CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");

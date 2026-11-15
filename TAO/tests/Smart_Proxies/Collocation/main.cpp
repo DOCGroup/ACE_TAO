@@ -10,7 +10,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       result = coll_test.init (argc, argv);
       if (result == 0)
+      {
         result = coll_test.run ();
+      }
     }
   catch (CORBA::Exception const &ex)
     {

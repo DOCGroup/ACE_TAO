@@ -104,14 +104,18 @@ FT::ObjectGroupRefVersion get_ft_group_version(IOP::ServiceContext_var service_c
   CORBA::Boolean byte_order;
 
   if (!(cdr >> ACE_InputCDR::to_boolean (byte_order)))
+  {
     throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
+  }
 
   cdr.reset_byte_order (static_cast<int> (byte_order));
 
   FT::FTGroupVersionServiceContext fgvsc;
 
   if (!(cdr >> fgvsc))
+  {
     throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
+  }
 
   return fgvsc.object_group_ref_version;
 }
@@ -124,7 +128,9 @@ void ForwardCtrlServerInterceptor::send_reply (PortableInterceptor::ServerReques
   try
   {
     if (!ri->response_expected())
+    {
       return;
+    }
 
     service_context =
       ri->get_request_service_context(IOP::FT_GROUP_VERSION);
@@ -157,7 +163,9 @@ void ForwardCtrlServerInterceptor::send_reply (PortableInterceptor::ServerReques
       //ACE_THROW (CORBA::MARSHAL ());
 
       if (!(cdr << forward.in ()))
+      {
         throw CORBA::MARSHAL ();
+      }
 
       ACE_Message_Block mb;
       ACE_CDR::consolidate(&mb, cdr.begin());

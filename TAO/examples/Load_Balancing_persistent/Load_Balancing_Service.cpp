@@ -58,12 +58,16 @@ Load_Balancing_Service::init (int argc, ACE_TCHAR* argv[])
     {
       result = this->orb_manager_.init (argc, argv);
       if (result == -1)
+      {
         return result;
+      }
 
       // Check the non-ORB arguments.
       result = this->parse_args (argc, argv);
       if (result < 0)
+      {
         return result;
+      }
 
       CORBA::PolicyList policies (2);
       policies.length (2);
@@ -143,7 +147,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   Load_Balancing_Service factory;
 
   if (factory.init (argc, argv) == -1)
+  {
     return 1;
+  }
 
   try
     {
@@ -158,5 +164,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   if (result == -1)
     return 1;
   else
+  {
     return 0;
+  }
 }

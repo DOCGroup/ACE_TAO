@@ -49,7 +49,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       int const result = parse_args (argc, argv);
 
       if (result != 0)
+      {
         return result;
+      }
 
       CORBA::Object_var const object =
         orb->string_to_object (ior.c_str ());
@@ -87,7 +89,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       test->unknown_exception_during_deactivation ();
 
       if (shutdown_server)
+      {
         test_factory->shutdown ();
+      }
 
       orb->destroy ();
     }

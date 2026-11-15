@@ -321,7 +321,9 @@ Event_Supplier::insert_event_data (CORBA::Any &data,
       }
 
             if (last_completion > (*sched_data)->completion_time)
+            {
               last_completion = 0;
+            }
 
       if ((*sched_data)->completion_time >= last_completion)
       {
@@ -338,7 +340,9 @@ Event_Supplier::insert_event_data (CORBA::Any &data,
                   "Could Not access scheduling data"));
 
     if (++schedule_index == schedule_data.size ())
+    {
       schedule_index = 0;
+    }
   }
   catch (CORBA::Exception const &)
   {
@@ -433,7 +437,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Initialize everthing
       if (event_Supplier_ptr->init () == -1)
+      {
         ACE_OS::exit (1);
+      }
 
       // now we can go ahead
       event_Supplier_ptr->start_generating_events ();

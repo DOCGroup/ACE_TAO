@@ -104,7 +104,9 @@ print_params ()
       if (payload_test)
         payload_style = "Payload based";
       else
+      {
         payload_style = "Work based";
+      }
 
       ACE_DEBUG ((LM_DEBUG,
                   "\nTesting oneway requests: %C : %C\n",
@@ -301,7 +303,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
           else if (!ACE_OS::strcmp (tmp, ACE_TEXT("twoway")))
             test_twoway = 1;
           else
+          {
             error = 1;
+          }
           break;
         }
 
@@ -316,7 +320,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
           else if (!ACE_OS::strcmp (tmp, ACE_TEXT("object")))
             level = OBJECT_LEVEL;
           else
+          {
             error = 1;
+          }
           break;
         }
 
@@ -409,7 +415,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int result = set_rt_mode ();
   if (result != 0)
+  {
     return result;
+  }
 
   try
     {
@@ -534,7 +542,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           if (payload_test)
             oneway_payload_test (server.in ());
           else
+          {
             oneway_work_test (server.in ());
+          }
         }
 
       if (shutdown_server)

@@ -57,7 +57,9 @@ ACE_Message_Block *
 Text_Input_Device_Wrapper::create_input_message ()
 {
   if (text_.empty ())
+  {
     return nullptr;
+  }
 
   std::string read_buffer (text_.size () + 1, '\0');
   for (size_t i = 0; i < text_.size (); ++i)
@@ -165,7 +167,9 @@ User_Input_Task::svc ()
     // Call back to the driver's implementation of how to read and
     // parse input.
     if (this->driver_.get_next_request () == -1)
+    {
       break;
+    }
 
   // We are done.
   this->relay_->end_transmission (Bounded_Packet_Relay::CANCELLED);
@@ -501,7 +505,9 @@ Send_Handler::handle_timeout (ACE_Time_Value const &,
                 return -1;
               }
             if (queue_.enqueue_command (re_register_callback.get ()) < 0)
+            {
               return -1;
+            }
             re_register_callback.release ();
             return 0;
           }
@@ -522,7 +528,9 @@ Send_Handler::handle_timeout (ACE_Time_Value const &,
                 return -1;
               }
             if (queue_.enqueue_command (clear_timers_callback.get ()) < 0)
+            {
               return -1;
+            }
             clear_timers_callback.release ();
             return 0;
           }
@@ -588,7 +596,9 @@ Termination_Handler::handle_timeout (ACE_Time_Value const &,
       return -1;
     }
   if (queue_.enqueue_command (clear_timers_callback.get ()) < 0)
+  {
     return -1;
+  }
   clear_timers_callback.release ();
   return 0;
 }

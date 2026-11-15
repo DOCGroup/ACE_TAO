@@ -191,7 +191,9 @@ Mmap1_Test::run_test (size_t iterations,
                        this->name ()),
                       -1);
   else
+  {
     return 0;
+  }
 }
 
 Mmap2_Test::Mmap2_Test (char const *name,
@@ -230,6 +232,8 @@ Mmap2_Test::run_test (size_t iterations,
       || map_output.unmap () == -1)
     return -1;
   else
+  {
     return 0;
+  }
 }
 #endif

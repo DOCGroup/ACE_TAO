@@ -366,7 +366,9 @@ Counting_Service::handle_input (ACE_HANDLE)
                                       sizeof len,
                                       timeout);
   if (bytes <= 0)
+  {
     return -1;
+  }
 
   bytes = this->peer ().recv (buf, len);
 

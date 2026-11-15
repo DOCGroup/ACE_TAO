@@ -115,7 +115,9 @@ Obj_Module::add_source(char const *p, bool imports_only)
 
   nmproc.spawn (nm_opts);
   if (ACE_OS::close(pipe[1]) == -1)
+  {
     ACE_DEBUG ((LM_DEBUG, "%p\n", "close"));
+  }
   nm_opts.release_handles();
 
   size_t import_lines = 0;
@@ -139,13 +141,17 @@ Obj_Module::add_source(char const *p, bool imports_only)
       }
     }
     if (eoln == 2)
+    {
       break;
+    }
     is_import = dummy == 'U';
     is_export = !imports_only && std::strchr ("BCDRTVW", dummy) != nullptr;
 
     //    if (ACE::recv(pipe[0],&dummy,1,&timeout) != 1)
     if (ACE_OS::read(pipe[0],&dummy,1) != 1)
+    {
       break;
+    }
 
     ACE_Message_Block *&buffer_cursor = is_import ? im_buf_cur :
       (is_export ? ex_buf_cur : discarded_buf);
@@ -161,7 +167,9 @@ Obj_Module::add_source(char const *p, bool imports_only)
 
   this->populate_sig_list (imports_, import_lines, im_buffer);
   if (!imports_only)
+  {
     this->populate_sig_list (exports_, export_lines, ex_buffer);
+  }
 }
 
 void

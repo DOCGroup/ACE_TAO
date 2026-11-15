@@ -204,7 +204,9 @@ be_visitor_union_branch_public_ci::visit_array (be_array *node)
       << bu->name () << "::" << ub->local_name () << " () const" << be_nl
       << "{" << be_idt_nl;
   if (this->emit_getter_validation (ub) == -1)
+  {
     return -1;
+  }
   *os << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl
       << "}";
 
@@ -276,7 +278,9 @@ be_visitor_union_branch_public_ci::visit_enum (be_enum *node)
       << bu->name () << "::" << ub->local_name () << " () const" << be_nl
       << "{" << be_idt_nl;
   if (this->emit_getter_validation (ub) == -1)
+  {
     return -1;
+  }
   *os << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl
       << "}";
 
@@ -367,7 +371,9 @@ be_visitor_union_branch_public_ci::visit_interface (be_interface *node)
       << bu->name () << "::" << ub->local_name () << " () const" << be_nl
       << "{" << be_idt_nl;
   if (this->emit_getter_validation (ub) == -1)
+  {
     return -1;
+  }
   *os << "return this->u_." << ub->local_name () << "_->in ();" << be_uidt_nl
       << "}";
 
@@ -458,7 +464,9 @@ be_visitor_union_branch_public_ci::visit_interface_fwd (be_interface_fwd *node)
       << bu->name () << "::" << ub->local_name () << " () const" << be_nl
       << "{" << be_idt_nl;
   if (this->emit_getter_validation (ub) == -1)
+  {
     return -1;
+  }
   *os << "return this->u_." << ub->local_name () << "_->in ();" << be_uidt_nl
       << "}";
 
@@ -554,7 +562,9 @@ be_visitor_union_branch_public_ci::emit_valuetype_common  (be_type *node)
       << bu->name () << "::" << ub->local_name () << " () const" << be_nl
       << "{" << be_idt_nl;
   if (this->emit_getter_validation (ub) == -1)
+  {
     return -1;
+  }
   *os << "return this->u_." << ub->local_name () << "_->in ();" << be_uidt_nl
       << "}";
 
@@ -702,7 +712,9 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
             << " () const" << be_nl
             << "{" << be_idt_nl;
         if (this->emit_getter_validation (ub) == -1)
+        {
           return -1;
+        }
         *os << "return this->u_." << ub->local_name ()
             << "_->in ();" << be_uidt_nl;
         *os << "}";
@@ -717,7 +729,9 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
             << " () const" << be_nl
             << "{" << be_idt_nl;
         if (this->emit_getter_validation (ub) == -1)
+        {
           return -1;
+        }
         *os << "return this->u_." << ub->local_name ()
             << "_;" << be_uidt_nl;
         *os << "}";
@@ -732,7 +746,9 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
             << " () const" << be_nl
             << "{" << be_idt_nl;
         if (this->emit_getter_validation (ub) == -1)
+        {
           return -1;
+        }
         *os << "return this->u_." << ub->local_name ()
             << "_;" << be_uidt_nl;
         *os << "}";
@@ -747,7 +763,9 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
             << " () const" << be_nl
             << "{" << be_idt_nl;
         if (this->emit_getter_validation (ub) == -1)
+        {
           return -1;
+        }
         *os << "return *this->u_." << ub->local_name () << "_;" << be_uidt_nl
             << "}" << be_nl_2;
 
@@ -759,7 +777,9 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
             << " ()" << be_nl
             << "{" << be_idt_nl;
         if (this->emit_getter_validation (ub) == -1)
+        {
           return -1;
+        }
         *os << "return *this->u_." << ub->local_name () << "_;" << be_uidt_nl
             << "}";
         break;
@@ -774,7 +794,9 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
             << " () const" << be_nl
             << "{" << be_idt_nl;
         if (this->emit_getter_validation (ub) == -1)
+        {
           return -1;
+        }
         *os << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl
             << "}";
 
@@ -863,7 +885,9 @@ be_visitor_union_branch_public_ci::visit_seq_map_common (be_type *node)
       << bu->name () << "::" << ub->local_name () << " () const" << be_nl
       << "{" << be_idt_nl;
   if (this->emit_getter_validation (ub) == -1)
+  {
     return -1;
+  }
   *os << "return *this->u_." << ub->local_name () << "_;" << be_uidt_nl
       << "}" << be_nl_2;
 
@@ -874,7 +898,9 @@ be_visitor_union_branch_public_ci::visit_seq_map_common (be_type *node)
       << bu->name () << "::" << ub->local_name () << " ()" << be_nl
       << "{" << be_idt_nl;
   if (this->emit_getter_validation (ub) == -1)
+  {
     return -1;
+  }
   *os << "return *this->u_." << ub->local_name () << "_;" << be_uidt_nl
       << "}";
 
@@ -1046,7 +1072,9 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
       << " () const // get method" << be_nl
       << "{" << be_idt_nl;
   if (this->emit_getter_validation (ub) == -1)
+  {
     return -1;
+  }
   *os << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl
       << "}";
 
@@ -1156,7 +1184,9 @@ be_visitor_union_branch_public_ci::visit_structure (be_structure *node)
       << "{" << be_idt_nl;
 
   if (this->emit_getter_validation (ub) == -1)
+  {
     return -1;
+  }
 
   if (bt->size_type () == be_type::VARIABLE
       || node->has_constructor ())
@@ -1178,7 +1208,9 @@ be_visitor_union_branch_public_ci::visit_structure (be_structure *node)
       << "{" << be_idt_nl;
 
   if (this->emit_getter_validation (ub) == -1)
+  {
     return -1;
+  }
 
   if (bt->size_type () == be_type::VARIABLE
       || node->has_constructor ())
@@ -1317,7 +1349,9 @@ be_visitor_union_branch_public_ci::visit_union (be_union *node)
       << bu->name () << "::" << ub->local_name () << " () const" << be_nl
       << "{" << be_idt_nl;
   if (this->emit_getter_validation (ub) == -1)
+  {
     return -1;
+  }
   *os << "return *this->u_." << ub->local_name () << "_;" << be_uidt_nl
       << "}" << be_nl_2;
 
@@ -1328,7 +1362,9 @@ be_visitor_union_branch_public_ci::visit_union (be_union *node)
       << bu->name () << "::" << ub->local_name () << " ()" << be_nl
       << "{" << be_idt_nl;
   if (this->emit_getter_validation (ub) == -1)
+  {
     return -1;
+  }
   *os << "return *this->u_." << ub->local_name () << "_;" << be_uidt_nl
       << "}";
 

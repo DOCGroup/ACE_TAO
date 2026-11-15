@@ -139,7 +139,9 @@ TAO_IIOP_Endpoint::set (ACE_INET_Addr const &addr,
         }
     }
   else
+  {
     this->host_ = CORBA::string_dup (tmp_host);
+  }
 
   this->port_ = addr.get_port_number ();
 
@@ -161,7 +163,9 @@ TAO_IIOP_Endpoint::addr_to_string (char *buffer, size_t length)
 #endif /* ACE_HAS_IPV6 */
 
   if (length < actual_len)
+  {
     return -1;
+  }
 
 #if defined (ACE_HAS_IPV6)
   if (this->is_ipv6_decimal_)
@@ -224,7 +228,9 @@ TAO_IIOP_Endpoint::next_filtered_i (TAO_IIOP_Endpoint *root,
   // initialized.
   TAO_IIOP_Endpoint *candidate = (root == nullptr) ? this : next_;
   if (root == nullptr)
+  {
     root = this;
+  }
 
 #if defined (ACE_HAS_IPV6)
   if (ipv6_only)
@@ -368,7 +374,9 @@ TAO_IIOP_Endpoint_get_ip_interfaces (std::vector<ACE_CString> &local_ips)
   int const err = ACE::get_ip_interfaces (cnt, tmp);
   std::unique_ptr<ACE_INET_Addr[]> interfaces (tmp);
   if (err != 0)
+  {
     return;
+  }
 #if defined (ACE_HAS_IPV6)
   char buf[64];
 #else /* ACE_HAS_IPV6 */
@@ -389,7 +397,9 @@ TAO_IIOP_Endpoint_none_duplicate_insert (
   std::vector<ACE_CString> &vector)
 {
   if (std::find (vector.begin (), vector.end (), value) == vector.end ())
+  {
     vector.push_back (value);
+  }
 }
 
 // Given a comma separated list of preferred interface directives, which
@@ -439,7 +449,9 @@ TAO_IIOP_Endpoint::find_preferred_interfaces (
       if (comma == ACE_CString::npos)
         wild_local = csv_preferred.substr (assign + 1);
       else
+      {
         wild_local = csv_preferred.substr (assign + 1, comma - assign - 1);
+      }
       ACE_CString const wild_remote = csv_preferred.substr (index, assign - index);
       index = comma + 1;
 
@@ -483,7 +495,9 @@ TAO_IIOP_Endpoint::find_preferred_interfaces (
           // remote endpoint.
         }
       if (comma == ACE_CString::npos)
+      {
         break;
+      }
     }
 }
 
@@ -509,7 +523,9 @@ TAO_IIOP_Endpoint::preferred_interfaces (char const *csv,
       for (++i; i < count; ++i)
         {
           if (std::strstr (preferred[i].c_str (), "if=") == nullptr)
+          {
             ep = add_local_endpoint (ep, preferred[i].c_str (), profile);
+          }
         }
 
       // If we're not enforcing the preferred interfaces, then we can just add
@@ -517,7 +533,9 @@ TAO_IIOP_Endpoint::preferred_interfaces (char const *csv,
       if (!enforce)
         ep = add_local_endpoint (ep, "", profile);
       else
+      {
         --count;
+      }
     }
   return count;
 }
@@ -529,7 +547,9 @@ TAO_IIOP_Endpoint::is_equivalent (TAO_Endpoint const *other_endpoint)
     dynamic_cast<TAO_IIOP_Endpoint const *> (other_endpoint);
 
   if (endpoint == nullptr)
+  {
     return false;
+  }
 
   return (this->port_ == endpoint->port_
           && (std::strcmp (this->host (), endpoint->host ()) == 0));
@@ -539,7 +559,9 @@ CORBA::ULong
 TAO_IIOP_Endpoint::hash ()
 {
   if (this->hash_val_ != 0)
+  {
     return this->hash_val_;
+  }
 
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
@@ -548,7 +570,9 @@ TAO_IIOP_Endpoint::hash ()
                       this->hash_val_);
     // .. DCL
     if (this->hash_val_ != 0)
+    {
       return this->hash_val_;
+    }
 
     // A few comments about this optimization. The call below will
     // deadlock if the object_addr_set is false. If you don't belive

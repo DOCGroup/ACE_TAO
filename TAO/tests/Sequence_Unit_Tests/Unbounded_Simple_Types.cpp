@@ -79,7 +79,9 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       if (idl_moved.get_buffer () != idl_buffer
           || idl_moved[0] != 3
           || idl_moved[1] != 7)
+      {
         return 1;
+      }
 
       CORBA::LongSeq idl_move_assigned;
       CORBA::Long * const idl_move_buffer = idl_moved.get_buffer ();
@@ -87,7 +89,9 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       if (idl_move_assigned.get_buffer () != idl_move_buffer
           || idl_move_assigned[0] != 3
           || idl_move_assigned[1] != 7)
+      {
         return 1;
+      }
     }
   catch (const ::CORBA::Exception &)
     {

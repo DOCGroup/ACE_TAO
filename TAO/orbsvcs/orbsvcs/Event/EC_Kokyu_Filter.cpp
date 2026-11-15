@@ -224,7 +224,9 @@ void
 TAO_EC_Kokyu_Filter::init_rt_info ()
 {
   if (this->rt_info_computed_)
+  {
     return;
+  }
 
 #if 1 //ifdef'ed from 1 to 0 by VS
 

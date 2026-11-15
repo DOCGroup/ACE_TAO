@@ -23,7 +23,9 @@ int
 EC_Connect::parse_args (int& argc, ACE_TCHAR* argv[])
 {
   if (this->EC_Driver::parse_args (argc, argv) != 0)
+  {
     return -1;
+  }
 
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
@@ -253,7 +255,9 @@ EC_Connect::disconnect_consumers ()
   this->consumer_disconnect_.dump_results (ACE_TEXT("Consumer/disconnect"),
                                            gsf);
   if (this->verbose ())
+  {
     ACE_DEBUG ((LM_DEBUG, "EC_Connect (%P|%t) consumers disconnected\n"));
+  }
 }
 
 void
@@ -275,7 +279,9 @@ EC_Connect::disconnect_suppliers ()
   this->supplier_disconnect_.dump_results (ACE_TEXT("Supplier/disconnect"),
                                            gsf);
   if (this->verbose ())
+  {
     ACE_DEBUG ((LM_DEBUG, "EC_Connect (%P|%t) suppliers disconnected\n"));
+  }
 }
 // ****************************************************************
 

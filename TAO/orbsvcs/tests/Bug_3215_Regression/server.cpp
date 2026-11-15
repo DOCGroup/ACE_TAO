@@ -84,7 +84,9 @@ make_iogr (TAO_IOP::TAO_IOR_Manipulation_ptr iorm,
   // Set the primary
   // See we are setting the second ior as the primary
   if (has_property)
+  {
     iorm->set_primary (&iogr_prop, new_ref.in (), new_ref.in ());
+  }
 
   return new_ref._retn ();
 }
@@ -135,7 +137,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Server_Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       Hello *hello_impl {};
       ACE_NEW_RETURN (hello_impl,

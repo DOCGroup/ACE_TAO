@@ -173,7 +173,9 @@ TAO_Queued_Data::duplicate (TAO_Queued_Data &sqd)
 
   if (ACE_BIT_ENABLED (fl,
                        ACE_Message_Block::DONT_DELETE))
+  {
     (void) TAO_Queued_Data::replace_data_block (*sqd.msg_block_);
+  }
 
   TAO_Queued_Data *qd {};
 

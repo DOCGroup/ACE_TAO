@@ -45,7 +45,9 @@ CC_LockSet::Init ()
 {
   // Acquire the semaphore in order to be able to put requests on hold
   if (semaphore_.acquire () == -1)
+  {
     throw CORBA::INTERNAL ();
+  }
 }
 
 // Returns true if the requested lock mode is compatible with the
@@ -56,7 +58,9 @@ bool CC_LockSet::compatible (CC_LockModeEnum mr) const
   for (size_t i = CC_IR; i <= CC_W; ++i)
     if (this->lock_[i] > 0)
       if (!this->compatible_[i][mr])
+      {
         return false;
+      }
 
   return true;
 }
@@ -77,7 +81,9 @@ CC_LockSet::lock (CosConcurrencyControl::lock_mode mode)
   // the FIFO properties of ACE_Token!
   if (this->lock_i (lm))
     if (semaphore_.acquire () == -1)
+    {
       throw CORBA::INTERNAL ();
+    }
 }
 
 // Tries to lock. If it is not possible false is returned.
@@ -131,7 +137,9 @@ CC_LockSet::unlock (CosConcurrencyControl::lock_mode mode)
   if (lock_[lm] == 0) // This lock is not held.
     throw CosConcurrencyControl::LockNotHeld();
   else
+  {
     --lock_[lm];
+  }
 
   // If we do not have a lock held in a weaker mode than the
   // strongest held and we have requests on the semaphore signal
@@ -144,7 +152,9 @@ CC_LockSet::unlock (CosConcurrencyControl::lock_mode mode)
         {
           this->lock_queue_.pop_front ();
           if (semaphore_.release () == -1)
+          {
             throw CORBA::INTERNAL ();
+          }
           ++lock_[lock_on_queue];
         }
       else
@@ -173,7 +183,9 @@ CC_LockSet::change_mode (CosConcurrencyControl::lock_mode held_mode,
       this->unlock (held_mode);
 
       if (semaphore_.acquire () == -1)
+      {
         throw CORBA::INTERNAL ();
+      }
     }
   //  this->dump ();
 }
@@ -193,7 +205,9 @@ CC_LockSet::lock_i (CC_LockModeEnum lm)
       return true; // Lock the semaphore.
     }
   else
+  {
     ++lock_[lm];
+  }
 
   this->dump ();
   return false;
@@ -211,7 +225,9 @@ CC_LockSet::try_lock_i (CC_LockModeEnum lm)
       return false;
     }
   else
+  {
     ++lock_[lm];
+  }
 
   this->dump ();
   return true;

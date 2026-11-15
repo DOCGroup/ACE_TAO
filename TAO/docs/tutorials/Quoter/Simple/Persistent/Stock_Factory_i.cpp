@@ -13,9 +13,13 @@ Quoter::Stock_ptr
 Quoter_Stock_Factory_i::get_stock (char const *symbol)
 {
   if (std::strcmp (symbol, "RHAT") == 0)
+  {
     return this->rhat_._this ();
+  }
   if (std::strcmp (symbol, "MSFT") == 0)
+  {
     return this->msft_._this ();
+  }
 
   throw Quoter::Invalid_Stock_Symbol ();
 }

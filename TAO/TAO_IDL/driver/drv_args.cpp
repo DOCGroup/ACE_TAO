@@ -486,7 +486,10 @@ DRV_parse_args (long ac, char **av)
           DRV_push_file (av[i]);
         }
 
-      if (idl_global->parse_args_exit_) return; // Catch Exits
+      if (idl_global->parse_args_exit_)
+      {
+        return; // Catch Exits
+      }
     } // End of FOR (i = 1; i < ac; i++)
 
   be_util::arg_post_proc ();

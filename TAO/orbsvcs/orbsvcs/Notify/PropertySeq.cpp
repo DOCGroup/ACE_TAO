@@ -20,7 +20,9 @@ TAO_Notify_PropertySeq::init (const CosNotification::PropertySeq& prop_seq)
       name = prop_seq[i].name.in ();
 
       if (this->property_map_.rebind (name, prop_seq[i].value) == -1)
+      {
         return -1;
+      }
     }
   // Note call to rebind. This allows to call <init> to set updates.
 

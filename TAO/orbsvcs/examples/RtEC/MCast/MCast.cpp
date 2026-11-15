@@ -49,7 +49,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_TString udp_mcast_address {
         ACE_TEXT (ACE_DEFAULT_MULTICAST_ADDR) ACE_TEXT (":10001")};
       if (parse_args (argc, argv, udp_mcast_address) == -1)
+      {
         return 1;
+      }
 
       // This is the standard code to get access to the POA and
       // activate it.

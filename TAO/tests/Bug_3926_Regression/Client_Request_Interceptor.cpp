@@ -104,7 +104,9 @@ Client_Request_Interceptor::receive_other (
 
   // Oneway
   if (!response_expected)
+  {
     return;
+  }
 
   PortableInterceptor::ReplyStatus reply_status;
 

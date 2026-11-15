@@ -53,7 +53,9 @@ Life_Cycle_Service_Server::init (int argc,
   retval = this->orb_manager_.activate_poa_manager ();
 
   if (retval == -1)
+  {
     ORBSVCS_ERROR_RETURN ((LM_ERROR, "%p\n", "activate_poa_manager"), -1);
+  }
 
   this->parse_args (command.get_argc (), command.get_TCHAR_argv ());
 
@@ -68,7 +70,9 @@ Life_Cycle_Service_Server::init (int argc,
     this->orb_manager_.activate (servant);
 
   if (this->debug_level_ >= 2)
+  {
     ORBSVCS_DEBUG ((LM_DEBUG, "LifeCycle_Service: IOR is: <%C>\n", str.in ()));
+  }
 
   // Register the LifeCycle Service with the Naming Service.
   try

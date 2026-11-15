@@ -43,7 +43,9 @@ siglistset (sigset_t x, int *sigset, int can_miss = 0)
   if (empty)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Empty!!\n\n"))) ;
   else
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n\n"))) ;
+  }
 }
 
 int

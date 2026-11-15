@@ -201,7 +201,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_DEBUG ((LM_DEBUG, "exceptional() yielded exception\n"));
           caught = true;
         }
-      if (!caught) ++errorCount;
+      if (!caught)
+      {
+        ++errorCount;
+      }
 
       caught = false;
       try
@@ -213,7 +216,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_DEBUG ((LM_DEBUG, "notexisting() yielded exception\n"));
           caught = true;
         }
-      if (!caught) ++errorCount;
+      if (!caught)
+      {
+        ++errorCount;
+      }
 
       orb->destroy ();
     }

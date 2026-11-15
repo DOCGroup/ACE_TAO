@@ -30,7 +30,9 @@ Supplier_Timer_Handler::handle_timeout (ACE_Time_Value const & /* tv */,
 
   // The next current stock rates are obtained from a file.
   if (this->get_stock_information () == -1)
+  {
     return 0;
+  }
 
   // Send the stock information to the notifier.  Graceful exit when
   // the notifier doesnt accept the information.

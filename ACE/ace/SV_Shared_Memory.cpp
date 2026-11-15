@@ -37,7 +37,9 @@ ACE_SV_Shared_Memory::open_and_attach (key_t external_id,
   else if (this->attach (virtual_addr, flags) == -1)
     return -1;
   else
+  {
     return 0;
+  }
 }
 
 // Constructor interface to this->open_and_attach () member function.

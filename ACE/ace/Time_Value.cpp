@@ -312,7 +312,9 @@ std::ostream &operator<< (std::ostream &o, ACE_Time_Value const &v)
     {
       o << tv->tv_sec;
       if (tv->tv_usec)
+      {
         o << '.' << std::setw (6) << std::labs (tv->tv_usec);
+      }
     }
   else if (tv->tv_usec < 0)
     o << "-0." << std::setw (6) << - tv->tv_usec;
@@ -320,7 +322,9 @@ std::ostream &operator<< (std::ostream &o, ACE_Time_Value const &v)
     {
       o << '0';
       if (tv->tv_usec > 0)
+      {
         o << '.'<< std::setw (6) << tv->tv_usec;
+      }
     }
 
   o.fill (oldFiller);

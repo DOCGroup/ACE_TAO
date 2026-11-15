@@ -33,7 +33,9 @@ TAO_DIOP_Connector::open (TAO_ORB_Core *orb_core)
 
   // Create our connect strategy
   if (this->create_connect_strategy () == -1)
+  {
     return -1;
+  }
 
   return 0;
 }
@@ -51,7 +53,9 @@ TAO_DIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
     this->remote_endpoint (endpoint);
 
   if (diop_endpoint == nullptr)
+  {
     return -1;
+  }
 
   const ACE_INET_Addr &remote_address =
     diop_endpoint->object_addr ();
@@ -90,7 +94,9 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
     this->remote_endpoint (desc.endpoint ());
 
   if (diop_endpoint == nullptr)
+  {
     return 0;
+  }
 
   const ACE_INET_Addr &remote_address =
     diop_endpoint->object_addr ();
@@ -248,7 +254,9 @@ TAO_DIOP_Connector::check_prefix (const char *endpoint)
 {
   // Check for a valid string
   if (!endpoint || !*endpoint)
+  {
     return -1;  // Failure
+  }
 
   const char *protocol[] = { "diop", "dioploc" };
 
@@ -281,7 +289,9 @@ TAO_DIOP_Endpoint *
 TAO_DIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
 {
   if (endpoint->tag () != TAO_TAG_DIOP_PROFILE)
+  {
     return 0;
+  }
 
   return dynamic_cast<TAO_DIOP_Endpoint *> (endpoint);
 }

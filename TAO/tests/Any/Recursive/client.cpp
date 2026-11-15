@@ -49,7 +49,9 @@ perform_invocation (Test::Hello_ptr const hello,
 
       T const *my_foo {};
       if (!(my_any.in () >>= my_foo))
+      {
         throw Test::Demarshaling_From_Any_Failed ();
+      }
 
       CORBA::TypeCode_var const the_tc = the_any.type ();
       CORBA::TypeCode_var const my_tc = my_any.in ().type ();
@@ -58,13 +60,17 @@ perform_invocation (Test::Hello_ptr const hello,
         the_tc->equal (my_tc.in ());
 
       if (!equal_tc)
+      {
         throw Test::Recursive_Type_In_Any_Test_Failed ();
+      }
 
       CORBA::Boolean const equiv_tc =
         the_tc->equivalent (my_tc.in ());
 
       if (!equiv_tc)
+      {
         throw Test::Recursive_Type_In_Any_Test_Failed ();
+      }
     }
 }
 
@@ -344,7 +350,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Client_Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var const tmp =
         orb->string_to_object (options.ior.c_str ());
@@ -395,7 +403,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       if (!success)
+      {
         throw Test::Recursive_Type_In_Any_Test_Failed ();
+      }
 
       hello->shutdown ();
 

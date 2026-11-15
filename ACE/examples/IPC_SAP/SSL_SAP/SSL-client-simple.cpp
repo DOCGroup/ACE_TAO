@@ -44,7 +44,9 @@ Options::init ()
 {
   // Check for default case.
   if (this->message_len_ == 0)
+  {
     this->message_len_ = std::strlen ("TAO");
+  }
 
   this->message_len_ += sizeof (ACE_UINT32);
 
@@ -205,7 +207,9 @@ Options::oneway_client_test ()
   char *request = this->shared_client_test (this->port () + 1,
                                             cli_stream);
   if (request == nullptr)
+  {
     return;
+  }
 
   // This variable is allocated off the stack to obviate the need for
   // locking.
@@ -252,7 +256,9 @@ Options::twoway_client_test ()
   char *request = this->shared_client_test (this->port (),
                                             cli_stream);
   if (request == nullptr)
+  {
     return;
+  }
 
   // This variable is allocated off the stack to obviate the need for
   // locking.
@@ -332,7 +338,9 @@ Options::run ()
   if (this->oneway_ == 0)
     this->twoway_client_test ();
   else
+  {
     this->oneway_client_test ();
+  }
 }
 
 static int
@@ -353,7 +361,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_LOG_MSG->open (argv[0]);
 
   if (OPTIONS::instance ()->parse_args (argc, argv) == -1)
+  {
     return -1;
+  }
 
   // Run the client
   run_client ();

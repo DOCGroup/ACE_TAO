@@ -405,7 +405,9 @@ Clerk_i::init (int argc,
 
       // Parse commandline arguments.
       if (this->parse_args (command.get_argc (), command.get_TCHAR_argv ()) != 0)
+      {
         return -1;
+      }
 
       // If IOR file has not been specified then try the Naming
       // Service.
@@ -417,23 +419,31 @@ Clerk_i::init (int argc,
 
           // Initialize the Naming Service.
           if (this->init_naming_service () != 0)
+          {
             return -1;
+          }
 
           // Get a reference to the Server Naming context and the
           // first IOR.
           if (this->get_first_IOR () != 0)
+          {
             return -1;
+          }
         }
 
       // Create an instance of the Clerk.
       if (this->create_clerk () != 0)
+      {
         return -1;
+      }
 
       // Register the clerk with the Naming Service.
       if (!this->ior_file_provided_)
         {
           if (this->register_clerk () != 0)
+          {
             return -1;
+          }
         }
 
     }

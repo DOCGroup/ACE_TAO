@@ -35,7 +35,9 @@ Stock_Consumer::push (RtecEventComm::EventSet const &data)
 
       Quoter::Event const *event {};
       if ((e.data.any_value >>= event) == 0)
+      {
         continue; // Invalid event
+      }
 
       std::cout << "The new price for one stock in \""
                 << event->full_name.in ()

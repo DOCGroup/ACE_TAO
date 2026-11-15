@@ -297,7 +297,9 @@ ACE_OS::tempnam (const wchar_t *dir, const wchar_t *pfx)
       wname = reinterpret_cast<wchar_t *>
         (ACE_OS::malloc (namelen * sizeof (wchar_t)));
       if (wname != nullptr)
+      {
         ACE_OS::strcpy (wname, ACE_Ascii_To_Wide (name).wchar_rep ());
+      }
       ACE_OS::free (name);
     }
   return wname;
@@ -550,7 +552,9 @@ ACE_OS::vaswprintf_emulation(wchar_t **bufp, const wchar_t *format, va_list argp
       wchar_t *buf = reinterpret_cast<wchar_t*>
         (ACE_OS::malloc((size + 1) * sizeof(wchar_t)));
       if (!buf)
+      {
         return -1;
+      }
 
       va_list aq;
       va_copy (aq, argptr);
@@ -558,7 +562,9 @@ ACE_OS::vaswprintf_emulation(wchar_t **bufp, const wchar_t *format, va_list argp
       va_end (aq);
 
       if (size != -1)
+      {
         *bufp = buf;
+      }
     }
 
   return size;

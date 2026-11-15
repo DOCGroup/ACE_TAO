@@ -82,13 +82,17 @@ Test_Client_Module::init (int argc, ACE_TCHAR *argv[])
                                     "CLIENT");
 
       if (CORBA::is_nil (this->orb_.in ()))
+      {
         return -1;
+      }
 
       ACE_Argv_Type_Converter converter (new_argc, new_argv.get_buffer ());
 
       ACE_TString ior {ACE_TEXT ("file://test.ior")};
       if (::parse_args (new_argc, converter.get_TCHAR_argv (), ior) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var const obj =
         this->orb_->string_to_object (ior.c_str ());

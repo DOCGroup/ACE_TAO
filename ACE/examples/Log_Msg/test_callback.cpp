@@ -100,7 +100,9 @@ Logger::log (ACE_Log_Record &log_record)
 
   // Cleanup on the way out.
   if (use_log_msg)
+  {
     this->recursive_ = true;
+  }
 }
 
 int

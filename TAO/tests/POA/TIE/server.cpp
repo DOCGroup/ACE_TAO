@@ -75,11 +75,15 @@ write_ior (char const *filename, char const *ior)
   std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
     ACE_OS::fopen (filename, "w"), ACE_OS::fclose);
   if (!output_file)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Cannot open IOR file %s for writing\n", filename), -1);
+  }
 
   int const result = ACE_OS::fprintf (output_file.get (), "%s", ior);
   if (result < 0 || static_cast<size_t> (result) != std::strlen (ior))
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Failed writing IOR to %s\n", filename), -1);
+  }
 
   return 0;
 }
@@ -98,7 +102,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       // Obtain the RootPOA.
       CORBA::Object_var const obj =
@@ -216,7 +222,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       }};
       for (CORBA::ULong i {}; i < iors.size (); ++i)
         if (write_ior (ACE_TEXT_ALWAYS_CHAR (options.ior_files[i]), iors[i]) != 0)
+        {
           return -1;
+        }
 
       poa_manager->activate ();
 

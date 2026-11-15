@@ -33,6 +33,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   else if (crawler.run () == -1)
     return 1;
   else
+  {
     return 0;
+  }
 }
 

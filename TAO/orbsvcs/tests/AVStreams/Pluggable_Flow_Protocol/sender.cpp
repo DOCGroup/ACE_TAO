@@ -82,12 +82,16 @@ Sender::init (int argc,
               ACE_TCHAR *argv[])
 {
   if (this->parse_args (argc, argv) != 0)
+  {
     return -1;
+  }
 
   if (this->endpoint_strategy_.init (TAO_AV_CORE::instance ()->orb (),
                                      TAO_AV_CORE::instance ()->poa ()) != 0 ||
       this->naming_client_.init (TAO_AV_CORE::instance ()->orb ()) != 0)
+  {
     return -1;
+  }
 
   this->input_file_.reset (ACE_OS::fopen (this->options_.filename.c_str (), "rb"));
   if (!this->input_file_)
@@ -115,13 +119,17 @@ Sender::init (int argc,
   TAO_MMDevice * const sender_mmdevice =
     new (std::nothrow) TAO_MMDevice (&this->endpoint_strategy_);
   if (sender_mmdevice == nullptr)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Unable to allocate sender MMDevice\n"), -1);
+  }
   PortableServer::ServantBase_var safe_mmdevice = sender_mmdevice;
   AVStreams::MMDevice_var mmdevice = sender_mmdevice->_this ();
 
   this->streamctrl_ = new (std::nothrow) TAO_StreamCtrl;
   if (this->streamctrl_ == nullptr)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Unable to allocate stream controller\n"), -1);
+  }
   this->streamctrl_servant_ = this->streamctrl_;
 
   CORBA::Boolean const bind_result =
@@ -130,7 +138,9 @@ Sender::init (int argc,
                                   the_qos.inout (),
                                   flow_spec);
   if (!bind_result)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "streamctrl::bind_devs failed\n"), -1);
+  }
   return 0;
 }
 
@@ -138,7 +148,9 @@ int
 Sender::pace_data ()
 {
   if (this->protocol_object_ == nullptr)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "No flow protocol object is available\n"), -1);
+  }
 
   ACE_Time_Value inter_frame_time;
   inter_frame_time.set (1.0 / this->options_.frame_rate);
@@ -161,7 +173,9 @@ Sender::pace_data ()
           if (bytes_read == 0)
             {
               if (std::ferror (this->input_file_.get ()))
+              {
                 ACE_ERROR_RETURN ((LM_ERROR, "Sender::pace_data fread failed\n"), -1);
+              }
               break;
             }
           this->mb_.wr_ptr (bytes_read);
@@ -222,7 +236,9 @@ ACE_TMAIN (int argc,
       Sender * const sender = SENDER::instance ();
       result = sender->init (argc, argv);
       if (result == 0)
+      {
         result = sender->pace_data ();
+      }
       orb->destroy ();
     }
   catch (CORBA::Exception const &ex)

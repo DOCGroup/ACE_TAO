@@ -21,7 +21,9 @@ namespace FTRTEC {
   int Identification_Service::init(int argc, ACE_TCHAR* argv[])
   {
     if (service != nullptr)
+    {
       return 0;
+    }
     name_.length(1);
     name_[0].id = CORBA::string_dup("FT_EventService");
 
@@ -32,7 +34,9 @@ namespace FTRTEC {
         else if (argv[0][0] != '$') {
           TAO_FtRt::UUID uuid(argv[0]);
           if (!uuid.is_valid())
+          {
             ORBSVCS_ERROR_RETURN((LM_ERROR, "Invalid Object_ID\n"), -1);
+          }
           object_id_.length(16);
           uuid.to_binary(object_id_.get_buffer ());
         }

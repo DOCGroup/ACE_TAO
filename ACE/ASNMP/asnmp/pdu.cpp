@@ -89,7 +89,9 @@ Pdu::~Pdu() = default;
 Pdu &Pdu::operator= (Pdu const &pdu)
 {
    if (this == std::addressof (pdu))
+   {
      return *this;
+   }
 
    // Initialize all mv's
    error_status_ = pdu.error_status_;
@@ -131,7 +133,9 @@ Pdu &Pdu::operator+= (Vb &vb)
 {
   // do we have room?
   if ( vb_count_ + 1 > MAX_VBS)
+  {
     return *this;
+  }
 
   // add the new one
   validity_ = 0;
@@ -191,7 +195,9 @@ char const *Pdu::to_string ()
 int Pdu::get_vblist (Vb *pvbs, int pvb_count)
 {
    if (pvbs == nullptr || pvb_count < 0 || pvb_count > vb_count_)
-      return 0;
+   {
+     return 0;
+   }
 
    // loop through all vbs_ and assign to params
    int z;
@@ -206,7 +212,9 @@ int Pdu::set_vblist (Vb *pvbs, int pvb_count)
 {
    // if invalid then don't destroy
    if (pvbs == nullptr || pvb_count < 0 || pvb_count > MAX_VBS)
+   {
      return 0;
+   }
 
    // check for zero case
    if ( pvb_count == 0) {
@@ -250,11 +258,15 @@ int Pdu::get_vb (Vb &vb, int index) const
 {
    // can't have an index less than 0
    if ( index < 0)
+   {
      return 0;
+   }
 
    // can't ask for something not there
    if ( index > (vb_count_ - 1))
-      return 0;
+   {
+     return 0;
+   }
 
    // asssign it
    vb = *vbs_[index];
@@ -267,11 +279,15 @@ int Pdu::set_vb (Vb &vb, int index)
 {
    // can't set a vb at index less than 0
    if ( index < 0)
+   {
      return 0;
+   }
 
    // can't ask for something not there
    if ( index > (vb_count_ - 1))
-      return 0;
+   {
+     return 0;
+   }
 
    std::unique_ptr<Vb> value {new (std::nothrow) Vb (vb)};
    if (!value)
@@ -334,7 +350,9 @@ char const *Pdu::agent_error_reason ()
 void set_error_status (Pdu *pdu, int status)
 {
    if (pdu != nullptr)
+   {
      pdu->error_status_ = status;
+   }
 }
 
 //=====================[ return the error index ]========================
@@ -348,21 +366,27 @@ int Pdu::get_error_index () const
 void set_error_index (Pdu *pdu, int index)
 {
    if (pdu != nullptr)
+   {
      pdu->error_index_ = index;
+   }
 }
 
 //=====================[ clear error status ]=============================
 void clear_error_status (Pdu *pdu)
 {
    if (pdu != nullptr)
+   {
      pdu->error_status_ = 0;
+   }
 }
 
 //=====================[ clear error index ]==============================
 void clear_error_index (Pdu *pdu)
 {
    if (pdu != nullptr)
+   {
      pdu->error_index_ = 0;
+   }
 }
 
 //=====================[ return the request id ]==========================
@@ -376,7 +400,9 @@ unsigned long Pdu::get_request_id () const
 void set_request_id (Pdu *pdu, unsigned long rid)
 {
    if (pdu != nullptr)
+   {
      pdu->request_id_ = rid;
+   }
 }
 
 //=====================[ returns validity_ of Pdu instance ]===============
@@ -404,7 +430,9 @@ int Pdu::trim (int p)
 
    // verify that lp is legal
    if ( lp < 0 || lp > vb_count_)
+   {
      return 0;
+   }
 
    while ( lp != 0)   {
      if ( vb_count_ > 0) {
@@ -421,7 +449,9 @@ int Pdu::delete_vb (int p)
 {
    // position has to be in range
    if (( p < 0) || ( p > (vb_count_ - 1)))
-      return 0;
+   {
+     return 0;
+   }
 
    // safe to remove it
    for (int z = p; z < (vb_count_ - 1); ++z) {

@@ -35,7 +35,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->resolve_initial_references ("PolicyCurrent");
 
       if (parse_args (argc, argv, ior_output_file) != 0)
+      {
         return 1;
+      }
 
       PortableServer::Servant_var<Server> impl;
       {

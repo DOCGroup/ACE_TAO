@@ -64,7 +64,9 @@ void
 TAO_Notify_ETCL_FilterFactory::destroy ()
 {
   if (CORBA::is_nil(this->filter_poa_.in ()))
+  {
     return;
+  }
   PortableServer::ServantBase_var guard(this);
   try
     {
@@ -85,7 +87,9 @@ TAO_Notify_ETCL_FilterFactory::create_filter (const char *constraint_grammar)
   if (std::strcmp (constraint_grammar, "TCL") != 0 &&
       std::strcmp (constraint_grammar, "ETCL") != 0 &&
       std::strcmp (constraint_grammar, "EXTENDED_TCL") != 0)
+  {
     throw CosNotifyFilter::InvalidGrammar ();
+  }
 
   TAO_Notify_Object::ID id = filter_ids_.id ();
   TAO_Notify_ETCL_Filter* filter {};
@@ -177,7 +181,9 @@ TAO_Notify_ETCL_FilterFactory::remove_filter (
   }
 
   if ( !found)
+  {
     throw CosNotifyFilter::FilterNotFound();
+  }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -307,7 +313,9 @@ TAO_Notify_ETCL_FilterFactory::find_filter_id (CosNotifyFilter::Filter_ptr filte
     iterator.advance ())
   {
    if (svt == entry->int_id_)
+   {
      return entry->ext_id_;
+   }
   }
 
   throw CORBA::INTERNAL ();

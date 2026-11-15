@@ -148,7 +148,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "(%P|%t)%T server - event loop finished\n"));
 
       if (lb_server.destroy () == -1)
+      {
         return 1;
+      }
     }
   catch (const CORBA::Exception &ex)
     {

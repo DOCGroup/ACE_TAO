@@ -16,21 +16,31 @@ pid_t timerTask (int initialDelay,
                  timerTask_t task)
 {
   if (initialDelay < 1 && interval < 1)
+  {
     return -1;
+  }
 
   pid_t const pid = ACE_OS::fork ();
 
   if (pid < 0)
+  {
     return -1;
+  }
 
   if (pid > 0)
+  {
     return pid;
+  }
 
   if (initialDelay > 0)
+  {
     ACE_OS::sleep (initialDelay);
+  }
 
   if (interval < 1)
+  {
     return 0;
+  }
 
   while (true)
     {

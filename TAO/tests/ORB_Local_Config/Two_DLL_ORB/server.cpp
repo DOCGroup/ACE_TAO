@@ -31,7 +31,9 @@ Server_Worker::parse_args (int argc, ACE_TCHAR *argv[])
   int option {};
   while ((option = get_opts ()) != -1)
     if (option == 'o')
+    {
       this->ior_file_ = get_opts.opt_arg ();
+    }
 
   // Indicates successful parsing of the command line
   return 0;
@@ -62,7 +64,9 @@ Server_Worker::test_main (int argc, ACE_TCHAR *argv[])
         root_poa->the_POAManager ();
 
       if (this->parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       Hello *hello_impl {};
       ACE_NEW_RETURN (hello_impl,

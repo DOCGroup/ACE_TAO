@@ -93,7 +93,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       TX_Object_i impl_object (orb.in ());
       TX_Object_var const tx_object = impl_object._this ();

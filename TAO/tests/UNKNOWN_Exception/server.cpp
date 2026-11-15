@@ -210,7 +210,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
+      {
         return -1;
+      }
 
       {
         test_factory_i *servant = new test_factory_i (orb.in ());

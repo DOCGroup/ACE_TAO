@@ -33,7 +33,9 @@ timeout (ACE_Timer_Queue &timer_queue,
       if (event_handler->reactor_timer_interface ())
         event_handler->reactor_timer_interface ()->cancel_timer (event_handler, 0);
       else
+      {
         timer_queue.cancel (event_handler, 0); // 0 means "call handle_close()".
+      }
     }
 
   if (!recurring_timer && requires_reference_counting)

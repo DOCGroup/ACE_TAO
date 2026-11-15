@@ -766,7 +766,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               "\n\t DII_Cubit::CLIENT \n\n"));
 
   if (cubit_client.init (argc, argv) == -1)
+  {
     return 1;
+  }
 
   return cubit_client.run ();
 }

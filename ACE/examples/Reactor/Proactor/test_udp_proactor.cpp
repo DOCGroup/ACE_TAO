@@ -389,7 +389,9 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (parse_args (argc, argv) == -1)
+  {
     return -1;
+  }
 
   Sender sender;
 
@@ -399,7 +401,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (host == nullptr)
     {
       if (receiver.open_addr (ACE_INET_Addr (port)) == -1)
+      {
         return -1;
+      }
     }
   // If active side
   else if (sender.open (host, port) == -1)

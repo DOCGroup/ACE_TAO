@@ -64,12 +64,16 @@ void
 write_ior_to_file (ACE_TCHAR const *ior_output_file, char const *ior)
 {
   if (ior_output_file == nullptr)
+  {
     return;
+  }
 
   std::unique_ptr<FILE, int (*) (FILE *)> output_file (
     ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
   if (!output_file)
+  {
     throw "Cannot open output file to write the IOR";
+  }
 
   ACE_OS::fprintf (output_file.get (), "%s", ior);
 }

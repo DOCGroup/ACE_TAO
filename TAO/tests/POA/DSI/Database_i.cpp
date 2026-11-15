@@ -49,7 +49,9 @@ DatabaseImpl::Entry::invoke (CORBA::ServerRequest_ptr request)
       this->is_a (request);
     }
   else
+  {
     throw CORBA::NO_IMPLEMENT ();
+  }
 }
 
 void
@@ -119,7 +121,9 @@ DatabaseImpl::Agent::create_entry (char const *key,
   // Create a new entry in the database:
   if (std::strcmp (entry_type, "Employee") != 0
       || initial_attributes.length () != 2)
+  {
     throw Database::Unknown_Type ();
+  }
 
   char const *name {};
   CORBA::Long id {};
@@ -131,7 +135,9 @@ DatabaseImpl::Agent::create_entry (char const *key,
 
   if (std::strcmp (first.name.in (), "name") != 0
       || std::strcmp (second.name.in (), "id") != 0)
+  {
     throw Database::Unknown_Type ();
+  }
 
   first.value >>= name;
   second.value >>= id;
@@ -145,7 +151,9 @@ DatabaseImpl::Agent::create_entry (char const *key,
   std::unique_ptr<Employee> employee (new_employee);
 
   if (DATABASE::instance ()->bind (key, new_employee) != 0)
+  {
     throw Database::Duplicate_Key (key);
+  }
   employee.release ();
 
   ACE_DEBUG ((LM_DEBUG,
@@ -175,7 +183,9 @@ DatabaseImpl::Agent::find_entry (char const *key,
                                  char const *entry_type)
 {
   if (std::strcmp (entry_type, "Employee") != 0)
+  {
     throw Database::Unknown_Type ();
+  }
 
   void *temp {};
   Database::Entry_var entry;
@@ -219,7 +229,9 @@ DatabaseImpl::Agent::destroy_entry (char const *key,
                                     char const *entry_type)
 {
   if (std::strcmp (entry_type, "Employee") != 0)
+  {
     throw Database::Unknown_Type ();
+  }
 
   void *temp {};
   if (DATABASE::instance ()->unbind (key, temp) == 0)
@@ -288,7 +300,9 @@ DatabaseImpl::Employee::name (char const *name)
 {
   char * const new_name = static_cast<char *> (DATABASE::instance ()->malloc (std::strlen (name) + 1));
   if (new_name == nullptr)
+  {
     throw CORBA::NO_MEMORY ();
+  }
   std::strcpy (new_name, name);
   DATABASE::instance ()->free (this->name_);
   this->name_ = new_name;

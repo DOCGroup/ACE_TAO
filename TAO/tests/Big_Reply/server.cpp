@@ -91,7 +91,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Server_Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       Big_Reply_i *big_reply_gen {};
       ACE_NEW_RETURN (big_reply_gen,

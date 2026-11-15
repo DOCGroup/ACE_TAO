@@ -180,20 +180,27 @@ ACE_THR_FUNC_RETURN CLD_Handler::forward () {
       ACE_Message_Block_Unique_Ptr mblk_owner {mblk};
       if (mblk->size () == 0
           && mblk->msg_type () == ACE_Message_Block::MB_STOP)
+      {
         break;
+      }
       chunk[message_index].reset (mblk_owner.release ());
       ++message_index;
     }
     if (message_index >= ACE_IOV_MAX ||
         (ACE_OS::gettimeofday () - time_of_last_send
          >= ACE_Time_Value(FLUSH_TIMEOUT))) {
-      if (this->send (chunk, message_index) == -1) break;
+      if (this->send (chunk, message_index) == -1)
+      {
+        break;
+      }
       time_of_last_send = ACE_OS::gettimeofday ();
     }
   }
 
   if (message_index > 0)
+  {
     this->send (chunk, message_index);
+  }
 
   msg_queue_.close ();
   no_sigpipe.restore_action (SIGPIPE, original_action);
@@ -231,7 +238,9 @@ int CLD_Handler::close () {
      ACE_Message_Block (0, ACE_Message_Block::MB_STOP), -1);
   ACE_Message_Block_Unique_Ptr shutdown_owner {shutdown_message};
   if (msg_queue_.enqueue_tail (shutdown_message) == -1)
+  {
     return -1;
+  }
   shutdown_owner.release ();
   return thr_mgr_.wait ();
 }
@@ -246,7 +255,9 @@ int CLD_Acceptor::open (CLD_Handler *handler,
   if (acceptor_.open (local_addr) == -1
       || reactor ()->register_handler
            (this, ACE_Event_Handler::ACCEPT_MASK) == -1)
+  {
     return -1;
+  }
   return 0;
 }
 
@@ -261,7 +272,10 @@ int CLD_Acceptor::handle_input (ACE_HANDLE) {
               handler_,
               ACE_Event_Handler::READ_MASK) == -1)
     return -1;
-  else return 0;
+  else
+  {
+    return 0;
+  }
 }
 
 int CLD_Acceptor::handle_close (ACE_HANDLE, ACE_Reactor_Mask) {
@@ -294,7 +308,10 @@ int CLD_Connector::reconnect () {
   ACE_Time_Value timeout (1); // Start with 1 second timeout.
   size_t i;
   for (i = 0; i < MAX_RETRIES; ++i) {
-    if (i > 0) ACE_OS::sleep (timeout);
+    if (i > 0)
+    {
+      ACE_OS::sleep (timeout);
+    }
     if (connector.connect (handler_->peer (), remote_addr_,
                            &timeout) == -1)
       timeout *= 2; // Exponential backoff.

@@ -256,7 +256,9 @@ ACE_Service_Repository::~ACE_Service_Repository ()
   ACE_TRACE ("ACE_Service_Repository::~ACE_Service_Repository");
 #ifndef ACE_NLOGGING
   if(ACE::debug ())
+  {
     ACELIB_DEBUG ((LM_DEBUG, "ACE (%P|%t) SR::<dtor>, this=%@\n", this));
+  }
 #endif
   this->close ();
 }
@@ -291,16 +293,22 @@ ACE_Service_Repository::find_i (ACE_TCHAR const name[],
       if ((*iter).second->fini_called ())
         {
           if (srp != nullptr)
+          {
             *srp = nullptr;
+          }
           return -1;
         }
 
       if (srp != nullptr)
+      {
         *srp = (*iter).second;
+      }
 
       if (ignore_suspended
           && !(*iter).second->active ())
+      {
         return -2;
+      }
 
       return 0;
     }
@@ -422,7 +430,9 @@ ACE_Service_Repository::insert (ACE_Service_Type const *sr)
         // ACE_Service_Type_Dynamic_Guard ctor and dtor for details.
 
         if (i < this->service_array_.size ())
+        {
           i = this->service_array_.size ();
+        }
 
         this->service_array_[i] = sr;
         return_value = 0;
@@ -447,7 +457,9 @@ ACE_Service_Repository::insert (ACE_Service_Type const *sr)
   replaced_service.reset ();
 
   if (return_value == -1)
+  {
     ACE_OS::last_error (ENOSPC);
+  }
 
   return return_value;
 }
@@ -462,7 +474,9 @@ ACE_Service_Repository::resume (ACE_TCHAR const name[],
 
   size_t i {};
   if (-1 == this->find_i (name, i, srp, false))
+  {
     return -1;
+  }
 
   return this->service_array_[i]->resume ();
 }
@@ -477,7 +491,9 @@ ACE_Service_Repository::suspend (ACE_TCHAR const name[],
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, -1);
   size_t i {};
   if (-1 == this->find_i (name, i, srp, false))
+  {
     return -1;
+  }
 
   return this->service_array_[i]->suspend ();
 }
@@ -496,12 +512,16 @@ ACE_Service_Repository::remove (ACE_TCHAR const name[], ACE_Service_Type **ps)
 
     // Not found!?
     if (this->remove_i (name, &removed_service) == -1)
+    {
       return -1;
+    }
   }
 
   std::unique_ptr<ACE_Service_Type> removed_service_owner (removed_service);
   if (ps != nullptr)
+  {
     *ps = removed_service_owner.release ();
+  }
   return 0;
 }
 
@@ -530,7 +550,9 @@ ACE_Service_Repository::remove_i (ACE_TCHAR const name[], ACE_Service_Type **ps)
 {
   size_t i {};
   if (-1 == this->find_i (name, i, nullptr, false))
+  {
     return -1;    // Not found
+  }
 
   // We may need the old ptr - to be delete outside the lock!
   *ps = const_cast<ACE_Service_Type *> (this->service_array_[i]);
@@ -581,7 +603,9 @@ ACE_Service_Repository_Iterator::next (ACE_Service_Type const *&sr)
   ACE_TRACE ("ACE_Service_Repository_Iterator::next");
 
   if (done ())
+  {
     return 0;
+  }
 
   sr = this->svc_rep_.service_array_[this->next_];
   return 1;
@@ -596,7 +620,10 @@ ACE_Service_Repository_Iterator::advance ()
 {
   ACE_TRACE ("ACE_Service_Repository_Iterator::advance");
 
-  if (done()) return 0;
+  if (done())
+  {
+    return 0;
+  }
 
   do ++this->next_; while (!(done () || valid ()));
 
@@ -608,7 +635,9 @@ ACE_Service_Repository_Iterator::valid () const
 {
   ACE_TRACE ("ACE_Service_Repository_Iterator::valid");
   if (!this->ignore_suspended_)
+  {
     return (this->svc_rep_.service_array_[this->next_] != nullptr); // skip over gaps
+  }
 
   return (this->svc_rep_.service_array_[this->next_] != nullptr
           && this->svc_rep_.service_array_[this->next_]->active ());

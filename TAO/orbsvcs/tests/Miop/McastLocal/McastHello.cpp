@@ -18,7 +18,9 @@ McastHello::send_forty_two (CORBA::Long forty_two)
       this->small_request_status_ = 1;
     }
   else
+  {
     this->small_request_status_ = 0;
+  }
 }
 
 void
@@ -44,7 +46,9 @@ McastHello::send_large_octet_array (const Test::Octets &payload)
       this->large_request_status_ = 1;
     }
   else
+  {
     this->large_request_status_ = 0;
+  }
 }
 
 void

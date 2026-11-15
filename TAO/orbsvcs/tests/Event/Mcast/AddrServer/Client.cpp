@@ -19,7 +19,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           if (ACE_OS::strcasecmp (argv[i], ACE_TEXT ("-k")) == 0)
             {
               if (i + 1 < argc)
+              {
                 ior = argv[++i];
+              }
             }
           else
             ACE_ERROR_RETURN ((LM_ERROR,

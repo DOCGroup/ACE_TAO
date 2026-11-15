@@ -40,11 +40,15 @@ TAO_EC_Bitmask_Filter::filter (RtecEventComm::EventSet const &event,
                                 TAO_EC_QOS_Info& qos_info)
 {
   if (event.length () != 1)
+  {
     return 0;
+  }
 
   if ((event[0].header.type & this->type_mask_) == 0
       || (event[0].header.source & this->source_mask_) == 0)
+  {
     return 0;
+  }
 
   return this->child_->filter (event, qos_info);
 }
@@ -54,11 +58,15 @@ TAO_EC_Bitmask_Filter::filter_nocopy (RtecEventComm::EventSet& event,
                                    TAO_EC_QOS_Info& qos_info)
 {
   if (event.length () != 1)
+  {
     return 0;
+  }
 
   if ((event[0].header.type & this->type_mask_) == 0
       || (event[0].header.source & this->source_mask_) == 0)
+  {
     return 0;
+  }
 
   return this->child_->filter_nocopy (event, qos_info);
 }
@@ -68,7 +76,9 @@ TAO_EC_Bitmask_Filter::push (RtecEventComm::EventSet const &event,
                              TAO_EC_QOS_Info &qos_info)
 {
   if (this->parent () != nullptr)
+  {
     this->parent ()->push (event, qos_info);
+  }
 }
 
 void
@@ -76,7 +86,9 @@ TAO_EC_Bitmask_Filter::push_nocopy (RtecEventComm::EventSet &event,
                                     TAO_EC_QOS_Info &qos_info)
 {
   if (this->parent () != nullptr)
+  {
     this->parent ()->push_nocopy (event, qos_info);
+  }
 }
 
 void
@@ -97,7 +109,9 @@ TAO_EC_Bitmask_Filter::can_match (
 {
   if ((header.type & this->type_mask_) == 0
       || (header.source & this->source_mask_) == 0)
+  {
     return 0;
+  }
 
   return this->child_->can_match (header);
 }

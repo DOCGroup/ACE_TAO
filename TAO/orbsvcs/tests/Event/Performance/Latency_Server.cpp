@@ -89,7 +89,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       TAO_EC_Event_Channel_Attributes attr (root_poa.in (),
                                             root_poa.in ());

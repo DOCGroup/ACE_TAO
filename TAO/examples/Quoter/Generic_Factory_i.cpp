@@ -107,14 +107,18 @@ Quoter_Generic_Factory_i::create_object (CosLifeCycle::Key const &factory_key,
         }
 
       if (this->debug_level_ > 1)
+      {
         ACE_DEBUG ((LM_DEBUG, "Generic Factory: Factory reference OK.\n"));
+      }
 
       // Now retrieve the Quoter obj ref corresponding to the key.
       quoter_var =
         factory_var->create_quoter ("test");
 
       if (this->debug_level_ > 1)
+      {
         ACE_DEBUG ((LM_DEBUG, "Generic_Factory: Quoter Created\n"));
+      }
 
       if (CORBA::is_nil (quoter_var.in ()))
         {
@@ -124,7 +128,9 @@ Quoter_Generic_Factory_i::create_object (CosLifeCycle::Key const &factory_key,
         }
 
       if (this->debug_level_ > 1)
+      {
         ACE_DEBUG ((LM_DEBUG, "Generic_Factory: Return an object reference to a new object.\n"));
+      }
     }
   catch (CORBA::Exception const &)
     {

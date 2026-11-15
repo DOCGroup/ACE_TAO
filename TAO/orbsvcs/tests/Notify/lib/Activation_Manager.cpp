@@ -19,7 +19,9 @@ TAO_Notify_Tests_Activation_Manager::TAO_Notify_Tests_Activation_Manager ()
 TAO_Notify_Tests_Activation_Manager::~TAO_Notify_Tests_Activation_Manager ()
 {
   if (this->ior_output_file_ != nullptr)
+  {
     ACE_OS::fclose(this->ior_output_file_);
+  }
 }
 
 int
@@ -30,7 +32,9 @@ TAO_Notify_Tests_Activation_Manager::ior_output_file (const ACE_TCHAR *file_name
   if (this->ior_output_file_ == nullptr)
     return -1;
   else
+  {
     return 0;
+  }
 }
 
 int
@@ -48,7 +52,9 @@ TAO_Notify_Tests_Activation_Manager::done (TAO_Notify_Tests_Periodic_Supplier* /
   --active_suppliers_;
 
   if (active_suppliers_ == 0)
+  {
     this->active_done_.broadcast ();
+  }
 }
 
 void
@@ -59,7 +65,9 @@ TAO_Notify_Tests_Activation_Manager::done (TAO_Notify_Tests_Periodic_Consumer* /
   --active_consumers_;
 
   if (active_consumers_ == 0)
+  {
     this->active_done_.broadcast ();
+  }
 }
 
 void
@@ -92,7 +100,9 @@ TAO_Notify_Tests_Activation_Manager::_register (TAO_Notify_Tests_Periodic_Suppli
   ACE_CString name (obj_name);
 
   if (this->supplier_map_.bind (name, supplier) == -1)
+  {
     ACE_ERROR ((LM_ERROR, "Failed to bind supplier %s in LookupMap\n", obj_name));
+  }
 
   // Designate application manager as the callback object.
   supplier->task_callback (this);
@@ -109,7 +119,9 @@ TAO_Notify_Tests_Activation_Manager::_register (TAO_Notify_Tests_Periodic_Consum
   ACE_CString name (obj_name);
 
   if (this->consumer_map_.bind (name, consumer) == -1)
+  {
     ACE_ERROR ((LM_ERROR, "Failed to bind consumer %s in LookupMap\n", obj_name));
+  }
 
   // Designate application manager as the callback object.
   consumer->task_callback (this);
@@ -125,7 +137,9 @@ TAO_Notify_Tests_Activation_Manager::resolve (TAO_Notify_Tests_Periodic_Supplier
   ACE_CString name (obj_name);
 
   if (this->supplier_map_.find (name, supplier) == -1)
+  {
     ACE_ERROR ((LM_ERROR, "Failed to find supplier %s in LookupMap\n", obj_name));
+  }
 }
 
 void
@@ -136,7 +150,9 @@ TAO_Notify_Tests_Activation_Manager::resolve (TAO_Notify_Tests_Periodic_Consumer
   ACE_CString name (obj_name);
 
   if (this->consumer_map_.find (name, consumer) == -1)
+  {
     ACE_ERROR ((LM_ERROR, "Failed to find consumer %s in LookupMap\n", obj_name));
+  }
 }
 
 int

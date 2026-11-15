@@ -61,7 +61,9 @@ TAO_Active_Object_Map::set_system_id_size (
           size_t hint_size {};
 
           if (creation_parameters.use_active_hint_in_ids_)
+          {
             hint_size = ACE_Active_Map_Manager_Key::size ();
+          }
 
           TAO_Active_Object_Map::system_id_size_ += hint_size;
         }
@@ -487,7 +489,9 @@ TAO_Unique_Id_Strategy::bind_using_user_id (
       if (result == 0)
         entry_owner.release ();
       else
+      {
         entry = nullptr;
+      }
     }
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
@@ -685,7 +689,9 @@ TAO_Multiple_Id_Strategy::bind_using_user_id (
       if (result == 0)
         entry_owner.release ();
       else
+      {
         entry = nullptr;
+      }
     }
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
@@ -976,7 +982,9 @@ TAO_System_Id_With_Unique_Id_Strategy::bind_using_system_id (
   if (result == 0)
     entry_owner.release ();
   else
+  {
     entry = nullptr;
+  }
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
   if (result == 0 && TAO_debug_level > 7)
@@ -1035,7 +1043,9 @@ TAO_System_Id_With_Multiple_Id_Strategy::bind_using_system_id (
   if (result == 0)
     entry_owner.release ();
   else
+  {
     entry = nullptr;
+  }
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
   if (result == 0 && TAO_debug_level > 7)

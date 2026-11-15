@@ -38,7 +38,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
       Options options {};
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var object = orb->string_to_object (options.ior_input_file);
       Messenger_var messenger = Messenger::_narrow (object.in ());

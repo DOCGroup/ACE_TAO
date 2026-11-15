@@ -81,7 +81,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Object_var o (s_orb->resolve_initial_references ("RootPOA"));
       PortableServer::POA_var rootpoa (PortableServer::POA::_narrow (o.in ()));
       if (CORBA::is_nil (rootpoa.in ()))
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t): failed to get root poa\n"), 1);
+      }
 
       PortableServer::POAManager_var poamgr (rootpoa->the_POAManager ());
 

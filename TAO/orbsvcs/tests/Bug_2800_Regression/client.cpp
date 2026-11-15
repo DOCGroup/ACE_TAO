@@ -39,7 +39,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Client_Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var tmp =
         orb->string_to_object ("corbaloc:iiop:1.2@localhost:9931/NameService");

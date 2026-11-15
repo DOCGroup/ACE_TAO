@@ -45,7 +45,9 @@ static void
 validate_expression (bool expr, char const* msg)
 {
   if (!expr)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error: %C\n"), msg));
+  }
 }
 
 #define validate(expr) validate_expression(expr, #expr)
@@ -68,7 +70,9 @@ Notify_Push_Consumer::push_structured_event (
   event.filterable_data[2].value >>= type;
 
   if (this->use_filter_)
+  {
     validate (type != 1 && group != 0);
+  }
 
   if (received > this->expected_)
     {

@@ -52,7 +52,9 @@ int failure = 0;
       // Command line argument interpretation.
       CORBA::Boolean verbose {};
       if (parse_args (argc, argv, verbose) != 0)
+      {
         return 1;
+      }
 
       ACE_DEBUG ((LM_DEBUG, "*** Initialize ORB and POA manager.\n"));
       TAO_ORB_Manager orb_manager;

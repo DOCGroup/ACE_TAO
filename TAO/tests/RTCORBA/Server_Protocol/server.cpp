@@ -236,7 +236,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return -1;
+      }
 
       CORBA::Object_var object =
         orb->resolve_initial_references("RootPOA");
@@ -258,7 +260,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Check ServerProtocol configurations.
       int const result = check_server_protocol_at_root_poa (root_poa.in ());
       if (result != 0)
+      {
         return -1;
+      }
 
       // If a protocol type was indicated using command line option,
       // create a child POA with ServerProtocolPolicy containing

@@ -72,7 +72,9 @@ File_Manager::open_passwd_file ()
   char filename[] = "passwd-XXXXXX";
   ACE_HANDLE f = ACE_OS::mkstemp (filename);
   if (f == ACE_INVALID_HANDLE)
+  {
     return -1;
+  }
 
   {
     using File_Ptr = std::unique_ptr<std::FILE, int (*) (std::FILE *)>;
@@ -93,7 +95,9 @@ File_Manager::open_passwd_file ()
           char *cp = std::strchr (pwent->pw_gecos, ',');
 
           if (cp != nullptr)
+          {
             *cp = '\0';
+          }
 
           std::fprintf (fp.get (),
                         "%-8.8s %s\n",
@@ -106,7 +110,9 @@ File_Manager::open_passwd_file ()
   }
 
   if (this->mmap_.map (filename) == -1)
+  {
     return -1;
+  }
 
   this->buffer_ptr = static_cast<char *> (this->mmap_.addr ());
 
@@ -144,7 +150,9 @@ File_Manager::open_friends_file (const char *filename)
   // Do the mmap'ing.
 
   if (this->mmap_.map (pathname) == -1)
+  {
     return -1;
+  }
 
   this->buffer_ptr = static_cast<char *> (this->mmap_.addr ());
 

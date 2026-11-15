@@ -260,7 +260,9 @@ TAO_Notify_SequencePushConsumer::enqueue_if_necessary (
   TAO_Notify_Method_Request_Event * request)
 {
   if (DEBUG_LEVEL > 0)
+  {
     ORBSVCS_DEBUG ( (LM_DEBUG, "SequencePushConsumer enqueing event.\n"));
+  }
   this->enqueue_request (request);
 
   size_t const mbs = static_cast<size_t> (this->max_batch_size_.value ());

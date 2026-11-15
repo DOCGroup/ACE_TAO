@@ -52,7 +52,9 @@ public:
       if (timed_event_loop == nullptr)
         this->time_flag_ = 0;
       else
+      {
         this->time_flag_ = 1;
+      }
 
       // Spawn the threads.
       if (this->activate (THR_NEW_LWP, 5) == -1)

@@ -13,7 +13,9 @@ int Client::open (void *p)
 {
   ACE_Time_Value const iter_delay {2}; // Two seconds
   if (super::open (p) == -1)
+  {
     return -1;
+  }
   this->notifier_.reactor (this->reactor ());
   this->msg_queue ()->notification_strategy (&this->notifier_);
   return this->reactor ()->schedule_timer
@@ -60,7 +62,9 @@ int Client::handle_timeout (ACE_Time_Value const &, void const *)
   ACE_ASSERT (nbytes > 0);
   message_block->wr_ptr (static_cast<size_t> (nbytes));
   if (this->putq (message_block.get ()) == -1)
+  {
     return -1;
+  }
   message_block.release ();
   return 0;
 }
@@ -82,11 +86,15 @@ int Client::handle_output (ACE_HANDLE)
                     ACE_TEXT ("(%P|%t) %p\n"),
                     ACE_TEXT ("send")));
       else
+      {
         message_block->rd_ptr (static_cast<size_t> (send_cnt));
+      }
       if (message_block->length () > 0)
         {
           if (this->ungetq (message_block.get ()) == -1)
+          {
             return -1;
+          }
           message_block.release ();
           break;
         }

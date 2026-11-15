@@ -70,7 +70,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // the command line arguments
       if (parse_args (argc, argv, options) == -1)
+      {
         return -1;
+      }
 
       if (options.first_ior == nullptr || options.second_ior == nullptr
           || options.output_file == nullptr)
@@ -92,7 +94,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Construct that with the managers ORB
       Client_i client_imp (manager.orb ());
       if (client_imp.init (options.output_file) != 0)
+      {
         return -1;
+      }
     }
   catch (CORBA::Exception const& ex)
     {
@@ -246,7 +250,9 @@ Client_i::init (ACE_TCHAR const* ior_file)
   std::unique_ptr<char, IOGR_IOR_Buffer_Deleter> const data (
     ior_buffer.read (), IOGR_IOR_Buffer_Deleter {ior_buffer.alloc ()});
   if (!data)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Unable to read IOR from %s\n"), ior_file), -1);
+  }
 
   CORBA::Object_var object =
     this->orb_->string_to_object (data.get ());

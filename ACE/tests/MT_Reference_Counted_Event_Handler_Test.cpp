@@ -191,7 +191,9 @@ Pipe::open ()
   // Close down the acceptor endpoint since we don't need it anymore.
   acceptor.close ();
   if (result == -1)
+  {
     return -1;
+  }
 
   this->handles_[0] = reader.get_handle ();
   this->handles_[1] = writer.get_handle ();
@@ -470,7 +472,9 @@ Receiver::handle_input (ACE_HANDLE handle)
                 handle_, result, ACE_TEXT("ACE::recv_n")));
 
   if (this->reactor ())
+  {
     this->reactor ()->resume_handler (handle);
+  }
 
   if (result == message_size)
     {
@@ -492,13 +496,17 @@ Receiver::handle_input (ACE_HANDLE handle)
 
           if ((this->nested_upcalls_level_ != max_nested_upcall_level) &&
             (global_event_loop_thread_variable != nullptr))
+          {
             global_event_loop_thread_variable->svc ();
+          }
 
           --this->nested_upcalls_level_;
           return 0;
         }
       else
+      {
         return 0;
+      }
     }
   else
     {
@@ -578,10 +586,14 @@ Connector::connect (ACE_HANDLE &client_handle,
         pipe.open ();
 
       if (result == 0)
+      {
         break;
+      }
 
       if (result == -1)
+      {
         ACE_OS::sleep (pipe_retry_timeout);
+      }
     }
 
   ACE_TEST_ASSERT (result == 0);
@@ -645,7 +657,9 @@ Connection_Cache::find (Sender *sender)
   for (int i = 0; i < number_of_connections; ++i)
     {
       if (this->entries_[i].sender_ == sender)
+      {
         return i;
+      }
     }
 
   return -1;
@@ -679,7 +693,9 @@ Connection_Cache::remove_connection (Sender *sender)
     this->find (sender);
 
   if (index == -1)
+  {
     return;
+  }
 
   // If we still have the sender, remove it.
   sender->remove_reference ();
@@ -700,11 +716,15 @@ Connection_Cache::acquire_connection ()
     {
       if (this->entries_[i].sender_ &&
           this->entries_[i].state_ == IDLE)
+      {
         index = i;
+      }
     }
 
   if (index == -1)
+  {
     return nullptr;
+  }
 
   this->entries_[index].sender_->add_reference ();
   this->entries_[index].state_ = BUSY;
@@ -724,7 +744,9 @@ Connection_Cache::release_connection (Sender *sender)
     this->find (sender);
 
   if (index == -1)
+  {
     return;
+  }
 
   // If we still have the sender, idle it.
   this->entries_[index].state_ = IDLE;
@@ -741,7 +763,9 @@ Connection_Cache::~Connection_Cache ()
   for (int i = 0; i < number_of_connections; ++i)
     {
       if (this->entries_[i].sender_)
+      {
         this->remove_connection (this->entries_[i].sender_);
+      }
     }
 
   delete[] this->entries_;
@@ -1009,7 +1033,9 @@ Close_Socket_Thread::svc ()
 
       if (result == -1 &&
           errno == ETIME)
+      {
         continue;
+      }
 
       // Sleep for half a second.
       ACE_OS::sleep (timeout);
@@ -1288,10 +1314,14 @@ test<REACTOR_IMPL>::test (int ignore_nested_upcalls,
 #endif /* linux */
 
           if (test_configs[i][4] && ignore_nested_upcalls)
+          {
             continue;
+          }
 
           if (!test_configs[i][1] && require_event_loop_thread)
+          {
             continue;
+          }
 
           ACE_Reactor reactor (new REACTOR_IMPL, true);
 
@@ -1397,7 +1427,9 @@ run_main (int argc, ACE_TCHAR *argv[])
   int result =
     parse_args (argc, argv);
   if (result != 0)
+  {
     return result;
+  }
 
   disable_signal (SIGPIPE, SIGPIPE);
 

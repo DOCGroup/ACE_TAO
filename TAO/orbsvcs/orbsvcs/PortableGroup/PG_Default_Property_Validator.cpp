@@ -30,7 +30,9 @@ TAO_PG_Default_Property_Validator::validate_property (
           if (!(property.val >>= membership)
               || (membership != PortableGroup::MEMB_APP_CTRL
                   && membership != PortableGroup::MEMB_INF_CTRL))
+          {
             throw PortableGroup::InvalidProperty (property.nam, property.val);
+          }
         }
       else if (property.nam == this->factories_)
         {
@@ -86,7 +88,9 @@ TAO_PG_Default_Property_Validator::validate_criteria (
           if (!(property.val >>= membership)
               || (membership != PortableGroup::MEMB_APP_CTRL
                   && membership != PortableGroup::MEMB_INF_CTRL))
+          {
             invalid_criteria[p++] = property;
+          }
         }
       else if (property.nam == this->factories_)
         {

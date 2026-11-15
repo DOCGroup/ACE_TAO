@@ -28,7 +28,9 @@ public:
         CosNotifyChannelAdmin::SupplierAdmin_var admin =
           this->ec_->get_supplieradmin (this->id_);
         if (!CORBA::is_nil (admin.in ()))
+        {
           admin->destroy ();
+        }
       }
     else
       {
@@ -87,7 +89,9 @@ TAO_MonitorSupplierAdmin::obtain_named_notification_push_consumer (
   TAO_MonitorEventChannel* ec =
     dynamic_cast<TAO_MonitorEventChannel*> (this->ec_.get ());
   if (ec == nullptr)
+  {
     throw CORBA::INTERNAL ();
+  }
 
   // Next, create the push consumer proxy
   CosNotifyChannelAdmin::ProxyConsumer_var proxy =
@@ -109,7 +113,9 @@ TAO_MonitorSupplierAdmin::obtain_notification_push_consumer (
   TAO_MonitorEventChannel* ec =
     dynamic_cast<TAO_MonitorEventChannel*> (this->ec_.get ());
   if (ec == nullptr)
+  {
     throw CORBA::INTERNAL ();
+  }
 
   // Next, create the push consumer proxy
   CosNotifyChannelAdmin::ProxyConsumer_var proxy =

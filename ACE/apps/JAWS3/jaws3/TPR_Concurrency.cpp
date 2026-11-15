@@ -25,7 +25,9 @@ int
 JAWS_TPR_Concurrency::putq (JAWS_Protocol_Handler *ph)
 {
   if (this->error_)
+  {
     return -1;
+  }
 
   JAWS_CONCURRENCY_TASK *task = this;
   int const result = task->putq (& ph->mb_);
@@ -54,7 +56,9 @@ JAWS_TPR_Concurrency::getq (JAWS_Protocol_Handler *&ph)
   JAWS_CONCURRENCY_TASK *task = this;
 
   if (this->shutdown_task_ && task->msg_queue ()->message_count () == 0)
+  {
     return -1;
+  }
 
   int const getting = ++(this->getting_);
 

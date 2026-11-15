@@ -94,7 +94,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       policies[1]->destroy ();
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       UDP_i udp_i (orb.in ());
 

@@ -74,7 +74,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var const object =
         orb->string_to_object (options.ior.c_str ());
@@ -124,7 +126,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // let the client run in a separate thread
       if (client.activate () == -1)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "Cannot activate client thread\n"), 1);
+      }
 
       // ORB loop, will be shut down by our client thread
 

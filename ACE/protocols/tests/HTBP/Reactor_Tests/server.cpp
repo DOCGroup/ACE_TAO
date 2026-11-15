@@ -78,7 +78,9 @@ Accept_Handler::Accept_Handler(ACE_SOCK_Acceptor &a)
    acceptor_(a)
 {
   if (this->reactor() == nullptr)
+  {
     this->reactor(ACE_Reactor::instance());
+  }
   this->reactor()->register_handler (acceptor_.get_handle(),
                                      this,
                                      ACE_Event_Handler::ACCEPT_MASK);
@@ -216,7 +218,9 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
   ACE_OS::socket_init (ACE_WSOCK_VERSION);
 
   if (parse_args (argc, argv) != 0)
+  {
     return 1;
+  }
 
   ACE_TCHAR host[MAXHOSTNAMELEN+1];
   if (ACE_OS::hostname (host, MAXHOSTNAMELEN) != 0)

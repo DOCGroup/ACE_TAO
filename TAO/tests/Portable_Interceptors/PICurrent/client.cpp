@@ -54,7 +54,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                          "client_orb");
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       // Get the PICurrent object.
       CORBA::Object_var obj =

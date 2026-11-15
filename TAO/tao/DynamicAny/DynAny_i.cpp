@@ -511,7 +511,9 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
                 for (CORBA::ULong i {}; i < lvalues->length(); ++i)
                   {
                     if (lvalues[i] != rvalues[i])
+                    {
                       return false;
+                    }
                   }
                 return true;
               }

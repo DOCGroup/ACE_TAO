@@ -87,7 +87,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       Simple_Server_i *server_impl = new Simple_Server_i (orb.in (),
                                                           no_iterations);

@@ -83,7 +83,9 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
     {
       size_t wc = receive[i].iov_len;
       if (static_cast<size_t> (bc) < wc)
+      {
         wc = static_cast<size_t> (bc);
+      }
       ACE_OS::write (ACE_STDOUT, receive[i].iov_base, wc);
       bc -= receive[i].iov_len;
     }

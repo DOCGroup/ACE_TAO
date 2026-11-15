@@ -232,7 +232,9 @@ dirent_count (const ACE_TCHAR *dir_path,
     {
       // Skip the ".." and "." files.
       if (ACE::isdotdir(directory->d_name) == true)
+      {
         continue;
+      }
       ++entry_count;
 
 #if defined (ACE_HAS_TCHAR_DIRENT)
@@ -269,7 +271,9 @@ dirent_count (const ACE_TCHAR *dir_path,
             // Don't recurse through symbolic directory links!
             ++dir_count;
           else
+          {
             ++file_count;
+          }
           break;
 
         case S_IFDIR:
@@ -354,7 +358,9 @@ run_main (int, ACE_TCHAR *[])
 #else
   const char *root = ACE_OS::getenv ("top_srcdir");
   if (root == nullptr)
+  {
     root = ACE_OS::getenv ("ACE_ROOT");
+  }
   if (root != nullptr)
     {
       TestDir = ACE_TEXT_CHAR_TO_TCHAR (root);
@@ -370,13 +376,19 @@ run_main (int, ACE_TCHAR *[])
   int status = 0;
 
   if (-1 == dirent_test ())
+  {
     status = -1;
+  }
 
   if (-1 == dirent_selector_test ())
+  {
     status = -1;
+  }
 
   if (-1 == dirent_recurse_test ())
+  {
     status = -1;
+  }
 
   ACE_END_TEST;
   return status;

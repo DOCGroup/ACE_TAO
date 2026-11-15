@@ -363,7 +363,10 @@ DynAnyAnalyzer::analyze (
       {
         if (TAO_DynCommon::is_basic_type_seq (tc.in ()))
           {
-            if (newline) ACE_DEBUG ((LM_DEBUG, "\n"));
+            if (newline)
+            {
+              ACE_DEBUG ((LM_DEBUG, "\n"));
+            }
             this->analyze_basic_seq (dup.in (), da);
           }
         else

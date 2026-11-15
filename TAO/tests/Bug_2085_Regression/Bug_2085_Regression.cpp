@@ -41,16 +41,24 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // string_to_object conversion failed due to bad scheme name
       if (!test_string_to_object (orb.in (), "", 7))
+      {
         ++retval;
+      }
       // string_to_object conversion failed due to bad address
       if (!test_string_to_object (orb.in (), "", 8))
+      {
         ++retval;
+      }
       // string_to_object conversion failed due to bad bad schema specific part
       if (!test_string_to_object (orb.in (), "", 9))
+      {
         ++retval;
+      }
       // string_to_object conversion failed due to non specific reason
       if (!test_string_to_object (orb.in (), "", 10))
+      {
         ++retval;
+      }
 
       orb->destroy ();
 

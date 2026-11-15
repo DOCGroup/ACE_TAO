@@ -85,14 +85,18 @@ ACEXML_URL_Addr::string_to_addr (const ACEXML_Char* s,
                                  int /*address_family */)
 {
   if (s == nullptr)
+  {
     return -1;
+  }
 
   const ACEXML_Char* http = ACE_TEXT ("http://");
   size_t http_len = ACE_OS::strlen (http);
 
   // Check validity of URL
   if (ACE_OS::strncmp (http, s, http_len) != 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Invalid URL %s\n"), s), -1);
+  }
 
   ACEXML_Char const *url {};
   // Get the host name
@@ -125,14 +129,18 @@ ACEXML_URL_Addr::string_to_addr (const ACEXML_Char* s,
   int result = this->ACE_INET_Addr::set (port, host_name.get ());
 
   if (result == -1)
+  {
     return -1;
+  }
 
   // Get the path name
   ACEXML_Char const *path_name {};
   if (*url == '\0')
     path_name = ACE_TEXT ("/");
   else
+  {
     path_name = url;
+  }
 
   ACEXML_Char *path_name_copy = ACE_OS::strdup (path_name);
   if (path_name_copy == nullptr)
@@ -158,7 +166,9 @@ int
 ACEXML_URL_Addr::set (const ACEXML_URL_Addr &addr)
 {
   if (this == std::addressof (addr))
+  {
     return 0;
+  }
 
   this->path_name_.reset ();
   this->addr_string_.reset ();

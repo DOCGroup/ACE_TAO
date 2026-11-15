@@ -42,7 +42,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (parse_args (argc,
                   argv) == -1)
+  {
     return -1;
+  }
 
   try
     {

@@ -92,7 +92,9 @@ run_main (int, ACE_TCHAR *[])
   int result;
 
   if ((result = fileno_test ()) != 0)
+  {
     status = -1;
+  }
 
   ACE_END_TEST;
   return status;

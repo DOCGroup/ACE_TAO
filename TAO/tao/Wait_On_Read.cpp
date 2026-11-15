@@ -81,13 +81,17 @@ TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
       // If we got our reply, no need to run the loop any
       // further.
       if (!rd.keep_waiting (leader_follower))
+      {
         break;
+      }
 
       // @@ We are not checking for timeouts here...
 
       // If we got an error just break
       if (retval == -1)
+      {
         break;
+      }
     }
 
   if (rd.error_detected (leader_follower) || retval == -1)
@@ -101,7 +105,9 @@ TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
          this->transport_->orb_core ();
 
        if (!oc->client_factory ()->use_cleanup_options ())
+       {
          return 0;
+       }
 
        if (TAO_debug_level > 0)
          TAOLIB_DEBUG ((LM_DEBUG,
@@ -134,7 +140,9 @@ TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
      }
 
   if (rd.error_detected (leader_follower))
+  {
     return -1;
+  }
 
   return 1;
 }

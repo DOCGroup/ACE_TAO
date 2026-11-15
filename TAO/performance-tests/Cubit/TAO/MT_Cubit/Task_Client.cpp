@@ -33,7 +33,9 @@ Task_State::parse_args (int argc,ACE_TCHAR *argv[])
     case 'g':
       granularity_ = ACE_OS::atoi (opts.opt_arg ());
       if (granularity_ < 1)
+      {
         granularity_ = 1;
+      }
       break;
     case 'l':
       remote_invocations_ = 0;
@@ -120,7 +122,9 @@ Task_State::parse_args (int argc,ACE_TCHAR *argv[])
     }
 
   if (thread_per_rate_ == 1)
+  {
     thread_count_ = THREAD_PER_RATE_OBJS;
+  }
 
   if (use_utilization_test_ == 1)
     {
@@ -209,7 +213,9 @@ Task_State::~Task_State ()
   int i;
 
   if (this->ior_file_ != 0)
+  {
     ACE_OS::free (this->ior_file_);
+  }
 
   // Delete the strduped memory.
   for (i = 0; i < this->iors_count_; i++)
@@ -282,7 +288,9 @@ ACE_timer_t
 Client::get_low_priority_latency ()
 {
   if (this->ts_->thread_count_ == 1)
+  {
     return 0;
+  }
 
   ACE_timer_t l = 0;
 
@@ -333,7 +341,9 @@ Client::get_high_priority_jitter ()
       jitter += difference * difference;
 
       if (stats.sample (ACE_round (*latency)) == -1)
+      {
         ACE_DEBUG ((LM_DEBUG, "Error: stats.sample returned -1\n"));
+      }
     }
 
   // Return the square root of the sum of the differences computed
@@ -354,7 +364,9 @@ ACE_timer_t
 Client::get_low_priority_jitter ()
 {
   if (this->ts_->thread_count_ == 1)
+  {
     return 0;
+  }
 
   ACE_timer_t jitter = 0.0;
   ACE_timer_t average = get_low_priority_latency ();
@@ -551,7 +563,9 @@ Client::init_orb ()
       int result = this->ts_->parse_args (argc,
                                           argv);
       if (result != 0)
+      {
         return CORBA::ORB::_nil ();
+      }
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%t)Arguments parsed successfully\n"));
@@ -581,7 +595,9 @@ Client::get_cubit (CORBA::ORB_ptr orb)
   // priority clients use only 1 low priority servant.
   if (this->id_ > 0
       && this->ts_->one_to_n_test_ == 1)
+  {
     my_ior = this->ts_->iors_[1];
+  }
 
   if (my_ior == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -632,7 +648,9 @@ Client::svc ()
       // Get the cubit object from the file.
       int r = this->get_cubit (orb.in ());
       if (r != 0)
+      {
         return r;
+      }
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) Waiting for other threads to "
@@ -650,14 +668,18 @@ Client::svc ()
       // Perform the tests.
       int result = this->run_tests ();
       if (result != 0)
+      {
         return result;
+      }
 
       // release the semaphore
       if (this->ts_->thread_per_rate_ == 1
           && this->id_ == this->ts_->thread_count_ - 1)
         this->ts_->semaphore_->release (this->ts_->thread_count_ - 1);
       else
+      {
         this->ts_->semaphore_->release ();
+      }
 
       // shutdown the server if necessary.
       if (this->ts_->shutdown_)
@@ -683,7 +705,9 @@ Client::svc ()
   if (thr_mgr ())
     thr_mgr ()->exit (status, 1);
   else
+  {
     ACE_OS::thr_exit (status);
+  }
 
   return 0;
 }
@@ -703,7 +727,9 @@ Client::cube_octet ()
       if (this->ts_->use_utilization_test_ == 1 && this->ts_->remote_invocations_ == 0)
         ret_octet = this->cubit_impl_.cube_octet (arg_octet);
       else
+      {
         ret_octet = this->cubit_->cube_octet (arg_octet);
+      }
 
       STOP_QUANTIFY;
 
@@ -864,7 +890,9 @@ Client::make_request ()
                              this->ts_->datatype_), -1);
         }
       if (result != 0)
+      {
         return result;
+      }
     }
   else
     {
@@ -982,7 +1010,9 @@ Client::do_test ()
       // make a request to the server object depending on the datatype.
       result = this->make_request ();
       if (result != 0)
+      {
         return 2;
+      }
 
       // Stop the timer.
       if (i % this->ts_->granularity_ == this->ts_->granularity_ - 1
@@ -1000,13 +1030,17 @@ Client::do_test ()
           this->latency_ += real_time * this->ts_->granularity_;
 
           if ((result = this->my_jitter_array_->enqueue_tail (real_time)) != 0)
+          {
             ACE_DEBUG ((LM_DEBUG, "(%t) Error: my_jitter_array->enqueue_tail() returned %d\n", result));
+          }
         }
       if (this->ts_->thread_per_rate_ == 1
           && id_ < (this->ts_->thread_count_ - 1))
         {
           if (this->ts_->semaphore_->tryacquire () != -1)
+          {
             break;
+          }
         }
       else
         // If we are the high priority client.  If tryacquire()
@@ -1020,7 +1054,9 @@ Client::do_test ()
                 --low_priority_client_count;
                 // If all clients are done then break out of loop.
                 if (low_priority_client_count <= 0)
+                {
                   break;
+                }
               }
           }
 
@@ -1042,12 +1078,16 @@ Client::run_tests ()
                   MT_Cubit_Timer (this->ts_->granularity_),
                   -1);
   if (this->ts_->use_utilization_test_ == 1)
+  {
     this->timer_->start ();
+  }
 
   // Make the calls in a loop.
   result = this->do_test ();
   if (result != 0)
+  {
     return result;
+  }
 
   if (id_ == 0)
     this->ts_->high_priority_loop_count_ =

@@ -85,7 +85,9 @@ DT_Test::run (int argc, ACE_TCHAR* argv [])
 
   TASK_STATS::instance ()->init (this->dt_creator_->total_load ());
   if (this->dt_creator_->resolve_naming_service () == -1)
+  {
     return;
+  }
 
   this->dt_creator_->activate_root_poa ();
 

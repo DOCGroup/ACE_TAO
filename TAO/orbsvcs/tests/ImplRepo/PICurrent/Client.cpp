@@ -117,7 +117,9 @@ public:
 
     CORBA::String_var op = ri->operation ();
     if (std::strcmp (op.in (), "send_message") != 0)
+    {
       return;
+    }
 
     CORBA::ULong v (0);
     CORBA::Any_var out = this->pic_->get_slot (slot_id);
@@ -209,7 +211,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var obj = orb->string_to_object(ior);
       Messenger_var messenger = Messenger::_narrow(obj.in());

@@ -109,7 +109,9 @@ run_main (int, ACE_TCHAR *[])
   // Because we kill the clerk process, on Win32 it may not do a
   // graceful shutdown and the backing store file is left behind.
   if (clerk.wait () != 0)
+  {
     ACE_OS::unlink (backing_store);
+  }
 
   ACE_END_TEST;
   return 0;

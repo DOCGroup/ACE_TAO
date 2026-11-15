@@ -88,9 +88,13 @@ run_main (int, ACE_TCHAR *[])
   int status = 0;
 
   if (test_accept (ACE_Addr::sap_any, 1) != 0)
+  {
     status = 1;
+  }
   if (test_accept (ACE_Addr::sap_any, 0) != 0)
+  {
     status = 1;
+  }
 
   ACE_END_TEST;
   return status;

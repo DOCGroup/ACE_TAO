@@ -31,7 +31,9 @@ ACE_Runtime_Scheduler::create (const char *entry_point)
   for (int i = 0; i < entry_count_; ++i)
       if (std::strcmp (entry_point,
                        rt_info_[i].entry_point) == 0)
+      {
         return i + 1;
+      }
 
   // TODO: throw an exception or print an error.
   return -1;
@@ -52,7 +54,9 @@ RtecScheduler::RT_Info *
 ACE_Runtime_Scheduler::get (RtecScheduler::handle_t handle)
 {
   if (handle <= 0 || handle > entry_count_)
+  {
     throw RtecScheduler::UNKNOWN_TASK ();
+  }
   // Note: there is no memory leak here, according to the CORBA spec,
   // we are supposed to allocate an structure and return it, the
   // caller owns it from then on.
@@ -191,7 +195,9 @@ ACE_Runtime_Scheduler::priority (RtecScheduler::handle_t handle,
                                  RtecScheduler::Preemption_Priority_t& p_priority)
 {
   if (handle <= 0 || handle > entry_count_)
+  {
     throw RtecScheduler::UNKNOWN_TASK ();
+  }
     // NOTREACHED
 
   o_priority = rt_info_[handle - 1].priority;
@@ -229,7 +235,9 @@ ACE_Runtime_Scheduler::add_dependency (RtecScheduler::handle_t handle,
                                        RtecScheduler::Dependency_Type_t /* dependency_type */)
 {
   if (handle <= 0 || handle > entry_count_)
+  {
     throw RtecScheduler::UNKNOWN_TASK ();
+  }
     // NOTREACHED
 
 #if 0
@@ -259,7 +267,9 @@ ACE_Runtime_Scheduler::remove_dependency (RtecScheduler::handle_t handle,
                                           RtecScheduler::Dependency_Type_t /* dependency_type */)
 {
   if (handle <= 0 || handle > entry_count_)
+  {
     throw RtecScheduler::UNKNOWN_TASK ();
+  }
 }
 
 // In the reconfig scheduler, this method enables a dependency between
@@ -273,7 +283,9 @@ ACE_Runtime_Scheduler::set_dependency_enable_state (RtecScheduler::handle_t hand
                                                     RtecScheduler::Dependency_Enabled_Type_t /* enabled */)
 {
   if (handle <= 0 || handle > entry_count_)
+  {
     throw RtecScheduler::UNKNOWN_TASK ();
+  }
 }
 
 // In the reconfig scheduler, this method enables or disables an RT_Info.
@@ -284,7 +296,9 @@ ACE_Runtime_Scheduler::set_rt_info_enable_state (RtecScheduler::handle_t handle,
                                                  RtecScheduler::RT_Info_Enabled_Type_t /* enabled */)
 {
   if (handle <= 0 || handle > entry_count_)
+  {
     throw RtecScheduler::UNKNOWN_TASK ();
+  }
 }
 
 void ACE_Runtime_Scheduler::set_dependency_enable_state_seq (const RtecScheduler::Dependency_Set & dependencies)
@@ -411,7 +425,9 @@ ACE_Runtime_Scheduler::last_scheduled_priority ()
   if (config_count_ <= 0)
     throw RtecScheduler::NOT_SCHEDULED();
   else
+  {
     return (RtecScheduler::Preemption_Priority_t) (config_count_ - 1);
+  }
 }
 
 void
@@ -419,7 +435,9 @@ ACE_Runtime_Scheduler::get_config_infos (RtecScheduler::Config_Info_Set_out /*co
 {
   // throw an exception if a valid schedule has not been loaded
   if (this->config_count_ <= 0)
+  {
     throw RtecScheduler::NOT_SCHEDULED();
+  }
   //TODO: fill the Config_Info_Set with the runtime Config_Infos
   //for now, this function is unimplemented
   //

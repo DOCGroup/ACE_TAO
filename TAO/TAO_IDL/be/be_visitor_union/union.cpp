@@ -108,17 +108,23 @@ be_visitor_union::boolean_branch (be_union_branch *b)
 {
   be_union * const u = dynamic_cast<be_union*> (b->defined_in ());
   if (!u || u->udisc_type () != AST_Expression::EV_bool)
+  {
     return Bool_Union_Branch::None;
+  }
 
   bool br_d {}, br_t {}, br_f {};
   for (size_t i = 0; i < b->label_list_length (); ++i)
     if (b->label (i)->label_kind () == AST_UnionLabel::UL_default)
       br_d = true;
     else
+    {
       (b->label (i)->label_val ()->ev ()->u.bval ? br_t : br_f) = true;
+    }
 
   if ((br_t && br_f) || (u->nfields () == 1 && br_d))
+  {
     return Bool_Union_Branch::Unconditional;
+  }
 
   bool has_other {}, other_val {};
   for (unsigned int i = 0; br_d && i < u->nfields (); ++i)

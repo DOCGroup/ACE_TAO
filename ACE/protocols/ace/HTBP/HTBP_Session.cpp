@@ -38,7 +38,9 @@ int
 ACE::HTBP::Session::remove_session (ACE::HTBP::Session *s)
 {
   if (session_map_.current_size() > 0)
+  {
     return session_map_.unbind(s->session_id());
+  }
   return 0;
 }
 
@@ -122,7 +124,9 @@ ACE::HTBP::Session::Session (ACE::HTBP::Session_Id_t const& id,
 ACE::HTBP::Session::~Session ()
 {
   if (destroy_proxy_addr_)
+  {
     delete proxy_addr_;
+  }
 
   delete this->inbound_;
   delete this->outbound_;
@@ -132,9 +136,13 @@ int
 ACE::HTBP::Session::close ()
 {
   if (this->inbound_)
+  {
     this->inbound_->close();
+  }
   if (this->outbound_)
+  {
     this->outbound_->close();
+  }
   this->closed_ = true;
   return ACE::HTBP::Session::remove_session (this);
 }
@@ -143,9 +151,13 @@ ACE::HTBP::Channel *
 ACE::HTBP::Session::outbound () const
 {
   if (!this->closed_ && this->proxy_addr_)
+  {
     this->reconnect();
+  }
   if (this->outbound_ == nullptr)
+  {
     return nullptr;
+  }
   ACE::HTBP::Channel::State const state = this->outbound_->state ();
   return state == ACE::HTBP::Channel::Init || state == ACE::HTBP::Channel::Ready ?
     this->outbound_ : nullptr;
@@ -174,13 +186,17 @@ ACE::HTBP::Session::reconnect_i (ACE::HTBP::Channel *s) const
                                                (void *) &no_delay,
                                                sizeof (no_delay));
       if (result == -1)
+      {
         ACE_DEBUG ((LM_DEBUG, "HTBP::Session::reconnect_i, %p\n", "set_option" ));
+      }
 #endif /* ! ACE_LACKS_TCP_NODELAY */
 
     }
   s->register_notifier(this->reactor_);
   if (s == this->inbound_)
+  {
     s->send_ack();
+  }
 }
 
 ACE_Event_Handler *
@@ -243,7 +259,9 @@ ACE::HTBP::Session::flush_outbound_queue ()
           msg = msg->next();
         }
       if (this->outbound_->state() ==  ACE::HTBP::Channel::Wait_For_Ack)
+      {
         this->outbound_->recv_ack();
+      }
       result = this->outbound_->sendv (iov,this->outbound_queue_.message_count(),0);
       while (this->outbound_queue_.message_count ())
         {

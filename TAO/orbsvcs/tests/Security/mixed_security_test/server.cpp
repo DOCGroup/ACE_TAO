@@ -47,11 +47,15 @@ typename REALTYPE::_ptr_type
 rir (CORBA::ORB_ptr orb, char const *token)
 {
   if (CORBA::is_nil (orb) || token == nullptr)
+  {
     return REALTYPE::_nil();
+  }
 
   CORBA::Object_var o = orb->resolve_initial_references (token);
   if (CORBA::is_nil (o.in ()))
+  {
     throw RirFailedException (token);
+  }
 
   typename REALTYPE::_var_type r = REALTYPE::_narrow (o.in ());
   return r._retn();
@@ -80,7 +84,9 @@ init_and_setup (int &argc,
 
   sl2ad = TAO::SL2::AccessDecision::_narrow (ad.in ());
   if (CORBA::is_nil (sl2ad.in ()))
+  {
     throw "non-tao accessdecision";
+  }
 }
 
 struct IORPublicationException
@@ -102,7 +108,9 @@ void
 publish_ior (CORBA::ORB_ptr orb, CORBA::Object_ptr o, ACE_TCHAR const *filename)
 {
   if (filename == nullptr || CORBA::is_nil (orb) || CORBA::is_nil (o))
+  {
     throw IORPublicationException (IORPublicationException::Why::bad_param);
+  }
 
   CORBA::String_var ior = orb->object_to_string (o);
 

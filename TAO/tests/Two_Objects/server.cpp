@@ -76,7 +76,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Parse the arguments
       Server_Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("ior file = %s\t#threads = %d\tmsglen = %d\n"),

@@ -75,7 +75,9 @@ Handler::Handler (ACE_Reactor &reactor)
                   ACE_Event_Handler::READ_MASK | ACE_Event_Handler::WRITE_MASK))
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("register")));
       else
+      {
         this->ok_ = true;
+      }
     }
 }
 
@@ -100,7 +102,9 @@ Handler::handle_timeout (const ACE_Time_Value &,
                 ACE_TEXT ("handle_timeout should be #1; it's %d\n"),
                 me));
   else
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Handler::handle_timeout\n")));
+  }
 
   return 0;
 }
@@ -114,7 +118,9 @@ Handler::handle_output (ACE_HANDLE)
                 ACE_TEXT ("handle_output should be #2; it's %d\n"),
                 me));
   else
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Handler::handle_output\n")));
+  }
 
   // Don't want to continually see writeable; only verify its relative order.
   this->reactor ()->mask_ops (this->pipe_.read_handle (),
@@ -244,7 +250,9 @@ run_main (int, ACE_TCHAR *[])
   ACE_Reactor dev_poll_reactor (&dev_poll_reactor_impl);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing Dev Poll Reactor\n")));
   if (!test_reactor_dispatch_order (dev_poll_reactor))
+  {
     ++result;
+  }
 
   ACE_END_TEST;
   return result;

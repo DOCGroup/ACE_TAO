@@ -91,7 +91,9 @@ TAO_CEC_Reactive_Pulling_Strategy::activate ()
                                             this->rate_,
                                             this->rate_);
   if (timer_id_ == -1)
+  {
     return;
+  }
 
   try
     {

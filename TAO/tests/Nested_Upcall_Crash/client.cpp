@@ -96,7 +96,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       policies[0]->destroy ();
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       std::unique_ptr<Client_Peer> servant = std::make_unique<Client_Peer> (orb.in ());
       Client_Peer *const impl = servant.get ();

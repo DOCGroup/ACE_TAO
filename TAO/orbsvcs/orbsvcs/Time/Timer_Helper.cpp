@@ -57,11 +57,15 @@ Timer_Helper::handle_timeout (ACE_Time_Value const &,
 
           // Set the highest time to the largest time seen so far.
           if (curr_server_time > highest_time)
+          {
             highest_time = curr_server_time;
+          }
 
           // Set the lowest time to the smallest time seen so far.
           if (curr_server_time < lowest_time)
+          {
             lowest_time = curr_server_time;
+          }
         }
 
       if (TAO_debug_level > 0)
@@ -86,7 +90,9 @@ Timer_Helper::handle_timeout (ACE_Time_Value const &,
       if (highest_time > lowest_time)
         clerk_->inaccuracy (highest_time - lowest_time);
       else
+      {
         clerk_->inaccuracy (0);
+      }
 
       ACE_Time_Value const timeofday = ACE_OS::gettimeofday ();
 
@@ -100,7 +106,9 @@ Timer_Helper::handle_timeout (ACE_Time_Value const &,
   catch (CORBA::Exception const & ex)
     {
       if (TAO_debug_level > 0)
+      {
         ex._tao_print_exception ("Exception in handle_timeout()\n");
+      }
 
       return -1;
     }

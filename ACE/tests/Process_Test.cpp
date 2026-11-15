@@ -99,7 +99,9 @@ check_temp_file (const ACE_TString &tmpfilename)
                               -1);
           filename[size] = '\0';
           if (tmpfilename == ACE_TString (ACE_TEXT_CHAR_TO_TCHAR (filename)))
+          {
             return 1;
+          }
         }
     }
 
@@ -117,7 +119,9 @@ run_parent (bool inherit_files)
   ACE_TCHAR tempfile[MAXPATHLEN + 1];
 
   if (ACE::get_temp_dir (tempfile, MAXPATHLEN - sizeof (t)) == -1)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("Could not get temp dir\n")));
+  }
 
   ACE_OS::strcat (tempfile, t);
 
@@ -258,11 +262,15 @@ run_main (int argc, ACE_TCHAR *argv[])
 #else
       // Test handle inheritance set to true
       if (!status)
+      {
         status = run_parent (true);
+      }
 
       // ... and set to false
       if (!status)
+      {
         run_parent (false);
+      }
 #endif /* ! ACE_LACKS_FORK */
 
       ACE_END_TEST;

@@ -28,7 +28,9 @@ bool
 Client_Task::done () const
 {
   if (this->tasks_running_.load () == 0)
+  {
     return this->done_.load ();
+  }
 
   //else
   return false;

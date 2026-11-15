@@ -115,7 +115,9 @@ public:
 
         // Invoke the method request.
         if (request == nullptr || request->call () == -1)
+        {
           break;
+        }
       }
 
     return 0;
@@ -126,7 +128,9 @@ public:
     ACE_TRACE ("Scheduler::enqueue");
     const int result = this->activation_queue_.enqueue (request.get ());
     if (result != -1)
+    {
       request.release ();
+    }
     return result;
   }
 

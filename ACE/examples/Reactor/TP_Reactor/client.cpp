@@ -38,7 +38,9 @@ int ACE_TMAIN(int argc, ACE_TCHAR **argv) {
     // parse the <size> argument
     if ((argc < 2) || (((size = ACE_OS::strtol(argv[1], nullptr, 10)) < 1) ||
             (errno == EINVAL)))
-        return printUsage(argv[0]);
+    {
+      return printUsage(argv[0]);
+    }
 
     // take size as the number of MiB and create appropriate buffer
     size *= BASE;
@@ -52,7 +54,9 @@ int ACE_TMAIN(int argc, ACE_TCHAR **argv) {
     // parse the <count> argument if available
     if ((argc == 3) && (((count = ACE_OS::strtol(argv[2], nullptr, 10)) < 1) ||
             (errno == EINVAL)))
-        return printUsage(argv[0]);
+    {
+      return printUsage(argv[0]);
+    }
 
     // the server listens on localhost on default port (from common.h)
     ACE_INET_Addr const serverAddr(PORT, "localhost");

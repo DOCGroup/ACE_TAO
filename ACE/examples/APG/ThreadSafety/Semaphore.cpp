@@ -33,7 +33,9 @@ public:
       {
         ACE_Message_Block *raw_message_block {};
         if (this->getq (raw_message_block) == -1)
+        {
           return;
+        }
 
         ACE_Message_Block_Unique_Ptr message_block (raw_message_block);
         if (message_block->msg_type () == ACE_Message_Block::MB_HANGUP)
@@ -58,7 +60,9 @@ public:
   {
   //FUZZ: enable check_for_lack_ACE_OS
     if (exit_condition_.exchange (true))
+    {
       return;
+    }
 
     this->msg_queue ()->deactivate ();
     csema_.release (N_THREADS);
@@ -93,7 +97,9 @@ public:
   {
     for (int i = 0; i <= MAX_PROD; ++i)
       if (produce_item (i) == -1)
+      {
         return -1;
+      }
     return hang_up ();
   }
 

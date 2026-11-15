@@ -37,7 +37,9 @@ ACE_Client_Logging_Handler::handle_signal (int signum,
   if (signum == SIGPIPE)
     return 0;
   else
+  {
     return -1;
+  }
 }
 
 // This function is called every time a client connects to us.
@@ -175,7 +177,9 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
       if (handle == this->peer ().get_handle ())
         this->peer ().close ();
       else
+      {
         ACE_OS::closesocket (handle);
+      }
       // Release the memory to prevent a leak.
       return 0;
       /* NOTREACHED */
@@ -309,7 +313,9 @@ int
 ACE_Client_Logging_Handler::close (u_long)
 {
   if (this->logging_output_ != ACE_STDERR)
+  {
     ACE_OS::closesocket (this->logging_output_);
+  }
 
   this->destroy ();
   return 0;
@@ -484,7 +490,9 @@ ACE_Client_Logging_Acceptor::fini ()
   this->close ();
 
   if (this->handler_ != 0)
+  {
     this->handler_->close (0);
+  }
 
   // Try to unlink the logger key so weird things don't happen if
   // we're using STREAM pipes.
@@ -518,7 +526,9 @@ ACE_Client_Logging_Acceptor::info (ACE_TCHAR **strp, size_t length) const
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;
   else
+  {
     ACE_OS::strncpy (*strp, buf, length);
+  }
   return ACE_OS::strlen (buf);
 }
 
@@ -667,10 +677,14 @@ ACE_Client_Logging_Acceptor::parse_args (int argc, ACE_TCHAR *argv[])
   if (local_addr_str.length () > 0)
     {
       if (local_addr_str.rfind (ACE_TCHAR(':')) == ACE_TString::npos)
+      {
         local_addr_str += ACE_TEXT (":0");
+      }
       ACE_TCHAR *local_addr_cstr = local_addr_str.rep ();
       if (-1 == local_addr_.string_to_addr (ACE_TEXT_ALWAYS_CHAR (local_addr_cstr)))
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), local_addr_cstr));
+      }
       delete [] local_addr_cstr;
     }
 

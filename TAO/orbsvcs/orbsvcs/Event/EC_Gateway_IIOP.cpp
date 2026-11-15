@@ -126,7 +126,9 @@ TAO_EC_Gateway_IIOP::disconnect_consumer_proxies_i ()
         {
           RtecEventComm::PushConsumer_ptr consumer = (*j).int_id_;
           if (CORBA::is_nil (consumer))
+          {
             continue;
+          }
           try
             {
               consumer->disconnect_push_consumer ();
@@ -181,7 +183,9 @@ TAO_EC_Gateway_IIOP::update_consumer (
     RtecEventChannelAdmin::ConsumerQOS const &c_qos)
 {
   if (c_qos.dependencies.length () == 0)
+  {
     return;
+  }
 
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
@@ -207,7 +211,9 @@ TAO_EC_Gateway_IIOP::cleanup_consumer_proxies_i ()
         {
           RtecEventComm::PushConsumer_ptr consumer = (*j).int_id_;
           if (CORBA::is_nil (consumer))
+          {
             continue;
+          }
 
           CORBA::release (consumer);
         }
@@ -231,7 +237,9 @@ TAO_EC_Gateway_IIOP::update_consumer_i (
 
   if (CORBA::is_nil (this->consumer_ec_.in ())
       || CORBA::is_nil (this->supplier_ec_.in ()))
+  {
     return;
+  }
 
   // ORBSVCS_DEBUG ((LM_DEBUG, "ECG (%t) update_consumer_i\n"));
 
@@ -270,11 +278,15 @@ TAO_EC_Gateway_IIOP::open_i (
       // id or skip all subscriptions when we don't need to use the consumer
       // proxy map.
       if (sid == ACE_ES_EVENT_SOURCE_ANY || this->use_consumer_proxy_map_ == 0)
+      {
         continue;
+      }
 
       // Skip all the magic event types.
       if (ACE_ES_EVENT_ANY < h.type && h.type < ACE_ES_EVENT_UNDEFINED)
+      {
         continue;
+      }
 
       if (this->consumer_proxy_map_.find (sid, proxy) == -1)
         {
@@ -317,7 +329,9 @@ TAO_EC_Gateway_IIOP::open_i (
               if (h.source != sid
                   || (ACE_ES_EVENT_ANY < h.type
                       && h.type < ACE_ES_EVENT_UNDEFINED))
+              {
                 continue;
+              }
               pub.publications[c].event.header = h;
               pub.publications[c].dependency_info.dependency_type =
                 RtecBase::TWO_WAY_CALL;
@@ -329,7 +343,9 @@ TAO_EC_Gateway_IIOP::open_i (
           //            "ECG (%t) supplier id %d has %d elements\n",
           //            sid, c));
           if (c == 0)
+          {
             continue;
+          }
 
           pub.publications.length (c);
 
@@ -355,11 +371,15 @@ TAO_EC_Gateway_IIOP::open_i (
 
       // Skip all subscriptions with a specific source when we use the map
       if (sid != ACE_ES_EVENT_SOURCE_ANY && this->use_consumer_proxy_map_ == 1)
+      {
         continue;
+      }
 
       // Skip all the magic event types.
       if (ACE_ES_EVENT_ANY < h.type && h.type < ACE_ES_EVENT_UNDEFINED)
+      {
         continue;
+      }
 
       pub.publications[c].event.header = h;
       pub.publications[c].event.header.creation_time = ORBSVCS_Time::zero ();
@@ -457,7 +477,9 @@ TAO_EC_Gateway_IIOP::push (RtecEventComm::EventSet const &events)
       if (this->use_ttl_ == 1)
         {
           if (events[i].header.ttl == 0)
+          {
             continue;
+          }
         }
 
       RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy = nullptr;
@@ -471,12 +493,16 @@ TAO_EC_Gateway_IIOP::push (RtecEventComm::EventSet const &events)
         }
 
       if (CORBA::is_nil (proxy))
+      {
         continue;
+      }
 
       out[0] = events[i];
 
       if (this->use_ttl_ == 1)
+      {
         --out[0].header.ttl;
+      }
 
       // ORBSVCS_DEBUG ((LM_DEBUG, "ECG: event sent to proxy\n"));
       this->push_to_consumer(proxy, out);

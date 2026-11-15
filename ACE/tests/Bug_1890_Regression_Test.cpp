@@ -121,7 +121,9 @@ run_main (int, ACE_TCHAR *[])
 
   // Verify that the results are what we expect
   if (!(success = timer->check_expected_results ()))
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("Test failed\n")));
+  }
 
   // Cleanup
   timer->close ();

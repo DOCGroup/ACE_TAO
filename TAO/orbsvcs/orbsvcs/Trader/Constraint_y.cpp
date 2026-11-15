@@ -516,14 +516,18 @@ static int yygrowstack(YYSTACKDATA *data)
     i = (int) (data->s_mark - data->s_base);
     newss = (YYINT *)realloc(data->s_base, newsize * sizeof(*newss));
     if (newss == 0)
-        return YYENOMEM;
+    {
+      return YYENOMEM;
+    }
 
     data->s_base = newss;
     data->s_mark = newss + i;
 
     newvs = (YYSTYPE *)realloc(data->l_base, newsize * sizeof(*newvs));
     if (newvs == 0)
-        return YYENOMEM;
+    {
+      return YYENOMEM;
+    }
 
     data->l_base = newvs;
     data->l_mark = newvs + i;
@@ -652,7 +656,10 @@ YYPARSE_DECL()
     memset(&yystack, 0, sizeof(yystack));
 #endif
 
-    if (yystack.s_base == 0 && yygrowstack(&yystack) == YYENOMEM) goto yyoverflow;
+    if (yystack.s_base == 0 && yygrowstack(&yystack) == YYENOMEM)
+    {
+      goto yyoverflow;
+    }
     yystack.s_mark = yystack.s_base;
     yystack.l_mark = yystack.l_base;
 #if defined(YYLTYPE) || defined(YYLTYPE_IS_DECLARED)
@@ -662,7 +669,10 @@ YYPARSE_DECL()
     *yystack.s_mark = 0;
 
 yyloop:
-    if ((yyn = yydefred[yystate]) != 0) goto yyreduce;
+    if ((yyn = yydefred[yystate]) != 0)
+    {
+      goto yyreduce;
+    }
     if (yychar < 0)
     {
 #if YYBTYACC
@@ -715,7 +725,10 @@ yyloop:
 #if YYBTYACC
         } while (0);
 #endif /* YYBTYACC */
-        if (yychar < 0) yychar = YYEOF;
+        if (yychar < 0)
+        {
+          yychar = YYEOF;
+        }
 #if YYDEBUG
         if (yydebug)
         {
@@ -881,7 +894,10 @@ yyloop:
             fprintf(stderr, "%s[%d]: state %d, shifting to state %d\n",
                             YYDEBUGSTR, yydepth, yystate, yytable[yyn]);
 #endif
-        if (yystack.s_mark >= yystack.s_last && yygrowstack(&yystack) == YYENOMEM) goto yyoverflow;
+        if (yystack.s_mark >= yystack.s_last && yygrowstack(&yystack) == YYENOMEM)
+        {
+          goto yyoverflow;
+        }
         yystate = yytable[yyn];
         *++yystack.s_mark = yytable[yyn];
         *++yystack.l_mark = yylval;
@@ -889,7 +905,10 @@ yyloop:
         *++yystack.p_mark = yylloc;
 #endif
         yychar = YYEMPTY;
-        if (yyerrflag > 0)  --yyerrflag;
+        if (yyerrflag > 0)
+        {
+          --yyerrflag;
+        }
         goto yyloop;
     }
     if (((yyn = yyrindex[yystate]) != 0) && (yyn += yychar) >= 0 &&
@@ -898,7 +917,10 @@ yyloop:
         yyn = yytable[yyn];
         goto yyreduce;
     }
-    if (yyerrflag != 0) goto yyinrecovery;
+    if (yyerrflag != 0)
+    {
+      goto yyinrecovery;
+    }
 #if YYBTYACC
 
     yynewerrflag = 1;
@@ -1031,7 +1053,10 @@ yyinrecovery:
                     fprintf(stderr, "%s[%d]: state %d, error recovery shifting to state %d\n",
                                     YYDEBUGSTR, yydepth, *yystack.s_mark, yytable[yyn]);
 #endif
-                if (yystack.s_mark >= yystack.s_last && yygrowstack(&yystack) == YYENOMEM) goto yyoverflow;
+                if (yystack.s_mark >= yystack.s_last && yygrowstack(&yystack) == YYENOMEM)
+                {
+                  goto yyoverflow;
+                }
                 yystate = yytable[yyn];
                 *++yystack.s_mark = yytable[yyn];
                 *++yystack.l_mark = yylval;
@@ -1050,7 +1075,10 @@ yyinrecovery:
                     fprintf(stderr, "%s[%d]: error recovery discarding state %d\n",
                                     YYDEBUGSTR, yydepth, *yystack.s_mark);
 #endif
-                if (yystack.s_mark <= yystack.s_base) goto yyabort;
+                if (yystack.s_mark <= yystack.s_base)
+                {
+                  goto yyabort;
+                }
 #if defined(YYLTYPE) || defined(YYLTYPE_IS_DECLARED)
                 /* the current TOS position is the error start position */
                 yyerror_loc_range[1] = *yystack.p_mark;
@@ -1077,7 +1105,10 @@ yyinrecovery:
     }
     else
     {
-        if (yychar == YYEOF) goto yyabort;
+        if (yychar == YYEOF)
+        {
+          goto yyabort;
+        }
 #if YYDEBUG
         if (yydebug)
         {
@@ -1130,7 +1161,9 @@ yyreduce:
     if (yym > 0)
         yyval = yystack.l_mark[1-yym];
     else
-        memset(&yyval, 0, sizeof yyval);
+    {
+      memset(&yyval, 0, sizeof yyval);
+    }
 #if defined(YYLTYPE) || defined(YYLTYPE_IS_DECLARED)
 
     /* Perform position reduction */
@@ -1345,7 +1378,10 @@ break;
 #if YYBTYACC
             } while (0);
 #endif /* YYBTYACC */
-            if (yychar < 0) yychar = YYEOF;
+            if (yychar < 0)
+            {
+              yychar = YYEOF;
+            }
 #if YYDEBUG
             if (yydebug)
             {
@@ -1355,14 +1391,19 @@ break;
             }
 #endif
         }
-        if (yychar == YYEOF) goto yyaccept;
+        if (yychar == YYEOF)
+        {
+          goto yyaccept;
+        }
         goto yyloop;
     }
     if (((yyn = yygindex[yym]) != 0) && (yyn += yystate) >= 0 &&
             yyn <= YYTABLESIZE && yycheck[yyn] == (YYINT) yystate)
         yystate = yytable[yyn];
     else
-        yystate = yydgoto[yym];
+    {
+      yystate = yydgoto[yym];
+    }
 #if YYDEBUG
     if (yydebug)
     {
@@ -1376,7 +1417,10 @@ break;
         fprintf(stderr, "shifting from state %d to state %d\n", *yystack.s_mark, yystate);
     }
 #endif
-    if (yystack.s_mark >= yystack.s_last && yygrowstack(&yystack) == YYENOMEM) goto yyoverflow;
+    if (yystack.s_mark >= yystack.s_last && yygrowstack(&yystack) == YYENOMEM)
+    {
+      goto yyoverflow;
+    }
     *++yystack.s_mark = (YYINT) yystate;
     *++yystack.l_mark = yyval;
 #if defined(YYLTYPE) || defined(YYLTYPE_IS_DECLARED)

@@ -172,7 +172,9 @@ TAO_ECG_Reconnect_ConsumerEC_Control::activate ()
                                                     this->rate_,
                                                     this->rate_);
         if (timer_id_ == -1)
+        {
           return -1;
+        }
       }
     }
   catch (CORBA::Exception const &)

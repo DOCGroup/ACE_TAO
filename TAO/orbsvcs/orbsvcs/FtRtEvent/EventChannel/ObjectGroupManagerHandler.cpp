@@ -34,7 +34,9 @@ void
 ObjectGroupManagerHandler::add_member ()
 {
   if (--num_backups_ ==0)
+  {
     evt_.signal();
+  }
 }
 
 void

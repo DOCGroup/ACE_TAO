@@ -14,6 +14,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   if (client.init (argc, argv) == -1)
     return 1;
   else
+  {
     return client.run ();
+  }
 }
 

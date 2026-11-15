@@ -504,7 +504,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("starting...\n")));
 
   if (::parse_args (argc, argv) == -1)
+  {
     return -1;
+  }
 
   if (run_all)
     {
@@ -524,10 +526,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
   if (run_date)
+  {
     ::test_date ();
+  }
 
   if (run_setenv)
+  {
     ::test_setenv (argv[0]);
+  }
 
   if (get_env)
     {
@@ -542,10 +548,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
   if (run_ls)
+  {
     ::test_ls ();
+  }
 
   if (run_wait)
+  {
     ::test_wait ();
+  }
 
 #if defined (ACE_WIN32)
   ACE_UNUSED_ARG (&win32_test_ls);
@@ -555,7 +565,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 #endif /* ACE_WIN32 */
 
   if (print_file != nullptr)
+  {
     test_more ();
+  }
 
   ACE_TCHAR buf1[30] {};
   ACE_TCHAR buf2[30] {};

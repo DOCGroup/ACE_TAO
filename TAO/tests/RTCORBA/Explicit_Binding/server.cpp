@@ -140,7 +140,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Parse arguments.
       if (parse_args (argc, argv, options) != 0)
+      {
         return -1;
+      }
 
       // RootPOA.
       CORBA::Object_var const object =
@@ -148,7 +150,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (object.in ());
       if (check_for_nil (root_poa.in (), "RootPOA") == -1)
+      {
         return -1;
+      }
 
       // POAManager.
       PortableServer::POAManager_var const poa_manager =
@@ -163,7 +167,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                         &server_impl,
                                         options.ior_output_file);
       if (result == -1)
+      {
         return -1;
+      }
 
       // Run ORB Event loop.
       poa_manager->activate ();

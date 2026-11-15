@@ -34,7 +34,9 @@ TAO_DII_Reply_Handler_ptr
 TAO_DII_Reply_Handler::_unchecked_narrow (CORBA::Object_ptr obj)
 {
   if (CORBA::is_nil (obj))
+  {
     return TAO_DII_Reply_Handler::_nil ();
+  }
 
   return
     reinterpret_cast<TAO_DII_Reply_Handler_ptr> (

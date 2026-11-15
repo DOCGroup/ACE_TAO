@@ -62,7 +62,9 @@ TestEventConsumer_i::push (CORBA::Any const &data)
               this->cond_.wait ();
           }
           if (wait_for_shutdown)
+          {
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TestEventConsumer_i::push Done\n")));
+          }
         }
     }
 }

@@ -79,7 +79,9 @@ int
 TAO_Notify_EventTypeSeq::add (TAO_Notify_EventType const & event_type)
 {
   if (this->contains (event_type))
+  {
     return 1;
+  }
 
   try
     {
@@ -99,7 +101,9 @@ TAO_Notify_EventTypeSeq::erase (TAO_Notify_EventType const & event_type)
   Storage::iterator const position =
     std::find (this->event_types_.begin (), this->event_types_.end (), event_type);
   if (position == this->event_types_.end ())
+  {
     return -1;
+  }
 
   this->event_types_.erase (position);
   return 0;
@@ -126,7 +130,9 @@ TAO_Notify_EventTypeSeq::populate_no_special (CosNotification::EventTypeSeq& eve
       event_type_seq.length (static_cast<CORBA::ULong> (this->size () - 1));
     }
   else
-      event_type_seq.length (static_cast<CORBA::ULong> (this->size ()));
+  {
+    event_type_seq.length (static_cast<CORBA::ULong> (this->size ()));
+  }
 
   CORBA::ULong i {};
   for (TAO_Notify_EventType const & event_type : this->event_types_)

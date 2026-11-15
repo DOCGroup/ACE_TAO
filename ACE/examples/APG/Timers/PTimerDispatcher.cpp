@@ -20,7 +20,9 @@ void PTimer_Dispatcher::wait_for_event ()
             timer_queue_->gettimeofday ();
           next_timeout += *this_timeout;
           if (this->timer_.wait (&next_timeout) == -1)
+          {
             this->timer_queue_->expire ();
+          }
         }
     }
 }

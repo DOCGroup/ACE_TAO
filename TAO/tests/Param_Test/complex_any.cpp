@@ -179,25 +179,39 @@ Test_Complex_Any::check_validity ()
   CORBA::AnySeq const *level2_test_seq {};
 
   if (!(this->in_ >>= level2_in_seq))
+  {
     return 0;
+  }
 
   if (!(this->inout_ >>= level2_test_seq))
+  {
     return 0;
+  }
 
   if (this->comp_engine (level2_in_seq, level2_test_seq) == 0)
+  {
     return 0;
+  }
 
   if (!(this->out_.in () >>= level2_test_seq))
+  {
     return 0;
+  }
 
   if (this->comp_engine (level2_in_seq, level2_test_seq) == 0)
+  {
     return 0;
+  }
 
   if (!(this->ret_.in () >>= level2_test_seq))
+  {
     return 0;
+  }
 
   if (this->comp_engine (level2_in_seq, level2_test_seq) == 0)
+  {
     return 0;
+  }
 
   return 1;
 }
@@ -220,9 +234,13 @@ Test_Complex_Any::comp_engine (const CORBA::AnySeq *level2_in_seq,
       CORBA::AnySeq const *level3_test_seq {};
 
       if (!((*level2_in_seq)[i] >>= level3_in_seq))
+      {
         return 0;
+      }
       if (!((*level2_comp_seq)[i] >>= level3_test_seq))
+      {
         return 0;
+      }
 
       if (level3_in_seq->length() != level3_test_seq->length())
         {
@@ -237,9 +255,13 @@ Test_Complex_Any::comp_engine (const CORBA::AnySeq *level2_in_seq,
           Param_Test::level4 const *level4_test_struct {};
 
           if (!((*level3_in_seq)[j] >>= level4_in_struct))
+          {
             return 0;
+          }
           if (!((*level3_test_seq)[j] >>= level4_test_struct))
+          {
             return 0;
+          }
 
           if (std::strcmp (level4_in_struct->level5_string,
                               level4_test_struct->level5_string))
@@ -255,22 +277,34 @@ Test_Complex_Any::comp_engine (const CORBA::AnySeq *level2_in_seq,
           const CORBA::Any *level7_test_any;
 
           if (!(level4_in_struct->level5_any >>= level6_in_any))
+          {
             return 0;
+          }
           if (!(level4_test_struct->level5_any >>= level6_test_any))
+          {
             return 0;
+          }
 
           if (!((*level6_in_any) >>= level7_in_any))
+          {
             return 0;
+          }
           if (!((*level6_test_any) >>= level7_test_any))
+          {
             return 0;
+          }
 
           Param_Test::level8 const *level8_in_struct {};
           Param_Test::level8 const *level8_test_struct {};
 
           if (!((*level7_in_any) >>= level8_in_struct))
+          {
             return 0;
+          }
           if (!((*level7_test_any) >>= level8_test_struct))
+          {
             return 0;
+          }
 
           if (std::strcmp (level8_in_struct->level9_string,
                                level8_test_struct->level9_string))

@@ -82,7 +82,9 @@ Messenger_i::receive_list (::demo::value::idl::Node *node)
   while (x != nullptr)
     {
       if (std::find (nodes.begin (), nodes.end (), x) != nodes.end ())
+      {
         break;
+      }
 
       nodes.push_back (x);
       x = x->next ();
@@ -96,7 +98,9 @@ Messenger_i::receive_list (::demo::value::idl::Node *node)
     {
       os << nodes[i]->id ();
       if (nodes[i]->next () != nullptr)
+      {
         os << " ";
+      }
     }
   return CORBA::string_dup (os.str ().c_str ());
 }

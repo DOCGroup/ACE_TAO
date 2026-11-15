@@ -193,9 +193,13 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
 #if defined (ACE_HAS_TERMIOS)
       // Can you really have different input and output baud rates?!
       if (cfsetospeed (&devpar, newbaudrate) == -1)
+      {
         return -1;
+      }
       if (cfsetispeed (&devpar, newbaudrate) == -1)
+      {
         return -1;
+      }
 #else
       devpar.c_cflag &= ~CBAUD;
 # if defined (CBAUDEX)
@@ -245,7 +249,9 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
               if (arg->inpckenb)
                 devpar.c_iflag |= INPCK | PARMRK;
               else
+              {
                 devpar.c_iflag &= ~(INPCK | PARMRK);
+              }
             }
           else if (ACE_OS::strcasecmp (arg->paritymode, ACE_TTY_IO_EVEN) == 0)
             {
@@ -255,7 +261,9 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
               if (arg->inpckenb)
                 devpar.c_iflag |= INPCK | PARMRK;
               else
+              {
                 devpar.c_iflag &= ~(INPCK | PARMRK);
+              }
             }
           else if (ACE_OS::strcasecmp (arg->paritymode, ACE_TTY_IO_NONE) == 0)
             {
@@ -280,7 +288,9 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
       if ((arg->ctsenb) || (arg->rtsenb)) // Enable RTS/CTS protocol
         devpar.c_cflag |= CRTSCTS;
       else
+      {
         devpar.c_cflag &= ~CRTSCTS;
+      }
 #endif /* NEW_RTSCTS || CRTSCTS */
 
 #if defined (CREAD)
@@ -288,7 +298,9 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
       if (arg->rcvenb)
         devpar.c_cflag |= CREAD;
       else
+      {
         devpar.c_cflag &= ~CREAD;
+      }
 #endif /* CREAD */
 
 #if defined (HUPCL)
@@ -301,20 +313,26 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
       if (arg->modem)
         devpar.c_cflag &= ~CLOCAL;
       else
+      {
         devpar.c_cflag |= CLOCAL;
+      }
 #endif /* CLOCAL */
 
       if (arg->databits < 8)
         devpar.c_iflag |= ISTRIP;
       else
+      {
         devpar.c_iflag &= ~ISTRIP;
+      }
 
 #if defined (IGNBRK)
       // If device is not a modem set to ignore break points
       if(arg->modem)
         devpar.c_iflag &= ~IGNBRK;
       else
+      {
         devpar.c_iflag |= IGNBRK;
+      }
 #endif /* IGNBRK */
 
 #if defined (IXOFF)
@@ -322,7 +340,9 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
       if (arg->xinenb)
         devpar.c_iflag |= IXOFF;
       else
+      {
         devpar.c_iflag &= ~IXOFF;
+      }
 #endif /* IXOFF */
 
 #if defined (IXON)
@@ -330,7 +350,9 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
       if (arg->xoutenb)
         devpar.c_iflag |= IXON;
       else
+      {
         devpar.c_iflag &= ~IXON;
+      }
 #endif /* IXON */
 
 #if defined (ICANON)
@@ -383,7 +405,9 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
           else if (arg->readmincharacters < 1)
             devpar.c_cc[VMIN] = 1;
           else
+          {
             devpar.c_cc[VMIN] = static_cast<unsigned char>(arg->readmincharacters);
+          }
         }
       else
         {
@@ -394,7 +418,9 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
           else if (arg->readmincharacters < 1)
             devpar.c_cc[VMIN] = 0;
           else
+          {
             devpar.c_cc[VMIN] = static_cast<unsigned char>(arg->readmincharacters);
+          }
         }
 
 #if defined (TIOCMGET)
@@ -404,7 +430,9 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
       if (arg->dtrdisable)
         status &= ~TIOCM_DTR;
       else
+      {
         status |=  TIOCM_DTR;
+      }
 
       this->ACE_IO_SAP::control (TIOCMSET, &status);
 #endif /* definded (TIOCMGET) */

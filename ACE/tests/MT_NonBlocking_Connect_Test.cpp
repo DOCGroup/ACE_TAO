@@ -330,7 +330,9 @@ run_main (int argc, ACE_TCHAR *argv[])
   // Validate options.
   result = parse_args (argc, argv);
   if (result != 0)
+  {
     return result;
+  }
 
   if (test_select_reactor)
     {

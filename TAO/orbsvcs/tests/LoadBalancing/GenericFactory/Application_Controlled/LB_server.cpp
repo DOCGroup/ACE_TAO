@@ -21,13 +21,19 @@ LB_server::destroy ()
     {
       if (!CORBA::is_nil (this->lm_.in ()) &&
           !CORBA::is_nil (this->object_group_.in ()))
+      {
         this->lm_->delete_object (this->fcid_.in ());
+      }
 
       if (!CORBA::is_nil (this->root_poa_.in ()))
+      {
         this->root_poa_->destroy (true, true);
+      }
 
       if (!CORBA::is_nil (this->orb_.in ()))
+      {
         this->orb_->destroy ();
+      }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -139,7 +145,9 @@ int
 LB_server::create_object_group ()
 {
   if (this->parse_args () != 0)
+  {
     return -1;
+  }
 
   try
     {
@@ -166,7 +174,9 @@ LB_server::create_object_group ()
         this->orb_->object_to_string (this->object_group_.in ());
 
       if (this->write_ior_to_file (ior.in ()) != 0)
+      {
         return -1;
+      }
     }
   catch (CORBA::Exception const &ex)
     {

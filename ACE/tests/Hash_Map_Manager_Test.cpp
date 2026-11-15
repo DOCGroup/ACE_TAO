@@ -93,7 +93,9 @@ int test_two_allocators ()
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK, failed: %d (%s)\n"),
                 status, ACE_OS::strerror (ACE_OS::last_error ())));
   else
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("*** Something is wrong...\n")), -1);
+  }
 
   status = hash.close ();
 
@@ -111,7 +113,9 @@ int test_two_allocators ()
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("*** Something is wrong: %d (%s)\n"),
                        status, ACE_OS::strerror (ACE_OS::last_error ())), -1);
   else
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK.\n")));
+  }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Table allocator depth: %d\n"),
               table_alloc.pool_depth ()));

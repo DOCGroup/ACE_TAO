@@ -160,7 +160,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     "Client: caught expected user exception: %C\n",
                     ex._name()));
       else
+      {
         ex._tao_print_exception ("Client: exception caught - ");
+      }
 
       ACE_DEBUG ((LM_DEBUG,
                   "error code: %d\n"
@@ -179,7 +181,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     "Client: caught expected system exception: %C\n",
                     ex._name()));
       else
+      {
         ex._tao_print_exception ("Client: exception caught - ");
+      }
       return options.test_system_exception ? 0 : 1;
     }
   catch (CORBA::Exception const &ex)

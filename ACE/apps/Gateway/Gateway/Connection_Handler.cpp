@@ -52,7 +52,9 @@ Connection_Handler::Connection_Handler (Connection_Config_Info const &pci)
   if (pci.host_[0] != '\0')
     this->remote_addr_.set (pci.remote_port_, pci.host_);
   else
+  {
     this->remote_addr_.set (pci.remote_port_, ACE_DEFAULT_SERVER_HOST);
+  }
   // Set the priority of the Proxy.
   this->priority (int (pci.priority_));
 }
@@ -79,7 +81,9 @@ void
 Connection_Handler::timeout (long to)
 {
   if (to > this->max_timeout_)
+  {
     to = this->max_timeout_;
+  }
 
   this->timeout_ = to;
 }
@@ -95,7 +99,9 @@ Connection_Handler::timeout ()
   this->timeout_ *= 2;
 
   if (this->timeout_ > this->max_timeout_)
+  {
     this->timeout_ = this->max_timeout_;
+  }
 
   return old_timeout;
 }
@@ -187,7 +193,9 @@ Connection_Handler::open (void *)
       (this, ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "register_handler"), -1);
   else
+  {
     return 0;
+  }
 }
 
 ACE_INET_Addr const &

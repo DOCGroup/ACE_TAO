@@ -25,7 +25,9 @@ int
 TAO_Notify_AdminProperties::init (const CosNotification::PropertySeq& prop_seq)
 {
   if (TAO_Notify_PropertySeq::init (prop_seq) != 0)
+  {
     return -1;
+  }
 
   this->max_global_queue_length_.set (*this);
   this->max_consumers_.set (*this);
@@ -79,7 +81,9 @@ TAO_Notify_AdminProperties::queue_full ()
     return false;
   else
     if (this->global_queue_length_ >= this->max_global_queue_length ().value ())
+    {
       return true;
+    }
 
   return false;
 }

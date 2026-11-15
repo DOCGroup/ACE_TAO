@@ -53,7 +53,9 @@ TAO::FT_Property_Validator::validate_property (
                   && value != FT::ACTIVE
                   && value != FT::ACTIVE_WITH_VOTING
                   && value != FT::SEMI_ACTIVE))
+          {
             throw PortableGroup::InvalidProperty (property.nam, property.val);
+          }
         }
       else if (property.nam == this->membership_style_)
         {
@@ -61,7 +63,9 @@ TAO::FT_Property_Validator::validate_property (
           if (!(property.val >>= value)
               || (value != PortableGroup::MEMB_APP_CTRL
                   && value != PortableGroup::MEMB_INF_CTRL))
+          {
             throw PortableGroup::InvalidProperty (property.nam, property.val);
+          }
         }
       else if (property.nam == this->consistency_style_)
         {
@@ -69,7 +73,9 @@ TAO::FT_Property_Validator::validate_property (
           if (!(property.val >>= value)
               || (value != FT::CONS_APP_CTRL
                   && value != FT::CONS_INF_CTRL))
+          {
             throw PortableGroup::InvalidProperty (property.nam, property.val);
+          }
         }
       else if (property.nam == this->fault_monitoring_style_)
         {
@@ -78,7 +84,9 @@ TAO::FT_Property_Validator::validate_property (
               || (value != FT::PULL
                   && value != FT::PUSH
                   && value != FT::NOT_MONITORED))
+          {
             throw PortableGroup::InvalidProperty (property.nam, property.val);
+          }
         }
       else if (property.nam == this->fault_monitoring_granularity_)
         {
@@ -87,7 +95,9 @@ TAO::FT_Property_Validator::validate_property (
               || (value != FT::MEMB
                   && value != FT::LOC
                   && value != FT::LOC_AND_TYPE))
+          {
             throw PortableGroup::InvalidProperty (property.nam, property.val);
+          }
         }
       else if (property.nam == this->factories_)
         {
@@ -150,33 +160,43 @@ TAO::FT_Property_Validator::validate_criteria (
              && value != FT::ACTIVE
              && value != FT::ACTIVE_WITH_VOTING
              && value != FT::SEMI_ACTIVE  )
+          {
             invalid_criteria[p++] = property;
+          }
         }
         else if (property.nam == this->membership_style_)
         {
           if (  value != PortableGroup::MEMB_APP_CTRL
              && value != PortableGroup::MEMB_INF_CTRL )
+          {
             invalid_criteria[p++] = property;
+          }
         }
         else if (property.nam == this->consistency_style_)
         {
           if (  value != FT::CONS_APP_CTRL
              && value != FT::CONS_INF_CTRL  )
+          {
             invalid_criteria[p++] = property;
+          }
         }
         else if (property.nam == this->fault_monitoring_style_)
         {
           if (  value != FT::PULL
              && value != FT::PUSH
              && value != FT::NOT_MONITORED  )
+          {
             invalid_criteria[p++] = property;
+          }
         }
         else if (property.nam == this->fault_monitoring_granularity_)
         {
           if (  value != FT::MEMB
              && value != FT::LOC
              && value != FT::LOC_AND_TYPE  )
+          {
             invalid_criteria[p++] = property;
+          }
         }
         else if (property.nam == this->factories_)
         {

@@ -117,7 +117,9 @@ make_service_name (char const* prefix,
 {
   std::string result {prefix};
   if (index >= 0 && index < 10)
+  {
     result += '0';
+  }
   result += std::to_string (index);
   result += '@';
   result += local_name.c_str ();
@@ -149,7 +151,9 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
       poa_manager->activate ();
 
       if (this->parse_args (argc, argv))
+      {
         return 1;
+      }
 
       ACE_DEBUG ((LM_DEBUG,
                   "Execution parameters:\n"
@@ -364,7 +368,9 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
 
             if (ACE_Scheduler_Factory::use_config (naming_context.in (),
                                                    buf.c_str ()) == -1)
+            {
               return -1;
+            }
           }
           break;
         }
@@ -569,7 +575,9 @@ Test_ECG::get_ec (CosNaming::NamingContext_ptr naming_context,
   CORBA::Object_var ec_ptr =
     naming_context->resolve (channel_name);
   if (CORBA::is_nil (ec_ptr.in ()))
+  {
     return RtecEventChannelAdmin::EventChannel::_nil ();
+  }
 
   return RtecEventChannelAdmin::EventChannel::_narrow (ec_ptr.in ());
 }
@@ -592,14 +600,18 @@ Test_ECG::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
       // Limit the number of messages sent by each supplier
       int mc = this->hp_message_count_ / this->hp_suppliers_;
       if (mc == 0)
+      {
         mc = 1;
+      }
 
       std::string const buf = make_service_name ("hp_supplier_", i, this->lcl_name_);
 
       Test_Supplier* const supplier =
         new (std::nothrow) Test_Supplier (this, this->suppliers_.data () + i);
       if (supplier == nullptr)
+      {
         throw CORBA::NO_MEMORY ();
+      }
       this->suppliers_[i] = supplier;
 
       this->suppliers_[i]->open (buf.c_str (),
@@ -615,7 +627,9 @@ Test_ECG::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
       // Limit the number of messages sent by each supplier
       int mc = this->lp_message_count_ / this->lp_suppliers_;
       if (mc == 0)
+      {
         mc = 1;
+      }
 
       std::string const buf = make_service_name ("lp_supplier_",
                                                  i - this->hp_suppliers_,
@@ -624,7 +638,9 @@ Test_ECG::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
       Test_Supplier* const supplier =
         new (std::nothrow) Test_Supplier (this, this->suppliers_.data () + i);
       if (supplier == nullptr)
+      {
         throw CORBA::NO_MEMORY ();
+      }
       this->suppliers_[i] = supplier;
 
       this->suppliers_[i]->open (buf.c_str (),
@@ -656,7 +672,9 @@ Test_ECG::activate_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
           // Limit the number of messages sent by each supplier
           int mc = this->hp_message_count_ / this->hp_suppliers_;
           if (mc == 0)
+          {
             mc = 1;
+          }
 
           std::string const buf = make_service_name ("hp_supplier_", i, this->lcl_name_);
 
@@ -670,7 +688,9 @@ Test_ECG::activate_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
           // Limit the number of messages sent by each supplier
           int mc = this->lp_message_count_ / this->lp_suppliers_;
           if (mc == 0)
+          {
             mc = 1;
+          }
 
           std::string const buf = make_service_name ("lp_supplier_",
                                                      i - this->hp_suppliers_,
@@ -698,7 +718,9 @@ Test_ECG::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
       Test_Consumer* const consumer =
         new (std::nothrow) Test_Consumer (this, this->consumers_.data () + i);
       if (consumer == nullptr)
+      {
         throw CORBA::NO_MEMORY ();
+      }
       this->consumers_[i] = consumer;
 
       this->consumers_[i]->open (buf.c_str (),
@@ -719,7 +741,9 @@ Test_ECG::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
       Test_Consumer* const consumer =
         new (std::nothrow) Test_Consumer (this, this->consumers_.data () + i);
       if (consumer == nullptr)
+      {
         throw CORBA::NO_MEMORY ();
+      }
       this->consumers_[i] = consumer;
 
       this->consumers_[i]->open (buf.c_str (),
@@ -888,7 +912,9 @@ Test_ECG::shutdown_supplier (void* /* supplier_cookie */,
 {
   --this->running_suppliers_;
   if (this->running_suppliers_ != 0)
+  {
     return;
+  }
 
   // We propagate a shutdown event through the system...
   //FUZZ: disable check_for_lack_ACE_OS
@@ -980,7 +1006,9 @@ Test_ECG::local_source (RtecEventComm::EventSourceID id) const
   for (int i = 0; i < this->hp_suppliers_ + this->lp_suppliers_; ++i)
     {
       if (this->suppliers_[i]->supplier_id () == id)
+      {
         return 1;
+      }
     }
   return 0;
 }
@@ -1235,7 +1263,9 @@ void
 Test_Supplier::close ()
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
+  {
     return;
+  }
 
   RtecEventChannelAdmin::ProxyPushConsumer_var proxy =
     this->consumer_proxy_._retn ();
@@ -1323,7 +1353,9 @@ Test_Supplier::push (RtecEventComm::EventSet const& events)
     {
       RtecEventComm::Event const& e = events[i];
       if (e.header.type != ACE_ES_EVENT_INTERVAL_TIMEOUT)
+      {
         continue;
+      }
 
       // ACE_DEBUG ((LM_DEBUG, "Test_Supplier - timeout (%t)\n"));
 
@@ -1360,7 +1392,9 @@ void
 Test_Supplier::disconnect_push_supplier ()
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
+  {
     return;
+  }
 
   this->supplier_proxy_->disconnect_push_supplier ();
 }
@@ -1430,7 +1464,9 @@ void
 Test_Consumer::close ()
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
+  {
     return;
+  }
 
   RtecEventChannelAdmin::ProxyPushSupplier_var proxy =
     this->supplier_proxy_._retn ();
@@ -1456,7 +1492,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // to worry about running out of stack space if it's large.
   std::unique_ptr<Test_ECG> test (new (std::nothrow) Test_ECG);
   if (!test)
+  {
     return -1;
+  }
 
   const int status = test->run (argc, argv);
   return status;

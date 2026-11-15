@@ -162,7 +162,9 @@ testFailedServiceInit (int, ACE_TCHAR *[])
       ACE_TCHAR msg[1024];
       ACE_TCHAR *msgp = msg;
       if (svc_impl->info (&msgp, sizeof (msg) / sizeof (ACE_TCHAR)) > 0)
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Refuses_Svc said: %s\n"), msg));
+      }
     }
   else
     ACE_DEBUG ((LM_DEBUG,
@@ -270,7 +272,9 @@ testLoadingServiceConfFileAndProcessNo (int argc, ACE_TCHAR *argv[])
   if (error == error0)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT("testLoadingServiceConfFileAndProcessNo completed successfully\n")));
   else
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT("testLoadingServiceConfFileAndProcessNo test failed\n")));
+  }
 }
 
 void
@@ -391,7 +395,9 @@ testUnloadingACELoggingStrategy (int, ACE_TCHAR *[])
 
   ACE_Reactor *r2 = ACE_Reactor::instance ();
   if (r1 != r2)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("Reactor before %@, after %@\n"), r1, r2));
+  }
 }
 
 // @brief The size of a repository is unlimited and can be exceeded
@@ -480,7 +486,9 @@ testLimits (int , ACE_TCHAR *[])
   if (error == error0)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Limits test completed successfully\n")));
   else
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Limits test failed\n")));
+  }
 }
 
 void

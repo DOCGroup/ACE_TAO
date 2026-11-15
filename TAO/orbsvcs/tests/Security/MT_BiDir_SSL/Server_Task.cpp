@@ -38,7 +38,9 @@ Server_Task::svc ()
       for (int i = 0; i != this->no_iterations_; ++i)
         {
           if (i % 50 == 0)
+          {
             ACE_DEBUG ((LM_DEBUG, "(%P|%t) Sending message ....\n"));
+          }
 
           this->sender_.send_message ();
 

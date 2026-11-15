@@ -88,7 +88,9 @@ TAO::FT_PG_Object_Group_Storable::state_written ()
   else if (this->destroyed_)
     change_type = FT_Naming::DELETED;
   else
+  {
     change_type = FT_Naming::UPDATED;
+  }
 
   // If peer is available notify that state has changed.
   // Otherwise, rely on file time stamps exclusively

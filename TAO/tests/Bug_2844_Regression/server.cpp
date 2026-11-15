@@ -54,7 +54,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         root_poa->the_POAManager ();
 
       if (parse_args (argc, argv, ior_output_file) != 0)
+      {
         return 1;
+      }
 
       // ACE_NEW_RETURN preserves the CORBA allocation-failure return; the servant var takes ownership below.
       Hello *hello_impl {};

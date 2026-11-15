@@ -47,7 +47,9 @@ TAO_Interpreter::is_empty_string (const char* str)
       while (str[i] != '\0')
         {
           if (str[i] != ' ')
+          {
             break;
+          }
 
           ++i;
         }

@@ -47,7 +47,9 @@ public:
                     item_no.value ()));
 
         if (check_termination (item_no.value ()))
+        {
           break;
+        }
       }
 
     return 0;
@@ -92,7 +94,9 @@ public:
                     item));
 
         if (check_termination (item))
+        {
           break;
+        }
       }
 
     return 0;

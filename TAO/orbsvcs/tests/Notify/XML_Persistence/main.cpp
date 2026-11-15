@@ -105,7 +105,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
           if (load_file)
             pass_options.pass2 = true;
           else
+          {
             pass_options.pass1 = true;
+          }
         }
 
       CORBA::Object_var const poa_object = orb->resolve_initial_references ("RootPOA");
@@ -134,7 +136,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
             NotifyExt::EventChannelFactory::_narrow (cosecf.in ());
 
           if (CORBA::is_nil (ecf.in ()))
+          {
             return -1;
+          }
 
           CosNotification::QoSProperties qosprops (7);
           CORBA::ULong index {};
@@ -272,7 +276,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
           NotifyExt::EventChannelFactory_var const ecf =
             NotifyExt::EventChannelFactory::_narrow (cosecf.in ());
           if (CORBA::is_nil (ecf.in ()))
+          {
             return -1;
+          }
 
           // Force a change, which should write out a new abc.xml.
           ecf->save_topology ();

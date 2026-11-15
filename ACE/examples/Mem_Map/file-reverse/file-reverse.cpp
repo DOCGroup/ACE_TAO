@@ -18,7 +18,9 @@ print_array_in_reverse (char *array,
                         int const size)
 {
   if (size <= 0)
+  {
     return;
+  }
 
   int const last_index = size - 1;
 

@@ -38,7 +38,9 @@ ACE_LSOCK_CODgram::open (const ACE_Addr &remote,
   ACE_TRACE ("ACE_LSOCK_CODgram::open");
   if (ACE_SOCK_CODgram::open (remote, local, protocol_family,
                               protocol) == -1)
+  {
     return -1;
+  }
   ACE_LSOCK::set_handle (this->get_handle ());
   return 0;
 }
@@ -53,7 +55,9 @@ ACE_LSOCK_CODgram::ACE_LSOCK_CODgram (const ACE_Addr &remote,
   ACE_TRACE ("ACE_LSOCK_CODgram::ACE_LSOCK_CODgram");
   if (this->open (remote, local, protocol_family,
                   protocol) == -1)
+  {
     ACELIB_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_LSOCK_CODgram")));
+  }
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

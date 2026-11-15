@@ -18,10 +18,14 @@ Time_Date_Client_i::run (char const *name,
 {
   // Initialize the client.
   if (client_.init (name, argc, argv) == -1)
+  {
     return -1;
+  }
 
   if (this->parse_args (argc, argv) == -1)
+  {
     return -1;
+  }
 
   try
     {
@@ -43,7 +47,9 @@ Time_Date_Client_i::run (char const *name,
                   str_var.in()));
 
       if (client_.do_shutdown ())
+      {
         client_->shutdown ();
+      }
     }
   catch (CORBA::UserException const &range_ex)
     {

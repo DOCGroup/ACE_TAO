@@ -37,7 +37,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_TString ior {ACE_TEXT ("file://test.ior")};
       // Parse the arguments
       if (parse_args (argc, argv, ior) != 0)
+      {
         return 1;
+      }
 
       // Convert the ior string to an object reference.
       // The object reference obtained is a reference to the factory

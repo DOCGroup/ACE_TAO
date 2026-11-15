@@ -62,7 +62,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                                   "Client ORB");
 
       if (::parse_args (argc, argv, ior_strs) != 0)
+      {
         return -1;
+      }
 
       if (ior_strs.empty ())
         ACE_ERROR_RETURN ((LM_ERROR,

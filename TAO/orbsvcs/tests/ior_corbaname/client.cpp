@@ -18,7 +18,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       IOR_corbaname_Client_i client {};
 
       if (client.init (argc, argv) == -1)
+      {
         return 1;
+      }
       return client.run ();
     }
   catch (CORBA::Exception const &ex)

@@ -34,7 +34,9 @@ ACE_FIFO_Recv::close ()
   if (this->aux_handle_ != ACE_INVALID_HANDLE)
     return ACE_OS::close (this->aux_handle_);
   else
+  {
     return result;
+  }
 }
 
 // Note that persistent means "open fifo for writing, as well as
@@ -58,7 +60,9 @@ ACE_FIFO_Recv::open (const ACE_TCHAR *fifo_name,
            && (this->aux_handle_ = ACE_OS::open (fifo_name, O_WRONLY, 0, sa)) == ACE_INVALID_HANDLE)
     return -1;
   else
+  {
     return this->get_handle () == ACE_INVALID_HANDLE ? -1 : 0;
+  }
 }
 
 ACE_FIFO_Recv::ACE_FIFO_Recv ()
@@ -81,7 +85,9 @@ ACE_FIFO_Recv::ACE_FIFO_Recv (const ACE_TCHAR *fifo_name,
                                  perms,
                                  persistent,
                                  sa) == -1)
+  {
     ACELIB_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_FIFO_Recv")));
+  }
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

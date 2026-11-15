@@ -12,7 +12,9 @@ TAO_LB_Component::init (int argc, ACE_TCHAR * argv[])
 {
   // There must be at least six arguments.
   if (argc < 6)
+  {
     return -1;
+  }
 
   // Try to optimize sequence growth by growing it once.
   const CORBA::ULong initial_len = argc / 6;  // -LBGroup group
@@ -44,7 +46,9 @@ TAO_LB_Component::init (int argc, ACE_TCHAR * argv[])
           ++i;  // 2
 
           if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-LBTypeId")) != 0)
+          {
             return -1;
+          }
 
           ++i;  // 3
 
@@ -64,7 +68,9 @@ TAO_LB_Component::init (int argc, ACE_TCHAR * argv[])
           ++i;  // 2
 
           if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-LBGroup")) != 0)
+          {
             return -1;
+          }
 
           ++i;  // 3
 

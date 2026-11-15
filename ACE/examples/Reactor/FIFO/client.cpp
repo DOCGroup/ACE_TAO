@@ -15,5 +15,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   if (fifo_sender.send (msg) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send error for fifo"), -1);
   else
+  {
     return 0;
+  }
 }

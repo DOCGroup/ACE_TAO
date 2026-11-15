@@ -16,7 +16,9 @@ Iterator_Factory_i::get_iterator (char const *pathname,
                                   Web_Server::Metadata_Type_out metadata)
 {
   if (pathname == nullptr)
+  {
     throw Web_Server::Error_Result (500);
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Received request for file: <%s>\n"),
@@ -25,7 +27,9 @@ Iterator_Factory_i::get_iterator (char const *pathname,
   std::string const filename (pathname);
   ACE_stat file_status {};
   if (ACE_OS::stat (filename.c_str (), &file_status) == -1)
+  {
     throw Web_Server::Error_Result (500);
+  }
 
   Content_Iterator_i *iterator_servant {};
   ACE_NEW_THROW_EX (iterator_servant,
@@ -39,7 +43,9 @@ Iterator_Factory_i::get_iterator (char const *pathname,
       if (errno == EACCES)
         throw Web_Server::Error_Result (403);
       else
+      {
         throw Web_Server::Error_Result (500);
+      }
     }
 
   Web_Server::Metadata_Type *metadata_ptr {};
@@ -51,11 +57,15 @@ Iterator_Factory_i::get_iterator (char const *pathname,
 
   if (this->modification_date (file_status,
                                *metadata_value) != 0)
+  {
     throw Web_Server::Error_Result (500);
+  }
 
   if (this->content_type (filename,
                           *metadata_value) != 0)
+  {
     throw Web_Server::Error_Result (500);
+  }
 
   // Activate the Content_Iterator object after metadata creation succeeds.
   Web_Server::Content_Iterator_var iterator =
@@ -72,7 +82,9 @@ Iterator_Factory_i::modification_date (ACE_stat const& file_status,
   // Get the modification time from the file status structure/
   struct tm const *const t_gmt = ACE_OS::gmtime (&file_status.st_mtime);
   if (t_gmt == nullptr)
+  {
     return -1;
+  }
 
   // A time string is probably never going to exceed 256 bytes.
   constexpr size_t buflen = 256;
@@ -83,7 +95,9 @@ Iterator_Factory_i::modification_date (ACE_stat const& file_status,
                      buf.size (),
                      "%a, %d %b %Y %H:%M:%S GMT",
                      t_gmt) == 0)
+  {
     return -1;
+  }
 
   metadata.modification_date = CORBA::string_dup (buf.data ());
 

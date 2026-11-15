@@ -17,10 +17,14 @@ TAO_ECG_Simple_Mcast_EH::open (char const *mcast_addr,
 {
   // Check that we haven't been closed already.
   if (!this->receiver_)
+  {
     return -1;
+  }
 
   if (mcast_addr == nullptr)
+  {
     return -1;
+  }
 
   ACE_INET_Addr mcast_group;
   if (mcast_group.set (mcast_addr) != 0)
@@ -59,7 +63,9 @@ TAO_ECG_Simple_Mcast_EH::shutdown ()
 {
   // Already shut down.
   if (!this->receiver_)
+  {
     return -1;
+  }
 
   int result {};
   if (this->reactor ())

@@ -148,7 +148,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv, "Server ORB");
 
       if (parse_args (argc, argv, options) != 0 || options.ior_file.empty ())
+      {
         return 1;
+      }
 
       CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
@@ -224,7 +226,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       interceptor->reset ();
 
       if (!write_ior (options.ior_file.c_str (), ior.in ()))
+      {
         return 1;
+      }
 
       orb->run ();
 

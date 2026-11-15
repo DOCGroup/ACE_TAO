@@ -78,7 +78,9 @@ namespace
            ++level, pMyNode= pMyNode->pNext)
         {
           if (pMyNode->pnc->_is_equivalent (nc))
+          {
             return level; // Loops backwards this number of levels
+          }
         }
 
       return 0; // Not seen before
@@ -166,7 +168,9 @@ namespace
       ACE_DEBUG ((LM_DEBUG, " "));
     char buf[256] {};
     if (endpoint->addr_to_string (buf, sizeof(buf)-1u) < 0)
+    {
       std::strcpy (buf, "{Endpoint too long}");
+    }
     ACE_DEBUG ((LM_DEBUG, " Endpoint: %C\n", buf));
   }
 
@@ -263,7 +267,9 @@ namespace
                       }
                   }
                 else
+                {
                   ACE_DEBUG ((LM_DEBUG, " {Max depth reached}\n"));
+                }
               }
           }
         // Mark this node as a reference
@@ -271,7 +277,9 @@ namespace
           {
             ACE_DEBUG ((LM_DEBUG, ": Object Reference"));
             if (CORBA::is_nil (obj.in ()))
+            {
               ACE_DEBUG ((LM_DEBUG, " {Null}"));
+            }
 
             if (showIOR)
               {
@@ -282,7 +290,9 @@ namespace
             else if (CORBA::is_nil (obj.in ()))
               ACE_DEBUG ((LM_DEBUG, "\n"));
             else
+            {
               display_endpoint_info (obj.in(), level);
+            }
           }
       }
   }
@@ -395,7 +405,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                           failed = true;
                         }
                       else
+                      {
                         nameService = *argv;
+                      }
                     }
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--nsior")))
@@ -409,7 +421,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       failed = true;
                     }
                   else
+                  {
                     showNSonly = true;
+                  }
                 }
               else if (0 == ACE_OS::strcmp(*argv, ACE_TEXT ("--ior")))
                 {
@@ -421,7 +435,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       failed = true;
                     }
                   else
+                  {
                     showIOR = true;
+                  }
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--ctxior")))
                 {
@@ -433,7 +449,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       failed = true;
                     }
                   else
+                  {
                     showCtxIOR = true;
+                  }
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--tree")))
                 {
@@ -454,7 +472,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                           failed = true;
                         }
                       else
+                      {
                         myTree = ACE_TEXT_ALWAYS_CHAR (*argv);
+                      }
                     }
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--node")))
@@ -476,7 +496,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                           failed = true;
                         }
                       else
+                      {
                         myNode = ACE_TEXT_ALWAYS_CHAR (*argv);
+                      }
                     }
                 }
               else if (0 == ACE_OS::strcmp(*argv, ACE_TEXT ("--noloops")))
@@ -489,7 +511,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       failed = true;
                     }
                   else
+                  {
                     noLoops = true;
+                  }
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--name")))
                 {
@@ -516,7 +540,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                           failed = true;
                         }
                       else
+                      {
                         name = *argv;
+                      }
                     }
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--ctxsep")))
@@ -541,7 +567,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       failed = true;
                     }
                   else
+                  {
                     ctxsep[0] = (*argv)[0];
+                  }
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--kindsep")))
                 {
@@ -566,7 +594,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       failed = true;
                     }
                   else
+                  {
                     kindsep = (*argv)[0];
+                  }
                 }
               else if (0 == ACE_OS::strcmp(*argv, ACE_TEXT ("--max")))
                 {
@@ -590,7 +620,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       failed = true;
                     }
                   else
-                     maxDepth= ACE_OS::atoi (*argv);
+                  {
+                    maxDepth= ACE_OS::atoi (*argv);
+                  }
                 }
               else if (0 == ACE_OS::strcmp(*argv, ACE_TEXT ("--rtt")))
                 {
@@ -607,7 +639,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       failed = true;
                     }
                  else
+                 {
                    rtt.set (ACE_OS::atoi (*argv), 0);
+                 }
                 }
               else if (0 == ACE_OS::strcmp(*argv, ACE_TEXT ("--count")))
                 {
@@ -681,7 +715,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (nameService)
         obj = orb->string_to_object (nameService);
       else
+      {
         obj = orb->resolve_initial_references ("NameService");
+      }
 
       obj = set_rtt(obj.in ());
 

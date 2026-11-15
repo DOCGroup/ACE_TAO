@@ -135,7 +135,9 @@ TAO_CEC_ProxyPushSupplier::shutdown ()
       this->deactivate ();
 
       if (CORBA::is_nil (typed_consumer.in ()))
+      {
         return;
+      }
 
       try
         {
@@ -167,7 +169,9 @@ TAO_CEC_ProxyPushSupplier::shutdown ()
   this->deactivate ();
 
   if (CORBA::is_nil (consumer.in ()))
+  {
     return;
+  }
 
   try
     {
@@ -196,7 +200,9 @@ TAO_CEC_ProxyPushSupplier::push (CORBA::Any const &event)
     ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
 
     if (!this->is_connected_i ())
+    {
       return;
+    }
 
     TAO_ESF_RefCount_Guard<CORBA::ULong> const cnt_mon (this->refcount_);
 
@@ -222,7 +228,9 @@ TAO_CEC_ProxyPushSupplier::invoke (TAO_CEC_TypedEvent const &typed_event)
     ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
 
     if (!this->is_connected_i ())
+    {
       return;
+    }
 
     TAO_ESF_RefCount_Guard<CORBA::ULong> cnt_mon (this->refcount_);
 
@@ -245,7 +253,9 @@ TAO_CEC_ProxyPushSupplier::push_nocopy (CORBA::Any &event)
     ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
 
     if (!this->is_connected_i ())
+    {
       return;
+    }
 
     TAO_ESF_RefCount_Guard<CORBA::ULong> const cnt_mon (this->refcount_);
 
@@ -283,7 +293,9 @@ TAO_CEC_ProxyPushSupplier::_decr_refcnt ()
     ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
     --this->refcount_;
     if (this->refcount_ != 0)
+    {
       return this->refcount_;
+    }
   }
 
   // Notify the event channel
@@ -308,7 +320,9 @@ TAO_CEC_ProxyPushSupplier::connect_push_consumer (
 {
   // Nil PushConsumers are illegal
   if (CORBA::is_nil (push_consumer))
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   {
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
@@ -342,7 +356,9 @@ TAO_CEC_ProxyPushSupplier::connect_push_consumer (
           if (this->is_connected_i ())
             {
               if (!this->typed_event_channel_->consumer_reconnect ())
+              {
                 throw CosEventChannelAdmin::AlreadyConnected ();
+              }
 
               // Re-connections are allowed....
               this->cleanup_i ();
@@ -392,7 +408,9 @@ TAO_CEC_ProxyPushSupplier::connect_push_consumer (
     if (this->is_connected_i ())
       {
         if (!this->event_channel_->consumer_reconnect ())
+        {
           throw CosEventChannelAdmin::AlreadyConnected ();
+        }
 
         // Re-connections are allowed....
         this->cleanup_i ();
@@ -496,7 +514,9 @@ TAO_CEC_ProxyPushSupplier::disconnect_push_supplier ()
     // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
 
     if (!this->is_connected_i ())
+    {
       throw CORBA::BAD_INV_ORDER ();
+    }
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
     if (this->is_typed_ec () )
@@ -581,7 +601,9 @@ TAO_CEC_ProxyPushSupplier::push_to_consumer (CORBA::Any const &event)
     // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
 
     if (!this->is_connected_i ())
+    {
       return; // ACE_THROW (CosEventComm::Disconnected ());????
+    }
 
     consumer =
       CosEventComm::PushConsumer::_duplicate (this->consumer_.in ());
@@ -618,7 +640,9 @@ TAO_CEC_ProxyPushSupplier::reactive_push_to_consumer (
   {
     ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
     if (!this->is_connected_i ())
+    {
       return; // TAO_THROW (CosEventComm::Disconnected ());????
+    }
 
     consumer =
       CosEventComm::PushConsumer::_duplicate (this->consumer_.in ());
@@ -675,7 +699,9 @@ TAO_CEC_ProxyPushSupplier::invoke_to_consumer (TAO_CEC_TypedEvent const &typed_e
     // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
 
     if (!this->is_connected_i ())
+    {
       return; // ACE_THROW (CosEventComm::Disconnected ());????
+    }
 
     typed_consumer_obj =
       CORBA::Object::_duplicate (this->typed_consumer_obj_.in ());

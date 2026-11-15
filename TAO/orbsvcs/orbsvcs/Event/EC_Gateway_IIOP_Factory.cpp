@@ -67,7 +67,9 @@ TAO_EC_Gateway_IIOP_Factory::init (int argc, ACE_TCHAR* argv[])
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("reconnect")) == 0)
                 this->consumer_ec_control_ = 2;
               else
+              {
                 this->unsupported_option_value (ACE_TEXT("-ECGIIOPConsumerECControl"), opt);
+              }
               arg_shifter.consume_arg ();
             }
         }

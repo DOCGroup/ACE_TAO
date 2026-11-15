@@ -31,9 +31,13 @@ parent (char * const shm)
     ACE_ERROR ((LM_ERROR, "%p", "parent sem.acquire(1)"));
 
   if (alloc.remove () == -1)
+  {
     ACE_ERROR ((LM_ERROR, "%p\n", "alloc.remove"));
+  }
   if (sem.remove () == -1)
+  {
     ACE_ERROR ((LM_ERROR, "%p\n", "sem.remove"));
+  }
   return 0;
 }
 
@@ -46,7 +50,9 @@ child (char const * const shm)
     if (errno == EAGAIN)
       ACE_DEBUG ((LM_DEBUG, "spinning in client!\n"));
     else
+    {
       ACE_ERROR_RETURN ((LM_ERROR, "client mutex.tryacquire(0)"), 1);
+    }
 
   for (char const *s = shm; *s != '\0'; ++s)
     ACE_DEBUG ((LM_DEBUG, "%c", *s));
@@ -54,7 +60,9 @@ child (char const * const shm)
   ACE_DEBUG ((LM_DEBUG, "\n"));
 
   if (sem.release (1) < 0)
+  {
     ACE_ERROR ((LM_ERROR, "client sem.release(1)"));
+  }
   return 0;
 }
 
@@ -64,7 +72,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   // The allocator owns the shared segment; shm only borrows its mapping.
   char * const shm = static_cast<char *> (alloc.malloc (27));
   if (shm == nullptr)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "%p", "alloc.malloc"), -1);
+  }
 
   switch (ACE_OS::fork ())
     {

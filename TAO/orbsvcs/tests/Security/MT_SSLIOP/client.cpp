@@ -57,10 +57,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       if (options.ior.empty ())
+      {
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("The IOR must not be empty.\n")), 1);
+      }
 
       ACE_TString another_ior (options.ior);
       another_ior[another_ior.length () - 1] = '1';

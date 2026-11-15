@@ -54,7 +54,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_TCHAR const *ior_file {};
       if (parse_args (argc, argv, ior_file) != 0)
+      {
         return -1;
+      }
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references ("RootPOA");
@@ -115,7 +117,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             1);
         int const result = std::fprintf (output_file.get (), "%s", ior.in ());
         if (result < 0 || static_cast<size_t> (result) != std::strlen (ior.in ()))
+        {
           ACE_ERROR_RETURN ((LM_ERROR, "Failed writing IOR to <%s>\n", ior_file), 1);
+        }
       }
 
       // Run the ORB event loop.

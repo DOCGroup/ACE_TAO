@@ -112,7 +112,9 @@ TAO_Notify_ProxyConsumer::push_i (TAO_Notify_Event * event)
       TAO_Notify::Routing_Slip_Ptr routing_slip =
         TAO_Notify::Routing_Slip::create (pevent);
       if (DEBUG_LEVEL > 0)
+      {
         ORBSVCS_DEBUG((LM_DEBUG, ACE_TEXT ("ProxyConsumer routing event.\n")));
+      }
       routing_slip->route (this, true);
       routing_slip->wait_persist ();
     }
@@ -156,7 +158,9 @@ int
 TAO_Notify_ProxyConsumer::shutdown ()
 {
   if (this->TAO_Notify_Object::shutdown () == 1)
+  {
     return 1;
+  }
 
   this->disconnect ();
 

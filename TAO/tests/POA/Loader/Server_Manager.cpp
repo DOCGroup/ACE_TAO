@@ -106,7 +106,9 @@ Server_i::init (int argc, ACE_TCHAR **argv)
 
       int const result = parse_args (argc, argv);
       if (result != 0)
+      {
         return result;
+      }
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =
@@ -319,7 +321,9 @@ Server_i::run ()
         this->write_iors_to_file (first_test_ior.in (),
                                   second_test_ior.in ());
       if (write_result != 0)
+      {
         return write_result;
+      }
 
       // Set the poa_manager state to active, ready to process
       // requests.

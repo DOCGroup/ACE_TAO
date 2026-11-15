@@ -60,7 +60,9 @@ Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
     case 'c':
       this->options_.consumer_count = ACE_OS::atoi (get_opts.optarg);
       if (this->options_.consumer_count > max_consumers)
+      {
         this->options_.consumer_count = max_consumers;
+      }
       break;
 
     case 'e':

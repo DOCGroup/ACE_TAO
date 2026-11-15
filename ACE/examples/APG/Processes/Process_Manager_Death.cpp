@@ -30,7 +30,9 @@ public:
         process->getpid (), process->return_value ()));
 
     if (++count_ == NCHILDREN)
+    {
       ACE_Reactor::instance ()->end_reactor_event_loop ();
+    }
 
     return 0;
   }

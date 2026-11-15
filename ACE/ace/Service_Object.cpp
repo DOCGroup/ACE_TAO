@@ -95,7 +95,9 @@ ACE_Service_Type::fini ()
                 this->dll_.dll_name_));
 
   if (this->fini_already_called_)
+  {
     return 0;
+  }
 
   this->fini_already_called_ = true;
 

@@ -83,11 +83,15 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
 
             if (this->inputs_.find (sr.ssrc (), c) == -1 &&
                 this->add_input_channel (sr.ssrc (), std::addressof (peer_address), c) < 0)
+            {
               return -1;
+            }
             c->updateStatistics (std::addressof (sr));
 
             if (TAO_debug_level > 0)
+            {
               sr.dump ();
+            }
             break;
           }
         case RTCP_PT_RR:
@@ -102,12 +106,16 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
 
             if (this->inputs_.find (rr.ssrc (), c) == -1 &&
                 this->add_input_channel (rr.ssrc (), std::addressof (peer_address), c) < 0)
+            {
               return -1;
+            }
 
             c->updateStatistics (std::addressof (rr));
 
             if (TAO_debug_level > 0)
+            {
               rr.dump ();
+            }
             break;
           }
         case RTCP_PT_SDES:
@@ -121,7 +129,9 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
                           "warning invalid rtcp packet\n"));
 
             if (TAO_debug_level > 0)
+            {
               sdes.dump ();
+            }
             break;
           }
         case RTCP_PT_BYE:
@@ -148,11 +158,15 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
                 this->inputs_.unbind(ssrc_list[i], c);
 
                 if (c != nullptr)
+                {
                   delete c;
+                }
               }
 
             if (TAO_debug_level > 0)
+            {
               bye.dump ();
+            }
 
             break;
           }
@@ -310,7 +324,9 @@ TAO_AV_RTCP::rtcp_interval (int members,
   // average time between reports.
   t = (*avg_rtcp_size) * n / rtcp_bw;
   if (t < rtcp_min_time)
+  {
     t = rtcp_min_time;
+  }
 
   // To avoid traffic bursts from unintended synchronization with
   // other sites, we then pick our actual next report interval as a
@@ -332,7 +348,9 @@ int
 TAO_AV_RTCP_Flow_Factory::match_protocol (char const *flow_string)
 {
   if (ACE_OS::strncasecmp (flow_string,"RTCP",4) == 0)
-      return 1;
+  {
+    return 1;
+  }
 
   return 0;
 }
@@ -380,13 +398,17 @@ TAO_AV_RTCP_Object::handle_input ()
   if (n == 0)
     {
       if (TAO_debug_level > 0)
+      {
         ORBSVCS_DEBUG ((LM_ERROR, "TAO_AV_RTCP::handle_input:connection closed\n"));
+      }
       return -1;
     }
   if (n < 0)
     {
       if (TAO_debug_level > 0)
+      {
         ORBSVCS_DEBUG ((LM_ERROR,"TAO_AV_RTCP::handle_input:recv error\n"));
+      }
       return -1;
     }
   data.wr_ptr (n);
@@ -515,7 +537,9 @@ TAO_AV_RTCP_Callback::add_input_channel (ACE_UINT32 ssrc,
   if (this->inputs_.bind (ssrc, channel_owner.get ()) == -1)
     {
       if (this->inputs_.find (ssrc, channel) == 0)
+      {
         return 0;
+      }
 
       ORBSVCS_ERROR_RETURN ((LM_ERROR, "Unable to add RTCP input channel\n"), -1);
     }
@@ -706,7 +730,9 @@ TAO_AV_RTCP_Callback::send_report (int bye)
   cp->get_packet_data (std::addressof (cp_ptr), cp_length);
   sdes.get_packet_data (std::addressof (sdes_ptr), sdes_length);
   if (bye_packet)
+  {
     bye_packet->get_packet_data (std::addressof (bye_ptr), bye_length);
+  }
 
   ACE_Message_Block mb (cp_length + sdes_length + bye_length);
 
@@ -744,7 +770,9 @@ TAO_AV_RTCP_Callback::get_timeout (ACE_Time_Value *&tv,
   iter = this->inputs_.begin();
 
   if (this->output_.active ())
+  {
     ++senders;
+  }
 
   // determine the number of senders and members of this session
   while (iter != this->inputs_.end ())
@@ -752,7 +780,9 @@ TAO_AV_RTCP_Callback::get_timeout (ACE_Time_Value *&tv,
       if ((*iter).int_id_->active ())
         {
           if ((*iter).int_id_->sender ())
+          {
             ++senders;
+          }
           ++members;
         }
       ++iter;
@@ -793,7 +823,9 @@ TAO_AV_RTCP_Callback::receive_frame (ACE_Message_Block *frame,
 
   if (this->inputs_.find (packet.ssrc(), c) < 0 &&
       this->add_input_channel (packet.ssrc (), std::addressof (peer_address), c) < 0)
+  {
     return -1;
+  }
 
   c->recv_rtp_packet (frame, std::addressof (peer_address));
   return 0;

@@ -15,7 +15,9 @@ Checkpoint_Client_i::run (char const *name,
 {
   // Initialize the client (read ior...).
   if (checkpoint.init (name,argc, argv) == -1)
+  {
     return -1;
+  }
 
   // Set random seed
   ACE_Time_Value const now (ACE_OS::gettimeofday ());
@@ -75,7 +77,9 @@ Checkpoint_Client_i::run (char const *name,
         }
 
       if (checkpoint.shutdown ())
+      {
         checkpoint->shutdown ();
+      }
     }
   catch (CORBA::Exception const &ex)
     {

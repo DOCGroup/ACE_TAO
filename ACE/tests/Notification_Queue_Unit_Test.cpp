@@ -279,7 +279,10 @@ void test_equal(int x, int y, char const * x_msg, char const * y_msg,
                 char const * error_message,
                 char const * test_name, char const * filename, int lineno)
 {
-  if (x == y) return;
+  if (x == y)
+  {
+    return;
+  }
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT("%C in (%C %C:%d) %C (%d) != %C (%d)\n"),
               error_message,
@@ -291,7 +294,10 @@ void test_equal(void * x, void * y, char const * x_msg, char const * y_msg,
                 char const * error_message,
                 char const * test_name, char const * filename, int lineno)
 {
-  if (x == y) return;
+  if (x == y)
+  {
+    return;
+  }
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT("%C in (%C %C:%d) %C (%@) != %C (%@)\n"),
               error_message,
@@ -303,7 +309,10 @@ void test_not_equal(int x, int y, char const * x_msg, char const * y_msg,
                     char const * error_message,
                     char const * test_name, char const * filename, int lineno)
 {
-  if (x != y) return;
+  if (x != y)
+  {
+    return;
+  }
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT("%C in (%C %C:%d) %C (%d) != %C (%d)\n"),
               error_message,
@@ -315,7 +324,10 @@ void test_assert(bool predicate, char const * predicate_msg,
                  char const * error_message,
                  char const * test_name, char const * filename, int lineno)
 {
-  if (predicate) return;
+  if (predicate)
+  {
+    return;
+  }
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT("Assertion in (%C %C:%d) %C %C\n"),
               test_name, filename, lineno,

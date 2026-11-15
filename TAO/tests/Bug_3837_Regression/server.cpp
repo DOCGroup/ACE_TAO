@@ -53,7 +53,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       std::basic_string<ACE_TCHAR> ior_output_file {ACE_TEXT ("test.ior")};
       if (parse_args (argc, argv, ior_output_file) != 0)
+      {
         return 1;
+      }
 
       Hello *hello_impl {};
       ACE_NEW_RETURN (hello_impl,

@@ -207,7 +207,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Client_Options options {};
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var const object (orb->string_to_object (options.ior));
       A::AMI_Test_var const server (A::AMI_Test::_narrow (object.in ()));

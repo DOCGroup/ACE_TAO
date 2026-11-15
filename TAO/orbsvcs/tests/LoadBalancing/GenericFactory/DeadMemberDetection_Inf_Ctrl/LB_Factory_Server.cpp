@@ -110,7 +110,9 @@ LB_Factory_Server::init ()
       this->orb_ = CORBA::ORB_init (this->argc_, this->argv_);
 
       if (this->parse_args (this->argc_, this->argv_) != 0)
+      {
         return -1;
+      }
 
       CORBA::Object_var poa_object =
         this->orb_->resolve_initial_references ("RootPOA");
@@ -149,7 +151,9 @@ LB_Factory_Server::init ()
 
       if (this->write_ior_to_file (ior.in (),
                                    this->options_.factory_ior_file.c_str ()) != 0)
+      {
         return -1;
+      }
 
       if (this->options_.server_id == 2)
         {
@@ -165,7 +169,9 @@ LB_Factory_Server::init ()
           CORBA::String_var ior = this->orb_->object_to_string (obj.in ());
           if (this->write_ior_to_file (ior.in (),
                                        this->options_.direct_object_ior_file.c_str ()) != 0)
+          {
             return -1;
+          }
         }
     }
   catch (const CORBA::Exception& ex)

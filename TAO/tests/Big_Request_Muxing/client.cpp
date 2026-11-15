@@ -114,7 +114,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_Time_Value tv (0, 100 * 1000);
       orb->run (tv);
       if (task0.done () && task1.done () && task2.done ())
+      {
         break;
+      }
     }
 
     ACE_Thread_Manager::instance ()->wait ();

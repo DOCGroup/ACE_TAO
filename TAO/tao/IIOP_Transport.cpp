@@ -83,7 +83,9 @@ TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator *allocator,
   // If we don't have an allocator, fallback to the regular way of sending
   // data
   if (allocator == nullptr)
+  {
     return this->send (iov, iovcnt, bytes_transferred, this->io_timeout(dc));
+  }
 
   // We can only use sendfile when all data is coming from the mmap allocator,
   // if not, we just fallback to to the regular way of sending data
@@ -101,7 +103,9 @@ TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator *allocator,
   ACE_HANDLE const in_fd = allocator->handle ();
 
   if (in_fd == ACE_INVALID_HANDLE)
+  {
     return retval;
+  }
 
   ACE_HANDLE const out_fd =
     this->connection_handler_->peer ().get_handle ();
@@ -175,7 +179,9 @@ TAO_IIOP_Transport::recv (char *buf,
   if (n == -1)
     {
       if (errno == EWOULDBLOCK)
+      {
         return 0;
+      }
 
       return -1;
     }
@@ -262,13 +268,17 @@ TAO_IIOP_Transport::tear_listen_point_list (TAO_InputCDR &cdr)
 {
   CORBA::Boolean byte_order;
   if (!(cdr >> ACE_InputCDR::to_boolean (byte_order)))
+  {
     return -1;
+  }
 
   cdr.reset_byte_order (static_cast<int> (byte_order));
 
   IIOP::ListenPointList listen_list;
   if (!(cdr >> listen_list))
+  {
     return -1;
+  }
 
   // As we have received a bidirectional information, set the flag to
   // 0 (i.e., non-originating side)
@@ -321,7 +331,9 @@ TAO_IIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
   // Marshal the information into the stream
   if (!(cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
       || (!(cdr << listen_point_list)))
+  {
     return;
+  }
 
   // Add this info in to the svc_list
   opdetails.request_service_context ().set_context (IOP::BI_DIR_IIOP, cdr);
@@ -338,7 +350,9 @@ TAO_IIOP_Transport::get_listen_point (
     dynamic_cast<TAO_IIOP_Acceptor *> (acceptor);
 
   if (iiop_acceptor == nullptr)
+  {
     return -1;
+  }
 
   // Get the array of endpoints serviced by TAO_IIOP_Acceptor
   ACE_INET_Addr const *endpoint_addr =

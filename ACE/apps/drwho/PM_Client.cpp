@@ -27,7 +27,9 @@ PM_Client::insert_protocol_info (Protocol_Record &protocol_record)
     }
 
   if (np->get_inactive_count () < current_node->get_inactive_count())
+  {
     np->set_inactive_count (current_node->get_inactive_count ());
+  }
 
   return prp;
 }
@@ -43,7 +45,9 @@ PM_Client::process ()
   if (Options::get_opt (Options::PRINT_LOGIN_NAME))
     get_name = &Protocol_Record::get_login;
   else
+  {
     get_name = &Protocol_Record::get_real;
+  }
 
   int active_friends = 0;
   const int users = this->Protocol_Manager::get_total_users ();
@@ -52,7 +56,9 @@ PM_Client::process ()
               "------------------------\n"));
 
   if (Options::get_opt (Options::PRINT_LOGIN_NAME))
+  {
     this->max_key_length = MAXUSERIDNAMELEN;
+  }
 
   // Goes through the queue of all the logged in friends and prints
   // out the associated information.

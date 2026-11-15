@@ -79,14 +79,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_OS::socket_init (ACE_WSOCK_VERSION);
 
   if (parse_args(argc, argv) != 0)
+  {
     return 1;
+  }
   if (remote_host == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Client: No remote host specified\n")),1);
 
   ACE::HTBP::Environment env;
   if (config_file != nullptr)
+  {
     env.import_config (config_file);
+  }
 
   ACE::HTBP::ID_Requestor req (&env);
   ACE::HTBP::Addr local(ACE_TEXT_ALWAYS_CHAR(req.get_HTID()));
@@ -195,11 +199,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     if (len == -1 || errno == EWOULDBLOCK)
       ACE_OS::sleep (1);
     else
+    {
       total += len;
+    }
   } while ((len == -1 &&  errno == EWOULDBLOCK) || total < 145);
 
     if (total != 145)
+    {
       Test_Result = 1;
+    }
 
   len = stream.recv (buffer2 + total, 110);
   ACE_DEBUG ((LM_DEBUG,
@@ -207,7 +215,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               len));
 
   if (len != 110)
+  {
     Test_Result = 1;
+  }
 
   for (i = 0; Test_Result == 0 && i < 255; i++)
     if (buffer2[i] != buffer[i])

@@ -90,7 +90,9 @@ void
 Test_Supplier::disconnect ()
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
+  {
     return;
+  }
 
   try
     {

@@ -18,13 +18,17 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_Notify_Object::TAO_Notify_Object ()
 {
   if (TAO_debug_level > 2 )
+  {
     ORBSVCS_DEBUG ((LM_DEBUG,"object:%x  created\n", this ));
+  }
 }
 
 TAO_Notify_Object::~TAO_Notify_Object ()
 {
   if (TAO_debug_level > 2 )
+  {
     ORBSVCS_DEBUG ((LM_DEBUG,"object:%x  destroyed\n", this ));
+  }
 
   this->destroy_proxy_poa ();
   this->destroy_object_poa ();
@@ -97,7 +101,9 @@ TAO_Notify_Object::shutdown ()
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 1);
 
     if (this->shutdown_ == 1)
+    {
       return 1; // Another thread has already run shutdown.
+    }
 
     this->shutdown_ = 1;
   }
@@ -137,8 +143,14 @@ TAO_Notify_Object::destroy_proxy_poa ()
   {
     try
     {
-      if ( this->proxy_poa_ == this->object_poa_ ) this->object_poa_ = nullptr;
-      if ( this->proxy_poa_ == this->poa_ ) this->poa_ = nullptr;
+      if ( this->proxy_poa_ == this->object_poa_ )
+      {
+        this->object_poa_ = nullptr;
+      }
+      if ( this->proxy_poa_ == this->poa_ )
+      {
+        this->poa_ = nullptr;
+      }
 
       if ( this->own_proxy_poa_ == true )
       {
@@ -151,7 +163,9 @@ TAO_Notify_Object::destroy_proxy_poa ()
     catch (const CORBA::Exception& ex)
     {
       if (TAO_debug_level > 2)
+      {
         ex._tao_print_exception ("Proxy shutdown error (%P|%t)\n");
+      }
     }
   }
 }
@@ -163,8 +177,14 @@ TAO_Notify_Object::destroy_object_poa ()
   {
     try
     {
-      if (this->object_poa_ == this->proxy_poa_) this->proxy_poa_ = nullptr;
-      if (this->object_poa_ == this->poa_) this->poa_ = nullptr;
+      if (this->object_poa_ == this->proxy_poa_)
+      {
+        this->proxy_poa_ = nullptr;
+      }
+      if (this->object_poa_ == this->poa_)
+      {
+        this->poa_ = nullptr;
+      }
 
       if (this->own_object_poa_ == true)
       {
@@ -177,7 +197,9 @@ TAO_Notify_Object::destroy_object_poa ()
     catch (const CORBA::Exception& ex)
     {
       if (TAO_debug_level > 2)
+      {
         ex._tao_print_exception ("Proxy shutdown error (%P|%t)\n");
+      }
     }
   }
 }
@@ -237,7 +259,9 @@ TAO_Notify_Object::set_qos (const CosNotification::QoSProperties & qos)
   TAO_Notify_QoSProperties new_qos_properties;
 
   if (new_qos_properties.init (qos, err_seq) == -1)
+  {
     throw CORBA::INTERNAL ();
+  }
 
   // Apply the appropriate concurrency QoS
   if (new_qos_properties.thread_pool ().is_valid ())
@@ -264,7 +288,9 @@ TAO_Notify_Object::set_qos (const CosNotification::QoSProperties & qos)
 
   // Init the the overall QoS on this object.
   if (new_qos_properties.copy (this->qos_properties_) == -1)
+  {
     throw CORBA::INTERNAL ();
+  }
 
   if (err_seq.length () > 0) // Unsupported Property
     throw CosNotification::UnsupportedQoS (err_seq);

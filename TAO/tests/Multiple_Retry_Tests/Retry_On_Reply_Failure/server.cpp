@@ -66,7 +66,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         root_poa->the_POAManager ();
 
       if (!parse_args (argc, argv, options))
+      {
         return 1;
+      }
 
       Simple_Server_i server_impl (orb.in (), options.num_exceptions_to_throw,
                                    options.raise_exception);

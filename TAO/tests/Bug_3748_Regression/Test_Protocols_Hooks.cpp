@@ -28,7 +28,9 @@ Test_Protocols_Hooks::server_protocol_properties_at_orb_level (
     TAO_IIOP_Protocol_Properties &)
 {
   if (++this->failure_count_ < Test::expected_failure_number)
+  {
     throw ::CORBA::INTERNAL ();
+  }
 }
 
 void

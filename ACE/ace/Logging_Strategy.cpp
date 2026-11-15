@@ -28,7 +28,9 @@ ACE_Logging_Strategy::priorities (ACE_TCHAR *priority_string, ACE_Log_Msg::MASK_
   if (mask == ACE_Log_Msg::PROCESS)
     priority_mask = process_priority_mask_;
   else
+  {
     priority_mask = thread_priority_mask_;
+  }
 
   ACE_TCHAR *strtokp {};
 
@@ -92,7 +94,9 @@ ACE_Logging_Strategy::priorities (ACE_TCHAR *priority_string, ACE_Log_Msg::MASK_
   if (mask == ACE_Log_Msg::PROCESS)
     process_priority_mask_ = priority_mask;
   else
+  {
     thread_priority_mask_ = priority_mask;
+  }
 }
 
 // Parse the string containing all the flags and set the flags
@@ -161,7 +165,9 @@ ACE_Logging_Strategy::parse_args (int argc, ACE_TCHAR *argv[])
           // been set already, don't set it.
           if (ACE_BIT_ENABLED (this->flags_, ACE_Log_Msg::LOGGER) &&
               this->logger_key_ == nullptr)
+          {
             this->logger_key_ = ACE::strnew (ACE_DEFAULT_LOGGER_KEY);
+          }
           break;
         case 'i':
           // Interval (in secs) at which logfile size is sampled.
@@ -478,7 +484,9 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &, const void *)
                 // max_file_number_.
                 max_num = max_file_number_;
               else
+              {
                 max_num = count_;
+              }
 
               for (int i = max_num ; i > 1 ;--i)
                 {

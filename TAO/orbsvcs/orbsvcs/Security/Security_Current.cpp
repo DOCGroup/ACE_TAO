@@ -26,7 +26,9 @@ TAO_Security_Current::get_attributes (
   // we're not in the middle of a request/upcall.  Throw an exception
   // to indicate that.
   if (impl == nullptr)
+  {
     throw CORBA::BAD_INV_ORDER ();
+  }
 
   return impl->get_attributes (attributes);
 }
@@ -40,7 +42,9 @@ TAO_Security_Current::received_credentials ()
   // we're not in the middle of a request/upcall.  Throw an exception
   // to indicate that.
   if (impl == nullptr)
+  {
     throw CORBA::BAD_INV_ORDER ();
+  }
 
   return impl->received_credentials ();
 }
@@ -67,7 +71,9 @@ TAO_Security_Current::init ()
   catch (CORBA::Exception const & ex)
     {
       if (TAO_debug_level >= 1)
+      {
         ex._tao_print_exception ("Could not initialize SecurityCurrent:");
+      }
 
       result = -1;
     }

@@ -32,7 +32,10 @@ void TAO::FT_FaultEventDescriptor::dump () const
   std::string loc_as_string;
   for (CORBA::ULong li = 0; li < this->location->length(); ++li)
   {
-    if (li > 0) loc_as_string += "/";
+    if (li > 0)
+    {
+      loc_as_string += "/";
+    }
     // Assume only the "id" field of the CosNaming::Name is used.
     loc_as_string += this->location[li].id;
   }

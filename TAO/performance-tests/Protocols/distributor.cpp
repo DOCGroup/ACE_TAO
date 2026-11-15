@@ -152,17 +152,26 @@ test_i::start_test (CORBA::Long session_id,
 
   if (std::strcmp (protocol, "DIOP") == 0)
     {
-      if (TAO_debug_level) ACE_DEBUG ((LM_DEBUG, "test protocol is DIOP\n"));
+      if (TAO_debug_level)
+      {
+        ACE_DEBUG ((LM_DEBUG, "test protocol is DIOP\n"));
+      }
       protocols[0].protocol_type = TAO_TAG_DIOP_PROFILE;
     }
   else if (std::strcmp (protocol, "SCIOP") == 0)
     {
-      if (TAO_debug_level) ACE_DEBUG ((LM_DEBUG, "test protocol is SCIOP\n"));
+      if (TAO_debug_level)
+      {
+        ACE_DEBUG ((LM_DEBUG, "test protocol is SCIOP\n"));
+      }
       protocols[0].protocol_type = TAO_TAG_SCIOP_PROFILE;
     }
   else
     {
-      if (TAO_debug_level) ACE_DEBUG ((LM_DEBUG, "test protocol is IIOP\n"));
+      if (TAO_debug_level)
+      {
+        ACE_DEBUG ((LM_DEBUG, "test protocol is IIOP\n"));
+      }
       protocols[0].protocol_type = 0;
     }
 
@@ -331,7 +340,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       int const parse_args_result =
         parse_args (argc, argv);
       if (parse_args_result != 0)
+      {
         return parse_args_result;
+      }
 
       object =
         orb->resolve_initial_references ("RootPOA");

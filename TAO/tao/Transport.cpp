@@ -243,7 +243,9 @@ TAO_Transport::provide_blockable_handler (TAO::Connection_Handler_Set &h)
 {
   if (this->ws_->non_blocking () ||
       this->opening_connection_role_ == TAO::TAO_SERVER_ROLE)
+  {
     return false;
+  }
 
   (void) this->add_reference ();
 
@@ -621,10 +623,14 @@ TAO_Transport::format_queue_message (TAO_OutputCDR &stream,
                                      TAO_Stub* stub)
 {
   if (this->messaging_object ()->format_message (stream, stub, nullptr) != 0)
+  {
     return -1;
+  }
 
   if (this->queue_message_i (stream.begin (), max_wait_time) != 0)
+  {
     return -1;
+  }
 
   // check the buffering constraints to see what must be done in post_open()
   bool must_flush {};
@@ -1479,7 +1485,9 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
 #if TAO_HAS_TRANSPORT_CURRENT == 1
   // "Count" the message, only if no error was encountered.
   if (ret != -1 && this->stats_ != nullptr)
+  {
     this->stats_->messages_sent (message_length);
+  }
 #endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
   return ret;
@@ -2553,7 +2561,9 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
 #if TAO_HAS_TRANSPORT_CURRENT == 1
   // Update stats, if any
   if (this->stats_ != nullptr)
+  {
     this->stats_->messages_received (qd->msg_block ()->length ());
+  }
 #endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
   switch (qd->msg_type ())
@@ -2865,7 +2875,9 @@ TAO_Transport::post_open (size_t id)
                 this->orb_core ()->flushing_strategy ();
 
               if (flushing_strategy == nullptr)
+              {
                 throw CORBA::INTERNAL ();
+              }
 
               this->flush_in_post_open_ = false;
               (void)flushing_strategy->schedule_output (this);

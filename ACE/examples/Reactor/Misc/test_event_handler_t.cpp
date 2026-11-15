@@ -44,22 +44,32 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                      &ACE_Test_Sig_Handler::signal_handler);
     }
     if (destruction_count != 0)
+    {
       return 1;
+    }
   }
   if (destruction_count != 1)
+  {
     return 1;
+  }
 
   {
     EH_SH owned_sh (new ACE_Test_Sig_Handler, true);
     owned_sh.op_handler (owned_sh.op_handler ());
     if (destruction_count != 1)
+    {
       return 1;
+    }
     owned_sh.op_handler (new ACE_Test_Sig_Handler);
     if (destruction_count != 2)
+    {
       return 1;
+    }
   }
   if (destruction_count != 3)
+  {
     return 1;
+  }
 
   return 0;
 }

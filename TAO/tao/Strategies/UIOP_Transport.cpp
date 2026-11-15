@@ -44,7 +44,9 @@ TAO_UIOP_Transport::send (iovec *iov, int iovcnt,
     this->connection_handler_->peer ().sendv (iov, iovcnt, max_wait_time);
 
   if (retval > 0)
+  {
     bytes_transferred = retval;
+  }
 
   return retval;
 }
@@ -74,7 +76,9 @@ TAO_UIOP_Transport::recv (char *buf,
   if (n == -1)
     {
       if (errno == EWOULDBLOCK)
+      {
         return 0;
+      }
 
       return -1;
     }

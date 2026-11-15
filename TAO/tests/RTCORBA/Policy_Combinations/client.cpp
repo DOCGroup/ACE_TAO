@@ -141,12 +141,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Client_Options options;
       int result = parse_args (argc, argv, options);
       if (result != 0)
+      {
         return result;
+      }
 
       // Make sure we can support multiple priorities that are required
       // for this test.
       if (!check_supported_priorities (orb.in ()))
+      {
         return 2;
+      }
 
       // The following finds out the lowest priority for this
       // scheduling policy.  This will give us the biggest range on NT

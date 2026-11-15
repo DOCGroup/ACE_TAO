@@ -84,7 +84,9 @@ ACE_Reactor::~ACE_Reactor ()
 {
   this->implementation ()->close ();
   if (this->delete_implementation_)
+  {
     delete this->implementation ();
+  }
 }
 
 // Process-wide ACE_Reactor.
@@ -185,7 +187,9 @@ ACE_Reactor::run_reactor_event_loop (REACTOR_EVENT_HOOK eh)
   ACE_TRACE ("ACE_Reactor::run_reactor_event_loop");
 
   if (this->reactor_event_loop_done ())
+  {
     return 0;
+  }
 
   while (true)
     {
@@ -208,7 +212,9 @@ ACE_Reactor::run_alertable_reactor_event_loop (REACTOR_EVENT_HOOK eh)
   ACE_TRACE ("ACE_Reactor::run_alertable_reactor_event_loop");
 
   if (this->reactor_event_loop_done ())
+  {
     return 0;
+  }
 
   while (true)
     {
@@ -232,7 +238,9 @@ ACE_Reactor::run_reactor_event_loop (ACE_Time_Value &tv,
   ACE_TRACE ("ACE_Reactor::run_reactor_event_loop");
 
   if (this->reactor_event_loop_done ())
+  {
     return 0;
+  }
 
   while (true)
     {
@@ -243,7 +251,9 @@ ACE_Reactor::run_reactor_event_loop (ACE_Time_Value &tv,
       else if (result == -1)
         {
           if (this->implementation_->deactivated ())
+          {
             result = 0;
+          }
           return result;
         }
       else if (result == 0)
@@ -258,7 +268,9 @@ ACE_Reactor::run_reactor_event_loop (ACE_Time_Value &tv,
           // way to 0, just return, as the entire time the caller
           // wanted to wait has been used up.
           if (tv.usec () > 0)
+          {
             continue;
+          }
           return 0;
         }
       // Else there were some events dispatched; go around again
@@ -274,7 +286,9 @@ ACE_Reactor::run_alertable_reactor_event_loop (ACE_Time_Value &tv,
   ACE_TRACE ("ACE_Reactor::run_alertable_reactor_event_loop");
 
   if (this->reactor_event_loop_done ())
+  {
     return 0;
+  }
 
   for (;;)
     {

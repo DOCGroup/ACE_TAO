@@ -84,7 +84,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     poa_manager = root_poa->the_POAManager ();
 
     if (parse_args (argc, argv, runtime) != 0)
+    {
       return 1;
+    }
 
     poa_manager->activate ();
 

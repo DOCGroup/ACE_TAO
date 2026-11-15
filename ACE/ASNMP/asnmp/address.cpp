@@ -80,7 +80,9 @@ unsigned char& Address::operator[]( const int position)
   if ( position < MAX_ADDR_SZ)
     return  address_buffer[ position];
   else
+  {
     return address_buffer[0];
+  }
 }
 
 //-----------------------------------------------------------------------
@@ -112,7 +114,9 @@ bool operator>=( const Address &lhs,const Address &rhs)
   if (( lhs > rhs) || ( lhs == rhs))
     return true;
   else
+  {
     return false;
+  }
 }
 
 // overloaded < operator, is a1 <= a2
@@ -121,7 +125,9 @@ bool operator<=( const Address &lhs,const Address &rhs)
   if (( lhs < rhs) || ( lhs == rhs))
     return true;
   else
+  {
     return false;
+  }
 }
 
 //-----------------------------------------------------------------
@@ -137,7 +143,9 @@ bool operator<( const Address &lhs, const Address &rhs)
 bool operator==( const Address &lhs,const char *rhs)
 {
   if (!rhs && !lhs.valid())
+  {
     return true;
+  }
   return std::strcmp (static_cast<char const *> (lhs), rhs) == 0;
 }
 
@@ -153,7 +161,9 @@ bool operator!=( const Address &lhs,const char *rhs)
 bool operator>( const Address &lhs,const char *rhs)
 {
   if (!rhs)
+  {
     return lhs.valid();  // if lhs valid then > 0, else invalid !> 0
+  }
   return std::strcmp (static_cast<char const *> (lhs), rhs) > 0;
 }
 
@@ -162,7 +172,9 @@ bool operator>( const Address &lhs,const char *rhs)
 bool operator>=( const Address &lhs,const char *rhs)
 {
   if (!rhs)
+  {
     return true; // always >= 0
+  }
   return std::strcmp (static_cast<char const *> (lhs), rhs) >= 0;
 }
 
@@ -171,7 +183,9 @@ bool operator>=( const Address &lhs,const char *rhs)
 bool operator<( const Address &lhs,const char *rhs)
 {
   if (!rhs)
+  {
     return false; // always >= 0
+  }
   return std::strcmp (static_cast<char const *> (lhs), rhs) < 0;
 }
 
@@ -180,7 +194,9 @@ bool operator<( const Address &lhs,const char *rhs)
 bool operator<=( const Address &lhs,const char *rhs)
 {
   if (!rhs)
+  {
     return !lhs.valid(); // invalid == 0, else valid > 0
+  }
   return std::strcmp (static_cast<char const *> (lhs), rhs) <= 0;
 }
 
@@ -302,12 +318,18 @@ bool IpAddress::is_private() const
 {
  if (valid()) {
    if (address_buffer[0] == 10)
+   {
      return true;
+   }
    if (address_buffer[0] == 172 && address_buffer[1] == 16)
+   {
      return true;
+   }
    if (address_buffer[0] == 192 && address_buffer[1] == 168  &&
       address_buffer[2] == 0)
+   {
      return true;
+   }
  }
   return false;
 }
@@ -332,7 +354,9 @@ SnmpSyntax& IpAddress::operator=( SnmpSyntax &val)
 {
   // protect against assignment from itself
   if (this == std::addressof (val))
+  {
     return *this;
+  }
 
   valid_flag = 0;       // will get set 1 if really valid
   iv_friendly_name_[0]=0;
@@ -361,7 +385,9 @@ IpAddress& IpAddress::operator=( const IpAddress &ipaddress)
 {
   // protect against assignment from itself
   if (this == std::addressof (ipaddress))
+  {
     return *this;
+  }
 
   valid_flag = ipaddress.valid_flag;
   iv_friendly_name_[0]=0;
@@ -384,7 +410,9 @@ SnmpSyntax *IpAddress::clone() const
 const char *IpAddress::resolve_hostname(int &status)
 {
   if ((iv_friendly_name_[0] == 0) && valid_flag)
+  {
     addr_to_friendly();
+  }
   status = iv_friendly_name_status_;
   return iv_friendly_name_;
 }
@@ -398,11 +426,15 @@ int IpAddress::parse_dotted_ipstring( const char *inaddr)
   // 123456789012345
   // XXX.XXX.XXX.XXX
   if (!inaddr || (std::strlen (inaddr) > 30))
+  {
     return 0;
+  }
   std::strcpy (temp, inaddr);
   trim_white_space( temp);
   if (std::strlen (temp) > 15)
+  {
     return 0;
+  }
 
   char const *token = temp;
   for (size_t index = 0; index < IPV4LEN; ++index)
@@ -412,12 +444,16 @@ int IpAddress::parse_dotted_ipstring( const char *inaddr)
         ++token_end;
 
       if (token_end == token || token_end - token > 3)
+      {
         return 0;
+      }
 
       unsigned int value {};
       std::from_chars_result const result = std::from_chars (token, token_end, value);
       if (result.ec != std::errc {} || result.ptr != token_end || value > 255)
+      {
         return 0;
+      }
 
       address_buffer[index] = static_cast<unsigned char> (value);
       if (index + 1 == IPV4LEN)
@@ -428,7 +464,9 @@ int IpAddress::parse_dotted_ipstring( const char *inaddr)
       else
         {
           if (*token_end != '.')
+          {
             return 0;
+          }
           token = token_end + 1;
         }
     }
@@ -464,7 +502,9 @@ int IpAddress::parse_address( const char *inaddr)
         std::strncpy (ds, ACE_OS::inet_ntoa (ipAddr), MAXHOSTNAMELEN);
 
         if ( !parse_dotted_ipstring( ds))
+        {
           return 0;
+        }
 
         // save the friendly name
         std::strcpy (iv_friendly_name_, inaddr);
@@ -484,7 +524,9 @@ int IpAddress::addr_to_friendly()
   in_addr ipAddr;
   long result = ACE_OS::inet_addr(to_string());
   if (result == -1)
+  {
     return -1;    // expected a dotted quad!
+  }
 
   ipAddr.s_addr = result;
 
@@ -547,7 +589,9 @@ int IpAddress::resolve_to_address(const char *hostname, in_addr& quad_addr)
         return 0;
      }
     else
-       return -1;  // wrong address size
+    {
+      return -1;  // wrong address size
+    }
    }
    return loc_errno;
 }
@@ -575,7 +619,9 @@ void IpAddress::format_output()
                    static_cast<unsigned int> (address_buffer[2]),
                    static_cast<unsigned int> (address_buffer[3]));
   else
+  {
     output_buffer[0] = 0;
+  }
 }
 
 //------[ return the type ]----------------------------------
@@ -641,7 +687,9 @@ int Address_Iter::how_many_addresses() const
 int Address_Iter::next (IpAddress &addr)
 {
   if (!valid_ || this->entry_index_ >= this->count_)
+  {
     return 1;
+  }
 
   in_addr binary_address {};
   ACE_OS::memcpy (&binary_address.s_addr,
@@ -650,11 +698,15 @@ int Address_Iter::next (IpAddress &addr)
 
   char address_string[MAX_DISPLAY_SZ] {};
   if (ACE_OS::inet_ntop (AF_INET, &binary_address, address_string, sizeof address_string) == nullptr)
+  {
     return 1;
+  }
 
   IpAddress resolved_address (address_string);
   if (!resolved_address.valid())
+  {
     return 1;
+  }
 
   addr = resolved_address;
   ++this->entry_index_;
@@ -672,7 +724,9 @@ int Address_Iter::query_dns (char const *hostname)
       return 0;
     }
     else
+    {
       return -1;  // wrong address size
+    }
   }
   return loc_errno;
 }
@@ -784,7 +838,9 @@ SnmpSyntax& UdpAddress::operator=( SnmpSyntax &val)
 {
   // protect against assignment from itself
   if (this == std::addressof (val))
-      return *this;
+  {
+    return *this;
+  }
 
   valid_flag=0;         // will get set 1 if really valid
   if (val.valid()){
@@ -818,7 +874,9 @@ UdpAddress& UdpAddress::operator=( const UdpAddress &udpaddr)
 {
   // protect against assignment from itself
   if (this == std::addressof (udpaddr))
-      return *this;
+  {
+    return *this;
+  }
 
   (IpAddress &)*this = udpaddr; // use ancestor assignment for ipaddr value
   set_port(udpaddr.get_port()); // copy to port value
@@ -845,7 +903,9 @@ int UdpAddress::parse_address( const char *inaddr)
   char *tmp;
   tmp = std::strstr (buffer, ":");
   if (tmp == nullptr)
+  {
     tmp = std::strstr (buffer, "/");
+  }
 
   if (tmp != nullptr) {
     *tmp=0;   // null terminator
@@ -880,7 +940,9 @@ unsigned short UdpAddress::get_port() const
     return ntohs(port_nbo);
   }
   else
+  {
     return 0;                   // don't use uninitialized memory
+  }
 }
 
 //------[ return the type ]--------------------------------------------
@@ -915,7 +977,9 @@ void UdpAddress::format_output()
                      static_cast<unsigned int> (get_port ()));
     }
   else
+  {
     output_buffer[0] = 0;
+  }
 }
 
 //=======================================================================
@@ -927,7 +991,9 @@ void NetbiosAddress::format_output()
   if ( valid_flag)
     ACE_OS::memcpy(output_buffer, address_buffer, NETBIOSLEN);
   else
+  {
     output_buffer[0] = 0;
+  }
 }
 
 void NetbiosAddress::InitNBAddr(const char *inaddr)
@@ -971,10 +1037,14 @@ NetbiosAddress::NetbiosAddress( const char *inaddr,  nb_service svc)
 int NetbiosAddress::parse_address(const char *address)
 {
   if (std::strlen (address) > NETBIOSLEN)
-      return 0; // invalid
+  {
+    return 0; // invalid
+  }
 
   if (std::strncmp (address, "IBM", 3) == 0)
-     return 0;   // invalid
+  {
+    return 0;   // invalid
+  }
 
   // addresses are free form but this  check may need to be expose to user
   //
@@ -997,7 +1067,9 @@ NetbiosAddress::NetbiosAddress( const NetbiosAddress& nbaddr)
 
   valid_flag = nbaddr.valid_flag;
   if (valid_flag)
-     ACE_OS::memcpy(address_buffer, nbaddr.address_buffer, NETBIOSLEN);
+  {
+    ACE_OS::memcpy(address_buffer, nbaddr.address_buffer, NETBIOSLEN);
+  }
   NetbiosAddress::format_output();
 }
 
@@ -1038,7 +1110,9 @@ NetbiosAddress& NetbiosAddress::operator=( const NetbiosAddress &val)
 {
  // protect against assignment from itself
   if (this == std::addressof (val))
-      return *this;
+  {
+    return *this;
+  }
 
   valid_flag = 0;         // will set to 1 if really valid
   if (val.valid()) {
@@ -1074,7 +1148,9 @@ SnmpSyntax& NetbiosAddress::operator=( SnmpSyntax &val)
 {
   // protect against assignment from itself
   if (this == std::addressof (val))
-      return *this;
+  {
+    return *this;
+  }
 
   valid_flag = 0;         // will set to 1 if really valid
   if (val.valid()) {
@@ -1153,7 +1229,9 @@ IpxAddress::IpxAddress(const IpxAddress &ipxaddr)
   separator = '\0';
   valid_flag = ipxaddr.valid_flag;
   if (valid_flag)
-     ACE_OS::memcpy(address_buffer, ipxaddr.address_buffer, IPXLEN);
+  {
+    ACE_OS::memcpy(address_buffer, ipxaddr.address_buffer, IPXLEN);
+  }
   IpxAddress::format_output();
 }
 
@@ -1196,7 +1274,9 @@ SnmpSyntax& IpxAddress::operator=( SnmpSyntax &val)
 {
   // protect against assignment from itself
   if (this == std::addressof (val))
-      return *this;
+  {
+    return *this;
+  }
 
   valid_flag=0;         // will set to 1 if really valid
   if (val.valid()){
@@ -1218,11 +1298,15 @@ IpxAddress& IpxAddress::operator=( const IpxAddress &ipxaddress)
 {
   // protect against assignment from itself
   if (this == std::addressof (ipxaddress))
-      return *this;
+  {
+    return *this;
+  }
 
   valid_flag = ipxaddress.valid_flag;
   if (valid_flag)
+  {
     ACE_OS::memcpy(address_buffer, ipxaddress.address_buffer, IPXLEN);
+  }
   IpxAddress::format_output();
   return *this;
 }
@@ -1268,7 +1352,10 @@ int IpxAddress::parse_address( const char *inaddr)
   size_t z, tmplen;
 
   // save the orginal source
-  if (!inaddr || (std::strlen (inaddr) > (sizeof (temp) - 1))) return 0;
+  if (!inaddr || (std::strlen (inaddr) > (sizeof (temp) - 1)))
+  {
+    return 0;
+  }
   std::strcpy (temp, inaddr);
   trim_white_space( temp);
   tmplen = std::strlen (temp);
@@ -1280,7 +1367,9 @@ int IpxAddress::parse_address( const char *inaddr)
   // XXXXXXXX-XXXXXX-XXXXXX 22 len
   // need at least 21 chars and no more than 22
   if ( (tmplen <21) || (tmplen >22))
+  {
     return 0;
+  }
 
   // convert the string to all lower case
   // this allows hex values to be in upper or lower
@@ -1302,7 +1391,9 @@ int IpxAddress::parse_address( const char *inaddr)
       ( separator != '.') &&
       ( separator != '-') &&
       ( separator != ' '))
+  {
     return 0;
+  }
 
   // separate the strings
   str1 = ( unsigned char *) temp;
@@ -1313,11 +1404,15 @@ int IpxAddress::parse_address( const char *inaddr)
 
   // check len of the network portion
   if (std::strlen (reinterpret_cast<char const *> (str1)) != 8)
-     return 0;
+  {
+    return 0;
+  }
 
   // check len of mac portion
   if (std::strlen (reinterpret_cast<char const *> (str2)) != 12)
+  {
     return 0;
+  }
 
   // ok we like then lens, make sure that all chars are 0-f
   // check out the net id
@@ -1327,7 +1422,9 @@ int IpxAddress::parse_address( const char *inaddr)
         ((*tmp >= 'a') && (*tmp <= 'f')))    // or a-f
       ++tmp;
     else
+    {
       return 0;
+    }
 
   // check out the MAC address
   tmp = str2;
@@ -1336,7 +1433,9 @@ int IpxAddress::parse_address( const char *inaddr)
         ((*tmp >= 'a') && (*tmp <= 'f')))    // or a-f
       ++tmp;
     else
+    {
       return 0;
+    }
 
   // convert to target string
   tmp = str1;
@@ -1345,7 +1444,9 @@ int IpxAddress::parse_address( const char *inaddr)
   if (( *tmp >= '0') && ( *tmp <= '9'))
     *tmp = *tmp - (char unsigned )'0';
   else
+  {
     *tmp = *tmp - (char unsigned) 'a' + (char unsigned) 10;
+  }
   ++tmp;
   }
 
@@ -1361,7 +1462,9 @@ int IpxAddress::parse_address( const char *inaddr)
   if (( *tmp >= '0') && ( *tmp <= '9'))
     *tmp = *tmp - (char unsigned) '0';
   else
+  {
     *tmp = *tmp - (char unsigned) 'a'+ (char unsigned) 10;
+  }
   ++tmp;
   }
 
@@ -1404,7 +1507,9 @@ void IpxAddress::format_output()
                    static_cast<unsigned int> (address_buffer[8]),
                    static_cast<unsigned int> (address_buffer[9]));
   else
+  {
     output_buffer[0] = 0;
+  }
 }
 
 // get the host id portion of an ipx address
@@ -1426,10 +1531,14 @@ int IpxAddress::get_hostid( MacAddress& mac)
        if ( mac.valid())
           return 1;
        else
-          return 0;
+       {
+         return 0;
+       }
    }
    else
-      return 0;
+   {
+     return 0;
+   }
 }
 
 //------[ return the type ]----------------------------------
@@ -1548,7 +1657,9 @@ SnmpSyntax& IpxSockAddress::operator=( SnmpSyntax &val)
 {
   // protect against assignment from itself
   if (this == std::addressof (val))
-      return *this;
+  {
+    return *this;
+  }
 
   valid_flag=0;         // will set to 1 if really valid
   if (val.valid()){
@@ -1581,7 +1692,9 @@ IpxSockAddress& IpxSockAddress::operator=( const IpxSockAddress &ipxaddr)
 {
   // protect against assignment from itself
   if (this == std::addressof (ipxaddr))
-      return *this;
+  {
+    return *this;
+  }
 
   (IpxAddress&)*this = ipxaddr;         // use ancestor assignment for ipx addr
   set_socket(ipxaddr.get_socket());     // copy socket value
@@ -1620,7 +1733,9 @@ void IpxSockAddress::format_output()
                      static_cast<unsigned int> (get_socket ()));
     }
   else
+  {
     output_buffer[0] = 0;
+  }
 }
 
 //-----[ IP Address parse Address ]---------------------------------
@@ -1670,7 +1785,9 @@ unsigned short IpxSockAddress::get_socket() const
     return ntohs(sock_nbo);
   }
   else
+  {
     return 0; // don't use uninitialized memory
+  }
 }
 
 //------[ return the type ]----------------------------------------------
@@ -1700,7 +1817,9 @@ MacAddress::MacAddress(const MacAddress &macaddr)
 
   valid_flag = macaddr.valid_flag;
   if (valid_flag)
+  {
     ACE_OS::memcpy(address_buffer, macaddr.address_buffer, MACLEN);
+  }
   format_output();
 }
 
@@ -1765,11 +1884,15 @@ MacAddress& MacAddress::operator=( const MacAddress &macaddress)
 {
   // protect against assignment from itself
   if (this == std::addressof (macaddress))
-      return *this;
+  {
+    return *this;
+  }
 
   valid_flag = macaddress.valid_flag;
   if (valid_flag)
+  {
     ACE_OS::memcpy(address_buffer, macaddress.address_buffer, MACLEN);
+  }
   format_output();
   return *this;
 }
@@ -1779,7 +1902,9 @@ SnmpSyntax& MacAddress::operator=( SnmpSyntax &val)
 {
   // protect against assignment from itself
   if (this == std::addressof (val))
-      return *this;
+  {
+    return *this;
+  }
 
   valid_flag=0;         // will set to 1 if really valid
   if (val.valid()){
@@ -1819,18 +1944,25 @@ int MacAddress::parse_address( const char *inaddr)
   size_t z;
 
   // save the orginal source
-  if (!inaddr || (std::strlen (inaddr) > 30)) return 0;
+  if (!inaddr || (std::strlen (inaddr) > 30))
+  {
+    return 0;
+  }
   std::strcpy (temp, inaddr);
   trim_white_space( temp);
 
   // bad total length check
   if (std::strlen (temp) != 17)
-     return 0;
+  {
+    return 0;
+  }
 
   // check for colons
   if ((temp[2] != ':')||(temp[5] != ':')||(temp[8]!=':')||(temp[11]!=':')
          ||(temp[14] !=':'))
-     return 0;
+  {
+    return 0;
+  }
 
   // strip off the colons
   tmp = ( unsigned char *) temp;
@@ -1857,7 +1989,9 @@ int MacAddress::parse_address( const char *inaddr)
         ((*tmp >= 'a') && (*tmp <= 'f')))    // or a-f
       ++tmp;
     else
+    {
       return 0;
+    }
 
   // convert to target string
   tmp = (unsigned char *) temp;
@@ -1866,7 +2000,9 @@ int MacAddress::parse_address( const char *inaddr)
   if (( *tmp >= '0') && ( *tmp <= '9'))
     *tmp = *tmp - (char unsigned )'0';
   else
+  {
     *tmp = *tmp - (char unsigned) 'a' + (char unsigned) 10;
+  }
   ++tmp;
   }
 
@@ -1903,7 +2039,9 @@ void MacAddress::format_output()
                    static_cast<unsigned int> (address_buffer[4]),
                    static_cast<unsigned int> (address_buffer[5]));
   else
+  {
     output_buffer[0] = 0;
+  }
 }
 
 //------[ return the type ]----------------------------------
@@ -1932,7 +2070,9 @@ void MacAddress::to_octet(OctetStr& octet) const
 SmiUINT32 GenAddress::get_syntax()
 {
   if (address)
+  {
     return address->get_syntax ();
+  }
 
   return sNMP_SYNTAX_NULL;
 }
@@ -1949,7 +2089,9 @@ static std::unique_ptr<Address> create_address ()
 {
   std::unique_ptr<Address> result (new (std::nothrow) ConcreteAddress);
   if (!result)
+  {
     errno = ENOMEM;
+  }
   return result;
 }
 
@@ -1958,7 +2100,9 @@ static std::unique_ptr<Address> create_address (char const *text)
 {
   std::unique_ptr<Address> result (new (std::nothrow) ConcreteAddress (text));
   if (!result)
+  {
     errno = ENOMEM;
+  }
   return result;
 }
 
@@ -1968,14 +2112,18 @@ void GenAddress::copy_smi_value ()
   smival.value.string.len = 0;
   smival.value.string.ptr = address_buffer;
   if (!valid_flag || !address)
+  {
     return;
+  }
 
   OctetStr octets;
   address->to_octet (octets);
   smival.syntax = address->get_syntax ();
   smival.value.string.len = octets.length ();
   if (smival.value.string.len != 0)
+  {
     ACE_OS::memcpy (smival.value.string.ptr, octets.data (), smival.value.string.len);
+  }
 }
 
 //-----------[ constructor with a string argument ]----------------------
@@ -2017,7 +2165,9 @@ GenAddress::GenAddress (Address const &addr)
 
   address.reset (static_cast<Address *> (addr.clone ()));
   if (address)
+  {
     valid_flag = address->valid();
+  }
 
   copy_smi_value ();
 
@@ -2044,7 +2194,9 @@ GenAddress::GenAddress (GenAddress const &addr)
 
   address.reset (static_cast<Address *> (addr.address->clone ()));
   if (address)
+  {
     valid_flag = address->valid();
+  }
 
   copy_smi_value ();
 
@@ -2065,16 +2217,22 @@ GenAddress& GenAddress::operator= (GenAddress const &addr)
 {
   // protect against assignment from itself
   if (this == std::addressof (addr))
-      return *this;
+  {
+    return *this;
+  }
 
   valid_flag = 0;
   address.reset ();
 
   if (addr.address)
+  {
     address.reset (static_cast<Address *> (addr.address->clone ()));
+  }
 
   if (address)
+  {
     valid_flag = address->valid();
+  }
 
   copy_smi_value ();
 
@@ -2087,7 +2245,9 @@ SnmpSyntax& GenAddress::operator= (SnmpSyntax& val)
 {
   // protect against assignment from itself
   if (this == std::addressof (val))
-      return *this;
+  {
+    return *this;
+  }
 
   valid_flag = 0;
   address.reset ();
@@ -2130,7 +2290,9 @@ SnmpSyntax& GenAddress::operator= (SnmpSyntax& val)
         {
           OctetStr const *octets = dynamic_cast<OctetStr const *> (&val);
           if (octets == nullptr)
+          {
             break;
+          }
           val_len = octets->length ();
         }
 
@@ -2152,14 +2314,18 @@ SnmpSyntax& GenAddress::operator= (SnmpSyntax& val)
         address = create_address<DecNetAddress> ();
 
       if (address)
+      {
         *address = val;
+      }
     }
     break;
     }   // end switch
   }
 
   if (address)
+  {
     valid_flag = address->valid ();
+  }
   copy_smi_value ();
 
   format_output();
@@ -2188,7 +2354,9 @@ int GenAddress::parse_address (char const *addr)
     // ipxsock address
     address = create_address<IpxSockAddress> (addr);
     if (!address)
+    {
       return -1;
+    }
     valid_flag = address->valid();
     if ( valid_flag && static_cast<IpxSockAddress *> (address.get ())->get_socket()) {
        format_output();
@@ -2200,7 +2368,9 @@ int GenAddress::parse_address (char const *addr)
     // ipx address
     address = create_address<IpxAddress> (addr);
     if (!address)
+    {
       return -1;
+    }
     valid_flag = address->valid();
     if ( valid_flag)  {
        format_output();
@@ -2217,7 +2387,9 @@ int GenAddress::parse_address (char const *addr)
     // udp address
     address = create_address<UdpAddress> (addr);
     if (!address)
+    {
       return -1;
+    }
     valid_flag = address->valid();
     if ( valid_flag && static_cast<UdpAddress *> (address.get ())->get_port()) {
        format_output();
@@ -2230,7 +2402,9 @@ int GenAddress::parse_address (char const *addr)
     // ip address
     address = create_address<IpAddress> (addr);
     if (!address)
+    {
       return -1;
+    }
     valid_flag = address->valid();
     if ( valid_flag)
     {
@@ -2243,7 +2417,9 @@ int GenAddress::parse_address (char const *addr)
     // mac address
     address = create_address<MacAddress> (addr);
     if (!address)
+    {
       return -1;
+    }
     valid_flag = address->valid();
     if ( valid_flag) {
        format_output();
@@ -2255,7 +2431,9 @@ int GenAddress::parse_address (char const *addr)
     case NETBIOSLEN:
         address = create_address<NetbiosAddress> (addr);
         if (!address)
+        {
           return -1;
+        }
         valid_flag = address->valid();
         if ( valid_flag) {
           format_output();
@@ -2266,7 +2444,9 @@ int GenAddress::parse_address (char const *addr)
     case APPLETKLEN:
         address = create_address<AppleTalkAddress> (addr);
         if (!address)
+        {
           return -1;
+        }
         valid_flag = address->valid();
         if ( valid_flag) {
           format_output();
@@ -2277,7 +2457,9 @@ int GenAddress::parse_address (char const *addr)
     case DECNETLEN:
         address = create_address<DecNetAddress> (addr);
         if (!address)
+        {
           return -1;
+        }
         valid_flag = address->valid();
         if ( valid_flag) {
           format_output();
@@ -2296,7 +2478,9 @@ GenAddress::operator char const *() const
   if (address)
     return static_cast<char const *> (*address);      // pass thru
   else
+  {
     return output_buffer;
+  }
 }
 
 // to_string form of the contained address
@@ -2305,7 +2489,9 @@ char const * GenAddress::to_string()
   if (address)
     return address->to_string();        // pass thru
   else
+  {
     return output_buffer;
+  }
 }
 
 // format output
@@ -2320,14 +2506,18 @@ addr_type GenAddress::get_type() const
   if (!valid())
     return type_invalid;
   else
+  {
     return address->get_type();
+  }
 }
 
 // call the particular type class here
 void GenAddress::to_octet(OctetStr& octet) const
 {
   if (!valid())
+  {
     return;
+  }
 
   address->to_octet(octet);
 }
@@ -2394,10 +2584,14 @@ DecNetAddress& DecNetAddress::operator=( const DecNetAddress &decaddr)
 {
   // protect against assignment from itself
   if (this == std::addressof (decaddr))
-      return *this;
+  {
+    return *this;
+  }
   valid_flag = decaddr.valid_flag;
   if (valid_flag)
+  {
     ACE_OS::memcpy(address_buffer, decaddr.address_buffer, DECNETLEN);
+  }
   format_output();
   return *this;
 }
@@ -2421,7 +2615,9 @@ SnmpSyntax& DecNetAddress::operator=( SnmpSyntax &val)
 {
   // protect against assignment from itself
   if (this == std::addressof (val))
+  {
     return *this;
+  }
 
   valid_flag = 0;       // will get set 1 if really valid
 
@@ -2454,13 +2650,17 @@ void DecNetAddress::format_output()
                    static_cast<unsigned int> (address_buffer[0]),
                    static_cast<unsigned int> (address_buffer[1]));
   else
+  {
     output_buffer[0] = 0;
+  }
 }
 
 int DecNetAddress::parse_address( const char *address)
 {
  if (std::strlen (address) > DECNETLEN)
-      return 0; // invalid
+ {
+   return 0; // invalid
+ }
 
   ACE_OS::memset(address_buffer, 0, DECNETLEN);
   ACE_OS::memcpy(address_buffer, address, DECNETLEN);
@@ -2529,10 +2729,14 @@ AppleTalkAddress& AppleTalkAddress::operator=( const AppleTalkAddress &ataddr)
 {
   // protect against assignment from itself
   if (this == std::addressof (ataddr))
-      return *this;
+  {
+    return *this;
+  }
   valid_flag = ataddr.valid_flag;
   if (valid_flag)
+  {
     ACE_OS::memcpy(address_buffer, ataddr.address_buffer, APPLETKLEN);
+  }
   format_output();
   return *this;
 }
@@ -2556,7 +2760,9 @@ SnmpSyntax& AppleTalkAddress::operator=( SnmpSyntax &val)
 {
   // protect against assignment from itself
   if (this == std::addressof (val))
+  {
     return *this;
+  }
 
   valid_flag = 0;       // will get set 1 if really valid
 
@@ -2590,13 +2796,17 @@ void AppleTalkAddress::format_output()
                    static_cast<unsigned int> (address_buffer[1]),
                    static_cast<unsigned int> (address_buffer[2]));
   else
+  {
     output_buffer[0] = 0;
+  }
 }
 
 int AppleTalkAddress::parse_address( const char *address)
 {
  if (std::strlen (address) > APPLETKLEN)
-      return 0; // invalid
+ {
+   return 0; // invalid
+ }
 
   ACE_OS::memset(address_buffer, 0, APPLETKLEN);
   ACE_OS::memcpy(address_buffer, address, APPLETKLEN);

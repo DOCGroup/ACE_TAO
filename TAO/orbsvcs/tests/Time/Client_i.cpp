@@ -21,7 +21,9 @@ struct Read_Buffer_Deleter
   void operator() (char *buffer) const
   {
     if (buffer != nullptr)
+    {
       this->allocator->free (buffer);
+    }
   }
 };
 
@@ -329,7 +331,9 @@ Client_i::init (int argc, ACE_TCHAR **argv)
 
       // Parse command line and verify parameters.
       if (this->parse_args (argc, argv) != 0)
+      {
         return -1;
+      }
 
       if (!this->ior_.empty ())
         {
@@ -356,7 +360,9 @@ Client_i::init (int argc, ACE_TCHAR **argv)
                      "[CLIENT] Process/Thread Id : (%P/%t) Using the Naming Service\n"));
 
           if (this->obtain_initial_references () == -1)
+          {
             return -1;
+          }
         }
     }
   catch (CORBA::Exception const &ex)

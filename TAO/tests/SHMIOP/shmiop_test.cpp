@@ -115,7 +115,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Options options {};
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       Servant servant (orb.in ());
       ORB_Task task (orb.in ());
@@ -167,7 +169,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       else if (options.server_ior_file != nullptr)
         {
           if (task.wait () != 0)
+          {
             return 1;
+          }
         }
 
       orb->destroy ();

@@ -72,12 +72,16 @@ int
 TAO::HTIOP::Connection_Handler::open (void*)
 {
   if (this->shared_open() == -1)
+  {
     return -1;
+  }
 
   if (this->transport ()->wait_strategy ()->non_blocking ())
     {
       if (this->peer ().enable (ACE_NONBLOCK) == -1)
+      {
         return -1;
+      }
     }
 
   // Called by the <Strategy_Acceptor> when the handler is
@@ -85,11 +89,15 @@ TAO::HTIOP::Connection_Handler::open (void*)
 
   ACE::HTBP::Addr remote_addr;
   if (this->peer ().get_remote_addr (remote_addr) == -1)
+  {
     return -1;
+  }
 
   ACE::HTBP::Addr local_addr;
   if (this->peer ().get_local_addr (local_addr) == -1)
+  {
     return -1;
+  }
 
   if (local_addr.is_ip_equal (remote_addr)
       && local_addr.get_port_number () == remote_addr.get_port_number ())
@@ -120,7 +128,9 @@ TAO::HTIOP::Connection_Handler::open (void*)
 
       // Verify that we can resolve the peer hostname.
       if (remote_addr.addr_to_string (client, sizeof (client), 0) == -1)
+      {
         return -1;
+      }
 
       ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) TAO_HTIOP connection to peer ")
@@ -131,7 +141,9 @@ TAO::HTIOP::Connection_Handler::open (void*)
   // Set the id in the transport now that we're active.
   // Use C-style cast b/c otherwise we get warnings on lots of compilers
   if (!this->transport ()->post_open ((size_t) this->get_handle ()))
+  {
     return -1;
+  }
 
   this->state_changed (TAO_LF_Event::LFS_SUCCESS,
                        this->orb_core ()->leader_follower ());
@@ -220,7 +232,9 @@ TAO::HTIOP::Connection_Handler::add_transport_to_cache ()
 
   // Get the peername.
   if (this->peer ().get_remote_addr (addr) == -1)
+  {
     return -1;
+  }
 
   // Construct an  TAO::HTIOP::Endpoint object
   TAO::HTIOP::Endpoint endpoint (addr,
@@ -252,7 +266,9 @@ TAO::HTIOP::Connection_Handler::process_listen_point_list
         addr.ACE_INET_Addr::set (listen_point.port,
                   listen_point.host.in ());
       else
+      {
         addr.set_htid (listen_point.htid);
+      }
 
       if (TAO_debug_level > 0)
         {
@@ -277,7 +293,9 @@ TAO::HTIOP::Connection_Handler::process_listen_point_list
       // handler with this property
       int retval = this->transport ()->recache_transport (&prop);
       if (retval == -1)
+      {
         return retval;
+      }
 
       // Make the handler idle and ready for use
       this->transport ()->make_idle ();

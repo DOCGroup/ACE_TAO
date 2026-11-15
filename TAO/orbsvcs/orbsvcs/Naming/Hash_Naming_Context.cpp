@@ -101,14 +101,18 @@ TAO_Hash_Naming_Context::bind (CosNaming::Name const &n, CORBA::Object_ptr obj)
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
   if (this->destroyed_)
+  {
     throw CORBA::OBJECT_NOT_EXIST ();
+  }
 
   // Get the length of the name.
   CORBA::ULong const name_len = n.length ();
 
   // Check for invalid name.
   if (name_len == 0)
+  {
     throw CosNaming::NamingContext::InvalidName();
+  }
 
   // If we received compound name, resolve it to get the context in
   // which the binding should take place, then perform the binding on
@@ -158,14 +162,18 @@ TAO_Hash_Naming_Context::rebind (CosNaming::Name const &n,
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
   if (this->destroyed_)
+  {
     throw CORBA::OBJECT_NOT_EXIST ();
+  }
 
   // Get the length of the name.
   CORBA::ULong const name_len = n.length ();
 
   // Check for invalid name.
   if (name_len == 0)
+  {
     throw CosNaming::NamingContext::InvalidName();
+  }
 
   // If we received compound name, resolve it to get the context in
   // which the rebinding should take place, then perform the rebinding
@@ -216,18 +224,24 @@ TAO_Hash_Naming_Context::bind_context (CosNaming::Name const &n,
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
   if (this->destroyed_)
+  {
     throw CORBA::OBJECT_NOT_EXIST ();
+  }
 
   // Do not allow binding of nil context reference.
   if (CORBA::is_nil (nc))
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   // Get the length of the name.
   CORBA::ULong const name_len = n.length ();
 
   // Check for invalid name.
   if (name_len == 0)
+  {
     throw CosNaming::NamingContext::InvalidName();
+  }
 
   // If we received compound name, resolve it to get the context in
   // which the binding should take place, then perform the binding on
@@ -277,14 +291,18 @@ TAO_Hash_Naming_Context::rebind_context (CosNaming::Name const &n,
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
   if (this->destroyed_)
+  {
     throw CORBA::OBJECT_NOT_EXIST ();
+  }
 
   // Get the length of the name.
   CORBA::ULong const name_len = n.length ();
 
   // Check for invalid name.
   if (name_len == 0)
+  {
     throw CosNaming::NamingContext::InvalidName();
+  }
 
   // If we received compound name, resolve it to get the context in
   // which the rebinding should take place, then perform the rebinding
@@ -335,14 +353,18 @@ TAO_Hash_Naming_Context::resolve (CosNaming::Name const &n)
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
   if (this->destroyed_)
+  {
     throw CORBA::OBJECT_NOT_EXIST ();
+  }
 
   // Get the length of the name.
   CORBA::ULong const name_len = n.length ();
 
   // Check for invalid name.
   if (name_len == 0)
+  {
     throw CosNaming::NamingContext::InvalidName();
+  }
 
   // Resolve the first component of the name.
 
@@ -439,14 +461,18 @@ TAO_Hash_Naming_Context::unbind (CosNaming::Name const &n)
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
   if (this->destroyed_)
+  {
     throw CORBA::OBJECT_NOT_EXIST ();
+  }
 
   // Get the length of the name.
   CORBA::ULong const name_len = n.length ();
 
   // Check for invalid name.
   if (name_len == 0)
+  {
     throw CosNaming::NamingContext::InvalidName();
+  }
 
   // If we received compound name, resolve it to get the context in
   // which the unbinding should take place, then perform the unbinding
@@ -489,14 +515,18 @@ TAO_Hash_Naming_Context::bind_new_context (CosNaming::Name const &n)
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
   if (this->destroyed_)
+  {
     throw CORBA::OBJECT_NOT_EXIST ();
+  }
 
   // Get the length of the name.
   CORBA::ULong name_len = n.length ();
 
   // Check for invalid name.
   if (name_len == 0)
+  {
     throw CosNaming::NamingContext::InvalidName();
+  }
 
   // If we received compound name, resolve it to get the context in
   // which the binding should take place, then perform the operation on
@@ -550,10 +580,14 @@ TAO_Hash_Naming_Context::destroy ()
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
   if (this->destroyed_)
+  {
     throw CORBA::OBJECT_NOT_EXIST ();
+  }
 
   if (this->context_->current_size () != 0)
+  {
     throw CosNaming::NamingContext::NotEmpty();
+  }
 
   // Destroy is a no-op on a root context.
   if (root ())

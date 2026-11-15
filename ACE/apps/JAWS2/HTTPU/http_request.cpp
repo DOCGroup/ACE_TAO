@@ -21,7 +21,9 @@ HTTP_Request::parse_line ()
 
   this->url_.init (this->request_.url ());
   if (this->url_.error () != 0)
+  {
     this->status_ = STATUS_INTERNAL_SERVER_ERROR;
+  }
 }
 
 int
@@ -37,7 +39,9 @@ HTTP_Request::espouse_line ()
                              this->url_.url_path ());
 
       if (count < 0 || static_cast<size_t> (count) >= this->mb_->space ())
+      {
         return -1;
+      }
 
       this->mb_->wr_ptr (count);
 
@@ -51,7 +55,9 @@ HTTP_Request::espouse_line ()
                          this->request_.version ());
 
   if (count < 0 || static_cast<size_t> (count) >= this->mb_->space ())
+  {
     return -1;
+  }
 
   this->mb_->wr_ptr (count);
 
@@ -65,7 +71,9 @@ HTTP_Request::espouse_line ()
                                  this->url_.host ());
 
           if (count < 0 || static_cast<size_t> (count) >= this->mb_->space ())
+          {
             return -1;
+          }
 
           this->mb_->wr_ptr (count);
         }

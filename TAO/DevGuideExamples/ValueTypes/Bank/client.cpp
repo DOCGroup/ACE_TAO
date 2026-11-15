@@ -85,12 +85,16 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
     Client_Options options;
 
     if (parse_args (argc, argv, options) != 0)
+    {
       return 1;
+    }
 
     CORBA::Object_var const obj = orb->string_to_object (options.ior);
     Transaction_var const trans = Transaction::_narrow (obj.in ());
     if (CORBA::is_nil (trans.in ()))
+    {
       throw std::runtime_error ("failed to find a valid Transaction IOR");
+    }
 
     Person_var const p = new Person_i ("TAOUser", 1000);
 

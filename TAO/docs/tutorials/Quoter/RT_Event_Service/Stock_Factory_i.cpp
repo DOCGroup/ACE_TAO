@@ -28,7 +28,9 @@ Quoter_Stock_Factory_i::destroy_stock_objects ()
 {
   PortableServer::POA_ptr const poa = this->stock_factory_poa_.in ();
   if (CORBA::is_nil (poa))
+  {
     return;
+  }
 
   poa->destroy (true, true);
   this->stock_factory_poa_ = PortableServer::POA::_nil ();
@@ -41,7 +43,9 @@ Quoter_Stock_Factory_i::load_stock_objects (
   RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin)
 {
   if (!CORBA::is_nil (this->stock_factory_poa_.in ()))
+  {
     return;
+  }
 
   TAO::Utils::PolicyList_Destroyer policies (2);
   policies.length (2);

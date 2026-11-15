@@ -37,7 +37,9 @@ CORBA::TypeCode::equal (TypeCode_ptr tc) const
   CORBA::TCKind const tc_kind = tc->kind ();
 
   if (tc_kind != this->kind_)
+  {
     return false;
+  }
 
   try
     {
@@ -46,14 +48,18 @@ CORBA::TypeCode::equal (TypeCode_ptr tc) const
       char const * const this_id = this->id ();
 
       if (std::strcmp (this_id, tc_id) != 0)
+      {
         return false;
+      }
 
       char const * const tc_name = tc->name ();
 
       char const * const this_name = this->name ();
 
       if (std::strcmp (this_name, tc_name) != 0)
+      {
         return false;
+      }
     }
   catch (::CORBA::TypeCode::BadKind const &)
     {
@@ -88,7 +94,9 @@ CORBA::TypeCode::equivalent (TypeCode_ptr tc) const
   CORBA::TCKind const tc_kind = unaliased_tc->kind ();
 
   if (tc_kind != this_kind)
+  {
     return false;
+  }
 
   try
     {

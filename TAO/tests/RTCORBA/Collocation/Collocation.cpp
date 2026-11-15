@@ -342,7 +342,9 @@ setup_test_parameters (Test_Object_And_Servant *test,
       if (current_thread_priority == default_thread_priority)
         test->servant_->invocation_lane (0);
       else
+      {
         test->servant_->invocation_lane (1);
+      }
     }
 
   if (!test->servant_->serviced_by_rt_tp ())
@@ -816,7 +818,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Make sure we can support multiple priorities that are
       // required for this test.
       if (!check_supported_priorities (orb.in ()))
+      {
         return 2;
+      }
 
       // Thread Manager for managing task.
       ACE_Thread_Manager thread_manager;

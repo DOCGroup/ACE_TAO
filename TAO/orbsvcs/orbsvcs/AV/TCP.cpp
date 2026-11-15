@@ -78,7 +78,9 @@ TAO_AV_TCP_Transport::send (ACE_Message_Block const *mblk, ACE_Time_Value *)
               n = this->handler_->peer ().sendv_n ((iovec const *) iov,
                                                    iovcnt);
               if (n < 1)
+              {
                 return n;
+              }
 
               nbytes += n;
               iovcnt = 0;
@@ -92,7 +94,9 @@ TAO_AV_TCP_Transport::send (ACE_Message_Block const *mblk, ACE_Time_Value *)
       n = this->handler_->peer ().sendv_n ((iovec const *) iov,
                                            iovcnt);
       if (n < 1)
+      {
         return n;
+      }
 
       nbytes += n;
     }
@@ -163,14 +167,19 @@ int
 TAO_AV_TCP_Factory::match_protocol (char const *protocol_string)
 {
   if (ACE_OS::strcasecmp (protocol_string,"TCP") == 0)
+  {
     return 1;
+  }
   return 0;
 }
 
 TAO_AV_Acceptor*
 TAO_AV_TCP_Factory::make_acceptor ()
 {
-  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_TCP_Factory::make_acceptor "));
+  if (TAO_debug_level > 0)
+  {
+    ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_TCP_Factory::make_acceptor "));
+  }
   TAO_AV_Acceptor *acceptor {};
   ACE_NEW_RETURN (acceptor,
                   TAO_AV_TCP_Acceptor,
@@ -181,7 +190,10 @@ TAO_AV_TCP_Factory::make_acceptor ()
 TAO_AV_Connector*
 TAO_AV_TCP_Factory::make_connector ()
 {
-  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_TCP_Factory::make_connector "));
+  if (TAO_debug_level > 0)
+  {
+    ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_TCP_Factory::make_connector "));
+  }
   TAO_AV_Connector *connector {};
   ACE_NEW_RETURN (connector,
                   TAO_AV_TCP_Connector,
@@ -199,9 +211,13 @@ TAO_AV_TCP_Object::handle_input ()
   int n = this->transport_->recv (this->frame_.rd_ptr (),
                                   this->frame_.size ());
   if (n == -1)
+  {
     ORBSVCS_ERROR_RETURN ((LM_ERROR,"TAO_AV_TCP_Flow_Handler::handle_input recv failed\n"),-1);
+  }
   if (n == 0)
+  {
     ORBSVCS_ERROR_RETURN ((LM_DEBUG,"TAO_AV_TCP_Flow_Handler::handle_input connection closed\n"),-1);
+  }
   this->frame_.wr_ptr (this->frame_.rd_ptr () + n);
 
   return this->callback_->receive_frame (&this->frame_);
@@ -266,7 +282,9 @@ int
 TAO_AV_TCP_Flow_Factory::match_protocol (char const *flow_string)
 {
   if (ACE_OS::strcasecmp (flow_string,"TCP") == 0)
+  {
     return 1;
+  }
   return 0;
 }
 
@@ -310,7 +328,9 @@ TAO_AV_TCP_Base_Connector::connector_open (TAO_AV_TCP_Connector *connector,
 
   int result = ACE_Connector <TAO_AV_TCP_Flow_Handler,ACE_SOCK_CONNECTOR>::open (reactor);
   if (result < 0)
+  {
     ORBSVCS_ERROR_RETURN ((LM_ERROR,"TAO_AV_TCP_Base_Connector::open failed\n"),-1);
+  }
   return 0;
 }
 
@@ -320,7 +340,9 @@ TAO_AV_TCP_Base_Connector::make_svc_handler (TAO_AV_TCP_Flow_Handler *&tcp_handl
   int const result =
     this->connector_->make_svc_handler (tcp_handler);
   if (result < 0)
+  {
     return result;
+  }
   tcp_handler->reactor (this->reactor_);
   return 0;
 }
@@ -333,7 +355,9 @@ TAO_AV_TCP_Base_Connector::connector_connect (TAO_AV_TCP_Flow_Handler *&handler,
     ACE_Connector <TAO_AV_TCP_Flow_Handler,ACE_SOCK_CONNECTOR>::connect (handler,
                                                                          remote_addr);
   if (result < 0)
+  {
     ORBSVCS_ERROR_RETURN ((LM_ERROR,"TAO_AV_TCP_Base_Connector::connect failed\n"),-1);
+  }
   return 0;
 }
 
@@ -347,7 +371,10 @@ TAO_AV_TCP_Connector::~TAO_AV_TCP_Connector () = default;
 int
 TAO_AV_TCP_Connector::make_svc_handler (TAO_AV_TCP_Flow_Handler *&tcp_handler)
 {
-  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_TCP_Connector::make_svc_handler\n"));
+  if (TAO_debug_level > 0)
+  {
+    ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_TCP_Connector::make_svc_handler\n"));
+  }
   //  TAO_AV_Callback *callback = 0;
   if (this->endpoint_ != nullptr)
     {
@@ -381,7 +408,10 @@ TAO_AV_TCP_Connector::open (TAO_Base_StreamEndPoint *endpoint,
 {
   this->endpoint_ = endpoint;
   this->flow_protocol_factory_ = factory;
-  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_TCP_Connector::open "));
+  if (TAO_debug_level > 0)
+  {
+    ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_TCP_Connector::open "));
+  }
   int result = this->connector_.connector_open(this,
                                                av_core->reactor ());
   return result;
@@ -396,14 +426,18 @@ TAO_AV_TCP_Connector::connect (TAO_FlowSpec_Entry *entry,
   if (flow_comp == TAO_AV_Core::TAO_AV_CONTROL)
     this->flowname_ = TAO_AV_Core::get_control_flowname (entry->flowname ());
   else
-  this->flowname_ = entry->flowname ();
+  {
+    this->flowname_ = entry->flowname ();
+  }
   ACE_Addr *remote_addr = entry->address ();
   ACE_INET_Addr *inet_addr = dynamic_cast<ACE_INET_Addr *> (remote_addr);
   TAO_AV_TCP_Flow_Handler *handler {};
   int result = this->connector_.connector_connect (handler,
                                                    *inet_addr);
   if (result < 0)
+  {
     ORBSVCS_ERROR_RETURN ((LM_ERROR,"TAO_AV_TCP_connector::connect failed\n"),-1);
+  }
   entry->handler (handler);
   transport = handler->transport ();
   return 0;
@@ -432,7 +466,9 @@ TAO_AV_TCP_Base_Acceptor::acceptor_open (TAO_AV_TCP_Acceptor *acceptor,
   int const result =
     ACE_Acceptor <TAO_AV_TCP_Flow_Handler,ACE_SOCK_ACCEPTOR>::open (local_addr,reactor);
   if (result < 0)
+  {
     ORBSVCS_ERROR_RETURN ((LM_ERROR,"TAO_AV_TCP_Base_Connector::open failed\n"),-1);
+  }
   return 0;
 }
 
@@ -441,7 +477,9 @@ TAO_AV_TCP_Base_Acceptor::make_svc_handler (TAO_AV_TCP_Flow_Handler *&handler)
 {
   int const result = this->acceptor_->make_svc_handler (handler);
   if (result < 0)
+  {
     return result;
+  }
   handler->reactor (this->reactor_);
   this->entry_->handler (handler);
   return 0;
@@ -502,7 +540,9 @@ TAO_AV_TCP_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
   if (flow_comp == TAO_AV_Core::TAO_AV_CONTROL)
     this->flowname_ = TAO_AV_Core::get_control_flowname (entry->flowname ());
   else
-  this->flowname_ = entry->flowname ();
+  {
+    this->flowname_ = entry->flowname ();
+  }
   ACE_Addr *address = entry->address ();
 
   ACE_INET_Addr *inet_addr = (ACE_INET_Addr *) address;
@@ -548,7 +588,9 @@ TAO_AV_TCP_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
   if (flow_comp == TAO_AV_Core::TAO_AV_CONTROL)
     this->flowname_ = TAO_AV_Core::get_control_flowname (entry->flowname());
   else
-  this->flowname_ = entry->flowname ();
+  {
+    this->flowname_ = entry->flowname ();
+  }
 
   ACE_INET_Addr *address {};
   ACE_NEW_RETURN (address,
@@ -627,7 +669,9 @@ TAO_AV_TCP_Flow_Handler::open (void * /*arg*/)
   if (this->peer ().get_option (SOL_SOCKET, /*IPPROTO_TCP,*/
                                 SO_RCVBUF,
                                 (void *) &buf_size, &s) == -1)
-       buf_size = BUFSIZ;
+  {
+    buf_size = BUFSIZ;
+  }
 
     ((TAO_AV_TCP_Object*)(this->protocol_object_))->frame_.size (buf_size);
 
@@ -636,7 +680,9 @@ TAO_AV_TCP_Flow_Handler::open (void * /*arg*/)
   ACE_INET_Addr addr;
 
   if (this->peer ().get_remote_addr (addr) == -1)
+  {
     return -1;
+  }
 
   ACE_TCHAR server[MAXHOSTNAMELEN + 16];
 

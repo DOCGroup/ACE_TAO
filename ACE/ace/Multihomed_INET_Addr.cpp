@@ -52,7 +52,9 @@ ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr(u_short port_number,
         this->secondaries_.size(this->secondaries_.size() - 1);
       }
       else
+      {
         ++next_empty_slot;
+      }
     }
   }
 
@@ -87,7 +89,9 @@ ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr(u_short port_number,
         this->secondaries_.size(this->secondaries_.size() - 1);
       }
       else
+      {
         ++next_empty_slot;
+      }
     }
   }
 
@@ -121,7 +125,9 @@ ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr(u_short port_number,
         this->secondaries_.size(this->secondaries_.size() - 1);
       }
       else
+      {
         ++next_empty_slot;
+      }
     }
   }
 
@@ -226,7 +232,9 @@ ACE_Multihomed_INET_Addr::get_secondary_addresses(ACE_INET_Addr *secondary_addrs
         secondary_addrs[i].set (this->secondaries_[i]);
 
       if (ret)
+      {
         return ret;
+      }
     }
 
   return 0;
@@ -237,7 +245,9 @@ ACE_Multihomed_INET_Addr::get_addresses(sockaddr_in *addrs,
                                         size_t size) const
 {
   if (size == 0)
+  {
     return;
+  }
   // Copy primary address(es) to the first slot(s) of the user-supplied array
   ACE_INET_Addr me (*this);
   size_t i = 0;
@@ -250,7 +260,9 @@ ACE_Multihomed_INET_Addr::get_addresses(sockaddr_in *addrs,
           ++i;
         }
       if (!me.next ())
+      {
         break;
+      }
     }
 
   // Copy secondary addresses to remaining slots of the user-supplied
@@ -267,7 +279,9 @@ ACE_Multihomed_INET_Addr::get_addresses(sockaddr_in *addrs,
               ++i;
             }
              if (!copy.next ())
-            break;
+             {
+               break;
+             }
         }
     }
 }

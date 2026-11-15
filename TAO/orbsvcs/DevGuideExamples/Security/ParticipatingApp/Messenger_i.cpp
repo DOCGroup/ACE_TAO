@@ -17,7 +17,9 @@ Messenger_i::send_message (char const *user_name,
   if (ssliop_current_->no_context ())
     std::cout << "Message from:        " << user_name << std::endl;
   else
+  {
     std::cout << "SECURE message from: " << user_name << std::endl;
+  }
 
   std::cout << "Subject:             " << subject << std::endl;
   std::cout << "Message:             " << message << std::endl << std::endl;

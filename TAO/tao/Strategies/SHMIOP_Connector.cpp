@@ -91,12 +91,16 @@ int
 TAO_SHMIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 {
   if (endpoint->tag () != TAO_TAG_SHMEM_PROFILE)
+  {
     return -1;
+  }
 
   TAO_SHMIOP_Endpoint *shmiop_endpoint =
     dynamic_cast <TAO_SHMIOP_Endpoint *>(endpoint);
   if (shmiop_endpoint == nullptr)
+  {
     return -1;
+  }
 
    const ACE_INET_Addr &remote_address =
      shmiop_endpoint->object_addr ();
@@ -141,7 +145,9 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
     this->remote_endpoint (desc.endpoint ());
 
   if (shmiop_endpoint == nullptr)
+  {
     return 0;
+  }
 
   const ACE_INET_Addr &remote_address =
     shmiop_endpoint->object_addr ();
@@ -307,7 +313,9 @@ TAO_SHMIOP_Connector::check_prefix (const char *endpoint)
 {
   // Check for a valid string
   if (!endpoint || !*endpoint)
+  {
     return -1;  // Failure
+  }
 
   const char *protocol[] = { "shmiop", "shmioploc" };
 
@@ -340,12 +348,16 @@ TAO_SHMIOP_Endpoint *
 TAO_SHMIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
 {
   if (endpoint->tag () != TAO_TAG_SHMEM_PROFILE)
+  {
     return 0;
+  }
 
   TAO_SHMIOP_Endpoint *shmiop_endpoint =
     dynamic_cast <TAO_SHMIOP_Endpoint *>(endpoint);
   if (shmiop_endpoint == nullptr)
+  {
     return 0;
+  }
 
   return shmiop_endpoint;
 }

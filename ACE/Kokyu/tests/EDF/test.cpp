@@ -65,7 +65,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
   Kokyu::Dispatcher_Attributes attrs;
 
   if (parse_args (argc, argv) == -1)
+  {
     return 0;
+  }
 
   if (ACE_OS::strcasecmp (sched_policy_str.c_str (), "fifo") == 0)
     {

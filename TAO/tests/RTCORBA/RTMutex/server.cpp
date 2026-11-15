@@ -53,7 +53,9 @@ check_for_nil (CORBA::Object_ptr const obj, char const *msg)
                        msg),
                       -1);
   else
+  {
     return 0;
+  }
 }
 
 static int
@@ -460,14 +462,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Parse arguments.
       if (parse_args (argc, argv) != 0)
+      {
         return -1;
+      }
 
       // RTORB.
       CORBA::Object_var const object =
         orb->resolve_initial_references ("RTORB");
       RTCORBA::RTORB_var const rt_orb = RTCORBA::RTORB::_narrow (object.in ());
       if (check_for_nil (rt_orb.in (), "RTORB") == -1)
+      {
         return -1;
+      }
 
       ACE_DEBUG ((LM_DEBUG,
                   "Running RTCORBA Mutex unit tests\n"));

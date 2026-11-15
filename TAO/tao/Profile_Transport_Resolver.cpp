@@ -98,7 +98,9 @@ namespace TAO
         TAO_Codeset_Manager * const tcm =
           this->stub_->orb_core ()->codeset_manager ();
         if (tcm)
+        {
           tcm->set_tcs (*this->profile_, *this->transport_);
+        }
       }
   }
 
@@ -148,7 +150,9 @@ namespace TAO
         if (timeout == nullptr || connection_timeout < *timeout)
           timeout = std::addressof (connection_timeout);
         else
+        {
           has_con_timeout = false;
+        }
       }
     else if (!this->blocked_)
       {
@@ -251,7 +255,9 @@ namespace TAO
     TAO_Transport* tmp = this->transport_.get ();
     if (cache.find_transport(desc, tmp, busy_count) !=
         Transport_Cache_Manager::CACHE_FOUND_AVAILABLE)
+    {
       return 0;
+    }
 
     this->transport_.set (tmp);
     return 1;

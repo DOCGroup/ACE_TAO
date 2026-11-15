@@ -333,7 +333,9 @@ TAO_Object_Adapter::dispatch_servant (const TAO::ObjectKey &key,
   int result = servant_upcall.prepare_for_upcall (key, operation, forward_to);
 
   if (result != TAO_Adapter::DS_OK)
+  {
     return result;
+  }
 
   // Preprocess request.
   if (req.collocated ())
@@ -394,7 +396,9 @@ TAO_Object_Adapter::locate_poa (const TAO::ObjectKey &key,
   }
 
   if (result != 0)
+  {
     throw ::CORBA::OBJ_ADAPTER ();
+  }
 
   {
     ACE_FUNCTION_TIMEPROBE (TAO_OBJECT_ADAPTER_FIND_POA_START);
@@ -407,7 +411,9 @@ TAO_Object_Adapter::locate_poa (const TAO::ObjectKey &key,
   }
 
   if (result != 0)
+  {
     throw ::CORBA::OBJECT_NOT_EXIST (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
+  }
 }
 
 int
@@ -426,7 +432,9 @@ TAO_Object_Adapter::activate_poa (const poa_name &folded_name,
   if (parent == nullptr || parent->name () != *iterator)
     throw ::CORBA::OBJ_ADAPTER ();
   else
+  {
     ++iterator;
+  }
 
   for (;
        iterator != end;
@@ -475,7 +483,9 @@ TAO_Object_Adapter::find_transient_poa (const poa_name &system_name,
 
   if (poa == nullptr
       || (result == 0 && !poa->validate_lifespan (false, poa_creation_time)))
+  {
     result = -1;
+  }
 
   return result;
 }
@@ -488,7 +498,9 @@ TAO_Object_Adapter::bind_poa (const poa_name &folded_name,
   if (poa->persistent ())
     return this->bind_persistent_poa (folded_name, poa, system_name);
   else
+  {
     return this->bind_transient_poa (poa, system_name);
+  }
 }
 
 int
@@ -499,7 +511,9 @@ TAO_Object_Adapter::unbind_poa (TAO_Root_POA *poa,
   if (poa->persistent ())
     return this->unbind_persistent_poa (folded_name, system_name);
   else
+  {
     return this->unbind_transient_poa (system_name);
+  }
 }
 
 int
@@ -662,12 +676,16 @@ TAO_Object_Adapter::close (int wait_for_completion)
   {
     ACE_GUARD (ACE_Lock, ace_mon, this->lock ());
     if (this->root_ == nullptr)
+    {
       return;
+    }
     root = std::move (this->root_);
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
     if (this->poa_manager_factory_ == nullptr)
+    {
       return;
+    }
     factory = std::move (this->poa_manager_factory_);
 #endif
   }
@@ -926,7 +944,9 @@ TAO_Object_Adapter::get_collocated_servant (const TAO_MProfile &mp)
           || std::memcmp (objkey->get_buffer (),
                              TAO_Root_POA::objectkey_prefix,
                              TAO_Root_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
+      {
         continue;
+      }
 
       TAO_ServantBase *servant {};
 
@@ -1078,7 +1098,9 @@ TAO_Object_Adapter::poa_name_iterator::poa_name_iterator (
       this->operator++ ();
     }
   else
+  {
     this->position_ = this->size_;
+  }
 }
 
 bool
@@ -1121,10 +1143,14 @@ TAO_Object_Adapter::poa_name_iterator::operator++ ()
       if (this->position_ < this->size_)
         {
           if (this->folded_buffer_[this->position_] == TAO_Root_POA::name_separator ())
+          {
             break;
+          }
         }
       else
+      {
         break;
+      }
     }
 
   return *this;
@@ -1165,7 +1191,9 @@ TAO_Object_Adapter::wait_for_non_servant_upcalls_to_complete ()
       // If so wait...
       int const result = this->non_servant_upcall_condition_.wait ();
       if (result == -1)
+      {
         throw ::CORBA::OBJ_ADAPTER ();
+      }
     }
 }
 

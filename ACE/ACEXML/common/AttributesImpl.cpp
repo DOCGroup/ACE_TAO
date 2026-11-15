@@ -31,7 +31,9 @@ ACEXML_AttributesImpl::addAttribute (const ACEXML_Char *uri,
                                      const ACEXML_Char *value)
 {
   if (this->isDuplicate (uri, localName, qName))
+  {
     return -1;
+  }
   size_t const length = this->attrs_.size ();
   this->attrs_.size (length + 1);
   this->setAttribute (length, uri, localName, qName, type, value);
@@ -42,7 +44,9 @@ int
 ACEXML_AttributesImpl::addAttribute (const ACEXML_Attribute &att)
 {
   if (this->isDuplicate (att.uri(), att.localName(), att.qName()))
+  {
     return -1;
+  }
   size_t const length = this->attrs_.size ();
   this->attrs_.size (length + 1);
   this->attrs_[length] = att;
@@ -63,7 +67,9 @@ ACEXML_AttributesImpl::isDuplicate (const ACEXML_Char *uri,
             {
               if (uri != nullptr && this->attrs_[i].uri() != nullptr
                   && ACE_OS::strcmp (this->attrs_[i].uri(), uri) == 0)
+              {
                 return 1;
+              }
             }
         }
     }
@@ -76,7 +82,9 @@ ACEXML_AttributesImpl::removeAttribute (size_t index)
   size_t const length = this->attrs_.size ();
 
   if (index >= length)
+  {
     return -1;
+  }
 
   this->attrs_[index] = this->attrs_[length - 1];
   this->attrs_.size (length - 1);
@@ -89,7 +97,9 @@ ACEXML_AttributesImpl::getIndex (const ACEXML_Char *qName)
 {
   for (size_t i = 0; i < this->attrs_.size (); ++i)
     if (ACE_OS::strcmp (qName, this->attrs_[i].qName ()) == 0)
+    {
       return static_cast<int> (i);
+    }
 
   return -1;
 }
@@ -101,7 +111,9 @@ ACEXML_AttributesImpl::getIndex (const ACEXML_Char *uri,
   for (size_t i = 0; i < this->attrs_.size (); ++i)
     if (ACE_OS::strcmp (uri, this->attrs_[i].uri ()) == 0 &&
         ACE_OS::strcmp (localPart, this->attrs_[i].localName ()) == 0)
+    {
       return static_cast<int> (i);
+    }
 
   return -1;
 }
@@ -116,7 +128,9 @@ const ACEXML_Char *
 ACEXML_AttributesImpl::getLocalName (size_t index)
 {
   if (index < this->attrs_.size ())
+  {
     return this->attrs_[index].localName ();
+  }
   return nullptr;
 }
 
@@ -124,7 +138,9 @@ const ACEXML_Char *
 ACEXML_AttributesImpl::getQName (size_t index)
 {
   if (index < this->attrs_.size ())
+  {
     return this->attrs_[index].qName ();
+  }
   return nullptr;
 }
 
@@ -132,7 +148,9 @@ const ACEXML_Char *
 ACEXML_AttributesImpl::getType (size_t index)
 {
   if (index < this->attrs_.size ())
+  {
     return this->attrs_[index].type ();
+  }
   return nullptr;
 }
 
@@ -141,7 +159,9 @@ ACEXML_AttributesImpl::getType (const ACEXML_Char *qName)
 {
   for (size_t i = 0; i < this->attrs_.size (); ++i)
     if (ACE_OS::strcmp (qName, this->attrs_[i].qName ()) == 0)
+    {
       return this->attrs_[i].type ();
+    }
 
   return nullptr;
 }
@@ -153,7 +173,9 @@ ACEXML_AttributesImpl::getType (const ACEXML_Char *uri,
   for (size_t i = 0; i < this->attrs_.size (); ++i)
     if (ACE_OS::strcmp (uri, this->attrs_[i].uri ()) == 0 &&
         ACE_OS::strcmp (localPart, this->attrs_[i].localName ()) == 0)
+    {
       return this->attrs_[i].type ();
+    }
 
   return nullptr;
 }
@@ -162,7 +184,9 @@ const ACEXML_Char *
 ACEXML_AttributesImpl::getURI (size_t index)
 {
   if (index < this->attrs_.size ())
+  {
     return this->attrs_[index].uri ();
+  }
   return nullptr;
 }
 
@@ -170,7 +194,9 @@ const ACEXML_Char *
 ACEXML_AttributesImpl::getValue (size_t index)
 {
   if (index < this->attrs_.size ())
+  {
     return this->attrs_[index].value ();
+  }
   return nullptr;
 }
 
@@ -179,7 +205,9 @@ ACEXML_AttributesImpl::getValue (const ACEXML_Char *qName)
 {
   for (size_t i = 0; i < this->attrs_.size (); ++i)
     if (ACE_OS::strcmp (qName, this->attrs_[i].qName ()) == 0)
+    {
       return this->attrs_[i].value ();
+    }
 
   return nullptr;
 }
@@ -191,7 +219,9 @@ ACEXML_AttributesImpl::getValue (const ACEXML_Char *uri,
   for (size_t i = 0; i < this->attrs_.size (); ++i)
     if (ACE_OS::strcmp (uri, this->attrs_[i].uri ()) == 0 &&
         ACE_OS::strcmp (localPart, this->attrs_[i].localName ()) == 0)
+    {
       return this->attrs_[i].value ();
+    }
 
   return nullptr;
 }

@@ -36,7 +36,9 @@ Initiator_Server::read_ior (ACE_TCHAR const *filename, std::string &ior_key)
     [] (char *memory)
     {
       if (memory != nullptr)
+      {
         ACE_Allocator::instance ()->free (memory);
+      }
     });
 
   if (!buffer)
@@ -104,7 +106,9 @@ Initiator_Server::init (int argc,
   this->argv_ = argv;
 
   if (this->parse_args () != 0)
+  {
     return -1;
+  }
 
   if (this->object_A_key_.empty () || this->object_B_key_.empty ())
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -174,7 +178,9 @@ Initiator_Server::init (int argc,
     new (std::nothrow) Initiator_i (this->object_A_var_.in (),
                                     this->object_B_var_.in ()));
   if (!this->initiator_i_ptr_)
+  {
     return -1;
+  }
 
   this->str_ = this->orb_manager_.activate (this->initiator_i_ptr_.get ());
 
@@ -220,9 +226,13 @@ Initiator_Server::run ()
 Initiator_Server::~Initiator_Server ()
 {
   if (!CORBA::is_nil (this->object_A_var_.in ()))
+  {
     this->object_A_var_->shutdown ();
+  }
   if (!CORBA::is_nil (this->object_B_var_.in ()))
+  {
     this->object_B_var_->shutdown ();
+  }
 
   if (this->initiator_i_ptr_ != nullptr)
     {
@@ -251,7 +261,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       int const retval = initiator_Server.init (argc, argv);
 
       if (retval == -1)
+      {
         return 1;
+      }
       return initiator_Server.run () == 0 ? 0 : 1;
     }
   catch (CORBA::SystemException const &sysex)

@@ -41,7 +41,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                             argcon.get_TCHAR_argv ());
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var tmp = orb->string_to_object (ior);
 

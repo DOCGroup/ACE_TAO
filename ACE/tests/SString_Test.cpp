@@ -206,7 +206,9 @@ run_main (int, ACE_TCHAR *[])
     ACE_CString zero_size_string (s1.c_str (), 0, nullptr, true);
 
     if (ACE_CString::npos == 0)
+    {
       ACE_ERROR((LM_ERROR,"Set #1: npos is incorrect.\n"));
+    }
 
     // Not equal comparisons. Error if they are equal
     if (s1 == s2){ACE_ERROR((LM_ERROR,"Set #1:\n"));return 1;}
@@ -431,7 +433,9 @@ run_main (int, ACE_TCHAR *[])
 
     s11.fast_clear ();
     if (s11.length () != 0)
+    {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("fast_clear didn't yield 0 length\n")));
+    }
   }
 
   {
@@ -447,7 +451,9 @@ run_main (int, ACE_TCHAR *[])
       sstr.substring (2, 300);
 
     if (tmp.length () == 300)
+    {
       ACE_ERROR ((LM_ERROR, "SString substring\n"));
+    }
 
     // Constring an ACE_SString without a character pointer or from an
     // existing ACE_SString causes memory to be allocated that will not

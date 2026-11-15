@@ -42,7 +42,9 @@ ACE_SOCK_Connector::shared_open (ACE_SOCK_Stream &new_stream,
                           reuse_addr) == -1)
     return -1;
   else
+  {
     return 0;
+  }
 }
 
 int
@@ -67,7 +69,9 @@ ACE_SOCK_Connector::shared_open (ACE_SOCK_Stream &new_stream,
                           reuse_addr) == -1)
     return -1;
   else
+  {
     return 0;
+  }
 }
 
 int
@@ -95,7 +99,9 @@ ACE_SOCK_Connector::shared_connect_start (ACE_SOCK_Stream &new_stream,
   if (timeout != nullptr && new_stream.enable (ACE_NONBLOCK) == -1)
     return -1;
   else
+  {
     return 0;
+  }
 }
 
 int
@@ -148,7 +154,9 @@ ACE_SOCK_Connector::shared_connect_finish (ACE_SOCK_Stream &new_stream,
           else if (this->complete (new_stream, nullptr, timeout) == -1)
             error = errno;
           else
+          {
             return 0;
+          }
         }
     }
 

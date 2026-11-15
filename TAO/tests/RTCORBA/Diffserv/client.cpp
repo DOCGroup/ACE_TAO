@@ -167,7 +167,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Client_Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return -1;
+      }
 
       // Initialize and obtain reference to the Test object.
       CORBA::Object_var const client_object =

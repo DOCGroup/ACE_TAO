@@ -57,7 +57,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                            ACE_TEXT ("send")),
                           1);
       if (writeto == 'q')
+      {
         break;
+      }
     }
 
   if (bytes_read == -1)

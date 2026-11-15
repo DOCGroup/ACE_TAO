@@ -452,7 +452,9 @@ parse_args (int argc, ACE_TCHAR *argv[], std::string &sched_type)
       }
   if (ACE_OS::strcasecmp (sched_type.c_str (), "rms") != 0
       && ACE_OS::strcasecmp (sched_type.c_str (), "muf") != 0)
+  {
     return -1;
+  }
 
   // Indicates successful parsing of the command line
   return 0;

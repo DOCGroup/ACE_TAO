@@ -148,7 +148,9 @@ public:
       ACE_DEBUG ((LM_DEBUG, "(%t):Starting svc routine\n"));
 
       if (this->proactor_->handle_events (run_time) == -1)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "(%t):%p.\n", "Worker::svc"), -1);
+      }
 
       ACE_DEBUG ((LM_DEBUG, "(%t) work complete\n"));
 
@@ -230,7 +232,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (ri % 2)
         signal_number = ACE_SIGRTMIN;
       else
+      {
         signal_number = ACE_SIGRTMAX;
+      }
       // Create the result.
       ACE_NEW_RETURN (result_objects [ri],
                       My_Result (handler,
@@ -249,7 +253,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (ri % 2)
         proactor = &proactor1;
       else
+      {
         proactor = &proactor2;
+      }
       if (result_objects [ri]->post_completion (proactor->implementation ())
           == -1)
         ACE_ERROR_RETURN ((LM_ERROR,

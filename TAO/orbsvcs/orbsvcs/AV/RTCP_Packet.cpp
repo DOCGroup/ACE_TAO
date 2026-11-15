@@ -51,18 +51,24 @@ RTCP_Packet::is_valid (bool is_first)
 {
   // make sure the RTP version is correct
   if (this->chd_.ver_ != RTP_VERSION)
+  {
     return false;
+  }
 
   // these checks are only for the first RTCP packet in a compound packet
   if (is_first)
     {
       // the payload type must be RR or SR
       if ((this->chd_.pt_ != RTCP_PT_SR) && (this->chd_.pt_ != RTCP_PT_RR))
+      {
         return false;
+      }
 
       // the padding bit must not be set
       if (this->chd_.pad_ != 0)
+      {
         return false;
+      }
     }
 
   return true;
@@ -102,17 +108,23 @@ RTCP_BYE_Packet::RTCP_BYE_Packet(ACE_UINT32 *ssrc_list,
     {
       size_t text_length = std::strlen(text);
       if (text_length >= sizeof (this->reason_))
+      {
         text_length = sizeof (this->reason_) - 1;
+      }
       std::memcpy (this->reason_, text, text_length);
       this->reason_length_ = static_cast<unsigned char> (text_length);
     }
   else
+  {
     this->reason_length_ = 0;
+  }
 
   // Set the packet length
   this->chd_.length_ = static_cast<ACE_UINT16> (this->chd_.count_ + (this->reason_length_+1)/4);
   if ((this->reason_length_+1)%4)
+  {
     ++this->chd_.length_;
+  }
 }
 
 //==============================================================================
@@ -150,7 +162,9 @@ RTCP_BYE_Packet::RTCP_BYE_Packet(char* buffer, int *len)
       index+=this->reason_length_;
     }
   else
+  {
     this->reason_length_ = 0;
+  }
 
   // Decrement the length by the size of this message. This is necessary
   // because multiple RTCP packets may be contained in a single UDP packet.
@@ -172,7 +186,9 @@ RTCP_BYE_Packet::packet_size()
     {
       size += this->reason_length_ + 1;
       if (size%4)
+      {
         size += 4 - size%4; // pad with zeros to even 32 bit bound
+      }
     }
 
   return size;
@@ -582,7 +598,9 @@ RTCP_SDES_Packet::add_item (ACE_UINT32 ssrc,
     {
       cp = this->add_chunk (ssrc);
       if (cp == nullptr)
+      {
         return;
+      }
     }
   else
     {
@@ -592,7 +610,9 @@ RTCP_SDES_Packet::add_item (ACE_UINT32 ssrc,
         {
           cp = this->add_chunk (ssrc);
           if (cp == nullptr)
+          {
             return;
+          }
         }
     }
 
@@ -607,7 +627,9 @@ RTCP_SDES_Packet::add_item (ACE_UINT32 ssrc,
 
   sdesItem_t * const ip = this->add_item_node (cp);
   if (ip == nullptr)
+  {
     return;
+  }
 
   ip->type_ = type;
   ip->length_ = length;
@@ -629,7 +651,9 @@ RTCP_SDES_Packet::add_priv_item (ACE_UINT32 ssrc,
     {
       cp = this->add_chunk (ssrc);
       if (cp == nullptr)
+      {
         return;
+      }
     }
   else
     {
@@ -639,7 +663,9 @@ RTCP_SDES_Packet::add_priv_item (ACE_UINT32 ssrc,
         {
           cp = this->add_chunk (ssrc);
           if (cp == nullptr)
+          {
             return;
+          }
         }
     }
 
@@ -657,7 +683,9 @@ RTCP_SDES_Packet::add_priv_item (ACE_UINT32 ssrc,
 
   sdesItem_t * const ip = this->add_item_node (cp);
   if (ip == nullptr)
+  {
     return;
+  }
 
   ip->type_ = RTCP_SDES_PRIV;
   ip->length_ = nameLength;

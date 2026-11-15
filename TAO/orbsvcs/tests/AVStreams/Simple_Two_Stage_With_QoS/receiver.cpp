@@ -47,7 +47,9 @@ Receiver::parse_args (int argc,
       if (option == 'f')
         this->options_.filename = opts.opt_arg ();
       else
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "Usage: receiver -f filename\n"), -1);
+      }
     }
   return 0;
 }
@@ -57,7 +59,9 @@ Receiver::init (int argc,
                 ACE_TCHAR *argv[])
 {
   if (this->parse_args (argc, argv) != 0)
+  {
     return -1;
+  }
 
   this->output_file_.reset (ACE_OS::fopen (this->options_.filename.c_str (), "wb"));
   if (!this->output_file_)
@@ -68,11 +72,15 @@ Receiver::init (int argc,
 
   if (this->reactive_strategy_.init (TAO_AV_CORE::instance ()->orb (),
                                      TAO_AV_CORE::instance ()->poa ()) != 0)
+  {
     return -1;
+  }
 
   TAO_MMDevice * const mmdevice = new (std::nothrow) TAO_MMDevice (&this->reactive_strategy_);
   if (mmdevice == nullptr)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Unable to allocate receiver MMDevice\n"), -1);
+  }
 
   PortableServer::ServantBase_var safe_mmdevice = mmdevice;
   CORBA::Object_var mmdevice_object = mmdevice->_this ();
@@ -101,11 +109,15 @@ Receiver::receive_frame (ACE_Message_Block *frame)
                                                    frame_length,
                                                    this->output_file_.get ());
       if (bytes_written != frame_length)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "Receiver_Callback::fwrite failed\n"), -1);
+      }
     }
 
   if (ACE_OS::fflush (this->output_file_.get ()) != 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Flushing received frame failed\n"), -1);
+  }
   return 0;
 }
 
@@ -126,7 +138,9 @@ ACE_TMAIN (int argc,
       TAO_AV_CORE::instance ()->init (orb.in (), root_poa.in ());
       result = RECEIVER::instance ()->init (argc, argv);
       if (result == 0)
+      {
         orb->run ();
+      }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -136,7 +150,9 @@ ACE_TMAIN (int argc,
 
   RECEIVER::close ();
   if (!CORBA::is_nil (orb.in ()))
+  {
     orb->destroy ();
+  }
   return result;
 }
 

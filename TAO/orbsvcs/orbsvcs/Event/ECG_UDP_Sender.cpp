@@ -169,7 +169,9 @@ TAO_ECG_UDP_Sender::push (RtecEventComm::EventSet const &events)
       // To avoid loops we keep a TTL field on the events and skip the
       // events with TTL <= 0
       if (events[i].header.ttl <= 0)
+      {
         continue;
+      }
 
       RtecEventComm::Event const &e = events[i];
 
@@ -188,7 +190,9 @@ TAO_ECG_UDP_Sender::push (RtecEventComm::EventSet const &events)
       cdr.write_ulong (1);
       if (!(cdr << header)
           || !(cdr << e.data))
+      {
         throw CORBA::MARSHAL ();
+      }
 
       ACE_INET_Addr inet_addr;
       try

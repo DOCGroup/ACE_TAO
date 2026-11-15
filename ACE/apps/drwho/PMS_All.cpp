@@ -92,7 +92,9 @@ PMS_All::insert_protocol_info (Protocol_Record &protocol_record)
                                        ACE::strnew (pwent->pw_gecos)),
                                       ',');
   if (cp != nullptr)
+  {
     *cp = '\0';
+  }
 
   return prp;
 }

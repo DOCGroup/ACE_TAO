@@ -35,7 +35,9 @@ TAO_Notify_QoSProperties::unsupported (ACE_CString& name)
   for (int i {}; i < UNSUPPORTED_PROPERTY_COUNT; ++i)
     {
       if (this->unsupported_[i] == name)
+      {
         return 1;
+      }
     }
 
   return 0;
@@ -190,7 +192,9 @@ TAO_Notify_QoSProperties::copy (TAO_Notify_QoSProperties& qos_properties)
   for (; iter.next (entry); iter.advance ())
     {
       if (qos_properties.property_map_.rebind (entry->ext_id_, entry->int_id_) == -1)
+      {
         return -1;
+      }
     }
 
   return 0;
@@ -200,7 +204,9 @@ int
 TAO_Notify_QoSProperties::transfer (TAO_Notify_QoSProperties& qos_properties)
 {
   if (this->copy (qos_properties) == -1)
+  {
     return -1;
+  }
 
   // unbind the properties that we don't want to transfer.
   qos_properties.property_map_.unbind (NotifyExt::ThreadPool);

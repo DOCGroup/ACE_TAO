@@ -37,11 +37,15 @@ TAO_EC_Masked_Type_Filter::filter (RtecEventComm::EventSet const &event,
                                    TAO_EC_QOS_Info& qos_info)
 {
   if (event.length () != 1)
+  {
     return 0;
+  }
 
   if ((event[0].header.type & this->type_mask_) != this->type_value_
       || (event[0].header.source & this->source_mask_) != this->source_value_)
+  {
     return 0;
+  }
 
   if (this->parent () != nullptr)
     {
@@ -55,11 +59,15 @@ TAO_EC_Masked_Type_Filter::filter_nocopy (RtecEventComm::EventSet& event,
                                           TAO_EC_QOS_Info& qos_info)
 {
   if (event.length () != 1)
+  {
     return 0;
+  }
 
   if ((event[0].header.type & this->type_mask_) != this->type_value_
       || (event[0].header.source & this->source_mask_) != this->source_value_)
+  {
     return 0;
+  }
 
   if (this->parent () != nullptr)
     {
@@ -97,7 +105,9 @@ TAO_EC_Masked_Type_Filter::can_match (
 {
   if ((header.type & this->type_mask_) == this->type_value_
       && (header.source & this->source_mask_) == this->source_value_)
+  {
     return 1;
+  }
 
   return 0;
 }

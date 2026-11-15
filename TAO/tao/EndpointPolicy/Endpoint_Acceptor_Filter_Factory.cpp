@@ -22,7 +22,9 @@ TAO_Endpoint_Acceptor_Filter_Factory::create_object (TAO_POA_Manager& poamanager
           EndpointPolicy::Policy_var const cur_policy =
             EndpointPolicy::Policy::_narrow (policies[i]);
           if (CORBA::is_nil (cur_policy.in ()))
+          {
             return nullptr;
+          }
 
           EndpointPolicy::EndpointList_var cur_endpoints = cur_policy->value ();
           CORBA::ULong const cur_num_endpoints = cur_endpoints->length ();

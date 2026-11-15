@@ -78,7 +78,9 @@ ACE_URL_Addr::string_to_addr (const ACE_TCHAR *s,
                               int /* address_family */)
 {
   if (s == nullptr)
+  {
     return -1;
+  }
 
   try
     {
@@ -88,7 +90,9 @@ ACE_URL_Addr::string_to_addr (const ACE_TCHAR *s,
       if (path_start != std::basic_string<ACE_TCHAR>::npos)
         {
           if (path_start + 1 < parsed_address.size ())
+          {
             path_name = parsed_address.substr (path_start + 1);
+          }
           parsed_address.resize (path_start);
         }
 
@@ -111,7 +115,9 @@ ACE_URL_Addr::string_to_addr (const ACE_TCHAR *s,
         }
 
       if (result == 0)
+      {
         this->path_name_ = std::move (path_name);
+      }
 
       return result;
     }
@@ -140,7 +146,9 @@ ACE_URL_Addr::set (const ACE_URL_Addr &addr)
       std::basic_string<ACE_TCHAR> path_name (addr.path_name_);
       std::basic_string<ACE_TCHAR> addr_string (addr.addr_string_);
       if (this->ACE_INET_Addr::set (addr) == -1)
+      {
         return -1;
+      }
       this->path_name_ = std::move (path_name);
       this->addr_string_ = std::move (addr_string);
       return 0;

@@ -113,7 +113,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       int parse_args_result =
         parse_args (argc, argv);
       if (parse_args_result != 0)
+      {
         return parse_args_result;
+      }
 
       // Get an object reference from the argument string.
       CORBA::Object_var object =

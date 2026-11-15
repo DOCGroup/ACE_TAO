@@ -32,7 +32,9 @@ TAO_Exclusive_TMS::request_id ()
 
   if ((bidir_flag == 1 && ACE_ODD (this->request_id_generator_))
        || (bidir_flag == 0 && ACE_EVEN (this->request_id_generator_)))
+  {
     ++this->request_id_generator_;
+  }
 
   if (TAO_debug_level > 4)
     TAOLIB_DEBUG ((LM_DEBUG,
@@ -63,7 +65,9 @@ int
 TAO_Exclusive_TMS::unbind_dispatcher (CORBA::ULong request_id)
 {
   if (!this->rd_ || this->request_id_ != request_id)
+  {
     return -1;
+  }
 
   this->rd_.release ();
 
@@ -163,7 +167,9 @@ void
 TAO_Exclusive_TMS::connection_closed ()
 {
   if (this->rd_)
+  {
     this->rd_->connection_closed ();
+  }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

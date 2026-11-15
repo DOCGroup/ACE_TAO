@@ -19,7 +19,9 @@ Protocol_Manager::get_drwho_node (char *key_name, Drwho_Node *&head)
   for (; *temp != nullptr; temp = std::addressof ((*temp)->next_))
     if (std::strcmp (key_name,
                      (*temp)->get_login_name ()) == 0)
+    {
       break;
+    }
 
   if (*temp == nullptr)
     ACE_NEW_RETURN (head,

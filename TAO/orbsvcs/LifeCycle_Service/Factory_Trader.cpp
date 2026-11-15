@@ -175,11 +175,15 @@ Factory_Trader::query (std::string const & constraint)
                                       0);
               else
                 if (this->debug_level_ >= 2)
+                {
                   ORBSVCS_DEBUG ((LM_DEBUG, "Factory_Trader::query: Received a proper object reference.\n"));
+                }
               return object._retn ();
             }
           else
+          {
             ORBSVCS_ERROR ((LM_ERROR, "Factory_Trader::query: OfferSequence.length is smaller than 1.\n"));
+          }
         }
       return {};
     }

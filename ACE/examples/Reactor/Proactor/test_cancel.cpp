@@ -198,7 +198,9 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (parse_args (argc, argv) == -1)
+  {
     return -1;
+  }
 
   // Note: acceptor parameterized by the Receiver
   ACE_Asynch_Acceptor<Receiver> acceptor;

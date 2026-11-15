@@ -91,7 +91,9 @@ PMC_Usr::process ()
                         np->get_host_name ()));
 
             if (!Options::get_opt (Options::USE_VERBOSE_FORMAT))
+            {
               return;
+            }
           }
 
       for (np = prp->get_drwho_list ();
@@ -104,7 +106,9 @@ PMC_Usr::process ()
                         np->get_host_name ()));
 
             if (!Options::get_opt (Options::USE_VERBOSE_FORMAT))
+            {
               return;
+            }
           }
     }
 }

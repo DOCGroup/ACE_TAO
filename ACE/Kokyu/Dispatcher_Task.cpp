@@ -142,12 +142,16 @@ Dispatcher_Task::svc ()
       int const result = command->execute ();
 
       if (command->can_be_deleted ())
+      {
         command->destroy ();
+      }
 
       ACE_Message_Block::release (mb);
 
       if (result == -1)
+      {
         break;
+      }
     }
   return 0;
 }
@@ -159,7 +163,9 @@ Dispatcher_Task::enqueue (Dispatch_Command const *cmd,
   void * const buf = this->allocator_->malloc (sizeof (Dispatch_Queue_Item));
 
   if (buf == nullptr)
+  {
     return -1;
+  }
 
   // ACE_Message_Block::release returns this allocator-backed block to the pool.
   ACE_Message_Block * const mb =

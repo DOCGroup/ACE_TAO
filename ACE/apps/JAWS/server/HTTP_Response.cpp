@@ -133,12 +133,18 @@ HTTP_Response::error_response (int status_code, const char *log_message)
   const char *error_header = error_header1;
 
   if (length < 0)
+  {
     return;
+  }
   if (length >= static_cast<int> (sizeof buf2))
+  {
     length = sizeof buf2 - 1;
+  }
 
   if (status_code == HTTP_Status_Code::STATUS_UNAUTHORIZED)
+  {
     error_header = error_header2;
+  }
 
   if (this->request_.version () == nullptr
       || std::strcmp ("HTTP/0.9", this->request_.version ()) == 0)
@@ -154,9 +160,13 @@ HTTP_Response::error_response (int status_code, const char *log_message)
                               length,
                               buf2);
       if (length < 0)
+      {
         return;
+      }
       if (length >= static_cast<int> (sizeof buf1))
+      {
         length = sizeof buf1 - 1;
+      }
       buf = buf1;
     }
 
@@ -252,7 +262,9 @@ HTTP_Response::cgi_response ()
                               this->request_.path (),
                               this->request_.cgi_args ());
   else
+  {
     cgi_options.command_line ("%s", this->request_.path ());
+  }
 
   // Build environment variables
   cgi_options.setenv (ACE_TEXT ("SERVER_SOFTWARE"), ACE_TEXT ("%s"), ACE_TEXT ("JAWS/1.0"));
@@ -307,14 +319,18 @@ HTTP_Response::cgi_response ()
         else if (c == '-')
           *q++ = '_';
         else
+        {
           *q++ = c;
+        }
 
       *q = '\0';
 
       const char *hv = this->request_.header_values (i);
 
       if (hv && *hv)
+      {
         cgi_options.setenv (buf, "%s", hv);
+      }
       q = p;
     }
 
@@ -394,7 +410,9 @@ HTTP_Response::build_headers ()
         HTTP_HEADER = "HTTP/1.0 200 OK\r\n"
           "Content-type: text/html\r\n\r\n";
       else
+      {
         HTTP_HEADER = "HTTP/1.0 200 OK\r\n";
+      }
 
       HTTP_HEADER_LENGTH = std::strlen (HTTP_HEADER);
 

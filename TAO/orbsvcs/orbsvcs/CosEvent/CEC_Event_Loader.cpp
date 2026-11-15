@@ -52,7 +52,9 @@ write_pid_file (ACE_TCHAR const *filename)
   std::unique_ptr<FILE, int (*) (FILE *)> file (
     ACE_OS::fopen (filename, ACE_TEXT ("w")), ACE_OS::fclose);
   if (file)
+  {
     std::fprintf (file.get (), "%ld\n", static_cast<long> (ACE_OS::getpid ()));
+  }
 }
 
 int
@@ -68,7 +70,9 @@ TAO_CEC_Event_Loader::init (int argc, ACE_TCHAR *argv[])
         this->create_object (this->orb_.in (), argc, argv);
 
       if (CORBA::is_nil (obj.in ()))
+      {
         return -1;
+      }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -221,10 +225,14 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
         this->ec_impl_->_this ();
 
       if (ior_file != nullptr)
+      {
         write_ior_file (orb, ior_file, event_channel.in ());
+      }
 
       if (pid_file != nullptr)
+      {
         write_pid_file (pid_file);
+      }
 
       // ****************************************************************
 
@@ -332,10 +340,14 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
             this->typed_ec_impl_->_this ();
 
           if (ior_file != nullptr)
+          {
             write_ior_file (orb, ior_file, event_channel.in ());
+          }
 
           if (pid_file != nullptr)
+          {
             write_pid_file (pid_file);
+          }
 
           // ****************************************************************
 

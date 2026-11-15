@@ -66,7 +66,9 @@ void
 Test_Consumer::disconnect ()
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
+  {
     return;
+  }
 
   this->supplier_proxy_->disconnect_push_supplier ();
 

@@ -150,7 +150,9 @@ CEC_Pull_Counting_Consumer::try_pull (CORBA::Boolean_out has_event)
     this->supplier_proxy_->try_pull (has_event);
 
   if (has_event)
+  {
     ++this->event_count;
+  }
 
   return event._retn ();
 }
@@ -245,7 +247,9 @@ CEC_Counting_Consumer_Task::run ()
       {
         ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
         if (has_event)
+        {
           ++this->pull_count_;
+        }
         stop = this->stop_flag_;
       }
     }

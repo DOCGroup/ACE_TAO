@@ -12,6 +12,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               "[CLIENT] Process/Thread Id : (%P/%t) Time Service Client\n"));
 
   if (client.init (argc, argv) == -1)
+  {
     return -1;
+  }
   return client.run ();
 }

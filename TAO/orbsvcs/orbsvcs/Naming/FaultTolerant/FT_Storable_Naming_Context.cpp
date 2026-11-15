@@ -38,7 +38,9 @@ TAO_FT_Storable_Naming_Context::is_object_group (CORBA::Object_ptr const obj) co
 {
   // Ensure the object is not nil first. If so, it cannot be an ObjectGroup.
   if (CORBA::is_nil (obj))
+  {
     return false;
+  }
 
   // If there is a tagged component with tag = IOP::TAG_FT_GROUP in the
   // object reference then it is an object group
@@ -58,7 +60,9 @@ TAO_FT_Storable_Naming_Context::resolve (CosNaming::Name const &n)
     // We will return the object reference as is all the way back
     // out to the client if not
     if (!this->is_object_group (resolved_ref.in ()))
+    {
       return resolved_ref._retn ();
+    }
 
     // If there is no naming manager, we will fail and report an error.
     if ( this->naming_manager_ == nullptr)
@@ -127,7 +131,9 @@ TAO_FT_Storable_Naming_Context::context_written ()
   if (this->destroyed_)
     change_type = FT_Naming::DELETED;
   else
+  {
     change_type = FT_Naming::UPDATED;
+  }
 
   propagate_update_notification (change_type);
 }

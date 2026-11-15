@@ -27,7 +27,9 @@ ACE::HTBP::ID_Requestor::ID_Requestor (ACE::HTBP::Environment *env)
       int via_proxy = 0;
       env->get_htid_via_proxy (via_proxy);
       if (via_proxy && env->get_proxy_host (host_) == 0)
+      {
         env->get_proxy_port (port_);
+      }
     }
 }
 
@@ -87,7 +89,9 @@ ACE::HTBP::ID_Requestor::send_request (ACE_SOCK_Stream *cli_stream)
   url = this->url_.c_str ();
 #endif
   if (url == nullptr)
+  {
     return -1;
+  }
 
   size_t const buffer_size = std::strlen (url) + std::strlen ("GET  HTTP/1.0\n\n") + 1;
   char *request_buffer {};
@@ -108,12 +112,16 @@ ACE_TCHAR *
 ACE::HTBP::ID_Requestor::get_HTID ()
 {
   if (ACE::HTBP::ID_Requestor::htid_.length() != 0)
+  {
     return ACE::HTBP::ID_Requestor::htid_.rep();
+  }
 
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, ACE::HTBP::ID_Requestor::htid_lock_, nullptr);
 
   if (ACE::HTBP::ID_Requestor::htid_.length() != 0)
+  {
     return ACE::HTBP::ID_Requestor::htid_.rep();
+  }
 
   ACE_SOCK_Stream cli_stream;
   ACE_TCHAR *htid {};
@@ -140,7 +148,9 @@ ACE::HTBP::ID_Requestor::get_HTID ()
       if (start == ACE_CString::npos)
         start = 0;
       else
+      {
         ++start;
+      }
       ACE::HTBP::ID_Requestor::htid_ = ACE_TEXT_CHAR_TO_TCHAR(answer.substr (start).c_str());
       htid = ACE::HTBP::ID_Requestor::htid_.rep();
     }

@@ -16,7 +16,9 @@ Iterator_Factory_i::get_iterator (char const *pathname,
                                   Web_Server::Metadata_Type_out metadata)
 {
   if (pathname == nullptr)
+  {
     throw Web_Server::Error_Result (500);
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Received request for file: <%s>\n"),
@@ -87,7 +89,9 @@ Iterator_Factory_i::modification_date (ACE_stat const& file_status,
                      t_gmt) == 0)
     return -1;
   else
+  {
     metadata.modification_date = CORBA::string_dup (buf.data ());
+  }
 
   return 0;
 }

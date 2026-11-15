@@ -25,7 +25,9 @@ int
 EC_Reconnect::parse_args (int& argc, ACE_TCHAR* argv[])
 {
   if (this->EC_Driver::parse_args (argc, argv) != 0)
+  {
     return -1;
+  }
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("scd:"));
   int opt;

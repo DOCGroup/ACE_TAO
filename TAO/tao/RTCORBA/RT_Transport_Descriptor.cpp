@@ -37,7 +37,9 @@ TAO_RT_Transport_Descriptor::duplicate ()
   // Get a copy of the underlying endpoint
   std::unique_ptr<TAO_Endpoint> endpoint {this->endpoint_->duplicate ()};
   if (endpoint == nullptr)
+  {
     return nullptr;
+  }
 
   TAO_RT_Transport_Descriptor *descriptor {};
 
@@ -59,7 +61,9 @@ TAO_RT_Transport_Descriptor::duplicate ()
       new_property =
         current_property->duplicate ();
       if (new_property == nullptr)
+      {
         return nullptr;
+      }
 
       // Note that we cannot use <insert> because that will reverse the stack.
       if (new_descriptor->property_list_ == nullptr)
@@ -81,11 +85,15 @@ TAO_RT_Transport_Descriptor::is_equivalent (TAO_Transport_Descriptor_Interface c
     dynamic_cast<TAO_RT_Transport_Descriptor const *> (other_prop);
 
   if (rhs == nullptr)
+  {
     return false;
+  }
 
   // Check if endpoint is equivalent.
   if (!this->endpoint_->is_equivalent (rhs->endpoint_))
+  {
     return false;
+  }
 
   // Check the property_list_.
   TAO_RT_Transport_Descriptor_Property *current =
@@ -97,10 +105,14 @@ TAO_RT_Transport_Descriptor::is_equivalent (TAO_Transport_Descriptor_Interface c
   while (current || rhs_current)
     {
       if (rhs_current == nullptr || current == nullptr)
+      {
         return false;
+      }
 
       if (!current->is_equivalent (rhs_current))
+      {
         return false;
+      }
 
       current = current->next_;
       rhs_current = rhs_current->next_;

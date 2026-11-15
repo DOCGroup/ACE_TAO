@@ -13,7 +13,9 @@ Database_i::set (Test::Index i,
                  CORBA::Double_out returned_token)
 {
   if (i >= this->max_range_)
+  {
     throw Test::OutOfRange (0, this->max_range_);
+  }
 
   returned_token = verification_token;
 
@@ -37,7 +39,9 @@ Test::OctetSeq*
 Database_i::get (Test::Index i)
 {
   if (i >= this->max_range_)
+  {
     throw Test::OutOfRange (0, this->max_range_);
+  }
 
   Test::OctetSeq *copy {};
   ACE_NEW_THROW_EX (copy,
@@ -50,7 +54,9 @@ CORBA::ULong
 Database_i::get_crc (Test::Index i)
 {
   if (i >= this->max_range_)
+  {
     throw Test::OutOfRange (0, this->max_range_);
+  }
 
   return ACE::crc32 (this->elements_[i].get_buffer (),
                      this->elements_[i].length ());

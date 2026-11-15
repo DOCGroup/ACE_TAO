@@ -60,22 +60,30 @@ do_client_processing (ACE_LSOCK_Stream &sc)
   int n;
 
   if (ACE_OS::pipe (fd_read) == -1 || ACE_OS::pipe (fd_write) == -1)
+  {
     return -1;
+  }
 
   if (sc.send_handle (fd_write[0]) == -1 || sc.send_handle (fd_read[1]) == -1)
+  {
     return -1;
+  }
 
   // Close off the ends we aren't interested in.
 
   if (ACE_OS::close (fd_read[1]) || ACE_OS::close (fd_write[0]) == -1)
+  {
     return -1;
+  }
 
   // Do a silly dup just for fun...
 
   ACE_HANDLE const fd1 = ACE_OS::open (file_name, O_RDONLY);
 
   if (fd1 == ACE_INVALID_HANDLE)
+  {
     return -1;
+  }
 
   while ((n = ACE_OS::read (fd1, buf, sizeof buf)) > 0)
     {
@@ -96,13 +104,17 @@ do_client_processing (ACE_LSOCK_Stream &sc)
       if (ACE_OS::write (ACE_STDOUT,
                          buf,
                          n) == -1)
+      {
         return -1;
+      }
     }
 
   if (ACE_OS::close (fd_read[0]) == -1
       || ACE_OS::close (fd_write[1]) == -1
       || ACE_OS::close (fd1) == -1)
+  {
     ACE_OS::exit (1);
+  }
 
   return 0;
 }

@@ -120,7 +120,9 @@ wchar_reference::match_warray (short key, ACE_OS::WChar const *test) const
                     i, wchar_reference::ref_warray[key][i],
                     test[i]));
       if (wchar_reference::ref_warray[key][i] != test[i])
+      {
         return false;
+      }
     }
   return true;
 }

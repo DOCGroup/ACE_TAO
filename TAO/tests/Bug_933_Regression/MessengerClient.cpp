@@ -40,7 +40,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       std::basic_string<ACE_TCHAR> ior {ACE_TEXT ("file://test.ior")};
 
       if (parse_args (argc, argv, ior) != 0)
+      {
         return 1;
+      }
 
       // Destringify ior
       CORBA::Object_var const obj =

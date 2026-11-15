@@ -179,7 +179,9 @@ Server_Events::handle_input (ACE_HANDLE)
         {
           *message_end-- = '\0';
           if (message_end == this->message_)
+          {
             break;
+          }
         }
 
       ACE_DEBUG ((LM_DEBUG,
@@ -207,7 +209,9 @@ Server_Events::handle_input (ACE_HANDLE)
       return 0;
     }
   else
+  {
     return -1;
+  }
 }
 
 int

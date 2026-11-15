@@ -32,7 +32,9 @@ Bzip2Compressor::compress (
     this->compression_level () * 25);
 
   if (retval != BZ_OK)
+  {
     throw ::Compression::CompressionException (retval, "");
+  }
 
   target.length (static_cast <CORBA::ULong> (max_length));
 
@@ -55,7 +57,9 @@ Bzip2Compressor::decompress (
     1);
 
   if (retval != BZ_OK)
+  {
     throw ::Compression::CompressionException (retval, "");
+  }
 
   target.length (static_cast <CORBA::ULong> (max_length));
 }

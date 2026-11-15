@@ -41,7 +41,9 @@ Receiver::parse_args (int argc,
       if (option == 'f')
         this->options_.filename = opts.opt_arg ();
       else
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "Usage: receiver -f filename\n"), -1);
+      }
     }
   return 0;
 }
@@ -51,7 +53,9 @@ Receiver::init (int argc,
                 ACE_TCHAR *argv[])
 {
   if (this->parse_args (argc, argv) != 0)
+  {
     return -1;
+  }
 
   this->output_file_.reset (ACE_OS::fopen (this->options_.filename.c_str (), "wb"));
   if (!this->output_file_)
@@ -62,11 +66,15 @@ Receiver::init (int argc,
 
   if (this->reactive_strategy_.init (TAO_AV_CORE::instance ()->orb (),
                                      TAO_AV_CORE::instance ()->poa ()) != 0)
+  {
     return -1;
+  }
 
   TAO_MMDevice * const mmdevice = new (std::nothrow) TAO_MMDevice (&this->reactive_strategy_);
   if (mmdevice == nullptr)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Unable to allocate receiver MMDevice\n"), -1);
+  }
 
   // The POA and this servant reference manage the MMDevice lifetime.
   PortableServer::ServantBase_var safe_mmdevice = mmdevice;
@@ -90,7 +98,9 @@ Receiver::receive_frame (ACE_Message_Block *frame)
 {
   size_t const frame_length = frame->length ();
   if (frame_length < sizeof (ACE_hrtime_t))
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Received frame is shorter than its timestamp\n"), -1);
+  }
 
   size_t const payload_length = frame_length - sizeof (ACE_hrtime_t);
   size_t const bytes_written = std::fwrite (frame->rd_ptr (),
@@ -98,9 +108,13 @@ Receiver::receive_frame (ACE_Message_Block *frame)
                                                  payload_length,
                                                  this->output_file_.get ());
   if (bytes_written != payload_length)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Writing received frame failed\n"), -1);
+  }
   if (std::fflush (this->output_file_.get ()) != 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Flushing received frame failed\n"), -1);
+  }
 
   ACE_hrtime_t timestamp {};
   std::memcpy (&timestamp, frame->rd_ptr () + payload_length, sizeof timestamp);
@@ -146,7 +160,9 @@ ACE_TMAIN (int argc,
       Receiver * const receiver = RECEIVER::instance ();
       result = receiver->init (argc, argv);
       if (result == 0)
+      {
         result = receiver->run ();
+      }
       orb->destroy ();
     }
   catch (CORBA::Exception const &ex)

@@ -78,7 +78,9 @@ RWho_DB_Manager::get_next_host ()
         ACE_OS::open (dir_ptr->d_name, O_RDONLY);
 
       if (user_file < 0)
+      {
         return -1;
+      }
 
       int host_data_length =
         ACE_OS::read (user_file,
@@ -94,7 +96,9 @@ RWho_DB_Manager::get_next_host ()
           return 1; // We found a good host, so return it.
         }
       else
+      {
         ACE_OS::close (user_file);
+      }
     }
 
   // There are no more hosts, so return False.
@@ -111,7 +115,9 @@ RWho_DB_Manager::get_next_user (Protocol_Record &protocol_record)
   // Get the next host file if necessary
   if (this->current_user >= this->number_of_users
       && this->get_next_host () == 0)
+  {
     return 0;
+  }
 
   protocol_record.set_login (this->host_data.wd_we[current_user].we_utmp.out_name);
   Drwho_Node *current_node = protocol_record.get_drwho_list ();

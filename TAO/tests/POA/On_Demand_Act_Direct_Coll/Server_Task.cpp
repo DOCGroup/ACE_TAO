@@ -114,7 +114,9 @@ Server_Task::svc ()
 
       int const write_result = write_iors_to_file (this->output_, first_test_ior.in ());
       if (write_result != 0)
+      {
         return write_result;
+      }
 
       poa_manager->activate ();
       this->me_.signal ();

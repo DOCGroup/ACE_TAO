@@ -88,7 +88,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       // Get the event channel object reference
       CORBA::Object_var object =
@@ -362,7 +364,9 @@ Task::svc ()
 
           --this->remaining_messages_;
           if (this->remaining_messages_ == 0)
+          {
             return 0;
+          }
         }
     }
   catch (CORBA::SystemException const & ex)

@@ -91,7 +91,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   const bool inetd_controlled = started_by_inetd ();
 
   if (!inetd_controlled && Options::get_opt (Options::BE_A_DAEMON))
+  {
     ACE::daemonize ();
+  }
 
   SMR_Server smr_server (Options::port_number);
 

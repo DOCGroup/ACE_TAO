@@ -126,7 +126,9 @@ ACE_ODB::remove_object (const void *this_ptr)
   for (i = 0; i < this->current_size_; ++i)
     {
       if (this->object_table_[i].this_ == this_ptr)
+      {
         break;
+      }
     }
 
   if (i < this->current_size_)

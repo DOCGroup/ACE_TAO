@@ -132,7 +132,9 @@ synchronous_signal_handler (void *)
       sigset.sig_add (SIGTERM);
     }
   else
+  {
     sigset.sig_add (SIGHUP);
+  }
 
   for (;;)
     {
@@ -148,7 +150,9 @@ synchronous_signal_handler (void *)
           continue;
         }
       if (handle_signal (signr) == -1)
+      {
         break;
+      }
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) handled signal\n")));
     }

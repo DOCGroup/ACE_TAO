@@ -18,7 +18,9 @@ Server_Request_Interceptor::receive_request_service_contexts (
     this->server_side_test (ri);
 
   if (!server_side)
+  {
     return;  // Don't continue if the client side is being tested.
+  }
 
   ACE_DEBUG ((LM_INFO,
               "%C.receive_request_service_contexts",
@@ -60,7 +62,9 @@ Server_Request_Interceptor::receive_request (
     this->server_side_test (ri);
 
   if (!server_side)
+  {
     return;  // Don't continue if the client side is being tested.
+  }
 
   ACE_DEBUG ((LM_INFO,
               "%C.receive_request\n",
@@ -75,7 +79,9 @@ Server_Request_Interceptor::send_reply (
     this->server_side_test (ri);
 
   if (!server_side)
+  {
     return;  // Don't continue if the client side is being tested.
+  }
 
   ++this->ending_interception_point_count_;
 
@@ -128,7 +134,9 @@ Server_Request_Interceptor::send_exception (
     this->server_side_test (ri);
 
   if (!server_side)
+  {
     return;  // Don't continue if the client side is being tested.
+  }
 
   ++this->ending_interception_point_count_;
 
@@ -203,7 +211,9 @@ Server_Request_Interceptor::send_other (
     this->server_side_test (ri);
 
   if (!server_side)
+  {
     return;  // Don't continue if the client side is being tested.
+  }
 
   ++this->ending_interception_point_count_;
 

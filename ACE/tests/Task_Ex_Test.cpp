@@ -67,7 +67,9 @@ int Consumer::svc ()
                ACE_TEXT("Consumer::svc got msg id=%d\n"),
                pMsg->msg_id ()));
     if(pMsg->msg_id ()==NUMBER_OF_MSGS-1)
+    {
       break;
+    }
   }
 
   ACE_DEBUG((LM_INFO,

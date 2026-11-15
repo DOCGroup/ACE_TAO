@@ -42,11 +42,17 @@ parent (char * const shm)
     ACE_ERROR ((LM_ERROR, "%p", "parent synch.acquire"));
 
   if (my_alloc.remove () == -1)
+  {
     ACE_ERROR ((LM_ERROR, "%p\n", "my_alloc.remove"));
+  }
   if (mutex.remove () == -1)
+  {
     ACE_ERROR ((LM_ERROR, "%p\n", "mutex.remove"));
+  }
   if (synch.remove () == -1)
+  {
     ACE_ERROR ((LM_ERROR, "%p\n", "synch.remove"));
+  }
   return 0;
 }
 
@@ -66,7 +72,9 @@ child (char const * const shm)
     if (errno == EAGAIN)
       ACE_DEBUG ((LM_DEBUG, "spinning in child!\n"));
     else
+    {
       ACE_ERROR_RETURN ((LM_ERROR, "child mutex.tryacquire"), 1);
+    }
 
   for (char const *s = shm; *s != '\0'; ++s)
     ACE_DEBUG ((LM_DEBUG, "%c", *s));
@@ -74,7 +82,9 @@ child (char const * const shm)
   ACE_DEBUG ((LM_DEBUG, "\n"));
 
   if (synch.release () == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "child synch.release"), 1);
+  }
   return 0;
 }
 
@@ -84,7 +94,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   // The allocator owns the shared segment; shm only borrows its mapping.
   char * const shm = static_cast<char *> (my_alloc.malloc (27));
   if (shm == nullptr)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "%p", "my_alloc.malloc"), -1);
+  }
 
   switch (ACE_OS::fork ())
     {

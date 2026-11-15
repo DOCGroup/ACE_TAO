@@ -36,7 +36,9 @@ FTP_Server_Callback::receive_frame (ACE_Message_Block *frame,
       size_t const written = FTP_SERVER::instance ()->write_output (
         frame->rd_ptr (), frame->length ());
       if (written != frame->length ())
+      {
         ACE_ERROR_RETURN ((LM_ERROR,"FTP_Server_Flow_Handler::fwrite failed\n"),-1);
+      }
       frame = frame->cont ();
     }
   return 0;
@@ -64,16 +66,22 @@ Server::init (int argc,
 
       int result = this->parse_args (argc, argv);
       if (result == -1)
+      {
         ACE_ERROR_RETURN  ((LM_ERROR,"parse args failed\n"),-1);
+      }
 
       this->fp_.reset (ACE_OS::fopen (this->options_.filename.c_str (), "wb"));
       if (!this->fp_)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "Unable to open output file\n"), -1);
+      }
 
       result = this->reactive_strategy_.init (TAO_AV_CORE::instance ()->orb (),
                                               TAO_AV_CORE::instance ()->poa ());
       if (result != 0)
+      {
         return result;
+      }
 
       // Initialize the naming services
       if (my_naming_client_.init (TAO_AV_CORE::instance ()->orb ()) != 0)
@@ -124,7 +132,9 @@ Server::run ()
     {
       while (!done)
         if (orb->work_pending ())
+        {
           orb->perform_work ();
+        }
 
       orb->shutdown (true);
     }
@@ -160,7 +170,9 @@ size_t
 Server::write_output (char const *buffer, size_t length)
 {
   if (!this->fp_)
+  {
     return 0;
+  }
 
   return std::fwrite (buffer, 1, length, this->fp_.get ());
 }
@@ -196,10 +208,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   result = FTP_SERVER::instance ()->init (argc, argv);
   if (result < 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,"FTP_SERVER::init failed\n"),1);
+  }
   result = FTP_SERVER::instance ()->run ();
   if (result < 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,"FTP_SERVER::run failed\n"),1);
+  }
 
   FTP_SERVER::close ();  // Explicitly finalize the Unmanaged_Singleton.
 

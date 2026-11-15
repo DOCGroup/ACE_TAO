@@ -105,7 +105,10 @@ TAO_FlowSpec_Entry::set_protocol ()
             {
               this->protocol_ = TAO_AV_Core::TAO_AV_SFP_UDP;
             }
-          else this->protocol_ = TAO_AV_Core::TAO_AV_USERDEFINED_UDP;
+          else
+          {
+            this->protocol_ = TAO_AV_Core::TAO_AV_USERDEFINED_UDP;
+          }
         }
       else
         {
@@ -117,12 +120,16 @@ TAO_FlowSpec_Entry::set_protocol ()
   if (this->address_ != nullptr)
     {
       if (TAO_debug_level > 0)
+      {
         ORBSVCS_DEBUG ((LM_DEBUG, "TAO_FlowSpec_Entry::set_protocol address is not 0\n"));
+      }
       ACE_INET_Addr *inet_addr = dynamic_cast<ACE_INET_Addr*> (this->address_);
       ACE_TCHAR buf[BUFSIZ];
       inet_addr->addr_to_string (buf,BUFSIZ);
       if (TAO_debug_level > 0)
+      {
         ORBSVCS_DEBUG ((LM_DEBUG,"TAO_FlowSpec_Entry::set_protocol:%s %x\n",buf, inet_addr->get_ip_address ()));
+      }
       if (IN_CLASSD (inet_addr->get_ip_address ()))
         {
           this->is_multicast_ = true;
@@ -153,10 +160,14 @@ TAO_FlowSpec_Entry::parse_address (char const *address,
                                    TAO_AV_Core::Flow_Component flow_comp)
 {
   if (TAO_debug_level > 0)
+  {
     ORBSVCS_DEBUG ((LM_DEBUG, "TAO_FlowSpec_Entry::parse_address [%C]\n", address));
+  }
 
   if (address == nullptr)
+  {
     return 0;
+  }
   if (address[0] == '\0')
     return 0;
   TAO_Tokenizer protocol_tokenizer (address,'=');
@@ -165,7 +176,9 @@ TAO_FlowSpec_Entry::parse_address (char const *address,
 
   int result = this->set_protocol ();
   if (result < 0)
+  {
     return result;
+  }
 
   if (protocol_tokenizer [1] != nullptr)
     {
@@ -199,7 +212,10 @@ TAO_FlowSpec_Entry::parse_address (char const *address,
                     }
                 }
             }
-          else addr += protocol_tokenizer[1];
+          else
+          {
+            addr += protocol_tokenizer[1];
+          }
 
           switch (this->protocol_)
             {
@@ -212,7 +228,9 @@ TAO_FlowSpec_Entry::parse_address (char const *address,
             case TAO_AV_Core::TAO_AV_QOS_UDP:
               {
                 if (flow_comp == TAO_AV_Core::TAO_AV_DATA)
+                {
                   this->address_str_ = addr;
+                }
                 ACE_INET_Addr *inet_addr;
                 ACE_NEW_RETURN (inet_addr,
                                 ACE_INET_Addr (addr.c_str() ),
@@ -232,7 +250,9 @@ TAO_FlowSpec_Entry::parse_address (char const *address,
                     && IN_CLASSD (inet_addr->get_ip_address ()))
                   {
                     if (TAO_debug_level > 0)
+                    {
                       ORBSVCS_DEBUG ((LM_DEBUG, "TAO_FlowSpec_Entry::parse_address is multicast\n"));
+                    }
 
                     this->is_multicast_ = true;
                     switch (this->protocol_)
@@ -256,7 +276,10 @@ TAO_FlowSpec_Entry::parse_address (char const *address,
               }
               break;
             default:
-              if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"ATM support not added yet\n"));
+              if (TAO_debug_level > 0)
+              {
+                ORBSVCS_DEBUG ((LM_DEBUG,"ATM support not added yet\n"));
+              }
             }
         }
       else
@@ -327,7 +350,9 @@ TAO_FlowSpec_Entry::parse_address (char const *address,
                     && IN_CLASSD (inet_addr->get_ip_address ()))
                   {
                     if (TAO_debug_level > 0)
+                    {
                       ORBSVCS_DEBUG ((LM_DEBUG, "TAO_FlowSpec_Entry::parse_address is multicast\n"));
+                    }
 
                     this->is_multicast_ = true;
                     switch (this->protocol_)
@@ -351,7 +376,10 @@ TAO_FlowSpec_Entry::parse_address (char const *address,
               }
               break;
             default:
-              if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"ATM support not added yet\n"));
+              if (TAO_debug_level > 0)
+              {
+                ORBSVCS_DEBUG ((LM_DEBUG,"ATM support not added yet\n"));
+              }
             }
         }
     }
@@ -364,7 +392,9 @@ char *
 TAO_FlowSpec_Entry::get_local_addr_str ()
 {
   if (this->local_addr_ == nullptr)
+  {
     return nullptr;
+  }
 
   switch (this->local_addr_->get_type ())
     {
@@ -433,14 +463,20 @@ TAO_Forward_FlowSpec_Entry::parse (char const *flowSpec_entry)
                   flowSpec_entry));
 
   if (tokenizer [TAO_AV_DIRECTION] != nullptr)
+  {
     this->set_direction (tokenizer [TAO_AV_DIRECTION]);
+  }
 
   if (tokenizer [TAO_AV_FORMAT] != nullptr)
+  {
     this->format_ = tokenizer [TAO_AV_FORMAT];
+  }
 
   if (tokenizer [TAO_AV_ADDRESS] != nullptr)
     if (this->parse_address (tokenizer [TAO_AV_ADDRESS], TAO_AV_Core::TAO_AV_BOTH) < 0)
+    {
       return -1;
+    }
 
   if (tokenizer [TAO_AV_PEER_ADDR] != nullptr)
     {
@@ -490,7 +526,9 @@ TAO_Forward_FlowSpec_Entry::parse (char const *flowSpec_entry)
 
   if (tokenizer [TAO_AV_FLOW_PROTOCOL] != nullptr)
     if (this->parse_flow_protocol_string (tokenizer [TAO_AV_FLOW_PROTOCOL]) < 0)
+    {
       return -1;
+    }
 
   return 0;
 }
@@ -499,7 +537,9 @@ TAO_FlowSpec_Entry::Role
 TAO_Forward_FlowSpec_Entry::role ()
 {
   if (this->role_ != TAO_AV_INVALID_ROLE)
+  {
     return this->role_;
+  }
 
   switch (this->direction_)
     {
@@ -518,7 +558,9 @@ char const *
 TAO_Forward_FlowSpec_Entry::entry_to_string ()
 {
   if (this->flowname_.length() == 0)
+  {
     return "";
+  }
 
   ACE_TCHAR address [BUFSIZ];
   ACE_CString address_str;
@@ -694,7 +736,9 @@ TAO_Forward_FlowSpec_Entry::entry_to_string ()
                    "No peer address specified\n"));
 
   if (TAO_debug_level > 0)
+  {
     ORBSVCS_DEBUG ((LM_DEBUG,"Forward entry_to_string: entry = %C\n",this->entry_.c_str()));
+  }
 
   return this->entry_.c_str();
 }
@@ -741,7 +785,9 @@ TAO_FlowSpec_Entry::Role
 TAO_Reverse_FlowSpec_Entry::role ()
 {
   if (this->role_ != TAO_AV_INVALID_ROLE)
+  {
     return this->role_;
+  }
   switch (this->direction_)
     {
     case TAO_AV_DIR_IN:
@@ -768,11 +814,15 @@ TAO_Reverse_FlowSpec_Entry::parse (char const *flowSpec_entry)
 
   if (tokenizer [TAO_AV_ADDRESS] != nullptr)
     if (this->parse_address (tokenizer [TAO_AV_ADDRESS], TAO_AV_Core::TAO_AV_BOTH) < 0)
+    {
       return -1;
+    }
 
   if (tokenizer [TAO_AV_FLOW_PROTOCOL] != nullptr)
     if (this->parse_flow_protocol_string (tokenizer [TAO_AV_FLOW_PROTOCOL]) < 0)
+    {
       return -1;
+    }
 
   return 0;
 }
@@ -781,7 +831,9 @@ char const *
 TAO_Reverse_FlowSpec_Entry::entry_to_string ()
 {
   if (this->flowname_.length() == 0)
+  {
     return "";
+  }
 
   ACE_TCHAR address [BUFSIZ];
   ACE_CString address_str;
@@ -863,7 +915,10 @@ TAO_Reverse_FlowSpec_Entry::entry_to_string ()
   this->entry_ += "\\";
   this->entry_ += this->flow_protocol_;
 
-  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"Reverse entry_to_string: entry = %C\n",this->entry_.c_str() ));
+  if (TAO_debug_level > 0)
+  {
+    ORBSVCS_DEBUG ((LM_DEBUG,"Reverse entry_to_string: entry = %C\n",this->entry_.c_str() ));
+  }
   return this->entry_.c_str();
 }
 

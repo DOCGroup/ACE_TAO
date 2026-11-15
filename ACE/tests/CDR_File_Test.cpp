@@ -142,17 +142,29 @@ CDR_Test::operator == (const CDR_Test &rhs) const
   // @@ Workaround bug in egcs-1.1.1 using a single && expression
   // results in UMR errors in purify.
   if (this->char_ != rhs.char_)
+  {
     return false;
+  }
   if (this->word2_ != rhs.word2_)
+  {
     return false;
+  }
   if (this->word4_ != rhs.word4_)
+  {
     return false;
+  }
   if (this->word8_ != rhs.word8_)
+  {
     return false;
+  }
   if (!ACE::is_equal (this->fpoint_, rhs.fpoint_))
+  {
     return false;
+  }
   if (!ACE::is_equal (this->dprec_, rhs.dprec_))
+  {
     return false;
+  }
   return true;
 }
 
@@ -279,7 +291,9 @@ run_test (int write_file,
       *ace_file_stream::instance ()->output_file () << temp;
 
       if (!(temp == cdr_test))
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Data mismatch across file\n")));
+      }
     }
 
   return 0;
@@ -333,15 +347,21 @@ run_main (int argc, ACE_TCHAR *argv[])
     }
 
   if ((!reading || !writing) && fn == nullptr)
+  {
     usage (ACE_TEXT("CDR_File_Test"));
+  }
 
   if (!reading && !writing)
+  {
     usage (ACE_TEXT("CDR_File_Test"));
+  }
 
   // Create a temporary filename.
   ACE_FILE_Addr filename (ACE_sap_any_cast (ACE_FILE_Addr &));
   if (fn != nullptr)
+  {
     filename.set (fn);
+  }
 
   ACE_FILE_Connector connector;
   ACE_FILE_IO file;

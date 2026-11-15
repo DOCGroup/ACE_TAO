@@ -69,7 +69,9 @@ TAO_UIPMC_Endpoint::addr_to_string (char *buffer, size_t length)
 #endif /* ACE_HAS_IPV6 */
 
   if (length < actual_len)
+  {
     return -1;
+  }
 
 #if defined (ACE_HAS_IPV6)
   if (this->object_addr_.get_type () == AF_INET6)
@@ -110,7 +112,9 @@ TAO_UIPMC_Endpoint::is_equivalent (TAO_Endpoint const *other_endpoint)
     dynamic_cast<TAO_UIPMC_Endpoint const *> (other_endpoint);
 
   if (endpoint == nullptr)
+  {
     return false;
+  }
 
   return
     (this->port_ == endpoint->port_
@@ -121,7 +125,9 @@ CORBA::ULong
 TAO_UIPMC_Endpoint::hash ()
 {
   if (this->hash_val_ != 0)
+  {
     return this->hash_val_;
+  }
 
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
@@ -130,7 +136,9 @@ TAO_UIPMC_Endpoint::hash ()
                       this->hash_val_);
     // .. DCL
     if (this->hash_val_ != 0)
+    {
       return this->hash_val_;
+    }
 
     this->hash_val_ = this->object_addr_.hash ();
   }

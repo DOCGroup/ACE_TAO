@@ -30,7 +30,9 @@ CORBA::Object_ptr EventChannelFactory_i::create_object (
     ACE_OS::fopen (this->conf_file.c_str (), "r"), ACE_OS::fclose
   };
   if (!file)
+  {
     throw PortableGroup::NoFactory();
+  }
 
   ACE_Read_Buffer read_buf (file.get ());
   std::unique_ptr<char, void (*) (char *)> id_str {
@@ -46,15 +48,21 @@ CORBA::Object_ptr EventChannelFactory_i::create_object (
     {
       id_str.reset (read_buf.read (' '));
       if (!id_str)
+      {
         break;
+      }
 
       prog.reset (read_buf.read ('\n'));
       if (!prog)
+      {
         break;
+      }
 
       id_str.get ()[std::strlen (id_str.get ()) - 1] = '\0';
       if (std::strcmp (id_str.get (), type_id) == 0)
+      {
         return create_process (prog.get (), the_criteria, factory_creation_id);
+      }
     }
 
   throw PortableGroup::ObjectNotCreated ();
@@ -102,7 +110,9 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
 
   std::string::size_type const slash = process_str.find_last_of ('/');
   if (slash != std::string::npos)
+  {
     options.working_directory (process_str.substr (0, slash).c_str ());
+  }
   str = ACE_TEXT_CHAR_TO_TCHAR (process_str.c_str ());
 
   constexpr int ENV_BUF_LEN = 512;
@@ -154,7 +164,9 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
 
   ORBSVCS_DEBUG((LM_DEBUG, "accepting connection from event channel\n"));
   if (acceptor.accept(stream, &client_addr, &timeout) == -1)
+  {
     ORBSVCS_ERROR_RETURN ((LM_ERROR, "accept fail\n"), 0);
+  }
 
   ORBSVCS_DEBUG((LM_DEBUG, "Factory Connect established with %s:%d\n",
     client_addr.get_host_name(), client_addr.get_port_number() ));
@@ -170,13 +182,17 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
     byte_read += n;
 
   if (n < 0 || byte_read == 0)
+  {
     return result;
+  }
 
   try
     {
       CORBA::Object_var object { this->orb->string_to_object (ior) };
       if (this->objects.bind (this->id, object) == 0)
+      {
         return object._retn ();
+      }
     }
   catch (...)
     {

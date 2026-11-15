@@ -76,7 +76,9 @@ marshaled_equal_to_other (CORBA::ORB_ptr orb, CORBA::Object_ptr obj, TAO_MProfil
   TAO_MProfile *copy_mprofile  = &(stub_copy->base_profiles ());
 
   if (copy_mprofile->size() != other_mprofile->size())
+  {
     return false;
+  }
 
   for (size_t i=0; i<copy_mprofile->size(); ++i)
     {
@@ -84,7 +86,9 @@ marshaled_equal_to_other (CORBA::ORB_ptr orb, CORBA::Object_ptr obj, TAO_MProfil
       TAO_Profile *other_profile = other_mprofile->get_profile (i);
 
       if (! equal_endpoint (copy_profile, other_profile) )
+      {
         return false;
+      }
     }
 
   return true;

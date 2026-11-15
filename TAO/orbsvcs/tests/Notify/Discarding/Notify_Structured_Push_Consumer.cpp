@@ -91,13 +91,17 @@ Notify_Structured_Push_Consumer::push_structured_event (
     {
       expected = this->sent_ - this->max_events_per_consumer_ + this->count_;
       if (this->first_ != this->sent_ - this->max_events_per_consumer_ + 1)
+      {
         --expected;
+      }
     }
   else if (discard_policy_ == CosNotification::FifoOrder)
     {
       expected = this->sent_ - this->max_events_per_consumer_ + this->count_;
       if (this->first_ != this->sent_ - this->max_events_per_consumer_ + 1)
+      {
         --expected;
+      }
     }
   else if (discard_policy_ == CosNotification::LifoOrder)
     expected = this->count_;
@@ -120,5 +124,7 @@ Notify_Structured_Push_Consumer::push_structured_event (
   // However, on some platforms, we'll only receive mepc, because filtering
   // happened before the first event.
   if (this->count_ >= this->max_events_per_consumer_)
+  {
     this->client_.consumer_done (this);
+  }
 }

@@ -200,7 +200,10 @@ run_tests (interop::WChar_Passer_ptr server)
       {
         bool const result = run_one_test (server, t);
         ++numtests;
-        if (result) ++successes;
+        if (result)
+        {
+          ++successes;
+        }
         if (verbose)
           ACE_DEBUG ((LM_DEBUG, "%s[%d] %s\n",
                       test_name[i], data_set,
@@ -261,7 +264,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
       }
 
   if (tests_to_run == 0)
+  {
     tests_to_run = ALL_TESTS;
+  }
   // Indicates successful parsing of the command line
   return 0;
 }
@@ -278,11 +283,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
       if (parse_args (argc, argv) == -1)
+      {
         return 0;
+      }
 
       CORBA::Object_var const obj = orb->string_to_object (ior);
       if (CORBA::is_nil (obj.in ()))
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "arg is not a valid IOR string"), -1);
+      }
 
       interop::WChar_Passer_var const server =
         interop::WChar_Passer::_narrow (obj.in ());
@@ -298,7 +307,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   server_orb.in (),
                   (result ? "passed" : "failed")));
       if (kill_server)
+      {
         server->shutdown ();
+      }
     }
   catch (CORBA::Exception const &ex)
     {

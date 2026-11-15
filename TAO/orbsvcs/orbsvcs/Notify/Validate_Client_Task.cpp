@@ -38,7 +38,9 @@ TAO_Notify_validate_client_Task::svc ()
     }
 
     if (this->shutdown_)
+    {
       break;
+    }
 
     try
     {
@@ -58,7 +60,9 @@ TAO_Notify_validate_client_Task::svc ()
     }
 
     if (this->interval_ == ACE_Time_Value::zero)
+    {
       break;
+    }
 
     due = ACE_OS::gettimeofday () + this->interval_;
   }

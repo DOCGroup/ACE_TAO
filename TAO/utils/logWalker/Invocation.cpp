@@ -37,7 +37,9 @@ bool
 Invocation::init (const char * text, size_t offset, Thread *thread)
 {
   if (GIOP_Buffer::size_leadin == nullptr)
+  {
     GIOP_Buffer::init_leadin (Session::tao_version());
+  }
   const char *size_str = std::strstr (text, GIOP_Buffer::size_leadin);
   const char *id = size_str == nullptr ? nullptr : std::strchr (size_str, '[');
   if (size_str == nullptr || id == nullptr)
@@ -51,7 +53,9 @@ Invocation::init (const char * text, size_t offset, Thread *thread)
   if (std::strstr (text, "Request") == nullptr)
     this->repl_octets_ = new GIOP_Buffer(text, offset, thread, this);
   else
+  {
     this->req_octets_  = new GIOP_Buffer(text, offset, thread, this);
+  }
   return true;
 }
 
@@ -72,7 +76,9 @@ Invocation::set_target (const char *oid, size_t oid_len)
 {
   PeerObject *tgt = this->peer_->object_for (oid, oid_len);
   if (tgt == nullptr)
+  {
     return;
+  }
 
   if (this->target_ == nullptr)
     {
@@ -87,11 +93,15 @@ Invocation::message_complete ()
   if (this->is_oneway())
     {
       if (this->req_octets_ == nullptr || !this->req_octets_->is_full())
+      {
         return false;
+      }
     }
   else
     if (this->repl_octets_ == nullptr || !this->repl_octets_->is_full())
+    {
       return false;
+    }
 
   return true;
 }
@@ -110,7 +120,9 @@ Invocation::give_octets (bool request)
   if (request)
     this->req_octets_ = nullptr;
   else
+  {
     this->repl_octets_ = nullptr;
+  }
   return result;
 }
 
@@ -140,9 +152,13 @@ bool
 Invocation::sent_request () const
 {
   if (this->req_octets_)
+  {
     return this->req_octets_->sending();
+  }
   if (this->repl_octets_)
+  {
     return !this->repl_octets_->sending();
+  }
   return false;
 }
 
@@ -156,7 +172,9 @@ size_t
 Invocation::expected_size () const
 {
   if (repl_octets_ != nullptr)
+  {
     return repl_octets_->expected_size();
+  }
   return req_octets_->expected_size();
 }
 
@@ -182,7 +200,9 @@ bool
 Invocation::contains (size_t line)
 {
   if (this->req_octets_ == nullptr || this->is_oneway())
+  {
     return false;
+  }
   return
     line > this->req_octets_->log_posn() &&
     (this->repl_octets_ == nullptr || line < this->repl_octets_->log_posn());
@@ -253,7 +273,9 @@ void
 Invocation::dump_start_line (ostream &strm, size_t indent, const ACE_Time_Value& start)
 {
   if (this->req_octets_ == nullptr)
+  {
     return;
+  }
   this->req_level_ = indent;
   strm << setw(7) << this->req_octets_->log_posn() << " " << setw(0);
 
@@ -282,13 +304,17 @@ Invocation::dump_start_line (ostream &strm, size_t indent, const ACE_Time_Value&
   strm << "start request ";
 
   if (opname == nullptr || opname[0] == 0)
+  {
     opname = "<no operation>";
+  }
 
   strm << dir_1;
   if (this->target_ == nullptr)
     strm << "<unknown object>" ;
   else
+  {
     strm << this->target_->name();
+  }
   strm << dir_2 << this->peer_->id() << ", req " << this->req_id_;
   strm << " [" << opname << "]";
   if (this->is_oneway())
@@ -304,7 +330,9 @@ Invocation::dump_finish_line (ostream &strm, size_t indent, const ACE_Time_Value
   bool is_popped = this->repl_level_ > 0 && indent == this->req_level_;
 
   if (!is_popped && (this->finish_reported_ || this->is_oneway() || this->repl_octets_ == nullptr))
+  {
     return;
+  }
 
   if (!this->finish_reported_)
     {
@@ -379,19 +407,27 @@ Invocation::dump_detail (ostream &strm,
   this->new_line (strm, indent, 0, false, true);
 
   if (opname == nullptr || opname[0] == 0)
+  {
     opname = "<no operation>";
+  }
 
   strm << dir_1;
   if (this->target_ == nullptr)
     strm << "<unknown object>" ;
   else
+  {
     strm << this->target_->name();
+  }
   if (mode == Dump_Proc || mode == Dump_Both)
+  {
     strm << dir_2 << this->peer_->id() << ",";
+  }
 
   strm << " req " << this->req_id_;
   if (show_handle)
+  {
     strm << "(h=" << this->handle_ << ")";
+  }
   strm << " [" << opname << "]\t";
   ACE_Time_Value req_time;
   ACE_Time_Value rep_time;
@@ -407,20 +443,28 @@ Invocation::dump_detail (ostream &strm,
         }
     }
   if (req_time.msec() != 0 && rep_time.msec() != 0)
+  {
     strm << " took " << (rep_time.msec() - req_time.msec()) << " ms";
+  }
 
   if (this->req_octets_ != nullptr)
     {
       strm << " Request, ";
       if (this->req_octets_->num_contexts() > 0)
+      {
         strm << "with " << this->req_octets_->num_contexts() << " contexts, ";
+      }
       strm << "size " << this->req_octets_->expected_size() << " ";
       strm << "line " << this->req_octets_->log_posn();
       if (mode == Dump_Thread || mode == Dump_Both)
+      {
         strm << " " << this->req_octets_->thread()->alias();
+      }
     }
   else
+  {
     strm << " <no request found>";
+  }
   if (this->is_oneway())
     strm << " oneway";
   else
@@ -447,12 +491,18 @@ Invocation::dump_detail (ostream &strm,
             }
         }
       else
+      {
         strm << " <no reply found>";
+      }
     }
   if (delta > 0)
+  {
     strm << " log span = " << delta;
+  }
   if (this->req_octets_ != nullptr && this->req_octets_->has_octets())
+  {
     this->dump_special_details (strm, indent, opname);
+  }
   strm << endl;
   if (!this->notify_incidents_.empty ())
     {
@@ -468,7 +518,9 @@ Invocation::dump_special_details (ostream &strm, size_t indent, const char *opna
 {
   size_t rstat {};
   if (this->repl_octets_ != nullptr && this->repl_octets_->has_octets())
+  {
     rstat = this->repl_octets_->reply_status();
+  }
   int opid {};
   if (std::strcmp (opname, "_is_a") == 0)
     {
@@ -527,18 +579,26 @@ Invocation::dump_special_details (ostream &strm, size_t indent, const char *opna
             {
               ACE_CDR::ULong len;
               if (!(cdr >> len))
+              {
                 break;
+              }
               strm << cdr.rd_ptr();
               if (!cdr.skip_bytes (len))
+              {
                 break;
+              }
               if (!(cdr >> len))
+              {
                 break;
+              }
               if (len > 1)
                 {
                   strm << "." << cdr.rd_ptr();
                 }
               if (!cdr.skip_bytes (len))
+              {
                 break;
+              }
               if (count > 0)
                 {
                   strm << "/";
@@ -581,7 +641,9 @@ Invocation::dump_special_details (ostream &strm, size_t indent, const char *opna
     }
 
   if (this->repl_octets_ == nullptr || !this->repl_octets_->has_octets())
+  {
     return;
+  }
 
   ACE_InputCDR &giop_cdr = this->repl_octets_->payload();
   ACE_InputCDR cdr (giop_cdr.rd_ptr(),
@@ -596,7 +658,9 @@ Invocation::dump_special_details (ostream &strm, size_t indent, const char *opna
           {
             ACE_CDR::Boolean x;
             if (cdr >> ACE_InputCDR::to_boolean (x))
+            {
               strm << " reply: " << (x ? "yes" : "no");
+            }
             break;
           }
         case 2:
@@ -604,7 +668,9 @@ Invocation::dump_special_details (ostream &strm, size_t indent, const char *opna
             this->new_line (strm, indent, 8, true, false);
             ACE_CDR::Long x;
             if (cdr >> x)
+            {
               strm << "MyID reply: " << x;
+            }
             break;
           }
         default:;

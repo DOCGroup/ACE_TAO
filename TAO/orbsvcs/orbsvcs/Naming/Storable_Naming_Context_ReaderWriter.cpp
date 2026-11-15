@@ -44,7 +44,9 @@ TAO_Storable_Naming_Context_ReaderWriter::write (TAO_Storable_Naming_Context & c
   this->write_header(header);
 
   if (0u == header.size ())
+  {
     return;
+  }
 
   ACE_Hash_Map_Iterator<TAO_Storable_ExtId,TAO_Storable_IntId,
                         ACE_Null_Mutex> it = context.storable_context_->map().begin();
@@ -182,7 +184,9 @@ TAO_Storable_Naming_Context_ReaderWriter::read (TAO_Storable_Naming_Context & co
   if (stream_.good ())
     return 0;
   else
+  {
     return -1;
+  }
 }
 
 void
@@ -267,7 +271,9 @@ TAO_Storable_Naming_Context_ReaderWriter::read_global (TAO_NS_Persistence_Global
     {
       if (ex.get_state() != TAO::Storable_Base::goodbit &&
           ex.get_state() != TAO::Storable_Base::eofbit)
+      {
         throw CORBA::INTERNAL ();
+      }
     }
 
   global.counter(counter);

@@ -39,7 +39,9 @@ ACE_RLECompressor::compress (void const *in_ptr,
             case 128:
               out_base = out_index;
               if (out_base >= max_out_len)
+              {
                 return (std::numeric_limits<ACE_UINT64>::max) ();
+              }
               ++out_index;
               run_code = false;
               run_count = 0;
@@ -58,7 +60,9 @@ ACE_RLECompressor::compress (void const *in_ptr,
                     {
                       out_base = out_index;
                       if (out_base >= max_out_len)
+                      {
                         return (std::numeric_limits<ACE_UINT64>::max) ();
+                      }
                       ++out_index;
                       run_count = 0;
                     }
@@ -71,7 +75,9 @@ ACE_RLECompressor::compress (void const *in_ptr,
                     {
                       out_base = out_index;
                       if (out_base >= max_out_len)
+                      {
                         return (std::numeric_limits<ACE_UINT64>::max) ();
+                      }
                       ++out_index;
                     }
                   run_code = false;
@@ -86,7 +92,9 @@ ACE_RLECompressor::compress (void const *in_ptr,
           ++run_count;
 
           if (out_index >= max_out_len)
+          {
             return (std::numeric_limits<ACE_UINT64>::max) ();
+          }
           out_p[out_index] = cur_byte;
           ++out_index;
         }
@@ -122,7 +130,9 @@ ACE_RLECompressor::decompress (void const *in_ptr,
           else if ((cur_byte & 0x80) != 0)
             {
               if (in_len == 0)
+              {
                 return (std::numeric_limits<ACE_UINT64>::max) ();
+              }
               --in_len;
               std::memset (out_p, *in_p, cpy_len);
               ++in_p;
@@ -134,7 +144,9 @@ ACE_RLECompressor::decompress (void const *in_ptr,
               in_len -= cpy_len;
             }
           else
+          {
             return (std::numeric_limits<ACE_UINT64>::max) ();
+          }
 
           out_p += cpy_len;
           max_out_len -= cpy_len;

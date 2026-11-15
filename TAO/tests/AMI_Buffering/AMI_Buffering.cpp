@@ -12,7 +12,9 @@ AMI_Buffering::Nest_Guard::Nest_Guard (AMI_Buffering &a)
 {
   ++target_.nest_;
   if (target_.nest_ > target_.max_nest_)
+  {
     target_.max_nest_ = target_.nest_;
+  }
 }
 
 AMI_Buffering::Nest_Guard::~Nest_Guard ()
@@ -58,9 +60,13 @@ void
 AMI_Buffering::try_shutdown ()
 {
   if (!this->must_shutdown_ || this->nest_ > 0)
+  {
     return;
+  }
   if (this->max_nest_ > 1)
+  {
     ACE_DEBUG ((LM_DEBUG, "(%P|%t) max nesting level: %d\n", this->max_nest_));
+  }
   this->admin_->shutdown ();
 
   this->orb_->shutdown (false);

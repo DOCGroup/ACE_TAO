@@ -35,7 +35,9 @@ Broadcaster_i::add (Receiver_ptr receiver,
 
   // Insert the Receiver reference to the set
   if (receiver_set_.insert (receiver_data) == -1)
+  {
     throw Broadcaster::CannotAdd ("failed to add to the receiver set\n");
+  }
 
   // Tell everyone which person just joined the chat.
   ACE_CString broadcast_string =
@@ -77,7 +79,9 @@ Broadcaster_i::remove (Receiver_ptr receiver)
 
   // Remove the reference from our list.
   if (this->receiver_set_.remove (receiver_data_to_remove) == -1)
+  {
     throw Broadcaster::CannotRemove ("failed to remove from receiver set\n");
+  }
 
   // Tell everyone, which person left the chat.
   ACE_CString broadcast_string = "**** "
@@ -107,7 +111,9 @@ Broadcaster_i::say (Receiver_ptr receiver,
            // behave well on other ORBs since <_is_equivalent> isn't
            // guaranteed to differentiate object references.
           if ((*iter).receiver_.in ()->_is_equivalent (receiver))
+          {
             sender_nickname = (*iter).nickname_;
+          }
         }
 
       // Broadcast the message to all registered clients

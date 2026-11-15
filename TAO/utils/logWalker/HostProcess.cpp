@@ -66,7 +66,9 @@ HostProcess::find_thread (long tid, size_t offset)
     {
       i.next(thr);
       if (thr->id() == tid)
+      {
         return thr;
+      }
     }
   char alias[20];
   std::snprintf (alias, 20, "Thread[" ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "]",
@@ -88,10 +90,14 @@ HostProcess::find_thread_for_peer (const ACE_CString &addr)
       i.next(thr);
       PeerProcess *pp = thr->peek_new_connection();
       if (pp == nullptr)
+      {
         continue;
+      }
 
       if (pp->match_server_addr(ep))
+      {
         return thr;
+      }
     }
   return nullptr;
 }
@@ -106,7 +112,9 @@ HostProcess::find_thread_for_handle (long h)
     {
       i.next(thr);
       if (thr->active_handle() == h && thr->giop_target() != nullptr)
+      {
         return thr;
+      }
     }
   return thr;
 }
@@ -124,14 +132,18 @@ PeerProcess *
 HostProcess::find_peer (long h)
 {
   if (this->by_handle_.size() == 0)
+  {
     return nullptr;
+  }
   for (PeerArray::ITERATOR i(this->by_handle_);
        !i.done();
        i++)
     {
       PeerNode *node = reinterpret_cast<PeerNode *>(i.next()->item_);
       if (node->handle_ == h)
+      {
         return node->peer_;
+      }
     }
   return nullptr;
 }
@@ -165,7 +177,9 @@ HostProcess::has_endpoint (const Endpoint& addr, bool listen)
       Endpoint *elem {};
       i.next (elem);
       if (*elem == addr)
+      {
         return true;
+      }
     }
   return false;
 }
@@ -208,7 +222,9 @@ void
 HostProcess::remove_peer(long h)
 {
   if (this->by_handle_.size() == 0)
+  {
     return;
+  }
   for (PeerArray::ITERATOR i(this->by_handle_);
        !i.done();
        i++)
@@ -239,7 +255,9 @@ HostProcess::dump_summary (ostream &strm)
           t_iter.next(ep);
           strm << ep->addr_.c_str();
           if (++count < num)
+          {
             strm << ", ";
+          }
         }
       strm << endl;
     }
@@ -259,7 +277,9 @@ HostProcess::dump_ident (ostream &strm, const char *message)
 {
   strm <<"\nHost process ";
   if (this->proc_name_.length())
+  {
     strm << this->proc_name_;
+  }
   strm << " pid (" << this->pid_ << ") " << message << endl;
 }
 
@@ -331,14 +351,20 @@ HostProcess::iterate_peers (int group,
     {
       PeerProcs::ENTRY *entry;
       if (i.next(entry) == 0)
+      {
         continue;
+      }
       PeerProcess *pp = entry->item();
       if (pp == nullptr)
+      {
         continue;
+      }
       if ((group != 3) &&
           ((pp->is_server() && group == 1)
            || (!pp->is_server() && group == 2)))
+      {
         continue;
+      }
 
       switch (operation)
         {
@@ -364,7 +390,9 @@ HostProcess::iterate_peers (int group,
           else
             {
               if (!first)
+              {
                 this->dump_ident (*strm,"Invocations continued");
+              }
               entry->item()->dump_invocation_detail (*strm);
               *strm << endl;
             }
@@ -388,14 +416,20 @@ HostProcess::dump_peer_summary (ostream &strm)
     {
       PeerProcs::ENTRY *entry;
       if (i.next(entry) == 0)
+      {
         break;
+      }
       PeerProcess *pp = entry->item();
       if (pp == nullptr)
+      {
         break;
+      }
       if (pp->is_server())
         ++num_servers;
       else
+      {
         ++num_clients;
+      }
     }
 
   strm << " from " << num_clients << " clients" << endl;

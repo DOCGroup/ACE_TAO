@@ -129,7 +129,9 @@ cancellation (ACE_Timer_Queue &timer_queue,
       else if (second_timer)
         expected_number_of_handle_close_calls = 2;
       else
+      {
         expected_number_of_handle_close_calls = 1;
+      }
     }
 
   Reference_Counted_Event_Handler *handler =
@@ -177,7 +179,9 @@ cancellation (ACE_Timer_Queue &timer_queue,
       if (second_timer)
         ACE_TEST_ASSERT (result == 2);
       else
+      {
         ACE_TEST_ASSERT (result == 1);
+      }
     }
   else
     {
@@ -560,7 +564,9 @@ run_main (int argc, ACE_TCHAR *argv[])
   int result =
     parse_args (argc, argv);
   if (result != 0)
+  {
     return result;
+  }
 
   if (test_cancellation)
     {

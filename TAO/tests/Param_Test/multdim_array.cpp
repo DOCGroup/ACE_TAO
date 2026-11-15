@@ -144,7 +144,9 @@ Test_Multdim_Array::check_validity ()
                      this->ret_.in ()))
     return 1;
   else
+  {
     return 0;
+  }
 }
 
 CORBA::Boolean
@@ -165,7 +167,9 @@ Test_Multdim_Array::compare (const Param_Test::Multdim_Array_slice *a1,
           for (CORBA::ULong k=0; k < Param_Test::DIM1; k++)
             {
               if (a1[i][j][k] != a2[i][j][k])
+              {
                 return 0;
+              }
             }
         }
     }

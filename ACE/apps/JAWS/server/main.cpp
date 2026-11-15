@@ -40,7 +40,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_OS::signal (SIGUSR2, (ACE_SignalHandler) handler);
 
   if (daemon.open (argc, argv, ACE_DEFAULT_LOGGER_KEY, 0) != 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), 1);
+  }
 
   // The configured service creates threads, and the
   // server won't exit until the threads die.

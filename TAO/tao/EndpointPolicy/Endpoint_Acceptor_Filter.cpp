@@ -32,12 +32,16 @@ TAO_Endpoint_Acceptor_Filter::fill_profile (TAO::ObjectKey const& object_key,
           tagfound = acceptor->tag () == endpoints_[epx]->protocol_tag();
         }
       if (!tagfound)
+      {
         continue;
+      }
 
       if (acceptor->create_profile (object_key,
                                     mprofile,
                                     priority) == -1)
+      {
         return -1;
+      }
     }
 
   if (TAO_debug_level > 2)
@@ -70,7 +74,9 @@ TAO_Endpoint_Acceptor_Filter::fill_profile (TAO::ObjectKey const& object_key,
           for (CORBA::ULong ep_ndx {}; !epmatch && ep_ndx < num_endpoints; ++ep_ndx)
             {
               if (endpoints_[ep_ndx]->protocol_tag() != pfile->tag())
+              {
                 continue;
+              }
 
               EndpointPolicy::EndpointValueBase_ptr const evb =
                 endpoints_[ep_ndx];
@@ -79,7 +85,9 @@ TAO_Endpoint_Acceptor_Filter::fill_profile (TAO::ObjectKey const& object_key,
                 dynamic_cast<TAO_Endpoint_Value_Impl const*> (evb);
 
               if (evi == nullptr)
+              {
                 continue;
+              }
 
               epmatch = evi->is_equivalent(ep_in_pfile);
             }

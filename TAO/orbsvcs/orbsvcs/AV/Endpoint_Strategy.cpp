@@ -116,10 +116,14 @@ TAO_AV_Endpoint_Process_Strategy::activate ()
                               -1);
           // if we were not interrupted due to a EINTR, break
           if (errno != EINTR)
+          {
             break;
+          }
         }
       else
+      {
         break;
+      }
     }
 
   // The job of the semaphore is done, remove it.
@@ -156,7 +160,9 @@ TAO_AV_Endpoint_Process_Strategy::bind_to_naming_service ()
   try
     {
       if (CORBA::is_nil (this->naming_context_.in ()) == 0)
+      {
         return 0;
+      }
 
       CORBA::Object_var naming_obj =
         TAO_ORB_Core_instance ()->orb ()->resolve_initial_references ("NameService");
@@ -190,7 +196,10 @@ TAO_AV_Endpoint_Process_Strategy::get_vdev ()
                        this->host_,
                        (long) this->pid_);
 
-      if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",vdev_name));
+      if (TAO_debug_level > 0)
+      {
+        ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",vdev_name));
+      }
 
       // Create the name
       CosNaming::Name VDev_Name (1);
@@ -261,7 +270,10 @@ TAO_AV_Endpoint_Process_Strategy_A::get_stream_endpoint ()
                        this->host_,
                        (long) this->pid_);
 
-      if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",stream_endpoint_name));
+      if (TAO_debug_level > 0)
+      {
+        ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",stream_endpoint_name));
+      }
 
       // Create the name
       CosNaming::Name Stream_Endpoint_A_Name (1);
@@ -346,7 +358,10 @@ TAO_AV_Endpoint_Process_Strategy_B::get_stream_endpoint ()
                        this->host_,
                        (long) this->pid_);
 
-      if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",stream_endpoint_name));
+      if (TAO_debug_level > 0)
+      {
+        ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",stream_endpoint_name));
+      }
 
       // Create the name
       CosNaming::Name Stream_Endpoint_B_Name (1);

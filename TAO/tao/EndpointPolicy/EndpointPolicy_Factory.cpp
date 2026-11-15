@@ -31,7 +31,9 @@ TAO_EndpointPolicy_Factory::create_policy (
       // This pointer aliases the sequence stored in the supplied Any.
       EndpointPolicy::EndpointList const *endpoint_list {};
       if (!(value >>= endpoint_list))
+      {
         throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
+      }
 
       TAO_Acceptor_Registry const& registry =
         this->orb_core_->lane_resources ().acceptor_registry ();
@@ -67,12 +69,16 @@ TAO_EndpointPolicy_Factory::create_policy (
               (*endpoint_list)[idx].in ());
 
           if (evi == nullptr)
+          {
             continue;
+          }
 
           for (std::unique_ptr<TAO_Acceptor> const &acceptor : registry.acceptors ())
             {
               if (!found_one && acceptor->tag () == prot_tag)
+              {
                 found_one = evi->validate_acceptor (acceptor.get (), prot_count > 1);
+              }
             }
         }
 
@@ -80,7 +86,9 @@ TAO_EndpointPolicy_Factory::create_policy (
       // is listening on. A CORBA::PolicyError exception with a
       // PolicyErrorCode of UNSUPPORTED_POLICY_VALUE is raised.
       if (!found_one)
+      {
         throw ::CORBA::PolicyError (CORBA::UNSUPPORTED_POLICY_VALUE);
+      }
 
       TAO_EndpointPolicy_i *tmp {};
       ACE_NEW_THROW_EX (tmp,
@@ -91,7 +99,9 @@ TAO_EndpointPolicy_Factory::create_policy (
       return tmp;
     }
   else
+  {
     throw ::CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
+  }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

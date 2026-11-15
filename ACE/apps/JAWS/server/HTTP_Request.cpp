@@ -91,7 +91,9 @@ HTTP_Request::parse_request (ACE_Message_Block &mb)
       || (this->got_request_line () && this->version () == nullptr))
     return this->init (mb.rd_ptr (), mb.length ());
   else
+  {
     return 0;
+  }
 }
 
 void
@@ -132,7 +134,9 @@ HTTP_Request::parse_request_line (char *const request_line)
         this->status_ = HTTP_Status_Code::STATUS_NOT_IMPLEMENTED;
 
       if (this->path (this->uri ()) == nullptr)
+      {
         this->status_ = HTTP_Status_Code::STATUS_NOT_FOUND;
+      }
     }
 
   ACE_DEBUG ((LM_DEBUG, " (%t) request %s %s %s parsed\n",
@@ -158,7 +162,9 @@ HTTP_Request::init (char *const buffer,
   if (data_ != nullptr)
     datalen_ = buflen;
   else
+  {
     datalen_ = 0;
+  }
 
   ACE_DEBUG ((LM_DEBUG, " (%t) init has initialized\n"));
 
@@ -243,7 +249,9 @@ HTTP_Request::header_strings (int index) const
   char const *hs {};
 
   if (0 <= index && index < NUM_HEADER_STRINGS)
+  {
     hs = this->header_strings_[index];
+  }
 
   return hs;
 }
@@ -321,7 +329,9 @@ const char *
 HTTP_Request::method (const char *method_string)
 {
   if (this->method_)
+  {
     ACE_OS::free (this->method_);
+  }
 
   if (method_string == nullptr)
     {
@@ -329,7 +339,9 @@ HTTP_Request::method (const char *method_string)
       this->method_ = nullptr;
     }
   else
+  {
     this->method_ = ACE_OS::strdup (method_string);
+  }
 
   return this->method_;
 }
@@ -338,7 +350,9 @@ const char *
 HTTP_Request::uri (char *uri_string)
 {
   if (this->uri_)
+  {
     ACE_OS::free (this->uri_);
+  }
 
   if (uri_string == nullptr)
     {
@@ -359,12 +373,16 @@ const char *
 HTTP_Request::version (const char *version_string)
 {
   if (this->version_)
+  {
     ACE_OS::free (this->version_);
+  }
 
   if (version_string)
     this->version_ = ACE_OS::strdup (version_string);
   else
+  {
     this->version_ = nullptr;
+  }
 
   return this->version_;
 }
@@ -375,7 +393,9 @@ HTTP_Request::type (const char *type_string)
   this->type_ = HTTP_Request::NO_TYPE;
 
   if (type_string == nullptr)
+  {
     return this->type_;
+  }
 
   for (size_t i = 0;
        i < HTTP_Request::NUM_METHOD_STRINGS;
@@ -388,7 +408,9 @@ HTTP_Request::type (const char *type_string)
       }
 
   if (this->type_ == HTTP_Request::NO_TYPE)
+  {
     this->status_ = HTTP_Status_Code::STATUS_NOT_IMPLEMENTED;
+  }
 
   return this->type_;
 }
@@ -403,7 +425,9 @@ HTTP_Request::cgi (char *uri_string)
   ACE_DEBUG ((LM_DEBUG, " (%t) HTTP_Request::cgi (%s)\n", uri_string));
 
   if (uri_string == nullptr || std::strlen (uri_string) == 0)
+  {
     return 0;
+  }
 
   // There are 2 cases where a file could be a CGI script
   //
@@ -438,11 +462,15 @@ HTTP_Request::cgi_in_path (char *uri_string, char *&extra_path_info)
   if (HTTP_Config::instance ()->cgi_path ())
     cgi_path = ACE_OS::strdup (HTTP_Config::instance ()->cgi_path ());
   else
+  {
     cgi_path = ACE_OS::strdup ("");
+  }
 
   // error checking considered helpful!
   if (cgi_path == nullptr)
+  {
     return 0;
+  }
 
   char *lasts {};
   char *cgi_path_next = ACE_OS::strtok_r (cgi_path, ":", &lasts);
@@ -538,10 +566,14 @@ HTTP_Request::cgi_args_and_env (char *&extra_path_info)
   char *cgi_question {};
 
   if (extra_path_info)
+  {
     cgi_question = std::strchr (extra_path_info, '?');
+  }
 
   if (extra_path_info == cgi_question)
+  {
     extra_path_info = nullptr;
+  }
 
   if (cgi_question)
     {
@@ -579,7 +611,9 @@ HTTP_Request::cgi_args_and_env (char *&extra_path_info)
 
                   while (*ptr++)
                       if (*ptr == '&' || *ptr == '=')
+                      {
                         *ptr = '\0';
+                      }
 
                   HTTP_Helper::HTTP_decode_string (this->cgi_env_[i - 1]);
                 }
@@ -603,7 +637,10 @@ HTTP_Request::path (const char *uri_string)
   char buf[MAXPATHLEN + 1];
   buf[0] = '\0';
 
-  if (file_name == nullptr) return nullptr;
+  if (file_name == nullptr)
+  {
+    return nullptr;
+  }
 
   if (*file_name == '/')
     {
@@ -627,7 +664,9 @@ HTTP_Request::path (const char *uri_string)
               struct passwd *pw_struct_ptr;
               if (ACE_OS::getpwnam_r (buf, &pw_struct, pw_buf,
                                       sizeof (pw_buf), &pw_struct_ptr) == 0)
+              {
                 return nullptr;
+              }
               std::strcpy (buf, pw_struct.pw_dir);
 #endif /* NOT ACE_WIN32 AND NOT VXWORKS */
             }

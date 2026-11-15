@@ -78,7 +78,9 @@ Policy_Tester::init (int argc,
           this->rt_object_properties_->ior_source (ACE_TString (arg));
         }
       else
+      {
         arg_shifter.consume_arg ();
+      }
     }
 
   if (!this->rt_poa_properties_ || !this->rt_object_properties_)
@@ -91,7 +93,9 @@ Policy_Tester::init (int argc,
   int const result = this->create_objects ();
 
   if (result != 0)
+  {
     return result;
+  }
 
   return 0;
 }

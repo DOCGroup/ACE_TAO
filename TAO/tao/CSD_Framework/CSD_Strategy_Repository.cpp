@@ -32,7 +32,9 @@ TAO_CSD_Strategy_Repository::find (std::string const &name)
     }
 
   if (node != nullptr)
+  {
     return CSD_Framework::Strategy::_duplicate (node->strategy_.in ());
+  }
 
   return CSD_Framework::Strategy::_nil();
 }

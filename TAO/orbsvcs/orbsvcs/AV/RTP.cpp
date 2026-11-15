@@ -72,7 +72,9 @@ RTP_Packet::RTP_Packet(char* buffer, int length)
       this->extension_bytes_ = 4 + extension_data_size;
     }
   else
+  {
     this->extension_bytes_ = 0;
+  }
 
   this->packet_size_ = static_cast<ACE_UINT16> (length);
   this->payload_size_ = static_cast<ACE_UINT16> (length-index);
@@ -119,7 +121,9 @@ RTP_Packet::RTP_Packet(unsigned char padding,
   }
 
   if (csrc_count > 15)
+  {
     csrc_count = 15; // Only 15 contributing sources can be specified.
+  }
 
   if (csrc_list != nullptr)
     for (unsigned char i {}; i < csrc_count; ++i)
@@ -267,11 +271,15 @@ RTP_Packet::is_valid ()
 
   // make sure the RTP version is correct
   if (this->ver() != RTP_VERSION)
+  {
     return 0;
+  }
 
   // make sure the payload type is not SR or RR
   if ((this->pt() == RTCP_PT_SR) || (this->pt() == RTCP_PT_RR))
+  {
     return 0;
+  }
 
   // if the p bit is set, the last octet of the packet must contain a valid
   // octet count, in particular, less than the total packet length minus
@@ -279,7 +287,9 @@ RTP_Packet::is_valid ()
   if (this->pad() != 0)
     if ((unsigned int)this->packet_[this->packet_size_] >=
         (this->packet_size_ - (12 + this->cc() + this->extension_bytes_)))
+    {
       return 0;
+    }
 
   // If there is an extension, it is ignored (taken care of in constructor)
 
@@ -327,7 +337,9 @@ TAO_AV_RTP_Object::handle_input ()
   int n = this->transport_->recv (this->frame_.rd_ptr (),
                                   this->frame_.size ());
   if (n == 0)
+  {
     ORBSVCS_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP::handle_input:connection closed\n"),-1);
+  }
   if (n < 0)
     {
       if ((errno == EADDRNOTAVAIL) || (errno == ECONNRESET))
@@ -336,14 +348,18 @@ TAO_AV_RTP_Object::handle_input ()
           return -1;
         }
       else
+      {
         ORBSVCS_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP::handle_input:recv error\n"),-1);
+      }
     }
 
   this->frame_.wr_ptr (this->frame_.rd_ptr () + n);
   ACE_Addr *addr = this->transport_->get_peer_addr ();
 
   if(this->control_object_)
+  {
     this->control_object_->handle_control_input (std::addressof (this->frame_), *addr);
+  }
 
   // Get payload that has been converted to host byte order
   char *data_ptr;
@@ -389,7 +405,9 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
         ORBSVCS_DEBUG ((LM_DEBUG,
                     "TAO_AV_RTP_Object::send_frame - error: format type mismatch"));
       if (frame_info->ssrc != 0)
+      {
         this->ssrc_ = frame_info->ssrc;
+      }
 
       TAO_AV_RTCP_Object *rtcp_prot_obj = dynamic_cast<TAO_AV_RTCP_Object*> (this->control_object_);
       // set the ssrc on the control object so the RTCP traffic can be matched
@@ -479,11 +497,15 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
 
   result = this->transport_->send (std::addressof (mb));
   if (result < 0)
+  {
     ORBSVCS_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP::send_frame failed\n"),result);
+  }
 
   TAO_AV_RTCP_Object *rtcp_prot_obj = dynamic_cast<TAO_AV_RTCP_Object*> (this->control_object_);
   if (rtcp_prot_obj)
+  {
     rtcp_prot_obj->handle_control_output (std::addressof (mb));
+  }
 
   return 0;
 }
@@ -512,7 +534,9 @@ TAO_AV_RTP_Object::send_frame (iovec const *iov,
                     "TAO_AV_RTP_Object::send_frame - error: format type mismatch"));
       this->sequence_num_ = static_cast<ACE_UINT16> (frame_info->sequence_num);
       if (frame_info->ssrc != 0)
+      {
         this->ssrc_ = frame_info->ssrc;
+      }
 
       TAO_AV_RTCP_Object *rtcp_prot_obj = dynamic_cast<TAO_AV_RTCP_Object*> (this->control_object_);
       // set the ssrc on the control object so the RTCP traffic can be matched
@@ -608,7 +632,9 @@ TAO_AV_RTP_Object::send_frame (iovec const *iov,
   result = this->transport_->send (send_iov, iovcnt);
 
   if (result < 0)
+  {
     ORBSVCS_ERROR_RETURN ((LM_ERROR,"TAO_AV_RTP::send_frame failed\n"),result);
+  }
 
   return 0;
 }
@@ -632,7 +658,9 @@ TAO_AV_RTP_Object::TAO_AV_RTP_Object (TAO_AV_Callback *callback,
   int result = ACE_OS::hostname (buf, BUFSIZ);
   unsigned long ipaddr = 0;
   if (result == 0)
+  {
     ipaddr = ACE_OS::inet_addr (buf);
+  }
   this->ssrc_ = TAO_AV_RTCP::alloc_srcid (ipaddr);
 
   this->frame_.size (2 * this->transport_->mtu ());
@@ -644,7 +672,9 @@ int
 TAO_AV_RTP_Object::destroy ()
 {
   if(this->control_object_)
-     this->control_object_->destroy ();
+  {
+    this->control_object_->destroy ();
+  }
 
   this->callback_->handle_destroy ();
   delete this;
@@ -669,7 +699,9 @@ TAO_AV_RTP_Object::set_policies (TAO_AV_PolicyList const &policy_list)
             TAO_AV_Payload_Type_Policy *payload_policy =
               static_cast<TAO_AV_Payload_Type_Policy *> (policy);
             if (payload_policy == nullptr)
+            {
               ORBSVCS_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP_Object::send_frame:Payload policy not defined\n"),-1);
+            }
             this->format_ = payload_policy->value ();
           }
           break;
@@ -678,7 +710,9 @@ TAO_AV_RTP_Object::set_policies (TAO_AV_PolicyList const &policy_list)
             TAO_AV_SSRC_Policy *ssrc_policy =
               static_cast<TAO_AV_SSRC_Policy *> (policy);
             if (ssrc_policy == nullptr)
+            {
               ORBSVCS_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP_Object::send_frame:SSRC policy not defined\n"),-1);
+            }
             this->ssrc_ = ssrc_policy->value ();
           }
           break;

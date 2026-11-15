@@ -74,7 +74,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           if ((ACE_OS::strcasecmp (argv [i], ACE_TEXT ("-ORBEndpoint")) == 0) ||
               (ACE_OS::strcasecmp (argv [i], ACE_TEXT ("-ORBListenEndpoints")) == 0))
+          {
             endpoint_found = true;
+          }
         }
 
       if (!endpoint_found)
@@ -88,7 +90,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
 
       if (parse_args (argc, argv, ior_output_file) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");

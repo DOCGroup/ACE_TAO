@@ -34,7 +34,9 @@ parse_args (int argc,
         {
           ACE_TCHAR const *mode = get_opts.opt_arg ();
           if (mode == nullptr)
+          {
             return 0;
+          }
 
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) - mode set to <%s> for collocated oneway test\n"),
@@ -65,7 +67,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   std::string server_orb;
   std::string client_orb;
   if (parse_args (argc, argv, output, input, sync_mode, server_orb, client_orb) == -1)
+  {
     return -1;
+  }
 
   try
     {

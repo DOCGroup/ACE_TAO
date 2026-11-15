@@ -56,7 +56,9 @@ QUEUE* squeue(ALLOCATOR* shmem_allocator)
   // This is the easy case since if we find hash table in the
   // memory-mapped file we know it's already initialized.
   if (shmem_allocator->find (QUEUE_NAME, queue) == 0)
+  {
     return (QUEUE *) queue;
+  }
 
   // Create a new map (because we've just created a new
   // memory-mapped file).
@@ -66,7 +68,9 @@ QUEUE* squeue(ALLOCATOR* shmem_allocator)
 
   // If allocation failed ...
   if (queue == nullptr)
+  {
     return nullptr;
+  }
 
   new (queue) QUEUE (shmem_allocator);
 
@@ -115,7 +119,9 @@ int processRecord (ALLOCATOR *shmem_allocator)
               ACE_TEXT ("|Record id1:%d|Record id2:%d\n"),
               record.name (), record.id1 (), record.id2 ()));
   if (record.id1 () == -1)
+  {
     queue->enqueue_tail (record, shmem_allocator);
+  }
   return record.id1 ();
 }
 // Listing 4
@@ -252,7 +258,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (argc == 1)
     handle_parent(argv[0]);
   else
+  {
     handle_child();
+  }
 
   return 0;
 }

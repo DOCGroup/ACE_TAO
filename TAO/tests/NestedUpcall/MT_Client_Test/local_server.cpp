@@ -32,7 +32,9 @@ int
 MT_Server_Task::svc ()
 {
   if (this->mT_Server_.init (this->argc_, this->argv_, this->orb_manager_ptr_) == -1)
+  {
     return -1;
+  }
   return this->mT_Server_.run_ORB_briefly ();
 }
 
@@ -126,10 +128,14 @@ MT_Server::init (int argc,
       if (this->orb_manager_ptr_->init_child_poa (this->argc_,
                                                   this->argv_.data (),
                                                   "child_poa") == -1)
+      {
         return -1;
+      }
 
       if (this->parse_args () == -1)
+      {
         return -1;
+      }
 
       this->str_  =
         this->orb_manager_ptr_->activate_under_child_poa ("MT",
@@ -161,7 +167,9 @@ MT_Server::init (int argc,
         }
 
       if (TAO_debug_level > 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "We have a proper reference to the Object.\n"));
+      }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -177,7 +185,9 @@ MT_Server::~MT_Server ()
   try
     {
       if (this->orb_manager_ptr_)
+      {
         this->orb_manager_ptr_->deactivate_under_child_poa (this->str_.in ());
+      }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -189,7 +199,9 @@ int
 MT_Server::run_ORB_briefly ()
 {
   if (this->orb_manager_ptr_->activate_poa_manager () == -1)
+  {
     return -1;
+  }
 
   if (this->iterations_ > 0)
     {

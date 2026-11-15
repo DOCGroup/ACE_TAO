@@ -55,7 +55,9 @@ CC_Command::GetLockSet (char const* lock_set_name)
               throw CORBA::UNKNOWN ();
             }
           else
+          {
             ccls_ret = cc_lockset_.in ();
+          }
         }
     }
   catch (const CORBA::Exception&)
@@ -384,7 +386,9 @@ CC_Excep_Cmd::execute()
   // First we check to see if an exception has occurred. If not we fail
   // because we expected to see one
   if(excep_ == nullptr)
+  {
     return 0; // CC_FAIL
+  }
 
   // If there is an exception check that it's the expected one
   if (std::strcmp (excep_->_rep_id (), ex_.c_str ()) == 0)

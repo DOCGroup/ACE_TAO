@@ -205,7 +205,9 @@ TAO_Singleton_Manager::init (int register_with_object_manager)
                (ACE_CLEANUP_FUNC) TAO_SINGLETON_MANAGER_CLEANUP_DESTROYER_NAME,
                nullptr,
                typeid (*this).name ()) != 0)
+      {
         return -1;
+      }
 
       this->registered_with_object_manager_ = register_with_object_manager;
     }
@@ -260,7 +262,9 @@ TAO_Singleton_Manager::fini ()
   this->object_manager_state_ = OBJ_MAN_SHUT_DOWN;
 
   if (this == the_instance)
+  {
     the_instance = nullptr;
+  }
 
   if (this->dynamically_allocated_)
     {

@@ -78,7 +78,9 @@ get_valid_ipv4_interface_names_getifaddrs (nameset &names)
   ifaddrs *p_if {};
 
   if (::getifaddrs (&ifap) != 0)
+  {
     return;
+  }
 
   for (p_if = ifap; p_if != nullptr; p_if = p_if->ifa_next)
     {

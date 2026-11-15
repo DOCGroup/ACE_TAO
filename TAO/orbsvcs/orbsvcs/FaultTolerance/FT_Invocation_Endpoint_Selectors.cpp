@@ -22,7 +22,9 @@ TAO_FT_Invocation_Endpoint_Selector::select_endpoint (
     ACE_Time_Value *val)
 {
   if (this->select_primary (r, val))
+  {
     return;
+  }
 
   this->select_secondary (r, val);
 
@@ -63,7 +65,9 @@ TAO_FT_Invocation_Endpoint_Selector::select_primary (
     }
 
   if (prof_list == nullptr)
+  {
     return false;
+  }
 
   // Try to look for primaries all over the place
   CORBA::ULong const sz = prof_list->size ();
@@ -88,7 +92,9 @@ TAO_FT_Invocation_Endpoint_Selector::select_primary (
                                max_wait_time);
 
           if (retval)
+          {
             return true;
+          }
         }
     }
 
@@ -122,7 +128,9 @@ TAO_FT_Invocation_Endpoint_Selector::select_secondary (
     }
 
   if (prof_list == nullptr)
+  {
     return false;
+  }
 
   CORBA::ULong const sz = prof_list->size ();
 
@@ -145,7 +153,9 @@ TAO_FT_Invocation_Endpoint_Selector::select_secondary (
                                max_wait_time);
 
           if (retval)
+          {
             return true;
+          }
         }
     }
 
@@ -181,7 +191,9 @@ TAO_FT_Invocation_Endpoint_Selector::try_connect (
 
       // Check if the connect has completed.
       if (retval)
+      {
         return true;
+      }
 
       // Go to the next endpoint in this profile.
       ep = ep->next ();
@@ -195,7 +207,9 @@ TAO_FT_Invocation_Endpoint_Selector::check_profile_for_primary (
     TAO_Profile const * const pfile) const
 {
   if (!pfile)
+  {
     return false;
+  }
 
   IOP::TaggedComponent tagged_component;
   tagged_component.tag = IOP::TAG_FT_PRIMARY;
@@ -206,7 +220,9 @@ TAO_FT_Invocation_Endpoint_Selector::check_profile_for_primary (
 
   // Search for the TaggedComponent that we want
   if (pfile_tagged.get_component (tagged_component) != 1)
+  {
     return false;
+  }
 
   if (TAO_debug_level > 2)
     {

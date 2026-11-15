@@ -85,17 +85,23 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
 
   // Create reader thread.
   if (tm.spawn (reader, &data) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "thread create for reader failed"), -1);
+  }
 
   // Create writer thread.
   if (tm.spawn (writer, &data) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "thread create for writer failed"), -1);
+  }
 
   // Wait for both.
   if (tm.wait () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "thread wait failed"), -1);
   else
+  {
     ACE_DEBUG ((LM_ERROR, "graceful exit\n"));
+  }
 
   return 0;
 }

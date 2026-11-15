@@ -270,7 +270,9 @@ Client_Handler::handle_write_stream
       if (this->msgs_sent_ == cli_req_no)
         send_again = false;   // All done
       else
+      {
         b.rd_ptr (b.base ());
+      }
     }
 
   if (send_again)
@@ -380,7 +382,9 @@ Server_Handler::handle_read_stream
       b.rd_ptr (test_string_len);
       // That ran up over the string; can we also consume the nul?
       if (b.length () > 0)
+      {
         b.rd_ptr (1);
+      }
       ++this->msgs_rcvd_;
     }
   b.crunch ();
@@ -423,7 +427,9 @@ Server_Acceptor::handle_input (ACE_HANDLE)
   Server_Handler *new_handler {};
   ACE_NEW_RETURN (new_handler, Server_Handler, -1);
   if (new_handler->open (new_stream.get_handle ()) != 0)
+  {
     delete new_handler;
+  }
 
   return 0;
 }
@@ -518,7 +524,9 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_INET_Addr accept_addr (rendezvous);
 
   if (acceptor.open (accept_addr) == -1)
+  {
     return 1;
+  }
   if (-1 == ACE_Reactor::instance ()->register_handler (&acceptor,
                                                         ACE_Event_Handler::ACCEPT_MASK))
     {

@@ -40,7 +40,9 @@ TAO_Notify_Tests_Periodic_Consumer::init_state (ACE_Arg_Shifter& arg_shifter)
 {
   // First, let the base class look for options.
   if (TAO_Notify_Tests_StructuredPushConsumer::init_state (arg_shifter) == -1)
+  {
     return -1;
+  }
 
   const ACE_TCHAR *current_arg {};
 
@@ -54,7 +56,9 @@ TAO_Notify_Tests_Periodic_Consumer::init_state (ACE_Arg_Shifter& arg_shifter)
           if (max_count_ == 0)
           {
             if (this->client_)
+            {
               this->client_->done (this);
+            }
           }
         }
        else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Check_Priority")) == 0)
@@ -76,7 +80,9 @@ void
 TAO_Notify_Tests_Periodic_Consumer::handle_start_event (const CosNotification::PropertySeq& prop_seq)
 {
   if (TAO_debug_level > 0)
+  {
     ACE_DEBUG ((LM_DEBUG, "(%P, %t)Consumer %s received inital (-1)th event\n", this->name_.c_str ()));
+  }
 
   for (CORBA::ULong i = 0; i < prop_seq.length (); ++i)
     {
@@ -176,7 +182,9 @@ TAO_Notify_Tests_Periodic_Consumer::push_structured_event (const CosNotification
   if (this->count_ == -2)
     {
       if (--warmup_countdown_ == 0)
+      {
         this->count_ = -1;
+      }
 
       return;
     }
@@ -185,7 +193,9 @@ TAO_Notify_Tests_Periodic_Consumer::push_structured_event (const CosNotification
       this->handle_start_event (prop_seq);
 
       if (this->max_count_ > 0)
+      {
         this->stats_.init (this->max_count_);
+      }
 
       this->count_ = 0;
       return;
@@ -239,10 +249,14 @@ TAO_Notify_Tests_Periodic_Consumer::push_structured_event (const CosNotification
       stats_.end_time (ACE_OS::gethrtime ());
 
       if (this->client_)
+      {
         this->client_->done (this);
+      }
 
       if (TAO_debug_level > 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "(%P, %t)Consumer %s done\n", this->name_.c_str ()));
+      }
     }
 }
 

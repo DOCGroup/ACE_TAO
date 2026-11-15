@@ -23,7 +23,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Messenger_var messenger = Messenger::_narrow (messenger_obj.in ());
 
       if (CORBA::is_nil (messenger.in ()))
+      {
         std::cerr << "Argument is not a Messenger reference" << std::endl;
+      }
 
       CORBA::String_var message = CORBA::string_dup ("Where can I get TAO?");
 

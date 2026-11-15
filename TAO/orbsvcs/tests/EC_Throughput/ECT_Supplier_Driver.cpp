@@ -51,7 +51,9 @@ ECT_Supplier_Driver::run (int argc, ACE_TCHAR* argv[])
         root_poa->the_POAManager ();
 
       if (this->parse_args (argc, argv))
+      {
         return 1;
+      }
 
       if (TAO_debug_level > 0)
         {
@@ -130,7 +132,9 @@ ECT_Supplier_Driver::run (int argc, ACE_TCHAR* argv[])
       CORBA::Object_var sched_obj =
         naming_context->resolve (schedule_name);
       if (CORBA::is_nil (sched_obj.in ()))
+      {
         return 1;
+      }
       RtecScheduler::Scheduler_var scheduler =
         RtecScheduler::Scheduler::_narrow (sched_obj.in ());
       CosNaming::Name name (1);
@@ -144,7 +148,9 @@ ECT_Supplier_Driver::run (int argc, ACE_TCHAR* argv[])
       if (CORBA::is_nil (ec_obj.in ()))
         channel = RtecEventChannelAdmin::EventChannel::_nil ();
       else
+      {
         channel = RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in ());
+      }
 
       poa_manager->activate ();
 

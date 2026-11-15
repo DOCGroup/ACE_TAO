@@ -26,7 +26,9 @@ JAWS_THYBRID_Concurrency::JAWS_THYBRID_Concurrency ()
       std::atoi (JAWS_DEFAULT_MIN_THYBRID_THREADS);
 
   if (this->min_number_of_threads_ <= 0)
+  {
     this->min_number_of_threads_ = 1;
+  }
 
   value = JAWS_Options::instance ()->getenv ("JAWS_MAX_THYBRID_THREADS");
   if (value != nullptr)
@@ -53,7 +55,9 @@ int
 JAWS_THYBRID_Concurrency::putq (JAWS_Protocol_Handler *ph)
 {
   if (this->error_)
+  {
     return -1;
+  }
 
   JAWS_CONCURRENCY_TASK *task = this;
   int const result = task->putq (& ph->mb_);
@@ -87,7 +91,9 @@ JAWS_THYBRID_Concurrency::getq (JAWS_Protocol_Handler *&ph)
   JAWS_CONCURRENCY_TASK *task = this;
 
   if (this->shutdown_task_ && task->msg_queue ()->message_count () == 0)
+  {
     return -1;
+  }
 
   int const getting = ++(this->getting_);
 

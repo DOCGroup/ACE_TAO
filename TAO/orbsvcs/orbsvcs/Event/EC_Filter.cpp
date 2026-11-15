@@ -67,7 +67,9 @@ TAO_EC_Null_Filter::push (RtecEventComm::EventSet const &event,
                           TAO_EC_QOS_Info& qos_info)
 {
   if (this->parent () != nullptr)
+  {
     this->parent ()->push (event, qos_info);
+  }
 }
 
 void
@@ -75,7 +77,9 @@ TAO_EC_Null_Filter::push_nocopy (RtecEventComm::EventSet& event,
                                  TAO_EC_QOS_Info& qos_info)
 {
   if (this->parent () != nullptr)
+  {
     this->parent ()->push_nocopy (event, qos_info);
+  }
 }
 
 void

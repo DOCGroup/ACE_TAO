@@ -39,14 +39,18 @@ Thread_Per_Connection_Logging_Server::handle_connections ()
     }
 
   if (acceptor ().accept (thread_args->logging_peer_) == -1)
+  {
     return -1;
+  }
   if (ACE_Thread_Manager::instance ()->spawn (
                    // Pointer to function entry point.
                   Thread_Per_Connection_Logging_Server::run_svc,
                    // <run_svc> parameter.
                   thread_args.get (),
                   THR_DETACHED | THR_SCOPE_SYSTEM) == -1)
+  {
     return -1;
+  }
   thread_args.release ();   // Spawned thread now owns the arguments.
   return 0;
 }
@@ -84,7 +88,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   Thread_Per_Connection_Logging_Server server;
 
   if (server.run (argc, argv) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "server.run()"), 1);
+  }
 
   // Cooperative thread cancellation and barrier synchronization.
   ACE_Thread_Manager::instance ()->cancel_all ();

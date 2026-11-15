@@ -93,7 +93,9 @@ TAO_RTScheduler_Current::update_scheduling_segment (const char * name,
   TAO_RTScheduler_Current_i * const impl = this->implementation ();
 
   if (impl == nullptr)
+  {
     throw ::CORBA::BAD_INV_ORDER ();
+  }
 
   impl->update_scheduling_segment (name,
                                    sched_param,
@@ -124,7 +126,10 @@ TAO_RTScheduler_Current::lookup(const RTScheduling::Current::IdType & id)
                                           DT);
   if (result == 0)
     return DT._retn ();
-  else return RTScheduling::DistributableThread::_nil ();
+  else
+  {
+    return RTScheduling::DistributableThread::_nil ();
+  }
 }
 
 /// Returns a null reference if the distributable thread is not known to the
@@ -141,7 +146,9 @@ TAO_RTScheduler_Current::spawn (RTScheduling::ThreadAction_ptr start,
   TAO_RTScheduler_Current_i * const impl = this->implementation ();
 
   if (impl == nullptr)
+  {
     throw ::CORBA::BAD_INV_ORDER ();
+  }
 
   return impl->spawn (start,
                       data,
@@ -158,7 +165,9 @@ TAO_RTScheduler_Current::id ()
   TAO_RTScheduler_Current_i * const impl = this->implementation ();
 
   if (impl == nullptr)
+  {
     throw ::CORBA::BAD_INV_ORDER ();
+  }
 
   return impl->id ();
 }
@@ -169,7 +178,9 @@ TAO_RTScheduler_Current::scheduling_parameter ()
   TAO_RTScheduler_Current_i * const impl = this->implementation ();
 
   if (impl == nullptr)
+  {
     throw ::CORBA::BAD_INV_ORDER ();
+  }
 
   return impl->scheduling_parameter ();
 }
@@ -180,7 +191,9 @@ TAO_RTScheduler_Current::implicit_scheduling_parameter ()
   TAO_RTScheduler_Current_i * const impl = this->implementation ();
 
   if (impl == nullptr)
+  {
     throw ::CORBA::BAD_INV_ORDER ();
+  }
 
   return impl->implicit_scheduling_parameter ();
 }
@@ -191,7 +204,9 @@ TAO_RTScheduler_Current::current_scheduling_segment_names ()
   TAO_RTScheduler_Current_i * const impl = this->implementation ();
 
   if (impl == nullptr)
+  {
     throw ::CORBA::BAD_INV_ORDER ();
+  }
 
   return impl->current_scheduling_segment_names ();
 }
@@ -451,7 +466,9 @@ TAO_RTScheduler_Current_i::spawn (RTScheduling::ThreadAction_ptr start,
   // If no scheduling parameter is specified then use the current
   // implicit scheduling parameter as the scheduling parameter
   if (sched_param == nullptr)
+  {
     sched_param = this->implicit_sched_param_.in ();
+  }
 
   RTScheduling::DistributableThread_var dt = TAO_DistributableThread_Factory::create_DT ();
   TAO_RTScheduler_Current_i *new_current {};
@@ -859,7 +876,9 @@ TAO_RTScheduler_Current_ptr
 TAO_RTScheduler_Current::_duplicate (TAO_RTScheduler_Current_ptr obj)
 {
   if (!CORBA::is_nil (obj))
+  {
     obj->_add_ref ();
+  }
   return obj;
 }
 

@@ -131,7 +131,9 @@ TAO_Naming_Context::to_string (CosNaming::Name const &n)
 
   // Check for invalid name.
   if (n.length () == 0)
+  {
     throw CosNaming::NamingContext::InvalidName();
+  }
 
   // Length of the return string
   CORBA::ULong len = 0;
@@ -271,7 +273,9 @@ TAO_Naming_Context::to_name (char const *sn)
   // Check for InvalidName i.e. Invalid stringified name
   //
   if (len == 0)
+  {
     throw CosNaming::NamingContext::InvalidName();
+  }
 
   // Assign the length of the return unstringified name.
   //
@@ -323,7 +327,9 @@ int
 TAO_Naming_Context::to_url_is_alnum_or_punctuation (char c)
 {
   if (ACE_OS::ace_isalnum (c))
+  {
     return 1;
+  }
 
   // NON US-ASCII characters excluding those in this array are the
   // characters that need to be escaped
@@ -340,7 +346,9 @@ TAO_Naming_Context::to_url_is_alnum_or_punctuation (char c)
       // and hence need not be escaped, then don't increment the
       // count.
       if (*j == c)
+      {
         return 1;
+      }
     }
   return 0;
 }
@@ -354,7 +362,9 @@ TAO_Naming_Context::to_url_validate_and_compute_size (
 
   // Check for invalid address
   if (addr_len == 0)
+  {
     throw CosNaming::NamingContextExt::InvalidAddress ();
+  }
 
   // Make a pass through the in string name to count the number of
   // characters and if the character
@@ -365,12 +375,16 @@ TAO_Naming_Context::to_url_validate_and_compute_size (
       ++sn_len;
 
       if (TAO_Naming_Context::to_url_is_alnum_or_punctuation (*i))
+      {
         continue;
+      }
       sn_len += 3;
     }
 
   if (sn_len == 0)
+  {
     throw CosNaming::NamingContextExt::InvalidName ();
+  }
 
   return addr_len + sn_len;
 }

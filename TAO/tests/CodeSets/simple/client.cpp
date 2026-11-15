@@ -76,7 +76,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Get IOR from command line (or file)
       Options options {};
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       // The first arg should be the IOR
       CORBA::Object_var const object =

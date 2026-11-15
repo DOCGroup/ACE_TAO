@@ -73,7 +73,9 @@ TAO_EC_ProxyPushConsumer::connected (TAO_EC_ProxyPushSupplier* supplier)
                                           this->event_channel_,
                                           this);
   if (!ace_mon.locked ())
+  {
     return;
+  }
 
   ace_mon.filter->connected (supplier);
 }
@@ -86,7 +88,9 @@ TAO_EC_ProxyPushConsumer::reconnected (TAO_EC_ProxyPushSupplier* supplier)
                                           this->event_channel_,
                                           this);
   if (!ace_mon.locked ())
+  {
     return;
+  }
 
   ace_mon.filter->reconnected (supplier);
 }
@@ -99,7 +103,9 @@ TAO_EC_ProxyPushConsumer::disconnected (TAO_EC_ProxyPushSupplier* supplier)
                                           this->event_channel_,
                                           this);
   if (!ace_mon.locked ())
+  {
     return;
+  }
 
   ace_mon.filter->disconnected (supplier);
 }
@@ -150,7 +156,9 @@ TAO_EC_ProxyPushConsumer::shutdown ()
   this->deactivate ();
 
   if (CORBA::is_nil (supplier.in ()))
+  {
     return;
+  }
 
   try
     {
@@ -217,7 +225,9 @@ TAO_EC_ProxyPushConsumer::_decr_refcnt ()
     ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
     --this->ec_refcount_;
     if (this->ec_refcount_ != 0)
+    {
       return this->ec_refcount_;
+    }
   }
 
   this->refcount_zero_hook ();
@@ -260,7 +270,9 @@ TAO_EC_ProxyPushConsumer_Guard::
   // This access is safe because guard objects are created on the
   // stack, only one thread has access to them
   if (!this->locked_)
+  {
     return;
+  }
 
   {
     ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
@@ -275,7 +287,9 @@ TAO_EC_ProxyPushConsumer_Guard::
 
     --this->refcount_;
     if (this->refcount_ != 0)
+    {
       return;
+    }
   }
 
   this->proxy_->refcount_zero_hook ();

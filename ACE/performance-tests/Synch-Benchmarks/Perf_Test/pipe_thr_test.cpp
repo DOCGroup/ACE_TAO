@@ -49,12 +49,16 @@ Pipe_Thr_Test::init (int, ACE_TCHAR **)
   synch_count = 1;
 
   if (ACE_OS::pipe (this->pipe_handles.data ()) == -1)
+  {
     ACE_OS::perror (ACE_TEXT("pipe")), ACE_OS::exit (1);
+  }
 
   if (ACE_Thread_Manager::instance ()->spawn
       (ACE_THR_FUNC (Pipe_Thr_Test::reader),
        static_cast<void *> (this), performance_test_options.t_flags ()) == -1)
+  {
     ACE_OS::perror (ACE_TEXT("thr_create")), ACE_OS::exit (1);
+  }
 
   return 1;
 }
@@ -70,7 +74,9 @@ Pipe_Thr_Test::svc ()
 
   while (!this->done ())
     if (ACE_OS::write (handle, from.get (), length) != length)
+    {
       ACE_OS::perror (ACE_TEXT("write"));
+    }
 
   ACE_OS::close (this->pipe_handles[0]);
   ACE_OS::close (this->pipe_handles[1]);

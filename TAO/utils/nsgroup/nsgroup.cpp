@@ -18,7 +18,9 @@ show_help (int argc, ACE_TCHAR *argv[])
 
   // Not enough arguments indicates help is required
   if (argc < 2)
+  {
     return true;
+  }
 
   // Did they ask for help?
   ACE_Get_Opt get_opts (
@@ -233,7 +235,9 @@ NSGROUP::run_cmd ()
     }
 
   if (rc == RC_BADARG)
+  {
     show_usage ();
+  }
 
   return rc;
 }
@@ -365,12 +369,16 @@ NSGROUP::parse_command_line ()
       else if (ACE_OS::strcmp (this->argv_[i], ACE_TEXT ("member_show")) == 0)
         nsgroup_cmd_ = NSGROUP_COMMAND::member_show;
       else
+      {
         nsgroup_cmd_ = NSGROUP_COMMAND::none;
+      }
     }
 
   // The command should be the only non option argument
   if (non_option_arg_count > 1)
+  {
     nsgroup_cmd_ = NSGROUP_COMMAND::none;
+  }
 
   return nsgroup_cmd_;
 }

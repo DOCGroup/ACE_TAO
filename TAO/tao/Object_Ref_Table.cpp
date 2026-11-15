@@ -29,10 +29,14 @@ TAO_Object_Ref_Table::register_initial_reference (
       if (this->unbind_i (id) == -1)
         return -1;
       else
+      {
         return this->bind_i (id, obj);
+      }
     }
   else
+  {
     return this->bind_i (id, obj);
+  }
 }
 
 CORBA::Object_ptr

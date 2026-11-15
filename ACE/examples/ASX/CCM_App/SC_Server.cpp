@@ -44,7 +44,9 @@ Event_Handler::handle_input (ACE_HANDLE handle)
                        ACE_TEXT ("%p\n"), ACE_TEXT ("write failed")),
                        -1);
   else
+  {
     return 0;
+  }
 }
 
 int

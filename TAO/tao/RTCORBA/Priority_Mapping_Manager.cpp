@@ -22,7 +22,9 @@ TAO_Priority_Mapping_Manager_ptr
 TAO_Priority_Mapping_Manager::_duplicate (TAO_Priority_Mapping_Manager_ptr obj)
 {
   if (!CORBA::is_nil (obj))
+  {
     obj->_add_ref ();
+  }
   return obj;
 }
 

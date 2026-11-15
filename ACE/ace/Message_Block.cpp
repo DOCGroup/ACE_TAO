@@ -60,7 +60,9 @@ ACE_Message_Block::data_block (ACE_Data_Block *db)
   if (ACE_BIT_DISABLED (this->flags_,
                         ACE_Message_Block::DONT_DELETE)
       && this->data_block_ != nullptr)
+  {
     this->data_block_->release ();
+  }
 
   this->data_block_ = db;
 
@@ -122,7 +124,9 @@ ACE_Message_Block::crunch ()
   if (this->rd_ptr_ != 0)
     {
       if (this->rd_ptr_ > this->wr_ptr_)
+      {
         return -1;
+      }
 
       size_t const len = this->length ();
       (void) std::memmove (this->base (),
@@ -239,7 +243,9 @@ ACE_Message_Block::size (size_t length)
 
   // Resize the underlying <ACE_Data_Block>.
   if (this->data_block ()->size (length) == -1)
+  {
     return -1;
+  }
 
   return 0;
 }
@@ -771,7 +777,9 @@ ACE_Data_Block::release_i ()
     // this will cause deletion of this
     result = nullptr;
   else
+  {
     result = this;
+  }
 
   return result;
 }
@@ -926,7 +934,9 @@ ACE_Message_Block::release_i (ACE_Lock *lock)
       this->data_block ())
     {
       if (this->data_block ()->release_no_delete (lock) == nullptr)
+      {
         result = 1;
+      }
       this->data_block_ = nullptr;
     }
 
@@ -952,7 +962,9 @@ ACE_Message_Block::release (ACE_Message_Block *mb)
   if (mb != nullptr)
     return mb->release ();
   else
+  {
     return nullptr;
+  }
 }
 
 ACE_Message_Block::~ACE_Message_Block ()
@@ -984,7 +996,9 @@ ACE_Data_Block::duplicate ()
       ++this->reference_count_;
     }
   else
+  {
     ++this->reference_count_;
+  }
 
   return this;
 }
@@ -1099,7 +1113,9 @@ ACE_Message_Block::duplicate (const ACE_Message_Block *mb)
   if (mb == nullptr)
     return nullptr;
   else
+  {
     return mb->duplicate ();
+  }
 }
 
 ACE_Data_Block *
@@ -1180,7 +1196,9 @@ ACE_Message_Block::clone (Message_Flags mask) const
       ACE_Data_Block *db = old_message_block->data_block ()->clone (mask);
 
       if (!db)
+      {
         return nullptr;
+      }
 
       if(old_message_block->message_block_allocator_ == nullptr)
         {
@@ -1239,7 +1257,9 @@ ACE_Message_Block::clone (Message_Flags mask) const
       new_message_block->wr_ptr (old_message_block->wr_ptr_);
       // save the root message block to return
       if (new_root_message_block == nullptr)
+      {
         new_root_message_block = new_message_block;
+      }
       if (new_previous_message_block != nullptr)
         // we're a continuation of the previous block, add ourself to its chain
         new_previous_message_block->cont_ = new_message_block;
@@ -1258,7 +1278,9 @@ ACE_Data_Block::base (char *msg_data,
 {
   if (ACE_BIT_DISABLED (this->flags_,
                         ACE_Message_Block::DONT_DELETE))
+  {
     this->allocator_strategy_->free (this->base_);
+  }
 
   this->max_size_ = msg_length;
   this->cur_size_ = msg_length;

@@ -60,7 +60,9 @@ TAO_Policy_Set::TAO_Policy_Set (TAO_Policy_Set const &rhs)
   catch (::CORBA::Exception const &ex)
     {
       if (TAO_debug_level > 4)
+      {
         ex._tao_print_exception ("TAO_Policy_Set::TAO_Policy_Set");
+      }
 
       // "Try" to make this recoverable as we must have run out of memory.
       this->policy_list_.length (0);

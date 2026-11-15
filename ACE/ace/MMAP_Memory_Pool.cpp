@@ -41,7 +41,9 @@ ACE_MMAP_Memory_Pool::release (int destroy)
   if (destroy)
     this->mmap_.remove ();
   else
+  {
     this->mmap_.close ();
+  }
   return 0;
 }
 
@@ -137,7 +139,9 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (
   if (options)
     {
       if (options->flags_ != 0)
+      {
         this->flags_ = options->flags_;
+      }
       use_fixed_addr_ = options->use_fixed_addr_;
 
       if (use_fixed_addr_ == ACE_MMAP_Memory_Pool_Options::ALWAYS_FIXED)
@@ -148,7 +152,9 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (
       this->write_each_page_ = options->write_each_page_;
       this->minimum_bytes_ = options->minimum_bytes_;
       if (options->sa_ != 0)
+      {
         this->sa_ = options->sa_;
+      }
       this->file_mode_ = options->file_mode_;
       this->install_signal_handler_ = options->install_signal_handler_;
     }
@@ -273,7 +279,9 @@ ACE_MMAP_Memory_Pool::map_file (size_t map_size)
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
   if (use_fixed_addr_ == ACE_MMAP_Memory_Pool_Options::NEVER_FIXED)
+  {
     this->base_addr_ = nullptr;
+  }
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
   // Remap the file; try to stay at the same location as a previous mapping
@@ -356,7 +364,9 @@ ACE_MMAP_Memory_Pool::init_acquire (size_t nbytes,
   first_time = 0;
 
   if (nbytes < static_cast <size_t> (this->minimum_bytes_))
+  {
     nbytes = static_cast <size_t> (this->minimum_bytes_);
+  }
 
   if (this->mmap_.open (this->backing_store_name_,
                         O_RDWR | O_CREAT | O_TRUNC | O_EXCL,
@@ -442,7 +452,9 @@ ACE_MMAP_Memory_Pool::remap (void *addr)
 
   if (!(addr < (void *) ((char *) this->mmap_.addr () + current_map_size)
         && addr >= this->mmap_.addr ()))
+  {
     return -1;
+  }
 
   // Extend the mapping to cover the size of the backing store.
   return this->map_file (current_map_size);
@@ -473,7 +485,9 @@ ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options (
   ACE_TRACE ("ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options");
   // for backwards compatibility
   if (base_addr_ == nullptr && use_fixed_addr_ == ALWAYS_FIXED)
+  {
     use_fixed_addr_ = FIRSTCALL_FIXED;
+  }
 }
 
 #if !defined (ACE_WIN32)
@@ -481,7 +495,9 @@ int
 ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t *)
 {
   if (signum != SIGSEGV)
+  {
     return -1;
+  }
 #if 0
   else
     ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) received %S\n"), signum));
@@ -496,7 +512,9 @@ ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t 
     {
       // ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) si_signo = %d, si_code = %d, addr = %@\n"), siginfo->si_signo, siginfo->si_code, siginfo->si_addr));
       if (this->remap ((void *) siginfo->si_addr) == -1)
+      {
         return -1;
+      }
       // ACELIB_ERROR_RETURN ((LM_ERROR, "(%P|%t) address %@ out of range\n",
       // siginfo->si_addr), -1);
       return 0;
@@ -530,7 +548,9 @@ ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t 
       return this->map_file (current_map_size);
     }
   else
+  {
     return -1;
+  }
 }
 #endif
 

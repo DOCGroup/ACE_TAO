@@ -16,7 +16,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       int const result = server.init (argc, argv);
       if (result == -1)
+      {
         return 1;
+      }
 
       server.run ();
     }

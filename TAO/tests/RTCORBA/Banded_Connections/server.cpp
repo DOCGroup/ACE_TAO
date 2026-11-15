@@ -93,7 +93,9 @@ Test_i::test_method (CORBA::Boolean client_propagated,
               client_priority >= this->bands_[i].low &&
               server_priority <= this->bands_[i].high &&
               server_priority >= this->bands_[i].low)
+          {
             index = i + 1;
+          }
         }
 
       ACE_DEBUG ((LM_DEBUG,
@@ -175,7 +177,9 @@ get_priority_bands (RTCORBA::PriorityBands &bands,
     ACE_OS::fopen (bands_file, "r");
 
   if (file == nullptr)
+  {
     return -1;
+  }
 
   ACE_Read_Buffer reader (file, 1);
 
@@ -193,7 +197,9 @@ get_priority_bands (RTCORBA::PriorityBands &bands,
     reader.read (EOF, ' ', '\0'), Read_Buffer_Deleter {reader.alloc ()});
 
   if (!string)
+  {
     return -1;
+  }
 
   CORBA::ULong const bands_length =
     (reader.replaced () + 1) / 2;
@@ -205,14 +211,18 @@ get_priority_bands (RTCORBA::PriorityBands &bands,
     {
       result = std::sscanf (working_string, "%hd", &bands[i].low);
       if (result == 0 || result == EOF)
+      {
         break;
+      }
 
       working_string += std::strlen (working_string);
       working_string += 1;
 
       result = std::sscanf (working_string, "%hd", &bands[i].high);
       if (result == 0 || result == EOF)
+      {
         break;
+      }
 
       working_string += std::strlen (working_string);
       working_string += 1;
@@ -227,7 +237,9 @@ get_priority_bands (RTCORBA::PriorityBands &bands,
   if (result == 0 || result == EOF)
     return -1;
   else
+  {
     return 0;
+  }
 }
 
 int
@@ -344,12 +356,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       int result =
         parse_args (argc, argv, options);
       if (result != 0)
+      {
         return result;
+      }
 
       // Make sure we can support multiple priorities that are required
       // for this test.
       if (!check_supported_priorities (orb.in ()))
+      {
         return 2;
+      }
 
       // Get the RTORB.
       CORBA::Object_var object =
@@ -508,7 +524,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                               &server_impl,
                               options.client_propagated_ior);
       if (result != 0)
+      {
         return result;
+      }
 
       // Create second servant and register with <server_declared_poa>.
       Test_i server_impl2 (orb.in (),
@@ -518,7 +536,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                               &server_impl2,
                               options.server_declared_ior);
       if (result != 0)
+      {
         return result;
+      }
 
       // Activate POA manager.
       poa_manager->activate ();

@@ -50,7 +50,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t|%T) Client %d sending request to %C\n"),

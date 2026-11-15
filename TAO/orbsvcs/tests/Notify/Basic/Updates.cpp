@@ -14,7 +14,9 @@ Updates_StructuredPushConsumer::offer_change (
         CosNotification::EventTypeSeq const &removed)
 {
   if (TAO_debug_level)
+  {
     ACE_DEBUG ((LM_DEBUG, "StructuredPushConsumer::offer_change invoked:\n"));
+  }
   this->test_client_->types_changed (added, removed);
 }
 
@@ -35,7 +37,9 @@ Updates_StructuredPushSupplier::subscription_change (
     CosNotification::EventTypeSeq const &removed)
 {
   if (TAO_debug_level)
+  {
     ACE_DEBUG ((LM_DEBUG, "StructuredPushSupplier::subscription_change invoked:\n"));
+  }
   this->test_client_->types_changed (added, removed);
 }
 
@@ -150,7 +154,9 @@ Updates::wait_for_updates (int expected_added, int expected_removed)
     {
       if (added_count_ == expected_added &&
           removed_count_ == expected_removed)
+      {
         break;
+      }
 
       ACE_Time_Value tv(0, 100 * 1000);
       orb_->run(tv);
@@ -171,7 +177,9 @@ Updates::run_test ()
   this->test_subscription_change ();
 
   if (TAO_debug_level)
+  {
     ACE_DEBUG ((LM_DEBUG, "Finished testing subscription_change!\n"));
+  }
 
   this->test_offer_change ();
 

@@ -109,7 +109,9 @@ TAO::TypeCode::Union<char const *,
   CORBA::Long const tc_def = tc->default_index ();
 
   if (tc_count != this->ncases_ || tc_def != this->default_index_)
+  {
     return false;
+  }
 
   // Check the discriminator type.
   CORBA::TypeCode_var const tc_discriminator = tc->discriminator_type ();
@@ -119,7 +121,9 @@ TAO::TypeCode::Union<char const *,
       tc_discriminator.in ());
 
   if (!equal_discriminators)
+  {
     return false;
+  }
 
   for (CORBA::ULong i {}; i < this->ncases_; ++i)
     {
@@ -137,7 +141,9 @@ TAO::TypeCode::Union<char const *,
       bool const equal_case = lhs_case.equal (i, tc);
 
       if (!equal_case)
+      {
         return false;
+      }
     }
 
   return true;
@@ -158,7 +164,9 @@ TAO::TypeCode::Union<char const *,
   CORBA::Long const tc_def = tc->default_index ();
 
   if (tc_count != this->ncases_ || tc_def != this->default_index_)
+  {
     return false;
+  }
 
   CORBA::TypeCode_var const tc_discriminator = tc->discriminator_type ();
 
@@ -167,7 +175,9 @@ TAO::TypeCode::Union<char const *,
       tc_discriminator.in ());
 
   if (!equiv_discriminators)
+  {
     return false;
+  }
 
   for (CORBA::ULong i {}; i < this->ncases_; ++i)
     {
@@ -185,7 +195,9 @@ TAO::TypeCode::Union<char const *,
       bool const equivalent_case = lhs_case.equivalent (i, tc);
 
       if (!equivalent_case)
+      {
         return false;
+      }
     }
 
   return true;
@@ -246,7 +258,9 @@ TAO::TypeCode::Union<char const *,
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
   if (index >= this->ncases_)
+  {
     throw ::CORBA::TypeCode::Bounds ();
+  }
 
   return this->cases_[index]->name ();
 }
@@ -260,7 +274,9 @@ TAO::TypeCode::Union<char const *,
   CORBA::ULong index) const
 {
   if (index >= this->ncases_)
+  {
     throw ::CORBA::TypeCode::Bounds ();
+  }
 
   return CORBA::TypeCode::_duplicate (this->cases_[index]->type ());
 }
@@ -274,7 +290,9 @@ TAO::TypeCode::Union<char const *,
   CORBA::ULong index) const
 {
   if (index >= this->ncases_)
+  {
     throw ::CORBA::TypeCode::Bounds ();
+  }
 
   // Default case.
   if (this->default_index_ > -1

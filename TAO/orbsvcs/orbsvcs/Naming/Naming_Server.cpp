@@ -193,7 +193,9 @@ TAO_Naming_Server::parse_args (int argc,
       case 's':
         size = ACE_OS::atoi (get_opts.opt_arg ());
         if (size >= 0)
+        {
           this->context_size_ = size;
+        }
         break;
       case 'm':
         this->multicast_ = ACE_OS::atoi(get_opts.opt_arg ());
@@ -304,7 +306,9 @@ TAO_Naming_Server::init_with_orb (int argc,
       result = this->parse_args (argc, argv);
 
       if (result < 0)
+      {
         return result;
+      }
 
       // Get the POA object.
       this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ());
@@ -399,7 +403,9 @@ TAO_Naming_Server::init_with_orb (int argc,
 #endif /* CORBA_E_MICRO */
 
       if (result == -1)
+      {
         return result;
+      }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -467,7 +473,10 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           TAO_Storable_Naming_Context_Factory* cf =
             this->storable_naming_context_factory (context_size);
           // Make sure we got a factory
-          if (cf == nullptr) return -1;
+          if (cf == nullptr)
+          {
+            return -1;
+          }
           std::unique_ptr<TAO_Storable_Naming_Context_Factory> contextFactory (cf);
 
           // This instance will either get deleted after recreate all or,
@@ -553,7 +562,10 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           TAO_Persistent_Naming_Context_Factory *naming_context_factory =
             this->persistent_naming_context_factory ();
           // Make sure we got a factory.
-          if (naming_context_factory == nullptr) return -1;
+          if (naming_context_factory == nullptr)
+          {
+            return -1;
+          }
 
           // Allocate and initialize Persistent Context Index.
           TAO_Persistent_Context_Index* context_index {};
@@ -638,13 +650,17 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
                 ACE_OS::getenv ("NameServicePort");
 
               if (port_number != nullptr)
+              {
                 port = static_cast<u_short> (ACE_OS::atoi (port_number));
+              }
             }
 
           // Port wasn't specified on the command-line or in environment -
           // use the default.
           if (port == 0)
+          {
             port = TAO_DEFAULT_NAME_SERVER_REQUEST_PORT;
+          }
 
           // Instantiate a handler which will handle client requests for
           // the root Naming Context ior, received on the multicast port.
@@ -657,7 +673,9 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
               if (this->ior_multicast_->init (this->iors_[ROOT].ior_.c_str (),
                                               mde.c_str (),
                                               TAO_SERVICEID_NAMESERVICE) == -1)
+              {
                 return -1;
+              }
             }
           else
             {
@@ -669,7 +687,9 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
                                               ACE_DEFAULT_MULTICAST_ADDR,
 #endif /* ACE_HAS_IPV6 */
                                               TAO_SERVICEID_NAMESERVICE) == -1)
+              {
                 return -1;
+              }
             }
 
           // Register event handler for the ior multicast.
@@ -762,7 +782,9 @@ TAO_Naming_Server::fini ()
   try
     {
       if (!CORBA::is_nil (this->ns_poa_.in ()))
+      {
         this->ns_poa_->destroy (true, true);
+      }
     }
   catch (CORBA::Exception const &)
     {
@@ -884,10 +906,14 @@ TAO_Naming_Server::write(size_t ndx) const
 {
   IOR_Bundle const *b = bundle_at(ndx);
   if (b == nullptr)
+  {
     return -1;
+  }
 
   if (b->filename_.length() == 0)
+  {
     return 0;
+  }
 
   if (b->ior_.length() == 0)
     {
@@ -924,7 +950,9 @@ TAO_Naming_Server::assign (size_t ndx, bool take, CORBA::Object_ptr obj)
 {
   IOR_Bundle *b = this->bundle_at(ndx);
   if (b == nullptr)
+  {
     return;
+  }
 
   b->ref_ = take ? obj : CORBA::Object::_duplicate (obj);
   CORBA::String_var ior = this->orb_->object_to_string (b->ref_.in());

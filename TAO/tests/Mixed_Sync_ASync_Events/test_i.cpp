@@ -65,7 +65,9 @@ Test_i::request (
       if (reqmode == A::RQM_SYNCH)
         {
           if (!CORBA::is_nil (this->rh_.in ()))
+          {
             this->opponent_->sendc_report (this->rh_.in (), buf.data ());
+          }
         }
       else
         {
@@ -87,7 +89,9 @@ void
 Test_i::shutdown ()
 {
   if (this->mode_ == A::RM_SLAVE && !CORBA::is_nil (this->opponent_.in ()))
+  {
     this->opponent_->shutdown ();
+  }
   this->orb_->shutdown (false);
 }
 
@@ -117,9 +121,13 @@ void Test_Reply_i::request_excep (
               "%N:%l:(%P:%t):Test_Reply_i::request_excep: %C - unexpected exception\n",
               (this->evh_.mode () == A::RM_MASTER ? "master" : "slave")));
   if (!CORBA::is_nil (this->evh_.opponent ()))
+  {
     this->evh_.opponent ()->shutdown ();
+  }
   if (this->evh_.mode () == A::RM_SLAVE)
+  {
     this->evh_.orb ()->shutdown (false);
+  }
 }
 
 void
@@ -139,9 +147,13 @@ Test_Reply_i::report_excep (
               "%N:%l:(%P:%t):Test_Reply_i::report_excep: %C - unexpected exception\n",
               (this->evh_.mode () == A::RM_MASTER ? "master" : "slave")));
   if (!CORBA::is_nil (this->evh_.opponent ()))
+  {
     this->evh_.opponent ()->shutdown ();
+  }
   if (this->evh_.mode () == A::RM_SLAVE)
+  {
     this->evh_.orb ()->shutdown (false);
+  }
 }
 
 TestHandler::TestHandler (CORBA::ORB_ptr orb,

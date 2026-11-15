@@ -64,7 +64,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Client_Options options;
       int const parse_args_result = parse_args (argc, argv, options);
       if (parse_args_result != 0)
+      {
         return parse_args_result;
+      }
 
       CORBA::Object_var const object =
         orb->string_to_object (options.ior);

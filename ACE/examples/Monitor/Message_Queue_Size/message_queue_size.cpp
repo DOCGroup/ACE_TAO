@@ -42,7 +42,9 @@ public:
     MC_ADMINMANAGER * const mgr =
       ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
     if (mgr == nullptr)
+    {
       ACE_ERROR_RETURN ((LM_ERROR, "Monitor service is unavailable\n"), -1);
+    }
 
     /// Call on the administrator class to look up the desired monitors.
     ACE::Monitor_Control::Monitor_Base_Unique_Ptr const mq_monitor (

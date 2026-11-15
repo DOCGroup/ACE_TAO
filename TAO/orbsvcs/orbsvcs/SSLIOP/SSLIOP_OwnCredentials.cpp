@@ -11,7 +11,9 @@ TAO::SSLIOP::OwnCredentials_ptr
 TAO::SSLIOP::OwnCredentials::_duplicate (TAO::SSLIOP::OwnCredentials_ptr obj)
 {
   if (!CORBA::is_nil (obj))
+  {
     obj->_add_ref ();
+  }
 
   return obj;
 }

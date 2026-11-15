@@ -44,10 +44,14 @@ ACE_INET_Addr::addr_to_string (ACE_TCHAR s[],
   if (ipaddr_format == 0)
     result = (this->get_host_name (hoststr, MAXHOSTNAMELEN+1) == 0);
   else
+  {
     result = (this->get_host_addr (hoststr, MAXHOSTNAMELEN+1) != nullptr);
+  }
 
   if (!result)
+  {
     return -1;
+  }
 
   size_t total_len =
     std::strlen (hoststr)
@@ -105,7 +109,9 @@ ACE_INET_Addr::operator == (const ACE_INET_Addr &sap) const
 
   if (this->get_type () != sap.get_type ()
       || this->get_size () != sap.get_size ())
+  {
     return false;
+  }
 
   return (std::memcmp (&this->inet_addr_,
                        &sap.inet_addr_,
@@ -117,7 +123,9 @@ ACE_INET_Addr::is_ip_equal (const ACE_INET_Addr &sap) const
 {
     if (this->get_type () != sap.get_type ()
       || this->get_size () != sap.get_size ())
-    return false;
+    {
+      return false;
+    }
 
 #if defined (ACE_HAS_IPV6)
   if (this->get_type () == PF_INET6)
@@ -155,7 +163,9 @@ ACE_INET_Addr::next ()
 {
   if (this->inet_addrs_.empty () ||
       this->inet_addrs_iter_ == this->inet_addrs_.end ())
+  {
     return false;
+  }
 
   union ip46 next_a = *this->inet_addrs_iter_++;
   this->set_addr (&next_a, sizeof (next_a));
@@ -180,7 +190,9 @@ ACE_INET_Addr &
 ACE_INET_Addr::operator= (const ACE_INET_Addr& rhs)
 {
   if (this != std::addressof (rhs))
+  {
     this->set (rhs);
+  }
   return *this;
 }
 
@@ -253,7 +265,9 @@ ACE_INET_Addr::string_to_addr (const char s[], int address_family)
           if (port < 0 || port > ACE_MAX_DEFAULT_PORT)
             result = -1;
           else
+          {
             result = this->set (u_short (port), ACE_UINT32 (INADDR_ANY));
+          }
         }
       else // port name
         result = this->set (ip_addr, ACE_UINT32 (INADDR_ANY));
@@ -270,10 +284,14 @@ ACE_INET_Addr::string_to_addr (const char s[], int address_family)
           if (port < 0 || port > ACE_MAX_DEFAULT_PORT)
             result = -1;
           else
+          {
             result = this->set (u_short (port), ip_addr, 1, address_family);
+          }
         }
       else
+      {
         result = this->set (port_p, ip_addr);
+      }
     }
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -461,7 +479,9 @@ static int get_port_number_from_name (const char port_name[],
 
       // Check for overflow.
       if (port_number < 0 || port_number > ACE_MAX_DEFAULT_PORT)
+      {
         return -1;
+      }
 
       // Return the port number.  NOTE: this number must
       // be returned in network byte order!
@@ -483,7 +503,9 @@ static int get_port_number_from_name (const char port_name[],
                                          &sentry,
                                          buf);
   if (sp != nullptr)
+  {
     port_number = sp->s_port;
+  }
 #endif /* ACE_LACKS_GETSERVBYNAME */
 
   return port_number;
@@ -507,7 +529,9 @@ ACE_INET_Addr::set (const char port_name[],
 
   int address_family = PF_UNSPEC;
   if (std::strcmp (protocol, "tcp") == 0)
+  {
     address_family = AF_INET;
+  }
 
 #  if defined (ACE_HAS_IPV6)
   if (std::strcmp (protocol, "tcp6") == 0)
@@ -588,7 +612,9 @@ ACE_INET_Addr::set (const sockaddr_in *addr, int len)
     {
       int const maxlen = static_cast<int> (sizeof (this->inet_addr_.in4_));
       if (len > maxlen)
+      {
         len = maxlen;
+      }
       std::memcpy (&this->inet_addr_.in4_, addr, len);
       this->base_set (AF_INET, len);
       return 0;
@@ -765,7 +791,9 @@ ACE_INET_Addr::get_host_name (char hostname[],
   else
     {
       if (len == 1)
+      {
         hostname[0] = '\0';
+      }
       result = -1;
     }
 
@@ -783,7 +811,9 @@ ACE_INET_Addr::get_host_name (wchar_t hostname[],
 
   // We have a build in limitation of MAXHOSTNAMELEN
   if (len > MAXHOSTNAMELEN + 1)
+  {
     len = MAXHOSTNAMELEN + 1;
+  }
 
   // Call the char version
   int const result = this->get_host_name (char_hostname, len);
@@ -806,7 +836,9 @@ ACE_INET_Addr::get_host_name () const
 
   static char name[MAXHOSTNAMELEN + 1];
   if (this->get_host_name (name, MAXHOSTNAMELEN + 1) == -1)
+  {
     std::strcpy (name, "<unknown>");
+  }
   return name;
 }
 
@@ -817,7 +849,9 @@ ACE_INET_Addr::set_port_number (u_short port_number,
   ACE_TRACE ("ACE_INET_Addr::set_port_number");
 
   if (encode)
+  {
     port_number = ACE_HTONS (port_number);
+  }
 
 #if defined (ACE_HAS_IPV6)
   if (this->get_type () == AF_INET6)
@@ -827,7 +861,9 @@ ACE_INET_Addr::set_port_number (u_short port_number,
     this->inet_addr_.in4_.sin_port = port_number;
 
   if (this->inet_addrs_.empty ())
+  {
     return;
+  }
   for (std::vector<union ip46>::iterator i = this->inet_addrs_.begin ();
        i != this->inet_addrs_.end ();
        ++i)
@@ -892,7 +928,9 @@ int ACE_INET_Addr::set_address (const char *ip_addr,
     {
       ACE_UINT32 ip4 = *reinterpret_cast<const ACE_UINT32 *> (ip_addr);
       if (encode)
+      {
         ip4 = ACE_HTONL (ip4);
+      }
 
       if (this->get_type () == AF_INET && map == 0) {
         this->base_set (AF_INET, sizeof (this->inet_addr_.in4_));

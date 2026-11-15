@@ -33,7 +33,9 @@ Quoter_Stock_i::set_price (CORBA::Double new_price)
 {
   this->data_.price = new_price;
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
+  {
     return;
+  }
 
   CORBA::Any event;
   event <<= this->data_;

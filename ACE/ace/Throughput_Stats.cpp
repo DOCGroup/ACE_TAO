@@ -23,7 +23,9 @@ void
 ACE_Throughput_Stats::accumulate (const ACE_Throughput_Stats &rhs)
 {
   if (rhs.samples_count () == 0u)
+  {
     return;
+  }
 
   this->ACE_Basic_Stats::accumulate (rhs);
 

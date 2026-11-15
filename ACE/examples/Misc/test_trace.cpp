@@ -83,7 +83,9 @@ My_Task::recursive (size_t depth)
   if (depth > 0)
     return recursive (depth - 1);
   else
+  {
     return 0;
+  }
   // Destructor of <ACE_Trace> automatically called.
 }
 
@@ -105,7 +107,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_OS::atexit (exithook);
 
   if (argc > 2)
+  {
     ACE_Trace::set_nesting_indent (ACE_OS::atoi (argv[2]));
+  }
 
   ACE_TRACE ("int ACE_TMAIN (int argc, ACE_TCHAR *argv[])");
 

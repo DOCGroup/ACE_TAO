@@ -26,13 +26,21 @@ ImplementationRepository::ActivationMode
 ImR_Utils::stringToActivationMode (const ACE_CString& s)
   {
     if (s == "NORMAL")
+    {
       return ImplementationRepository::NORMAL;
+    }
     if (s == "MANUAL")
+    {
       return ImplementationRepository::MANUAL;
+    }
     if (s == "PER_CLIENT")
+    {
       return ImplementationRepository::PER_CLIENT;
+    }
     if (s == "AUTO_START")
+    {
       return ImplementationRepository::AUTO_START;
+    }
 
     return ImplementationRepository::NORMAL;
   }
@@ -85,17 +93,25 @@ ImR_Utils::stringToEnvList(const ACE_CString& s,
       ret[i].value = "";
 
       if ((start = entry.find (NAMETAG)) == ACE_CString::npos)
+      {
         continue;
+      }
       start += NAMETAG.length();
       if ((pos = entry.find (ENDTAG, start + 1)) == ACE_CString::npos)
+      {
         continue;
+      }
       ret[i].name = entry.substr (start, pos - start).c_str();
 
       if ((start = entry.find (VALTAG, pos)) == ACE_CString::npos)
+      {
         continue;
+      }
       start += VALTAG.length ();
       if ((pos = entry.find (ENDTAG, start + 1)) == ACE_CString::npos)
+      {
         continue;
+      }
       ret[i].value = entry.substr (start, pos - start).c_str();
     }
 }
@@ -143,10 +159,14 @@ ImR_Utils::stringToPeerList (const ACE_CString& s, CORBA::StringSeq& ret)
       ret[i] = "";
 
       if ((start = entry.find (NAMETAG)) == ACE_CString::npos)
+      {
         continue;
+      }
       start += NAMETAG.length();
       if ((pos = entry.find (ENDTAG, start + 1)) == ACE_CString::npos)
+      {
         continue;
+      }
       ret[i] = entry.substr (start, pos - start).c_str();
     }
 

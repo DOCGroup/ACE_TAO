@@ -21,7 +21,9 @@ void
 Supplier::connect ()
 {
   if (CORBA::is_nil (this->supplier_admin_.in ()))
+  {
     return;
+  }
 
   this->consumer_proxy_ =
     this->supplier_admin_->obtain_push_consumer ();
@@ -36,7 +38,9 @@ Supplier::disconnect ()
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ())
       || CORBA::is_nil (this->supplier_admin_.in ()))
+  {
     return;
+  }
 
   this->consumer_proxy_->disconnect_push_consumer ();
 

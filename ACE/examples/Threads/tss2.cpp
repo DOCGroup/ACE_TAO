@@ -105,7 +105,9 @@ int
 Test_Task::open (void *arg)
 {
   if (ACE_Thread::spawn (Test_Task::svc, arg) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Thread::spawn"), 0);
+  }
 
   return 0;
 }
@@ -140,7 +142,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       for (int j = 0; j < num_tasks; ++j)
         {
           if (task_arr[j]->open (task_arr[j].get ()) == -1)
+          {
             ACE_ERROR_RETURN ((LM_ERROR, "failed to start Test_Task thread\n"), -1);
+          }
         }
 
       ACE_DEBUG ((LM_DEBUG, "(%t) waiting for first thread started\n"));
@@ -150,7 +154,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_Thread::yield ();
 
           if (Test_Task::max_count_.load (std::memory_order_relaxed) != 0)
+          {
             break;
+          }
         }
 
       ACE_DEBUG ((LM_DEBUG, "(%t) First thread started\n"

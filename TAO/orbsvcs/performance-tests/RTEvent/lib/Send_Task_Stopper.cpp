@@ -13,6 +13,8 @@
 Send_Task_Stopper::~Send_Task_Stopper ()
 {
   if (this->task_ == nullptr)
+  {
     return;
+  }
   this->task_->stop ();
 }

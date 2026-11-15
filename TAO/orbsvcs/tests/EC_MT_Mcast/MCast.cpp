@@ -277,7 +277,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         &orb_state,
         THR_DETACHED | THR_NEW_LWP);
       if (thread_pool_id == -1)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "Cannot spawn thread pool\n"), 1);
+      }
       ACE_OS::sleep (1); // simple solution ensures ready thread pool
 
       for (CORBA::ULong i {}; i < data_items; ++i)

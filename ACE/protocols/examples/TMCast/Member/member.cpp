@@ -22,14 +22,20 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
   try
   {
     if (argc < 4)
+    {
       throw Args {};
+    }
 
     if (argv[1][0] != 'r' && argv[1][0] != 's')
+    {
       throw Args {};
+    }
     bool const receiver {argv[1][0] == 'r'};
 
     if (!receiver)
+    {
       ACE_OS::srand (static_cast<u_int> (ACE_OS::time ()));
+    }
 
     ACE_INET_Addr const address (argv[3]);
 

@@ -67,7 +67,9 @@ TAO_EC_Basic_ObserverStrategy::append_observer (
                           RtecEventChannelAdmin::Observer::_duplicate (obs));
 
     if (this->observers_.bind (entry.handle, entry) == -1)
+    {
       throw RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER();
+    }
   }
 
   RtecEventChannelAdmin::ConsumerQOS c_qos;
@@ -89,7 +91,9 @@ TAO_EC_Basic_ObserverStrategy::remove_observer (
       RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
 
   if (this->observers_.unbind (handle) == -1)
+  {
     throw RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER();
+  }
 }
 
 int
@@ -140,7 +144,9 @@ TAO_EC_Basic_ObserverStrategy::supplier_qos_update (
                                         TAO_EC_ProxyPushConsumer *consumer)
 {
   if (consumer->publications ().is_gateway)
+  {
     return;
+  }
 
   RtecEventChannelAdmin::SupplierQOS s_qos;
   this->fill_qos (s_qos);
@@ -182,7 +188,9 @@ TAO_EC_Basic_ObserverStrategy::consumer_qos_update (
                                         TAO_EC_ProxyPushSupplier *supplier)
 {
   if (supplier->subscriptions ().is_gateway)
+  {
     return;
+  }
 
   RtecEventChannelAdmin::ConsumerQOS c_qos;
   this->fill_qos (c_qos);
@@ -255,7 +263,9 @@ TAO_EC_Reactive_ObserverStrategy::supplier_qos_update (
                                         TAO_EC_ProxyPushConsumer *consumer)
 {
   if (consumer->publications ().is_gateway)
+  {
     return;
+  }
 
   RtecEventChannelAdmin::SupplierQOS s_qos;
   this->fill_qos (s_qos);
@@ -297,7 +307,9 @@ TAO_EC_Reactive_ObserverStrategy::consumer_qos_update (
                                         TAO_EC_ProxyPushSupplier *supplier)
 {
   if (supplier->subscriptions ().is_gateway)
+  {
     return;
+  }
 
   RtecEventChannelAdmin::ConsumerQOS c_qos;
   this->fill_qos (c_qos);
@@ -379,7 +391,9 @@ TAO_EC_Accumulate_Supplier_Headers::work (TAO_EC_ProxyPushSupplier *supplier)
   const RtecEventChannelAdmin::ConsumerQOS& sub =
     supplier->subscriptions ();
   if (sub.is_gateway)
+  {
     return;
+  }
   for (CORBA::ULong j {}; j < sub.dependencies.length (); ++j)
     {
       const RtecEventComm::Event& event =
@@ -387,7 +401,9 @@ TAO_EC_Accumulate_Supplier_Headers::work (TAO_EC_ProxyPushSupplier *supplier)
       RtecEventComm::EventType type = event.header.type;
 
       if (0 < type && type < ACE_ES_EVENT_UNDEFINED)
+      {
         continue;
+      }
       this->headers_.insert (event.header, 1);
     }
 }
@@ -400,7 +416,9 @@ TAO_EC_Accumulate_Consumer_Headers::work (TAO_EC_ProxyPushConsumer *consumer)
   const RtecEventChannelAdmin::SupplierQOS& pub =
     consumer->publications ();
   if (pub.is_gateway)
+  {
     return;
+  }
   for (CORBA::ULong j {}; j < pub.publications.length (); ++j)
     {
       const RtecEventComm::Event& event =
@@ -408,7 +426,9 @@ TAO_EC_Accumulate_Consumer_Headers::work (TAO_EC_ProxyPushConsumer *consumer)
       RtecEventComm::EventType type = event.header.type;
 
       if (0 < type && type < ACE_ES_EVENT_UNDEFINED)
+      {
         continue;
+      }
       this->headers_.insert (event.header, 1);
     }
 }

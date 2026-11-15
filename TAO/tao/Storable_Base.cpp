@@ -46,11 +46,17 @@ TAO::Storable_Base::state_as_string (Storable_State state)
   else
     {
       if (state & badbit)
+      {
         state_string = "badbit ";
+      }
       if (state & eofbit)
+      {
         state_string += "eofbit ";
+      }
       if (state & failbit)
+      {
         state_string += "failbit";
+      }
     }
   return state_string;
 }

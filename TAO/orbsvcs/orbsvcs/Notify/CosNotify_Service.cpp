@@ -126,7 +126,9 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
                           (current_arg == nullptr ? ACE_TEXT ("''") : current_arg)));
             }
           if (current_arg != nullptr)
+          {
             arg_shifter.consume_arg ();
+          }
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-AllowReconnect")) == 0)
       {
@@ -196,7 +198,9 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
             (current_arg == nullptr ? ACE_TEXT ("''") : current_arg)));
         }
         if (current_arg != nullptr)
+        {
           arg_shifter.consume_arg ();
+        }
       }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-ValidateClientInterval")) == 0)
       {
@@ -215,7 +219,9 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
             (current_arg == nullptr ? ACE_TEXT ("''") : current_arg)));
         }
         if (current_arg != nullptr)
+        {
           arg_shifter.consume_arg ();
+        }
       }
       else
       {
@@ -239,7 +245,9 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
       // Set the per ConsumerAdmin QoS
       {
         if (consumer_threads > 0)
+        {
           ORBSVCS_DEBUG((LM_DEBUG, "Using %d threads for each ConsumerAdmin.\n", consumer_threads));
+        }
         CosNotification::QoSProperties qos;
         this->set_threads (qos, consumer_threads);
         properties->default_consumer_admin_qos_properties (qos);
@@ -248,7 +256,9 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
       // Set the per SupplierAdmin QoS
       {
         if (supplier_threads > 0)
+        {
           ORBSVCS_DEBUG((LM_DEBUG, "Using %d threads for each SupplierAdmin.\n", supplier_threads));
+        }
         CosNotification::QoSProperties qos;
         this->set_threads (qos, supplier_threads);
         properties->default_supplier_admin_qos_properties (qos);
@@ -259,7 +269,9 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
       // Set the per ProxyConsumer QoS
       {
         if (supplier_threads > 0)
+        {
           ORBSVCS_DEBUG((LM_DEBUG, "Using %d threads for each Supplier.\n", supplier_threads));
+        }
         CosNotification::QoSProperties qos;
         this->set_threads (qos, supplier_threads); // lookup thread per proxy doesn't make sense.
         properties->default_proxy_consumer_qos_properties (qos);
@@ -268,7 +280,9 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
       // Set the per ProxySupplier QoS
       {
         if (consumer_threads > 0)
+        {
           ORBSVCS_DEBUG((LM_DEBUG, "Using %d threads for each Consumer.\n", consumer_threads));
+        }
         CosNotification::QoSProperties qos;
         this->set_threads (qos, consumer_threads);
         properties->default_proxy_supplier_qos_properties (qos);
@@ -348,7 +362,9 @@ TAO_CosNotify_Service::finalize_service (
 {
   // Get out early if we can
   if (CORBA::is_nil (factory))
+  {
     return;
+  }
 
   // Make sure the factory doesn't go away while we're in here
   CosNotifyChannelAdmin::EventChannelFactory_var ecf =
@@ -369,7 +385,9 @@ TAO_CosNotify_Service::finalize_service (
               TAO_Notify_EventChannel* nec =
                 dynamic_cast<TAO_Notify_EventChannel*> (ec->_servant ());
               if (nec != 0)
+              {
                 nec->destroy ();
+              }
             }
         }
       catch (const CORBA::Exception&)
@@ -382,7 +400,9 @@ TAO_CosNotify_Service::finalize_service (
     dynamic_cast<TAO_Notify_EventChannelFactory*> (ecf->_servant ());
 
   if (necf != 0)
+  {
     necf->stop_validator();
+  }
 }
 
 void
@@ -422,7 +442,9 @@ TAO_CosNotify_Service::init_i2 (CORBA::ORB_ptr orb, CORBA::ORB_ptr dispatching_o
     orb->resolve_initial_references("RootPOA");
 
   if (CORBA::is_nil (object.in ()))
+  {
     ORBSVCS_ERROR ((LM_ERROR, " (%P|%t) Unable to resolve the RootPOA.\n"));
+  }
 
   PortableServer::POA_var default_poa = PortableServer::POA::_narrow (object.in ());
 

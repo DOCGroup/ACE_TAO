@@ -13,13 +13,17 @@ Parse_HTTP_Response::Parse_HTTP_Response (const char *response)
     error_ (0)
 {
   if (response != nullptr)
+  {
     this->init (response);
+  }
 }
 
 Parse_HTTP_Response::~Parse_HTTP_Response ()
 {
   if (this->response_ != nullptr)
+  {
     ACE_OS::free (this->response_);
+  }
 }
 
 void
@@ -62,7 +66,9 @@ Parse_HTTP_Response::init (const char *response)
       *p++ = '\0';
     }
   else
+  {
     this->error_ = BAD_RESPONSE;
+  }
 }
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)

@@ -44,7 +44,9 @@ TAO_UTF16_BOM_Translator::read_wchar (ACE_InputCDR &cdr, ACE_CDR::WChar &x)
     {
       ACE_CDR::Octet len;
       if (!this->read_1 (cdr, &len))
+      {
         return false;
+      }
 
       if (len == 2) // no BOM present
         {
@@ -52,7 +54,9 @@ TAO_UTF16_BOM_Translator::read_wchar (ACE_InputCDR &cdr, ACE_CDR::WChar &x)
 
           if (!this->read_array (cdr,
                                  reinterpret_cast<char *> (&sx), 1, 1, 2))
+          {
             return false;
+          }
 
 #if defined (ACE_LITTLE_ENDIAN)
           ACE_CDR::Short ux;
@@ -84,7 +88,9 @@ TAO_UTF16_BOM_Translator::read_wchar (ACE_InputCDR &cdr, ACE_CDR::WChar &x)
               x = static_cast<ACE_CDR::WChar> (ux);
             }
           else
+          {
             x = static_cast<ACE_CDR::WChar> (buf[1]);
+          }
           return true;
         }
       // What do we do here? The length is > 2 but the first word
@@ -107,7 +113,9 @@ TAO_UTF16_BOM_Translator::read_wstring (ACE_InputCDR &cdr,
 {
   ACE_CDR::ULong len;
   if (!this->read_4 (cdr, &len))
+  {
     return false;
+  }
 
   // A check for the length being too great is done later in the
   // call to read_char_array but we want to have it done before
@@ -175,7 +183,9 @@ TAO_UTF16_BOM_Translator::read_wstring (ACE_InputCDR &cdr,
 {
   ACE_CDR::ULong len;
   if (!this->read_4 (cdr, &len))
+  {
     return false;
+  }
 
   // A check for the length being too great is done later in the
   // call to read_char_array but we want to have it done before
@@ -264,7 +274,9 @@ TAO_UTF16_BOM_Translator::read_wchar_array_i (ACE_InputCDR & cdr,
           ++sb;
 
           if (adjust_len)
+          {
             length -= 1;
+          }
         }
 
       for (size_t i {}; i < length; ++i)
@@ -298,19 +310,25 @@ TAO_UTF16_BOM_Translator::read_wchar_array (ACE_InputCDR & cdr,
                                             ACE_CDR::ULong length)
 {
   if (length == 0)
+  {
     return true;
+  }
 
   if (static_cast<ACE_CDR::Short> (this->major_version (cdr)) == 1
       && static_cast<ACE_CDR::Short> (this->minor_version (cdr)) > 1)
     {
       for (size_t i {}; i < length; ++i)
         if (!this->read_wchar (cdr, x[i]))
+        {
           return false;
+        }
 
       return true;
     }
   else
+  {
     return this->read_wchar_array_i (cdr, x, length);
+  }
 }
 
 ACE_CDR::Boolean
@@ -359,7 +377,9 @@ TAO_UTF16_BOM_Translator::write_wchar_i (ACE_OutputCDR &cdr,
             ACE_CDR::swap_2 (reinterpret_cast<char const *> (&x),
                              reinterpret_cast<char *> (buffer));
           else
+          {
             buffer[0] = static_cast<ACE_CDR::Short> (x);
+          }
         }
 
       ACE_CDR::Octet tcsize =
@@ -368,7 +388,9 @@ TAO_UTF16_BOM_Translator::write_wchar_i (ACE_OutputCDR &cdr,
       if (this->write_1 (cdr, &tcsize))
         return this->write_array (cdr, &buffer, tcsize, 1, 1);
       else
+      {
         return false;
+      }
     }
   else if (static_cast<ACE_CDR::Short> (this->minor_version (cdr)) != 0)
     {
@@ -404,7 +426,9 @@ TAO_UTF16_BOM_Translator::write_wstring (ACE_OutputCDR & cdr,
           if (this->write_4 (cdr, &l) &&
               this->write_2 (cdr, &ACE_UNICODE_BOM_SWAPPED) &&
               x != nullptr)
+          {
             return this->write_swapped_wchar_array_i (cdr, x, len);
+          }
         }
       else
         {
@@ -412,7 +436,9 @@ TAO_UTF16_BOM_Translator::write_wstring (ACE_OutputCDR & cdr,
           if (this->write_4 (cdr, &l) &&
               this->write_2 (cdr, &ACE_UNICODE_BOM_CORRECT) &&
               x != nullptr)
+          {
             return this->write_wchar_array_i (cdr, x, len);
+          }
         }
     }
   else
@@ -447,7 +473,9 @@ TAO_UTF16_BOM_Translator::write_wchar_array (ACE_OutputCDR & cdr,
     {
       for (size_t i {}; i < length; ++i)
         if (!this->write_wchar_i (cdr, x[i], false))
+        {
           return false;
+        }
 
       return true;
     }
@@ -461,7 +489,9 @@ TAO_UTF16_BOM_Translator::write_wchar_array_i (ACE_OutputCDR & cdr,
                                                ACE_CDR::ULong length)
 {
   if (length == 0)
+  {
     return true;
+  }
   char* buf;
   static constexpr size_t align = ACE_CDR::SHORT_ALIGN;
   if (cdr.adjust (ACE_UTF16_CODEPOINT_SIZE * length, align, buf)
@@ -485,7 +515,9 @@ TAO_UTF16_BOM_Translator::write_swapped_wchar_array_i (ACE_OutputCDR & cdr,
                                                        ACE_CDR::ULong length)
 {
   if (length == 0)
+  {
     return true;
+  }
   char* buf;
   static constexpr size_t align = ACE_CDR::SHORT_ALIGN;
   if (cdr.adjust (ACE_UTF16_CODEPOINT_SIZE * length, align, buf)

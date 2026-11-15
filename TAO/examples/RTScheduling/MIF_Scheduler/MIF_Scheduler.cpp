@@ -249,7 +249,10 @@ MIF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType &/
           delete new_dt;
         }
     }
-  else delete new_dt;
+  else
+  {
+    delete new_dt;
+  }
 }
 
 void
@@ -338,7 +341,9 @@ MIF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_
       ACE_hthread_t current;
       ACE_Thread::self (current);
       if (ACE_Thread::getprio (current, priority) == -1)
+      {
         return;
+      }
 
       ACE_DEBUG ((LM_DEBUG,
                   "Initial thread priority is %d %d\n",
@@ -353,7 +358,9 @@ MIF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_
 
           ACE_Thread::self (current);
           if (ACE_Thread::getprio (current, priority) == -1)
+          {
             return;
+          }
 
           ACE_DEBUG ((LM_DEBUG,
                       "Bumped thread priority is %d\n",
@@ -556,7 +563,9 @@ MIF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr)
   ACE_hthread_t current;
   ACE_Thread::self (current);
   if (ACE_Thread::getprio (current, priority) == -1)
+  {
     return;
+  }
 
   RTCORBA::Priority rtpriority;
   RTCORBA::PriorityMapping* pm = this->mapping_manager_->mapping ();
@@ -600,7 +609,9 @@ MIF_Scheduler::receive_exception (PortableInterceptor::ClientRequestInfo_ptr)
   ACE_hthread_t current;
   ACE_Thread::self (current);
   if (ACE_Thread::getprio (current, priority) == -1)
+  {
     return;
+  }
 
   RTCORBA::Priority rtpriority;
   RTCORBA::PriorityMapping* pm = this->mapping_manager_->mapping ();
@@ -644,7 +655,9 @@ MIF_Scheduler::receive_other (PortableInterceptor::ClientRequestInfo_ptr)
   ACE_hthread_t current;
   ACE_Thread::self (current);
   if (ACE_Thread::getprio (current, priority) == -1)
+  {
     return;
+  }
 
   RTCORBA::Priority rtpriority;
   RTCORBA::PriorityMapping* pm = this->mapping_manager_->mapping ();

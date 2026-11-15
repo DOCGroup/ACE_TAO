@@ -54,7 +54,9 @@ void
 Consumer::connect ()
 {
   if (CORBA::is_nil (this->consumer_admin_.in ()))
+  {
     return;
+  }
 
   CosEventComm::PushConsumer_var const objref =
     this->_this ();
@@ -70,7 +72,9 @@ Consumer::disconnect ()
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ())
       || CORBA::is_nil (this->consumer_admin_.in ()))
+  {
     return;
+  }
 
   this->supplier_proxy_->disconnect_push_supplier ();
 
@@ -142,10 +146,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   Consumer cons;
 
   if (cons.init (argc, argv) == -1)
+  {
     return 1;
+  }
 
   if (cons.init_Consumer () == -1)
+  {
     return 1;
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P): %s\n"), ACE_TEXT ("Started the consumer..")));

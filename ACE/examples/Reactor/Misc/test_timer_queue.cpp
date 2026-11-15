@@ -53,7 +53,9 @@ test_functionality (ACE_Timer_Queue * const tq)
   // Use timer_id outside of an assert, so that we don't get compile
   // warnings with ACE_NDEBUG about it being unused.
   if (timer_id1 == -1)
+  {
     ACE_ERROR ((LM_ERROR, "%p\n", "schedule () failed"));
+  }
   ACE_TEST_ASSERT (timer_id1 != -1);
 
   long result = tq->schedule (&eh, &times2, ACE_OS::gettimeofday ());

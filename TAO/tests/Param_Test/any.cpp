@@ -115,7 +115,9 @@ Test_Any::reset_parameters ()
         s = gen->gen_short ();
 
         if (TAO_debug_level > 0)
+        {
           ACE_DEBUG ((LM_DEBUG, "setting short = %d\n", s));
+        }
         this->in_ <<= s;
         this->inout_ <<= s;
       }
@@ -129,7 +131,9 @@ Test_Any::reset_parameters ()
         char *str = gen->gen_string ();
 
         if (TAO_debug_level > 0)
+        {
           ACE_DEBUG ((LM_DEBUG, "setting string = %C\n", str));
+        }
         this->in_ <<= str;
         this->inout_ <<= str;
         CORBA::string_free (str);
@@ -158,7 +162,9 @@ Test_Any::reset_parameters ()
         for (size_t i = 0; i < Param_Test::DIM1; i++)
           array[i] = i;
         if (TAO_debug_level > 0)
+        {
           ACE_DEBUG ((LM_DEBUG, "Setting Fixed_Array\n"));
+        }
         this->in_ <<= Param_Test::Fixed_Array_forany (array);
         this->inout_ <<= Param_Test::Fixed_Array_forany (array);
       }
@@ -342,7 +348,9 @@ Test_Any::check_validity ()
               array_out[i] != ii ||
               array_inout[i] != square ||
               array_ret[i] != square)
+          {
             return 0;
+          }
         }
       return 1;
     }
@@ -357,7 +365,9 @@ Test_Any::check_validity ()
           if ((*bdss_in)[i] != (*bdss_out)[i] ||
               (*bdss_inout)[i] != square ||
               (*bdss_inout)[i] != (*bdss_ret)[i])
+          {
             return 0;
+          }
         }
       return 1;
     }
@@ -372,7 +382,9 @@ Test_Any::check_validity ()
           if ((*ubss_in)[i] != (*ubss_out)[i] ||
               (*ubss_inout)[i] != square ||
               (*ubss_inout)[i] != (*ubss_ret)[i])
+          {
             return 0;
+          }
         }
       return 1;
     }
@@ -451,7 +463,9 @@ Test_Any::check_validity ()
       return 1;
     }
   else
+  {
     return 0;
+  }
 }
 
 CORBA::Boolean

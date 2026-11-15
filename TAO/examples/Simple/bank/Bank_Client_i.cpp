@@ -12,13 +12,17 @@ Bank_Client_i::run (char const *name,
 {
   // Initialize the client.
   if (client_.init (name, argc, argv) == -1)
+  {
     return -1;
+  }
 
   try
     {
       this->check_accounts ();
       if (client_.do_shutdown ())
+      {
         client_->shutdown ();
+      }
     }
   catch (CORBA::Exception const &)
     {

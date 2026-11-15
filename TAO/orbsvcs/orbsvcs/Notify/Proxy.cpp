@@ -60,7 +60,9 @@ TAO_Notify_Proxy::types_changed (const TAO_Notify_EventTypeSeq& added, const TAO
   // return if the updates for this proxy are turned off or
   // if all the updates in the channel are switched off.
   if (this->updates_off_ || !TAO_Notify_PROPERTIES::instance()->updates ())
+  {
     return;
+  }
 
   TAO_Notify_Method_Request_Updates_No_Copy request (added, removed, this);
 
@@ -111,7 +113,9 @@ TAO_Notify_Proxy::qos_changed (TAO_Notify_QoSProperties const &qos_properties)
   TAO_Notify_Peer* peer = this->peer ();
 
   if (peer != nullptr)
+  {
     peer->qos_changed (qos_properties);
+  }
 }
 
 void

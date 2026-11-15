@@ -59,7 +59,9 @@ void
 
               // Check if the connect has completed.
               if (r->try_connect (std::addressof (desc), max_wait_time))
+              {
                 return;
+              }
             }
         }
     }

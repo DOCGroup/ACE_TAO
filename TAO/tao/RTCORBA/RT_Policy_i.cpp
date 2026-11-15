@@ -157,7 +157,9 @@ TAO_ThreadpoolPolicy::create (CORBA::Any const &val)
 {
   RTCORBA::ThreadpoolId value;
   if (!(val >>= value))
+  {
     throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
+  }
 
   TAO_ThreadpoolPolicy *tmp {};
   ACE_NEW_THROW_EX (tmp,
@@ -290,7 +292,9 @@ TAO_PriorityBandedConnectionPolicy::create (CORBA::Any const &val)
 {
   RTCORBA::PriorityBands const *value {};
   if (!(val >>= value))
+  {
     throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
+  }
 
   TAO_PriorityBandedConnectionPolicy *tmp {};
   ACE_NEW_THROW_EX (tmp,
@@ -390,7 +394,9 @@ TAO_ServerProtocolPolicy::create (CORBA::Any const &val)
 {
   RTCORBA::ProtocolList const *value {};
   if (!(val >>= value))
+  {
     throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
+  }
 
   TAO_ServerProtocolPolicy *tmp {};
   ACE_NEW_THROW_EX (tmp,
@@ -478,7 +484,9 @@ TAO_ClientProtocolPolicy::create (CORBA::Any const &val)
 {
   RTCORBA::ProtocolList const *value {};
   if (!(val >>= value))
+  {
     throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
+  }
 
   TAO_ClientProtocolPolicy *tmp {};
   ACE_NEW_THROW_EX (tmp,

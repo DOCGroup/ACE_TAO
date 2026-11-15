@@ -45,7 +45,9 @@ ACE_LSOCK_Dgram::open (const ACE_Addr &local,
   if (ACE_SOCK_Dgram::open (local,
                             protocol_family,
                             protocol) == -1)
+  {
     return -1;
+  }
   ACE_LSOCK::set_handle (this->ACE_SOCK_Dgram::get_handle ());
   return 0;
 }

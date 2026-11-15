@@ -53,7 +53,9 @@ TAO_FT_Persistent_Naming_Context::resolve (CosNaming::Name const &n)
     // We will return the object reference all the way back out to the client
     // if not
     if (!this->is_object_group (resolved_ref.in ()))
+    {
       return resolved_ref._retn ();
+    }
 
     // If there is no naming manager, we will fail and report an error.
     if ( this->naming_manager_impl_ == nullptr)

@@ -48,7 +48,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       try
         {
           if (parse_args (argc, argv) == -1)
+          {
             return (-1);
+          }
 
           CORBA::Object_var manager_obj = orb->resolve_initial_references ("RTSchedulerManager");
 

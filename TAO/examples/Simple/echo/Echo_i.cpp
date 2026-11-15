@@ -45,7 +45,9 @@ Echo_i::echo_string (char const *mesg)
 {
   // The pointer mesg was null, return.
   if (mesg == nullptr)
+  {
     return nullptr;
+  }
 
   CORBA::String_var str = CORBA::string_dup (mesg);
 
@@ -53,7 +55,9 @@ Echo_i::echo_string (char const *mesg)
   // raised.
 
   if (str.in () == nullptr)
+  {
     throw CORBA::NO_MEMORY ();
+  }
 
   // Got thru! now, make a deep copy of the mesg string and send it
   // back to the client.

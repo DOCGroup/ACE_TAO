@@ -20,10 +20,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   int const result = the_agent.set_args (argc, argv);
 #endif
   if (result != 0)
+  {
     return 1;
+  }
 
   if (!the_agent.valid ())
+  {
     return 1;
+  }
 
   return the_agent.run (); // main loop
 }

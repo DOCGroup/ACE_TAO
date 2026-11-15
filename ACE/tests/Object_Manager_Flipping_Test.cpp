@@ -84,7 +84,9 @@ int run_main (int, ACE_TCHAR *[])
   // following ACE::init, as it tries to use the SC instance.
 
   if (ACE_Service_Config::instance ()->is_opened ())
-      ++errors;
+  {
+    ++errors;
+  }
 
   // Not using ACE_TEST_ASSERT because ACE is not initialized yet.
 

@@ -29,7 +29,9 @@ void Update_Manager::handle_reply(int id)
     evt_.signal();
   }
   if (replied_ == suicide_condition_)
+  {
     delete this;
+  }
 }
 
 void Update_Manager::handle_exception(int id)
@@ -46,7 +48,9 @@ void Update_Manager::handle_exception(int id)
     evt_.signal();
   }
   if (replied_ == suicide_condition_)
+  {
     delete this;
+  }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

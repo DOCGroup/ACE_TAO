@@ -220,7 +220,9 @@ TAO_EC_Filter_Builder*
 TAO_EC_Kokyu_Factory::create_filter_builder (TAO_EC_Event_Channel_Base *ec)
 {
   if (this->filtering_ == 3)
+  {
     return new TAO_EC_Kokyu_Filter_Builder (ec);
+  }
 
   return this->TAO_EC_Default_Factory::create_filter_builder (ec);
 }

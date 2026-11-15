@@ -33,15 +33,21 @@ FTP_Client_Callback::handle_timeout (void *)
                   return 0;
                 }
               else
+              {
                 return 0;
+              }
             }
           else
+          {
             ACE_ERROR_RETURN ((LM_ERROR, "FTP_Client_Flow_Handler::fread error\n"), -1);
+          }
         }
       mb.wr_ptr (bytes_read);
       int const result = this->protocol_object_->send_frame (&mb);
       if (result < 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "FTP_Client_Flow_Handler::send failed\n"), -1);
+      }
       ACE_DEBUG ((LM_DEBUG, "handle_timeout::buffer sent successfully\n"));
     }
   catch (CORBA::Exception const &ex)
@@ -175,7 +181,9 @@ Client::init (int argc, ACE_TCHAR *argv[])
       mgr->activate ();
 
       if (this->parse_args (argc, argv) != 0)
+      {
         return -1;
+      }
 
       TAO_StreamEndPoint_A *streamendpoint_a {};
       ACE_NEW_RETURN (streamendpoint_a, TAO_StreamEndPoint_A, -1);
@@ -252,7 +260,9 @@ Client::run ()
       timer.elapsed_time (elapsed);
       elapsed.dump ();
       if (result == 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "streamctrl::bind failed\n"), -1);
+      }
 
       AVStreams::flowSpec start_spec (1);
       this->streamctrl_.start (start_spec);
@@ -288,7 +298,9 @@ ACE_TMAIN (int argc,
 
       int result = CLIENT::instance ()->init (argc, argv);
       if (result < 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "client::init failed\n"), 1);
+      }
       result = CLIENT::instance ()->run ();
 
       poa->destroy (true, true);
@@ -296,7 +308,9 @@ ACE_TMAIN (int argc,
       orb->destroy ();
 
       if (result < 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "client::run failed\n"), 1);
+      }
     }
   catch (CORBA::Exception const &ex)
     {

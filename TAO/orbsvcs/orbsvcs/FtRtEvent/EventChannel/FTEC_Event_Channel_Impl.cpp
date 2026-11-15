@@ -293,7 +293,9 @@ void TAO_FTEC_Event_Channel_Impl::disconnect_push_supplier (
         const FtRtecEventChannelAdmin::ObjectId & oid)
 {
   if (Request_Context_Repository().is_executed_request())
+  {
     return;
+  }
 
   TAO_FTEC_ProxyPushSupplier* proxy = this->find_proxy_push_supplier(oid);
 
@@ -307,7 +309,9 @@ void TAO_FTEC_Event_Channel_Impl::disconnect_push_consumer (
         const FtRtecEventChannelAdmin::ObjectId & oid)
 {
   if (Request_Context_Repository().is_executed_request())
+  {
     return;
+  }
 
   TAO_FTEC_ProxyPushConsumer* proxy = this->find_proxy_push_consumer(oid);
 
@@ -321,7 +325,9 @@ void TAO_FTEC_Event_Channel_Impl::suspend_push_supplier (
         const FtRtecEventChannelAdmin::ObjectId & oid)
 {
   if (Request_Context_Repository().is_executed_request())
+  {
     return;
+  }
 
   TAO_FTEC_ProxyPushSupplier* proxy = this->find_proxy_push_supplier(oid);
 
@@ -335,7 +341,9 @@ void TAO_FTEC_Event_Channel_Impl::resume_push_supplier (
         const FtRtecEventChannelAdmin::ObjectId & oid)
 {
   if (Request_Context_Repository().is_executed_request())
+  {
     return;
+  }
 
   TAO_FTEC_ProxyPushSupplier* proxy = this->find_proxy_push_supplier(oid);
 

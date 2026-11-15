@@ -81,7 +81,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Server_Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return 2;
+      }
 
       CORBA::Object_var miop_ref =
         orb->string_to_object (options.uipmc_url.c_str ());

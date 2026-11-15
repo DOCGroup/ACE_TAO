@@ -651,7 +651,9 @@ Stop_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask m)
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("(%P|%t) Stop_Handler::handle_close - entered.\n")));
   if (m == ACE_Event_Handler::SIGNAL_MASK)
+  {
     return 0;
+  }
   this->reactor ()->remove_handler (this,
                                     ACE_Event_Handler::SIGNAL_MASK |
                                     ACE_Event_Handler::DONT_CALL);

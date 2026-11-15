@@ -235,10 +235,14 @@ GIOP_Buffer::add_octets (const char *text, size_t offset)
        count++)
     {
       if (count == 8)
+      {
         ++c;
+      }
       int o = ::strtol(c, &err, 16);
       if (err == c || *err == 0)
+      {
         return -1;
+      }
       *this->wr_pos_++ = o;
       c = err+1;
     }
@@ -248,7 +252,9 @@ GIOP_Buffer::add_octets (const char *text, size_t offset)
     {
       this->header_parsed_ = this->parse_header();
       if (this->header_parsed_ )
+      {
         rtn = 1;
+      }
     }
   if (cs == this->buffer_size_)
     {
@@ -281,7 +287,9 @@ char
 GIOP_Buffer::type () const
 {
   if (this->octets_ == nullptr)
+  {
     return 127;
+  }
   return this->octets_[7];
 }
 
@@ -318,7 +326,9 @@ GIOP_Buffer::is_oneway ()
     }
 
   if (!this->header_parsed_)
+  {
     this->header_parsed_ = this->parse_header();
+  }
 
   return (resp_exp_ &1) == 0;
 }
@@ -363,9 +373,13 @@ size_t
 GIOP_Buffer::msg_size ()
 {
   if (this->cur_size() < 12)
+  {
     return 0;
+  }
   if (!this->header_parsed_)
+  {
     this->header_parsed_ = this->parse_header();
+  }
   return (size_leadin == size_leadin_1_5) ? this->payload_size_ : this->msg_size_;
 }
 
@@ -379,10 +393,14 @@ size_t
 GIOP_Buffer::actual_req_id ()
 {
   if (this->octets_ == nullptr)
+  {
     return 0;
+  }
 
   if (!this->header_parsed_)
+  {
     this->header_parsed_ = this->parse_header();
+  }
 
   return this->req_id_;
 }
@@ -399,14 +417,18 @@ GIOP_Buffer::parse_svc_contexts ()
   ACE_CDR::ULong temp;
   ACE_CDR::ULong num_svc_cont;
   if ( !(*this->cdr_ >> num_svc_cont))
+  {
     return false;
+  }
   this->num_contexts_ = static_cast<size_t>(num_svc_cont);
   while (num_svc_cont > 0)
     {
       if (!(*this->cdr_ >> temp))  // tag really
         return false;
       if (!(*this->cdr_ >> temp))
+      {
         return false;
+      }
       if ((this->cur_size() == this->buffer_size_) && (this->cdr_->length() < temp))
         {
           return this->cdr_->skip_bytes (this->cdr_->length());
@@ -445,7 +467,9 @@ GIOP_Buffer::parse_header ()
   this->payload_start_ = this->cdr_->rd_ptr();
   ACE_CDR::ULong len_ulong;
   if (!(*this->cdr_ >> len_ulong))
-      return false;
+  {
+    return false;
+  }
   this->msg_size_ = len_ulong;
 
   if (this->ver_minor_ < 2)
@@ -506,7 +530,9 @@ GIOP_Buffer::parse_header ()
   if (this->ver_minor_ > 1)
     {
       if (!this->parse_svc_contexts())
+      {
         return false;
+      }
     }
   this->cdr_->align_read_ptr (8);
   this->payload_start_ = this->cdr_->rd_ptr();
@@ -522,10 +548,14 @@ GIOP_Buffer::target_oid (size_t &len)
     }
 
   if (!this->header_parsed_)
+  {
     this->header_parsed_ = this->parse_header();
+  }
 
   if (this->oid_ == nullptr)
+  {
     return nullptr;
+  }
 
   len = this->oid_len_;
   return this->oid_;
@@ -535,10 +565,14 @@ const char *
 GIOP_Buffer::operation ()
 {
   if (octets_ == nullptr)
+  {
     return nullptr;
+  }
 
   if (!this->header_parsed_)
+  {
     this->header_parsed_ = this->parse_header();
+  }
 
   return this->opname_;
 }
@@ -547,7 +581,9 @@ ACE_InputCDR &
 GIOP_Buffer::payload ()
 {
   if (octets_ != nullptr && !this->header_parsed_)
+  {
     this->header_parsed_ = this->parse_header();
+  }
   return *this->cdr_;
 }
 

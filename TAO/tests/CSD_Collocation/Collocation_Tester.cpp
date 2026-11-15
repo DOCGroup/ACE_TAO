@@ -21,7 +21,9 @@ Collocation_Test::init (int argc, ACE_TCHAR *argv[])
 
   int result = this->parse_args (argc, argv);
   if (result != 0)
+  {
     return result;
+  }
 
   // Get an Object reference to RootPOA.
   CORBA::Object_var obj =

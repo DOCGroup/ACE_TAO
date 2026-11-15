@@ -27,7 +27,9 @@ TAO_EC_TPC_ProxyPushSupplier:: disconnect_push_supplier ()
   BASECLASS::disconnect_push_supplier ();
 
   if (TAO_EC_TPC_debug_level > 0)
+  {
     ORBSVCS_DEBUG ((LM_DEBUG, "EC (%P|%t): leave EC_TPC_ProxySupplier::disconnect_push_supplier (%@)\n", this));
+  }
 }
 
 TAO_EC_TPC_Dispatching*

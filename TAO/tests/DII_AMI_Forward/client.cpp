@@ -98,7 +98,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Client using ior source %s\n"),
@@ -125,7 +127,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       if (options.do_shutdown)
+      {
         result = do_shutdown_test (server);
+      }
 
       ACE_DEBUG ((LM_DEBUG, "Shutting down and destroying ORB.\n"));
       orb->destroy ();

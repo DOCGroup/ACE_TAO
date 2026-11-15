@@ -119,7 +119,9 @@ ClientAcceptor::handle_input (ACE_HANDLE)
   // The registered handler owns the accepted service from here onward.
   ClientService *const accepted_client = client.release ();
   if (accepted_client->open () == -1)
+  {
     accepted_client->handle_close (ACE_INVALID_HANDLE, 0);
+  }
   return 0;
 }
 // Listing 3
@@ -174,14 +176,18 @@ ClientService::handle_input (ACE_HANDLE)
   send_cnt =
     this->sock_.send (buffer, static_cast<size_t> (recv_cnt));
   if (send_cnt == recv_cnt)
+  {
     return 0;
+  }
   if (send_cnt == -1 && ACE_OS::last_error () != EWOULDBLOCK)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%P|%t) %p\n"),
                        ACE_TEXT ("send")),
                       0);
   if (send_cnt == -1)
+  {
     send_cnt = 0;
+  }
   ACE_Message_Block *raw_message_block {};
   size_t const remaining =
     static_cast<size_t> ((recv_cnt - send_cnt));
@@ -222,11 +228,15 @@ ClientService::handle_output (ACE_HANDLE)
                     ACE_TEXT ("(%P|%t) %p\n"),
                     ACE_TEXT ("send")));
       else
+      {
         message_block->rd_ptr (static_cast<size_t> (send_cnt));
+      }
       if (message_block->length () > 0)
         {
           if (this->output_queue_.enqueue_head (message_block.get ()) == -1)
+          {
             return -1;
+          }
           message_block.release ();
           break;
         }
@@ -240,7 +250,9 @@ int
 ClientService::handle_close (ACE_HANDLE, ACE_Reactor_Mask mask)
 {
   if (mask == ACE_Event_Handler::WRITE_MASK)
+  {
     return 0;
+  }
   mask = ACE_Event_Handler::ALL_EVENTS_MASK |
          ACE_Event_Handler::DONT_CALL;
   this->reactor ()->remove_handler (this, mask);
@@ -335,7 +347,9 @@ LogSwitcher::handle_exception (ACE_HANDLE)
   if (this->on_off_)
     ACE_LOG_MSG->clr_flags (ACE_Log_Msg::SILENT);
   else
+  {
     ACE_LOG_MSG->set_flags (ACE_Log_Msg::SILENT);
+  }
   return 0;
 }
 // Listing 15
@@ -347,7 +361,9 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ClientAcceptor acceptor;
   acceptor.reactor (ACE_Reactor::instance ());
   if (acceptor.open (port_to_listen) == -1)
+  {
     return 1;
+  }
 
   ACE_Reactor::instance ()->run_reactor_event_loop ();
 

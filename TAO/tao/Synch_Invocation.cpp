@@ -108,7 +108,9 @@ namespace TAO
     s = this->send_request_interception ();
 
     if (s != TAO_INVOKE_SUCCESS)
+    {
       return s;
+    }
 
     // We have started the interception flow. We need to call the
     // ending interception flow if things go wrong. The purpose of the
@@ -196,12 +198,16 @@ namespace TAO
             Invocation_Status const tmp = this->receive_other_interception ();
 
             if (tmp != TAO_INVOKE_SUCCESS)
+            {
               s = tmp;
+            }
           }
 #endif /* TAO_HAS_INTERCEPTORS */
 
         if (s != TAO_INVOKE_SUCCESS)
+        {
           return s;
+        }
 
         countdown.update ();
 
@@ -209,7 +215,9 @@ namespace TAO
         // back to cache. If the idling is successful let the
         // resolver about that.
         if (transport->idle_after_send ())
+        {
           this->resolver_.transport_released ();
+        }
 
         // @@ In all MT environments, there's a cancellation point lurking
         // here; need to investigate.  Client threads would frequently be
@@ -237,12 +245,16 @@ namespace TAO
 
             // Push the latest values for the return..
             if (tmp != TAO_INVOKE_SUCCESS)
+            {
               s = tmp;
+            }
           }
 #endif /* TAO_HAS_INTERCEPTORS */
 
         if (s != TAO_INVOKE_SUCCESS)
+        {
           return s;
+        }
 
         // What happens when the above call returns an error through
         // the return value? That would be bogus as per the contract
@@ -252,7 +264,9 @@ namespace TAO
         // For some strategies one may want to release the transport
         // back to  cache after receiving the reply.
         if (transport->idle_after_reply ())
+        {
           this->resolver_.transport_released ();
+        }
 
 #if TAO_HAS_INTERCEPTORS == 1
         Invocation_Status tmp = TAO_INVOKE_FAILURE;
@@ -265,7 +279,9 @@ namespace TAO
             tmp = this->receive_reply_interception ();
           }
         if (tmp != TAO_INVOKE_SUCCESS)
+        {
           s = tmp;
+        }
       }
     catch ( ::CORBA::Exception& ex)
       {
@@ -291,7 +307,9 @@ namespace TAO
              st == PortableInterceptor::TRANSPORT_RETRY)
            s = TAO_INVOKE_RESTART;
          else
+         {
            throw;
+         }
       }
 #endif /* TAO_HAS_INTERCEPTORS */
 
@@ -314,7 +332,9 @@ namespace TAO
     bool const
       expired = (max_wait_time && ACE_Time_Value::zero == *max_wait_time);
     if (expired)
+    {
       errno = ETIME;
+    }
     int const
       reply_error = expired ? -1 :
         this->resolver_.transport ()->wait_strategy ()->wait (max_wait_time, rd);
@@ -677,7 +697,9 @@ namespace TAO
                          type_id.in ()));
 
         if (do_forward)
+        {
           this->stub ()->forwarded_on_exception (true);
+        }
 
         // Start the special case for FTCORBA.
         /**
@@ -691,7 +713,9 @@ namespace TAO
             this->resolver_.profile ());
 
         if (s == TAO_INVOKE_RESTART)
+        {
           return s;
+        }
 
         // Attempt profile retry.
         /**
@@ -776,7 +800,9 @@ namespace TAO
     s = this->send_request_interception ();
 
     if (s != TAO_INVOKE_SUCCESS)
+    {
       return s;
+    }
 
     try
       {
@@ -909,7 +935,9 @@ namespace TAO
             st == PortableInterceptor::TRANSPORT_RETRY)
           s = TAO_INVOKE_RESTART;
         else
+        {
           throw;
+        }
       }
 #endif /* TAO_HAS_INTERCEPTORS */
 

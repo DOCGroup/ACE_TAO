@@ -87,7 +87,9 @@ ACE_TMAIN (int, ACE_TCHAR **argv)
           if (result != 0 && EINTR == ACE_OS::last_error ())
             {
               if (bShutdown != 0)
+              {
                 break;
+              }
             }
           else if (result != 0)
             {

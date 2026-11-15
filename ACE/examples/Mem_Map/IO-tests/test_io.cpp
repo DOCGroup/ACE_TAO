@@ -60,7 +60,9 @@ extern "C" void
 cleanup (int)
 {
   if (options.remove_output)
+  {
     ACE_OS::unlink (options.output_filename);
+  }
   ACE_OS::exit (0);
 }
 
@@ -124,7 +126,9 @@ run_tests (size_t iterations, FILE *input_fp, FILE *output_fp)
       || create_test<Mmap2_Test> (test_vector[4], "Mmap2_Test") == -1
       || create_test<Slow_Read_Write_Test> (test_vector[5],
                                             "Slow_Read_Write_Test") == -1)
+  {
     return -1;
+  }
 
   for (std::unique_ptr<IO_Test> const &test : test_vector)
     {
@@ -169,7 +173,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   options.program_name = ACE::basename (argv[0],
                                         ACE_DIRECTORY_SEPARATOR_CHAR);
   if (parse_args (argc, argv) == -1)
+  {
     return 1;
+  }
 
   ACE_Sig_Action sa (&cleanup, SIGINT);
   ACE_UNUSED_ARG (sa);

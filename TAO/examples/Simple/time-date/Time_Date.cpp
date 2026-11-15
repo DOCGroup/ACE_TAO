@@ -75,7 +75,9 @@ DLL_ORB::init (int argc, ACE_TCHAR *argv[])
                                     "An ORB");
 
       if (CORBA::is_nil (this->orb_.in ()))
+      {
         return -1;
+      }
 
       CORBA::Object_var poa_object =
         this->orb_->resolve_initial_references ("RootPOA");

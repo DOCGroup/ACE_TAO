@@ -18,7 +18,9 @@ int TP_Logging_Handler::handle_input (ACE_HANDLE) {
     log_blk_owner->cont (mblk.release ());
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, -1);
     if (TP_LOGGING_TASK::instance ()->put (log_blk_owner.get ()) == -1)
+    {
       return -1;
+    }
     log_blk_owner.release ();
     ++queued_count_;
     return 0;
@@ -34,15 +36,22 @@ TP_Logging_Handler::handle_close (ACE_HANDLE handle,
     if (queued_count_ == 0)
       close_now = true;
     else
+    {
       deferred_close_ = true;
+    }
   } else {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, -1);
     --queued_count_;
-    if (queued_count_ == 0) close_now = deferred_close_;
+    if (queued_count_ == 0)
+    {
+      close_now = deferred_close_;
+    }
   }
 
   if (close_now)
+  {
     return Logging_Event_Handler::handle_close ();
+  }
   return 0;
 }
 

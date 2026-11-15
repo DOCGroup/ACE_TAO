@@ -48,7 +48,9 @@ public:
         if (this->is_supplier_)
           this->interf_->get_suppliers (&list);
         else
+        {
           this->interf_->get_consumers (&list);
+        }
         this->receive (list);
       }
     else
@@ -56,7 +58,9 @@ public:
         if (this->is_supplier_)
           this->receive (this->interf_->get_suppliers (nullptr));
         else
+        {
           this->receive (this->interf_->get_consumers (nullptr));
+        }
       }
   }
 

@@ -143,7 +143,9 @@ TAO_Notify_Event_Manager::offer_change (TAO_Notify_ProxyConsumer* proxy_consumer
   TAO_Notify_ProxySupplier_Update_Worker worker (new_added, last_removed);
 
   if (updates_collection != nullptr)
+  {
     updates_collection->for_each (&worker);
+  }
 }
 
 void
@@ -172,7 +174,9 @@ TAO_Notify_Event_Manager::subscribe (TAO_Notify_ProxySupplier* proxy_supplier, c
       int result = this->consumer_map().insert (proxy_supplier, event_type);
 
       if (result == 1)
+      {
         new_seq.add (event_type);
+      }
     }
 }
 
@@ -184,7 +188,9 @@ TAO_Notify_Event_Manager::un_subscribe (TAO_Notify_ProxySupplier* proxy_supplier
       int result = this->consumer_map().remove (proxy_supplier, event_type);
 
       if (result == 1)
+      {
         last_seq.add (event_type);
+      }
     }
 }
 
@@ -196,7 +202,9 @@ TAO_Notify_Event_Manager::publish (TAO_Notify_ProxyConsumer* proxy_consumer, con
       int result = supplier_map().insert (proxy_consumer, event_type);
 
       if (result == 1)
+      {
         new_seq.add (event_type);
+      }
     }
 }
 
@@ -208,7 +216,9 @@ TAO_Notify_Event_Manager::un_publish (TAO_Notify_ProxyConsumer* proxy_consumer, 
       int result = supplier_map().remove (proxy_consumer, event_type);
 
       if (result == 1)
+      {
         last_seq.add (event_type);
+      }
     }
 }
 

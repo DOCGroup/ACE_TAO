@@ -48,7 +48,9 @@ CC_Lock::try_lock ()
           return false;
         }
       else
+      {
         throw CORBA::INTERNAL ();
+      }
     }
   ORBSVCS_DEBUG ((LM_DEBUG,
               "lock_held_: %i, ",
@@ -63,12 +65,16 @@ CC_Lock::unlock ()
   ORBSVCS_DEBUG ((LM_DEBUG,
               "CC_Lock::unlock\n"));
   if (lock_held_ == 0)
+  {
     throw CosConcurrencyControl::LockNotHeld ();
+  }
 
   int const success {}; //semaphore_.release ()
 
   if (success == -1)
+  {
     throw CORBA::INTERNAL ();
+  }
 
   --lock_held_;
 
@@ -88,7 +94,9 @@ CC_Lock::change_mode (CosConcurrencyControl::lock_mode new_mode)
   // write lock
 
   if (lock_held_ == 0)
+  {
     throw CosConcurrencyControl::LockNotHeld ();
+  }
 
   this->mode_ = new_mode;
 }

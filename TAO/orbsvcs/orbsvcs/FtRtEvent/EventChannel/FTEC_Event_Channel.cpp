@@ -60,7 +60,9 @@ TAO_FTEC_Event_Channel::activate(TAO_FTEC_Event_Channel::MEMBERSHIP membership)
     detector_loader->init(0, nullptr);
 
     if (FTRTEC::Identification_Service::instance() == nullptr)
+    {
       ORBSVCS_ERROR_RETURN((LM_ERROR, "No Identification\n"), 0);
+    }
 
     // initialize naming_contex
     CosNaming::NamingContext_var naming_context
@@ -69,7 +71,9 @@ TAO_FTEC_Event_Channel::activate(TAO_FTEC_Event_Channel::MEMBERSHIP membership)
     GroupInfoPublisher::instance()->set_naming_context(naming_context);
 
     if (FTRTEC::Replication_Service::instance()->init(0, nullptr) == -1)
+    {
       return nullptr;
+    }
 
     GroupInfoPublisher::instance()->subscribe(FTRTEC::Replication_Service::instance());
 
@@ -158,7 +162,9 @@ void
 TAO_FTEC_Event_Channel::destroy ()
 {
   if (Fault_Detector::instance())
+  {
     Fault_Detector::instance()->stop();
+  }
 
   ec_impl_->destroy ();
   this->orb_->shutdown ();

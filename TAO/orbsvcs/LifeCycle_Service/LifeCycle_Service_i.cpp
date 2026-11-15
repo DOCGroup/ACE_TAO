@@ -32,7 +32,9 @@ Life_Cycle_Service_i::create_object (CosLifeCycle::Key const & factory_key,
                                      CosLifeCycle::Criteria const & the_criteria)
 {
   if (this->debug_level_ >= 2)
+  {
     ORBSVCS_DEBUG ((LM_DEBUG, "Life_Cycle_Service_i:create_object: called.\n"));
+  }
     // Exceptions are forwarded, not handled !!
 
   if (this->factory_trader_ptr_)
@@ -40,10 +42,14 @@ Life_Cycle_Service_i::create_object (CosLifeCycle::Key const & factory_key,
       Criteria_Evaluator const criteria_evaluator (the_criteria);
 
       if (this->debug_level_ >= 2)
+      {
         ORBSVCS_DEBUG ((LM_DEBUG, "Life_Cycle_Service_i:create_object: new evaluator.\n"));
+      }
 
       if (this->debug_level_ >= 2)
+      {
         ORBSVCS_DEBUG ((LM_DEBUG, "Life_Cycle_Service_i:create_object: getFilter will be called.\n"));
+      }
 
       std::string const filter = criteria_evaluator.getFilter ();
 
@@ -55,7 +61,9 @@ Life_Cycle_Service_i::create_object (CosLifeCycle::Key const & factory_key,
       CORBA::Object_var generic_factory = this->factory_trader_ptr_->query (filter);
 
       if (this->debug_level_ >= 2)
+      {
         ORBSVCS_DEBUG ((LM_DEBUG, "Life_Cycle_Service_i:create_object: query was called.\n"));
+      }
 
       if (CORBA::is_nil (generic_factory.in ()))
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
@@ -63,7 +71,9 @@ Life_Cycle_Service_i::create_object (CosLifeCycle::Key const & factory_key,
                           0);
       else // everyting is ok
         if (this->debug_level_ >= 2)
+        {
           ORBSVCS_DEBUG ((LM_DEBUG, "Life_Cycle_Service_i::create_object: Object reference OK.\n"));
+        }
 
       // Now we have a proper reference to a Generic Factory
       // the create_object call will be forwarded to this factory
@@ -92,7 +102,9 @@ Life_Cycle_Service_i::create_object (CosLifeCycle::Key const & factory_key,
                               0);
 
           if (this->debug_level_ >= 2)
+          {
             ORBSVCS_DEBUG ((LM_DEBUG, "Life_Cycle_Service_i::create_object: Generic Factory reference OK.\n"));
+          }
 
           // Now retrieve the Object obj ref corresponding to the key.
           CORBA::Object_var object_var = genericFactory_var->create_object (factory_key,
@@ -127,7 +139,9 @@ Life_Cycle_Service_i::register_factory (char const * name,
                                         CORBA::Object_ptr object)
 {
   if (!this->factory_trader_ptr_)
+  {
     this->factory_trader_ptr_ = std::make_unique<Factory_Trader> (this->debug_level_);
+  }
   // we have an proper reference to the Factory Trader
 
   // Just forward the call to the factory trader

@@ -53,7 +53,9 @@ Test_i::test_method (CORBA::Short priority)
     RTCORBA::Current::_narrow (obj.in ());
 
   if (CORBA::is_nil (obj.in ()))
+  {
     throw CORBA::INTERNAL ();
+  }
 
   CORBA::Short const servant_thread_priority =
     current->the_priority ();
@@ -252,12 +254,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Server_Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return -1;
+      }
 
       // Make sure we can support multiple priorities that are required
       // for this test.
       if (!check_supported_priorities (orb.in ()))
+      {
         return 2;
+      }
 
       // Thread Manager for managing task.
       ACE_Thread_Manager thread_manager;

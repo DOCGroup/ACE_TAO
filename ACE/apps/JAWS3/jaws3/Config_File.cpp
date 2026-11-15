@@ -36,7 +36,9 @@ public:
       {
         d = *x;
         if (ACE_OS::strcmp (d, s) == 0)
+        {
           break;
+        }
         d = nullptr;
         iter.advance ();
       }
@@ -106,7 +108,9 @@ JAWS_Config_File_Impl::parse_file ()
                          , 0
                          , O_RDONLY
                          ) == -1)
+  {
     return;
+  }
 
   ACE_Message_Block buffer (8192);
   ACE_Message_Block line (4096);
@@ -139,7 +143,9 @@ JAWS_Config_File_Impl::parse_file ()
                 }
 
               if (p == buffer.wr_ptr ())
+              {
                 continue;
+              }
 
               end_of_current_line = p;
             }
@@ -207,7 +213,9 @@ JAWS_Config_File_Impl::parse_file ()
 
       // If we are done, we are done!
       if (last_line_was_read && buffer.length () == 0)
+      {
         break;
+      }
 
       // If the buffer is pointing at a comment line, ignore it.
       if (buffer.rd_ptr ()[0] == '#'

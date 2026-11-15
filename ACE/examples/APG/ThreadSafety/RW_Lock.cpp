@@ -71,7 +71,9 @@ HA_DiscoveryAgent::list_contains_item_i (Device const *device)
   while (!iter.done ())
     {
       if (iter.next () == device)
+      {
         return 1;
+      }
       iter.advance ();
     }
 

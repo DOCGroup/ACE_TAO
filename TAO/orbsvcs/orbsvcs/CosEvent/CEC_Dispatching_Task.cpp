@@ -68,12 +68,16 @@ TAO_CEC_Dispatching_Task::push (TAO_CEC_ProxyPushSupplier *proxy,
                                 CORBA::Any& event)
 {
   if (this->allocator_ == nullptr)
+  {
     this->allocator_ = ACE_Allocator::instance ();
+  }
 
   void* buf = this->allocator_->malloc (sizeof (TAO_CEC_Push_Command));
 
   if (buf == nullptr)
+  {
     throw CORBA::NO_MEMORY (TAO::VMCID, CORBA::COMPLETED_NO);
+  }
 
   ACE_Message_Block *mb =
     new (buf) TAO_CEC_Push_Command (proxy,
@@ -89,12 +93,16 @@ TAO_CEC_Dispatching_Task::invoke (TAO_CEC_ProxyPushSupplier *proxy,
                                   TAO_CEC_TypedEvent& typed_event)
 {
   if (this->allocator_ == nullptr)
+  {
     this->allocator_ = ACE_Allocator::instance ();
+  }
 
   void* buf = this->allocator_->malloc (sizeof (TAO_CEC_Invoke_Command));
 
   if (buf == nullptr)
+  {
     throw CORBA::NO_MEMORY (TAO::VMCID, CORBA::COMPLETED_NO);
+  }
 
   ACE_Message_Block *mb =
     new (buf) TAO_CEC_Invoke_Command (proxy,

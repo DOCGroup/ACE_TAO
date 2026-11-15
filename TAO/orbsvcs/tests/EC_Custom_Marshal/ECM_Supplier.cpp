@@ -51,7 +51,9 @@ ECMS_Driver::run (int argc, ACE_TCHAR* argv[])
         root_poa->the_POAManager ();
 
       if (this->parse_args (argc, argv))
+      {
         return 1;
+      }
 
       ACE_DEBUG ((LM_DEBUG,
                   "Execution parameters:\n"
@@ -129,7 +131,9 @@ ECMS_Driver::run (int argc, ACE_TCHAR* argv[])
       if (CORBA::is_nil (ec_obj.in ()))
         channel = RtecEventChannelAdmin::EventChannel::_nil ();
       else
+      {
         channel = RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in ());
+      }
 
       poa_manager->activate ();
 
@@ -205,13 +209,17 @@ ECMS_Driver::supplier_task (Test_Supplier& supplier)
       // The typecode name standard, the encode method is not (in
       // general the CDR interface is not specified).
       if (!(cdr << info))
+      {
         throw CORBA::MARSHAL ();
+      }
 
       // Here we marshall a non-IDL type.
       cdr << other;
 
       if (!cdr.good_bit ())
+      {
         ACE_ERROR ((LM_ERROR, "Problem marshalling C++ data\n"));
+      }
 
       ACE_Message_Block const* const mb = cdr.begin ();
       // NOTE: total_length () return the length of the complete
@@ -233,7 +241,9 @@ ECMS_Driver::supplier_task (Test_Supplier& supplier)
           else if (i % 2 == 0)
             event[0].header.type = this->event_a_;
           else
+          {
             event[0].header.type = this->event_b_;
+          }
 
           // We use replace to minimize the copies, this should result
           // in just one memory allocation;
@@ -449,7 +459,9 @@ void
 Test_Supplier::disconnect ()
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
+  {
     return;
+  }
 
   RtecEventChannelAdmin::ProxyPushConsumer_var proxy =
     this->consumer_proxy_._retn ();

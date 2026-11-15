@@ -38,7 +38,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
       if (parse_args (argc, argv) != 0)
+      {
         return -1;
+      }
 
       CORBA::Object_var nsobj = orb->resolve_initial_references ("NameService");
       CosNaming::NamingContext_var nc =
@@ -62,7 +64,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Long n = test->get();
       CORBA::Long m = test->get();
       if (m == n + 1)
+      {
         return 0;
+      }
       return 1;
     }
   catch (const CORBA::Exception& ex)

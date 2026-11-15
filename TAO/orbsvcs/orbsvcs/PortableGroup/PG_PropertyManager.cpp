@@ -36,7 +36,9 @@ TAO_PG_PropertyManager::set_default_properties (
       PortableGroup::Property const property = props[i];
 
       if (property.nam == factories)
+      {
         throw PortableGroup::InvalidProperty (property.nam, property.val);
+      }
     }
 
   this->property_validator_.validate_property (props);
@@ -68,7 +70,9 @@ TAO_PG_PropertyManager::remove_default_properties (
     PortableGroup::Properties const & props)
 {
   if (props.length () == 0)
+  {
     return;  // @@ Throw CORBA::BAD_PARAM instead?
+  }
 
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
 
@@ -86,13 +90,17 @@ TAO_PG_PropertyManager::set_type_properties (
   CORBA::ULong num_overrides = overrides.length ();
 
   if (num_overrides == 0)
+  {
     return;  // Throw CORBA::BAD_PARAM exception instead?
+  }
 
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
 
   Type_Prop_Table::ENTRY * entry {};
   if (this->type_properties_.find (type_id, entry) != 0)
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   PortableGroup::Properties & props = entry->int_id_;
   props = overrides;
@@ -108,7 +116,9 @@ TAO_PG_PropertyManager::get_type_properties (
   PortableGroup::Properties * type_properties {};
 
   if (this->type_properties_.find (type_id, entry) == 0)
+  {
     type_properties = &entry->int_id_;
+  }
 
   CORBA::ULong const def_props_len = this->default_properties_.length ();
   CORBA::ULong const type_props_len =
@@ -136,7 +146,9 @@ TAO_PG_PropertyManager::get_type_properties (
   *tmp_properties = this->default_properties_;
 
   if (type_properties != nullptr && type_props_len > 0)
+  {
     TAO_PG::override_properties (*type_properties, *tmp_properties);
+  }
 
   return properties._retn ();
 }
@@ -147,13 +159,17 @@ TAO_PG_PropertyManager::remove_type_properties (
     PortableGroup::Properties const & props)
 {
   if (props.length () == 0)
+  {
     return;  // @@ Throw CORBA::BAD_PARAM instead?
+  }
 
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
 
   Type_Prop_Table::ENTRY * entry {};
   if (this->type_properties_.find (type_id, entry) != 0)
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   PortableGroup::Properties & type_properties = entry->int_id_;
 
@@ -206,7 +222,9 @@ TAO_PG_PropertyManager::get_properties (
 
   CORBA::ULong const dyn_props_len = dynamic_properties->length ();
   if (dyn_props_len > properties_len)
+  {
     properties_len = dyn_props_len;
+  }
 
   CORBA::String_var type_id =
     this->object_group_manager_.type_id (object_group);
@@ -220,12 +238,16 @@ TAO_PG_PropertyManager::get_properties (
       type_props_len = type_properties->length ();
 
       if (type_props_len > properties_len)
+      {
         properties_len = type_props_len;
+      }
     }
 
   CORBA::ULong const def_props_len = this->default_properties_.length ();
   if (def_props_len > properties_len)
+  {
     properties_len = def_props_len;
+  }
 
   PortableGroup::Properties * tmp_properties {};
   ACE_NEW_THROW_EX (tmp_properties,
@@ -249,7 +271,9 @@ TAO_PG_PropertyManager::get_properties (
 
   // Override default properties with type-specific properties.
   if (type_properties != nullptr)
+  {
     TAO_PG::override_properties (*type_properties, *tmp_properties);
+  }
 
   // Now override with the dynamic (object group) properties.
   TAO_PG::override_properties (dynamic_properties.in (), *tmp_properties);
@@ -264,7 +288,9 @@ TAO_PG_PropertyManager::remove_properties (
 {
   CORBA::ULong const num_removed = to_be_removed.length ();
   if (num_removed == 0)
+  {
     return;  // @@ Throw CORBA::BAD_PARAM instead?
+  }
 
   CORBA::ULong const old_length = properties.length ();
 
@@ -284,12 +310,16 @@ TAO_PG_PropertyManager::remove_properties (
 
       for (CORBA::ULong j {}; j < old_length; ++j)
         if (remove.nam != properties[j].nam)
+        {
           new_properties[n++] = properties[j];
+        }
 
       // The property to be removed doesn't exist in the current list
       // of default properties.
       if (n == old_n)
+      {
         throw PortableGroup::InvalidProperty (remove.nam, remove.val);
+      }
     }
 
   // All properties were successfully removed, and the remaining ones

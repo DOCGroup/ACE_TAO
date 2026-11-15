@@ -24,7 +24,9 @@ Callback_i::callback_method (CORBA::OctetSeq const &)
 {
   static std::atomic<int> count {};
   if (count++ > 0)
+  {
     ACE_OS::exit (0);
+  }
 }
 
 CORBA::Long

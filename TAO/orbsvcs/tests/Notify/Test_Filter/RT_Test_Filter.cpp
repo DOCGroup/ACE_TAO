@@ -27,7 +27,9 @@ TAO_Notify_Tests_RT_Test_Filter::add_constraints (
   for (CORBA::ULong i {}; i < constraint_list.length (); ++i)
     {
       if (TAO_debug_level > 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "(%t) received  = %s\n", constraint_list[i].constraint_expr.in ()));
+      }
 
       // Check pool id.
       if (std::strncmp (constraint_list[i].constraint_expr.in (), pool_id_prefix, pool_id_index) == 0)
@@ -38,7 +40,9 @@ TAO_Notify_Tests_RT_Test_Filter::add_constraints (
                 std::atoi (&constraint_list[i].constraint_expr[pool_id_index]);
 
               if (TAO_debug_level > 0)
+              {
                 ACE_DEBUG ((LM_DEBUG, "(%t) Parsed Pool Id = %d\n", this->expected_pool_id_));
+              }
             }
         }
       // Check lane id.
@@ -50,7 +54,9 @@ TAO_Notify_Tests_RT_Test_Filter::add_constraints (
                 std::atoi (&constraint_list[i].constraint_expr[lane_id_index]);
 
               if (TAO_debug_level > 0)
+              {
                 ACE_DEBUG ((LM_DEBUG, "(%t) Parsed Lane Id = %d\n", this->expected_lane_id_));
+              }
             }
         }
     }
@@ -116,7 +122,9 @@ TAO_Notify_Tests_RT_Test_Filter::match_structured (
                       CORBA::INTERNAL ());
 
   if (TAO_debug_level > 0)
+  {
     ACE_DEBUG ((LM_DEBUG, "TAO_Notify_Tests_RT_Test_Filter (%x) ::match_structured (%t)\n", this));
+  }
 
   TAO_Root_POA* const poa = dynamic_cast<TAO_Root_POA*> (this->_default_POA ());
 

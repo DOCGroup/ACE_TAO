@@ -87,7 +87,9 @@ Bogus_Handler::handle_close (ACE_HANDLE,
                              ACE_Reactor_Mask)
 {
   if (this->okay_to_close_)
+  {
     return 0;
+  }
 
   overall_result = -1;
 
@@ -343,7 +345,9 @@ handle_events (ACE_Reactor & reactor,
                       ACE_TEXT ("Event loop failed unexpectedly\n")));
         }
       else
+      {
         return 0;
+      }
     }
 
   return -1;

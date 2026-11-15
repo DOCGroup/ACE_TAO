@@ -40,7 +40,9 @@ ClientTest::ClientTest (CORBA::ORB_ptr orb, ACE_TCHAR const *ior)
 {
   CORBA::Object_var o = this->orb_->string_to_object (ior);
   if (CORBA::is_nil (o.in ()))
+  {
     throw CORBA::INTERNAL ();
+  }
 
   this->obj_ = Foo::Bar::_narrow (o.in ());
 }

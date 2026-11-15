@@ -572,7 +572,9 @@ public:
       if (vS)
         ACE_DEBUG( (LM_INFO, vS->val.in()) );
       else
+      {
         ACE_DEBUG( (LM_INFO, "*Null*") );
+      }
     }
     else if (arg >>= fS)
     {
@@ -580,7 +582,9 @@ public:
       if (fS)
         ACE_DEBUG( (LM_INFO, "%d", fS->val) );
       else
+      {
         ACE_DEBUG( (LM_INFO, "*Null*") );
+      }
     }
     else if (arg >>= pString)
     {
@@ -588,7 +592,9 @@ public:
       if (pString)
         ACE_DEBUG( (LM_INFO, pString) );
       else
+      {
         ACE_DEBUG( (LM_INFO, "*Null*") );
+      }
     }
     else if (arg >>= theLong)
       ACE_DEBUG( (LM_INFO, "Long (%d", theLong) );
@@ -609,7 +615,9 @@ public:
         ACE_DEBUG( (LM_INFO, "*Unknown*") );
       }
       else
+      {
         ACE_DEBUG( (LM_INFO, "*Null*") );
+      }
     }
     else if (arg >>= vU)
     {
@@ -628,7 +636,9 @@ public:
         ACE_DEBUG( (LM_INFO, "*Unknown*") );
       }
       else
+      {
         ACE_DEBUG( (LM_INFO, "*Null*") );
+      }
     }
     else if (arg >>= sL)
     {
@@ -642,10 +652,14 @@ public:
           ACE_DEBUG( (LM_INFO, "%d", (*sL)[ sL->length() - 1u ]) );
         }
         else
+        {
           ACE_DEBUG( (LM_INFO, "*Empty*") );
+        }
       }
       else
+      {
         ACE_DEBUG( (LM_INFO, "*Null*") );
+      }
     }
     else if (arg >>= holding)
     {
@@ -655,10 +669,14 @@ public:
         if (*holding >>= theLong)
           ACE_DEBUG( (LM_INFO, "Long %d", theLong) );
         else
+        {
           ACE_DEBUG( (LM_INFO, "*Not Long*") );
+        }
       }
       else
+      {
         ACE_DEBUG( (LM_INFO, "*Null*") );
+      }
     }
     else if (arg >>= arr)
     {
@@ -674,7 +692,9 @@ public:
       ACE_DEBUG( (LM_INFO, "CORBA::Object (") );
     }
     else
+    {
       ACE_DEBUG( (LM_INFO, "Unknown (") );
+    }
     ACE_DEBUG( (LM_INFO, ") parameter\n") );
   }
 
@@ -801,7 +821,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       rootPOAMgr = rootPOA->the_POAManager( );
 
     if (parse_args (argc, argv, ior_output_file) != 0)
+    {
       return 1;
+    }
 
     FooImpl phooey (orb.in ());
     PortableServer::ObjectId_var

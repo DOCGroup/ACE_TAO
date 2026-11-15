@@ -28,7 +28,9 @@ Client_ORBInitializer::post_init (
   for (CORBA::ULong i = 0; i < args_len; ++i)
     if (std::strcmp ("-k", args[i]) == 0
         && i < (args_len - 1))
+    {
       forward_str = args[i + 1];
+    }
 
   PortableInterceptor::ClientRequestInterceptor_ptr interceptor {};
 

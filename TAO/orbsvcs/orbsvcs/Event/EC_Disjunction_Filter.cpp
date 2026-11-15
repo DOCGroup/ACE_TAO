@@ -55,7 +55,9 @@ TAO_EC_Disjunction_Filter::filter (RtecEventComm::EventSet const &event,
     {
       int n = (*i)->filter (event, qos_info);
       if (n != 0)
+      {
         return n;
+      }
     }
   return 0;
 }
@@ -71,7 +73,9 @@ TAO_EC_Disjunction_Filter::filter_nocopy (RtecEventComm::EventSet& event,
     {
       int n = (*i)->filter (event, qos_info);
       if (n != 0)
+      {
         return n;
+      }
     }
   return 0;
 }
@@ -81,7 +85,9 @@ TAO_EC_Disjunction_Filter::push (RtecEventComm::EventSet const &event,
                                  TAO_EC_QOS_Info& qos_info)
 {
   if (this->parent () != nullptr)
+  {
     this->parent ()->push (event, qos_info);
+  }
 }
 
 void
@@ -89,7 +95,9 @@ TAO_EC_Disjunction_Filter::push_nocopy (RtecEventComm::EventSet& event,
                                  TAO_EC_QOS_Info& qos_info)
 {
   if (this->parent () != nullptr)
+  {
     this->parent ()->push_nocopy (event, qos_info);
+  }
 }
 
 void
@@ -115,7 +123,9 @@ TAO_EC_Disjunction_Filter::max_event_size () const
     {
       CORBA::ULong m = (*i)->max_event_size ();
       if (n < m)
+      {
         n = m;
+      }
     }
   return n;
 }
@@ -130,7 +140,9 @@ TAO_EC_Disjunction_Filter::can_match (
        ++i)
     {
       if ((*i)->can_match (header) != 0)
+      {
         return 1;
+      }
     }
   return 0;
 }

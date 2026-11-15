@@ -64,7 +64,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
   Kokyu::Dispatcher_Attributes attrs;
 
   if (parse_args (argc, argv) == -1)
+  {
     return 0;
+  }
 
   if (ACE_OS::strcasecmp (sched_policy_str.c_str (), "fifo") == 0)
     {
@@ -126,7 +128,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
   if (disp->dispatch (&cmd1, qos1) == -1 ||
       disp->dispatch (&cmd2, qos2) == -1 ||
       disp->dispatch (&cmd3, qos3) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Error in dispatching command object\n"), -1);
+  }
 
   if (disp->activate () == -1)
     {

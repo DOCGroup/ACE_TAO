@@ -134,7 +134,9 @@ TAO::Security::PolicyFactory::create_policy (
            || type == ::Security::SecDelegationDirectivePolicy)
     throw CORBA::PolicyError (CORBA::UNSUPPORTED_POLICY);
   else
+  {
     throw CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
+  }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

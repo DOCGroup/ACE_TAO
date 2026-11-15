@@ -61,7 +61,9 @@ namespace Test
           root_poa->the_POAManager ();
 
         if (parse_args (argc, argv, options) != 0)
+        {
           return 1;
+        }
 
         test_i *test_impl {};
         // ServantBase_var takes ownership of this reference-counted TAO servant.

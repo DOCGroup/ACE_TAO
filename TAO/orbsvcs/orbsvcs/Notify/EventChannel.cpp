@@ -201,7 +201,9 @@ TAO_Notify_EventChannel::shutdown ()
   int sd_ret = TAO_Notify_Object::shutdown ();
 
   if (sd_ret == 1)
+  {
     return 1;
+  }
 
   this->ca_container().shutdown ();
 
@@ -218,7 +220,9 @@ TAO_Notify_EventChannel::destroy ()
   TAO_Notify_EventChannel::Ptr guard( this );
 
   if (this->shutdown () == 1)
+  {
     return;
+  }
 
   this->ecf_->remove (this);
 

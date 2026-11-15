@@ -46,7 +46,9 @@ TAO::SSLIOP::Connector::open (TAO_ORB_Core *orb_core)
   this->active_connect_strategy_.reset (connect_strategy);
 
   if (this->TAO::IIOP_SSL_Connector::open (orb_core) == -1)
+  {
     return -1;
+  }
 
   // Our connect creation strategy
   CONNECT_CREATION_STRATEGY *connect_creation_strategy {};
@@ -95,13 +97,17 @@ TAO::SSLIOP::Connector::connect (TAO::Profile_Transport_Resolver *resolver,
   TAO_Endpoint *endpoint = desc->endpoint ();
 
   if (endpoint->tag () != IOP::TAG_INTERNET_IOP)
+  {
     return nullptr;
+  }
 
   TAO_SSLIOP_Endpoint *ssl_endpoint =
     dynamic_cast<TAO_SSLIOP_Endpoint *> (endpoint);
 
   if (ssl_endpoint == nullptr)
+  {
     return nullptr;
+  }
 
   // @@ TODO:  The EstablishTrust policy should be evaluated once per
   //           connection, not once per invocation.  This should
@@ -268,7 +274,9 @@ TAO::SSLIOP::Connector::corbaloc_scan (char const *endpoint, size_t &len)
    else
    {
        if (this->TAO_IIOP_Connector::check_prefix (endpoint) != 0)
+       {
          return nullptr;
+       }
    }
 
    // Determine the (first in a list of possibly > 1) endpoint address
@@ -313,7 +321,10 @@ int
 TAO::SSLIOP::Connector::check_prefix (char const *endpoint)
 {
   // Check for a valid string
-  if (!endpoint || !*endpoint) return -1;  // Failure
+  if (!endpoint || !*endpoint)
+  {
+    return -1;  // Failure
+  }
 
   char const *protocol[] = { "ssliop", "sslioploc" };
 
@@ -325,10 +336,14 @@ TAO::SSLIOP::Connector::check_prefix (char const *endpoint)
   // Check for the proper prefix in the IOR.  If the proper prefix
   // isn't in the IOR then it is not an IOR we can use.
   if (first_slot == len0 && std::strncmp (endpoint, protocol[0], len0) == 0)
+  {
     return 0;
+  }
 
   if (first_slot == len1 && std::strncmp (endpoint, protocol[1], len1) == 0)
+  {
     return 0;
+  }
 
   // Failure: not an SSLIOP IOR
   // DO NOT throw an exception here.
@@ -415,7 +430,9 @@ TAO::SSLIOP::Connector::ssliop_connect (
   if (ACE_BIT_DISABLED (ssl_component.target_supports,
                         ::Security::NoProtection)
       && qop == ::Security::SecQOPIntegrity)
+  {
     throw CORBA::INV_POLICY ();
+  }
 
   ACE_INET_Addr const &remote_address = ssl_endpoint->object_addr ();
 
@@ -570,7 +587,9 @@ TAO::SSLIOP::Connector::ssliop_connect (
           // Trust in neither the client nor the target is explicitly
           // specified.  Use the default setting.
           else
+          {
             verify_mode = ACE_SSL_Context::instance ()->default_verify_mode ();
+          }
 
           ::SSL_set_verify (svc_handler->peer ().ssl (), verify_mode, nullptr);
 
@@ -801,7 +820,9 @@ TAO::SSLIOP::Connector::retrieve_credentials (TAO_Stub *stub,
             {
               TAO::SSLIOP::X509_var x509 = ssliop_credentials->x509 ();
               if (::SSL_use_certificate (ssl, x509.in ()) != 1)
+              {
                 return TAO::SSLIOP::OwnCredentials::_nil ();
+              }
 
               TAO::SSLIOP::EVP_PKEY_var evp = ssliop_credentials->evp ();
               if (evp.in () != nullptr

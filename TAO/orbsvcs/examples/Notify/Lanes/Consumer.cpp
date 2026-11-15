@@ -87,7 +87,9 @@ TAO_Notify_Lanes_Consumer::push_structured_event (
       for (CORBA::ULong i {}; i < prop_seq.length (); ++i)
         {
           if (std::strcmp (prop_seq[i].name.in (), CosNotification::Priority) == 0)
+          {
             prop_seq[i].value >>= event_priority;
+          }
         }
 
       ACE_DEBUG ((LM_DEBUG,

@@ -144,7 +144,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (!sax)
     handler = std::make_unique<ACEXML_Print_Handler> (name);
   else
+  {
     handler = std::make_unique<ACEXML_SAXPrint_Handler> (name);
+  }
 
   ACEXML_Parser parser;
   ACEXML_InputSource input (stm.get ());

@@ -76,7 +76,9 @@ Event_Handler::Event_Handler (ACE_Reactor &reactor,
                   ACE_TEXT ("Event_Handler sent %b bytes; should be %B\n"),
                   result, message_size));
       if (result <= 0)
+      {
         return;
+      }
     }
 
   ACE_DEBUG ((LM_DEBUG,

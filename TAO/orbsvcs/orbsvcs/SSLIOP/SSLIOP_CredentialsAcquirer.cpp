@@ -45,7 +45,9 @@ TAO_SSLIOP_PASSWORD_CALLBACK_NAME (char *buf,
       // Clear the portion of the buffer that exceeds the space that
       // will be occupied by the password.
       if (copy_len < size)
+      {
         std::memset (buf + copy_len, 0, size - copy_len);
+      }
 
       // Make sure we don't overflow the OpenSSL supplied buffer.
       // Truncate the password if necessary.
@@ -126,17 +128,23 @@ TAO::SSLIOP::CredentialsAcquirer::get_credentials (CORBA::Boolean on_list)
   ::SSLIOP::AuthData const *data {};
 
   if (!(this->acquisition_arguments_ >>= data))
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   TAO::SSLIOP::X509_var x509 = this->make_X509 (data->certificate);
 
   if (x509.in () == nullptr)
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   TAO::SSLIOP::EVP_PKEY_var evp = this->make_EVP_PKEY (data->key);
 
   if (evp.in () == nullptr)
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   // Verify that the private key is consistent with the certificate.
   if (::X509_check_private_key (x509.in (), evp.in ()) != 1)
@@ -192,7 +200,9 @@ TAO::SSLIOP::CredentialsAcquirer::check_validity ()
              this->lock_);
 
   if (this->destroyed_)
+  {
     throw CORBA::BAD_INV_ORDER ();
+  }
 }
 
 ::X509 *
@@ -204,7 +214,9 @@ TAO::SSLIOP::CredentialsAcquirer::make_X509 (::SSLIOP::File const &certificate)
   char const *filename = certificate.filename.in ();
 
   if (filename == nullptr)
+  {
     return nullptr;
+  }
 
   FILE *fp {};
   ::X509 *x {};
@@ -261,7 +273,9 @@ TAO::SSLIOP::CredentialsAcquirer::make_X509 (::SSLIOP::File const &certificate)
   (void) ACE_OS::fclose (fp);
 
   if (x == nullptr && TAO_debug_level > 0)
+  {
     ACE_SSL_Context::report_error ();
+  }
 
   return x;
 }
@@ -275,7 +289,9 @@ TAO::SSLIOP::CredentialsAcquirer::make_EVP_PKEY (::SSLIOP::File const &key)
   char const *filename = key.filename.in ();
 
   if (filename == nullptr)
+  {
     return nullptr;
+  }
 
   FILE *fp {};
   ::EVP_PKEY *evp {};
@@ -334,7 +350,9 @@ TAO::SSLIOP::CredentialsAcquirer::make_EVP_PKEY (::SSLIOP::File const &key)
   (void) ACE_OS::fclose (fp);
 
   if (evp == nullptr && TAO_debug_level > 0)
+  {
     ACE_SSL_Context::report_error ();
+  }
 
   return evp;
 }

@@ -27,9 +27,18 @@ static union
 int
 hex_to_byte (char h)
 {
-  if (h >= '0' && h <= '9') return h - '0';
-  if (h >= 'A' && h <= 'F') return h - 'A' + 10;
-  if (h >= 'a' && h <= 'f') return h - 'a' + 10;
+  if (h >= '0' && h <= '9')
+  {
+    return h - '0';
+  }
+  if (h >= 'A' && h <= 'F')
+  {
+    return h - 'A' + 10;
+  }
+  if (h >= 'a' && h <= 'f')
+  {
+    return h - 'a' + 10;
+  }
   return -1;
 }
 
@@ -37,11 +46,17 @@ int
 hexbyte_to_byte (char const *hexbyte)
 {
   int hi = hex_to_byte(*hexbyte);
-  if (hi == -1) return -1;
+  if (hi == -1)
+  {
+    return -1;
+  }
   ++hexbyte;
 
   int low = hex_to_byte(*hexbyte);
-  if (low == -1) return -1;
+  if (low == -1)
+  {
+    return -1;
+  }
   return (hi << 4) | low;
 }
 
@@ -55,7 +70,9 @@ UUID::UUID (ACE_TCHAR const *string_rep)
   : rep_ {}
 {
   if (this->from_string(ACE_TEXT_ALWAYS_CHAR(string_rep)) == false)
+  {
     rep_.timestamp.hi = 0;
+  }
 }
 
 bool
@@ -122,7 +139,10 @@ UUID::create (unsigned char *buffer)
 {
   static unsigned int seed;
 
-  if (seed == 0) seed = ACE_OS::getpid();
+  if (seed == 0)
+  {
+    seed = ACE_OS::getpid();
+  }
 
   // test if node is properly initialized
   if (node.rand_node.rand1 == 0)

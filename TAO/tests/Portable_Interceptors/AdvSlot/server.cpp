@@ -128,7 +128,9 @@ public:
     if (n == 5)
       ACE_DEBUG ((LM_DEBUG, "State value is correctly %d.\n", n));
     else
+    {
       ACE_ERROR ((LM_ERROR, "ERROR: State value is incorrectly %d.\n", n));
+    }
   }
 
   void send_exception (ServerRequestInfo_ptr) override
@@ -182,7 +184,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ORB_var const orb (ORB_init (argc, argv));
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       Object_var const obj (orb->resolve_initial_references ("RootPOA"));
 

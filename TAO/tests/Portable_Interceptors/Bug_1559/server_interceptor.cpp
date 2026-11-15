@@ -54,7 +54,9 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
   // meaning that the client hasn't added the service context yet.
   // Same goes for the shutdown call
   if (std::strcmp ("shutdown", operation.in ()) == 0)
+  {
     return;
+  }
 
   IOP::ServiceId const id = ::service_id;
   IOP::ServiceContext_var const sc =
@@ -231,5 +233,7 @@ Echo_Server_Request_Interceptor::send_other (
   CORBA::Object_var const forward = ri->forward_reference ();
 
   if (CORBA::is_nil (forward.in ()))
+  {
     throw CORBA::INTERNAL ();
+  }
 }

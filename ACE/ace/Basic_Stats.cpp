@@ -11,7 +11,9 @@ void
 ACE_Basic_Stats::accumulate (const ACE_Basic_Stats &rhs)
 {
   if (rhs.samples_count_ == 0)
+  {
     return;
+  }
 
   if (this->samples_count_ == 0)
     {

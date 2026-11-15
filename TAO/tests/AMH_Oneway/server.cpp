@@ -218,7 +218,9 @@ ST_AMH_Server::run_event_loop (int expected_calls)
 
           // when all calls from client have been received, exit
           if (calls_received.load () == expected_calls)
+          {
             return;
+          }
         }
     }
   catch (CORBA::Exception const &)
@@ -251,11 +253,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ST_AMH_Server amh_server (&argc, argv);
 
   if (amh_server.start_orb_and_poa () != 0)
+  {
     return 1;
+  }
 
   Server_Options options {};
   if (parse_args (argc, argv, options) != 0)
+  {
     return 1;
+  }
 
   ST_AMH_Servant servant (amh_server.orb ());
 

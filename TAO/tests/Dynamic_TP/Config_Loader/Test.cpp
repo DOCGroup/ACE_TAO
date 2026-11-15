@@ -13,7 +13,9 @@ show_tp_config (std::string const &name, TAO_DTP_Definition const &entry)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("  Min threads: %d:\n"), entry.min_threads_));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("  Max threads: %d:\n"), entry.max_threads_));
   if (entry.min_threads_ > -1)
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("  Idle Timeout: %d (sec)\n"), entry.timeout_.sec()));
+  }
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("  Stack Size: %B:\n"), entry.stack_size_));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("  Request queue max depth: %d\n"), entry.queue_depth_));
 }
@@ -69,7 +71,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       if (found)
+      {
         show_tp_config (config.name, entry);
+      }
     }
   return 0;
 }

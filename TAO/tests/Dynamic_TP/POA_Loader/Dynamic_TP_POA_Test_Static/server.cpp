@@ -59,7 +59,9 @@ next_parm (ACE_TCHAR const *&pstart)
   long const rtn = ACE_OS::strtol (pstart, &sep, 10);
   pstart = sep + 1;
   if (!(*pstart == '-' || (*pstart >= '0' && *pstart <= '9')))
+  {
     ++pstart;
+  }
   return rtn;
 }
 
@@ -93,7 +95,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Server_Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");

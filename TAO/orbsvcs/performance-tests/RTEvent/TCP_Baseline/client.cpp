@@ -72,7 +72,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   Client_Options options (argc, argv);
 
   if (parse_args (argc, argv) != 0)
+  {
     return 1;
+  }
 
   ACE_DEBUG ((LM_DEBUG, "Calibrating high res timer ...."));
   ACE_High_Res_Timer::calibrate ();
@@ -86,7 +88,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   int per_thread_period = options.low_priority_period;
   if (options.global_low_priority_rate)
+  {
     per_thread_period = options.low_priority_period * options.nthreads;
+  }
 
   Scavenger_Task lo_task (lo_endpoint, &the_barrier,
                           per_thread_period);
@@ -168,17 +172,23 @@ Scavenger_Task::svc()
       {
         ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
         if (this->stopped_)
+        {
           break;
+        }
       }
       ACE_hrtime_t start = ACE_OS::gethrtime ();
       ssize_t n = stream.send_n(&start, sizeof(start));
       if (n == 0 || n == -1)
+      {
         break;
+      }
 
       ACE_hrtime_t end;
       n = stream.recv(&end, sizeof(end));
       if (n == 0 || n == -1)
+      {
         break;
+      }
 
       if (start != end)
       {

@@ -102,7 +102,9 @@ static ACE_TSS<Worker> *workers_p {};
 int Worker::svc ()
 {
   if (debug)
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Worker thread starting up.\n")));
+  }
   // Register this worker
   workers.ts_object (this);
   int retval {};
@@ -111,7 +113,9 @@ int Worker::svc ()
       retval = this->process_cmd ();
     }
   if (debug)
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Worker thread shutting down.\n")));
+  }
   return retval;
 }
 
@@ -136,7 +140,9 @@ int Worker::process_cmd ()
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error calling getq: $!\n")));
       // Strangely, message queues return this instead of ETIME
       if (errno == EWOULDBLOCK || errno == ESHUTDOWN)
+      {
         return 0;
+      }
       return -1;
     }
   Command *const cmd = dynamic_cast<Command *> (mb);
@@ -171,7 +177,9 @@ public:
   int handle_events (ACE_Time_Value * = nullptr) override
   {
     if (TAO_debug_level > 10)
+    {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Executing Test_Reactor::handle_events\n")));
+    }
     // This is called by client leader threads.  Note, the loop here
     // glosses over the fact that the Leader_Follower code does not
     // work quite the way we want it to.  Namely, this logic:
@@ -245,7 +253,9 @@ public:
   void complete_event (TAO_Leader_Follower &lf)
   {
     if (debug)
+    {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Completing event\n")));
+    }
     this->state_changed (TAO_LF_Event::LFS_SUCCESS, lf);
   }
 
@@ -270,7 +280,9 @@ protected:
   {
     if (this->state_ == TAO_LF_Event::LFS_TIMEOUT ||
         this->state_ == TAO_LF_Event::LFS_FAILURE)
+    {
       return true;
+    }
     return false;
   }
 };
@@ -339,7 +351,9 @@ public:
   int execute (Worker *worker) override
   {
     if (debug)
+    {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Shutdown cmd\n")));
+    }
     worker->shutdown (true);
     return 0;
   }
@@ -389,7 +403,9 @@ public:
   int execute (Worker *) override
   {
     if (debug)
+    {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Executing Wait_For_Event cmd\n")));
+    }
     int const retval = lf_.wait_for_event (&event_, &transport_, 0);
     // The worker has probably been shutdown in order for the client
     // leader event loop to exit - reactivate the worker so it from
@@ -415,7 +431,9 @@ public:
   int execute (Worker *) override
   {
     if (debug)
+    {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Executing Cond_Signal cmd\n")));
+    }
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->cond_.mutex (), 0);
     return this->cond_.signal ();
   }
@@ -434,7 +452,9 @@ public:
     // method
     --this->ref_count_;
     if (this->ref_count_ == 0)
+    {
       return ACE_Message_Block::release ();
+    }
     return this;
   }
 
@@ -455,7 +475,9 @@ public:
   int execute (Worker *worker) override
   {
     if (debug)
+    {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Executing Event_Loop_Thread cmd\n")));
+    }
     TAO_LF_Event_Loop_Thread_Helper elt (lf_, lf_strategy_, 0);
     while (!worker->shutdown ())
       worker->process_cmd ();
@@ -480,7 +502,9 @@ public:
   int execute (Worker *) override
   {
     if (debug)
+    {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Executing Set_Upcall_Thread cmd\n")));
+    }
     lf_.set_upcall_thread ();
     return 0;
   }
@@ -1064,7 +1088,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       CORBA::ORB_var const orb {CORBA::ORB_init (argc, argv)};
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       // Make sure the reactor is initialised in the leader_follower
       ACE_Reactor *const reactor = orb->orb_core ()->leader_follower ().reactor ();

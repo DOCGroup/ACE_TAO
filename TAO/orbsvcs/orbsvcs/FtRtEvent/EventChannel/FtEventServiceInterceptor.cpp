@@ -40,7 +40,9 @@ CachedRequestTable::get_result (ACE_CString const &client_id,
 {
   TableImpl::ENTRY *entry {};
   if (table_.find (client_id, entry) == 0)
+  {
     result = entry->int_id_.result;
+  }
 }
 
 void
@@ -88,12 +90,16 @@ retrieve_ft_request_context(
   CORBA::Boolean byte_order;
 
   if (!(cdr >> ACE_InputCDR::to_boolean (byte_order)))
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   cdr.reset_byte_order (static_cast<int> (byte_order));
 
   if (!(cdr >> ft_request_service_context))
+  {
     throw CORBA::BAD_PARAM ();
+  }
 }
 
 FTRT::TransactionDepth
@@ -118,13 +124,17 @@ get_transaction_depth_context(
   CORBA::Boolean byte_order;
 
   if (!(cdr >> ACE_InputCDR::to_boolean (byte_order)))
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   cdr.reset_byte_order (static_cast<int> (byte_order));
 
   FTRT::TransactionDepth result;
   if (!(cdr >> result))
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   return result;
 }
@@ -145,12 +155,16 @@ get_sequence_number_context(
   CORBA::Boolean byte_order;
 
   if (!(cdr >> ACE_InputCDR::to_boolean (byte_order)))
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   cdr.reset_byte_order (static_cast<int> (byte_order));
 
   if (!(cdr >> result))
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   return result;
 }

@@ -84,7 +84,9 @@ Connection_Handler::svc ()
                        ACE_TEXT ("(%P|%t) can't register with reactor\n")),
                       -1);
   else
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) connected with client\n")));
+  }
 
   // Keep looping until we receive SIGQUIT or the client shutsdown.
 
@@ -148,7 +150,9 @@ Connection_Handler::handle_input (ACE_HANDLE)
                            this->get_handle ()),
                           -1);
       else
+      {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) from client: %s"), buf));
+      }
     }
 
   return 0;

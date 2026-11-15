@@ -94,7 +94,9 @@ ACE_Token::ACE_Token_Queue::remove_entry (ACE_Token::ACE_Token_Queue_Entry *entr
   ACE_Token_Queue_Entry *prev {};
 
   if (this->head_ == nullptr)
+  {
     return;
+  }
 
   for (curr = this->head_;
        curr != nullptr && curr != entry;
@@ -114,7 +116,9 @@ ACE_Token::ACE_Token_Queue::remove_entry (ACE_Token::ACE_Token_Queue_Entry *entr
   // We need to update the tail of the list if we've deleted the last
   // entry.
   if (curr->next_ == nullptr)
+  {
     this->tail_ = prev;
+  }
 }
 
 //
@@ -154,7 +158,9 @@ ACE_Token::ACE_Token_Queue::insert_entry (ACE_Token::ACE_Token_Queue_Entry &entr
       entry.next_ = insert_after->next_;
 
       if (entry.next_ == nullptr)
+      {
         this->tail_ = std::addressof (entry);
+      }
 
       insert_after->next_ = std::addressof (entry);
     }
@@ -263,7 +269,9 @@ ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
           // Note, this should obey whatever thread-specific interrupt
           // policy is currently in place...
           if (errno == EINTR)
+          {
             continue;
+          }
 
 #if defined (ACE_TOKEN_DEBUGGING)
           cerr << '(' << ACE_Thread::self () << ')'
@@ -277,7 +285,9 @@ ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
           if (errno == ETIME)
             timed_out = true;
           else
+          {
             error = true;
+          }
 
           // Stop the loop.
           break;
@@ -409,7 +419,9 @@ ACE_Token::renew (int requeue_position,
           // Note, this should obey whatever thread-specific interrupt
           // policy is currently in place...
           if (errno == EINTR)
+          {
             continue;
+          }
 
 #if defined (ACE_TOKEN_DEBUGGING)
           cerr << '(' << ACE_Thread::self () << ')'
@@ -423,7 +435,9 @@ ACE_Token::renew (int requeue_position,
           if (errno == ETIME)
             timed_out = true;
           else
+          {
             error = true;
+          }
 
           // Stop the loop.
           break;

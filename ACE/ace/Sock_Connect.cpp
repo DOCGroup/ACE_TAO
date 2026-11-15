@@ -148,7 +148,9 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
   ACE_HANDLE s = handle;
 
   if (s == ACE_INVALID_HANDLE)
+  {
     s = ACE_OS::socket (AF_INET, SOCK_STREAM, 0);
+  }
 
   if (s == ACE_INVALID_HANDLE)
     ACELIB_ERROR_RETURN ((LM_ERROR,
@@ -218,7 +220,9 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
       std::memcpy (&if_addr, &ifr->ifr_addr, sizeof if_addr);
 
       if (ip_addr.sin_addr.s_addr != if_addr.sin_addr.s_addr)
+      {
         continue;
+      }
 
       if (ifr->ifr_addr.sa_family != AF_INET)
         {
@@ -251,7 +255,9 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
         }
 
       if (ACE_BIT_ENABLED (flags.ifr_flags, IFF_LOOPBACK))
+      {
         continue;
+      }
 
       if (ACE_BIT_ENABLED (flags.ifr_flags, IFF_BROADCAST))
         {
@@ -269,7 +275,9 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
               std::memcpy ((void *) &host_addr, (void *) &ip_addr.sin_addr, sizeof host_addr);
 
               if (handle == ACE_INVALID_HANDLE)
+              {
                 ACE_OS::close (s);
+              }
 
               bcast_addr = host_addr;
               return 0;
@@ -282,7 +290,9 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
                     ACE_TEXT ("Broadcast is not enabled for this interface.")));
 
       if (handle == ACE_INVALID_HANDLE)
+      {
         ACE_OS::close (s);
+      }
 
       bcast_addr = host_addr;
       return 0;
@@ -315,7 +325,9 @@ ACE::get_fqdn (ACE_INET_Addr const & addr,
                            addr_size, hostname,
                            static_cast<ACE_SOCKET_LEN> (len),
                            nullptr, 0, NI_NAMEREQD) != 0)
+  {
     return -1;
+  }
 
   if (ACE::debug ())
     ACELIB_DEBUG ((LM_DEBUG,
@@ -562,7 +574,9 @@ get_ip_interfaces_getifaddrs (size_t &count,
   struct ifaddrs *p_if {};
 
   if (::getifaddrs (&ifap) != 0)
+  {
     return -1;
+  }
   std::unique_ptr<struct ifaddrs, decltype (&::freeifaddrs)> safe_ifap (
     ifap, ::freeifaddrs);
 
@@ -589,11 +603,15 @@ get_ip_interfaces_getifaddrs (size_t &count,
        p_if = p_if->ifa_next)
     {
       if (p_if->ifa_addr == nullptr)
+      {
         continue;
+      }
 
       // Check to see if it's up.
       if ((p_if->ifa_flags & IFF_UP) != IFF_UP)
+      {
         continue;
+      }
 
       if (p_if->ifa_addr->sa_family == AF_INET)
         {
@@ -925,7 +943,9 @@ return 0;
       /* In OpenBSD, the length of the list is returned. */
       ifcfg.ifc_len -= sizeof (struct ifreq);
       if (ifcfg.ifc_len < 0)
+      {
         break;
+      }
 
       ++if_count;
 # if !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) && !defined (__Lynx__)

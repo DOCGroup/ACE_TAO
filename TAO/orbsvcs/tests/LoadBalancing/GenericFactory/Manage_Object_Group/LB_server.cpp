@@ -19,16 +19,24 @@ LB_server::destroy ()
       if (!CORBA::is_nil (this->lm_.in ()))
         {
           if (!CORBA::is_nil (this->basic_object_group_.in ()))
+          {
             this->lm_->delete_object (this->basic_fcid_.in ());
+          }
           if (!CORBA::is_nil (this->simple_object_group_.in ()))
+          {
             this->lm_->delete_object (this->simple_fcid_.in ());
+          }
         }
 
       if (!CORBA::is_nil (this->root_poa_.in ()))
+      {
         this->root_poa_->destroy (true, true);
+      }
 
       if (!CORBA::is_nil (this->orb_.in ()))
+      {
         this->orb_->destroy ();
+      }
     }
   catch (CORBA::Exception const &ex)
     {

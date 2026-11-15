@@ -91,14 +91,18 @@ TAO_UIPMC_Acceptor::open (
     }
 
   if (address == nullptr)
+  {
     return -1;
+  }
 
   if (major >= 0 && minor >= 0)
     this->version_.set_version (static_cast<CORBA::Octet> (major),
                                 static_cast<CORBA::Octet> (minor));
   // Parse options
   if (this->parse_options (options) == -1)
+  {
     return -1;
+  }
 
   ACE_INET_Addr addr;
 
@@ -158,7 +162,9 @@ TAO_UIPMC_Acceptor::open (
     }
 
   if (addr.set (address) != 0)
+  {
     return -1;
+  }
 
   specified_hostname = tmp_host;
 
@@ -196,12 +202,16 @@ TAO_UIPMC_Acceptor::open (
                       addr,
                       this->hosts_[0],
                       specified_hostname) != 0)
+  {
     return -1;
+  }
 
   // Copy the addr.  The port is (re)set in
   // TAO_UIPMC_Acceptor::open_i().
   if (this->addrs_[0].set (addr) != 0)
+  {
     return -1;
+  }
 
   return this->open_i (addr,
                        reactor);
@@ -379,7 +389,9 @@ int
 TAO_UIPMC_Acceptor::parse_options (char const *str)
 {
   if (str == nullptr)
+  {
     return 0;  // No options to parse.  Not a problem.
+  }
 
   // Use an option format similar to the one used for CGI scripts in
   // HTTP URLs.
@@ -398,7 +410,9 @@ TAO_UIPMC_Acceptor::parse_options (char const *str)
   // before the object key.
   for (size_t i {}; i < len; ++i)
     if (options[i] == option_delimiter)
+    {
       ++option_count;
+    }
 
   // The idea behind the following loop is to split the options into
   // (option, name) pairs.
@@ -416,7 +430,9 @@ TAO_UIPMC_Acceptor::parse_options (char const *str)
       if (j < option_count - 1)
         end = options.find (option_delimiter, begin);
       else
+      {
         end = len;
+      }
 
       ++j;  // In this way we fight MS VS warning about unreachable code.
 
@@ -464,7 +480,9 @@ TAO_UIPMC_Acceptor::parse_options (char const *str)
                               -1);
         }
       else
+      {
         break;  // No other options.
+      }
     }
   return 0;
 }

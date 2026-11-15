@@ -65,7 +65,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var const obj = orb->string_to_object (options.ior);
 
@@ -109,7 +111,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       if (options.shutdown_server)
+      {
         tx_object->shutdown ();
+      }
 
       orb->destroy ();
     }

@@ -27,7 +27,9 @@ TAO_EndpointPolicy_ORBInitializer::register_policy_factories (
   TAO_ORBInitInfo * const local_info = dynamic_cast <TAO_ORBInitInfo *> (info);
 
   if (local_info == nullptr)
+  {
     throw CORBA::INTERNAL ();
+  }
 
   TAO_ORB_Core * const the_orb_core = local_info->orb_core ();
 

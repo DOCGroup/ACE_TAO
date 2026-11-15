@@ -77,7 +77,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
               orb->perform_work ();
             }
           else
+          {
             ACE_OS::sleep (tv);
+          }
         }
 
       orb->shutdown (false);

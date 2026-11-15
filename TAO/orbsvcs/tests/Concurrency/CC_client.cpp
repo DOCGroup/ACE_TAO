@@ -27,10 +27,14 @@ CC_Client::~CC_Client ()
 {
   // Close the IOR file handle.
   if (this->f_handle_ != ACE_INVALID_HANDLE)
+  {
     ACE_OS::close (this->f_handle_);
+  }
 
   if (this->cc_factory_key_ != 0)
+  {
     ACE_OS::free (this->cc_factory_key_);
+  }
 }
 
 // Reads the lock set factory ior from a file
@@ -131,7 +135,9 @@ CC_Client::run ()
     {
       success = run_basic_tests ();
       if(success==CC_FAIL)
+      {
         ACE_DEBUG((LM_DEBUG, "Basic tests did not succeed\n"));
+      }
       tests_run = true;
     }
 
@@ -139,7 +145,9 @@ CC_Client::run ()
     {
       success = run_extended_tests (this->extended_tests_params_);
       if(success==CC_FAIL)
+      {
         ACE_DEBUG((LM_DEBUG, "Extended tests did not succeed\n"));
+      }
       tests_run = true;
     }
 
@@ -211,7 +219,9 @@ CC_Client::run_basic_tests ()
       t6.run () == CC_SUCCESS )
     return CC_SUCCESS;
   else
+  {
     return CC_FAIL;
+  }
 }
 
 int
@@ -230,7 +240,9 @@ CC_Client::check_extended_test_params(ACE_TCHAR *params)
           if(ACE_OS::ace_isdigit(*cp))
             state = TAO_NUMBER;
           else
+          {
             state = TAO_ERROR;
+          }
           break;
 
         case TAO_NUMBER:
@@ -241,7 +253,9 @@ CC_Client::check_extended_test_params(ACE_TCHAR *params)
             }
           else
             if(!ACE_OS::ace_isdigit(*cp))
+            {
               state = TAO_ERROR;
+            }
           break;
 
         case TAO_ARG:
@@ -264,7 +278,9 @@ CC_Client::check_extended_test_params(ACE_TCHAR *params)
   if (state==TAO_ERROR) // there was only one character given and it was wrong
     return -1;
   else
+  {
     return no_of_params;
+  }
 }
 
 int
@@ -367,13 +383,17 @@ CC_Client::init (int argc, ACE_TCHAR **argv)
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
+      {
         return -1;
+      }
 
       if (this->use_naming_service_)
         {
           naming_result = this->init_naming_service ();
           if (naming_result < 0)
+          {
             return naming_result;
+          }
         }
       else
         {

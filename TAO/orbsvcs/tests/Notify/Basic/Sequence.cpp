@@ -270,7 +270,9 @@ Sequence::run_test ()
           batch.length (batch_index); // set the correct length
 
           if (TAO_debug_level)
+          {
             ACE_DEBUG ((LM_DEBUG, "Sending batch with %u events\n", batch.length ()));
+          }
 
           this->supplier_->send_events (batch);
 

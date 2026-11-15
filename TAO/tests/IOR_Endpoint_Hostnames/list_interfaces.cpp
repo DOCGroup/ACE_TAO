@@ -66,7 +66,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   size_t lo_cnt {};  // Loopback interface count
   for (size_t j = 0; j < if_cnt; ++j)
     if (if_addrs_owner[j].is_loopback ())
+    {
       ++lo_cnt;
+    }
 
 #if defined (ACE_HAS_IPV6)
   size_t ipv4_cnt {};
@@ -170,7 +172,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // non-loopback interfaces.
       if (ignore_lo &&
           if_addrs_owner[i].is_loopback ())
+      {
         continue;
+      }
 #endif /* !ACE_HAS_IPV6 */
 
       // Print the address as a string.

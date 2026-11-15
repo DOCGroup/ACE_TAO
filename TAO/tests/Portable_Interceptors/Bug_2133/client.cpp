@@ -61,7 +61,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var tmp =
         orb->string_to_object (options.ior.c_str ());

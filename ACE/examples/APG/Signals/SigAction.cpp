@@ -26,7 +26,9 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       if (errno == EINTR)
         continue;
       else
+      {
         ACE_OS::exit (1);
+      }
     }
   return 0;
 }
@@ -44,7 +46,9 @@ static void my_sighandler (int signo)
   if (signo == SIGUSR1)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Signal SIGUSR1\n")));
   else
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Signal SIGUSR2\n")));
+  }
 
   ACE_OS::sleep (10);
 }

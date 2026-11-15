@@ -372,13 +372,31 @@ int test_basic_invocations (Test * test_object)
                 "(%P|%t) test_basic_invocations: caught a C++ exception\n"));
       fail = 1;
     }
-  if (p1) p1->_remove_ref ();
-  if (p2) p2->_remove_ref ();
-  if (p3) p3->_remove_ref ();
+  if (p1)
+  {
+    p1->_remove_ref ();
+  }
+  if (p2)
+  {
+    p2->_remove_ref ();
+  }
+  if (p3)
+  {
+    p3->_remove_ref ();
+  }
 
-  if (mp1) mp1->_remove_ref ();
-  if (mp2) mp2->_remove_ref ();
-  if (mp3) mp3->_remove_ref ();
+  if (mp1)
+  {
+    mp1->_remove_ref ();
+  }
+  if (mp2)
+  {
+    mp2->_remove_ref ();
+  }
+  if (mp3)
+  {
+    mp3->_remove_ref ();
+  }
 
   return fail;
 }
@@ -538,9 +556,18 @@ int test_boxed_string_invocations (Test * test_object)
                   "caught a C++ exception\n"));
       fail = 1;
     }
-  if (p1) p1->_remove_ref ();
-  if (p2) p2->_remove_ref ();
-  if (p3) p3->_remove_ref ();
+  if (p1)
+  {
+    p1->_remove_ref ();
+  }
+  if (p2)
+  {
+    p2->_remove_ref ();
+  }
+  if (p3)
+  {
+    p3->_remove_ref ();
+  }
 
   return fail;
 }
@@ -714,9 +741,18 @@ int test_boxed_sequence_invocations (Test * test_object)
       fail = 1;
     }
 
-  if (p1) p1->_remove_ref ();
-  if (p2) p2->_remove_ref ();
-  if (p3) p3->_remove_ref ();
+  if (p1)
+  {
+    p1->_remove_ref ();
+  }
+  if (p2)
+  {
+    p2->_remove_ref ();
+  }
+  if (p3)
+  {
+    p3->_remove_ref ();
+  }
 
   return fail;
 }
@@ -1452,7 +1488,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       // Obtain reference to the object.
       CORBA::Object_var tmp =

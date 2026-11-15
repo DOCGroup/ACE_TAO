@@ -190,7 +190,9 @@ testBug1459 (int, ACE_TCHAR *[])
       ORBD->destroy ();
 
       if (error)
+      {
         return -1;
+      }
     }
   catch (CORBA::Exception const &ex)
     {

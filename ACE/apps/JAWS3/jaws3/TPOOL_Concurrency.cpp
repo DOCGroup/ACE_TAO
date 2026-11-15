@@ -18,10 +18,14 @@ JAWS_TPOOL_Concurrency::JAWS_TPOOL_Concurrency ()
   if (value != nullptr)
     this->number_of_threads_ = std::atoi (value);
   else
+  {
     this->number_of_threads_ = std::atoi (JAWS_DEFAULT_TPOOL_THREADS);
+  }
 
   if (this->number_of_threads_ <= 0)
+  {
     this->number_of_threads_ = 5;
+  }
 
   int const r = this->activate ( THR_BOUND | THR_JOINABLE,
                                  this->number_of_threads_);
@@ -38,7 +42,9 @@ int
 JAWS_TPOOL_Concurrency::putq (JAWS_Protocol_Handler *ph)
 {
   if (this->error_)
+  {
     return -1;
+  }
 
   JAWS_CONCURRENCY_TASK *task = this;
   return task->putq (& ph->mb_);
@@ -52,7 +58,9 @@ JAWS_TPOOL_Concurrency::getq (JAWS_Protocol_Handler *&ph)
   JAWS_CONCURRENCY_TASK *task = this;
 
   if (this->shutdown_task_ && task->msg_queue ()->message_count () == 0)
+  {
     return -1;
+  }
 
   ACE_Message_Block *mb {};
 

@@ -123,7 +123,9 @@ parse_args (int test_number,
         case 0:
           // Long Option.
           if (!get_opt.long_option ())
+          {
             ACE_ERROR_RETURN ((LM_ERROR, "  Long option doesn't exist.\n"), 1);
+          }
 
           ACE_DEBUG ((LM_INFO, "   Found long option \"%s\" %s %s\n",
                       get_opt.long_option (),

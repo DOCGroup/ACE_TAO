@@ -59,7 +59,9 @@ run_standalone (Activator_Options& opts)
           status = server.fini ();
 
           if (status == -1)
+          {
             return 1;
+          }
         }
       return 0;
     }
@@ -109,7 +111,9 @@ static int
 run_service_command (Activator_Options& opts)
 {
   if (opts.service_command () == Activator_Options::SC_NONE)
+  {
     return 0;
+  }
 
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
   SERVICE::instance()->name (IMR_ACTIVATOR_SERVICE_NAME, IMR_ACTIVATOR_DISPLAY_NAME);
@@ -200,7 +204,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     return 0;  // No error, but we should exit anyway.
 
   if (opts.service ())
+  {
     return run_service ();
+  }
 
   return run_standalone (opts);
 }

@@ -58,7 +58,9 @@ TAO_PG_ObjectGroupManager::add_member (
     CORBA::Object_ptr member)
 {
   if (CORBA::is_nil (member))
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
@@ -84,7 +86,9 @@ TAO_PG_ObjectGroupManager::_tao_add_member (
     CORBA::Boolean const propagate_member_already_present)
 {
   if (CORBA::is_nil (member))
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
@@ -112,7 +116,9 @@ TAO_PG_ObjectGroupManager::_tao_add_member (
       if (propagate_member_already_present)
         throw;
       else
+      {
         throw CORBA::INTERNAL ();
+      }
     }
   catch (PortableGroup::ObjectNotAdded const &)
     {
@@ -150,7 +156,9 @@ TAO_PG_ObjectGroupManager::add_member_i (
   TAO_PG_ObjectGroup_Array * groups {};
   if (this->location_map_.find (the_location, groups) == 0
       && this->member_already_present (*groups, group_entry))
+  {
     throw PortableGroup::MemberAlreadyPresent ();
+  }
 
   TAO_PG_MemberInfo member_info;
   member_info.group    = PortableGroup::ObjectGroup::_duplicate (object_group);
@@ -187,7 +195,9 @@ TAO_PG_ObjectGroupManager::add_member_i (
   // Don't bother checking for duplicates since a check is already
   // performed when binding to the location map above.
   if (group_entry->member_infos.insert_tail (member_info) != 0)
+  {
     throw PortableGroup::ObjectNotAdded ();
+  }
 
   return PortableGroup::ObjectGroup::_duplicate (object_group);
 }
@@ -204,7 +214,9 @@ TAO_PG_ObjectGroupManager::remove_member (
 
   TAO_PG_ObjectGroup_Array * groups {};
   if (this->location_map_.find (the_location, groups) != 0)
+  {
     throw PortableGroup::ObjectGroupNotFound ();
+  }
 
   // Multiple members from different object groups may reside at the
   // same location.  Iterate through the list to attempt to find a
@@ -212,7 +224,9 @@ TAO_PG_ObjectGroupManager::remove_member (
   int to_be_removed = this->get_object_group_position (*groups, group_entry);
 
   if (to_be_removed == -1)
+  {
     throw PortableGroup::ObjectGroupNotFound ();
+  }
 
   // remove the element from the array and resize the array.
   this->remove_entry_from_groups (to_be_removed, groups);
@@ -261,7 +275,9 @@ TAO_PG_ObjectGroupManager::remove_member (
               return PortableGroup::ObjectGroup::_duplicate (object_group);
             }
           else
+          {
             break;
+          }
         }
     }
 
@@ -354,7 +370,9 @@ TAO_PG_ObjectGroupManager::get_object_group_id (
     this->get_group_entry (object_group);
 
   if (entry == nullptr)
+  {
     throw CORBA::INTERNAL ();
+  }
 
   // Only the lower 32 bits of the 64 bit PortableGroup::ObjectGroupId
   // are ever used.
@@ -377,7 +395,9 @@ TAO_PG_ObjectGroupManager::get_object_group_ref (
   }
 
   if (entry == nullptr)
+  {
     throw CORBA::INTERNAL ();
+  }
 
   // This implementation does not change the object group reference.
   return PortableGroup::ObjectGroup::_duplicate (object_group);
@@ -416,7 +436,9 @@ TAO_PG_ObjectGroupManager::get_member_ref (
            i != end;
            ++i)
         if ((*i).location == loc)
+        {
           return CORBA::Object::_duplicate ((*i).member.in ());
+        }
     }
 
   // No member of the given object group is present at the given
@@ -472,7 +494,9 @@ TAO_PG_ObjectGroupManager::create_object_group (
   PortableGroup::Criteria const & the_criteria)
 {
   if (CORBA::is_nil (this->poa_.in ()))
+  {
     throw CORBA::INTERNAL ();
+  }
 
   // Create a reference for the ObjectGroup corresponding to the
   // RepositoryId of the object being created.
@@ -511,7 +535,9 @@ TAO_PG_ObjectGroupManager::create_object_group (
                       0);
 
     if (this->object_group_map_.bind (oid, group_entry) != 0)
+    {
       throw PortableGroup::ObjectNotCreated ();
+    }
   }
 
   (void) safe_group_entry.release ();
@@ -527,7 +553,9 @@ TAO_PG_ObjectGroupManager::destroy_object_group (
 
   TAO_PG_ObjectGroup_Map_Entry * group_entry {};
   if (this->object_group_map_.unbind (oid, group_entry) != 0)
+  {
     throw PortableGroup::ObjectNotFound ();
+  }
 
   // Must remove entries for group in location_map_ or they
   // will be accessed in later lookups.
@@ -565,7 +593,9 @@ TAO_PG_ObjectGroupManager::object_group (PortableServer::ObjectId const & oid)
     return
       PortableGroup::ObjectGroup::_duplicate (group_entry->object_group.in ());
   else
+  {
     return PortableGroup::ObjectGroup::_nil ();
+  }
 }
 
 CORBA::ULong
@@ -624,7 +654,9 @@ TAO_PG_ObjectGroupManager::get_group_entry (
     CORBA::Object_ptr object_group)
 {
   if (CORBA::is_nil (this->poa_.in ()))
+  {
     throw CORBA::INTERNAL ();
+  }
 
   PortableServer::ObjectId_var oid;
   try
@@ -634,21 +666,27 @@ TAO_PG_ObjectGroupManager::get_group_entry (
   catch (PortableServer::POA::WrongAdapter const & ex)
     {
       if (TAO_debug_level > 0)
+      {
         ex._tao_print_exception ("TAO_PG (%P|%t) Unexpected exception\n");
+      }
 
       throw CORBA::INTERNAL ();
     }
   catch (PortableServer::POA::WrongPolicy const & ex)
     {
       if (TAO_debug_level > 0)
+      {
         ex._tao_print_exception ("TAO_PG (%P|%t) Unexpected exception\n");
+      }
 
       throw CORBA::INTERNAL ();
     }
 
   TAO_PG_ObjectGroup_Map_Entry * group_entry {};
   if (this->object_group_map_.find (oid.in (), group_entry) != 0)
+  {
     throw PortableGroup::ObjectGroupNotFound ();
+  }
 
   return group_entry;
 }
@@ -714,7 +752,9 @@ TAO_PG_ObjectGroupManager::valid_type_id (
   // @todo Strategize this -- e.g. strict type checking.
 
   if (CORBA::is_nil (member))
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   // Before we can use this code, i.e. the reverse lock, the
   // TAO_PG_ObjectGroup_Entry should be made so that it is reference
@@ -830,7 +870,9 @@ TAO_PG_ObjectGroupManager::member_count (
 
   TAO_PG_ObjectGroup_Map_Entry * group_entry {};
   if (this->object_group_map_.find (oid, group_entry) != 0)
+  {
     throw PortableGroup::ObjectGroupNotFound ();
+  }
 
   int count {};
   TAO_PG_MemberInfo_Set & member_infos = group_entry->member_infos;
@@ -859,7 +901,9 @@ TAO_PG_ObjectGroupManager::is_alive (
 
   TAO_PG_ObjectGroup_Map_Entry * group_entry {};
   if (this->object_group_map_.find (oid, group_entry) != 0)
+  {
     throw PortableGroup::ObjectGroupNotFound ();
+  }
 
   TAO_PG_MemberInfo_Set & member_infos = group_entry->member_infos;
 
@@ -971,7 +1015,9 @@ TAO_PG_ObjectGroupManager::validate_members (CORBA::ORB_ptr orb,
         ++j)
       {
         if ((*j) == (*i))
+        {
           (*j).is_alive = false;
+        }
       }
     }
 
@@ -991,7 +1037,9 @@ TAO_PG_ObjectGroupManager::ping (CORBA::ORB_ptr orb,
 {
   bool status { true };
   if (CORBA::is_nil (obj.in ()))
+  {
     throw CORBA::OBJECT_NOT_EXIST ();
+  }
 
   // The ping() is used by LoadBalancer which may use RW strategy.
   // The validate thread invokes the _non_existent call to members

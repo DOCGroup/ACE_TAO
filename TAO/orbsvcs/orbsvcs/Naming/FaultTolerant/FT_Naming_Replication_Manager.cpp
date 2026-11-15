@@ -109,7 +109,9 @@ TAO_FT_Naming_Replication_Manager::init_orb ()
       endpoint = ACE_TEXT_CHAR_TO_TCHAR (endpoint_.c_str ());
       if (orb_args.add (ACE_TEXT ("-ORBListenEndpoints")) == -1
           || orb_args.add (endpoint.c_str ()) == -1)
+      {
         throw CORBA::NO_MEMORY ();
+      }
     }
 
   int argc = orb_args.argc ();

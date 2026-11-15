@@ -27,7 +27,9 @@ Cubit_Task::svc ()
   // thr_getprio () on the current thread should never fail.
 
   if (ACE_OS::thr_getprio (thr_handle, prio) == -1)
+  {
     return -1;
+  }
 
   //   char buffer[BUFSIZ];
   //   sprintf (buffer, "server%d.log", this->task_id_);
@@ -108,7 +110,9 @@ Cubit_Task::initialize_orb ()
                                                  "persistent_poa",
                                                  orb_name);
       if (r == -1)
+      {
         return -1;
+      }
 
       this->orb_ = this->orb_manager_.orb ();
 
@@ -117,7 +121,9 @@ Cubit_Task::initialize_orb ()
         {
           if (GLOBALS::instance ()->parse_args (argc,
                                                 argv) == -1)
+          {
             return -1;
+          }
           ACE_Barrier *barrier {};
           ACE_NEW_RETURN (barrier,
                           ACE_Barrier (GLOBALS::instance ()->num_of_objs + 1),
@@ -144,7 +150,9 @@ Cubit_Task::get_servant_ior (u_int index)
   if (index >= num_of_objs_)
     return 0;
   else
+  {
     return ACE_OS::strdup (this->servants_iors_[index]);
+  }
 }
 
 int

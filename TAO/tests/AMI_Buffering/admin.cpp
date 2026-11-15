@@ -58,7 +58,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       AMI_Buffering_Admin *ami_buffering_admin_impl {};
       ACE_NEW_RETURN (ami_buffering_admin_impl,

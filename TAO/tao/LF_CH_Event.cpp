@@ -109,7 +109,9 @@ bool
 TAO_LF_CH_Event::successful_i () const
 {
   if (this->prev_state_ == TAO_LF_Event::LFS_CONNECTION_WAIT)
+  {
     return this->state_ == TAO_LF_Event::LFS_SUCCESS;
+  }
 
   return this->state_ == TAO_LF_Event::LFS_CONNECTION_CLOSED;
 }
@@ -118,7 +120,9 @@ bool
 TAO_LF_CH_Event::error_detected_i () const
 {
   if (this->prev_state_ == TAO_LF_Event::LFS_CONNECTION_WAIT)
+  {
     return this->state_ == TAO_LF_Event::LFS_CONNECTION_CLOSED;
+  }
 
   return this->state_ == TAO_LF_Event::LFS_TIMEOUT;
 }

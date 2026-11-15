@@ -33,7 +33,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         event_service.init (command_line.get_argc(), command_line.get_TCHAR_argv());
 
       if (result == -1)
+      {
         return 1;
+      }
 
       // @@ Run forever... even after the EC is destroyed...
       //    The "Right Way"[tm] to fix this is to modify

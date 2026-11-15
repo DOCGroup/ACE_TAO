@@ -114,7 +114,9 @@ unsigned int
 JAWS_Referenced_Cache_Object::count_i () const
 {
   if (this->count_.tryacquire_write () == 0)
+  {
     return 0;
+  }
 
   return 1;
 }
@@ -139,7 +141,9 @@ JAWS_Referenced_Cache_Object::priority_i () const
     = ACE_OS::difftime (this->last_access (), this->first_access ());
 
   if (delta >= 0.0 && delta < ~(0U))
+  {
     priority = (unsigned) delta;
+  }
 
   return priority;
 }
@@ -200,7 +204,9 @@ JAWS_Cache_Object_Factory::JAWS_Cache_Object_Factory (ACE_Allocator *alloc)
   : allocator_ (alloc)
 {
   if (this->allocator_ == 0)
+  {
     this->allocator_ = ACE_Allocator::instance ();
+  }
 }
 
 JAWS_Cache_Object_Factory::~JAWS_Cache_Object_Factory ()
@@ -213,7 +219,9 @@ JAWS_Cache_Object_Factory::open (ACE_Allocator *alloc)
   this->allocator_ = alloc;
 
   if (this->allocator_ == 0)
+  {
     this->allocator_ = ACE_Allocator::instance ();
+  }
 
   return 0;
 }

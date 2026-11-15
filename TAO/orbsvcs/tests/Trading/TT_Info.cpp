@@ -171,7 +171,9 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
         }
 
       if (tc == nullptr)
+      {
         continue;
+      }
       if (tc->equal (TAO_Trader_Test::_tc_StringSeq))
         {
           TAO_Trader_Test::StringSeq const *str_seq {};
@@ -300,7 +302,9 @@ TT_Parse_Args::TT_Parse_Args (int& argc, ACE_TCHAR** argv)
               arg_shifter.consume_arg ();
             }
           else
+          {
             ior_file = ACE_OS::fdopen (ACE_STDIN, ACE_TEXT("r"));
+          }
 
           if (ior_file != nullptr)
             {
@@ -308,7 +312,9 @@ TT_Parse_Args::TT_Parse_Args (int& argc, ACE_TCHAR** argv)
               this->ior_ = read_buffer.read ();
             }
           else
+          {
             ACE_ERROR ((LM_ERROR, "Couldn't load ior.\n"));
+          }
         }
       else
         {

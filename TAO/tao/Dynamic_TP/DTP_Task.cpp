@@ -344,7 +344,9 @@ TAO_DTP_Task::svc ()
                   }
                 // Check for timeout
                 if (this->shutdown_)
+                {
                   return 0;
+                }
                 if (wait_state == -1)
                   {
                     if (errno != ETIME || this->remove_active (false))

@@ -135,12 +135,16 @@ int wpdu::set_trap_info (snmp_pdu *raw_pdu, Pdu const &pdu) const
    raw_pdu->specific_type = (int) trapid[(int) (trapid.length() - 1)];
    trapid.trim(1);
    if ( trapid[(int)(trapid.length() - 1)] == 0 )
+   {
      trapid.trim(1);
+   }
    enterprise = trapid;
   }
 
   if ( raw_pdu->trap_type != V1_ENT_SPECIFIC)
+  {
     pdu.get_notify_enterprise( enterprise);
+  }
   if ( enterprise.length() > 0) {
     // note!!  To the contrary, enterprise OID val is
     // copied here and raw_pdu->enterprise is freed in free_pdu
@@ -220,7 +224,9 @@ int wpdu::load_vbs (snmp_pdu *raw_pdu, Pdu const &pdu)
       // what are we trying to convert here (vb oid part or value part)
       status = convert_vb_to_smival( tempvb, &smival );
       if ( status != SNMP_CLASS_SUCCESS)
-         return status;
+      {
+        return status;
+      }
 
       // add the var to the raw pdu
       cmu_snmp::add_var(raw_pdu, smioid->ptr, (int) smioid->len, &smival);
@@ -235,7 +241,9 @@ int wpdu::load_vbs (snmp_pdu *raw_pdu, Pdu const &pdu)
 void wpdu::copy_iovec (iovec &dest, iovec const &src)
 {
   if (&dest == &src)
+  {
     return;
+  }
 
    std::memmove (dest.iov_base, src.iov_base, src.iov_len);
    dest.iov_len = src.iov_len;
@@ -351,7 +359,9 @@ iovec const &wpdu::get_buffer () const
 int wpdu::get_pdu (Pdu &pdu, snmp_version &version)
 {
   if (iovec_.iov_len == 0)
+  {
     return -1; // NO DATA
+  }
 
   snmp_pdu *raw_pdu = cmu_snmp::pdu_create(0);
   if (!raw_pdu) {
@@ -364,7 +374,9 @@ int wpdu::get_pdu (Pdu &pdu, snmp_version &version)
                      community_name, comm_len,
                      version, iovec_.iov_len);
   if (status != 0)
+  {
     return SNMP_CLASS_INTERNAL_ERROR;
+  }
 
   community_name[comm_len] = 0; // set null based on returned length
   set_request_id( &pdu, raw_pdu->reqid);

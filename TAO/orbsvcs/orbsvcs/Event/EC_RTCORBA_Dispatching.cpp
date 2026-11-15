@@ -53,7 +53,9 @@ TAO_EC_RTCORBA_Dispatching::shutdown ()
       int nthreads =
         this->thread_manager_.num_threads_in_task (std::addressof (this->tasks_[i]));
       if (nthreads <= 0)
+      {
         continue;
+      }
       for (int j {}; j != nthreads; ++j)
         {
           this->tasks_[i].putq (new TAO_EC_Shutdown_Task_Command);
@@ -84,7 +86,9 @@ TAO_EC_RTCORBA_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
   for (CORBA::ULong i {}; i != this->lanes_.length (); ++i)
     {
       if (this->lanes_[i].lane_priority != current_priority)
+      {
         continue;
+      }
 
       // @@ If there were no threads available we may need to create
       // some...

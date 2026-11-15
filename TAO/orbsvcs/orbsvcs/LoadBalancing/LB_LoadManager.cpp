@@ -84,7 +84,9 @@ TAO_LB_LoadManager::push_loads (
     const CosLoadBalancing::LoadList & loads)
 {
   if (loads.length () == 0)
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   {
     ACE_GUARD (TAO_SYNCH_MUTEX,
@@ -92,7 +94,9 @@ TAO_LB_LoadManager::push_loads (
                this->load_lock_);
 
     if (this->load_map_.rebind (the_location, loads) == -1)
+    {
       throw CORBA::INTERNAL ();
+    }
   }
 
   // Analyze loads for object groups that have members residing at the
@@ -159,7 +163,9 @@ TAO_LB_LoadManager::get_loads (const PortableGroup::Location & the_location)
   if (this->load_map_.find (the_location, *tmp) == 0)
     return loads._retn ();
   else
+  {
     throw CosLoadBalancing::LocationNotFound ();
+  }
 }
 
 void
@@ -176,7 +182,9 @@ TAO_LB_LoadManager::enable_alert (const PortableGroup::Location & the_location)
       //       registered with more than LoadManager.
 
       if (info.alerted)
+      {
         return;  // No need to set the alert status.  It has already
+      }
                  // been set.
 
       // Duplicate before releasing the LoadAlertMap lock to prevent a
@@ -213,7 +221,9 @@ TAO_LB_LoadManager::enable_alert (const PortableGroup::Location & the_location)
       }
     }
   else
+  {
     throw CosLoadBalancing::LoadAlertNotFound ();
+  }
 }
 
 void
@@ -229,7 +239,9 @@ TAO_LB_LoadManager::disable_alert (const PortableGroup::Location & the_location)
       // @note This could be problematic if the LoadAlert object is
       //       registered with more than LoadManager.
       if (!info.alerted)
+      {
         return;  // No need to set the alert status.  It has already
+      }
                  // been set.
 
       // Duplicate before releasing the LoadAlertMap lock to prevent a
@@ -266,7 +278,9 @@ TAO_LB_LoadManager::disable_alert (const PortableGroup::Location & the_location)
       }
     }
   else
+  {
     throw CosLoadBalancing::LoadAlertNotFound ();
+  }
 }
 
 void
@@ -275,7 +289,9 @@ TAO_LB_LoadManager::register_load_alert (
     CosLoadBalancing::LoadAlert_ptr load_alert)
 {
   if (CORBA::is_nil (load_alert))
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->load_alert_lock_);
 
@@ -343,7 +359,9 @@ TAO_LB_LoadManager::register_load_monitor (
     CosLoadBalancing::LoadMonitor_ptr load_monitor)
 {
   if (CORBA::is_nil (load_monitor))
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   const CosLoadBalancing::LoadMonitor_var the_monitor =
     CosLoadBalancing::LoadMonitor::_duplicate (load_monitor);
@@ -423,7 +441,9 @@ TAO_LB_LoadManager::remove_load_monitor (
              this->monitor_lock_);
 
   if (this->monitor_map_.unbind (the_location) != 0)
+  {
     throw CosLoadBalancing::LocationNotFound ();
+  }
 
   // If no load monitors are registered with the load balancer than
   // shutdown the "pull monitoring."
@@ -640,7 +660,9 @@ TAO_LB_LoadManager::next_member (const PortableServer::ObjectId & oid)
     this->object_group_manager_.object_group (oid);
 
   if (CORBA::is_nil (object_group.in ()))
+  {
     throw CORBA::OBJECT_NOT_EXIST ();
+  }
 
   PortableGroup::Properties_var properties =
     this->get_properties (object_group.in ());
@@ -692,16 +714,22 @@ TAO_LB_LoadManager::next_member (const PortableServer::ObjectId & oid)
         }
 
         if (this->object_group_manager_.is_alive (oid, obj.in ()))
+        {
           break;
+        }
       }
 
       if (CORBA::is_nil (obj.in ()))
         throw CORBA::OBJECT_NOT_EXIST ();
       else
+      {
         return obj._retn ();
+      }
     }
   else
+  {
     throw CORBA::OBJECT_NOT_EXIST ();
+  }
 }
 
 void
@@ -864,7 +892,9 @@ TAO_LB_LoadManager::preprocess_properties (PortableGroup::Properties & props)
           CosLoadBalancing::CustomStrategy_ptr strategy;
           if (!(property.val >>= strategy)
               || CORBA::is_nil (strategy))
+          {
             throw PortableGroup::InvalidProperty (property.nam, property.val);
+          }
         }
 
       else if (property.nam == this->built_in_balancing_strategy_info_name_)
@@ -891,7 +921,9 @@ TAO_LB_LoadManager::preprocess_properties (PortableGroup::Properties & props)
                   property.val);
             }
           else
+          {
             throw PortableGroup::InvalidProperty (property.nam, property.val);
+          }
         }
       else if (property.nam == this->built_in_balancing_strategy_name_)
         {

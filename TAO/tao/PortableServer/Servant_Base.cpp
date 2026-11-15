@@ -524,7 +524,9 @@ TAO_ServantBase::synchronous_upcall_dispatch (
               throw;
             }
           else
+          {
             req.tao_send_reply_exception (ex);
+          }
         }
     }
 }

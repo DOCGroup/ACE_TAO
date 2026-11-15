@@ -17,7 +17,9 @@ Util_Thread::svc ()
   int prio;
 
   if (ACE_OS::thr_getprio (thr_handle, prio) == -1)
+  {
     return -1;
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               "(%t) Utilization Thread created with priority %d, "

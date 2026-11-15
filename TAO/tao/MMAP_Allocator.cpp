@@ -80,7 +80,9 @@ TAO_MMAP_Allocator::offset (void *p)
 
   // Check if p is in the range of the mmap pool, if not we return -1
   if (off < base || off > end)
+  {
     return -1;
+  }
 
   off_t const the_offset = static_cast<off_t> (off - base);
 

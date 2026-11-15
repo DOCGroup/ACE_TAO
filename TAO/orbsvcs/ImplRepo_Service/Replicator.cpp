@@ -246,7 +246,9 @@ Replicator::send_access_state (const char *name, ImplementationRepository::AAM_S
       this->to_send_[len].action.state (state);
     }
   if (this->notified_)
+  {
     return;
+  }
   this->notified_ = true;
   this->reactor_->notify (this);
 }
@@ -319,7 +321,9 @@ Replicator::send_entity (ImplementationRepository::UpdateInfo &info)
       this->to_send_[len] = info;
     }
   if (this->notified_)
+  {
     return;
+  }
   this->notified_ = true;
   this->reactor_->notify (this);
 }

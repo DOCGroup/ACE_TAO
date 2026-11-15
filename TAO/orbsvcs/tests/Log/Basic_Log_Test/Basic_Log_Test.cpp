@@ -30,7 +30,9 @@ BasicLog_Test::init (int argc, ACE_TCHAR *argv[])
 
       // Parse command line and verify parameters.
       if (this->parse_args (argc, argv) == -1)
+      {
         return -1;
+      }
 
       // Initialize the factory
       int const init_result = this->init_factory ();
@@ -269,7 +271,9 @@ int BasicLog_Test::write_records (CORBA::ULongLong numberOfRecords)
         record[0] <<= t.in ();
         basicLog_->write_records(record);
         if (l == 0)
+        {
           break; // silence an 'infinite loop' warning
+        }
     }
   }
   else
@@ -487,7 +491,9 @@ BasicLog_Test::resolve_naming_service ()
 
   // Need to check return value for errors.
   if (CORBA::is_nil (naming_obj.in ()))
+  {
     throw CORBA::UNKNOWN ();
+  }
 
   this->naming_context_ =
     CosNaming::NamingContext::_narrow (naming_obj.in ());

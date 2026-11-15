@@ -156,7 +156,9 @@ TAO_UIPMC_Mcast_Connection_Handler::open (void *)
 
 #ifndef TAO_ALLOW_UNICAST_MIOP
       if (!success)
+      {
         return -1; // No joins worked, we are not listening.
+      }
 #endif // TAO_ALLOW_UNICAST_MIOP
     }
 
@@ -165,7 +167,9 @@ TAO_UIPMC_Mcast_Connection_Handler::open (void *)
   if (!preferred_size)
     {
       if (this->listen_on_all_)
+      {
         this->peer ().opts (ACE_SOCK_Dgram_Mcast::OPT_NULLIFACE_ALL | this->peer ().opts());
+      }
 
       if (0 == this->peer ().join (this->local_addr_))
         {

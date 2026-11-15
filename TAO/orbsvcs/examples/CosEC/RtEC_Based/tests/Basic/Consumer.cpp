@@ -21,7 +21,9 @@ void
 Consumer::connect ()
 {
   if (CORBA::is_nil (this->consumer_admin_.in ()))
+  {
     return;
+  }
 
   CosEventComm::PushConsumer_var const objref =
     this->_this ();
@@ -37,7 +39,9 @@ Consumer::disconnect ()
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ())
       || CORBA::is_nil (this->consumer_admin_.in ()))
+  {
     return;
+  }
 
   this->supplier_proxy_->disconnect_push_supplier ();
 

@@ -98,19 +98,25 @@ TAO_AV_Connector_Registry::open (TAO_Base_StreamEndPoint *endpoint,
                 {
                   // add connector to list.
                   if (this->connectors_.insert (connector) == -1)
+                  {
                     return -1;
+                  }
                   connector_owner.release ();
 
                   if (connector->open (endpoint,
                                        av_core,
                                        flow_factory) == -1)
+                  {
                     return -1;
+                  }
 
                   TAO_AV_Transport *transport {};
                   if (connector->connect (entry,
                                           transport,
                                           TAO_AV_Core::TAO_AV_DATA) == -1)
+                  {
                     return -1;
+                  }
                   entry->transport (transport);
                 }
               else
@@ -135,19 +141,25 @@ TAO_AV_Connector_Registry::open (TAO_Base_StreamEndPoint *endpoint,
                     {
                       // add connector to list.
                       if (this->connectors_.insert (control_connector) == -1)
+                      {
                         return -1;
+                      }
                       control_connector_owner.release ();
 
                       if (control_connector->open (endpoint,
                                                    av_core,
                                                    control_flow_factory) == -1)
+                      {
                         return -1;
+                      }
 
                       TAO_AV_Transport *control_transport {};
                       if (control_connector->connect (entry,
                                                       control_transport,
                                                       TAO_AV_Core::TAO_AV_CONTROL) == -1)
+                      {
                         return -1;
+                      }
                       entry->control_transport (control_transport);
 
                       // Now set the control object on the data flow object.
@@ -248,7 +260,9 @@ TAO_AV_Acceptor_Registry::open (TAO_Base_StreamEndPoint *endpoint,
                                      av_core,
                                      entry);
           if(retv < 0)
-                  return retv;
+          {
+            return retv;
+          }
           continue;
         }
       else
@@ -270,7 +284,9 @@ TAO_AV_Acceptor_Registry::open (TAO_Base_StreamEndPoint *endpoint,
                     {
                       // add acceptor to list.
                       if (this->acceptors_.insert (acceptor) == -1)
+                      {
                         return -1;
+                      }
                       acceptor_owner.release ();
 
                       if (acceptor->open (endpoint,
@@ -278,7 +294,9 @@ TAO_AV_Acceptor_Registry::open (TAO_Base_StreamEndPoint *endpoint,
                                           entry,
                                           flow_factory,
                                           TAO_AV_Core::TAO_AV_DATA) == -1)
+                      {
                         return -1;
+                      }
 
                       TAO_AV_Flow_Protocol_Factory *control_flow_factory =
                         av_core->get_flow_protocol_factory (flow_factory->control_flow_factory ());
@@ -292,7 +310,9 @@ TAO_AV_Acceptor_Registry::open (TAO_Base_StreamEndPoint *endpoint,
                             {
                               // add acceptor to list.
                               if (this->acceptors_.insert (acceptor) == -1)
+                              {
                                 return -1;
+                              }
                               acceptor_owner.release ();
 
                               if (acceptor->open (endpoint,
@@ -300,7 +320,9 @@ TAO_AV_Acceptor_Registry::open (TAO_Base_StreamEndPoint *endpoint,
                                                   entry,
                                                   control_flow_factory,
                                                   TAO_AV_Core::TAO_AV_CONTROL) == -1)
+                              {
                                 return -1;
+                              }
 
                               entry->protocol_object ()->control_object (entry->control_protocol_object ());
                              }
@@ -355,7 +377,9 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
                       -1);
 
   if (TAO_debug_level > 0)
+  {
     ORBSVCS_DEBUG((LM_DEBUG, "(%N,%l) Matched flow_protocol: %s, Looking for transport protocol: %s\n", flow_protocol, transport_protocol));
+  }
 
   TAO_AV_Transport_Factory *transport_factory =
     av_core->get_transport_factory (transport_protocol);
@@ -380,7 +404,9 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
                        -1);
 
   if (this->acceptors_.insert (acceptor) == -1)
+  {
     return -1;
+  }
   acceptor_owner.release ();
 
   if (acceptor->open_default (endpoint,
@@ -420,7 +446,9 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
                           -1);
 
       if (this->acceptors_.insert (control_acceptor) == -1)
+      {
         return -1;
+      }
       control_acceptor_owner.release ();
 
       if (control_acceptor->open_default (endpoint,
@@ -465,7 +493,9 @@ TAO_AV_Acceptor_Registry::close_all ()
        ++i)
     {
       if (*i == nullptr)
+      {
         continue;
+      }
 
       (*i)->close ();
 
@@ -535,7 +565,9 @@ TAO_AV_Flow_Handler::schedule_timer ()
 
   this->callback_->get_timeout (tv, this->timeout_arg_);
   if (tv == nullptr)
+  {
     return 0;
+  }
 
   this->timer_id_ =
       TAO_AV_CORE::instance()->reactor ()->schedule_timer (event_handler,
@@ -543,7 +575,9 @@ TAO_AV_Flow_Handler::schedule_timer ()
                                                            *tv);
 
   if (this->timer_id_ < 0)
+  {
     return -1;
+  }
 
   return 0;
 }
@@ -554,7 +588,9 @@ TAO_AV_Flow_Handler::cancel_timer ()
   if (this->timer_id_ != -1)
   return TAO_AV_CORE::instance()->reactor ()->cancel_timer (this->timer_id_);
   else
+  {
     return 0;
+  }
 }
 
 int
@@ -567,7 +603,12 @@ TAO_AV_Flow_Handler::stop (TAO_FlowSpec_Entry::Role role)
       {
         int result =  this->event_handler ()->reactor ()->cancel_timer (this->timer_id_);
         if (result <  0)
-          if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_Flow_Handler::stop:cancel_timer failed\n"));
+        {
+          if (TAO_debug_level > 0)
+          {
+            ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_Flow_Handler::stop:cancel_timer failed\n"));
+          }
+        }
       }
       break;
     default:
@@ -582,20 +623,26 @@ TAO_AV_Flow_Handler::handle_timeout (ACE_Time_Value const & /*tv*/,
 {
   int result = this->callback_->handle_timeout (this->timeout_arg_);
   if (result < 0)
+  {
     return result;
+  }
   ACE_Event_Handler *event_handler = this->event_handler ();
   ACE_Time_Value *timeout {};
 
   this->callback_->get_timeout (timeout,  this->timeout_arg_);
   if (timeout == nullptr)
+  {
     return 0;
+  }
 
   this->timer_id_ =  event_handler->reactor ()->schedule_timer (event_handler,
                                                                 nullptr,
                                                                 *timeout);
 
   if (this->timer_id_ < 0)
+  {
     return -1;
+  }
 
   return 0;
 }

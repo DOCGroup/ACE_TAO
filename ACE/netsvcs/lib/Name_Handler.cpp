@@ -26,7 +26,9 @@ ACE_Name_Acceptor::parse_args (int argc, ACE_TCHAR *argv[])
 
   // dont allow to connect to another name serever
   if(this->naming_context()->name_options()->context() == ACE_Naming_Context::NET_LOCAL)
-        this->naming_context()->name_options()->nameserver_host(ACE_TEXT ("localhost"));
+  {
+    this->naming_context()->name_options()->nameserver_host(ACE_TEXT ("localhost"));
+  }
 
   if (this->naming_context()->open( this->naming_context()->name_options()->context() ) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -165,7 +167,9 @@ ACE_Name_Handler::send_reply (ACE_INT32 status,
   int len = this->name_reply_.encode (buf);
 
   if (len == -1)
+  {
     return -1;
+  }
 
   ssize_t n = this->peer ().send (buf, len);
 
@@ -177,7 +181,9 @@ ACE_Name_Handler::send_reply (ACE_INT32 status,
                        n),
                       -1);
   else
+  {
     return 0;
+  }
 }
 
 /* VIRTUAL */ int
@@ -331,7 +337,9 @@ ACE_Name_Handler::handle_input (ACE_HANDLE)
   if (this->recv_request () == -1)
     return -1;
   else
+  {
     return this->dispatch ();
+  }
 }
 
 int
@@ -378,12 +386,16 @@ ACE_Name_Handler::shared_bind (int rebind)
                                                     a_value,
                                                     this->name_request_.type ());
       if (result == 1)
+      {
         result = 0;
+      }
     }
   if (result == 0)
     return this->send_reply (0);
   else
+  {
     return this->send_reply (-1);
+  }
 }
 
 int
@@ -432,7 +444,9 @@ ACE_Name_Handler::unbind ()
   if (this->naming_context ()->unbind (a_name) == 0)
     return this->send_reply (0);
   else
+  {
     return this->send_reply (-1);
+  }
 }
 
 ACE_Name_Request
@@ -493,7 +507,9 @@ ACE_Name_Handler::lists ()
       ACE_Name_Request end_rq (ACE_Name_Request::MAX_ENUM, 0, 0, 0, 0, 0, 0);
 
       if (this->send_request (end_rq) == -1)
+      {
         return -1;
+      }
     }
   else
     {
@@ -508,7 +524,9 @@ ACE_Name_Handler::lists ()
           // Create a request by calling the appropriate method obtained
           // by accessing into the table. Then send the request across.
           if (this->send_request (nrq) == -1)
+          {
             return -1;
+          }
         }
 
       // Send last message indicator.
@@ -566,7 +584,9 @@ ACE_Name_Handler::lists_entries ()
         ACE_Naming_Context::list_type_entries (set, pattern);
     }
   else
+  {
     return -1;
+  }
 
   if (result == 0)
     {
@@ -587,14 +607,18 @@ ACE_Name_Handler::lists_entries ()
                                   ACE_OS::strlen (one_entry->type_));
 
           if (this->send_request (mynrq) == -1)
+          {
             return -1;
+          }
         }
 
       // send last message indicator
       ACE_Name_Request nrq (ACE_Name_Request::MAX_ENUM, 0, 0, 0, 0, 0, 0);
 
       if (this->send_request (nrq) == -1)
+      {
         return -1;
+      }
     }
   else
     {
@@ -602,7 +626,9 @@ ACE_Name_Handler::lists_entries ()
       ACE_Name_Request end_rq (ACE_Name_Request::MAX_ENUM, 0, 0, 0, 0, 0, 0);
 
       if (this->send_request (end_rq) == -1)
+      {
         return -1;
+      }
     }
 
   return 0;

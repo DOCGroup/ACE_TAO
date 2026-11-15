@@ -38,7 +38,9 @@ TAO_FT_Naming_Service::init (int argc, ACE_TCHAR * argv[])
                                                                 this->orb_.in ());
 
       if (result == -1)
+      {
         return result;
+      }
     }
   catch (CORBA::Exception const & ex)
     {
@@ -63,7 +65,9 @@ TAO_FT_Naming_Service::parse_args (int & argc, ACE_TCHAR * argv[])
           {
             int const time = ACE_OS::atoi (get_opts.opt_arg ());
             if (time >= 0)
+            {
               this->time_ = time;
+            }
 
             // Remove the option '-t' from argv []
             // to avoid any confusion that might result.
@@ -79,7 +83,9 @@ TAO_FT_Naming_Service::parse_args (int & argc, ACE_TCHAR * argv[])
           {
             int const nt = ACE_OS::atoi (get_opts.opt_arg ());
             if (nt >= 1)
+            {
               this->num_threads_ = nt;
+            }
 
             // Remove the option '-n' from argv []
             // to avoid any confusion that might result.

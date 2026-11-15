@@ -26,7 +26,9 @@ int
 JAWS_Protocol_Handler::service ()
 {
   if (this->state_ == nullptr)
+  {
     return -1;
+  }
 
   return this->state_->service (this, this->data_);
 }

@@ -133,7 +133,9 @@ Worker_Thread::validate_connection ()
         {
           // If we have reach our maximum number of tries, throw exception.
           if (current_attempt == max_attempts)
+          {
             throw;
+          }
           // Otherwise, ignore...
         }
       catch (CORBA::Exception const &)
@@ -231,7 +233,9 @@ Task::svc ()
                     priorities,
                     this->options_.debug);
       if (result != 0)
+      {
         return result;
+      }
 
       CORBA::PolicyList policies;
 
@@ -242,7 +246,9 @@ Task::svc ()
                             policies,
                             this->options_.debug);
       if (result != 0)
+      {
         return result;
+      }
 
       policy_manager->set_policy_overrides (policies,
                                             CORBA::SET_OVERRIDE);
@@ -311,12 +317,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       int const parse_args_result = parse_args (argc, argv, options);
       if (parse_args_result != 0)
+      {
         return parse_args_result;
+      }
 
       // Make sure we can support multiple priorities that are required
       // for this test.
       if (!check_supported_priorities (orb.in ()))
+      {
         return 2;
+      }
 
       // Thread Manager for managing task.
       ACE_Thread_Manager thread_manager;

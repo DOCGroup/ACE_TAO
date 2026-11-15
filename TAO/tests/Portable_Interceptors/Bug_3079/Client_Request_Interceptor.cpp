@@ -86,7 +86,9 @@ Client_Request_Interceptor::receive_exception (
       CORBA::String_var const id = tc->id ();
 
       if (std::strcmp (id.in (), "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0)
+      {
         throw ::CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
+      }
     }
 }
 

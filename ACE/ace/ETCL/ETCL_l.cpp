@@ -631,13 +631,19 @@ YY_DECL
 #endif
 
     if ( ! yy_start )
+    {
       yy_start = 1; /* first start state */
+    }
 
     if ( ! yyin )
+    {
       yyin = stdin;
+    }
 
     if ( ! yyout )
+    {
       yyout = stdout;
+    }
 
     if ( ! yy_current_buffer )
       yy_current_buffer =
@@ -672,7 +678,9 @@ yy_match:
         {
         yy_current_state = (int) yy_def[yy_current_state];
         if ( yy_current_state >= 118 )
+        {
           yy_c = yy_meta[(unsigned int) yy_c];
+        }
         }
       yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
       ++yy_cp;
@@ -1034,7 +1042,9 @@ case YY_STATE_EOF(INITIAL):
         else
           {
           if ( ! yy_did_buffer_switch_on_eof )
+          {
             YY_NEW_FILE;
+          }
           }
         break;
         }
@@ -1146,7 +1156,9 @@ static int yy_get_next_buffer()
         if ( new_size <= 0 )
           b->yy_buf_size += b->yy_buf_size / 8;
         else
+        {
           b->yy_buf_size *= 2;
+        }
 
         b->yy_ch_buf = (char *)
           /* Include room in for 2 EOB chars. */
@@ -1169,7 +1181,9 @@ static int yy_get_next_buffer()
       }
 
     if ( num_to_read > YY_READ_BUF_SIZE )
+    {
       num_to_read = YY_READ_BUF_SIZE;
+    }
 
     /* Read in more data. */
     YY_INPUT( (&yy_current_buffer->yy_ch_buf[number_to_move]),
@@ -1195,7 +1209,9 @@ static int yy_get_next_buffer()
     }
 
   else
+  {
     ret_val = EOB_ACT_CONTINUE_SCAN;
+  }
 
   yy_n_chars += number_to_move;
   yy_current_buffer->yy_ch_buf[yy_n_chars] = YY_END_OF_BUFFER_CHAR;
@@ -1227,7 +1243,9 @@ static yy_state_type yy_get_previous_state()
       {
       yy_current_state = (int) yy_def[yy_current_state];
       if ( yy_current_state >= 118 )
+      {
         yy_c = yy_meta[(unsigned int) yy_c];
+      }
       }
     yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
     }
@@ -1261,7 +1279,9 @@ yy_state_type yy_current_state;
     {
     yy_current_state = (int) yy_def[yy_current_state];
     if ( yy_current_state >= 118 )
+    {
       yy_c = yy_meta[(unsigned int) yy_c];
+    }
     }
   yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
   yy_is_jam = (yy_current_state == 117);
@@ -1398,7 +1418,9 @@ FILE *input_file;
 #endif
   {
   if ( ! yy_current_buffer )
+  {
     yy_current_buffer = yy_create_buffer( yyin, YY_BUF_SIZE );
+  }
 
   yy_init_buffer( yy_current_buffer, input_file );
   yy_load_buffer_state();
@@ -1412,7 +1434,9 @@ YY_BUFFER_STATE new_buffer;
 #endif
   {
   if ( yy_current_buffer == new_buffer )
+  {
     return;
+  }
 
   if ( yy_current_buffer )
     {
@@ -1457,7 +1481,9 @@ int size;
 
   b = (YY_BUFFER_STATE) yy_flex_alloc( sizeof( struct yy_buffer_state ) );
   if ( ! b )
+  {
     YY_FATAL_ERROR( "out of dynamic memory in yy_create_buffer()" );
+  }
 
   b->yy_buf_size = size;
 
@@ -1466,7 +1492,9 @@ int size;
    */
   b->yy_ch_buf = (char *) yy_flex_alloc( b->yy_buf_size + 2 );
   if ( ! b->yy_ch_buf )
+  {
     YY_FATAL_ERROR( "out of dynamic memory in yy_create_buffer()" );
+  }
 
   b->yy_is_our_buffer = 1;
 
@@ -1483,13 +1511,19 @@ YY_BUFFER_STATE b;
 #endif
   {
   if ( ! b )
+  {
     return;
+  }
 
   if ( b == yy_current_buffer )
+  {
     yy_current_buffer = (YY_BUFFER_STATE) 0;
+  }
 
   if ( b->yy_is_our_buffer )
+  {
     yy_flex_free( (void *) b->yy_ch_buf );
+  }
 
   yy_flex_free( (void *) b );
   }
@@ -1520,7 +1554,9 @@ YY_BUFFER_STATE b;
 
   {
   if ( ! b )
+  {
     return;
+  }
 
   b->yy_n_chars = 0;
 
@@ -1537,7 +1573,9 @@ YY_BUFFER_STATE b;
   b->yy_buffer_status = YY_BUFFER_NEW;
 
   if ( b == yy_current_buffer )
+  {
     yy_load_buffer_state();
+  }
   }
 
 #ifndef YY_NO_SCAN_BUFFER
@@ -1559,7 +1597,9 @@ yy_size_t size;
 
   b = (YY_BUFFER_STATE) yy_flex_alloc( sizeof( struct yy_buffer_state ) );
   if ( ! b )
+  {
     YY_FATAL_ERROR( "out of dynamic memory in yy_scan_buffer()" );
+  }
 
   b->yy_buf_size = size - 2;  /* "- 2" to take care of EOB's */
   b->yy_buf_pos = b->yy_ch_buf = base;
@@ -1611,7 +1651,9 @@ int len;
   n = len + 2;
   buf = (char *) yy_flex_alloc( n );
   if ( ! buf )
+  {
     YY_FATAL_ERROR( "out of dynamic memory in yy_scan_bytes()" );
+  }
 
   for ( i = 0; i < len; ++i )
     buf[i] = bytes[i];
@@ -1620,7 +1662,9 @@ int len;
 
   b = yy_scan_buffer( buf, n );
   if ( ! b )
+  {
     YY_FATAL_ERROR( "bad buffer in yy_scan_bytes()" );
+  }
 
   /* It's okay to grow etc. this buffer, and we should throw it
    * away when we're done.
@@ -1810,7 +1854,9 @@ extract_string(char* str)
           else if (*i == '\\')
             *t = '\\';
           else
+          {
             *t = *i;
+          }
           continue;
         }
 

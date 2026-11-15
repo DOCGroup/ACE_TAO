@@ -41,7 +41,9 @@ Vault_Server_Request_Interceptor::receive_request (
         reinterpret_cast<char const *> (sc->context_data.get_buffer ());
 
       if (std::strcmp (buf, "root123") != 0)
+      {
         throw CORBA::NO_PERMISSION ();
+      }
     }
 
   if (std::strcmp (op.in (), "update_records") == 0)
@@ -118,7 +120,9 @@ Vault_Server_Request_Context_Interceptor::receive_request (
   char const *const buf = reinterpret_cast<char const *> (sc->context_data.get_buffer ());
 
   if (std::strcmp (buf, "root123") != 0)
+  {
     throw CORBA::NO_PERMISSION ();
+  }
 }
 
 void

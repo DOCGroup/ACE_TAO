@@ -19,7 +19,9 @@ namespace Persistent_Grid_Detail
     ~Handle_Guard ()
     {
       if (this->handle_ != ACE_INVALID_HANDLE)
+      {
         ACE_OS::close (this->handle_);
+      }
     }
 
     Handle_Guard (Handle_Guard const&) = delete;

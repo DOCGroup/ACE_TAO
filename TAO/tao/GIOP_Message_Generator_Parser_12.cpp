@@ -30,7 +30,9 @@ TAO_GIOP_Message_Generator_Parser_12::write_request_header (
 {
   // First the request id
   if (!(msg << opdetails.request_id ()))
+  {
     return false;
+  }
 
   CORBA::Octet const response_flags = opdetails.response_flags ();
 
@@ -72,7 +74,9 @@ TAO_GIOP_Message_Generator_Parser_12::write_request_header (
   msg.write_octet_array (reserved, 3);
 
   if (!this->marshall_target_spec (spec, msg))
+  {
     return false;
+  }
 
   // Write the operation name
   msg.write_string (opdetails.opname_len (),
@@ -80,7 +84,9 @@ TAO_GIOP_Message_Generator_Parser_12::write_request_header (
 
   // Write the service context list
   if (!(msg << opdetails.request_service_info ()))
+  {
     return false;
+  }
 
   // We align the pointer only if the operation has arguments.
   if (opdetails.in_argument_flag ()
@@ -100,11 +106,15 @@ TAO_GIOP_Message_Generator_Parser_12::write_locate_request_header (
 {
   // Write the request id
   if (!(msg << request_id))
+  {
     return false;
+  }
 
   // Write the target address
   if (!(this->marshall_target_spec (spec, msg)))
+  {
     return false;
+  }
 
   // I dont think we need to align the pointer to an 8 byte boundary
   // here.
@@ -123,14 +133,20 @@ TAO_GIOP_Message_Generator_Parser_12::write_reply_header (
 {
   // Write the request ID
   if (!(output.write_ulong (reply.request_id_)))
+  {
     return false;
+  }
 
   // Write the reply status
   if (!(output.write_ulong (reply.reply_status ())))
+  {
     return false;
+  }
 
   if (!(output << reply.service_context_notowned ()))
+  {
     return false;
+  }
 
   if (reply.argument_flag_)
     {
@@ -151,11 +167,15 @@ TAO_GIOP_Message_Generator_Parser_12::write_locate_reply_mesg (
     TAO_GIOP_Locate_Status_Msg &status_info)
 {
   if (!(output.write_ulong (request_id)))
+  {
     return false;
+  }
 
   // Make the header for the locate request
   if (!(output.write_ulong (status_info.status)))
+  {
     return false;
+  }
 
   // Note: We dont align the pointer to an 8 byte boundary for a
   // locate reply body. This is due to an urgent issue raised by Michi
@@ -335,7 +355,9 @@ TAO_GIOP_Message_Generator_Parser_12::parse_reply (
     TAO_Pluggable_Reply_Params &params)
 {
   if (TAO_GIOP_Message_Generator_Parser::parse_reply (cdr, params) == -1)
+  {
     return -1;
+  }
 
   if (!(cdr >> params.svc_ctx_))
     {
@@ -364,7 +386,9 @@ TAO_GIOP_Message_Generator_Parser_12::parse_locate_reply (
     TAO_Pluggable_Reply_Params &params)
 {
   if (TAO_GIOP_Message_Generator_Parser::parse_locate_reply (cdr, params) == -1)
+  {
     return -1;
+  }
 
   // Note: We dont align the pointer to an 8 byte boundary for a
   // locate reply body. This is due to an urgent issue raised by Michi
@@ -409,7 +433,9 @@ TAO_GIOP_Message_Generator_Parser_12::marshall_target_spec (
       {
         // As this is a union send in the discriminant first
         if (!(msg << GIOP::KeyAddr))
+        {
           return false;
+        }
 
         // Get the object key
         TAO::ObjectKey const *key = spec.object_key ();
@@ -418,7 +444,9 @@ TAO_GIOP_Message_Generator_Parser_12::marshall_target_spec (
           {
             // Marshall in the object key
             if (!(msg << *key))
+            {
               return false;
+            }
           }
         else
           {
@@ -435,7 +463,9 @@ TAO_GIOP_Message_Generator_Parser_12::marshall_target_spec (
       {
         // As this is a union send in the discriminant first
         if (!(msg << GIOP::ProfileAddr))
+        {
           return false;
+        }
 
         // Get the profile
         IOP::TaggedProfile const *pfile = spec.profile ();
@@ -444,7 +474,9 @@ TAO_GIOP_Message_Generator_Parser_12::marshall_target_spec (
           {
             // Marshall in the object key
             if (!(msg << *pfile))
+            {
               return false;
+            }
           }
         else
           {
@@ -461,7 +493,9 @@ TAO_GIOP_Message_Generator_Parser_12::marshall_target_spec (
       {
         // As this is a union send in the discriminant first
         if (!(msg << GIOP::ReferenceAddr))
+        {
           return false;
+        }
 
         // Get the IOR
         IOP::IOR *ior {};
@@ -473,9 +507,13 @@ TAO_GIOP_Message_Generator_Parser_12::marshall_target_spec (
             // member of the struct one after another in the order
             // defined.
             if (!(msg << index))
+            {
               return false;
+            }
             if (!(msg << *ior))
+            {
               return false;
+            }
           }
         else
           {

@@ -71,7 +71,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Test_Options options;
       if (parse_args (argc, argv, options) == -1)
+      {
         return -1;
+      }
 
       ACE_Manual_Event wait_for_event;
 

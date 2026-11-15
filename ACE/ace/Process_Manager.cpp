@@ -177,7 +177,9 @@ ACE_Process_Manager::resize (size_t size)
   ACE_TRACE ("ACE_Process_Manager::resize");
 
   if (size <= this->max_process_table_size_)
+  {
     return 0;
+  }
 
   Process_Descriptor *temp {};
 
@@ -210,14 +212,18 @@ ACE_Process_Manager::open (size_t size, ACE_Reactor *r)
 #if !defined (ACE_WIN32) && !defined (ACE_LACKS_UNIX_SIGNALS)
       // Register signal handler object.
       if (r->register_handler (SIGCHLD, this) == -1)
+      {
         return -1;
+      }
 #endif /* !defined(ACE_WIN32) */
     }
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
 
   if (this->max_process_table_size_ < size)
+  {
     this->resize (size);
+  }
   return 0;
 }
 
@@ -266,7 +272,9 @@ ACE_Process_Manager::close ()
     }
 
   if (this->default_exit_handler_ != nullptr)
-      this->default_exit_handler_->handle_close (ACE_INVALID_HANDLE,0);
+  {
+    this->default_exit_handler_->handle_close (ACE_INVALID_HANDLE,0);
+  }
   this->default_exit_handler_ = nullptr;
 
   return 0;
@@ -376,7 +384,9 @@ ACE_Process_Manager::register_handler (ACE_Event_Handler *eh,
   if (pid == ACE_INVALID_PID)
     {
       if (this->default_exit_handler_ != nullptr)
+      {
         this->default_exit_handler_->handle_close (ACE_INVALID_HANDLE, 0);
+      }
       this->default_exit_handler_ = eh;
       return 0;
     }
@@ -392,7 +402,9 @@ ACE_Process_Manager::register_handler (ACE_Event_Handler *eh,
   Process_Descriptor &proc_desc = this->process_table_[i];
 
   if (proc_desc.exit_notify_ != nullptr)
+  {
     proc_desc.exit_notify_->handle_close (ACE_INVALID_HANDLE, 0);
+  }
   proc_desc.exit_notify_ = eh;
   return 0;
 }
@@ -409,7 +421,9 @@ ACE_Process_Manager::spawn (ACE_Process_Options &options,
 
   pid_t const pid = this->spawn (process, options, event_handler);
   if (pid == ACE_INVALID_PID || pid == 0)
+  {
     delete process;
+  }
 
   return pid;
 }
@@ -426,7 +440,9 @@ ACE_Process_Manager::spawn (ACE_Process *process,
 
   // Only include the pid in the parent's table.
   if (pid == ACE_INVALID_PID || pid == 0)
+  {
     return pid;
+  }
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex,
                             ace_mon, this->lock_, -1));
@@ -482,9 +498,13 @@ ACE_Process_Manager::append_proc (ACE_Process *proc,
     {
       size_t new_size = this->max_process_table_size_ * 2;
       if (new_size == 0)
+      {
         new_size = ACE_Process_Manager::DEFAULT_SIZE;
+      }
       if (this->resize (new_size) == -1)
+      {
         return -1;
+      }
     }
 
   Process_Descriptor &proc_desc =
@@ -517,7 +537,9 @@ ACE_Process_Manager::insert_proc (ACE_Process *proc,
   // Check for duplicates and bail out if they're already
   // registered...
   if (this->find_proc (proc->getpid ()) != -1)
+  {
     return -1;
+  }
 
   return this->append_proc (proc, event_handler);
 }
@@ -533,7 +555,9 @@ ACE_Process_Manager::remove (pid_t pid)
   ssize_t const i = this->find_proc (pid);
 
   if (i != -1)
+  {
     return this->remove_proc (i);
+  }
 
   // set "process not found" error
   return -1;
@@ -646,7 +670,9 @@ ACE_Process_Manager::set_scheduler_all (const ACE_Sched_Params & params)
     {
       pid_t const pid = this->process_table_[i].process_->getpid ();
       if (ACE_OS::sched_params (params, pid) != 0)
+      {
         return -1;
+      }
     }
   return 0;
 }
@@ -700,7 +726,9 @@ ACE_Process_Manager::wait (const ACE_Time_Value &timeout)
   ACE_Time_Value remaining = timeout;
 
   if (until < ACE_Time_Value::max_time)
+  {
     until += ACE_OS::gettimeofday ();
+  }
 
   while (this->current_count_ > 0)
     {
@@ -716,7 +744,9 @@ ACE_Process_Manager::wait (const ACE_Time_Value &timeout)
         : ACE_Time_Value::max_time;
 
       if (remaining <= ACE_Time_Value::zero)
+      {
         break;
+      }
 
       // else Process terminated...wait for more...
     }
@@ -752,7 +782,9 @@ ACE_Process_Manager::wait (pid_t pid,
 
   ACE_exitcode local_stat = 0;
   if (status == nullptr)
+  {
     status = &local_stat;
+  }
 
   *status = 0;
 
@@ -769,7 +801,9 @@ ACE_Process_Manager::wait (pid_t pid,
         if (idx == -1)
           return ACE_INVALID_PID;
         else
+        {
           proc = process_table_[idx].process_;
+        }
       }
     // release the lock.
   }
@@ -897,7 +931,9 @@ ACE_Process_Manager::wait (pid_t pid,
               // If SIGCHLD isn't delivered, we'll need to do something
               // with sigaction to force it.
               if (-1 == ACE_OS::sleep (tmo) && errno == EINTR)
+              {
                 continue;
+              }
               // Timed out
               pid = 0;
               break;
@@ -905,7 +941,9 @@ ACE_Process_Manager::wait (pid_t pid,
 
           // Restore the previous SIGCHLD action if it was changed.
           if (this->reactor () == nullptr)
+          {
             old_action.register_action (SIGCHLD);
+          }
 # endif /* !ACE_LACKS_UNIX_SIGNALS */
         }
 #endif /* !defined (ACE_WIN32) */
@@ -925,9 +963,13 @@ ACE_Process_Manager::wait (pid_t pid,
           return pid;
         }
       else
+      {
         proc = process_table_[idx].process_;
+      }
       if (proc != nullptr)
+      {
         ACE_ASSERT (pid == proc->getpid ());
+      }
 
       this->notify_proc_handler (idx,
                                  *status);

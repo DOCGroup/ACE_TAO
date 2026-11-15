@@ -42,7 +42,9 @@ producer (void *arg)
                         "(%t) %p\n",
                         "put_next"));
           else
+          {
             message.release ();
+          }
           break;
         }
       // Send the message to the other thread.
@@ -55,7 +57,9 @@ producer (void *arg)
                         "(%t) %p\n",
                         "put_next"));
           else
+          {
             message.release ();
+          }
         }
     }
 
@@ -86,16 +90,22 @@ consumer (void *arg)
       result = msg_queue->dequeue_head (mb, &timeout);
 
       if (result == -1)
+      {
         break;
+      }
 
       ACE_Message_Block_Unique_Ptr message {mb};
       int const length = ACE_Utils::truncate_cast<int> (mb->length ());
 
       if (length > 0)
+      {
         ACE_OS::write (ACE_STDOUT, mb->rd_ptr (), length);
+      }
 
       if (length == 0)
+      {
         break;
+      }
     }
 
   if (result == -1 && errno == EWOULDBLOCK)

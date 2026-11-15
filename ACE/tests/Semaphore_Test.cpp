@@ -165,7 +165,9 @@ worker (void *)
                           ACE_TEXT ("Worker should be ETIME but is")));
             }
           else
+          {
             ++timeouts;
+          }
           ACE_Time_Value diff = ACE_OS::gettimeofday ();
           diff = diff - tv;       // tv should have been reset to time acquired
           long diff_msec = diff.msec ();
@@ -207,7 +209,9 @@ int run_main (int argc, ACE_TCHAR *argv[])
   //Test timed waits.
   for (size_t i = 0; i < test_timeout_count; i++)
     if (test_timeout () != 0)
+    {
       test_result = 1;
+    }
 
   // Release the semaphore a certain number of times.
   s.release (n_release_count);
@@ -231,7 +235,9 @@ int run_main (int argc, ACE_TCHAR *argv[])
               (int)percent));
 
   if (test_result == 0)
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Semaphore Test successful\n")));
+  }
 #else
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);

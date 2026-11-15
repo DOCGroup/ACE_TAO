@@ -143,7 +143,9 @@ TAO::Storable_FlatFileStream::Storable_FlatFileStream (std::string const &file,
 TAO::Storable_FlatFileStream::~Storable_FlatFileStream ()
 {
   if ( fl_ != nullptr )
+  {
     this->close();
+  }
 }
 
 void
@@ -183,11 +185,17 @@ TAO::Storable_FlatFileStream::open()
     if( std::strchr(mode_.c_str(), 'w') )
       flags = O_RDWR, fdmode = "w+";
     else
+    {
       flags = O_RDONLY, fdmode = "r";
+    }
   else
+  {
     flags = O_WRONLY, fdmode = "w";
+  }
   if( std::strchr(mode_.c_str(), 'c') )
+  {
     flags |= O_CREAT;
+  }
 
 #ifndef ACE_WIN32
   if( ACE_OS::flock_init (std::addressof (filelock_), flags,
@@ -262,7 +270,9 @@ TAO::Storable_FlatFileStream::flock (int whence, int start, int len)
        --attempts)
     {
       if (retry)
+      {
         this->reopen();
+      }
       retry = true;
       result = shared ?
         ACE_OS::flock_rdlock(std::addressof (filelock_), whence, start, len) :
@@ -305,7 +315,9 @@ TAO::Storable_FlatFileStream::funlock (int whence, int start, int len)
        --attempts)
     {
       if (retry)
+      {
         this->reopen();
+      }
       retry = true;
       result = ACE_OS::flock_unlock(std::addressof (filelock_), whence, start, len);
       if (result != 0)
@@ -344,7 +356,9 @@ TAO::Storable_FlatFileStream::last_changed ()
            --attempts)
         {
           if (retry)
+          {
             this->reopen ();
+          }
           retry = true;
 
           ACE_stat st;
@@ -362,7 +376,9 @@ TAO::Storable_FlatFileStream::last_changed ()
                                  file_.c_str (), filelock_.handle_,  ACE_TEXT ("fstat")));
                 }
               if (errno != EBADF)
+              {
                 break;
+              }
             }
         }
     }
@@ -371,7 +387,9 @@ TAO::Storable_FlatFileStream::last_changed ()
       ACE_stat st;
       result = ACE_OS::stat (file_.c_str (), std::addressof (st));
       if (result == 0)
+      {
         mtime = st.st_mtime;
+      }
     }
   if (result != 0)
     {
@@ -411,7 +429,9 @@ TAO::Storable_FlatFileStream::operator << (std::string const &str)
     std::fprintf (this->fl_, ACE_SSIZE_T_FORMAT_SPECIFIER_ASCII "\n%s\n",
                   str.length (), str.c_str ());
   if (n < 0)
+  {
     this->throw_on_write_error (badbit);
+  }
 
   return *this;
 }
@@ -461,7 +481,9 @@ TAO::Storable_FlatFileStream::operator << (ACE_UINT32 i)
   int const n =
     std::fprintf (this->fl_, ACE_UINT32_FORMAT_SPECIFIER_ASCII "\n", i);
   if (n < 0)
+  {
     this->throw_on_write_error (badbit);
+  }
   return *this;
 }
 
@@ -481,7 +503,9 @@ TAO::Storable_FlatFileStream::operator << (ACE_UINT64 i)
   int const n =
     std::fprintf (this->fl_, ACE_UINT64_FORMAT_SPECIFIER_ASCII "\n", i);
   if (n < 0)
+  {
     this->throw_on_write_error (badbit);
+  }
   return *this;
 }
 
@@ -501,7 +525,9 @@ TAO::Storable_FlatFileStream::operator << (ACE_INT32 i)
   int const n =
     std::fprintf (this->fl_, ACE_INT32_FORMAT_SPECIFIER_ASCII "\n", i);
   if (n < 0)
+  {
     this->throw_on_write_error (badbit);
+  }
   return *this;
 }
 
@@ -521,7 +547,9 @@ TAO::Storable_FlatFileStream::operator << (ACE_INT64 i)
   int const n =
     std::fprintf (this->fl_, ACE_INT64_FORMAT_SPECIFIER_ASCII "\n", i);
   if (n < 0)
+  {
     this->throw_on_write_error (badbit);
+  }
   return *this;
 }
 
@@ -583,7 +611,9 @@ TAO::Storable_FlatFileStream::create_backup ()
        --attempts)
     {
       if (retry)
+      {
         this->reopen();
+      }
       retry = true;
       errno = 0;
       this->rewind();
@@ -634,7 +664,9 @@ TAO::Storable_FlatFileStream::restore_backup ()
   std::string backup_name = this->backup_file_name ();
 
   if (ACE_OS::access (backup_name.c_str (), F_OK))
+  {
     return -1;
+  }
 
   if (std::strchr (this->mode_.c_str(),'w') == nullptr)
     {

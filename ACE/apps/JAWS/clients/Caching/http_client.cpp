@@ -51,7 +51,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
           // Shell command.
           if (ACE_OS::system (ACE_TEXT_CHAR_TO_TCHAR (s)) == -1)
+          {
             ACE_ERROR ((LM_ERROR, ACE_TEXT (" ! Error executing: %C\n"), s));
+          }
         }
       else if (std::strncmp (s, "http://", 7) == 0)
         {
@@ -60,7 +62,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
           connector.connect (s);
         }
       else
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT (" ? I don't understand: %C\n"), s));
+      }
 
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("* ")));
     }

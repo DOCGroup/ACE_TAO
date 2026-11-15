@@ -37,7 +37,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 
       if (parse_args (argc, argv, ior) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var const tmp = orb->string_to_object (ior);
 

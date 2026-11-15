@@ -47,7 +47,9 @@ been_signalled (const ACE_thread_t t_id,
           unused_slot == n_threads  &&
           ACE_OS::thr_equal (signalled[i],
                              ACE_OS::NULL_thread))
+      {
         unused_slot = i;
+      }
     }
 
   if (update  &&  unused_slot < n_threads)
@@ -200,10 +202,14 @@ test_task_record_keeping (ACE_Thread_Manager *mgr)
   // task_all_list() works.
   if (-1 == t1.activate (THR_JOINABLE, 2, 0,
                          ACE_DEFAULT_THREAD_PRIORITY, t1_grp))
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("activate")), 1);
+  }
   if (-1 == t2.activate (THR_JOINABLE, 3, 0,
                          ACE_DEFAULT_THREAD_PRIORITY, t2_grp))
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("activate")), 1);
+  }
 
   ACE_Task_Base *task_list[10];
   int num_tasks = mgr->task_all_list (task_list, 10);
@@ -221,7 +227,9 @@ test_task_record_keeping (ACE_Thread_Manager *mgr)
           && task_list[0] != task_list[1])
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("The Task IDs are correct\n")));
       else
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("But Task ID values are wrong!\n")));
+      }
     }
   ACE_DEBUG ((LM_DEBUG, "Canceling grp %d\n", t1_grp));
   if (-1 == mgr->cancel_grp (t1_grp))
@@ -234,7 +242,9 @@ test_task_record_keeping (ACE_Thread_Manager *mgr)
 
   mgr->wait ();
   if (ThrMgr_Task::errors > 0 && status == 0)
+  {
     status = 1;
+  }
 
   return status;
 }
@@ -441,7 +451,9 @@ run_main (int, ACE_TCHAR *[])
 
   // Now test task record keeping
   if (test_task_record_keeping (thr_mgr) != 0)
+  {
     status = -1;
+  }
 
 #else
   ACE_ERROR ((LM_INFO,

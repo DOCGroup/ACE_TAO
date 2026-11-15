@@ -81,7 +81,9 @@ TAO_UIPMC_Protocol_Factory::init (int argc,
               // Add a special token (see TAO_UIPMC_Acceptor) which will be
               // subsituted (when we have access to the orb->params).
               if (this->listener_interfaces_.length ())
+              {
                 this->listener_interfaces_+= ',';
+              }
               this->listener_interfaces_+= CopyPreferredInterfaceToken;
             }
           else
@@ -93,7 +95,9 @@ TAO_UIPMC_Protocol_Factory::init (int argc,
                   // (by other -ORBListenerInterfaces options that have been
                   // seen previously)
                   if (this->listener_interfaces_.length ())
+                  {
                     this->listener_interfaces_+= ',';
+                  }
                   this->listener_interfaces_+= always_char;
                 }
               else

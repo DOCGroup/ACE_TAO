@@ -826,7 +826,9 @@ TAO_FT_Naming_Manager::next_member (PortableGroup::ObjectGroup_ptr object_group)
   if (result == true)
     return this->get_member_ref (object_group, next_location);
   else
+  {
     return CORBA::Object::_nil();
+  }
 }
 
 void

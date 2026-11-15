@@ -605,7 +605,9 @@ Routing_Slip_Persistence_Manager::build_chain(
       result &= this->allocator_->write(prevblk);
 
       if (prevhdr != &first_header)
+      {
         delete prevhdr;
+      }
     }
     prevblk = curblk;
     prevhdr = hdr;
@@ -616,7 +618,9 @@ Routing_Slip_Persistence_Manager::build_chain(
     result &= this->allocator_->write(prevblk);
 
     if (prevhdr != &first_header)
+    {
       delete prevhdr;
+    }
   }
   pos = first_header.put_header(
     *first_block);

@@ -51,7 +51,9 @@ FTP_Server_Callback::receive_frame (ACE_Message_Block *frame,
                      1,
                      FTP_SERVER::instance ()->file ());
       if (items_written != 1)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "FTP_Server_Flow_Handler::fwrite failed\n"), -1);
+      }
       frame = frame->cont ();
     }
   return 0;
@@ -95,7 +97,9 @@ Server::init (int argc,
 
       int const result = this->parse_args (argc, argv);
       if (result == -1)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "parse args failed\n"), -1);
+      }
 
       // Initialize the naming services
       if (my_naming_client_.init (this->orb_.in ()) != 0)
@@ -165,7 +169,9 @@ Server::parse_args (int argc, ACE_TCHAR *argv[])
         case 'f':
           this->file_.reset (ACE_OS::fopen (opts.opt_arg (), ACE_TEXT("w")));
           if (!this->file_)
+          {
             ACE_ERROR_RETURN ((LM_ERROR, "Cannot open output file\n"), -1);
+          }
           ACE_DEBUG ((LM_DEBUG, "file opened successfully\n"));
           break;
         default:
@@ -174,7 +180,9 @@ Server::parse_args (int argc, ACE_TCHAR *argv[])
     }
 
   if (!this->file_)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Invalid file!\nUsage: server -f filename\n"), -1);
+  }
 
   return 0;
 }
@@ -215,12 +223,16 @@ ACE_TMAIN (int argc,
   int result = FTP_SERVER::instance ()->init (argc, argv);
 
   if (result < 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "SERVER::init failed\n"), 1);
+  }
 
   result = FTP_SERVER::instance ()->run ();
 
   if (result < 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "SERVER::run failed\n"), 1);
+  }
 
   FTP_SERVER::close ();  // Explicitly finalize the Unmanaged_Singleton.
 

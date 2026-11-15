@@ -22,7 +22,9 @@ namespace XML
   {
     XStr path (path_);
     if (!path.append (systemId))
+    {
       return nullptr;
+    }
 
     return path.release ();
   }
@@ -40,7 +42,9 @@ namespace XML
     XStr const xrelpath (relpath);
 
     if (!xpath.append (xrelpath))
+    {
       throw std::bad_alloc ();
+    }
 
     paths_.push_back (std::move (xpath));
   }
@@ -51,7 +55,9 @@ namespace XML
     {
       XStr path (path_prefix);
       if (!path.append (systemId))
+      {
         continue;
+      }
 
       xercesc::FileHandle const file (xercesc::XMLPlatformUtils::openFile (path));
 

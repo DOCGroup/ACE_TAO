@@ -37,10 +37,14 @@ ACE_TMAIN (int, ACE_TCHAR * [])
   status = ACE_Thread::spawn (main_orb, &result, THR_NEW_LWP | THR_JOINABLE, nullptr, &thread1);
 #endif
   if (status != 0)
+  {
     return 1;
+  }
 
   if (ACE_Thread::join (thread1) != 0)
+  {
     return 1;
+  }
 
   return result;
 }

@@ -89,7 +89,9 @@ Nestea_Server_i::init (int argc, ACE_TCHAR **argv)
       int const retval = this->parse_args ();
 
       if (retval != 0)
+      {
         return retval;
+      }
 
       // Get the POA from the ORB.
       CORBA::Object_var obj =
@@ -136,7 +138,9 @@ Nestea_Server_i::init (int argc, ACE_TCHAR **argv)
       CORBA::String_var const ior =
         this->orb_->object_to_string (obj.in ());
       if (TAO_debug_level > 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "The IOR is: <%s>\n", ior.in ()));
+      }
 
       TAO_Root_POA * const tmp_poa = dynamic_cast<TAO_Root_POA *> (nestea_poa_.in ());
       obj = tmp_poa->id_to_reference_i (server_id.in (), false);

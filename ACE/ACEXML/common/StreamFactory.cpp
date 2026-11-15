@@ -14,7 +14,9 @@ ACEXML_CharStream*
 ACEXML_StreamFactory::create_stream (ACEXML_Char const *uri)
 {
   if (uri == nullptr)
+  {
     return nullptr;
+  }
   if (ACE_OS::strstr (uri, ACE_TEXT("ftp://")) != nullptr)
     {
       return nullptr;
@@ -29,12 +31,16 @@ ACEXML_StreamFactory::create_stream (ACEXML_Char const *uri)
           return nullptr;
         }
       if (hstream->open (uri) != -1)
+      {
         return hstream.release ();
+      }
     }
   else
     {
       if (ACE_OS::strstr (uri, ACE_TEXT ("file://")) != nullptr)
+      {
         uri += 7; // Skip over file://
+      }
       std::unique_ptr<ACEXML_FileCharStream> fstream {
         new (std::nothrow) ACEXML_FileCharStream};
       if (!fstream)
@@ -43,7 +49,9 @@ ACEXML_StreamFactory::create_stream (ACEXML_Char const *uri)
           return nullptr;
         }
       if (fstream->open (uri) != -1)
+      {
         return fstream.release ();
+      }
 #ifdef USE_ZZIP
       else
         {

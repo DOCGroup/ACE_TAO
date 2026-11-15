@@ -139,7 +139,9 @@ Concurrency_Service::init (int argc,
     }
 
   if (this->options_.use_naming_service)
+  {
     return this->init_naming_service ();
+  }
 
   return 0;
 }
@@ -154,7 +156,9 @@ Concurrency_Service::init_naming_service ()
   int const result = this->naming_client_.init (orb.in ());
 
   if (result == -1)
+  {
     return result;
+  }
   lockset_factory_ =
     this->my_concurrency_server_.GetLockSetFactory ()->_this ();
 
@@ -208,7 +212,9 @@ ACE_TMAIN (int argc, ACE_TCHAR ** argv)
       int const r = concurrency_service.init (argc, argv);
 
       if (r == -1)
+      {
         return 1;
+      }
 
       concurrency_service.run ();
     }

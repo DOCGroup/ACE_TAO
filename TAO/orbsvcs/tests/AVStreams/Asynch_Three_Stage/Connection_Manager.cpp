@@ -25,7 +25,9 @@ Connection_Manager::load_ep_addr (char const *file_name)
         {
           // At end of file break the loop and end the sender.
           if (TAO_debug_level > 0)
+          {
             ACE_DEBUG ((LM_DEBUG, "End of Addr file\n"));
+          }
           break;
         }
 
@@ -47,7 +49,9 @@ Connection_Manager::load_ep_addr (char const *file_name)
           return;
         }
       else
+      {
         flowname += addr_tokenizer [0];
+      }
 
       if (addr_tokenizer [1] != nullptr)
         {
@@ -59,7 +63,9 @@ Connection_Manager::load_ep_addr (char const *file_name)
               addr.sender_addr = CORBA::string_dup ((token.substr (0, pos)).c_str ());
             }
           else
+          {
             addr.sender_addr = CORBA::string_dup (token.c_str());
+          }
 
           pos = addr.sender_addr.find ('\n');
           if (pos != ACE_CString::npos)
@@ -78,7 +84,9 @@ Connection_Manager::load_ep_addr (char const *file_name)
               addr.receiver_addr = CORBA::string_dup ((token.substr (0,pos)).c_str ());
             }
           else
+          {
             addr.receiver_addr = CORBA::string_dup (token.c_str());
+          }
 
           pos = addr.receiver_addr.find ('\n');
           if (pos != ACE_CString::npos)
@@ -446,7 +454,9 @@ void
 Connection_Manager::connect_to_sender ()
 {
   if (CORBA::is_nil (this->sender_.in ()))
+  {
     return;
+  }
 
   ACE_CString flowname =
     this->sender_name_ +

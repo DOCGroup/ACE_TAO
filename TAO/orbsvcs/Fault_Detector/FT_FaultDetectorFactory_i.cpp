@@ -84,7 +84,9 @@ void TAO::FT_FaultDetectorFactory_i::shutdown_i ()
   for (size_t nDetector = 0; nDetector < this->detectors_.size(); ++nDetector)
   {
     if (this->detectors_[nDetector])
+    {
       this->detectors_[nDetector]->request_quit ();
+    }
   }
 }
 
@@ -358,7 +360,9 @@ CORBA::ULong TAO::FT_FaultDetectorFactory_i::allocate_id ()
     for (CORBA::ULong pos {}; pos < id; ++pos)
     {
       if (!this->detectors_[pos])
+      {
         return pos;
+      }
     }
   }
   else

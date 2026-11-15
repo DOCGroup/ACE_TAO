@@ -76,9 +76,13 @@ run_main (int argc, ACE_TCHAR *argv[])
     size_t iterations = 10;
 
     if (argc > 1)
+    {
       max_buffer_size = ACE_OS::atoi (argv[1]);
+    }
     if (argc > 2)
+    {
       iterations = ACE_OS::atoi (argv[2]);
+    }
 
     ACE_FILE_Connector connector;
     ACE_FILE_IO file_io;

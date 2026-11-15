@@ -110,7 +110,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_TCHAR const *target_host = ACE_TEXT ("localhost");
 
       if (parse_args (argc, argv, port, target_host) != 0)
+      {
         return 1;
+      }
 
       std::string ior ("corbaloc::");
       ior += ACE_TEXT_ALWAYS_CHAR (target_host);

@@ -69,7 +69,9 @@ TAO_UTF8_Latin1_Translator::read_string (ACE_InputCDR &cdr,
 {
   ACE_CDR::ULong len;
   if (!cdr.read_ulong (len))
+  {
     return false;
+  }
 
   // A check for the length being too great is done later in the
   // call to read_char_array but we want to have it done before
@@ -120,7 +122,9 @@ TAO_UTF8_Latin1_Translator::read_string (ACE_InputCDR &cdr,
 {
   ACE_CDR::ULong len;
   if (!cdr.read_ulong (len))
+  {
     return false;
+  }
 
   // A check for the length being too great is done later in the
   // call to read_char_array but we want to have it done before
@@ -165,11 +169,15 @@ TAO_UTF8_Latin1_Translator::read_char_array (ACE_InputCDR & cdr,
                                         ACE_CDR::ULong length)
 {
   if (length == 0)
+  {
     return true;
+  }
 
   for (size_t i {}; i < length; ++i)
     if (!this->read_char(cdr,x[i]))
+    {
       return false;
+    }
 
   return true;
 }
@@ -206,7 +214,9 @@ TAO_UTF8_Latin1_Translator::write_char_i (ACE_OutputCDR &cdr,
       ACE_CDR::Octet upper = 0xC0 + (ox >> 6);
       ACE_CDR::Octet lower = 0x80 + (ox & 0x3F);
       if (this->write_1(cdr, &upper))
+      {
         return this->write_1(cdr, &lower);
+      }
     }
   return false;
 }
@@ -218,12 +228,17 @@ TAO_UTF8_Latin1_Translator::write_string (ACE_OutputCDR & cdr,
 {
   // we'll accept a null pointer but only for an empty string
   if (x == nullptr && len != 0)
+  {
     return false;
+  }
 
   ACE_CDR::ULong l = len;
   // Compute the real buffer size by adding in multi-byte codepoints.
   for (ACE_CDR::ULong i {}; i < len; ++i)
-    if (static_cast<ACE_CDR::Octet>(x[i]) > 0xbf) ++l;
+    if (static_cast<ACE_CDR::Octet>(x[i]) > 0xbf)
+    {
+      ++l;
+    }
 
   // Always add one for the nul
   ++l;
@@ -232,7 +247,9 @@ TAO_UTF8_Latin1_Translator::write_string (ACE_OutputCDR & cdr,
       for (ACE_CDR::ULong i {}; i < len; ++i)
         {
           if (!this->write_char_i (cdr, x[i]))
+          {
             return false;
+          }
         }
       ACE_CDR::Octet s {};
       return this->write_1 (cdr, &s);
@@ -246,13 +263,17 @@ TAO_UTF8_Latin1_Translator::write_char_array (ACE_OutputCDR & cdr,
                                          ACE_CDR::ULong length)
 {
   if (length == 0)
+  {
     return true;
+  }
 
   for (size_t i {}; i < length; ++i)
     // We still have to write each char individually, as any translated
     // value may fail to fit in a single octet.
     if (!this->write_char (cdr, x[i]))
+    {
       return false;
+    }
 
   return true;
 }

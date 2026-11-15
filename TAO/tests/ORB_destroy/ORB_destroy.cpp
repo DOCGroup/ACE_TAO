@@ -44,10 +44,14 @@ run_destroy_case (int argc,
         }
 
       if (options.destroy_poa)
+      {
         root_poa->destroy (true, true);
+      }
 
       if (options.destroy_orb)
+      {
         orb->destroy ();
+      }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -74,7 +78,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   for (Destroy_Options const &options : test_cases)
     if (run_destroy_case (argc, argv, options) != 0)
+    {
       return 1;
+    }
 
   TAO_ORB_Manager orb_manager;
   // Check that Server_Main can be constructed with a null name.
@@ -90,7 +96,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                "ORB_Manager_fini") != 0
           || orb_manager.fini () != 0
           || orb_manager.fini () != 0)
+      {
         return 1;
+      }
     }
   catch (CORBA::Exception const &ex)
     {

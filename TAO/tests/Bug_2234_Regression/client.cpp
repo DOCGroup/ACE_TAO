@@ -47,7 +47,9 @@ ACE_TMAIN (
        orb = CORBA::ORB_init (argc, argv);
 
     if (parse_args (argc, argv, ior) != 0)
+    {
       return 1;
+    }
 
     CORBA::Object_var
        object= orb->string_to_object(ior);
@@ -72,7 +74,9 @@ ACE_TMAIN (
     else if (static_cast<CORBA::Long>(7) != rL) {
        ACE_DEBUG( (LM_ERROR, "r is wrong\n")); testFailed= 1;}
     else
-       ACE_DEBUG( (LM_INFO, "OK\n"));
+    {
+      ACE_DEBUG( (LM_INFO, "OK\n"));
+    }
 
     //-----------------------------------------------------------------------
     CORBA::String_var
@@ -92,7 +96,9 @@ ACE_TMAIN (
     else if ((0 != *aS.in()) && (0 != std::strcmp(rS.in(), "7"))) {
        ACE_DEBUG( (LM_ERROR, "r is wrong\n")); testFailed= 1;}
     else
-       ACE_DEBUG( (LM_INFO, "OK\n"));
+    {
+      ACE_DEBUG( (LM_INFO, "OK\n"));
+    }
 
     //-----------------------------------------------------------------------
     Test::MyNonVarStruct_var
@@ -115,7 +121,9 @@ ACE_TMAIN (
     else if (static_cast<CORBA::Long>(7) != rFS->val) {
        ACE_DEBUG( (LM_ERROR, "r is wrong\n")); testFailed= 1;}
     else
-       ACE_DEBUG( (LM_INFO, "OK\n"));
+    {
+      ACE_DEBUG( (LM_INFO, "OK\n"));
+    }
 
     //-----------------------------------------------------------------------
     Test::MyVarStruct_var
@@ -138,7 +146,9 @@ ACE_TMAIN (
     else if ((0 != *rVS->val) && (0 != std::strcmp(rVS->val, "7"))) {
        ACE_DEBUG( (LM_ERROR, "r is wrong\n")); testFailed= 1;}
     else
-       ACE_DEBUG( (LM_INFO, "OK\n"));
+    {
+      ACE_DEBUG( (LM_INFO, "OK\n"));
+    }
 
     //-----------------------------------------------------------------------
     Test::MyNonVarUnion_var
@@ -154,22 +164,30 @@ ACE_TMAIN (
     if (static_cast<CORBA::Short>(1) != aFU->_d())
        ACE_DEBUG( (LM_INFO, "?"));
     else
-       ACE_DEBUG( (LM_INFO, "%d", aFU->valLong()));
+    {
+      ACE_DEBUG( (LM_INFO, "%d", aFU->valLong()));
+    }
     ACE_DEBUG( (LM_INFO, ", b is "));
     if (static_cast<CORBA::Short>(1) != bFU->_d())
        ACE_DEBUG( (LM_INFO, "?"));
     else
-       ACE_DEBUG( (LM_INFO, "%d", bFU->valLong()));
+    {
+      ACE_DEBUG( (LM_INFO, "%d", bFU->valLong()));
+    }
     ACE_DEBUG( (LM_INFO, ", c is "));
     if (static_cast<CORBA::Short>(1) != cFU->_d())
        ACE_DEBUG( (LM_INFO, "?"));
     else
-       ACE_DEBUG( (LM_INFO, "%d", cFU->valLong()));
+    {
+      ACE_DEBUG( (LM_INFO, "%d", cFU->valLong()));
+    }
     ACE_DEBUG( (LM_INFO, ", r is "));
     if (static_cast<CORBA::Short>(1) != rFU->_d())
        ACE_DEBUG( (LM_INFO, "?"));
     else
-       ACE_DEBUG( (LM_INFO, "%d", rFU->valLong()));
+    {
+      ACE_DEBUG( (LM_INFO, "%d", rFU->valLong()));
+    }
     ACE_DEBUG( (LM_INFO, ":  "));
     if ((static_cast<CORBA::Short>(1) != aFU->_d()) || (static_cast<CORBA::Long>(1) != aFU->valLong())) {
        ACE_DEBUG( (LM_ERROR, "a is wrong\n")); testFailed= 1;}
@@ -180,7 +198,9 @@ ACE_TMAIN (
     else if ((static_cast<CORBA::Short>(1) != rFU->_d()) || (static_cast<CORBA::Long>(7) != rFU->valLong())) {
        ACE_DEBUG( (LM_ERROR, "r is wrong\n")); testFailed= 1;}
     else
-       ACE_DEBUG( (LM_INFO, "OK\n"));
+    {
+      ACE_DEBUG( (LM_INFO, "OK\n"));
+    }
 
     //-----------------------------------------------------------------------
     Test::MyVarUnion_var
@@ -196,22 +216,30 @@ ACE_TMAIN (
     if (static_cast<CORBA::Short>(1) != aVU->_d())
        ACE_DEBUG( (LM_INFO, "?"));
     else
-       ACE_DEBUG( (LM_INFO, "%d", aVU->valLong()));
+    {
+      ACE_DEBUG( (LM_INFO, "%d", aVU->valLong()));
+    }
     ACE_DEBUG( (LM_INFO, ", b is "));
     if (static_cast<CORBA::Short>(1) != bVU->_d())
        ACE_DEBUG( (LM_INFO, "?"));
     else
-       ACE_DEBUG( (LM_INFO, "%d", bVU->valLong()));
+    {
+      ACE_DEBUG( (LM_INFO, "%d", bVU->valLong()));
+    }
     ACE_DEBUG( (LM_INFO, ", c is "));
     if (static_cast<CORBA::Short>(1) != cVU->_d())
        ACE_DEBUG( (LM_INFO, "?"));
     else
-       ACE_DEBUG( (LM_INFO, "%d", cVU->valLong()));
+    {
+      ACE_DEBUG( (LM_INFO, "%d", cVU->valLong()));
+    }
     ACE_DEBUG( (LM_INFO, ", r is "));
     if (static_cast<CORBA::Short>(1) != rVU->_d())
        ACE_DEBUG( (LM_INFO, "?"));
     else
-       ACE_DEBUG( (LM_INFO, "%d", rVU->valLong()));
+    {
+      ACE_DEBUG( (LM_INFO, "%d", rVU->valLong()));
+    }
     ACE_DEBUG( (LM_INFO, ":  "));
     if ((static_cast<CORBA::Short>(1) != aVU->_d()) || (static_cast<CORBA::Long>(1) != aVU->valLong())) {
        ACE_DEBUG( (LM_ERROR, "a is wrong\n")); testFailed= 1;}
@@ -222,7 +250,9 @@ ACE_TMAIN (
     else if ((static_cast<CORBA::Short>(1) != rVU->_d()) || (static_cast<CORBA::Long>(7) != rVU->valLong())) {
        ACE_DEBUG( (LM_ERROR, "r is wrong\n")); testFailed= 1;}
     else
-       ACE_DEBUG( (LM_INFO, "OK\n"));
+    {
+      ACE_DEBUG( (LM_INFO, "OK\n"));
+    }
 
     //-----------------------------------------------------------------------
     Test::MySeqOfLong_var
@@ -240,22 +270,30 @@ ACE_TMAIN (
     if (1u != aSL->length())
        ACE_DEBUG( (LM_INFO, "?"));
     else
-       ACE_DEBUG( (LM_INFO, "%d", aSL[0]));
+    {
+      ACE_DEBUG( (LM_INFO, "%d", aSL[0]));
+    }
     ACE_DEBUG( (LM_INFO, ", b is "));
     if (1u != bSL->length())
        ACE_DEBUG( (LM_INFO, "?"));
     else
-       ACE_DEBUG( (LM_INFO, "%d", bSL[0]));
+    {
+      ACE_DEBUG( (LM_INFO, "%d", bSL[0]));
+    }
     ACE_DEBUG( (LM_INFO, ", c is "));
     if (1u != cSL->length())
        ACE_DEBUG( (LM_INFO, "?"));
     else
-       ACE_DEBUG( (LM_INFO, "%d", cSL[0]));
+    {
+      ACE_DEBUG( (LM_INFO, "%d", cSL[0]));
+    }
     ACE_DEBUG( (LM_INFO, ", r is "));
     if (1u != rSL->length())
        ACE_DEBUG( (LM_INFO, "?"));
     else
-       ACE_DEBUG( (LM_INFO, "%d", rSL[0]));
+    {
+      ACE_DEBUG( (LM_INFO, "%d", rSL[0]));
+    }
     ACE_DEBUG( (LM_INFO, ":  "));
     if ((1u != aSL->length()) || (static_cast<CORBA::Long>(1) != aSL[0])) {
        ACE_DEBUG( (LM_ERROR, "a is wrong\n")); testFailed= 1;}
@@ -266,7 +304,9 @@ ACE_TMAIN (
     else if ((1u != rSL->length()) || (static_cast<CORBA::Long>(7) != rSL[0])) {
        ACE_DEBUG( (LM_ERROR, "r is wrong\n")); testFailed= 1;}
     else
-       ACE_DEBUG( (LM_INFO, "OK\n"));
+    {
+      ACE_DEBUG( (LM_INFO, "OK\n"));
+    }
 
     //-----------------------------------------------------------------------
     CORBA::Any_var
@@ -287,22 +327,30 @@ ACE_TMAIN (
     if (0 != (aB= (aA>>= aL)))
        ACE_DEBUG( (LM_INFO, "%d", aL));
     else
-       ACE_DEBUG( (LM_INFO, "?"));
+    {
+      ACE_DEBUG( (LM_INFO, "?"));
+    }
     ACE_DEBUG( (LM_INFO, ", b is "));
     if (0 != (bB= (bA>>= bL)))
        ACE_DEBUG( (LM_INFO, "%d", bL));
     else
-       ACE_DEBUG( (LM_INFO, "?"));
+    {
+      ACE_DEBUG( (LM_INFO, "?"));
+    }
     ACE_DEBUG( (LM_INFO, ", c is "));
     if (0 != (cB= (cA>>= cL)))
        ACE_DEBUG( (LM_INFO, "%d", cL));
     else
-       ACE_DEBUG( (LM_INFO, "?"));
+    {
+      ACE_DEBUG( (LM_INFO, "?"));
+    }
     ACE_DEBUG( (LM_INFO, ", r is "));
     if (0 != (rB= (rA>>= rL)))
        ACE_DEBUG( (LM_INFO, "%d", rL));
     else
-       ACE_DEBUG( (LM_INFO, "?"));
+    {
+      ACE_DEBUG( (LM_INFO, "?"));
+    }
     ACE_DEBUG( (LM_INFO, ":  "));
     if (!aB || (static_cast<CORBA::Long>(1) != aL)) {
        ACE_DEBUG( (LM_ERROR, "a is wrong\n")); testFailed= 1;}
@@ -313,7 +361,9 @@ ACE_TMAIN (
     else if (!rB || (static_cast<CORBA::Long>(7) != rL)) {
        ACE_DEBUG( (LM_ERROR, "r is wrong\n")); testFailed= 1;}
     else
-       ACE_DEBUG( (LM_INFO, "OK\n"));
+    {
+      ACE_DEBUG( (LM_INFO, "OK\n"));
+    }
 
     //-----------------------------------------------------------------------
     {
@@ -359,7 +409,9 @@ ACE_TMAIN (
           ACE_DEBUG( (LM_ERROR, "arr_ret[1] is wrong\n")); testFailed = 1;
         }
       else
+      {
         ACE_DEBUG( (LM_INFO, "OK\n"));
+      }
     }
 
     //-----------------------------------------------------------------------
@@ -397,7 +449,9 @@ ACE_TMAIN (
   if (testFailed)
     ACE_DEBUG( (LM_ERROR, "Failed\n"));
   else
+  {
     ACE_DEBUG( (LM_INFO, "Passed\n"));
+  }
 
   return testFailed? -1 : 0;
 }

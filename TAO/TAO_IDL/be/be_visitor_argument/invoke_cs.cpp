@@ -253,13 +253,17 @@ int be_visitor_args_invoke_cs::visit_fixed (be_fixed *)
   be_argument * const arg = dynamic_cast<be_argument*> (this->ctx_->node ());
 
   if (arg == nullptr)
+  {
     return -1;
+  }
 
   if ((this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT
        && this->direction () != AST_Argument::dir_OUT)
       || (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT
           && this->direction () != AST_Argument::dir_IN))
+  {
     *os << arg->local_name ();
+  }
 
   return 0;
 }
@@ -530,7 +534,9 @@ int be_visitor_args_invoke_cs::emit_common2 (be_type *node)
           if (node->size_type () == AST_Type::VARIABLE)
             *os << "*" << arg->local_name () << ".ptr ()";
           else
+          {
             *os << arg->local_name ();
+          }
           break;
         }
     }

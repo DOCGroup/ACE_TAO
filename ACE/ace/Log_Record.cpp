@@ -245,7 +245,9 @@ ACE_Log_Record::format_msg (const ACE_TCHAR host_name[],
       if (nullptr == ACE::timestamp (reftime,
                                timestamp,
                                sizeof (timestamp) / sizeof (ACE_TCHAR)))
+      {
         return -1;
+      }
 
       // Historical timestamp in VERBOSE[_LITE] used 3 places for partial sec.
       // 012345678901234567890123456
@@ -279,7 +281,9 @@ ACE_Log_Record::format_msg (const ACE_TCHAR host_name[],
                      ACE_Log_Record::priority_name (ACE_Log_Priority (this->type_)),
                      this->msg_data_);
   else
+  {
     ACE_OS::strcpy (verbose_msg, this->msg_data_);
+  }
   return 0;
 }
 
@@ -287,7 +291,9 @@ inline bool
 log_priority_enabled(ACE_Log_Category_TSS* category, ACE_Log_Priority priority)
 {
   if (category && !category->log_priority_enabled (priority))
+  {
     return false;
+  }
   return ACE_LOG_MSG->log_priority_enabled (priority);
 }
 
@@ -324,14 +330,18 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
               if (fwrite_result != verbose_msg_len)
                 result = -1;
               else
+              {
                 ACE_OS::fflush (fp);
+              }
             }
         }
 
       return result;
     }
   else
+  {
     return 0;
+  }
 }
 
 int
@@ -389,7 +399,9 @@ operator>> (ACE_InputCDR &cdr,
 #endif /* ACE_USES_WCHAR */
     log_msg[buffer_len] = '\0';
     if (-1 == log_record.msg_data (log_msg))
+    {
       return -1;
+    }
   }
   return cdr.good_bit ();
 }

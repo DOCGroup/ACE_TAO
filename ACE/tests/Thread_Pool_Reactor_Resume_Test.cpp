@@ -135,7 +135,9 @@ Request_Handler::open (void *arg)
 
   // Return on error.
   if (result == -1)
+  {
     return -1;
+  }
 
   // Else we have successfully registered with the Reactor.  Give our
   // ownership to the Reactor.
@@ -178,7 +180,9 @@ Request_Handler::handle_input (ACE_HANDLE fd)
                   fd,
                   buffer));
       if (ACE_OS::strcmp (buffer, ACE_TEXT ("shutdown")) == 0)
-          ACE_Reactor::instance()->end_reactor_event_loop ();
+      {
+        ACE_Reactor::instance()->end_reactor_event_loop ();
+      }
 
       this->reactor ()->resume_handler (fd);
       return 0;

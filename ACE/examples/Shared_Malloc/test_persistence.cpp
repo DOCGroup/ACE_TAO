@@ -49,7 +49,9 @@ public:
   void name (char const *name)
   {
     if (this->name_ != nullptr)
+    {
       shmem_allocator->free (this->name_);
+    }
 
     size_t const len = std::strlen (name) + 1;
     this->name_ = static_cast<char *> (shmem_allocator->malloc (len));
@@ -124,7 +126,9 @@ public:
           std::string name;
           std::string id;
           if (!(std::cin >> name >> id))
+          {
             break;
+          }
           result = insert_employee (name,
                                     std::atoi (id.c_str ()));
         }
@@ -134,7 +138,9 @@ public:
         {
           std::string name;
           if (!(std::cin >> name))
+          {
             break;
+          }
           result = find_employee (name);
         }
         break;
@@ -143,7 +149,9 @@ public:
         {
           std::string name;
           if (!(std::cin >> name))
+          {
             break;
+          }
           result = delete_employee (name);
         }
         break;
@@ -161,7 +169,9 @@ public:
     if (result == 0)
       std::cout << "Last operation was successful!!" << std::endl;
     else
+    {
       std::cout << "Last operation failed!! " << std::endl;
+    }
 
     menu ();
 
@@ -314,7 +324,9 @@ void
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   if (argc > 1)
+  {
     backing_store = argv[1];
+  }
 }
 
 int
@@ -337,7 +349,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       ACE_TEXT ("defaulting to current directory\n")));
         }
       else
+      {
         backing_store = temp_dir;
+      }
 
       // Add the filename to the end
       backing_store.append (ACE_TEXT ("ace-malloc-XXXXXX"));

@@ -41,7 +41,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var const orb (CORBA::ORB_init (argc, argv));
       Client_Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var object (orb->resolve_initial_references ("RootPOA"));
       PortableServer::POA_var const root_poa (
@@ -72,7 +74,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       server->callback_object (callback.in ());
       CORBA::Long const result = server->test_method (true);
       if (result != 0)
+      {
         std::cout << "unexpected result = " << result << std::endl;
+      }
 
       orb->run ();
       CORBA::Boolean const etherealize = true;

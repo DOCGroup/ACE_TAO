@@ -12,7 +12,9 @@ TAO_FT_ServerPolicyFactory::create_policy (
     CORBA::Any const &val)
 {
   if (type == FT::HEARTBEAT_ENABLED_POLICY)
+  {
     return TAO_FT_Heart_Beat_Enabled_Policy::create (val);
+  }
 
   throw CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
 }

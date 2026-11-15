@@ -24,7 +24,9 @@ Sender_StreamEndPoint::get_callback (char const *,
 
   TAO_Negotiator * const negotiator = new (std::nothrow) TAO_Negotiator;
   if (negotiator == nullptr)
+  {
     return -1;
+  }
 
   PortableServer::ServantBase_var safe_negotiator = negotiator;
   AVStreams::Negotiator_var negotiator_obj = negotiator->_this ();
@@ -91,7 +93,9 @@ Sender::parse_args (int argc,
     }
 
   if (this->options_.frame_rate <= 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Frame rate must be greater than zero\n"), -1);
+  }
   return 0;
 }
 
@@ -154,12 +158,16 @@ Sender::init (int argc,
               ACE_TCHAR *argv[])
 {
   if (this->parse_args (argc, argv) != 0)
+  {
     return -1;
+  }
 
   if (this->endpoint_strategy_.init (TAO_AV_CORE::instance ()->orb (),
                                      TAO_AV_CORE::instance ()->poa ()) != 0 ||
       this->naming_client_.init (TAO_AV_CORE::instance ()->orb ()) != 0)
+  {
     return -1;
+  }
 
   this->input_file_.reset (ACE_OS::fopen (this->options_.filename.c_str (), "rb"));
   if (!this->input_file_)
@@ -169,17 +177,23 @@ Sender::init (int argc,
                       -1);
 
   if (this->bind_to_receiver () != 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Error binding to the naming service\n"), -1);
+  }
 
   ACE_TCHAR hostname[BUFSIZ] {};
   if (ACE_OS::hostname (hostname, BUFSIZ) != 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Unable to get local hostname\n"), -1);
+  }
 
   ACE_INET_Addr local_address;
   if (this->options_.address.empty ())
     {
       if (local_address.set (5000, hostname, 1, AF_INET) != 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "Unable to set local address\n"), -1);
+      }
     }
   else if (local_address.set (this->options_.address.c_str ()) != 0)
     ACE_ERROR_RETURN ((LM_ERROR, "Invalid local address\n"), -1);
@@ -188,7 +202,9 @@ Sender::init (int argc,
   if (this->options_.peer_address.empty ())
     {
       if (peer_address.set (5050, hostname, 1, AF_INET) != 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "Unable to set peer address\n"), -1);
+      }
     }
   else if (peer_address.set (this->options_.peer_address.c_str ()) != 0)
     ACE_ERROR_RETURN ((LM_ERROR, "Invalid peer address\n"), -1);
@@ -210,13 +226,17 @@ Sender::init (int argc,
   TAO_MMDevice * const sender_mmdevice =
     new (std::nothrow) TAO_MMDevice (&this->endpoint_strategy_);
   if (sender_mmdevice == nullptr)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Unable to allocate sender MMDevice\n"), -1);
+  }
   PortableServer::ServantBase_var safe_mmdevice = sender_mmdevice;
   AVStreams::MMDevice_var mmdevice = sender_mmdevice->_this ();
 
   this->streamctrl_ = new (std::nothrow) TAO_StreamCtrl;
   if (this->streamctrl_ == nullptr)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Unable to allocate stream controller\n"), -1);
+  }
   this->streamctrl_owner_ = this->streamctrl_;
 
   AVStreams::streamQoS qos;
@@ -224,7 +244,9 @@ Sender::init (int argc,
                                      this->receiver_mmdevice_.in (),
                                      qos,
                                      flow_spec))
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "streamctrl::bind_devs failed\n"), -1);
+  }
   return 0;
 }
 
@@ -251,7 +273,9 @@ Sender::pace_data ()
           if (bytes_read == 0)
             {
               if (std::ferror (this->input_file_.get ()))
+              {
                 ACE_ERROR_RETURN ((LM_ERROR, "Sender::pace_data fread failed\n"), -1);
+              }
               break;
             }
           this->mb_.wr_ptr (bytes_read);
@@ -271,7 +295,9 @@ Sender::pace_data ()
           elapsed_timer.start ();
           if (this->protocol_object_ == nullptr ||
               this->protocol_object_->send_frame (&this->mb_) < 0)
+          {
             ACE_ERROR_RETURN ((LM_ERROR, "Sender::pace_data send failed\n"), -1);
+          }
 
           ++this->frame_count_;
           ACE_DEBUG ((LM_DEBUG,
@@ -326,7 +352,9 @@ ACE_TMAIN (int argc,
       Sender * const sender = SENDER::instance ();
       result = sender->init (argc, argv);
       if (result == 0)
+      {
         result = sender->pace_data ();
+      }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -336,7 +364,9 @@ ACE_TMAIN (int argc,
 
   SENDER::close ();
   if (!CORBA::is_nil (orb.in ()))
+  {
     orb->destroy ();
+  }
   return result;
 }
 

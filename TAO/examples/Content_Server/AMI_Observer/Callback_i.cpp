@@ -32,7 +32,9 @@ Callback_i::Callback_i (std::atomic<int>& request_count)
                   this->file_.get_path_name ()));
     }
   else
+  {
     ++this->request_count_;
+  }
 }
 
 Callback_i::~Callback_i ()

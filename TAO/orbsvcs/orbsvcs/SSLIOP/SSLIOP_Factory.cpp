@@ -287,10 +287,14 @@ TAO::SSLIOP::Protocol_Factory::parse_x509_file (char *arg, char *&path)
   path = CORBA::string_dup (ACE_OS::strtok_r (nullptr, "", &lst));
 
   if (ACE_OS::strcasecmp (type_name, "ASN1") == 0)
-      return SSL_FILETYPE_ASN1;
+  {
+    return SSL_FILETYPE_ASN1;
+  }
 
   if (ACE_OS::strcasecmp (type_name, "PEM") == 0)
-      return SSL_FILETYPE_PEM;
+  {
+    return SSL_FILETYPE_PEM;
+  }
 
   return -1;
 }
@@ -449,7 +453,9 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
                                    argv[curarg]),
                                   -1);
               else
+              {
                 this->timeout_.set (timeout);
+              }
             }
         }
 
@@ -590,7 +596,9 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
     }
 
     if (errors > 0)
+    {
       return -1;
+    }
   }
 
   // Load any trusted certificates explicitely rather than relying on
@@ -782,10 +790,14 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
     }
 
   if (this->register_orb_initializer () != 0)
+  {
     return -1;
+  }
 
   if (prevdebug != -1)
+  {
     TAO_debug_level = prevdebug;
+  }
 
   return 0;
 }

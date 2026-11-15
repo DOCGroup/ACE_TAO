@@ -154,7 +154,9 @@ TAO_UIPMC_Mcast_Transport::recv_packet (
 
   // There is nothing left in the socket buffer.
   if (n <= 0)
+  {
     return nullptr;
+  }
 
   // Make sure that we at least have a MIOP header.
   if (static_cast<size_t> (n) < MIOP_MIN_HEADER_SIZE)
@@ -433,7 +435,9 @@ TAO_UIPMC_Mcast_Transport::recv_all (TAO_Resume_Handle &rh)
 
               // Stop attempting to queue more messages if we are not in eager mode.
               if (!eager_dequeue)
+              {
                 break;
+              }
             }
         }
       recv_guard.release ();
@@ -442,10 +446,14 @@ TAO_UIPMC_Mcast_Transport::recv_all (TAO_Resume_Handle &rh)
   // Ok we have received as many packets as we could, now if we have
   // any completed packets queued up, return the first to the caller.
   if (this->complete_.empty ())
+  {
     return nullptr;
+  }
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, complete_guard, this->complete_lock_, nullptr);
   if (this->complete_.empty ())
+  {
     return nullptr; // Another thread got here first, not a problem.
+  }
 
   TAO_PG::UIPMC_Recv_Packet *packet = this->complete_.front ();
   this->complete_.pop_front ();

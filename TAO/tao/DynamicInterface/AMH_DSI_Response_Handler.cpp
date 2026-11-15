@@ -277,19 +277,27 @@ TAO_AMH_DSI_Exception_Holder::_tao_unmarshal (
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
+  {
     return false;
+  }
 
   if (is_null_object)
+  {
     return true;
+  }
 
   if (!is_indirected && base != nullptr && !base->_tao_unmarshal_v (strm))
+  {
     return false;
+  }
 
   // Now base must be null or point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = TAO_AMH_DSI_Exception_Holder::_downcast (base);
   if (is_indirected)
+  {
     new_object->_add_ref ();
+  }
 
   owner._retn ();
   return true;
@@ -468,7 +476,9 @@ TAO_AMH_DSI_Response_Handler_ptr
 TAO_AMH_DSI_Response_Handler::_unchecked_narrow (CORBA::Object_ptr obj)
 {
   if (CORBA::is_nil (obj))
+  {
     return TAO_AMH_DSI_Response_Handler::_nil ();
+  }
 
   return dynamic_cast <TAO_AMH_DSI_Response_Handler_ptr> (obj);
 }

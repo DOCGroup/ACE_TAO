@@ -31,7 +31,9 @@ Performance_Test::pre_run_test (Benchmark_Base *bb)
   Benchmark_Performance * const bp = static_cast<Benchmark_Performance *> (bb);
 
   if (this->n_lwps_ > 0)
+  {
     ACE_Thread::setconcurrency (this->n_lwps_);
+  }
 
       // We should probably use a "barrier" here rather than
       // THR_SUSPENDED since many OS platforms lack the ability to
@@ -39,7 +41,9 @@ Performance_Test::pre_run_test (Benchmark_Base *bb)
   if (ACE_Thread_Manager::instance ()->spawn_n
       (performance_test_options.thr_count (), ACE_THR_FUNC (bp->svc_run),
        static_cast<void *> (bp), performance_test_options.t_flags () | THR_SUSPENDED) == -1)
+  {
     ACE_ERROR ((LM_ERROR, "%p\n%a", "couldn't spawn threads", 1));
+  }
   return 0;
 }
 

@@ -229,7 +229,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                ACE_TEXT ("Insufficient privilege to activate ACE_Task.\n")),
                               -1);
           else
+          {
             ACE_DEBUG ((LM_ERROR, ACE_TEXT ("(%t) Task activation failed.\n")));
+          }
         }
 
       orb_run_task.thr_mgr ()->wait ();

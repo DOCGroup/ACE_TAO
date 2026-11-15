@@ -54,7 +54,9 @@ TAO::TypeCode::Empty_Param::equivalent_i (CORBA::TypeCode_ptr tc) const
   CORBA::TCKind const tc_kind = TAO::unaliased_kind (tc);
 
   if (tc_kind != this->kind_)
+  {
     return false;
+  }
 
   return true;
 }

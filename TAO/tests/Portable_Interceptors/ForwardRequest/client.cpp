@@ -63,7 +63,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var const orb (CORBA::ORB_init (argc, argv, "Client ORB"));
 
       if (::parse_args (argc, argv) != 0)
+      {
         return -1;
+      }
 
       // Start out with the first IOR.  Interaction with the second
       // IOR occurs during the various interceptions executed during
@@ -95,7 +97,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       i));
 
           if (i > 1)
+          {
             old_number = number;
+          }
 
           number = server->number ();
 

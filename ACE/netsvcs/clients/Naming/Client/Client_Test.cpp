@@ -104,7 +104,9 @@ Client_Test::handle_input (ACE_HANDLE)
         std::string hostname;
         int port {};
         if (!(input >> hostname >> port))
+        {
           break;
+        }
         result = this->set_host (hostname, port);
         break;
       }
@@ -127,7 +129,9 @@ Client_Test::handle_input (ACE_HANDLE)
       {
         std::string key;
         if (!(input >> key))
+        {
           break;
+        }
         result = this->unbind (key);
         break;
       }
@@ -156,7 +160,9 @@ Client_Test::handle_input (ACE_HANDLE)
       {
         std::string key_pattern;
         if (!(input >> key_pattern))
+        {
           break;
+        }
         switch (command)
           {
           case 'f':
@@ -194,7 +200,9 @@ Client_Test::handle_input (ACE_HANDLE)
   if (result == -1)
     ACE_Reactor::instance ()->end_reactor_event_loop ();
   else
+  {
     this->display_menu ();
+  }
   return result;
 }
 

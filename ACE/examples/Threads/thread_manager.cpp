@@ -72,27 +72,35 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_OS::sleep (1);
   ACE_DEBUG ((LM_DEBUG, "(%t) suspending group\n"));
   if (thr_mgr->suspend_grp (grp_id) == -1)
+  {
     ACE_ERROR ((LM_DEBUG, "(%t) %p\n", "suspend_grp"));
+  }
 
   // Wait for 1 more second and then resume every thread in the
   // group.
   ACE_OS::sleep (ACE_Time_Value (1));
   ACE_DEBUG ((LM_DEBUG, "(%t) resuming group\n"));
   if (thr_mgr->resume_grp (grp_id) == -1)
+  {
     ACE_ERROR ((LM_DEBUG, "(%t) %p\n", "resume_grp"));
+  }
 
   // Wait for 1 more second and then send a SIGINT to every thread in
   // the group.
   ACE_OS::sleep (ACE_Time_Value (1));
   ACE_DEBUG ((LM_DEBUG, "(%t) signaling group\n"));
   if (thr_mgr->kill_grp (grp_id, SIGINT) == -1)
+  {
     ACE_ERROR ((LM_DEBUG, "(%t) %p\n", "kill_grp"));
+  }
 
   // Wait for 1 more second and then cancel all the threads.
   ACE_OS::sleep (ACE_Time_Value (1));
   ACE_DEBUG ((LM_DEBUG, "(%t) cancelling group\n"));
   if (thr_mgr->cancel_grp (grp_id) == -1)
+  {
     ACE_ERROR ((LM_DEBUG, "(%t) %p\n", "cancel_grp"));
+  }
 
   // Perform a barrier wait until all the threads have shut down.
   thr_mgr->wait ();

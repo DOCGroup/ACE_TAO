@@ -50,7 +50,9 @@ namespace TAO
     ACE_Time_Value *max_wait_time {};
 
     if (this->get_timeout (tmp_wait_time))
+    {
       max_wait_time = std::addressof (tmp_wait_time);
+    }
 
     Invocation_Status s = TAO_INVOKE_START;
 
@@ -138,7 +140,9 @@ namespace TAO
           effective_target->_stubobj ();
 
         if (stubobj && stubobj->base_profiles ().size () == 0)
+        {
           nil_forward_ref = true;
+        }
       }
 
     if (nil_forward_ref)

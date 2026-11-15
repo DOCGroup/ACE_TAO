@@ -23,11 +23,15 @@ TAO_GIOP_Message_Generator_Parser_10::write_request_header (
 {
   // Write the service context list
   if (!(msg << opdetails.request_service_info ()))
+  {
     return false;
+  }
 
   // The request ID
   if (!(msg << opdetails.request_id ()))
+  {
     return false;
+  }
 
   CORBA::Octet const response_flags = opdetails.response_flags ();
 
@@ -151,7 +155,9 @@ TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
   if (!reply.is_dsi_)
     {
       if (!(output << reply.service_context_notowned ()))
+      {
         return false;
+      }
     }
   else
     {
@@ -177,7 +183,9 @@ TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
 
       // Now marshal the rest of the service context objects
       if (!(output << count))
+      {
         return false;
+      }
 
       for (CORBA::ULong i {}; i != l; ++i)
         {
@@ -187,7 +195,9 @@ TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
             }
 
           if (!(output << svc_ctx[i]))
+          {
             return false;
+          }
         }
 
     }
@@ -323,7 +333,9 @@ TAO_GIOP_Message_Generator_Parser_10::parse_request_header (
   IOP::ServiceContextList &service_info = request.request_service_info ();
 
   if (!(input >> service_info))
+  {
     return -1;
+  }
 
   CORBA::Boolean hdr_status = input.good_bit ();
 
@@ -429,7 +441,9 @@ TAO_GIOP_Message_Generator_Parser_10::parse_reply (
 
   // Call the base class for further processing
   if (TAO_GIOP_Message_Generator_Parser::parse_reply (cdr, params) == -1)
+  {
     return -1;
+  }
 
   return 0;
 }

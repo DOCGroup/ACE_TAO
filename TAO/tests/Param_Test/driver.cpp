@@ -118,7 +118,9 @@ Driver::run ()
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -131,7 +133,9 @@ Driver::run ()
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -144,7 +148,9 @@ Driver::run ()
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -157,7 +163,9 @@ Driver::run ()
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -170,7 +178,9 @@ Driver::run ()
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -183,7 +193,9 @@ Driver::run ()
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -196,7 +208,9 @@ Driver::run ()
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -209,7 +223,9 @@ Driver::run ()
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -222,7 +238,9 @@ Driver::run ()
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -235,7 +253,9 @@ Driver::run ()
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -248,7 +268,9 @@ Driver::run ()
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -261,7 +283,9 @@ Driver::run ()
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -274,7 +298,9 @@ Driver::run ()
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -287,7 +313,9 @@ Driver::run ()
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -300,7 +328,9 @@ Driver::run ()
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -313,7 +343,9 @@ Driver::run ()
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
 
         Param_Test_Client<Test_Unbounded_Struct_Sequence> *client2 = new
@@ -325,7 +357,9 @@ Driver::run ()
         if (opt->invoke_type () == Options::SII)
           retstatus = client2->run_sii_test ();
         else
+        {
           retstatus = client2->run_dii_test ();
+        }
         delete client2;
       }
       break;
@@ -338,7 +372,9 @@ Driver::run ()
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -351,7 +387,9 @@ Driver::run ()
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -364,7 +402,9 @@ Driver::run ()
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -377,7 +417,9 @@ Driver::run ()
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -390,7 +432,9 @@ Driver::run ()
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -403,7 +447,9 @@ Driver::run ()
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -416,7 +462,9 @@ Driver::run ()
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -429,7 +477,9 @@ Driver::run ()
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -442,7 +492,9 @@ Driver::run ()
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -455,7 +507,9 @@ Driver::run ()
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -468,7 +522,9 @@ Driver::run ()
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -481,7 +537,9 @@ Driver::run ()
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -494,7 +552,9 @@ Driver::run ()
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -507,7 +567,9 @@ Driver::run ()
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -520,7 +582,9 @@ Driver::run ()
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -533,7 +597,9 @@ Driver::run ()
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -546,7 +612,9 @@ Driver::run ()
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -559,7 +627,9 @@ Driver::run ()
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -572,7 +642,9 @@ Driver::run ()
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -585,7 +657,9 @@ Driver::run ()
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;

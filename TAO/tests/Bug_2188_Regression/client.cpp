@@ -39,7 +39,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, ior) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var const tmp =
         orb->string_to_object (ior);
@@ -69,10 +71,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
   if (!CORBA::is_nil (saobj.in ()))
+  {
     saobj->shutdown ();
+  }
 
   if (!CORBA::is_nil (orb.in ()))
+  {
     orb->destroy ();
+  }
 
   return 0;
 }

@@ -70,7 +70,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                          "POAManagerFactoryTest");
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       // Obtain the RootPOA.
       CORBA::Object_var const obj =
@@ -94,7 +96,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("%s\n"),
                     (pretest == fail) ? ACE_TEXT ("passed") : ACE_TEXT ("failed")));
       if (CORBA::is_nil (poa_manager_factory.in ()))
+      {
         return 1;
+      }
 
       CORBA::PolicyList const policies;
 
@@ -113,7 +117,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("%s\n"),
                     (pretest == fail) ? ACE_TEXT ("passed") : ACE_TEXT ("failed")));
       if (CORBA::is_nil (poa_manager_1.in ()))
+      {
         return 1;
+      }
 
       // Creating a POAManager with an exiting POAManager name raises exception.
       if (verbose)
@@ -138,7 +144,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     (pretest == fail) ? ACE_TEXT ("passed") : ACE_TEXT ("failed")));
 
       if (!got_expected_exception)
+      {
         return 1;
+      }
 
       {
         if (verbose)
@@ -161,7 +169,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       (pretest == fail) ? ACE_TEXT ("passed") : ACE_TEXT ("failed")));
 
         if (CORBA::is_nil (poa_manager_2.in ()))
+        {
           return 1;
+        }
 
         CORBA::String_var const poa_manager_2_name
           = poa_manager_2->get_id ();
@@ -171,10 +181,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       poa_manager_2_name.in()));
 
         if (std::strlen (poa_manager_2_name.in ()) == 0)
+        {
           return 1;
+        }
 
         if (verbose)
+        {
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT("List POAManagers: ")));
+        }
         pretest = fail;
 
         PortableServer::POAManagerFactory::POAManagerSeq_var managers
@@ -206,12 +220,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     && tmp_pm == poa_manager_2.in ()))
               {
                 if (verbose)
+                {
                   ACE_DEBUG ((LM_DEBUG, ACE_TEXT("passed\n")));
+                }
                 continue;
               }
 
             if (verbose)
+            {
               ACE_DEBUG ((LM_DEBUG, ACE_TEXT("failed\n")));
+            }
             ++fail;
           }
       }
@@ -254,13 +272,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       orb->destroy ();
 
       if (verbose)
+      {
         ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("passed\n")));
+      }
     }
   catch (CORBA::Exception const &ex)
     {
       ++fail;
       if (verbose)
+      {
         ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("failed\n")));
+      }
       ex._tao_print_exception ("Exception caught");
     }
 

@@ -63,12 +63,16 @@ TAO_UIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
   ACE_UNIX_Addr addr;
 
   if (this->base_acceptor_.acceptor ().get_local_addr (addr) == -1)
+  {
     return 0;
+  }
 
   int const count = mprofile.profile_count ();
   if ((mprofile.size () - count) < 1
       && mprofile.grow (count + 1) == -1)
+  {
     return -1;
+  }
 
   TAO_UIOP_Profile *pfile {};
   ACE_NEW_RETURN (pfile,
@@ -92,12 +96,16 @@ TAO_UIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
   // the same convention for UIOP).
   if (this->orb_core_->orb_params ()->std_profile_components () == 0
       || (this->version_.major == 1 && this->version_.minor == 0))
+  {
     return 0;
+  }
 
   pfile->tagged_components ().set_orb_type (TAO_ORB_TYPE);
   TAO_Codeset_Manager *csm = this->orb_core_->codeset_manager();
   if (csm)
+  {
     csm->set_codeset(pfile->tagged_components());
+  }
   return 0;
 }
 
@@ -134,7 +142,9 @@ TAO_UIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
       ACE_UNIX_Addr addr;
 
       if (this->base_acceptor_.acceptor ().get_local_addr (addr) == -1)
+      {
         return 0;
+      }
 
       TAO_UIOP_Endpoint *endpoint {};
       ACE_NEW_RETURN (endpoint,
@@ -155,12 +165,16 @@ TAO_UIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 
   // Make sure the dynamically cast pointer is valid.
   if (endp == nullptr)
+  {
     return false;
+  }
 
   // For UNIX Files this is relatively cheap.
   ACE_UNIX_Addr address;
   if (this->base_acceptor_.acceptor ().get_local_addr (address) == -1)
+  {
     return false;
+  }
 
   return endp->object_addr () == address;
 }
@@ -173,7 +187,9 @@ TAO_UIOP_Acceptor::close ()
       ACE_UNIX_Addr addr;
 
       if (this->base_acceptor_.acceptor ().get_local_addr (addr) == 0)
+      {
         (void) ACE_OS::unlink (addr.get_path_name ());
+      }
 
       this->unlink_on_close_ = false;
     }
@@ -192,7 +208,9 @@ TAO_UIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   this->orb_core_ = orb_core;
 
   if (address == nullptr)
+  {
     return -1;
+  }
 
   if (major >= 0 && minor >= 0)
     this->version_.set_version (static_cast<CORBA::Octet> (major),
@@ -220,12 +238,16 @@ TAO_UIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
 
   // Parse options
   if (this->parse_options (options) == -1)
+  {
     return -1;
+  }
 
   ACE_Auto_String_Free const tempname (ACE_OS::tempnam (0, "TAO"));
 
   if (tempname.get () == nullptr)
+  {
     return -1;
+  }
 
   return this->open_i (tempname.get (),
                        reactor);
@@ -266,7 +288,9 @@ TAO_UIOP_Acceptor::open_i (const char *rendezvous,
       // Don't unlink an existing rendezvous point since it may be in
       // use by another UIOP server/client.
       if (errno == EADDRINUSE)
+      {
         this->unlink_on_close_ = false;
+      }
 
       return -1;
     }
@@ -387,7 +411,9 @@ TAO_UIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
 
   // ... and object key.
   if ((cdr >> object_key) == 0)
+  {
     return -1;
+  }
 
   return 1;
 }
@@ -396,7 +422,9 @@ int
 TAO_UIOP_Acceptor::parse_options (const char *str)
 {
   if (str == nullptr)
+  {
     return 0;  // No options to parse.  Not a problem.
+  }
 
   // Use an option format similar to the one used for CGI scripts in
   // HTTP URLs.
@@ -417,7 +445,9 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
   // before the object key.
   for (size_t i {}; i < len; ++i)
     if (options[i] == option_delimiter)
+    {
       ++option_count;
+    }
 
   // The idea behind the following loop is to split the options into
   // (option, name) pairs.
@@ -435,7 +465,9 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
       if (j < option_count - 1)
         end = options.find (option_delimiter, begin);
       else
+      {
         end = len;
+      }
 
       if (end == begin)
         TAOLIB_ERROR_RETURN ((LM_ERROR,
@@ -481,7 +513,9 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
                               -1);
         }
       else
+      {
         break;  // No other options.
+      }
     }
   return 0;
 }

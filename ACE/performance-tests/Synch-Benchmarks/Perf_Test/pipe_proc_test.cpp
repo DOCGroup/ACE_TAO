@@ -32,7 +32,9 @@ Pipe_Proc_Test::init (int, ACE_TCHAR **)
   synch_count = 1;
 
   if (ACE_OS::pipe (this->pipe_handles.data ()) == -1)
+  {
     ACE_OS::perror (ACE_TEXT("pipe")), ACE_OS::exit (1);
+  }
 
   switch (ACE_OS::fork ())
     {
@@ -77,7 +79,9 @@ Pipe_Proc_Test::svc ()
     if (ACE_OS::write (handle, from.get (), length) == length)
       ++performance_test_options.thr_work_count[ni];
     else
+    {
       ACE_OS::perror (ACE_TEXT("write"));
+    }
 
   ACE_OS::close (this->pipe_handles[0]);
   ACE_OS::close (this->pipe_handles[1]);

@@ -34,7 +34,9 @@ TAO_UIOP_Connector::open (TAO_ORB_Core *orb_core)
 
   // Create our connect strategy
   if (this->create_connect_strategy () == -1)
+  {
     return -1;
+  }
 
   // Our connect creation strategy
   TAO_UIOP_CONNECT_CREATION_STRATEGY *connect_creation_strategy {};
@@ -79,7 +81,9 @@ TAO_Profile *
 TAO_UIOP_Connector::corbaloc_scan (const char *str, size_t &len)
 {
   if (this->check_prefix (str) != 0)
+  {
     return 0;
+  }
 
   const char *separator = std::strchr (str,'|');
   if (separator == nullptr)
@@ -101,7 +105,9 @@ TAO_UIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
   TAO_UIOP_Endpoint *uiop_endpoint = this->remote_endpoint (endpoint);
 
   if (uiop_endpoint == nullptr)
+  {
     return -1;
+  }
 
    const ACE_UNIX_Addr &remote_address = uiop_endpoint->object_addr ();
 
@@ -140,7 +146,9 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
     this->remote_endpoint (desc.endpoint ());
 
   if (uiop_endpoint == nullptr)
+  {
     return 0;
+  }
 
   const ACE_UNIX_Addr &remote_address =
     uiop_endpoint->object_addr ();
@@ -327,7 +335,9 @@ TAO_UIOP_Connector::check_prefix (const char *endpoint)
 {
   // Check for a valid string
   if (!endpoint || !*endpoint)
+  {
     return -1;  // Failure
+  }
 
   static const char *protocol[] = { "uiop", "uioploc" };
 
@@ -363,13 +373,17 @@ TAO_UIOP_Endpoint *
 TAO_UIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
 {
   if (endpoint->tag () != TAO_TAG_UIOP_PROFILE)
+  {
     return 0;
+  }
 
   TAO_UIOP_Endpoint *uiop_endpoint =
     dynamic_cast<TAO_UIOP_Endpoint *> (endpoint);
 
   if (uiop_endpoint == nullptr)
+  {
     return 0;
+  }
 
   return uiop_endpoint;
 }

@@ -15,7 +15,9 @@ Simple_Server_i::test_is_a (char const *)
 {
   if (this->num_exceptions_thrown_ ==
       this->num_exceptions_to_throw_)
+  {
     return false;
+  }
 
   if ((this->raise_exception_ & TAO::FOE_OBJECT_NOT_EXIST) == TAO::FOE_OBJECT_NOT_EXIST)
     {

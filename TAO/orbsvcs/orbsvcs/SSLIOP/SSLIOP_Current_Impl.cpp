@@ -22,7 +22,9 @@ TAO::SSLIOP::Current_Impl::client_credentials ()
   TAO::SSLIOP::X509_var cert = ::SSL_get_peer_certificate(this->ssl_);
 #endif
   if (cert.ptr () == nullptr)
+  {
     throw CORBA::BAD_OPERATION ();
+  }
 
   SecurityLevel3::ClientCredentials_ptr creds;
   ACE_NEW_THROW_EX (creds,
@@ -49,7 +51,9 @@ TAO::SSLIOP::Current_Impl::get_peer_certificate (
   ::SSLIOP::ASN_1_Cert *certificate)
 {
   if (this->ssl_ == nullptr)
+  {
     return;
+  }
 
 #if (OPENSSL_VERSION_NUMBER >= 0x30000000L)
   TAO::SSLIOP::X509_var cert = ::SSL_get1_peer_certificate(this->ssl_);
@@ -57,12 +61,16 @@ TAO::SSLIOP::Current_Impl::get_peer_certificate (
   TAO::SSLIOP::X509_var cert = ::SSL_get_peer_certificate(this->ssl_);
 #endif
   if (cert.ptr () == nullptr)
+  {
     return;
+  }
 
   // Get the size of the ASN.1 encoding.
   int const cert_length = ::i2d_X509 (cert.in (), nullptr);
   if (cert_length <= 0)
+  {
     return;
+  }
 
   certificate->length (cert_length);
 
@@ -78,11 +86,15 @@ TAO::SSLIOP::Current_Impl::get_peer_certificate_chain (
   ::SSLIOP::SSL_Cert *cert_chain)
 {
   if (this->ssl_ == nullptr)
+  {
     return;
+  }
 
   STACK_OF (X509) *certs = ::SSL_get_peer_cert_chain (this->ssl_);
   if (certs == nullptr)
+  {
     return;
+  }
 
   int const chain_length = sk_X509_num (certs);
   cert_chain->length (chain_length);
@@ -97,7 +109,9 @@ TAO::SSLIOP::Current_Impl::get_peer_certificate_chain (
       // Get the size of the ASN.1 encoding.
       int const cert_length = ::i2d_X509 (x, nullptr);
       if (cert_length <= 0)
+      {
         continue;  // @@ What do we do if there is an error?
+      }
 
       ::SSLIOP::ASN_1_Cert &certificate = (*cert_chain)[i];
       certificate.length (cert_length);

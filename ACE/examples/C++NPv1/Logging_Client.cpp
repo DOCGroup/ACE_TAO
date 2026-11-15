@@ -91,7 +91,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (logger_port != 0)
     result = server_addr.set (logger_port, logger_host);
   else
+  {
     result = server_addr.set ("ace_logger", logger_host);
+  }
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "lookup %s, %p\n",
                        logger_port == 0 ? "ace_logger" : argv[1],
@@ -101,7 +103,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   Logging_Client logging_client;
 
   if (connector.connect (logging_client.peer (), server_addr) < 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "connect()"), 1);
+  }
 
 #if defined (ACE_WIN32) && defined (ACE_USES_OLD_IOSTREAMS)
   for (;;) {
@@ -124,7 +128,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     std::string user_input;
     std::getline (cin, user_input, '\n');
 
-    if (!cin || cin.eof ()) break;
+    if (!cin || cin.eof ())
+    {
+      break;
+    }
 
     ACE_Time_Value const now (ACE_OS::gettimeofday ());
     ACE_Log_Record log_record (LM_INFO, now, ACE_OS::getpid ());

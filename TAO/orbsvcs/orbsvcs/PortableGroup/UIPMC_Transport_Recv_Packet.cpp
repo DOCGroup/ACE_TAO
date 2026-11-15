@@ -54,7 +54,9 @@ namespace TAO_PG
     new_data.len = len;
 
     if (is_last)
+    {
       this->last_fragment_id_ = id;
+    }
 
     this->data_length_ += len;
 
@@ -78,12 +80,16 @@ namespace TAO_PG
 
     // We haven't encountered yet the last fragment.
     if (!is_last && this->last_fragment_id_ == 0)
+    {
       return 0;
+    }
 
     // We haven't encountered yet all the fragments but the last one is
     // already in.
     if (this->last_fragment_id_ + 1 != this->fragments_.current_size ())
+    {
       return 0;
+    }
 
     // Since fragments are enumerated from 0 to last_fragment_id_ this
     // is the heaviest but the most reliable check for packet completeness.

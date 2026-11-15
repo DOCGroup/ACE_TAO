@@ -48,7 +48,9 @@ int send_datagram (ACE_SOCK_Dgram_Bcast &socket, int datagram_no)
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                            ACE_TEXT ("Cannot broadcast datagram")), -1);
     else
-        ACE_DEBUG ((LM_INFO, ACE_TEXT ("%C sent\n"), dgram_buffer));
+    {
+      ACE_DEBUG ((LM_INFO, ACE_TEXT ("%C sent\n"), dgram_buffer));
+    }
     return 0;
 }
 
@@ -70,7 +72,9 @@ int run_sender( )
         while (dgrams_no-- != 0)
           {
             if (send_datagram (socket, dgrams_no) < 0)
+            {
               break;
+            }
             ACE_OS::sleep (1);
           }
         socket.close ();
@@ -145,7 +149,9 @@ int run_auto_test (const ACE_TCHAR *prog_name)
   opts.command_line (ACE_TEXT ("%s -p %d -t %d -a -r"),
                      prog_name, dgram_port, static_cast<int>(dgram_recv_timeout.msec ()));
   if ((child_pid = ACE_Process_Manager::instance ()->spawn (opts)) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n()")), -1);
+  }
 
 #elif defined (ACE_HAS_THREADS)
   ACE_UNUSED_ARG (prog_name);
@@ -178,7 +184,9 @@ int run_auto_test (const ACE_TCHAR *prog_name)
           if (ACE_Process_Manager::instance ()->wait (child_pid,
                                                       child_timeout,
                                                       &receiver_exit_code) == child_pid)
+          {
             break;
+          }
 #else /* ACE_HAS_THREADS */
           // sleep 1 second or wait for child thread
           child_timeout += ACE_OS::gettimeofday () ;

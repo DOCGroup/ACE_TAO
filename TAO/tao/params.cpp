@@ -86,7 +86,9 @@ TAO_ORB_Parameters::get_endpoint_set (const ACE_CString &lane,
 
   // If lane is not in the map, endpoint_set remains empty
   if (endpoints == this->endpoints_map_.end ())
+  {
     return;
+  }
 
   // At this point, the parsing should not fail since they have been
   // parsed successfully before.
@@ -109,7 +111,9 @@ TAO_ORB_Parameters::add_endpoints (const ACE_CString &lane,
 
   // Parse failure.
   if (result != 0)
+  {
     return result;
+  }
 
   // Look for the lane in the endpoints map.
   //
@@ -238,7 +242,9 @@ TAO_ORB_Parameters::check_preferred_interfaces_string (const char *s)
 #endif /* ACE_HAS_IPV6 */
     case '=':
       if (!expect_assign)
+      {
         return false;
+      }
       found_remote = true;
       expect_assign = false;
       expect_comma = false;
@@ -247,7 +253,9 @@ TAO_ORB_Parameters::check_preferred_interfaces_string (const char *s)
 
     case ',':
       if (!expect_comma)
+      {
         return false;
+      }
       found_remote = false;
       expect_assign = false;
       expect_comma = false;
@@ -257,7 +265,9 @@ TAO_ORB_Parameters::check_preferred_interfaces_string (const char *s)
     case '*':
     case '?':
       if (!expect_wild)
+      {
         return false;
+      }
       expect_assign = !found_remote;
       expect_comma = found_remote;
       expect_wild = false;
@@ -283,7 +293,9 @@ TAO_ORB_Parameters::preferred_interfaces (const char *s)
       // (by other -ORBPreferredInterfaces options that have been
       // seen previously)
       if (!this->pref_network_.empty ())
+      {
         this->pref_network_+= ',';
+      }
       this->pref_network_+= s;
     }
 

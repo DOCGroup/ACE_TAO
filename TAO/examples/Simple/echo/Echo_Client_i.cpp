@@ -12,7 +12,9 @@ Echo_Client_i::run (char const *name,
 {
   // Initialize the client.
   if (client_.init (name, argc, argv) == -1)
+  {
     return -1;
+  }
 
   try
     {
@@ -25,7 +27,9 @@ Echo_Client_i::run (char const *name,
                       ACE_TEXT ("ECHO? ")));
 
           if (ACE_OS::fgets (buf, sizeof buf, stdin) == nullptr)
+          {
             break;
+          }
 
           CORBA::String_var s = client_->echo_string (buf);
 
@@ -35,7 +39,9 @@ Echo_Client_i::run (char const *name,
         }
 
       if (client_.do_shutdown ())
+      {
         client_->shutdown ();
+      }
     }
   catch (CORBA::Exception const &ex)
     {

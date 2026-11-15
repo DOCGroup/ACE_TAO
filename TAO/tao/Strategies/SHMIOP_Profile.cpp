@@ -221,7 +221,9 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string)
                          CORBA::COMPLETED_NO);
           }
         else
+        {
           this->endpoint_.host_ = host_addr_str;
+        }
       }
       else
         {
@@ -262,7 +264,9 @@ TAO_SHMIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
     dynamic_cast <const TAO_SHMIOP_Profile *> (other_profile);
 
   if (op == nullptr)
+  {
     return false;
+  }
 
   // Check endpoints equivalence.
   const TAO_SHMIOP_Endpoint *other_endp = std::addressof (op->endpoint_);
@@ -273,7 +277,9 @@ TAO_SHMIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
       if (endp->is_equivalent (other_endp))
         other_endp = other_endp->next_;
       else
+      {
         return false;
+      }
     }
 
   return true;
@@ -387,7 +393,9 @@ TAO_SHMIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
 
   if (this->version_.major > 1
       || this->version_.minor > 0)
+  {
     this->tagged_components ().encode (encap);
+  }
 }
 
 int
@@ -418,7 +426,9 @@ TAO_SHMIOP_Profile::encode_endpoints ()
   TAO_OutputCDR out_cdr;
   if ((out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)) == 0
       || (out_cdr << endpoints) == 0)
+  {
     return -1;
+  }
   size_t const length = out_cdr.total_length ();
 
   IOP::TaggedComponent tagged_component;
@@ -461,14 +471,18 @@ TAO_SHMIOP_Profile::decode_endpoints ()
       // Extract the Byte Order.
       CORBA::Boolean byte_order;
       if ((in_cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+      {
         return -1;
+      }
       in_cdr.reset_byte_order (static_cast<int> (byte_order));
 
       // Extract endpoints sequence.
       TAO::IIOPEndpointSequence endpoints;
 
       if ((in_cdr >> endpoints) == 0)
+      {
         return -1;
+      }
 
       // Get the priority of the first endpoint (head of the list.
       // It's other data is extracted as part of the standard profile

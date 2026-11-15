@@ -232,7 +232,9 @@ run_main (int, ACE_TCHAR *[])
                              ACE_TEXT ("wait")),
                             1);
       if (!size_checker)
+      {
         status = 1;
+      }
     }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Cancel flags sanity check:\n")
@@ -253,22 +255,30 @@ run_main (int, ACE_TCHAR *[])
     {
       check1.wait ();
       if (!check1)
+      {
         status = 1;
+      }
 
       check2.open (nullptr);
       check2.wait ();
       if (!check2)
+      {
         status = 1;
+      }
 
       check3.open (nullptr);
       check3.wait ();
       if (!check3)
+      {
         status = 1;
+      }
 
       check4.open (nullptr);
       check4.wait ();
       if (!check4)
+      {
         status = 1;
+      }
     }
   else
     {

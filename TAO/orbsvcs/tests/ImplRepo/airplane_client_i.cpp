@@ -86,7 +86,9 @@ Airplane_Client_i::init (int argc, ACE_TCHAR **argv)
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
+      {
         return -1;
+      }
 
       CORBA::Object_var const server_object =
         this->orb_->string_to_object (this->server_key_.c_str ());

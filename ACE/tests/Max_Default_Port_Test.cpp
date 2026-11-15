@@ -37,7 +37,9 @@ My_Accept_Handler::My_Accept_Handler (ACE_INET_Addr &addr)
   : addr_ (addr)
 {
   if (addr.get_port_number() != 0)
+  {
     this->open (addr);
+  }
 }
 
 My_Accept_Handler::~My_Accept_Handler ()
@@ -148,7 +150,9 @@ client (void *arg)
   int connected_port = server_addr.get_port_number ();
 
   if (connected_port > max_connected_port)
+  {
     max_connected_port = connected_port;
+  }
 
   cli_stream.close ();
 
@@ -237,7 +241,9 @@ run_main (int argc, ACE_TCHAR *argv[])
       if (eh->port () == idx)
         {
           if (idx > max_listened_port)
+          {
             max_listened_port = idx;
+          }
         }
       else
         {

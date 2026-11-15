@@ -54,7 +54,9 @@ Grid_i::set (CORBA::Short x,
       || y >= height_)
     throw Grid::RANGE_ERROR ();
   else
+  {
     array_[x][y] = value;
+  }
 }
 
 //  Get a value from  the grid.
@@ -69,7 +71,9 @@ Grid_i::get (CORBA::Short x,
       || y >= height_)
     throw Grid::RANGE_ERROR ();
   else
+  {
     return array_[x][y];
+  }
 }
 
 // Access methods.
@@ -126,11 +130,15 @@ Grid_Factory_i::make_grid (CORBA::Short width,
 
   // Set a default value for width.
   if (width <= 0)
+  {
     width = Grid_Factory::DEFAULT_WIDTH;
+  }
 
   // Set a default value for height.
   if (height <= 0)
+  {
     height = Grid_Factory::DEFAULT_HEIGHT;
+  }
 
   // Get a memory pool
   std::unique_ptr<pool_t> pool_owner;

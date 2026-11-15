@@ -76,7 +76,9 @@ namespace ACE
       {
         str << this->command_.c_str ();
         if (!this->args_.empty ())
+        {
           str << ' ' << this->args_.c_str ();
+        }
         str << "\r\n";
 
         INET_DEBUG (6, (LM_DEBUG, DLINFO
@@ -110,7 +112,9 @@ namespace ACE
             ch = str.get ();
           }
         if (!ACE_OS::ace_isspace (ch))
+        {
           return false; // invalid FTP command string
+        }
         if (ch != '\r' && ch != '\n')
           {
             // skip whitespace

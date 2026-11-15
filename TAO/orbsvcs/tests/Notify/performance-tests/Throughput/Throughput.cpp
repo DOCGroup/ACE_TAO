@@ -44,7 +44,9 @@ Throughput_StructuredPushConsumer::push_structured_event (
   CORBA::Boolean const ok = (notification.remainder_of_body >>= msg);
 
   if (!ok)
+  {
     ACE_DEBUG ((LM_DEBUG, "(%t) Error extracting message body\n"));
+  }
 
   TimeBase::TimeT Throughput_base_recorded {};
   ACE_hrtime_t Throughput_base {};
@@ -373,7 +375,9 @@ Notify_Throughput::parse_args (int argc, ACE_TCHAR *argv [])
       this->options_.supplier_count;
   this->peer_done_count_ = this->options_.consumer_count + this->options_.supplier_count;
   if (this->options_.payload_size < 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Payload size must be non-negative\n"), -1);
+  }
   try
     {
       this->payload_.assign (static_cast<size_t> (this->options_.payload_size), 'x');

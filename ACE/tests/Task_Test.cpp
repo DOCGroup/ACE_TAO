@@ -73,7 +73,9 @@ Barrier_Task::Barrier_Task (ACE_Thread_Manager *thr_mgr,
 {
   // Create worker threads.
   if (this->activate (THR_NEW_LWP, n_threads) == -1)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("activate failed")));
+  }
 }
 
 // Check to see if it's time to clean up by examining last_thread().

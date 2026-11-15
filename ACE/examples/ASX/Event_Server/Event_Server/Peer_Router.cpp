@@ -78,7 +78,9 @@ Peer_Router_Context::release ()
   --this->reference_count_;
 
   if (this->reference_count_ == 0)
+  {
     delete this;
+  }
 }
 
 Peer_Router_Context::Peer_Router_Context (u_short port)
@@ -249,7 +251,9 @@ Peer_Handler::open (void *)
                        ACE_TEXT ("bind_peer")),
                       -1);
   else
+  {
     return 0;
+  }
 }
 
 // Receive a message from a Peer.

@@ -175,7 +175,9 @@ SendEvents (TAO_Notify_Tests_SequencePushSupplier& supplier,
       if (z % 2 == 0)
         event.filterable_data[0].value <<= static_cast<CORBA::Long> (20);
       else
+      {
         event.filterable_data[0].value <<= static_cast<CORBA::Long> (10);
+      }
 
       event.filterable_data[1].value <<= z;
 

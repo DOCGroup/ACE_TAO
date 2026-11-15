@@ -96,7 +96,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Client_Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var object = orb->string_to_object (options.ior);
       Test::Roundtrip_var roundtrip = Test::Roundtrip::_narrow (object.in ());
@@ -123,7 +125,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         new (std::nothrow) CORBA::Request_var[options.burst]
       };
       if (!requests)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "Cannot allocate request array\n"), 1);
+      }
 
       for (int i = 0; i < options.iterations; ++i)
         {

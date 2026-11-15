@@ -75,7 +75,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Client_Options options {};
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var const object (orb->string_to_object (options.ior));
       Simple_Server_var const server (Simple_Server::_narrow (object.in ()));
@@ -87,7 +89,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                           1);
 
       if (options.shutdown)
+      {
         server->shutdown ();
+      }
 
       Client client (server.in (), options.iteration_count);
       if (client.activate (THR_NEW_LWP | THR_JOINABLE,

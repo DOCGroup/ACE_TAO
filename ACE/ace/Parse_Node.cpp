@@ -36,9 +36,14 @@ ACE_Stream_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
 
   const ACE_Service_Type *sst = this->node_->record (config);
   if (sst == nullptr)
+  {
     const_cast<ACE_Static_Node *> (this->node_)->apply (config, yyerrno);
+  }
 
-  if (yyerrno != 0) return;
+  if (yyerrno != 0)
+  {
+    return;
+  }
 
   sst = this->node_->record (config);
   ACE_Stream_Type *st =
@@ -67,7 +72,9 @@ ACE_Stream_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
       module = *iter;
       const ACE_Service_Type *mst = module->record (config);
       if (mst == nullptr)
+      {
         const_cast<ACE_Static_Node *> (module)->apply (config, yyerrno);
+      }
 
       if (yyerrno != 0)
         {
@@ -188,7 +195,9 @@ ACE_Parse_Node::print () const
               this->name ()));
 
   if (this->next_)
+  {
     this->next_->print ();
+  }
 }
 
 ACE_Parse_Node::~ACE_Parse_Node ()
@@ -244,7 +253,9 @@ ACE_Suspend_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
   ACE_TRACE ("ACE_Suspend_Node::apply");
 
   if (config->suspend (this->name ()) == -1)
+  {
     ++yyerrno;
+  }
 
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
@@ -261,7 +272,9 @@ ACE_Resume_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
   ACE_TRACE ("ACE_Resume_Node::apply");
 
   if (config->resume (this->name ()) == -1)
+  {
     ++yyerrno;
+  }
 
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
@@ -296,7 +309,9 @@ ACE_Remove_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
   ACE_TRACE ("ACE_Remove_Node::apply");
 
   if (config->remove (this->name ()) == -1)
+  {
     ++yyerrno;
+  }
 
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
@@ -323,7 +338,9 @@ ACE_Dynamic_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
 
   if (config->initialize (this->factory_.get (),
                           this->parameters ()) == -1)
+  {
     ++yyerrno;
+  }
 
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
@@ -375,7 +392,9 @@ ACE_Static_Node::record (const ACE_Service_Gestalt *config) const
   ACE_Service_Type *sr {};
 
   if (config->find (this->name (), (const ACE_Service_Type **) &sr) == -1)
+  {
     return nullptr;
+  }
 
   return sr;
 }
@@ -393,7 +412,9 @@ ACE_Static_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
   ACE_TRACE ("ACE_Static_Node::apply");
   if (config->initialize (this->name (),
         this->parameters ()) == -1)
+  {
     ++yyerrno;
+  }
 
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
@@ -892,7 +913,9 @@ ACE_Service_Type_Factory::make_service_type (ACE_Service_Gestalt *cfg) const
                                                       flags,
                                                       gobbler);
       if (stp == nullptr)
+      {
         ++yyerrno;
+      }
 
       ACE_Service_Type *tmp {};
       ACE_NEW_RETURN (tmp,

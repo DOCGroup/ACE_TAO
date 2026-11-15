@@ -81,7 +81,9 @@ Notify_Test_Client::resolve_naming_service ()
 
   // Need to check return value for errors.
   if (CORBA::is_nil (naming_obj.in ()))
+  {
     throw CORBA::UNKNOWN ();
+  }
 
   this->naming_context_ =
     CosNaming::NamingContext::_narrow (naming_obj.in ());

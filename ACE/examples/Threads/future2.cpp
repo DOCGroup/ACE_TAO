@@ -232,12 +232,16 @@ Scheduler::svc ()
       std::unique_ptr<ACE_Method_Request> mo (this->activation_queue_.dequeue ());
 
       if (!mo)
+      {
         break;
+      }
 
       ACE_DEBUG ((LM_DEBUG, " (%t) calling method object\n"));
       // Call it.
       if (mo->call () == -1)
+      {
         break;
+      }
       // Smart pointer destructor automatically deletes mo.
     }
 
@@ -249,7 +253,9 @@ void
 Scheduler::end ()
 {
   if (this->enqueue (std::make_unique<Method_Request_end> ()) == -1)
+  {
     ACE_ERROR ((LM_ERROR, " (%t) failed to enqueue end request\n"));
+  }
 }
 
 // Here's where the Work takes place.
@@ -273,7 +279,9 @@ Scheduler::enqueue (std::unique_ptr<ACE_Method_Request> request)
 {
   int const result = this->activation_queue_.enqueue (request.get ());
   if (result != -1)
+  {
     request.release ();
+  }
   return result;
 }
 
@@ -300,7 +308,9 @@ Scheduler::name ()
       else
         {
           if (this->enqueue (std::make_unique<Method_Request_name> (this, new_future)) == -1)
+          {
             ACE_ERROR ((LM_ERROR, " (%t) failed to enqueue name request\n"));
+          }
         }
 
       return new_future;
@@ -327,7 +337,9 @@ Scheduler::work (u_long newparam, int newcount)
         {
           if (this->enqueue (std::make_unique<Method_Request_work> (
                 this, newparam, newcount, new_future)) == -1)
+          {
             ACE_ERROR ((LM_ERROR, " (%t) failed to enqueue work request\n"));
+          }
         }
 
       return new_future;
@@ -403,11 +415,17 @@ test_active_object (int n_iterations)
       if (i == 0)
         {
           if (!fresulta.ready ())
+          {
             ACE_DEBUG ((LM_DEBUG," (%t) ERROR: worker A is should be ready!!!\n"));
+          }
           if (!fresultb.ready ())
+          {
             ACE_DEBUG ((LM_DEBUG," (%t) ERROR: worker B is should be ready!!!\n"));
+          }
           if (!fresultc.ready ())
+          {
             ACE_DEBUG ((LM_DEBUG," (%t) ERROR: worker C is should be ready!!!\n"));
+          }
         }
 
       // When the workers are active we will block here until the
@@ -468,14 +486,18 @@ test_cancellation (int n_iterations)
   fresulta.cancel (10);
 
   if (!fresulta.ready ())
+  {
     ACE_DEBUG ((LM_DEBUG," (%t) ERROR: future A is should be ready!!!\n"));
+  }
 
   u_long resulta = fresulta;
 
   ACE_DEBUG ((LM_DEBUG, " (%t) cancelled result %u\n", (u_int) resulta));
 
   if (resulta != 10)
+  {
     ACE_DEBUG ((LM_DEBUG, " (%t) cancelled result should be 10!!\n", resulta));
+  }
 
   resulta = fresultb;
 
@@ -503,7 +525,9 @@ test_timeout (int n_iterations)
   if (fresulta.ready ())
     ACE_DEBUG ((LM_DEBUG," (%t) ERROR: future A is should not be ready!!!\n"));
   else
+  {
     ACE_DEBUG ((LM_DEBUG," (%t) timed out on future A\n"));
+  }
 
   // now we wait until we are done...
   fresulta.get (resulta);

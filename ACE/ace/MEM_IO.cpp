@@ -33,7 +33,9 @@ ACE_Reactive_MEM_IO::recv_buf (ACE_MEM_SAP_Node *&buf,
   ACE_TRACE ("ACE_Reactive_MEM_IO::recv_buf");
 
   if (this->shm_malloc_ == nullptr || this->handle_ == ACE_INVALID_HANDLE)
+  {
     return -1;
+  }
 
   ACE_OFF_T new_offset {};
   ssize_t retv = ACE::recv (this->handle_,

@@ -36,7 +36,9 @@ AMH_Servant::parse_args (int &argc, ACE_TCHAR **argv)
           {
             int const time = ACE_OS::atoi (get_opts.opt_arg ());
             if (time >= 0)
+            {
               this->sleep_time_ = time;
+            }
 
             // Remove the option '-s' from argv []
             // to avoid any confusion that might result.

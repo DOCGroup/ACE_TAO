@@ -230,11 +230,15 @@ TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
     // We need to initialize before TAO_default_environment() is called
     // since that call instantiates a TAO_TSS_Singleton.
     if (TAO_Singleton_Manager::instance ()->init () == -1)
+    {
       return -1;
+    }
 
     // Prevent multiple initializations.
     if (++orb_init_count > 1)
+    {
       return 0;
+    }
   }
 
   // Prevent any other thread from going through ORB initialization before the
@@ -281,7 +285,9 @@ TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
          tmpargv,
          global_svc_config_argv,
          true) == -1)
+  {
     return -1;
+  }
 
   bool skip_service_config_open {}; // by default we shouldn't
 
@@ -292,7 +298,9 @@ TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
       if (parse_svcconf_args_i (tmpargc,
               tmpargv,
               global_svc_config_argv) == -1)
+      {
         return -1;
+      }
     }
 
   bool ignore_default_svc_conf_file {};
@@ -302,7 +310,9 @@ TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
           global_svc_config_argv,
           skip_service_config_open,
           ignore_default_svc_conf_file) == -1)
+  {
     return -1;
+  }
 
   // register_global_services_i depends on the parsing of at least the
   // -ORBNegotiateCodesets option, and must be invoked after all the
@@ -470,7 +480,9 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
     ACE_TEXT ("orb-specific services\n")));
 
   if (parse_svcconf_args_i (argc, argv, svc_config_argv) == -1)
+  {
     return -1;
+  }
   // Not a big deal to call open_private_services_i() again (if it was the global one). The SG::open() would not run if it has already been executed.
   // only open the private context if it is not also the global context
   if (pcfg != ACE_Service_Config::global())
@@ -929,7 +941,9 @@ namespace
             arg_shifter.ignore_arg();
 
             if (nullptr != (current_arg = arg_shifter.get_current()))
+            {
               negotiate_codesets = (ACE_OS::atoi (current_arg));
+            }
 
             arg_shifter.ignore_arg();
           }

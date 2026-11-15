@@ -31,7 +31,9 @@ TAO_Protocol_Item::factory (TAO_Protocol_Factory *factory,
   if (owner == 1)
     {
       if (this->owned_factory_.get () != factory)
+      {
         this->owned_factory_.reset (factory);
+      }
     }
   else if (this->owned_factory_.get () != factory)
     {

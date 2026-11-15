@@ -29,7 +29,9 @@ TAO_UIPMC_Connector::open (TAO_ORB_Core *orb_core)
 
   // For the sake of uniformity do
   if (this->create_connect_strategy () == -1)
+  {
     return -1;
+  }
 
   return 0;
 }
@@ -44,13 +46,17 @@ int
 TAO_UIPMC_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 {
   if (endpoint->tag () != IOP::TAG_UIPMC)
+  {
     return -1;
+  }
 
   TAO_UIPMC_Endpoint const *uipmc_endpoint =
     dynamic_cast<TAO_UIPMC_Endpoint const *> (endpoint);
 
   if (uipmc_endpoint == nullptr)
+  {
     return -1;
+  }
 
   ACE_INET_Addr const &remote_address =
     uipmc_endpoint->object_addr ();
@@ -89,7 +95,9 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
     dynamic_cast<TAO_UIPMC_Endpoint *> (desc.endpoint ());
 
   if (uipmc_endpoint == nullptr)
+  {
     return nullptr;
+  }
 
   ACE_INET_Addr const &remote_address =
     uipmc_endpoint->object_addr ();
@@ -321,7 +329,9 @@ TAO_UIPMC_Connector::check_prefix (char const *endpoint)
 
   char const * const separator = std::strchr (endpoint, ':');
   if (separator == nullptr)
+  {
     return -1;
+  }
 
   size_t const slot = separator - endpoint;
 
@@ -329,7 +339,9 @@ TAO_UIPMC_Connector::check_prefix (char const *endpoint)
   // isn't in the IOR then it is not an IOR we can use.
   if (slot == len
       && ACE_OS::strncasecmp (endpoint, protocol, len) == 0)
+  {
     return 0;
+  }
 
   return -1;
   // Failure: not a MIOP IOR

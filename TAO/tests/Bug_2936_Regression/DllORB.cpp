@@ -27,11 +27,15 @@ DllORB::init (int argc, ACE_TCHAR *argv[])
             {
               int const num_threads = ACE_OS::atoi (current_arg);
               if (num_threads >= 1)
+              {
                 thread_count = num_threads;
+              }
               as.consume_arg ();
             }
           else
+          {
             as.ignore_arg ();
+          }
         }
 
       if (failPrePostInit_ < 3)

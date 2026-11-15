@@ -72,7 +72,9 @@ List_Node::List_Node (char const *input, int len)
   if (option[STRCASECMP])
     for (char& ch : this->key)
       if (ACE_OS::ace_isupper (ch))
+      {
         ch = static_cast<char> (ACE_OS::ace_tolower (ch));
+      }
 
   if (option[ALLCHARS])         // Use all the character position in the KEY.
     for (char const ch : this->key)

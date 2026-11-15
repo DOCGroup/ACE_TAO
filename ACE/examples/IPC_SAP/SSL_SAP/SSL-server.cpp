@@ -414,15 +414,21 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_SSL_Context *context = ACE_SSL_Context::instance ();
 
   if (context->certificate ("./dummy.pem", SSL_FILETYPE_PEM) != 0)
+  {
     return -1;
+  }
 
   if (context->private_key ("./key.pem", SSL_FILETYPE_PEM) != 0)
+  {
     return -1;
+  }
 
   u_short port = ACE_DEFAULT_SERVER_PORT;
 
   if (argc > 1)
+  {
     port = ACE_OS::atoi (argv[1]);
+  }
 
   return run_event_loop (port);
 }

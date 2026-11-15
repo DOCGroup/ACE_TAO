@@ -92,7 +92,9 @@ TAO_Offer_Iterator_Collection::
 add_offer_iterator (CosTrading::OfferIterator_ptr offer_iter)
 {
   if (! CORBA::is_nil (offer_iter))
+  {
     this->iters_.push_back (offer_iter);
+  }
 }
 
 CORBA::Boolean
@@ -129,7 +131,9 @@ TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
           CORBA::release (iter);
         }
       else
+      {
         this->iters_.push_front (iter);
+      }
 
       // Merge it with the passed set.
       offset = offers->length ();
@@ -142,7 +146,9 @@ TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
 
   // Determine if we have anything left to offer.
   if (this->iters_.empty ())
+  {
     return_value = false;
+  }
 
   return return_value;
 }

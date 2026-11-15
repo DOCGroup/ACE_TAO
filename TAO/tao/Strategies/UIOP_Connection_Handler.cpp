@@ -69,7 +69,9 @@ int
 TAO_UIOP_Connection_Handler::open (void*)
 {
   if (this->shared_open() == -1)
+  {
     return -1;
+  }
 
   TAO_UIOP_Protocol_Properties protocol_properties;
 
@@ -103,12 +105,16 @@ TAO_UIOP_Connection_Handler::open (void*)
   if (this->set_socket_option (this->peer (),
                                protocol_properties.send_buffer_size_,
                                protocol_properties.recv_buffer_size_) == -1)
+  {
     return -1;
+  }
 
   if (this->transport ()->wait_strategy ()->non_blocking ())
     {
       if (this->peer ().enable (ACE_NONBLOCK) == -1)
+      {
         return -1;
+      }
     }
 
   // Called by the <Strategy_Acceptor> when the handler is completely
@@ -116,7 +122,9 @@ TAO_UIOP_Connection_Handler::open (void*)
   ACE_UNIX_Addr addr;
 
   if (this->peer ().get_remote_addr (addr) == -1)
+  {
     return -1;
+  }
 
   if (TAO_debug_level > 0)
     TAOLIB_DEBUG ((LM_DEBUG,
@@ -128,7 +136,9 @@ TAO_UIOP_Connection_Handler::open (void*)
   // Use C-style cast b/c otherwise we get warnings on lots of
   // compilers
   if (!this->transport ()->post_open ((size_t) this->get_handle ()))
+  {
     return -1;
+  }
 
   this->state_changed (TAO_LF_Event::LFS_SUCCESS,
                        this->orb_core ()->leader_follower ());
@@ -217,7 +227,9 @@ TAO_UIOP_Connection_Handler::add_transport_to_cache ()
 
   // Get the peername.
   if (this->peer ().get_remote_addr (addr) == -1)
+  {
     return -1;
+  }
 
   // Construct an  UIOP_Endpoint object
   TAO_UIOP_Endpoint endpoint (addr);

@@ -144,7 +144,9 @@ TAO::Security::AccessDecision::access_allowed_i (OBJECT_KEY &key,
       access_decision = this->default_allowance_decision_;
       // When collocated is enabled, this overrides the global value
       if (this->default_collocated_decision_)
+      {
         access_decision = true;
+      }
       if (TAO_debug_level >= 3)
         ORBSVCS_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) SL2_AccessDecision::access_decision(%x,%C)"

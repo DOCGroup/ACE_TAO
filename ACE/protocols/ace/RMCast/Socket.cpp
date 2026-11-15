@@ -140,7 +140,9 @@ namespace ACE_RMCast
       // Close signal pipe.
       //
       if (signal_pipe_.read_handle () != ACE_INVALID_HANDLE)
+      {
         signal_pipe_.close ();
+      }
     }
 
   void Socket_Impl::
@@ -164,7 +166,9 @@ namespace ACE_RMCast
       ACE_Time_Value abs_time;
 
       if (timeout)
+      {
         abs_time = ACE_OS::gettimeofday () + *timeout;
+      }
 
       Lock l (mutex_);
 
@@ -173,12 +177,16 @@ namespace ACE_RMCast
           if (timeout)
             {
               if (cond_.wait (&abs_time) != -1)
+              {
                 break;
+              }
             }
           else
             {
               if (cond_.wait () != -1)
+              {
                 break;
+              }
             }
 
           return -1; // errno is already set
@@ -187,7 +195,9 @@ namespace ACE_RMCast
       Message_ptr m;
 
       if (queue_.dequeue_head (m) == -1)
+      {
         ACE_OS::abort ();
+      }
 
       if (queue_.is_empty ())
         {
@@ -206,7 +216,9 @@ namespace ACE_RMCast
         }
 
       if (from)
+      {
         *from = static_cast<From const*> (m->find (From::id))->address ();
+      }
 
       if (m->find (NoData::id) != nullptr)
         {
@@ -229,7 +241,9 @@ namespace ACE_RMCast
       ACE_Time_Value abs_time;
 
       if (timeout)
+      {
         abs_time = ACE_OS::gettimeofday () + *timeout;
+      }
 
       Lock l (mutex_);
 
@@ -238,12 +252,16 @@ namespace ACE_RMCast
           if (timeout)
             {
               if (cond_.wait (&abs_time) != -1)
+              {
                 break;
+              }
             }
           else
             {
               if (cond_.wait () != -1)
+              {
                 break;
+              }
             }
 
           return -1; // errno is already set
@@ -255,10 +273,14 @@ namespace ACE_RMCast
       Message_ptr m;
 
       if (queue_.dequeue_head (m) == -1)
+      {
         ACE_OS::abort ();
+      }
 
       if (queue_.enqueue_head (m) == -1)
+      {
         ACE_OS::abort ();
+      }
 
       if (m->find (NoData::id) != nullptr)
         {
@@ -294,7 +316,9 @@ namespace ACE_RMCast
                             static_cast<From const*> (m->find (From::id))->address ());
 
               if (to == from)
+              {
                 return;
+              }
             }
 
           Lock l (mutex_);

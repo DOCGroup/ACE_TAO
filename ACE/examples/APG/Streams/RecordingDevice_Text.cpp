@@ -169,7 +169,9 @@ int TextListener::play_message (ACE_FILE_Addr &addr)
       ((LM_ERROR, ACE_TEXT ("Invalid message type %d\n"),
         type.get_codec ()), -1);
   if (!file)
+  {
     return -1;
+  }
   int rval = this->play_message (temp);
   file->remove ();
   return rval;
@@ -184,7 +186,9 @@ MessageType *TextListener::record_message (ACE_FILE_Addr &addr)
   c->extra_data_ = &addr;
   c = this->command_stream_->execute (c);
   if (c->numeric_result_ == -1)
+  {
     return nullptr;
+  }
 
   return new MessageType (MessageType::RAWTEXT, addr);
 }

@@ -15,7 +15,9 @@ char *
 Airplane_i::get_plane ()
 {
   if (TAO_debug_level)
+  {
     ACE_DEBUG ((LM_DEBUG, "Airplane_i::get_plane\n"));
+  }
 
   switch (ACE_OS::rand () % 24)
     {

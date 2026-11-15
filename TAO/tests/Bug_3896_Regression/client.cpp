@@ -64,7 +64,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       std::basic_string<ACE_TCHAR> ior {ACE_TEXT ("file://test.ior")};
       bool shutdown_server {};
       if (parse_args (argc, argv, ior, shutdown_server) != 0)
+      {
         return 1;
+      }
 
       constexpr int timeout_secs = 5;
       CORBA::Object_var const obj = orb->resolve_initial_references ("ORBPolicyManager");

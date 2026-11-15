@@ -17,7 +17,9 @@ consume_arg (int argc, ACE_TCHAR *argv[])
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
   if (arg_shifter.is_anything_left ())
+  {
     arg_shifter.consume_arg (1);
+  }
   // Once we initialize an arg_shifter, we must iterate through it all!
   while ((arg_shifter.is_anything_left ()))
     arg_shifter.ignore_arg (1);

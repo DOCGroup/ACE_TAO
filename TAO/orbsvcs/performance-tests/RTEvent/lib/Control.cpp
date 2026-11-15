@@ -42,13 +42,17 @@ Control::join (Federated_Test::Peer_ptr peer)
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
     if (this->peers_count_ == this->peers_expected_)
+    {
       return;
+    }
 
     this->peers_[this->peers_count_++] =
       Federated_Test::Peer::_duplicate (peer);
 
     if (this->peers_count_ < this->peers_expected_)
+    {
       return;
+    }
   }
 
   /// Automatically shutdown the ORB

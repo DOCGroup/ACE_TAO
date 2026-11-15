@@ -226,7 +226,9 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
 
   // Guard against reentrant processing.
   if (this->is_opened_)
+  {
     return 0;
+  }
 
   this->is_opened_ = true;
 
@@ -239,7 +241,9 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
       // If we have to become a daemn and that fails
       // return -1 here
       if (ACE::daemonize () == -1)
+      {
         return -1;
+      }
     }
 
   // Write process id to file.
@@ -261,7 +265,9 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
 
   // Only use STDERR if the caller hasn't already set the flags.
   if (flags == 0)
+  {
     flags = (u_long) ACE_Log_Msg::STDERR;
+  }
 
   const ACE_TCHAR *key = logger_key;
 
@@ -280,7 +286,9 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
   if (log_msg->open (program_name,
                      flags,
                      key) == -1)
+  {
     return -1;
+  }
 
   if (ACE::debug ())
     ACELIB_DEBUG ((LM_STARTUP,
@@ -554,14 +562,20 @@ ACE_Service_Config::fini_svcs ()
 
   // Clear the LM_DEBUG bit from log messages if appropriate
   if (ACE::debug ())
+  {
     ACE_Log_Msg::disable_debug_messages ();
+  }
 
   int result = 0;
   if (ACE_Service_Repository::instance () != nullptr)
+  {
     result = ACE_Service_Repository::instance ()->fini ();
+  }
 
   if (ACE::debug ())
+  {
     ACE_Log_Msg::enable_debug_messages ();
+  }
 
   return result;
 }

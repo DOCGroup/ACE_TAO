@@ -11,13 +11,17 @@ Parse_HTTP_Request::Parse_HTTP_Request (const char *request)
     error_ (0)
 {
   if (request != nullptr)
+  {
     this->init (request);
+  }
 }
 
 Parse_HTTP_Request::~Parse_HTTP_Request ()
 {
   if (this->request_ != nullptr)
+  {
     ACE_OS::free (this->request_);
+  }
 }
 
 void
@@ -104,7 +108,9 @@ Parse_HTTP_Request::init (const char *request)
         }
     }
   else
+  {
     this->error_ = BAD_REQUEST;
+  }
 }
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)

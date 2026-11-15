@@ -146,7 +146,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
       Server_Options options;
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       {
         CORBA::ValueFactoryBase_var const factory = new PersonFactory;
@@ -166,7 +168,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
         obj = poa->id_to_reference (id.in ());
         CORBA::String_var const ior = orb->object_to_string (obj.in ());
         if (write_ior (options.ior_output_file, ior.in ()) != 0)
+        {
           return 1;
+        }
       }
 
       std::cout << "Server: Running..." << std::endl;

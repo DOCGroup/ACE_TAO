@@ -35,7 +35,9 @@ void echo_dgram ()
   size_t buflen = buff.size ();
   ssize_t const recv_cnt = udp.recv (buff.data (), buflen, your_addr);
   if (recv_cnt > 0)
+  {
     udp.send (buff.data (), static_cast<size_t> (buflen), your_addr);
+  }
   udp.close ();
 }
 // Listing 2
@@ -51,12 +53,16 @@ static void show_codgram ()
   ACE_INET_Addr peer_addr {peer};
   ACE_SOCK_CODgram udp {};
   if (0 != udp.open (peer_addr))
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), peer));
+  }
 
   // ...
 
   if (-1 == udp.send (buff.data (), buflen))
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("send")));
+  }
   // Listing 3
 }
 

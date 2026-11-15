@@ -72,12 +72,16 @@ test_i::deactivate_self ()
   PortableServer::ObjectId_var id = poa->servant_to_id (this);
 
   if (debug)
+  {
     ACE_DEBUG ((LM_DEBUG, "(%t) Deactivating servant\n"));
+  }
 
   poa->deactivate_object (id.in ());
 
   if (debug)
+  {
     ACE_DEBUG ((LM_DEBUG, "(%t) Deactivation complete: signaling main thread and going to sleep\n"));
+  }
 
   int result = this->event_.signal ();
   ACE_ASSERT (result == 0);
@@ -86,7 +90,9 @@ test_i::deactivate_self ()
   ACE_OS::sleep (3);
 
   if (debug)
+  {
     ACE_DEBUG ((LM_DEBUG, "(%t) test_i::deactivate_self complete\n"));
+  }
 }
 
 class Activator : public ACE_Task_Base
@@ -132,14 +138,18 @@ int
 Activator::svc ()
 {
   if (debug)
+  {
     ACE_DEBUG ((LM_DEBUG, "(%t) Waiting for deactivation to complete\n"));
+  }
 
   int result = this->event_.wait ();
   ACE_ASSERT (result == 0);
   ACE_UNUSED_ARG (result);
 
   if (debug)
+  {
     ACE_DEBUG ((LM_DEBUG, "(%t) Deactivation complete, trying to activate\n"));
+  }
 
   try
     {
@@ -155,7 +165,9 @@ Activator::svc ()
         }
 
       if (debug)
+      {
         ACE_DEBUG ((LM_DEBUG, "(%t) Activation complete\n"));
+      }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -211,7 +223,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         parse_args (argc, argv);
 
       if (parse_args_result != 0)
+      {
         return parse_args_result;
+      }
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =
@@ -274,12 +288,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           activator2.activate () != 0 ||
           deactivator1.activate () != 0 ||
           deactivator2.activate () != 0)
+      {
         return -1;
+      }
 
       int result = ACE_Thread_Manager::instance ()->wait ();
 
       if (result != 0)
+      {
         return result;
+      }
 
       root_poa->destroy (true, true);
 

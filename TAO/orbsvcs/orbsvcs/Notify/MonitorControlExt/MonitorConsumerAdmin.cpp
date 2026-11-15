@@ -201,7 +201,9 @@ TAO_MonitorConsumerAdmin::get_ec () const
 {
   TAO_MonitorEventChannel* ec = dynamic_cast<TAO_MonitorEventChannel*> (this->ec_.get ());
   if (ec == nullptr)
+  {
     throw CORBA::INTERNAL ();
+  }
   return ec;
 }
 

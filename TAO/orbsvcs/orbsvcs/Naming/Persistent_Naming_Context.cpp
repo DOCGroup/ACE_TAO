@@ -111,11 +111,15 @@ TAO_Persistent_Bindings_Map::open (size_t hash_table_size, ACE_Allocator *alloc)
 
   // If allocation failed ...
   if (hash_map == nullptr)
+  {
     return -1;
+  }
 
   // Initialize allocated hash map through placement new.
   if (open_helper (hash_table_size, hash_map) == -1)
+  {
     this->allocator_->free (hash_map);
+  }
 
   return 0;
 }
@@ -251,7 +255,9 @@ TAO_Persistent_Naming_Context::TAO_Persistent_Naming_Context (PortableServer::PO
   // If a map was provided (i.e., not defaulted) then set it in the
   // persistent_context_
   if (map != nullptr)
+  {
     persistent_context_->set (map, index_->allocator ());
+  }
 }
 
 int
@@ -299,14 +305,18 @@ TAO_Persistent_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
 
   // Verify that a context implementation was created. If not, throw an exception
   if (context_impl == nullptr)
+  {
     throw CORBA::NO_MEMORY ();
+  }
 
   // Put <context_impl> into the unique pointer temporarily, in case next
   // allocation fails.
   std::unique_ptr<TAO_Persistent_Naming_Context> temp (context_impl);
 
   if (context_impl->init (context_size) == -1)
+  {
     throw CORBA::NO_MEMORY ();
+  }
 
   // Insure appropriate cleanup in case of exception conditions ahead.
   context_impl->set_cleanup_level (1);
@@ -315,7 +325,9 @@ TAO_Persistent_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
   if (ind->bind (context_impl->poa_id_.c_str (),
                  context_impl->counter_,
                  context_impl->persistent_context_->map ()) == -1)
+  {
     throw CORBA::INTERNAL ();
+  }
 
   // Insure appropriate cleanup in case of exception conditions ahead.
   context_impl->set_cleanup_level (2);
@@ -354,7 +366,9 @@ TAO_Persistent_Naming_Context::new_context ()
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
   if (this->destroyed_)
+  {
     throw CORBA::OBJECT_NOT_EXIST ();
+  }
 
   // Generate a POA id for the new context.
   char poa_id[BUFSIZ];
@@ -387,7 +401,9 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
   if (this->destroyed_)
+  {
     throw CORBA::OBJECT_NOT_EXIST ();
+  }
 
   // Dynamically allocate hash map iterator.
   HASH_MAP::ITERATOR *hash_iter {};
@@ -420,7 +436,9 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
   if (this->context_->current_size () > how_many)
     n = how_many;
   else
+  {
     n = static_cast<CORBA::ULong> (this->context_->current_size ());
+  }
 
   // Use hash iterator to populate a BindingList with bindings.
   bl->length (n);
@@ -439,7 +457,9 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
         hash_iter->advance ();
 
         if (ITER_SERVANT::populate_binding (hash_entry, bl[i]) == 0)
+        {
           throw CORBA::NO_MEMORY();
+        }
       }
   }
   // Now we are done with the BindingsList, and we can follow up on

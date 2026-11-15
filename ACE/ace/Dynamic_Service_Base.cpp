@@ -45,7 +45,9 @@ ACE_Dynamic_Service_Base::find_i (const ACE_Service_Gestalt* &repo,
     {
       // Check the static repo, too if different
       if (repo == global)
+      {
         break;
+      }
     }
 
   return svc_rec;
@@ -68,7 +70,9 @@ ACE_Dynamic_Service_Base::instance (const ACE_Service_Gestalt* repo,
     {
       type = svc_rec->type ();
       if (type != nullptr)
+      {
         obj = type->object ();
+      }
     }
 
   if (ACE::debug ())

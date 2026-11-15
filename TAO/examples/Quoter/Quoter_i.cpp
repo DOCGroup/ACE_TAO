@@ -27,7 +27,9 @@ Quoter_Factory_i::Quoter_Factory_i (size_t num, PortableServer::POA_ptr poa_ptr)
 int Quoter_Factory_i::init ()
 {
   if (this->quoter_num_ == 0 || this->quoter_num_ > this->quoters_.max_size ())
+  {
     return -1;
+  }
 
   try
     {
@@ -78,12 +80,16 @@ Stock::Quoter_ptr
 Quoter_Factory_i::create_quoter (char const *)
 {
   if (this->quoters_.empty ())
+  {
     throw CORBA::INTERNAL ();
+  }
 
   this->next_quoter_ = (this->next_quoter_ + 1) % this->quoter_num_;
 
   if (TAO_debug_level > 0)
+  {
     ACE_DEBUG ((LM_DEBUG, "Quoter %d Created\n", this->next_quoter_));
+  }
 
   return this->quoters_[this->next_quoter_].get ()->_this ();
 }
@@ -137,7 +143,9 @@ Quoter_i::copy (CosLifeCycle::FactoryFinder_ptr there,
       CosLifeCycle::Factories_var factories =
         there->find_factories (factoryKey);
       if (factories.ptr () == nullptr)
+      {
         throw CosLifeCycle::NoFactory (factoryKey);
+      }
 
       // Now it is known that there is at least one factory.
       Stock::Quoter_var quoter_var;
@@ -199,7 +207,9 @@ Quoter_i::copy (CosLifeCycle::FactoryFinder_ptr there,
         }
 
       if (TAO_debug_level > 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "Quoter copied\n"));
+      }
 
       lifeCycleObject_ptr =
         CosLifeCycle::LifeCycleObject::_duplicate (
@@ -234,7 +244,9 @@ void
 Quoter_i::remove ()
 {
   if (TAO_debug_level > 0)
+  {
     ACE_DEBUG ((LM_DEBUG, "I have been asked to shut down.\n"));
+  }
 
   TAO_ORB_Core_instance ()->orb ()->shutdown ();
 }

@@ -183,7 +183,9 @@ ACE_Capabilities::fillent (const ACE_TCHAR *buf)
         }
 
       if (*buf++ != ACE_TEXT (','))
+      {
         return -1;
+      }
     }
 
   return 0;
@@ -209,7 +211,9 @@ ACE_Capabilities::is_entry (const ACE_TCHAR *name, const ACE_TCHAR *line)
 
       // We have found the required entry?
       if (ACE_OS::strcmp (nextname.c_str (), name) == 0)
+      {
         return true;
+      }
 
       // Skip puntuaction char if neccesary.
       if (*line == ACE_TEXT ('|') || *line == ACE_TEXT (','))
@@ -237,7 +241,9 @@ ACE_Capabilities::getline (FILE *fp, ACE_TString &line)
   if (ch == EOF && line.length () == 0)
     return -1;
   else
+  {
     return 0;
+  }
 }
 
 int
@@ -245,12 +251,16 @@ ACE_Capabilities::getval (const ACE_TCHAR *keyname, ACE_TString &val)
 {
   ACE_CapEntry* cap {};
   if (this->caps_.find (keyname, cap) == -1)
+  {
     return -1;
+  }
 
   ACE_StringCapEntry *scap =
     dynamic_cast<ACE_StringCapEntry *> (cap);
   if (scap == nullptr)
+  {
     return -1;
+  }
 
   val = scap->getval ();
   return 0;
@@ -261,7 +271,9 @@ ACE_Capabilities::getval (const ACE_TCHAR *keyname, int &val)
 {
   ACE_CapEntry *cap {};
   if (this->caps_.find (keyname, cap) == -1)
+  {
     return -1;
+  }
 
   ACE_IntCapEntry *icap =
     dynamic_cast<ACE_IntCapEntry *> (cap);
@@ -275,7 +287,9 @@ ACE_Capabilities::getval (const ACE_TCHAR *keyname, int &val)
     dynamic_cast<ACE_BoolCapEntry *> (cap);
 
   if (bcap == nullptr)
+  {
     return -1;
+  }
 
   val = bcap->getval ();
   return 0;
@@ -327,7 +341,9 @@ ACE_Capabilities::getent (const ACE_TCHAR *fname, const ACE_TCHAR *name)
         if (is_line (newline.c_str ()))
           description += newline;
         else
+        {
           break;
+        }
 
       if (this->is_entry (name, line.c_str()))
         {

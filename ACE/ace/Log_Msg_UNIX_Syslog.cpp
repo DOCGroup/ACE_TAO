@@ -31,7 +31,9 @@ int
 ACE_Log_Msg_UNIX_Syslog::open (const ACE_TCHAR * logger_key)
 {
   if (logger_key == nullptr)
+  {
     logger_key = ACE_Log_Msg::program_name ();
+  }
 
   // Initialize the UNIX syslog facility.  Default the syslog log
   // options LOG_CONS and LOG_PID to be set.  There really should be a
@@ -111,7 +113,9 @@ ACE_Log_Msg_UNIX_Syslog::log (ACE_Log_Record &log_record)
         {
           ACE_TCHAR date_and_time[27];
           if (nullptr == ACE::timestamp (date_and_time, sizeof (date_and_time), true))
+          {
             ACE_OS::strcpy (date_and_time, ACE_TEXT ("<time error>"));
+          }
           const ACE_TCHAR *prio_name =
             ACE_Log_Record::priority_name(ACE_Log_Priority(log_record.type()));
           syslog (syslog_priority,
@@ -173,30 +177,46 @@ ACE_Log_Msg_UNIX_Syslog::convert_log_mask (int lm_mask)
 
   if (ACE_BIT_ENABLED (lm_mask, LM_TRACE)
       || ACE_BIT_ENABLED (lm_mask, LM_DEBUG))
+  {
     ACE_SET_BITS (syslog_mask, LOG_MASK(LOG_DEBUG));
+  }
 
   if (ACE_BIT_ENABLED (lm_mask, LM_STARTUP)
       || ACE_BIT_ENABLED (lm_mask, LM_SHUTDOWN)
       || ACE_BIT_ENABLED (lm_mask, LM_INFO))
+  {
     ACE_SET_BITS (syslog_mask, LOG_MASK(LOG_INFO));
+  }
 
   if (ACE_BIT_ENABLED (lm_mask, LM_NOTICE))
+  {
     ACE_SET_BITS (syslog_mask, LOG_MASK(LOG_NOTICE));
+  }
 
   if (ACE_BIT_ENABLED (lm_mask, LM_ERROR))
+  {
     ACE_SET_BITS (syslog_mask, LOG_MASK(LOG_ERR));
+  }
 
   if (ACE_BIT_ENABLED (lm_mask, LM_WARNING))
+  {
     ACE_SET_BITS (syslog_mask, LOG_MASK(LOG_WARNING));
+  }
 
   if (ACE_BIT_ENABLED (lm_mask, LM_CRITICAL))
+  {
     ACE_SET_BITS (syslog_mask, LOG_MASK(LOG_CRIT));
+  }
 
   if (ACE_BIT_ENABLED (lm_mask, LM_ALERT))
+  {
     ACE_SET_BITS (syslog_mask, LOG_MASK(LOG_ALERT));
+  }
 
   if (ACE_BIT_ENABLED (lm_mask, LM_EMERGENCY))
+  {
     ACE_SET_BITS (syslog_mask, LOG_MASK(LOG_EMERG));
+  }
 
   return syslog_mask;
 }

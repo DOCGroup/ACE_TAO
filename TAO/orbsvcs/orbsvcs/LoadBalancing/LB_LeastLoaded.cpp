@@ -79,7 +79,9 @@ TAO_LB_LeastLoaded::push_loads (
 {
   // Only the first load is used by this load balancing strategy.
   if (loads.length () == 0)
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   CosLoadBalancing::Load load;  // Unused
 
@@ -95,7 +97,9 @@ TAO_LB_LeastLoaded::push_loads (
     CosLoadBalancing::Load & load)
 {
   if (loads.length () == 0)
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   // Only the first load is used by this load balancing strategy.
   CosLoadBalancing::Load const & new_load = loads[0];
@@ -110,7 +114,9 @@ TAO_LB_LeastLoaded::push_loads (
           CosLoadBalancing::Load & previous_load = entry->int_id_;
 
           if (previous_load.id != new_load.id)
+          {
             throw CORBA::BAD_PARAM ();  // Somebody switched
+          }
                                               // LoadIds on us!
 
           previous_load.value =
@@ -151,7 +157,9 @@ TAO_LB_LeastLoaded::get_loads (CosLoadBalancing::LoadManager_ptr load_manager,
                                PortableGroup::Location const & the_location)
 {
   if (CORBA::is_nil (load_manager))
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   CosLoadBalancing::LoadList_var loads =
     load_manager->get_loads (the_location);
@@ -169,13 +177,17 @@ TAO_LB_LeastLoaded::next_member (
     CosLoadBalancing::LoadManager_ptr load_manager)
 {
   if (CORBA::is_nil (load_manager))
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   PortableGroup::Locations_var locations =
     load_manager->locations_of_members (object_group);
 
   if (locations->length () == 0)
+  {
     throw CORBA::TRANSIENT ();
+  }
 
   // @@ RACE CONDITION.  OBJECT GROUP MEMBERSHIP MAY CHANGE AFTER
   //    RETRIEVING LOCATIONS!  HOW DO WE HANDLE THAT?
@@ -219,13 +231,17 @@ TAO_LB_LeastLoaded::analyze_loads (
     CosLoadBalancing::LoadManager_ptr load_manager)
 {
   if (CORBA::is_nil (load_manager))
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   PortableGroup::Locations_var locations =
     load_manager->locations_of_members (object_group);
 
   if (locations->length () == 0)
+  {
     throw CORBA::TRANSIENT ();
+  }
 
   const CORBA::ULong len = locations->length ();
 
@@ -518,7 +534,9 @@ TAO_LB_LeastLoaded::init (PortableGroup::Properties const & props)
 
           // Valid tolerance values are greater than or equal to one.
           if (tolerance < 1)
+          {
             throw PortableGroup::InvalidProperty (property.nam, property.val);
+          }
         }
 
       else if (std::strcmp (property.nam[0].id.in (),
@@ -529,7 +547,9 @@ TAO_LB_LeastLoaded::init (PortableGroup::Properties const & props)
 
           // Dampening range is [0,1).
           if (dampening < 0 || dampening >= 1)
+          {
             throw PortableGroup::InvalidProperty (property.nam, property.val);
+          }
         }
 
       else if (std::strcmp (property.nam[0].id.in (),
@@ -543,7 +563,9 @@ TAO_LB_LeastLoaded::init (PortableGroup::Properties const & props)
   if (!ACE::is_equal (critical_threshold, 0.0f)
       && !ACE::is_equal (reject_threshold, 0.0f)
       && critical_threshold <= reject_threshold)
+  {
     throw PortableGroup::InvalidProperty (ct->nam, ct->val);
+  }
 
   this->properties_ = props;
 
@@ -575,7 +597,9 @@ TAO_LB_LeastLoaded::extract_float_property (
   CORBA::Float & value)
 {
   if (!(property.val >>= value))
+  {
     throw PortableGroup::InvalidProperty (property.nam, property.val);
+  }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

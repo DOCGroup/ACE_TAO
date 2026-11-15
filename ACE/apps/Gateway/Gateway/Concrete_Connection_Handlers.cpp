@@ -104,7 +104,9 @@ Consumer_Handler::nonblk_put (ACE_Message_Block *event)
       return 0;
     }
   else
+  {
     return n;
+  }
 }
 
 ssize_t
@@ -542,7 +544,9 @@ Thr_Consumer_Handler::handle_close (ACE_HANDLE h, ACE_Reactor_Mask m)
   if (in_thread_)
     return 0;
   else
+  {
     return Consumer_Handler::handle_close (h, m);
+  }
 }
 
 // This method should be called only when the Consumer shuts down
@@ -703,7 +707,9 @@ Thr_Supplier_Handler::handle_close (ACE_HANDLE h, ACE_Reactor_Mask m)
   if (in_thread_)
     return 0;
   else
+  {
     return Supplier_Handler::handle_close (h, m);
+  }
 }
 
 int

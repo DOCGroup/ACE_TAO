@@ -151,7 +151,9 @@ TAO::Object_Group_File_Guard::~Object_Group_File_Guard ()
       this->release ();
       // Notify if persistent store was updated.
       if (object_group_.write_occurred_)
+      {
         object_group_.state_written ();
+      }
     }
   catch (TAO::Storable_Exception const &se)
     {
@@ -246,7 +248,9 @@ TAO::PG_Object_Group_Storable::PG_Object_Group_Storable (
     std::unique_ptr<TAO::Storable_Base> stream (this->create_stream ("r"));
 
     if (stream->exists ())
+    {
       stream_exists = true;
+    }
   }
 
   if (stream_exists)
@@ -280,7 +284,9 @@ TAO::PG_Object_Group_Storable::PG_Object_Group_Storable (
     std::unique_ptr<TAO::Storable_Base> stream (this->create_stream ("r"));
 
     if (stream->exists ())
+    {
       stream_exists = true;
+    }
   }
 
   if (stream_exists)
@@ -428,7 +434,9 @@ PortableGroup::ObjectGroupId
 TAO::PG_Object_Group_Storable::get_object_group_id () const
 {
   if (this->group_previously_stored_)
+  {
     return this->group_id_previously_stored_;
+  }
 
   return PG_Object_Group::get_object_group_id ();
 }
@@ -488,7 +496,9 @@ TAO::PG_Object_Group_Storable::read (TAO::Storable_Base & stream)
   if (num_members == 0)
     this->empty_ = true;
   else
+  {
     this->empty_ = false;
+  }
 
   this->clear_members_map ();
 

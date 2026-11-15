@@ -97,7 +97,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Initialize options based on command-line arguments.
       int const parse_args_result = parse_args (argc, argv, options);
       if (parse_args_result != 0)
+      {
         return parse_args_result;
+      }
 
       // Get an object reference from the argument string.
       CORBA::Object_var object =

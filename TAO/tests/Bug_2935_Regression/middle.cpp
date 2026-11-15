@@ -76,7 +76,9 @@ read_ior (ACE_TCHAR const *file_name, std::string &ior)
   std::unique_ptr<FILE, int (*) (FILE *)> input_file (
     ACE_OS::fopen (file_name, "r"), ACE_OS::fclose);
   if (!input_file)
+  {
     return false;
+  }
 
   char buffer[512];
   size_t bytes_read {};

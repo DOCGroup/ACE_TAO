@@ -77,9 +77,13 @@ namespace ACE
                     "/" :
                     this->get_path ().c_str ());
         if (!this->get_query ().empty ())
+        {
           sos << '?' << this->get_query ().c_str ();
+        }
         if (!this->get_fragment ().empty ())
+        {
           sos << '#' << this->get_fragment ().c_str ();
+        }
         return sos.str ();
       }
 
@@ -90,9 +94,13 @@ namespace ACE
             << this->get_authority ().c_str ()
             << this->get_path ().c_str ();
         if (!this->get_query ().empty ())
+        {
           sos << '?' << this->get_query ().c_str ();
+        }
         if (!this->get_fragment ().empty ())
+        {
           sos << '#' << this->get_fragment ().c_str ();
+        }
         return sos.str ();
       }
 

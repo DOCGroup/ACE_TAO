@@ -28,7 +28,9 @@ void
 TAO_EC_Priority_Dispatching::activate ()
 {
   if (!this->tasks_.empty ())
+  {
     return;
+  }
 
   // @@ Query the scheduler to obtain this....
   this->ntasks_ = ACE_Scheduler_MAX_PRIORITIES;
@@ -89,7 +91,9 @@ void
 TAO_EC_Priority_Dispatching::shutdown ()
 {
   if (this->tasks_.empty ())
+  {
     return;
+  }
 
   for (int i {}; i < this->ntasks_; ++i)
     this->tasks_[i]->putq (new TAO_EC_Shutdown_Task_Command);
@@ -116,7 +120,9 @@ TAO_EC_Priority_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                                           TAO_EC_QOS_Info& qos_info)
 {
   if (this->tasks_.empty ())
+  {
     this->activate ();
+  }
 
   int i = qos_info.preemption_priority;
   if (i < 0 || i >= this->ntasks_)

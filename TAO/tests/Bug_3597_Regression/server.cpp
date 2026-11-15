@@ -34,7 +34,9 @@ int
 Backend::open (ACE_TCHAR const *key)
 {
   if (ACE_OS::strcmp (key, mykey) == 0)
+  {
     this->ok_ = true;
+  }
   return 0;
 }
 

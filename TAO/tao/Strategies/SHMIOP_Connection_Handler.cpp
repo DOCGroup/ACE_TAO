@@ -72,7 +72,9 @@ int
 TAO_SHMIOP_Connection_Handler::open (void*)
 {
   if (this->shared_open() == -1)
+  {
     return -1;
+  }
 
   TAO_SHMIOP_Protocol_Properties protocol_properties;
 
@@ -108,21 +110,27 @@ TAO_SHMIOP_Connection_Handler::open (void*)
   if (this->set_socket_option (this->peer (),
                                protocol_properties.send_buffer_size_,
                                protocol_properties.recv_buffer_size_) == -1)
+  {
     return -1;
+  }
 
 #if !defined (ACE_LACKS_TCP_NODELAY)
   if (this->peer ().set_option (ACE_IPPROTO_TCP,
                                 TCP_NODELAY,
                                 std::addressof (protocol_properties.no_delay_),
                                 sizeof (protocol_properties.no_delay_)) == -1)
+  {
     return -1;
+  }
 
 #endif /* ! ACE_LACKS_TCP_NODELAY */
 
   if (this->transport ()->wait_strategy ()->non_blocking ())
     {
       if (this->peer ().enable (ACE_NONBLOCK) == -1)
+      {
         return -1;
+      }
     }
 
   // Called by the <Strategy_Acceptor> when the handler is
@@ -151,7 +159,9 @@ TAO_SHMIOP_Connection_Handler::open (void*)
   // Use C-style cast b/c otherwise we get warnings on lots of
   // compilers
   if (!this->transport ()->post_open ((size_t) this->get_handle ()))
+  {
     return -1;
+  }
 
   // Not needed, anyway
   this->state_changed (TAO_LF_Event::LFS_SUCCESS,
@@ -243,7 +253,9 @@ TAO_SHMIOP_Connection_Handler::add_transport_to_cache ()
 
   // Get the peername.
   if (this->peer ().get_remote_addr (addr) == -1)
+  {
     return -1;
+  }
 
   // Construct an  SHMIOP_Endpoint object
   TAO_SHMIOP_Endpoint endpoint (

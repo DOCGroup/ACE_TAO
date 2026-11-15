@@ -30,9 +30,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Logger_Options options;
   if (argc > 1)
+  {
     options.host = argv[1];
+  }
   if (argc > 2)
+  {
     options.port = static_cast<u_short> (ACE_OS::atoi (argv[2]));
+  }
   if (argc > 3)
     {
       int const parsed_iterations = ACE_OS::atoi (argv[3]);
@@ -48,7 +52,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_INET_Addr addr (options.port, options.host);
 
   if (connector.connect (logger, addr) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")), -1);
+  }
 
   for (size_t i = 0; i < options.max_iterations; ++i)
     {
@@ -93,11 +99,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       iov[1].iov_len  = length;
 
       if (logger.sendv_n (iov.data (), static_cast<int> (iov.size ())) == -1)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"), -1);
+      }
     }
 
   if (logger.close () == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("close")), -1);
+  }
 
   return 0;
 }

@@ -47,7 +47,9 @@ FilterClient::run ()
     { // if we still need to wait for events, run the orb.
       while (!this->done_.load ())
         if (this->orb_->work_pending ())
+        {
           this->orb_->perform_work ();
+        }
     }
 }
 
@@ -88,7 +90,9 @@ FilterClient::resolve_naming_service ()
 
   // Need to check return value for errors.
   if (CORBA::is_nil (naming_obj.in ()))
+  {
     throw CORBA::UNKNOWN ();
+  }
 
   this->naming_context_ =
     CosNaming::NamingContext::_narrow (naming_obj.in ());
@@ -341,7 +345,9 @@ Filter_StructuredPushConsumer::push_structured_event (
               ACE_TEXT ("event count %u\n"), result_count.load ()));
 
   if (++result_count == events_expected_to_receive)
+  {
     this->filter_->done (); // all events received, we're done.
+  }
 }
 
 void

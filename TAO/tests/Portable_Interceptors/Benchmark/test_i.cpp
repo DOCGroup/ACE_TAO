@@ -18,7 +18,9 @@ void
 Secure_Vault_i::authenticate (char const *user)
 {
   if (std::strcmp (user, "root") != 0)
+  {
     throw Test_Interceptors::Invalid ();
+  }
 }
 
 CORBA::Long

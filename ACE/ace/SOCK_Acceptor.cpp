@@ -54,7 +54,9 @@ ACE_SOCK_Acceptor::shared_accept_start (ACE_Time_Value *timeout,
           if (in_blocking_mode
               && ACE::set_flags (handle,
                                  ACE_NONBLOCK) == -1)
+          {
             return -1;
+          }
         }
     }
 
@@ -144,7 +146,9 @@ ACE_SOCK_Acceptor::accept (ACE_SOCK_Stream &new_stream,
         {
           remote_addr->set_size (len);
           if (addr)
+          {
             remote_addr->set_type (addr->sa_family);
+          }
         }
     }
 
@@ -197,7 +201,9 @@ ACE_SOCK_Acceptor::accept (ACE_SOCK_Stream &new_stream,
       // domain sockets.
       if (new_stream.get_handle () != ACE_INVALID_HANDLE
           && remote_addr != nullptr)
+      {
         remote_addr->set_size (len);
+      }
     }
 
   return this->shared_accept_finish (new_stream,
@@ -278,12 +284,16 @@ ACE_SOCK_Acceptor::shared_open (const ACE_Addr &local_sap,
           local_inet_addr.sin_port = 0;
         }
       else
+      {
         local_inet_addr = *reinterpret_cast<sockaddr_in *> (local_sap.get_addr ());
+      }
       if (local_inet_addr.sin_port == 0)
         {
           if (ACE::bind_port (this->get_handle (),
                               ACE_NTOHL (ACE_UINT32 (local_inet_addr.sin_addr.s_addr))) == -1)
+          {
             error = 1;
+          }
         }
       else if (ACE_OS::bind (this->get_handle (),
                              reinterpret_cast<sockaddr *> (&local_inet_addr),
@@ -321,7 +331,9 @@ ACE_SOCK_Acceptor::open (const ACE_Addr &local_sap,
   ACE_TRACE ("ACE_SOCK_Acceptor::open");
 
   if (protocol_family == PF_UNSPEC)
+  {
     protocol_family = local_sap.get_type ();
+  }
 
   if (ACE_SOCK::open (SOCK_STREAM,
                       protocol_family,

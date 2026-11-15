@@ -77,7 +77,9 @@ peer1 (void *)
         ACE_ERROR ((LM_ERROR,
                     "(%t) buffer recv from peer1 failed\n"));
       else
+      {
         conbuf[i] = c;
+      }
     }
 
   conbuf[i] = '\0';

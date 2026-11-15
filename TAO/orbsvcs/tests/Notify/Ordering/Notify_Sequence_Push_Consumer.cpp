@@ -52,7 +52,9 @@ Notify_Sequence_Push_Consumer::_connect (
       properties[2].value <<= this->order_policy_;
     }
   else
+  {
     properties.length (2);
+  }
 
   this->proxy_->set_qos (properties);
   this->proxy_->connect_sequence_push_consumer (objref.in ());
@@ -110,7 +112,9 @@ Notify_Sequence_Push_Consumer::push_structured_events (
         CORBA::Long expected_id = previous_id + 1;
         if (this->order_policy_ == CosNotification::PriorityOrder
             || this->order_policy_ == CosNotification::DeadlineOrder)
+        {
           expected_id = previous_id - 1;
+        }
         if (id != expected_id)
           {
             ACE_ERROR ((LM_ERROR, "Error: Expected:%d Received:%d\n", expected_id, id));
@@ -126,7 +130,9 @@ Notify_Sequence_Push_Consumer::push_structured_events (
           CORBA::Long expected_id = this->previous_first_ + BATCH_SIZE;
           if (this->order_policy_ == CosNotification::PriorityOrder
               || this->order_policy_ == CosNotification::DeadlineOrder)
+          {
             expected_id = this->previous_first_ - BATCH_SIZE;
+          }
           if (first_id != expected_id)
             {
               ACE_ERROR ((LM_ERROR, "Error: Expected:%d Received:%d\n", expected_id, first_id));

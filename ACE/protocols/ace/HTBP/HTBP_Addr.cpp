@@ -26,7 +26,9 @@ ACE::HTBP::Addr::set (u_short port,
                       char const* htid)
 {
   if (htid != nullptr && std::strlen (htid) != 0)
+  {
     return this->set_htid (htid);
+  }
   return this->ACE_INET_Addr::set(port,host);
 }
 
@@ -50,9 +52,13 @@ ACE::HTBP::Addr::addr_to_string (ACE_TCHAR buffer[],
                                  int ipaddr_format) const
 {
   if (this->htid_.length() == 0)
+  {
     return this->ACE_INET_Addr::addr_to_string(buffer,size,ipaddr_format);
+  }
   if (size < htid_.length())
+  {
     return -1;
+  }
   ACE_OS::strncpy (buffer,
                    ACE_TEXT_CHAR_TO_TCHAR(htid_.c_str()),
                    size);

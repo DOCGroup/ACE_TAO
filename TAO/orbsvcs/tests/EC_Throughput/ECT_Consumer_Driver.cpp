@@ -46,7 +46,9 @@ ECT_Consumer_Driver::run (int argc, ACE_TCHAR* argv[])
         root_poa->the_POAManager ();
 
       if (this->parse_args (argc, argv))
+      {
         return 1;
+      }
 
       if (TAO_debug_level > 0)
         {
@@ -119,7 +121,9 @@ ECT_Consumer_Driver::run (int argc, ACE_TCHAR* argv[])
       CORBA::Object_var sched_obj =
         naming_context->resolve (schedule_name);
       if (CORBA::is_nil (sched_obj.in ()))
+      {
         return 1;
+      }
       RtecScheduler::Scheduler_var scheduler =
         RtecScheduler::Scheduler::_narrow (sched_obj.in ());
 
@@ -134,7 +138,9 @@ ECT_Consumer_Driver::run (int argc, ACE_TCHAR* argv[])
       if (CORBA::is_nil (ec_obj.in ()))
         channel = RtecEventChannelAdmin::EventChannel::_nil ();
       else
+      {
         channel = RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in ());
+      }
 
       poa_manager->activate ();
 
@@ -149,7 +155,9 @@ ECT_Consumer_Driver::run (int argc, ACE_TCHAR* argv[])
           this->orb_->perform_work (tv);
           ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 1);
           if (this->active_count_ <= 0)
+          {
             break;
+          }
         }
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 

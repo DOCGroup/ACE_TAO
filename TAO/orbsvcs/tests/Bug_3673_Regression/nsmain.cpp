@@ -158,7 +158,9 @@ TestTask::svc ()
 
       this->namingServiceA_.end ();
       if (!this->options_.shutdown_ns)
+      {
         this->namingServiceB_.end ();
+      }
 
       return 0;
     }

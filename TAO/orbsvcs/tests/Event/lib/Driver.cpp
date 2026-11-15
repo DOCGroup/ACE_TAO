@@ -91,10 +91,14 @@ EC_Driver::run_init (int &argc, ACE_TCHAR* argv[])
   this->initialize_orb_and_poa (argc, argv);
 
   if (this->parse_args (argc, argv))
+  {
     throw CORBA::INTERNAL (TAO::VMCID, CORBA::COMPLETED_NO);
+  }
 
   if (this->verbose ())
+  {
     this->print_args ();
+  }
 
   if (this->pid_file_name_ != 0)
     {
@@ -108,15 +112,21 @@ EC_Driver::run_init (int &argc, ACE_TCHAR* argv[])
     }
 
   if (this->move_to_rt_class () == -1)
+  {
     throw CORBA::INTERNAL (TAO::VMCID, CORBA::COMPLETED_NO);
+  }
 
   this->initialize_ec_impl ();
 
   if (this->allocate_consumers () == -1)
+  {
     throw CORBA::NO_MEMORY (TAO::VMCID, CORBA::COMPLETED_NO);
+  }
 
   if (this->allocate_suppliers () == -1)
+  {
     throw CORBA::NO_MEMORY (TAO::VMCID, CORBA::COMPLETED_NO);
+  }
 
   this->connect_clients ();
 }
@@ -131,12 +141,16 @@ EC_Driver::run_cleanup ()
   this->destroy_ec ();
 
   if (this->verbose ())
+  {
     ACE_DEBUG ((LM_DEBUG, "EC_Driver (%P|%t) channel destroyed\n"));
+  }
 
   this->deactivate_ec ();
 
   if (this->verbose ())
+  {
     ACE_DEBUG ((LM_DEBUG, "EC_Driver (%P|%t) channel deactivated\n"));
+  }
 
   this->cleanup_tasks ();
   this->cleanup_suppliers ();
@@ -328,7 +342,9 @@ EC_Driver::deactivate_ec ()
   }
 
   if (this->verbose ())
+  {
     ACE_DEBUG ((LM_DEBUG, "EC_Driver (%P|%t) EC deactivated\n"));
+  }
 }
 
 void
@@ -410,7 +426,9 @@ EC_Driver::connect_consumers ()
       this->connect_consumer (consumer_admin.in (), i);
     }
   if (this->verbose ())
+  {
     ACE_DEBUG ((LM_DEBUG, "EC_Driver (%P|%t) connected consumer(s)\n"));
+  }
 }
 
 void
@@ -463,7 +481,9 @@ EC_Driver::connect_suppliers ()
     }
 
   if (this->verbose ())
+  {
     ACE_DEBUG ((LM_DEBUG, "EC_Driver (%P|%t) connected supplier(s)\n"));
+  }
 }
 
 void
@@ -509,12 +529,16 @@ void
 EC_Driver::execute_test ()
 {
   if (this->allocate_tasks () == -1)
+  {
     return;
+  }
 
   this->activate_tasks ();
 
   if (this->verbose ())
+  {
     ACE_DEBUG ((LM_DEBUG, "EC_Driver (%P|%t) suppliers are active\n"));
+  }
 
   // Wait for the supplier threads...
   if (ACE_Thread_Manager::instance ()->wait () == -1)
@@ -523,14 +547,18 @@ EC_Driver::execute_test ()
     }
 
   if (this->verbose ())
+  {
     ACE_DEBUG ((LM_DEBUG, "EC_Driver (%P|%t) suppliers finished\n"));
+  }
 }
 
 int
 EC_Driver::allocate_tasks ()
 {
   if (this->tasks_ != 0)
+  {
     return 0;
+  }
 
   ACE_NEW_RETURN (this->tasks_,
                   ACE_Task_Base*[this->n_suppliers_],
@@ -586,52 +614,68 @@ void
 EC_Driver::disconnect_suppliers ()
 {
   if (this->suppliers_ == 0)
+  {
     return;
+  }
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
       this->suppliers_[i]->disconnect ();
     }
   if (this->verbose ())
+  {
     ACE_DEBUG ((LM_DEBUG, "EC_Driver (%P|%t) suppliers disconnected\n"));
+  }
 }
 
 void
 EC_Driver::disconnect_consumers ()
 {
   if (this->consumers_ == 0)
+  {
     return;
+  }
   for (int i = 0; i < this->n_consumers_; ++i)
     {
       this->consumers_[i]->disconnect ();
     }
   if (this->verbose ())
+  {
     ACE_DEBUG ((LM_DEBUG, "EC_Driver (%P|%t) consumers disconnected\n"));
+  }
 }
 
 void
 EC_Driver::shutdown_suppliers ()
 {
   if (this->suppliers_ == 0)
+  {
     return;
+  }
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
       this->suppliers_[i]->shutdown ();
     }
   if (this->verbose ())
+  {
     ACE_DEBUG ((LM_DEBUG, "EC_Driver (%P|%t) suppliers deactivated\n"));
+  }
 }
 
 void
 EC_Driver::shutdown_consumers ()
 {
   if (this->consumers_ == 0)
+  {
     return;
+  }
   for (int i = 0; i < this->n_consumers_; ++i)
     {
       this->consumers_[i]->shutdown ();
     }
   if (this->verbose ())
+  {
     ACE_DEBUG ((LM_DEBUG, "EC_Driver (%P|%t) consumers deactivated\n"));
+  }
 }
 
 void

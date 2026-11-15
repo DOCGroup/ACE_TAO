@@ -656,7 +656,9 @@ LC_TimeoutGuard::~LC_TimeoutGuard ()
         {
           ACE_Time_Value const now (ACE_OS::gettimeofday());
           if (owner_->deferred_timeout_ > now)
+          {
             delay = owner_->deferred_timeout_ - now;
+          }
         }
       ++owner_->token_;
       if (ImR_Locator_i::debug () > 2)
@@ -773,11 +775,15 @@ LiveCheck::handle_timeout (const ACE_Time_Value &,
                       token, this->running_));
     }
   if (!this->running_)
+  {
     return -1;
+  }
 
   LC_TimeoutGuard tg (this, token);
   if (tg.blocked ())
+  {
     return 0;
+  }
 
   LiveEntryMap::iterator le_end = this->entry_map_.end();
   for (LiveEntryMap::iterator le = this->entry_map_.begin();
@@ -856,7 +862,9 @@ LiveCheck::add_server (const char *server,
     }
 
   if (!this->running_)
+  {
     return;
+  }
 
   ACE_CString s (server);
   LiveEntry *entry {};
@@ -1067,7 +1075,9 @@ LiveCheck::add_per_client_listener (LiveListener *l,
                                     ImplementationRepository::ServerObject_ptr ref)
 {
   if (!this->running_)
+  {
     return false;
+  }
 
   LiveEntry *entry {};
   ACE_NEW_RETURN (entry, LiveEntry (this, l->server (), true, ref, 0), false);
@@ -1097,7 +1107,9 @@ bool
 LiveCheck::add_poll_listener (LiveListener *l)
 {
   if (!this->running_)
+  {
     return false;
+  }
 
   LiveEntry *entry {};
   ACE_CString key (l->server());
@@ -1117,7 +1129,9 @@ bool
 LiveCheck::add_listener (LiveListener *l)
 {
   if (!this->running_)
+  {
     return false;
+  }
 
   LiveEntry *entry {};
   ACE_CString key (l->server());
@@ -1135,7 +1149,9 @@ void
 LiveCheck::remove_listener (LiveListener *l)
 {
   if (!this->running_)
+  {
     return;
+  }
 
   LiveEntry *entry {};
   ACE_CString key (l->server());
@@ -1150,7 +1166,9 @@ bool
 LiveCheck::schedule_ping (LiveEntry *entry)
 {
   if (!this->running_)
+  {
     return false;
+  }
 
   LiveStatus const status = entry->status();
   if (status == LS_PING_AWAY || status == LS_DEAD)
@@ -1223,7 +1241,9 @@ LiveStatus
 LiveCheck::is_alive (const char *server)
 {
   if (!this->running_)
+  {
     return LS_DEAD;
+  }
 
   if (this->ping_interval_ == ACE_Time_Value::zero)
     {

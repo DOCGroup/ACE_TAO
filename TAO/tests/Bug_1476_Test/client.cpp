@@ -52,7 +52,9 @@ parse_args (int argc, ACE_TCHAR *argv[], Options &options)
           else if (ACE_OS::strcmp (level, ACE_TEXT("thread")) == 0)
             options.policy_level = Policy_Level::thread;
           else
+          {
             options.policy_level = Policy_Level::object;
+          }
           break;
         }
       case 's':
@@ -61,7 +63,9 @@ parse_args (int argc, ACE_TCHAR *argv[], Options &options)
           if (ACE_OS::strcmp (synch, ACE_TEXT("delayed")) == 0)
             options.synchronization = Synchronization::delayed;
           else
+          {
             options.synchronization = Synchronization::none;
+          }
           break;
         }
 
@@ -91,7 +95,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv, "test");
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var tmp = orb->string_to_object (options.ior);
 
@@ -195,7 +201,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         tcm.find_transport (&desc, transport, busy_count);
       // find_transport adds a reference for each result that contains a transport.
       if (transport != nullptr)
+      {
         transport->remove_reference ();
+      }
 
       switch (find_result)
         {

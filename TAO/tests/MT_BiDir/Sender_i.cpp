@@ -10,7 +10,9 @@ Sender_i::Sender_i (CORBA::ULong no_clients,
 {
   this->receivers_.reset (new (std::nothrow) Receiver_var[no_clients]);
   if (!this->receivers_)
+  {
     throw CORBA::NO_MEMORY ();
+  }
 
   // Okay to have a magic number...
   this->payload_.length (32768);
@@ -27,7 +29,9 @@ Sender_i::receiver_object (Receiver_ptr recv)
                     this->mutex_, -1);
 
   if (this->no_clients_ == this->last_index_)
+  {
     throw Sender::Table_Full ();
+  }
 
   this->receivers_[this->last_index_] =
     Receiver::_duplicate (recv);

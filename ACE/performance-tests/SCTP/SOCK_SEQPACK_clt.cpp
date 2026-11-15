@@ -138,12 +138,16 @@ int sendHeader(ACE_SOCK_SEQPACK_Association & stream) {
   hdrCDR << ACE_OutputCDR::from_boolean (ACE_CDR_BYTE_ORDER);
   hdrCDR << ACE_CDR::ULong(Options_Manager::test_iterations+primerIterations);
   if (!hdrCDR.good_bit())
+  {
     return (0);
+  }
 
   // send the header to the server (HEADER is 8 BYTES LONG)
   size_t bt;
   if (stream.send_n(hdrCDR.begin(), 0,  &bt) == -1)
+  {
     return 0;
+  }
 
   return 1;
 }
@@ -290,7 +294,9 @@ ACE_SCTP::HIST runTest(ACE_SOCK_SEQPACK_Association & stream)
   std::unique_ptr<ACE_CDR::Octet[]> o_arr (
     new (std::nothrow) ACE_CDR::Octet[seqLen]);
   if (!o_arr)
+  {
     return 0;
+  }
 
   return runUnmarshalledOctetTest (std::move (o_arr), seqLen, stream);
 }

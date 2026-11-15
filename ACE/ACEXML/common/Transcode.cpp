@@ -13,12 +13,16 @@ ACEXML_Transcoder::utf162utf8 (ACEXML_UTF16 src,
   // Check for valid argument first...
 
   if (dst == nullptr)
+  {
     return ACEXML_INVALID_ARGS;
+  }
 
   if (src < 0x80)
     {
       if (len < 1)
+      {
         return ACEXML_DESTINATION_TOO_SHORT;
+      }
 
       *dst = static_cast<ACEXML_UTF8> (src);
       return 1;
@@ -26,7 +30,9 @@ ACEXML_Transcoder::utf162utf8 (ACEXML_UTF16 src,
   else if (src < 0x800)
     {
       if (len < 2)
+      {
         return ACEXML_DESTINATION_TOO_SHORT;
+      }
 
       *dst = 0xc0 | (static_cast<ACEXML_UTF8> (src) / 0x40);
       *(dst+1) = 0x80 | (static_cast<ACEXML_UTF8> (src) % 0x40);
@@ -35,11 +41,15 @@ ACEXML_Transcoder::utf162utf8 (ACEXML_UTF16 src,
   else
     {
       if (len < 3)
+      {
         return ACEXML_DESTINATION_TOO_SHORT;
+      }
 
       // Surrogates (0xD800 - 0xDFFF) are not valid unicode values
       if (src >= 0xD800 && src < 0xE000)
+      {
         return ACEXML_IS_SURROGATE;
+      }
 
       *dst = static_cast<ACEXML_UTF8> (0xe0 | (src / 0x1000));
       *(dst+1) = static_cast<ACEXML_UTF8> (0x80 | (src % 0x1000 / 0x40));
@@ -63,10 +73,14 @@ ACEXML_Transcoder::ucs42utf8 (ACEXML_UCS4 src,
   else if (src >= 0x100000 && src < 0x110000)
     {
       if (len < 4)
+      {
         return ACEXML_DESTINATION_TOO_SHORT;
+      }
 
       if (dst == nullptr)
+      {
         return ACEXML_INVALID_ARGS;
+      }
 
       *dst = static_cast<ACEXML_UTF8> (0xf0 | (src / 0x40000));
       *(dst+1) = static_cast<ACEXML_UTF8> (0x80 | (src % 0x40000 / 0x1000));
@@ -83,15 +97,21 @@ ACEXML_Transcoder::ucs42utf16 (ACEXML_UCS4 src,
                                size_t len)
 {
   if (dst == nullptr)
+  {
     return ACEXML_INVALID_ARGS;
+  }
 
   if (src < 0x10000)
     {
       if (len < 1)
+      {
         return ACEXML_DESTINATION_TOO_SHORT;
+      }
 
       if (src >= 0xD800 && src < 0xE000)
+      {
         return ACEXML_NON_UNICODE;     // Surrogates are not valid unicode value
+      }
 
       *dst = static_cast<ACEXML_UTF16> (src);
       return 1;
@@ -100,7 +120,9 @@ ACEXML_Transcoder::ucs42utf16 (ACEXML_UCS4 src,
     // Scalar values are encoded into surrogates
     {
       if (len < 2)
+      {
         return ACEXML_DESTINATION_TOO_SHORT;
+      }
 
       *dst = 0xD800 | (static_cast<ACEXML_UTF16> (src) / 0x400);
       *(dst+1) = 0xDC00 | (static_cast<ACEXML_UTF16> (src) % 0x400);
@@ -117,12 +139,16 @@ ACEXML_Transcoder::surrogate2utf8 (ACEXML_UTF16 high,
                                    size_t len)
 {
   if (len < 3)
+  {
     return ACEXML_DESTINATION_TOO_SHORT;
+  }
 
   if (dst == nullptr ||
       (high >= 0xD800 && high < 0xDC00) ||
       (low >= 0xDC00 && low < 0xE000))
+  {
     return ACEXML_INVALID_ARGS;
+  }
 
   ACEXML_UCS4 src = (high - 0xD800) * 0x400 + (low - 0xDC00) + 0x10000;
   *dst = static_cast<ACEXML_UTF8> (0xD800 | (src / 0x400));
@@ -137,7 +163,9 @@ ACEXML_Transcoder::surrogate2ucs4 (ACEXML_UTF16 high,
 {
   if ((high >= 0xD800 && high < 0xDC00) ||
       (low >= 0xDC00 && low < 0xE000))
+  {
     return ACEXML_INVALID_ARGS;
+  }
 
   dst = (high - 0xD800) * 0x400 + (low - 0xDC00) + 0x10000;
   return ACEXML_SUCCESS;
@@ -170,42 +198,66 @@ ACEXML_Transcoder::utf82ucs4 (const ACEXML_UTF8 *the_src,
     {
       dst = (*(src++) & 0x1f) * 0x40;
       if (++forward > len)
+      {
         return ACEXML_END_OF_SOURCE;
+      }
       if ((*src & 0xC0) != 0x80)
+      {
         return ACEXML_NON_UNICODE;     // Error transcoding unicode scalar
+      }
       dst += *src & 0x3f;
     }
   else if ((*src & 0xF0) == 0xE0)
     {
       dst = (*src++ & 0x0f) * 0x40;
       if (++forward > len)
+      {
         return ACEXML_END_OF_SOURCE;
+      }
       if ((*src & 0xC0) != 0x80)
+      {
         return ACEXML_NON_UNICODE;
+      }
       dst = (dst + (*src++ & 0x3f)) * 0x40;
       if (++forward > len)
+      {
         return ACEXML_END_OF_SOURCE;
+      }
       if ((*src & 0xC0) != 0x80)
+      {
         return ACEXML_NON_UNICODE;
+      }
       dst += *src & 0x3f;
     }
   else if ((*src & 0xF8) == 0xF0)
     {
       dst = (*src++ & 0x0f) * 0x40;
       if (++forward > len)
+      {
         return ACEXML_END_OF_SOURCE;
+      }
       if ((*src & 0xC0) != 0x80)
+      {
         return ACEXML_NON_UNICODE;
+      }
       dst = (dst + (*src++ & 0x3f)) * 0x40;
       if (++forward > len)
+      {
         return ACEXML_END_OF_SOURCE;
+      }
       if ((*src & 0xC0) != 0x80)
+      {
         return ACEXML_NON_UNICODE;
+      }
       dst = (dst + (*src++ & 0x3f)) * 0x40;
       if (++forward > len)
+      {
         return ACEXML_END_OF_SOURCE;
+      }
       if ((*src & 0xC0) != 0x80)
+      {
         return ACEXML_NON_UNICODE;
+      }
       dst += *src & 0x3f;
     }
   else
@@ -272,7 +324,9 @@ ACEXML_Transcoder::utf8s2utf16s (const ACEXML_UTF8 *src,
       if ((forward = ACEXML_Transcoder::utf82ucs4 (src,
                                                    src_len,
                                                    temp)) <= 0)
+      {
         return forward;
+      }
 
       src += forward;
       src_len -= forward;
@@ -280,7 +334,9 @@ ACEXML_Transcoder::utf8s2utf16s (const ACEXML_UTF8 *src,
       if ((forward = ACEXML_Transcoder::ucs42utf16 (temp,
                                                     dst,
                                                     len)) <= 0)
+      {
         return forward;
+      }
 
       total_len += forward;
       dst += forward;
@@ -296,7 +352,9 @@ ACEXML_Transcoder::utf16s2utf8s (const ACEXML_UTF16 *src,
                                  size_t len)
 {
   if (src == nullptr || dst == nullptr)
+  {
     return ACEXML_INVALID_ARGS;
+  }
 
   size_t src_len = 1;
   for (const ACEXML_UTF16 *p = src; *p++ != 0; ++src_len)
@@ -311,7 +369,9 @@ ACEXML_Transcoder::utf16s2utf8s (const ACEXML_UTF16 *src,
       if ((forward = ACEXML_Transcoder::utf162ucs4 (src,
                                                     src_len,
                                                     temp)) <= 0)
+      {
         return forward;
+      }
 
       src += forward;
       src_len -= forward;
@@ -319,7 +379,9 @@ ACEXML_Transcoder::utf16s2utf8s (const ACEXML_UTF16 *src,
       if ((forward = ACEXML_Transcoder::ucs42utf8 (temp,
                                                    dst,
                                                    len)) <= 0)
+      {
         return forward;
+      }
 
       total_len += forward;
       dst += forward;

@@ -204,11 +204,15 @@ run_main (int argc, ACE_TCHAR *argv[])
     {
       int p = priority.priority ();
       if (tasks[i].open ((void *) &p) == -1)
+      {
         break; // Out of enclosing loop.
+      }
 
       // If there are more priorities get the next one...
       if (priority.more ())
+      {
         priority.next ();
+      }
     }
 
   ACE_DEBUG ((LM_DEBUG,

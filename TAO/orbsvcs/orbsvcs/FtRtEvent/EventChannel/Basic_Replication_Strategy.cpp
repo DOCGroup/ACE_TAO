@@ -39,7 +39,9 @@ Basic_Replication_Strategy::check_validity()
       throw FTRT::OutOfSequence(exception);
     }
     else
+    {
       ++this->sequence_num_;
+    }
 }
 
 void twoway_set_update(FtRtecEventChannelAdmin::EventChannel_var successor,
@@ -53,7 +55,9 @@ void twoway_set_update(FtRtecEventChannelAdmin::EventChannel_var successor,
     catch (const CORBA::COMM_FAILURE& ex){
       if (ex.minor() == 6)   finished = false;
       else
+      {
         throw;
+      }
     }
   } while(!finished);
 }
@@ -74,7 +78,9 @@ Basic_Replication_Strategy::replicate_request(
   FtRtecEventChannelAdmin::EventChannel_var successor = info_publisher->successor();
   if (!CORBA::is_nil(successor.in())) {
     if (info_publisher->is_primary())
+    {
       ++this->sequence_num_;
+    }
 
     TAO_FTRTEC::Log(1, ACE_TEXT("replicate_request : sequence no = %d\n"), sequence_num_);
     Request_Context_Repository().set_sequence_number(sequence_num_);
@@ -110,7 +116,10 @@ Basic_Replication_Strategy::add_member(const FTRT::ManagerInfo & info,
     }
     catch (const CORBA::COMM_FAILURE& ex){
       if (ex.minor() == 6) finished = false;
-      else throw;
+      else
+      {
+        throw;
+      }
     }
   } while (!finished);
 }

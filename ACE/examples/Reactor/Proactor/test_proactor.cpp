@@ -150,7 +150,9 @@ Receiver::open (ACE_HANDLE handle,
     // Otherwise, make sure we proceed. Initiate reading the socket
     // stream.
     if (this->initiate_read_stream () == -1)
+    {
       return;
+    }
 }
 
 int
@@ -216,7 +218,9 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 
       // Initiate new read from the stream.
       if (this->initiate_read_stream () == -1)
+      {
         return;
+      }
     }
   else
     {
@@ -408,11 +412,15 @@ Sender::open (const ACE_TCHAR *host,
 
   // Start an asynchronous transmit file
   if (this->transmit_file () == -1)
+  {
     return -1;
+  }
 
   // Start an asynchronous read file
   if (this->initiate_read_file () == -1)
+  {
     return -1;
+  }
 
   return 0;
 }
@@ -478,7 +486,9 @@ Sender::handle_transmit_file (const ACE_Asynch_Transmit_File::Result &result)
 
   this->transmit_file_done_ = 1;
   if (this->stream_write_done_)
+  {
     done = 1;
+  }
 }
 
 int
@@ -545,7 +555,9 @@ Sender::handle_read_file (const ACE_Asynch_Read_File::Result &result)
         {
           // Start an asynchronous read file.
           if (initiate_read_file () == -1)
+          {
             return;
+          }
         }
     }
 }
@@ -598,7 +610,9 @@ Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
         {
           this->stream_write_done_ = 1;
           if (this->transmit_file_done_)
+          {
             done = 1;
+          }
         }
     }
 
@@ -643,7 +657,9 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (parse_args (argc, argv) == -1)
+  {
     return -1;
+  }
 
   Sender sender;
 
@@ -656,7 +672,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
      if (acceptor.open (ACE_INET_Addr (port),
                         initial_read_size,
                         1) == -1)
+     {
        return -1;
+     }
    }
   // If active side
   else if (sender.open (host, port) == -1)

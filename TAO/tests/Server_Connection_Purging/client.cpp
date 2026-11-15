@@ -72,7 +72,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Client_Options options;
   if (parse_args (argc, argv, options) == -1)
+  {
     return -1;
+  }
 
   ACE_Select_Reactor sr;
 
@@ -131,7 +133,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
   if ((iteration_count - purged_handles) > 20)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) Purging hasnt worked at all\n"), -1);
+  }
 
   return 0;
 }

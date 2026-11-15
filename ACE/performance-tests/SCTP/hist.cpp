@@ -75,20 +75,32 @@ void record (double point, hist_t *hist)
 {
   unsigned int bin;
   double incsum;
-  if (point < hist->min) hist->min = point;
-  if (point > hist->max) hist->max = point;
+  if (point < hist->min)
+  {
+    hist->min = point;
+  }
+  if (point > hist->max)
+  {
+    hist->max = point;
+  }
   if (point < hist->first) {
     bin = 0;
     if (hist->max_num_outer > hist->num_outer)
+    {
       hist->outer[hist->num_outer++] = point;
+    }
   }
   else if (point >= hist->last) {
     bin = hist->num_bins+1;
     if (hist->max_num_outer > hist->num_outer)
+    {
       hist->outer[hist->num_outer++] = point;
+    }
   }
   else
+  {
     bin = (unsigned int)(((point - hist->first)*(hist->num_bins))/(hist->last - hist->first)+1);
+  }
 
   hist->hs[bin]++;
   ++hist->num_points;
@@ -117,7 +129,10 @@ void report_to (std::FILE *strm, hist_t const *hist)
   }
   ACE_OS::fprintf(strm, "\n\n\t\t\t\tHistogram %s\n", hist->name.c_str ());
   if (hist->skew) ACE_OS::fprintf(strm, "version: %s\n", HIST_VERSION);
-  else ACE_OS::fprintf(strm, "version: 1.1\n");
+  else
+  {
+    ACE_OS::fprintf(strm, "version: 1.1\n");
+  }
   ACE_OS::fprintf(strm, "minimum: %g\n", hist->min);
   ACE_OS::fprintf(strm, "maximum: %g\n", hist->max);
   ACE_OS::fprintf(strm, "mean: %g\n", mean = hist->sum/hist->num_points);

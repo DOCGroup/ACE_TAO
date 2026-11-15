@@ -68,7 +68,9 @@ namespace {
     if ((current == '9') ||
         (current == RESTART_CHAR) ||
         (current == FINISHED_CHAR))
+    {
       return '0';
+    }
 
     return current + 1;
   }
@@ -596,7 +598,9 @@ Svc_Handler::send (IovecGuard& iovec_array,
   if (expected_num_messages > 1)
     // need to indicate that the message is restarting
     if (this->send(RESTART_CHAR, send_desc) < 1)
+    {
       return -1;
+    }
 
   ssize_t actual_send_status;
 
@@ -705,7 +709,9 @@ Svc_Handler::send (IovecGuard& iovec_array,
       if (send_status == -1)
         {
           if (errno == EWOULDBLOCK)
+          {
             continue;
+          }
 
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) %p, %s remainder send returned ")
@@ -730,7 +736,9 @@ Svc_Handler::send (char send_char, const ACE_TCHAR * const send_desc)
       if (send_status == -1)
         {
           if (errno == EWOULDBLOCK)
+          {
             continue;
+          }
 
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) %p, %s sending character ")
@@ -856,7 +864,9 @@ Svc_Handler::recv_data ()
                                 expected_num_messages,
                                 messages));
                   else
+                  {
                     server_complete = true;
+                  }
 
                   return;
                 }
@@ -1056,7 +1066,9 @@ spawn_threads (ACCEPTOR *acceptor,
                     ACE_TEXT ("maximum wait time of %d msec exceeded\n"),
                                max_wait.msec ()));
       else
+      {
         ACE_OS::perror (ACE_TEXT ("ACE_Thread_Manager::wait"));
+      }
 
       status = -1;
     }
@@ -1102,7 +1114,9 @@ run_main (int , ACE_TCHAR *[])
     }
 
   if (!client_complete || !server_complete)
+  {
     status = 1;
+  }
 
 #  ifdef CLEANUP_PROCESS_MUTEX
   ACE_Process_Mutex::unlink (acceptor.acceptor ().lock ().name ());

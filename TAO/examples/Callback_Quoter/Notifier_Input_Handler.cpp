@@ -34,7 +34,9 @@ Notifier_Input_Handler::init_naming_service ()
   CORBA::ORB_var orb = this->orb_manager_.orb ();
 
   if (this->naming_server_.init (orb.in ()) == -1)
+  {
     return -1;
+  }
 
   // create the name for the naming service
   CosNaming::Name notifier_obj_name (1);
@@ -130,7 +132,9 @@ Notifier_Input_Handler::init (int argc,
   int retval = this->parse_args ();
 
   if (retval != 0)
+  {
     return retval;
+  }
 
   // Register our <Input_Handler> to handle STDIN events, which will
   // trigger the <handle_input> method to process these events.

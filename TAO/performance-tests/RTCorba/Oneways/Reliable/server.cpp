@@ -85,7 +85,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int result = set_rt_mode ();
   if (result != 0)
+  {
     return result;
+  }
 
   try
     {

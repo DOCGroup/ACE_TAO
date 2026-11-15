@@ -46,7 +46,9 @@ ACE_SOCK_SEQPACK_Acceptor::shared_accept_start (ACE_Time_Value *timeout,
           if (in_blocking_mode
               && ACE::set_flags (handle,
                                  ACE_NONBLOCK) == -1)
+          {
             return -1;
+          }
         }
     }
 
@@ -200,11 +202,15 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Addr &local_sap,
           local_inet_addr.sin_port = 0;
         }
       else
+      {
         local_inet_addr = *reinterpret_cast<sockaddr_in *> (local_sap.get_addr ());
+      }
       if (local_inet_addr.sin_port == 0)
         {
           if (ACE::bind_port (this->get_handle ()) == -1)
+          {
             error = 1;
+          }
         }
       else if (ACE_OS::bind (this->get_handle (),
                              reinterpret_cast<sockaddr *> (&local_inet_addr),
@@ -395,7 +401,9 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
               if (ACE_OS::bind (this->get_handle (),
                                 reinterpret_cast<sockaddr *> (local_inet_addrs),
                                 static_cast<int> (name_len)) == -1)
+              {
                 error = 1;
+              }
 #endif /* ACE_HAS_LKSCTP */
             }
 
@@ -433,7 +441,9 @@ ACE_SOCK_SEQPACK_Acceptor::open (const ACE_Addr &local_sap,
   ACE_TRACE ("ACE_SOCK_SEQPACK_Acceptor::open");
 
   if (protocol_family == PF_UNSPEC)
+  {
     protocol_family = local_sap.get_type ();
+  }
 
 #if defined (ACE_HAS_LKSCTP)
   if (ACE_SOCK::open (SOCK_STREAM,
@@ -448,7 +458,9 @@ ACE_SOCK_SEQPACK_Acceptor::open (const ACE_Addr &local_sap,
                       reuse_addr) == -1)
     return -1;
   else
+  {
     return this->shared_open (local_sap, protocol_family, backlog);
+  }
 }
 
 ACE_SOCK_SEQPACK_Acceptor::ACE_SOCK_SEQPACK_Acceptor (const ACE_Addr &local_sap,

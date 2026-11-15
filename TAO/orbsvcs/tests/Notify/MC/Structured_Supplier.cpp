@@ -150,7 +150,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             MonitorTestInterface::_narrow (object.in ());
 
           if (CORBA::is_nil (sig.in ()))
+          {
             ACE_ERROR_RETURN ((LM_ERROR, "Error: Structured Supplier: Narrow to MonitorTestInterface failed.\n"),1);
+          }
           CosNotifyChannelAdmin::SupplierAdmin_var admin =
             create_supplieradmin (ec.in ());
           if (!CORBA::is_nil (admin.in ()))

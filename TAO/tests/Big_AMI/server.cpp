@@ -73,10 +73,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       if (options.debug)
+      {
         ++TAO_debug_level;
+      }
 
       AMI_Test_i ami_test_i (orb.in ());
 

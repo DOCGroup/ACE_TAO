@@ -147,7 +147,9 @@ static void run_server (ACE_HANDLE handle)
   if (Options_Manager::test_enable_nagle)
     nagle=0;
   else
+  {
     nagle=1;
+  }
 
   if (Options_Manager::test_transport_protocol == IPPROTO_SCTP){
     // default - sctp case
@@ -240,7 +242,9 @@ static void run_server (ACE_HANDLE handle)
                 ACE_TEXT ("(%P|%t) %p\n"),
                 ACE_TEXT ("spawn")));
   else
+  {
     args.release ();
+  }
 #else
   (*unmarshalledOctetServer) (args.release ());
 #endif /* ACE_HAS_THREADS */

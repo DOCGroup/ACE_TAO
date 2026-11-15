@@ -13,10 +13,14 @@ TAO_DiffServ_PolicyFactory::create_policy (
     CORBA::Any const &value)
 {
   if (type == TAO::CLIENT_NETWORK_PRIORITY_TYPE)
+  {
     return TAO_Client_Network_Priority_Policy::create (value);
+  }
 
   if (type == TAO::NETWORK_PRIORITY_TYPE)
+  {
     return TAO_Server_Network_Priority_Policy::create (value);
+  }
 
   throw ::CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
 }

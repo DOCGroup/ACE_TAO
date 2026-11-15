@@ -311,7 +311,9 @@ void
 Connection_Manager::connect_to_sender ()
 {
   if (CORBA::is_nil (this->sender_.in ()))
+  {
     return;
+  }
 
   ACE_CString flowname =
     this->sender_name_ +

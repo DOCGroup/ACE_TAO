@@ -40,7 +40,9 @@ int
 ACEXML_XMLFilterImpl::getFeature (const ACEXML_Char *name)
 {
   if (this->parent_ != nullptr)
+  {
     return this->parent_->getFeature (name);
+  }
 
   throw ACEXML_SAXNotRecognizedException (name);
 }
@@ -49,7 +51,9 @@ void *
 ACEXML_XMLFilterImpl::getProperty (const ACEXML_Char *name)
 {
   if (this->parent_ != nullptr)
+  {
     return this->parent_->getProperty (name);
+  }
 
   throw ACEXML_SAXNotRecognizedException (name);
 }
@@ -98,14 +102,18 @@ ACEXML_XMLFilterImpl::characters (const ACEXML_Char *ch,
                                   size_t length)
 {
   if (this->contentHandler_ != nullptr)
+  {
     this->contentHandler_->characters (ch, start, length);
+  }
 }
 
 void
 ACEXML_XMLFilterImpl::endDocument ()
 {
   if (this->contentHandler_ != nullptr)
+  {
     this->contentHandler_->endDocument ();
+  }
 }
 
 void
@@ -123,7 +131,9 @@ void
 ACEXML_XMLFilterImpl::endPrefixMapping (const ACEXML_Char *prefix)
 {
   if (this->contentHandler_ != nullptr)
+  {
     this->contentHandler_->endPrefixMapping (prefix);
+  }
 }
 
 void
@@ -150,21 +160,27 @@ void
 ACEXML_XMLFilterImpl::setDocumentLocator (ACEXML_Locator *locator)
 {
   if (this->contentHandler_ != nullptr)
+  {
     this->contentHandler_->setDocumentLocator (locator);
+  }
 }
 
 void
 ACEXML_XMLFilterImpl::skippedEntity (const ACEXML_Char *name)
 {
   if (this->contentHandler_ != nullptr)
+  {
     this->contentHandler_->skippedEntity (name);
+  }
 }
 
 void
 ACEXML_XMLFilterImpl::startDocument ()
 {
   if (this->contentHandler_ != nullptr)
+  {
     this->contentHandler_->startDocument ();
+  }
 }
 
 void
@@ -227,21 +243,27 @@ void
 ACEXML_XMLFilterImpl::error (ACEXML_SAXParseException &exception)
 {
   if (this->errorHandler_ != nullptr)
+  {
     this->errorHandler_->error (exception);
+  }
 }
 
 void
 ACEXML_XMLFilterImpl::fatalError (ACEXML_SAXParseException &exception)
 {
   if (this->errorHandler_ != nullptr)
+  {
     this->errorHandler_->fatalError (exception);
+  }
 }
 
 void
 ACEXML_XMLFilterImpl::warning (ACEXML_SAXParseException &exception)
 {
   if (this->errorHandler_ != nullptr)
+  {
     this->errorHandler_->warning (exception);
+  }
 }
 
 ACEXML_DTDHandler *

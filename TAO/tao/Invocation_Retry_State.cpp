@@ -113,7 +113,9 @@ bool
 TAO::Invocation_Retry_State::forward_on_exception_increment (int const ef)
 {
   if (!this->forward_on_exception_limit_used_)
+  {
     return false;
+  }
 
   int const count { this->ex_count_map_[ef] };
   Invocation_Retry_Params::exception_limit_map_type::const_iterator const i =
@@ -156,7 +158,9 @@ void
 TAO::Invocation_Retry_State::sleep_at_starting_profile (TAO_Stub &stub) const
 {
   if (stub.at_starting_profile ())
+  {
     this->sleep ();
+  }
 }
 
 void

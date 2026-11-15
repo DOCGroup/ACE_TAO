@@ -48,7 +48,9 @@ Options::init ()
 {
   // Check for default case.
   if (this->message_len_ == 0)
+  {
     this->message_len_ = std::strlen ("TAO");
+  }
 
   this->message_len_ += sizeof (ACE_UINT32);
 
@@ -230,7 +232,9 @@ Options::oneway_client_test (void *)
   char *request = options->shared_client_test (options->port () + 1,
                                                cli_stream);
   if (request == nullptr)
+  {
     return nullptr;
+  }
 
   // This variable is allocated off the stack to obviate the need for
   // locking.
@@ -283,7 +287,9 @@ Options::twoway_client_test (void *)
   char *request = options->shared_client_test (options->port (),
                                                cli_stream);
   if (request == nullptr)
+  {
     return nullptr;
+  }
 
   // This variable is allocated off the stack to obviate the need for
   // locking.
@@ -372,7 +378,9 @@ Options::thr_func ()
   if (this->oneway_ == 0)
     return ACE_THR_FUNC (&Options::twoway_client_test);
   else
+  {
     return ACE_THR_FUNC (&Options::oneway_client_test);
+  }
 }
 
 static int
@@ -390,7 +398,9 @@ run_client ()
                        ACE_TEXT ("spawn_n")),
                       1);
   else
+  {
     ACE_Thread_Manager::instance ()->wait ();
+  }
 #else
   (void) *(OPTIONS::instance ()->thr_func) ();
 #endif /* ACE_HAS_THREADS */
@@ -403,16 +413,22 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_SSL_Context *context = ACE_SSL_Context::instance ();
 
   if (context->certificate ("./dummy.pem", SSL_FILETYPE_PEM) != 0)
+  {
     return -1;
+  }
 
   if (context->private_key ("./key.pem", SSL_FILETYPE_PEM) != 0)
+  {
     return -1;
+  }
 
   // Initialize the logger.
   ACE_LOG_MSG->open (argv[0]);
 
   if (OPTIONS::instance ()->parse_args (argc, argv) == -1)
+  {
     return -1;
+  }
 
   // Run the client
   run_client ();

@@ -224,7 +224,9 @@ void ST_AMH_Server::run_event_loop ()
 
           // when all calls from client have been received, exit
           if (this->servant_->calls_received () == this->num_calls_)
+          {
             return;
+          }
         }
     }
   catch (CORBA::Exception const &)
@@ -297,7 +299,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_TCHAR const *ior_file = ACE_TEXT ("test.ior");
 
   if (parse_args (argc, argv, num_calls, ior, ior_file) != 0)
+  {
     return 1;
+  }
 
   CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
@@ -305,7 +309,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     ST_AMH_Servant servant;
     ST_AMH_Server amh_server (num_calls, ior_file);
     if (amh_server.start_orb_and_poa (orb.in ()) != 0)
+    {
       return 1;
+    }
 
     amh_server.register_servant (&servant);
 
@@ -328,7 +334,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                static_cast<void *> (&amh_server),
                                THR_NEW_LWP | THR_JOINABLE,
                                &server_thread) == -1)
+    {
       ACE_ERROR_RETURN ((LM_ERROR, "Unable to start server thread\n"), 1);
+    }
 
     if (thread_manager->spawn (start_client,
                                static_cast<void *> (&client_args),

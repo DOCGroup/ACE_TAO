@@ -139,7 +139,9 @@ TAO::PG_Group_List_Store::PG_Group_List_Store (
     std::unique_ptr<TAO::Storable_Base> stream (this->create_stream ("r"));
 
     if (stream->exists ())
+    {
       stream_exists = true;
+    }
   }
 
   if (stream_exists)
@@ -173,7 +175,9 @@ TAO::PG_Group_List_Store::add (PortableGroup::ObjectGroupId id)
                                           this->group_ids_.end (),
                                           id);
   if (it != this->group_ids_.end())
+  {
     return -1;
+  }
   this->group_ids_.insert (id);
   this->write (fg.peer ());
   return 0;
@@ -187,7 +191,9 @@ TAO::PG_Group_List_Store::remove (PortableGroup::ObjectGroupId id)
                                     this->group_ids_.end (),
                                     id);
   if (it == this->group_ids_.end ())
+  {
     return -1;
+  }
   this->group_ids_.erase (it);
   this->write (fg.peer ());
   return 0;
@@ -251,9 +257,13 @@ TAO::PG_Group_List_Store::list_obsolete ()
   // TODO: Update if obsolete flag is set based on CORBA call.
   std::unique_ptr<TAO::Storable_Base> stream (this->create_stream ("r"));
   if (!stream->exists ())
+  {
     throw CORBA::INTERNAL ();
+  }
   if (stream->open () != 0)
+  {
     throw CORBA::INTERNAL ();
+  }
   return this->is_obsolete (stream->last_changed ());
 }
 

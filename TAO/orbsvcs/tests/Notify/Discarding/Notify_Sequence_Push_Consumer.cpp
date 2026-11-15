@@ -147,8 +147,12 @@ Notify_Sequence_Push_Consumer::push_structured_events (
       // We expect to get another batch with the correct one.
     }
   else
+  {
     this->client_.consumer_done (this);
+  }
 
   if (this->count_ > 2)
+  {
     ACE_ERROR ((LM_ERROR, "Error : Too many batches received.\n"));
+  }
 }

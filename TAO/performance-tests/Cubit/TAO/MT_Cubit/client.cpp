@@ -85,7 +85,9 @@ Client_i::init (int argc, ACE_TCHAR *argv[])
   int result;
   result = GLOBALS::instance ()->sched_fifo_init ();
   if (result == -1)
+  {
     return result;
+  }
   VX_VME_INIT;
   FORCE_ARGV (this->argc_,this->argv_);
   // Make sure we've got plenty of socket handles.  This call will use
@@ -127,7 +129,9 @@ Client_i::run ()
         }
     }
   else
+  {
     this->do_thread_per_rate_test ();
+  }
 }
 
 #if defined (ACE_HAS_VXTHREADS)
@@ -453,7 +457,9 @@ Client_i::activate_util_thread ()
         this->low_priority_);
     }
   else
+  {
     this->util_thread_->close ();
+  }
   return 0;
 }
 
@@ -629,7 +635,9 @@ Client_i::do_priority_inversion_test ()
   // Create and activate the high priority client.
   int result = this->activate_high_client ();
   if (result < 0)
+  {
     return result;
+  }
 
   ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ready_mon, this->ts_->ready_mtx_,-1));
 
@@ -641,12 +649,16 @@ Client_i::do_priority_inversion_test ()
   result = this->activate_low_client ();
 
   if (result < 0)
+  {
     return result;
+  }
 
   // Activate the utilization thread if necessary.
   result = this->activate_util_thread ();
   if (result < 0)
+  {
     return result;
+  }
 
   // Wait for all the client threads to be initialized before going
   // any further.
@@ -821,7 +833,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   int result = client.init (argc,argv);
 
   if (result < 0)
+  {
     return result;
+  }
 
   // Run the tests.
   client.run ();

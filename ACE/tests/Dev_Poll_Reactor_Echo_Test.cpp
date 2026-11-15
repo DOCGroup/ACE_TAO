@@ -150,7 +150,9 @@ Client::handle_output (ACE_HANDLE handle)
   else if (bytes_sent == 0)
     return -1;
   else
+  {
     this->sent.append (buffer.substr (0, bytes_sent));
+  }
 
   return -1;
 }
@@ -264,7 +266,9 @@ Server::handle_input (ACE_HANDLE handle)
       else
         {
           if (send_i (buffer, bytes_read) == -1)
+          {
             return -1;
+          }
         }
     }
 }
@@ -412,7 +416,9 @@ public:
                                                              perms);
 
     if (result != 0)
+    {
       return result;
+    }
 
     ACE_TCHAR hostname[MAXHOSTNAMELEN];
     if (remote_addr.get_host_name (hostname,

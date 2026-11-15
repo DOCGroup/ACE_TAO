@@ -148,7 +148,9 @@ FilterClient::wait_ready ()
     if (cons_ids->length () + sup_ids->length () == 3)
       break;
     else
+    {
       ACE_OS::sleep (1);
+    }
   }
 }
 
@@ -171,7 +173,9 @@ FilterClient::wait_consumer_complete ()
         ++i;
       }
       else
+      {
         break;
+      }
     }
     catch (const CORBA::OBJECT_NOT_EXIST&)
     {
@@ -202,7 +206,9 @@ FilterClient::run_consumer ()
     { // if we still need to wait for events, run the orb.
       while (!this->done_)
         if (this->orb_->work_pending ())
+        {
           this->orb_->perform_work ();
+        }
     }
 
   //ACE_DEBUG ((LM_DEBUG, "(%P|%t)destroying consumer admins ... \n"));
@@ -248,7 +254,9 @@ FilterClient::resolve_naming_service ()
 
   // Need to check return value for errors.
   if (CORBA::is_nil (naming_obj.in ()))
+  {
     throw CORBA::UNKNOWN ();
+  }
 
   this->naming_context_ =
     CosNaming::NamingContext::_narrow (naming_obj.in ());
@@ -665,7 +673,9 @@ Filter_StructuredPushConsumer::push_structured_event
 
     if (g_result_count.fetch_add (1, std::memory_order_relaxed) + 1 ==
         EVENTS_EXPECTED_TO_RECEIVE)
+    {
       this->filter_->done (); // all events received, we're done.
+    }
 }
 
 void

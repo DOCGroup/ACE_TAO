@@ -60,7 +60,9 @@ ACE_FIFO_Recv_Msg::ACE_FIFO_Recv_Msg (const ACE_TCHAR *fifo_name,
                                      perms,
                                      persistent,
                                      sa) == -1)
+  {
     ACELIB_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_FIFO_Recv_Msg")));
+  }
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

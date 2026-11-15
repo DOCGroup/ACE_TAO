@@ -64,7 +64,9 @@ TAO_FT_Service_Callbacks::object_is_nil (CORBA::Object_ptr const obj)
 
   // If the profile count is zero then return true
   if (count == 0)
+  {
     return true;
+  }
 
   // Otherwise, check whether any profile is not nil.
   for (CORBA::ULong cnt {};
@@ -75,7 +77,9 @@ TAO_FT_Service_Callbacks::object_is_nil (CORBA::Object_ptr const obj)
         obj->_stubobj ()->base_profiles ().get_profile (cnt);
 
       if (profile != nullptr)
+      {
         return false;
+      }
     }
 
   // If it reaches here then it should be nill
@@ -160,7 +164,9 @@ TAO_FT_Service_Callbacks::hash_ft (TAO_Profile * const p, CORBA::ULong const max
   tc.tag = IOP::TAG_FT_GROUP;
 
   if (this_comp.get_component (tc) == 0)
+  {
     return 0;
+  }
 
   // extract the group component
   TAO_InputCDR cdr (reinterpret_cast<char const *> (tc.component_data.get_buffer ()),
@@ -190,7 +196,9 @@ TAO_FT_Service_Callbacks::is_permanent_forward_condition (CORBA::Object_ptr cons
   sc.context_id = IOP::FT_GROUP_VERSION;
 
   if (service_context.get_context (sc) == 0)
-      return false;
+  {
+    return false;
+  }
 
   IOP::TaggedComponent tc;
   tc.tag = IOP::TAG_FT_GROUP;
@@ -232,14 +240,18 @@ TAO_FT_Service_Callbacks::is_permanent_forward_condition (CORBA::Object_ptr cons
       TAO_MProfile const& mprofile = stub->base_profiles ();
 
       if (mprofile.profile_count () == 0)
+      {
         return false;
+      }
 
       // assuming group-attributes are set for all profiles, check only the first profile
       TAO_Tagged_Components const& tagged_components =
               mprofile.get_profile (0)->tagged_components ();
 
       if (tagged_components.get_component (tc) == 0)
+      {
         return false;
+      }
 
       return true; /* true */
     }
@@ -252,7 +264,9 @@ TAO_FT_Service_Callbacks::raise_comm_failure (
 {
   if (this->restart_policy_check (context_list,
                                   profile))
+  {
     return TAO::TAO_INVOKE_RESTART;
+  }
 
   // As the right tags are not found close the connection and throw an
   // exception
@@ -270,7 +284,9 @@ TAO_FT_Service_Callbacks::raise_transient_failure (
 {
   if (this->restart_policy_check (service,
                                   profile))
+  {
     return TAO::TAO_INVOKE_RESTART;
+  }
 
   // Unlike COMM_FAILURE do not raise an exception since the
   // completion status is not known and no assumption can be made.
@@ -304,11 +320,15 @@ TAO_FT_Service_Callbacks::restart_policy_check (
                                 service_list[i].context_data.length ());
               CORBA::Boolean byte_order {};
               if (!(cdr >> ACE_InputCDR::to_boolean (byte_order)))
+              {
                 return false;
+              }
               cdr.reset_byte_order (static_cast <int> (byte_order));
               FT::FTRequestServiceContext ftsrc;
               if (!(cdr >> ftsrc))
+              {
                 return false;
+              }
 
               return (ftsrc.expiration_time > now ());
             }

@@ -52,7 +52,9 @@ parse_args (int argc, ACE_TCHAR *argv[], InsecureReferences_Options &options)
       else if (ACE_OS::strstr (argv[c], ACE_TEXT ("-ORB")) == argv[c])
         {
           if (c + 1 < argc && argv[c + 1][0] != ACE_TEXT ('-'))
+          {
             ++c;
+          }
         }
       else
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -86,7 +88,9 @@ gen_objref (ACE_TCHAR *argv[], InsecureReferences_Options const &options)
       orb_argv.add (first_endpoint.data ()) == -1 ||
       orb_argv.add (second_option) == -1 ||
       orb_argv.add (second_endpoint.data ()) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Failed to build ORB argument list\n")), 1);
+  }
 
   int orb_argc = orb_argv.argc ();
   CORBA::ORB_var orb {};
@@ -143,8 +147,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   InsecureReferences_Options options;
   if (parse_args (argc, argv, options) != 0)
+  {
     return 1;
+  }
   if (options.as_server)
+  {
     return gen_objref (argv, options);
+  }
   return parse_objref (argc, argv, options);
 }

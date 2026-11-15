@@ -133,7 +133,9 @@ Input_Device_Wrapper_Base::svc ()
       // run the reactor event loop unti we get a timeout or something
       // happens in a registered upcall.
       if (current_count_ > 0)
+      {
         --current_count_;
+      }
 
       timeout = ACE_Time_Value (0, input_period_);
       reactor_.run_event_loop (timeout);
@@ -174,7 +176,9 @@ Bounded_Packet_Relay::Bounded_Packet_Relay (ACE_Thread_Manager *input_task_mgr,
             Bounded_Packet_Relay::DEFAULT_LWM)
 {
   if (input_task_mgr_ == nullptr)
+  {
     input_task_mgr_ = ACE_Thread_Manager::instance ();
+  }
 }
 
 Bounded_Packet_Relay::~Bounded_Packet_Relay ()
@@ -185,7 +189,9 @@ Bounded_Packet_Relay::~Bounded_Packet_Relay ()
     {
       ACE_Message_Block *msg {};
       if (queue_.dequeue_head (msg) < 0)
+      {
         break;
+      }
       ACE_Message_Block_Unique_Ptr message {msg};
     }
 
@@ -205,7 +211,9 @@ Bounded_Packet_Relay::send_input ()
 
   if (queue_.dequeue_head (item,
                            &immediate) < 0)
+  {
     return 1;
+  }
 
   // If a message block was dequeued, send it to the output device.
 
@@ -237,7 +245,9 @@ Bounded_Packet_Relay::start_transmission (u_long packet_count,
 
   // If a transmission is already in progress, just return.
   if (is_active_)
+  {
     return 1;
+  }
 
   // Set transmission in progress flag true.
   is_active_ = true;
@@ -254,7 +264,9 @@ Bounded_Packet_Relay::start_transmission (u_long packet_count,
     {
       ACE_Message_Block *msg {};
       if (queue_.dequeue_head (msg) < 0)
+      {
         break;
+      }
       ACE_Message_Block_Unique_Ptr message {msg};
     }
 
@@ -325,7 +337,9 @@ Bounded_Packet_Relay::end_transmission (Transmission_Status status)
 
   // If a transmission is not already in progress, just return.
   if (! is_active_)
+  {
     return 1;
+  }
 
   // Set transmission in progress flag false.
   is_active_ = false;
@@ -352,7 +366,9 @@ Bounded_Packet_Relay::end_transmission (Transmission_Status status)
     {
       ACE_Message_Block *msg {};
       if (queue_.dequeue_head (msg) < 0)
+      {
         break;
+      }
       ACE_Message_Block_Unique_Ptr message {msg};
     }
 
@@ -377,7 +393,9 @@ Bounded_Packet_Relay::report_statistics ()
 
   // If a transmission is already in progress, just return.
   if (is_active_)
+  {
     return 1;
+  }
 
   // Calculate duration of trasmission.
   ACE_Time_Value duration (transmission_end_);

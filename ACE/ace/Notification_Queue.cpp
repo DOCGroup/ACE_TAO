@@ -28,7 +28,9 @@ ACE_Notification_Queue::open()
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->notify_queue_lock_, -1);
 
   if (!this->free_queue_.is_empty ())
+  {
     return 0;
+  }
 
   return allocate_more_buffers();
 }
@@ -81,7 +83,9 @@ ACE_Notification_Queue::allocate_more_buffers()
   std::unique_ptr<ACE_Notification_Queue_Node[]> safe_temp (temp);
 
   if (this->alloc_queue_.enqueue_head (temp) == -1)
+  {
     return -1;
+  }
 
   safe_temp.release ();
 
@@ -103,7 +107,9 @@ ACE_Notification_Queue::purge_pending_notifications(
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->notify_queue_lock_, -1);
 
   if (this->notify_queue_.is_empty ())
+  {
     return 0;
+  }
 
   int number_purged = 0;
   ACE_Notification_Queue_Node * node = notify_queue_.head();

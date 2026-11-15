@@ -51,7 +51,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Options options;
   if (parse_args (argc, argv, options) == -1)
+  {
     return -1;
+  }
 
   try
     {

@@ -21,7 +21,9 @@ Quoter_Factory_Finder_Server::~Quoter_Factory_Finder_Server ()
       factory_Finder_Name[0].id = CORBA::string_dup ("IDL_Quoter");
       factory_Finder_Name[1].id = CORBA::string_dup ("Quoter_Factory_Finder");
       if (!CORBA::is_nil (this->quoterNamingContext_var_.in ()))
+      {
         this->quoterNamingContext_var_->unbind (factory_Finder_Name);
+      }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -61,10 +63,14 @@ Quoter_Factory_Finder_Server::init (int argc,
       int const result = this->orb_manager_.activate_poa_manager ();
 
       if (result == -1)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "activate_poa_manager"), -1);
+      }
 
       if (this->parse_args () != 0)
+      {
         return -1;
+      }
 
       Quoter_Factory_Finder_i *factory_finder {};
       ACE_NEW_RETURN (factory_finder,
@@ -79,11 +85,15 @@ Quoter_Factory_Finder_Server::init (int argc,
 
       // Print the IOR.
       if (this->debug_level_ >= 2)
+      {
         ACE_DEBUG ((LM_DEBUG, "Factory Finder: IOR is: <%C>\n", str.in ()));
+      }
 
       // Register the Quoter Factory Finder with the Naming Service
       if (this->debug_level_ >= 2)
+      {
         ACE_DEBUG ((LM_DEBUG,"Factory Finder: Trying to get a reference to the Naming Service.\n"));
+      }
 
       // Get the Naming Service object reference.
       exception_message = "While resolving the Name Service";

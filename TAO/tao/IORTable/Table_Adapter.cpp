@@ -77,7 +77,9 @@ TAO_Table_Adapter::dispatch (TAO::ObjectKey &key,
       return TAO_Adapter::DS_FORWARD;
     }
   else
+  {
     return TAO_Adapter::DS_MISMATCHED_KEY;
+  }
 }
 
 char const *

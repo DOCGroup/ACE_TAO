@@ -10,7 +10,9 @@ void
 Receiver_Stats::accumulate (Receiver_Stats const &rhs)
 {
   if (rhs.samples_count_ == 0)
+  {
     return;
+  }
 
   if (this->samples_count_ == 0)
     {
@@ -26,9 +28,13 @@ Receiver_Stats::accumulate (Receiver_Stats const &rhs)
   this->samples_count_ += rhs.samples_count_;
 
   if (this->min_ > rhs.min_)
+  {
     this->min_ = rhs.min_;
+  }
   if (this->max_ < rhs.max_)
+  {
     this->max_ = rhs.max_;
+  }
 
   this->sum_  += rhs.sum_;
   this->sum2_ += rhs.sum2_;

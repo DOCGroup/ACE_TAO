@@ -123,7 +123,9 @@ ImR_Activator_i::register_with_imr (ImplementationRepository::Activator_ptr acti
   try
     {
       if (this->debug_ > 1)
+      {
         ORBSVCS_DEBUG( (LM_DEBUG, "(%P|%t) ImR Activator: Contacting ImplRepoService...\n"));
+      }
 
 #if defined (ACE_WIN32)
       // On Windows the notify of a death of a child process requires the
@@ -161,7 +163,9 @@ ImR_Activator_i::register_with_imr (ImplementationRepository::Activator_ptr acti
           this->registration_token_ = locator_->register_activator (name_.c_str (), activator);
 
           if (debug_ > 0)
+          {
             ORBSVCS_DEBUG((LM_DEBUG, "(%P|%t) ImR Activator: Registered with ImR\n"));
+          }
 
           return;
         }
@@ -177,7 +181,9 @@ ImR_Activator_i::register_with_imr (ImplementationRepository::Activator_ptr acti
     }
 
   if (debug_ > 0)
+  {
     ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) ImR Activator: Not registered with ImR\n"));
+  }
 }
 
 int
@@ -227,7 +233,9 @@ ImR_Activator_i::init_with_orb (CORBA::ORB_ptr orb, const Activator_Options& opt
       CORBA::String_var ior = this->orb_->object_to_string (activator.in ());
 
       if (this->debug_ > 0)
+      {
         ORBSVCS_DEBUG((LM_DEBUG, "(%P|%t) ImR Activator: Starting <%C>\n", name_.c_str ()));
+      }
 
       this->register_with_imr (activator.in ()); // no throw
 
@@ -286,7 +294,9 @@ ImR_Activator_i::fini ()
   try
     {
       if (debug_ > 1)
+      {
         ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) ImR Activator: Shutting down...\n"));
+      }
 
 #if defined (ACE_WIN32)
       // Stop our process watcher task
@@ -326,7 +336,9 @@ ImR_Activator_i::fini ()
       this->orb_->destroy ();
 
       if (debug_ > 0)
+      {
         ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) ImR Activator: Shut down successfully\n"));
+      }
     }
   catch (const CORBA::Exception& ex)
     {

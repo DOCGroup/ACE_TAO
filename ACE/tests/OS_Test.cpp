@@ -128,7 +128,9 @@ rename_test ()
                   ACE_TEXT ("Rename test 1: old_file still there\n")));
     }
   if (result == 0)
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Rename when dest. exists: success\n")));
+  }
 
   // Now test 2 - rename when the new file does not exist. If test 1 worked,
   // the old_file is now new_file and there is no old_file.
@@ -152,7 +154,9 @@ rename_test ()
                   ACE_TEXT ("Rename test 2: old_file still there\n")));
     }
   else
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Rename when dest. gone: success\n")));
+  }
 
   ACE_OS::unlink (new_file);
   ACE_OS::unlink (old_file);
@@ -653,7 +657,9 @@ getpwnam_r_test ()
 
   const char* login = getlogin ();
   if (login == nullptr)
+  {
     login = "root";
+  }
 
   if (ACE_OS::getpwnam_r (login,
                           &pwd,
@@ -709,7 +715,9 @@ version_test ()
               compile_time_check ? ACE_TEXT ("OK") : ACE_TEXT ("FAIL")));
 
   if(run_time_check && compile_time_check)
+  {
     return 0;
+  }
   return 1;
 }
 
@@ -1625,16 +1633,24 @@ run_main (int, ACE_TCHAR *[])
   int result;
 
   if ((result = access_test ()) != 0)
+  {
     status = result;
+  }
 
   if ((result = rename_test ()) != 0)
+  {
     status = result;
+  }
 
   if ((result = string_emulation_test ()) != 0)
+  {
     status = result;
+  }
 
   if ((result = snprintf_test (ACE_OS::snprintf)) != 0)
+  {
     status = result;
+  }
 
 #if defined (ACE_HAS_VSNPRINTF_EMULATION)
   if ((result = snprintf_test (snprintf_emulation)) != 0)
@@ -1645,61 +1661,99 @@ run_main (int, ACE_TCHAR *[])
 #endif
 
   if ((result = getpwnam_r_test ()) != 0)
+  {
     status = result;
+  }
 
   if ((result = ctime_r_test ()) != 0)
+  {
     status = result;
+  }
 
   if ((result = string_strsncpy_test ()) != 0)
-      status = result;
+  {
+    status = result;
+  }
 
   if ((result = strsignal_test ()) != 0)
-      status = result;
+  {
+    status = result;
+  }
 
   if ((result = cpu_info_test ()) != 0)
-      status = result;
+  {
+    status = result;
+  }
 
   if ((result = pagesize_test ()) != 0)
-      status = result;
+  {
+    status = result;
+  }
 
   if ((result = ceilf_test ()) != 0)
-      status = result;
+  {
+    status = result;
+  }
 
   if ((result = floorf_test ()) != 0)
-      status = result;
+  {
+    status = result;
+  }
 
   if ((result = ceil_test ()) != 0)
-      status = result;
+  {
+    status = result;
+  }
 
   if ((result = floor_test ()) != 0)
-      status = result;
+  {
+    status = result;
+  }
 
   if ((result = ceill_test ()) != 0)
-      status = result;
+  {
+    status = result;
+  }
 
   if ((result = floorl_test ()) != 0)
-      status = result;
+  {
+    status = result;
+  }
 
   if ((result = log2_test ()) != 0)
-      status = result;
+  {
+    status = result;
+  }
 
   if ((result = last_error_test ()) != 0)
-      status = result;
+  {
+    status = result;
+  }
 
   if ((result = ace_ctype_test ()) != 0)
-      status = result;
+  {
+    status = result;
+  }
 
   if ((result = swab_test ()) != 0)
-      status = result;
+  {
+    status = result;
+  }
 
   if ((result = compiler_test ()) != 0)
-      status = result;
+  {
+    status = result;
+  }
 
   if ((result = version_test ()) != 0)
-      status = result;
+  {
+    status = result;
+  }
 
   if ((result = gai_strerror_test   ()) != 0)
-      status = result;
+  {
+    status = result;
+  }
 
   ACE_END_TEST;
   return status;

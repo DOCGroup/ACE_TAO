@@ -71,7 +71,9 @@ RPS_Monitor::loads ()
   if (elapsed_time == ACE_Time_Value::zero)
     load_list[0].value = 0;
   else
+  {
     load_list[0].value = request_count / elapsed_time.msec () * 1000;
+  }
 
   // Strictly for debugging or
   ACE_DEBUG ((LM_DEBUG, "%f\n", load_list[0].value));

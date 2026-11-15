@@ -52,7 +52,9 @@ TestListener::~TestListener ()
     }
 
   if (!CORBA::is_nil (this->structured_push_consumer.in ()) && !CORBA::is_nil (this->root_poa.in ()))
+  {
     this->root_poa->deactivate_object (this->object_id.in ());
+  }
 }
 
 void

@@ -15,11 +15,15 @@ ACE_Remote_Name_Space::open (const ACE_TCHAR *servername, u_short port)
 
   // Initialize Addr
   if (servaddr.set (port, servername) == -1)
+  {
     return -1;
+  }
 
   // Connect to Name Server process.
   if (this->ns_proxy_.open (servaddr) == -1)
+  {
     return -1;
+  }
 
   return 0;
 }
@@ -34,7 +38,9 @@ ACE_Remote_Name_Space::ACE_Remote_Name_Space (const ACE_TCHAR *hostname,
 {
   ACE_TRACE ("ACE_Remote_Name_Space::ACE_Remote_Name_Space");
   if (this->open (hostname, port) == -1)
+  {
     ACELIB_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_Remote_Name_Space::ACE_Remote_Name_Space")));
+  }
 }
 
 int
@@ -93,12 +99,16 @@ ACE_Remote_Name_Space::resolve (const ACE_NS_WString &name,
                             nullptr, 0, nullptr, 0);
 
   if (this->ns_proxy_.send_request (request) == -1)
+  {
     return -1;
+  }
 
   ACE_Name_Request reply;
 
   if (this->ns_proxy_.recv_reply (reply) == -1)
+  {
     return -1;
+  }
 
   ACE_NS_WString temp (reply.value (), reply.value_len () / sizeof (ACE_WCHAR_T));
   value = temp;
@@ -140,7 +150,9 @@ ACE_Remote_Name_Space::list_names (ACE_WSTRING_SET &set,
                             pattern_len,
                             nullptr, 0, nullptr, 0);
   if (this->ns_proxy_.send_request (request) == -1)
+  {
     return -1;
+  }
 
   ACE_Name_Request reply (0, nullptr, 0, nullptr, 0, nullptr, 0, nullptr);
 
@@ -173,7 +185,9 @@ ACE_Remote_Name_Space::list_values (ACE_WSTRING_SET &set,
                             pattern_len,
                             nullptr, 0, nullptr, 0);
   if (this->ns_proxy_.send_request (request) == -1)
+  {
     return -1;
+  }
 
   ACE_Name_Request reply (0, nullptr, 0, nullptr, 0, nullptr, 0, nullptr);
 
@@ -208,7 +222,9 @@ ACE_Remote_Name_Space::list_types (ACE_WSTRING_SET &set,
                             nullptr, 0, nullptr, 0);
 
   if (this->ns_proxy_.send_request (request) == -1)
+  {
     return -1;
+  }
 
   ACE_Name_Request reply (0, nullptr, 0, nullptr, 0, nullptr, 0, nullptr);
 
@@ -242,7 +258,9 @@ ACE_Remote_Name_Space::list_name_entries (ACE_BINDING_SET &set,
                             nullptr, 0, nullptr, 0);
 
   if (this->ns_proxy_.send_request (request) == -1)
+  {
     return -1;
+  }
 
   ACE_Name_Request reply (0, nullptr, 0, nullptr, 0, nullptr, 0, nullptr);
 
@@ -263,7 +281,9 @@ ACE_Remote_Name_Space::list_name_entries (ACE_BINDING_SET &set,
                                   value,
                                   reply.type ());
           if (set.insert (entry) == -1)
+          {
             return -1;
+          }
         }
     }
   return 0;
@@ -282,7 +302,9 @@ ACE_Remote_Name_Space::list_value_entries (ACE_BINDING_SET &set,
                             nullptr, 0, nullptr, 0);
 
   if (this->ns_proxy_.send_request (request) == -1)
+  {
     return -1;
+  }
 
   ACE_Name_Request reply (0, nullptr, 0, nullptr, 0, nullptr, 0, nullptr);
 
@@ -303,7 +325,9 @@ ACE_Remote_Name_Space::list_value_entries (ACE_BINDING_SET &set,
                                   value,
                                   reply.type());
           if (set.insert (entry) == -1)
+          {
             return -1;
+          }
         }
     }
   return 0;
@@ -322,7 +346,9 @@ ACE_Remote_Name_Space::list_type_entries (ACE_BINDING_SET &set,
                             nullptr, 0, nullptr, 0);
 
   if (this->ns_proxy_.send_request (request) == -1)
+  {
     return -1;
+  }
 
   ACE_Name_Request reply (0, nullptr, 0, nullptr, 0, nullptr, 0, nullptr);
 
@@ -343,7 +369,9 @@ ACE_Remote_Name_Space::list_type_entries (ACE_BINDING_SET &set,
                                   value,
                                   reply.type ());
           if (set.insert (entry) == -1)
-              return -1;
+          {
+            return -1;
+          }
         }
     }
   return 0;

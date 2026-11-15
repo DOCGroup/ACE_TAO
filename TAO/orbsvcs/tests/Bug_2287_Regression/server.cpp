@@ -81,7 +81,9 @@ make_iogr (TAO_IOP::TAO_IOR_Manipulation_ptr iorm,
   CORBA::Boolean const has_property = iorm->set_property (&iogr_prop, new_ref.in ());
 
   if (has_property)
+  {
     iorm->set_primary (&iogr_prop, new_ref.in (), new_ref.in ());
+  }
 
   return new_ref._retn ();
 }
@@ -134,7 +136,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                               policies);
 
       if (parse_args (options, argc, argv) != 0)
+      {
         return 1;
+      }
 
       Hello *hello_impl {};
       ACE_NEW_RETURN (hello_impl,
@@ -183,7 +187,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                              options.ior_output_file),
                             1);
         if (std::fprintf (output_file.get (), "%s", iorgr_string.in ()) < 0)
+        {
           ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot write IOR to output file\n")), 1);
+        }
       }
 
       temp_initializer->set_server_iogr (iogr.in ());

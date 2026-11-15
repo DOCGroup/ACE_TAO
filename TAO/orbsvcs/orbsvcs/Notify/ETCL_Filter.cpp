@@ -105,13 +105,17 @@ TAO_Notify_ETCL_Filter::~TAO_Notify_ETCL_Filter ()
   catch (const CORBA::Exception&)
     {
       if (TAO_debug_level)
+      {
         ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("Error in Filter dtor\n")));
+      }
 
       // @@ eat exception.
     }
 
   if (TAO_debug_level > 1)
+  {
     ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("Filter Destroyed\n")));
+  }
 }
 
 char*
@@ -145,7 +149,9 @@ TAO_Notify_ETCL_Filter::add_constraint_i (CosNotifyFilter::ConstraintID cnstr_id
                 ACE_TEXT("Added an empty constraint to filter\n")));
 
   if (this->constraint_expr_list_.bind (cnstr_id, notify_constr_expr) == -1)
+  {
     throw CORBA::INTERNAL ();
+  }
 
   auto_expr.release ();
 
@@ -189,7 +195,9 @@ TAO_Notify_ETCL_Filter::add_constraint_i
   }
 
   if (this->constraint_expr_list_.bind (cnstr_id, notify_constr_expr) == -1)
+  {
     throw CORBA::INTERNAL ();
+  }
 
   auto_expr.release ();
 }
@@ -294,7 +302,9 @@ TAO_Notify_ETCL_Filter::modify_constraints (
           CosNotifyFilter::ConstraintID cnstr_id = ++this->constraint_expr_ids_;
 
           if (constraint_expr_list_.bind (cnstr_id, constr_saved[index]) == -1)
+          {
             throw CORBA::NO_RESOURCES ();
+          }
         }
 
       throw;
@@ -340,7 +350,9 @@ TAO_Notify_ETCL_Filter::get_constraints (
     {
       if (this->constraint_expr_list_.find (id_list[index],
                                             notify_constr_expr) == -1)
+      {
         throw CosNotifyFilter::ConstraintNotFound (id_list[index]);
+      }
 
       infoseq[index].constraint_expression =
         notify_constr_expr->constr_expr;

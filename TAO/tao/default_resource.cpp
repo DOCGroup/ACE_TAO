@@ -54,10 +54,14 @@ void
 TAO_Codeset_Parameters::apply_to (TAO_Codeset_Descriptor_Base *csd)
 {
   if (csd == nullptr)
+  {
     return;
+  }
 
   if (this->native_set_)
-      csd->ncs (this->native ());
+  {
+    csd->ncs (this->native ());
+  }
 
   for (std::basic_string<ACE_TCHAR> const& translator : this->translators_)
     {
@@ -71,7 +75,9 @@ TAO_Codeset_Parameters::native (const ACE_TCHAR* n)
   if (n == nullptr)
     this->native_.clear ();
   else
+  {
     this->native_ = n;
+  }
 
   this->native_set_ = n != nullptr;
 }
@@ -176,7 +182,9 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
     // Parse thro' and find the number of Parsers to be loaded.
     if (ACE_OS::strcasecmp (argv[curarg],
                             ACE_TEXT("-ORBIORParser")) == 0)
+    {
       ++this->parser_names_count_;
+    }
 
     ++curarg;
 
@@ -211,7 +219,9 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
             else if (ACE_OS::strcasecmp (name, ACE_TEXT("1")) == 0)
               this->reactor_mask_signals_= 1;
             else
+            {
               this->report_option_value_error (ACE_TEXT("-ORBReactorMaskSignals"), name);
+            }
           }
       }
 
@@ -235,7 +245,9 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                             argv[curarg]));
               }
             else
+            {
               item.release ();
+            }
           }
       }
 
@@ -245,7 +257,9 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
       {
         ++curarg;
         if (curarg < argc)
-            this->char_codeset_parameters_.native (argv[curarg]);
+        {
+          this->char_codeset_parameters_.native (argv[curarg]);
+        }
       }
 
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -253,7 +267,9 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
       {
         ++curarg;
         if (curarg < argc)
-            this->wchar_codeset_parameters_.native (argv[curarg]);
+        {
+          this->wchar_codeset_parameters_.native (argv[curarg]);
+        }
       }
 
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -261,7 +277,9 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
       {
         ++curarg;
         if (curarg < argc)
-            this->char_codeset_parameters_.add_translator (argv[curarg]);
+        {
+          this->char_codeset_parameters_.add_translator (argv[curarg]);
+        }
       }
 
     /// CodeSet Translators
@@ -270,7 +288,9 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
       {
         ++curarg;
         if (curarg < argc)
-            this->wchar_codeset_parameters_.add_translator (argv[curarg]);
+        {
+          this->wchar_codeset_parameters_.add_translator (argv[curarg]);
+        }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_TEXT("-ORBConnectionPurgingStrategy")) == 0)
@@ -298,7 +318,9 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
               this->connection_purging_type_ =
                   TAO_Resource_Factory::NOOP;
             else
+            {
               this->report_option_value_error (ACE_TEXT("-ORBConnectionPurgingStrategy"), name);
+            }
           }
       }
    else if (ACE_OS::strcasecmp (argv[curarg],
@@ -308,7 +330,9 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
         if (curarg < argc)
             this->cache_maximum_ = ACE_OS::atoi (argv[curarg]);
         else
+        {
           this->report_option_value_error (ACE_TEXT("-ORBConnectionCacheMax"), argv[curarg]);
+        }
       }
    else if (ACE_OS::strcasecmp (argv[curarg],
                                 ACE_TEXT("-ORBConnectionCachePurgePercentage")) == 0)
@@ -352,7 +376,9 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                 this->cached_connection_lock_type_ = TAO_NULL_LOCK;
               }
             else
+            {
               this->report_option_value_error (ACE_TEXT("-ORBConnectionCacheLock"), name);
+            }
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -372,7 +398,9 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                 this->resource_usage_strategy_ = TAO_LAZY;
               }
             else
+            {
               this->report_option_value_error (ACE_TEXT("-ORBResourceUsage"), name);
+            }
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -393,7 +421,9 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                                          ACE_TEXT("blocking")) == 0)
               this->flushing_strategy_type_ = TAO_BLOCKING_FLUSHING;
             else
+            {
               this->report_option_value_error (ACE_TEXT("-ORBFlushingStrategy"), name);
+            }
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -418,7 +448,9 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
             if (tmp == 0)
               this->drop_replies_ = false;
             else
+            {
               this->drop_replies_ = true;
+            }
           }
         else
           this->report_option_value_error (ACE_TEXT("-ORBDropRepliesDuringShutdown"),
@@ -490,7 +522,9 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
         if (curarg < argc)
             this->transport_idle_timeout_ = ACE_OS::atoi (argv[curarg]);
         else
+        {
           this->report_option_value_error (ACE_TEXT("-ORBTransportIdleTimeout"), argv[curarg]);
+        }
       }
     else if (ACE_OS::strncmp (argv[curarg],
                               ACE_TEXT ("-ORB"),
@@ -634,7 +668,9 @@ TAO_Default_Resource_Factory::load_default_protocols ()
 
       if (TAO::details::load_protocol_factory <TAO_IIOP_Protocol_Factory> (
           this->protocol_factories_, "IIOP_Factory") == -1)
+      {
         return -1;
+      }
 #endif /* TAO_HAS_IIOP && TAO_HAS_IIOP != 0 */
 
   return 0;
@@ -820,7 +856,9 @@ TAO_Default_Resource_Factory::use_local_memory_pool (bool flag)
   this->use_local_memory_pool_ = flag;
 
   if (this->output_cdr_allocator_type_ == DEFAULT)
+  {
     this->output_cdr_allocator_type_ = LOCAL_MEMORY_POOL;
+  }
 }
 
 ACE_Allocator *
@@ -1043,7 +1081,9 @@ int
 TAO_Default_Resource_Factory::locked_transport_cache ()
 {
   if (this->cached_connection_lock_type_ == TAO_NULL_LOCK)
+  {
     return 0;
+  }
 
   return 1;
 }

@@ -71,7 +71,9 @@ ACE_SV_Semaphore_Complex::open (key_t k,
   ACE_TRACE ("ACE_SV_Semaphore_Complex::open");
 #ifdef ACE_HAS_SYSV_IPC
   if (k == IPC_PRIVATE)
+  {
     return -1;
+  }
 #endif
 
   this->key_ = k;
@@ -92,7 +94,9 @@ ACE_SV_Semaphore_Complex::open (key_t k,
              perms | ACE_SV_Semaphore_Complex::ACE_CREATE);
 
           if (this->internal_id_ == -1)
+          {
             return -1; // permission problem or tables full
+          }
 
           // When the <ACE_SV_Semaphore_Complex> is created, we know
           // that the value of all 3 members is 0.  Get a lock on the
@@ -113,7 +117,9 @@ ACE_SV_Semaphore_Complex::open (key_t k,
       while (result == -1 && (errno == EINVAL || errno == EIDRM));
 
       if (result == -1)
+      {
         return -1;
+      }
 
       // Get the value of the process counter. If it equals 0, then no
       // one has initialized the ACE_SV_Semaphore yet.
@@ -140,7 +146,9 @@ ACE_SV_Semaphore_Complex::open (key_t k,
           else
             for (u_short i = 0; i < nsems; ++i)
               if (this->control (SETVAL, initial_value, i) == -1)
+              {
                 return -1;
+              }
         }
 
       // Decrement the process counter and then release the lock.
@@ -152,7 +160,9 @@ ACE_SV_Semaphore_Complex::open (key_t k,
     {
       this->internal_id_ = ACE_OS::semget (this->key_, 2 + nsems, 0);
       if (this->internal_id_ == -1)
+      {
         return -1;                      // doesn't exist or tables full
+      }
 
       // Decrement the process counter. We don't need a lock to do this.
       if (ACE_OS::semop (this->internal_id_,
@@ -192,7 +202,9 @@ ACE_SV_Semaphore_Complex::close ()
 
 #ifdef ACE_HAS_SYSV_IPC
   if (this->key_ == (key_t) - 1 || this->internal_id_ == -1)
+  {
     return -1;
+  }
 #endif
 
   // The following semop() first gets a lock on the ACE_SV_Semaphore,
@@ -201,14 +213,18 @@ ACE_SV_Semaphore_Complex::close ()
   if (ACE_OS::semop (this->internal_id_,
                      &ACE_SV_Semaphore_Complex::op_close_[0],
                      3) == -1)
+  {
     return -1;
+  }
 
   // Now that we have a lock, read the value of the process counter to
   // see if this is the last reference to the ACE_SV_Semaphore. There
   // is a race condition here - see the comments in create ().
 
   if ((semval = ACE_SV_Semaphore_Simple::control (GETVAL, 0, 1)) == -1)
+  {
     return -1;
+  }
 
   if (semval > ACE_SV_Semaphore_Complex::BIGCOUNT_)
     return -1;
@@ -233,7 +249,9 @@ ACE_SV_Semaphore_Complex::ACE_SV_Semaphore_Complex (key_t k,
 {
   ACE_TRACE ("ACE_SV_Semaphore_Complex::ACE_SV_Semaphore_Complex");
   if (this->open (k, flags, initial_value, nsems, perms) == -1)
+  {
     ACELIB_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_SV_Semaphore_Complex")));
+  }
 }
 
 ACE_SV_Semaphore_Complex::ACE_SV_Semaphore_Complex (const char *name,
@@ -248,20 +266,26 @@ ACE_SV_Semaphore_Complex::ACE_SV_Semaphore_Complex (const char *name,
 
 #ifdef ACE_HAS_SYSV_IPC
   if (name != nullptr)
+  {
     key = this->name_2_key (name);
+  }
 #else
   ACE_UNUSED_ARG (name);
 #endif
 
   if (this->open (key, flags, initial_value, nsems, perms) == -1)
+  {
     ACELIB_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_SV_Semaphore_Complex")));
+  }
 }
 
 ACE_SV_Semaphore_Complex::~ACE_SV_Semaphore_Complex ()
 {
   ACE_TRACE ("ACE_SV_Semaphore_Complex::~ACE_SV_Semaphore_Complex");
   if (this->internal_id_ >= 0)
+  {
     this->close ();
+  }
 }
 
 ACE_SV_Semaphore_Complex::ACE_SV_Semaphore_Complex ()

@@ -76,7 +76,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
       Client_Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
       CORBA::Object_var object = orb->string_to_object (options.ior);
       null_cipher_test (orb.in (), object.in (), options.ior);
       orb->destroy ();

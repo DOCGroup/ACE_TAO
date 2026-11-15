@@ -111,7 +111,10 @@ AST_UnionBranch::dump (ACE_OSTREAM_TYPE &o)
       ul->dump (o);
 
       this->dump_i (o, ":\n");
-      if (i != l - 1) idl_global->indent ()->skip_to (o);
+      if (i != l - 1)
+      {
+        idl_global->indent ()->skip_to (o);
+      }
     }
 
   idl_global->indent ()->increase ();

@@ -123,7 +123,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Parse arguments.
       Server_Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return -1;
+      }
 
       // RootPOA.
       object =
@@ -144,7 +146,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                          orb.in (),
                          &servant,
                          simple_servant_ior_file) != 0)
+      {
         return -1;
+      }
 
       object =
         orb->resolve_initial_references ("NetworkPriorityMappingManager");
@@ -204,7 +208,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                          orb.in (),
                          &servant,
                          diffserv_servant_ior_file) != 0)
+      {
         return -1;
+      }
 
       // Activate POA manager.
       poa_manager->activate ();

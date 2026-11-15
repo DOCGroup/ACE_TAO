@@ -53,7 +53,9 @@ consumer (void *args)
       int result = msg_queue->dequeue_head (mb);
 
       if (result == -1)
+      {
         break;
+      }
 
       ++local_count;
 

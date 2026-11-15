@@ -90,7 +90,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       constexpr std::array<IOR_Equivalence_Test, 35> tests {{
         // A plain IOR is never equivalent to an IOGR; the plain endpoints differ too.
@@ -135,7 +137,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       for (IOR_Equivalence_Test const &test : tests)
         {
           if (!check_is_equivalent (orb.in (), test.ior1, test.ior2, test.expected_result))
+          {
             status = 1;
+          }
         }
 
       orb->destroy ();

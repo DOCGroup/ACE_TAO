@@ -30,12 +30,16 @@ FIFO_Recv_Handler::FIFO_Recv_Handler ()
   // Make sure to open the FIFO with the "persistent" flag enabled
   // (which is the default).
   if (this->fifo_reader_.open (ACE_DEFAULT_RENDEZVOUS) == -1)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")));
+  }
 
   // Register with the Reactor.
   if (ACE_Reactor::instance ()->register_handler
       (this, ACE_Event_Handler::READ_MASK) == -1)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("register_handler")));
+  }
 }
 
 ACE_HANDLE

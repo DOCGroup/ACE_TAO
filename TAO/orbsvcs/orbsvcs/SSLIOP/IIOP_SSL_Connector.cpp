@@ -31,7 +31,9 @@ TAO::IIOP_SSL_Connector::open (TAO_ORB_Core *orb_core)
 
   // Create our connect strategy
   if (this->create_connect_strategy () == -1)
+  {
     return -1;
+  }
 
   // Our connect creation strategy
   CONNECT_CREATION_STRATEGY *connect_creation_strategy {};
@@ -66,13 +68,17 @@ int
 TAO::IIOP_SSL_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 {
   if (endpoint->tag () != IOP::TAG_INTERNET_IOP)
+  {
     return -1;
+  }
 
   TAO_IIOP_Endpoint *iiop_endpoint =
     dynamic_cast<TAO_IIOP_Endpoint *> (endpoint);
 
   if (iiop_endpoint == nullptr)
+  {
     return -1;
+  }
 
   ACE_INET_Addr const &remote_address = iiop_endpoint->object_addr ();
 
@@ -109,7 +115,9 @@ TAO::IIOP_SSL_Connector::make_connection (
     dynamic_cast<TAO_IIOP_Endpoint *> (desc.endpoint ());
 
   if (iiop_endpoint == nullptr)
+  {
     return nullptr;
+  }
 
   ACE_INET_Addr const &remote_address =
     iiop_endpoint->object_addr ();

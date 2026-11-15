@@ -74,7 +74,9 @@ Time_Handler::handle_timeout (const ACE_Time_Value &tv,
 {
   long current_count = static_cast<long> (reinterpret_cast<size_t> (arg));
   if (current_count >= 0)
+  {
     ACE_TEST_ASSERT (current_count == the_count);
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("[%x] Timer id %d with count #%d|%d timed out at %d!\n"),

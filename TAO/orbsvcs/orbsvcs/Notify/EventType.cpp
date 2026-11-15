@@ -87,7 +87,9 @@ TAO_Notify_EventType&
 TAO_Notify_EventType::operator=(const TAO_Notify_EventType& event_type)
 {
   if (this == std::addressof (event_type))
+  {
     return *this;
+  }
 
   this->init_i (event_type.event_type_.domain_name.in (),event_type.event_type_.type_name.in ());
 

@@ -153,7 +153,9 @@ client (void *arg)
 cleanup:
   cli_stream.close ();
   if (in_fd != ACE_INVALID_HANDLE)
+  {
     (void) ACE_OS::close (in_fd);
+  }
 
   return nullptr;
 }

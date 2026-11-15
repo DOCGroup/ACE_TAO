@@ -88,7 +88,9 @@ int Vb::valid () const
 Vb &Vb::operator= (Vb const &vb)
 {
    if (this == std::addressof (vb))
+   {
      return *this;
+   }
 
    std::unique_ptr<SnmpSyntax> value_copy {
      vb.iv_vb_value_ != nullptr ? vb.iv_vb_value_->clone () : nullptr
@@ -194,7 +196,9 @@ int Vb::get_value (SnmpInt32 &i)
      return SNMP_CLASS_SUCCESS;
    }
    else
+   {
      return SNMP_CLASS_INVALID;
+   }
 }
 
 int Vb::get_value (SnmpUInt32 &u)
@@ -227,7 +231,9 @@ int Vb::get_value (Gauge32 &g)
      return SNMP_CLASS_SUCCESS;
    }
    else
+   {
      return SNMP_CLASS_INVALID;
+   }
 }
 
 int Vb::get_value (Counter32 &c)
@@ -239,7 +245,9 @@ int Vb::get_value (Counter32 &c)
      return SNMP_CLASS_SUCCESS;
    }
    else
+   {
      return SNMP_CLASS_INVALID;
+   }
 }
 
 int Vb::get_value (Counter64 &c)
@@ -251,7 +259,9 @@ int Vb::get_value (Counter64 &c)
      return SNMP_CLASS_SUCCESS;
    }
    else
+   {
      return SNMP_CLASS_INVALID;
+   }
 }
 
 int Vb::get_value (TimeTicks &t)
@@ -263,7 +273,9 @@ int Vb::get_value (TimeTicks &t)
      return SNMP_CLASS_SUCCESS;
    }
    else
+   {
      return SNMP_CLASS_INVALID;
+   }
 }
 
 int Vb::get_value (OctetStr &s)
@@ -275,7 +287,9 @@ int Vb::get_value (OctetStr &s)
      return SNMP_CLASS_SUCCESS;
    }
    else
+   {
      return SNMP_CLASS_INVALID;
+   }
 }
 
 int Vb::get_value (Oid &s)
@@ -287,7 +301,9 @@ int Vb::get_value (Oid &s)
      return SNMP_CLASS_SUCCESS;
    }
    else
+   {
      return SNMP_CLASS_INVALID;
+   }
 }
 
 //---------------[ Vb::get_value( Value &val) ]--------
@@ -298,7 +314,9 @@ int Vb::get_value (SnmpSyntax &val)
     if (val.valid())
         return SNMP_CLASS_SUCCESS;
     else
-        return SNMP_CLASS_INVALID;
+    {
+      return SNMP_CLASS_INVALID;
+    }
   }
   else
   {
@@ -318,7 +336,9 @@ SmiUINT32 Vb::get_syntax ()
   if ( exception_status_ != SNMP_CLASS_SUCCESS)
     return exception_status_;
   else
+  {
     return iv_vb_value_ != nullptr ? iv_vb_value_->get_syntax() : sNMP_SYNTAX_NULL;
+  }
 }
 
 // return the printabel value
@@ -327,7 +347,9 @@ char const *Vb::to_string_value ()
   if (iv_vb_value_ != nullptr)
     return iv_vb_value_->to_string();
   else
+  {
     return "";
+  }
 }
 
 // return the printable oid
@@ -364,7 +386,9 @@ void set_exception_status (Vb *vb, SmiUINT32 status)
 bool operator== (Vb const &lhs, Vb const &rhs)
 {
   if ( lhs.iv_vb_oid_ != rhs.iv_vb_oid_)
-       return false;
+  {
+    return false;
+  }
 
   if (lhs.iv_vb_value_ != nullptr && rhs.iv_vb_value_ != nullptr)
     {
@@ -374,5 +398,7 @@ bool operator== (Vb const &lhs, Vb const &rhs)
       return !val;
     }
   else
+  {
     return false;
+  }
 }

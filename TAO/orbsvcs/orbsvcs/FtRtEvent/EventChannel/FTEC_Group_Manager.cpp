@@ -254,7 +254,9 @@ void TAO_FTEC_Group_Manager::remove_member (
   remove_item(impl_->info_list, crashed_pos);
 
   if (impl_->my_position > crashed_pos)
+  {
     --impl_->my_position;
+  }
 
   GroupInfoPublisherBase* publisher = GroupInfoPublisher::instance();
 
@@ -279,7 +281,9 @@ void TAO_FTEC_Group_Manager::remove_member (
 
   TAO_FTRTEC::Log(3, ACE_TEXT("my_position = %d, crashed_pos = %d\n"), impl_->my_position, crashed_pos);
   if (impl_->my_position == crashed_pos && impl_->my_position > 0)
+  {
     Fault_Detector::instance()->connect(impl_->info_list[impl_->my_position-1].the_location);
+  }
 }
 
 void TAO_FTEC_Group_Manager::connection_closed()

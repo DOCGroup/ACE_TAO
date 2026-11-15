@@ -38,7 +38,9 @@ JAWS_Concurrency_Base::singleton_mb ()
           this->mb_acquired_ = 1;
 
           if (result == -1 || mb == nullptr)
+          {
             return nullptr;
+          }
 
           this->mb_ = mb;
         }
@@ -90,7 +92,9 @@ JAWS_Concurrency_Base::svc_loop (JAWS_Data_Block *db)
   for (;;)
     {
       if (this->svc_hook (ts_db.get ()) != 0)
+      {
         break;
+      }
       ts_db->task (db->task ());
       ts_db->policy (db->policy ());
       ts_db->payload (nullptr);
@@ -131,7 +135,9 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *ts_db)
         {
           JAWS_TRACE ("JAWS_Concurrency_Base::svc_hook, recycling");
           if (handler)
+          {
             handler->done ();
+          }
           handler = nullptr;
           JAWS_IO_Handler ** const ioh = waiter->find_by_index (waiter_index);
           *ioh = nullptr;
@@ -143,7 +149,10 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *ts_db)
 
       if (result == 0 || result == -3)
         handler = mb->io_handler ();
-      else handler = nullptr;
+      else
+      {
+        handler = nullptr;
+      }
 
       if (result == 1 || result == 2)
         {
@@ -166,10 +175,14 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *ts_db)
         {
           JAWS_TRACE ("JAWS_Concurrency_Base::svc_hook, negative result");
           if (result == -1)
+          {
             ACE_ERROR ((LM_ERROR, "%p\n", "JAWS_Concurrency_Base::svc_hook"));
+          }
 
           if (handler)
+          {
             handler->done ();
+          }
 
           handler = nullptr;
           if (result == -2)
@@ -182,7 +195,9 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *ts_db)
         }
 
       if (handler == nullptr)
+      {
         break;
+      }
 
       mb = handler->message_block ();
       task = handler->task ();

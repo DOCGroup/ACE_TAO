@@ -10,7 +10,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               "\n \t IDL_Logger: client \n\n"));
 
   if (logger_client.init (argc, argv) == -1)
+  {
     return 1;
+  }
 
   return logger_client.run ();
 }

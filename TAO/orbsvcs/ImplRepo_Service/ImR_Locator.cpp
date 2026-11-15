@@ -57,7 +57,9 @@ run_standalone (Options& opts)
           status = server.fini ();
 
           if (status == -1)
+          {
             return 1;
+          }
         }
       return 0;
     }
@@ -109,7 +111,9 @@ static int
 run_service_command (Options& opts)
 {
   if (opts.service_command () == Options::SC_NONE)
+  {
     return 0;
+  }
 
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
   SERVICE::instance()->name (IMR_LOCATOR_SERVICE_NAME, IMR_LOCATOR_DISPLAY_NAME);

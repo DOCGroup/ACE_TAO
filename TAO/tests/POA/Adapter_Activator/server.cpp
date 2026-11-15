@@ -168,11 +168,15 @@ write_ior_to_file (std::string const &filename,
 {
   std::unique_ptr<FILE, int (*) (FILE *)> output_file (std::fopen (filename.c_str (), "w"), std::fclose);
   if (!output_file)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Cannot open output file for writing IOR: %C\n", filename.c_str ()), -1);
+  }
 
   int const result = std::fprintf (output_file.get (), "%s", ior);
   if (result < 0 || static_cast<size_t> (result) != std::strlen (ior))
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Failed writing IOR to %C\n", filename.c_str ()), -1);
+  }
   return 0;
 }
 
@@ -190,7 +194,9 @@ write_iors_to_file (ACE_TCHAR const *ior_output_file,
   if (write_ior_to_file (first_filename, first_ior) != 0 ||
       write_ior_to_file (second_filename, second_ior) != 0 ||
       write_ior_to_file (third_filename, third_ior) != 0)
+  {
     return -1;
+  }
   return 0;
 }
 
@@ -205,7 +211,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_TCHAR const *ior_output_file = ACE_TEXT ("ior");
       int const result = parse_args (argc, argv, ior_output_file);
       if (result != 0)
+      {
         return result;
+      }
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =
@@ -314,7 +322,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                                    second_ior.in (),
                                                    third_ior.in ());
       if (write_result != 0)
+      {
         return write_result;
+      }
 
       first_poa->destroy (true, true);
 

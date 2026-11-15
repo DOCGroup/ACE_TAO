@@ -272,7 +272,9 @@ Supplier_Task::perform_notifications (int notifications)
                         ACE_TEXT ("(%t) %p\n"),
                         ACE_TEXT ("notify")));
           else
+          {
             ACE_TEST_ASSERT (result != -1);
+          }
         }
 
       // Wait for our <handle_exception> method to release the
@@ -469,7 +471,9 @@ run_notify_purge_test ()
 
     status = r->purge_pending_notifications (&n1);
     if (status == -1 && errno == ENOTSUP)
+    {
       return 0;         // Select Reactor w/o ACE_HAS_REACTOR_NOTIFICATION_QUEUE
+    }
     if (status != 1)
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Purged %d notifies; expected 1\n"),
@@ -543,7 +547,9 @@ run_main (int, ACE_TCHAR *[])
 
 #if defined (ACE_HAS_THREADS)
   if (0 != run_quiet_notify_test ())
+  {
     test_result = 1;
+  }
 
   ACE_Time_Value timeout (SHORT_TIMEOUT);
 

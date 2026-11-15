@@ -40,7 +40,9 @@ void Gadget_Part_Impl::remove_from_owner ()
   // Weak pointers are automatically set to nullptr if the object they refer to
   // is deleted. We can use this fact to check that our owner still exists.
   if (owner.null ())
+  {
     return;
+  }
 
   // Take all existing parts from the owner and build up a temporary list. If
   // we find ourselves then we won't add ourselves to the list.
@@ -49,9 +51,13 @@ void Gadget_Part_Impl::remove_from_owner ()
     {
       Gadget_Part_var const part = owner->remove_part ();
       if (part.null ())
+      {
         break;
+      }
       if (part != this)
+      {
         parts.enqueue_tail (part);
+      }
     }
 
   // Add the remaining parts back to the gadget.

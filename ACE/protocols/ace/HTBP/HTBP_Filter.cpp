@@ -25,7 +25,9 @@ ACE::HTBP::Filter::header_complete (ACE::HTBP::Channel *ch)
       return nullptr;
     }
   if (ch->leftovers().space() > 0)
+  {
     *ch->leftovers().wr_ptr() = '\0';
+  }
   char *start = ch->leftovers().rd_ptr();
   char *nl = std::strchr (start, '\n');
   if (this->http_code_ == 0)

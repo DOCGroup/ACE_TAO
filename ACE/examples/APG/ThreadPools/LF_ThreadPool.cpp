@@ -76,7 +76,9 @@ public:
       {
         Follower *follower {};
         if (this->followers_.dequeue_head (follower) != 0)
+        {
           break;
+        }
         follower->signal ();
       }
 
@@ -132,7 +134,9 @@ LF_ThreadPool::svc ()
   while (!done ())
     {
       if (become_leader () == -1)
+      {
         break;
+      }
 
       ACE_Message_Block *raw_message_block {};
       ACE_Time_Value tv {LONG_TIME};
@@ -142,14 +146,20 @@ LF_ThreadPool::svc ()
       if (this->getq (raw_message_block, &tv) < 0)
         {
           if (done ())
+          {
             break;
+          }
           if (elect_new_leader () == 0)
+          {
             break;
+          }
           continue;
         }
       ACE_Message_Block_Unique_Ptr message_block {raw_message_block};
       if (!message_block)
+      {
         continue;
+      }
 
       elect_new_leader ();
       process_message (message_block);
@@ -170,7 +180,9 @@ LF_ThreadPool::become_leader ()
     {
       std::unique_ptr<Follower> fw {make_follower ()};
       if (!fw)
+      {
         return -1;
+      }
       {
         // Wait until told to do so.
         while (leader_active () && !done ())
@@ -184,7 +196,9 @@ LF_ThreadPool::become_leader ()
                                   this->followers_lock_,
                                   -1);
                 if (this->followers_.enqueue_tail (fw.get ()) == -1)
+                {
                   return -1;
+                }
               }
           }
       }
@@ -192,7 +206,9 @@ LF_ThreadPool::become_leader ()
     }
 
   if (done ())
+  {
     return -1;
+  }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Becoming the leader\n")));
 
@@ -212,7 +228,9 @@ LF_ThreadPool::make_follower ()
   ACE_NEW_RETURN (follower_raw, Follower (this->leader_lock_), nullptr);
   std::unique_ptr<Follower> follower {follower_raw};
   if (this->followers_.enqueue_tail (follower.get ()) == -1)
+  {
     return nullptr;
+  }
   return follower.release ();
 }
 // Listing 3
@@ -236,7 +254,9 @@ LF_ThreadPool::elect_new_leader ()
       // Get the old follower.
       Follower *fw {};
       if (this->followers_.dequeue_head (fw) != 0)
+      {
         return -1;
+      }
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) Resigning and Electing %d\n"),
                   fw->owner ()));
@@ -286,7 +306,9 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 
       // Add a new work item.
       if (tp.putq (message_block.get ()) == -1)
+      {
         return -1;
+      }
       message_block.release ();
     }
 

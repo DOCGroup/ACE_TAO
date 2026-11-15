@@ -98,7 +98,9 @@ int run_main (int, ACE_TCHAR *[])
   }
 
   if (!errors)
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Test ok\n")));
+  }
 
   ACE_END_TEST;
   return errors == 0  ?  0  :  1;

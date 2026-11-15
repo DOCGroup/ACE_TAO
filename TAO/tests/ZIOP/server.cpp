@@ -219,7 +219,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                           1);
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       Test::Hello_var hello = prepare_tests (orb.in (), root_poa.in ());
 

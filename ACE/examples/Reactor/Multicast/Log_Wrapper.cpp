@@ -19,10 +19,14 @@ Log_Wrapper::open (int port, char const *mcast_addr)
   ACE_utsname host_data;
 
   if (ACE_OS::uname (&host_data) < 0)
+  {
     return -1;
+  }
 
   if ((host_info = ACE_OS::gethostbyname (host_data.nodename)) == nullptr)
+  {
     return -1;
+  }
 
   std::memcpy (&this->log_msg_.host, host_info->h_addr, host_info->h_length);
   this->log_msg_.app_id = ACE_OS::getpid ();
@@ -31,7 +35,9 @@ Log_Wrapper::open (int port, char const *mcast_addr)
   server_ = ACE_INET_Addr (port, mcast_addr);
 
   if (logger_.join (server_) == -1)
+  {
     ACE_OS::perror("can't join to multicast group"), ACE_OS::exit(1);
+  }
 
   // success.
   return 0;

@@ -67,13 +67,17 @@ MultiTypes::on_received_event (MultiTypes_PushConsumer* consumer)
   ++any_event_count_;
 
   if (TAO_debug_level)
+  {
     ACE_DEBUG ((LM_DEBUG, "PushConsumer received event #%d\n", any_event_count_.load ()));
+  }
 
   if (disconnect_on_last_event_ == 1)
   {
     consumer->disconnect ();
     if (TAO_debug_level)
+    {
       ACE_DEBUG ((LM_DEBUG, "PushConsumer has been disconnected.\n"));
+    }
   }
 }
 
@@ -83,13 +87,17 @@ MultiTypes::on_received_event (MultiTypes_StructuredPushConsumer* consumer)
   ++struct_event_count_;
 
   if (TAO_debug_level)
+  {
     ACE_DEBUG ((LM_DEBUG, "StructuredPushConsumer received event #%d\n", struct_event_count_.load ()));
+  }
 
   if (disconnect_on_last_event_ == 1)
   {
     consumer->disconnect ();
     if (TAO_debug_level)
+    {
       ACE_DEBUG ((LM_DEBUG, "StructuredPushConsumer has been disconnected.\n"));
+    }
   }
 }
 
@@ -99,14 +107,18 @@ MultiTypes::on_received_event (MultiTypes_SequencePushConsumer* consumer)
   ++seq_event_count_;
 
   if (TAO_debug_level)
+  {
     ACE_DEBUG ((LM_DEBUG, "SequencePushConsumer received event #%d\n", seq_event_count_.load ()));
+  }
 
   if (disconnect_on_last_event_ == 1)
   {
     consumer->disconnect ();
 
     if (TAO_debug_level)
+    {
       ACE_DEBUG ((LM_DEBUG, "SequencePushConsumer has been disconnected.\n"));
+    }
   }
 }
 
@@ -202,11 +214,15 @@ MultiTypes::run_test ()
   any <<= (CORBA::Long)0;
 
   if (TAO_debug_level)
+  {
     ACE_DEBUG ((LM_DEBUG, "Sending Any Event..\n"));
+  }
   any_supplier_->send_event (any);
 
   if (TAO_debug_level)
+  {
     ACE_DEBUG ((LM_DEBUG, "Waiting for consumers to receive the 1 event..\n"));
+  }
   this->wait_for_all_consumers (1);
 
   /*****************************************************************************/
@@ -223,11 +239,15 @@ MultiTypes::run_test ()
   event.header.fixed_header.event_name = CORBA::string_dup("myevent");
 
   if (TAO_debug_level)
+  {
     ACE_DEBUG ((LM_DEBUG, "Sending Structured Event..\n"));
+  }
   structured_supplier_->send_event (event);
 
   if (TAO_debug_level)
+  {
     ACE_DEBUG ((LM_DEBUG, "Waiting for consumers to receive the 1 event..\n"));
+  }
   this->wait_for_all_consumers (1);
 
   /*****************************************************************************/
@@ -250,11 +270,15 @@ MultiTypes::run_test ()
   events[1] = event;
 
   if (TAO_debug_level)
+  {
     ACE_DEBUG ((LM_DEBUG, "Sending Sequence Event..\n"));
+  }
   sequence_supplier_->send_events (events);
 
   if (TAO_debug_level)
+  {
     ACE_DEBUG ((LM_DEBUG, "Waiting for consumers to receive the 2 events..\n"));
+  }
   this->wait_for_all_consumers (2);
 
   /*****************************************************************************/
@@ -267,11 +291,15 @@ MultiTypes::run_test ()
   disconnect_on_last_event_ = 1;
 
   if (TAO_debug_level)
+  {
     ACE_DEBUG ((LM_DEBUG, "Sending LAST Any Event, Consumers will attempt disconnect..\n"));
+  }
   any_supplier_->send_event (any);
 
   if (TAO_debug_level)
+  {
     ACE_DEBUG ((LM_DEBUG, "Waiting for consumers to receive the 1 event..\n"));
+  }
   this->wait_for_all_consumers (1);
 
   ACE_DEBUG ((LM_DEBUG, "MultiTypes test has run successfully!\n"));

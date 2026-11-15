@@ -22,7 +22,9 @@ TAO_RT_Endpoint_Utils::policy (TAO_Cached_Policy_Type type,
     dynamic_cast<TAO_RT_Stub *> (r.stub ());
 
   if (rt_stub == nullptr)
+  {
     throw CORBA::INTERNAL ();
+  }
 
   try
     {

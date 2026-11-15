@@ -144,7 +144,9 @@ ACE_OS::wcsicmp_emulation (const wchar_t *s, const wchar_t *t)
   else if (*scan2 == '\0')
     return 1;
   else
+  {
     return ACE_OS::ace_tolower (*scan1) - ACE_OS::ace_towlower (*scan2);
+  }
 }
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSICMP */
 
@@ -258,7 +260,9 @@ ACE_OS::wcsnicmp_emulation (const wchar_t *s,
     }
 
   if (count > len)
+  {
     return 0;
+  }
 
   // The following case analysis is necessary so that characters which
   // look negative collate low against normal characters but high
@@ -271,7 +275,9 @@ ACE_OS::wcsnicmp_emulation (const wchar_t *s,
   else if (*scan2 == '\0')
     return 1;
   else
+  {
     return ACE_OS::ace_towlower (*scan1) - ACE_OS::ace_towlower (*scan2);
+  }
 }
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSNICMP */
 

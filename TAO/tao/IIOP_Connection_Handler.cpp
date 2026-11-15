@@ -134,7 +134,9 @@ int
 TAO_IIOP_Connection_Handler::open (void*)
 {
   if (this->shared_open() == -1)
+  {
     return -1;
+  }
 
   TAO_IIOP_Protocol_Properties protocol_properties;
 
@@ -185,7 +187,9 @@ TAO_IIOP_Connection_Handler::open (void*)
                                 TCP_NODELAY,
                                 std::addressof (protocol_properties.no_delay_),
                                 sizeof (protocol_properties.no_delay_)) == -1)
+  {
     return -1;
+  }
 #endif /* ! ACE_LACKS_TCP_NODELAY */
 
   if (protocol_properties.keep_alive_)
@@ -273,7 +277,9 @@ TAO_IIOP_Connection_Handler::open (void*)
       || this->transport ()->opened_as () == TAO::TAO_SERVER_ROLE)
     {
       if (this->peer ().enable (ACE_NONBLOCK) == -1)
+      {
         return -1;
+      }
     }
 
   // Called by the <Strategy_Acceptor> when the handler is
@@ -281,11 +287,15 @@ TAO_IIOP_Connection_Handler::open (void*)
 
   ACE_INET_Addr remote_addr;
   if (this->peer ().get_remote_addr (remote_addr) == -1)
+  {
     return -1;
+  }
 
   ACE_INET_Addr local_addr;
   if (this->peer ().get_local_addr (local_addr) == -1)
+  {
     return -1;
+  }
 
   if (TAO_debug_level > 2)
     TAOLIB_DEBUG ((LM_DEBUG,
@@ -342,7 +352,9 @@ TAO_IIOP_Connection_Handler::open (void*)
 
       // Verify that we can resolve the peer hostname.
       if (remote_addr.addr_to_string (client_addr, sizeof (client_addr)) == -1)
+      {
         return -1;
+      }
 
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - IIOP_Connection_Handler::open, IIOP ")
@@ -354,7 +366,9 @@ TAO_IIOP_Connection_Handler::open (void*)
   // Use C-style cast b/c otherwise we get warnings on lots of
   // compilers
   if (!this->transport ()->post_open ((size_t) this->get_handle ()))
+  {
     return -1;
+  }
   this->state_changed (TAO_LF_Event::LFS_SUCCESS,
                        this->orb_core ()->leader_follower ());
 
@@ -475,7 +489,9 @@ TAO_IIOP_Connection_Handler::add_transport_to_cache ()
 
   // Get the peername.
   if (this->peer ().get_remote_addr (addr) == -1)
+  {
     return -1;
+  }
 
   // Construct an IIOP_Endpoint object
   TAO_IIOP_Endpoint endpoint (
@@ -562,7 +578,9 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
       // The property for this handler has changed. Recache the
       // handler with this property
       if (this->transport ()->recache_transport (std::addressof (prop)) == -1)
+      {
         return -1;
+      }
 
       // Make the handler idle and ready for use
       this->transport ()->make_idle ();
@@ -619,7 +637,9 @@ TAO_IIOP_Connection_Handler::set_tos (int tos)
 
       // On successful setting of TOS field.
       if (result == 0)
+      {
         this->dscp_codepoint_ = tos;
+      }
     }
   return 0;
 }

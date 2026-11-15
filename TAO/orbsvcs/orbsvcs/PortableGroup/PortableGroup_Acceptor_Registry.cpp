@@ -162,7 +162,9 @@ TAO_PortableGroup_Acceptor_Registry::find (TAO_Profile const *profile,
       // changing anything.
       TAO_Profile * const nc_profile = const_cast<TAO_Profile *> (profile);
       if (entry->endpoint->is_equivalent (nc_profile->endpoint ()))
+      {
         return 1;
+      }
 
       iter.advance ();
     }

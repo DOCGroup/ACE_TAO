@@ -428,7 +428,9 @@ TAO_OperationDef_i::contexts_i (CORBA::ContextIdSeq const &contexts)
   CORBA::ULong length = contexts.length ();
 
   if (length == 0)
+  {
     return;
+  }
 
   ACE_Configuration_Section_Key contexts_key;
   this->repo_->config ()->open_section (this->section_key_,

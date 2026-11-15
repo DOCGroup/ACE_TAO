@@ -568,7 +568,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                 priority);
 
   if (result != 0)
+  {
     return result;
+  }
 
   // Activate the workers.
   result = output_task.activate (flags,
@@ -577,7 +579,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                  priority);
 
   if (result != 0)
+  {
     return result;
+  }
 
   // Wait for all threads to terminate.
   result = ACE_Thread_Manager::instance ()->wait ();

@@ -88,7 +88,9 @@ Handle_Thr_Acceptor<SVH, PR_AC_2>::init (int argc, ACE_TCHAR *argv[])
                        &this->thr_strategy_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")), -1);
   else
+  {
     return 0;
+  }
 }
 
 template <class SVH, PR_AC_1> int
@@ -126,7 +128,9 @@ CLI_Stream<PR_ST_2>::open (void *)
               this->peer ().get_handle ()));
 
   if (this->peer ().get_remote_addr (sa) == -1)
+  {
     return -1;
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) accepted at port %d\n"),
@@ -162,7 +166,9 @@ CLI_Stream<PR_ST_2>::svc ()
                    ACE_TEXT_ALWAYS_CHAR (ACE_OS::ctime ((const time_t *) &t)));
 
   if (this->peer ().send_n (buf, std::strlen (buf) + 1) == -1)
+  {
     return -1;
+  }
 
   ACE_DEBUG ((LM_DEBUG, "(%t) sent reply %s", buf));
   return 0;

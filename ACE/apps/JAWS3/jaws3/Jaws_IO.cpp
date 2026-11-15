@@ -21,7 +21,9 @@ JAWS_IO::JAWS_IO (JAWS_IO_Impl *impl)
     {
       char const *io_type = JAWS_Options::instance ()->getenv ("JAWS_IO");
       if (io_type == nullptr)
+      {
         io_type = JAWS_DEFAULT_IO;
+      }
 
       if (ACE_OS::strcasecmp (io_type, "SYNCH") == 0)
         this->impl_ = JAWS_Synch_IO::instance ();
@@ -30,7 +32,9 @@ JAWS_IO::JAWS_IO (JAWS_IO_Impl *impl)
       else if (ACE_OS::strcasecmp (io_type, "REACTIVE") == 0)
         this->impl_ = JAWS_Reactive_IO::instance ();
       else
+      {
         this->impl_ = JAWS_Synch_IO::instance ();
+      }
     }
 }
 

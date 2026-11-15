@@ -62,7 +62,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       // Create factories.
 
@@ -256,7 +258,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         catch (CORBA::MARSHAL const&)
           {
             if (verbose)
+            {
               ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("passed\n")));
+            }
             caught_expected_exception = true;
           }
 
@@ -264,7 +268,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           {
             ++fail;
             if (verbose)
+            {
               ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("faileded\n")));
+            }
           }
       } //end marshaling exception test.
 
@@ -476,7 +482,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           return 1;
         }
       else
+      {
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) client: test passed\n"));
+      }
     }
   catch (CORBA::Exception const& ex)
     {

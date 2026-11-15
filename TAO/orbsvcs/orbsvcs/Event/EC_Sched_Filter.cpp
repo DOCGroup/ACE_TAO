@@ -169,7 +169,9 @@ void
 TAO_EC_Sched_Filter::init_rt_info ()
 {
   if (this->rt_info_computed_)
+  {
     return;
+  }
 
   // Provide dummy values the scheduler will compute them based on the
   // dependencies and the fact that this is a DISJUNCTION.

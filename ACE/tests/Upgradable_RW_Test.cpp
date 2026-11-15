@@ -85,7 +85,9 @@ find_last ()
       element_ptr = iterator.next ();
       if (element_ptr)
         if (*element_ptr->value () == cString)
+        {
           return 1;
+        }
     }
 
   return 0;
@@ -283,7 +285,9 @@ Time_Calculation ::print_stats ()
       double tmp = 0.0;
 
       if (!ACE::is_equal (elapsed_time.real_time, 0.0))
+      {
         tmp = 1000 / elapsed_time.real_time;
+      }
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("\n")
@@ -416,7 +420,9 @@ run_main (int argc, ACE_TCHAR *argv[])
                     ACE_TEXT ("maximum wait time of %d msec exceeded\n"),
                                max_wait.msec ()));
       else
+      {
         ACE_OS::perror (ACE_TEXT ("wait"));
+      }
 
       status = -1;
     }

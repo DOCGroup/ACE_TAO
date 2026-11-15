@@ -30,7 +30,9 @@ TAO_LF_Strategy_Complete::reset_event_loop_thread (int call_reset,
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, lf.lock ());
 
   if (call_reset)
+  {
     lf.reset_event_loop_thread ();
+  }
 
   int const result = lf.elect_new_leader ();
 

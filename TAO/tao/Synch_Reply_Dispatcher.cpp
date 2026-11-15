@@ -50,7 +50,9 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (
     TAO_Pluggable_Reply_Params &params)
 {
   if (params.input_cdr_ == nullptr)
+  {
     return -1;
+  }
 
   this->reply_status_ = params.reply_status ();
   this->locate_reply_status_ = params.locate_reply_status ();

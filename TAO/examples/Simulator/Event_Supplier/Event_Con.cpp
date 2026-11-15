@@ -284,7 +284,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_Scheduler_Factory::use_config (naming_context.in ());
 
       if (get_options (argc, argv))
+      {
         ACE_OS::exit (-1);
+      }
 
       // Get the Event Channel.
 

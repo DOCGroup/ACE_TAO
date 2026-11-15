@@ -305,7 +305,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ORB_var const orb (ORB_init (argc, argv));
 
   if (parse_args (argc, argv) != 0)
+  {
     return 1;
+  }
 
   Object_var const obj (orb->resolve_initial_references ("RootPOA"));
 

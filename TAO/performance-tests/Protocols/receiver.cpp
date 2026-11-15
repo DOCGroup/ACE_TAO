@@ -268,7 +268,9 @@ test_i::oneway_method (CORBA::Long session_id,
   if (this->first_invocation_)
     this->first_invocation_ = false;
   else
+  {
     this->inter_arrival_times_->sample (time_of_current_call - this->time_of_last_call_);
+  }
 
   this->time_of_last_call_ = time_of_current_call;
 }
@@ -304,7 +306,9 @@ test_i::twoway_method (CORBA::Long &session_id,
   if (this->first_invocation_)
     this->first_invocation_ = false;
   else
+  {
     this->inter_arrival_times_->sample (time_of_current_call - this->time_of_last_call_);
+  }
 
   this->time_of_last_call_ = time_of_current_call;
 }
@@ -337,7 +341,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       int const parse_args_result =
         parse_args (argc, argv);
       if (parse_args_result != 0)
+      {
         return parse_args_result;
+      }
 
       CORBA::Object_var object =
         orb->resolve_initial_references ("RootPOA");

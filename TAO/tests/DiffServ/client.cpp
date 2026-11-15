@@ -54,7 +54,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_TString ior (ACE_TEXT ("file://simple_servant.ior"));
       int iterations {1};
       if (parse_args (argc, argv, ior, iterations) != 0)
+      {
         return -1;
+      }
 
       // Initialize and obtain reference to the Test object.
       CORBA::Object_var const client_object =

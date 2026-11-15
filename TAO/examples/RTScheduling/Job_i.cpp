@@ -93,7 +93,9 @@ Job_i::work (CORBA::ULong work,
 
       ACE_Time_Value *base_time = dt_creator_->base_time ();
       if (base_time == 0)
+      {
         return;
+      }
 
       ACE_Time_Value run_time = ACE_OS::gettimeofday () - *(base_time);
       TASK_STATS::instance ()->sample (run_time.sec (), guid_);

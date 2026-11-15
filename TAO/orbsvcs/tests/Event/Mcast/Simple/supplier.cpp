@@ -47,7 +47,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       RtecEventChannelAdmin::EventChannel_var ec =
         RtecEventChannelAdmin::EventChannel::_narrow (obj.in ());
       if (check_for_nil (ec.in (), "EC") == -1)
+      {
         return 1;
+      }
 
       // Obtain reference to SupplierAdmin.
       RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =

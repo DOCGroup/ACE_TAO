@@ -269,7 +269,9 @@ int TAO::PG_Group_Factory::destroy_group (PortableGroup::ObjectGroupId group_id)
 
       }
     if (result)
+    {
       delete group;
+    }
   }
   return result;
 }
@@ -344,7 +346,9 @@ TAO::PG_Group_Factory::set_object_group_storable_factory (
   this->use_persistence_ = true;
   this->list_store_.reset ();
   if (this->storable_factory_.get () != factory)
+  {
     this->storable_factory_.reset (factory);
+  }
   PG_Group_List_Store *list_store {};
   ACE_NEW_THROW_EX (list_store,
                     TAO::PG_Group_List_Store (*this->storable_factory_),
@@ -412,7 +416,9 @@ TAO::PG_Group_Factory::get_group_map ()
                   delete group;
                 }
               else
+              {
                 throw PortableGroup::ObjectGroupNotFound ();
+              }
             }
 
           this->groups_read_ = true;

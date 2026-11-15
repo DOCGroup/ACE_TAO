@@ -267,5 +267,7 @@ Consumer::push (const RtecEventComm::EventSet& events)
   //               this->name_, this->event_count));
 
   if (events[0].header.type == this->event_base_type_)
+  {
     ++this->event_base_count;
+  }
 }

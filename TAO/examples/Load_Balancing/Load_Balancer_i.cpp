@@ -21,7 +21,9 @@ Object_Group_Factory_i::remove_group (std::string const &id,
   if (random)
     random_groups_.unbind (id);
   else
+  {
     rr_groups_.unbind (id);
+  }
 }
 
 Load_Balancer::Object_Group_ptr
@@ -78,7 +80,9 @@ Object_Group_Factory_i::make_group (bool random,
       if (random)
         {
           if (random_groups_.bind (group_id, group) == -1)
+          {
             throw CORBA::INTERNAL ();
+          }
 
           ACE_DEBUG ((LM_DEBUG,
                       "Load_Balancer: Created new Random Group"
@@ -87,7 +91,9 @@ Object_Group_Factory_i::make_group (bool random,
       else
         {
           if (rr_groups_.bind (group_id, group) == -1)
+          {
             throw CORBA::INTERNAL ();
+          }
           ACE_DEBUG ((LM_DEBUG,
                       "Load_Balancer: Created new Round Robin Group"
                       " with id <%C>\n", id));
@@ -107,7 +113,9 @@ Object_Group_Factory_i::resolve (char const * id)
       && random_groups_.find (group_id, group) == -1)
     throw Load_Balancer::no_such_group ();
   else
+  {
     return group._retn ();
+  }
 }
 
 Load_Balancer::Group_List *
@@ -204,7 +212,9 @@ Object_Group_i::bind (Load_Balancer::Member const & member)
                     CORBA::NO_MEMORY ());
   std::unique_ptr<std::string> new_id_guard (new_id);
   if (member_id_list_.insert_tail (new_id) == nullptr)
+  {
     throw CORBA::NO_MEMORY ();
+  }
   new_id_guard.release ();
 
   // Theoretically, we should deal with memory failures more
@@ -228,7 +238,9 @@ Object_Group_i::unbind (char const * id)
 
   // Check to make sure we have it.
   if (members_.find (member_id) == -1)
+  {
     throw Load_Balancer::no_such_member ();
+  }
 
   // Remove all entries for this member.
   members_.unbind (member_id);
@@ -251,7 +263,9 @@ Object_Group_i::resolve_with_id (char const * id)
   std::string member_id (id);
 
   if (members_.find (member_id, obj) == -1)
+  {
     throw Load_Balancer::no_such_member ();
+  }
 
   return obj._retn ();
 }
@@ -326,7 +340,9 @@ Random_Object_Group::resolve ()
 
   size_t const group_size = members_.current_size ();
   if (group_size == 0)
+  {
     throw Load_Balancer::no_such_member ();
+  }
 
   // Generate random number in the range [0, group_size - 1]
   size_t const member = std::rand () % group_size;
@@ -367,7 +383,9 @@ RR_Object_Group::resolve ()
 
   size_t const group_size = members_.current_size ();
   if (group_size == 0)
+  {
     throw Load_Balancer::no_such_member ();
+  }
 
   // Get the id of the member to return to the client.
   std::string *id {};
@@ -382,7 +400,9 @@ RR_Object_Group::resolve ()
 
   // Return the object reference corresponding to the found id to the client.
   if (members_.find (*id, obj) == -1)
+  {
     throw CORBA::INTERNAL ();
+  }
 
   return obj._retn ();
 }
@@ -394,7 +414,9 @@ RR_Object_Group::unbind (char const *id)
 
   // Check to make sure we have it.
   if (members_.find (member_id) == -1)
+  {
     throw Load_Balancer::no_such_member ();
+  }
 
   // Remove all entries for this member.
   members_.unbind (member_id);

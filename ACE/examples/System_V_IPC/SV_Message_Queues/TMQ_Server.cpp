@@ -21,7 +21,9 @@ extern "C" void
 handler (int)
 {
   if (ace_sv_message_queue.remove () < 0)
+  {
     ACE_ERROR ((LM_ERROR, "%p\n%a", "ace_sv_message_queue.recv", 1));
+  }
   ACE_OS::exit (0);
 }
 
@@ -41,7 +43,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   while (true)
     {
       if (ace_sv_message_queue.recv (recv_msg) == -1)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ace_sv_message_queue.recv"), 1);
+      }
 
       Message_Data const &recv_msg_data = recv_msg.data ();
 
@@ -57,7 +61,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       send_msg.type (recv_msg_data.pid ());
 
       if (ace_sv_message_queue.send (send_msg) < 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ace_sv_message_queue.send"), 1);
+      }
     }
 
   ACE_NOTREACHED (return 0;)

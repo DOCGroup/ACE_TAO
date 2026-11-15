@@ -37,10 +37,14 @@ SM_Server::demux (char *packet, int &packet_length)
   packet_length = SUBTRACT_PACKET_TYPE (packet_length);
 
   if (pm_server_->decode (SKIP_PACKET_TYPE (packet), packet_length) < 0)
+  {
     return -1;
+  }
 
   if (pm_server_->process () < 0)
+  {
     return -1;
+  }
 
   return 1;
 }

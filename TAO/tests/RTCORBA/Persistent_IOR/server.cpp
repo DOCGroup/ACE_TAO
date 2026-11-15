@@ -319,7 +319,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Server_Options options;
       int const result = parse_args (argc, argv, options);
       if (result != 0)
+      {
         return result;
+      }
 
       CORBA::Object_var object =
         orb->resolve_initial_references ("RTORB");

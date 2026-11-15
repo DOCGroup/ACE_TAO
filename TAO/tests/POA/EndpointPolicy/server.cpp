@@ -136,7 +136,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   PortableServer::POAManagerFactory_var poa_manager_factory;
 
   if (parse_args (argc, argv) != 0)
+  {
     return 1;
+  }
 
   ACE_TCHAR const *e1_format = ACE_TEXT ("iiop://%s:%d");
   ACE_TCHAR const *e2_format = ACE_TEXT ("iiop://%s:%d/hostname_in_ior=unreachable");
@@ -302,11 +304,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       int result = 0;
       result = make_ior (orb.in(), root_poa.in(), hello_impl, root_ior_file);
       if (result != 0)
+      {
         return result;
+      }
 
       result = make_ior (orb.in(), good_poa.in(), hello_impl, good_ior_file);
       if (result != 0)
+      {
         return result;
+      }
 
       good_pm->activate ();
 
@@ -320,7 +326,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                 policies);
           result = make_ior (orb.in(), bad_poa.in(), hello_impl, bad_ior_file);
           if (result != 0)
+          {
             return result;
+          }
 
           bad_pm->activate ();
         }

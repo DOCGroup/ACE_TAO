@@ -26,7 +26,9 @@ RT_Properties::read_from (ACE_TString const &file_name)
   std::unique_ptr<FILE, int (*) (FILE *)> file (
     ACE_OS::fopen (file_name.c_str (), ACE_TEXT ("r")), ACE_OS::fclose);
   if (!file)
+  {
     throw CORBA::BAD_PARAM (TAO::VMCID, CORBA::COMPLETED_NO);
+  }
 
   std::unique_ptr<RT_Properties> rt_properties = RT_Properties::create ();
 

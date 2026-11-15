@@ -20,7 +20,9 @@ Callback_i::response (Test::TimeStamp time_stamp,
   ACE_hrtime_t const now = ACE_OS::gethrtime ();
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   if (this->remaining_samples_ == 0)
+  {
     return;
+  }
 
   --this->remaining_samples_;
   this->history_.sample (ACE_HRTIME_TO_U64(now) - time_stamp);

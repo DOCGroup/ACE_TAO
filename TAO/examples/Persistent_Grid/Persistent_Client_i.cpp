@@ -37,10 +37,14 @@ Persistent_Client_i::run (char const *name,
 {
   // Initialize the client.
   if (this->client.init (name, argc, argv) == -1)
+  {
     return -1;
+  }
 
   if (this->parse_args (argc, argv) == -1)
+  {
     return -1;
+  }
   try
     {
       // Make the Grid.

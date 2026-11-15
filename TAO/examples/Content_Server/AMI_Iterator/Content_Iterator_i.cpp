@@ -28,7 +28,9 @@ Content_Iterator_i::next_chunk (CORBA::ULongLong offset,
   chunk = new Web_Server::Chunk_Type;
 
   if (offset >= this->file_size_)
+  {
     return false;  // Applications shouldn't throw system exceptions.
+  }
 
   ACE_OFF_T const real_offset =
     ACE_OS::lseek (this->file_io_.get_handle (),

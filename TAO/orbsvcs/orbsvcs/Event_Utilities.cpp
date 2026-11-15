@@ -33,7 +33,9 @@ ACE_ConsumerQOS_Factory::start_conjunction_group (int nchildren)
   int const l = qos_.dependencies.length ();
   qos_.dependencies.length (l + 1);
   if (this->event_initializer_ != nullptr)
+  {
     (*this->event_initializer_) (qos_.dependencies[l].event);
+  }
   qos_.dependencies[l].event.header.type = ACE_ES_CONJUNCTION_DESIGNATOR;
   qos_.dependencies[l].event.header.source = nchildren;
   qos_.dependencies[l].rt_info = 0;
@@ -47,7 +49,9 @@ ACE_ConsumerQOS_Factory::start_disjunction_group (int nchildren)
   int const l = qos_.dependencies.length ();
   qos_.dependencies.length (l + 1);
   if (this->event_initializer_ != nullptr)
+  {
     (*this->event_initializer_) (qos_.dependencies[l].event);
+  }
   qos_.dependencies[l].event.header.type = ACE_ES_DISJUNCTION_DESIGNATOR;
   qos_.dependencies[l].event.header.source = nchildren;
   qos_.dependencies[l].rt_info = 0;
@@ -61,7 +65,9 @@ ACE_ConsumerQOS_Factory::start_logical_and_group (int nchildren)
   int const l = qos_.dependencies.length ();
   qos_.dependencies.length (l + 1);
   if (this->event_initializer_ != nullptr)
+  {
     (*this->event_initializer_) (qos_.dependencies[l].event);
+  }
   qos_.dependencies[l].event.header.type = ACE_ES_LOGICAL_AND_DESIGNATOR;
   qos_.dependencies[l].event.header.source = nchildren;
   qos_.dependencies[l].rt_info = 0;
@@ -75,7 +81,9 @@ ACE_ConsumerQOS_Factory::start_negation ()
   int const l = qos_.dependencies.length ();
   qos_.dependencies.length (l + 1);
   if (this->event_initializer_ != nullptr)
+  {
     (*this->event_initializer_) (qos_.dependencies[l].event);
+  }
   qos_.dependencies[l].event.header.type = ACE_ES_NEGATION_DESIGNATOR;
   qos_.dependencies[l].rt_info = 0;
   this->designator_set_ = true;
@@ -113,7 +121,9 @@ ACE_ConsumerQOS_Factory::insert (const RtecEventChannelAdmin::Dependency &subscr
       int const l = qos_.dependencies.length ();
       qos_.dependencies.length (l + 1);
       if (this->event_initializer_ != nullptr)
+      {
         (*this->event_initializer_) (qos_.dependencies[l].event);
+      }
       qos_.dependencies[l].rt_info = 0;
       qos_.dependencies[l].event.header.type = ACE_ES_GLOBAL_DESIGNATOR;
 
@@ -187,7 +197,9 @@ ACE_SupplierQOS_Factory::insert (RtecEventComm::EventSourceID sid,
   this->qos_.publications.length (l + 1);
 
   if (this->event_initializer_ != nullptr)
+  {
     (*this->event_initializer_) (qos_.publications[l].event);
+  }
   this->qos_.publications[l].event.header.source = sid;
   this->qos_.publications[l].event.header.type = type;
   // TODO: IDL union this->qos_.publications[l].event.data_.lval (0);

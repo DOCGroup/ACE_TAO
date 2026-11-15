@@ -62,12 +62,16 @@ Identity_Server::init (int argc,
       result = this->orb_manager_.init (argc,
                                         argv);
       if (result == -1)
+      {
         return result;
+      }
 
       // Check the non-ORB arguments.
       result = this->parse_args (argc, argv);
       if (result < 0)
+      {
         return result;
+      }
 
       // Contact the <Object_Group_Factory> to create 2
       // <Object_Group>s, one random and one rr.
@@ -171,7 +175,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   Identity_Server server;
 
   if (server.init (argc, argv) == -1)
+  {
     return 1;
+  }
 
   try
     {
@@ -184,6 +190,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
   if (result == -1)
+  {
     return 1;
+  }
   return 0;
 }

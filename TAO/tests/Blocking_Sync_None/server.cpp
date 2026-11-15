@@ -56,7 +56,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         root_poa->the_POAManager ();
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       Blocking_Sync_None *blocking_sync_none_impl {};
       ACE_NEW_RETURN (blocking_sync_none_impl,

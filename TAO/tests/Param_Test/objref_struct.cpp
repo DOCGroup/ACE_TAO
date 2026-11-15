@@ -139,7 +139,9 @@ Test_Objref_Struct::check_validity ()
   if (this->in_.x != this->inout_->x
       || this->in_.x != this->out_->x
       || this->in_.x != this->ret_->x)
+  {
     return 0;
+  }
 
   try
     {

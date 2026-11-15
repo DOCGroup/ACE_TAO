@@ -18,12 +18,16 @@ ImR_Activator_Loader::init (int argc, ACE_TCHAR *argv[])
     {
       int err = this->opts_.init (argc, argv);
       if (err != 0)
+      {
         return -1;
+      }
 
       // Creates it's own internal orb, which we must run later
       err = this->service_.init (this->opts_);
       if (err != 0)
+      {
         return -1;
+      }
 
       // Create a thread in which to run the service
       ACE_ASSERT (this->runner_.get () == nullptr);

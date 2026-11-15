@@ -63,7 +63,9 @@ make_iogr (TAO_IOP::TAO_IOR_Manipulation_ptr iorm,
   TAO_FT_IOGR_Property iogr_prop (ft_tag_component);
   CORBA::Boolean retval = iorm->set_property (&iogr_prop, new_ref.in ());
   if (retval)
+  {
     retval = iorm->set_primary (&iogr_prop, new_ref.in (), new_ref.in ());
+  }
 
   return new_ref._retn ();
 }
@@ -113,7 +115,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Server_Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       // ACE_NEW_RETURN needs a writable raw pointer; owner adopts the servant reference.
       Hello *hello_impl {};
@@ -152,7 +156,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                              options.ior_output_file.c_str ()),
                             1);
         if (ACE_OS::fprintf (output_file.get (), "%s", iorgr_string.in ()) < 0)
+        {
           ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot write IOR to output file\n")), 1);
+        }
       }
 
       poa_manager->activate ();

@@ -39,13 +39,19 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
   // So we have to do that here in case f.i. the Exclusive TMS left the transport
   // busy after the send
   if (this->transport_ != nullptr)
+  {
     this->transport_->tms ()->idle_after_reply ();
+  }
 
   if (!params.input_cdr_)
+  {
     return -1;
+  }
 
   if (!this->try_dispatch_reply ())
+  {
     return 0;
+  }
 
   this->reply_status_ = params.reply_status ();
   this->locate_reply_status_ = params.locate_reply_status ();
@@ -130,7 +136,9 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
       catch (::CORBA::Exception const &ex)
         {
           if (TAO_debug_level >= 4)
+          {
             ex._tao_print_exception ("Asynch_Reply_Dispatcher::dispatch_reply, exception during reply handler");
+          }
         }
     }
 
@@ -154,7 +162,9 @@ TAO_Asynch_Reply_Dispatcher::connection_closed ()
         }
 
       if (!this->try_dispatch_reply ())
+      {
         return;
+      }
 
       if (!CORBA::is_nil (this->reply_handler_.in ()))
         {
@@ -207,13 +217,17 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out ()
       // So we have to do that here in case f.i. the Exclusive TMS left the transport
       // busy after the send
       if (this->transport_ != nullptr)
+      {
         this->transport_->tms ()->idle_after_reply ();
+      }
 
       // This is okay here... Everything relies on our refcount being
       // held by the timeout handler, whose refcount in turn is held
       // by the reactor.
       if (!this->try_dispatch_reply ())
+      {
         return;
+      }
 
       if (!CORBA::is_nil (this->reply_handler_.in ()))
         {

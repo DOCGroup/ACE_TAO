@@ -114,7 +114,9 @@ Test_Fixed_Array::check_validity ()
       this->compare (this->in_, this->ret_.in ()))
     return 1;
   else
+  {
     return 0;
+  }
 }
 
 CORBA::Boolean
@@ -131,7 +133,9 @@ Test_Fixed_Array::compare (const Param_Test::Fixed_Array_slice *a1,
   for (CORBA::ULong i=0; i < Param_Test::DIM1; i++)
     {
       if (a1[i] != a2[i])
+      {
         return 0;
+      }
     }
   return 1; // success
 }

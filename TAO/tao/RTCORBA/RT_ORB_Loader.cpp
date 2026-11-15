@@ -22,7 +22,9 @@ TAO_RT_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
 
   // Only allow initialization once.
   if (this->initialized_)
+  {
     return 0;
+  }
 
   this->initialized_ = true;
 

@@ -21,7 +21,9 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object) const
   // Make sure that the servant is in the same ORB that created this
   // object.
   if (!object->_is_collocated ())
+  {
     return false;
+  }
 
   // Get the orb core.
   TAO_ORB_Core * const orb_core = object->_stubobj ()->servant_orb_var ()->orb_core ();
@@ -39,7 +41,9 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object) const
   // If the target POA does not have a dedicated thread pool, then all
   // calls to it are collocated.
   if (target_thread_pool == nullptr)
+  {
     return true;
+  }
 
   /// Get the ORB_Core's TSS resources.
   TAO_ORB_Core_TSS_Resources const &tss =
@@ -60,17 +64,23 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object) const
   // different pool than POA.  Therefore, this object is not
   // collocated.
   if (current_thread_pool != target_thread_pool)
+  {
     return false;
+  }
 
   // If the current thread and the POA are in the default thread pool,
   // then the object is collocated.
   if (current_thread_pool == nullptr)
+  {
     return true;
+  }
 
   // If the current thread and the POA are in a thread pool without
   // lanes, then the object is collocated.
   if (!current_thread_pool->with_lanes ())
+  {
     return true;
+  }
 
   // Grab the priority model used by the POA.  Note that this cannot
   // be NOT_SPECIFIED because NOT_SPECIFIED is not allowed with thread
@@ -82,7 +92,9 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object) const
   // because the current thread is of the correct priority :-) and
   // we'll simple use the current thread to run the upcall.
   if (priority_model == TAO::Portable_Server::Cached_Policies::CLIENT_PROPAGATED)
+  {
     return true;
+  }
 
   // Find the target servant priority. We are really not interested in the
   // servant itself but in the priority that this servant will run at.
@@ -99,7 +111,9 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object) const
   if (target_priority == current_thread_lane->lane_priority ())
     return true;
   else
+  {
     return false;
+  }
 }
 
 ACE_STATIC_SVC_DEFINE (TAO_RT_Collocation_Resolver,

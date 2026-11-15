@@ -39,7 +39,10 @@ TAO_AV_UDP_MCast_Flow_Handler::handle_timeout (ACE_Time_Value const &tv,
 ACE_HANDLE
 TAO_AV_UDP_MCast_Flow_Handler::get_handle () const
 {
-  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_UDP_MCast_Flow_Handler::get_handle "));
+  if (TAO_debug_level > 0)
+  {
+    ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_UDP_MCast_Flow_Handler::get_handle "));
+  }
   return this->get_mcast_socket ()->get_handle () ;
 }
 
@@ -121,7 +124,9 @@ TAO_AV_UDP_MCast_Transport::send (ACE_Message_Block const *mblk, ACE_Time_Value 
                                                              iovcnt);
 
               if (n < 1)
+              {
                 return n;
+              }
 
               nbytes += n;
               iovcnt = 0;
@@ -135,7 +140,9 @@ TAO_AV_UDP_MCast_Transport::send (ACE_Message_Block const *mblk, ACE_Time_Value 
       n = this->handler_->get_mcast_socket ()->send ((iovec const *) iov,
                                                      iovcnt);
       if (n < 1)
+      {
         return n;
+      }
 
       nbytes += n;
     }

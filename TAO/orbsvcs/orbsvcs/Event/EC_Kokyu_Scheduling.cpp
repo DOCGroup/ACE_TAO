@@ -61,7 +61,9 @@ TAO_EC_Kokyu_Scheduling::schedule_event (const RtecEventComm::EventSet &event,
             qos.publications[i].event.header;
 
           if (TAO_EC_Filter::matches (e.header, qos_header) == 0)
+          {
             continue;
+          }
 
           qos_info.rt_info = qos.publications[i].dependency_info.rt_info;
 

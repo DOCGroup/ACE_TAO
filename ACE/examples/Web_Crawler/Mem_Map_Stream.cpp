@@ -26,7 +26,9 @@ int
 Mem_Map_Stream::get_char ()
 {
   if (this->eof () && this->grow_file_and_remap () == -1)
+  {
     return EOF;
+  }
 
   return *this->get_pos_++;
 }
@@ -48,7 +50,9 @@ Mem_Map_Stream::peek_char (size_t offset)
   // We may need to iterate if the size of <n> is large.
   while (this->get_pos_ + offset >= this->end_of_mapping_plus1_)
     if (this->grow_file_and_remap () == -1)
+    {
       return EOF;
+    }
 
   return this->get_pos_[offset];
 }
@@ -63,7 +67,9 @@ const char *
 Mem_Map_Stream::recv (size_t &len)
 {
   if (this->eof () && this->grow_file_and_remap () == -1)
+  {
     return nullptr;
+  }
 
   const char *s = this->recv_pos_;
   ACE_OFF_T olen = static_cast <ACE_OFF_T> (len);
@@ -85,7 +91,9 @@ Mem_Map_Stream::peek_str (size_t offset,
   // We will iterate if the size of <offset> is large.
   while (this->get_pos_ + (offset + size) > this->end_of_mapping_plus1_)
     if (this->grow_file_and_remap () == -1)
+    {
       return nullptr;
+    }
 
   return this->get_pos_ + offset;
 }
@@ -115,7 +123,9 @@ Mem_Map_Stream::seek (ACE_OFF_T offset, int whence)
   // Make sure that the backing store will cover this.
   while (this->get_pos_ > this->end_of_mapping_plus1_)
     if (this->grow_file_and_remap () == -1)
+    {
       return (ACE_OFF_T) -1;
+    }
 
   this->recv_pos_ = this->get_pos_;
   return

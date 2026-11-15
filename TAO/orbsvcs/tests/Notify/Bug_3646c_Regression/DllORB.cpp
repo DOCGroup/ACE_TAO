@@ -23,11 +23,15 @@ DllORB::init (int argc, ACE_TCHAR* argv[])
             {
               int const count = ACE_OS::atoi (current_arg);
               if (count >= 1)
+              {
                 thread_count = count;
+              }
               arg_shifter.consume_arg ();
             }
           else
+          {
             arg_shifter.ignore_arg ();
+          }
         }
 
       if (this->fail_pre_post_init_ < 3)

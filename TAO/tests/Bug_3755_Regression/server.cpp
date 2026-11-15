@@ -132,7 +132,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (write_priority_mapping (priority_mapping1,
                                   options.mapping_file1.c_str (),
                                   "1") != 0)
+      {
         return -1;
+      }
 
       CORBA::Object_var const manager_object2 =
         orb2->resolve_initial_references ("PriorityMappingManager");
@@ -146,7 +148,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (write_priority_mapping (priority_mapping2,
                                   options.mapping_file2.c_str (),
                                   "2") != 0)
+      {
         return -1;
+      }
     }
   catch (CORBA::SystemException const &ex)
     {

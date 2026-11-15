@@ -20,7 +20,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     }
 
   if (n == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "recv"), 1);
+  }
 
   return 0;
 }

@@ -46,7 +46,9 @@ Baseline_Test_Base::parse_args (int argc, ACE_TCHAR *argv[])
                                "%d is not a valid value for iteration\n",
                                tmp), -1);
           else
+          {
             this->iteration_ = static_cast<size_t> (tmp);
+          }
         }
         break;
 
@@ -79,7 +81,9 @@ Baseline_Test_Base::yield () const
   if (this->yield_method_ == Baseline_Yield_Method::sleep_zero)
     ACE_OS::sleep (0);
   else
+  {
     ACE_OS::thr_yield ();
+  }
 }
 
 int
@@ -174,7 +178,9 @@ Baseline_Test::run_test ()
   if (baseline_options.test_try_lock ())
     return this->current_test_->test_try_lock ();
   else
+  {
     return this->current_test_->test_acquire_release ();
+  }
 }
 
 int

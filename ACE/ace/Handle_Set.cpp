@@ -228,7 +228,9 @@ ACE_Handle_Set::set_max (ACE_HANDLE current_max)
 
   // Do some sanity checking...
   if (this->max_handle_ >= ACE_Handle_Set::MAXSIZE)
+  {
     this->max_handle_ = ACE_Handle_Set::MAXSIZE - 1;
+  }
 #else
   ACE_UNUSED_ARG (current_max);
 #endif /* !ACE_HANDLE_SET_USES_FD_ARRAY */
@@ -345,7 +347,9 @@ ACE_Handle_Set_Iterator::operator () ()
          {
            // We have exceeded the word count in Handle_Set?
            if (++this->word_num_ >= this->word_max_)
+           {
              return ACE_INVALID_HANDLE;
+           }
 
            lsb = this->handles_.mask_.fds_bits[this->word_num_];
          }

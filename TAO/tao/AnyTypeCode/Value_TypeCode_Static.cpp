@@ -57,7 +57,9 @@ TAO::TypeCode::Value<char const *,
     && (enc << this->nfields_);
 
   if (!success)
+  {
     return false;
+  }
 
   for (CORBA::ULong i {}; i < this->nfields_; ++i)
     {
@@ -70,7 +72,9 @@ TAO::TypeCode::Value<char const *,
                        ACE_Utils::truncate_cast<CORBA::ULong> (
                            offset + enc.total_length ()))
           || !(enc << field.visibility))
+      {
         return false;
+      }
     }
 
   return
@@ -112,7 +116,9 @@ TAO::TypeCode::Value<char const *,
     tc->type_modifier ();
 
   if (tc_type_modifier != this->type_modifier_)
+  {
     return false;
+  }
 
   CORBA::TypeCode_var const rhs_concrete_base_type = tc->concrete_base_type ();
 
@@ -120,12 +126,16 @@ TAO::TypeCode::Value<char const *,
     this->equal (rhs_concrete_base_type.in ());
 
   if (!equal_concrete_base_types)
+  {
     return false;
+  }
 
   CORBA::ULong const tc_nfields = tc->member_count ();
 
   if (tc_nfields != this->nfields_)
+  {
     return false;
+  }
 
   for (CORBA::ULong i {}; i < this->nfields_; ++i)
     {
@@ -136,14 +146,18 @@ TAO::TypeCode::Value<char const *,
       CORBA::Visibility const rhs_visibility = tc->member_visibility (i);
 
       if (lhs_visibility != rhs_visibility)
+      {
         return false;
+      }
 
       char const * const lhs_name =
         Traits<char const *>::get_string (lhs_field.name);
       char const * const rhs_name = tc->member_name (i);
 
       if (std::strcmp (lhs_name, rhs_name) != 0)
+      {
         return false;
+      }
 
       CORBA::TypeCode_ptr const lhs_tc =
         Traits<char const *>::get_typecode (lhs_field.type);
@@ -154,7 +168,9 @@ TAO::TypeCode::Value<char const *,
         lhs_tc->equal (rhs_tc.in ());
 
       if (!equal_members)
+      {
         return false;
+      }
     }
 
   return true;
@@ -171,7 +187,9 @@ TAO::TypeCode::Value<char const *,
   CORBA::ValueModifier const tc_type_modifier = tc->type_modifier ();
 
   if (tc_type_modifier != this->type_modifier_)
+  {
     return false;
+  }
 
   CORBA::TypeCode_var const rhs_concrete_base_type = tc->concrete_base_type ();
 
@@ -179,7 +197,9 @@ TAO::TypeCode::Value<char const *,
     this->equivalent (rhs_concrete_base_type.in ());
 
   if (!equivalent_concrete_base_types)
+  {
     return false;
+  }
 
   // Perform a structural comparison, excluding the name() and
   // member_name() operations.
@@ -187,7 +207,9 @@ TAO::TypeCode::Value<char const *,
   CORBA::ULong const tc_nfields = tc->member_count ();
 
   if (tc_nfields != this->nfields_)
+  {
     return false;
+  }
 
   for (CORBA::ULong i {}; i < this->nfields_; ++i)
     {
@@ -199,7 +221,9 @@ TAO::TypeCode::Value<char const *,
       CORBA::Visibility const rhs_visibility = tc->member_visibility (i);
 
       if (lhs_visibility != rhs_visibility)
+      {
         return false;
+      }
 
       CORBA::TypeCode_ptr const lhs_tc =
         Traits<char const *>::get_typecode (lhs_field.type);
@@ -208,7 +232,9 @@ TAO::TypeCode::Value<char const *,
       CORBA::Boolean const equiv_types = lhs_tc->equivalent (rhs_tc.in ());
 
       if (!equiv_types)
+      {
         return false;
+      }
     }
 
   return true;
@@ -309,7 +335,9 @@ TAO::TypeCode::Value<char const *,
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
   if (index >= this->nfields_)
+  {
     throw ::CORBA::TypeCode::Bounds ();
+  }
 
   return Traits<char const *>::get_string (this->fields_[index].name);
 }
@@ -323,7 +351,9 @@ TAO::TypeCode::Value<char const *,
   CORBA::ULong index) const
 {
   if (index >= this->nfields_)
+  {
     throw ::CORBA::TypeCode::Bounds ();
+  }
 
   return
     CORBA::TypeCode::_duplicate (
@@ -339,7 +369,9 @@ TAO::TypeCode::Value<char const *,
   CORBA::ULong index) const
 {
   if (index >= this->nfields_)
+  {
     throw ::CORBA::TypeCode::Bounds ();
+  }
 
   return this->fields_[index].visibility;
 }

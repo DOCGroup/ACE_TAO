@@ -1151,7 +1151,9 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
                 dynamic_cast<AST_Attribute*> (d);
 
               if (attr == nullptr)
+              {
                 return -1;
+              }
 
               // Generate only the "get" entry if we are
               // readonly.

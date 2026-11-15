@@ -197,7 +197,10 @@ UTL_ScopeStack::lookup_by_name (
       if (scope != nullptr)
         {
           AST_Decl *node = scope->lookup_by_name (name, full_def_only, for_add);
-          if (node != nullptr) return node;
+          if (node != nullptr)
+          {
+            return node;
+          }
         }
     }
   return nullptr;

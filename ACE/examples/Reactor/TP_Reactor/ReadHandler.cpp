@@ -92,7 +92,9 @@ int ReadHandler::handle_input(ACE_HANDLE) {
               ACE_DEBUG((LM_DEBUG, ACE_TEXT("%N:%l: Failed to allocate ")
                          ACE_TEXT ("data buffer.\n")));
             else
-                response = 'K';
+            {
+              response = 'K';
+            }
         }
 
         // send the response to the client (which is still 0, if the
@@ -106,7 +108,9 @@ int ReadHandler::handle_input(ACE_HANDLE) {
         if (response == 'K')
             INVOCATION_RETURN(0); // get another request from the same client
         else
-            INVOCATION_RETURN(-1); // the client will not send data if response != 'K'
+        {
+          INVOCATION_RETURN(-1); // the client will not send data if response != 'K'
+        }
 
     } else if (mCallCounter == 1) {
         /*

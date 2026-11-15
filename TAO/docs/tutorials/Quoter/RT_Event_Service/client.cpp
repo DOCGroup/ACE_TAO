@@ -36,7 +36,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       for (int i = 1; i < argc; ++i)
         {
           if (ACE_OS::strlen (argv[i]) < 4)
+          {
             continue;
+          }
 
           CORBA::ULong const type =
             static_cast<CORBA::ULong> (static_cast<unsigned char> (argv[i][0])) << 24 |

@@ -12,9 +12,13 @@ namespace
   {
     size_t const len = std::strlen (s);
     if (len == 0)
+    {
       return 0;
+    }
     if (! ACE_OS::ace_isdigit(s[0]))
+    {
       return 0;
+    }
 
     ACE_UINT64 t {};
     for (size_t i {}; i < len; ++i)

@@ -47,7 +47,9 @@ TAO_Leader_Follower::~TAO_Leader_Follower ()
   if ( this->orb_core_->gui_resource_factory () )
     this->orb_core_->gui_resource_factory ()->reclaim_reactor (this->reactor_);
   else
+  {
     this->orb_core_->resource_factory ()->reclaim_reactor (this->reactor_);
+  }
 
   this->reactor_ = nullptr;
 }
@@ -56,7 +58,9 @@ TAO_LF_Follower *
 TAO_Leader_Follower::allocate_follower ()
 {
   if (!this->follower_free_list_.is_empty ())
+  {
     return this->follower_free_list_.pop_front ();
+  }
 
   TAO_LF_Follower *ptr {};
   ACE_NEW_RETURN (ptr,
@@ -297,7 +301,9 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
         // Grab a follower:
         TAO_LF_Follower_Auto_Ptr follower (*this);
         if (follower.get () == nullptr)
+        {
           return -1;
+        }
 
         if (TAO_debug_level >= 5)
           TAOLIB_DEBUG ((LM_DEBUG,
@@ -424,10 +430,14 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
         // input. We are already removed from the follower queue.
 
         if (event->successful_i ())
+        {
           return 0;
+        }
 
         if (event->error_detected_i ())
+        {
           return -1;
+        }
 
         // FALLTHROUGH
         // We only get here if we woke up but the reply is not
@@ -506,21 +516,29 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
             if (result == 0 &&
                 max_wait_time != nullptr &&
                 *max_wait_time == ACE_Time_Value::zero)
+            {
               break;
+            }
 
             // Other errors? If so, stop running the loop.
             if (result == -1)
+            {
               break;
+            }
 
             // Has an event loop thread become available to take over?
             // Yes, we are checking this without the lock, however, if
             // we get a false reading we'll just circle around and
             // become leader again...
             if (this->event_loop_threads_waiting_)
+            {
               break;
+            }
             // Did we give up leadership?
             if (!this->is_client_leader_thread ())
+            {
               break;
+            }
             // Otherwise, keep going...
           }
 

@@ -93,7 +93,9 @@ u_char * asn1::parse_int(u_char *data,
   }
   *datalength -= (int)asn_length + (bufp - data);
   if (*bufp & 0x80)
+  {
     value = -1; /* integer is negative */
+  }
   while(asn_length--)
     value = (value << 8) | *bufp++;
   *intp = value;
@@ -145,7 +147,9 @@ u_char * asn1::parse_unsigned_int( u_char *data,
   }
   *datalength -= (int)asn_length + (bufp - data);
   if (*bufp & 0x80)
+  {
     value = (u_long) -1;
+  }
   while(asn_length--)
     value = (value << 8) | *bufp++;
   *intp = value;
@@ -177,7 +181,9 @@ u_char * asn1::build_int( u_char *data,
   u_long mask;
 
   if (intsize != (int) sizeof (long))
+  {
     return 0;
+  }
   integer = *intp;
   /*
    * Truncate "unnecessary" bytes off of the most significant end of this
@@ -194,9 +200,13 @@ u_char * asn1::build_int( u_char *data,
   }
   data = asn1::build_header(data, datalength, type, intsize);
   if (data == nullptr)
+  {
     return 0;
+  }
   if (*datalength < intsize)
+  {
     return 0;
+  }
   *datalength -= intsize;
   mask = u_long (0xFF) << (8 * (sizeof(u_long) - 1));
   /* mask is 0xFF000000 on a big-endian machine */
@@ -233,7 +243,9 @@ u_char * asn1::build_unsigned_int( u_char *data,
   int add_null_byte = 0;
 
   if (intsize != (int) sizeof (long))
+  {
     return 0;
+  }
   integer = *intp;
   mask = u_long (0xFF) << (8 * (sizeof(u_long) - 1));
   /* mask is 0xFF000000 on a big-endian machine */
@@ -255,9 +267,13 @@ u_char * asn1::build_unsigned_int( u_char *data,
   }
   data = asn1::build_header(data, datalength, type, intsize);
   if (data == nullptr)
+  {
     return 0;
+  }
   if (*datalength < intsize)
+  {
     return 0;
+  }
   *datalength -= intsize;
   if (add_null_byte == 1){
     *data++ = '\0';
@@ -302,7 +318,9 @@ u_char * asn1::parse_string( u_char     *data,
   *type = *bufp++;
   bufp = asn1::parse_length(bufp, &asn_length);
   if (bufp == nullptr)
+  {
     return 0;
+  }
   if ((int)(asn_length + (bufp - data)) > *datalength){
     ASNERROR("overflow of message");
     return 0;
@@ -343,9 +361,13 @@ u_char * asn1::build_string( u_char *data,
    */
   data = asn1::build_header(data, datalength, type, strlength);
   if (data == nullptr)
+  {
     return 0;
+  }
   if (*datalength < strlength)
+  {
     return 0;
+  }
   // fixed
   ACE_OS::memcpy((u_char *)data,(u_char *)string, strlength);
   *datalength -= strlength;
@@ -378,7 +400,9 @@ u_char *asn1::parse_header( u_char *data,
   *type = *bufp;
   bufp = asn1::parse_length(bufp + 1, &asn_length);
   if (bufp == nullptr)
+  {
     return 0;
+  }
   header_len = bufp - data;
   if ((int)(header_len + asn_length) > *datalength){
     ASNERROR("asn length too long");
@@ -408,7 +432,9 @@ u_char * asn1::build_header( u_char *data,
 {
   ACE_TRACE("asn1::build_header");
   if (*datalength < 1)
+  {
     return 0;
+  }
   *data++ = type;
   (*datalength)--;
   return asn1::build_length(data, datalength, length);
@@ -548,7 +574,9 @@ u_char *asn1::parse_objid( u_char *data,
   *type = *bufp++;
   bufp = asn1::parse_length(bufp, &asn_length);
   if (bufp == nullptr)
+  {
     return 0;
+  }
   if ((int)asn_length + (bufp - data) > *datalength){
     ASNERROR("overflow of message");
     return 0;
@@ -557,7 +585,9 @@ u_char *asn1::parse_objid( u_char *data,
 
   /* Handle invalid object identifier encodings of the form 06 00 robustly */
   if (asn_length == 0)
+  {
     objid[0] = objid[1] = 0;
+  }
 
   length = asn_length;
   (*objidlength)--;     /* account for expansion of first byte */
@@ -652,7 +682,9 @@ u_char *asn1::build_objid( u_char *data,
       for(;mask != 0x7F; mask >>= 7, bits -= 7){
         /* fix a mask that got truncated above */
         if (mask == 0x1E00000)
+        {
           mask = 0xFE00000;
+        }
         *bp++ = (u_char)(((subid & mask) >> bits) | ASN_BIT8);
       }
       *bp++ = (u_char)(subid & mask);
@@ -661,9 +693,13 @@ u_char *asn1::build_objid( u_char *data,
   asnlength = bp - buf;
   data = asn1::build_header(data, datalength, type, asnlength);
   if (data == nullptr)
+  {
     return 0;
+  }
   if (*datalength < asnlength)
+  {
     return 0;
+  }
   // fixed
   ACE_OS::memcpy((char *)data, (char *)buf,  asnlength);
   *datalength -= asnlength;
@@ -694,7 +730,9 @@ u_char *asn1::parse_null(u_char *data,
   *type = *bufp++;
   bufp = asn1::parse_length(bufp, &asn_length);
   if (bufp == nullptr)
+  {
     return 0;
+  }
   if (asn_length != 0){
     ASNERROR("Malformed 0");
     return 0;
@@ -752,7 +790,9 @@ u_char *asn1::parse_bitstring( u_char *data,
   *type = *bufp++;
   bufp = asn1::parse_length(bufp, &asn_length);
   if (bufp == nullptr)
+  {
     return 0;
+  }
   if ((int)(asn_length + (bufp - data)) > *datalength){
     ASNERROR("overflow of message");
     return 0;
@@ -803,9 +843,13 @@ u_char *asn1::build_bitstring( u_char *data,
   }
   data = asn1::build_header(data, datalength, type, strlength);
   if (data == nullptr)
+  {
     return 0;
+  }
   if (*datalength < strlength)
+  {
     return 0;
+  }
   // fixed
   ACE_OS::memcpy((char *)data,(char *)string, strlength);
   *datalength -= strlength;
@@ -898,7 +942,9 @@ u_char * asn1::build_unsigned_int64( u_char *data,
   int intsize;
 
   if (countersize != (int) sizeof (struct counter64))
+  {
     return 0;
+  }
   intsize = 8;
   low = cp->low;
   high = cp->high;
@@ -926,9 +972,13 @@ u_char * asn1::build_unsigned_int64( u_char *data,
   }
   data = asn1::build_header(data, datalength, type, intsize);
   if (data == nullptr)
+  {
     return 0;
+  }
   if (*datalength < intsize)
+  {
     return 0;
+  }
   *datalength -= intsize;
   if (add_null_byte == 1){
     *data++ = '\0';
@@ -970,10 +1020,14 @@ void cmu_snmp::free_pdu( struct snmp_pdu *pdu)
   while(vp){
     // release the oid part
     if (vp->name)
+    {
       delete [] vp->name;
+    }
     // if deep data, then release as well
     if (vp->val.string)
+    {
       delete [] vp->val.string;
+    }
     ovp = vp;
     // go to the next one
     vp = vp->next_variable;
@@ -982,7 +1036,9 @@ void cmu_snmp::free_pdu( struct snmp_pdu *pdu)
   }
   // if enterprise release it up
   if (pdu->enterprise)
+  {
     delete [] pdu->enterprise;
+  }
   // release up pdu itself
   delete pdu;
 }
@@ -1177,7 +1233,9 @@ u_char * cmu_snmp::build_var_op(u_char *data, oid * var_name,
   data += 4;
   dummyLen -=4;
   if (dummyLen < 0)
+  {
     return 0;
+  }
 
   headerLen = data - dataPtr;
   *listlength -= headerLen;
@@ -1279,7 +1337,9 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
                            vp->val_len, (u_char *)vp->val.string,
                            &length);
     if (cp == nullptr)
+    {
       return -1;
+    }
   }
   totallength = cp - packet;
 
@@ -1290,7 +1350,9 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
                         (u_char)(ASN_SEQUENCE | ASN_CONSTRUCTOR),
                         totallength);
   if (cp == nullptr)
+  {
     return -1;
+  }
   ACE_OS::memcpy( (char *)cp, (char *)packet,totallength);
   totallength += cp - buf;
 
@@ -1303,7 +1365,9 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
                        (long *)&pdu->reqid,
                        sizeof(pdu->reqid));
     if (cp == nullptr)
+    {
       return -1;
+    }
 
     // error status
     cp = asn1::build_int(cp,
@@ -1311,7 +1375,9 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
                (u_char)(ASN_UNIVERSAL | ASN_PRIMITIVE | ASN_INTEGER),
                        (long *)&pdu->errstat, sizeof(pdu->errstat));
     if (cp == nullptr)
+    {
       return -1;
+    }
 
     // error index
     cp = asn1::build_int(cp,
@@ -1319,7 +1385,9 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
                (u_char)(ASN_UNIVERSAL | ASN_PRIMITIVE | ASN_INTEGER),
                        (long *)&pdu->errindex, sizeof(pdu->errindex));
     if (cp == nullptr)
+    {
       return -1;
+    }
   }
   else {        // this is a trap message
 
@@ -1330,7 +1398,9 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
                          (oid *)pdu->enterprise,
                          pdu->enterprise_length);
     if (cp == nullptr)
+    {
       return -1;
+    }
 
     // agent-addr
     cp = asn1::build_string(cp,
@@ -1341,7 +1411,9 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
                           (u_char *)&pdu->agent_addr.sin_addr.s_addr,
                           sizeof(pdu->agent_addr.sin_addr.s_addr));
     if (cp == nullptr)
+    {
       return -1;
+    }
 
     long tmp (static_cast <long> (pdu->trap_type));
     // generic trap
@@ -1351,7 +1423,9 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
                          &tmp,
                          sizeof(pdu->trap_type));
     if (cp == nullptr)
+    {
       return -1;
+    }
 
     tmp = static_cast <long> (pdu->specific_type);
     // specific trap
@@ -1361,7 +1435,9 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
                           &tmp,
                           sizeof(pdu->specific_type));
     if (cp == nullptr)
+    {
       return -1;
+    }
 
     // timestamp
     cp = asn1::build_int(cp,
@@ -1372,11 +1448,15 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
                        (long *)&pdu->time,
                        sizeof(pdu->time));
     if (cp == nullptr)
+    {
       return -1;
+    }
   }
 
   if (length < totallength)
+  {
     return -1;
+  }
   // fixed
   ACE_OS::memcpy((char *)cp, (char *)buf, totallength);
   totallength += cp - packet;
@@ -1387,9 +1467,13 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
                         (u_char)pdu->command,
                         totallength);
   if (cp == nullptr)
+  {
     return -1;
+  }
   if (length < totallength)
+  {
     return -1;
+  }
   // fixed
   ACE_OS::memcpy((char *)cp, (char *)packet, totallength);
   totallength += cp - buf;
@@ -1403,9 +1487,13 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
                        community_len,
                        totallength );
   if (cp == nullptr)
+  {
     return -1;
+  }
   if ((*out_length - (cp - packet)) < totallength)
+  {
     return -1;
+  }
   // fixed
   ACE_OS::memcpy((char *)cp, (char *)buf, totallength);
   totallength += cp - packet;
@@ -1477,7 +1565,9 @@ cmu_snmp::parse_var_op( u_char *data, oid *var_name,
     return 0;
   }
   if (var_op_type != (u_char)(ASN_SEQUENCE | ASN_CONSTRUCTOR))
+  {
     return 0;
+  }
   data = asn1::parse_objid(data, &var_op_len, &var_op_type, var_name, var_name_len);
   if (data == nullptr) {
     ASNERROR("");
@@ -1485,7 +1575,9 @@ cmu_snmp::parse_var_op( u_char *data, oid *var_name,
   }
   if (var_op_type != (u_char)
                      (ASN_UNIVERSAL | ASN_PRIMITIVE | ASN_OBJECT_ID))
+  {
     return 0;
+  }
   *var_val = data;      /* save pointer to this object */
   /* find out what type of object this is */
   data = asn1::parse_header(data, &var_op_len, var_val_type);
@@ -1525,7 +1617,9 @@ int cmu_snmp::parse( struct snmp_pdu *pdu,
                          &community_length,
                          &version);
   if (data == nullptr)
+  {
     return -1;
+  }
 
   // copy the returned community name
   ACE_OS::memcpy( (u_char *) community_name,
@@ -1544,7 +1638,9 @@ int cmu_snmp::parse( struct snmp_pdu *pdu,
                           &length,
                           &msg_type);
   if (data == nullptr)
+  {
     return -1;
+  }
   pdu->command = msg_type;
 
   if (pdu->command != TRP_REQ_MSG){
@@ -1554,7 +1650,9 @@ int cmu_snmp::parse( struct snmp_pdu *pdu,
                          (long *)&pdu->reqid,
                          sizeof(pdu->reqid));
     if (data == nullptr)
+    {
       return -1;
+    }
     // get the error status
     data = asn1::parse_int(data,
                          &length,
@@ -1562,7 +1660,9 @@ int cmu_snmp::parse( struct snmp_pdu *pdu,
                          (long *)&pdu->errstat,
                          sizeof(pdu->errstat));
     if (data == nullptr)
+    {
       return -1;
+    }
     // get the error index
     data = asn1::parse_int(data,
                          &length,
@@ -1570,7 +1670,9 @@ int cmu_snmp::parse( struct snmp_pdu *pdu,
                          (long *)&pdu->errindex,
                          sizeof(pdu->errindex));
     if (data == nullptr)
+    {
       return -1;
+    }
   }
   else {  // is a trap
 
@@ -1582,7 +1684,9 @@ int cmu_snmp::parse( struct snmp_pdu *pdu,
                            objid,
                            &pdu->enterprise_length);
     if (data == nullptr)
+    {
       return -1;
+    }
 
     ACE_NEW_RETURN(pdu->enterprise,
                    oid[pdu->enterprise_length*sizeof(oid)],-1);
@@ -1597,7 +1701,9 @@ int cmu_snmp::parse( struct snmp_pdu *pdu,
                             (u_char *)&pdu->agent_addr.sin_addr.s_addr,
                             &four);
     if (data == nullptr)
+    {
       return -1;
+    }
 
     long tmp (static_cast <long> (pdu->trap_type));
 
@@ -1605,29 +1711,39 @@ int cmu_snmp::parse( struct snmp_pdu *pdu,
     data = asn1::parse_int(data, &length, &type, &tmp,
                          sizeof(pdu->trap_type));
     if (data == nullptr)
+    {
       return -1;
+    }
 
     // trap type
     tmp = static_cast <long> (pdu->specific_type);
     data = asn1::parse_int(data, &length, &type, &tmp,
                          sizeof(pdu->specific_type));
     if (data == nullptr)
+    {
       return -1;
+    }
 
     // timestamp
     data = asn1::parse_int(data, &length, &type, (long *)&pdu->time,
                             sizeof(pdu->time));
     if (data == nullptr)
+    {
       return -1;
+    }
   }
 
   // get the vb list
   data = asn1::parse_header(data, &length, &type);
   if (data == nullptr)
+  {
     return -1;
+  }
 
   if (type != (u_char)(ASN_SEQUENCE | ASN_CONSTRUCTOR))
+  {
     return -1;
+  }
 
   while((int)length > 0) {
     if (pdu->variables == nullptr) {
@@ -1646,7 +1762,9 @@ int cmu_snmp::parse( struct snmp_pdu *pdu,
                              &vp->val_len, &var_val,
                              (int *)&length);
      if (data == nullptr)
-      return -1;
+     {
+       return -1;
+     }
 
     ACE_NEW_RETURN(op, oid[(unsigned)vp->name_length * sizeof(oid)], -1);
 

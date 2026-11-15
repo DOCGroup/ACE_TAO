@@ -21,7 +21,9 @@ TAO_ECG_UDP_EH::open (ACE_INET_Addr const &ipaddr,
 {
   // Check that we haven't been closed already.
   if (!this->receiver_)
+  {
     return -1;
+  }
 
   if (this->dgram_.open (ipaddr, PF_INET, 0, reuse_addr) == -1)
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
@@ -48,7 +50,9 @@ TAO_ECG_UDP_EH::shutdown ()
 {
   // Already shut down.
   if (!this->receiver_)
+  {
     return -1;
+  }
 
   int result {};
   if (this->reactor ())

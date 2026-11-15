@@ -11,7 +11,9 @@ write_ior (char const *ior)
 {
   std::ofstream output_file (server_ior_file);
   if (!output_file)
+  {
     return false;
+  }
 
   output_file << ior;
   output_file.close ();

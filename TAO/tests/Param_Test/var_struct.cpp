@@ -224,7 +224,9 @@ Test_Var_Struct::print_values ()
                   (this->inout_->seq[i]? (const char *)this->inout_->seq[i]:"<nul>")));
     }
   if (!this->inout_.ptr ())
+  {
     ACE_DEBUG ((LM_DEBUG, "\ninout struct does not exist\n"));
+  }
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
   for (i=0; this->out_.ptr () && (i < this->out_->seq.length ()); i++)
     {
@@ -235,7 +237,9 @@ Test_Var_Struct::print_values ()
                   (this->out_->seq[i]? (const char *)this->out_->seq[i]:"<nul>")));
     }
   if (!this->out_.ptr ())
+  {
     ACE_DEBUG ((LM_DEBUG, "\nout struct is NUL\n"));
+  }
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
   for (i=0; this->ret_.ptr () && (i < this->ret_->seq.length ()); i++)
     {
@@ -246,6 +250,8 @@ Test_Var_Struct::print_values ()
                   (this->ret_->seq[i]? (const char *)this->ret_->seq[i]:"<nul>")));
     }
   if (!this->ret_.ptr ())
+  {
     ACE_DEBUG ((LM_DEBUG, "\nret struct is NUL\n"));
+  }
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
 }

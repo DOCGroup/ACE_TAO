@@ -68,7 +68,9 @@ TAO_FTNS_Notifier::handle_exception (ACE_HANDLE )
   if (this->iors_)
     owner_.update_iors_i();
   else
+  {
     owner_.update_info_i();
+  }
   return 0;
 }
 
@@ -195,7 +197,9 @@ TAO_FT_Naming_Server::init_with_orb (int argc,
 
   // Check the result to make sure it executed Ok.
   if (result != 0)
+  {
     return result;
+  }
 
   if (this->use_object_group_persistence_)
     {
@@ -227,14 +231,18 @@ TAO_FT_Naming_Server::init_with_orb (int argc,
   // interface
   result = this->init_naming_manager_with_orb (argc, argv, orb);
   if (result != 0)
+  {
     return result;
+  }
 
   try
     {
       // Initialize the replicator if necessary
       result = init_replicator ();
       if (result != 0)
+      {
         return result;
+      }
 
       // Setup the pairing with peer
       init_replication_pairing ();
@@ -281,7 +289,9 @@ TAO_FT_Naming_Server::init_naming_manager_with_orb (int, ACE_TCHAR *[], CORBA::O
         }
 
       if (result != 0)
+      {
         return result;
+      }
 
       this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ());
       PortableServer::POAManager_var poa_manager =
@@ -315,7 +325,9 @@ TAO_FT_Naming_Server::init_naming_manager_with_orb (int, ACE_TCHAR *[], CORBA::O
       this->assign (size_t(GROUP), true, this->naming_manager_poa_->id_to_reference (id.in ()));
 
       if (write (size_t(GROUP)) != 0)
+      {
         return -1;
+      }
 
       this->naming_manager_.initialize (this->orb_.in (),
                                         this->naming_manager_poa_.in ());
@@ -343,7 +355,9 @@ int
 TAO_FT_Naming_Server::init_replicator ()
 {
   if (this->server_role_ == STANDALONE )
+  {
     return 0;
+  }
 
   ACE_GUARD_THROW_EX (ACE_SYNCH_RECURSIVE_MUTEX,
                       ace_mon,
@@ -475,7 +489,9 @@ TAO_FT_Naming_Server::parse_args (int argc,
       case 's':
         size = ACE_OS::atoi (get_opts.opt_arg ());
         if (size >= 0)
+        {
           this->context_size_ = size;
+        }
         break;
       case 'm':
         this->multicast_ = ACE_OS::atoi(get_opts.opt_arg ());
@@ -621,7 +637,9 @@ TAO_FT_Naming_Server::fini ()
   try
     {
       if (!CORBA::is_nil (this->naming_manager_poa_.in ()))
+      {
         this->naming_manager_poa_->destroy (true, true);
+      }
       this->naming_manager_poa_ = PortableServer::POA::_nil ();
     }
   catch (CORBA::Exception const &)
@@ -971,7 +989,9 @@ TAO_FT_Naming_Server::recover_iors ()
                           fname.c_str()));
         }
       if (ACE_OS::access (fname.c_str (), F_OK) != 0)
+      {
         return -1;
+      }
 
       try
         {

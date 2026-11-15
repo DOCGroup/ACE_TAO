@@ -126,7 +126,9 @@ TAO::ORB_Table::set_default (char const * orb_id)
   iterator const i = this->table_.find (key_type (orb_id));
 
   if (i != this->end ())
+  {
     this->first_orb_ = (*i).second.core ();
+  }
 }
 
 void

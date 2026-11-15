@@ -47,7 +47,9 @@ reverse_file (ACE_HANDLE file_handle,
           count = 0;
         }
       else
+      {
         ++count;
+      }
     }
   ACE_OS::write (file_handle, array, count+1);
 }

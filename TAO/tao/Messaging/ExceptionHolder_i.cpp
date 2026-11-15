@@ -91,7 +91,9 @@ namespace TAO
       for (CORBA::ULong i {}; i != this->count_; ++i)
         {
           if (this->data_[i].id.compare(type_id.in ()) != 0)
+          {
             continue;
+          }
 
           CORBA::Exception * const exception = this->data_[i].alloc ();
 

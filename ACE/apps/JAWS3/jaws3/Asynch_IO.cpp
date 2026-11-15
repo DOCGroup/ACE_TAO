@@ -35,7 +35,9 @@ JAWS_Asynch_IO::send ( ACE_HANDLE handle
                                   );
 
       if (completer)
+      {
         completer->output_complete (io_result, act);
+      }
     }
 }
 
@@ -61,7 +63,9 @@ JAWS_Asynch_IO::recv ( ACE_HANDLE handle
                                   );
 
       if (completer)
+      {
         completer->output_complete (io_result, act);
+      }
     }
 }
 
@@ -108,7 +112,9 @@ JAWS_Asynch_IO::transmit ( ACE_HANDLE handle
                                   );
 
       if (completer)
+      {
         completer->output_complete (io_result, act);
+      }
     }
 }
 

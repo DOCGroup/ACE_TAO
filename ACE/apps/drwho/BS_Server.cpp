@@ -65,7 +65,9 @@ BS_Server::insert (char const *key_name, int max_len)
   if (std::strncmp (last_lookup, key_name, max_len) == 0)
     {
       if (result == 0)
+      {
         return nullptr;
+      }
     }
   else
     {
@@ -86,7 +88,9 @@ BS_Server::insert (char const *key_name, int max_len)
           if (cmp < 0)
             hi = mid - 1;
           else
+          {
             lo = mid;
+          }
         }
 
       // This line is very subtle... ;-)
@@ -115,7 +119,9 @@ BS_Server::get_next_entry ()
        prp != nullptr;
        prp = Binary_Search::get_next_entry ())
     if (prp->get_drwho_list () != nullptr)
+    {
       return prp;
+    }
 
   return nullptr;
 }

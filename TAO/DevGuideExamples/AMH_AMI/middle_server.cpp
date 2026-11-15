@@ -54,7 +54,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var const orb (CORBA::ORB_init (argc, argv));
       Middle_Server_Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var object (orb->resolve_initial_references ("RootPOA"));
       PortableServer::POA_var const poa (
@@ -75,7 +77,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (options.use_sync)
         servant = new Middle_i (peer.in ());
       else
+      {
         servant = new Asynch_Middle_i (poa.in (), peer.in ());
+      }
 
       PortableServer::ObjectId_var const oid (poa->activate_object (servant.in ()));
       object = poa->id_to_reference (oid.in ());

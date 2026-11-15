@@ -42,7 +42,9 @@ ACE_OS::strdup_emulation (const wchar_t *s)
     (wchar_t *) ACE_OS::malloc ((ACE_OS::strlen (s) + 1)
                                 * sizeof (wchar_t));
   if (buffer == nullptr)
+  {
     return nullptr;
+  }
 
   return ACE_OS::strcpy (buffer, s);
 }
@@ -194,7 +196,9 @@ ACE_OS::strnchr (const char *s, int c, size_t len)
 {
   for (size_t i = 0; i < len; ++i)
     if (s[i] == c)
+    {
       return s + i;
+    }
 
   return nullptr;
 }
@@ -221,7 +225,9 @@ ACE_OS::strnstr (const char *s1, const char *s2, size_t len2)
 
   // Check if the substring is longer than the string being searched.
   if (len2 > len1)
+  {
     return nullptr;
+  }
 
   // Go upto <len>
   size_t const len = len1 - len2;
@@ -246,7 +252,9 @@ ACE_OS::strnstr (const ACE_WCHAR_T *s1, const ACE_WCHAR_T *s2, size_t len2)
 
   // Check if the substring is longer than the string being searched.
   if (len2 > len1)
+  {
     return nullptr;
+  }
 
   // Go upto <len>
   size_t const len = len1 - len2;

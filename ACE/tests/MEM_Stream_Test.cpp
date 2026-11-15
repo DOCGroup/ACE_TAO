@@ -139,7 +139,9 @@ Echo_Handler::handle_close (ACE_HANDLE,
 
   // If no connections are open.
   if (*Waiting::instance () == 0)
+  {
     ACE_Reactor::instance ()->end_reactor_event_loop ();
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Echo_Handler %d::handle_close closing down\n"),
@@ -284,7 +286,9 @@ test_reactive (const ACE_TCHAR *prog,
   opts.command_line (ACE_TEXT ("%") ACE_TEXT_PRIs ACE_TEXT (" -p%d -r"), prog, sport);
   if (ACE_Process_Manager::instance ()->spawn_n (NUMBER_OF_REACTIVE_CONNECTIONS,
                                                  opts) == -1)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n ()")));
+  }
 #endif /* _TEST_USES_THREADS */
 
   ACE_Time_Value tv (60, 0);
@@ -297,14 +301,18 @@ test_reactive (const ACE_TCHAR *prog,
       status = 1;
     }
   else
+  {
     ACE_DEBUG ((LM_DEBUG, "Reactor::run_event_loop finished\n"));
+  }
 
 #if defined (_TEST_USES_THREADS)
   if (ACE_Thread_Manager::instance ()->wait () == -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("wait ()")));
 #else
   if (ACE_Process_Manager::instance ()->wait () == -1)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("wait ()")));
+  }
 #endif /* _TEST_USES_THREADS */
 
   if (acceptor.close () == -1)
@@ -370,7 +378,9 @@ test_concurrent (const ACE_TCHAR *prog,
   opts.command_line (ACE_TEXT ("%") ACE_TEXT_PRIs ACE_TEXT (" -p%d -m"), prog, sport);
   if (ACE_Process_Manager::instance ()->spawn_n (NUMBER_OF_MT_CONNECTIONS,
                                                  opts) == -1)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n()")));
+  }
 #endif /* _TEST_USES_THREADS */
 
   ACE_Time_Value tv (60, 0);
@@ -383,14 +393,18 @@ test_concurrent (const ACE_TCHAR *prog,
       status = 1;
     }
   else
+  {
     ACE_DEBUG ((LM_DEBUG, "Reactor::run_event_loop finished\n"));
+  }
 
 #if defined (_TEST_USES_THREADS)
   if (ACE_Thread_Manager::instance ()->wait () == -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("wait ()")));
 #else
   if (ACE_Process_Manager::instance ()->wait () == -1)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("wait ()")));
+  }
 #endif /* _TEST_USES_THREADS */
 
   if (acceptor.close () == -1)

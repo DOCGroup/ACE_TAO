@@ -28,7 +28,9 @@ test_std_string_bounds ()
   std::string const value (5, 'x');
   TAO_OutputCDR output;
   if (!(output << ACE_OutputCDR::from_std_string (value, 5)))
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Bounded std::string insertion failed\n"), 1);
+  }
 
   try
     {
@@ -42,7 +44,9 @@ test_std_string_bounds ()
 #if !defined(ACE_LACKS_STD_WSTRING)
   std::wstring const wide (5, L'x');
   if (!(output << ACE_OutputCDR::from_std_wstring (wide, 5)))
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Bounded std::wstring insertion failed\n"), 1);
+  }
   try
     {
       output << ACE_OutputCDR::from_std_wstring (wide, 4);
@@ -58,10 +62,14 @@ test_std_string_bounds ()
       TAO_VERSIONED_NAMESPACE_NAME::tao_valid_std_string_length (max_length, 0) ||
       TAO_VERSIONED_NAMESPACE_NAME::tao_valid_std_string_length (5, 4) ||
       TAO_VERSIONED_NAMESPACE_NAME::tao_valid_std_string_length (5, 3))
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Incorrect std::string length validation\n"), 1);
+  }
   if (sizeof (size_t) > sizeof (ACE_CDR::ULong) &&
       TAO_VERSIONED_NAMESPACE_NAME::tao_valid_std_string_length (max_length + 1, 0))
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Unrepresentable CDR length accepted\n"), 1);
+  }
 
   return 0;
 }
@@ -72,21 +80,29 @@ test_boolean_holder ()
 {
   Holder holder;
   if (holder.arg ())
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Default Boolean holder is not false\n"), 1);
+  }
 
   TAO_OutputCDR output;
   if (!holder.marshal (output))
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Boolean holder marshal failed\n"), 1);
+  }
 
   TAO_InputCDR input (output);
   CORBA::Octet octet;
   if (!input.read_octet (octet) || octet != 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Default Boolean was not encoded as octet 0\n"), 1);
+  }
 
   CORBA::Boolean value = true;
   TAO_InputCDR round_trip (output);
   if (!round_trip.read_boolean (value) || value)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Default Boolean round-trip failed\n"), 1);
+  }
 
   return 0;
 }
@@ -103,11 +119,15 @@ test_sargument_initialization ()
   Long_Traits::out_arg_val long_out;
 
   if (boolean_ret.arg () || boolean_out.arg () || long_ret.arg () != 0 || long_out.arg () != 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Default skeleton argument holder is not value-initialized\n"), 1);
+  }
 
   if (test_boolean_holder<Boolean_Traits::ret_val> () != 0 ||
       test_boolean_holder<Boolean_Traits::out_arg_val> () != 0)
+  {
     return 1;
+  }
 
   return 0;
 }
@@ -297,10 +317,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var const orb {CORBA::ORB_init (argc, argv)};
 
       if (test_std_string_bounds () != 0)
+      {
         return 1;
+      }
 
       if (test_sargument_initialization () != 0)
+      {
         return 1;
+      }
 
       int n {4096};
       int nloops {100};
@@ -339,7 +363,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           CDR_Test_Types test_types;
 
           if (test_put (output, test_types, n) != 0)
+          {
             return 1;
+          }
           TAO_InputCDR input (output);
           if (TAO_debug_level > 0)
             {
@@ -350,7 +376,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             }
 
           if (test_get (input, test_types, n) != 0)
+          {
             return 1;
+          }
         }
 
     }

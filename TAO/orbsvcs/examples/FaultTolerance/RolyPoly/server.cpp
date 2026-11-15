@@ -47,7 +47,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       Server_Options options {};
       if (::parse_args (argc, argv, options) != 0)
+      {
         return -1;
+      }
       crash_point = options.crash_point;
 
       ORB_Initializer *temp_initializer {};

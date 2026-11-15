@@ -72,7 +72,9 @@ Supplier_Input_Handler::handle_input (ACE_HANDLE)
       if (buf[n - 1] == '\n')
         buf[n - 1] = '\0';
       else
+      {
         buf[n] = '\0';
+      }
       ACE_DEBUG ((LM_DEBUG,
                   "notifying for event %s\n",
                   buf));

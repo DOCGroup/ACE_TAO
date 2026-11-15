@@ -106,7 +106,9 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       status = 1;
     }
   else
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Default namespace prefix is empty\n")));
+  }
 
   if ((prefix = xmlns.getPrefix (ACE_TEXT ("http://www.w3.org/XML/1998/namespace"))) == nullptr)
     {
@@ -162,28 +164,36 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       status = 1;
     }
   else
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("URI for \"dc\" is %s\n"), URI));
+  }
   if ((URI = xmlns.getURI (ACE_TEXT ("xc"))) == nullptr)
     {
       ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Fail to get URI for \"xc\"\n")));
       status = 1;
     }
   else
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("URI for \"xc\" is %s\n"), URI));
+  }
   if ((URI = xmlns.getURI (ACE_TEXT ("xml"))) == nullptr)
     {
       ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Fail to get URI for \"xml\"\n")));
       status = 1;
     }
   else
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("URI for \"xml\" is %s\n"), URI));
+  }
   if ((URI = xmlns.getURI (ACE_TEXT (""))) == nullptr)
     {
       ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Fail to get default namespace URI\n")));
       status = 1;
     }
   else
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("URI for default namespace is %s\n"), URI));
+  }
 
   xmlns.popContext ();
 

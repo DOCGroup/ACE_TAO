@@ -270,7 +270,9 @@ Task::svc ()
                                 1);
 
           if (result != 0)
+          {
             return result;
+          }
 
           result =
             get_priority_bands ("server",
@@ -280,7 +282,9 @@ Task::svc ()
                                 1);
 
           if (result != 0)
+          {
             return result;
+          }
         }
       else
         {
@@ -311,7 +315,9 @@ Task::svc ()
                                     1);
 
               if (result != 0)
+              {
                 return result;
+              }
             }
         }
 
@@ -346,7 +352,9 @@ Task::svc ()
                            test.in ());
 
       if (result != 0)
+      {
         return result;
+      }
 
       poa_manager->activate ();
 
@@ -375,7 +383,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       int result =
         parse_args (argc, argv);
       if (result != 0)
+      {
         return result;
+      }
 
       // Make sure we can support multiple priorities that are required
       // for this test.

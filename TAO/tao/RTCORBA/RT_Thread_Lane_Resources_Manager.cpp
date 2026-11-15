@@ -83,7 +83,9 @@ TAO_RT_Thread_Lane_Resources_Manager::is_collocated (TAO_MProfile const &mprofil
     this->default_lane_resources_->is_collocated (mprofile);
 
   if (result)
+  {
     return result;
+  }
 
   return this->tp_manager_->is_collocated (mprofile);
 }

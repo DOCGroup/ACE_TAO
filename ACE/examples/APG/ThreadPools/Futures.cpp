@@ -35,7 +35,9 @@ public:
     future.get (result);
     std::unique_ptr<ACE_CString> result_owner {result};
     if (result_owner)
+    {
       ACE_DEBUG ((LM_INFO, ACE_TEXT ("%C\n"), result_owner->c_str ()));
+    }
   }
 };
 // Listing 2
@@ -60,7 +62,9 @@ public:
     ACE_NEW_RETURN (msg, ACE_CString ("Completed assigned task\n"), -1);
     std::unique_ptr<ACE_CString> msg_owner {msg};
     if (result_.set (msg_owner.get ()) == -1)
+    {
       return -1;
+    }
     msg_owner.release ();
     return 0;
   }
@@ -133,12 +137,16 @@ public:
       {
         ACE_Method_Request *request = this->queue_.dequeue ();
         if (request == nullptr)
+        {
           return -1;
+        }
 
         // Requests are borrowed; the caller keeps them alive until processing finishes.
         int const result = request->call ();
         if (result == -1)
+        {
           break;
+        }
 
         // Return to work.
         this->manager_.return_to_work (*this);
@@ -255,7 +263,9 @@ private:
         ACE_NEW_RETURN (worker_raw, Worker (*this), -1);
         std::unique_ptr<Worker> worker {worker_raw};
         if (this->workers_.enqueue_tail (worker.get ()) == -1)
+        {
           return -1;
+        }
         worker.release ();
         worker_raw->activate ();
       }

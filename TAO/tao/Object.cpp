@@ -34,7 +34,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 CORBA::Object::~Object ()
 {
   if (this->protocol_proxy_)
+  {
     (void) this->protocol_proxy_->_decr_refcnt ();
+  }
 }
 
 CORBA::Object::Object (TAO_Stub * protocol_proxy,
@@ -54,7 +56,9 @@ CORBA::Object::Object (TAO_Stub * protocol_proxy,
   ACE_ASSERT (this->protocol_proxy_ != nullptr);
 
   if (this->orb_core_ == nullptr)
+  {
     this->orb_core_ = this->protocol_proxy_->orb_core ();
+  }
 
   // Set the collocation marker on the stub. This may not be news to it.
   // This may also change the stub's object proxy broker.
@@ -222,7 +226,9 @@ CORBA::Object::_is_a (char const *type_id)
   if (this->_stubobj ()->type_id.in () != nullptr
       && std::strcmp (type_id,
                       this->_stubobj ()->type_id.in ()) == 0)
+  {
     return true;
+  }
 
   return this->proxy_broker ()->_is_a (this, type_id);
 }
@@ -301,7 +307,9 @@ CORBA::Object::_is_equivalent (CORBA::Object_ptr other_obj)
   TAO_OBJECT_IOR_EVALUATE_RETURN;
 
   if (this->protocol_proxy_ != nullptr)
+  {
     return this->protocol_proxy_->is_equivalent (other_obj);
+  }
 
   return false;
 }
@@ -314,7 +322,9 @@ CORBA::Object::_key ()
   TAO_OBJECT_IOR_EVALUATE_RETURN;
 
   if (this->_stubobj () && this->_stubobj ()->profile_in_use ())
+  {
     return this->_stubobj ()->profile_in_use ()->_key ();
+  }
 
   if (TAO_debug_level > 2)
     {
@@ -342,7 +352,9 @@ CORBA::Object::is_nil_i (CORBA::Object_ptr obj)
   // If the profile length is zero for a non-evaluated IOR it is a
   // null-object.
   if ((!obj->is_evaluated ()) && obj->ior ().profiles.length () == 0)
+  {
     return true;
+  }
 
   // To accommodate new definitions.
   if (obj->orb_core_)
@@ -634,7 +646,9 @@ CORBA::Object::_validate_connection (
   // CORBA::Object::_non_existent().  This behavior is consistent
   // with the non-collocated case.
   if (this->_is_collocated ())
-      return !(this->proxy_broker ()->_non_existent (this));
+  {
+    return !(this->proxy_broker ()->_non_existent (this));
+  }
 
   TAO::LocateRequest_Invocation_Adapter tao_call (this);
   try
@@ -720,7 +734,9 @@ operator<< (TAO_OutputCDR& cdr, CORBA::Object const *x)
    TAO_Stub *stubobj = x->_stubobj ();
 
    if (stubobj == nullptr)
+   {
      return false;
+   }
 
   return (stubobj->marshal (cdr));
 }
@@ -735,7 +751,9 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
   // for protocol_proxy_ or whatever to make sure that things have
   // been initialized!
   if (profile_count == 0)
+  {
     return;
+  }
 
   // get a profile container to store all profiles in the IOR.
   TAO_MProfile mp (profile_count);
@@ -819,7 +837,9 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
 
   // This call will set the stub proxy broker if necessary
   if (orb_core->initialize_object (safe_objdata.get (), obj) == -1)
+  {
     return;
+  }
 
   obj->protocol_proxy_ = objdata;
 
@@ -862,11 +882,15 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
       // If the user has set up a eager strategy..
       CORBA::String_var type_hint;
       if (!(cdr >> type_hint.inout ()))
+      {
         return false;
+      }
 
       CORBA::ULong profile_count;
       if (!(cdr >> profile_count))
+      {
         return false;
+      }
 
       if (profile_count == 0)
         {

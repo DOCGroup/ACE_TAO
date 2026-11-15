@@ -60,13 +60,21 @@ bool
 Endpoint::operator == (const Endpoint &other) const
 {
   if (this->port_ != other.port_)
+  {
     return false;
+  }
   if (this->is_localhost_ != other.is_localhost_)
+  {
     return false;
+  }
   if (this->is_localhost_)
+  {
     return true;
+  }
   if (this->host_ == other.host_)
+  {
     return true;
+  }
   return Session::is_equivalent (this->host_, other.host_);
 }
 
@@ -74,9 +82,13 @@ bool
 Endpoint::operator < (const Endpoint &other) const
 {
   if (this->port_ < other.port_)
+  {
     return true;
+  }
   if (this->host_ < other.host_)
+  {
     return true;
+  }
   return false;
 }
 
@@ -143,7 +155,9 @@ PeerProcess::~PeerProcess ()
     {
       PeerObjectTable::ENTRY *entry;
       if (i.next(entry) == 0)
+      {
         break;
+      }
       delete entry->item();
     }
 }
@@ -234,7 +248,9 @@ PeerProcess::match_hosts (Session *session)
       Transport *t {};
       this->transports_.get(t,0);
       if (t != nullptr)
+      {
         this->remote_ = session->find_host(t->client_endpoint_, false);
+      }
     }
 }
 
@@ -245,7 +261,9 @@ PeerProcess::id () const
     {
       const ACE_CString &pname = this->remote_->proc_name();
       if (pname.length() > 0)
+      {
         return pname.c_str();
+      }
     }
 
   return this->ident_;
@@ -279,7 +297,9 @@ Invocation *
 PeerProcess::new_invocation (size_t req_id, Thread *thr)
 {
   if (this->find_invocation (req_id, thr->active_handle()) != nullptr)
+  {
     return nullptr;
+  }
   Invocation *inv = new Invocation (this, thr, req_id);
   this->invocations_.insert_tail(inv);
   thr->add_invocation (inv);
@@ -342,18 +362,26 @@ PeerProcess::dump_summary (ostream &strm)
   if (this->remote_)
     strm << "  " << remote_->proc_name();
   else
+  {
     strm << "  peer process " << this->ident_;
+  }
   strm << " is a ";
   if (this->ssl_)
+  {
     strm << "secure ";
+  }
   if (this->is_server_role_)
     strm << "server at ";
   else
+  {
     strm << "client to ";
+  }
   strm << this->server_ep_.host_ << ":" << this->server_ep_.port_ << endl;
   strm << "   ";
   if (this->first_time_.length())
+  {
     strm << " first seen at " << this->first_time_;
+  }
 
   strm << " with " << num_transports << " connections, ";
   strm << " referenced " << this->objects_.current_size()
@@ -370,7 +398,9 @@ PeerProcess::dump_summary (ostream &strm)
       strm << tran->client_endpoint_.host_ << ":" << tran->client_endpoint_.port_;
       strm << " created line " << tran->open_offset_;
       if (tran->close_offset_)
+      {
         strm << " closed line " << tran->close_offset_;
+      }
       strm << endl;
     }
   strm << endl;
@@ -384,11 +414,15 @@ PeerProcess::dump_object_detail (ostream &strm)
   if (this->is_server_role_)
     strm << " in ";
   else
+  {
     strm << " by ";
+  }
   if (this->remote_)
     strm << remote_->proc_name();
   else
+  {
     strm << "peer process " << this->ident_;
+  }
   strm << ":" << endl;
   size_t count_inv {};
   for (ObjectByIndex::ITERATOR i = this->object_by_index_.begin();
@@ -412,7 +446,9 @@ PeerProcess::dump_invocation_detail (ostream &strm)
   if (this->remote_)
     strm << remote_->proc_name();
   else
+  {
     strm << "peer process " << this->ident_;
+  }
   strm << ":" << endl;
   Invocation *inv {};
   bool show_handle = this->transports_.size() > 1;

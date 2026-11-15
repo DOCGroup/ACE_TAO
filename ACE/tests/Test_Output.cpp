@@ -96,7 +96,9 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 
 #endif /* ACE_WIN32 */
   if (test_dir == nullptr)
+  {
     test_dir = ACE_DEFAULT_TEST_DIR;
+  }
 
   // This could be done with ACE_OS::sprintf() but it requires different
   // format strings for wide-char POSIX vs. narrow-char POSIX and Windows.
@@ -132,7 +134,9 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
   this->output_file_->open (ACE_TEXT_ALWAYS_CHAR (temp),
                             ios::out | (append ? ios::app : ios::trunc));
   if (!this->output_file_->good ())
+  {
     return -1;
+  }
 #else /* when ACE_LACKS_IOSTREAM_TOTALLY */
   ACE_TCHAR const *fmode {};
   if (append)

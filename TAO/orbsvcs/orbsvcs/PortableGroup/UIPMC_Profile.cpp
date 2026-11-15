@@ -476,7 +476,9 @@ TAO_UIPMC_Profile::do_is_equivalent (TAO_Profile const *other_profile)
     dynamic_cast<TAO_UIPMC_Profile const *> (other_profile);
 
   if (op == nullptr)
+  {
     return false;
+  }
 
   return this->endpoint_.is_equivalent (std::addressof (op->endpoint_));
 }
@@ -784,7 +786,9 @@ TAO_UIPMC_Profile::extract_group_component (
   // Extract the Byte Order.
   CORBA::Boolean byte_order {};
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+  {
     return -1;
+  }
   cdr.reset_byte_order (static_cast<int> (byte_order));
 
   // Read and verify major, minor versions, ignoring UIPMC profiles
@@ -821,14 +825,18 @@ TAO_UIPMC_Profile::extract_group_component (
 
   TAO_Tagged_Components tagged_components;
   if (tagged_components.decode (cdr) == 0)
+  {
     return -1;
+  }
 
   IOP::TaggedComponent tagged_component;
   tagged_component.tag = IOP::TAG_GROUP;
 
   // Try to find it.
   if (tagged_components.get_component (tagged_component) == 0)
+  {
     return -1;
+  }
 
   // Found it.
   buf = tagged_component.component_data.get_buffer ();
@@ -838,11 +846,15 @@ TAO_UIPMC_Profile::extract_group_component (
 
   // Extract the Byte Order.
   if ((in_cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+  {
     return -1;
+  }
   in_cdr.reset_byte_order (static_cast<int> (byte_order));
 
   if ((in_cdr >> group) == 0)
+  {
     return -1;
+  }
 
   return 0;
 }

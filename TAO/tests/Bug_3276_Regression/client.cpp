@@ -42,7 +42,9 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, proxy_ior, control_ior) == -1)
+      {
         return -1;
+      }
 
       CORBA::Object_var const proxy_object = orb->string_to_object (proxy_ior);
 

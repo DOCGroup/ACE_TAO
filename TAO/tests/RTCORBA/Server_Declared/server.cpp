@@ -48,7 +48,9 @@ Test_i::test_method (CORBA::Short priority)
   RTCORBA::Current_var const current = RTCORBA::Current::_narrow (object.in ());
 
   if (CORBA::is_nil (object.in ()))
+  {
     throw CORBA::INTERNAL ();
+  }
 
   CORBA::Short const servant_thread_priority = current->the_priority ();
   if (servant_thread_priority != priority)
@@ -90,7 +92,9 @@ parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
                            "%hd",
                            &options.poa_priority);
         if (result == 0 || result == EOF)
+        {
           ACE_ERROR_RETURN ((LM_ERROR, "Unable to process <-a> option"), -1);
+        }
         break;
 
       case 'b':
@@ -98,7 +102,9 @@ parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
                            "%hd",
                            &options.object_priority);
         if (result == 0 || result == EOF)
+        {
           ACE_ERROR_RETURN ((LM_ERROR, "Unable to process <-b> option"), -1);
+        }
         break;
 
       case '?':
@@ -146,7 +152,9 @@ create_object (RTPortableServer::POA_ptr poa,
   if (priority > -1)
     id = poa->activate_object_with_priority (server_impl, priority);
   else
+  {
     id = poa->activate_object (server_impl);
+  }
 
   CORBA::Object_var const server = poa->id_to_reference (id.in ());
   CORBA::String_var const ior = orb->object_to_string (server.in ());
@@ -203,12 +211,16 @@ Task::svc ()
       CORBA::Object_var object = this->orb_->resolve_initial_references ("RTORB");
       RTCORBA::RTORB_var const rt_orb = RTCORBA::RTORB::_narrow (object.in ());
       if (check_for_nil (rt_orb.in (), "RTORB") == -1)
+      {
         return -1;
+      }
 
       object = this->orb_->resolve_initial_references ("RootPOA");
       PortableServer::POA_var const root_poa = PortableServer::POA::_narrow (object.in ());
       if (check_for_nil (root_poa.in (), "RootPOA") == -1)
+      {
         return -1;
+      }
 
       PortableServer::POAManager_var const poa_manager = root_poa->the_POAManager ();
 
@@ -222,7 +234,9 @@ Task::svc ()
         root_poa->create_POA ("Child_POA", poa_manager.in (), poa_policy_list);
       RTPortableServer::POA_var const rt_poa = RTPortableServer::POA::_narrow (child_poa.in ());
       if (check_for_nil (rt_poa.in (), "RTPOA") == -1)
+      {
         return -1;
+      }
 
       Test_i server_impl (this->orb_.in ());
       ACE_DEBUG ((LM_DEBUG, "\nActivated object one as "));
@@ -232,7 +246,9 @@ Task::svc ()
                                  -1,
                                  this->options_.ior_output_file1);
       if (result == -1)
+      {
         return -1;
+      }
 
       ACE_DEBUG ((LM_DEBUG, "\nActivated object two as "));
       result = create_object (rt_poa.in (),
@@ -241,7 +257,9 @@ Task::svc ()
                               this->options_.object_priority,
                               this->options_.ior_output_file2);
       if (result == -1)
+      {
         return -1;
+      }
 
       poa_manager->activate ();
       this->orb_->run ();
@@ -264,10 +282,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
       Server_Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return -1;
+      }
 
       if (!check_supported_priorities (orb.in ()))
+      {
         return 2;
+      }
 
       ACE_Thread_Manager thread_manager;
       Task task (thread_manager, orb.in (), options);
@@ -287,7 +309,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                sched_policy_name (orb->orb_core ()->orb_params ()->ace_sched_policy ())),
                               2);
           else
+          {
             ACE_ASSERT (0);
+          }
         }
 
       result = thread_manager.wait ();

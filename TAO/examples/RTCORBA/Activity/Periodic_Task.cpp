@@ -48,10 +48,14 @@ Periodic_Task::init_task (ACE_Arg_Shifter& arg_shifter)
           std::unique_ptr<Task_Stats> task_stats (
             new (std::nothrow) Task_Stats (iter_));
           if (!task_stats)
+          {
             return -1;
+          }
 
           if (task_stats->init () == -1)
+          {
             return -1;
+          }
 
           task_stats_ = std::move (task_stats);
         }

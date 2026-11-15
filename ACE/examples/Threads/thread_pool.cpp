@@ -178,10 +178,14 @@ producer (Thread_Pool &thread_pool)
           if (count == n_iterations)
             n = 1; // Indicate that we need to shut down.
           else
+          {
             ++count;
+          }
 
           if (count == 0 || (count % 20 == 0))
+          {
             ACE_OS::sleep (1);
+          }
         }
 
       if (n > 1)
@@ -194,7 +198,9 @@ producer (Thread_Pool &thread_pool)
           if (thread_pool.put (mb) == -1)
             ACE_ERROR ((LM_ERROR, " (%t) %p\n", "put"));
           else
+          {
             message_block.release ();
+          }
         }
       else
         {
@@ -220,7 +226,9 @@ producer (Thread_Pool &thread_pool)
               if (thread_pool.put (mb) == -1)
                 ACE_ERROR ((LM_ERROR, " (%t) %p\n", "put"));
               else
+              {
                 message_block.release ();
+              }
             }
 
           ACE_DEBUG ((LM_DEBUG,

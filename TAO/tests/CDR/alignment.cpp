@@ -53,7 +53,9 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 
       CORBA::Double read_dbl {};
       if (input.read_double (read_dbl) == 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "Failure reading double...\n"));
+      }
 
       if (!ACE::is_equal (read_dbl, dbl))
         {

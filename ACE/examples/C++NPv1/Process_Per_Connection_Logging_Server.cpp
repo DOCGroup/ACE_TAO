@@ -43,7 +43,9 @@ int
 Logging_Process::prepare (ACE_Process_Options &options)
 {
   if (options.pass_handle (logging_peer_.get_handle ()) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "pass_handle"), -1);
+  }
   options.command_line ("%s", this->prog_name_.c_str ());
   options.avoid_zombies (1);
   options.creation_flags (ACE_Process_Options::NO_EXEC);
@@ -67,7 +69,9 @@ Process_Per_Connection_Logging_Server::handle_connections ()
 
   // Block until a client connects.
   if (acceptor ().accept (logging_peer) == -1)
+  {
     return -1;
+  }
 
   std::unique_ptr<Logging_Process> logger (
     new (std::nothrow) Logging_Process (this->prog_name_.c_str (),
@@ -92,7 +96,9 @@ Process_Per_Connection_Logging_Server::handle_connections ()
   }
   logging_peer.close ();
   if (pid == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn()"), -1);
+  }
 
   // ACE_Process_Manager calls unmanage() when it no longer tracks the process.
   logger.release ();
@@ -130,7 +136,9 @@ Process_Per_Connection_Logging_Server::run (int argc, char *argv[])
   if (argc == 3)
     return run_worker (argc, argv);  // Only on Win32.
   else
+  {
     return run_master (argc, argv);
+  }
 }
 
 int
@@ -138,11 +146,15 @@ Process_Per_Connection_Logging_Server::run_master (int argc, char *argv[])
 {
   u_short const logger_port = argc == 2 ? ACE_OS::atoi (argv[1]) : 0;
   if (this->open (logger_port) == -1)
+  {
     return -1;
+  }
 
   for (;;)
     if (handle_connections () == -1)
+    {
       return -1;
+    }
 
   ACE_NOTREACHED (return 0;)
 }
@@ -186,7 +198,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   Process_Per_Connection_Logging_Server server;
 
   if (server.run (argc, argv) == -1 && errno != EINTR)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "server.run()"), 1);
+  }
 
   // Barrier synchronization.
   return ACE_Process_Manager::instance ()->wait ();

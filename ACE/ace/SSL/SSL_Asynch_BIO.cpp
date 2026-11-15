@@ -84,7 +84,9 @@ ACE_SSL_make_BIO (void * ssl_asynch_stream)
   {
     BIO_METHOD *methods = BIO_meth_new (BIO_TYPE_ACE, "ACE_Asynch_BIO");
     if (methods == nullptr)
+    {
       return nullptr;
+    }
 
     if (BIO_meth_set_write (methods, ACE_ASYNCH_BIO_WRITE_NAME) != 1
         || BIO_meth_set_read (methods, ACE_ASYNCH_BIO_READ_NAME) != 1
@@ -180,7 +182,9 @@ ACE_ASYNCH_BIO_READ_NAME (BIO * pBIO, char * buf, int len)
     static_cast<ACE_SSL_Asynch_Stream *> (BIO_get_data(pBIO));
 
   if (BIO_get_init(pBIO) == 0 || p_stream == nullptr || buf == nullptr || len <= 0)
+  {
     return -1;
+  }
 
   BIO_clear_retry_flags (pBIO);
 
@@ -193,10 +197,14 @@ ACE_ASYNCH_BIO_READ_NAME (BIO * pBIO, char * buf, int len)
                                           errval);
 
   if (retval >= 0)
+  {
     return retval;
+  }
 
   if (errval == EINPROGRESS)
+  {
     BIO_set_retry_read (pBIO);
+  }
 
   return -1;
 }
@@ -210,7 +218,9 @@ ACE_ASYNCH_BIO_WRITE_NAME (BIO * pBIO, const char * buf, int len)
     static_cast<ACE_SSL_Asynch_Stream *> (BIO_get_data(pBIO));
 
   if (BIO_get_init(pBIO) == 0 || p_stream == nullptr || buf == nullptr || len <= 0)
+  {
     return -1;
+  }
 
   BIO_clear_retry_flags (pBIO);
 
@@ -223,10 +233,14 @@ ACE_ASYNCH_BIO_WRITE_NAME (BIO * pBIO, const char * buf, int len)
                                            errval);
 
   if (retval >= 0)
+  {
     return retval;
+  }
 
   if (errval == EINPROGRESS)
+  {
     BIO_set_retry_write (pBIO);
+  }
 
   return -1;
 }

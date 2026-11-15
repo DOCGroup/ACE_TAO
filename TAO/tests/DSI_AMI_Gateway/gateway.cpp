@@ -58,7 +58,9 @@ test_exception_holder_copy ()
     TAO_AMH_DSI_Exception_Holder::_downcast (copy.in ());
 
   if (copied_holder == nullptr)
+  {
     return -1;
+  }
 
   bool copy_raised {};
   try

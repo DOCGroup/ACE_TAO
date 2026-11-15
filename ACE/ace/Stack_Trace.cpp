@@ -83,7 +83,9 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset, size_t num_frame
   char** stack_syms;
 
   if (num_frames == 0)
+  {
     num_frames = MAX_FRAMES;
+  }
 
   size_t starting_frame =
     determine_starting_frame (INITIAL_FRAME, starting_frame_offset);

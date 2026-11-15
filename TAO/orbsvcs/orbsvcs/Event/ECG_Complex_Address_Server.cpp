@@ -66,7 +66,9 @@ TAO_ECG_Complex_Address_Server::init (char const *arg)
       // Add new entry to the mapping.
       if (this->add_entry (key_string.c_str (),
                            mcast_string.c_str ()) == -1)
+      {
         return -1;
+      }
     }
   return 0;
 }
@@ -126,7 +128,9 @@ TAO_ECG_Complex_Address_Server::get_addr (
   if (this->is_source_mapping_)
     key = header.source;
   else
+  {
     key = header.type;
+  }
 
   MAP::ENTRY * mapping_entry {};
   if (this->mcast_mapping_.find (key, mapping_entry) == -1)
@@ -159,7 +163,9 @@ TAO_ECG_Complex_Address_Server::get_address (
   if (this->is_source_mapping_)
     key = header.source;
   else
+  {
     key = header.type;
+  }
 
   MAP::ENTRY * mapping_entry {};
   ACE_INET_Addr &src_addr =

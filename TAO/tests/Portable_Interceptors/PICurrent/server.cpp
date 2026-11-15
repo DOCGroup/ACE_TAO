@@ -31,7 +31,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
               if (i < argc)
                 ior_output_file = argv[i];
               else
+              {
                 error = true;
+              }
               break;
 
               case 't':
@@ -48,7 +50,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
                                       "Defaulting to single threaded.\n"));
 #endif /* ACE_HAS_THREADS */
               else
+              {
                 error = true;
+              }
               break;
 
               default:
@@ -90,7 +94,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                             "test_orb");
 
       if (parse_args (argc, argv) != 0)
+      {
         return -1;
+      }
 
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA");

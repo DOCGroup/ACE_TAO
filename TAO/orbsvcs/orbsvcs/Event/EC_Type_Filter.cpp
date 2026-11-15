@@ -12,7 +12,9 @@ TAO_EC_Type_Filter::filter (RtecEventComm::EventSet const &event,
                             TAO_EC_QOS_Info& qos_info)
 {
   if (event.length () != 1)
+  {
     return this->filter_set (event, qos_info);
+  }
 
   if (this->can_match (event[0].header))
     {
@@ -27,7 +29,9 @@ TAO_EC_Type_Filter::filter_nocopy (RtecEventComm::EventSet& event,
                                    TAO_EC_QOS_Info& qos_info)
 {
   if (event.length () != 1)
+  {
     return this->filter_set (event, qos_info);
+  }
 
   if (this->can_match (event[0].header))
     {
@@ -42,7 +46,9 @@ TAO_EC_Type_Filter::push (RtecEventComm::EventSet const &event,
                           TAO_EC_QOS_Info& qos_info)
 {
   if (this->parent () != nullptr)
+  {
     this->parent ()->push (event, qos_info);
+  }
 }
 
 void
@@ -50,7 +56,9 @@ TAO_EC_Type_Filter::push_nocopy (RtecEventComm::EventSet& event,
                                  TAO_EC_QOS_Info& qos_info)
 {
   if (this->parent () != nullptr)
+  {
     this->parent ()->push_nocopy (event, qos_info);
+  }
 }
 
 void
@@ -73,7 +81,9 @@ TAO_EC_Type_Filter::can_match (
       if (this->header_.type == 0 || header.type == 0)
         return 1;
       else
+      {
         return this->header_.type == header.type;
+      }
     }
 
   if (this->header_.type == 0)
@@ -81,13 +91,17 @@ TAO_EC_Type_Filter::can_match (
       if (header.source == 0)
         return 1;
       else
+      {
         return this->header_.source == header.source;
+      }
     }
 
   if (header.source == 0)
     {
       if (header.type != 0)
+      {
         return this->header_.type == header.type;
+      }
       return 1;
     }
 
@@ -114,20 +128,26 @@ TAO_EC_Type_Filter::filter_set (RtecEventComm::EventSet const &event,
 {
   CORBA::ULong maximum = event.length ();
   if (event.maximum () == 0)
+  {
     return 0;
+  }
 
   RtecEventComm::EventSet matched (maximum);
   CORBA::ULong next_slot {};
   for (CORBA::ULong i {}; i != maximum; ++i)
     {
       if (!this->can_match (event[i].header))
+      {
         continue;
+      }
       matched.length (next_slot + 1);
       matched[next_slot] = event[i];
       ++next_slot;
     }
   if (matched.length () == 0)
+  {
     return 0;
+  }
 
   this->push (matched, qos_info);
 

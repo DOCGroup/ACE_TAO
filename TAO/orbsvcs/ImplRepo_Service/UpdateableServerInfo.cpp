@@ -55,7 +55,9 @@ void
 UpdateableServerInfo::update_repo ()
 {
   if (!needs_update_)
+  {
     return;
+  }
 
   needs_update_ = false;
   int err = repo_->update_server (si_);

@@ -65,7 +65,9 @@ TAO_IIOP_Acceptor::create_profile (TAO::ObjectKey const &object_key,
 {
   // Sanity check.
   if (this->endpoint_count_ == 0)
+  {
     return -1;
+  }
 
   // Check if multiple endpoints should be put in one profile or
   // if they should be spread across multiple profiles.
@@ -73,7 +75,9 @@ TAO_IIOP_Acceptor::create_profile (TAO::ObjectKey const &object_key,
       this->orb_core_->orb_params ()->shared_profile () == 0)
     return this->create_new_profile (object_key, mprofile, priority);
   else
+  {
     return this->create_shared_profile (object_key, mprofile, priority);
+  }
 }
 
 int
@@ -85,7 +89,9 @@ TAO_IIOP_Acceptor::create_new_profile (TAO::ObjectKey const &object_key,
   int const count = mprofile.profile_count ();
   if ((mprofile.size () - count) < this->endpoint_count_
       && mprofile.grow (count + this->endpoint_count_) == -1)
+  {
     return -1;
+  }
 
   // Create a profile for each acceptor endpoint.
   for (CORBA::ULong i {}; i < this->endpoint_count_; ++i)
@@ -94,7 +100,9 @@ TAO_IIOP_Acceptor::create_new_profile (TAO::ObjectKey const &object_key,
       if (i > 0
           && (this->addrs_[i].get_port_number() == this->addrs_[0].get_port_number())
           && std::strcmp(this->hosts_[i], this->hosts_[0]) == 0)
+      {
         continue;
+      }
 
       TAO_IIOP_Profile *pfile {};
       ACE_NEW_RETURN (pfile,
@@ -118,13 +126,17 @@ TAO_IIOP_Acceptor::create_new_profile (TAO::ObjectKey const &object_key,
       // created (IIOP 1.0 did not support tagged components).
       if (!this->orb_core_->orb_params ()->std_profile_components ()
           || (this->version_.major == 1 && this->version_.minor == 0))
+      {
         continue;
+      }
 
       pfile->tagged_components ().set_orb_type (TAO_ORB_TYPE);
 
       TAO_Codeset_Manager *csm = this->orb_core_->codeset_manager();
       if (csm != nullptr)
+      {
         csm->set_codeset(pfile->tagged_components());
+      }
     }
 
   return 0;
@@ -180,7 +192,9 @@ TAO_IIOP_Acceptor::create_shared_profile (TAO::ObjectKey const &object_key,
           iiop_profile->tagged_components ().set_orb_type (TAO_ORB_TYPE);
           TAO_Codeset_Manager *csm = this->orb_core_->codeset_manager();
           if (csm != nullptr)
+          {
             csm->set_codeset(iiop_profile->tagged_components());
+          }
         }
 
       index = 1;
@@ -194,7 +208,9 @@ TAO_IIOP_Acceptor::create_shared_profile (TAO::ObjectKey const &object_key,
       if (index > 0 &&
           this->addrs_[index].get_port_number() == this->addrs_[0].get_port_number() &&
           std::strcmp(this->hosts_[index], this->hosts_[0]) == 0)
+      {
         continue;
+      }
 
       TAO_IIOP_Endpoint *endpoint {};
       ACE_NEW_RETURN (endpoint,
@@ -217,7 +233,9 @@ TAO_IIOP_Acceptor::is_collocated (TAO_Endpoint const *endpoint)
 
   // Make sure the dynamically cast pointer is valid.
   if (endp == nullptr)
+  {
     return false;
+  }
 
   for (CORBA::ULong i {}; i < this->endpoint_count_; ++i)
     {
@@ -229,7 +247,9 @@ TAO_IIOP_Acceptor::is_collocated (TAO_Endpoint const *endpoint)
       //
       if (endp->port() == this->addrs_[i].get_port_number()
           && std::strcmp(endp->host(), this->hosts_[i]) == 0)
+      {
         return true;
+      }
     }
 
   return false;
@@ -271,14 +291,18 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
     }
 
   if (address == nullptr)
+  {
     return -1;
+  }
 
   if (major >=0 && minor >= 0)
     this->version_.set_version (static_cast<CORBA::Octet> (major),
                                 static_cast<CORBA::Octet> (minor));
   // Parse options
   if (this->parse_options (options) == -1)
+  {
     return -1;
+  }
 
   ACE_CString specified_hostname;
   ACE_INET_Addr addr;
@@ -288,7 +312,9 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                            addr,
                            specified_hostname,
                            &def_type) == -1)
+  {
     return -1;
+  }
 
   if (specified_hostname.length() == 0)
     {
@@ -298,7 +324,9 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 
       // Check for multiple network interfaces.
       if (this->probe_interfaces (orb_core, def_type) == -1)
+      {
         return -1;
+      }
 
       // Probe interfaces has a side effect of potentially modifying
       // the default address, since that is where the address family
@@ -365,12 +393,16 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                       addr,
                       this->hosts_[0],
                       specified_hostname.c_str()) != 0)
+  {
     return -1;
+  }
 
   // Copy the addr.  The port is (re)set in
   // TAO_IIOP_Acceptor::open_i().
   if (this->addrs_[0].set (addr) != 0)
+  {
     return -1;
+  }
 
   return this->open_i (addr, reactor);
 }
@@ -401,11 +433,15 @@ TAO_IIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
 
   // Parse options
   if (this->parse_options (options) == -1)
+  {
     return -1;
+  }
 
   // Check for multiple network interfaces.
   if (this->probe_interfaces (orb_core) == -1)
+  {
     return -1;
+  }
 
   // Now that each network interface's hostname has been cached, open
   // an endpoint on each network interface using the INADDR_ANY
@@ -413,7 +449,9 @@ TAO_IIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
   ACE_INET_Addr addr;
 
   if (addr.set (this->default_address_) != 0)
+  {
     return -1;
+  }
 
   return this->open_i (addr, reactor);
 }
@@ -653,7 +691,9 @@ TAO_IIOP_Acceptor::parse_address (char const *address,
   bool host_defaulted = port_separator_loc == address;
   bool ipv6_in_host {};
   if (def_type)
+  {
     *def_type = AF_UNSPEC;
+  }
 
 #if defined (ACE_HAS_IPV6)
   // Check if this is a (possibly) IPv6 supporting profile containing a
@@ -706,23 +746,31 @@ TAO_IIOP_Acceptor::parse_address (char const *address,
             size_t const len = port_separator_loc - address;
 
             if (len >= sizeof (tmp_host))
+            {
               return -1;
+            }
 
             std::memcpy (tmp_host, address, len);
             tmp_host[len] = '\0';
           }
         else
+        {
           std::strcpy (tmp_host, address);
+        }
       }
 
   if (!ipv6_in_host && !host_defaulted)
     {
       if (addr.set((unsigned short)0,tmp_host) != 0)
+      {
         return -1;
+      }
       this->default_address_.set(addr);
       host_defaulted = addr.is_any();
       if (def_type)
+      {
         *def_type = AF_INET;
+      }
     }
 
   if (host_defaulted)
@@ -739,7 +787,9 @@ TAO_IIOP_Acceptor::parse_address (char const *address,
 
       // Now reset the port and set the host.
       if (addr.set (this->default_address_) != 0)
+      {
         return -1;
+      }
     }
   else if (port_separator_loc == nullptr)
     {
@@ -748,20 +798,26 @@ TAO_IIOP_Acceptor::parse_address (char const *address,
       specified_hostname = tmp_host[0] == '\0' ? address : tmp_host;
       if (addr.set ((unsigned short) 0,
                     specified_hostname.c_str()) != 0)
+      {
         return -1;
+      }
     }
   else
     {
       // Host and port were specified.
       if (addr.set (address) != 0)
+      {
         return -1;
+      }
       if (tmp_host[0] == '\0')
         {
           // Extract out just the host part of the address.
           size_t const len = port_separator_loc - address;
 
           if (len >= sizeof (tmp_host))
+          {
             return -1;
+          }
 
           std::memcpy (tmp_host, address, len);
           tmp_host[len] = '\0';
@@ -799,7 +855,9 @@ TAO_IIOP_Acceptor::dotted_decimal_address (ACE_INET_Addr const &addr,
       tmp = new_addr.get_host_addr ();
     }
   else
+  {
     tmp = addr.get_host_addr ();
+  }
 
   if (tmp == nullptr || result != 0)
     {
@@ -859,7 +917,9 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
   size_t lo_cnt {};  // Loopback interface count
   for (size_t j {}; j < if_cnt; ++j)
     if (if_addrs[j].is_loopback ())
+    {
       ++lo_cnt;
+    }
 
 #if defined (ACE_HAS_IPV6)
   size_t ipv4_cnt {};
@@ -957,7 +1017,9 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
   if (!ignore_lo)
     this->endpoint_count_ = static_cast<CORBA::ULong> (if_cnt);
   else
+  {
     this->endpoint_count_ = static_cast<CORBA::ULong> (if_cnt - lo_cnt);
+  }
 #endif /* !ACE_HAS_IPV6 */
 
   if (this->endpoint_count_ == 0)
@@ -1021,18 +1083,24 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
       // non-loopback interfaces.
       if (ignore_lo &&
           if_addrs[i].is_loopback ())
+      {
         continue;
+      }
 #endif /* !ACE_HAS_IPV6 */
 
       if (this->hostname (orb_core,
                           if_addrs[i],
                           this->hosts_[host_cnt]) != 0)
+      {
         return -1;
+      }
 
       // Copy the addr.  The port is (re)set in
       // TAO_IIOP_Acceptor::open_i().
       if (this->addrs_[host_cnt].set (if_addrs[i]) != 0)
+      {
         return -1;
+      }
 
       ++host_cnt;
     }
@@ -1094,7 +1162,9 @@ TAO_IIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
 
   // ... and object key.
   if ((cdr >> object_key) == 0)
+  {
     return -1;
+  }
 
   // We are NOT bothered about the rest.
 
@@ -1105,7 +1175,9 @@ int
 TAO_IIOP_Acceptor::parse_options (char const *str)
 {
   if (str == nullptr)
+  {
     return 0;  // No options to parse.  Not a problem.
+  }
 
   // Use an option format similar to the one used for CGI scripts in
   // HTTP URLs.
@@ -1122,7 +1194,9 @@ TAO_IIOP_Acceptor::parse_options (char const *str)
 
   for (size_t i {}; i < len; ++i)
     if (options[i] == option_delimiter)
+    {
       ++argc;
+    }
 
   // The idea behind the following loop is to split the options into
   // (option, name) pairs.
@@ -1152,7 +1226,9 @@ TAO_IIOP_Acceptor::parse_options (char const *str)
       if (j < argc - 1)
         end = options.find (option_delimiter, begin);
       else
+      {
         end = len;
+      }
 
       if (end == begin)
         {
@@ -1174,7 +1250,9 @@ TAO_IIOP_Acceptor::parse_options (char const *str)
     }
 
   if (result == 0)
+  {
     result = this->parse_options_i (argc, argv.data ());
+  }
 
   if (argc > 0)
     {

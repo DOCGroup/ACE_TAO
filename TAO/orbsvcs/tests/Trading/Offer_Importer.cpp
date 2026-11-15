@@ -37,7 +37,9 @@ TAO_Offer_Importer::perform_directed_queries ()
   policies.link_follow_rule (CosTrading::local_only);
 
   if (this->verbose_)
+  {
     ACE_DEBUG ((LM_DEBUG, "Obtaining link interface.\n"));
+  }
   CosTrading::Link_var const link_if = this->lookup_->link_if ();
 
   if (this->verbose_)
@@ -70,7 +72,9 @@ TAO_Offer_Importer::perform_directed_queries ()
           while (i < length)
             {
               if (std::strcmp (link_name_seq2[i], "Bootstrap") != 0)
+              {
                 break;
+              }
               ++i;
             }
 
@@ -189,7 +193,9 @@ TAO_Offer_Importer::perform_queries_with_policies (
                                      offer_iterator.in());
 
               if (limits_applied->length () > 0)
+              {
                 ACE_DEBUG ((LM_DEBUG, "*** Limits Applied:\n\n"));
+              }
 
               for (int length = limits_applied->length (), j = 0; j < length; j++)
                 {

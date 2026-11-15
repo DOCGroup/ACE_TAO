@@ -29,7 +29,9 @@ IIOPEndpointValue_i::is_equivalent (TAO_Endpoint const* endpoint) const
   TAO_IIOP_Endpoint const * const iep =
     dynamic_cast<TAO_IIOP_Endpoint const*> (endpoint);
   if (iep == nullptr)
+  {
     return false;
+  }
   return this->addr_.get_type() != -1 ? this->addr_ == iep->object_addr() :
     this->is_equivalent_i (iep->port(), iep->host());
 }
@@ -50,7 +52,9 @@ IIOPEndpointValue_i::validate_acceptor(TAO_Acceptor * acceptor,
 {
   TAO_IIOP_Acceptor * const iacc = dynamic_cast<TAO_IIOP_Acceptor *> (acceptor);
   if (iacc == nullptr)
+  {
     return false;
+  }
 
   // @@@ mesnier_p@ociweb.com @@@
   // Rather than blindly returning true, we need to reject defaulted
@@ -71,7 +75,9 @@ IIOPEndpointValue_i::host (char const* h)
 {
   this->host_ = h;
   if (this->addr_.set(this->port_, this->host_.in ()) != 0)
+  {
     this->addr_.set_type (-1);
+  }
 }
 
 CORBA::UShort
@@ -85,7 +91,9 @@ IIOPEndpointValue_i::port (CORBA::UShort p )
 {
   this->port_ = p;
   if (this->addr_.set(this->port_, this->host_.in ()) != 0)
+  {
     this->addr_.set_type (-1);
+  }
 }
 
 CORBA::ULong

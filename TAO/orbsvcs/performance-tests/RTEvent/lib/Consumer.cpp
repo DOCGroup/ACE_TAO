@@ -33,7 +33,9 @@ Consumer::connect (RtecEventChannelAdmin::EventChannel_ptr ec)
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
     if (!CORBA::is_nil (this->proxy_supplier_.in ()))
+    {
       return;
+    }
 
     this->proxy_supplier_ =
       consumer_admin->obtain_push_supplier ();
@@ -66,7 +68,9 @@ Consumer::disconnect ()
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
     if (CORBA::is_nil (this->proxy_supplier_.in ()))
+    {
       return;
+    }
     proxy = this->proxy_supplier_._retn ();
   }
 
@@ -97,13 +101,17 @@ Consumer::push (const RtecEventComm::EventSet &events)
     {
       ACE_hrtime_t elapsed = ACE_OS::gethrtime () - now;
       if (elapsed > this->gsf_ * this->workload_in_usecs_)
+      {
         break;
+      }
       ACE_OS::sleep (0);
     }
 
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   if (sample_history_.max_samples () == sample_history_.sample_count ())
+  {
     return;
+  }
   this->sample_history_.sample (now - creation);
 }
 

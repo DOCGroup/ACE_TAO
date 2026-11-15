@@ -41,7 +41,9 @@ ServerRequestInterceptor::receive_request (
     ri->response_expected ();
 
   if (!response_expected)
+  {
     return;
+  }
 
   PortableServer::POA_var poa;
 

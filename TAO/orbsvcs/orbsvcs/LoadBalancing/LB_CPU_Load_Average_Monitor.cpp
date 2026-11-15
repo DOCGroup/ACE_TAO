@@ -45,7 +45,9 @@ TAO_LB_CPU_Load_Average_Monitor::TAO_LB_CPU_Load_Average_Monitor (
       this->location_[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(location_id));
 
       if (location_kind != nullptr)
+      {
         this->location_[0].kind = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(location_kind));
+      }
     }
 }
 
@@ -165,10 +167,14 @@ TAO_LB_CPU_Load_Average_Monitor::loads ()
       if (num_processors > 0)
         load = loadavg[0] / num_processors;
       else
+      {
         throw CORBA::TRANSIENT ();  // Correct exception?
+      }
     }
   else
+  {
     throw CORBA::TRANSIENT ();  // Correct exception?
+  }
 
 #elif defined (__NetBSD__) || defined (__APPLE__)
 

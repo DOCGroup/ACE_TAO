@@ -38,7 +38,9 @@ Chatter::svc ()
         Test_Idl::SharedIntf::_narrow(rawObject.in());
 
      if (CORBA::is_nil (intf_var.in ()))
+     {
        ACE_ERROR_RETURN ((LM_ERROR, "Nil reference <%s>\n", ior_), -1);
+     }
 
      // make call on server
      {
@@ -79,7 +81,9 @@ Chatter::farewell ()
         Test_Idl::SharedIntf::_narrow(rawObject.in());
 
      if (CORBA::is_nil (intf_var.in ()))
+     {
        ACE_ERROR_RETURN ((LM_ERROR, "Nil reference <%s>\n", ior_), -1);
+     }
 
      // make call on server
      ACE_DEBUG((LM_INFO,"(%P|%t) farewell START for %s\n", ior_));

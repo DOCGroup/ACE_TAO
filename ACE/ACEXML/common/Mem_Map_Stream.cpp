@@ -34,7 +34,9 @@ int
 ACEXML_Mem_Map_Stream::get_char ()
 {
   if (this->eof () && this->grow_file_and_remap () == -1)
+  {
     return EOF;
+  }
   return *this->get_pos_++;
 }
 
@@ -52,7 +54,9 @@ ACEXML_Mem_Map_Stream::peek_char (size_t offset)
   // We may need to iterate if the size of <n> is large.
   while (this->get_pos_ + offset >= this->end_of_mapping_plus1_)
     if (this->grow_file_and_remap () == -1)
+    {
       return EOF;
+    }
 
   return this->get_pos_[offset];
 }
@@ -90,7 +94,9 @@ ACEXML_Mem_Map_Stream::peek_str (size_t offset,
   // We will iterate if the size of <offset> is large.
   while (this->get_pos_ + (offset + size) > this->end_of_mapping_plus1_)
     if (this->grow_file_and_remap () == -1)
+    {
       return nullptr;
+    }
 
   return &this->get_pos_[offset];
 }
@@ -120,7 +126,9 @@ ACEXML_Mem_Map_Stream::seek (ACE_OFF_T offset, int whence)
   // Make sure that the backing store will cover this.
   while (this->get_pos_ > this->end_of_mapping_plus1_)
     if (this->grow_file_and_remap () == -1)
+    {
       this->get_pos_ = this->end_of_mapping_plus1_;
+    }
 
   this->recv_pos_ = this->get_pos_;
 

@@ -77,7 +77,9 @@ TAO_LB_ObjectReferenceFactory::make_object (
     PortableInterceptor::ObjectId const & id)
 {
   if (repository_id == nullptr)
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   CORBA::Object_var obj =
     this->old_orf_->make_object (repository_id,
@@ -149,7 +151,9 @@ TAO_LB_ObjectReferenceFactory::find_object_group (
   PortableGroup::ObjectGroup_out object_group)
 {
   if (!this->load_managed_object (repository_id, index))
+  {
     return false;
+  }
 
   PortableGroup::ObjectGroup_var group;
   if (this->table_.find (repository_id, group) != 0)
@@ -212,7 +216,9 @@ TAO_LB_ObjectReferenceFactory::load_managed_object (char const * repository_id,
   CORBA::ULong const len = this->repository_ids_.length ();
   for (i = 0; i < len; ++i)
     if (std::strcmp (this->repository_ids_[i], repository_id) == 0)
+    {
       return true;
+    }
 
   return false;
 }

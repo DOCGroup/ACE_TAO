@@ -136,7 +136,9 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (argc < 2)
     loops = 10000000;
   else
+  {
     loops = ACE_OS::atoi (argv[1]);
+  }
 
   n_chunks = 2;
 
@@ -161,7 +163,9 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       ptr1 = (char *) allocator.malloc (requested_size);
       if (!ptr1)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT (" (%t) Failed, exiting.\n")), -1);
+      }
 
       ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) OK, succeeded.\n")));
       if ((depth = allocator.pool_depth ()) != (n_chunks - 1))
@@ -178,7 +182,9 @@ run_main (int argc, ACE_TCHAR *argv[])
       if (!ptr2)
         ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) OK, failed.\n")));
       else
+      {
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT (" (%t) Something is wrong...\n")), -1);
+      }
 
       requested_size = chunk_size - 1;
       ACE_DEBUG ((LM_INFO,
@@ -187,7 +193,9 @@ run_main (int argc, ACE_TCHAR *argv[])
                   requested_size));
       ptr3 = (char *) allocator.malloc (requested_size);
       if (!ptr3)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT (" (%t) Failed, exiting.\n")), -1);
+      }
 
       ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) OK, succeeded.\n")));
 
@@ -206,7 +214,9 @@ run_main (int argc, ACE_TCHAR *argv[])
       if (!ptr4)
         ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) OK, failed.\n")));
       else
+      {
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT (" (%t) Something is wrong\n")), -1);
+      }
 
       ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Writing to chunk 1:   %C\n"), str1));
       ACE_OS::memcpy (ptr1, str1, chunk_size);
@@ -227,7 +237,9 @@ run_main (int argc, ACE_TCHAR *argv[])
                   requested_size));
       ptr1 = (char *) allocator.malloc (requested_size);
       if (!ptr1)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT (" (%t) Failed, exiting.\n")), -1);
+      }
 
       ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) OK, succeeded.\n")));
 

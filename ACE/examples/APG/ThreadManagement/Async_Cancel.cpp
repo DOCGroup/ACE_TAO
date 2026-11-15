@@ -20,7 +20,9 @@ public:
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Starting thread\n")));
 
     if (this->set_cancel_mode () < 0)
+    {
       return -1;
+    }
 
     while (true)
       {

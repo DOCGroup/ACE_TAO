@@ -151,11 +151,15 @@ ACE_DLL::open_i (const ACE_TCHAR *dll_filename,
       if (ACE_OS::strcmp (this->dll_name_, dll_filename) == 0)
         return 0;
       else
+      {
         this->close ();
+      }
     }
 
   if (!this->dll_name_)
+  {
     this->dll_name_ = ACE::strnew (dll_filename);
+  }
 
   this->open_mode_ = open_mode;
   this->close_handle_on_destruction_ = close_handle_on_destruction;
@@ -173,7 +177,9 @@ ACE_DLL::open_i (const ACE_TCHAR *dll_filename,
         {
           errors.pop (errtmp);
           if (this->errmsg_.length () > 0)
+          {
             this->errmsg_ += ACE_TEXT ("\n");
+          }
           this->errmsg_ += errtmp;
         }
       this->error_ = true;
@@ -194,10 +200,14 @@ ACE_DLL::symbol (const ACE_TCHAR *sym_name, int ignore_errors)
 
   void *sym {};
   if (this->dll_handle_)
+  {
     sym = this->dll_handle_->symbol (sym_name, ignore_errors, this->errmsg_);
+  }
 
   if (!sym)
+  {
     this->error_ = true;
+  }
 
   return sym;
 }
@@ -216,7 +226,9 @@ ACE_DLL::close ()
       && this->close_handle_on_destruction_
       && this->dll_name_
       && (retval = ACE_DLL_Manager::instance ()->close_dll (this->dll_name_)) != 0)
+  {
     this->error_ = true;
+  }
 
   // Even if close_dll() failed, go ahead and cleanup.
   this->dll_handle_ = nullptr;
@@ -257,7 +269,9 @@ ACE_DLL::get_handle (bool become_owner) const
   ACE_SHLIB_HANDLE handle = ACE_SHLIB_INVALID_HANDLE;
 
   if (this->dll_handle_)
+  {
     handle = this->dll_handle_->get_handle (become_owner);
+  }
 
   return handle;
 }

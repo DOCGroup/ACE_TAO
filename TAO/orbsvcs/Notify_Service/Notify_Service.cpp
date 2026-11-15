@@ -96,7 +96,9 @@ TAO_Notify_Service_Driver::apply_timeout (CORBA::ORB_ptr orb)
       CORBA::PolicyManager_var policy_manager =
         CORBA::PolicyManager::_narrow (object.in ());
       if (CORBA::is_nil (policy_manager.in ()))
+      {
         throw CORBA::INTERNAL ();
+      }
 
       CORBA::PolicyList policy_list (1);
       policy_list.length (1);
@@ -119,11 +121,15 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR * argv[])
   TAO_Daemon_Utility::check_for_daemon (argc, argv);
 
   if (this->parse_args(argc, argv) != 0)
+  {
     return -1;
+  }
 
   // initialize the ORB.
   if (this->init_ORB (argc, argv) != 0)
+  {
     return -1;
+  }
 
   this->notify_service_ = TAO_Notify_Service::load_default ();
 
@@ -189,7 +195,9 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR * argv[])
       int const ns_ret = this->resolve_naming_service ();
 
       if (ns_ret != 0)
+      {
         return -1;
+      }
     }
 
   if (TAO_debug_level > 0)
@@ -484,7 +492,9 @@ TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR * argv[])
                 ACE_OS::atoi (current_arg) != 0;
             }
           if (current_arg != nullptr)
+          {
             arg_shifter.consume_arg ();
+          }
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-ShutdownDispatchingORB")) == 0)
         {
@@ -498,7 +508,9 @@ TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR * argv[])
                 ACE_OS::atoi (current_arg) != 0;
             }
           if (current_arg != nullptr)
+          {
             arg_shifter.consume_arg ();
+          }
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-UseSeparateDispatchingORB")) == 0)
         {
@@ -528,7 +540,9 @@ TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR * argv[])
                 }
             }
           if (current_arg != nullptr)
+          {
             arg_shifter.consume_arg ();
+          }
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Boot")) == 0)
         {

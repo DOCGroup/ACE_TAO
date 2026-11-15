@@ -20,7 +20,9 @@ Quoter_Task::svc ()
   if (this->quoter_client.init (this->argc_, this->argv_) == -1)
     return 1;
   else
+  {
     return this->quoter_client.run ();
+  }
 }
 
 // Parses the command line arguments and returns an error status.
@@ -82,7 +84,9 @@ Quoter_Client::run ()
       CORBA::Long q = this->quoter_var_->get_quote ("ACE Hardware");
 
       if (this->options_.debug_level >= 1)
+      {
         ACE_DEBUG ((LM_DEBUG, "Quoter Client: ACE Hardware = %i\n", q));
+      }
 
       // Copy the Quoter
 
@@ -108,13 +112,17 @@ Quoter_Client::run ()
                           -1);
 
       if (this->options_.debug_level >= 2)
+      {
         ACE_DEBUG ((LM_DEBUG, "Quoter Client: Copied object.\n"));
+      }
 
       exception_message = "While using get_quote () on copied object";
       q = copied_quoter_var->get_quote ("ACE Hardware");
 
       if (this->options_.debug_level >= 1)
+      {
         ACE_DEBUG ((LM_DEBUG, "Quoter Client: Copied object: ACE Hardware = %i\n", q));
+      }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -147,7 +155,9 @@ Quoter_Client::init_naming_service ()
         CosNaming::NamingContext::_narrow (naming_obj.in ());
 
       if (this->options_.debug_level >= 2)
+      {
         ACE_DEBUG ((LM_DEBUG, "Quoter Client: Have a proper reference to the Naming Service.\n"));
+      }
 
       CosNaming::Name quoterFactoryFinderName (2);
       quoterFactoryFinderName.length (2);
@@ -155,14 +165,18 @@ Quoter_Client::init_naming_service ()
       quoterFactoryFinderName[1].id = CORBA::string_dup ("Quoter_Factory_Finder");
 
       if (this->options_.debug_level >= 2)
+      {
         ACE_DEBUG ((LM_DEBUG, "Quoter Client: Trying to resolve the Quoter Factory Finder!\n"));
+      }
 
       exception_message = "While resolving the factory finder";
       CORBA::Object_var factory_obj =
         naming_context->resolve (quoterFactoryFinderName);
 
       if (this->options_.debug_level >= 2)
+      {
         ACE_DEBUG ((LM_DEBUG, "Quoter Client: Resolved the Quoter Factory Finder!\n"));
+      }
 
       exception_message = "While narrowing the factory finder";
       factory_Finder_var_ =
@@ -174,7 +188,9 @@ Quoter_Client::init_naming_service ()
                           -1);
 
       if (this->options_.debug_level >= 2)
+      {
         ACE_DEBUG ((LM_DEBUG, "Quoter Client: Have a proper reference to the Quoter Factory Finder.\n"));
+      }
 
       // The name of the Quoter Generic Factory
       CosLifeCycle::Key factoryName (2);  // max = 2
@@ -194,7 +210,9 @@ Quoter_Client::init_naming_service ()
       }
 
       if (this->options_.debug_level >= 2)
+      {
         ACE_DEBUG ((LM_DEBUG, "Quoter Client: Trying to get a reference of a factory.\n"));
+      }
 
       // Find an appropriate factory over there.
       exception_message = "While finding factories";
@@ -207,7 +225,9 @@ Quoter_Client::init_naming_service ()
                           -1);
 
       if (this->options_.debug_level >= 2)
+      {
         ACE_DEBUG ((LM_DEBUG, "Quoter Client: Got a proper reference of a factory.\n"));
+      }
 
       // Get the first object reference to a factory.
       CORBA::Object_var quoter_FactoryObj_var;
@@ -234,7 +254,9 @@ Quoter_Client::init_naming_service ()
                           -1);
 
       if (this->options_.debug_level >= 2)
+      {
         ACE_DEBUG ((LM_DEBUG, "Quoter Client: Have a proper reference to the Quoter Factory.\n"));
+      }
     }
   catch (CosLifeCycle::NoFactory const &excpt)
     {
@@ -273,14 +295,20 @@ Quoter_Client::init (int argc, ACE_TCHAR **argv)
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
+      {
         return -1;
+      }
 
       int const naming_result = this->init_naming_service ();
       if (naming_result == -1)
+      {
         return naming_result;
+      }
 
       if (this->options_.debug_level >= 2)
+      {
         ACE_DEBUG ((LM_DEBUG, "Quoter Client: Factory received OK\n"));
+      }
 
       // using the Quoter Generic Factory
       CosLifeCycle::Key genericFactoryName (1);  // max = 1
@@ -302,7 +330,9 @@ Quoter_Client::init (int argc, ACE_TCHAR **argv)
       this->quoter_var_ = Stock::Quoter::_narrow (quoterObject_var.in());
 
       if (this->options_.debug_level >= 2)
+      {
         ACE_DEBUG ((LM_DEBUG, "Quoter Client: Quoter Created\n"));
+      }
 
       if (CORBA::is_nil (this->quoter_var_.in()))
       {
@@ -331,12 +361,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     if (argv[i] != nullptr && ACE_OS::strcmp (argv[i], ACE_TEXT("-n")) == 0)
       {
         if (i + 1 >= argc)
+        {
           ACE_ERROR_RETURN ((LM_ERROR, "Missing thread count after -n\n"), -1);
+        }
         threads = ACE_OS::atoi (argv[i + 1]);
       }
 
   if (threads <= 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Thread count must be positive\n"), -1);
+  }
 
   std::vector<std::unique_ptr<Quoter_Task>> clients;
   try

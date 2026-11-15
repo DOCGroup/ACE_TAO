@@ -27,11 +27,15 @@ HASH_MAP* smap (ALLOCATOR *shmem_allocator)
 {
   void *db {};
   if (shmem_allocator->find (MAP_NAME, db) == 0)
+  {
     return static_cast<HASH_MAP *> (db);
+  }
   size_t hash_table_size = sizeof (HASH_MAP);
   void *hash_map = shmem_allocator->malloc (hash_table_size);
   if (hash_map == nullptr)
+  {
     return nullptr;
+  }
   new (hash_map) HASH_MAP (hash_table_size, shmem_allocator);
   if (shmem_allocator->bind (MAP_NAME, hash_map) == -1)
     {
@@ -237,7 +241,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (argc == 1) // parent
     ACE_ASSERT (handle_parent (argv[0]) == 0);
   else
+  {
     ACE_ASSERT (handle_child () == 0);
+  }
 
   ACE_UNUSED_ARG (argv);
   return 0;

@@ -48,7 +48,9 @@ Server_i::write_iors_to_file (char const *first_ior,
                               char const *second_ior)
 {
   if (this->ior_output_file_ == nullptr)
+  {
     return 0;
+  }
 
   ACE_TString ior_output_file_1 (this->ior_output_file_);
   ACE_TString ior_output_file_2 (this->ior_output_file_);
@@ -101,7 +103,9 @@ Server_i::init (int argc, ACE_TCHAR *argv[])
 
       int const result = this->parse_args (argc, argv);
       if (result != 0)
+      {
         return result;
+      }
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =
@@ -303,7 +307,9 @@ Server_i::run ()
         this->write_iors_to_file (first_test_ior.in (),
                                   second_test_ior.in ());
       if (write_result != 0)
+      {
         return write_result;
+      }
 
       // Set the poa_manager state to active, ready to process
       // requests.

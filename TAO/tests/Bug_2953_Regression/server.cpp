@@ -98,7 +98,9 @@ createThreadpool (CORBA::ORB_ptr orb, RTCORBA::RTORB_ptr rtorb, CORBA::ULong nth
   RTCORBA::Priority default_thread_priority {};
 
   if (tph->get_thread_implicit_CORBA_priority (default_thread_priority) != 0)
+  {
     throw CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
+  }
 
   CORBA::Boolean const do_buffering = false;
   CORBA::ULong const max_buffered_requests {};
@@ -272,13 +274,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                                   impl_b, tpid_b, 3);
 
       if (parse_args (argc, argv, ior_a_file, ior_b_file) != 0)
+      {
         return 1;
+      }
 
       if (write_iorfile (ior_a_file, ior_a.in ()) != 0)
+      {
         return 1;
+      }
 
       if (write_iorfile (ior_b_file, ior_b.in ()) != 0)
+      {
         return 1;
+      }
 
       // colocated calls work fine
       CORBA::Object_var obj_a = orb_a->string_to_object (ior_a.in ());
@@ -294,9 +302,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   result_a.in (), result_b.in ()));
 
       if (client_task_a.activate (THR_NEW_LWP | THR_JOINABLE, 1) == -1)
+      {
         ACE_ERROR ((LM_ERROR, "Error activating client task\n"));
+      }
       if (client_task_b.activate (THR_NEW_LWP | THR_JOINABLE, 1) == -1)
+      {
         ACE_ERROR ((LM_ERROR, "Error activating client task\n"));
+      }
       client_task_a.thr_mgr ()->wait ();
       client_task_b.thr_mgr ()->wait ();
 

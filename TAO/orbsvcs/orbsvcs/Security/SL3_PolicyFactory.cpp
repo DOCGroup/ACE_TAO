@@ -14,7 +14,9 @@ TAO::SL3::PolicyFactory::create_policy (CORBA::PolicyType type,
     {
       SecurityLevel3::ContextEstablishmentPolicyArgument const * arg {};
       if (!(value >>= arg))
+      {
         throw CORBA::INTERNAL ();
+      }
 
       ACE_NEW_THROW_EX (policy,
                         TAO::SL3::ContextEstablishmentPolicy (
@@ -30,7 +32,9 @@ TAO::SL3::PolicyFactory::create_policy (CORBA::PolicyType type,
     {
       SecurityLevel3::ObjectCredentialsPolicyArgument const * creds {};
       if (!(value >>= creds))
+      {
         throw CORBA::INTERNAL ();
+      }
 
       ACE_NEW_THROW_EX (policy,
                         TAO::SL3::ObjectCredentialsPolicy (*creds),

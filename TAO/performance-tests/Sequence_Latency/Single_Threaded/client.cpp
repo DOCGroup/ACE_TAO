@@ -40,7 +40,9 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
             ACE_OS::strcmp (options.data_type, ACE_TEXT("short")) != 0 &&
             ACE_OS::strcmp (options.data_type, ACE_TEXT("double")) != 0 &&
             ACE_OS::strcmp (options.data_type, ACE_TEXT("longlong")) != 0)
+        {
           return -1;
+        }
         break;
       case 'x':
         options.shutdown = false;
@@ -94,7 +96,9 @@ test_sequence (Test::Roundtrip_ptr roundtrip,
   ACE_DEBUG ((LM_DEBUG, "done\n"));
 
   if (options.dump_history)
+  {
     history.dump_samples (ACE_TEXT("HISTORY"), gsf);
+  }
 
   ACE_Basic_Stats stats;
   history.collect_basic_stats (stats);
@@ -120,7 +124,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     "client (%P|%t): user is not superuser, "
                     "test runs in time-shared class\n"));
       else
+      {
         ACE_ERROR ((LM_ERROR, "client (%P|%t): sched_params failed\n"));
+      }
     }
 
   try
@@ -128,7 +134,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
       Client_Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var object = orb->string_to_object (options.ior);
       Test::Roundtrip_var roundtrip = Test::Roundtrip::_narrow (object.in ());
@@ -165,7 +173,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                             &Test::Roundtrip::test_longlong_method);
 
       if (options.shutdown)
+      {
         roundtrip->shutdown ();
+      }
     }
   catch (const CORBA::Exception &ex)
     {

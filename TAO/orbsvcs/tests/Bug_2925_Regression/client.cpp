@@ -89,7 +89,9 @@ public:
             }
 
             if (c >= this->call_count_)
+            {
               break;
+            }
 
             this->hello_->say_hello (c);
 
@@ -126,7 +128,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Client_Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return 2;
+      }
 
       CORBA::Object_var miop_ref =
         orb->string_to_object (options.ior_file.c_str ());
@@ -136,7 +140,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         Test::Hello::_unchecked_narrow (miop_ref.in ());
 
       if (CORBA::is_nil (hello.in ()))
+      {
         return 5;
+      }
 
       TAO::DiffservCodepoint const request_dscp = IPDSFIELD_DSCP_AF22;
       TAO::DiffservCodepoint const reply_dscp = IPDSFIELD_DSCP_AF23;

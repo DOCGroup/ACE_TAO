@@ -38,7 +38,9 @@ HTTP_Handler::open (ACE_HANDLE handle,
                                    sizeof sockbufsize);
 
   if (result == -1)
+  {
     ACE_ERROR ((LM_ERROR, "%p\n", "SO_RCVBUF"));
+  }
 
   sockbufsize = HTTP_Handler::MAX_SOCKBUFSIZE;
 
@@ -48,7 +50,9 @@ HTTP_Handler::open (ACE_HANDLE handle,
                                (char *) &sockbufsize,
                                sizeof sockbufsize);
   if (result == -1)
+  {
     ACE_ERROR ((LM_ERROR, "%p\n", "SO_SNDBUF"));
+  }
 
   this->handle_ = handle;
   this->io_.handle (this->handle_);
@@ -97,7 +101,9 @@ HTTP_Handler::receive_file_complete ()
   char buffer[BUFSIZ];
   char const *version = this->request_.version ();
   if (version == nullptr)
+  {
     version = "HTTP/0.9";
+  }
 
   int buflen = std::snprintf (buffer,
                               sizeof buffer,
@@ -106,9 +112,13 @@ HTTP_Handler::receive_file_complete ()
                               HTTP_Status_Code::STATUS_OK,
                               "Successful");
   if (buflen < 0)
+  {
     return;
+  }
   if (buflen >= static_cast<int> (sizeof buffer))
+  {
     buflen = sizeof buffer - 1;
+  }
 
   this->io_.send_confirmation_message (buffer, buflen);
 }
@@ -140,7 +150,9 @@ HTTP_Handler::receive_file_error (int result)
     }
   char const *version = this->request_.version ();
   if (version == nullptr)
+  {
     version = "HTTP/0.9";
+  }
 
   int buflen = std::snprintf (buffer,
                               sizeof buffer,
@@ -149,9 +161,13 @@ HTTP_Handler::receive_file_error (int result)
                               status_code,
                               "Failed");
   if (buflen < 0)
+  {
     return;
+  }
   if (buflen >= static_cast<int> (sizeof buffer))
+  {
     buflen = sizeof buffer - 1;
+  }
 
   this->io_.send_confirmation_message (buffer, buflen);
 }

@@ -53,7 +53,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   static char const message[] = "testing socket broadcast service";
 
   if (sd.send (message, std::strlen (message), broadcast_port_number) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "can't send broadcast"), -1);
+  }
 
   return 0;
 }

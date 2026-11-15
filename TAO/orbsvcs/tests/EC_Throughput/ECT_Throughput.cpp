@@ -61,7 +61,9 @@ ECT_Throughput::run (int argc, ACE_TCHAR* argv[])
       poa_manager->activate ();
 
       if (this->parse_args (argc, argv))
+      {
         return 1;
+      }
 
       if (TAO_debug_level > 0)
         {

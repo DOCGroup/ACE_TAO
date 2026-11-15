@@ -65,7 +65,9 @@ BS_Client::insert (char const *key_name, int)
       else if (cmp < 0)
         hi = mid - 1;
       else
+      {
         lo = mid + 1;
+      }
     }
 
   return nullptr;
@@ -78,7 +80,9 @@ BS_Client::get_each_entry ()
        prp != nullptr;
        prp = Binary_Search::get_each_entry ())
     if (prp->get_drwho_list () != nullptr)
+    {
       return prp;
+    }
 
   return nullptr;
 }

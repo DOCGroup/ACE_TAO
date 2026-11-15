@@ -133,7 +133,9 @@ Logger::log (ACE_Log_Record &log_record)
 
   // Cleanup on the way out.
   if (use_log_msg)
+  {
     this->recursive_ = true;
+  }
 }
 
 static void
@@ -478,7 +480,9 @@ test_ostream ()
 
   // Check for errors.
   if (myostream.bad ())
+  {
     return -1;
+  }
 
   OFSTREAM *old_stream = ace_file_stream::instance ()->output_file ();
   // Set the ostream.
@@ -696,7 +700,9 @@ Log_Spec_Verify::log (ACE_Log_Record &log_record)
 
   // Cleanup on the way out.
   if (use_log_msg)
+  {
     this->recursive_ = true;
+  }
 }
 
 int

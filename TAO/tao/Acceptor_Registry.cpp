@@ -50,7 +50,9 @@ bool
 TAO_Acceptor_Registry::reserve_acceptors (size_t count)
 {
   if (count > this->acceptors_.max_size () - this->acceptors_.size ())
+  {
     return false;
+  }
 
   try
     {
@@ -474,7 +476,9 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
   // With no explicit endpoints, the number of acceptors cannot exceed
   // the number of loaded protocols in the ORB core.
   if (!this->reserve_acceptors (pfs->size ()))
+  {
     return -1;
+  }
 
   TAO_ProtocolFactorySetItor const end = pfs->end ();
 
@@ -601,7 +605,9 @@ TAO_Acceptor_Registry::close_all ()
   for (std::unique_ptr<TAO_Acceptor> const& acceptor : this->acceptors_)
     {
       if (acceptor != nullptr)
+      {
         acceptor->close ();
+      }
     }
 
   this->acceptors_.clear ();

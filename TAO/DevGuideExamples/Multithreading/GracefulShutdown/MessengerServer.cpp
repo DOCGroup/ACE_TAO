@@ -144,7 +144,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     // Parse arguments to determine how we should shutdown.
     MessengerServer::Options options;
     if (MessengerServer::parse_args (argc, argv, options) != 0)
+    {
       return 1;
+    }
 
     //Get reference to the RootPOA.
     CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");

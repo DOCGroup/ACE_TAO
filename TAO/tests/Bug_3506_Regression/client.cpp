@@ -63,7 +63,9 @@ public:
 
         client->foo (ts);
         if (shutdown)
+        {
           client->shutdown ();
+        }
       }
     catch (CORBA::Exception const &ex)
       {
@@ -82,7 +84,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
       if (parse_args (argc, argv, ior) != 0)
+      {
         return 1;
+      }
 
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
       IF_Test_client const testclient;

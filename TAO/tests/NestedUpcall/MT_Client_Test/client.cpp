@@ -34,7 +34,9 @@ int
 MT_Client_Task::svc ()
 {
   if (this->mT_Client_.init (this->argc_, this->argv_, this->client_number_) == -1)
+  {
     return -1;
+  }
   return this->mT_Client_.run ();
 }
 
@@ -161,7 +163,9 @@ MT_Client::init (int argc, ACE_TCHAR **argv,
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
+      {
         return -1;
+      }
 
       if (this->object_key_.empty ())
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -186,7 +190,9 @@ MT_Client::init (int argc, ACE_TCHAR **argv,
         }
 
       if (TAO_debug_level > 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "We have a proper reference to the Object.\n"));
+      }
 
       CORBA::Object_var poa_object =
         this->orb_var_->resolve_initial_references ("RootPOA");
@@ -235,10 +241,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       for (int i = 0; i + 1 < argc; ++i)
         if (ACE_OS::strcmp (argv[i], ACE_TEXT ("-n")) == 0)
+        {
           threads = ACE_OS::atoi (argv[i + 1]);
+        }
 
       if (threads <= 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "The number of client threads must be positive.\n"), -1);
+      }
 
       // create a separate server thread
       ACE_Thread_Manager server_thr_mgr;

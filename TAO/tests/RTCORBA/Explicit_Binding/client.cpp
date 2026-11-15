@@ -63,14 +63,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Parse arguments.
       if (parse_args (argc, argv, options) != 0)
+      {
         return -1;
+      }
 
       // RTORB.
       CORBA::Object_var object =
         orb->resolve_initial_references ("RTORB");
       RTCORBA::RTORB_var const rt_orb = RTCORBA::RTORB::_narrow (object.in ());
       if (check_for_nil (rt_orb.in (), "RTORB") == -1)
+      {
         return -1;
+      }
 
       // PolicyCurrent.
       object = orb->resolve_initial_references ("PolicyCurrent");
@@ -78,13 +82,17 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::PolicyCurrent::_narrow (object.in ());
       if (check_for_nil (policy_current.in (), "PolicyCurrent")
           == -1)
+      {
         return -1;
+      }
 
       // Test object.
       object = orb->string_to_object (options.ior);
       Test_var const server = Test::_narrow (object.in ());
       if (check_for_nil (server.in (), "server") == -1)
+      {
         return -1;
+      }
 
       // Test 1: Check that <validate_connection> establishes an
       // appropriate connection for the current set of effective

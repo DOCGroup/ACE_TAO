@@ -152,11 +152,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       std::unique_ptr<char[]> argument_buffer (
         new (std::nothrow) char[max_argument_size]);
       if (!argument_buffer)
+      {
         return 1;
+      }
 
       std::unique_ptr<int[]> argument_sizes (new (std::nothrow) int[max_arguments]);
       if (!argument_sizes)
+      {
         return 1;
+      }
 
       int const n = ACE_OS::rand_r (&seed) % max_arguments + 1;
       for (int k = 0; k < n; ++k)
@@ -226,7 +230,9 @@ Application_Simulator::upcall (unsigned int *const seed)
       if (buffer)
         {
           if (ACE_OS::rand_r (seed) % 10000 < 5000)
+          {
             buffer.reset ();
+          }
         }
       else
         {
@@ -236,7 +242,9 @@ Application_Simulator::upcall (unsigned int *const seed)
                 this->max_fragment_size_ + 1;
               buffer.reset (new (std::nothrow) char[size]);
               if (!buffer)
+              {
                 return;
+              }
             }
         }
     }

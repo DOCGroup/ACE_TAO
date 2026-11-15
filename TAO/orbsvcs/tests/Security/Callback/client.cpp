@@ -50,7 +50,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var const server_object = orb->string_to_object (options.ior);
       if (CORBA::is_nil (server_object.in ()))

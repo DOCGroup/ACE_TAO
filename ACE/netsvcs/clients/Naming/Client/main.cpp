@@ -58,7 +58,9 @@ ACE_TMAIN (int, ACE_TCHAR *argv[])
 
   Client_Test test_body;
   if (test_body.open () == -1)
+  {
     return 1;
+  }
 
   // Run forever, performing the configured services until we are shut
   // down by a SIGINT/SIGQUIT signal.

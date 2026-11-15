@@ -165,7 +165,9 @@ ACE_Event_Handler::add_reference ()
   if (reference_counting_required)
     return ++this->reference_count_;
   else
+  {
     return 1;
+  }
 }
 
 ACE_Event_Handler::Reference_Count
@@ -180,7 +182,9 @@ ACE_Event_Handler::remove_reference ()
       Reference_Count const result = --this->reference_count_;
 
       if (result == 0)
+      {
         delete this;
+      }
 
       return result;
     }

@@ -23,7 +23,9 @@ void
 EC_Supplier::send_event (int event_number)
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
+  {
     return;
+  }
 
   // Create the event...
 
@@ -50,7 +52,9 @@ EC_Supplier::send_event (const RtecEventComm::EventSet& event)
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   if (this->push_count_ == 0)
+  {
     this->throughput_start_ = ACE_OS::gethrtime ();
+  }
 
   this->push_count_ += event.length ();
 
@@ -87,7 +91,9 @@ EC_Supplier::event_type (int event_number,
       int i = event_number % l;
       int type = this->qos_.publications[i].event.header.type;
       if (type == this->shutdown_event_type_)
+      {
         i = 0;
+      }
 
       RtecEventComm::EventHeader& header =
         this->qos_.publications[i].event.header;
@@ -113,7 +119,9 @@ EC_Supplier::connect (const RtecEventChannelAdmin::SupplierQOS& qos,
                       int shutdown_event_type)
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
+  {
     return; // @@ Throw?
+  }
 
   this->qos_ = qos;
   this->shutdown_event_type_ = shutdown_event_type;
@@ -132,7 +140,9 @@ void
 EC_Supplier::disconnect ()
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
+  {
     return;
+  }
 
   this->consumer_proxy_->disconnect_push_consumer ();
 
@@ -144,7 +154,9 @@ void
 EC_Supplier::shutdown ()
 {
   if (!this->is_active_)
+  {
     return;
+  }
 
   // Deactivate the servant
   PortableServer::POA_var poa =

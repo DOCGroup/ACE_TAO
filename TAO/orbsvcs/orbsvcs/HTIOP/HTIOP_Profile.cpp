@@ -159,7 +159,9 @@ TAO::HTIOP::Profile::parse_string_i (const char *ior)
       length_host = cp_pos - ior;
     }
   else
+  {
     length_host = okd - ior;
+  }
 
   CORBA::String_var tmp = CORBA::string_alloc (length_host);
 
@@ -198,7 +200,9 @@ TAO::HTIOP::Profile::parse_string_i (const char *ior)
             CORBA::COMPLETED_NO);
         }
       else
+      {
         this->endpoint_.host_ = CORBA::string_dup (tmp_host);
+      }
     }
 
   TAO::ObjectKey ok;
@@ -215,7 +219,9 @@ TAO::HTIOP::Profile::do_is_equivalent (const TAO_Profile *other_profile)
     dynamic_cast<const TAO::HTIOP::Profile *> (other_profile);
 
   if (op == nullptr)
+  {
     return 0;
+  }
 
   // Check endpoints equivalence.
   const TAO::HTIOP::Endpoint *other_endp = std::addressof (op->endpoint_);
@@ -226,7 +232,9 @@ TAO::HTIOP::Profile::do_is_equivalent (const TAO_Profile *other_profile)
       if (endp->is_equivalent (other_endp))
         other_endp = other_endp->next_;
       else
+      {
         return 0;
+      }
     }
 
   return 1;
@@ -354,7 +362,9 @@ TAO::HTIOP::Profile::create_profile_body (TAO_OutputCDR &encap) const
 
   if (this->version_.major > 1
       || this->version_.minor > 0)
+  {
     this->tagged_components ().encode (encap);
+  }
 }
 
 int
@@ -386,7 +396,9 @@ TAO::HTIOP::Profile::encode_endpoints ()
   TAO_OutputCDR out_cdr;
   if ((out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)) == 0
       || (out_cdr << endpoints) == 0)
+  {
     return -1;
+  }
   size_t const length = out_cdr.total_length ();
 
   IOP::TaggedComponent tagged_component;

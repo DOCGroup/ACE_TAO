@@ -116,7 +116,9 @@ ACE_LSOCK_Acceptor::accept (ACE_LSOCK_Stream &new_stream,
       // domain sockets.
       if (new_stream.get_handle () != ACE_INVALID_HANDLE
           && remote_addr != nullptr)
+      {
         remote_addr->set_size (len);
+      }
     }
 
   return this->shared_accept_finish (new_stream,

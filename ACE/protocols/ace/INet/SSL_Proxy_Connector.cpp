@@ -29,12 +29,16 @@ namespace ACE
         SSL *ssl = new_stream.ssl ();
 
         if (SSL_is_init_finished (ssl))
+        {
           return 0;
+        }
 
         // Check if a connection is already pending for the given SSL
         // structure.
         if (!SSL_in_connect_init (ssl))
+        {
           ::SSL_set_connect_state (ssl);
+        }
 
         ACE_HANDLE handle = new_stream.get_handle ();
 
@@ -56,12 +60,16 @@ namespace ACE
             if (reset_blocking_mode
                     && ACE::set_flags (handle,
                                       ACE_NONBLOCK) == -1)
+            {
               return -1;
+            }
           }
 
         ACE_Time_Value t;
         if (timeout != nullptr)
+        {
           t = *timeout;   // Need a non-const copy.
+        }
 
         // Take into account the time between each select() call below.
         ACE_Countdown_Time countdown ((timeout == nullptr ? nullptr : std::addressof (t)));
@@ -192,7 +200,9 @@ namespace ACE
         INET_TRACE ("SSL_Proxy_Connector::connect");
 
         if (new_stream.get_handle () != ACE_INVALID_HANDLE)
+        {
           return -1;    // SSL already connected, somebody made a mistake here
+        }
 
         // Set the handle from the established proxy connection in the
         // SSL_SOCK_Stream.
@@ -202,7 +212,9 @@ namespace ACE
         int result = this->ssl_connect (new_stream, timeout);
 
         if (result == -1)
+        {
           new_stream.close ();
+        }
 
         return result;
       }

@@ -95,13 +95,17 @@ TAO_EC_ProxyPushSupplier::shutdown ()
     consumer = this->consumer_._retn ();
 
     if (connected)
+    {
       this->cleanup_i ();
+    }
   }
 
   this->deactivate ();
 
   if (CORBA::is_nil (consumer.in ()))
+  {
     return;
+  }
 
   try
     {
@@ -163,7 +167,9 @@ TAO_EC_ProxyPushSupplier::_decr_refcnt ()
     ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
     --this->refcount_;
     if (this->refcount_ != 0)
+    {
       return this->refcount_;
+    }
   }
 
   this->refcount_zero_hook ();
@@ -224,10 +230,14 @@ TAO_EC_ProxyPushSupplier::push (const RtecEventComm::EventSet& event,
   // The mutex is already held by the caller (usually the filter()
   // method)
   if (!this->is_connected_i ())
+  {
     return; // TAO_THROW (RtecEventComm::Disconnected ());????
+  }
 
   if (this->suspended_)
+  {
     return;
+  }
 
   TAO_ESF_RefCount_Guard<CORBA::ULong> ace_mon (this->refcount_);
   // The guard will decrement the reference count, notice that the
@@ -259,7 +269,9 @@ TAO_EC_ProxyPushSupplier::push (const RtecEventComm::EventSet& event,
   }
 
   if (this->child_ != nullptr)
+  {
     this->child_->clear ();
+  }
 }
 
 void
@@ -274,10 +286,14 @@ TAO_EC_ProxyPushSupplier::push_nocopy (RtecEventComm::EventSet& event,
   // The mutex is already held by the caller (usually the filter()
   // method)
   if (!this->is_connected_i ())
+  {
     return; // TAO_THROW (RtecEventComm::Disconnected ());????
+  }
 
   if (this->suspended_)
+  {
     return;
+  }
 
   TAO_ESF_RefCount_Guard<CORBA::ULong> ace_mon (this->refcount_);
   // The guard will decrement the reference count, notice that the
@@ -308,7 +324,9 @@ TAO_EC_ProxyPushSupplier::push_nocopy (RtecEventComm::EventSet& event,
   }
 
   if (this->child_ != nullptr)
+  {
     this->child_->clear ();
+  }
 }
 
 void
@@ -322,10 +340,14 @@ TAO_EC_ProxyPushSupplier::push_to_consumer (
             RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
 
     if (!this->is_connected_i ())
+    {
       return; // ACE_THROW (RtecEventComm::Disconnected ());????
+    }
 
     if (this->suspended_)
+    {
       return;
+    }
   }
 
   try
@@ -451,7 +473,9 @@ TAO_EC_ProxyPushSupplier::can_match (
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
 
   if (!this->is_connected_i ())
+  {
     return 0;
+  }
 
   return this->child_->can_match (header);
 }

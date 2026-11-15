@@ -100,7 +100,9 @@ ACE_SOCK_Dgram_Bcast::open (const ACE_Addr &local,
 
   if (this->ACE_SOCK_Dgram::open (local, protocol_family,
                                   protocol, reuse_addr) == -1)
+  {
     return -1;
+  }
 
   return this->mk_broadcast (host_name);
 }
@@ -195,7 +197,9 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
           std::memcpy (&if_addr, &ifr->ifr_addr, sizeof if_addr);
 
           if (host_addr.sin_addr.s_addr != if_addr.sin_addr.s_addr)
+          {
             continue;
+          }
         }
 
       if (ifr->ifr_addr.sa_family != AF_INET)
@@ -237,7 +241,9 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
 
       if (ACE_BIT_ENABLED (flags.ifr_flags,
                            IFF_LOOPBACK))
+      {
         continue;
+      }
 
       if (ACE_BIT_ENABLED (flags.ifr_flags,
                            IFF_BROADCAST))
@@ -283,7 +289,9 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
       return -1;
     }
   else
+  {
     return 0;
+  }
 }
 
 // Broadcast the datagram to every interface.  Returns the average
@@ -300,7 +308,9 @@ ACE_SOCK_Dgram_Bcast::send (const void *buf,
   ssize_t total_bytes = 0;
 
   if (this->if_list_ == nullptr)
+  {
     return -1;
+  }
 
   for (ACE_Bcast_Node *temp = this->if_list_;
        temp != nullptr;
@@ -316,7 +326,9 @@ ACE_SOCK_Dgram_Bcast::send (const void *buf,
       if (bytes_sent == -1)
         return -1;
       else
+      {
         total_bytes += bytes_sent;
+      }
 
       ++iterations;
     }
@@ -336,7 +348,9 @@ ACE_SOCK_Dgram_Bcast::send (const iovec iov[],
   ACE_TRACE ("ACE_SOCK_Dgram_Bcast::send");
 
   if (this->if_list_ == nullptr)
+  {
     return -1;
+  }
 
   // Send the message to every interface.
 
@@ -350,7 +364,9 @@ ACE_SOCK_Dgram_Bcast::send (const iovec iov[],
                                 n,
                                 temp->bcast_addr_,
                                 flags) == -1)
+      {
         return -1;
+      }
     }
 
   return 0;

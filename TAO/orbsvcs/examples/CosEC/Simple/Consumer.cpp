@@ -44,7 +44,9 @@ Consumer::run (int argc, ACE_TCHAR* argv[])
 
       ACE_TCHAR const *ior = ACE_TEXT ("file://ec.ior");
       if (parse_args (argc, argv, ior) != 0)
+      {
         return 1;
+      }
 
       // Do *NOT* make a copy because we don't want the ORB to outlive
       // the Consumer object.

@@ -119,7 +119,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       TestShutdown killer (orb.in ());
 
       if (parse_args (argc, argv, ior_file) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var const poa_object {orb->resolve_initial_references ("RootPOA")};
       PortableServer::POA_var const poa {PortableServer::POA::_narrow (poa_object.in ())};

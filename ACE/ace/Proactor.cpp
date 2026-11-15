@@ -141,7 +141,9 @@ ACE_Proactor_Timer_Handler::svc ()
           if (absolute_time > cur_time)
             relative_time = absolute_time - cur_time;
           else
+          {
             relative_time = ACE_Time_Value::zero;
+          }
 
           // Block for relative time.
           result = this->timer_event_.wait (&relative_time, 0);
@@ -456,7 +458,9 @@ ACE_Proactor::proactor_run_event_loop (PROACTOR_EVENT_HOOK eh)
     // Early check. It is ok to do this without lock, since we care just
     // whether it is zero or non-zero.
     if (this->end_event_loop_ != 0)
+    {
       return 0;
+    }
 
     // First time you are in. Increment the thread count.
     ++this->event_loop_thread_count_;
@@ -468,16 +472,22 @@ ACE_Proactor::proactor_run_event_loop (PROACTOR_EVENT_HOOK eh)
       // Check the end loop flag. It is ok to do this without lock,
       // since we care just whether it is zero or non-zero.
       if (this->end_event_loop_ != 0)
+      {
         break;
+      }
 
       // <end_event_loop> is not set. Ready to do <handle_events>.
       result = this->handle_events ();
 
       if (eh != nullptr && (*eh) (this))
+      {
         continue;
+      }
 
       if (result == -1)
+      {
         break;
+      }
     }
 
   // Leaving the event loop. Decrement the thread count.
@@ -491,7 +501,9 @@ ACE_Proactor::proactor_run_event_loop (PROACTOR_EVENT_HOOK eh)
 
     if (this->event_loop_thread_count_ > 0
        && this->end_event_loop_ != 0)
-       this->proactor_post_wakeup_completions (1);
+    {
+      this->proactor_post_wakeup_completions (1);
+    }
   }
 
   return result;
@@ -513,7 +525,9 @@ ACE_Proactor::proactor_run_event_loop (ACE_Time_Value &tv,
     // whether it is zero or non-zero.
     if (this->end_event_loop_ != 0
        || tv == ACE_Time_Value::zero)
+    {
       return 0;
+    }
 
     // First time you are in. Increment the thread count.
     ++this->event_loop_thread_count_;
@@ -525,16 +539,22 @@ ACE_Proactor::proactor_run_event_loop (ACE_Time_Value &tv,
       // Check the end loop flag. It is ok to do this without lock,
       // since we care just whether it is zero or non-zero.
       if (this->end_event_loop_ != 0)
+      {
         break;
+      }
 
       // <end_event_loop> is not set. Ready to do <handle_events>.
       result = this->handle_events (tv);
 
       if (eh != nullptr && (*eh) (this))
+      {
         continue;
+      }
 
       if (result == -1 || result == 0)
+      {
         break;
+      }
     }
 
   // Leaving the event loop. Decrement the thread count.
@@ -547,7 +567,9 @@ ACE_Proactor::proactor_run_event_loop (ACE_Time_Value &tv,
 
     if (this->event_loop_thread_count_ > 0
        && this->end_event_loop_ != 0)
-       this->proactor_post_wakeup_completions (1);
+    {
+      this->proactor_post_wakeup_completions (1);
+    }
   }
 
   return result;
@@ -583,7 +605,9 @@ ACE_Proactor::proactor_end_event_loop ()
     // Number of completions to post.
     how_many = this->event_loop_thread_count_;
     if (how_many == 0)
+    {
       return 0;
+    }
   }
 
   // Post completions to all the threads so that they will all wake

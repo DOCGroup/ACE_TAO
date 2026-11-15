@@ -31,7 +31,9 @@ ServantActivator_i::incarnate (PortableServer::ObjectId const &oid,
     this->servant_manager_.obtain_servant (ACE_TEXT_CHAR_TO_TCHAR(s.in ()),
                                            poa);
   if (servant != nullptr)
+  {
     return servant;
+  }
   throw CORBA::OBJECT_NOT_EXIST ();
 }
 
@@ -50,7 +52,9 @@ ServantActivator_i::etherealize (PortableServer::ObjectId const &oid,
   // POA::destroy() and/or Object::deactivate().
 
   if (!remaining_activations)
+  {
     this->servant_manager_.destroy_servant (servant, oid);
+  }
 }
 
 // This method returns an ObjectId when given an dll name and the

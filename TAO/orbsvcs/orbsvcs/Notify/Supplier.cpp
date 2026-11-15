@@ -37,7 +37,9 @@ TAO_Notify_Supplier::dispatch_updates_i (
   CosNotification::EventTypeSeq const &removed)
 {
   if (!CORBA::is_nil (this->subscribe_.in ()))
+  {
     this->subscribe_->subscription_change (added, removed);
+  }
 }
 
 bool
@@ -54,7 +56,9 @@ TAO_Notify_Supplier::is_alive (bool allow_nil_supplier)
     if (allow_nil_supplier)
       return true;
     else
+    {
       return status;
+    }
   }
 
   CORBA::PolicyList policy_list;
@@ -106,7 +110,9 @@ TAO_Notify_Supplier::is_alive (bool allow_nil_supplier)
         status = !rtt_obj_->_non_existent ();
       }
       else
+      {
         status = true;
+      }
     }
   catch (const CORBA::TIMEOUT&)
     {

@@ -239,7 +239,9 @@ TAO_OutputCDR::offset (char* pos)
     }
 
     if (wr_ptr == cur_mb->wr_ptr ())
+    {
       break;
+    }
 
     cur_mb = cur_mb->cont();
   }

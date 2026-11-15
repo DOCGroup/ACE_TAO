@@ -148,7 +148,9 @@ Test_Small_Union::check_validity ()
         CORBA::Long out   = this->out_->the_long ();
         CORBA::Long ret   = this->ret_->the_long ();
         if (in != out || in != inout || in != ret)
+        {
           return 0;
+        }
       }
       break;
 
@@ -159,7 +161,9 @@ Test_Small_Union::check_validity ()
         CORBA::Short out   = this->out_->the_short ();
         CORBA::Short ret   = this->ret_->the_short ();
         if (in != out || in != inout || in != ret)
+        {
           return 0;
+        }
       }
       break;
 

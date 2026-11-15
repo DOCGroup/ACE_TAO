@@ -17,7 +17,9 @@ TAO_Default_Acceptor_Filter::fill_profile (TAO::ObjectKey const &object_key,
     {
       // Ask each acceptor to make a profile.
       if (acceptor->create_profile (object_key, mprofile, priority) == -1)
+      {
         return -1;
+      }
     }
 
   return 0;
@@ -32,7 +34,9 @@ TAO_Default_Acceptor_Filter::encode_endpoints (TAO_MProfile &mprofile)
     {
       TAO_Profile * const profile = mprofile.get_profile (i);
       if (profile->encode_alternate_endpoints () == -1)
+      {
         return -1;
+      }
     }
 
   return 0;

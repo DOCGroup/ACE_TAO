@@ -204,7 +204,9 @@ ACE::HTBP::Inside_Squid_Filter::recv_ack (ACE::HTBP::Channel *ch)
   if (header_end == nullptr)
     {
       if (ch->state() != ACE::HTBP::Channel::Closed)
+      {
         errno = EWOULDBLOCK;
+      }
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT("HTBP::Inside_Squid_Filter::")
                          ACE_TEXT("recv_ack, ")

@@ -63,7 +63,9 @@ TAO_ZIOP_Loader::load_policy_validators (TAO_Policy_Validator &val)
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
   // Is this true? Does the GIOP protocol version matter here?
   if (TAO_DEF_GIOP_MINOR < 2)
+  {
     return;
+  }
 
   TAO_ZIOPPolicy_Validator *validator {};
   ACE_NEW_THROW_EX (validator,
@@ -572,7 +574,9 @@ TAO_ZIOP_Loader::complete_compression (Compression::Compressor_ptr compressor,
             }
         }
       else
+      {
         return false;
+      }
     }
     else if (TAO_debug_level > 8)
       {

@@ -82,7 +82,10 @@ namespace ACE_TMCast
                               this,
                               THR_JOINABLE,
                               &unused,
-                              &thread_) != 0) ACE_OS::abort ();
+                              &thread_) != 0)
+      {
+        ACE_OS::abort ();
+      }
     }
 
     Scheduler (Scheduler const&) = delete;
@@ -98,7 +101,10 @@ namespace ACE_TMCast
         in_control_.push (MessagePtr (new Terminate));
       }
 
-      if (ACE_OS::thr_join (thread_, nullptr) != 0) ACE_OS::abort ();
+      if (ACE_OS::thr_join (thread_, nullptr) != 0)
+      {
+        ACE_OS::abort ();
+      }
 
       // cerr << "Scheduler is down." << endl;
     }
@@ -220,7 +226,10 @@ namespace ACE_TMCast
             } while (!in_link_data_.empty() ||
                      sync_schedule < ACE_OS::gettimeofday ());
 
-            if (done) break;
+            if (done)
+            {
+              break;
+            }
           }
         }
       }
@@ -358,7 +367,10 @@ namespace ACE_TMCast
     {
     //FUZZ: enable check_for_lack_ACE_OS
 
-      if (size > Protocol::MAX_PAYLOAD_SIZE) throw InvalidArg ();
+      if (size > Protocol::MAX_PAYLOAD_SIZE)
+      {
+        throw InvalidArg ();
+      }
 
       // Note the potential deadlock if I lock mutex_ and out_data_ in
       // reverse order.
@@ -427,7 +439,9 @@ namespace ACE_TMCast
             Recv* data = dynamic_cast<Recv*> (m.get ());
 
             if (size < data->size ())
+            {
               throw Group::InsufficienSpace ();
+            }
 
             std::memcpy (msg, data->payload (), data->size ());
 
@@ -450,9 +464,15 @@ namespace ACE_TMCast
     void
     throw_if_failed ()
     {
-      if (!failed_ && !in_control_.empty ()) failed_ = true;
+      if (!failed_ && !in_control_.empty ())
+      {
+        failed_ = true;
+      }
 
-      if (failed_) throw Group::Failed ();
+      if (failed_)
+      {
+        throw Group::Failed ();
+      }
     }
 
   private:

@@ -25,7 +25,9 @@ void
 Nestea_i::drink (CORBA::Long cans)
 {
   if (TAO_debug_level)
+  {
     ACE_DEBUG ((LM_DEBUG, "Nestea_i::drink %d cans\n", cans));
+  }
 
   this->cans_ += cans;
 
@@ -38,12 +40,16 @@ void
 Nestea_i::crush (CORBA::Long cans)
 {
   if (TAO_debug_level)
+  {
     ACE_DEBUG ((LM_DEBUG, "Nestea_i::crush %d cans\n", cans));
+  }
 
   if (static_cast<ACE_UINT32> (cans) > this->cans_)
     this->cans_ = 0;
   else
+  {
     this->cans_ -= cans;
+  }
 
   this->save_data ();
 }
@@ -54,7 +60,9 @@ CORBA::Long
 Nestea_i::bookshelf_size ()
 {
   if (TAO_debug_level)
+  {
     ACE_DEBUG ((LM_DEBUG, "Nestea_i::bookshelf_size\n"));
+  }
 
   return this->cans_;
 }
@@ -65,7 +73,9 @@ char *
 Nestea_i::get_praise ()
 {
   if (TAO_debug_level)
+  {
     ACE_DEBUG ((LM_DEBUG, "Nestea_i::get_praise\n"));
+  }
 
   if (this->cans_ > 500)
     return CORBA::string_dup ("Man, that is one excellent Nestea Collection!");
@@ -76,14 +86,18 @@ Nestea_i::get_praise ()
   else if (this->cans_ > 0)
     return CORBA::string_dup ("Well, it is a start. Drink more Nestea!");
   else
+  {
     return CORBA::string_dup ("No cans, no praise.");
+  }
 }
 
 void
 Nestea_i::shutdown ()
 {
   if (TAO_debug_level)
+  {
     ACE_DEBUG ((LM_DEBUG, "Nestea_i::shutdown\n"));
+  }
 
   this->orb_->shutdown (false);
 }
@@ -141,6 +155,8 @@ Nestea_i::load_data ()
       this->cans_ = static_cast<ACE_UINT32> (ACE_OS::atoi (str));
     }
   else
+  {
     this->cans_ = 0;
+  }
   return 0;
 }

@@ -45,7 +45,9 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
             ACE_OS::strcmp (options.data_type, ACE_TEXT("short")) != 0 &&
             ACE_OS::strcmp (options.data_type, ACE_TEXT("double")) != 0 &&
             ACE_OS::strcmp (options.data_type, ACE_TEXT("longlong")) != 0)
+        {
           return -1;
+        }
         break;
       case 's':
         options.size = ACE_OS::atoi (get_opts.opt_arg ());
@@ -93,7 +95,9 @@ test_sequence (Test::Roundtrip_ptr roundtrip,
   std::unique_ptr<CORBA::Request_var[]> const requests (
     new (std::nothrow) CORBA::Request_var[options.burst]);
   if (!requests)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Unable to allocate deferred requests\n"), 1);
+  }
 
   for (int i = 0; i < options.iterations; ++i)
     {
@@ -128,7 +132,9 @@ test_sequence (Test::Roundtrip_ptr roundtrip,
   ACE_DEBUG ((LM_DEBUG, "done\n"));
 
   if (options.dump_history)
+  {
     history.dump_samples (ACE_TEXT("HISTORY"), gsf);
+  }
 
   ACE_Basic_Stats stats;
   history.collect_basic_stats (stats);
@@ -155,7 +161,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     "client (%P|%t): user is not superuser, "
                     "test runs in time-shared class\n"));
       else
+      {
         ACE_ERROR ((LM_ERROR, "client (%P|%t): sched_params failed\n"));
+      }
     }
 
   try
@@ -163,7 +171,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
       Client_Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var object = orb->string_to_object (options.ior);
       Test::Roundtrip_var roundtrip = Test::Roundtrip::_narrow (object.in ());
@@ -200,7 +210,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                             "test_longlong_method", "longlong_load");
 
       if (options.shutdown)
+      {
         roundtrip->shutdown ();
+      }
     }
   catch (const CORBA::Exception &ex)
     {

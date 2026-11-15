@@ -312,7 +312,9 @@ TAO_UIPMC_Connection_Handler::open (void*)
   // Use C-style cast b/c otherwise we get warnings on lots of
   // compilers
   if (!this->transport ()->post_open ((size_t) this->peer ().get_handle ()))
+  {
     return -1;
+  }
 
   this->state_changed (TAO_LF_Event::LFS_SUCCESS,
                        this->orb_core ()->leader_follower ());
@@ -475,7 +477,9 @@ TAO_UIPMC_Connection_Handler::set_tos (int tos)
 
       // On successful setting of TOS field.
       if (result == 0)
+      {
         this->dscp_codepoint_ = tos;
+      }
     }
 
   return 0;

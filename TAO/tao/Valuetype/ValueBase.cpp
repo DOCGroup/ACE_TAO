@@ -154,7 +154,9 @@ CORBA::ValueBase::_tao_marshal (TAO_OutputCDR &strm,
     return _tao_write_value (strm, this_, formal_type_id);
   }
   else
+  {
     return true;
+  }
 }
 
 CORBA::Boolean
@@ -845,10 +847,14 @@ CORBA::ValueBase::_tao_write_value_header (TAO_OutputCDR &strm,
   // Truncatable value type, must use chunking and list all repository
   // ids in its "truncatable" derivation hierarchy.
   if (this->is_truncatable_ || this->chunking_)
+  {
     valuetag |= TAO_OBV_GIOP_Flags::Chunking_tag_sigbits;
+  }
 
   if (!is_formal_type || this->is_truncatable_)
+  {
     valuetag |= TAO_OBV_GIOP_Flags::Type_info_single;
+  }
 
   if (num_ids > 1)
     {
@@ -1179,7 +1185,9 @@ TAO_ChunkInfo::skip_chunks (TAO_InputCDR &strm)
       return this->skip_chunks (strm);
     }
   else
+  {
     return false;
+  }
 }
 
 CORBA::Boolean
@@ -1253,7 +1261,9 @@ CORBA::ValueBase::_tao_read_repository_id (TAO_InputCDR& strm,
     }
 
   if (! id_stream.read_string (id))
+  {
     return false;
+  }
 
   // It's possible the id is read again from an indirection stream,
   // so make sure the id is the same.
@@ -1343,7 +1353,9 @@ CORBA::ValueBase::_tao_read_codebase_url (TAO_InputCDR& strm,
     }
 
   if (! url_stream.read_string (codebase_url))
+  {
     return false;
+  }
 
   // It's possible the codebase url is read again from an indirection stream,
   // so make sure the codebase url is the same.
@@ -1451,7 +1463,9 @@ CORBA::DefaultValueRefCountBase::_remove_ref ()
   CORBA::ULong const new_count = --this->refcount_;
 
   if (new_count == 0)
+  {
     delete this;
+  }
 }
 
 CORBA::ULong

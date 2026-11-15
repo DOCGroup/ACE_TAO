@@ -44,7 +44,9 @@ CosEC_ServantBase::activate ()
   // Activate the CosEC
   int const retval = this->activate_cosec ();
   if (retval != 0)
+  {
     return -1;
+  }
 
    // Activate ourselves..
    // Note that the POA is <thispoa_>
@@ -70,7 +72,9 @@ CosEC_ServantBase::activate (char const *servant_id)
   // Activate the CosEC
   int const retval = this->activate_cosec ();
   if (retval != 0)
+  {
     return -1;
+  }
 
   PortableServer::ObjectId_var const oid =
     PortableServer::string_to_ObjectId (servant_id);
@@ -128,7 +132,9 @@ CosEC_ServantBase::activate_cosec ()
   if (this->cosec_servant_->init (consumerqos,
                                   supplierqos,
                                   this->rtec_.in ()) != 0)
+  {
     return -1;
+  }
 
   // Activate the CosEC
   PortableServer::ObjectId_var const oid =
@@ -274,7 +280,9 @@ CosEC_ServantBase::init_SupplierQOS (RtecBase::handle_t supp_handle,
 
           int type_val {};
           if (tok != nullptr)
+          {
             type_val = ACE_OS::atoi (tok);
+          }
 
           ACE_DEBUG ((LM_DEBUG, "supplier_qos::insert (%d, %d)\n",
                       source_val, type_val));

@@ -41,9 +41,13 @@ TAO::HTIOP::Endpoint::Endpoint (const char *host,
     next_ (nullptr)
 {
   if (host != nullptr)
+  {
     this->host_ = host;
+  }
   if (htid != nullptr)
+  {
     this->htid_ = htid;
+  }
 }
 
 TAO::HTIOP::Endpoint::Endpoint ()
@@ -69,9 +73,13 @@ TAO::HTIOP::Endpoint::Endpoint (const char *host,
     next_ (nullptr)
 {
   if (host != nullptr)
+  {
     this->host_ = host;
+  }
   if (htid != nullptr)
+  {
     this->htid_ = htid;
+  }
 }
 
 TAO::HTIOP::Endpoint::~Endpoint () = default;
@@ -97,10 +105,14 @@ TAO::HTIOP::Endpoint::set (const ACE::HTBP::Addr &addr,
           return -1;
         }
       else
+      {
         this->host_ = tmp;
+      }
     }
   else
+  {
     this->host_ = CORBA::string_dup (tmp_host);
+  }
 
   this->port_ = addr.get_port_number();
   this->htid_ = addr.get_htid();
@@ -119,7 +131,9 @@ TAO::HTIOP::Endpoint::addr_to_string (char *buffer, size_t length)
         + sizeof ('\0');
 
       if (length < actual_len)
+      {
         return -1;
+      }
 
       ACE_OS::sprintf (buffer, "%s:%d",
                        this->host_.in (), this->port_);
@@ -127,7 +141,9 @@ TAO::HTIOP::Endpoint::addr_to_string (char *buffer, size_t length)
   else
     {
       if (length < std::strlen (this->htid_.in ()) + 1)
+      {
         return -1;
+      }
       std::strcpy (buffer, this->htid_.in ());
     }
   return 0;
@@ -193,7 +209,9 @@ TAO::HTIOP::Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
   TAO::HTIOP::Endpoint *endpoint =
     dynamic_cast<TAO::HTIOP::Endpoint *> (endpt);
   if (endpoint == nullptr)
+  {
     return 0;
+  }
 
   if (this->htid_.in() && std::strlen (this->htid_.in ()))
     return (endpoint->htid() &&
@@ -207,7 +225,9 @@ CORBA::ULong
 TAO::HTIOP::Endpoint::hash ()
 {
   if (this->htid_.in() && std::strlen (this->htid_.in ()))
+  {
     return ACE::hash_pjw(this->htid_.in());
+  }
   return this->object_addr ().hash();
 }
 

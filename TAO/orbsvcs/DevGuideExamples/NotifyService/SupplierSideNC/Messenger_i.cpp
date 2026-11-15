@@ -27,7 +27,9 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
         orb_->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (naming_obj.in ()))
+      {
         std::cerr << "Unable to find naming service" << std::endl;
+      }
 
       CosNaming::NamingContext_var const naming_context =
         CosNaming::NamingContext::_narrow (naming_obj.in ());
@@ -67,7 +69,9 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
         ec->new_for_suppliers (ifgop, adminid);
 
       if (CORBA::is_nil (supplier_admin.in ()))
+      {
         std::cerr << "Unable to find supplier admin" << std::endl;
+      }
 
       CosNotifyChannelAdmin::ProxyID supplieradmin_proxy_id {};
 
@@ -88,7 +92,9 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
         proxy_consumer.in ());
 
       if (CORBA::is_nil (consumer_proxy_.in ()))
+      {
         std::cerr << "Unable to find structured proxy push consumer" << std::endl;
+      }
 
       consumer_proxy_->connect_structured_push_supplier (supplier.in ());
     }

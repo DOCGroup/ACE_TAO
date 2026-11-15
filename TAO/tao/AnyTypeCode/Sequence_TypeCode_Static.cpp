@@ -68,7 +68,9 @@ TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
   CORBA::ULong const tc_length = tc->length ();
 
   if (this->length_ != tc_length)
+  {
     return false;
+  }
 
   CORBA::TypeCode_var const rhs_content_type =
     tc->content_type ();
@@ -88,7 +90,9 @@ TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
   CORBA::ULong const tc_length = tc->length ();
 
   if (this->length_ != tc_length)
+  {
     return false;
+  }
 
   CORBA::TypeCode_var const rhs_content_type =
     tc->content_type ();

@@ -12,7 +12,9 @@ Hash_Table::get_next_entry ()
   // Reset the iterator if we are starting from the beginning.
 
   if (this->current_index == -1)
+  {
     this->current_index = 0;
+  }
 
   if (this->current_ptr == nullptr)
     {

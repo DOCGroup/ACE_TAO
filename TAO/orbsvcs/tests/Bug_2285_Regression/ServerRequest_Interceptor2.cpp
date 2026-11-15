@@ -39,7 +39,9 @@ TAO249_ServerRequest_Interceptor2::receive_request (
   CORBA::String_var const op = ri->operation ();
 
   if (std::strcmp (op.in (), "drop_down_dead") != 0)
+  {
     return;
+  }
 
   try
     {
@@ -53,14 +55,18 @@ TAO249_ServerRequest_Interceptor2::receive_request (
       CORBA::Boolean byte_order {};
 
       if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+      {
         throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
+      }
 
       cdr.reset_byte_order (static_cast<int> (byte_order));
 
       FT::FTRequestServiceContext ftrsc;
 
       if ((cdr >> ftrsc) == 0)
+      {
         throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
+      }
 
       File_Ptr last_exp_time_file (
         std::fopen ("last_expiration_time", "r+"), std::fclose);
@@ -71,7 +77,9 @@ TAO249_ServerRequest_Interceptor2::receive_request (
           // The first server creates the file containing the expiration time.
           last_exp_time_file.reset (std::fopen ("last_expiration_time", "w+"));
           if (!last_exp_time_file)
+          {
             throw CORBA::NO_RESOURCES ();
+          }
           last_exp_time = ftrsc.expiration_time;
         }
       else
@@ -81,7 +89,9 @@ TAO249_ServerRequest_Interceptor2::receive_request (
                           1,
                           sizeof (TimeBase::TimeT),
                           last_exp_time_file.get ()) != sizeof (TimeBase::TimeT))
+          {
             throw CORBA::NO_RESOURCES ();
+          }
           ACE_OS::sleep (1);
         }
 
@@ -130,7 +140,9 @@ TAO249_ServerRequest_Interceptor2::receive_request (
                               1,
                               sizeof (TimeBase::TimeT),
                               no_more_retries.get ()) != sizeof (TimeBase::TimeT))
+              {
                 throw CORBA::NO_RESOURCES ();
+              }
 
               ACE_DEBUG ((LM_ERROR,
                           ACE_TEXT ("Test Failed - REGRESSION !!! Client ORB is still retrying after "
@@ -144,12 +156,16 @@ TAO249_ServerRequest_Interceptor2::receive_request (
             {
               no_more_retries.reset (std::fopen ("no_more_retries", "w+"));
               if (!no_more_retries)
+              {
                 throw CORBA::NO_RESOURCES ();
+              }
 
               if (std::fwrite (&now, 1, sizeof (TimeBase::TimeT), no_more_retries.get ()) !=
                     sizeof (TimeBase::TimeT) ||
                   std::fflush (no_more_retries.get ()) != 0)
+              {
                 throw CORBA::NO_RESOURCES ();
+              }
             }
           }
 
@@ -159,7 +175,9 @@ TAO249_ServerRequest_Interceptor2::receive_request (
                        sizeof (TimeBase::TimeT),
                        last_exp_time_file.get ()) != sizeof (TimeBase::TimeT) ||
           std::fflush (last_exp_time_file.get ()) != 0)
+      {
         throw CORBA::NO_RESOURCES ();
+      }
       last_exp_time_file.reset ();
 
       std::abort ();

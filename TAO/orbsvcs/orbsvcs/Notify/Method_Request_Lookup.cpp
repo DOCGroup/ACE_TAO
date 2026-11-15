@@ -55,7 +55,9 @@ TAO_Notify_Method_Request_Lookup::work (
 int TAO_Notify_Method_Request_Lookup::execute_i ()
 {
   if (this->proxy_consumer_->has_shutdown ())
+  {
     return 0; // If we were shutdown while waiting in the queue, return with no action.
+  }
 
   TAO_Notify_SupplierAdmin& parent = this->proxy_consumer_->supplier_admin ();
 
@@ -70,7 +72,9 @@ int TAO_Notify_Method_Request_Lookup::execute_i ()
 
   // Filter failed - do nothing.
   if (!val)
+  {
     return 0;
+  }
 
   // The map of subscriptions.
   TAO_Notify_Consumer_Map& map = this->proxy_consumer_->event_manager ().consumer_map ();

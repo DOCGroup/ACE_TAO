@@ -43,7 +43,9 @@ TAO_IORInfo::add_ior_component (IOP::TaggedComponent const &component)
   this->check_validity ();
 
   if (this->components_established_)
+  {
     throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
+  }
 
   // Add the given tagged component to all profiles.
   this->poa_->save_ior_component (component);
@@ -57,7 +59,9 @@ TAO_IORInfo::add_ior_component_to_profile (
   this->check_validity ();
 
   if (this->components_established_)
+  {
     throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
+  }
 
   this->poa_->save_ior_component_and_profile_id (component, profile_id);
 }

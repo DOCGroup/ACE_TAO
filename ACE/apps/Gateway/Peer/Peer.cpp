@@ -152,7 +152,9 @@ Peer_Handler::transmit_stdin ()
   // If transmit error, the stdin-thread will be cancelled, so should
   // reset first_time_ to true, which will register_stdin_handler again.
   if (result == -1)
+  {
     first_time_ = true;
+  }
 
   return result;
 }
@@ -201,7 +203,9 @@ Peer_Handler::nonblk_put (ACE_Message_Block *mb)
       return 0;
     }
   else
+  {
     return n;
+  }
 }
 
 // Finish sending a event when flow control conditions abate.  This
@@ -498,7 +502,9 @@ Peer_Handler::await_connection_id ()
 
   // Subscribe for events if we're a Consumer.
   if (Options::instance ()->enabled (Options::CONSUMER_CONNECTOR))
+  {
     this->subscribe ();
+  }
 
   // No need to disconnect by timeout.
   ACE_Reactor::instance ()->cancel_timer(this);
@@ -689,7 +695,9 @@ Peer_Acceptor::close ()
 {
   // Will trigger a delete.
   if (this->peer_handler_ != nullptr)
+  {
     this->peer_handler_->destroy ();
+  }
 
   // Close down the base class.
   return this->inherited::close ();
@@ -746,12 +754,16 @@ Peer_Connector::open (ACE_Reactor *, int)
   if (Options::instance ()->enabled (Options::SUPPLIER_CONNECTOR)
       && this->open_connector (this->supplier_peer_handler_,
                                Options::instance ()->supplier_connector_port ()) == -1)
+  {
     return -1;
+  }
 
   if (Options::instance ()->enabled (Options::CONSUMER_CONNECTOR)
       && this->open_connector (this->consumer_peer_handler_,
                                Options::instance ()->consumer_connector_port ()) == -1)
+  {
     return -1;
+  }
 
   return 0;
 }
@@ -801,7 +813,9 @@ Peer_Factory::info (ACE_TCHAR **strp, size_t length) const
   if (*strp == nullptr && (*strp = ACE_OS::strdup (buf)) == nullptr)
     return -1;
   else
+  {
     ACE_OS::strncpy (*strp, buf, length);
+  }
   return ACE_OS::strlen (buf);
 }
 

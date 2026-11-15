@@ -140,7 +140,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       // Obtain Priority Mapping used by the ORB.
       CORBA::Object_var object =

@@ -29,15 +29,21 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
 {
   SSL *ssl = new_stream.ssl ();
   if (ssl == nullptr)
+  {
     return -1;
+  }
 
   if (SSL_is_init_finished (ssl))
+  {
     return 0;
+  }
 
   // Check if a connection is already pending for the given SSL
   // structure.
   if (!SSL_in_connect_init (ssl))
+  {
     ::SSL_set_connect_state (ssl);
+  }
 
   ACE_HANDLE const handle = new_stream.get_handle ();
 
@@ -59,12 +65,16 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
           if (reset_blocking_mode
               && ACE::set_flags (handle,
                                  ACE_NONBLOCK) == -1)
+          {
             return -1;
+          }
     }
 
   ACE_Time_Value t;
   if (timeout != nullptr)
+  {
     t = *timeout;   // Need a non-const copy.
+  }
 
   // Take into account the time between each select() call below.
   ACE_Countdown_Time countdown ((timeout == nullptr ? nullptr : &t));
@@ -220,7 +230,9 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
 
   int error {};
   if (result == -1)
+  {
     error = errno;  // Save us some TSS accesses.
+  }
 
   // Obtain the handle from the underlying SOCK_Stream and set it in
   // the SSL_SOCK_Stream.  Note that the case where a connection is in
@@ -231,10 +243,14 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
       && (result == 0
           || (result == -1 && (error == EWOULDBLOCK
                                || error == EINPROGRESS))))
+  {
     new_stream.set_handle (new_stream.peer ().get_handle ());
+  }
 
   if (result == -1)
+  {
     return result;
+  }
 
   // If using a timeout, update the countdown timer to reflect the time
   // spent on the connect itself, then pass the remaining time to
@@ -248,7 +264,9 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
   result = this->ssl_connect (new_stream, timeout);
 
   if (result == -1)
+  {
     new_stream.close ();
+  }
 
   return result;
 }
@@ -290,7 +308,9 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
 
   int error {};
   if (result == -1)
+  {
     error = errno;  // Save us some TSS accesses.
+  }
 
   // Obtain the handle from the underlying SOCK_Stream and set it in
   // the SSL_SOCK_Stream.  Note that the case where a connection is in
@@ -301,10 +321,14 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
       && (result == 0
           || (result == -1 && (error == EWOULDBLOCK
                                || error == EINPROGRESS))))
+  {
     new_stream.set_handle (new_stream.peer ().get_handle ());
+  }
 
   if (result == -1)
+  {
     return result;
+  }
 
   // If using a timeout, update the countdown timer to reflect the time
   // spent on the connect itself, then pass the remaining time to
@@ -318,7 +342,9 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
   result = this->ssl_connect (new_stream, timeout);
 
   if (result == -1)
+  {
     new_stream.close ();
+  }
 
   return result;
 }
@@ -349,7 +375,9 @@ ACE_SSL_SOCK_Connector::complete (ACE_SSL_SOCK_Stream &new_stream,
       && this->connector_.complete (new_stream.peer (),
                                     remote_sap,
                                     tv) == -1)
+  {
     return -1;
+  }
 
   // The handle in the SSL_SOCK_Stream should have already been set in
   // the connect() method.

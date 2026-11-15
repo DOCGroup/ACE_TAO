@@ -84,7 +84,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       Coordinator *coordinator_impl {};
       ACE_NEW_RETURN (coordinator_impl,
@@ -172,7 +174,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           for (CORBA::ULong k = 0; k != options.peer_count; ++k)
             {
               if (k == j)
+              {
                 continue;
+              }
               other_sessions[count++] =
                 Test::Session::_duplicate (session_list[k]);
             }

@@ -33,7 +33,9 @@ Thread::add_time (const ACE_CString &time)
     {
       last_time_ = time;
       if (first_time_.length() == 0)
+      {
         first_time_ = time;
+      }
     }
 }
 
@@ -47,7 +49,9 @@ PeerProcess *
 Thread::pop_new_connection ()
 {
   if (this->new_connection_.empty ())
+  {
     return nullptr;
+  }
 
   PeerProcess *pp = this->new_connection_.back ();
   this->new_connection_.pop_back ();
@@ -77,7 +81,9 @@ Thread::handle_request ()
 {
   ++this->server_encounters_;
   if (this->pending_.size() > 1)
+  {
     ++this->nested_;
+  }
 }
 
 void
@@ -86,16 +92,22 @@ Thread::enter_wait (PeerProcess *pp)
   this->pending_.push_back (pp);
   ++this->client_encounters_;
   if (this->pending_.size() > this->max_depth_)
+  {
     this->max_depth_ = this->pending_.size();
+  }
   if (this->pending_.size() > 1)
+  {
     ++this->nested_;
+  }
 }
 
 void
 Thread::exit_wait (PeerProcess *pp, size_t linenum)
 {
   if (this->pending_.empty ())
+  {
     return;
+  }
 
   PeerProcess *old = this->pending_.back ();
   this->pending_.pop_back ();
@@ -106,7 +118,9 @@ Thread::exit_wait (PeerProcess *pp, size_t linenum)
                   " is to peer %s\n", linenum, pp->id(), old->id()));
       //      this->pending_.push(old);
       if (this->pending_.empty ())
+      {
         return;
+      }
 
       old = this->pending_.back ();
       this->pending_.pop_back ();
@@ -210,7 +224,9 @@ Thread::swap_target ()
       if (target_dup_ == nullptr)
         ACE_ERROR ((LM_ERROR, "Thread::swap_target, target_dup_ == nullptr\n"));
       else
+      {
         ACE_ERROR ((LM_ERROR, "Thread::swap_target, target_dup_.id = %d, giop_target == nullptr\n", target_dup_->id()));
+      }
     }
 }
 
@@ -247,7 +263,9 @@ void
 Thread::pop_invocation ()
 {
   if (! this->current_invocation_.empty ())
+  {
     this->current_invocation_.pop_back ();
+  }
 }
 
 Invocation *
@@ -325,7 +343,9 @@ Thread::dump_invocations (ostream &strm)
             {
               level = nested.size();
               if (level > this->nested_)
+              {
                 this->nested_ = level;
+              }
               break;
             }
           nested.pop();
@@ -342,7 +362,9 @@ void
 Thread::dump_incidents (ostream &strm, const ACE_Time_Value& relstart)
 {
   if (this->nested_ == 0)
+  {
     return;
+  }
   strm << "\n" << this->alias_  << " handled " << this->invocations_.size()
        << " invocations with a max nesting level of " << this->nested_ << endl;
 
@@ -399,7 +421,9 @@ Thread::count_nesting ()
         {
           level = nested.size();
           if (level > this->nested_)
+          {
             this->nested_ = level;
+          }
           if (nested.top()->contains (inv->req_line ()))
             {
               break;

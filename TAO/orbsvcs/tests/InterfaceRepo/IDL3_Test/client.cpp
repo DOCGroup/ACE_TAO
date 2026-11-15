@@ -9,11 +9,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
       if (client.init (argc, argv) == -1)
+      {
         return 1;
+      }
 
       int const status = client.run ();
       if (status == -1)
+      {
         return 1;
+      }
     }
   catch (CORBA::Exception const& ex)
     {

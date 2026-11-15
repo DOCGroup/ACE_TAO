@@ -83,7 +83,9 @@ HTTP_Header_Processing_Strategy::execute ()
           this->url_.reply_status (*url_status_ptr);
           // Invalid url.
           if (url_status_ptr->status () != 200)
+          {
             return -1;
+          }
         }
       else
         {
@@ -127,7 +129,9 @@ HTML_Body_Validation_Strategy::execute ()
 
   // Note: prev_location always ends with '/'
   if (prev_location[0] != '/')
+  {
     prev_location = "/" + prev_location;
+  }
 
   // Build the url portion which can be attached to teh relative paths.
   prev_location = host_name + prev_location;
@@ -149,15 +153,21 @@ HTML_Body_Validation_Strategy::execute ()
              prev_location = prev_location.substring (0, i+1);
            }
           if (url[0] == '.' && url[1] == '/')
+          {
             url = url.substr (2);
+          }
 
           url = prev_location + url;
         }
       else
+      {
         url = url.substr (7);
+      }
       // Double slash at the end works!e.g www.cs.wustl.edu/~kirthika//
       if (url.find (".html") == url.npos)
+      {
         url = url + "/";
+      }
 
       // Create the new URL address.
       ACE_URL_Addr *url_addr {};
@@ -180,7 +190,9 @@ HTML_Body_Validation_Strategy::execute ()
           Destroyable_Unique_Ptr<URL_Command> url_command_ptr (url_command);
 
           if (OPTIONS::instance ()->command_processor ()->insert (url_command) != 0)
+          {
             ACE_ERROR_RETURN ((LM_ERROR, "insert URL command failed\n"), -1);
+          }
           url_command_ptr.release ();
         }
     }
@@ -273,12 +285,16 @@ URL_Validation_Visitor::in_cache (const ACE_URL_Addr &url_addr)
 
       // Invalid status.
       if (reply_status.status () != 200)
+      {
         return -1;
+      }
 
       return 1;
     }
   else
+  {
     return 0;
+  }
 }
 
 URL_Visitation_Strategy_Factory *
@@ -289,7 +305,9 @@ URL_Validation_Visitor::make_visitation_strategy_factory (URL &url)
 
   if (url.stream ().open (this->strat_connector_.get (),
                           url.url_addr ()) == -1)
+  {
     return nullptr;
+  }
 
   // See if we can get connected and send the GET request via the
   // <HTTP_URL>.
@@ -373,11 +391,15 @@ URL_Validation_Visitor::visit (HTTP_URL &http_url)
 
       // Since it is invalid dont go further.
       if (phs_result == -1)
+      {
         return 0;
+      }
 
       // Get back if the recurse option isnt set.
       if (!OPTIONS::instance ()->recurse ())
+      {
         return 0;
+      }
 
       Destroyable_Unique_Ptr <URL_Iterator> is (vs->make_body_iterator ());
       if (!is)
@@ -474,7 +496,9 @@ URL_Download_Visitor::make_visitation_strategy_factory (URL &url)
     {
       int retval = url.send_request ();
       if (retval != -1)
+      {
         break;
+      }
     }
   // @@ Here's where we could check to see if the <url> was HTTP or
   // FTP, etc.  But for now we'll just assume that everything is an

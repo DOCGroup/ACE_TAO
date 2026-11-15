@@ -60,7 +60,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (ACE_Thread_Manager::instance ()->spawn_n
       (n_threads, tester,
        &args, THR_NEW_LWP | THR_DETACHED) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), 1);
+  }
 
   // Wait for all the threads to reach their exit point.
   ACE_Thread_Manager::instance ()->wait ();

@@ -24,7 +24,9 @@ TAO_DTP_POA_Loader::init (int argc, ACE_TCHAR* argv[])
   // Only allow initialization once.
   static bool initialized {};
   if (initialized)
+  {
     return 0;
+  }
   initialized = true;
 
   TAO_CSD_Strategy_Repository * repo =

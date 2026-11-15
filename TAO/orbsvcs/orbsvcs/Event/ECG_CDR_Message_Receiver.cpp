@@ -64,11 +64,15 @@ TAO_ECG_UDP_Request_Entry::validate_fragment (CORBA::Boolean byte_order,
   if (byte_order != this->byte_order_
       || request_size != this->request_size_
       || fragment_count != this->fragment_count_)
+  {
     return 0;
+  }
 
   if (fragment_offset >= request_size
       || fragment_offset + fragment_size > request_size)
+  {
     return 0;
+  }
 
   return 1;
 }
@@ -78,7 +82,9 @@ TAO_ECG_UDP_Request_Entry::test_received (CORBA::ULong fragment_id) const
 {
   // Assume out-of-range fragments as received, so they are dropped...
   if (fragment_id > this->fragment_count_)
+  {
     return 1;
+  }
 
   constexpr int bits_per_ulong = sizeof(CORBA::ULong) * CHAR_BIT;
   CORBA::ULong idx = fragment_id / bits_per_ulong;
@@ -91,7 +97,9 @@ TAO_ECG_UDP_Request_Entry::mark_received (CORBA::ULong fragment_id)
 {
   // Assume out-of-range fragments as received, so they are dropped...
   if (fragment_id > this->fragment_count_)
+  {
     return;
+  }
 
   constexpr int bits_per_ulong = sizeof(CORBA::ULong) * CHAR_BIT;
   CORBA::ULong idx = fragment_id / bits_per_ulong;
@@ -107,7 +115,9 @@ TAO_ECG_UDP_Request_Entry::complete () const
        ++i)
     {
       if (this->received_fragments_[i] != 0xFFFFFFFF)
+      {
         return 0;
+      }
     }
   return 1;
 }
@@ -125,7 +135,9 @@ TAO_ECG_CDR_Message_Receiver::Requests::init (size_t size,
 {
   // Already initialized.
   if (this->fragmented_requests_)
+  {
     return -1;
+  }
 
   TAO_ECG_UDP_Request_Entry** fragmented_requests {};
   ACE_NEW_RETURN (fragmented_requests,
@@ -154,7 +166,9 @@ TAO_ECG_CDR_Message_Receiver::Requests::~Requests ()
         this->fragmented_requests_[i];
 
       if (request != &TAO_ECG_CDR_Message_Receiver::Request_Completed_)
+      {
         delete request;
+      }
     }
 
   this->fragmented_requests_.reset ();
@@ -179,7 +193,9 @@ TAO_ECG_CDR_Message_Receiver::Requests::get_request (CORBA::ULong request_id)
       CORBA::ULong new_slots_needed = request_id - this->id_range_high_;
 
       if (new_slots_needed < this->min_purge_count_)
+      {
         new_slots_needed = this->min_purge_count_;
+      }
 
       if (new_slots_needed > this->size_)
         // Shifting the range by more than the size of array.
@@ -252,7 +268,9 @@ TAO_ECG_CDR_Message_Receiver::handle_input (
   if (n == -1)
     {
       if (errno == EWOULDBLOCK)
+      {
         return 0;
+      }
 
       ORBSVCS_ERROR_RETURN ((LM_ERROR, "Error reading mcast fragment (%m).\n"),
                         -1);
@@ -291,7 +309,9 @@ TAO_ECG_CDR_Message_Receiver::handle_input (
   // Decode and validate mcast header.
   Mcast_Header header;
   if (header.read (header_buf, n, this->check_crc_) == -1)
+  {
     return -1;
+  }
 
   if ( this->check_crc_ && header.crc != crc)
     {
@@ -335,13 +355,17 @@ TAO_ECG_CDR_Message_Receiver::handle_input (
       // needed if we don't care about duplicates.)
       int const result = this->mark_received (from, header.request_id);
       if (result != 1)
+      {
         return result;
+      }
 
       TAO_InputCDR cdr (data_buf, header.request_size, header.byte_order);
       if (cdr_processor->decode (cdr) == -1)
         return -1;
       else
+      {
         return 1;
+      }
     }
 
   return this->process_fragment (from, header, data_buf, cdr_processor);
@@ -355,7 +379,9 @@ TAO_ECG_CDR_Message_Receiver::mark_received (const ACE_INET_Addr &from,
 
   Request_Map::ENTRY * entry = this->get_source_entry (from);
   if (!entry)
+  {
     return -1;
+  }
 
   TAO_ECG_UDP_Request_Entry ** request =
     entry->int_id_->get_request (request_id);
@@ -394,7 +420,9 @@ TAO_ECG_CDR_Message_Receiver::process_fragment (
 
   Request_Map::ENTRY * source_entry = this->get_source_entry (from);
   if (!source_entry)
+  {
     return -1;
+  }
 
   TAO_ECG_UDP_Request_Entry ** request =
     source_entry->int_id_->get_request (header.request_id);
@@ -458,7 +486,9 @@ TAO_ECG_CDR_Message_Receiver::process_fragment (
                     header.byte_order);
 
   if (cdr_processor->decode (cdr) == -1)
+  {
     return -1;
+  }
 
   delete *request;
   *request = &Request_Completed_;

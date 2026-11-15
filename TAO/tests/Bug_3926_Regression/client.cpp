@@ -56,7 +56,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_Argv_Type_Converter wide (narrow.get_argc (), narrow.get_ASCII_argv ());
       std::basic_string<ACE_TCHAR> ior {};
       if (::parse_args (wide.get_argc (), wide.get_TCHAR_argv (), ior) != 0)
+      {
         return -1;
+      }
 
       CORBA::Object_var const object =
         orb->string_to_object (ior.c_str ());

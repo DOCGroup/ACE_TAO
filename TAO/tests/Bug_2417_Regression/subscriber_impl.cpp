@@ -11,7 +11,9 @@ Subscriber_impl::onData (::CORBA::Double)
 {
   unsigned int const count = ++this->count_;
   if (count > 100)
+  {
     this->shutdown ();
+  }
 }
 
 ::CORBA::Boolean

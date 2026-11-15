@@ -80,7 +80,9 @@ csdb_generator::csdb_generator ()
 {
   char const * const ace_root = ACE_OS::getenv ("ACE_ROOT");
   if (ace_root != nullptr)
+  {
     this->ace_src_ = ace_root;
+  }
 }
 
 void
@@ -99,13 +101,17 @@ csdb_generator::read_line ()
   this->line_data_ = nullptr;
   char *cpos = std::strchr (this->source_line_.data (), '#');
   if (cpos == nullptr)
+  {
     cpos = this->source_line_.data () + std::strlen (this->source_line_.data ());
+  }
   while (cpos > this->source_line_.data ()
          && std::strchr (" \t", *(cpos - 1)))
     --cpos;
   *cpos = '\0';
   if (cpos == this->source_line_.data ())
+  {
     return 0;
+  }
   for (size_t i = 0; i < tags_.size (); ++i)
     {
       cpos = std::strstr (this->source_line_.data (), tags_[i]);
@@ -117,10 +123,14 @@ csdb_generator::read_line ()
           while (tpos > this->source_line_.data () && std::strchr (" \t", *tpos))
             --tpos;
           if (tpos > this->source_line_.data ())
+          {
             continue;
+          }
         }
       if (i == 0 && in_entry_)
+      {
         fail ("\"start\" encountered twice before \"end\"");
+      }
       if (i > 0 && !this->in_entry_)
         {
           char emsg[100];
@@ -172,11 +182,17 @@ csdb_generator::read_from (char const *srcfile)
       break;
     case 2: // end
       if (entry_.codeset_id_ == 0)
+      {
         fail ("entry missing rgy_value");
+      }
       if (entry_.num_sets_ == 0)
+      {
         fail ("entry does not include at least one char_value");
+      }
       if (entry_.max_bytes_ == 0)
+      {
         fail ("entry does not define max_bytes");
+      }
       // These registry fields borrow the strings only while write_entry() serializes them.
       entry_.desc_ = this->description_.c_str ();
       entry_.loc_name_ = this->loc_name_.c_str ();
@@ -186,19 +202,25 @@ csdb_generator::read_from (char const *srcfile)
       break;
     case 3: // description
       if (this->have_description_)
+      {
         fail ("duplicate description");
+      }
       this->description_ = this->line_data_;
       this->have_description_ = true;
       break;
     case 4: // loc_name
       if (this->have_loc_name_)
+      {
         fail ("duplicate loc_name");
+      }
        this->loc_name_ = this->line_data_;
        this->have_loc_name_ = true;
        break;
     case 5: // rgy_value
       if (entry_.codeset_id_ != 0)
+      {
         fail ("duplicate rgy_value");
+      }
       entry_.codeset_id_ = std::strtoul (this->line_data_, &ptr, 16);
       if (*ptr != 0 || entry_.codeset_id_ == 0)
         {
@@ -209,11 +231,15 @@ csdb_generator::read_from (char const *srcfile)
       break;
     case 6: // char_values
       if (entry_.num_sets_ != 0)
+      {
         fail ("duplicate char_values");
+      }
       ptr = this->line_data_;
       do {
         if (*ptr == ':')
+        {
           ++ptr;
+        }
         ACE_CDR::UShort const tmp =
           static_cast<ACE_CDR::UShort> (std::strtoul (ptr, &ptr, 16));
         if (*ptr != '\0' && *ptr != ':')
@@ -228,7 +254,9 @@ csdb_generator::read_from (char const *srcfile)
             ++entry_.num_sets_;
           }
         else
+        {
           ++entry_.num_sets_;
+        }
       } while (*ptr == ':');
       if (entry_.num_sets_ > max_charsets_)
         {
@@ -242,7 +270,9 @@ csdb_generator::read_from (char const *srcfile)
       break;
     case 7: // max_bytes
       if (entry_.max_bytes_ != 0)
+      {
         fail ("duplicate max_bytes");
+      }
       entry_.max_bytes_ =
         static_cast<ACE_CDR::UShort> (std::strtol (this->line_data_, &ptr, 10));
       if (*ptr != '\0')
@@ -258,10 +288,14 @@ csdb_generator::init_output (char const *srcfile)
 {
   ACE_stat buf;
   if (ACE_OS::stat (srcfile, &buf) != 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,"Unable to open %s\n",srcfile),-1);
+  }
 
   if (this->ace_src_.empty ())
+  {
     ACE_ERROR_RETURN ((LM_ERROR,"You must first set $ACE_ROOT\n"),-1);
+  }
 
   time_t const now = ACE_OS::time ();
   std::string temp_template = this->ace_src_ + ACE_DIRECTORY_SEPARATOR_STR + "csdbXXXXXX";
@@ -304,7 +338,9 @@ void
 csdb_generator::write_entry ()
 {
   if (this->count_ != 0)
+  {
     std::fprintf (this->outf_.get (), ",\n");
+  }
   std::fprintf (this->outf_.get (), "  {\"%s\",\"%s\",0x%08x,%d,{",
                    entry_.desc_,
                    entry_.loc_name_,
@@ -314,7 +350,9 @@ csdb_generator::write_entry ()
     if (j+1 < entry_.num_sets_)
       std::fprintf (this->outf_.get (), "0x%04x,", entry_.char_sets_[j]);
     else
+    {
       std::fprintf (this->outf_.get (), "0x%04x", entry_.char_sets_[j]);
+    }
   std::fprintf (this->outf_.get (), "},%d}", entry_.max_bytes_);
 }
 
@@ -336,7 +374,9 @@ csdb_generator::fini_output (char const *tgt)
   std::string const target = this->ace_src_ + ACE_DIRECTORY_SEPARATOR_STR + "ace"
     + ACE_DIRECTORY_SEPARATOR_STR + tgt;
   if (count_ == 0)
+  {
     write_dummy_entry ();
+  }
   std::fprintf (this->outf_.get (),
                 "\n};\n\nsize_t const ACE_Codeset_Registry::num_registry_entries_ = %zu;\n\n"
                 "ACE_END_VERSIONED_NAMESPACE_DECL\n",
@@ -382,8 +422,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       -1);
   csdb_generator csdb;
   if (csdb.init_output (srcname.c_str ()) == -1)
+  {
     return 0;
+  }
   if (csdb.read_from (srcname.c_str ()) == 0)
+  {
     csdb.fini_output ("Codeset_Registry_db.cpp");
+  }
   return 0;
 }

@@ -44,7 +44,9 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (parse_args (argc, argv) == -1)
+  {
     return -1;
+  }
 
   try
     {
@@ -53,7 +55,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       for (int i = 1; i < argc; ++i)
         {
           if (orb_args.add (argv[i]) == -1)
+          {
             return -1;
+          }
         }
 
       ACE_Argv_Type_Converter satc (argc, argv);

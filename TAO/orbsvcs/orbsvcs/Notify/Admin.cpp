@@ -101,7 +101,9 @@ int
 TAO_Notify_Admin::shutdown ()
 {
   if (TAO_Notify_Object::shutdown () == 1)
+  {
     return 1;
+  }
 
   this->proxy_container().shutdown ();
 

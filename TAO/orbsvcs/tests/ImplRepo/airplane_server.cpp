@@ -10,7 +10,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
       if (server.init (argc, argv) == -1)
+      {
         return -1;
+      }
 
       int const retval = server.run ();
 

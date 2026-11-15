@@ -24,10 +24,14 @@ TAO_ZIOP_Stub::TAO_ZIOP_Stub (char const *repository_id,
 TAO_ZIOP_Stub::~TAO_ZIOP_Stub ()
 {
   if (!CORBA::is_nil (this->compression_enabling_policy_.in ()))
+  {
     this->compression_enabling_policy_->destroy ();
+  }
 
   if (!CORBA::is_nil (this->compression_id_list_policy_.in ()))
+  {
     this->compression_id_list_policy_->destroy ();
+  }
 }
 
 void
@@ -149,10 +153,14 @@ TAO_ZIOP_Stub::effective_compression_enabling_policy ()
 
   // Reconcile client-exposed and locally set values.
   if (CORBA::is_nil (exposed.in ()))
+  {
     return override._retn ();
+  }
 
   if (CORBA::is_nil (override.in ()))
+  {
     return exposed._retn ();
+  }
 
   ZIOP::CompressionEnablingPolicy_var override_policy_var =
     ZIOP::CompressionEnablingPolicy::_narrow (override.in ());
@@ -163,10 +171,14 @@ TAO_ZIOP_Stub::effective_compression_enabling_policy ()
   // Both override and exposed have been set.
   // See if either of them has empty priority bands.
   if (override_policy_var->compression_enabled () && exposed_policy_var->compression_enabled ())
+  {
     return override._retn ();
+  }
 
   if (!override_policy_var->compression_enabled ())
+  {
     return override._retn ();
+  }
 
   return exposed._retn ();
 }

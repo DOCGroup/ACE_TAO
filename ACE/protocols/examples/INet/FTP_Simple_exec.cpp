@@ -102,7 +102,9 @@ class My_Authenticator
                 buf[n++] = static_cast<char> (ch);
               }
             if (n > 0)
+            {
               auth.password (buf.data ());
+            }
           }
         return true;
       }
@@ -209,7 +211,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
           if (!options.outfile.empty ())
             std::cout << '\'' << options.outfile.c_str () << '\'' << std::endl;
           else
+          {
             std::cout << "(stdout)" << std::endl;
+          }
 
           (*sout) << urlin->rdbuf ();
           sout->flush ();

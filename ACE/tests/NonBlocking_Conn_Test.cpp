@@ -135,7 +135,9 @@ test_connect (ACE_Reactor &reactor,
                        synch_options);
 
   if (!synch_options[ACE_Synch_Options::USE_REACTOR])
+  {
     ACE_TEST_ASSERT (completion_counter == number_of_connections);
+  }
 
   if (complete_nonblocking_connections != Svc_Handler::Comp_NO)
     {
@@ -298,7 +300,9 @@ run_main (int argc, ACE_TCHAR *argv[])
   // Validate options.
   result = parse_args (argc, argv);
   if (result != 0)
+  {
     return result;
+  }
 
   if (test_select_reactor)
     {

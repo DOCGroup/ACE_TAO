@@ -33,7 +33,9 @@ public:
     --signal_count;
 
     if (signal_count == 0)
+    {
       ACE_Reactor::end_event_loop ();
+    }
 
     return 0;
   }
@@ -57,7 +59,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_Time_Value period (ACE_DEFAULT_TIMEOUT);
 
   if (argc > 1)
+  {
     period.set (ACE_OS::atoi (argv[1]), 0);
+  }
 
   // Set up the periodic interval timer.
   if (ACE_Reactor::instance ()->schedule_timer

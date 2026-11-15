@@ -39,13 +39,17 @@ EC_Master::run (int argc, ACE_TCHAR* argv[])
       this->initialize_orb_and_poa (argc, argv);
 
       if (this->parse_args (argc, argv))
+      {
         return 1;
+      }
 
       ACE_DEBUG ((LM_DEBUG,
                   "The seed value is %d\n", this->seed_));
 
       if (this->n_channels_ < 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "EC_Master: negative channel count\n"), 1);
+      }
 
       this->channels_.reserve (static_cast<size_t> (this->n_channels_));
 
@@ -252,7 +256,9 @@ EC_Observer::execute_test ()
   for (int i = 0; i != peer_count; ++i)
     {
       if (i == this->id_)
+      {
         continue;
+      }
 
       RtecEventChannelAdmin::EventChannel_ptr rmt_ec =
         this->master_->channel (i)->event_channel_.in ();
@@ -270,7 +276,9 @@ EC_Observer::execute_test ()
     }
 
   if (this->allocate_tasks () == -1)
+  {
     return;
+  }
 
   this->activate_tasks ();
 
@@ -285,7 +293,9 @@ EC_Observer::run_cleanup ()
   for (int j = 0; j != this->master_->channel_count (); ++j)
     {
       if (j == this->id_)
+      {
         continue;
+      }
 
       RtecEventChannelAdmin::EventChannel_ptr rmt_ec =
         this->master_->channel (j)->event_channel_.in ();
@@ -334,7 +344,9 @@ EC_Observer::connect_consumer (
     }
   unsigned int x = ACE_OS::rand_r (&this->seed_);
   if (x < RAND_MAX / 8)
+  {
     this->EC_Driver::connect_consumer (consumer_admin, i);
+  }
 }
 
 void

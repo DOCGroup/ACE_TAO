@@ -52,7 +52,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
       Options options {};
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var const poa_object = orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var const poa = PortableServer::POA::_narrow (poa_object.in ());
@@ -145,7 +147,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_OS::fopen (options.ior_output_file, ACE_TEXT ("w")),
           ACE_OS::fclose);
         if (!output_file)
+        {
           throw std::runtime_error ("Cannot open URL output file");
+        }
         ACE_OS::fprintf (output_file.get (), "%s\n", url.in ());
       }
       ACE_DEBUG ((LM_DEBUG,

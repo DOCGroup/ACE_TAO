@@ -53,7 +53,9 @@ ACE::ldfind (const ACE_TCHAR* filename,
       return -1;
     }
   else
+  {
     ACE_OS::strcpy (tempcopy, filename);
+  }
 
   // Insert canonical directory separators.
   ACE_TCHAR *separator_ptr;
@@ -156,7 +158,9 @@ ACE::ldfind (const ACE_TCHAR* filename,
                                 searchfilename,
                                 has_suffix ? ACE_TEXT ("") : dll_suffix);
               if (ACE_OS::access (pathname, F_OK) == 0)
+              {
                 return 0;
+              }
 
               // Second, try matching the filename *with* adding a prefix.
               ACE_OS::snprintf (pathname, maxpathnamelen,
@@ -166,7 +170,9 @@ ACE::ldfind (const ACE_TCHAR* filename,
                                 searchfilename,
                                 has_suffix ? ACE_TEXT ("") : dll_suffix);
               if (ACE_OS::access (pathname, F_OK) == 0)
+              {
                 return 0;
+              }
             }
         }
 
@@ -284,7 +290,9 @@ ACE::ldfind (const ACE_TCHAR* filename,
                                     searchfilename,
                                     has_suffix ? ACE_TEXT ("") : dll_suffix);
                   if (ACE_OS::access (pathname, F_OK) == 0)
+                  {
                     break;
+                  }
 
                   // Second, try matching the filename *with* adding a
                   // prefix.
@@ -296,7 +304,9 @@ ACE::ldfind (const ACE_TCHAR* filename,
                                     searchfilename,
                                     has_suffix ? ACE_TEXT ("") : dll_suffix);
                   if (ACE_OS::access (pathname, F_OK) == 0)
+                  {
                     break;
+                  }
 
                   // Fetch the next item in the path
                   path_entry =
@@ -337,7 +347,9 @@ ACE::ldopen (const ACE_TCHAR *filename,
                    sizeof (buf) /sizeof (ACE_TCHAR)) == -1)
     return nullptr;
   else
+  {
     return ACE_OS::fopen (buf, type);
+  }
 }
 
 ACE_TCHAR *
@@ -451,7 +463,9 @@ ACE::open_temp_file (const ACE_TCHAR *name, int mode, int perm)
 #endif /* ACE_WIN32 */
 
   if (handle == ACE_INVALID_HANDLE)
+  {
     return ACE_INVALID_HANDLE;
+  }
 
   // Unlink it so that the file will be removed automatically when the
   // process goes away.
@@ -493,7 +507,9 @@ ACE::strsplit_r (char *str,
   char *result {};
 
   if (str != nullptr)
+  {
     next_start = str;
+  }
 
   if (next_start != nullptr)
     {
@@ -527,7 +543,9 @@ ACE::strsplit_r (wchar_t *str,
   wchar_t *result {};
 
   if (str != nullptr)
+  {
     next_start = str;
+  }
 
   if (next_start != nullptr)
     {

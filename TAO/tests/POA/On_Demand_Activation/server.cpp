@@ -105,7 +105,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Server_Options options;
       int const result = parse_args (argc, argv, options);
       if (result != 0)
+      {
         return result;
+      }
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =
@@ -242,7 +244,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                                    first_test_ior.in (),
                                                    second_test_ior.in ());
       if (write_result != 0)
+      {
         return write_result;
+      }
 
       // Set the poa_manager state to active, ready to process requests.
       poa_manager->activate ();

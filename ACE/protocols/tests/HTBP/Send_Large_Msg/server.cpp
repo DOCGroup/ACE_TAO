@@ -52,7 +52,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_OS::socket_init (ACE_WSOCK_VERSION);
 
   if (parse_args (argc, argv) != 0)
+  {
     return 1;
+  }
 
   ACE_TCHAR host[MAXHOSTNAMELEN+1];
   if (ACE_OS::hostname (host,MAXHOSTNAMELEN) != 0)
@@ -138,7 +140,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   ACE_TEXT("got = %b\n"), got));
 
       if (got < 0)
+      {
         break;
+      }
       total_recv += got;
     }
 

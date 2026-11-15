@@ -32,7 +32,9 @@ Standard_Event_Persistence::get_factory ()
 
       std::unique_ptr<Standard_Event_Persistence_Factory> new_factory (factory);
       if (new_factory != nullptr && new_factory->open (this->filename_.c_str ()))
+      {
         this->factory_.reset (new_factory.release ());
+      }
     }
   return this->factory_.get ();
 }

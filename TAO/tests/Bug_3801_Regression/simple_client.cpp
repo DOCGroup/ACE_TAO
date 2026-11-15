@@ -232,7 +232,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       bool shutdown_flag {};
       bool debug {};
       if (parse_args (argc, argv, ior, shutdown_flag, debug) != 0)
+      {
         return 1;
+      }
 
       // We reuse the object_var smart pointer!
       object_var = orb->string_to_object (ior.c_str ());

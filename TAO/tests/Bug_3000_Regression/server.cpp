@@ -82,7 +82,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       }
 
       if (parse_args (argc, argv, ior_output_file) != 0)
+      {
         return 1;
+      }
 
       // ServantBase_var owns this servant; the raw pointer is borrowed for POA activation.
       Service *service_impl {};

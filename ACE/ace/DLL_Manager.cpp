@@ -70,10 +70,14 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
         }
     }
   else
+  {
     this->dll_name_ = ACE::strnew (dll_name);
+  }
 
   if (!this->open_called_)
+  {
     this->open_called_ = 1;
+  }
 
   // If it hasn't been loaded yet, go ahead and do that now.
   if (this->handle_ == ACE_SHLIB_INVALID_HANDLE)
@@ -122,7 +126,9 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
                name_iter.next (name); name_iter.advance ())
             {
               if (this->open_i (name->c_str (), open_mode, errors))
+              {
                 break;
+              }
             }
 
           if (this->handle_ == ACE_SHLIB_INVALID_HANDLE)
@@ -173,7 +179,9 @@ ACE_DLL_Handle::close (int unload)
     if (this->refcount_ > 0)
       --this->refcount_;
     else
+    {
       this->refcount_ = 0;
+    }
 
     if (ACE::debug ())
       ACELIB_DEBUG ((LM_DEBUG,
@@ -292,7 +300,9 @@ ACE_DLL_Handle::get_handle (bool become_owner)
   if (become_owner)
     {
       if (--this->refcount_ == 0)
+      {
         this->handle_ = ACE_SHLIB_INVALID_HANDLE;
+      }
     }
 
   if (ACE::debug ())
@@ -337,7 +347,9 @@ ACE_DLL_Handle::get_dll_names (const ACE_TCHAR *dll_name,
       base_file = base.substr (pos + 1);
     }
   else
+  {
     base_file = base;
+  }
 
   // 2. Locate the file suffix, if there is one. Move the '.' and the
   // suffix to base_suffix.
@@ -364,7 +376,9 @@ ACE_DLL_Handle::get_dll_names (const ACE_TCHAR *dll_name,
   // So we need room for 5 entries in try_names.
   try_names.size (0);
   if ((try_names.max_size () - try_names.size ()) < 5)
+  {
     try_names.max_size (try_names.max_size () + 5);
+  }
 #if defined (ACE_LD_DECORATOR_STR) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
   ACE_TString decorator (ACE_LD_DECORATOR_STR);
 #endif
@@ -390,7 +404,9 @@ ACE_DLL_Handle::get_dll_names (const ACE_TCHAR *dll_name,
             break;
           try_this = base_dir;
           if (i < 2)
+          {
             try_this += prefix;
+          }
           try_this += base_file;
           if (base_suffix.length () > 0)
             try_this += base_suffix;
@@ -614,7 +630,9 @@ ACE_DLL_Manager::unload_policy (u_long unload_policy)
           {
             if (this->handle_vector_[i] &&
                 this->handle_vector_[i]->refcount () == 0)
+            {
               this->handle_vector_[i]->close (1);
+            }
           }
       }
 }

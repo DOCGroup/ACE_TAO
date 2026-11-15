@@ -83,7 +83,9 @@ TAO_Notify_Tests_Options_Parser::execute (CosNotification::QoSProperties& qos, A
                           priority, static_cast<int> (default_priority)));
             }
           else
+          {
             default_priority = static_cast<NotifyExt::Priority> (priority);
+          }
 
           arg_shifter.consume_arg ();
         }
@@ -142,7 +144,9 @@ TAO_Notify_Tests_Options_Parser::execute (CosNotification::QoSProperties& qos, A
               ++l_index;
             }
           else
+          {
             break;
+          }
         } /* while -- lane values */
 
       qos.length (1);

@@ -31,11 +31,15 @@ JAWS_Task_Timer::schedule_timer ( long *timer_id
                                      );
 
       if (completer)
+      {
         completer->timer_complete (timer_result, act);
+      }
 
     }
   else
+  {
     eh.release ();
+  }
 }
 
 void
@@ -54,11 +58,15 @@ JAWS_Task_Timer::schedule_absolute_timer ( long *timer_id
                                      );
 
       if (completer)
+      {
         completer->timer_complete (timer_result, act);
+      }
 
     }
   else
+  {
     eh.release ();
+  }
 }
 
 void
@@ -80,11 +88,15 @@ JAWS_Task_Timer::schedule_interval_timer ( long *timer_id
                                      );
 
       if (completer)
+      {
         completer->timer_complete (timer_result, act);
+      }
 
     }
   else
+  {
     eh.release ();
+  }
 }
 
 void

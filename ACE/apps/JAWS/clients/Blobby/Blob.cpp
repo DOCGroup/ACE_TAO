@@ -21,7 +21,9 @@ ACE_Blob::read (ACE_Message_Block *mb, size_t length, size_t offset)
 
   // Connect to the server
   if (this->connector_.connect (brp, this->inet_addr_) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Blob::read():Connector error"), -1);
+  }
 
   return blob_reader.byte_count ();
 }
@@ -37,7 +39,9 @@ ACE_Blob::write (ACE_Message_Block *mb, size_t length, size_t offset)
 
   // Connect to the server
   if (this->connector_.connect (bwp, this->inet_addr_) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Blob::write():Connector error"), -1);
+  }
 
   return blob_writer.byte_count ();
 }

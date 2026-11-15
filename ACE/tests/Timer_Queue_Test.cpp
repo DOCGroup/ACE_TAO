@@ -69,7 +69,9 @@ public:
     int result = 0;
 
     if (*act == 007)
+    {
       result = -1; // This is the special value to trigger a handle_close
+    }
 
     delete act;
     return result;
@@ -570,7 +572,9 @@ test_unique_timer_heap_ids ()
     }
 
   if (all_unique)
+  {
     ACE_DEBUG ((LM_INFO, ACE_TEXT ("All timer ids were unique.\n")));
+  }
 
   return;
 }
@@ -610,7 +614,9 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_START_TEST (ACE_TEXT ("Timer_Queue_Test"));
 
   if (argc > 1)
+  {
     max_iterations = ACE_OS::atoi (argv[1]);
+  }
 
   // = Perform initializations.
 

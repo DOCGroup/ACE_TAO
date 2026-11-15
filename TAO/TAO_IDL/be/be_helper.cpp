@@ -598,9 +598,15 @@ signed_int_helper (TAO_OutStream &os, IntType value, IntType min, const char *sp
    * Apparently the workaround is to write it as `VALUE_PLUS_ONE - 1`.
    */
   const bool min_value = value == min;
-  if (min_value) ++value;
+  if (min_value)
+  {
+    ++value;
+  }
   os.print (specifier, value);
-  if (min_value) os.print (" - 1");
+  if (min_value)
+  {
+    os.print (" - 1");
+  }
 }
 
 TAO_OutStream&
@@ -696,7 +702,9 @@ TAO_OutStream::print (AST_Expression *expr)
             this->TAO_OutStream::print ("'\\x%x'", ev->u.oval);
           }
        else
-        this->TAO_OutStream::print ("'\\x%x'", ev->u.oval);
+       {
+         this->TAO_OutStream::print ("'\\x%x'", ev->u.oval);
+       }
       break;
     case AST_Expression::EV_wchar:
       this->TAO_OutStream::print ("L'%lc'", ev->u.wcval);

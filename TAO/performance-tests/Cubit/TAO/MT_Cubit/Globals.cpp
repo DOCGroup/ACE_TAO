@@ -62,7 +62,9 @@ Globals::parse_args (int argc, ACE_TCHAR *argv[])
     }
 
   if (thread_per_rate == 1)
+  {
     num_of_objs = THREAD_PER_RATE_OBJS;
+  }
 
   // Indicates successful parsing of the command-line.
   return 0;
@@ -182,7 +184,9 @@ MT_Priority::get_low_priority (u_int num_low_priority,
       this->grain_ = num_low_priority / this->num_priorities_;
 
       if (this->grain_ <= 0)
+      {
         this->grain_ = 1;
+      }
     }
   else
     low_priority =

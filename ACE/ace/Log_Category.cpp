@@ -88,7 +88,9 @@ ACE_Log_Category::per_thr_obj()
 
         if (ACE_OS::thr_keycreate (&this->key_,
                                    &ACE_Log_Category_tss_destroy) != 0)
+        {
           return nullptr; // Major problems, this should *never* happen!
+        }
       }
   }
 
@@ -98,7 +100,9 @@ ACE_Log_Category::per_thr_obj()
       return nullptr; // This should not happen!
     }
   if (temp != nullptr)
+  {
     return static_cast <ACE_Log_Category_TSS *> (temp);
+  }
 
   ACE_Log_Category_TSS * result;
 

@@ -30,7 +30,9 @@ POA_Holder::init (ACE_Arg_Shifter& arg_shifter)
           if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("CLIENT")) == 0)
             priority_model_ = RTCORBA::CLIENT_PROPAGATED;
           else
+          {
             priority_model_ = RTCORBA::SERVER_DECLARED;
+          }
           arg_shifter.consume_arg ();
 
           server_priority_ = ACE_OS::atoi (current_arg);
@@ -68,7 +70,9 @@ POA_Holder::init (ACE_Arg_Shifter& arg_shifter)
                   ++l_index;
                 }
         else
-                break;
+        {
+          break;
+        }
             } /* while -- lane values */
 
         } /* if -Lanes */
@@ -122,7 +126,9 @@ POA_Holder::init (ACE_Arg_Shifter& arg_shifter)
                   ++b_index;
                 }
               else
+              {
                 break;
+              }
             } /* while -- Band values */
     ACE_DEBUG ((LM_DEBUG,
           "Bands Initialized\n"));
@@ -281,7 +287,9 @@ POA_Holder::activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_
         "Initialized POA Policy\n"));
 
   if (TAO_debug_level > 0)
+  {
     ACE_DEBUG ((LM_DEBUG, "creating POA %C\n", POA_name_.c_str ()));
+  }
 
   // Get the POA Manager.
   PortableServer::POAManager_var poa_manager =

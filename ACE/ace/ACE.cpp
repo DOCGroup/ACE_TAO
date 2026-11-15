@@ -80,7 +80,9 @@ ACE::out_of_handles (int error)
       error == ENFILE)
     return 1;
   else
+  {
     return 0;
+  }
 }
 
 u_int
@@ -186,11 +188,17 @@ ACE::select (int width,
 # if !defined (ACE_WIN32)
       // This isn't needed for Windows... it's a no-op anyway.
       if (readfds)
+      {
         readfds->sync ((ACE_HANDLE) width);
+      }
       if (writefds)
+      {
         writefds->sync ((ACE_HANDLE) width);
+      }
       if (exceptfds)
+      {
         exceptfds->sync ((ACE_HANDLE) width);
+      }
 #endif /* ACE_WIN32 */
     }
   return result;
@@ -209,7 +217,9 @@ ACE::select (int width,
 
 #if !defined (ACE_WIN32)
   if (result > 0)
+  {
     readfds.sync ((ACE_HANDLE) width);
+  }
 #endif /* ACE_WIN32 */
   return result;
 }
@@ -250,7 +260,9 @@ ACE::process_active (pid_t pid)
   else if (errno == ESRCH)
     return 0;
   else
+  {
     return -1;
+  }
 #else
   // Create a handle for the given process id.
   ACE_HANDLE process_handle =
@@ -398,7 +410,9 @@ ACE::basename (const ACE_TCHAR *pathname, ACE_TCHAR delim)
   if (temp == nullptr)
     return pathname;
   else
+  {
     return temp + 1;
+  }
 }
 
 const ACE_TCHAR *
@@ -422,7 +436,9 @@ ACE::dirname (const ACE_TCHAR *pathname, ACE_TCHAR delim)
       // not happen in normal circomstances
       size_t len = temp - pathname + 1;
       if (len > (sizeof return_dirname / sizeof (ACE_TCHAR)))
+      {
         len = sizeof return_dirname / sizeof (ACE_TCHAR);
+      }
 
       ACE_OS::strsncpy (return_dirname,
                         pathname,
@@ -575,7 +591,9 @@ ACE::recv_n_i (ACE_HANDLE handle,
                         flags);
       // Check EOF.
       if (n == 0)
+      {
         return 0;
+      }
 
       // Check for other errors.
       if (n == -1)
@@ -666,7 +684,9 @@ ACE::recv_n_i (ACE_HANDLE handle,
   if (error)
     return result;
   else
+  {
     return static_cast<ssize_t> (bytes_transferred);
+  }
 }
 
 #if defined (ACE_HAS_TLI)
@@ -899,7 +919,9 @@ ACE::recv_n_i (ACE_HANDLE handle,
   if (error)
     return result;
   else
+  {
     return static_cast<ssize_t> (bytes_transferred);
+  }
 }
 
 // This is basically an interface to ACE_OS::readv, that doesn't use
@@ -988,7 +1010,9 @@ ACE::recvv_n_i (ACE_HANDLE handle,
       ssize_t n = ACE_OS::recvv (handle, iov + s, iovcnt - s);
       // Check EOF.
       if (n == 0)
+      {
         return 0;
+      }
 
       // Check for other errors.
       if (n == -1)
@@ -1163,7 +1187,9 @@ ACE::recv_n (ACE_HANDLE handle,
 
                   // Errors.
                   if (result == -1 || result == 0)
+                  {
                     return result;
+                  }
 
                   // Reset iovec counter.
                   iovcnt = 0;
@@ -1349,7 +1375,9 @@ ACE::send_n_i (ACE_HANDLE handle,
                         flags);
       // Check EOF.
       if (n == 0)
+      {
         return 0;
+      }
 
       // Check for other errors.
       if (n == -1)
@@ -1778,7 +1806,9 @@ ACE::sendv_n_i (ACE_HANDLE handle,
 
       // Check EOF.
       if (n == 0)
+      {
         return 0;
+      }
 
       // Check for other errors.
       if (n == -1)
@@ -1957,7 +1987,9 @@ ACE::write_n (ACE_HANDLE handle,
 
                   // Errors.
                   if (result == -1 || result == 0)
+                  {
                     return result;
+                  }
 
                   // Reset iovec counter.
                   iovcnt = 0;
@@ -1988,7 +2020,9 @@ ACE::write_n (ACE_HANDLE handle,
 
       // Errors.
       if (result == -1 || result == 0)
+      {
         return result;
+      }
     }
 
   // Return total bytes transferred.
@@ -2054,7 +2088,9 @@ ACE::send_n (ACE_HANDLE handle,
 
                   // Errors.
                   if (result == -1 || result == 0)
+                  {
                     return result;
+                  }
 
                   // Reset iovec counter.
                   iovcnt = 0;
@@ -2114,7 +2150,9 @@ ACE::readv_n (ACE_HANDLE handle,
                                  iovcnt - s);
 
       if (n == -1 || n == 0)
+      {
         return n;
+      }
 
       for (bytes_transferred += n;
            s < iovcnt
@@ -2239,7 +2277,9 @@ ACE::enter_recv_timedwait (ACE_HANDLE handle,
   int const result = ACE::handle_read_ready (handle, timeout);
 
   if (result == -1)
+  {
     return -1;
+  }
 
   ACE::record_and_set_non_blocking_mode (handle, val);
 
@@ -2254,7 +2294,9 @@ ACE::enter_send_timedwait (ACE_HANDLE handle,
   int const result = ACE::handle_write_ready (handle, timeout);
 
   if (result == -1)
+  {
     return -1;
+  }
 
   ACE::record_and_set_non_blocking_mode (handle, val);
 
@@ -2310,7 +2352,9 @@ ACE::format_hexdump (const char *buffer,
   const ACE_TCHAR *const obuf_start = obuf;
 
   if (size > max_input_bytes)
+  {
     size = max_input_bytes;
+  }
 
   size_t i;
 
@@ -2443,7 +2487,9 @@ ACE::round_to_pagesize (size_t len)
   ACE_TRACE ("ACE::round_to_pagesize");
 
   if (ACE::pagesize_ == 0)
+  {
     ACE::pagesize_ = ACE_OS::getpagesize ();
+  }
 
   return (len + (ACE::pagesize_ - 1)) & ~(ACE::pagesize_ - 1);
 }
@@ -2454,7 +2500,9 @@ ACE::round_to_allocation_granularity (size_t len)
   ACE_TRACE ("ACE::round_to_allocation_granularity");
 
   if (ACE::allocation_granularity_ == 0)
+  {
     ACE::allocation_granularity_ = ACE_OS::allocation_granularity ();
+  }
 
   return (len + (ACE::allocation_granularity_ - 1)) & ~(ACE::allocation_granularity_ - 1);
 }
@@ -2526,7 +2574,9 @@ ACE::handle_timed_complete (ACE_HANDLE h,
   if (n <= 0)
     {
       if (n == 0 && timeout != nullptr)
+      {
         errno = ETIME;
+      }
       return ACE_INVALID_HANDLE;
     }
 
@@ -2627,7 +2677,9 @@ ACE::handle_timed_accept (ACE_HANDLE listener,
   ACE_TRACE ("ACE::handle_timed_accept");
   // Make sure we don't bomb out on erroneous values.
   if (listener == ACE_INVALID_HANDLE)
+  {
     return -1;
+  }
 
 #if defined (ACE_HAS_POLL)
 
@@ -2667,13 +2719,17 @@ ACE::handle_timed_accept (ACE_HANDLE listener,
           if (errno == EINTR && restart)
             continue;
           else
+          {
             return -1;
+          }
           /* NOTREACHED */
         case 0:
           if (timeout != nullptr && *timeout == ACE_Time_Value::zero)
             errno = EWOULDBLOCK;
           else
+          {
             errno = ETIMEDOUT;
+          }
           return -1;
           /* NOTREACHED */
         case 1:
@@ -2711,7 +2767,9 @@ ACE::daemonize (const ACE_TCHAR pathname[],
   pid = ACE_OS::fork (program_name);
 
   if (pid != 0)
+  {
     ACE_OS::exit (0); // First child terminates.
+  }
 
   // Second child continues.
 
@@ -2735,7 +2793,9 @@ ACE::daemonize (const ACE_TCHAR pathname[],
           ACE_OS::dup2 (fd, ACE_STDERR);
 
           if (fd > ACE_STDERR)
+          {
             ACE_OS::close (fd);
+          }
         }
     }
 
@@ -2785,7 +2845,9 @@ ACE::fork (const ACE_TCHAR *program_name,
       // Parent process waits for child to terminate.
       ACE_exitcode status;
       if (pid < 0 || ACE_OS::waitpid (pid, &status, 0) < 0)
+      {
         return -1;
+      }
 
       // child terminated by calling exit()?
       if (WIFEXITED ((status)))
@@ -2794,7 +2856,9 @@ ACE::fork (const ACE_TCHAR *program_name,
           if (WEXITSTATUS ((status)) == 0)
             return 1;
           else
+          {
             errno = WEXITSTATUS ((status));
+          }
         }
       else
         // child didn't call exit(); perhaps it received a signal?
@@ -2816,7 +2880,9 @@ ACE::max_handles ()
     return rl.rlim_cur;
 # else
   if (r == 0 && rl.rlim_cur != RLIM_INFINITY)
+  {
     return rl.rlim_cur;
+  }
   // If == RLIM_INFINITY, fall through to the ACE_LACKS_RLIMIT sections
 # endif /* RLIM_INFINITY */
 #endif /* RLIMIT_NOFILE && !ACE_LACKS_RLIMIT */
@@ -2844,7 +2910,9 @@ ACE::set_handle_limit (int new_limit,
   int max_limit = cur_limit;
 
   if (cur_limit == -1)
+  {
     return -1;
+  }
 
 #if !defined (ACE_LACKS_RLIMIT) && defined (RLIMIT_NOFILE)
   struct rlimit rl;
@@ -2852,11 +2920,15 @@ ACE::set_handle_limit (int new_limit,
   std::memset (&rl, 0, sizeof rl);
   int r = ACE_OS::getrlimit (RLIMIT_NOFILE, &rl);
   if (r == 0)
+  {
     max_limit = rl.rlim_max;
+  }
 #endif /* ACE_LACKS_RLIMIT */
 
   if (new_limit == -1)
+  {
     new_limit = max_limit;
+  }
 
   if (new_limit < 0)
     {
@@ -2960,7 +3032,9 @@ ACE::is_prime (const u_long n,
          factor <= max_factor;
          ++factor)
       if (n / factor * factor == n)
+      {
         return factor;
+      }
 
   return 0;
 }
@@ -3312,7 +3386,9 @@ char *
 ACE::strnew (const char *s)
 {
   if (s == nullptr)
+  {
     return nullptr;
+  }
   char *t {};
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_ALLOCATOR_RETURN (t,
@@ -3332,7 +3408,9 @@ wchar_t *
 ACE::strnew (const wchar_t *s)
 {
   if (s == nullptr)
+  {
     return nullptr;
+  }
 
   size_t const n = std::wcslen (s) + 1;
   wchar_t *t {};
@@ -3356,7 +3434,9 @@ namespace
   inline bool equal_char (char a, char b, bool case_sensitive)
   {
     if (case_sensitive)
+    {
       return a == b;
+    }
     return ACE_OS::ace_tolower (a) == ACE_OS::ace_tolower (b);
   }
 
@@ -3410,9 +3490,13 @@ ACE::wild_match(const char *str, const char *pat, bool case_sensitive,
                 bool character_classes)
 {
   if (str == pat)
+  {
     return true;
+  }
   if (pat == nullptr || str == nullptr)
+  {
     return false;
+  }
 
   bool star = false, escape = false;
   const char *s = str;
@@ -3448,7 +3532,9 @@ ACE::wild_match(const char *str, const char *pat, bool case_sensitive,
            else
             {
               if (!star)
+              {
                 return false;
+              }
               p = pat;
             }
           ++s;
@@ -3456,7 +3542,9 @@ ACE::wild_match(const char *str, const char *pat, bool case_sensitive,
       else if (!equal_char (*s, *p, case_sensitive))
         {
           if (!star)
+          {
             return false;
+          }
           ++s;
           p = pat;
           escape = false;
@@ -3469,7 +3557,9 @@ ACE::wild_match(const char *str, const char *pat, bool case_sensitive,
         }
     }
   if (*p == '*')
+  {
     while (*++p == '*') {}
+  }
 
   return *p == '\0';
 }

@@ -21,7 +21,9 @@ struct Allocated_Buffer_Release
   void operator() (char *buffer) const
   {
     if (buffer != nullptr)
+    {
       this->allocator->free (buffer);
+    }
   }
 };
 
@@ -52,7 +54,9 @@ consumer (void *arg)
       ACE_Message_Block *mb {};
 
       if (msg_queue->dequeue_head (mb) == -1)
+      {
         break;
+      }
 
       Message_Block_Owner message {mb};
       int const length = ACE_Utils::truncate_cast<int> (mb->length ());
@@ -65,7 +69,9 @@ consumer (void *arg)
         }
 
       if (length == 0)
+      {
         break;
+      }
     }
 
   return ACE_THR_FUNC_RETURN_NULL;
@@ -104,7 +110,9 @@ producer (void *arg)
           if (msg_queue->enqueue_tail (mb) == -1)
             ACE_ERROR ((LM_ERROR, "(%t) %p\n", "put_next"));
           else
+          {
             message.release ();
+          }
           break;
         }
 
@@ -157,7 +165,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   if (thr_mgr.spawn (producer,
                      static_cast<void *> (&msg_queue),
                      THR_NEW_LWP | THR_DETACHED) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), 1);
+  }
 
   // Wait for producer and consumer threads to exit.
   thr_mgr.wait ();

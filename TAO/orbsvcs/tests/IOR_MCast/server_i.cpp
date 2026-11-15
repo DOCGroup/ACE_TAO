@@ -95,7 +95,9 @@ int
 Server_i::enable_multicast (char const *ior)
 {
   if (this->parse_args (this->argc_, this->argv_) != 0)
+  {
     return -1;
+  }
 
   // Get reactor instance from TAO.
   ACE_Reactor * const reactor =
@@ -105,12 +107,16 @@ Server_i::enable_multicast (char const *ior)
   // bootstrappable service, received on the multicast port.
   this->ior_multicast_.reset (new (std::nothrow) TAO_IOR_Multicast);
   if (!this->ior_multicast_)
+  {
     return -1;
+  }
 
   if (this->ior_multicast_->init (ior,
                                   this->mcast_address_.in (),
                                   TAO_SERVICEID_MCASTSERVER) == -1)
+  {
     return -1;
+  }
 
   // Register event handler for the ior multicast.
   if (reactor->register_handler (this->ior_multicast_.get (),

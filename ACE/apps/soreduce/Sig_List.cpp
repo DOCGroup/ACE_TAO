@@ -16,7 +16,9 @@ void
 Sig_List::add (ACE_CString const &s)
 {
   if (this->contains (s))
+  {
     return;
+  }
   modified_ = true;
   if (has_nulls_)
     for (size_t i = 0; i < array_.size (); ++i)
@@ -57,7 +59,9 @@ Sig_List::remove_current ()
   if (index_ == array_.size () - 1)
     array_.pop_back ();
   else
+  {
     ++has_nulls_;
+  }
 }
 
 bool
@@ -86,7 +90,9 @@ Sig_List::first ()
 {
   for (index_ = 0; index_ < array_.size (); ++index_)
     if (array_[index_])
+    {
       return array_[index_].get ();
+    }
   return nullptr;
 }
 
@@ -95,7 +101,9 @@ Sig_List::next ()
 {
   for (++index_; index_ < array_.size (); ++index_)
     if (array_[index_])
+    {
       return array_[index_].get ();
+    }
   return nullptr;
 }
 

@@ -128,7 +128,9 @@ void MD5Update (MD5_CTX *context, unsigned char *input, unsigned int inputLen)
   if ((context->count[0] += ((UINT4)inputLen << 3))
 
    < ((UINT4)inputLen << 3))
- context->count[1]++;
+  {
+    context->count[1]++;
+  }
   context->count[1] += ((UINT4)inputLen >> 29);
 
   partLen = 64 - index;
@@ -146,7 +148,9 @@ void MD5Update (MD5_CTX *context, unsigned char *input, unsigned int inputLen)
  index = 0;
   }
   else
- i = 0;
+  {
+    i = 0;
+  }
 
   /* Buffer remaining input */
   MD5_memcpy

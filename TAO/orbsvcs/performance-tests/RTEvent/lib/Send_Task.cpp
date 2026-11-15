@@ -43,7 +43,9 @@ int
 Send_Task::svc ()
 {
   if (this->barrier_ == nullptr)
+  {
     return -1;
+  }
 
   this->barrier_->wait ();
 

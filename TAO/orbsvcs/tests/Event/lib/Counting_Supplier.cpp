@@ -108,7 +108,9 @@ void
 EC_Counting_Supplier::push (const RtecEventComm::EventSet&)
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
+  {
     return;
+  }
 
   RtecEventComm::EventSet event (1);
   event.length (1);

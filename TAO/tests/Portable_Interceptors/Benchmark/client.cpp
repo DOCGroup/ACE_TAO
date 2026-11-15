@@ -75,7 +75,9 @@ run_test (Test_Interceptors::Secure_Vault_ptr server, int niterations)
                      Benchmark_Method::ready);
 
       if (TAO_debug_level > 0 && i % 100 == 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
+      }
     }
 
   marker.dump_stats (ACE_TEXT ("Ready method  "), gsf, Benchmark_Method::ready);
@@ -101,7 +103,9 @@ run_test (Test_Interceptors::Secure_Vault_ptr server, int niterations)
                          Benchmark_Method::authenticate);
 
           if (TAO_debug_level > 0 && i % 100 == 0)
+          {
             ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
+          }
         }
       marker.dump_stats (ACE_TEXT ("Authenticate method  "), gsf,
                          Benchmark_Method::authenticate);
@@ -136,7 +140,9 @@ run_test (Test_Interceptors::Secure_Vault_ptr server, int niterations)
                      Benchmark_Method::update_records);
 
       if (TAO_debug_level > 0 && i % 100 == 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
+      }
     }
 
   marker.dump_stats (ACE_TEXT ("update records  method  "), gsf,
@@ -185,7 +191,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Options options {};
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var const object =
         orb->string_to_object (options.ior.c_str ());

@@ -471,7 +471,9 @@ TestData::server_done (Server *s)
         }
     }
   if (i >= MAX_SERVERS)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("Server %@ done but not listed\n"), s));
+  }
 
   return;
 }
@@ -506,7 +508,9 @@ TestData::client_done (Client *c)
         }
     }
   if (i >= MAX_CLIENTS)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("Client %@ done but not listed\n"), c));
+  }
 
   return;
 }
@@ -523,13 +527,17 @@ TestData::stop_all ()
     for (i = 0; i < MAX_CLIENTS; ++i)
       {
         if (this->client_list_[i] != nullptr)
+        {
           this->client_list_[i]->cancel ();
+        }
       }
 
     for (i = 0; i < MAX_SERVERS; ++i)
       {
         if (this->server_list_[i] != nullptr)
+        {
           this->server_list_[i]->cancel ();
+        }
       }
   }
   {
@@ -537,13 +545,17 @@ TestData::stop_all ()
     for (i = 0; i < MAX_CLIENTS; ++i)
       {
         if (this->client_list_[i] != nullptr)
+        {
           delete this->client_list_[i];
+        }
       }
 
     for (i = 0; i < MAX_SERVERS; ++i)
       {
         if (this->server_list_[i] != nullptr)
+        {
           delete this->server_list_[i];
+        }
       }
   }
 }
@@ -684,10 +696,14 @@ Server::~Server ()
                 ACE_TEXT ("(%t) Above byte counts look odd; need review\n")));
 
   if (this->tester_ != nullptr)
+  {
     this->tester_->server_done (this);
+  }
 
   if (this->handle_ != ACE_INVALID_HANDLE)
+  {
     ACE_OS::closesocket (this->handle_);
+  }
 
   this->id_ = -1;
   this->handle_= ACE_INVALID_HANDLE;
@@ -734,7 +750,9 @@ Server::open (ACE_HANDLE handle, ACE_Message_Block &)
                                         TCP_NODELAY,
                                         &nodelay,
                                         sizeof (nodelay)))
+    {
       ACE_ERROR ((LM_ERROR, "%p\n", "set_option"));
+    }
 
     if (this->ws_.open (*this, this->handle_) == -1)
       ACE_ERROR ((LM_ERROR,
@@ -745,10 +763,14 @@ Server::open (ACE_HANDLE handle, ACE_Message_Block &)
                   ACE_TEXT ("(%t) %p\n"),
                   ACE_TEXT ("Server::ACE_Asynch_Read_Stream::open")));
     else
+    {
       this->initiate_read_stream ();
+    }
 
     if (this->io_count_ > 0)
+    {
       return;
+    }
   }
   delete this;
 }
@@ -757,7 +779,9 @@ int
 Server::initiate_read_stream ()
 {
   if (this->flg_cancel_ != 0 || this->handle_ == ACE_INVALID_HANDLE)
+  {
     return -1;
+  }
 
   ACE_Message_Block *mb {};
   ACE_NEW_RETURN (mb,
@@ -893,7 +917,9 @@ Server::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
           prio = LM_DEBUG;
 #endif /* ACE_WIN32 */
         else
+        {
           prio = LM_ERROR;
+        }
         ACE_Log_Msg::instance ()->errnum (result.error ());
         ACE_Log_Msg::instance ()->log (prio,
                                        ACE_TEXT ("(%t) Server %d; %p\n"),
@@ -920,11 +946,15 @@ Server::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
           }
       }
     else
+    {
       mb.release ();
+    }
 
     --this->io_count_;
     if (this->io_count_ > 0)
+    {
       return;
+    }
   }
   delete this;
 }
@@ -993,7 +1023,9 @@ Server::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
           prio = LM_DEBUG;
 #endif /* ACE_WIN32 */
         else
+        {
           prio = LM_ERROR;
+        }
         ACE_Log_Msg::instance ()->errnum (result.error ());
         ACE_Log_Msg::instance ()->log (prio,
                                        ACE_TEXT ("(%t) Server %d; %p\n"),
@@ -1015,12 +1047,16 @@ Server::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
         this->total_snd_ += result.bytes_transferred ();
 
         if (duplex == 0)
+        {
           this->initiate_read_stream ();
+        }
       }
 
     --this->io_count_;
     if (this->io_count_ > 0)
+    {
       return;
+    }
   }
   delete this;
 }
@@ -1066,10 +1102,14 @@ int
 Connector::start (const ACE_INET_Addr& addr, int num)
 {
   if (num > MAX_CLIENTS)
+  {
     num = MAX_CLIENTS;
+  }
 
   if (num < 0)
+  {
     num = 1;
+  }
 
   int rc = 0;
 
@@ -1154,7 +1194,9 @@ Client::~Client ()
                 ACE_TEXT ("(%t) Above byte counts look odd; need review\n")));
 
   if (this->tester_ != nullptr)
+  {
     this->tester_->client_done (this);
+  }
 
   this->id_ = -1;
   this->handle_= ACE_INVALID_HANDLE;
@@ -1218,7 +1260,9 @@ Client::open (ACE_HANDLE handle, ACE_Message_Block &)
                                   TCP_NODELAY,
                                   &nodelay,
                                   sizeof (nodelay)))
+    {
       ACE_ERROR ((LM_ERROR, "%p\n", "set_option"));
+    }
 
     // Open ACE_Asynch_Write_Stream
     if (this->ws_.open (*this, this->handle_) == -1)
@@ -1239,7 +1283,9 @@ Client::open (ACE_HANDLE handle, ACE_Message_Block &)
       }
 
     if (this->io_count_ > 0)
+    {
       return;
+    }
   }
   delete this;
 }
@@ -1250,7 +1296,9 @@ Client::initiate_write_stream ()
   if (this->flg_cancel_ != 0 ||
       this->stop_writing_ ||
       this->handle_ == ACE_INVALID_HANDLE)
+  {
     return -1;
+  }
 
   static const size_t complete_message_length = ACE_OS::strlen (complete_message);
 
@@ -1330,7 +1378,9 @@ int
 Client::initiate_read_stream ()
 {
   if (this->flg_cancel_ != 0 || this->handle_ == ACE_INVALID_HANDLE)
+  {
     return -1;
+  }
 
   static const size_t complete_message_length =
     ACE_OS::strlen (complete_message);
@@ -1524,7 +1574,9 @@ Client::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
           prio = LM_DEBUG;
 #endif /* ACE_WIN32 */
         else
+        {
           prio = LM_ERROR;
+        }
         ACE_Log_Msg::instance ()->errnum (result.error ());
         ACE_Log_Msg::instance ()->log (prio,
                                        ACE_TEXT ("(%t) Client %d; %p\n"),
@@ -1562,7 +1614,9 @@ Client::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
 
     --this->io_count_;
     if (this->io_count_ > 0)
+    {
       return;
+    }
   }
   delete this;
 }
@@ -1650,7 +1704,9 @@ Client::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
           prio = LM_DEBUG;
 #endif /* ACE_WIN32 */
         else
+        {
           prio = LM_ERROR;
+        }
         ACE_Log_Msg::instance ()->errnum (result.error ());
         ACE_Log_Msg::instance ()->log (prio,
                                        ACE_TEXT ("(%t) Client %d; %p\n"),
@@ -1679,7 +1735,9 @@ Client::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 
     --this->io_count_;
     if (this->io_count_ > 0)
+    {
       return;
+    }
   }
   delete this;
 }
@@ -1723,7 +1781,9 @@ static int
 set_proactor_type (const ACE_TCHAR *ptype)
 {
   if (!ptype)
+  {
     return 0;
+  }
 
   switch (ACE_OS::ace_toupper (*ptype))
     {
@@ -1781,7 +1841,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case 'x':  // xfer limit
         xfer_limit = static_cast<size_t> (ACE_OS::atoi (get_opt.opt_arg ()));
         if (xfer_limit == 0)
+        {
           xfer_limit = 1;          // Bare minimum.
+        }
         break;
       case 'b':  // both client and server
         both = 1;
@@ -1804,14 +1866,18 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case 'c':     // number of clients
         clients = ACE_OS::atoi (get_opt.opt_arg ());
         if (clients > MAX_CLIENTS)
+        {
           clients = MAX_CLIENTS;
+        }
         break;
       case 'o':     // max number of aio for proactor
         max_aio_operations = ACE_OS::atoi (get_opt.opt_arg ());
         break;
       case 't':    //  Proactor Type
         if (set_proactor_type (get_opt.opt_arg ()))
+        {
           break;
+        }
         return print_usage (argc, argv);
       case 'u':
       default:
@@ -1828,7 +1894,9 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_START_TEST (ACE_TEXT ("Proactor_Test"));
 
   if (::parse_args (argc, argv) == -1)
+  {
     return -1;
+  }
 
   disable_signal (ACE_SIGRTMIN, ACE_SIGRTMAX);
   disable_signal (SIGPIPE, SIGPIPE);
@@ -1848,18 +1916,24 @@ run_main (int argc, ACE_TCHAR *argv[])
         {
           // Simplify, initial read with zero size
           if (acceptor.open (addr, 0, true) == 0)
+          {
             rc = 1;
+          }
         }
 
       if (both != 0 || host != nullptr)
         {
           if (host == nullptr)
+          {
             host = ACE_LOCALHOST;
+          }
 
           if (addr.set (port, host, 1, addr.get_type ()) == -1)
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), host));
           else
+          {
             rc += connector.start (addr, clients);
+          }
         }
 
       // Wait a few seconds to let things get going, then poll til

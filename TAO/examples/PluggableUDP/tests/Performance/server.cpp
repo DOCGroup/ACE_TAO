@@ -112,7 +112,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Server_Options options;
       if (parse_args (options, argc, argv) != 0)
+      {
         return 1;
+      }
 
       UDP_i udp_i;
 

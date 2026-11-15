@@ -41,14 +41,18 @@ TAO249_ServerRequest_Interceptor::receive_request (
       CORBA::Boolean byte_order {};
 
       if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+      {
         throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
+      }
 
       cdr.reset_byte_order (static_cast<int> (byte_order));
 
       FT::FTRequestServiceContext ftrsc;
 
       if ((cdr >> ftrsc) == 0)
+      {
         throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
+      }
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO249_ServerRequest_Interceptor::receive_request (%P|%t) called for method: %C ... "

@@ -40,7 +40,9 @@ TAO_Notify_Tests_Periodic_Supplier::init_state (ACE_Arg_Shifter& arg_shifter)
 {
   // First, let the base class look for options.
   if (TAO_Notify_Tests_StructuredPushSupplier::init_state (arg_shifter) == -1)
+  {
     return -1;
+  }
 
   const ACE_TCHAR *current_arg {};
 
@@ -99,7 +101,9 @@ TAO_Notify_Tests_Periodic_Supplier::init_state (ACE_Arg_Shifter& arg_shifter)
           arg_shifter.consume_arg ();
 
           if (stats_.init (iter_) == -1)
+          {
             return -1;
+          }
         }
       else if (nullptr != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Load"))))
         {
@@ -199,7 +203,9 @@ TAO_Notify_Tests_Periodic_Supplier::send_prologue ()
   zeroth_event.opt_header ("Load", buffer);
 
   if (TAO_debug_level > 0)
+  {
     ACE_DEBUG ((LM_DEBUG, "(%P, %t) Supplier (%s) sending event 0th event\n"));
+  }
 
   this->send_event (zeroth_event.event ());
 }
@@ -273,7 +279,9 @@ TAO_Notify_Tests_Periodic_Supplier::handle_svc ()
           */
 
           if (TAO_debug_level > 0)
+          {
             ACE_DEBUG ((LM_DEBUG, "(%t) sleep time = %d uSec, missed %d deadlines\n", sleep_time, missed));
+          }
 
           ACE_Time_Value t_sleep (0, sleep_time);
           ACE_OS::sleep (t_sleep);
@@ -284,14 +292,18 @@ TAO_Notify_Tests_Periodic_Supplier::handle_svc ()
   stats_.end_time (ACE_OS::gethrtime ());
 
   if (this->client_)
+  {
     this->client_->done (this);
+  }
 }
 
 int
 TAO_Notify_Tests_Periodic_Supplier::svc ()
 {
   if (TAO_debug_level > 0)
+  {
     ACE_DEBUG ((LM_DEBUG, "Thread_Task (%t) - wait\n"));
+  }
 
   try
     {

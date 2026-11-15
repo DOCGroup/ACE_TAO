@@ -98,13 +98,17 @@ namespace ACE
               }
           }
         if (!keep_alive)
+        {
           request.set_keep_alive (false);
+        }
         if (!request.has_host ())
           {
             if (this->port_ == URL::HTTP_PORT)
               request.set_host (this->host_);
             else
+            {
               request.set_host (this->host_, this->port_);
+            }
           }
 
         this->expects_response_body_ = request.get_method() != Request::HTTP_HEAD;
@@ -176,7 +180,9 @@ namespace ACE
         if (this->out_stream_)
           return *this->out_stream_;
         else
+        {
           return ACE::IOS::Null::out_stream_;
+        }
       }
 
     std::ostream& SessionBase::request_stream (
@@ -188,7 +194,9 @@ namespace ACE
             return *this->out_stream_;
           }
         else
+        {
           return ACE::IOS::Null::out_stream_;
+        }
       }
 
     std::istream& SessionBase::receive_response (Response& response)
@@ -281,7 +289,9 @@ namespace ACE
         if (this->in_stream_)
           return *this->in_stream_;
         else
+        {
           return ACE::IOS::Null::in_stream_;
+        }
       }
 
     std::istream& SessionBase::response_stream (
@@ -293,7 +303,9 @@ namespace ACE
             return *this->in_stream_;
           }
         else
+        {
           return ACE::IOS::Null::in_stream_;
+        }
       }
 
     void SessionBase::close ()

@@ -23,11 +23,15 @@ DllORB::init (int argc, ACE_TCHAR* argv[])
             {
               int const count = ACE_OS::atoi (current_arg);
               if (count >= 1)
+              {
                 thread_count = count;
+              }
               arg_shifter.consume_arg ();
             }
           else
+          {
             arg_shifter.ignore_arg ();
+          }
         }
 
       if (this->fail_pre_post_init_ < 3)
@@ -60,7 +64,9 @@ DllORB::init (int argc, ACE_TCHAR* argv[])
                 }
             }
           else
+          {
             ACE_DEBUG ((LM_INFO, ACE_TEXT ("Pre-ORB initialization done.\n")));
+          }
         }
 
       this->orb_ = CORBA::ORB_init (argc, argv);
@@ -163,7 +169,9 @@ DllORB::fini ()
             }
         }
       else
+      {
         ACE_DEBUG ((LM_INFO, ACE_TEXT ("Post-ORB finalization done.\n")));
+      }
     }
 
   return 0;

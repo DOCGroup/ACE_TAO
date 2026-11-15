@@ -56,7 +56,9 @@ JAWS_Strdup_String::~JAWS_Strdup_String ()
   if (this->c_ && --*(this->c_) == 0)
     {
       if (this->s_)
+      {
         ACE_OS::free (this->s_);
+      }
       delete this->c_;
     }
   this->s_ = 0;
@@ -74,7 +76,9 @@ JAWS_Strdup_String::operator = (const char *s)
   if (this->c_ && --*(this->c_) == 0)
     {
       if (this->s_)
+      {
         ACE_OS::free (this->s_);
+      }
       delete this->c_;
     }
   this->c_ = new int (1);
@@ -85,12 +89,16 @@ void
 JAWS_Strdup_String::operator = (const JAWS_Strdup_String &s)
 {
   if (this == std::addressof (s))
+  {
     return;
+  }
 
   if (this->c_ && --*(this->c_) == 0)
     {
       if (this->s_)
+      {
         ACE_OS::free (this->s_);
+      }
       delete this->c_;
     }
   this->c_ = s.c_;

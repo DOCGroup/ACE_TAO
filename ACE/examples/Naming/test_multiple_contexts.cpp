@@ -14,12 +14,16 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_Naming_Context ns;
   ACE_Name_Options * const name_options = ns.name_options ();
   if (name_options == nullptr)
+  {
     return 1;
+  }
 
   ACE_Naming_Context ns1;
   ACE_Name_Options * const name_options1 = ns1.name_options ();
   if (name_options1 == nullptr)
+  {
     return 1;
+  }
 
   ACE_TCHAR address_arg1[BUFSIZ];
   ACE_TCHAR address_arg2[BUFSIZ];
@@ -52,7 +56,9 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
               result));
 
   if (result != 0)
+  {
     return -1;
+  }
 
   name_options1->parse_args (n_argc, n_argv.data ());
 
@@ -62,7 +68,9 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
               "(%P) 1 opened with %d\n",
               result1));
   if (result1 != 0)
+  {
     return -1;
+  }
 
   return 0;
 }

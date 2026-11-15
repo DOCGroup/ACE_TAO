@@ -304,7 +304,9 @@ run_main (int, ACE_TCHAR *[])
 
       // Timeout.
       if (result == 0)
+      {
         break;
+      }
 
       // Make sure there were no errors.
       ACE_TEST_ASSERT (result != -1);
@@ -357,7 +359,9 @@ run_main (int, ACE_TCHAR *[])
 
   status = other_thread.verify_results ();
   if (status != 0)
+  {
     test_result = 1;
+  }
 
 #else
   ACE_ERROR ((LM_INFO,

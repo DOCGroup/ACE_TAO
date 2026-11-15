@@ -468,7 +468,9 @@ void
 Heartbeat_Application::shutdown ()
 {
   if (!this->initialized_)
+  {
     return;
+  }
 
   this->initialized_ = false;
 
@@ -532,7 +534,9 @@ check_for_nil (CORBA::Object_ptr obj, char const *message)
                        message),
                       -1);
   else
+  {
     return 0;
+  }
 }
 
 int
@@ -576,14 +580,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) == -1)
+      {
         return 1;
+      }
 
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var poa =
         PortableServer::POA::_narrow (obj.in ());
       if (check_for_nil (poa.in (), "POA") == -1)
+      {
         return 1;
+      }
 
       PortableServer::POAManager_var manager =
         poa->the_POAManager ();
@@ -593,12 +601,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       RtecEventChannelAdmin::EventChannel_var ec =
         RtecEventChannelAdmin::EventChannel::_narrow (obj.in ());
       if (check_for_nil (ec.in (), "EC") == -1)
+      {
         return 1;
+      }
 
       // Init our application.
       app = new Heartbeat_Application;
       if (!app.in ())
+      {
         return 1;
+      }
 
       app->init (orb, ec);
 

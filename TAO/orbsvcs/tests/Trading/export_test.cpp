@@ -57,7 +57,9 @@ int failure = 0;
 
       // Command line argument parser for use with comlex pearl tests.
       if (parse_args_spec (argc, argv, help) != 0)
+      {
         return 1;
+      }
 
       // Command line argument parser for the trading tests.
       TT_Parse_Args parse_args (argc, argv);

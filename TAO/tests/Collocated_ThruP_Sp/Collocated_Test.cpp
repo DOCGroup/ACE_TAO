@@ -44,7 +44,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   std::string server_orb;
   std::string client_orb;
   if (parse_args (argc, argv, output, input, server_orb, client_orb) == -1)
+  {
     return -1;
+  }
 
   try
     {

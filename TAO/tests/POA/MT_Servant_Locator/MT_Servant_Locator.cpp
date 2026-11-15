@@ -269,13 +269,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                               policies);
 
       if (!set_nil_servant_manager (child_poa.in ()))
+      {
         retval = -1;
+      }
 
       Servant_Locator servant_locator (child_poa.in ());
       child_poa->set_servant_manager (&servant_locator);
 
       if (!overwrite_servant_manager (child_poa.in ()))
+      {
         retval = -1;
+      }
 
       PortableServer::ObjectId_var first_oid =
         PortableServer::string_to_ObjectId ("first");

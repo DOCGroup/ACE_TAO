@@ -229,7 +229,9 @@ XML_Backing_Store::load_file (const ACE_TString& filename,
     err = fstm->use_stream(open_file,
                            filename.c_str());
   else
+  {
     err = fstm->open (filename.c_str());
+  }
 
   if (debug > 9)
     {

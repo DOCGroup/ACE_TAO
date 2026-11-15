@@ -65,7 +65,9 @@ check_for_nil (CORBA::Object_ptr obj, char const *msg)
                        msg),
                       -1);
   else
+  {
     return 0;
+  }
 }
 
 void
@@ -102,14 +104,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Parse arguments.
       Client_Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return -1;
+      }
 
       // RTORB.
       CORBA::Object_var object =
         orb->resolve_initial_references ("RTORB");
       RTCORBA::RTORB_var const rt_orb = RTCORBA::RTORB::_narrow (object.in ());
       if (check_for_nil (rt_orb.in (), "RTORB") == -1)
+      {
         return -1;
+      }
 
       // PolicyManager.
       object = orb->resolve_initial_references ("ORBPolicyManager");
@@ -117,7 +123,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::PolicyManager::_narrow (object.in ());
       if (check_for_nil (policy_manager.in (), "PolicyManager")
           == -1)
+      {
         return -1;
+      }
 
       // PolicyCurrent.
       object = orb->resolve_initial_references ("PolicyCurrent");
@@ -125,19 +133,25 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::PolicyCurrent::_narrow (object.in ());
       if (check_for_nil (policy_current.in (), "PolicyCurrent")
           == -1)
+      {
         return -1;
+      }
 
       // Test object 1 (ClientProtocolPolicy set on server).
       object = orb->string_to_object (options.server_policy_ior);
       Test_var const server1 = Test::_narrow (object.in ());
       if (check_for_nil (server1.in (), "server1") == -1)
+      {
         return -1;
+      }
 
       // Test object 2 (no client-exposed ClientProtocolPolicy).
       object = orb->string_to_object (options.default_policy_ior);
       Test_var const server2 = Test::_narrow (object.in ());
       if (check_for_nil (server2.in (), "server2") == -1)
+      {
         return -1;
+      }
 
       // Do testing.
 

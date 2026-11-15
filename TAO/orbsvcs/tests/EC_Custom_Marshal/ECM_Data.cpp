@@ -40,7 +40,9 @@ operator>> (TAO_InputCDR& cdr, ECM_Data& x)
           cdr >> ext_id;
           cdr >> int_id;
           if (cdr.good_bit ())
+          {
             x.inventory.bind (ext_id, int_id);
+          }
 
           // ACE_DEBUG ((LM_DEBUG, "Boung <%d,%f>\n", ext_id, int_id));
         }

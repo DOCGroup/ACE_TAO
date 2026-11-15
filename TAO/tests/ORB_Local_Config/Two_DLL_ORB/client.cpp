@@ -28,7 +28,9 @@ Client_Worker::parse_args (int argc, ACE_TCHAR *argv[])
   int option {};
   while ((option = get_opts ()) != -1)
     if (option == 'k')
+    {
       this->ior_file_ = get_opts.opt_arg ();
+    }
 
   // Indicates successful parsing of the command line
   return 0;
@@ -91,7 +93,9 @@ Client_Worker::test_main (int argc, ACE_TCHAR *argv[])
           catch (CORBA::TRANSIENT const& ex)
             {
               if (attempts_left == 1)
+              {
                 throw;
+              }
 
               ex._tao_print_exception ("Temporary problem encountered");
 
@@ -105,7 +109,9 @@ Client_Worker::test_main (int argc, ACE_TCHAR *argv[])
               ex._tao_print_exception ("Unexpected CORBA exception caught");
 
               if (attempts_left == 1)
+              {
                 throw;
+              }
 
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) Pausing for a while.\n")));

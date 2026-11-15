@@ -38,7 +38,9 @@ test_duplicates (size_t count)
       if (ACE_ODD (handle))
         {
           if (handle_set.is_set ((ACE_HANDLE) handle))
+          {
             ++duplicates;
+          }
 
           handle_set.set_bit ((ACE_HANDLE) handle);
           ++sets;
@@ -46,7 +48,9 @@ test_duplicates (size_t count)
       else
         {
           if (handle_set.is_set ((ACE_HANDLE) handle))
+          {
             --duplicates;
+          }
 
           handle_set.clr_bit ((ACE_HANDLE) handle);
           ++clears;

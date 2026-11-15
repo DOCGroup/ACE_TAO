@@ -109,7 +109,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (sched_policy == ACE_SCHED_RR)
     flags = THR_NEW_LWP | THR_BOUND | THR_JOINABLE | THR_SCHED_RR;
   else
+  {
     flags = THR_NEW_LWP | THR_BOUND | THR_JOINABLE | THR_SCHED_FIFO;
+  }
 
   ACE_hthread_t main_thr_handle {};
   ACE_Thread::self (main_thr_handle);
@@ -145,7 +147,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var object =
         orb->string_to_object (options.ior);
@@ -245,7 +249,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       if (scheduler != nullptr)
+      {
         scheduler->shutdown ();
+      }
       ACE_DEBUG ((LM_DEBUG, "scheduler shutdown done\n"));
 
       orb->destroy ();

@@ -18,7 +18,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::Repository::_narrow (ifr_object.in ());
 
       if (CORBA::is_nil (repository.in ()))
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "Nil IFR reference\n"), 1);
+      }
 
       CORBA::InterfaceDefSeq base_interfaces;
       CORBA::InterfaceDef_var const interface =
@@ -111,7 +113,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       interface->destroy ();
 
       if (failed)
+      {
         return 1;
+      }
 
       ACE_DEBUG ((LM_DEBUG, ". seems OK\n"));
     }

@@ -73,7 +73,9 @@ public:
           {
             caught_exception = true;
             if (TAO_debug_level > 0)
+            {
               ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("sayHello() expected TRANSIENT exceptions.\n")));
+            }
           }
         catch (...)
           {
@@ -126,7 +128,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       int test_duration {30};
       if (parse_args (argc, argv, test_duration) != 0)
+      {
         return -1;
+      }
 
       CORBA::Object_var const shutdown_obj =
         orb->string_to_object (server1_shutdown_ior.c_str ());
@@ -147,7 +151,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ClientTask task (test_duration);
       if (task.activate (THR_NEW_LWP | THR_JOINABLE, 1) != 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "Cannot activate client threads\n"), 1);
+      }
 
       task.wait ();
 
@@ -159,7 +165,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       orb = CORBA::ORB::_nil ();
 
       if (!reconnected.load ())
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "Client was not able to reconnect to server 1.\n"), 1);
+      }
     }
   catch (CORBA::Exception const &ex)
     {

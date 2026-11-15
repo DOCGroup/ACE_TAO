@@ -52,7 +52,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv, options) != 0
           || options.ior_output_file == nullptr
           || options.key == nullptr)
+      {
         return 1;
+      }
       CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
@@ -108,7 +110,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                              options.ior_output_file),
                             1);
         if (std::fprintf (output_file.get (), "%s", ior.in ()) < 0)
+        {
           ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot write IOR to output file\n")), 1);
+        }
       }
 
       poa_manager->activate ();

@@ -112,7 +112,9 @@ public:
 
         // Invoke the method request.
         if (request == nullptr || request->call () == -1)
+        {
           break;
+        }
       }
 
     return 0;
@@ -123,7 +125,9 @@ public:
     ACE_TRACE ("Scheduler::enqueue");
     const int result = this->activation_queue_.enqueue (request.get ());
     if (result != -1)
+    {
       request.release ();
+    }
     return result;
   }
 
@@ -188,7 +192,9 @@ public:
     ACE_DEBUG ((LM_INFO,
                 ACE_TEXT ("(%t) New Status %d\n"), result));
     if (result == 10)
+    {
       this->proxy_.exit ();
+    }
   }
 
 private:

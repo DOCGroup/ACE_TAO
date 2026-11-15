@@ -18,7 +18,9 @@ TAO_Continuous_Priority_Mapping::to_native (RTCORBA::Priority corba_priority,
                                             RTCORBA::NativePriority &native_priority)
 {
   if (corba_priority < 0)
+  {
     return false;
+  }
 
 #if defined (ACE_WIN32)
 
@@ -46,19 +48,25 @@ TAO_Continuous_Priority_Mapping::to_native (RTCORBA::Priority corba_priority,
     {
       native = corba_priority + this->min_;
       if (native > this->max_)
+      {
         return false;
+      }
     }
   else if (this->min_ > this->max_)
     {
       native = this->min_ - corba_priority;
       if (native < this->max_)
+      {
         return false;
+      }
     }
   else
     {
       // There is only one native priority.
       if (corba_priority != 0)
+      {
         return false;
+      }
 
       native = this->min_;
     }
@@ -98,20 +106,26 @@ TAO_Continuous_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priori
     {
       if (native_priority < this->min_
           || native_priority > this->max_)
+      {
         return false;
+      }
       corba_priority = native_priority - this->min_;
     }
   else if (this->min_ > this->max_)
     {
       if (native_priority > this->min_
           || native_priority < this->max_)
+      {
         return false;
+      }
       corba_priority = this->min_ - native_priority;
     }
   else if (this->min_ == this->max_)
     {
       if (native_priority != this->min_)
+      {
         return false;
+      }
       corba_priority = 0;
     }
 

@@ -83,7 +83,9 @@ HA_Proactive_Service::handle_read_stream
                 ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
                             ACE_TEXT ("starting read")));
               else
+              {
                 new_message_block.release ();
+              }
             }
         }
     }
@@ -125,7 +127,9 @@ HA_Proactive_Acceptor::validate_connection (
   in_addr const *const local_addr =
     reinterpret_cast<in_addr const *> (local.get_addr ());
   if (inet_netof (*local_addr) == inet_netof (*remote_addr))
+  {
     return 0;
+  }
 
   return -1;
 }

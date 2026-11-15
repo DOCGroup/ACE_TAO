@@ -29,7 +29,9 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint (
     ACE_Time_Value *val)
 {
   if (r == nullptr)
+  {
     throw ::CORBA::INTERNAL ();
+  }
 
   CORBA::Policy_var client_protocol_policy_base =
     TAO_RT_Endpoint_Utils::policy (TAO_CACHED_POLICY_RT_CLIENT_PROTOCOL, *r);
@@ -41,7 +43,9 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint (
           r->profile (r->stub ()->profile_in_use ());
 
           if (this->endpoint_from_profile (*r, val) == 1)
+          {
             return;
+          }
         }
       while (r->stub ()->next_profile_retry ());
 
@@ -113,7 +117,9 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint_based_on_client_protocol_po
               r.profile (profile);
 
               if (this->endpoint_from_profile (r, val) == 1)
+              {
                 return;
+              }
               // @@ Else we should check for potential forwarding here.
             }
         }
@@ -150,7 +156,9 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
   TAO_RT_Stub * const rt_stub = dynamic_cast <TAO_RT_Stub *> (r.stub ());
 
   if (!rt_stub)
+  {
     throw CORBA::INTERNAL ();
+  }
 
   // Get the priority model policy.
   CORBA::Policy_var priority_model_policy =
@@ -329,7 +337,9 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
 
           // Check if the invocation has completed.
           if (r.try_connect (std::addressof (rt_transport_descriptor), val))
+          {
             return 1;
+          }
         }
 
       // Go to the next endpoint in this profile.

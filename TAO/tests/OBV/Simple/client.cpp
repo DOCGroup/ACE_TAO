@@ -13,6 +13,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (client.run ("Event_Types_Checkpoint",
                   argc,
                   argv) == -1)
+  {
     return -1;
+  }
   return 0;
 }

@@ -19,7 +19,9 @@ TAO_EC_Timeout_Adapter::handle_timeout (const ACE_Time_Value & /* tv */,
     static_cast<TAO_EC_Timeout_Filter*> (const_cast<void*> (vp));
 
   if (filter == nullptr)
+  {
     return 0;
+  }
 
   try
     {

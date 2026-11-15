@@ -453,7 +453,9 @@ Client::test_get_all_properties ()
 
               // Print the value if type is not tk_void.
               if (properties [pi].property_value.type () == CORBA::_tc_void)
+              {
                 ACE_DEBUG ((LM_DEBUG,"Void\n"));
+              }
 
               if (properties [pi].property_value.type () == CORBA::_tc_float)
                 {
@@ -637,14 +639,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Client client;
 
       if (client.init (argc, argv) == -1)
+      {
         return 1;
+      }
 
       //  client.run ();
       int const ret = client.property_tester ();
       if (ret != 0)
         ACE_DEBUG ((LM_DEBUG, "Test failed\n"));
       else
+      {
         ACE_DEBUG ((LM_DEBUG, "Test succeeded\n"));
+      }
     }
   catch (CORBA::Exception const &ex)
     {

@@ -189,7 +189,9 @@ Test_ObjRef::check_validity ()
       if (!std::strcmp (in, inout) &&
           !std::strcmp (in, out) &&
           !std::strcmp (in, ret))
+      {
         return 1; // success
+      }
     }
   catch (const CORBA::Exception& ex)
     {

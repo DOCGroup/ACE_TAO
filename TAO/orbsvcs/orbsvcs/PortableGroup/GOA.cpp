@@ -384,7 +384,9 @@ TAO_GOA::find_group_component (CORBA::Object_ptr const the_ref,
   while ((profile = profiles.get_profile (slot)) != nullptr)
     {
       if (this->find_group_component_in_profile (profile, group) == 0)
+      {
         return 0;
+      }
 
       ++slot;
     }
@@ -406,7 +408,9 @@ TAO_GOA::find_group_component_in_profile (TAO_Profile const *profile,
 
   // Try to find it.
   if (components.get_component (tagged_component) == 0)
+  {
     return -1;
+  }
 
   // Found it.
   CORBA::Octet const * const buf =
@@ -418,11 +422,15 @@ TAO_GOA::find_group_component_in_profile (TAO_Profile const *profile,
   // Extract the Byte Order.
   CORBA::Boolean byte_order {};
   if ((in_cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+  {
     return -1;
+  }
   in_cdr.reset_byte_order (static_cast <int> (byte_order));
 
   if ((in_cdr >> group) == 0)
+  {
     return -1;
+  }
 
   return 0;
 }

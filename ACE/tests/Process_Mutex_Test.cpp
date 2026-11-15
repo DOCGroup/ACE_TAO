@@ -95,7 +95,9 @@ acquire_release ()
       ACE_TEST_ASSERT (errno != EEXIST);
     }
   else
+  {
     ACE_OS::close (checker_handle);
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P) Working....\n")));

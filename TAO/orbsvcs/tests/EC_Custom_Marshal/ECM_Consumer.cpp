@@ -63,7 +63,9 @@ Driver::run (int argc, ACE_TCHAR* argv[])
         root_poa->the_POAManager ();
 
       if (this->parse_args (argc, argv))
+      {
         return 1;
+      }
 
       ACE_DEBUG ((LM_DEBUG,
                   "Execution parameters:\n"
@@ -138,7 +140,9 @@ Driver::run (int argc, ACE_TCHAR* argv[])
       if (CORBA::is_nil (ec_obj.in ()))
         channel = RtecEventChannelAdmin::EventChannel::_nil ();
       else
+      {
         channel = RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in ());
+      }
 
       poa_manager->activate ();
 
@@ -228,7 +232,9 @@ Driver::push_consumer (RtecEventComm::EventSet const& events)
       cdr >> other;
 
       if (!cdr.good_bit ())
+      {
         ACE_ERROR ((LM_ERROR, "Problem demarshalling C++ data\n"));
+      }
 
       CORBA::ULong const n = info.trajectory.length ();
       // ACE_DEBUG ((LM_DEBUG, "Payload contains <%d> elements\n", n));
@@ -382,7 +388,9 @@ void
 Test_Consumer::disconnect ()
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
+  {
     return;
+  }
 
   RtecEventChannelAdmin::ProxyPushSupplier_var proxy =
     this->supplier_proxy_._retn ();

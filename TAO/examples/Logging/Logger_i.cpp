@@ -48,7 +48,9 @@ Logger_Factory_i::make_logger (char const *name)
   // @@ Matt, this code doesn't seem right.  Can you please check with
   // Irfan and Carlos about whether this is the right thing to do?
   if (!result)
+  {
     return Logger::_nil ();
+  }
 
   return result->_this ();
 }

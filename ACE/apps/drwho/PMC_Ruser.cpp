@@ -87,12 +87,18 @@ PMC_Ruser::insert_protocol_info (Protocol_Record &protocol_record)
   np->set_real_name (ACE::strnew (current_node->get_real_name ()));
 
   if (np->get_active_count () < current_node->get_active_count ())
+  {
     np->set_active_count (current_node->get_active_count ());
+  }
   if (np->get_inactive_count () < current_node->get_inactive_count())
+  {
     np->set_inactive_count (current_node->get_inactive_count ());
+  }
 
   if (length > this->max_key_length)
+  {
     this->max_key_length = length;
+  }
 
   return prp;
 }
@@ -124,7 +130,9 @@ PMC_Ruser::process ()
   if (Options::get_opt (Options::PRINT_LOGIN_NAME))
     get_name = &Drwho_Node::get_login_name;
   else
+  {
     get_name = &Drwho_Node::get_real_name;
+  }
 
   for (Protocol_Record *prp;
        (prp = this->Protocol_Manager::get_each_friend ()) != nullptr;

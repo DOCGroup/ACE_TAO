@@ -92,7 +92,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                           contents.in ());
 
       if (result != 0)
+      {
         return -1;
+      }
 
       // Done with the Content_Iterator, so destroy it.
       contents->destroy ();
@@ -153,7 +155,9 @@ int retrieve_data (char const *content_type,
       CORBA::Boolean const rc = contents->next_chunk (offset, chunk);
 
       if (!rc)
+      {
         break;
+      }
 
       // Write the received data to a file.
       if (file_io.send (chunk->get_buffer (),
@@ -168,7 +172,9 @@ int retrieve_data (char const *content_type,
                             -1);
         }
       else
+      {
         offset += chunk->length ();
+      }
     }
 
   // Done writing to the file.
@@ -177,7 +183,9 @@ int retrieve_data (char const *content_type,
   // Now spawn a view to display the retrieved data.
   if (::spawn_viewer (content_type,
                       ACE_TEXT_ALWAYS_CHAR (file_addr.get_path_name ())) != 0)
+  {
     return -1;
+  }
 
   return 0;
 }
@@ -186,7 +194,9 @@ int external_viewer (char const *content_type,
                      std::string& viewer)
 {
   if (content_type == nullptr)
+  {
     return -1;
+  }
 
   if (ACE_OS::strcasecmp (content_type, "text/html") == 0)
     viewer = "lynx";

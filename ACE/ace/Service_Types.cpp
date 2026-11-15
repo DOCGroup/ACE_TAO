@@ -84,7 +84,9 @@ ACE_Service_Type_Impl::fini () const
 
   if (ACE_BIT_ENABLED (this->flags_,
                        ACE_Service_Type::DELETE_THIS))
+  {
     delete const_cast <ACE_Service_Type_Impl *> (this);
+  }
 
   return 0;
 }
@@ -111,7 +113,9 @@ ACE_Service_Object_Type::init (int argc, ACE_TCHAR *argv[]) const
     static_cast<ACE_Service_Object *> (obj);
 
   if (so == nullptr)
+  {
     return -1;
+  }
 
   this->initialized_ = so->init (argc, argv);
 
@@ -132,7 +136,9 @@ ACE_Service_Object_Type::fini () const
   // initialized, i.e. init() returned 0. This is necessary to
   // maintain the ctor/dtor-like semantics for init/fini.
   if (so != nullptr && this->initialized_ == 0)
-      so->fini ();
+  {
+    so->fini ();
+  }
 
   return ACE_Service_Type_Impl::fini ();
 }
@@ -210,7 +216,9 @@ ACE_Module_Type::init (int argc, ACE_TCHAR *argv[]) const
       || writer->init (argc, argv) == -1)
     return -1;
   else
+  {
     return 0;
+  }
 }
 
 int
@@ -226,7 +234,9 @@ ACE_Module_Type::suspend () const
       || writer->suspend () == -1)
     return -1;
   else
+  {
     return 0;
+  }
 }
 
 int
@@ -242,7 +252,9 @@ ACE_Module_Type::resume () const
       || writer->resume () == -1)
     return -1;
   else
+  {
     return 0;
+  }
 }
 
 // Note, these operations are somewhat too familiar with the
@@ -258,10 +270,14 @@ ACE_Module_Type::fini () const
   MT_Task *writer = mod->writer ();
 
   if (reader != nullptr)
+  {
     reader->fini ();
+  }
 
   if (writer != nullptr)
+  {
     writer->fini ();
+  }
 
   // Close the module and delete the memory.
   mod->close (MT_Module::M_DELETE);
@@ -282,7 +298,9 @@ ACE_Module_Type::info (ACE_TCHAR **str, size_t len) const
   if (*str == nullptr && (*str = ACE_OS::strdup (buf)) == nullptr)
     return -1;
   else
+  {
     ACE_OS::strsncpy (*str, buf, len);
+  }
   return static_cast<int> (ACE_OS::strlen (buf));
 }
 
@@ -372,7 +390,9 @@ ACE_Stream_Type::info (ACE_TCHAR **str, size_t len) const
   if (*str == nullptr && (*str = ACE_OS::strdup (buf)) == nullptr)
     return -1;
   else
+  {
     ACE_OS::strsncpy (*str, buf, len);
+  }
   return static_cast<int> (ACE_OS::strlen (buf));
 }
 
@@ -419,18 +439,24 @@ ACE_Stream_Type::remove (ACE_Module_Type *mod)
           if (prev == nullptr)
             this->head_ = link;
           else
+          {
             prev->link (link);
+          }
 
           // Final arg is an indication to *not* delete the Module.
           if (str->remove (m->name (),
                            MT_Module::M_DELETE_NONE) == -1)
+          {
             result = -1;
+          }
 
           // Do not call m->fini (); as this will result in a double delete
           // of the ACE_Module_type when ACE_Service_Repository::fini is called
         }
       else
+      {
         prev = m;
+      }
 
       m = link;
     }
@@ -460,7 +486,9 @@ ACE_Stream_Type::find (const ACE_TCHAR *module_name) const
        m != nullptr;
        m = m->link ())
     if (ACE_OS::strcmp (m->name (), module_name) == 0)
+    {
       return m;
+    }
 
   return nullptr;
 }

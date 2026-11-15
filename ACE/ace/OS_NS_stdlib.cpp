@@ -124,7 +124,9 @@ ACE_OS::strenvdup (const ACE_TCHAR *str)
 #  endif /* ACE_WIN32 */
       size_t buf_len = ACE_OS::strlen (str) + 1;
       if (temp != nullptr)
+      {
         buf_len += ACE_OS::strlen (temp) - var_len;
+      }
       ACE_TCHAR * buf_p =
 #if defined (ACE_HAS_ALLOC_HOOKS)
         (ACE_TCHAR *) ACE_Allocator::instance()->malloc (buf_len * sizeof (ACE_TCHAR));
@@ -159,7 +161,9 @@ ACE_OS::strenvdup (const ACE_TCHAR *str)
       return buf_p;
     }
   else
+  {
     return ACE_OS::strdup (str);
+  }
 }
 
 #if !defined (ACE_HAS_ITOA)
@@ -295,7 +299,9 @@ ACE_OS::mktemp (wchar_t *s)
   // string for mktemp (), then convert the name back for the caller.
   ACE_Wide_To_Ascii narrow_s (s);
   if (::mktemp (narrow_s.char_rep ()) == 0)
+  {
     return nullptr;
+  }
   ACE_Ascii_To_Wide wide_s (narrow_s.char_rep ());
   ACE_OS::strcpy (s, wide_s.wchar_rep ());
   return s;

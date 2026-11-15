@@ -64,7 +64,9 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
                   ACE_TCHAR const * const opt = arg_shifter.get_current ();
                   int n = ACE_OS::atoi (opt);
                   if (n >= 1)
+                  {
                     this->nsuppliers_ = n;
+                  }
                   arg_shifter.consume_arg ();
                 }
             }
@@ -77,7 +79,9 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
                   ACE_TCHAR const * const opt = arg_shifter.get_current ();
                   int n = ACE_OS::atoi (opt);
                   if (n >= 1)
+                  {
                     this->nconsumers_ = n;
+                  }
                   arg_shifter.consume_arg ();
                 }
             }
@@ -90,7 +94,9 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
                   ACE_TCHAR const * const opt = arg_shifter.get_current ();
                   int n = ACE_OS::atoi (opt);
                   if (n >= 0)
+                  {
                     this->max_recursion_ = n;
+                  }
                   arg_shifter.consume_arg ();
                 }
             }
@@ -101,7 +107,9 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
               this->verbose_ = true;
             }
           else
+          {
             arg_shifter.ignore_arg ();
+          }
         }
 
       // ****************************************************************
@@ -386,7 +394,9 @@ RND_Consumer::disconnect ()
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   if (CORBA::is_nil (this->proxy_.in ()))
+  {
     return;
+  }
   this->proxy_->disconnect_push_supplier ();
   this->proxy_ =
     RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
@@ -433,7 +443,9 @@ RND_Supplier::disconnect ()
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   if (CORBA::is_nil (this->proxy_.in ()))
+  {
     return;
+  }
   this->proxy_->disconnect_push_consumer ();
   this->proxy_ =
     RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
@@ -458,7 +470,9 @@ RND_Supplier::push (RtecEventComm::EventSet &event)
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
     if (CORBA::is_nil (this->proxy_.in ()))
+    {
       return;
+    }
 
     proxy =
       RtecEventChannelAdmin::ProxyPushConsumer::_duplicate(this->proxy_.in ());

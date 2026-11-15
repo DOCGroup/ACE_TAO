@@ -22,7 +22,9 @@ TAO_EC_Default_ProxyPushSupplier::connect_push_consumer (
 {
   // Nil PushConsumers are illegal
   if (CORBA::is_nil (push_consumer))
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   {
     ACE_GUARD_THROW_EX (
@@ -33,7 +35,9 @@ TAO_EC_Default_ProxyPushSupplier::connect_push_consumer (
     if (this->is_connected_i ())
       {
         if (!this->event_channel_->consumer_reconnect ())
+        {
           throw RtecEventChannelAdmin::AlreadyConnected ();
+        }
 
         // Re-connections are allowed....
         this->cleanup_i ();
@@ -62,7 +66,9 @@ TAO_EC_Default_ProxyPushSupplier::connect_push_consumer (
         // this is probably an application error, handle it as
         // gracefully as possible
         if (this->is_connected_i ())
+        {
           return; // @@ Should we throw
+        }
       }
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
@@ -115,7 +121,9 @@ TAO_EC_Default_ProxyPushSupplier::disconnect_push_supplier ()
     consumer = this->consumer_._retn ();
 
     if (connected)
+    {
       this->cleanup_i ();
+    }
   }
 
   // Notify the event channel....

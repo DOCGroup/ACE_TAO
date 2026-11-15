@@ -259,7 +259,9 @@ Param_Test_i::test_strseq (const CORBA::StringSeq &s1,
                       (s2[i]? (const char *)s2[i]:"<nul>")));
         }
       if (s2.length () == 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "\ninout sequence is NUL\n"));
+      }
     }
 
   // now copy all elements of s1 into the others using the assignment operator
@@ -629,7 +631,9 @@ Param_Test_i::test_objref (Coffee_ptr o1,
       Coffee_var myobj = obj_._this ();
 
       if (!CORBA::is_nil (o2))
+      {
         CORBA::release (o2);
+      }
 
       CORBA::Boolean equiv = myobj->_is_equivalent (o1);
 
@@ -706,26 +710,38 @@ Param_Test_i::test_any (const CORBA::Any &a1,
   if (a1 >>= short_in)
     {
       if (TAO_debug_level > 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "Received short = %d\n", short_in));
+      }
       a2 >>= short_in;
       if (TAO_debug_level > 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "inout short = %d\n", short_in));
+      }
       *a3.ptr () >>= short_in;
       if (TAO_debug_level > 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "out short = %d\n", short_in));
+      }
       *ret >>= short_in;
       if (TAO_debug_level > 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "ret short = %d\n", short_in));
+      }
     }
   else if (a1 >>= str_in)
     {
       if (TAO_debug_level > 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "Received unbounded string = %C\n", str_in));
+      }
     }
   else if (a1 >>= coffee)
     {
       if (TAO_debug_level > 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "Received Coffee object\n"));
+      }
     }
   else if (a1 >>= array)
     {
@@ -774,7 +790,9 @@ Param_Test_i::test_any (const CORBA::Any &a1,
   else if (a1 >>= fixed_structure)
     {
       if (TAO_debug_level > 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "Received Fixed_Struct\n"));
+      }
     }
   else if (a1 >>= big_union)
     {

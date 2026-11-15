@@ -106,7 +106,9 @@ void AIO_Output_Handler::start_write (ACE_Message_Block *mblk) {
   if (mblk != nullptr) {
     can_write_ = false;
     if (writer_.write (*mblk, mblk->length ()) == -1)
+    {
       ungetq (mblk);
+    }
   }
 }
 
@@ -131,7 +133,10 @@ void AIO_Output_Handler::handle_write_stream
     can_write_ = handle () == result.handle ();
     if (mblk.length () == 0) {
       mblk.release ();
-      if (can_write_) start_write ();
+      if (can_write_)
+      {
+        start_write ();
+      }
     }
     else if (can_write_) start_write (&mblk);
     else { mblk.rd_ptr (mblk.base ()); ungetq (&mblk); }
@@ -181,7 +186,9 @@ void AIO_Input_Handler::handle_read_stream
   else {
     ACE_Message_Block *message_block = mblk_.release ();
     if (OUTPUT_HANDLER::instance ()->put (message_block) == -1)
+    {
       message_block->release ();
+    }
 
     ACE_NEW_NORETURN (message_block, ACE_Message_Block (ACE_DEFAULT_CDR_BUFSIZE));
     mblk_.reset (message_block);
@@ -225,7 +232,9 @@ int AIO_CLD_Connector::validate_connection
     ACE_Time_Value delay (retry_delay_);
     retry_delay_ *= 2;
     if (retry_delay_ > MAX_RETRY_DELAY)
+    {
       retry_delay_ = MAX_RETRY_DELAY;
+    }
     proactor ()->schedule_timer (*this, nullptr, delay);
     return -1;
   }
@@ -234,7 +243,10 @@ int AIO_CLD_Connector::validate_connection
   if (ssl_ctx_ == nullptr) {
     OpenSSL_add_ssl_algorithms ();
     ssl_ctx_ = SSL_CTX_new (SSLv23_client_method ());
-    if (ssl_ctx_ == nullptr) return -1;
+    if (ssl_ctx_ == nullptr)
+    {
+      return -1;
+    }
 
     if (SSL_CTX_use_certificate_file (ssl_ctx_,
                                       CLD_CERTIFICATE_FILENAME,
@@ -265,7 +277,10 @@ int AIO_CLD_Connector::validate_connection
   SSL_set_verify (ssl_, SSL_VERIFY_PEER, nullptr);
 
   if (SSL_connect (ssl_) == -1
-      || SSL_shutdown (ssl_) == -1) return -1;
+      || SSL_shutdown (ssl_) == -1)
+  {
+    return -1;
+  }
   return 0;
 }
 
@@ -307,7 +322,9 @@ int AIO_Client_Logging_Daemon::init
 
   if (cld_addr_.set (cld_port) == -1 ||
       sld_addr_.set (sld_port, sld_host) == -1)
+  {
     return -1;
+  }
   return activate ();
 }
 
@@ -318,9 +335,14 @@ int AIO_Client_Logging_Daemon::fini () {
 }
 
 int AIO_Client_Logging_Daemon::svc () {
-  if (acceptor_.open (cld_addr_) == -1) return -1;
+  if (acceptor_.open (cld_addr_) == -1)
+  {
+    return -1;
+  }
   if (CLD_CONNECTOR::instance ()->connect (sld_addr_) == 0)
+  {
     ACE_Proactor::instance ()->proactor_run_event_loop ();
+  }
   acceptor_.close ();
   CLD_CONNECTOR::close ();
   OUTPUT_HANDLER::close ();

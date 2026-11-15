@@ -60,7 +60,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       consumer_state.orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
       consumer_state.pass = options.pass;
 
       CORBA::Object_var const naming_obj =
@@ -132,7 +134,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (servant.nummsgs () > 0)
         std::cout << "Success pass " << consumer_state.pass << ": events received " << std::endl;
       else
+      {
         std::cout << "ERROR pass " << consumer_state.pass << ": no events received " << std::endl;
+      }
     }
   catch (CORBA::Exception const &ex)
     {

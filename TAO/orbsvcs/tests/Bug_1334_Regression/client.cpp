@@ -19,7 +19,9 @@ ACE_TMAIN (int argc,
           CORBA::Object_var const naming =
             orb->resolve_initial_references ("NameService");
           if (CORBA::is_nil (naming.in ()))
+          {
             return 1;
+          }
         }
       catch (CORBA::Exception const &)
         {

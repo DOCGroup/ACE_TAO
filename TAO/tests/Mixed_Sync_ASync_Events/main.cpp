@@ -93,7 +93,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var const poa_manager = root_poa->the_POAManager ();
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       // create, activate and initialize AMI reply handler
       Test_Reply_i test_i_rh_srv (orb.in (), options.max_count, options.mode);
@@ -138,7 +140,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       do
         {
           if (options.mode == A::RM_SLAVE)
+          {
             ACE_OS::sleep (ACE_Time_Value (0, 100));
+          }
 
           // Get object reference for opponent.
           CORBA::Object_var const object =
@@ -159,7 +163,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // start the show
       if (options.mode == A::RM_MASTER)
+      {
         test_i_rh_srv.test_handler ().start ();
+      }
 
       orb->run ();
 

@@ -60,7 +60,9 @@ run_main (int argc, ACE_TCHAR *argv[])
   // Validate options.
   int result = parse_args (argc, argv);
   if (result != 0)
+  {
     return result;
+  }
 
   // Start the test only if options are valid.
   ACE_START_TEST (ACE_TEXT ("Hash_Map_Bucket_Iterator_Test"));

@@ -67,12 +67,16 @@ Identity_Client::init (int argc,
     {
       result = this->orb_manager_.init (argc, argv);
       if (result == -1)
+      {
         return result;
+      }
 
       // Check the non-ORB arguments.
       result = this->parse_args (argc, argv);
       if (result < 0)
+      {
         return result;
+      }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -175,7 +179,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   Identity_Client client;
 
   if (client.init (argc, argv) == -1)
+  {
     return 1;
+  }
 
   try
     {
@@ -188,6 +194,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
   if (result == -1)
+  {
     return 1;
+  }
   return 0;
 }

@@ -43,10 +43,14 @@ ACE_Base64::encode (ACE_Byte const *input,
                     bool is_chunked)
 {
   if (!ACE_Base64::init_)
+  {
     ACE_Base64::init();
+  }
 
   if (input == nullptr)
+  {
     return nullptr;
+  }
 
   ACE_Byte *result {};
 
@@ -83,7 +87,9 @@ ACE_Base64::encode (ACE_Byte const *input,
           if (cols == max_columns)
             {
               if (is_chunked)
+              {
                 result[pos++] = '\n';
+              }
               cols = 0;
             }
           bits = 0;
@@ -116,7 +122,9 @@ ACE_Base64::encode (ACE_Byte const *input,
     }
 
   if (cols > 0 && is_chunked)
+  {
     result[pos++] = '\n';
+  }
 
   result[pos] = 0;
   *output_len = pos;
@@ -127,7 +135,9 @@ size_t
 ACE_Base64::length (ACE_Byte const *input)
 {
   if (!ACE_Base64::init_)
+  {
     ACE_Base64::init();
+  }
 
   ACE_Byte const *ptr = input;
   while (*ptr != 0 &&
@@ -143,10 +153,14 @@ ACE_Byte *
 ACE_Base64::decode (ACE_Byte const *input, size_t *output_len)
 {
   if (!ACE_Base64::init_)
+  {
     ACE_Base64::init();
+  }
 
   if (input == nullptr)
+  {
     return nullptr;
+  }
 
   size_t const result_len = ACE_Base64::length (input);
   ACE_Byte *result {};
@@ -176,9 +190,13 @@ ACE_Base64::decode (ACE_Byte const *input, size_t *output_len)
   for (; i < input_len; ++i)
     {
       if (input[i] == pad)
+      {
         break;
+      }
       if (!ACE_Base64::member_[input[i]])
+      {
         continue;
+      }
       bits += decoder_[input[i]];
       ++char_count;
 

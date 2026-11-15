@@ -11,7 +11,9 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 
   ACE_Name_Options * const name_options = ns.name_options ();
   if (name_options == nullptr)
+  {
     return 1;
+  }
 
   ACE_TCHAR program_name[] = ACE_TEXT ("MyName");
   ACE_TCHAR context_arg[] = ACE_TEXT ("-cNODE_LOCAL");
@@ -33,7 +35,9 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
               "(%P) opened with %d\n",
               result));
   if (result != 0)
+  {
     return -1;
+  }
 
   int const bind_result = ns.bind ("Key_Value",
                                    "Val_Value",

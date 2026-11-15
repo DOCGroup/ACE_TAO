@@ -458,7 +458,9 @@ ACE_Name_Reply::status (ACE_INT32 s)
   if (s == -1)
     this->transfer_.type_ = -1;
   else
+  {
     this->transfer_.type_ = 0;
+  }
 }
 
 ACE_UINT32

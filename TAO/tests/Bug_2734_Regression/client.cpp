@@ -92,7 +92,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, ior, min_timeout, max_timeout) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var object =
         orb->string_to_object (ior);

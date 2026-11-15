@@ -134,7 +134,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       int timeout {10};
 
       if (parse_args (argc, argv, ior, iterations, timeout) != 0)
+      {
         return 1;
+      }
 
       PeriodicTask periodic_task (orb.in (), ior, iterations);
 

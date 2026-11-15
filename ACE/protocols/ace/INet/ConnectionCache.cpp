@@ -39,7 +39,9 @@ namespace ACE
           {
             std::unique_ptr<ConnectionKey> duplicate;
             if (cachekey.key_ != nullptr)
+            {
               duplicate.reset (cachekey.key_->duplicate ());
+            }
             this->owned_key_ = std::move (duplicate);
             this->key_ = this->owned_key_.get ();
           }
@@ -168,7 +170,9 @@ namespace ACE
 
                 if ((state == ConnectionCacheValue::CST_BUSY ||
                         state == ConnectionCacheValue::CST_INIT) && !wait)
+                {
                   return false;
+                }
 
                 if (state == ConnectionCacheValue::CST_CLOSED ||
                         state == ConnectionCacheValue::CST_NONE)
@@ -223,7 +227,9 @@ namespace ACE
                     return false;
                   }
                 else
+                {
                   return false;
+                }
               }
           }
       }
@@ -261,7 +267,9 @@ namespace ACE
               }
           }
         else
+        {
           return false;
+        }
       }
 
     bool ConnectionCache::close_connection (ConnectionKey const& key,
@@ -300,7 +308,9 @@ namespace ACE
               }
           }
         else
+        {
           return false;
+        }
       }
 
     bool ConnectionCache::has_connection (ConnectionKey const& key)

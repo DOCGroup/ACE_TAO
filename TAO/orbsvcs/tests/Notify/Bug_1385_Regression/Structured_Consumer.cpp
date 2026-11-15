@@ -108,7 +108,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       status = client.init (argc, argv);
       if (status != 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Error: Client init failed.\n")), 1);
+      }
 
       CosNotifyChannelAdmin::EventChannel_var ec =
         client.create_event_channel ("MyEventChannel", 1);
@@ -119,13 +121,17 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       sig_var sig = sig::_narrow (object.in ());
 
       if (CORBA::is_nil (sig.in ()))
+      {
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Error: Narrow failed.\n")), 1);
+      }
 
       CosNotifyChannelAdmin::ConsumerAdmin_var admin =
         create_consumeradmin (ec.in ());
 
       if (CORBA::is_nil (admin.in ()))
+      {
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Error: nil ConsumerAdmin.\n")), 1);
+      }
 
       Notify_Structured_Push_Consumer* consumer =
         create_consumers (admin.in (), client, client.options ());

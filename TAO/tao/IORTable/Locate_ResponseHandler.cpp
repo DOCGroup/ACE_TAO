@@ -66,7 +66,9 @@ TAO_AMH_Locate_ResponseHandler_ptr
 TAO_AMH_Locate_ResponseHandler::_unchecked_narrow (CORBA::Object_ptr obj)
 {
   if (CORBA::is_nil (obj))
+  {
     return TAO_AMH_Locate_ResponseHandler::_nil ();
+  }
 
   return dynamic_cast < TAO_AMH_Locate_ResponseHandler_ptr > (obj);
 }

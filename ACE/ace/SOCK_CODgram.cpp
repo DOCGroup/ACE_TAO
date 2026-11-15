@@ -35,7 +35,9 @@ ACE_SOCK_CODgram::ACE_SOCK_CODgram (const ACE_Addr &remote,
                   protocol_family,
                   protocol,
                   reuse_addr) == -1)
+  {
     ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("ACE_SOCK_CODgram")));
+  }
 }
 
 /* This is the general-purpose open routine.  Note that it performs
@@ -108,7 +110,9 @@ ACE_SOCK_CODgram::open (const ACE_Addr &remote, const ACE_Addr &local,
                || protocol_family == PF_INET6
 #endif /* ACE_HAS_IPV6 */
               ) && ACE::bind_port (this->get_handle ()) == -1)
+          {
             error = true;
+          }
         }
       // We are binding just the local address.
       else if (local != ACE_Addr::sap_any && remote == ACE_Addr::sap_any)
@@ -116,7 +120,9 @@ ACE_SOCK_CODgram::open (const ACE_Addr &remote, const ACE_Addr &local,
           if (ACE_OS::bind (this->get_handle (),
                             (sockaddr *) local.get_addr (),
                             local.get_size ()) == -1)
+          {
             error = true;
+          }
         }
       // We are connecting to the remote address.
       else if (local == ACE_Addr::sap_any && remote != ACE_Addr::sap_any)
@@ -124,7 +130,9 @@ ACE_SOCK_CODgram::open (const ACE_Addr &remote, const ACE_Addr &local,
           if (ACE_OS::connect (this->get_handle (),
                                (sockaddr *) remote.get_addr (),
                                remote.get_size ()) == -1)
+          {
             error = true;
+          }
         }
       // We are binding to the local address and connecting to the
       // remote addresses.
@@ -136,7 +144,9 @@ ACE_SOCK_CODgram::open (const ACE_Addr &remote, const ACE_Addr &local,
               || ACE_OS::connect (this->get_handle (),
                                   (sockaddr *) remote.get_addr (),
                                   remote.get_size ()) == -1)
+          {
             error = true;
+          }
         }
       if (error)
         {

@@ -82,7 +82,9 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       PortableServer::POAManager_var const poa_manager = root_poa->the_POAManager ();
 
       if (parse_args (argc, argv, runtime) != 0)
+      {
         return 1;
+      }
 
       poa_manager->activate ();
       std::cout << "Get event_channel now" << std::endl;

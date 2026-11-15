@@ -22,7 +22,9 @@ CosNotifyFilter::FilterID
 TAO_Notify_FilterAdmin::add_filter (CosNotifyFilter::Filter_ptr new_filter)
 {
   if (CORBA::is_nil (new_filter))
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
@@ -35,7 +37,9 @@ TAO_Notify_FilterAdmin::add_filter (CosNotifyFilter::Filter_ptr new_filter)
   if (this->filter_list_.bind (new_id, new_filter_var) == -1)
       throw CORBA::INTERNAL ();
   else
+  {
     return new_id;
+  }
 }
 
 void
@@ -45,7 +49,9 @@ TAO_Notify_FilterAdmin::remove_filter (CosNotifyFilter::FilterID filter_id)
                       CORBA::INTERNAL ());
 
   if (this->filter_list_.unbind (filter_id) == -1)
+  {
     throw CosNotifyFilter::FilterNotFound ();
+  }
 }
 
 CosNotifyFilter::Filter_ptr
@@ -58,7 +64,9 @@ TAO_Notify_FilterAdmin::get_filter (CosNotifyFilter::FilterID filter_id)
 
   if (this->filter_list_.find (filter_id,
                                filter_var) == -1)
+  {
     throw CosNotifyFilter::FilterNotFound ();
+  }
 
   return filter_var._retn ();
 }
@@ -109,7 +117,9 @@ void
 TAO_Notify_FilterAdmin::save_persistent (TAO_Notify::Topology_Saver& saver)
 {
   if (this->filter_list_.current_size() == 0)
+  {
     return;
+  }
 
   bool changed = true;
 
@@ -160,7 +170,9 @@ TAO_Notify_FilterAdmin::load_child (ACE_CString const &type, CORBA::Long id,
     {
       this->filter_ids_.set_last_used(id);
       if (this->filter_list_.bind (id, filter) != 0)
+      {
         throw CORBA::INTERNAL ();
+      }
     }
   }
   return this;

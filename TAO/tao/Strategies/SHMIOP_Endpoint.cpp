@@ -45,7 +45,9 @@ TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const char *host,
     , object_addr_ (addr)
 {
   if (host != nullptr)
+  {
     this->host_ = host;
+  }
 }
 
 TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint ()
@@ -64,7 +66,9 @@ TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const char *host,
     , object_addr_ ()
 {
   if (host != nullptr)
+  {
     this->host_ = host;
+  }
 
   this->priority (priority);
 }
@@ -97,10 +101,14 @@ TAO_SHMIOP_Endpoint::set (const ACE_INET_Addr &addr,
           return -1;
         }
       else
+      {
         this->host_ = tmp;
+      }
     }
   else
+  {
     this->host_ = CORBA::string_dup (tmp_host);
+  }
 
   this->port_ = addr.get_port_number();
 
@@ -117,7 +125,9 @@ TAO_SHMIOP_Endpoint::addr_to_string (char *buffer, size_t length)
     + sizeof ('\0');
 
   if (length < actual_len)
+  {
     return -1;
+  }
 
   std::sprintf (buffer, "%s:%d",
                    this->host_.in (), this->port_);
@@ -160,7 +170,9 @@ TAO_SHMIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
                                                      (other_endpoint);
 
   if (endpoint == nullptr)
+  {
     return false;
+  }
 
   return
     this->port_ == endpoint->port_
@@ -171,7 +183,9 @@ CORBA::ULong
 TAO_SHMIOP_Endpoint::hash ()
 {
   if (this->hash_val_ != 0)
+  {
     return this->hash_val_;
+  }
 
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
@@ -180,7 +194,9 @@ TAO_SHMIOP_Endpoint::hash ()
                       this->hash_val_);
     // .. DCL
     if (this->hash_val_ != 0)
+    {
       return this->hash_val_;
+    }
 
     this->hash_val_ =
       ACE::hash_pjw (this->host ()) + this->port ();

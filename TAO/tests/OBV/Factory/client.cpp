@@ -70,7 +70,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       // Obtain reference to the object
       CORBA::Object_var tmp =
@@ -90,7 +92,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Check if we get the correct exception with minor code because no
       // factory has been set.
       if (!no_factory (test.in ()))
+      {
         return 1;
+      }
 
       // Create factories.
       OBV_FactoryTest::BaseValue_init *base_factory {};

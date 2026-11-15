@@ -47,7 +47,9 @@ FactoryDriver::start (int argc, ACE_TCHAR *argv [])
       orb_ = CORBA::ORB_init (argc, argv);
 
       if (this->parse_args (argc, argv) == -1)
+      {
         return -1;
+      }
 
       CORBA::Object_var const poa_object =
         orb_->resolve_initial_references ("RootPOA");

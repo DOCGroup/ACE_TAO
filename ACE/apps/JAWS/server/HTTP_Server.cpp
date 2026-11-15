@@ -92,7 +92,9 @@ HTTP_Server::parse_args (int argc, ACE_TCHAR *argv[])
         if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("NO_CACHE")) == 0)
           this->caching_ = false;
         else
+        {
           this->caching_ = true;
+        }
         break;
         default:
         break;
@@ -100,12 +102,18 @@ HTTP_Server::parse_args (int argc, ACE_TCHAR *argv[])
 
   // No magic numbers.
   if (this->port_ <= 0)
+  {
     this->port_ = 5432;
+  }
   if (this->threads_ <= 0)
+  {
     this->threads_ = 5;
+  }
   // Don't use number of threads as default
   if (this->backlog_ <= 0)
+  {
     this->backlog_ = this->threads_;
+  }
 
   this->strategy_ = thr_strategy | io_strategy;
 
@@ -273,7 +281,9 @@ HTTP_Server::thread_per_request (HTTP_Handler_Factory &factory)
       // Throttling is not allowing too many threads to run away.
       // Should really use some sort of condition variable here.
       if (!this->throttle_)
+      {
         continue;
+      }
 
       // This works because each task has only one thread.
       while (this->tm_.num_tasks_in_group (grp_id) > this->threads_)

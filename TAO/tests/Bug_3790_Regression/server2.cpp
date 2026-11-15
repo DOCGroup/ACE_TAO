@@ -94,7 +94,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ACE_TEXT ("corbaloc:iiop:localhost:15989/SIMPLE_TEST_KEY")};
       std::basic_string<ACE_TCHAR> another_ior {ACE_TEXT ("file://test.ior")};
       if (parse_args (argc, argv, test_ior, another_ior) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var const object =
         orb->resolve_initial_references ("RootPOA");

@@ -51,7 +51,9 @@ TAO::SSLIOP::Transport::handle_input (TAO_Resume_Handle &rh,
   TAO::SSLIOP::State_Guard ssl_state_guard (this->connection_handler_, result);
 
   if (result == -1)
+  {
     return -1;
+  }
 
   return TAO_Transport::handle_input (rh, max_wait_time);
 }
@@ -66,7 +68,9 @@ TAO::SSLIOP::Transport::send (iovec *iov,
     this->connection_handler_->peer ().sendv (iov, iovcnt, max_wait_time);
 
   if (retval > 0)
+  {
     bytes_transferred = retval;
+  }
 
   return retval;
 }
@@ -95,7 +99,9 @@ TAO::SSLIOP::Transport::recv (char *buf,
   if (n == -1)
     {
       if (errno == EWOULDBLOCK)
+      {
         return 0;
+      }
 
       return -1;
     }
@@ -116,7 +122,9 @@ TAO::SSLIOP::Transport::send_request (TAO_Stub *stub,
                                       ACE_Time_Value *max_wait_time)
 {
   if (this->ws_->sending_request (orb_core, message_semantics) == -1)
+  {
     return -1;
+  }
 
   if (this->send_message (stream,
                           stub,
@@ -138,7 +146,9 @@ TAO::SSLIOP::Transport::send_message (TAO_OutputCDR &stream,
 {
   // Format the message in the stream first
   if (this->messaging_object ()->format_message (stream, stub, request) != 0)
+  {
     return -1;
+  }
 
   // Strictly speaking, should not need to loop here because the
   // socket never gets set to a nonblocking mode ... some Linux
@@ -170,13 +180,17 @@ TAO::SSLIOP::Transport::tear_listen_point_list (TAO_InputCDR &cdr)
 {
   CORBA::Boolean byte_order;
   if (!(cdr >> ACE_InputCDR::to_boolean (byte_order)))
+  {
     return -1;
+  }
 
   cdr.reset_byte_order (static_cast<int> (byte_order));
 
   IIOP::ListenPointList listen_list;
   if (!(cdr >> listen_list))
+  {
     return -1;
+  }
 
   // As we have received a bidirectional information, set the flag to
   // 0
@@ -217,7 +231,9 @@ TAO::SSLIOP::Transport::set_bidir_context_info (
   // Marshall the information into the stream
   if (!(cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
       || !(cdr << listen_point_list))
+  {
     return;
+  }
 
   // Add this info in to the svc_list
   opdetails.request_service_context ().set_context (IOP::BI_DIR_IIOP, cdr);
@@ -233,7 +249,9 @@ TAO::SSLIOP::Transport::get_listen_point (
     dynamic_cast<TAO::SSLIOP::Acceptor *> (acceptor);
 
   if (ssliop_acceptor == nullptr)
+  {
     return -1;
+  }
 
   // Get the array of IIOP (not SSLIOP!) endpoints serviced by the
   // SSLIOP_Acceptor.

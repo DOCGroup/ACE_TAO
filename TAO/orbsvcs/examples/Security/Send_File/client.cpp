@@ -38,7 +38,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var object =
         orb->string_to_object (ior);
@@ -59,7 +61,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ACE_Read_Buffer buf (stdin, 0);
           char *line = buf.read ('\n');
           if (line == nullptr)
+          {
             break;
+          }
           server->send_line (line);
           buf.alloc ()->free (line);
         }

@@ -109,7 +109,9 @@ reader (void *)
       // ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%t) I'm reader number %d\n"), n));
 
       if (current_writers > 0)
+      {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%t) writers found!!!\n")));
+      }
 
       ACE_thread_t data = shared_data;
 

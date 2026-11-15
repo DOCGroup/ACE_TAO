@@ -47,7 +47,9 @@ TAO_EC_Conjunction_Filter::all_received () const
        ++i)
     {
       if (*i != static_cast<Word> (~0))
+      {
         return 0;
+      }
     }
   return 1;
 }
@@ -81,7 +83,9 @@ TAO_EC_Conjunction_Filter::filter (RtecEventComm::EventSet const &event,
     {
       int n = (*this->current_child_)->filter (event, qos_info);
       if (n != 0)
+      {
         return n;
+      }
     }
   return 0;
 }
@@ -97,7 +101,9 @@ TAO_EC_Conjunction_Filter::filter_nocopy (RtecEventComm::EventSet& event,
     {
       int n = (*i)->filter_nocopy (event, qos_info);
       if (n != 0)
+      {
         return n;
+      }
     }
   return 0;
 }
@@ -110,7 +116,9 @@ TAO_EC_Conjunction_Filter::push (RtecEventComm::EventSet const &event,
   int w = pos / bits_per_word;
   int b = pos % bits_per_word;
   if (ACE_BIT_ENABLED (this->bitvec_[w], 1<<b))
+  {
     return;
+  }
   ACE_SET_BITS (this->bitvec_[w], 1<<b);
   CORBA::ULong n = event.length ();
   CORBA::ULong l = this->event_.length ();
@@ -120,7 +128,9 @@ TAO_EC_Conjunction_Filter::push (RtecEventComm::EventSet const &event,
       this->event_[l + i] = event[i];
     }
   if (this->all_received () && this->parent () != nullptr)
+  {
     this->parent ()->push_nocopy (this->event_, qos_info);
+  }
 }
 
 void
@@ -178,7 +188,9 @@ TAO_EC_Conjunction_Filter::can_match (
        ++i)
     {
       if ((*i)->can_match (header) != 0)
+      {
         return 1;
+      }
     }
   return 0;
 }

@@ -36,7 +36,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_TCHAR const *ior {};
       if (parse_args (argc, argv, ior) != 0)
+      {
         return -1;
+      }
 
       // Start out with the first IOR.  Interaction with the second
       // IOR occurs during the various interceptions executed during

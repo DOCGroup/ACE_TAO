@@ -142,7 +142,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var const server_object =
         orb->string_to_object (options.server_ior);
@@ -406,7 +408,9 @@ run_message_count (CORBA::ORB_ptr orb,
                         ami_buffering, flusher.out ());
 
   if (policy_setup_failed != 0)
+  {
     return policy_setup_failed;
+  }
 
   int test_failed {};
 
@@ -497,7 +501,9 @@ run_message_count (CORBA::ORB_ptr orb,
                        ami_buffering_admin);
 
   if (liveness_test_failed)
+  {
     test_failed = 1;
+  }
 
   return test_failed;
 }
@@ -521,7 +527,9 @@ run_timeout (CORBA::ORB_ptr orb,
                         ami_buffering, flusher.out ());
 
   if (policy_setup_failed != 0)
+  {
     return policy_setup_failed;
+  }
 
   int test_failed {};
 
@@ -622,7 +630,9 @@ run_timeout (CORBA::ORB_ptr orb,
                        ami_buffering_admin);
 
   if (liveness_test_failed)
+  {
     test_failed = 1;
+  }
 
   return test_failed;
 }
@@ -646,7 +656,9 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
                         ami_buffering, flusher.out ());
 
   if (policy_setup_failed != 0)
+  {
     return policy_setup_failed;
+  }
 
   int test_failed {};
 
@@ -774,7 +786,9 @@ run_buffer_size (CORBA::ORB_ptr orb,
                         ami_buffering, flusher.out ());
 
   if (policy_setup_failed != 0)
+  {
     return policy_setup_failed;
+  }
 
   int test_failed {};
 
@@ -868,7 +882,9 @@ run_buffer_size (CORBA::ORB_ptr orb,
                        ami_buffering_admin);
 
   if (liveness_test_failed)
+  {
     test_failed = 1;
+  }
 
   return test_failed;
 }

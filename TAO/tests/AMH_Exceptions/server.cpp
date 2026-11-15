@@ -176,7 +176,9 @@ ST_AMH_Server::start_orb_and_poa ()
     {
       this->orb_ = CORBA::ORB_init (*(this->argc_), this->argv_);
       if (parse_args (*(this->argc_), this->argv_, this->options_) != 0)
+      {
         return -1;
+      }
 
       CORBA::Object_var const poa_object (
         this->orb_->resolve_initial_references ("RootPOA"));
@@ -265,7 +267,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ST_AMH_Server amh_server (&argc, argv);
 
   if (amh_server.start_orb_and_poa () != 0)
+  {
     return 1;
+  }
 
   ST_AMH_Servant servant (amh_server.orb ());
 

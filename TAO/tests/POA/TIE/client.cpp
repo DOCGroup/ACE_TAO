@@ -158,7 +158,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Initialize options based on command-line arguments.
       int const parse_args_result = parse_args (argc, argv, options);
       if (parse_args_result != 0)
+      {
         return parse_args_result;
+      }
 
       Test<A, A_var>::run (orb.in (), options.iors[0], options.iterations);
       Test<Outer::B, Outer::B_var>::run (orb.in (), options.iors[1], options.iterations);

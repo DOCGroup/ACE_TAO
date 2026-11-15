@@ -40,7 +40,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_TString ior_output_file (ACE_TEXT ("server.ior"));
       if (parse_args (argc, argv, ior_output_file) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");

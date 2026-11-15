@@ -114,7 +114,9 @@ ACE_Control_Block::ACE_Name_Node::ACE_Name_Node (const char *name,
   char *n = this->name_;
   std::strcpy (n, name);
   if (next != nullptr)
+  {
     next->prev_ = this;
+  }
 }
 
 const char *

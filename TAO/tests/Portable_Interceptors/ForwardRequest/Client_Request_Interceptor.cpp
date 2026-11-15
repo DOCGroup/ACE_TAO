@@ -91,13 +91,17 @@ Client_Request_Interceptor::receive_other (
 
   // Oneway
   if (!response_expected)
+  {
     return;
+  }
 
   PortableInterceptor::ReplyStatus const reply_status =
     ri->reply_status ();
 
   if (reply_status == PortableInterceptor::TRANSPORT_RETRY)
+  {
     return;
+  }
 
   // If we get this far then we should have received a
   // LOCATION_FORWARD reply, either from another client request
@@ -109,7 +113,9 @@ Client_Request_Interceptor::receive_other (
   CORBA::Object_var const forward (ri->forward_reference ());
 
   if (CORBA::is_nil (forward.in ()))
+  {
     throw CORBA::INTERNAL ();
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               "CLIENT (%P|%t) Received LOCATION_FORWARD reply.\n"));

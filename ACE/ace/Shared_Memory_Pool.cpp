@@ -115,7 +115,9 @@ ACE_Shared_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
   SHM_TABLE *st = reinterpret_cast<SHM_TABLE *> (this->shm_addr_table_[0]);
 
   if (this->in_use (offset, counter) == -1)
+  {
     return -1;
+  }
 
   if (counter == this->max_segments_)
     {
@@ -166,7 +168,9 @@ ACE_Shared_Memory_Pool::handle_signal (int, siginfo_t *siginfo, ucontext_t *)
 #if defined (ACE_HAS_SIGINFO_T) && !defined (ACE_LACKS_SI_ADDR) && \
         (defined (SEGV_MAPERR) || defined (SEGV_MEMERR))
   if (siginfo == nullptr)
+  {
     return -1;
+  }
 
   // Make sure that the pointer causing the problem is within the
   // range of the backing store.
@@ -274,7 +278,9 @@ ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool (
         }
     }
   else
+  {
     this->base_shm_key_ = ACE_DEFAULT_SHM_KEY;
+  }
 #endif // ACE_HAS_SYSV_IPC
 
   if (this->signal_handler_.register_handler (SIGSEGV, this) == -1)
@@ -298,7 +304,9 @@ ACE_Shared_Memory_Pool::acquire (size_t nbytes, size_t &rounded_bytes)
   ACE_OFF_T offset;
 
   if (this->commit_backing_store_name (rounded_bytes, offset) == -1)
+  {
     return nullptr;
+  }
 
   // ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) ACE_Shared_Memory_Pool::acquire, acquired more chunks, nbytes = %d, rounded_bytes = %d\n"), nbytes, rounded_bytes));
   return ((char *) this->shm_addr_table_[0]) + offset;
@@ -481,7 +489,9 @@ ACE_Shared_Memory_Pool::round_up (size_t nbytes)
 {
   ACE_TRACE ("ACE_Shared_Memory_Pool::round_up");
   if (nbytes < this->segment_size_)
+  {
     nbytes = this->segment_size_;
+  }
 
   return ACE::round_to_pagesize (nbytes);
 }

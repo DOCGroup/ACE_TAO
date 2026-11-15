@@ -97,7 +97,9 @@ TAO_DIOP_Transport::recv (char *buf,
   if (n == -1)
     {
       if (errno == EWOULDBLOCK)
+      {
         return 0;
+      }
 
       return -1;
     }
@@ -175,7 +177,9 @@ TAO_DIOP_Transport::handle_input (TAO_Resume_Handle &rh,
   // Parse the incoming message for validity. The check needs to be
   // performed by the messaging objects.
   if (this->messaging_object ()->parse_next_message (qd, mesg_length) == -1)
+  {
     return -1;
+  }
 
   if (qd.missing_data () == TAO_MISSING_DATA_UNDEFINED)
     {

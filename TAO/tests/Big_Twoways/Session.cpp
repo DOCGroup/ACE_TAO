@@ -81,12 +81,16 @@ void
 Session::start (const Test::Session_List &other_sessions)
 {
   if (other_sessions.length () == 0)
+  {
     throw Test::No_Peers ();
+  }
 
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
     if (this->running_)
+    {
       throw Test::Already_Running ();
+    }
 
     this->other_sessions_ = other_sessions;
 
@@ -116,7 +120,9 @@ Session::start (const Test::Session_List &other_sessions)
       }
 
     if (this->active_thread_count_ != this->thread_count_)
+    {
       return;
+    }
   }
 
   this->validate_connections ();
@@ -124,7 +130,9 @@ Session::start (const Test::Session_List &other_sessions)
   this->barrier_.wait ();
 
   if (this->running_)
+  {
     return;
+  }
 
   /// None of the threads are running, this session is useless at
   /// this point, report the problem and destroy the local objects
@@ -158,7 +166,9 @@ Session::echo_payload (Test::Payload const &the_payload)
     verbose = (this->expected_messages_ % 10 == 0);
 #endif /* 0 */
     if (this->expected_messages_ < 5)
+    {
       verbose = true;
+    }
 
     if (verbose)
       {
@@ -168,7 +178,9 @@ Session::echo_payload (Test::Payload const &the_payload)
                     this->expected_messages_));
       }
     if (this->more_work ())
+    {
       return retval._retn ();
+    }
   }
   this->terminate (true);
 
@@ -193,7 +205,9 @@ Session::more_work () const
   if (this->expected_messages_ > 0
       || this->active_thread_count_ > 0
       || !this->running_)
+  {
     return true;
+  }
 
   return false;
 }

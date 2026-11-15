@@ -81,9 +81,13 @@ namespace {
                       ACE_TEXT ("   handle %d: %u\n"),
                       (*iter).first, (*iter).second));
           if ((*iter).second > max_chunks)
+          {
             max_chunks = (*iter).second;
+          }
           if ((*iter).second < min_chunks)
+          {
             min_chunks = (*iter).second;
+          }
         }
       if ((max_chunks - min_chunks) > max_chunks / 10)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -136,7 +140,9 @@ Read_Handler::handle_input (ACE_HANDLE h)
   else // result == 0
     {
       if (opt_debug)
+      {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Handle %d closing\n"), h));
+      }
       // This will cause handle_close to get called.
       return -1;
     }
@@ -203,7 +209,9 @@ sender (void *arg)
       socks[i].enable (ACE_NONBLOCK);
     }
   if (i < opt_nconnections)
+  {
     return ACE_THR_FUNC_RETURN_NULL;
+  }
 
   // Keep blasting data on all possible connections until this thread
   // is canceled. If we manage to overrun the receiver on all sockets,
@@ -229,7 +237,9 @@ sender (void *arg)
               continue;
             }
           if (errno == EWOULDBLOCK)
+          {
             continue;
+          }
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%t) %p; giving up\n"),
                       ACE_TEXT ("sender")));
@@ -258,11 +268,15 @@ reactor_loop (void *p)
   int me = reactor_thread_nr++;
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Reactor loop %d starting...\n"), me));
   if (me == 0)
+  {
     r->owner (ACE_Thread::self ());
+  }
   if (r->run_reactor_event_loop () == -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"), ACE_TEXT ("reactor")));
   else
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) reactor thread %d ending\n"), me));
+  }
   return ACE_THR_FUNC_RETURN_NULL;
 }
 

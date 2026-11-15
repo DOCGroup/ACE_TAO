@@ -14,10 +14,14 @@ HA_CommandHandler::svc ()
     {
       ACE_Message_Block *raw_message_block {};
       if (this->getq (raw_message_block) == -1)
+      {
         break;
+      }
       ACE_Message_Block_Unique_Ptr message_block {raw_message_block};
       if (message_block->msg_type () == ACE_Message_Block::MB_HANGUP)
+      {
         break;
+      }
 
       DeviceCommandHeader header {};
       std::memcpy (&header, message_block->rd_ptr (), sizeof (header));
@@ -66,7 +70,9 @@ Message_Receiver::copy_payload (ACE_Message_Block &message_block,
     this->peer ().recv_n (message_block.wr_ptr (), payload_length);
 
   if (result <= 0)
+  {
     return -1;
+  }
 
   message_block.wr_ptr (payload_length);
   return 0;
@@ -78,7 +84,9 @@ Message_Receiver::handle_input (ACE_HANDLE)
 {
   DeviceCommandHeader dch {};
   if (this->read_header (dch) < 0)
+  {
     return -1;
+  }
 
   if (dch.deviceId_ < 0)
     {
@@ -104,7 +112,9 @@ Message_Receiver::handle_input (ACE_HANDLE)
                        ACE_TEXT ("Receive failure")), -1);
   // Pass it off to the handler thread.
   if (this->handler_->putq (message_block.get ()) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Failed to enqueue message\n")), -1);
+  }
   message_block.release ();
   return 0;
 }

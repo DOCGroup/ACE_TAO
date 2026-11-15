@@ -51,7 +51,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     Options options;
     if (parse_args (argc, argv, options) != 0)
+    {
       return 1;
+    }
 
     // Create a servant.
     PortableServer::Servant_var<Messenger_i> const messenger_servant = new Messenger_i;

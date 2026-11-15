@@ -56,35 +56,45 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             if (argv[i + 1] != nullptr)
                 ecname = argv[++i];
             else
+            {
               ACE_ERROR_RETURN ((LM_ERROR,  "Missing Event channel name\n"),0);
+            }
           }
         else if (ACE_OS::strcasecmp (argv[i], ACE_TEXT ("-address")) == 0)
           {
             if (argv[i + 1] != nullptr)
               address = argv[++i];
             else
+            {
               ACE_ERROR_RETURN ((LM_ERROR, "Missing address\n"),0);
+            }
           }
         else if (ACE_OS::strcasecmp (argv[i], ACE_TEXT ("-port")) == 0)
           {
             if (argv[i + 1] != nullptr)
               port = ACE_OS::atoi (argv[++i]);
             else
+            {
               ACE_ERROR_RETURN ((LM_ERROR, "Missing port\n"),0);
+            }
           }
         else if (ACE_OS::strcasecmp (argv[i], ACE_TEXT ("-listenport")) == 0)
           {
             if (argv[i + 1] != nullptr)
               listenport = ACE_OS::atoi (argv[++i]);
             else
+            {
               ACE_ERROR_RETURN ((LM_ERROR, "Missing port\n"), 0);
+            }
           }
         else if (ACE_OS::strcasecmp (argv[i], ACE_TEXT ("-iorfile")) == 0)
           {
             if (argv[i + 1] != nullptr)
               iorfile = argv[++i];
              else
-              ACE_ERROR_RETURN ((LM_ERROR, "Missing ior file\n"), 0);
+             {
+               ACE_ERROR_RETURN ((LM_ERROR, "Missing ior file\n"), 0);
+             }
           }
         else if (ACE_OS::strcasecmp (argv[i], ACE_TEXT ("-udp")) == 0)
           mcast = false;
@@ -208,7 +218,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       udp_eh->reactor (orb->orb_core ()->reactor ());
       ACE_INET_Addr local_addr (listenport);
       if (udp_eh->open (local_addr) == -1)
+      {
         ACE_ERROR ((LM_ERROR,"Cannot open EH\n"));
+      }
 
       eh = std::move (udp_eh);
     }

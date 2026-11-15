@@ -98,7 +98,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Client_Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       // Get a ref to the IORManipulation object
       CORBA::Object_var const iorm_object =

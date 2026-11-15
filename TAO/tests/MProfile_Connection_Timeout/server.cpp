@@ -63,7 +63,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       Simple_Server_i server_impl (orb.in ());
 
@@ -92,7 +94,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       if (options.run_orb)
+      {
         orb->run ();
+      }
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 

@@ -23,7 +23,9 @@ void
 TAO_Notify_Tests_RT_Test_FilterFactory::destroy ()
 {
   if (CORBA::is_nil (this->filter_poa_.in ()))
+  {
     return;
+  }
   PortableServer::ServantBase_var guard (this);
   try
     {
@@ -40,13 +42,17 @@ CosNotifyFilter::Filter_ptr
 TAO_Notify_Tests_RT_Test_FilterFactory::create_filter (char const* constraint_grammar)
 {
   if (TAO_debug_level)
+  {
     ACE_DEBUG ((LM_DEBUG, "(%P, %t)In TAO_Notify_Tests_RT_Test_FilterFactory::create_filter\n"));
+  }
 
   // @@: change to "ExTCL" later.
   if (std::strcmp (constraint_grammar, "TCL") != 0 &&
       std::strcmp (constraint_grammar, "ETCL") != 0 &&
       std::strcmp (constraint_grammar, "EXTENDED_TCL") != 0)
+  {
     throw CosNotifyFilter::InvalidGrammar ();
+  }
 
   // Create the RefCounted servant.
   TAO_Notify_Tests_RT_Test_Filter* filter {};

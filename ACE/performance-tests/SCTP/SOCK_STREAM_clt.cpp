@@ -106,7 +106,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
   // can access. So the histogram created in one of the *_test() functions
   // will be reported out by the report() call
   if (testResultsHistogram != nullptr)
+  {
     ACE_SCTP::report();
+  }
 
   return 0;
 }
@@ -137,12 +139,16 @@ int sendHeader(ACE_SOCK_Stream & stream) {
     hdrCDR << ACE_OutputCDR::from_boolean (ACE_CDR_BYTE_ORDER);
     hdrCDR << ACE_CDR::ULong(Options_Manager::test_iterations+primerIterations);
   if (!hdrCDR.good_bit())
+  {
     return (0);
+  }
 
   // send the header to the server (HEADER IS 8 BYTES LONG)
   size_t bt;
   if (stream.send_n(hdrCDR.begin(), 0,  &bt) == -1)
+  {
     return 0;
+  }
 
   return 1;
 }
@@ -299,7 +305,9 @@ ACE_SCTP::HIST runTest(ACE_SOCK_Stream & stream)
   std::unique_ptr<ACE_CDR::Octet[]> o_arr (
     new (std::nothrow) ACE_CDR::Octet[seqLen]);
   if (!o_arr)
+  {
     return 0;
+  }
 
   return runUnmarshalledOctetTest (std::move (o_arr), seqLen, stream);
 }

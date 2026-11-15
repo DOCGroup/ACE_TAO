@@ -287,7 +287,9 @@ Twoway_Handler::run ()
 
       if (parse_header_and_allocate_buffer (request,
                                             &len) == -1)
+      {
         return -1;
+      }
 
       // Subtract off the sizeof the length prefix.
       ssize_t r_bytes =
@@ -322,7 +324,9 @@ Twoway_Handler::run ()
 
           // Don't try to send more than is in the request buffer!
           if (s_bytes > r_bytes)
+          {
             s_bytes = r_bytes;
+          }
 
           if (this->ssl_stream_ -> send_n (request,
                                            s_bytes) != s_bytes)
@@ -381,7 +385,9 @@ Oneway_Handler::run ()
 
       if (parse_header_and_allocate_buffer (request,
                                             &len) == -1)
+      {
         return -1;
+      }
 
       // Subtract off the sizeof the length prefix.
       ssize_t r_bytes =
@@ -491,7 +497,9 @@ Handler_Factory::create_handler (
               handler_type));
 
   if (handler->open () == -1)
+  {
     return -1;
+  }
 
 #if defined (ACE_MT_SAFE)
   // Spawn a new thread and run the new connection in that thread of
@@ -518,7 +526,9 @@ int
 Handler_Factory::handle_events ()
 {
   if (this->init_acceptors () == -1)
+  {
     return -1;
+  }
 
   fd_set handles;
 
@@ -574,10 +584,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_SSL_Context *context = ACE_SSL_Context::instance ();
 
   if (context->certificate ("./dummy.pem", SSL_FILETYPE_PEM) != 0)
+  {
     return -1;
+  }
 
   if (context->private_key ("./key.pem", SSL_FILETYPE_PEM) != 0)
+  {
     return -1;
+  }
 
   OPTIONS::instance ()->parse_args (argc, argv);
 

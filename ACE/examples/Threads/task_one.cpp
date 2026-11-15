@@ -44,7 +44,9 @@ Barrier_Task::Barrier_Task (ACE_Thread_Manager *thr_mgr,
 {
   // Create worker threads.
   if (this->activate (THR_NEW_LWP, n_threads) == -1)
+  {
     ACE_ERROR ((LM_ERROR, "%p\n", "activate failed"));
+  }
 }
 
 // Iterate <n_iterations> time printing off a message and "waiting"

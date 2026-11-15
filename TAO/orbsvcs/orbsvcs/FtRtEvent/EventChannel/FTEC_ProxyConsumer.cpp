@@ -44,7 +44,9 @@ void TAO_FTEC_ProxyPushConsumer::connect_push_supplier (
                 const RtecEventChannelAdmin::SupplierQOS& qos)
 {
   if (Request_Context_Repository().is_executed_request())
+  {
     return;
+  }
 
   FtRtecEventChannelAdmin::Operation update;
   update.object_id = this->id();
@@ -71,7 +73,9 @@ void TAO_FTEC_ProxyPushConsumer::connect_push_supplier (
 void TAO_FTEC_ProxyPushConsumer::disconnect_push_consumer ()
 {
   if (Request_Context_Repository().is_executed_request())
+  {
     return;
+  }
   FtRtecEventChannelAdmin::Operation update;
   update.object_id = id();
   update.param._d(FtRtecEventChannelAdmin::DISCONNECT_PUSH_CONSUMER);

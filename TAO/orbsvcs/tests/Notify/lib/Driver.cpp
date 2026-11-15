@@ -230,12 +230,16 @@ TAO_Notify_Tests_Driver::init (int argc, ACE_TCHAR *argv[])
                                 "");
 
   if (this->parse_args (argc, argv) == -1)
+  {
     return -1;
+  }
 
   // Make sure we can support multiple priorities that are required
   // for this test.
   if (skip_priority_levels_check_ == 0)
+  {
     check_supported_priorities (this->orb_.in());
+  }
 
   LOOKUP_MANAGER->init (this->orb_.in ());
 
@@ -246,7 +250,9 @@ TAO_Notify_Tests_Driver::init (int argc, ACE_TCHAR *argv[])
 
   // Set the run period.
   if (this->run_period_ != ACE_Time_Value::zero)
+  {
     this->orb_run_worker_.run_period (this->run_period_);
+  }
 
   // Set the ORB
   this->orb_run_worker_.orb (this->orb_.in ());

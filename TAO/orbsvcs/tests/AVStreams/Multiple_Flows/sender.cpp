@@ -116,20 +116,26 @@ Sender::init (int argc,
     this->endpoint_strategy_.init (TAO_AV_CORE::instance ()->orb (),
                                    TAO_AV_CORE::instance ()->poa ());
   if (result != 0)
+  {
     return result;
+  }
 
   // Initialize the naming services
   result =
     this->naming_client_.init (TAO_AV_CORE::instance ()->orb ());
   if (result != 0)
+  {
     return result;
+  }
 
   // Parse the command line arguments
   result =
     this->parse_args (argc,
                       argv);
   if (result != 0)
+  {
     return result;
+  }
 
   // Open file to read.
   this->input_file_.reset (std::fopen (this->options_.filename.c_str (), "rb"));
@@ -249,7 +255,9 @@ Sender::pace_data ()
 
               // At end of file break the loop and end the sender.
               if (TAO_debug_level > 0)
+              {
                 ACE_DEBUG ((LM_DEBUG,"Handle_Start:End of file\n"));
+              }
               break;
             }
 

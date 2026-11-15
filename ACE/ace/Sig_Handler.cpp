@@ -50,7 +50,9 @@ ACE_Sig_Handler::~ACE_Sig_Handler ()
 {
   for (int s = 1; s < ACE_NSIG; ++s)
     if (ACE_Sig_Handler::signal_handlers_[s])
+    {
       ACE_Sig_Handler::remove_handler_i (s);
+    }
 }
 
 void
@@ -96,7 +98,9 @@ ACE_Sig_Handler::handler (int signum)
   if (ACE_Sig_Handler::in_range (signum))
     return ACE_Sig_Handler::signal_handlers_[signum];
   else
+  {
     return nullptr;
+  }
 }
 
 ACE_Event_Handler *
@@ -113,7 +117,9 @@ ACE_Sig_Handler::handler_i (int signum,
       return sh;
     }
   else
+  {
     return nullptr;
+  }
 }
 
 ACE_Event_Handler *
@@ -149,19 +155,25 @@ ACE_Sig_Handler::register_handler_i (int signum,
       // Return a pointer to the old ACE_Event_Handler if the user
       // asks for this.
       if (old_sh != nullptr)
+      {
         *old_sh = sh;
+      }
 
       // Make sure that @a new_disp points to a valid location if the
       // user doesn't care...
       if (new_disp == nullptr)
+      {
         new_disp = &sa;
+      }
 
       new_disp->handler (ace_signal_handler_dispatcher);
       new_disp->flags (new_disp->flags () | SA_SIGINFO);
       return new_disp->register_action (signum, old_disp);
     }
   else
+  {
     return -1;
+  }
 }
 
 /// Register an ACE_Event_Handler along with the corresponding SIGNUM.
@@ -198,7 +210,9 @@ ACE_Sig_Handler::remove_handler_i (int signum,
   ACE_Sig_Action sa (SIG_DFL, (sigset_t *) nullptr); // Reset to default disposition.
 
   if (new_disp == nullptr)
+  {
     new_disp = &sa;
+  }
 
   ACE_Event_Handler *eh = ACE_Sig_Handler::signal_handlers_[signum];
   ACE_Sig_Handler::signal_handlers_[signum] = nullptr;
@@ -228,7 +242,9 @@ ACE_Sig_Handler::remove_handler (int signum,
     ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, m, *lock, -1));
 
   if (ACE_Sig_Handler::in_range (signum))
+  {
     return ACE_Sig_Handler::remove_handler_i (signum, new_disp, old_disp);
+  }
 
   return -1;
 }
@@ -255,7 +271,9 @@ ACE_Sig_Handler::dispatch (int signum, siginfo_t *siginfo, ucontext_t *ucontext)
   if (eh != nullptr)
     {
       if (eh->handle_signal (signum, siginfo, ucontext) == -1)
+      {
         ACE_Sig_Handler::remove_handler_i (signum);
+      }
 #if defined (ACE_WIN32)
       else
         // Win32 is weird in the sense that it resets the signal
@@ -416,7 +434,9 @@ ACE_Sig_Handlers::register_handler (int signum,
           // Make sure that new_disp points to a valid location if the
           // user doesn't care...
           if (new_disp == nullptr)
+          {
             new_disp = &sa;
+          }
 
           new_disp->handler (ace_signal_handlers_dispatcher);
 
@@ -497,14 +517,18 @@ ACE_Sig_Handlers::remove_handler (int signum,
           ACE_Sig_Action sa (SIG_DFL, (sigset_t *) nullptr);
 
           if (new_disp == nullptr)
+          {
             new_disp = &sa;
+          }
 
           return new_disp->register_action (signum, old_disp);
         }
       return 0;
     }
   else
+  {
     return -1;
+  }
 }
 
 /// Master dispatcher function that gets called by a signal handler and

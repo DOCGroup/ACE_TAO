@@ -10,7 +10,9 @@ Hello::next_prime ()
                     this->latest_prime_);
 
   if (this->latest_prime_ > 10000)
+  {
     ACE_OS::abort ();
+  }
 
   for (CORBA::Long ind = 0;
        ind != 400;
@@ -24,7 +26,9 @@ Hello::next_prime ()
           if (ACE::is_prime (this->latest_prime_,
                              2,
                              this->latest_prime_ / 2) == 0)
+          {
             is_prime = true;
+          }
         }
     }
 

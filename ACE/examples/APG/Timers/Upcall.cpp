@@ -118,7 +118,9 @@ UpcallHandler::cancel_type (PTimerQueue &,
               ACE_TEXT ("Handler %d has been cancelled\n"),
               handler->getID ()));
   if (!dont_call)
+  {
     return handler->handleCancel ();
+  }
   return 0;
 }
 
@@ -135,7 +137,9 @@ UpcallHandler::cancel_timer (PTimerQueue &,
               ACE_TEXT ("Handler %d has been cancelled\n"),
               handler->getID ()));
   if (!dont_call)
+  {
     return handler->handleCancel ();
+  }
   return 0;
 }
 

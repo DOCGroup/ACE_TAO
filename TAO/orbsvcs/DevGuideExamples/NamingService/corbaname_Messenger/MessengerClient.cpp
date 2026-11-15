@@ -16,7 +16,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     << " [-ORB options] [corbaname URL for message server]" << std::endl;
         }
       else
+      {
         url = argv[1];
+      }
 
       CORBA::Object_var const object = orb->string_to_object (url);
       Messenger_var const messenger = Messenger::_narrow (object.in ());

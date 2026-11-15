@@ -15,7 +15,9 @@ TAO_PI_Server_Loader::init (int, ACE_TCHAR* [])
 
   // Only allow initialization once.
   if (this->initialized_)
+  {
     return 0;
+  }
 
   this->initialized_ = true;
 

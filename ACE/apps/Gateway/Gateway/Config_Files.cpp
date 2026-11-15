@@ -33,7 +33,9 @@ Consumer_Config_File_Parser::read_entry (Consumer_Config_Info &entry,
   // Get the payload type.
   result = this->getint (entry.type_);
   if (result != FPRT::RT_SUCCESS)
+  {
     return result;
+  }
 
   // get all the consumers.
   entry.total_consumers_ = 0;
@@ -45,7 +47,9 @@ Consumer_Config_File_Parser::read_entry (Consumer_Config_Info &entry,
   if (result == FPRT::RT_EOLINE || result == FPRT::RT_EOFILE)
     return FPRT::RT_SUCCESS;
   else
+  {
     return result;
+  }
 }
 
 FP_RETURN_TYPE
@@ -71,7 +75,9 @@ Connection_Config_File_Parser::read_entry (Connection_Config_Info &entry,
   // Get the hostname.
   result = this->getword (entry.host_);
   if (result != FPRT::RT_SUCCESS)
+  {
     return result;
+  }
 
   ACE_INT32 port {};
 
@@ -84,7 +90,9 @@ Connection_Config_File_Parser::read_entry (Connection_Config_Info &entry,
       if (result != FPRT::RT_SUCCESS)
         return result;
       else
+      {
         entry.connection_role_ = buf[0];
+      }
 
       if (entry.connection_role_ == 'C')
         entry.remote_port_ = Options::instance ()->consumer_connector_port ();
@@ -105,7 +113,9 @@ Connection_Config_File_Parser::read_entry (Connection_Config_Info &entry,
       if (result != FPRT::RT_SUCCESS)
         return result;
       else
+      {
         entry.connection_role_ = buf[0];
+      }
     }
 
   // Get the max retry delay.
@@ -122,7 +132,9 @@ Connection_Config_File_Parser::read_entry (Connection_Config_Info &entry,
   else if (result != FPRT::RT_SUCCESS)
     return result;
   else
+  {
     entry.local_port_ = (unsigned short) port;
+  }
 
   ACE_INT32 priority {};
 
@@ -131,7 +143,9 @@ Connection_Config_File_Parser::read_entry (Connection_Config_Info &entry,
   if (result != FPRT::RT_SUCCESS)
     return result;
   else
+  {
     entry.priority_ = priority;
+  }
 
   return FPRT::RT_SUCCESS;
 }

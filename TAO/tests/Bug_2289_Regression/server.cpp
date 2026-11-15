@@ -64,7 +64,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         root_poa->the_POAManager ();
 
       if (parse_args (argc, argv, ior_output_file, client_ior) != 0)
+      {
         return 1;
+      }
 
       MyInterfaceImpl *test_impl {};
       ACE_NEW_RETURN (test_impl,

@@ -78,7 +78,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       RtecEventChannelAdmin::EventChannel_var const channel = get_event_channel (argc, argv);
 
       if (CORBA::is_nil (channel.in ()))
+      {
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot Find FT_EventService\n")), -1);
+      }
 
       PortableServer::POA_var const poa =
         resolve_init<PortableServer::POA> (orb.in (), "RootPOA");

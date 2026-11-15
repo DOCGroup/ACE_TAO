@@ -18,7 +18,9 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
   ACE_Naming_Context ns;
   ACE_Name_Options * const name_options = ns.name_options ();
   if (name_options == nullptr)
+  {
     return 1;
+  }
 
   ACE_TCHAR program_name[] = ACE_TEXT ("MyName");
   ACE_TCHAR context_arg[] = ACE_TEXT ("-cNET_LOCAL");
@@ -34,7 +36,9 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
               "ACE_Naming_Context::open returned %d\n",
               result));
   if (result != 0)
+  {
     return result;
+  }
 
   char key[128];
   char val[32];
@@ -58,7 +62,9 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
                   bind_result));
 
       if (bind_result != 0)
+      {
         return -1;
+      }
     }
 
   int const close_result = ns.close ();

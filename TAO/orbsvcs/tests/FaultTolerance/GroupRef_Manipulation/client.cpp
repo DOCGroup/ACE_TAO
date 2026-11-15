@@ -43,7 +43,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Client_Options options {};
 
       if (parse_args (argc, argv, options) != 0 || options.ior.empty ())
+      {
         return -1;
+      }
 
       // Start out with the first IOR.  Interaction with the second
       // IOR occurs during the various interceptions executed during
@@ -54,7 +56,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ForwardRequestTest::test::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "Object reference is nil\n"), 1);
+      }
 
       CORBA::String_var const marshaled_obj_snapshot1 =
         orb->object_to_string (server.in ());

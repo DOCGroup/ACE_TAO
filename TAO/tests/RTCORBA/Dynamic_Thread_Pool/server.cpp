@@ -166,7 +166,9 @@ Task::svc ()
                                       this->options_.ior_output_file,
                                       this->ior_count_);
       if (result != 0)
+      {
         return result;
+      }
 
       poa_manager->activate ();
 
@@ -210,7 +212,9 @@ Task::svc ()
                                                 this->options_,
                                                 this->ior_count_);
       if (result != 0)
+      {
         return result;
+      }
 
       result = create_POA_and_register_servant (threadpool_policy_2.in (),
                                                 "second_poa",
@@ -221,7 +225,9 @@ Task::svc ()
                                                 this->options_,
                                                 this->ior_count_);
       if (result != 0)
+      {
         return result;
+      }
 
       this->orb_->run ();
       this->orb_->destroy ();
@@ -244,10 +250,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Server_Options options;
       int result = parse_args (argc, argv, options);
       if (result != 0)
+      {
         return result;
+      }
 
       if (!check_supported_priorities (orb.in ()))
+      {
         return 2;
+      }
 
       ACE_Thread_Manager thread_manager;
       Task task (thread_manager, orb.in (), options);
@@ -266,7 +276,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                sched_policy_name (orb->orb_core ()->orb_params ()->ace_sched_policy ())),
                               2);
           else
+          {
             ACE_ASSERT (0);
+          }
         }
 
       result = thread_manager.wait ();

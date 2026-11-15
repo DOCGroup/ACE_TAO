@@ -407,16 +407,22 @@ JAWS_Asynch_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result
                               result.act ()) == -1)
                 code = -1;
               else
+              {
                 return;
+              }
             }
         }
       else
+      {
         code = -1;
+      }
 
       if (code == ACE_Filecache_Handle::ACE_SUCCESS)
         this->handler ()->receive_file_complete ();
       else
+      {
         this->handler ()->receive_file_error (code);
+      }
 
       result.message_block ().release ();
       delete (ACE_Filecache_Handle *) result.act ();
@@ -430,7 +436,9 @@ JAWS_Asynch_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result
           && result.bytes_transferred () != 0)
         this->handler ()->read_complete (&result.message_block ());
       else
+      {
         this->handler ()->read_error ();
+      }
     }
 }
 
@@ -445,7 +453,9 @@ JAWS_Asynch_Handler::handle_write_stream (const ACE_Asynch_Write_Stream::Result
   if (result.act () == (void *) JAWS_Asynch_IO::CONFIRMATION)
     this->handler ()->confirmation_message_complete ();
   else
+  {
     this->handler ()->error_message_complete ();
+  }
 }
 
 void
@@ -458,7 +468,9 @@ JAWS_Asynch_Handler::handle_transmit_file (const
   if (result.success ())
     this->handler ()->transmit_file_complete ();
   else
+  {
     this->handler ()->transmit_file_error (-1);
+  }
 
   result.header_and_trailer ()->header ()->release ();
   result.header_and_trailer ()->trailer ()->release ();
@@ -478,7 +490,9 @@ JAWS_Asynch_Handler::handle_accept (const ACE_Asynch_Accept::Result &result)
       this->handler ()->accept_complete (result.accept_handle ());
     }
   else
+  {
     this->handler ()->accept_error ();
+  }
 }
 
 void

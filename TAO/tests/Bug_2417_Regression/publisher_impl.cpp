@@ -69,7 +69,9 @@ int Publisher_impl::Worker::svc ()
                     if (!CORBA::is_nil (entry.subscriber.in ()))
                       entry.subscriber->onData (data);
                     else
+                    {
                       entry.unsubscribed = true;
+                    }
                   }
                 catch (...)
                   {
@@ -99,7 +101,9 @@ int Publisher_impl::Worker::svc ()
       if (do_shutdown)
         this->owner_->shutdown ();
       else
+      {
         ACE_OS::sleep (tv);
+      }
     }
   return 0;
 }

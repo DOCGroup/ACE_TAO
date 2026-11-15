@@ -25,7 +25,9 @@ Factory::create_object (
     {
       ++this->fcid_;
       if (this->fcid_ == tmp_fcid)
+      {
         throw PortableGroup::ObjectNotCreated ();
+      }
     }
 
   tmp_fcid = this->fcid_;
@@ -55,18 +57,24 @@ Factory::delete_object (
   CORBA::ULong my_fcid {};
 
   if (!(fcid >>= my_fcid))
+  {
     throw PortableGroup::ObjectNotFound ();
+  }
 
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
     Factory_Map::ENTRY *entry {};
     if (this->factory_map_.find (my_fcid, entry) == 0
         && this->factory_map_.unbind (my_fcid) != 0)
+    {
       throw CORBA::INTERNAL ();
+    }
   }
 
   if (my_fcid != this->fcid_)
+  {
     throw PortableGroup::ObjectNotFound ();
+  }
 
   this->poa_->deactivate_object (this->oid_.in ());
 }

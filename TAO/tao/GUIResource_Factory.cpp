@@ -52,7 +52,9 @@ namespace TAO
     ACE_GUARD ( TAO_SYNCH_MUTEX, ace_mon, this->lock_ );
 
     if (this->dynamically_allocated_reactor_)
+    {
       delete reactor;
+    }
   }
 }
 

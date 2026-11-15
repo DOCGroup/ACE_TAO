@@ -257,7 +257,9 @@ Refuses_Init::info (ACE_TCHAR **info_string, size_t length) const
   if (*info_string == nullptr)
     *info_string = ACE_OS::strdup (msg);
   else
+  {
     ACE_OS::strncpy (*info_string, msg, length);
+  }
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("Refuses_Init::info() called - shouldn't be\n")));
   return ACE_OS::strlen (*info_string);

@@ -34,7 +34,9 @@ Service_Config_ORB_DLL::init (int argc, ACE_TCHAR *argv[])
           arg_shifter.consume_arg ();
         }
       else
+      {
         arg_shifter.ignore_arg ();
+      }
     }
 
   if (this->worker_type_ == Worker_Type::unspecified)
@@ -52,7 +54,9 @@ Service_Config_ORB_DLL::init (int argc, ACE_TCHAR *argv[])
   if (this->worker_type_ == Worker_Type::server)
     ACE_NEW_RETURN (worker, Server_Worker, -1);
   else
+  {
     ACE_NEW_RETURN (worker, Client_Worker, -1);
+  }
   this->worker_.reset (worker);
 
 #if defined (ACE_HAS_THREADS)

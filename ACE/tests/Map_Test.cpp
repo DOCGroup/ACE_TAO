@@ -264,13 +264,19 @@ run_main (int argc, ACE_TCHAR *argv[])
   size_t functionality_tests = 1;
 
   if (argc > 1)
+  {
     functionality_tests = ACE_OS::atoi (argv[1]);
+  }
 
   if (argc > 2)
+  {
     table_size = ACE_OS::atoi (argv[2]);
+  }
 
   if (argc > 3)
+  {
     iterations = ACE_OS::atoi (argv[3]);
+  }
 
   MAP_MANAGER_ADAPTER map1 (table_size);
   HASH_MAP_MANAGER_ADAPTER map2 (table_size);

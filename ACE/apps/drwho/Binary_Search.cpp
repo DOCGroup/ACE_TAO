@@ -24,7 +24,9 @@ Binary_Search::get_next_entry ()
   // Reset the iterator if we are starting from the beginning.
 
   if (this->current_ptr_ == nullptr)
+  {
     this->current_ptr_ = this->sorted_record_.get ();
+  }
 
   // Now check to see if we've hit the end, in which case we set
   // things up for the next round!
@@ -49,7 +51,9 @@ Binary_Search::get_each_entry ()
   // Reset the iterator if we are starting from the beginning.
 
   if (this->current_index_ == -1)
+  {
     this->current_index_ = 0;
+  }
 
   // Now check to see if we've hit the end, in which case we set
   // things up for the next round!

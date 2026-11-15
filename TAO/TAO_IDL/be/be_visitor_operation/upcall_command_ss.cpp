@@ -107,7 +107,9 @@ be_visitor_operation_upcall_command_ss::visit (
       os << "," << be_nl;
 
       if (be_global->gen_thru_poa_collocation ())
+      {
         os << "TAO_Operation_Details const * operation_details," << be_nl;
+      }
 
       os << "TAO::Argument * const args[])" << be_nl;
     }
@@ -198,7 +200,9 @@ be_visitor_operation_upcall_command_ss::visit (
       os << be_nl;
 
       if (be_global->gen_thru_poa_collocation ())
+      {
         os << "TAO_Operation_Details const * const operation_details_;" << be_nl;
+      }
 
       os << "TAO::Argument * const * const args_;";
     }

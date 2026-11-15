@@ -81,7 +81,9 @@ void
 ACE_OS_Object_Manager_Internal_Exit_Hook ()
 {
   if (ACE_OS_Object_Manager::instance_)
+  {
     ACE_OS_Object_Manager::instance ()->fini ();
+  }
 }
 
 ACE_OS_Object_Manager *ACE_OS_Object_Manager::instance_ {};
@@ -110,7 +112,9 @@ ACE_OS_Object_Manager::ACE_OS_Object_Manager ()
 
   // Be sure that no further instances are created via instance ().
   if (instance_ == nullptr)
+  {
     instance_ = this;
+  }
 
   init ();
 }
@@ -402,7 +406,9 @@ ACE_OS_Object_Manager::fini ()
     }
 
   if (this == instance_)
+  {
     instance_ = nullptr;
+  }
 
   return 0;
 }

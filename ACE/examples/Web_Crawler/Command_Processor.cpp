@@ -20,28 +20,44 @@ URL_Command::execute ()
   ACE_CString check_string
     (ACE_TEXT_ALWAYS_CHAR (this->url_->url_addr ().get_path_name ()));
   if (check_string.find ("news:") != ACE_CString::npos)
+  {
     return 0;
+  }
 
   if (check_string.find (".cgi") != ACE_CString::npos)
-     return 0;
+  {
+    return 0;
+  }
 
   if (check_string.find ("mailto") != ACE_CString::npos)
+  {
     return 0;
+  }
 
   if (check_string.find (".gif") != ACE_CString::npos)
+  {
     return 0;
+  }
 
   if (check_string.find (".pdf") != ACE_CString::npos)
+  {
     return 0;
+  }
 
   if (check_string.find (".map") != ACE_CString::npos)
+  {
     return 0;
+  }
 
   if (check_string.find (".bmp") != ACE_CString::npos)
+  {
     return 0;
+  }
 
   if (check_string.find (".jpg") != ACE_CString::npos)
+  {
     return 0;
+  }
 
   if (this->url_->accept (OPTIONS::instance ()->visitor ()) !=0)
     {
@@ -93,7 +109,9 @@ Command_Processor::insert (Command *command)
 {
   // According to the order specified the commands are removed from the queue.
   if (this->url_queue_.is_full ())
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "command queue is full\n"), -1);
+  }
 
   const ACE_TCHAR *order = OPTIONS::instance ()->order ();
   if (ACE_OS::strcmp (order, ACE_TEXT ("FIFO")) == 0)
@@ -111,7 +129,9 @@ Command_Processor::insert (Command *command)
                           -1);
     }
   else
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("invalid command queue order\n")), -1);
+  }
 
   return 0;
 }

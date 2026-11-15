@@ -39,7 +39,9 @@ Trading_Service::init (int argc, ACE_TCHAR * argv[])
   int const result_trader = this->trading_loader_.init (argc, argv);
 
   if (result_trader == -1)
+  {
     return -1;
+  }
 
   return 0;
 }
@@ -59,7 +61,9 @@ Trading_Service::shutdown ()
   int const shutdown_result = this->trading_loader_.fini ();
 
   if (shutdown_result == -1)
+  {
     return -1;
+  }
 
   return 0;
 }

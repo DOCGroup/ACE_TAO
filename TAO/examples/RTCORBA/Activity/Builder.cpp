@@ -32,7 +32,9 @@ Builder::init (int argc, ACE_TCHAR *argv[])
         {
           task_count_ = ACE_OS::atoi (current_arg);
           if (task_count_ < 0)
+          {
             return -1;
+          }
           task_list_.reserve (static_cast<size_t> (task_count_));
           arg_shifter.consume_arg ();
         }
@@ -40,7 +42,9 @@ Builder::init (int argc, ACE_TCHAR *argv[])
         {
           job_count_ = ACE_OS::atoi (current_arg);
           if (job_count_ < 0)
+          {
             return -1;
+          }
           job_list_.reserve (static_cast<size_t> (job_count_));
           arg_shifter.consume_arg ();
         }
@@ -48,7 +52,9 @@ Builder::init (int argc, ACE_TCHAR *argv[])
         {
           poa_count_ = ACE_OS::atoi (current_arg);
           if (poa_count_ < 0)
+          {
             return -1;
+          }
           poa_list_.reserve (static_cast<size_t> (poa_count_));
           arg_shifter.consume_arg ();
         }
@@ -63,12 +69,16 @@ Builder::init (int argc, ACE_TCHAR *argv[])
               std::unique_ptr<Periodic_Task> task (task_pointer);
 
               if (task->init_task (arg_shifter) == -1)
+              {
                 return -1;
+              }
 
               this->task_list_.push_back (std::move (task));
             }
           else
+          {
             return -1;
+          }
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Job")) == 0)
         {
@@ -81,12 +91,16 @@ Builder::init (int argc, ACE_TCHAR *argv[])
               std::unique_ptr<Job_i> job (job_pointer);
 
               if (job->init (arg_shifter) == -1)
+              {
                 return -1;
+              }
 
               this->job_list_.push_back (job.release ());
             }
           else
+          {
             return -1;
+          }
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-POA")) == 0)
         {
@@ -99,12 +113,16 @@ Builder::init (int argc, ACE_TCHAR *argv[])
               std::unique_ptr<POA_Holder> poa_holder (poa_holder_pointer);
 
               if (poa_holder->init (arg_shifter) == -1)
+              {
                 return -1;
+              }
 
               this->poa_list_.push_back (std::move (poa_holder));
             }
           else
+          {
             return -1;
+          }
         }
       else
         {
@@ -121,7 +139,9 @@ Builder::fini ()
   // It's only a hack for proper cleanup of this badly designed test.
   static bool already_cleaned {};
   if (already_cleaned)
+  {
     return 0;
+  }
 
   this->task_list_.clear ();
   this->job_list_.clear ();

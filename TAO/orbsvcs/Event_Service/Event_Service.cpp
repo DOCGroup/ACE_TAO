@@ -37,7 +37,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (use_thread_per_consumer)
     TAO_EC_TPC_Factory::init_svcs ();
   else
+  {
     TAO_EC_Default_Factory::init_svcs ();
+  }
 
   Event_Service event_service;
   return event_service.run (argc, argv);
@@ -61,7 +63,9 @@ Event_Service::run (int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       if (this->parse_args (argc, argv) == -1)
+      {
         return 1;
+      }
 
       CORBA::Object_var const root_poa_object =
         this->orb_->resolve_initial_references ("RootPOA");

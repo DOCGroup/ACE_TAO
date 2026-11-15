@@ -60,7 +60,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Server_Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       Test_impl *test_impl {};
       ACE_NEW_RETURN (test_impl,

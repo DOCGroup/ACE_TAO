@@ -111,7 +111,9 @@ TAO_IIOP_Connector::open (TAO_ORB_Core *orb_core)
 
   // Create our connect strategy
   if (this->create_connect_strategy () == -1)
+  {
     return -1;
+  }
 
   /// Our connect creation strategy
   TAO_IIOP_CONNECT_CREATION_STRATEGY *connect_creation_strategy {};
@@ -163,7 +165,9 @@ TAO_IIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
   TAO_IIOP_Endpoint * const iiop_endpoint = this->remote_endpoint (endpoint);
 
   if (iiop_endpoint == nullptr)
+  {
     return -1;
+  }
 
   ACE_INET_Addr const &remote_address = iiop_endpoint->object_addr ();
 
@@ -201,7 +205,9 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   TAO_IIOP_Endpoint *iiop_endpoint =
     this->remote_endpoint (desc.endpoint());
   if (iiop_endpoint == nullptr)
+  {
     return nullptr;
+  }
 
   int const result =
     this->begin_connection (svc_handler, r, iiop_endpoint, timeout);
@@ -321,7 +327,9 @@ TAO_IIOP_Connector::make_parallel_connection (
                   ACE_OS::nanosleep (&nsleep);
                   result = this->active_connect_strategy_->poll (std::addressof (mev));
                   if (result != -1)
+                  {
                     break;
+                  }
                 }
             }
           else
@@ -356,7 +364,9 @@ TAO_IIOP_Connector::make_parallel_connection (
       // We add here an extra reference so that when svc_handler_auto_ptr
       // will go out of scope the winner will be still alive.
       if (winner != nullptr)
+      {
         winner->add_reference ();
+      }
     }
 
   return winner;
@@ -748,13 +758,17 @@ TAO_IIOP_Endpoint *
 TAO_IIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
 {
   if (endpoint->tag () != IOP::TAG_INTERNET_IOP)
+  {
     return nullptr;
+  }
 
   TAO_IIOP_Endpoint *iiop_endpoint =
     dynamic_cast<TAO_IIOP_Endpoint *> (endpoint );
 
   if (iiop_endpoint == nullptr)
+  {
     return nullptr;
+  }
 
   return iiop_endpoint;
 }

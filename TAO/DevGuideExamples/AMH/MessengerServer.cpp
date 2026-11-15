@@ -38,7 +38,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var const orb (CORBA::ORB_init (argc, argv));
       Server_Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var const root_object (
         orb->resolve_initial_references ("RootPOA"));

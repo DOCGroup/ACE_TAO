@@ -21,7 +21,9 @@ TAO::SSLIOP::Current::get_peer_certificate ()
   // we're not in the middle of a request or an upcall.  Throw an
   // exception to indicate that.
   if (impl == nullptr)
+  {
     throw ::SSLIOP::Current::NoContext ();
+  }
 
   // A valid value must always be returned, so instantiate a sequence
   // regardless of whether or not it is populated with certificates.
@@ -51,7 +53,9 @@ TAO::SSLIOP::Current::get_peer_certificate_chain ()
   // we're not in the middle of a request or an upcall.  Throw an
   // exception to indicate that.
   if (impl == nullptr)
+  {
     throw SSLIOP::Current::NoContext ();
+  }
 
   // A valid value must always be returned, so instantiate a sequence
   // regardless of whether or not it is populated with certificates.
@@ -116,7 +120,9 @@ TAO::SSLIOP::Current_ptr
 TAO::SSLIOP::Current::_duplicate (TAO::SSLIOP::Current_ptr obj)
 {
   if (!CORBA::is_nil (obj))
+  {
     obj->_add_ref ();
+  }
 
   return obj;
 }

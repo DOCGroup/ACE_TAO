@@ -130,7 +130,9 @@ TAO_RT_POA::validate_priority (RTCORBA::Priority priority)
       for (std::unique_ptr<TAO_Thread_Lane> const &lane : this->thread_pool_->lanes ())
         {
           if (lane->lane_priority () == priority)
+          {
             return;
+          }
         }
 
       throw ::CORBA::BAD_PARAM ();
@@ -163,7 +165,9 @@ TAO_RT_POA::validate_priority (RTCORBA::Priority priority)
             {
               if (bands[i].low <= priority &&
                   bands[i].high >= priority)
+              {
                 return;
+              }
             }
 
           throw ::CORBA::BAD_PARAM ();
@@ -318,14 +322,18 @@ TAO_RT_POA::create_stub_object (TAO::ObjectKey const &object_key,
   int result =
     mprofile.set (static_cast <CORBA::ULong> (profile_count));
   if (result == -1)
+  {
     error = true;
+  }
 
   // Leave it to the filter to decide which acceptors/in which order
   // go into the mprofile.
   for (std::unique_ptr<TAO_Thread_Lane> const &lane : this->thread_pool_->lanes ())
     {
       if (error)
+      {
         break;
+      }
 
       if (this->lane_required (lane.get (), priority_bands))
         {
@@ -338,14 +346,20 @@ TAO_RT_POA::create_stub_object (TAO::ObjectKey const &object_key,
                                   acceptor_registry.acceptors (),
                                   lane->lane_priority ());
           if (result == -1)
+          {
             error = true;
+          }
         }
     }
 
   if (!error)
+  {
     result = filter->encode_endpoints (mprofile);
+  }
   if (result == -1)
+  {
     error = true;
+  }
 
   if (error)
     throw ::CORBA::INTERNAL (
@@ -385,7 +399,9 @@ TAO_RT_POA::lane_required (TAO_Thread_Lane *lane,
                            TAO_PriorityBandedConnectionPolicy *priority_bands)
 {
   if (priority_bands == nullptr)
+  {
     return true;
+  }
 
   RTCORBA::PriorityBands &bands =
     priority_bands->priority_bands_rep ();
@@ -396,7 +412,9 @@ TAO_RT_POA::lane_required (TAO_Thread_Lane *lane,
     {
       if (bands[i].low <= lane->lane_priority () &&
           bands[i].high >= lane->lane_priority ())
+      {
         return true;
+      }
     }
 
   return false;
@@ -434,7 +452,9 @@ TAO_RT_POA::client_exposed_policies (CORBA::Short object_priority)
       if (priority_model == TAO::Portable_Server::Cached_Policies::CLIENT_PROPAGATED)
         priority = poa_priority;
       else
+      {
         priority = object_priority;
+      }
 
       CORBA::ULong const current_length =
         client_exposed_policies->length ();

@@ -45,7 +45,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::PolicyManager_var const policy_mgr =
         CORBA::PolicyManager::_narrow (object.in ());
       if (CORBA::is_nil (policy_mgr.in ()))
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "failed to get policy manager\n"), 1);
+      }
       CORBA::String_var const ref_id = policy_mgr->_interface_repository_id ();
       ACE_DEBUG ((LM_DEBUG, "Policy MGR intid = %C\n", ref_id.in ()));
 
@@ -79,7 +81,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       if (parse_args (argc, argv, ior_output_file) != 0)
+      {
         return 1;
+      }
 
       // The POA borrows this stack servant until root_poa->destroy() completes.
       Simple_Server_i server_impl (orb.in ());

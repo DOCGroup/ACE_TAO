@@ -140,7 +140,9 @@ Thread_Pool::svc ()
     this->doprint_ = (t > 65530);
 
   if (this->doprint_)
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT("  (%P|%t) thread started.\n")));
+  }
 
   // Note that the <ACE_Task::svc_run> method automatically removes us
   // from the <ACE_Thread_Manager> when the thread exits.
@@ -160,7 +162,9 @@ Thread_Pool::open (void *)
                 this->n_threads_));
 
   if (this->total_activated_threads_ >= (65534 - this->n_threads_))
+  {
     no_op ();
+  }
 
   // Create a pool of worker threads.
   if (this->activate (THR_NEW_LWP,
@@ -214,7 +218,9 @@ run_main (int, ACE_TCHAR *[])
       int& n_threads = thread_pool.n_threads_;
       const unsigned long THREAD_THRESHOLD = 63336;
       if (thread_pool.total_threads() >= (THREAD_THRESHOLD - n_threads))
+      {
         n_threads = 1;
+      }
     }
 
   ACE_DEBUG ((LM_DEBUG,

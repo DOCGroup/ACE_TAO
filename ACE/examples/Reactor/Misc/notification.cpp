@@ -225,7 +225,9 @@ Thread_Handler::handle_input (ACE_HANDLE handle)
       return 0;
     }
   else
+  {
     return -1;
+  }
 }
 
 // Perform a task that will test the ACE_Reactor's multi-threading
@@ -241,7 +243,9 @@ Thread_Handler::svc ()
        --i)
     {
       if (this->shutdown_ != 0)
+      {
         break;
+      }
 
       // Block for delay_.secs () / 2, then notify the Reactor.
       ACE_OS::sleep (sleep_timeout);
@@ -301,7 +305,9 @@ Thread_Handler::handle_timeout (ACE_Time_Value const &time, void const *)
 
   if (--this->iterations_ <= 0
       || Thread_Handler::interval_.sec () == 0)
+  {
     ACE_Reactor::end_event_loop ();
+  }
 
   return 0;
 }
@@ -343,7 +349,9 @@ Thread_Handler::svc_run (void *eh)
   if (this_handler->svc () == 0)
     return nullptr;
   else
+  {
     return reinterpret_cast<void *> (-1);
+  }
 }
 
 int

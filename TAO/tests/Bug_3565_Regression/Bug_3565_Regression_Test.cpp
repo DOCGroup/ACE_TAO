@@ -54,7 +54,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           CORBA::ORB_var const orb = CORBA::ORB_init (largc, largv.data (), "FirstORB");
 
           if (orb->orb_core ()->client_factory ()->reply_dispatcher_table_size () != 333)
+          {
             ++result;
+          }
 
           orb->destroy ();
         }
@@ -63,7 +65,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::ORB_var const second_orb = CORBA::ORB_init (second_largc, second_largv.data (), "SecondORB");
 
         if (second_orb->orb_core ()->client_factory ()->reply_dispatcher_table_size () != 666)
+        {
           ++result;
+        }
 
         second_orb->destroy ();
       }

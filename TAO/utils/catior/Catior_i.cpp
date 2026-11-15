@@ -102,11 +102,15 @@ Catior_i::catiiop (char* string)
   // removed, so we see it as an empty string.
 
   if (!string || !*string)
+  {
     return false;
+  }
 
   size_t const string_length = std::strlen (string);
   if (string_length < 2)
+  {
     throw CORBA::DATA_CONVERSION ();
+  }
 
   // Type ID not encoded in this string ... makes narrowing rather
   // expensive, though it does ensure that type-safe narrowing code
@@ -133,7 +137,9 @@ Catior_i::catiiop (char* string)
   else
     {
       if (string [0] != '/' || string [1] != '/')
+      {
         throw CORBA::DATA_CONVERSION ();
+      }
 
       string += 2;
     }
@@ -222,7 +228,9 @@ Catior_i::catior (char const * str)
       u_char byte;
 
       if (! (ACE_OS::ace_isxdigit (tmp [0]) && ACE_OS::ace_isxdigit (tmp [1])))
+      {
         break;
+      }
 
       byte = (u_char) (ACE::hex2byte (tmp [0]) << 4);
       byte |= ACE::hex2byte (tmp [1]);
@@ -235,11 +243,15 @@ Catior_i::catior (char const * str)
   // stream.
 
   if (len == 0)
+  {
     throw CORBA::DATA_CONVERSION ();
+  }
 
   CORBA::Octet const byteOrder = static_cast<CORBA::Octet> (mb.rd_ptr ()[0]);
   if (byteOrder > 1)
+  {
     throw CORBA::DATA_CONVERSION ();
+  }
 
   mb.rd_ptr (1);
   mb.wr_ptr (len);
@@ -249,7 +261,9 @@ Catior_i::catior (char const * str)
   if (byteOrder == 1)
     buffer_ += "Little Endian\n";
   else
+  {
     buffer_ += "Big Endian\n";
+  }
 
   // First, read the type hint. This will be the type_id encoded in an
   // object reference.
@@ -380,7 +394,9 @@ CORBA::Boolean
 Catior_i::catpoop (char* string)
 {
   if (!string || !*string)
+  {
     return false;
+  }
 
   if (string [0] != ':' || string [1] != '\\')
     throw CORBA::DATA_CONVERSION ();
@@ -391,7 +407,9 @@ Catior_i::catpoop (char* string)
     {
       char *delimiter = std::strchr (string, ':');
       if (delimiter == nullptr)
+      {
         throw CORBA::DATA_CONVERSION ();
+      }
 
       std::string field (string, static_cast<size_t> (delimiter - string));
       string = delimiter + 1;
@@ -439,7 +457,9 @@ CORBA::Boolean
 Catior_i::cat_tag_orb_type (TAO_InputCDR& stream) {
   CORBA::ULong length {};
   if (!stream.read_ulong (length))
+  {
     return true;
+  }
 
   TAO_InputCDR stream2 (stream, length);
   stream.skip_bytes(length);
@@ -447,7 +467,9 @@ Catior_i::cat_tag_orb_type (TAO_InputCDR& stream) {
   CORBA::ULong orbtype;
 
   if (!(stream2 >> orbtype))
+  {
     return false;
+  }
 
   constexpr size_t bufsize {512};
   char buf[bufsize];
@@ -534,14 +556,18 @@ Catior_i::cat_ibm_partner_version (TAO_InputCDR& stream) {
    */
   CORBA::ULong length {};
   if (!(stream.read_ulong (length)))
+  {
     return true;
+  }
 
   TAO_InputCDR stream2 (stream, length);
   stream.skip_bytes(length);
 
   CORBA::ULong version;
   if (!(stream2 >> version))
+  {
     return false;
+  }
 
   constexpr size_t bufsize {512};
   char buf[bufsize];
@@ -556,14 +582,18 @@ Catior_i::cat_tao_tag_endpoints (TAO_InputCDR& stream)
 {
   CORBA::ULong length {};
   if (!stream.read_ulong (length))
+  {
     return true;
+  }
 
   TAO_InputCDR stream2 (stream, length);
   stream.skip_bytes(length);
 
   TAO::IIOPEndpointSequence epseq;
   if (!(stream2 >> epseq))
+  {
     return true;
+  }
 
   constexpr size_t bufsize {512};
   char buf[bufsize];
@@ -595,7 +625,9 @@ CORBA::Boolean
 Catior_i::cat_tag_alternate_endpoints (TAO_InputCDR& stream) {
   CORBA::ULong length {};
   if (!stream.read_ulong (length))
+  {
     return true;
+  }
 
   TAO_InputCDR stream2 (stream, length);
   stream.skip_bytes(length);
@@ -624,14 +656,18 @@ CORBA::Boolean
 Catior_i::cat_tag_policies (TAO_InputCDR& stream) {
   CORBA::ULong length {};
   if (!stream.read_ulong (length))
+  {
     return true;
+  }
 
   TAO_InputCDR stream2 (stream, length);
   stream.skip_bytes(length);
 
   Messaging::PolicyValueSeq policies;
   if (!(stream2 >> policies))
+  {
     return true;
+  }
 
   constexpr size_t bufsize {512};
   char buf[bufsize];
@@ -651,7 +687,9 @@ Catior_i::cat_tag_policies (TAO_InputCDR& stream) {
 
     CORBA::Boolean byte_order;
     if (!(stream3 >> ACE_InputCDR::to_boolean (byte_order)))
+    {
       return true;
+    }
 
     stream3.reset_byte_order (static_cast <int> (byte_order));
 
@@ -666,9 +704,13 @@ Catior_i::cat_tag_policies (TAO_InputCDR& stream) {
       RTCORBA::Priority server_priority;
 
       if (!(stream3 >> priority_model))
+      {
         return true;
+      }
       if (!(stream3 >> server_priority))
+      {
         return true;
+      }
 
       indent ();
       if (priority_model == RTCORBA::CLIENT_PROPAGATED) {
@@ -783,7 +825,9 @@ Catior_i::cat_tag_policies (TAO_InputCDR& stream) {
       buffer_ += buf;
       ::Compression::CompressorIdLevelList idlist;
       if (!(stream3 >> idlist))
+      {
         return true;
+      }
       for (CORBA::ULong index {}; index < idlist.length (); ++index)
         {
           indent ();
@@ -800,7 +844,9 @@ Catior_i::cat_tag_policies (TAO_InputCDR& stream) {
       buffer_ += buf;
       CORBA::Boolean status;
       if (!(stream3 >> ACE_InputCDR::to_boolean (status)))
+      {
         return true;
+      }
       indent ();
       ACE_OS::snprintf (buf, bufsize, "\t Enabled: %d\n", status);
       buffer_ += buf;
@@ -871,7 +917,9 @@ Catior_i::cat_tag_ssl_sec_trans (TAO_InputCDR& cdr) {
 
   CORBA::ULong length {};
   if (!cdr.read_ulong (length))
+  {
     return false;
+  }
 
   TAO_InputCDR stream (cdr, length);
   cdr.skip_bytes(length);
@@ -881,13 +929,19 @@ Catior_i::cat_tag_ssl_sec_trans (TAO_InputCDR& cdr) {
   CORBA::UShort port;
 
   if (stream.read_ushort(target_supports) == 0)
+  {
     return false;
+  }
 
   if (stream.read_ushort(target_requires) == 0)
+  {
     return false;
+  }
 
   if (stream.read_ushort(port) == 0)
+  {
     return false;
+  }
 
   constexpr size_t bufsize {512};
   char buf[bufsize];
@@ -917,7 +971,9 @@ Catior_i::cat_octet_seq (const char *object_name,
 {
   CORBA::ULong length {};
   if (!stream.read_ulong (length))
+  {
     return true;
+  }
 
   constexpr size_t bufsize {512};
   char buf[bufsize];
@@ -948,7 +1004,9 @@ Catior_i::cat_octet_seq (const char *object_name,
         }
 
       if (!stream.read_octet (anOctet))
+      {
         return false;
+      }
 
       ACE_OS::snprintf (buf, bufsize, "%2.2x ", anOctet);
       buffer_ += buf;
@@ -971,7 +1029,9 @@ Catior_i::cat_octet_seq (const char *object_name,
       if (ACE_OS::ace_isprint (static_cast<ACE_TCHAR> (tmp)))
         buffer_ += c;
       else
+      {
         buffer_ += ".";
+      }
     }
 
   buffer_ += "\n";
@@ -999,7 +1059,9 @@ void
 Catior_i::displayHex (TAO_InputCDR & str)
 {
   if (!str.good_bit ())
+  {
     return;
+  }
 
   TAO_InputCDR clone_str (str);
   CORBA::ULong theSetId ;
@@ -1031,7 +1093,9 @@ Catior_i::cat_codeset_info (TAO_InputCDR& cdr)
 {
   CORBA::ULong length {};
   if (cdr.read_ulong (length) == 0)
+  {
     return false;
+  }
 
   TAO_InputCDR stream (cdr, length);
   cdr.skip_bytes(length);
@@ -1064,7 +1128,9 @@ Catior_i::cat_codeset_info (TAO_InputCDR& cdr)
   buffer_ += buf;
 
   if (c_ccslen)
+  {
     buffer_ += "\tConversion Codesets for char are:\n";
+  }
 
   //  Loop through and display them
   for (CORBA::ULong index {}; index < c_ccslen; ++index)
@@ -1094,7 +1160,9 @@ Catior_i::cat_codeset_info (TAO_InputCDR& cdr)
   buffer_ += buf;
 
   if (w_ccslen)
+  {
     buffer_ += "\tConversion Codesets for wchar are:\n";
+  }
 
   //  Loop through and display them
   for (CORBA::ULong index {}; index < w_ccslen; ++index)
@@ -1115,7 +1183,9 @@ Catior_i::cat_tagged_components (TAO_InputCDR& stream)
 
   CORBA::ULong len;
   if (!(stream >> len))
+  {
     return false;
+  }
 
   constexpr size_t bufsize {512};
   char buf[bufsize];
@@ -1220,7 +1290,9 @@ Catior_i::cat_profile_helper (TAO_InputCDR& stream,
   TAO_InputCDR str (stream, encap_len);
 
   if (!str.good_bit () || stream.skip_bytes (encap_len) == 0)
+  {
     return false;
+  }
 
   constexpr size_t bufsize {512};
   char buf[bufsize];
@@ -1263,7 +1335,9 @@ Catior_i::cat_profile_helper (TAO_InputCDR& stream,
     }
 
   if (!(str >> port_number))
+  {
     return false;
+  }
 
   indent ();
   buffer_ += "Host Name:\t";
@@ -1275,18 +1349,24 @@ Catior_i::cat_profile_helper (TAO_InputCDR& stream,
   buffer_ += buf;
 
   if (!cat_object_key (str))
+  {
     return false;
+  }
 
   //IIOP 1.0 does not have tagged_components.
   if (!(iiop_version_major == 1 && iiop_version_minor == 0))
     {
       if (cat_tagged_components (str) == 0)
+      {
         return false;
+      }
 
       return true;
     }
   else
+  {
     return false;
+  }
 }
 
 CORBA::Boolean
@@ -1308,7 +1388,9 @@ Catior_i::cat_coiop_profile (TAO_InputCDR& stream)
   TAO_InputCDR str (stream, encap_len);
 
   if (!str.good_bit () || stream.skip_bytes (encap_len) == 0)
+  {
     return false;
+  }
 
   constexpr size_t bufsize {512};
   char buf[bufsize];
@@ -1355,18 +1437,24 @@ Catior_i::cat_coiop_profile (TAO_InputCDR& stream)
   buffer_ += "\n";
 
   if (cat_object_key (str) == 0)
+  {
     return false;
+  }
 
   //IIOP 1.0 does not have tagged_components.
   if (!(iiop_version_major == 1 && iiop_version_minor == 0))
     {
       if (cat_tagged_components (str) == 0)
+      {
         return false;
+      }
 
       return true;
     }
   else
+  {
     return false;
+  }
 }
 
 CORBA::Boolean
@@ -1391,14 +1479,18 @@ Catior_i::cat_uiop_profile (TAO_InputCDR& stream)
 
   CORBA::ULong encap_len;
   if (stream.read_ulong (encap_len) == 0)
+  {
     return false;
+  }
 
   // Create the decoding stream from the encapsulation in the
   // buffer, and skip the encapsulation.
   TAO_InputCDR str (stream, encap_len);
 
   if (!str.good_bit () || stream.skip_bytes (encap_len) == 0)
+  {
     return false;
+  }
 
   constexpr size_t bufsize {512};
   char buf[bufsize];
@@ -1435,7 +1527,9 @@ Catior_i::cat_uiop_profile (TAO_InputCDR& stream)
   // Get host and port.
   CORBA::String_var rendezvous;
   if ((str >> rendezvous.out ()) == 0)
+  {
     return false;
+  }
 
   indent ();
   buffer_ += "Rendezvous point:\t";
@@ -1443,10 +1537,14 @@ Catior_i::cat_uiop_profile (TAO_InputCDR& stream)
   buffer_ += "\n";
 
   if (cat_object_key (str) == 0)
+  {
     return false;
+  }
 
   if (cat_tagged_components (str) == 0)
+  {
     return false;
+  }
 
   return true;
 }
@@ -1479,7 +1577,9 @@ Catior_i::cat_sciop_profile (TAO_InputCDR& stream)
   TAO_InputCDR str (stream, encap_len);
 
   if (!str.good_bit () || stream.skip_bytes (encap_len) == 0)
+  {
     return false;
+  }
 
   constexpr size_t bufsize {512};
   char buf[bufsize];
@@ -1543,14 +1643,18 @@ Catior_i::cat_sciop_profile (TAO_InputCDR& stream)
     }
 
   if (!(str >> port_number))
+  {
     return false;
+  }
 
   indent ();
   ACE_OS::snprintf (buf, bufsize, "Port Number:\t%d\n", port_number);
   buffer_ += buf;
 
   if (!(str >> max_streams))
+  {
     return false;
+  }
 
   indent ();
   ACE_OS::snprintf (buf, bufsize, "Max Streams:\t%d\n", max_streams);
@@ -1558,7 +1662,9 @@ Catior_i::cat_sciop_profile (TAO_InputCDR& stream)
 
   // Unlike IIOP (1.0), SCIOP always has tagged_components.
   if (!cat_object_key (str) || !cat_tagged_components (str))
+  {
     return false;
+  }
 
   return true;
 }
@@ -1583,7 +1689,9 @@ Catior_i::cat_nsk_profile_helper (TAO_InputCDR& stream,
   TAO_InputCDR str (stream, encap_len);
 
   if (!str.good_bit () || stream.skip_bytes (encap_len) == 0)
+  {
     return false;
+  }
 
   constexpr size_t bufsize {512};
   char buf[bufsize];
@@ -1632,18 +1740,24 @@ Catior_i::cat_nsk_profile_helper (TAO_InputCDR& stream,
   buffer_ += "\n";
 
   if (cat_object_key (str) == 0)
+  {
     return false;
+  }
 
   // Version 1.0 does not have tagged_components.
   if (!(iiop_version_major == 1 && iiop_version_minor == 0))
     {
       if (cat_tagged_components (str) == 0)
+      {
         return false;
+      }
 
       return true;
     }
   else
+  {
     return false;
+  }
 }
 
 CORBA::Boolean

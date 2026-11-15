@@ -93,7 +93,9 @@ Main_C::Create (CORBA::ORB_ptr orb, int argc, ACE_TCHAR *argv[]) const
   try
     {
       if (parse_args (argc, argv, ior_output_file) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var const obj = orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var const poa = PortableServer::POA::_narrow (obj.in ());

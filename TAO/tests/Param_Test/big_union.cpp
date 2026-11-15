@@ -275,7 +275,9 @@ Test_Big_Union::check_validity ()
                 || CORBA::is_nil (inout)
                 || CORBA::is_nil (out)
                 || CORBA::is_nil (ret))
+            {
               return 0;
+            }
 
             Coffee::Desc_var in_desc =
               in->description ();
@@ -292,7 +294,9 @@ Test_Big_Union::check_validity ()
                                    out_desc->name.in ())
                 || std::strcmp (in_desc->name.in (),
                                    ret_desc->name.in ()))
+            {
               return 0;
+            }
           }
         catch (const CORBA::Exception&)
           {
@@ -364,7 +368,9 @@ Test_Big_Union::check_validity ()
         if (in.length () != out.length ()
             || in.length () != inout.length ()
             || in.length () != ret.length ())
+        {
           return 0;
+        }
 
         for (CORBA::ULong i = 0; i != in.length (); ++i)
           {

@@ -80,7 +80,9 @@ namespace ACE_RMCast
         // Don't bother to sleep if the time is less than 10 usec.
         //
         if (time.tv_nsec > 10000)
+        {
           ACE_OS::sleep (ACE_Time_Value (time));
+        }
       }
     }
 
@@ -109,7 +111,9 @@ namespace ACE_RMCast
         nak_time_ = nak_time;
 
         if (ACE::is_equal (cap_tput_, 0.0))
+        {
           cap_tput_ = current_tput_;
+        }
 
         if (!ACE::is_equal (cap_tput_, 0.0))
         {

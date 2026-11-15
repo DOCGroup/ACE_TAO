@@ -60,7 +60,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
       if (parse_args (argc, argv, orbid_a_file, orbid_b_file) != 0)
+      {
         return 1;
+      }
 
       char const * const orbid_a = "orbidA";
       CORBA::ORB_var const orb_a = CORBA::ORB_init (argc, argv, orbid_a);

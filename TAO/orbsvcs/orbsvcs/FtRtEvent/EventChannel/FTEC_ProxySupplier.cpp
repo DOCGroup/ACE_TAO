@@ -45,7 +45,9 @@ void TAO_FTEC_ProxyPushSupplier::connect_push_consumer (
                 const RtecEventChannelAdmin::ConsumerQOS &qos)
 {
   if (Request_Context_Repository().is_executed_request())
+  {
     return;
+  }
 
   FtRtecEventChannelAdmin::Operation update;
   FtRtecEventChannelAdmin::Connect_push_consumer_param param;
@@ -71,7 +73,9 @@ void TAO_FTEC_ProxyPushSupplier::connect_push_consumer (
 void TAO_FTEC_ProxyPushSupplier::disconnect_push_supplier ()
 {
   if (Request_Context_Repository().is_executed_request())
+  {
     return;
+  }
 
   FtRtecEventChannelAdmin::Operation update;
   update.object_id = id();
@@ -88,7 +92,9 @@ void TAO_FTEC_ProxyPushSupplier::disconnect_push_supplier ()
 void TAO_FTEC_ProxyPushSupplier::suspend_connection ()
 {
   if (Request_Context_Repository().is_executed_request())
+  {
     return;
+  }
 
   FtRtecEventChannelAdmin::Operation update;
   update.object_id = id();
@@ -113,7 +119,9 @@ void TAO_FTEC_ProxyPushSupplier::suspend_connection ()
 void TAO_FTEC_ProxyPushSupplier::resume_connection ()
 {
   if (Request_Context_Repository().is_executed_request())
+  {
     return;
+  }
 
   Request_Context_Repository().set_object_id(id());
   FtRtecEventChannelAdmin::Operation update;
@@ -155,7 +163,9 @@ void TAO_FTEC_ProxyPushSupplier::set_state(const FtRtecEventChannelAdmin::ProxyP
     Inherited::connect_push_consumer(state.parameter.info().push_consumer.in(),
       state.parameter.info().qos);
     if (state.suspended)
+    {
       Inherited::suspend_connection();
+    }
   }
 }
 

@@ -45,7 +45,9 @@ Session_Control::session_finished (CORBA::Boolean success)
                   "unexpected callback\n"));
     }
   if (!success)
+  {
     this->success_ = false;
+  }
 
   --this->session_count_;
   ACE_DEBUG ((LM_DEBUG,

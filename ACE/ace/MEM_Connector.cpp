@@ -74,7 +74,9 @@ ACE_MEM_Connector::connect (ACE_MEM_Stream &new_stream,
                        this->address_.get_port_number ()),
                       -1);
   else
+  {
     this->address_.set_port_number (remote_sap.get_port_number ());
+  }
 
   ACE_SOCK_Stream temp_stream;
 
@@ -132,7 +134,9 @@ ACE_MEM_Connector::connect (ACE_MEM_Stream &new_stream,
   if (new_stream.init (buf,
                        static_cast<ACE_MEM_IO::Signal_Strategy> (server_strategy),
                        &this->malloc_options_) == -1)
+  {
     return -1;
+  }
 
   return 0;
 }

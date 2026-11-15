@@ -55,7 +55,9 @@ public:
             ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("getq")));
         ACE_Message_Block_Unique_Ptr message_block {raw_message_block};
         if (!message_block)
+        {
           break;
+        }
         if (message_block->msg_type () == ACE_Message_Block::MB_HANGUP)
           {
             ACE_DEBUG ((LM_INFO,
@@ -137,7 +139,9 @@ public:
           }
         ACE_Message_Block_Unique_Ptr message_block {raw_message_block};
         if (!message_block)
+        {
           continue;
+        }
 
         // Choose a worker.
         Worker *worker {};
@@ -153,7 +157,9 @@ public:
 
         // On success, the worker queue owns the message block.
         if (worker->putq (message_block.get ()) != -1)
+        {
           message_block.release ();
+        }
       }
 
     return 0;
@@ -188,7 +194,9 @@ private:
         ACE_NEW_RETURN (worker_raw, Worker (*this), -1);
         std::unique_ptr<Worker> worker {worker_raw};
         if (this->workers_.enqueue_tail (worker.get ()) == -1)
+        {
           return -1;
+        }
         worker.release ();
         worker_raw->activate ();
       }
@@ -237,7 +245,9 @@ Manager::shut_down ()
          -1);
       ACE_Message_Block_Unique_Ptr message_block {raw_message_block};
       if (worker->putq (message_block.get ()) == -1)
+      {
         return -1;
+      }
       message_block.release ();
 
       // Wait for the exit.
@@ -281,7 +291,9 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 
       // Add a new work item.
       if (tp.putq (message_block.get ()) == -1)
+      {
         return -1;
+      }
       message_block.release ();
     }
 

@@ -30,7 +30,9 @@ Simple::get_string ()
 {
   if (this->server_id_ < 1
       || static_cast<size_t> (this->server_id_) > locations.size ())
+  {
     return {};
+  }
   return CORBA::string_dup (locations[static_cast<size_t> (this->server_id_ - 1)]);
 }
 

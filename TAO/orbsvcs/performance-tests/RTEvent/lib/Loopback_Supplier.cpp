@@ -26,7 +26,9 @@ Loopback_Supplier::connect (RtecEventChannelAdmin::EventChannel_ptr ec)
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
     if (!CORBA::is_nil (this->proxy_consumer_.in ()))
+    {
       return;
+    }
 
     this->proxy_consumer_ =
       supplier_admin->obtain_push_consumer ();
@@ -54,7 +56,9 @@ Loopback_Supplier::disconnect ()
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
     if (CORBA::is_nil (this->proxy_consumer_.in ()))
+    {
       return;
+    }
     proxy = this->proxy_consumer_._retn ();
   }
 
@@ -74,7 +78,9 @@ Loopback_Supplier::push (const RtecEventComm::EventSet &source)
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
     if (CORBA::is_nil (this->proxy_consumer_.in ()))
+    {
       return;
+    }
     proxy = this->proxy_consumer_;
 
 #if 0

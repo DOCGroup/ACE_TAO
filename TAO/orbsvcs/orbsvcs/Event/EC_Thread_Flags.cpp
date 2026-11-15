@@ -119,7 +119,9 @@ TAO_EC_Thread_Flags::default_priority () const
 
   // use the implementation
   if (this->sched() == 0)
+  {
     return priority;
+  }
 
   priority =
     ACE_Sched_Params::priority_min (this->sched()) +

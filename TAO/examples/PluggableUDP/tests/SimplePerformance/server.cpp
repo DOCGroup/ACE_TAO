@@ -60,7 +60,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Server_Options options;
       if (parse_args (options, argc, argv) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");

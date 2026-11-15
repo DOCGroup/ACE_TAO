@@ -92,7 +92,9 @@ ACE_Priority_Reactor::build_bucket (ACE_Handle_Set &dispatch_mask,
       ACE_Event_Handler *event_handler =
         this->handler_rep_.find (handle);
       if (event_handler == nullptr)
+      {
         return -1;
+      }
 
       ACE_Event_Tuple et (event_handler,
                           handle);
@@ -101,16 +103,24 @@ ACE_Priority_Reactor::build_bucket (ACE_Handle_Set &dispatch_mask,
       // If the priority is out of range assign the minimum priority.
       if (prio < ACE_Event_Handler::LO_PRIORITY
           || prio > ACE_Event_Handler::HI_PRIORITY)
+      {
         prio = ACE_Event_Handler::LO_PRIORITY;
+      }
 
       if (bucket_[prio]->enqueue_tail (et) == -1)
+      {
         return -1;
+      }
 
       // Update the priority ranges....
       if (min_priority > prio)
+      {
         min_priority = prio;
+      }
       if (max_priority < prio)
+      {
         max_priority = prio;
+      }
     }
 
   return 0;
@@ -127,7 +137,9 @@ ACE_Priority_Reactor::dispatch_io_set (int number_of_active_handles,
   ACE_TRACE ("ACE_Priority_Reactor::dispatch_io_set");
 
   if (number_of_active_handles == 0)
+  {
     return 0;
+  }
 
   // The range for which there exists any Event_Tuple is computed on
   // the ordering loop, minimizing iterations on the dispatching loop.
@@ -139,7 +151,9 @@ ACE_Priority_Reactor::dispatch_io_set (int number_of_active_handles,
   if (this->build_bucket (dispatch_mask,
                           min_priority,
                           max_priority) == -1)
+  {
     return -1;
+  }
 
   for (int i = max_priority; i >= min_priority; --i)
     {
@@ -164,7 +178,9 @@ ACE_Priority_Reactor::dispatch_io_set (int number_of_active_handles,
                                      mask);
 
           if (this->state_changed_)
+          {
             this->state_changed_ = false; // so it will not rebuild it ...
+          }
         }
 
       // Even if we are aborting the loop due to this->state_changed

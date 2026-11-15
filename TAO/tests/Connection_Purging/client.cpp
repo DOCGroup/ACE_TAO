@@ -39,7 +39,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_TString ior (ACE_TEXT ("server.ior"));
       if (parse_args (argc, argv, ior) != 0)
+      {
         return 1;
+      }
 
       bool done {};
       test_var holder {};

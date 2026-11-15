@@ -71,7 +71,9 @@ TAO_Binary_Constraint::accept (TAO_Constraint_Visitor* visitor)
     return_value = -1;
 
   if (dispatch_table[offset] != nullptr)
+  {
     return_value = dispatch_table[offset] (visitor, this);
+  }
 
   return return_value;
 }
@@ -328,7 +330,9 @@ TAO_Literal_Constraint (CORBA::Any const* any)
           this->op_.integer_ = static_cast<CORBA::LongLong> (sh);
         }
       else
+      {
         any_ref >>= this->op_.integer_;
+      }
       break;
     case TAO_UNSIGNED:
       this->op_.uinteger_ = 0;
@@ -345,7 +349,9 @@ TAO_Literal_Constraint (CORBA::Any const* any)
           this->op_.uinteger_ = static_cast<CORBA::ULongLong> (sh);
         }
       else
+      {
         any_ref >>= this->op_.uinteger_;
+      }
       break;
     case TAO_DOUBLE:
       if (corba_type == CORBA::tk_float)
@@ -355,7 +361,9 @@ TAO_Literal_Constraint (CORBA::Any const* any)
           this->op_.double_ = static_cast<CORBA::Double> (fl);
         }
       else
+      {
         (*any) >>= this->op_.double_;
+      }
       break;
     case TAO_BOOLEAN:
       {
@@ -408,7 +416,9 @@ TAO_Literal_Constraint::TAO_Literal_Constraint (char const* str)
 TAO_Literal_Constraint::~TAO_Literal_Constraint ()
 {
   if (this->type_ == TAO_STRING)
+  {
     CORBA::string_free (this->op_.str_);
+  }
 }
 
 int
@@ -552,7 +562,9 @@ TAO_Literal_Constraint::comparable_type (CORBA::TypeCode_ptr type)
         // Since this is a "top level try block, no need to check again.
 
         if (kind == CORBA::tk_sequence)
+        {
           return_value = TAO_SEQUENCE;
+        }
       }
     break;
     default:
@@ -789,7 +801,9 @@ operator/ (const TAO_Literal_Constraint& left,
     case TAO_DOUBLE:
       {
         if (ACE::is_equal (static_cast<CORBA::Double> (right), 0.0))
+        {
           return TAO_Literal_Constraint (CORBA::Double {});
+        }
 
         CORBA::Double const result = static_cast<CORBA::Double> (left) /
                                      static_cast<CORBA::Double> (right);
@@ -798,7 +812,9 @@ operator/ (const TAO_Literal_Constraint& left,
     case TAO_SIGNED:
       {
         if (static_cast<CORBA::LongLong> (right) == 0)
+        {
           return TAO_Literal_Constraint (static_cast<CORBA::LongLong> (0));
+        }
 
         CORBA::LongLong const result = static_cast<CORBA::LongLong> (left) /
                                        static_cast<CORBA::LongLong> (right);
@@ -807,7 +823,9 @@ operator/ (const TAO_Literal_Constraint& left,
     case TAO_UNSIGNED:
       {
         if (static_cast<CORBA::ULongLong> (right) == 0)
+        {
           return TAO_Literal_Constraint (static_cast<CORBA::ULongLong> (0));
+        }
 
         CORBA::ULongLong const result = static_cast<CORBA::ULongLong> (left) /
                                         static_cast<CORBA::ULongLong> (right);
@@ -857,7 +875,9 @@ TAO_Literal_Constraint::widest_type (const TAO_Literal_Constraint& left,
       if (right_type > left_type)
         return_value = right_type;
       else
+      {
         return_value = left_type;
+      }
     }
 
   return return_value;
@@ -867,7 +887,9 @@ void
 TAO_Literal_Constraint::copy (const TAO_Literal_Constraint& lit)
 {
   if (this->type_ == TAO_STRING)
+  {
     CORBA::string_free (this->op_.str_);
+  }
 
   this->type_ = lit.type_;
   if (this->type_ == TAO_STRING)
@@ -883,7 +905,9 @@ TAO_Literal_Constraint::copy (const TAO_Literal_Constraint& lit)
   else if (this->type_ == TAO_SEQUENCE)
     this->op_.any_ = lit.op_.any_;
   else
+  {
     type_ = TAO_UNKNOWN;
+  }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

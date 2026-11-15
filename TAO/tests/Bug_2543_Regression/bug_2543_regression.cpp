@@ -40,11 +40,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // This pointer refers into any_n and remains valid while the Any is alive.
       BaseSeq const *out {};
       if (!(any_n.in () >>= out))
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "Error: extract out of any failed\n"), 1);
+      }
 
       if (std::strcmp ((*out)[0]->_tao_obv_repository_id (),
                        Value::_tao_obv_static_repository_id ()) != 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "Error: wrong type!\n"), 1);
+      }
 
       orb->destroy ();
     }

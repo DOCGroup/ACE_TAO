@@ -30,10 +30,14 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
   SSL *ssl = new_stream.ssl ();
 
   if (SSL_is_init_finished (ssl))
+  {
     return 0;
+  }
 
   if (!SSL_in_accept_init (ssl))
+  {
     ::SSL_set_accept_state (ssl);
+  }
 
   ACE_HANDLE const handle = new_stream.get_handle ();
 
@@ -55,7 +59,9 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
           if (reset_blocking_mode
               && ACE::set_flags (handle,
                                  ACE_NONBLOCK) == -1)
+          {
             return -1;
+          }
     }
 
   // Take into account the time between each select() call below.
@@ -114,10 +120,14 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
               else if (SSL_want_read (ssl))
                 rd_handle.set_bit (handle);
               else
+              {
                 status = -1;            // Doesn't want anything - bail out
+              }
             }
           else
+          {
             status = -1;
+          }
           break;
 
         default:
@@ -186,7 +196,9 @@ ACE_SSL_SOCK_Acceptor::accept (ACE_SSL_SOCK_Stream &new_stream,
                                     timeout,
                                     restart,
                                     reset_new_handle))
+  {
     return -1;
+  }
 
   (void) countdown.update ();
 
@@ -224,7 +236,9 @@ ACE_SSL_SOCK_Acceptor::accept (ACE_SSL_SOCK_Stream &new_stream,
                                     timeout,
                                     restart,
                                     reset_new_handle))
+  {
     return -1;
+  }
 
   (void) countdown.update ();
 

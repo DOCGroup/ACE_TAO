@@ -100,7 +100,9 @@ ACE_SOCK_Netlink::recv (iovec iov[],
                                     flags);
 
   if (recv_msg.msg_flags & MSG_TRUNC)
+  {
     return -1;
+  }
 
   addr.set_size (recv_msg.msg_namelen);
   addr.set_type (((sockaddr_in *) addr.get_addr())->sin_family);

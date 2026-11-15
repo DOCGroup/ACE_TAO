@@ -52,7 +52,9 @@ Object_Group_Factory_i::make_round_robin (char const *id)
       void *hash_map = this->mem_pool_->malloc (sizeof (HASH_MAP));
 
       if (hash_map == nullptr)
+      {
         throw CORBA::NO_MEMORY ();
+      }
 
       this->rr_groups_ = new (hash_map) HASH_MAP (this->mem_pool_.get ());
 
@@ -79,7 +81,9 @@ Object_Group_Factory_i::unbind_round_robin (char const *id)
 
       if (this->mem_pool_->find (rr_name_bind,
                                  tmp_rr) == -1)
+      {
         throw Load_Balancer::no_such_group ();
+      }
 
       this->rr_groups_ = reinterpret_cast <HASH_MAP *> (tmp_rr);
     }
@@ -89,7 +93,9 @@ Object_Group_Factory_i::unbind_round_robin (char const *id)
   // Throw an exception if not found in the HASH MAP
   if (this->rr_groups_->find (const_cast<char *> (id),
                               this->mem_pool_.get ()) < 0)
+  {
     throw Load_Balancer::no_such_group ();
+  }
 
   // Unbind the entry
   this->rr_groups_->unbind (const_cast<char *> (id),
@@ -106,7 +112,9 @@ Object_Group_Factory_i::unbind_round_robin (char const *id)
 
       if (this->mem_pool_->find (flags_name_bind,
                                  tmp_flags) == -1)
+      {
         return;
+      }
 
       this->flags_ = reinterpret_cast <CORBA::Short *> (tmp_flags);
     }
@@ -129,7 +137,9 @@ Object_Group_Factory_i::make_random (char const *id)
       void *hash_map = this->mem_pool_->malloc (sizeof (HASH_MAP));
 
       if (hash_map == nullptr)
+      {
         throw CORBA::NO_MEMORY ();
+      }
 
       this->random_groups_ = new (hash_map) HASH_MAP (this->mem_pool_.get ());
 
@@ -156,7 +166,9 @@ Object_Group_Factory_i::unbind_random (char const *id)
 
       if (this->mem_pool_->find (random_name_bind,
                                  tmp_random) == -1)
+      {
         throw Load_Balancer::no_such_group ();
+      }
 
       this->random_groups_ = reinterpret_cast <HASH_MAP *> (tmp_random);
     }
@@ -166,7 +178,9 @@ Object_Group_Factory_i::unbind_random (char const *id)
   // Throw an exception if not found in the HASH MAP
   if (this->random_groups_->find (const_cast<char *> (id),
                                   this->mem_pool_.get ()) < 0)
+  {
     throw Load_Balancer::no_such_group ();
+  }
 
   // Unbind the entry
   this->random_groups_->unbind (const_cast<char *> (id),
@@ -183,7 +197,9 @@ Object_Group_Factory_i::unbind_random (char const *id)
 
       if (this->mem_pool_->find (flags_name_bind,
                                  tmp_flags) == -1)
+      {
         return;
+      }
 
       this->flags_ = reinterpret_cast <CORBA::Short *> (tmp_flags);
     }
@@ -209,13 +225,17 @@ Object_Group_Factory_i::make_group (bool random,
     {
       if (this->random_groups_->find (const_cast<char *> (id),
                                       this->mem_pool_.get ()) == 0)
+      {
         throw Load_Balancer::duplicate_group ();
+      }
     }
   else
     {
       if (this->rr_groups_->find (const_cast<char *> (id),
                                   this->mem_pool_.get ()) == 0)
+      {
         throw Load_Balancer::duplicate_group ();
+      }
     }
 
   // As we are sure that it is not in the list go ahead and insert it
@@ -246,7 +266,9 @@ Object_Group_Factory_i::make_group (bool random,
   char *ptr = static_cast<char *> (this->mem_pool_->malloc (id_len + kind_len));
 
   if (ptr == nullptr)
+  {
     throw CORBA::NO_MEMORY ();
+  }
 
   char * id_ptr =  ptr;
   char * ior_ptr = ptr + id_len;
@@ -359,7 +381,9 @@ Object_Group_Factory_i::resolve (char const *id)
       && random_groups_->find (const_cast<char *> (id),
                                ior,
                                this->mem_pool_.get ()) == -1)
+  {
     throw Load_Balancer::no_such_group ();
+  }
 
   CORBA::Object_var objref =
     this->orb_->string_to_object (ior);
@@ -394,7 +418,9 @@ Object_Group_Factory_i::list_groups (bool random)
   if (random)
     len = random_groups_->current_size ();
   else
+  {
     len = rr_groups_->current_size ();
+  }
 
   // Allocate the list of <len> length.
   ACE_NEW_THROW_EX (list,
@@ -409,7 +435,9 @@ Object_Group_Factory_i::list_groups (bool random)
   if (random)
     group_iter = &random_iter;
   else
+  {
     group_iter = &rr_iter;
+  }
 
   // Iterate over groups and populate the list.
   HASH_MAP::ENTRY *hash_entry {};
@@ -455,7 +483,9 @@ Object_Group_Factory_i::update_flags (bool random)
             this->mem_pool_->malloc (sizeof (CORBA::Short));
 
           if (value == nullptr)
+          {
             throw CORBA::NO_MEMORY ();
+          }
 
           this->flags_ = new (value) CORBA::Short (0);
 
@@ -472,15 +502,21 @@ Object_Group_Factory_i::update_flags (bool random)
       if (random)
         *(this->flags_) = 2;
       else
+      {
         *(this->flags_) = 1;
+      }
       break;
     case 1:
       if (random)
+      {
         *(this->flags_) = 3;
+      }
       break;
     case 2:
       if (!random)
+      {
         *(this->flags_) = 3;
+      }
       break;
     }
 }
@@ -588,7 +624,9 @@ Object_Group_i::bind (Load_Balancer::Member const &member)
           void *hash_map = this->allocator_->malloc (sizeof (HASH_MAP));
 
           if (hash_map == nullptr)
+          {
             throw CORBA::NO_MEMORY ();
+          }
 
           this->members_ = new (hash_map) HASH_MAP (this->allocator_.get ());
 
@@ -605,7 +643,9 @@ Object_Group_i::bind (Load_Balancer::Member const &member)
   // Check whether the element already exists..
   if (this->members_->find (const_cast<char *> (static_cast<char const *> (member.id)),
                             this->allocator_.get ()) == 0)
+  {
     throw Load_Balancer::duplicate_member ();
+  }
 
   size_t id_len = std::strlen (member.id) + 1;
   size_t ref_len = std::strlen (member.obj) + 1;
@@ -613,7 +653,9 @@ Object_Group_i::bind (Load_Balancer::Member const &member)
   char *mem_alloc = static_cast<char *> (this->allocator_->malloc (id_len + ref_len));
 
   if (mem_alloc == nullptr)
-     throw CORBA::NO_MEMORY ();
+  {
+    throw CORBA::NO_MEMORY ();
+  }
 
   char **id_ptr = static_cast<char **> (this->allocator_->malloc (sizeof (char *)));
   *id_ptr = mem_alloc;
@@ -650,7 +692,9 @@ Object_Group_i::bind (Load_Balancer::Member const &member)
       void *dll_list = this->allocator_->malloc (sizeof (LIST));
 
       if (dll_list == nullptr)
+      {
         throw CORBA::NO_MEMORY ();
+      }
 
       this->member_id_list_ = new (dll_list) LIST (this->allocator_.get ());
 
@@ -665,7 +709,9 @@ Object_Group_i::bind (Load_Balancer::Member const &member)
     }
 
   if (member_id_list_->insert_tail (id_ptr) == 0)
+  {
     throw CORBA::NO_MEMORY ();
+  }
 
   // Theoretically, we should deal with memory failures more
   // thoroughly.  But, practically, the whole system is going to be
@@ -695,7 +741,9 @@ Object_Group_i::unbind (char const *id)
   // Check to make sure we have it.
   if (this->members_->find (const_cast<char *> (id),
                             this->allocator_.get ()) == -1)
+  {
     throw Load_Balancer::no_such_member ();
+  }
 
   // Remove all entries for this member.
   this->members_->unbind (const_cast<char *> (id),
@@ -711,7 +759,9 @@ Object_Group_i::unbind (char const *id)
       if (this->allocator_->find (id.c_str (),
                                   tmp_id_list)
           == -1)
+      {
         throw Load_Balancer::no_such_member ();
+      }
 
       this->member_id_list_ = reinterpret_cast <LIST *> (tmp_id_list);
     }
@@ -733,7 +783,9 @@ Object_Group_i::resolve_with_id (char const *id)
 
   if (this->members_->find (const_cast<char *> (id),
                       ior.out (), this->allocator_.get ()) == -1)
+  {
     throw Load_Balancer::no_such_member ();
+  }
 
   char *retn_ptr = CORBA::string_dup (ior.in ());
 
@@ -844,7 +896,9 @@ Random_Object_Group::resolve ()
 
   size_t group_size = this->members_->current_size ();
   if (group_size == 0)
+  {
     throw Load_Balancer::no_such_member ();
+  }
 
   // Generate random number in the range [0, group_size - 1]
   size_t member = ACE_OS::rand() % group_size;
@@ -881,7 +935,9 @@ RR_Object_Group::resolve ()
 
   size_t group_size = this->members_->current_size ();
   if (group_size == 0)
+  {
     throw Load_Balancer::no_such_member ();
+  }
 
   // Get the id of the member to return to the client.
   char **id {};
@@ -896,7 +952,9 @@ RR_Object_Group::resolve ()
   if (this->members_->find (*id,
                             objref,
                             this->allocator_.get ()) == -1)
+  {
     throw CORBA::INTERNAL ();
+  }
 
   char *retn_ptr = CORBA::string_dup (objref);
 
@@ -926,7 +984,9 @@ RR_Object_Group::unbind (char const *id)
   // Check to make sure we have it.
   if (this->members_->find (const_cast<char *> (id),
                             this->allocator_.get ()) == -1)
+  {
     throw Load_Balancer::no_such_member ();
+  }
 
   // Remove all entries for this member.
   this->members_->unbind (const_cast<char *> (id),
@@ -944,7 +1004,9 @@ RR_Object_Group::unbind (char const *id)
       if (this->allocator_->find (id.c_str (),
                                   tmp_id_list)
           == -1)
+      {
         throw Load_Balancer::no_such_member ();
+      }
 
       this->member_id_list_ = reinterpret_cast <LIST *> (tmp_id_list);
     }

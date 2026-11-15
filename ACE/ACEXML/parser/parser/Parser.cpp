@@ -310,7 +310,9 @@ ACEXML_Parser::parse_external_dtd ()
       if (ip)
         {
           if (this->switch_input (ip, (uri ? uri.get () : systemId), publicId) != 0)
+          {
             return -1;
+          }
         }
       else
         {
@@ -321,7 +323,9 @@ ACEXML_Parser::parse_external_dtd ()
             this->fatal_error (ACE_TEXT ("Invalid input source"));
           }
           if (this->switch_input (cstream, systemId, publicId) != 0)
+          {
             return -1;
+          }
         }
       this->parse_external_subset ();
     }
@@ -347,14 +351,18 @@ ACEXML_Parser::parse_external_subset ()
                 if (nextch == '[')
                   this->parse_conditional_section ();
                 else
+                {
                   this->parse_markup_decl ();
+                }
                 break;
               case '?':
                 nextch = this->peek();
                 if (nextch == 'x')
                   this->parse_text_decl ();
                 else
+                {
                   this->parse_processing_instruction ();
+                }
                 break;
               default:
                 this->fatal_error (ACE_TEXT ("Invalid content in external DTD"));
@@ -366,7 +374,9 @@ ACEXML_Parser::parse_external_subset ()
         case 0:
           nrelems = this->pop_context (false);
           if (nrelems == 1)
+          {
             return 0;
+          }
           break;
         default:
           this->fatal_error (ACE_TEXT ("Invalid content in external DTD"));
@@ -433,7 +443,9 @@ ACEXML_Parser::parse_conditional_section ()
   if (include)
     this->parse_includesect ();
   else
+  {
     this->parse_ignoresect ();
+  }
   return 0;
 }
 
@@ -483,7 +495,9 @@ ACEXML_Parser::parse_ignoresect ()
           break;
       }
     if (done)
+    {
       break;
+    }
     nextch = this->get();
   } while (1);
 
@@ -506,7 +520,9 @@ ACEXML_Parser::parse_includesect ()
                 if (nextch == '[')
                   this->parse_conditional_section ();
                 else
+                {
                   this->parse_markup_decl ();
+                }
                 break;
               case '?':
                 nextch = this->peek();
@@ -820,7 +836,9 @@ ACEXML_Parser::parse_element (bool is_root)
         }
     }
   if (this->parse_content (startname, ns_uri, ns_lname, ns_flag) != 0)
+  {
     return;
+  }
 }
 
 int
@@ -935,7 +953,9 @@ ACEXML_Parser::parse_content (ACEXML_Char const *startname,
                 this->ref_state_ = ACEXML_ParserInt::IN_CONTENT;
                 int const length = this->parse_entity_reference();
                 if (length == 1)
+                {
                   ++cdata_length;
+                }
               }
             break;
           case '\x20': case '\x0D': case '\x0A': case '\x09':
@@ -1119,7 +1139,9 @@ ACEXML_Parser::parse_entity_decl ()
           if (is_GEDecl)
             retval = this->external_GE_.add_entity (entity_name, systemid);
           else
+          {
             retval = this->external_PE_.add_entity (entity_name, systemid);
+          }
           if (retval < 0)
             {
               this->fatal_error(ACE_TEXT ("Internal Parser Error"));
@@ -1129,7 +1151,9 @@ ACEXML_Parser::parse_entity_decl ()
           if (is_GEDecl)
             retval = this->external_GE_.add_entity (entity_name, publicid);
           else
+          {
             retval = this->external_PE_.add_entity (entity_name, publicid);
+          }
           if (retval < 0)
             {
               this->fatal_error(ACE_TEXT ("Internal Parser Error"));
@@ -1177,7 +1201,9 @@ ACEXML_Parser::parse_attlist_decl ()
                           ACE_TEXT ("name and AttDef"));
       this->skip_whitespace_count (&fwd);
       if (fwd == '>')
+      {
         break;
+      }
 
       count = this->check_for_PE_reference ();
 
@@ -1679,7 +1705,9 @@ ACEXML_Parser::parse_children_definition ()
       default:
         int const status = this->parse_child (true);
         if (status != 0)
+        {
           return -1;
+        }
     }
 
   // Check for trailing '?', '*', '+'
@@ -1851,13 +1879,17 @@ ACEXML_Parser::parse_char_reference (ACEXML_Char *buf, size_t& len)
       more_digit = true;
     }
   if (ch != ';' || !more_digit)
+  {
     return -1;
+  }
   buf[i] = 0;
   ACEXML_UCS4 const sum =
     static_cast<ACEXML_UCS4> (ACE_OS::strtol (buf, nullptr, (hex ? 16 : 10)));
   // [WFC: Legal Character]
   if (!this->isChar (sum))
+  {
     return -1;
+  }
   int clen;
 #if defined (ACE_USES_WCHAR)
 #  if (ACE_SIZEOF_WCHAR == 2)    // UTF-16
@@ -1871,7 +1903,9 @@ ACEXML_Parser::parse_char_reference (ACEXML_Char *buf, size_t& len)
 
 #else                          // or UTF-8
   if ((clen = ACEXML_Transcoder::ucs42utf8 (sum, buf, len)) < 0)
+  {
     return -1;
+  }
 #endif
   buf [clen] = 0;
   len = clen;
@@ -1883,16 +1917,22 @@ ACEXML_Parser::parse_reference_name ()
 {
   ACEXML_Char ch = this->get ();
   if (!this->isLetter (ch) && (ch != '_' && ch != ':'))
+  {
     return 0;
+  }
   while (ch) {
     this->alt_stack_.grow (ch);
     ch = this->peek ();
     if (!this->isNameChar (ch))
+    {
       break;
+    }
     ch = this->get ();
   };
   if (ch != ';')
+  {
     return 0;
+  }
   ch = this->get();
   return this->alt_stack_.freeze ();
 }
@@ -2064,7 +2104,9 @@ ACEXML_Parser::parse_entity_reference ()
                              ACE_TEXT ("stream"));
         }
       if (this->switch_input (str.release (), replace) != 0)
+      {
         this->fatal_error (ACE_TEXT ("Unable to create internal input stream"));
+      }
       return 0;
     }
   else
@@ -2155,7 +2197,9 @@ ACEXML_Parser::parse_PE_reference ()
           this->fatal_error (ACE_TEXT ("Error in switching InputSource"));
         }
       if (this->switch_input (sstream.release (), replace) != 0)
+      {
         this->fatal_error (ACE_TEXT ("Error in switching InputSource"));
+      }
       return 0;
     }
   else if (this->external_entity_ && this->validate_)
@@ -2278,14 +2322,20 @@ ACEXML_Char *
 ACEXML_Parser::parse_name (ACEXML_Char ch)
 {
   if (ch == 0)
+  {
     ch = this->get ();
+  }
   if (!this->isLetter (ch) && ch != '_' && ch != ':')
+  {
     return 0;
+  }
   while (ch) {
     this->obstack_.grow (ch);
     ch = this->peek ();
     if (!this->isNameChar (ch))
+    {
       break;
+    }
     ch = this->get ();
   };
   return this->obstack_.freeze ();
@@ -2295,14 +2345,20 @@ ACEXML_Char*
 ACEXML_Parser::parse_nmtoken (ACEXML_Char ch)
 {
   if (ch == 0)
+  {
     ch = this->get ();
+  }
   if (!this->isNameChar (ch))
+  {
     return 0;
+  }
   while (ch) {
     this->obstack_.grow (ch);
     ch = this->peek ();
     if (!this->isNameChar (ch))
+    {
       break;
+    }
     ch = this->get ();
   };
   return this->obstack_.freeze ();
@@ -2335,7 +2391,9 @@ ACEXML_Parser::parse_version_num (ACEXML_Char*& str)
           ++numchars;
         }
       else
+      {
         return -1;
+      }
     }
 }
 
@@ -2389,7 +2447,9 @@ ACEXML_Parser::parse_pubid_literal (ACEXML_Char*& str)
       else if (this->isPubidChar (ch))
         this->obstack_.grow (ch);
       else
+      {
         return -1;
+      }
     }
 }
 
@@ -2413,7 +2473,9 @@ ACEXML_Parser::parse_encname (ACEXML_Char*& str)
       // [81]    EncName ::= [A-Za-z] ([A-Za-z0-9._] | '-')*
       if (!((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z'))
           && !numchars)
+      {
         return -1;
+      }
       if (ch == '-' || ((ch >= 'a' && ch <= 'z') ||
                         (ch >= 'A' && ch <= 'Z') ||
                         (ch >= '0' && ch <= '9') ||
@@ -2423,7 +2485,9 @@ ACEXML_Parser::parse_encname (ACEXML_Char*& str)
           ++numchars;
         }
       else
+      {
         return -1;
+      }
     }
 }
 
@@ -2496,7 +2560,9 @@ ACEXML_Parser::switch_input (ACEXML_InputSource* input,
   std::unique_ptr<ACEXML_InputSource> input_owner (input);
   ACEXML_LocatorImpl *locator {};
   if (!systemId)
+  {
     systemId = input_owner->getSystemId();
+  }
   ACE_NEW_RETURN (locator, ACEXML_LocatorImpl (systemId, publicId), -1);
   std::unique_ptr<ACEXML_LocatorImpl> locator_owner (locator);
   ACEXML_Parser_Context *new_context {};
@@ -2563,7 +2629,9 @@ ACEXML_Parser::pop_context (bool GE_ref)
         }
     }
   if (this->external_entity_)
+  {
     --this->external_entity_;
+  }
 
   this->content_handler_->setDocumentLocator (this->current_->getLocator());
 
@@ -2640,7 +2708,9 @@ ACEXML_Parser::error (ACEXML_Char const *msg)
   if (this->error_handler_)
       this->error_handler_->error (exception);
   else
+  {
     throw exception;
+  }
 }
 
 void
@@ -2648,7 +2718,9 @@ ACEXML_Parser::warning (ACEXML_Char const *msg)
 {
   ACEXML_SAXParseException exception(msg);
   if (this->error_handler_)
+  {
     this->error_handler_->warning (exception);
+  }
 }
 
 void
@@ -2656,7 +2728,9 @@ ACEXML_Parser::fatal_error (ACEXML_Char const *msg)
 {
   ACEXML_SAXParseException exception(msg);
   if (this->error_handler_)
+  {
     this->error_handler_->fatalError (exception);
+  }
   this->reset();
   throw exception;
 }
@@ -2728,7 +2802,9 @@ ACEXML_Parser::parse_text_decl ()
     }
 
   if (fwd == '?' && this->get() == '>')
+  {
     return 0;
+  }
   // All the rules fail. So return an error.
   this->fatal_error (ACE_TEXT ("Invalid TextDecl"));
   return -1;
@@ -2769,13 +2845,17 @@ ACEXML_Parser::parse_xml_decl ()
               this->parse_sddecl (astring) == 0)
             {
               if (ACE_OS::strcmp (astring, ACE_TEXT ("yes")) == 0)
+              {
                 this->standalone_ = true;
+              }
               fwd = this->skip_whitespace();
             }
         }
     }
   if (fwd == '?' && this->get() == '>')
+  {
     return;
+  }
   // All the rules fail. So return an error.
   this->fatal_error (ACE_TEXT ("Invalid XMLDecl declaration"));
 }
@@ -2800,7 +2880,9 @@ ACEXML_Parser::parse_comment ()
           (fwd == '>' && state == 2))
         ++state;
       else
+      {
         state = 0;              // Reset parse state.
+      }
     }
   return 0;
 }
@@ -2826,7 +2908,9 @@ ACEXML_Parser::parse_processing_instruction ()
         {
           case '?':
             if (state == 0)
+            {
               state = 1;
+            }
             break;
           case '>':
             if (state == 1)
@@ -2842,7 +2926,9 @@ ACEXML_Parser::parse_processing_instruction ()
             ACE_FALLTHROUGH;
           default:
             if (state == 1)
+            {
               this->obstack_.grow ('?');
+            }
             this->obstack_.grow (ch);
             state = 0;
         }

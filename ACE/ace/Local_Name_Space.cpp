@@ -87,7 +87,9 @@ ACE_NS_String::strstr (const ACE_NS_String &s) const
 
           for (j = 0; j < pat_len; ++j)
             if (this->rep_[i + j] != s.rep_[j])
+            {
               break;
+            }
 
           if (j == pat_len)
             // Found a match!  Return the index.

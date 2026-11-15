@@ -55,7 +55,9 @@ ACE_TMAIN (int argc , ACE_TCHAR *argv[])
   ACE_OS::socket_init (ACE_WSOCK_VERSION);
 
   if (parse_args(argc, argv) != 0)
+  {
     return 1;
+  }
 
   ACE_TCHAR host[MAXHOSTNAMELEN+1];
   if (ACE_OS::hostname (host, MAXHOSTNAMELEN) != 0)
@@ -141,7 +143,9 @@ ACE_TMAIN (int argc , ACE_TCHAR *argv[])
           ACE_OS::sleep(1);
         }
       if (retrycount == 0 || n < 0)
+      {
         break;
+      }
 
       buffer[n] = 0;
 
@@ -150,7 +154,9 @@ ACE_TMAIN (int argc , ACE_TCHAR *argv[])
                   ACE_TEXT ("Got: \"%C\"\n"), buffer));
 
       if (ACE_OS::strstr (buffer,"goodbye") != nullptr)
+      {
         break;
+      }
 
       ACE_OS::sprintf (buffer,"I hear you %d",i);
       n = stream.send (buffer,ACE_OS::strlen(buffer)+1);
@@ -184,7 +190,9 @@ ACE_TMAIN (int argc , ACE_TCHAR *argv[])
                             ACE_TEXT ("channel2.pre_recv()")));
             }
           if (got[0] == -1 || got[1] == -1)
+          {
             ACE_OS::sleep (1);
+          }
         }
     }
   ACE_OS::sleep(1); // prevent test failure on windows when the connection

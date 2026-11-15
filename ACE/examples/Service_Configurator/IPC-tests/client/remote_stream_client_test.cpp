@@ -128,7 +128,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                        "recv"),
                       -1);
   else
+  {
     ACE_OS::write (ACE_STDOUT, buf, n);
+  }
 
   return 0;
 }

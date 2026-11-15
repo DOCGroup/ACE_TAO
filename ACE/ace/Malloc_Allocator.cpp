@@ -97,7 +97,9 @@ ACE_New_Allocator::malloc (size_t nbytes)
 {
   char *ptr {};
   if (nbytes > 0)
+  {
     ACE_NEW_RETURN (ptr, char[nbytes], nullptr);
+  }
   return (void *) ptr;
 }
 

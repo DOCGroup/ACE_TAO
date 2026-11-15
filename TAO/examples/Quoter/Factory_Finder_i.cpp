@@ -58,7 +58,9 @@ Quoter_Factory_Finder_i::find_factories (CosLifeCycle::Key const &factory_key)
 
     // Check if it is a valid Quoter Factory reference
     if (CORBA::is_nil (quoterFactoryObject_var.in()))
+    {
       throw CosLifeCycle::NoFactory (factory_key);
+    }
 
     // create a sequence of factories object
     factories = new CosLifeCycle::Factories (1);

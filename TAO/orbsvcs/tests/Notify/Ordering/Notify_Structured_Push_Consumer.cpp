@@ -98,7 +98,9 @@ Notify_Structured_Push_Consumer::push_structured_event (
           int const adjusted_expected_id = expected_id <= this->first_ ? expected_id - 1 : expected_id;
 
           if (id != adjusted_expected_id)
+          {
             ACE_ERROR ((LM_ERROR, "\nError: "));
+          }
           ACE_DEBUG ((LM_DEBUG, "Expected id:%d Received id:%d\n", adjusted_expected_id, id));
         }
       else if (id != this->count_ - 1)

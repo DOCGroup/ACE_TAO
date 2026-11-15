@@ -50,7 +50,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       Foo_i *foo_i;
       ACE_NEW_RETURN (foo_i,

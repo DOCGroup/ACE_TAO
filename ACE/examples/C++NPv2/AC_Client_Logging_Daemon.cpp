@@ -145,7 +145,9 @@ int AC_Output_Handler::open (void *connector) {
                       &bufsiz, sizeof bufsiz);
   if (reactor ()->register_handler
        (this, ACE_Event_Handler::READ_MASK) == -1)
+  {
     return -1;
+  }
   if (msg_queue ()->activate ()
       == ACE_Message_Queue_Base::ACTIVATED) {
     msg_queue ()->high_water_mark (QUEUE_MAX);
@@ -158,7 +160,9 @@ int AC_Output_Handler::put (ACE_Message_Block *mb,
   int retval;
   while ((retval = putq (mb, timeout)) == -1) {
     if (msg_queue ()->state () != ACE_Message_Queue_Base::PULSED)
+    {
       break;
+    }
   }
   return retval;
 }
@@ -189,7 +193,10 @@ int AC_Output_Handler::svc () {
     ACE_Message_Block *mblk = nullptr;
     if (getq (mblk, &timeout) == -1) {
       if (errno == ESHUTDOWN) {
-        if (connector_->reconnect () == -1) break;
+        if (connector_->reconnect () == -1)
+        {
+          break;
+        }
         continue;
       } else if (errno != EWOULDBLOCK) break;
       else if (message_index == 0) continue;
@@ -197,20 +204,27 @@ int AC_Output_Handler::svc () {
       ACE_Message_Block_Unique_Ptr mblk_owner {mblk};
       if (mblk->size () == 0
           && mblk->msg_type () == ACE_Message_Block::MB_STOP)
+      {
         break;
+      }
       chunk[message_index].reset (mblk_owner.release ());
       ++message_index;
     }
     if (message_index >= ACE_IOV_MAX ||
         (ACE_OS::gettimeofday () - time_of_last_send
          >= ACE_Time_Value(FLUSH_TIMEOUT))) {
-      if (this->send (chunk, message_index) == -1) break;
+      if (this->send (chunk, message_index) == -1)
+      {
+        break;
+      }
       time_of_last_send = ACE_OS::gettimeofday ();
     }
   }
 
   if (message_index > 0)
+  {
     this->send (chunk, message_index);
+  }
   no_sigpipe.restore_action (SIGPIPE, original_action);
   return 0;
 }
@@ -245,7 +259,9 @@ int AC_Input_Handler::open (void *) {
   ACE_HANDLE handle = peer ().get_handle ();
   if (reactor ()->register_handler
         (handle, this, ACE_Event_Handler::READ_MASK) == -1)
+  {
     return -1;
+  }
   connected_clients_.set_bit (handle);
   return 0;
 }
@@ -257,7 +273,9 @@ int AC_Input_Handler::close (u_long) {
      ACE_Message_Block (0, ACE_Message_Block::MB_STOP), -1);
   ACE_Message_Block_Unique_Ptr shutdown_owner {shutdown_message};
   if (output_handler_->put (shutdown_message) == -1)
+  {
     return -1;
+  }
   shutdown_owner.release ();
 
   reactor ()->remove_handler
@@ -310,10 +328,16 @@ int AC_CLD_Acceptor::handle_close (ACE_HANDLE,
 #endif /* !CLD_KEY_FILENAME */
 
 int AC_CLD_Connector::open (ACE_Reactor *r, int flags) {
-  if (PARENT::open (r, flags) != 0) return -1;
+  if (PARENT::open (r, flags) != 0)
+  {
+    return -1;
+  }
   OpenSSL_add_ssl_algorithms ();
   ssl_ctx_ = SSL_CTX_new (SSLv23_client_method ());
-  if (ssl_ctx_ == nullptr) return -1;
+  if (ssl_ctx_ == nullptr)
+  {
+    return -1;
+  }
 
   if (SSL_CTX_use_certificate_file (ssl_ctx_,
                                     CLD_CERTIFICATE_FILENAME,
@@ -322,10 +346,15 @@ int AC_CLD_Connector::open (ACE_Reactor *r, int flags) {
                                      CLD_KEY_FILENAME,
                                      SSL_FILETYPE_PEM) <= 0
      || !SSL_CTX_check_private_key (ssl_ctx_))
+  {
     return -1;
+  }
 
   ssl_ = SSL_new (ssl_ctx_);
-  if (ssl_ == nullptr) return -1;
+  if (ssl_ == nullptr)
+  {
+    return -1;
+  }
   return 0;
 }
 
@@ -337,7 +366,10 @@ int AC_CLD_Connector::connect_svc_handler
      int reuse_addr, int flags, int perms) {
   if (PARENT::connect_svc_handler
       (svc_handler, remote_addr, timeout,
-       local_addr, reuse_addr, flags, perms) == -1) return -1;
+       local_addr, reuse_addr, flags, perms) == -1)
+  {
+    return -1;
+  }
   SSL_clear (ssl_);
 #if defined (ACE_WIN32)
   // ACE_WIN32 is the only platform where ACE_HANDLE is not an int.
@@ -350,7 +382,10 @@ int AC_CLD_Connector::connect_svc_handler
   SSL_set_verify (ssl_, SSL_VERIFY_PEER, nullptr);
 
   if (SSL_connect (ssl_) == -1
-      || SSL_shutdown (ssl_) == -1) return -1;
+      || SSL_shutdown (ssl_) == -1)
+  {
+    return -1;
+  }
   remote_addr_ = remote_addr;
   return 0;
 }
@@ -375,9 +410,14 @@ int AC_CLD_Connector::reconnect () {
   for (i = 0; i < MAX_RETRIES; ++i) {
     ACE_Synch_Options options (ACE_Synch_Options::USE_TIMEOUT,
                                timeout);
-    if (i > 0) ACE_OS::sleep (timeout);
+    if (i > 0)
+    {
+      ACE_OS::sleep (timeout);
+    }
     if (this->connect (handler_, remote_addr_, options) == 0)
+    {
       break;
+    }
     timeout *= 2; // Exponential backoff.
   }
   return i == MAX_RETRIES ? -1 : 0;
@@ -417,7 +457,10 @@ int AC_Client_Logging_Daemon::init
   ACE_INET_Addr cld_addr (cld_port);
   ACE_INET_Addr sld_addr (sld_port, sld_host);
 
-  if (acceptor_.open (cld_addr) == -1) return -1;
+  if (acceptor_.open (cld_addr) == -1)
+  {
+    return -1;
+  }
   AC_Output_Handler *oh = &output_handler_;
   if (connector_.connect (oh, sld_addr) == -1)
   { acceptor_.close (); return -1; }

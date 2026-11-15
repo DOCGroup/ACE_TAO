@@ -22,7 +22,9 @@ HTTP_Parse_URL::HTTP_Parse_URL (const char *url)
 HTTP_Parse_URL::~HTTP_Parse_URL ()
 {
   if (this->url_ != nullptr)
+  {
     ACE_OS::free (this->url_);
+  }
 }
 
 void
@@ -31,10 +33,14 @@ HTTP_Parse_URL::init( const char *url )
    // Should really reset completely and cleanly here before
    // doing anything else!
    if (url == nullptr)
-      return;
+   {
+     return;
+   }
 
    if (url_ != nullptr)
-      ACE_OS::free( url_ );
+   {
+     ACE_OS::free( url_ );
+   }
 
    url_ = ACE_OS::strdup( url );
    if (url_ == nullptr)
@@ -146,18 +152,24 @@ HTTP_Parse_URL::parse_host (char *&p)
               if (at != nullptr && colon2 == nullptr)
                 colon2 = q;
               else
+              {
                 colon1 = q;
+              }
             }
           else
             {
               if (at != nullptr && colon2 == nullptr)
+              {
                 colon2 = q;
+              }
             }
         }
       if (*q == '@')
         {
           if (at == nullptr)
+          {
             at = q;
+          }
         }
       ++q;
     }
@@ -173,7 +185,9 @@ HTTP_Parse_URL::parse_host (char *&p)
   else if (at == nullptr && colon1 != nullptr)
     {
       if (p != colon1)
+      {
         this->host_ = p;
+      }
       *colon1++ = '\0';
       this->port_ = std::atoi (colon1);
     }
@@ -193,7 +207,9 @@ HTTP_Parse_URL::parse_host (char *&p)
       this->user_ = p;
       *at++ = '\0';
       if (at != colon2)
+      {
         this->host_ = at;
+      }
       *colon2++ = '\0';
       this->port_ = std::atoi (colon2);
     }
@@ -217,7 +233,9 @@ HTTP_Parse_URL::parse_host (char *&p)
       this->passwd_ = colon1;
       *at++ = '\0';
       if (at != colon2)
+      {
         this->host_ = at;
+      }
       *colon2++ = '\0';
       this->port_ = std::atoi (colon2);
     }
@@ -240,7 +258,9 @@ HTTP_Parse_URL::set_port_from_scheme ()
   if (std::strcmp (this->scheme_, "ftp") == 0)
     {
       if (this->port_ == -1)
+      {
         this->port_ = 21;
+      }
       if (this->user_ == nullptr)
         {
           this->user_ = "anonymous";
@@ -252,7 +272,9 @@ HTTP_Parse_URL::set_port_from_scheme ()
   else if (std::strcmp (this->scheme_, "http") == 0)
     {
       if (this->port_ == -1)
+      {
         this->port_ = 80;
+      }
     }
 }
 
@@ -299,9 +321,13 @@ HTTP_Parse_URL::is_cgi (const char *path)
 
   yes = (std::strchr (path, '?') != nullptr);
   if (!yes && (std::strlen (path) >= 3))
+  {
     yes = (std::strstr (path, "cgi") != nullptr);
+  }
   if (!yes)
+  {
     yes = (std::strstr (path, "asp") != nullptr);
+  }
 
   this->is_cgi_ = yes;
 }

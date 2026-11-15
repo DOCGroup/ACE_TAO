@@ -251,7 +251,9 @@ TAO_MonitorEventChannelFactory::create_channel (
 
   // Make sure the name isn't already used.
   if (this->map_.find (sname) == 0)
+  {
     throw NotifyMonitoringExt::NameAlreadyUsed ();
+  }
 
   // Event channel creation was successful, try to bind it in our map
   if (this->map_.bind (sname, id) != 0)

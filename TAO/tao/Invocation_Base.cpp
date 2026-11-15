@@ -93,7 +93,9 @@ namespace TAO
           }
 
         if (this->reply_status_ == GIOP::LOCATION_FORWARD)
+        {
           return TAO_INVOKE_RESTART;
+        }
 
         this->cri_adapter_->pushTSC (this->stub_->orb_core ());
       }
@@ -128,7 +130,9 @@ namespace TAO
           }
 
         if (this->reply_status_ == GIOP::LOCATION_FORWARD)
+        {
           return TAO_INVOKE_RESTART;
+        }
       }
     else if (sri_adapter_)
       {
@@ -160,7 +164,9 @@ namespace TAO
           }
 
         if (this->reply_status_ == GIOP::LOCATION_FORWARD)
+        {
           return TAO_INVOKE_RESTART;
+        }
       }
     else if (sri_adapter_)
       {

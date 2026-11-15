@@ -37,7 +37,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "Wrong arguments\n"), -1);
+      }
 
       CORBA::Object_var tmp = orb->string_to_object (ior_server);
 
@@ -45,7 +47,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         Test::Server::_unchecked_narrow (tmp.in ());
 
       if (CORBA::is_nil (server.in ()))
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "Nil reference\n"), -1);
+      }
 
       server->shutdown ();
 

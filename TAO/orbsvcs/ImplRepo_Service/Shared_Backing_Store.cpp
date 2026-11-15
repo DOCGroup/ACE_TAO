@@ -109,7 +109,9 @@ namespace {
     void close_file ()
     {
       if (this->file_ == nullptr)
+      {
         return;
+      }
 
       ACE_OS::fflush (this->file_);
       ACE_OS::fclose (this->file_);
@@ -127,7 +129,9 @@ namespace {
     {
 #if !defined (ACE_WIN32)
       if (this->locked_)
+      {
         return;
+      }
 
       if (file_lock_.get () == nullptr)
         {
@@ -1014,7 +1018,9 @@ Shared_Backing_Store::updates_available
   this->updates_.length (len);
 
   if (this->notified_)
+  {
     return;
+  }
   this->notified_ = true;
   this->orb_->orb_core ()->reactor ()->notify (&this->update_handler_);
 }

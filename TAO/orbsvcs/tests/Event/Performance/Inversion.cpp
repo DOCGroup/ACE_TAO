@@ -63,7 +63,9 @@ EC_Inversion::connect_consumers ()
     {
       int base_event = ACE_ES_EVENT_UNDEFINED + 2;
       if (this->same_events_)
+      {
         base_event = ACE_ES_EVENT_UNDEFINED;
+      }
 
       ACE_ConsumerQOS_Factory qos1;
       qos1.start_disjunction_group (2);
@@ -75,7 +77,9 @@ EC_Inversion::connect_consumers ()
                                     base_event + 1);
     }
   if (this->verbose ())
+  {
     ACE_DEBUG ((LM_DEBUG, "EC_Inversion (%P|%t) connected consumer(s)\n"));
+  }
 }
 
 void
@@ -96,7 +100,9 @@ EC_Inversion::connect_suppliers ()
     {
       int base_event = ACE_ES_EVENT_UNDEFINED + 2;
       if (this->same_events_)
+      {
         base_event = ACE_ES_EVENT_UNDEFINED;
+      }
 
       ACE_SupplierQOS_Factory qos1;
       qos1.insert (1, base_event    , 0, 1);
@@ -108,7 +114,9 @@ EC_Inversion::connect_suppliers ()
     }
 
   if (this->verbose ())
+  {
     ACE_DEBUG ((LM_DEBUG, "EC_Inversion (%P|%t) connected supplier(s)\n"));
+  }
 }
 
 void

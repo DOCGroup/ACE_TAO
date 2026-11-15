@@ -70,13 +70,17 @@ Receiver::init ()
     this->reactive_strategy_.init (TAO_AV_CORE::instance ()->orb (),
                                    TAO_AV_CORE::instance ()->poa ());
   if (result != 0)
+  {
     return result;
+  }
 
   // Initialize the connection manager.
   result =
     this->connection_manager_.init (TAO_AV_CORE::instance ()->orb ());
   if (result != 0)
+  {
     return result;
+  }
 
   this->connection_manager_.load_ep_addr (
     ACE_TEXT_ALWAYS_CHAR (this->options_.addr_file.c_str ()));
@@ -176,7 +180,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       int result =
         receiver.parse_args (argc, argv);
       if (result == -1)
+      {
         return -1;
+      }
 
       // Make sure we have a valid <output_file>
       output_file_owner.reset (
@@ -195,7 +201,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       result = receiver.init ();
 
       if (result != 0)
+      {
         return result;
+      }
 
       ACE_Time_Value tv (0, 10000);
       while (!done)

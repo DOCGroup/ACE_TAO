@@ -103,7 +103,9 @@ worker (void *)
                       ACE_TEXT (" (%P|%t) awake in time\n")));
 
           if (++n_awoken2 >= (n_workers/2))
+          {
             evt.reset ();    // reset signal (rest times out)
+          }
         }
 
       // Check to ensure that an "infinite timeout" will work.
@@ -122,7 +124,9 @@ worker (void *)
                   ACE_TEXT (" (%P|%t) last awake; send signal\n")));
       // last one wakes others
       if (evt.signal () == -1)
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT (" (%P|%t) %p\n"), ACE_TEXT ("signal")));
+      }
 
       ACE_OS::sleep (ACE_Time_Value (0, 200 * 1000));  // 200 msec
     }

@@ -66,12 +66,16 @@ Identity_Client::init (int argc, ACE_TCHAR* argv[])
     {
       result = this->orb_manager_.init (argc, argv);
       if (result == -1)
+      {
         return result;
+      }
 
       // Check the non-ORB arguments.
       result = this->parse_args (argc, argv);
       if (result < 0)
+      {
         return result;
+      }
     }
   catch (const CORBA::Exception& ex)
     {
@@ -108,7 +112,9 @@ Identity_Client::run ()
   if (this->use_random_)
     group_name = "Random group";
   else
+  {
     group_name = "Round Robin group";
+  }
 
   Load_Balancer::Object_Group_var object_group;
 
@@ -210,7 +216,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   Identity_Client client;
 
   if (client.init (argc, argv) == -1)
+  {
     return 1;
+  }
 
   try
     {
@@ -225,5 +233,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   if (result == -1)
     return 1;
   else
+  {
     return 0;
+  }
 }

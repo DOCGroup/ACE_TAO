@@ -179,7 +179,9 @@ ACE_SSL_Context::ssl_library_init ()
         ACE_OS::getenv (ACE_SSL_EGD_FILE_ENV);
 
       if (egd_socket_file != nullptr)
+      {
         (void) this->egd_file (egd_socket_file);
+      }
 #endif  /* OPENSSL_VERSION_NUMBER */
 
       const char *rand_file = ACE_OS::getenv (ACE_SSL_RAND_FILE_ENV);
@@ -233,7 +235,9 @@ ACE_SSL_Context::set_mode (int mode)
                             -1));
 
   if (this->context_)
+  {
     return -1;
+  }
 
 #if OPENSSL_VERSION_NUMBER >= 0x10000002
   SSL_METHOD const *method {};
@@ -260,7 +264,9 @@ ACE_SSL_Context::set_mode (int mode)
 
   this->context_.reset (::SSL_CTX_new (method));
   if (!this->context_)
+  {
     return -1;
+  }
 
   this->mode_ = mode;
 
@@ -456,7 +462,9 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file,
                                        ca_dir) <= 0)
     {
       if (ACE::debug ())
+      {
         ACE_SSL_Context::report_error ();
+      }
       return -1;
     }
 
@@ -483,7 +491,9 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file,
               if ((cert_names = ::SSL_load_client_CA_file (ca_file)) != nullptr)
                 ::SSL_CTX_set_client_CA_list (this->context_.get (), cert_names);
               else
+              {
                 error = true;
+              }
             }
           else
             {
@@ -495,7 +505,9 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file,
           if (error)
             {
               if (ACE::debug ())
+              {
                 ACE_SSL_Context::report_error ();
+              }
               return -1;
             }
         }
@@ -514,7 +526,9 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file,
               if ((cert_names = sk_X509_NAME_new_null ()) == nullptr)
                 {
                   if (ACE::debug ())
+                  {
                     ACE_SSL_Context::report_error ();
+                  }
                   return -1;
                 }
               ::SSL_CTX_set_client_CA_list (this->context_.get (), cert_names);
@@ -522,7 +536,9 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file,
           if (0 == ::SSL_add_dir_cert_subjects_to_stack (cert_names, ca_dir))
             {
               if (ACE::debug ())
+              {
                 ACE_SSL_Context::report_error ();
+              }
               return -1;
             }
         }
@@ -542,7 +558,9 @@ ACE_SSL_Context::private_key (const char *file_name,
   ACE_TRACE ("ACE_SSL_Context::private_key");
 
   if (this->private_key_.type () != -1)
+  {
     return 0;
+  }
 
   this->check_context ();
 
@@ -553,13 +571,17 @@ ACE_SSL_Context::private_key (const char *file_name,
                                      this->private_key_.type ()) <= 0)
     {
       if (ACE::debug ())
+      {
         ACE_SSL_Context::report_error ();
+      }
 
       this->private_key_ = ACE_SSL_Data_File ();
       return -1;
     }
   else
+  {
     return this->verify_private_key ();
+  }
 }
 
 int
@@ -572,7 +594,9 @@ ACE_SSL_Context::verify_private_key ()
   if (::SSL_CTX_check_private_key (this->context_.get ()) <= 0)
     {
       if (ACE::debug ())
+      {
         ACE_SSL_Context::report_error ();
+      }
 
       return -1;
     }
@@ -586,7 +610,9 @@ ACE_SSL_Context::certificate (const char *file_name,
   ACE_TRACE ("ACE_SSL_Context::certificate:file_name:type");
 
   if (this->certificate_.type () != -1)
+  {
     return 0;
+  }
 
   this->certificate_ = ACE_SSL_Data_File (file_name, type);
 
@@ -597,13 +623,17 @@ ACE_SSL_Context::certificate (const char *file_name,
                                       this->certificate_.type ()) <= 0)
     {
       if (ACE::debug ())
+      {
         ACE_SSL_Context::report_error ();
+      }
 
       this->certificate_ = ACE_SSL_Data_File ();
       return -1;
     }
   else
+  {
     return 0;
+  }
 }
 
 int
@@ -614,14 +644,18 @@ ACE_SSL_Context::certificate (X509* cert)
   // Is it really a good idea to return 0 if we're not setting the
   // certificate?
   if (this->certificate_.type () != -1)
-      return 0;
+  {
+    return 0;
+  }
 
   this->check_context();
 
   if (::SSL_CTX_use_certificate (this->context_.get (), cert) <= 0)
     {
       if (ACE::debug ())
+      {
         ACE_SSL_Context::report_error ();
+      }
 
       return -1;
     }
@@ -648,12 +682,16 @@ ACE_SSL_Context::certificate_chain (const char *file_name, int type)
                                             this->certificate_.file_name ()) <= 0)
     {
       if (ACE::debug ())
+      {
         ACE_SSL_Context::report_error ();
+      }
 
       return -1;
     }
   else
+  {
     return 0;
+  }
 }
 
 void
@@ -666,9 +704,13 @@ ACE_SSL_Context::set_verify_peer (int strict, int once, int depth)
   // Setup the peer verification mode.
   int verify_mode = SSL_VERIFY_PEER;
   if (once)
+  {
     verify_mode |= SSL_VERIFY_CLIENT_ONCE;
+  }
   if (strict)
+  {
     verify_mode |= SSL_VERIFY_FAIL_IF_NO_PEER_CERT;
+  }
 
   // set the default verify mode
   this->default_verify_mode (verify_mode);
@@ -676,7 +718,9 @@ ACE_SSL_Context::set_verify_peer (int strict, int once, int depth)
   // Set the max certificate depth but later let the verify_callback
   // catch the depth error by adding one to the required depth.
   if (depth > 0)
+  {
     ::SSL_CTX_set_verify_depth (this->context_.get (), depth + 1);
+  }
 }
 
 int
@@ -732,7 +776,9 @@ ACE_SSL_Context::seed_file (const char * seed_file, long bytes)
     return 0;  // Ugly, but OpenSSL <= 0.9.4 doesn't have RAND_status().
 #endif  /* OPENSSL_VERSION_NUMBER >= 0x00905100L */
   else
+  {
     return -1;
+  }
 }
 
 void
@@ -775,11 +821,15 @@ ACE_SSL_Context::dh_params (const char *file_name,
   ACE_TRACE ("ACE_SSL_Context::dh_params");
 
   if (this->dh_params_.type () != -1)
+  {
     return 0;
+  }
 
   // For now we only support PEM encodings
   if (type != SSL_FILETYPE_PEM)
+  {
     return -1;
+  }
 
   this->dh_params_ = ACE_SSL_Data_File (file_name, type);
 

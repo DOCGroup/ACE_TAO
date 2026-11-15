@@ -101,7 +101,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_TString ior (ACE_TEXT("corbaloc:iiop:192.3.47/10007/RandomObject"));
       if (parse_args (argc, argv, ior) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var const tmp =
         orb->string_to_object (ior.c_str ());

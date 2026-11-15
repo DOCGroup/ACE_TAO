@@ -42,10 +42,14 @@ ACE_Stats::sample (const ACE_INT32 value)
         }
 
       if (value < min_)
+      {
         min_ = value;
+      }
 
       if (value > max_)
+      {
         max_ = value;
+      }
 
       return 0;
     }
@@ -216,7 +220,9 @@ ACE_Stats::print_summary (const u_int precision,
       if (tmp_precision == 0)
         ACE_OS::snprintf (format, 32, ACE_TEXT ("%%%d"), tmp_precision);
       else
+      {
         ACE_OS::snprintf (format, 32, ACE_TEXT ("%%d.%%0%du"), tmp_precision);
+      }
 
       ACE_Stats_Value u (tmp_precision);
       ((ACE_Stats *) this)->mean (u, scale_factor);
@@ -350,7 +356,9 @@ ACE_Stats::square_root (const ACE_UINT64 n,
           else if (mid_squared < n)
             floor = mid;
           else
+          {
             ceiling = mid;
+          }
         }
     }
 
@@ -390,7 +398,9 @@ ACE_Stats::square_root (const ACE_UINT64 n,
           else if (current <= target)
             floor = mid;
           else
+          {
             ceiling = mid;
+          }
         }
 
       // Check to see if the fractional part should be one greater.

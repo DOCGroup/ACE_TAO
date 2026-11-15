@@ -36,7 +36,9 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
             ACE_OS::strcmp (options.data_type, ACE_TEXT("short")) != 0 &&
             ACE_OS::strcmp (options.data_type, ACE_TEXT("double")) != 0 &&
             ACE_OS::strcmp (options.data_type, ACE_TEXT("longlong")) != 0)
+        {
           return -1;
+        }
         break;
       case 's':
         options.size = ACE_OS::atoi (get_opts.opt_arg ());
@@ -80,7 +82,9 @@ test_sequence (Test::Roundtrip_ptr roundtrip,
     {
       (roundtrip->*operation) (handler.in (), load, ACE_OS::gethrtime ());
       if (orb->work_pending ())
+      {
         orb->perform_work ();
+      }
     }
 
   ACE_Time_Value timeout (0, 2000);
@@ -114,7 +118,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     "client (%P|%t): user is not superuser, "
                     "test runs in time-shared class\n"));
       else
+      {
         ACE_ERROR ((LM_ERROR, "client (%P|%t): sched_params failed\n"));
+      }
     }
 
   try
@@ -122,11 +128,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
       Client_Options options;
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var poa_object = orb->resolve_initial_references ("RootPOA");
       if (CORBA::is_nil (poa_object.in ()))
+      {
         ACE_ERROR_RETURN ((LM_ERROR, " (%P|%t) Unable to initialize the POA.\n"), 1);
+      }
 
       PortableServer::POA_var root_poa = PortableServer::POA::_narrow (poa_object.in ());
       PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();

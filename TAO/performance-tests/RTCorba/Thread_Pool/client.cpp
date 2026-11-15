@@ -365,7 +365,9 @@ max_throughput (test_ptr test,
             ACE_OS::gethrtime ();
 
           if (now > end)
+          {
             break;
+          }
 
           test->method (work,
                         prime_number);
@@ -621,7 +623,9 @@ Paced_Worker::svc ()
         this->setup ();
 
       if (result != 0)
+      {
         return result;
+      }
 
       for (CORBA::ULong i = 0;
            i != this->history_.max_samples ();
@@ -759,7 +763,9 @@ Continuous_Worker::print_stats (ACE_Sample_History &history,
   ACE_hrtime_t elapsed_time_for_current_thread =
     test_end - test_start;
   if (elapsed_time_for_current_thread > this->time_for_test_)
+  {
     this->time_for_test_ = elapsed_time_for_current_thread;
+  }
 }
 
 void
@@ -828,7 +834,9 @@ Continuous_Worker::svc ()
         this->setup ();
 
       if (result != 0)
+      {
         return result;
+      }
 
       for (CORBA::ULong i = 0;
            i != history.max_samples () && !done;
@@ -915,7 +923,9 @@ Task::svc ()
                     rates,
                     1);
       if (result != 0)
+      {
         return result;
+      }
 
       ULong_Array invocation_priorities;
       result =
@@ -925,7 +935,9 @@ Task::svc ()
                     invocation_priorities,
                     1);
       if (result != 0)
+      {
         return result;
+      }
 
       if (invocation_priorities.size () != 0 &&
           invocation_priorities.size () != rates.size ())
@@ -945,7 +957,9 @@ Task::svc ()
                         priority_mapping,
                         max_rate);
       if (result != 0)
+      {
         return result;
+      }
 
       CORBA::Short priority_range =
         RTCORBA::maxPriority - RTCORBA::minPriority;
@@ -1120,7 +1134,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       int result =
         parse_args (argc, argv);
       if (result != 0)
+      {
         return result;
+      }
 
       // Make sure we can support multiple priorities that are required
       // for this test.

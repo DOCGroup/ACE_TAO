@@ -31,7 +31,9 @@ RTCP_Channel_In::updateStatistics(RTP_Packet* dataPkt)
 
   // determine if the source has been declared valid
   if (update_seq(dataPkt->sn ()) == 0)
+  {
     return;
+  }
 
   // Set initial values if this is the first data packet.
   if (this->first_data_packet_)
@@ -81,7 +83,9 @@ RTCP_Channel_In::updateStatistics(RTP_Packet* dataPkt)
   int d = transit - this->transit_;
   this->transit_ = transit;
   if (d < 0)
+  {
     d = -d;
+  }
 
   // Calculate the inter-arrival jitter.
   this->jitter_ += (1./16.)*((double)d - this->jitter_);
@@ -225,7 +229,9 @@ RTCP_Channel_In::getRRBlock()
 
       // make the source inactive if significant time has passed since last report
       if (this->no_data_counter_ == 32)
+      {
         this->active_ = false;
+      }
 
       return {};
     }
@@ -256,7 +262,9 @@ RTCP_Channel_In::getRRBlock()
   if ((expected_interval == 0) || (lost_interval <= 0))
     local_block_ptr->fraction_ = 0;
   else
+  {
     local_block_ptr->fraction_ = (lost_interval << 8) / expected_interval;
+  }
 
   local_block_ptr->last_seq_ = extended_max;
 

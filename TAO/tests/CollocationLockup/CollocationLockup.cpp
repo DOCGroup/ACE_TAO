@@ -144,7 +144,9 @@ TestThread (void *arg)
           C_var const b {C::_narrow (obj.in ())};
           A_var const a {b->makeA ()};
           if (i % 50 == 0)
+          {
             ACE_DEBUG ((LM_INFO, "(%t) collocated call returned\n"));
+          }
         }
     }
   catch (CORBA::Exception const &ex)

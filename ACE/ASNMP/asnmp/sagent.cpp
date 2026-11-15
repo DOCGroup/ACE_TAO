@@ -42,7 +42,9 @@ int sagent::handle_input(ACE_HANDLE fd)
   tr.handle_input(fd);
   char rcv_com_str[MAX_COMM_STR_LEN];
   if (tr.result(pdu_, rcv_com_str) < 0)
-     return 0;
+  {
+    return 0;
+  }
   OctetStr community(rcv_com_str);
   const ACE_INET_Addr &ta = tr.get_from_addr();
   ACE_TCHAR buf_tmp[MAXHOSTNAMELEN + 1];

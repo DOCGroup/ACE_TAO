@@ -40,7 +40,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   RT_Class rt_class;
 
   if (parse_args (argc, argv) != 0)
+  {
     return 1;
+  }
 
   Task hi_task (hi_endpoint);
   Task lo_task (lo_endpoint);
@@ -96,7 +98,9 @@ Svc_Handler::handle_input(ACE_HANDLE h)
         break;
       } else if (n == -1) {
         if(errno == EWOULDBLOCK)
+        {
           return 0;
+        }
 
         ACE_ERROR((LM_ERROR,
                    "Error on <%d> while reading %p\n",
@@ -112,7 +116,9 @@ Svc_Handler::handle_input(ACE_HANDLE h)
         break;
       } else if (k == -1) {
         if(errno == EWOULDBLOCK)
+        {
           return 0;
+        }
 
         ACE_ERROR((LM_ERROR,
                    "Error on <%d> while writing %p\n",

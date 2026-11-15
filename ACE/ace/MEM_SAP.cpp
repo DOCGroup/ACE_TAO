@@ -48,7 +48,9 @@ ACE_MEM_SAP::create_shm_malloc (const ACE_TCHAR *name,
   ACE_TRACE ("ACE_MEM_SAP::create_shm_malloc");
 
   if (this->shm_malloc_ != nullptr)
+  {
     return -1;                  // already initialized.
+  }
 
   MALLOC_TYPE *shm_malloc {};
   ACE_NEW_RETURN (shm_malloc,

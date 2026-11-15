@@ -63,7 +63,9 @@ Nestea_Client_i::run ()
                         praise.in ()));
 
   if (this->shutdown_server_)
+  {
     this->server_->shutdown ();
+  }
 
   return 0;
 }
@@ -83,7 +85,9 @@ Nestea_Client_i::init (int argc, ACE_TCHAR **argv)
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
+      {
         return -1;
+      }
 
       CORBA::Object_var server_object =
         this->orb_->string_to_object (this->server_key_.c_str ());

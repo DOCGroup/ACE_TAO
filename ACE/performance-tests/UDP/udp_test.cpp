@@ -239,10 +239,14 @@ Client::run ()
         }
       timer.start ();
       if (this->send (sbuf, bufsz) <= 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "(%P) %p\n", "send"), -1);
+      }
 
       if ((n = get_response (rbuf, bufsz)) <= 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "(%P) %p\n", "get_response"), -1);
+      }
 
       timer.stop ();
 
@@ -691,7 +695,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               continue;
             }
           if (result == -1)
+          {
             return 1;
+          }
         }
     }
   else
@@ -723,7 +729,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       int const run_status = client.run ();
       int const shutdown_status = client.shutdown ();
       if (run_status == -1 || shutdown_status == -1)
+      {
         return 1;
+      }
     }
 
   return 0;

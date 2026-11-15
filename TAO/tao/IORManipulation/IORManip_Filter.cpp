@@ -37,7 +37,9 @@ TAO_IORManip_Filter::sanitize (CORBA::Object_ptr object,
 
   TAO_ORB_Core *orb_core {object->_stubobj ()->orb_core ()};
   if (orb_core == nullptr)
+  {
     orb_core = TAO_ORB_Core_instance ();
+  }
 
   TAO_Stub_Auto_Ptr safe_stub (orb_core->create_stub (id.in (), new_profiles));
 

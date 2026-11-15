@@ -51,7 +51,9 @@ ACE_FILE_Addr::set (const ACE_FILE_Addr &sa)
 #  endif /* ACE_DEFAULT_TEMP_FILE */
 
       if (ACE_OS::mktemp (this->filename_) == nullptr)
+      {
         return -1;
+      }
       this->base_set (AF_FILE,
                       static_cast<int> (ACE_OS::strlen (this->filename_) + 1));
 #endif /* ACE_DISABLE_MKTEMP */
@@ -88,7 +90,9 @@ ACE_FILE_Addr &
 ACE_FILE_Addr::operator= (const ACE_FILE_Addr &sa)
 {
   if (this != std::addressof (sa))
+  {
     this->set (sa);
+  }
   return *this;
 }
 

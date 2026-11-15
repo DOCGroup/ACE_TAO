@@ -58,7 +58,9 @@ My_Task::svc ()
           this->token_.release ();
         }
       else
+      {
         ACE_Thread::yield ();
+      }
     }
   return 0;
 }

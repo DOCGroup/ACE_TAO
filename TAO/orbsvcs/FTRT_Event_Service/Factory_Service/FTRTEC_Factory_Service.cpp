@@ -59,7 +59,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 
     Options options {};
     if (parse_args (argc, argv, options) != 0)
+    {
       return -1;
+    }
 
     CORBA::Object_var obj =
       orb->resolve_initial_references ("RootPOA");
@@ -91,13 +93,17 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
       name.length (1);
       name[0].id = CORBA::string_dup (options.id.c_str ());
       if (!options.kind.empty ())
+      {
         name[0].kind = CORBA::string_dup (options.kind.c_str ());
+      }
 
       naming_context->bind (name, event_channel_factory.in ());
 
       ORBSVCS_DEBUG ((LM_DEBUG, "Register to naming service with %s", options.id.c_str ()));
       if (!options.kind.empty ())
+      {
         ORBSVCS_DEBUG ((LM_DEBUG, ", %s", options.kind.c_str ()));
+      }
       ORBSVCS_DEBUG ((LM_DEBUG, "\n"));
     }
 

@@ -33,7 +33,9 @@ ACEXML_HttpCharStream::open (ACEXML_Char const *url)
 {
   this->close ();
   if (url == nullptr)
+  {
     return -1;
+  }
   this->url_.reset (ACE::strnew (url));
   if (!this->url_)
     {
@@ -312,7 +314,9 @@ ACEXML_HttpCharStream::send_request ()
   // Send the command to the connected server.
   int retval = static_cast<int> (this->stream_->send_n (command.get (), bytes, &tv));
   if (retval <= 0)
+  {
     return -1;
+  }
   return retval;
 }
 
@@ -320,7 +324,9 @@ int
 ACEXML_HttpCharStream::available ()
 {
   if (this->stream_ == nullptr)
+  {
     return -1;
+  }
   return static_cast<int> (this->stream_->available());
 }
 
@@ -344,7 +350,9 @@ int
 ACEXML_HttpCharStream::determine_encoding ()
 {
   if (this->stream_ == nullptr)
+  {
     return -1;
+  }
 
   char input[4] {};
   size_t const len = sizeof (input) / sizeof (input[0]);
@@ -354,7 +362,9 @@ ACEXML_HttpCharStream::determine_encoding ()
     input[i] = static_cast<char> (this->stream_->peek_char (i));
 
   if (i < len)
+  {
     return -1;
+  }
 
   ACEXML_Char const * const temp = ACEXML_Encoding::get_encoding (input);
 
@@ -384,12 +394,16 @@ void
 ACEXML_HttpCharStream::rewind ()
 {
   if (this->stream_ == nullptr)
+  {
     return;
+  }
   this->stream_->rewind();
 
   // Forward to the beginning of data.
   if (this->stream_->seek (this->data_offset_, SEEK_SET) == -1)
+  {
     ACE_ERROR ((LM_ERROR, "%s: %m", "Error in seeking to beginning of data"));
+  }
   this->determine_encoding();
 }
 
@@ -410,11 +424,15 @@ ACEXML_HttpCharStream::read (ACEXML_Char *str,
                              size_t len)
 {
   if (this->stream_ == nullptr)
+  {
     return -1;
+  }
   len = len * sizeof (ACEXML_Char);
   char const *temp = this->stream_->recv (len);
   if (temp == nullptr)
+  {
     return -1;
+  }
   ACE_OS::strncpy (str, ACE_TEXT_CHAR_TO_TCHAR (temp), len);
   return static_cast<int> (len);
 }
@@ -423,7 +441,9 @@ int
 ACEXML_HttpCharStream::get (ACEXML_Char& ch)
 {
   if (this->stream_ == nullptr)
+  {
     return -1;
+  }
 #if defined (ACE_USES_WCHAR)
   return this->get_i (ch);
 #else
@@ -436,7 +456,9 @@ int
 ACEXML_HttpCharStream::peek ()
 {
   if (this->stream_ == nullptr)
+  {
     return -1;
+  }
 
 #if defined (ACE_USES_WCHAR)
   return this->peek_i();

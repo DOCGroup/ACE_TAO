@@ -36,7 +36,9 @@ AMI_Replication_Strategy::make_primary_strategy()
   ACE_NEW_RETURN(result, AMI_Primary_Replication_Strategy(mt_), nullptr);
   std::unique_ptr<AMI_Primary_Replication_Strategy> holder(result);
   if (result->activate() == 0)
+  {
     return holder.release();
+  }
   return nullptr;
 }
 

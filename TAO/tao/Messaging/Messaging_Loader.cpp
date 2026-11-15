@@ -16,7 +16,9 @@ TAO_Messaging_Loader::init (int, ACE_TCHAR* [])
   ACE_TRACE ("TAO_Messaging_Loader::init");
 
   if (this->initialized_)
+  {
     return 0;
+  }
 
   this->initialized_ = true;
 

@@ -35,7 +35,9 @@ ACE_Asynch_Pseudo_Task::stop ()
     return 0;
 
   if (this->reactor_.end_reactor_event_loop () == -1)
+  {
     return -1;
+  }
 
   this->wait ();
   this->reactor_.close ();
@@ -73,10 +75,14 @@ ACE_Asynch_Pseudo_Task::register_io_handler (ACE_HANDLE handle,
 {
   // Register the handler with the reactor.
   if (-1 == this->reactor_.register_handler (handle, handler, mask))
+  {
     return -1;
+  }
 
   if (flg_suspend == 0)
+  {
     return 0;
+  }
 
   // Suspend the handle now. Enable only when the accept is issued
   // by the application.

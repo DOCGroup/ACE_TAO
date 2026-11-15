@@ -65,7 +65,9 @@ test_impl (CORBA::ORB_ptr orb, ACE_TCHAR const *ior, int iterations, bool shutdo
   Test_var const test = Test::_narrow (object.in ());
 
   if (CORBA::is_nil (test.in ()))
+  {
     throw "Nil reference after narrow";
+  }
 
   for (int i {}; i != iterations; ++i)
     test->sendc_the_operation (AMI_TestHandler::_nil ());
@@ -74,7 +76,9 @@ test_impl (CORBA::ORB_ptr orb, ACE_TCHAR const *ior, int iterations, bool shutdo
   orb->run (wait_for_responses_interval);
 
   if (shutdown)
+  {
     test->shutdown ();
+  }
 }
 
 void

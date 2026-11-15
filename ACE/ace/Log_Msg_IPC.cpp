@@ -59,7 +59,9 @@ ACE_Log_Msg_IPC::log (ACE_Log_Record &log_record)
   // Insert contents of <log_record> into payload stream.
   ACE_OutputCDR payload (max_payload_size);
   if (!(payload << log_record))
+  {
     return -1;
+  }
 
   // Get the number of bytes used by the CDR stream. If it becomes desireable
   // to support payloads more than 4GB, this field will need to be changed
@@ -71,11 +73,15 @@ ACE_Log_Msg_IPC::log (ACE_Log_Record &log_record)
   // size of the incoming CDR stream.
   ACE_OutputCDR header (ACE_CDR::MAX_ALIGNMENT + 8);
   if (!(header << ACE_OutputCDR::from_boolean (ACE_CDR_BYTE_ORDER)))
-   return -1;
+  {
+    return -1;
+  }
 
   // Store the size of the payload that follows
   if (!(header << ACE_CDR::ULong (length)))
-   return -1;
+  {
+    return -1;
+  }
 
   // Use an iovec to send both buffer and payload simultaneously.
   iovec iov[2];

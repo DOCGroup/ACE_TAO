@@ -36,7 +36,9 @@ TAO::be_visitor_enum_typecode::visit_enum (be_enum * node)
      << "{" << be_idt_nl;
 
   if (this->visit_members (node) != 0)
+  {
     return -1;
+  }
 
   os << be_uidt_nl
      << "};" << be_uidt_nl << be_nl;
@@ -55,7 +57,9 @@ TAO::be_visitor_enum_typecode::visit_enum (be_enum * node)
     << be_uidt_nl;
 
   if (this->gen_typecode_ptr (node) != 0)
+  {
     return -1;
+  }
 
   return 0;
 }

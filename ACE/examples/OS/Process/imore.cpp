@@ -79,7 +79,9 @@ parse_args (int argc, ACE_TCHAR **argv)
       return -1;
     }
   else
+  {
     fname = argv[get_opt.opt_ind ()]; // Alright.
+  }
 
   return 0;
 }
@@ -101,7 +103,9 @@ setup_named_pipes (ACE_Process_Options &opt)
 
   // Out of memory?
   if (!rendezvous)
+  {
     return -1;
+  }
 
   // Alright, this is indeed strange.  Named pipes are meant to be
   // used for unrelated processes.  Because of the constraints in
@@ -149,7 +153,9 @@ setup_unnamed_pipe (ACE_Process_Options &opt)
 
   // Check if the pipe is created successfully.
   if (pipe.open () == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "pipe.open"), -1);
+  }
 
   // Setting up pipe between parent and child process.  Use the pipe
   // as child process'es ACE_STDIN.  ACE_Process_Options will keep
@@ -207,17 +213,23 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 #if !defined (ACE_WIN32)
   ACE_Sig_Action sig_act (SIG_IGN);
   if (sig_act.register_action (SIGPIPE) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Sig_Action::register_action"), -1);
+  }
 #endif /* ACE_WIN32 */
 
   // Alright, what you want me to do now?
   if (::parse_args (argc, argv) == -1)
+  {
     return -1;
+  }
 
   // Can I find the file you want?
   ACE_HANDLE infile = ACE_OS::open (fname, O_RDONLY);
   if (infile == ACE_INVALID_HANDLE)
-      ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", fname), -1);
+  {
+    ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", fname), -1);
+  }
 
   ACE_Process new_process;
 
@@ -235,13 +247,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                         -1);
 #  else
       if (::setup_named_pipes (options) == -1)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "Error, bailing out!\n"), -1);
+      }
 #  endif /* ACE_DISABLE_TEMPNAM */
     }
   else
     {
       if (::setup_unnamed_pipe (options) == -1)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "Error, bailing out!\n"), -1);
+      }
     }
 
   options.command_line (ACE_TEXT("%") ACE_TEXT_PRIs, executable);
@@ -254,7 +270,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // write file to ACE_STDOUT.
   if (::print_file (infile) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Error, bailing out!\n"), -1);
+  }
 
   // Close the STDOUT to inform child eof.
   ACE_OS::close (ACE_STDOUT);

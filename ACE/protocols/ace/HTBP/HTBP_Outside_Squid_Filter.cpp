@@ -159,7 +159,9 @@ ACE::HTBP::Outside_Squid_Filter::send_ack (ACE::HTBP::Channel *ch)
 {
   this->send_data_header (0,ch);
   if (ch->state() == ACE::HTBP::Channel::Header_Sent)
+  {
     ch->state(ACE::HTBP::Channel::Detached);
+  }
   return 1;
 }
 

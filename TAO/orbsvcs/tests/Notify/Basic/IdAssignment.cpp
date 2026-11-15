@@ -388,7 +388,9 @@ IdAssignment::run_test()
             }
 
           if (this->default_consumer_admin_test (ec_id[ec_count]) == false)
+          {
             ACE_OS::exit (1);
+          }
 
           // Connect <supplier_admin_count_> number of suppliers
           // to the current ec.
@@ -401,7 +403,9 @@ IdAssignment::run_test()
             }
 
           if (this->default_supplier_admin_test (ec_id[ec_count]) == false)
+          {
             ACE_OS::exit (1);
+          }
         }
 
       // Destroy the ec, the admins should destroy too.

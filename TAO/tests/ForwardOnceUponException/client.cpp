@@ -64,7 +64,9 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
   if (ACE_OS::strncmp (options.ior.c_str (),
                        corbaloc_prefix,
                        ACE_OS::strlen (corbaloc_prefix)) != 0)
+  {
     return 1;
+  }
 
   return 0;
 }
@@ -111,7 +113,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       Worker worker (orb.in (), options);
 

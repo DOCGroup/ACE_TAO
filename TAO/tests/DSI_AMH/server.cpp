@@ -54,7 +54,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         root_poa->the_POAManager ();
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       // The POA activation API uses this borrowed pointer; owner_transfer owns the servant.
       Roundtrip *roundtrip_impl {};

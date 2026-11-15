@@ -27,7 +27,9 @@ TAO_Notify_CosEC_ProxyPushConsumer::push (CORBA::Any const &any)
   // Check if we should proceed at all.
   if (this->admin_properties().reject_new_events () == 1
       && this->admin_properties().queue_full ())
+  {
     throw CORBA::IMP_LIMIT ();
+  }
 
   if (this->is_connected () == 0)
     {

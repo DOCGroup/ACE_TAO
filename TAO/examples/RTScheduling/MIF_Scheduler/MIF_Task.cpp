@@ -159,7 +159,9 @@ MIF_Task::perform_task ()
     this->count_));
 
   if (dist_)
+  {
     job_->shutdown ();
+  }
 
   return 0;
 }

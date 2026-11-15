@@ -18,7 +18,9 @@ HA_Status::init (int argc, ACE_TCHAR *argv[])
   ACE_Get_Opt cmd_opts (argc, argv, options, 0);
   if (cmd_opts.long_option
       (ACE_TEXT ("config"), 'f', ACE_Get_Opt::ARG_REQUIRED) == -1)
+  {
     return -1;
+  }
   int option {};
   ACE_TCHAR config_file[MAXPATHLEN] {};
   ACE_OS::strcpy (config_file, ACE_TEXT ("HAStatus.conf"));
@@ -100,7 +102,9 @@ HA_Status::info (ACE_TCHAR **str, size_t len) const
   if (*str == nullptr)
     *str = ACE::strnew (buffer);
   else
+  {
     ACE_OS::strncpy (*str, buffer, len);
+  }
   return static_cast<int> (ACE_OS::strlen (*str));
 }
 // Listing 3

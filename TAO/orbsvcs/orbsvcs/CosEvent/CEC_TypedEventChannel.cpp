@@ -68,7 +68,9 @@ TAO_CEC_TypedEventChannel::~TAO_CEC_TypedEventChannel ()
   this->typed_supplier_admin_ = nullptr;
 
   if (this->own_factory_)
+  {
     delete this->factory_;
+  }
 }
 
 void

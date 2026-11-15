@@ -151,7 +151,9 @@ Test_Long_Sequence::print_values ()
                   this->in_[i]));
     }
   if (!this->in_.ptr ())
+  {
     ACE_DEBUG ((LM_DEBUG, "\nin sequence is NUL\n"));
+  }
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
   for (i=0; this->inout_.ptr () && (i < this->inout_->length ()); i++)
     {
@@ -162,7 +164,9 @@ Test_Long_Sequence::print_values ()
                   this->inout_[i]));
     }
   if (!this->inout_.ptr ())
+  {
     ACE_DEBUG ((LM_DEBUG, "\ninout sequence is NUL\n"));
+  }
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
   for (i=0; this->out_.ptr () && (i < this->out_->length ()); i++)
     {
@@ -173,7 +177,9 @@ Test_Long_Sequence::print_values ()
                   this->out_[i]));
     }
   if (!this->out_.ptr ())
+  {
     ACE_DEBUG ((LM_DEBUG, "\nout sequence is NUL\n"));
+  }
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
   for (i=0; this->ret_.ptr () && (i < this->ret_->length ()); i++)
     {
@@ -184,6 +190,8 @@ Test_Long_Sequence::print_values ()
                   this->ret_[i]));
     }
   if (!this->ret_.ptr ())
+  {
     ACE_DEBUG ((LM_DEBUG, "\nin sequence is NUL\n"));
+  }
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
 }

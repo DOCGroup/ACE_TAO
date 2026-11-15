@@ -37,11 +37,17 @@ Grid_Client_i::parse_args (int argc,
       }
 
   if (setx_ == 0)
+  {
     setx_ = Grid::DEFAULT_LOCATION;
+  }
   if (sety_ == 0)
+  {
     sety_ = Grid::DEFAULT_LOCATION;
+  }
   if (value_ == 0)
+  {
     value_ = Grid::DEFAULT_VALUE;
+  }
   return 0;
 }
 
@@ -52,10 +58,14 @@ Grid_Client_i::run (char const *name,
 {
   // Initialize the client.
   if (client_.init (name, argc, argv) == -1)
+  {
     return -1;
+  }
 
   if (this->parse_args (argc, argv) == -1)
+  {
     return -1;
+  }
 
   try
     {
@@ -120,7 +130,9 @@ Grid_Client_i::run (char const *name,
         }
 
       if (client_.do_shutdown ())
+      {
         client_->shutdown ();
+      }
 
       ACE_UNUSED_ARG (ret_val);
     }

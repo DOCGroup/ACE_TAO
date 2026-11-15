@@ -23,7 +23,9 @@ Connection_Handler_Acceptor::accept_svc_handler (Connection_Handler *ch)
       ACE_INET_Addr remote_addr;
 
       if (ch->peer ().get_remote_addr (remote_addr) == -1)
+      {
         return -1;
+      }
 
       // Set the remote address of our connected Peer.
       ch->remote_addr (remote_addr);

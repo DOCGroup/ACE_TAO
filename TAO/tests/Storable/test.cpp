@@ -83,7 +83,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   int exit_status = 0;
 
   if (parse_args (argc, argv) != 0)
+  {
     return 1;
+  }
 
   int read_index = write_index ? 0 : 1;
 

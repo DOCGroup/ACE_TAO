@@ -39,7 +39,9 @@ ACE_Activation_Queue::ACE_Activation_Queue (
   , data_block_allocator_ (db_alloc)
 {
   if (this->allocator_ == nullptr)
+  {
     this->allocator_ = ACE_Allocator::instance ();
+  }
 
   if (new_queue)
     this->queue_ = new_queue;
@@ -78,7 +80,9 @@ ACE_Activation_Queue::dequeue (ACE_Time_Value *tv)
       return mr;
     }
   else
+  {
     return nullptr;
+  }
 }
 
 int
@@ -112,7 +116,9 @@ ACE_Activation_Queue::enqueue (ACE_Method_Request *mr,
 
   // The queue takes ownership when enqueue_prio succeeds.
   if (result != -1)
+  {
     mb_owner.release ();
+  }
 
   return result;
 }

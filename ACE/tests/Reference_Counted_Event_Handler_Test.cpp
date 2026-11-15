@@ -68,7 +68,9 @@ Reference_Counted_Event_Handler::Reference_Counted_Event_Handler (int &events)
   : events_ (events)
 {
   if (this->pipe_.open () != 0)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("ctor: pipe open")));
+  }
 
   this->reference_counting_policy ().value
     (ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
@@ -224,7 +226,9 @@ reference_counted_event_handler_test_1 (ACE_Reactor *reactor)
                     ACE_TEXT ("line %l %p\n"),
                     ACE_TEXT ("register pipe read")));
       else
+      {
         ++events;
+      }
 
       if (-1 == reactor->register_handler (handler->pipe_.write_handle (),
                                            handler,
@@ -233,7 +237,9 @@ reference_counted_event_handler_test_1 (ACE_Reactor *reactor)
                     ACE_TEXT ("line %l %p\n"),
                     ACE_TEXT ("register pipe write")));
       else
+      {
         ++events;
+      }
     }
 
   if (test_timers)
@@ -264,7 +270,9 @@ reference_counted_event_handler_test_1 (ACE_Reactor *reactor)
                     ACE_TEXT ("line %l %p\n"),
                     ACE_TEXT ("schedule_timer")));
       else
+      {
         events += 2;  // Wait for the scheduled and one repeating
+      }
 
       ACE_Time_Value const two_second (2);
       timer_id =
@@ -276,7 +284,9 @@ reference_counted_event_handler_test_1 (ACE_Reactor *reactor)
                     ACE_TEXT ("line %l %p\n"),
                     ACE_TEXT ("schedule_timer")));
       else
+      {
         ++events;
+      }
     }
 
   while (events > 0)
@@ -368,7 +378,9 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
                     ACE_TEXT ("line %l %p\n"),
                     ACE_TEXT ("register pipe read")));
       else
+      {
         ++events;
+      }
 
       if (-1 == reactor->register_handler (handler->pipe_.write_handle (),
                                            handler,
@@ -377,7 +389,9 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
                     ACE_TEXT ("line %l %p\n"),
                     ACE_TEXT ("register pipe write")));
       else
+      {
         ++events;
+      }
     }
 
   if (test_timers)
@@ -420,7 +434,9 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
                     ACE_TEXT ("line %l %p\n"),
                     ACE_TEXT ("schedule_timer")));
       else
+      {
         events += 2;  // Wait for the scheduled and one repeating
+      }
 
       ACE_Time_Value const two_second (2);
       timer_id =
@@ -432,7 +448,9 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
                     ACE_TEXT ("line %l %p\n"),
                     ACE_TEXT ("schedule_timer")));
       else
+      {
         ++events;
+      }
     }
 
   while (events > 0)
@@ -588,7 +606,9 @@ Simple_Event_Handler::handle_close (ACE_HANDLE handle,
               --this->close_count_));
 
   if (this->close_count_ == 0)
+  {
     delete this;
+  }
 
   return 0;
 }
@@ -678,7 +698,9 @@ simple_event_handler (ACE_Reactor *reactor)
                     ACE_TEXT ("line %l %p\n"),
                     ACE_TEXT ("register pipe read")));
       else
+      {
         ++events;
+      }
 
       if (-1 == reactor->register_handler (handler->pipe_.write_handle (),
                                            handler,
@@ -687,7 +709,9 @@ simple_event_handler (ACE_Reactor *reactor)
                     ACE_TEXT ("line %l %p\n"),
                     ACE_TEXT ("register pipe write")));
       else
+      {
         ++events;
+      }
     }
 
   if (test_timers)
@@ -728,7 +752,9 @@ simple_event_handler (ACE_Reactor *reactor)
                     ACE_TEXT ("line %l %p\n"),
                     ACE_TEXT ("schedule_timer")));
       else
+      {
         events += 2;  // Wait for the scheduled and one repeating
+      }
 
       ACE_Time_Value const two_second (2);
       timer_id =
@@ -740,7 +766,9 @@ simple_event_handler (ACE_Reactor *reactor)
                     ACE_TEXT ("line %l %p\n"),
                     ACE_TEXT ("schedule_timer")));
       else
+      {
         ++events;
+      }
     }
 
   while (events > 0)
@@ -906,7 +934,9 @@ closed_in_upcall_event_handler (ACE_Reactor *reactor)
                     ACE_TEXT ("line %l %p\n"),
                     ACE_TEXT ("register_handler")));
       else
+      {
         events += 1;
+      }
     }
 
   while (events > 0)
@@ -939,16 +969,24 @@ template <class REACTOR_IMPLEMENTATION>
 test<REACTOR_IMPLEMENTATION>::test ()
 {
   if (test_simple_event_handler)
+  {
     simple (new REACTOR_IMPLEMENTATION);
+  }
 
   if (test_reference_counted_event_handler_1)
+  {
     reference_count_1 (new REACTOR_IMPLEMENTATION);
+  }
 
   if (test_reference_counted_event_handler_2)
+  {
     reference_count_2 (new REACTOR_IMPLEMENTATION);
+  }
 
   if (test_closed_in_upcall_event_handler)
+  {
     closed_in_upcall (new REACTOR_IMPLEMENTATION);
+  }
 }
 
 static int
@@ -1043,7 +1081,9 @@ run_main (int argc, ACE_TCHAR *argv[])
   int result =
     parse_args (argc, argv);
   if (result != 0)
+  {
     return result;
+  }
 
   if (test_select_reactor)
     {

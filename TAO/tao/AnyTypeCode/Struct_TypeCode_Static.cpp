@@ -52,7 +52,9 @@ TAO::TypeCode::Struct<char const *,
     && (enc << this->nfields_);
 
   if (!success)
+  {
     return false;
+  }
 
   for (CORBA::ULong i {}; i < this->nfields_; ++i)
     {
@@ -65,7 +67,9 @@ TAO::TypeCode::Struct<char const *,
                        Traits<char const *>::get_typecode (field.type),
                        ACE_Utils::truncate_cast<CORBA::ULong> (
                            offset + enc.total_length ())))
+      {
         return false;
+      }
     }
 
   return
@@ -107,7 +111,9 @@ TAO::TypeCode::Struct<char const *,
     tc->member_count ();
 
   if (tc_nfields != this->nfields_)
+  {
     return false;
+  }
 
   for (CORBA::ULong i {}; i < this->nfields_; ++i)
     {
@@ -119,7 +125,9 @@ TAO::TypeCode::Struct<char const *,
       char const * const rhs_name = tc->member_name (i);
 
       if (std::strcmp (lhs_name, rhs_name) != 0)
+      {
         return false;
+      }
 
       CORBA::TypeCode_ptr const lhs_tc =
         Traits<char const *>::get_typecode (lhs_field.type);
@@ -130,7 +138,9 @@ TAO::TypeCode::Struct<char const *,
         lhs_tc->equal (rhs_tc.in ());
 
       if (!equal_members)
+      {
         return false;
+      }
     }
 
   return true;
@@ -151,7 +161,9 @@ TAO::TypeCode::Struct<char const *,
     tc->member_count ();
 
   if (tc_nfields != this->nfields_)
+  {
     return false;
+  }
 
   for (CORBA::ULong i {}; i < this->nfields_; ++i)
     {
@@ -164,7 +176,9 @@ TAO::TypeCode::Struct<char const *,
         lhs->equivalent (rhs.in ());
 
       if (!equiv_members)
+      {
         return false;
+      }
     }
 
   return true;
@@ -261,7 +275,9 @@ TAO::TypeCode::Struct<char const *,
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
   if (index >= this->nfields_)
+  {
     throw ::CORBA::TypeCode::Bounds ();
+  }
 
   return Traits<char const *>::get_string (this->fields_[index].name);
 }
@@ -275,7 +291,9 @@ TAO::TypeCode::Struct<char const *,
   CORBA::ULong index) const
 {
   if (index >= this->nfields_)
+  {
     throw ::CORBA::TypeCode::Bounds ();
+  }
 
   return
     CORBA::TypeCode::_duplicate (

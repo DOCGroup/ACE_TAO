@@ -13,10 +13,14 @@ JAWS_Timer_EH::handle_timeout (const ACE_Time_Value &, const void *)
                                  );
 
   if (this->completer_)
+  {
     this->completer_->timer_complete (timer_result, this->act_);
+  }
 
   if (this->interval_)
+  {
     return 0;
+  }
 
   this->expired_ = true;
   return -1;
@@ -31,7 +35,9 @@ JAWS_Timer_EH::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
                                  );
 
   if (! this->expired_ && this->completer_)
+  {
     this->completer_->timer_complete (timer_result, this->act_);
+  }
 
   return 0;
 }

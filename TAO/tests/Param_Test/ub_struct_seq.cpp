@@ -124,7 +124,9 @@ Test_Struct_Sequence::check_validity ()
       this->compare (this->in_, this->ret_.in ()))
     return 1;
   else
+  {
     return 0;
+  }
 }
 
 CORBA::Boolean
@@ -159,9 +161,13 @@ Test_Struct_Sequence::compare (const Param_Test::StructSeq &s1,
                                const Param_Test::StructSeq &s2)
 {
   if (s1.maximum () != s2.maximum ())
-      return 0;
-  if (s1.length () != s2.length ())
+  {
     return 0;
+  }
+  if (s1.length () != s2.length ())
+  {
+    return 0;
+  }
 
   for (CORBA::ULong i=0; i < s1.length (); i++)
     {
@@ -175,7 +181,9 @@ Test_Struct_Sequence::compare (const Param_Test::StructSeq &s1,
           || !ACE::is_equal (vs1.f, vs2.f)
           || vs1.b != vs2.b
           || !ACE::is_equal (vs1.d, vs2.d))
+      {
         return 0;
+      }
     }
 
   return 1; // success
@@ -311,7 +319,9 @@ Test_Unbounded_Struct_Sequence::check_validity ()
       this->compare (this->in_, this->ret_.in ()))
     return 1;
   else
+  {
     return 0;
+  }
 }
 
 CORBA::Boolean
@@ -346,9 +356,13 @@ Test_Unbounded_Struct_Sequence::compare (const Param_Test::PathSpec &s1,
                                          const Param_Test::PathSpec &s2)
 {
   if (s1.maximum () != s2.maximum ())
-      return 0;
-  if (s1.length () != s2.length ())
+  {
     return 0;
+  }
+  if (s1.length () != s2.length ())
+  {
+    return 0;
+  }
 
   for (CORBA::ULong i=0; i < s1.length (); i++)
     {
@@ -358,7 +372,9 @@ Test_Unbounded_Struct_Sequence::compare (const Param_Test::PathSpec &s1,
       if (std::strcmp (vs1.name.id.in (), vs2.name.id.in ())
           || std::strcmp (vs1.name.kind.in (), vs2.name.kind.in ())
           || vs1.process != vs2.process)
+      {
         return 0;
+      }
     }
   return 1; // success
 }

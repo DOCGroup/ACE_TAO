@@ -22,7 +22,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       int const result = policy_tester.init (argc, argv);
 
       if (result != 0)
+      {
         return result;
+      }
 
       policy_tester.run ();
     }

@@ -13,7 +13,9 @@ TAO_Base_Transport_Property::duplicate ()
   // Get a copy of the underlying endpoint
   TAO_Endpoint *const endpt = this->endpoint_->duplicate ();
   if (endpt == nullptr)
+  {
     return nullptr;
+  }
 
   // Construct a copy of our class
   TAO_Base_Transport_Property *prop {};
@@ -29,7 +31,9 @@ TAO_Base_Transport_Property::is_equivalent
     dynamic_cast<TAO_Base_Transport_Property const *> (rhs);
 
   if (other_desc == nullptr)
+  {
     return false;
+  }
 
   return this->endpoint_->is_equivalent (other_desc->endpoint_);
 }

@@ -38,7 +38,9 @@ server ()
     ACE_OS::sleep (1);
 
   if (shm_server.remove () < 0)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("remove")));
+  }
   ACE_OS::unlink (shm_key);
 }
 
@@ -47,7 +49,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 {
   if (ACE_OS::mkstemp (shm_key) == 0
       || (ACE_OS::unlink (shm_key) == -1 && errno == EPERM))
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), shm_key), 1);
+  }
 
   switch (ACE_OS::fork ())
     {

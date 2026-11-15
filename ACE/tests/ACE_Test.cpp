@@ -41,12 +41,16 @@ ace_debug_test ()
   if (debug == nullptr)
     {
       if (ACE::debug())
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ACE::debug() returns true.\n")));
+      }
     }
   else
     {
       if (!ACE::debug())
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ACE::debug() returns false.\n")));
+      }
     }
 
   return test_status;
@@ -104,13 +108,19 @@ run_main (int, ACE_TCHAR *[])
   int result;
 
   if ((result = execname_test ()) != 0)
+  {
     status = result;
+  }
 
   if ((result = log2_test ()) != 0)
+  {
     status = result;
+  }
 
   if ((result = ace_debug_test ()) != 0)
-      status = result;
+  {
+    status = result;
+  }
 
   ACE_END_TEST;
   return status;

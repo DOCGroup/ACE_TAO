@@ -48,7 +48,9 @@ Session::set_tao_version (ACE_TCHAR *str)
   else if (ACE_OS::strncmp (str, ACE_TEXT("2.2"), 3) == 0)
     tao_version_ = 220;
   else
+  {
     return false;
+  }
   return true;
 }
 
@@ -76,7 +78,9 @@ Session::alternate_address (const char *addrspec)
 {
   const char *equal = std::strchr (addrspec, '=');
   if (equal == nullptr)
-   return;
+  {
+    return;
+  }
   ACE_CString name (addrspec,(equal - addrspec));
   ACE_CString value (equal+1);
   Session::alt_addrs_.bind(name,value);
@@ -100,7 +104,9 @@ Session::default_service (const char *addrspec)
 {
    const char *equal = std::strchr (addrspec, '=');
   if (equal == nullptr)
+  {
     return;
+  }
   ACE_CString name (addrspec,(equal - addrspec));
   Endpoint ep (equal+1);
 
@@ -120,7 +126,9 @@ Session::find_process (long pid)
   if (this->processes_.find(pid,entry) == 0)
     return entry->item();
   else
+  {
     return nullptr;
+  }
 }
 
 HostProcess *
@@ -130,9 +138,13 @@ Session::find_host_i (const Endpoint &endpoint, bool server)
     {
       Processes::ENTRY *entry;
       if (i.next(entry) == 0)
+      {
         break;
+      }
       if (entry->item()->has_endpoint(endpoint, server))
+      {
         return entry->item();
+      }
     }
   return nullptr;
 }
@@ -142,7 +154,9 @@ Session::find_host (const Endpoint &endpoint, bool server)
 {
   HostProcess *result = find_host_i (endpoint, server);
   if (result != nullptr)
+  {
     return result;
+  }
 
   Endpoint test (endpoint);
   ACE_CString alternate;
@@ -220,11 +234,15 @@ Session::stream_for ( ostream *oldstream, HostProcess *hp, const char *sub, cons
     }
 
   if (oldstream != nullptr)
+  {
     return oldstream;
+  }
   if (this->has_outfile())
     return new ofstream(this->outfile_.c_str());
   else
+  {
     return &cout;
+  }
 }
 
 void
@@ -244,17 +262,23 @@ Session::dump ()
     {
       Procs_By_Name::ENTRY *entry;
       if (i.next(entry) == 0)
+      {
         continue;
+      }
       entry->item()->dump_summary (*strm);
     }
 
   if (single)
+  {
     *strm << "\n\n\nSession detail threads report: " << endl;
+  }
   for (Procs_By_Name::ITERATOR i (this->procs_by_name_); !i.done(); i.advance())
     {
       Procs_By_Name::ENTRY *entry;
       if (i.next(entry) == 0)
+      {
         continue;
+      }
       strm = this->split_details_ ?
         stream_for (strm,entry->item(),"threads", "summary.txt"):
         stream_for (strm,entry->item(),"threads.txt");
@@ -262,12 +286,16 @@ Session::dump ()
     }
 
   if (single)
+  {
     *strm << "\n\n\nSession detail peer process report: " << endl;
+  }
   for (Procs_By_Name::ITERATOR i (this->procs_by_name_); !i.done(); i.advance())
     {
       Procs_By_Name::ENTRY *entry;
       if (i.next(entry) == 0)
+      {
         continue;
+      }
       strm = this->split_details_ ?
         stream_for (strm,entry->item(),"peers", "summary.txt") :
         stream_for (strm,entry->item(),"peer_processes.txt");
@@ -275,23 +303,31 @@ Session::dump ()
     }
 
   if (single)
+  {
     *strm << "\n\n\nSession detail object report: " << endl;
+  }
   for (Procs_By_Name::ITERATOR i (this->procs_by_name_); !i.done(); i.advance())
     {
       Procs_By_Name::ENTRY *entry;
       if (i.next(entry) == 0)
+      {
         continue;
+      }
       strm = stream_for (strm,entry->item(),"objects.txt");
       entry->item()->dump_object_detail (*strm);
     }
 
   if (single)
+  {
     *strm << "\n\n\nSession detail invocation by peer process report: " << endl;
+  }
   for (Procs_By_Name::ITERATOR i (this->procs_by_name_); !i.done(); i.advance())
     {
       Procs_By_Name::ENTRY *entry;
       if (i.next(entry) == 0)
+      {
         continue;
+      }
       if (this->split_details_)
         {
           entry->item()->split_peer_invocations (this);
@@ -304,14 +340,18 @@ Session::dump ()
     }
 
   if (single)
+  {
     *strm << "\n\n\nSession detail invocation by thread report: " << endl;
+  }
 
   ACE_Time_Value start = ACE_Time_Value::zero;
   for (Procs_By_Name::ITERATOR i (this->procs_by_name_); !i.done(); i.advance())
     {
       Procs_By_Name::ENTRY *entry;
       if (i.next(entry) == 0)
+      {
         continue;
+      }
       if (start == ACE_Time_Value::zero ||
           entry->item()->start_time().msec() < start.msec())
         {
@@ -323,7 +363,9 @@ Session::dump ()
     {
       Procs_By_Name::ENTRY *entry;
       if (i.next(entry) == 0)
+      {
         continue;
+      }
       if (this->split_details_)
         {
           entry->item()->split_thread_invocations (this, start);
@@ -335,7 +377,9 @@ Session::dump ()
         }
     }
   if (this->has_outfile() || this->has_dir())
+  {
     delete strm;
+  }
 }
 
 // iterate over the collection of host processes to associate peer
@@ -347,7 +391,9 @@ Session::reconcile ()
     {
       Processes::ENTRY *entry;
       if (i.next(entry) == 0)
+      {
         continue;
+      }
       entry->item()->reconcile_peers(this);
     }
 

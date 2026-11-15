@@ -17,15 +17,23 @@
 int Logging_Server::run (int argc, char *argv[])
 {
   if (this->open (argc > 1 ? ACE_OS::atoi (argv[1]) : 0) == -1)
+  {
     return -1;
+  }
 
   for (;;) {
     if (wait_for_multiple_events () == -1)
+    {
       return -1;
+    }
     if (handle_connections () == -1)
+    {
       return -1;
+    }
     if (handle_data () == -1)
+    {
       return -1;
+    }
   }
 
   ACE_NOTREACHED (return 0;)
@@ -37,7 +45,10 @@ int Logging_Server::open (u_short logger_port)
   int const result = logger_port != 0
     ? server_addr.set (logger_port, static_cast<ACE_UINT32> (INADDR_ANY))
     : server_addr.set ("ace_logger", static_cast<ACE_UINT32> (INADDR_ANY));
-  if (result == -1) return -1;
+  if (result == -1)
+  {
+    return -1;
+  }
 
   // Start listening, enable reuse of listen address for quick restarts.
   return acceptor_.open (server_addr, 1);

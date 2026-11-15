@@ -24,7 +24,9 @@ TAO_Notify_Property_Boolean::set (const TAO_Notify_PropertySeq& property_seq)
   CosNotification::PropertyValue value;
 
   if (property_seq.find (this->name_, value) == -1)
+  {
     return -1;
+  }
 
   value >>= CORBA::Any::to_boolean (this->value_);
 

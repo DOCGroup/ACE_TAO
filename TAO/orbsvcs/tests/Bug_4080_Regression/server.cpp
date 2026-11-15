@@ -140,7 +140,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                              options.ior_output_file.c_str ()),
                             -1);
         if (std::fprintf (output_file.get (), "%s", ior.in ()) < 0)
+        {
           ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot write IOR to output file\n")), -1);
+        }
       }
 
       poa_manager->activate ();

@@ -78,7 +78,9 @@ DT_Test::check_supported_priorities ()
   else
     {
       if (TAO_debug_level > 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "Sched policy = THR_SCHED_OTHER\n"));
+      }
 
       sched_policy_ = ACE_SCHED_OTHER;
     }
@@ -157,7 +159,9 @@ DT_Test::run (int argc, ACE_TCHAR* argv [])
   TestShutdown killer (this->orb_.in ());
 
   if (this->dt_creator_->resolve_naming_service () == -1)
+  {
     return;
+  }
 
   //TASK_STATS::instance ()->init (this->dt_creator_->dt_count () * 100);
 

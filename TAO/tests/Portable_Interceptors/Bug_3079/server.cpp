@@ -88,7 +88,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Options options {};
       if (::parse_args (argc, argv, options) != 0)
+      {
         return -1;
+      }
 
       crash_point = static_cast<short> (options.crash_point);
       test_i *test_impl {};
@@ -120,7 +122,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       }
 
       if (options.server_number == 2)
+      {
         ACE_OS::exit (1);
+      }
 
       poa_manager->activate ();
 

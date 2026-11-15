@@ -191,16 +191,22 @@ Client_Task::is_equal_node (BaseNode *node1, BaseNode *node2)
 {
   bool ret_val {};
   if (node1 == nullptr && node2 == nullptr)
+  {
     return true;
+  }
   if (node1 != nullptr && node2 != nullptr)
     {
       StringNode * const sn1 = StringNode::_downcast (node1);
       StringNode * const sn2 = StringNode::_downcast (node2);
       if (sn1 && sn2)
         if (!std::strcmp (sn1->name (), sn2->name ()))
+        {
           ret_val = true;
+        }
       if (!(sn1 || sn2))
+      {
         ret_val = true;
+      }
       return ret_val
         && is_equal_node (node1->left (), node2->left ())
         && is_equal_node (node1->right (), node2->right ());

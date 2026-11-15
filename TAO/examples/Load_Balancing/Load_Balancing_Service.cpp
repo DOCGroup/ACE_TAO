@@ -59,12 +59,16 @@ Load_Balancing_Service::init (int argc,
       result = this->orb_manager_.init (argc,
                                         argv);
       if (result == -1)
+      {
         return result;
+      }
 
       // Check the non-ORB arguments.
       result = this->parse_args (argc, argv);
       if (result < 0)
+      {
         return result;
+      }
 
       // Create, ref. count, and activate the servant.
       Object_Group_Factory_i *factory_servant {};
@@ -75,7 +79,9 @@ Load_Balancing_Service::init (int argc,
       ior = this->orb_manager_.activate (factory_servant);
 
       if (ior.in () == nullptr)
+      {
         return -1;
+      }
       if (TAO_debug_level > 1)
         ACE_DEBUG ((LM_DEBUG,
                     "Load_Balancer: Object Group Factory ior is %C\n",
@@ -111,7 +117,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   Load_Balancing_Service factory;
 
   if (factory.init (argc, argv) == -1)
+  {
     return 1;
+  }
 
   try
     {
@@ -124,6 +132,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
   if (result == -1)
+  {
     return 1;
+  }
   return 0;
 }

@@ -49,7 +49,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                   "child_poa");
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return -1;
+      }
 
       CORBA::String_var ior =
         orb_manager.activate_under_child_poa ("my_object",

@@ -21,19 +21,25 @@ namespace TAO
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
       TAO_Transport const * const t = this->transport ();
       if (t == nullptr)
+      {
         throw NoContext ();
+      }
 
       TAO_Connection_Handler * const ch =
         const_cast<TAO_Transport *> (t)->connection_handler ();
       if (ch == nullptr)
+      {
         throw NoContext ();
+      }
 
       // Make sure that this connection handler is for IIOP.  This
       // implementation is not intended to operate under SSLIOP.
       TAO_IIOP_Connection_Handler * const iiop_ch =
         dynamic_cast <TAO_IIOP_Connection_Handler*> (ch);
       if (iiop_ch == nullptr)
+      {
         throw NoContext ();
+      }
 
       return iiop_ch;
 #else

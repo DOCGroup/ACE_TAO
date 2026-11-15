@@ -69,21 +69,27 @@ void
 ACE_Base_Thread_Adapter::close_log_msg ()
 {
   if (ACE_Base_Thread_Adapter::close_log_msg_hook_ != nullptr)
+  {
     (*ACE_Base_Thread_Adapter::close_log_msg_hook_) ();
+  }
 }
 
 void
 ACE_Base_Thread_Adapter::sync_log_msg (const ACE_TCHAR *prg)
 {
   if (ACE_Base_Thread_Adapter::sync_log_msg_hook_ != nullptr)
+  {
     (*ACE_Base_Thread_Adapter::sync_log_msg_hook_) (prg);
+  }
 }
 
 ACE_OS_Thread_Descriptor *
 ACE_Base_Thread_Adapter::thr_desc_log_msg ()
 {
   if (ACE_Base_Thread_Adapter::thr_desc_log_msg_hook_ != nullptr)
+  {
     return (*ACE_Base_Thread_Adapter::thr_desc_log_msg_hook_) ();
+  }
   return nullptr;
 }
 

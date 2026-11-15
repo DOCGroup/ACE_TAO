@@ -68,7 +68,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ORB_Holder orb (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       RTServer_Setup rtserver_setup (use_rt_corba,
                                      orb,

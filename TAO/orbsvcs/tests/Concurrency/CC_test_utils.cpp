@@ -17,19 +17,29 @@
 char const *CC_TestUtils::get_lock_mode_name (CosConcurrencyControl::lock_mode mode)
 {
   if (mode == CosConcurrencyControl::read)
+  {
     return "read";
+  }
 
   if (mode == CosConcurrencyControl::write)
+  {
     return "write";
+  }
 
   if (mode == CosConcurrencyControl::upgrade)
+  {
     return "upgrade";
+  }
 
   if (mode == CosConcurrencyControl::intention_read)
+  {
     return "intention_read";
+  }
 
   if (mode == CosConcurrencyControl::intention_write)
+  {
     return "intention_write";
+  }
 
   return "unknown lock mode";
 }

@@ -974,7 +974,9 @@ run_main (int argc, ACE_TCHAR *argv[])
               ACE_TEXT ("Testing ACE CDR functions - short stream\n\n")));
 
   if (short_stream () != 0 )
+  {
     return 1;
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Short stream - no errors\n\n")
@@ -986,7 +988,9 @@ run_main (int argc, ACE_TCHAR *argv[])
       CDR_Test_Types test_types;
 
       if (test_types.test_put (output) != 0)
+      {
         return 1;
+      }
 
       ACE_InputCDR input (output);
       if (debug > 0)
@@ -1004,7 +1008,9 @@ run_main (int argc, ACE_TCHAR *argv[])
         }
 
       if (test_types.test_get (input) != 0)
+      {
         return 1;
+      }
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -1017,7 +1023,9 @@ run_main (int argc, ACE_TCHAR *argv[])
       CDR_Test_Types test_types;
 
       if (test_types.test_put (output) != 0)
+      {
         return 1;
+      }
 
       ACE_InputCDR input (output.begin ());
       if (debug > 0)
@@ -1035,7 +1043,9 @@ run_main (int argc, ACE_TCHAR *argv[])
         }
 
       if (test_types.test_get (input) != 0)
+      {
         return 1;
+      }
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -1046,7 +1056,9 @@ run_main (int argc, ACE_TCHAR *argv[])
   CDR_Test_Types test_types;
 
   if (test_types.test_put (output) != 0)
+  {
     return 1;
+  }
 
   if (output.begin () == output.end ())
     ACE_DEBUG ((LM_WARNING,
@@ -1054,7 +1066,9 @@ run_main (int argc, ACE_TCHAR *argv[])
   else
     {
       if (output.consolidate () != 0)
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("consolidate")));
+      }
     }
 
   ACE_InputCDR input (output);
@@ -1073,7 +1087,9 @@ run_main (int argc, ACE_TCHAR *argv[])
     }
 
   if (test_types.test_get (input) != 0)
+  {
     return 1;
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Consolidation - no errors\n\n")
@@ -1081,7 +1097,9 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   output.reset();
   if (test_types.test_put_placeholder (output) != 0)
+  {
     return 1;
+  }
 
   input = ACE_InputCDR(output);
   if (debug > 0)
@@ -1099,13 +1117,19 @@ run_main (int argc, ACE_TCHAR *argv[])
     }
 
   if (test_types.test_get_placeholder (input) != 0)
+  {
     return 1;
+  }
 
   if (boolean_test () != 0)
+  {
     return 1;
+  }
 
   if (boolean_array_test () != 0)
+  {
     return 1;
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Placeholder/Replace - no errors\n\n")));

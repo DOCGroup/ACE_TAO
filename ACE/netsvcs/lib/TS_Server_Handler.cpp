@@ -244,7 +244,9 @@ ACE_TS_Server_Handler::handle_input (ACE_HANDLE)
   if (this->recv_request () == -1)
     return -1;
   else
+  {
     return this->dispatch ();
+  }
 }
 
 ACE_TS_Server_Handler::~ACE_TS_Server_Handler ()

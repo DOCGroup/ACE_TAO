@@ -38,5 +38,7 @@ void
 Server_ORBInitializer2::set_server_iogr (CORBA::Object_ptr obj)
 {
   if (this->sri_)
+  {
     this->sri_->server_iogr (obj);
+  }
 }

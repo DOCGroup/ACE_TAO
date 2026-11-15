@@ -65,7 +65,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Options options {};
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var const tmp =
         orb->string_to_object (options.ior);
@@ -90,14 +92,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           if (result)
             ++exception_count;
           else
+          {
             ++normal_count;
+          }
 
           if (i % 100 == 0)
+          {
             ACE_DEBUG ((LM_DEBUG, "Finished iteration %d\n", i));
+          }
 
           // Let's not waste any more time than we have to.
           if (exception_count > 10 && normal_count > 0)
+          {
             break;
+          }
         }
 
       if (exception_count == 0)

@@ -113,7 +113,9 @@ Worker::svc ()
 
           ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, mutex, -1);
           if (pending_requests == 0)
+          {
             break;
+          }
         }
     }
   catch (CORBA::Exception const &ex)

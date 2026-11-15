@@ -211,7 +211,9 @@ be_visitor_facet_ami_exh::init (bool for_impl)
   this->callback_iface_ = dynamic_cast<be_interface*> (d);
 
   if (this->callback_iface_ == nullptr)
+  {
     this->sync_  = true;
+  }
 }
 
 int
@@ -222,7 +224,9 @@ be_visitor_facet_ami_exh::gen_reply_handler_class ()
   std::string const suffix = "_reply_handler";
   this->init (false);
   if (this->sync_)
+  {
     return 0;
+  }
   os_ << be_nl
       << "class " << this->export_macro_ << " "
       << this->iface_name_ << suffix << be_idt_nl
@@ -295,7 +299,9 @@ be_visitor_facet_ami_exh::gen_facet_executor_class ()
   if (iface_name.find ("AMI4CCM") != std::string::npos)
     this->sync_ = false;
   else
+  {
     this->sync_ = true;
+  }
   if (this->sync_)
    {
      UTL_Scope *ss = this->iface_->defined_in();

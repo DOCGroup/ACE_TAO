@@ -46,7 +46,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   // Check for errors.
   if (outfile.bad ())
+  {
     return 1;
+  }
 
   // Set the ostream.
   ACE_LOG_MSG->msg_ostream (&outfile);
@@ -67,7 +69,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   std::ifstream infile (filename, std::ios::in);
 
   if (infile.bad ())
+  {
     return 1;
+  }
 
   // This loop should print out the contents of file "output", which should
   // have the strings "fourth\n" and "fifth\n" in them.

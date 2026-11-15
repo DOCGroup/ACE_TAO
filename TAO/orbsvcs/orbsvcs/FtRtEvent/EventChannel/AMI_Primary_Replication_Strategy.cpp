@@ -69,7 +69,9 @@ int AMI_Primary_Replication_Strategy::svc()
     running_ = true;
     while (running_) {
       if (orb_->work_pending())
+      {
         orb_->perform_work();
+      }
     }
     orb_->destroy();
   }
@@ -126,7 +128,9 @@ AMI_Primary_Replication_Strategy::replicate_request(
            "AMI_Primary_Replication_Strategy::replicate_request : ");
          manager->handle_exception(i);
          if (oid.length())
+         {
            poa_->deactivate_object(oid);
+         }
        }
    }
    // wait until the first transaction_depth replicas replied.

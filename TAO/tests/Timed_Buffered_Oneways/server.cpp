@@ -49,7 +49,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
+      {
         return -1;
+      }
 
       test_i servant (orb.in ());
 

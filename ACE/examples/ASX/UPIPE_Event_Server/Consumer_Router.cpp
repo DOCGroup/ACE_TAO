@@ -40,7 +40,9 @@ Consumer_Router::open (void *)
   ACE_TCHAR *argv[] = {file_arg.data ()};
 
   if (this->init (1, argv) == -1)
+  {
     return -1;
+  }
 
   // Make this an active object.
   //   return this->activate (options.t_flags ());
@@ -113,7 +115,9 @@ Consumer_Router::info (ACE_TCHAR **strp, size_t length) const
   ACE_UPIPE_Acceptor &sa = this->acceptor_->acceptor ();
 
   if (sa.get_local_addr (addr) == -1)
+  {
     return -1;
+  }
 
   ACE_OS::sprintf (buf,
                    ACE_TEXT ("%") ACE_TEXT_PRIs
@@ -125,7 +129,9 @@ Consumer_Router::info (ACE_TCHAR **strp, size_t length) const
   if (*strp == nullptr && (*strp = ACE_OS::strdup (module_name)) == nullptr)
     return -1;
   else
+  {
     ACE_OS::strncpy (*strp, module_name, length);
+  }
 
   return ACE_Utils::truncate_cast<int> (ACE_OS::strlen (module_name));
 }

@@ -84,7 +84,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Server_Options options;
       int const result = parse_args (argc, argv, options);
       if (result != 0)
+      {
         return result;
+      }
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =
@@ -214,11 +216,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       int write_result = write_ior_to_file (ior_file_1, first_ior.in ());
       if (write_result == 0)
+      {
         write_result = write_ior_to_file (ior_file_2, second_ior.in ());
+      }
       if (write_result == 0)
+      {
         write_result = write_ior_to_file (ior_file_3, third_ior.in ());
+      }
       if (write_result != 0)
+      {
         return write_result;
+      }
 
       // Activate third servant using its ObjectID.
       test_i third_servant (orb.in (),

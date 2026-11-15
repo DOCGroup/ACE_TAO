@@ -32,7 +32,9 @@ My_Accept_Handler::My_Accept_Handler (ACE_INET_Addr &addr)
   : addr_ (addr)
 {
   if (addr.get_port_number() != 0)
+  {
     this->open (addr);
+  }
 }
 
 My_Accept_Handler::~My_Accept_Handler ()

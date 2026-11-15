@@ -32,7 +32,9 @@ Client_Task::parse_args ()
           {
             int const iterations = ACE_OS::atoi (get_opts.opt_arg ());
             if (iterations >= 0)
+            {
               this->iterations_ = iterations;
+            }
             break;
           }
         case '?':

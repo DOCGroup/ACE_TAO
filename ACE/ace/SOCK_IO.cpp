@@ -70,7 +70,9 @@ ACE_SOCK_IO::recvv (iovec *io_vec,
       return recv_len;
     }
   else
+  {
     return 0;
+  }
 #else
   ACE_UNUSED_ARG (io_vec);
   ACE_UNUSED_ARG (timeout);

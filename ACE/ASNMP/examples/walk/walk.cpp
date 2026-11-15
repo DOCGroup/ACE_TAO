@@ -79,7 +79,9 @@ walkapp::walkapp (int argc, char *argv[])
   Oid req {};
   Oid const def_oid ("1.3.6.1.2.1.1.1.0"); // default begin walk with MIBII
   if (argc < 2)
+  {
     return;
+  }
 
   address_ = UdpAddress (argv[argc - 1]);
   if (!address_.valid ())
@@ -127,7 +129,9 @@ walkapp::walkapp (int argc, char *argv[])
   if (req.valid ())
     vb.set_oid (req); // set the Oid portion of the Vb
   else
+  {
     vb.set_oid (def_oid); // set the Oid portion of the Vb
+  }
   pdu_ += vb;
   vb.get_oid (oid_); // store for later use
   this->valid_ = true;
@@ -234,7 +238,9 @@ int walkapp::run ()
 
   //--------[ build up ASNMP object needed ]-------------------------------
   if (address_.get_port () == 0)
+  {
     address_.set_port (DEF_AGENT_PORT);
+  }
   target_.set_address (address_); // make a target using the address
 
   //-------[ issue the request, blocked mode ]-----------------------------

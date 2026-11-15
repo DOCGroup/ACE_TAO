@@ -15,7 +15,9 @@ CM_Client::open (short port_number)
   Comm_Manager::sokfd_ = ACE_OS::socket (PF_INET, SOCK_DGRAM, 0);
 
   if (Comm_Manager::sokfd_ == ACE_INVALID_HANDLE)
+  {
     return -1;
+  }
 
   this->sin_.sin_family = AF_INET;
   this->sin_.sin_port = htons (port_number);
@@ -70,7 +72,9 @@ CM_Client::receive (int timeout)
                 }
 
               if (this->demux (this->recv_packet_, n) < 0)
+              {
                 return -1;
+              }
 
               Multicast_Manager::checkoff_host (this->sin_.sin_addr);
             }
@@ -92,7 +96,9 @@ CM_Client::send ()
   int packet_length = 0;
 
   if (this->mux (this->send_packet_, packet_length) < 0)
+  {
     return -1;
+  }
 
   // Ship off the info to all the hosts.
 
@@ -116,7 +122,9 @@ CM_Client::send ()
                          0,
                          reinterpret_cast<sockaddr *> (&this->sin_),
                          sizeof this->sin_) < 0)
+      {
         return -1;
+      }
     }
   return 1;
 }
@@ -128,5 +136,7 @@ CM_Client::~CM_Client ()
                 "disposing CM_Client\n"));
 
   if (Comm_Manager::sokfd_ != ACE_INVALID_HANDLE)
+  {
     ACE_OS::closesocket (Comm_Manager::sokfd_);
+  }
 }

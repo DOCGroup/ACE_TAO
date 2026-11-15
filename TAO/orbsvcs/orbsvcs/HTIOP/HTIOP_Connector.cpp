@@ -41,7 +41,9 @@ TAO::HTIOP::Connector::open (TAO_ORB_Core *orb_core)
 
   // Create our connect strategy
   if (this->create_connect_strategy () == -1)
+  {
     return -1;
+  }
 
   /// Our connect creation strategy
   CONNECT_CREATION_STRATEGY *connect_creation_strategy {};
@@ -86,7 +88,9 @@ TAO::HTIOP::Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
     this->remote_endpoint (endpoint);
 
   if (htiop_endpoint == nullptr)
+  {
     return -1;
+  }
 
    const ACE::HTBP::Addr &remote_address =
      htiop_endpoint->object_addr ();
@@ -139,7 +143,9 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *,
     this->remote_endpoint (desc.endpoint ());
 
   if (htiop_endpoint == nullptr)
+  {
     return nullptr;
+  }
 
   ACE::HTBP::Session_Id_t session_id;
   ACE_TString proxy_host;
@@ -160,7 +166,9 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *,
     }
 
   if (proxy_port == 0)
+  {
     return nullptr;
+  }
 
   session_id.peer_ = htiop_endpoint->object_addr ();
   session_id.id_ = ACE::HTBP::Session::next_session_id();
@@ -363,7 +371,9 @@ TAO::HTIOP::Connector::check_prefix (const char *endpoint)
 {
   // Check for a valid string
   if (!endpoint || !*endpoint)
+  {
     return -1;  // Failure
+  }
 
   const char *protocol[] = { "htiop" };
 
@@ -375,7 +385,9 @@ TAO::HTIOP::Connector::check_prefix (const char *endpoint)
   // isn't in the IOR then it is not an IOR we can use.
   if (slot == len0
       && ACE_OS::strncasecmp (endpoint, protocol[0], len0) == 0)
+  {
     return 0;
+  }
 
   return -1;
   // Failure: not an TAO_HTIOP IOR
@@ -392,13 +404,17 @@ TAO::HTIOP::Endpoint *
 TAO::HTIOP::Connector::remote_endpoint (TAO_Endpoint *endpoint)
 {
   if (endpoint->tag () != OCI_TAG_HTIOP_PROFILE)
+  {
     return 0;
+  }
 
   TAO::HTIOP::Endpoint *htiop_endpoint =
     dynamic_cast<TAO::HTIOP::Endpoint *> (endpoint );
 
  if (htiop_endpoint == nullptr)
-    return nullptr;
+ {
+   return nullptr;
+ }
 
   return htiop_endpoint;
 }

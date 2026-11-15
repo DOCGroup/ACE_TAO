@@ -190,7 +190,9 @@ server (ACCEPTOR *acceptor)
   int result = acceptor->accept (&svc_handler,
                                  &cli_addr);
   if (result == -1)
+  {
     return -1;
+  }
 
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
@@ -279,10 +281,14 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
 
       // Run the cached blocking test.
       if (-1 == cached_connect (strategy_connector, server_addr))
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("cached_connect")));
+      }
 
       if (-1 == server (&acceptor))
+      {
         out_of_sockets_handler ();
+      }
     }
 }
 
@@ -354,13 +360,21 @@ parse_args (int argc, ACE_TCHAR *argv[])
         // will fail if the number of servers exceed number of open
         // files allowed for the process.
         if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("null")) == 0)
+        {
           caching_strategy_type = ACE_NULL;
+        }
         if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("lru")) == 0)
+        {
           caching_strategy_type = ACE_LRU;
+        }
         if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("lfu")) == 0)
+        {
           caching_strategy_type = ACE_LFU;
+        }
         if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("fifo")) == 0)
+        {
           caching_strategy_type = ACE_FIFO;
+        }
         break;
       case 'a':
         keep_handles_available = ACE_OS::atoi (get_opt.opt_arg ());
@@ -389,7 +403,9 @@ run_main (int argc, ACE_TCHAR *argv[])
   // Validate options.
   int result = parse_args (argc, argv);
   if (result != 0)
+  {
     return result;
+  }
 
 #if defined (ACE_WIN32)
   // Somehow, on Win32, the <listen once> option allows us to create
@@ -412,7 +428,9 @@ run_main (int argc, ACE_TCHAR *argv[])
   // <keep_handles_available> to play with.
   ACE_Handle_Gobbler handle_gobbler;
   if (0 != handle_gobbler.consume_handles (keep_handles_available))
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("handle_gobbler")));
+  }
 
   // Do we need to test all the strategies.  Note, that the less
   // useful null strategy is ignored in this case.
@@ -424,7 +442,9 @@ run_main (int argc, ACE_TCHAR *argv[])
       // Default iterations are too many; if the user hasn't specified
       // otherwise, we'll shrink the iterations for LFU and FIFO.
       if (!user_has_specified_iterations)
+      {
         iterations /= 100;
+      }
 
       caching_strategy_type = ACE_LFU;
       test_caching_strategy_type ();

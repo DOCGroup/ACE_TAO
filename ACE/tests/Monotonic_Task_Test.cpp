@@ -250,7 +250,9 @@ MyTask::svc ()
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%P|%t) MyTask::svc - waiting for stop\n")));
 
     if (!this->stop_)
+    {
       this->cond_.wait ();
+    }
   }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%t) MyTask finished\n")));
@@ -304,7 +306,9 @@ run_main (int , ACE_TCHAR *[])
             }
         }
       else
+      {
         status = 1;
+      }
 
       // ok, now stop task
       if (my_task.stop () != 0)
@@ -317,7 +321,9 @@ run_main (int , ACE_TCHAR *[])
       set_system_time (ACE_OS::gettimeofday () + tv_shift);
     }
   else
+  {
     status = 1;
+  }
 
 #  endif /* ACE_HAS_THREADS */
 

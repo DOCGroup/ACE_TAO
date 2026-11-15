@@ -74,7 +74,9 @@ Time_Range::overlaps (const Time_Range &other) const
   // process unlocks and a waiter immediately locks.
   if ((this->start_ >= other.start_ && this->start_ < other.stop_) ||
       (this->stop_ > other.start_ && this->stop_ < other.stop_))
+  {
     return true;
+  }
   return false;
 }
 
@@ -114,7 +116,9 @@ Child::any_overlaps (const Child &other) const
       for (int j = 0; j < other.range_count_ && !overlap; ++j)
         {
           if (this->ranges_[i].overlaps (other.ranges_[j]))
+          {
             overlap = true;
+          }
         }
     }
   return overlap;
@@ -214,7 +218,9 @@ reader (int num)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sending reports to %s\n"), me_str));
 
   if (sock.open (ACE_Addr::sap_any, PF_INET) == -1)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("UDP open")));
+  }
 
   Range_Report report;
   report.child_ = num;
@@ -260,7 +266,9 @@ reader (int num)
                 num,
                 ACE_TEXT ("first release")));
   else
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Reader %d released first time\n"), num));
+  }
   report.range_.set (start, stop);
   ssize_t bytes = sock.send (&report, sizeof (report), parent);
   ACE_DEBUG ((LM_DEBUG,
@@ -327,7 +335,9 @@ writer ()
   parent.addr_to_string (me_str, 80);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sending reports to %s\n"), me_str));
   if (sock.open (ACE_Addr::sap_any, PF_INET) == -1)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("UDP open")));
+  }
 
   Range_Report report;
   report.child_ = 0;   // We're the writer
@@ -406,7 +416,9 @@ run_main (int argc, ACE_TCHAR *argv[])
       if (child_nr == 0)
         writer ();
       else
+      {
         reader (child_nr);
+      }
       ACE_END_LOG;
     }
   else
@@ -516,13 +528,17 @@ run_main (int argc, ACE_TCHAR *argv[])
                 ACE_DEBUG ((LM_DEBUG,
                             ACE_TEXT ("UDP time out; check child exits\n")));
               else
+              {
                 ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("UDP recv")));
+              }
             }
 
           for (i = 0; i < Nr_Processes; i++)
             {
               if (children[i] == nullptr)
+              {
                 continue;
+              }
               ACE_exitcode child_status;
               // See if the child has exited.
               int wait_result = children[i]->wait (poll, &child_status);
@@ -548,7 +564,9 @@ run_main (int argc, ACE_TCHAR *argv[])
       sock.close ();
 
       if (0 != mutex.remove ())
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("mutex remove")));
+      }
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Comparing time ranges...\n")));
       // The writer should never overlap any readers
@@ -585,7 +603,9 @@ run_main (int argc, ACE_TCHAR *argv[])
             }
         }
       if (!reader_overlap)
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("No readers overlapped!\n")));
+      }
 
 #endif // ACE_HAS_PROCESS_SPAWN
       ACE_END_TEST;

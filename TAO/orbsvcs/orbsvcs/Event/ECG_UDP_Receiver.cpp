@@ -15,7 +15,9 @@ TAO_ECG_UDP_Receiver::~TAO_ECG_UDP_Receiver ()
     RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
 
   if (this->handler_rptr_.get ())
+  {
     this->handler_rptr_->shutdown ();
+  }
 }
 
 void
@@ -139,7 +141,9 @@ void
 TAO_ECG_UDP_Receiver::shutdown ()
 {
   if (this->handler_rptr_.get ())
+  {
     this->handler_rptr_->shutdown ();
+  }
   TAO_ECG_Refcounted_Handler empty_handler_rptr;
   this->handler_rptr_ = empty_handler_rptr;
 

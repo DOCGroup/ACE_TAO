@@ -28,7 +28,9 @@ namespace FTRTEC {
 
     // Only allow initialization once.
     if (initialized)
+    {
       return 0;
+    }
 
     initialized = true;
 
@@ -64,7 +66,9 @@ namespace FTRTEC {
   Fault_Detector_Loader::stop ()
   {
     if (this->detector_ != nullptr)
+    {
       this->detector_->stop ();
+    }
   }
 }
 

@@ -340,7 +340,9 @@ run_main (int , ACE_TCHAR *[])
       ACE_Time_Value_T<ACE_Monotonic_Time_Policy> monotonic_waittime;
       monotonic_waittime = monotonic_waittime.now ();
       if (test_timer (monotonic_condition_, monotonic_waittime, true))
+      {
         status = 0;
+      }
     }
   }
 #  else

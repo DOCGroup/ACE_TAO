@@ -43,7 +43,9 @@ public:
         if (result == -1 && errno == EWOULDBLOCK)
           continue;
         else
+        {
           process_message (mb);
+        }
       }
 
     ACE_NOTREACHED (return 0);

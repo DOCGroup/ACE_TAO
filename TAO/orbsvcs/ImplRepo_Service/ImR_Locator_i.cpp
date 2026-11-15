@@ -299,7 +299,9 @@ ImR_Locator_i::shutdown
           ACE_ASSERT (! info.null ());
           this->connect_activator (*info);
           if (! CORBA::is_nil (info->activator.in ()))
+          {
             acts.push_back (info->activator);
+          }
         }
 
       int shutdown_errs = 0;
@@ -365,14 +367,18 @@ ImR_Locator_i::fini ()
   try
     {
       if (debug_ > 1)
+      {
         ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) ImR: Shutting down...\n")));
+      }
 
       this->root_poa_->destroy (true, true);
 
       this->orb_->destroy ();
 
       if (debug_ > 0)
+      {
         ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) ImR: Shut down successfully.\n")));
+      }
     }
   catch (const CORBA::Exception& ex)
     {
@@ -756,13 +762,17 @@ ImR_Locator_i::add_or_update_server
     }
 
   if (debug_ > 0)
+  {
     ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) ImR: Add/Update server <%C>\n"), server));
+  }
 
   UpdateableServerInfo info(this->repository_, server);
   if (info.null ())
     {
       if (debug_ > 1)
+      {
         ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) ImR: Adding server <%C>\n"), server));
+      }
 
       this->repository_->add_server (server, options);
     }
@@ -1281,7 +1291,9 @@ ImR_Locator_i::server_is_running
     }
 
   if (this->opts_->unregister_if_address_reused ())
+  {
     this->repository_->unregister_if_address_reused (id, partial_ior, this);
+  }
 
   CORBA::Object_var obj = this->set_timeout_policy (server_object, this->opts_->ping_timeout ());
   ImplementationRepository::ServerObject_var srvobj =
@@ -1436,7 +1448,9 @@ ImR_Locator_i::find
           imr_info = si->createImRServerInfo ();
 
           if (debug_ > 1)
+          {
             ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) ImR: Found server <%C>\n"), id));
+          }
         }
       else
         {
@@ -1499,7 +1513,9 @@ void
 ImR_Locator_i::connect_activator (Activator_Info& info)
 {
   if (! CORBA::is_nil (info.activator.in ()) || info.ior.length () == 0)
+  {
     return;
+  }
 
   try
     {
@@ -1541,7 +1557,9 @@ void
 ImR_Locator_i::auto_start_servers ()
 {
   if (this->repository_->servers ().current_size () == 0)
+  {
     return;
+  }
 
   Locator_Repository::SIMap::ENTRY* server_entry;
   Locator_Repository::SIMap::ITERATOR server_iter (this->repository_->servers ());

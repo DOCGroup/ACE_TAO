@@ -38,7 +38,9 @@ Server::init (int argc, ACE_TCHAR **argv)
 
   result = GLOBALS::instance ()->sched_fifo_init ();
   if (result == -1)
+  {
     return result;
+  }
 
   this->argc_ = argc;
   this->argv_ = argv;
@@ -150,7 +152,9 @@ Server::write_iors ()
     }
 
   if (ior_f != 0)
+  {
     ACE_OS::fclose (ior_f);
+  }
 
   return 0;
 }
@@ -346,7 +350,9 @@ Server::start_servants ()
 
   int result = this->write_iors ();
   if (result != 0)
+  {
     return result;
+  }
   return 0;
 }
 

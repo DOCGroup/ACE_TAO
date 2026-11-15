@@ -80,7 +80,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         root_poa->the_POAManager ();
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       Simple_Server_i server_impl (orb.in ());
 
@@ -96,7 +98,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (!options.ior_output_file.empty ())
         {
           if (write_ior (options.ior_output_file.c_str (), ior.in ()) != 0)
+          {
             return 1;
+          }
         }
 
       poa_manager->activate ();

@@ -157,7 +157,9 @@ namespace TAO
         // LOCATION_FORWARD).
         if (status == PortableInterceptor::SYSTEM_EXCEPTION
             || status == PortableInterceptor::USER_EXCEPTION)
+        {
           throw;
+        }
       }
   }
 
@@ -226,7 +228,9 @@ namespace TAO
         // LOCATION_FORWARD).
         if (status == PortableInterceptor::SYSTEM_EXCEPTION
             || status == PortableInterceptor::USER_EXCEPTION)
+        {
           throw;
+        }
       }
   }
 
@@ -278,7 +282,9 @@ namespace TAO
             invocation_base.reply_status () == GIOP::LOCATION_FORWARD_PERM)
           reply_status = PortableInterceptor::LOCATION_FORWARD;
         else
+        {
           reply_status = PortableInterceptor::TRANSPORT_RETRY;
+        }
         break;
       case TAO::TAO_INVOKE_USER_EXCEPTION:
         reply_status = PortableInterceptor::USER_EXCEPTION;

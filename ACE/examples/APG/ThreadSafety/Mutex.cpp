@@ -41,7 +41,9 @@ public:
   {
     ACE_GUARD (MUTEX, mon, mutex_);
     if (message.priority () == LogMessage::CRITICAL)
+    {
       logCritical (message);
+    }
   }
 
   void logCritical (LogMessage const &)

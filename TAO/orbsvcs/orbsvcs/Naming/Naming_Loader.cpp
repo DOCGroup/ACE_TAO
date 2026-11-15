@@ -29,7 +29,9 @@ TAO_Naming_Loader::TAO_Naming_Loader (TAO_Naming_Server *server)
   // If no server was provided, then we will construct one of the
   // base class type.
   if (naming_server_ == nullptr)
+  {
     naming_server_.reset (new (std::nothrow) TAO_Naming_Server);
+  }
 }
 
 TAO_Naming_Loader::~TAO_Naming_Loader () = default;
@@ -68,7 +70,9 @@ TAO_Naming_Loader::fini ()
   if (this->naming_server_ == nullptr)
     return 0;
   else
+  {
     return this->naming_server_->fini ();
+  }
 }
 
 CORBA::Object_ptr
@@ -87,7 +91,9 @@ TAO_Naming_Loader::create_object (CORBA::ORB_ptr orb,
       // Initializes the Naming Service. Returns -1
       // on an error.
       if (this->naming_server_->init_with_orb (argc, argv, orb) == -1)
+      {
         return CORBA::Object::_nil ();
+      }
     }
 
   return CORBA::Object::_nil ();

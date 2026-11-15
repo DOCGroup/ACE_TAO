@@ -141,7 +141,9 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
 
       result = parse_args (argc, argv);
       if (result != 0)
+      {
         return result;
+      }
 
       CORBA::Object_var const object {orb->resolve_initial_references ("RootPOA")};
 
@@ -167,7 +169,9 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
 
       result = write_ior_to_file (ior.in ());
       if (result != 0)
+      {
         return result;
+      }
 
       Server_Task server_tasks (orb.in ());
 
@@ -175,17 +179,23 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
                                       number_of_threads);
 
       if (result != 0)
+      {
         return result;
+      }
 
       result = ACE_Thread_Manager::instance ()->wait ();
 
       if (result != 0)
+      {
         return result;
+      }
 
       root_poa->destroy (true, true);
 
       if (!server_servant.exception ())
+      {
         ++result;
+      }
 
       orb->destroy ();
     }

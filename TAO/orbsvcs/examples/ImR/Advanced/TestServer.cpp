@@ -356,7 +356,9 @@ void TestServer::run ()
   mgr_ = root_->the_POAManager ();
 
   if (!registerWithManager ())
+  {
     return;
+  }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("* Server (%d.%d) started.\n"),
               options_.server_id, options_.server_instance_id));

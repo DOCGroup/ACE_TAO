@@ -89,11 +89,15 @@ JAWS_Synch_IO::receive_file (const char *filename,
       if (bytes == bytes_to_read)
         this->handler_->receive_file_complete ();
       else
+      {
         result = -1;
+      }
     }
 
   if (result != ACE_Filecache_Handle::ACE_SUCCESS)
+  {
     this->handler_->receive_file_error (result);
+  }
 }
 
 void
@@ -146,12 +150,16 @@ JAWS_Synch_IO::transmit_file (const char *filename,
       if (ACE_OS::writev (this->handle_, iov, iovcnt) < 0)
         result = -1;
       else
+      {
         this->handler_->transmit_file_complete ();
+      }
 #endif /* ACE_JAWS_BASELINE */
     }
 
   if (result != ACE_Filecache_Handle::ACE_SUCCESS)
+  {
     this->handler_->transmit_file_error (result);
+  }
 }
 
 void

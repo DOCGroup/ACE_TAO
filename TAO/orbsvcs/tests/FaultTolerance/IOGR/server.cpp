@@ -40,7 +40,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // We do the command line parsing first
       if (parse_args (argc, argv, output_file) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references ("RootPOA");

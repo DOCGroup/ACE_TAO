@@ -58,7 +58,9 @@ ACE_UPIPE_Stream::close ()
       // checking to see if closing it now fails.
 
       if (this->ACE_SPIPE::get_handle () != ACE_INVALID_HANDLE)
+      {
         this->ACE_SPIPE::close ();
+      }
 
       // Close down the ACE_stream.
       return this->stream_.close ();
@@ -159,7 +161,9 @@ ACE_UPIPE_Stream::recv (char *buffer,
               // Return the number of bytes read before we timed out.
               return static_cast<ssize_t> (bytes_read);
             else
+            {
               return -1;
+            }
           }
       }
 

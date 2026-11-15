@@ -88,5 +88,7 @@ PP_Test_Server::run ()
 PP_Test_Server::~PP_Test_Server ()
 {
   if (this->factory_id_.in ())
+  {
     this->orb_manager_.deactivate_under_child_poa (this->factory_id_.in ());
+  }
 }

@@ -263,7 +263,9 @@ TAO_DynValueBox_i::set_from_any (CORBA::Any const& any)
       TAO::Unknown_IDL_Type *unk =
         dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
       if (unk == nullptr)
+      {
         throw CORBA::INTERNAL ();
+      }
 
       in = unk->_tao_get_cdr ();
     }

@@ -69,7 +69,9 @@ test_server (void *arg)
   ACE_TCHAR const *const ior = server_number == 1 ? context.ior1 : context.ior2;
 
   if (server_number == 2)
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%D Expecting an exception for server %d\n"), server_number));
+  }
 
   Test::Hello_var hello;
   try
@@ -112,7 +114,9 @@ test_server (void *arg)
     }
 
   if (server_number == 2)
+  {
     context.barrier.wait ();
+  }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%D Shutdown server %d\n"), server_number));
   if (!CORBA::is_nil (hello.in ()))
@@ -127,7 +131,9 @@ test_server (void *arg)
     }
 
   if (server_number == 1)
+  {
     context.barrier.wait ();
+  }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%D Thread ended for server %d\n"), server_number));
   return ACE_THR_FUNC_RETURN_NULL;
@@ -143,7 +149,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
       if (parse_args (argc, argv, ior1, ior2, debug_level) != 0)
+      {
         return 1;
+      }
 
       std::vector<std::basic_string<ACE_TCHAR>> extra_arguments {
         ACE_TEXT ("-ORBSvcConfDirective"),
@@ -176,13 +184,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (ACE_Thread_Manager::instance ()->spawn (test_server,
                                                    &first_thread,
                                                    THR_NEW_LWP | THR_JOINABLE) == -1)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Error spawning thread 1\n")), 1);
+      }
 
       ACE_OS::sleep (2);
       if (ACE_Thread_Manager::instance ()->spawn (test_server,
                                                    &second_thread,
                                                    THR_NEW_LWP | THR_JOINABLE) == -1)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Error spawning thread 2\n")), 1);
+      }
 
       ACE_Thread_Manager::instance ()->wait ();
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%D Transport data when done: current size: %B\n"),

@@ -19,10 +19,14 @@ int
 TAO_HTTP_Handler::open (void *)
 {
   if (this->send_request () != 0)
+  {
     TAOLIB_ERROR_RETURN ((LM_ERROR, "TAO (%P|%t) - HTTP_Handler::open, send_request failed\n"), -1);
+  }
 
   if (this->receive_reply () != 0)
+  {
     TAOLIB_ERROR_RETURN ((LM_ERROR, "TAO (%P|%t) - HTTP_Handler::open, receive_reply failed\n"), -1);
+  }
   return 0;
 }
 
@@ -71,7 +75,9 @@ TAO_HTTP_Reader::send_request ()
 
   // Check to see if the request is too big
   if (MAX_HEADER_SIZE < request_size + 4)
+  {
     TAOLIB_ERROR_RETURN((LM_ERROR,"TAO (%P|%t) - HTTP_Reader::send_request, request too large!"), -1);
+  }
 
   // Create a message to send to the server requesting retrieval of the file
   std::string message;
@@ -85,7 +91,9 @@ TAO_HTTP_Reader::send_request ()
 
   // Send the message to server
   if (peer ().send_n (message.data (), len) != len)
+  {
     TAOLIB_ERROR_RETURN((LM_ERROR,"TAO (%P|%t) - HTTP_Reader::send_request, error sending request\n"), -1);
+  }
 
   return 0;
 }
@@ -114,7 +122,9 @@ TAO_HTTP_Reader::receive_reply ()
       else if ((buf_ptr = std::strstr (buf, "\n\n")) != nullptr)     //for compatibility with JAWS
         buf_ptr += 2;
       else
+      {
         buf_ptr = buf;
+      }
 
       // Determine number of data bytes read. This is equal to the
       // total bytes read minus number of header bytes.

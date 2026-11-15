@@ -216,10 +216,14 @@ CORBA::ORB::work_pending (ACE_Time_Value &tv)
 
   int const result = this->orb_core_->reactor ()->work_pending (tv);
   if (result == 0 || (result == -1 && errno == ETIME))
+  {
     return false;
+  }
 
   if (result == -1)
+  {
     throw ::CORBA::INTERNAL ();
+  }
 
   return true;
 }
@@ -232,10 +236,14 @@ CORBA::ORB::work_pending ()
 
   const int result = this->orb_core_->reactor ()->work_pending ();
   if (result == 0)
+  {
     return false;
+  }
 
   if (result == -1)
+  {
     throw ::CORBA::INTERNAL ();
+  }
 
   return true;
 }
@@ -830,7 +838,9 @@ CORBA::ORB::resolve_service (TAO::MCAST_SERVICEID mcast_service_id)
           if (port_number != nullptr)
             port = static_cast<unsigned short> (std::atoi (port_number));
           else
+          {
             port = default_service_port[mcast_service_id];
+          }
         }
 
       // Set the port value in ORB_Params: modify the default mcast
@@ -927,7 +937,9 @@ CORBA::ORB::resolve_initial_references (const char *name,
     }
 
   if (!CORBA::is_nil (result.in ()))
+  {
     return result._retn ();
+  }
 
   // -----------------------------------------------------------------
 
@@ -942,7 +954,9 @@ CORBA::ORB::resolve_initial_references (const char *name,
     this->orb_core_->init_ref_map ()->find (ACE_CString (name));
 
   if (ior != this->orb_core_->init_ref_map ()->end ())
+  {
     return this->string_to_object ((*ior).second.c_str ());
+  }
 
   // Look for an environment variable called "<name>IOR".
   //
@@ -991,7 +1005,9 @@ CORBA::ORB::resolve_initial_references (const char *name,
   result = this->orb_core ()->resolve_rir (name);
 
   if (!CORBA::is_nil (result.in ()))
+  {
     return result._retn ();
+  }
   // -----------------------------------------------------------------
 
   throw ::CORBA::ORB::InvalidName ();
@@ -1002,28 +1018,38 @@ void
 CORBA::ORB::register_initial_reference (const char * id, CORBA::Object_ptr obj)
 {
   if (id == nullptr || std::strlen (id) == 0)
+  {
     throw ::CORBA::ORB::InvalidName ();
+  }
 
   if (CORBA::is_nil (obj))
+  {
     throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 27, CORBA::COMPLETED_NO);
+  }
 
   TAO_Object_Ref_Table &table = this->orb_core_->object_ref_table ();
 
   if (table.register_initial_reference (id, obj) == -1)
+  {
     throw ::CORBA::ORB::InvalidName ();
+  }
 }
 
 CORBA::Object_ptr
 CORBA::ORB::unregister_initial_reference (const char * id)
 {
   if (id == nullptr || std::strlen (id) == 0)
+  {
     throw ::CORBA::ORB::InvalidName ();
+  }
 
   TAO_Object_Ref_Table &table = this->orb_core_->object_ref_table ();
   CORBA::Object_ptr obj = table.unregister_initial_reference (id);
 
   if (CORBA::is_nil (obj))
+  {
     throw ::CORBA::ORB::InvalidName ();
+  }
 
   return obj;
 }
@@ -1079,7 +1105,9 @@ namespace TAO
                  ACE_TString& opt_arg)
   {
     if (opt_arg.length () > 0)
+    {
       return false;
+    }
 
     ACE_Arg_Shifter arg_shifter (command_line.get_argc (),
                                  command_line.get_TCHAR_argv ());
@@ -1111,10 +1139,14 @@ namespace TAO
             if (current_arg[opt_len] == ' ')
               opt_arg = current_arg + opt_len + 1;
             else
+            {
               opt_arg = current_arg + opt_len;
+            }
           }
         else
+        {
           arg_shifter.ignore_arg ();
+        }
       }
     return found;
   }
@@ -1373,7 +1405,9 @@ CORBA::ORB_init (int &argc, ACE_TCHAR *argv[], const char *orbid)
   // Before returning remember to store the ORB into the table...
   if (TAO::ORB_Table::instance ()->bind (ACE_TEXT_ALWAYS_CHAR(orbid_string.c_str ()),
                                          oc.get ()) != 0)
+  {
     throw ::CORBA::INTERNAL (0, CORBA::COMPLETED_NO);
+  }
 
   // Return a duplicate since the ORB_Core should release the last
   // reference to the ORB.
@@ -1392,14 +1426,18 @@ CORBA::ORB::object_to_string (CORBA::Object_ptr obj)
   if (!CORBA::is_nil (obj))
     {
       if (!obj->can_convert_to_ior ())
+      {
         throw ::CORBA::MARSHAL (CORBA::OMGVMCID | 4, CORBA::COMPLETED_NO);
+      }
 
       // Allow a user to provide custom object stringification
       char* user_string =
         obj->convert_to_ior (this->use_omg_ior_format_, ior_prefix);
 
       if (user_string != nullptr)
+      {
         return user_string;
+      }
     }
 
   // Application writer controls what kind of objref strings they get,
@@ -1440,7 +1478,9 @@ CORBA::ORB::object_to_string (CORBA::Object_ptr obj)
       // Marshal the objref into an encapsulation bytestream.
       (void) cdr.write_octet (TAO_ENCAP_BYTE_ORDER);
       if (!(cdr << obj))
+      {
         throw ::CORBA::MARSHAL ();
+      }
 
       // Now hexify the encapsulated CDR data into a string, and
       // return that string.
@@ -1503,7 +1543,9 @@ CORBA::ORB::object_to_string (CORBA::Object_ptr obj)
         {
           char * result = mp.get_profile (index)->to_string();
           if (result)
+          {
             return result;
+          }
         }
 
       if (TAO_debug_level > 0)
@@ -1546,7 +1588,9 @@ CORBA::ORB::string_to_object (const char *str)
   if (std::strncmp (str, ior_prefix, sizeof ior_prefix - 1) == 0)
     return this->ior_string_to_object (str + sizeof ior_prefix - 1);
   else
+  {
     return this->url_ior_string_to_object (str);
+  }
 }
 
 #if defined (ACE_USES_WCHAR)
@@ -1631,7 +1675,9 @@ CORBA::ORB::ior_string_to_object (const char *str)
       unsigned char byte;
 
       if (!(ACE_OS::ace_isxdigit (tmp [0]) && ACE_OS::ace_isxdigit (tmp [1])))
+      {
         break;
+      }
 
       byte = (u_char) (ACE::hex2byte (tmp [0]) << 4);
       byte |= ACE::hex2byte (tmp [1]);

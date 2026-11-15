@@ -26,7 +26,9 @@ TAO_BiDirPolicy_Validator::validate_impl (TAO_Policy_Set &policies)
 
       // Set the flag in the ORB_Core
       if (val == BiDirPolicy::BOTH)
+      {
         orb_core_.bidir_giop_policy (true);
+      }
     }
 }
 

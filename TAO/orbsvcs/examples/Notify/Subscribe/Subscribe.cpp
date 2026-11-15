@@ -44,7 +44,9 @@ Subscribe::run ()
     {
       while (!this->done_.load ())
         if (this->orb_->work_pending ())
+        {
           this->orb_->perform_work ();
+        }
     }
 }
 
@@ -85,7 +87,9 @@ Subscribe::resolve_naming_service ()
 
   // Need to check return value for errors.
   if (CORBA::is_nil (naming_obj.in ()))
+  {
     throw CORBA::UNKNOWN ();
+  }
 
   this->naming_context_ =
     CosNaming::NamingContext::_narrow (naming_obj.in ());
@@ -301,7 +305,9 @@ Subscribe_StructuredPushConsumer::push_structured_event (
 
   for (CORBA::ULong i {}; i < this->expected_subscription_.length (); ++i)
     if (std::strcmp (this->expected_subscription_[i].domain_name, domain_name) == 0)
+    {
       found = true;
+    }
 
   if (found)
     ACE_DEBUG ((LM_DEBUG,
@@ -314,7 +320,9 @@ Subscribe_StructuredPushConsumer::push_structured_event (
                 this->proxy_supplier_id_, domain_name, type_name));
 
   if (++result_count == event_count)
+  {
     this->subscribe_->done ();
+  }
 }
 
 void

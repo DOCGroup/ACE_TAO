@@ -119,12 +119,16 @@ trapapp::trapapp (int argc, char *argv[])
    if (ent.valid ())
      pdu_.set_notify_enterprise (ent); // set up the enterprise of the trap
    else
+   {
      pdu_.set_notify_enterprise (def_ent_oid);
+   }
 
    if (trap.valid ())
      pdu_.set_notify_id (trap); // set the id of the trap
    else
+   {
      pdu_.set_notify_id (coldStart); // set the id of the trap
+   }
 
    Oid const detail_oid ("1.3.6.1.4.1.11.2.16.2");
    OctetStr const detail_value ("SNMP++ Trap Send Test");
@@ -153,7 +157,9 @@ int trapapp::run ()
    }
 
    if (address_.get_port () == 0)
+   {
      address_.set_port (DEF_TRAP_PORT);
+   }
    target_.set_address (address_); // make a target using the address
 
    //-------[ issue the request, blocked mode ]-----------------------------

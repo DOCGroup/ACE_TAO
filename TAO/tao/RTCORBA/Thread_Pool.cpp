@@ -49,7 +49,9 @@ TAO_Thread_Pool_Threads::svc ()
     this->lane ().pool ().manager ().orb_core ();
 
   if (orb_core.has_shutdown ())
+  {
     return 0;
+  }
 
   // Set TSS resources for this thread.
   TAO_Thread_Pool_Threads::set_tss_resources (orb_core, this->lane_);
@@ -182,7 +184,9 @@ TAO_Thread_Lane::new_dynamic_thread ()
   // Note that we are checking this condition below without the lock
   // held.
   if (this->dynamic_threads_.thr_count () >= this->dynamic_threads_number_)
+  {
     return false;
+  }
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     mon,
@@ -240,7 +244,9 @@ TAO_Thread_Lane::validate_and_map_priority ()
 {
   // Make sure that static_threads_number_ is not zero.
   if (this->static_threads_number_ == 0)
+  {
     throw ::CORBA::BAD_PARAM ();
+  }
 
   // Check that the priority is in bounds.
   if (this->lane_priority_ < RTCORBA::minPriority
@@ -269,7 +275,9 @@ TAO_Thread_Lane::validate_and_map_priority ()
     pm->to_native (this->lane_priority_, this->native_priority_);
 
   if (!result)
+  {
     throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
+  }
 
   if (TAO_debug_level > 3)
     {
@@ -468,7 +476,9 @@ TAO_Thread_Lane::create_threads_i (TAO_Thread_Pool_Threads &thread_pool,
                           stack_size_array);
 
   if (result != 0)
+  {
     return result;
+  }
 
   return result;
 }
@@ -496,7 +506,9 @@ TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
 {
   // No support for buffering.
   if (allow_request_buffering)
+  {
     throw ::CORBA::NO_IMPLEMENT ();
+  }
 
   this->lanes_.push_back (
     std::make_unique<TAO_Thread_Lane> (*this,
@@ -531,7 +543,9 @@ TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
   // No support for buffering or borrowing.
   if (allow_borrowing ||
       allow_request_buffering)
+  {
     throw ::CORBA::NO_IMPLEMENT ();
+  }
 
   this->lanes_.reserve (lanes.length ());
   for (CORBA::ULong i {};
@@ -598,7 +612,9 @@ TAO_Thread_Pool::is_collocated (TAO_MProfile const &mprofile)
       bool const result = lane->is_collocated (mprofile);
 
       if (result)
+      {
         return result;
+      }
     }
 
   return false;
@@ -614,7 +630,9 @@ TAO_Thread_Pool::create_static_threads ()
 
       // Return on failure.
       if (result != 0)
+      {
         return result;
+      }
     }
 
   // Success.
@@ -690,7 +708,9 @@ TAO_Thread_Pool_Manager::is_collocated (TAO_MProfile const &mprofile)
       bool const result = (*iterator).int_id_->is_collocated (mprofile);
 
       if (result)
+      {
         return result;
+      }
     }
 
   return false;
@@ -759,7 +779,9 @@ TAO_Thread_Pool_Manager::destroy_threadpool (RTCORBA::ThreadpoolId threadpool)
 
     // If the thread pool is not found in our map.
     if (result != 0)
+    {
       throw RTCORBA::RTORB::InvalidThreadpool ();
+    }
   }
 
   // Mark the thread pool that we are shutting down.
@@ -872,7 +894,9 @@ TAO_Thread_Pool_Manager::create_threadpool_helper (TAO_Thread_Pool *thread_pool)
 
   // Throw exceptin in case of errors.
   if (result != 0)
+  {
     throw ::CORBA::INTERNAL ();
+  }
 
   //
   // Success.

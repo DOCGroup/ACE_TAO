@@ -57,7 +57,9 @@ public:
 
     // Last reply flips the flag.
     if (reply_number == this->iterations_)
+    {
       this->all_replies_received_ = true;
+    }
   }
 
   void method_excep (::Messaging::ExceptionHolder *holder) override
@@ -264,7 +266,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Client_Options options;
       int const parse_args_result = parse_args (argc, argv, options);
       if (parse_args_result != 0)
+      {
         return parse_args_result;
+      }
 
       CORBA::Object_var base =
         orb->resolve_initial_references ("RootPOA");

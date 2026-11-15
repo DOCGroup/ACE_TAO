@@ -140,7 +140,9 @@ namespace ACE
         // get method
         ch = this->read_ws_field (str, method, MAX_METHOD_LENGTH);
         if (ch == eof_  || !ACE_OS::ace_isspace (ch))
+        {
           return false; // invalid HTTP method string
+        }
         // skip whitespace
         while (ACE_OS::ace_isspace (str.peek ()))
           {
@@ -149,7 +151,9 @@ namespace ACE
         // get uri
         ch = this->read_ws_field (str, uri, MAX_URI_LENGTH);
         if (ch == eof_ || !ACE_OS::ace_isspace (ch))
+        {
           return false; // invalid HTTP uri string
+        }
         // skip whitespace
         while (ACE_OS::ace_isspace (str.peek ()))
           {
@@ -158,13 +162,17 @@ namespace ACE
         // get version
         ch = this->read_ws_field (str, version, MAX_VERSION_LENGTH);
         if (ch == eof_ || !ACE_OS::ace_isspace (ch))
+        {
           return false; // invalid HTTP version string
+        }
         // skip to eol
         while (ch != '\n' && ch != eof_)
           ch = str.get ();
         // get header lines
         if (!Header::read (str))
+        {
           return false;
+        }
         // skip empty line
         ch = str.get ();
         while (ch != '\n' && ch != eof_)

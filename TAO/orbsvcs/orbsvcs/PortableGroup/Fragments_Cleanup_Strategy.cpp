@@ -26,10 +26,14 @@ namespace
       reinterpret_cast<HASH_MAP_ENTRY * const *> (b);
 
     if ((*left)->int_id_->started () < (*right)->int_id_->started ())
+    {
       return -1;
+    }
 
     if ((*left)->int_id_->started () > (*right)->int_id_->started ())
+    {
       return 1;
+    }
 
     return 0;
   }
@@ -86,7 +90,9 @@ namespace TAO_PG
 
         if ((*cur_iter).item ()->started () != ACE_Time_Value::zero &&
             now <= (*cur_iter).item ()->started () + delay)
+        {
           continue;
+        }
 
         if (TAO_debug_level >= 8)
           {
@@ -114,7 +120,9 @@ namespace TAO_PG
 
     // bound_ is a number of packets.
     if (current_size <= this->bound_)
+    {
       return;
+    }
 
     DESCRIPTOR_SET sorted_set;
     ACE_NEW (sorted_set, HASH_MAP_ENTRY*[current_size]);
@@ -136,7 +144,9 @@ namespace TAO_PG
     for (int i {}; i < current_size; ++i)
       {
         if (current_size - i <= this->bound_)
+        {
           break;
+        }
 
         if (TAO_debug_level >= 8)
           {
@@ -185,12 +195,16 @@ namespace TAO_PG
             packets.unbind (cur_iter);
           }
         else
+        {
           size += (*cur_iter).item ()->data_length ();
+        }
       }
 
     // bound_ is a number of bytes.
     if (static_cast<int> (size) <= this->bound_)
+    {
       return;
+    }
 
     int const current_size = static_cast<int> (packets.current_size ());
 
@@ -212,7 +226,9 @@ namespace TAO_PG
     for (int i {}; i < current_size; ++i)
       {
         if (static_cast<int> (size) <= this->bound_)
+        {
           break;
+        }
 
         if (TAO_debug_level >= 8)
           ORBSVCS_DEBUG ((LM_DEBUG,

@@ -144,7 +144,9 @@ TAO_Notify_ThreadPool_Task::svc ()
           else
             {
               if (TAO_debug_level > 0)
+              {
                 ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t)ThreadPool_Task dequeue failed\n"));
+              }
             }
         }
       catch (const CORBA::Exception& ex)

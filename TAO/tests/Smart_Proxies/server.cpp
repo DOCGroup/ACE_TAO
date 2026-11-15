@@ -45,7 +45,9 @@ Test_i :: method (CORBA::Short boo)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Test_i::method () invoked\n")));
   if (boo == 5)
+  {
     throw Test::Oops ("Invalid boo\n");
+  }
 
   return 0;
 }
@@ -92,7 +94,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                             argv);
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       Test_i servant (orb.in ());
       // Obtain RootPOA.

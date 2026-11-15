@@ -112,7 +112,9 @@ run_main (int, ACE_TCHAR *[])
        (ACE_THR_FUNC) shut_tester,
        (void *) &shut_args,
        THR_NEW_LWP | THR_JOINABLE) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n")), 1);
+  }
 
   shut_barrier.shutdown ();
   ACE_Thread_Manager::instance ()->wait ();

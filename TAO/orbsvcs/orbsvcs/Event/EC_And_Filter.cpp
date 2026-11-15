@@ -52,7 +52,9 @@ TAO_EC_And_Filter::filter (RtecEventComm::EventSet const &event,
     {
       int n = (*i)->filter (event, qos_info);
       if (n == 0)
+      {
         return 0;
+      }
     }
 
   // All children accepted the event, push up...
@@ -73,7 +75,9 @@ TAO_EC_And_Filter::filter_nocopy (RtecEventComm::EventSet& event,
     {
       int n = (*i)->filter_nocopy (event, qos_info);
       if (n == 0)
+      {
         return 0;
+      }
     }
 
   // All children accepted the event, push up...
@@ -120,7 +124,9 @@ TAO_EC_And_Filter::max_event_size () const
     {
       CORBA::ULong c = (*i)->max_event_size ();
       if (n < c)
+      {
         n = c;
+      }
     }
   return n;
 }
@@ -135,7 +141,9 @@ TAO_EC_And_Filter::can_match (
        ++i)
     {
       if ((*i)->can_match (header) == 0)
+      {
         return 0;
+      }
     }
   return 1;
 }

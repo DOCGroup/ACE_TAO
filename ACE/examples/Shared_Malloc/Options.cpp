@@ -173,5 +173,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 
   // Switch to using MMAP when the -p and -e options are enabled.
   if (this->exec_slave_ && !this->spawn_threads_)
+  {
     this->use_mmap_ = true;
+  }
 }

@@ -48,7 +48,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     orb_ = CORBA::ORB_init (argc, argv, "myorb-client");
 
     if (parse_args (argc, argv) != 0)
+    {
       return 1;
+    }
 
     CORBA::Object_var poa_object =
       orb_->resolve_initial_references ("RootPOA");
@@ -128,7 +130,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         Test_Idl::SharedIntf::_narrow(rawObject.in());
 
         if (CORBA::is_nil (intf_var.in ()))
+        {
           ACE_ERROR_RETURN ((LM_ERROR, "Nil reference <%s>\n", serverior), -1);
+        }
 
         // make call on server
         ACE_DEBUG((LM_INFO,"(%P|%t) farewell START for %s\n", serverior));

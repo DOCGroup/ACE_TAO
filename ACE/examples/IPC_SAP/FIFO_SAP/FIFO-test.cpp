@@ -24,13 +24,17 @@ do_child (ACE_FIFO_Recv &fifo_reader)
   // Set child's stdin to read from the fifo.
   if (ACE_OS::close (ACE_STDIN) == -1
       || ACE_OS::dup (fifo_reader.get_handle ()) == ACE_INVALID_HANDLE)
+  {
     return -1;
+  }
 
   char command[] = EXEC_COMMAND_ARG;
   char *argv[] {command, nullptr};
 
   if (ACE_OS::execvp (EXEC_NAME, argv) == -1)
+  {
     return -1;
+  }
   return 0;
 }
 
@@ -43,25 +47,35 @@ do_parent (ACE_TCHAR const fifo_name[],
   char buf[BUFSIZ] {};
 
   if (fifo_sender.get_handle () == ACE_INVALID_HANDLE)
+  {
     return -1;
+  }
 
   ACE_HANDLE inputfd =
     ACE_OS::open (input_filename, O_RDONLY);
 
   if (inputfd == ACE_INVALID_HANDLE)
+  {
     return -1;
+  }
 
   // Read from input file and write into input end of the fifo.
 
   while ((len = ACE_OS::read (inputfd, buf, sizeof buf)) > 0)
     if (fifo_sender.send (buf, len) != len)
+    {
       return -1;
+    }
 
   if (len == -1)
+  {
     return -1;
+  }
 
   if (fifo_sender.remove () == -1)
+  {
     return -1;
+  }
   return 0;
 }
 
@@ -81,7 +95,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_FIFO_Recv fifo_reader (FIFO_NAME, O_RDONLY | O_CREAT, PERMS, 0);
 
   if (fifo_reader.get_handle () == ACE_INVALID_HANDLE)
+  {
     return -1;
+  }
 
   pid_t const child_pid = ACE_OS::fork ();
 

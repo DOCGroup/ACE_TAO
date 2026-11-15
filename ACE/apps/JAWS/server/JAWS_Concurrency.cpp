@@ -22,7 +22,9 @@ JAWS_Concurrency_Base::svc ()
 
       result = this->getq (mb);
       if (result == -1 || mb == nullptr)
+      {
         break;
+      }
 
       this->put_next (mb);
     }
@@ -41,7 +43,9 @@ JAWS_Thread_Pool_Task::JAWS_Thread_Pool_Task (long flags,
     maxthreads_ (maxthreads)
 {
   if (this->activate (flags, nthreads) == -1)
+  {
     ACE_ERROR ((LM_ERROR, "%p\n", "JAWS_Thread_Pool_Task::activate"));
+  }
 }
 
 JAWS_Thread_Per_Task::JAWS_Thread_Per_Task (long flags, int maxthreads)

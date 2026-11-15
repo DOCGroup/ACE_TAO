@@ -96,7 +96,9 @@ Consumer::initialize (int argc, ACE_TCHAR *argv[])
                        "register_handler"),
                       -1);
   else
+  {
     return 0;
+  }
 }
 
 int

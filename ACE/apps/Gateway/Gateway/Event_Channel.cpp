@@ -240,7 +240,9 @@ Event_Channel::initiate_connection_connection (Connection_Handler *connection_ha
   else if (Options::instance ()->blocking_semantics () == ACE_NONBLOCK)
     synch_options = ACE_Synch_Options::asynch;
   else
+  {
     synch_options = ACE_Synch_Options::synch;
+  }
 
   return this->connector_.initiate_connection (connection_handler,
                                                synch_options);
@@ -354,7 +356,9 @@ Event_Channel::initiate_connector ()
           Connection_Handler *connection_handler = me->int_id_;
 
           if (this->initiate_connection_connection (connection_handler) == -1)
+          {
             continue; // Failures are handled elsewhere...
+          }
         }
     }
 }
@@ -439,7 +443,9 @@ Event_Channel::close (u_long)
         // If have no this statement, the gatewayd will abort when exiting
         // with some Consumer/Supplier not connected.
         if (connection_handler->state()==Connection_Handler::CONNECTING)
+        {
           this->cancel_connection_connection(connection_handler);
+        }
         // Mark Connection_Handler as DISCONNECTING so we don't try to
         // reconnect...
         connection_handler->state (Connection_Handler::DISCONNECTING);
@@ -565,7 +571,9 @@ Event_Channel::open (void *)
 
   // Passively initiate Peer acceptor.
   if (this->initiate_acceptors () == -1)
+  {
     return -1;
+  }
 
   // If we're not running reactively, then we need to make sure that
   // <ACE_Message_Block> reference counting operations are

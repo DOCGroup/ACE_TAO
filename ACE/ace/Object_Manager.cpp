@@ -326,7 +326,9 @@ ACE_Object_Manager::init ()
 
           // Open the main thread's ACE_Log_Msg.
           if (nullptr == ACE_LOG_MSG)
+          {
             return -1;
+          }
         }
 
       // Finally, indicate that the ACE_Object_Manager instance has
@@ -400,7 +402,9 @@ ACE_Object_Manager::ACE_Object_Manager ()
 
   // Be sure that no further instances are created via instance ().
   if (instance_ == nullptr)
+  {
     instance_ = this;
+  }
 
   init ();
 }
@@ -434,7 +438,9 @@ ACE_Object_Manager::instance ()
       return instance_pointer;
     }
   else
+  {
     return instance_;
+  }
 }
 
 int
@@ -823,7 +829,9 @@ ACE_Object_Manager::fini ()
 
   // Then, ensure that the ACE_OS_Object_Manager gets shut down.
   if (this == instance_ && ACE_OS_Object_Manager::instance_)
+  {
     ACE_OS_Object_Manager::instance_->fini ();
+  }
 
   if (dynamically_allocated_)
     {
@@ -831,7 +839,9 @@ ACE_Object_Manager::fini ()
     }
 
   if (this == instance_)
+  {
     instance_ = nullptr;
+  }
 
   return 0;
 }

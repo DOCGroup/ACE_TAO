@@ -16,7 +16,9 @@ TAO_CSD_ThreadPool::init ()
 {
   static bool initialized {};
   if (initialized)
+  {
     return 0;
+  }
   initialized = true;
 
   TAO_CSD_Framework_Loader::static_init();

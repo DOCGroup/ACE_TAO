@@ -100,7 +100,9 @@ void print_till_death ()
   for (int i = 0; i < 1000; i++)
     {
       if (i % 50 == 0)
+      {
         ACE_OS::sleep (1);
+      }
 
       if (i == 0)
         ACE_DEBUG ((LM_DEBUG,
@@ -222,7 +224,9 @@ order ()
   if (num_files <= 2)
     {
       if (num_files == 1)
+      {
         get_statistics (file_name);
+      }
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("      Ordering...OK! - ")
                   ACE_TEXT (" Only %d file (s) was (were) generated"),
@@ -297,7 +301,9 @@ remove_files ()
                        file_name,
                        i);
       if (ACE_OS::unlink (backup) != 0)
+      {
         error = 1;
+      }
     }
   while (error != 1);
 

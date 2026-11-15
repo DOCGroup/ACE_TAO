@@ -331,17 +331,23 @@ TAO_PropertySet::define_property (char const *property_name,
 {
   // Check the name's validity.
   if (property_name == nullptr)
+  {
     throw CosPropertyService::InvalidPropertyName();
+  }
 
   CORBA::TypeCode_var arg_tc = property_value.type ();
 
   // Is this type allowed?
   if (is_type_allowed (arg_tc.in ()) != 1)
+  {
     throw CosPropertyService::UnsupportedTypeCode();
+  }
 
   // Is this property allowed?
   if (is_property_allowed (property_name) != 1)
+  {
     throw CosPropertyService::UnsupportedProperty();
+  }
 
   // Try to bind the property. Use normal mode.
   CosProperty_Hash_Key hash_key (property_name);
@@ -364,7 +370,9 @@ TAO_PropertySet::define_property (char const *property_name,
 
       // Is the pointer valid?
       if (entry_ptr == nullptr)
+      {
         throw CORBA::UNKNOWN ();
+      }
 
       mapped_tc = entry_ptr->int_id_.pvalue_.type ();
 
@@ -374,13 +382,17 @@ TAO_PropertySet::define_property (char const *property_name,
 
         // If type is not the same, raise exception.
         if (!equal_tc)
+        {
           throw CosPropertyService::ConflictingProperty();
+        }
       }
 
       // If mode is read only, raise exception.
       if ((entry_ptr->int_id_.pmode_ == CosPropertyService::read_only) ||
           (entry_ptr->int_id_.pmode_ == CosPropertyService::fixed_readonly))
+      {
         throw CosPropertyService::ReadOnlyProperty();
+      }
 
       // Use the mode that is already there.
       hash_value.pmode_ = entry_ptr->int_id_.pmode_;
@@ -409,7 +421,9 @@ TAO_PropertySet::is_type_allowed (CORBA::TypeCode_ptr type) const
 {
   // If the sequence is empty, no constraints.
   if (this->allowed_property_types_.length () == 0)
+  {
     return true;
+  }
 
   // Check in the allowed_property_types sequence.
   CORBA::Boolean ret_val {};
@@ -422,7 +436,9 @@ TAO_PropertySet::is_type_allowed (CORBA::TypeCode_ptr type) const
           ret_val = this->allowed_property_types_[ti]->equal (type);
 
           if (ret_val)
+          {
             return true;
+          }
         }
       catch (CORBA::Exception const &ex)
         {
@@ -442,7 +458,9 @@ TAO_PropertySet::is_property_allowed (char const *property_name) const
 {
   // If  the sequence is empty, no constraints.
   if (this->allowed_property_names_.length() == 0)
+  {
     return true;
+  }
 
   // Check in the allowed_property_names.
   for (CORBA::ULong ni {};
@@ -450,7 +468,9 @@ TAO_PropertySet::is_property_allowed (char const *property_name) const
        ++ni)
     if (std::strcmp (this->allowed_property_names_[ni].in (),
                      property_name) == 0)
+    {
       return true;
+    }
 
   // Name not found in the sequence.
   return false;
@@ -531,7 +551,9 @@ TAO_PropertySet::define_properties (CosPropertyService::Properties const &nprope
 
   // Raise the multi exception if needed.
   if (multi_ex.exceptions.length () > 0)
+  {
     throw CosPropertyService::MultipleExceptions (multi_ex);
+  }
 }
 
 // Returns the current number of properties associated with this
@@ -572,7 +594,9 @@ TAO_PropertySet::get_all_property_names (CORBA::ULong how_many,
       if (how_many >= num_of_properties)
         sequence_length = num_of_properties;
       else
+      {
         sequence_length = how_many;
+      }
       property_names->length (sequence_length);
     }
 
@@ -634,7 +658,9 @@ TAO_PropertySet::get_property_value (char const *property_name)
 {
   // Check the name's validity.
   if (property_name == nullptr)
+  {
     throw CosPropertyService::InvalidPropertyName();
+  }
 
   // Get the value out of the hash table.
 
@@ -642,7 +668,9 @@ TAO_PropertySet::get_property_value (char const *property_name)
   CosProperty_Hash_Value hash_value;
 
   if (this->hash_table_.find (hash_key, hash_value) != 0)
+  {
     throw CosPropertyService::PropertyNotFound();
+  }
 
   // Return the any value got.
   CORBA::Any *any_ptr {};
@@ -670,7 +698,9 @@ TAO_PropertySet::get_properties (CosPropertyService::PropertyNames const &proper
   // Validate the length.
   CORBA::ULong const n = property_names.length ();
   if (n == 0)
+  {
     return false;
+  }
 
   // Set the length for the out parameter.
   nproperties->length (n);
@@ -723,7 +753,9 @@ TAO_PropertySet::get_all_properties (CORBA::ULong how_many,
           this->get_number_of_properties ();
 
   if (num_of_properties == 0)
+  {
     return;
+  }
 
   // Set the length for the nproperties if how_many > 0.
   CORBA::ULong sequence_length {};
@@ -733,7 +765,9 @@ TAO_PropertySet::get_all_properties (CORBA::ULong how_many,
       if (how_many >= num_of_properties)
         sequence_length = num_of_properties;
       else
+      {
         sequence_length = how_many;
+      }
 
       nproperties->length (sequence_length);
     }
@@ -805,7 +839,9 @@ TAO_PropertySet::delete_property (char const *property_name)
 {
   // Check the name's validity.
   if (property_name == nullptr)
+  {
     throw CosPropertyService::InvalidPropertyName();
+  }
 
   // Get the entry from the Hash Table.
 
@@ -814,12 +850,16 @@ TAO_PropertySet::delete_property (char const *property_name)
 
   if (this->hash_table_.find (hash_key,
                               entry_ptr) == -1)
+  {
     throw CosPropertyService::PropertyNotFound();
+  }
 
   // If property is fixed, then raise exception.
   if ((entry_ptr->int_id_.pmode_ == CosPropertyService::fixed_normal)
       || (entry_ptr->int_id_.pmode_ == CosPropertyService::fixed_readonly))
+  {
     throw CosPropertyService::FixedProperty();
+  }
 
   // Unbind this property.
   if (this->hash_table_.unbind (entry_ptr) != 0)
@@ -889,7 +929,9 @@ TAO_PropertySet::delete_properties (CosPropertyService::PropertyNames const &pro
 
   // Raise the multiple exceptions if there are any.
   if (multi_ex.exceptions.length () > 0)
+  {
     throw CosPropertyService::MultipleExceptions (multi_ex);
+  }
 }
 
 // Delete all the properties in the current ProperySet : Delete the
@@ -934,7 +976,9 @@ TAO_PropertySet::is_property_defined (char const *property_name)
   if (this->hash_table_.find (hash_key) == 0)
     return true;
   else
+  {
     return false;
+  }
 }
 
 // Makes default sized hash_table_.
@@ -1008,19 +1052,27 @@ TAO_PropertySetDef::define_property_with_mode (char const *property_name,
 {
   // Check the names validity.
   if (property_name == nullptr)
+  {
     throw CosPropertyService::InvalidPropertyName();
+  }
 
   // Is this type allowed?
   if (is_type_allowed (property_value.type ()) != 1)
+  {
     throw CosPropertyService::UnsupportedTypeCode();
+  }
 
   // Is this property allowed?
   if (is_property_allowed (property_name) != 1)
+  {
     throw CosPropertyService::UnsupportedProperty();
+  }
 
   // Is this a valid mode.
   if (property_mode == CosPropertyService::undefined)
+  {
     throw CosPropertyService::UnsupportedMode();
+  }
 
   // Try to bind the Property.
   CosProperty_Hash_Key hash_key (property_name);
@@ -1042,23 +1094,31 @@ TAO_PropertySetDef::define_property_with_mode (char const *property_name,
 
       // Is the pointer valid.
       if (entry_ptr == nullptr)
+      {
         throw CORBA::UNKNOWN ();
+      }
 
       // If type is not the same, raise exception.
       if (entry_ptr->int_id_.pvalue_.type () != property_value.type ())
+      {
         throw CosPropertyService::ConflictingProperty();
+      }
 
       // If mode is read only, raise exception.
       if ((entry_ptr->int_id_.pmode_ == CosPropertyService::read_only) ||
           (entry_ptr->int_id_.pmode_ == CosPropertyService::fixed_readonly))
+      {
         throw CosPropertyService::ReadOnlyProperty();
+      }
 
       // If current mode is fixed_normal, but the new mode is not
       // fixed, reject it.
       if ((entry_ptr->int_id_.pmode_ ==
            CosPropertyService::fixed_normal) &&
           (property_mode < CosPropertyService::fixed_normal))
+      {
         throw CosPropertyService::UnsupportedMode();
+      }
 
       // Everything is fine. Overwrite the value.
       if (this->hash_table_.rebind (hash_key,
@@ -1158,7 +1218,9 @@ TAO_PropertySetDef::define_properties_with_modes (CosPropertyService::PropertyDe
 
   // Raise the multi exception if needed.
   if (multi_ex.exceptions.length () > 0)
+  {
     throw CosPropertyService::MultipleExceptions (multi_ex);
+  }
 }
 
 // Get the mode of a property. Raises InvalidpropertyName,
@@ -1168,7 +1230,9 @@ TAO_PropertySetDef::get_property_mode (char const *property_name)
 {
   // Check for the name's validity.
   if (property_name == nullptr)
+  {
     throw CosPropertyService::InvalidPropertyName();
+  }
 
   // Find the property in the hash table.
   CosProperty_Hash_Key hash_key (property_name);
@@ -1207,7 +1271,9 @@ TAO_PropertySetDef::get_property_modes (CosPropertyService::PropertyNames const 
   CORBA::ULong const sequence_length = property_names.length ();
 
   if (sequence_length == 0)
+  {
     return true;
+  }
 
   // Set the length of the sequence.
   property_modes->length (sequence_length);
@@ -1254,11 +1320,15 @@ TAO_PropertySetDef::set_property_mode (char const *property_name,
 {
   // Check the names validity.
   if (property_name == nullptr)
+  {
     throw CosPropertyService::InvalidPropertyName();
+  }
 
   // Trying to set to undefined mode is not allowed.
   if (property_mode == CosPropertyService::undefined)
+  {
     throw CosPropertyService::UnsupportedMode();
+  }
 
   // Find the property from the Hash Table.
   CosProperty_Hash_Key hash_key (property_name);
@@ -1277,7 +1347,9 @@ TAO_PropertySetDef::set_property_mode (char const *property_name,
 
       // If the new mode  is the same as the old one, nothing to do.
       if (hash_value.pmode_ == property_mode)
+      {
         return;
+      }
 
       // Check for legality of the mode change.
       switch (hash_value.pmode_)
@@ -1393,7 +1465,9 @@ TAO_PropertySetDef::set_property_modes (CosPropertyService::PropertyModes const 
 
   // Raise the multi_ex, if needed.
   if (multi_ex.exceptions.length () > 0)
+  {
     throw CosPropertyService::MultipleExceptions (multi_ex);
+  }
 }
 
 //======================================================================
@@ -1432,7 +1506,9 @@ TAO_PropertyNamesIterator::next_one (CORBA::String_out property_name)
       return true;
     }
   else
+  {
     return false;
+  }
 }
 
 CORBA::Boolean
@@ -1447,7 +1523,9 @@ TAO_PropertyNamesIterator::next_n (CORBA::ULong how_many,
   COSPROPERTY_HASH_ENTRY *entry_ptr {};
 
   if (this->iterator_.next (entry_ptr) == 0 || how_many == 0)
+  {
     return false;
+  }
 
   CORBA::ULong const size = static_cast<CORBA::ULong> (this->iterator_.map ().current_size ());
   CORBA::ULong const len = how_many <= size ? how_many : size;
@@ -1522,7 +1600,9 @@ TAO_PropertiesIterator::next_n (CORBA::ULong how_many,
   COSPROPERTY_HASH_ENTRY *entry_ptr {};
 
   if (this->iterator_.next (entry_ptr) == 0 || how_many == 0)
+  {
     return false;
+  }
 
   CORBA::ULong const size = static_cast<CORBA::ULong> (this->iterator_.map ().current_size ());
   CORBA::ULong const len = how_many <= size ? how_many : size;
@@ -1540,7 +1620,9 @@ TAO_PropertiesIterator::next_n (CORBA::ULong how_many,
             entry_ptr->int_id_.pvalue_;
         }
       else
+      {
         break;
+      }
     }
 
   return true;

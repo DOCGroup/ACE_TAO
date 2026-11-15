@@ -52,9 +52,13 @@ parse_args (int argc, ACE_TCHAR *argv[], SupplierOptions &options)
 
   int const argument_index = get_opts.opt_ind ();
   if (argument_index < argc)
+  {
     options.num_events = ACE_OS::atoi (argv[argument_index]);
+  }
   if (argument_index + 1 < argc)
+  {
     options.payload_size = ACE_OS::atoi (argv[argument_index + 1]);
+  }
   if (argument_index + 2 < argc)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("usage: %s [-k <ec_ior>] [-h <host>] [-p <port>] "
@@ -91,7 +95,9 @@ public:
       event_ (event)
   {
     if (reactor_ == nullptr || CORBA::is_nil (event_channel) || CORBA::is_nil (event_.in ()))
+    {
       throw std::invalid_argument ("TestSupplier: invalid event channel, reactor, or event");
+    }
 
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TestSupplier: string_to_object from %s\n"),
@@ -155,7 +161,9 @@ public:
             disconnect ();
           }
         else
+        {
           schedule_next_event (ACE_Time_Value (0, 10 * 1000));
+        }
         return true;
       }
     catch (CORBA::Exception const &exception)
@@ -184,7 +192,9 @@ public:
   void disconnect_self ()
   {
     if (!connected_)
+    {
       return;
+    }
     connected_ = false;
     reactor_->cancel_timer (this);
     poa_->deactivate_object (id_.in ());
@@ -203,7 +213,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       CORBA::ValueFactoryBase_var const value_factory = new MyEventFactory;
       CORBA::String_var const repository_id = _tc_MyEvent->id ();
@@ -222,14 +234,18 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CosNotifyChannelAdmin::EventChannelFactory_var const event_channel_factory =
         CosNotifyChannelAdmin::EventChannelFactory::_unchecked_narrow (notify_object.in ());
       if (CORBA::is_nil (event_channel_factory.in ()))
+      {
         throw std::invalid_argument ("No event channel factory");
+      }
 
       CORBA::Object_var const event_channel_object =
         orb->string_to_object (options.event_channel_ior);
       CosNotifyChannelAdmin::EventChannel_var const event_channel =
         CosNotifyChannelAdmin::EventChannel::_unchecked_narrow (event_channel_object.in ());
       if (CORBA::is_nil (event_channel.in ()))
+      {
         throw std::invalid_argument ("No event channel");
+      }
 
       MyEvent_var event = new MyEvent_i ("TestName", 42);
       for (int i {}; i < options.payload_size; ++i)

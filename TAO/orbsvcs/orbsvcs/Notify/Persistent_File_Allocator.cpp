@@ -119,12 +119,16 @@ Persistent_Storage_Block::reassign_data(unsigned char* newptr,
   bool delete_old)
 {
   if (this->data_.get () == newptr)
+  {
     return;
+  }
 
   if (delete_old)
     this->data_.reset ();
   else
+  {
     this->data_.release ();
+  }
 
   this->data_.reset (newptr);
 }
@@ -282,7 +286,9 @@ Persistent_File_Allocator::read(Persistent_Storage_Block* psb)
           cached = (queued_block->block_number() == psb->block_number());
         }
         if (cached)
+        {
           std::memcpy (psb->data (), queued_block->data (), this->block_size ());
+        }
       }
     }
     if (!cached)
@@ -322,7 +328,9 @@ Persistent_File_Allocator::write(Persistent_Storage_Block* psb)
     catch (const std::bad_alloc&)
       {
         if (ourpsb != psb)
+        {
           delete ourpsb;
+        }
         result = false;
       }
   }

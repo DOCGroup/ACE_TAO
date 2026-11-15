@@ -28,7 +28,9 @@ CORBA::string_dup (const char *str)
 
 #ifndef TAO_NO_SHARED_NULL_CORBA_STRING
   if (!*str)
+  {
     return null_char;
+  }
 #endif /* TAO_NO_SHARED_NULL_CORBA_STRING */
 
   size_t const len = std::strlen (str);
@@ -79,7 +81,9 @@ CORBA::wstring_dup (const WChar *const str)
 
 #ifndef TAO_NO_SHARED_NULL_CORBA_STRING
   if (!*str)
+  {
     return null_wchar;
+  }
 #endif /* TAO_NO_SHARED_NULL_CORBA_STRING */
 
   CORBA::WChar* retval =

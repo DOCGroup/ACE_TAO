@@ -25,7 +25,9 @@ void sort (LongVector & vector)
 
         for (j = pass + 1; j < size; j++ )
           if (vector[j] < vector[indexOfMin] )
+          {
             indexOfMin = j;
+          }
 
         swap (vector[pass], vector[indexOfMin]);
       }

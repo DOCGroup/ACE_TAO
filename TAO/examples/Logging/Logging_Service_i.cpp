@@ -88,7 +88,9 @@ Logger_Server::init_naming_service ()
 
   // Initialize the naming service
   if (this->my_name_server_.init (orb.in ()) == -1)
+  {
     return -1;
+  }
 
   // Create an instance of the Logger_Factory
   Logger_Factory_var factory = this->factory_impl_._this ();

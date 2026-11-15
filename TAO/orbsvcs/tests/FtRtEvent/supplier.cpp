@@ -85,7 +85,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       RtecEventChannelAdmin::EventChannel_var const channel = get_event_channel (argc, argv);
 
       if (CORBA::is_nil (channel.in ()))
+      {
         return -1;
+      }
 
       PortableServer::POA_var const poa =
         resolve_init<PortableServer::POA> (orb.in (), "RootPOA");
@@ -96,7 +98,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       PushSupplier_impl push_supplier (orb.in ());
       if (push_supplier.init (channel.in ()) == -1)
+      {
         return -1;
+      }
 
       RtecEventComm::PushSupplier_var const supplier = push_supplier._this ();
 

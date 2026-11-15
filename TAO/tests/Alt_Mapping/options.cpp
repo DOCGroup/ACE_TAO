@@ -63,7 +63,9 @@ Options::parse_args (int argc, ACE_TCHAR **argv)
 
       case 'i':  // invocation
         if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("dii")))
+        {
           this->invoke_type_ = Options::Invoke_Type::DII;
+        }
         break;
 
       case 't': // data type

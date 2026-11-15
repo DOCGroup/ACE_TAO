@@ -62,14 +62,18 @@ ACE_FILE_Connector::connect (ACE_FILE_IO &new_io,
 
       if (handle == ACE_INVALID_HANDLE
           || new_io.addr_.set (ACE_TEXT_CHAR_TO_TCHAR (filename)) != 0)
+      {
         return -1;
+      }
 
       new_io.set_handle (handle);
 
       return 0;
     }
   else
+  {
     new_io.addr_ = remote_sap; // class copy.
+  }
 
   handle = ACE::handle_timed_open (timeout,
                                    new_io.addr_.get_path_name (),

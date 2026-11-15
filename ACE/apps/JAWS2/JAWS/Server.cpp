@@ -112,7 +112,9 @@ JAWS_Server::open (JAWS_Pipeline_Handler *protocol,
 
       int n = this->nthreads_;
       if (this->concurrency_ == 1)
+      {
         n = 1;
+      }
 
       for (int i = 0; i < n * this->ratio_ - n; ++i)
         db->task ()->put (db.get ());
@@ -151,12 +153,18 @@ JAWS_Server::parse_args (int argc, ACE_TCHAR *argv[])
       case 'c':
         if (std::strcmp (getopt.opt_arg (), "PER_REQUEST") == 0)
           this->concurrency_ = 1;
-        else this->concurrency_ = 0;
+        else
+        {
+          this->concurrency_ = 0;
+        }
         break;
       case 'd':
         if (std::strcmp (getopt.opt_arg (), "ASYNCH") == 0)
           this->dispatch_ = 1;
-        else this->dispatch_ = 0;
+        else
+        {
+          this->dispatch_ = 0;
+        }
         break;
       case 'n':
         this->nthreads_ = ACE_OS::atoi (getopt.opt_arg ());
@@ -184,7 +192,16 @@ JAWS_Server::parse_args (int argc, ACE_TCHAR *argv[])
     ACE_Trace::stop_tracing ();
 #endif /* ACE_NTRACE != 1*/
 
-  if (this->port_ == 0) this->port_ = 5432;
-  if (this->nthreads_ == 0) this->nthreads_ = 5;
-  if (this->maxthreads_ == 0) this->maxthreads_ = 20;
+  if (this->port_ == 0)
+  {
+    this->port_ = 5432;
+  }
+  if (this->nthreads_ == 0)
+  {
+    this->nthreads_ = 5;
+  }
+  if (this->maxthreads_ == 0)
+  {
+    this->maxthreads_ = 20;
+  }
 }

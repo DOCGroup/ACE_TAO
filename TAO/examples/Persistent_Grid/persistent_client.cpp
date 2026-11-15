@@ -12,5 +12,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (client.run ("grid", argc, argv) == -1)
     return -1;
   else
+  {
     return 0;
+  }
 }

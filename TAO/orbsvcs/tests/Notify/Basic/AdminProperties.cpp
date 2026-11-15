@@ -79,7 +79,9 @@ AdminProperties_Task::svc ()
       catch (CORBA::IMP_LIMIT const &)
         {
           if (TAO_debug_level > 0)
+          {
             ACE_DEBUG ((LM_DEBUG, "\nEvent %d was not send due to Impl Limit reached\n", i));
+          }
 
           ++ this->client_->rejections_;
         }
@@ -107,12 +109,16 @@ AdminProperties_StructuredPushConsumer::push_structured_event (const CosNotifica
   ++events_received_;
 
   if (events_received_.load () >= client_->max_queue_length_)
+  {
     client_->consumer_done(this);
+  }
 
   ACE_DEBUG((LM_DEBUG, "-"));
 
   if (TAO_debug_level)
+  {
     ACE_DEBUG ((LM_DEBUG, "\nConsumer %x received event %d\n", this, events_received_.load ()));
+  }
 }
 
 /***************************************************************************/
@@ -381,7 +387,9 @@ AdminProperties::create_suppliers ()
   catch (CORBA::IMP_LIMIT const &)
     {
       if (TAO_debug_level)
+      {
         ACE_DEBUG ((LM_DEBUG, "\nImpl Limit excpetion when connecting supplier\n"));
+      }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -416,7 +424,9 @@ AdminProperties::create_consumers ()
   catch (CORBA::IMP_LIMIT const &)
     {
       if (TAO_debug_level)
+      {
         ACE_DEBUG ((LM_DEBUG, "\nImpl Limit exception when connecting consumer\n"));
+      }
     }
   catch (CORBA::Exception const &ex)
     {

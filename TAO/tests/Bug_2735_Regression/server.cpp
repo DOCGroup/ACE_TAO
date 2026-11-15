@@ -46,7 +46,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
       if (parse_args (argc, argv, factory_strategy) == -1)
+      {
         return -1;
+      }
 
       int targc {3};
       ACE_TCHAR const *targv[] =

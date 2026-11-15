@@ -109,7 +109,9 @@ Thread_Task::svc ()
         ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
         --active_thread_count_;
         if (active_thread_count_ == 0)
+        {
           orb_->shutdown ();
+        }
       }
 
       return 0;

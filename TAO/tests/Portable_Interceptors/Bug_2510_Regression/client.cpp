@@ -73,7 +73,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var const object =
         orb->string_to_object (options.ior.c_str ());
@@ -95,7 +97,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                              THR_NEW_LWP | THR_JOINABLE,
                              0,
                              &thread_handle) == -1)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "Cannot start thread"), 1);
+      }
 
       ACE_Thread::join (thread_handle);
 

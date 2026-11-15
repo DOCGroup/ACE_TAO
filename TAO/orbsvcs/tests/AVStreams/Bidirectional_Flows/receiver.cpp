@@ -29,7 +29,9 @@ Receiver_StreamEndPoint::set_protocol_object (char const *flowname,
   // Set the sender protocol object corresponding to the transport
   // protocol selected.
   if (std::strcmp (flowname, "Data_Receiver1") == 0)
+  {
     RECEIVER::instance ()->protocol_object (object);
+  }
   return 0;
 }
 
@@ -161,14 +163,18 @@ Receiver::init (int argc,
     this->reactive_strategy_.init (TAO_AV_CORE::instance ()->orb (),
                                    TAO_AV_CORE::instance ()->poa ());
   if (result != 0)
+  {
     return result;
+  }
 
   // Parse the command line arguments
   result =
     this->parse_args (argc,
                       argv);
   if (result != 0)
+  {
     return result;
+  }
 
   // Open file to read.
   this->input_file_.reset (std::fopen (this->options_.filename.c_str (), "rb"));
@@ -271,7 +277,9 @@ ACE_TMAIN (int argc,
       int const result = RECEIVER::instance ()->init (argc, argv);
 
       if (result != 0)
+      {
         return result;
+      }
 
       orb->run ();
 

@@ -93,11 +93,15 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (options.is_consumer)
     consumer (sema, options.iterations);
   else
+  {
     producer (sema, options.iterations);
+  }
 
   ACE_OS::sleep (options.exit_delay);
 
   if (options.delete_semaphore)
+  {
     sema.remove ();
+  }
   return 0;
 }

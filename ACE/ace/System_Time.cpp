@@ -118,7 +118,9 @@ ACE_System_Time::get_master_system_time (ACE_Time_Value &time_out)
   ACE_TRACE ("ACE_System_Time::get_master_system_time");
   time_t to {};
   if (this->get_master_system_time (to) == -1)
+  {
     return -1;
+  }
   time_out.sec (to);
   return 0;
 }

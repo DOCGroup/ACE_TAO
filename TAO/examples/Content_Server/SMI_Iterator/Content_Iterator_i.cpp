@@ -34,7 +34,9 @@ Content_Iterator_i::next_chunk (CORBA::ULongLong const offset,
   chunk = chunk_owner._retn ();
 
   if (offset >= this->file_size_)
+  {
     return false;  // Applications shouldn't throw system exceptions.
+  }
 
   ACE_OFF_T const real_offset =
     ACE_OS::lseek (this->file_io_.get_handle (),

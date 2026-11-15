@@ -27,7 +27,9 @@ public:
   void _remove_ref () override
   {
     if (this->ref_count_.fetch_sub (1, std::memory_order_acq_rel) == 1)
+    {
       delete this;
+    }
   }
 };
 
@@ -44,7 +46,9 @@ Quoter_Stock_i::Quoter_Stock_i (std::string const &symbol,
 Quoter_Stock_i::~Quoter_Stock_i ()
 {
   if (!CORBA::is_nil (this->consumer_proxy_.in ()))
+  {
     this->consumer_proxy_->disconnect_push_consumer ();
+  }
 }
 
 char *
@@ -70,7 +74,9 @@ Quoter_Stock_i::set_price (CORBA::Double new_price)
 {
   this->data_.price = new_price;
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
+  {
     return;
+  }
 
   // Create the event
   RtecEventComm::EventSet event (1);

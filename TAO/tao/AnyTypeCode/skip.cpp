@@ -98,7 +98,9 @@ TAO_Marshal_Any::skip (CORBA::TypeCode_ptr, TAO_InputCDR *stream)
 
   // Status of encode operation.
   if (!(*stream >> elem_tc.inout ()))
+  {
     return TAO::TRAVERSE_STOP;
+  }
 
   return TAO_Marshal_Object::perform_skip (elem_tc.in (), stream);
 }
@@ -170,7 +172,9 @@ TAO_Marshal_TypeCode::skip (CORBA::TypeCode_ptr, TAO_InputCDR *stream)
                 // get the encapsulation length
                 continue_skipping = stream->read_ulong (length);
                 if (!continue_skipping)
+                {
                   break;
+                }
                 // skip the encapsulation
                 continue_skipping = stream->skip_bytes (length);
               }
@@ -259,7 +263,9 @@ TAO_Marshal_ObjRef::skip (CORBA::TypeCode_ptr, TAO_InputCDR *stream)
         // get the profile ID tag
         continue_skipping = stream->read_ulong (tag);
         if (!continue_skipping)
+        {
           continue;
+        }
 
         CORBA::ULong encap_len {};
         // ProfileData is encoded as a sequence of octet. So first get
@@ -268,7 +274,9 @@ TAO_Marshal_ObjRef::skip (CORBA::TypeCode_ptr, TAO_InputCDR *stream)
         // buffer, and skip the encapsulation.
         continue_skipping = stream->read_ulong (encap_len);
         if (!continue_skipping)
+        {
           continue;
+        }
 
         continue_skipping = stream->skip_bytes (encap_len);
       }
@@ -306,7 +314,9 @@ TAO_Marshal_Struct::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *stream)
     }
 
   if (retval == TAO::TRAVERSE_CONTINUE)
+  {
     return TAO::TRAVERSE_CONTINUE;
+  }
 
   if (TAO_debug_level > 0)
     TAOLIB_DEBUG ((LM_DEBUG,
@@ -339,56 +349,72 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *src)
     case CORBA::tk_short:
       {
         if (!src->read_short (short_v))
+        {
           return TAO::TRAVERSE_STOP;
+        }
       }
       break;
 
     case CORBA::tk_ushort:
       {
         if (!src->read_ushort (ushort_v))
+        {
           return TAO::TRAVERSE_STOP;
+        }
       }
       break;
 
     case CORBA::tk_long:
       {
         if (!src->read_long (long_v))
+        {
           return TAO::TRAVERSE_STOP;
+        }
       }
       break;
 
     case CORBA::tk_ulong:
       {
         if (!src->read_ulong (ulong_v))
+        {
           return TAO::TRAVERSE_STOP;
+        }
       }
       break;
 
     case CORBA::tk_enum:
       {
         if (!src->read_ulong (enum_v))
+        {
           return TAO::TRAVERSE_STOP;
+        }
       }
       break;
 
     case CORBA::tk_char:
       {
         if (!src->read_char (char_v))
+        {
           return TAO::TRAVERSE_STOP;
+        }
       }
       break;
 
     case CORBA::tk_wchar:
       {
         if (!src->read_wchar (wchar_v))
+        {
           return TAO::TRAVERSE_STOP;
+        }
       }
       break;
 
     case CORBA::tk_boolean:
       {
         if (!src->read_boolean (boolean_v))
+        {
           return TAO::TRAVERSE_STOP;
+        }
       }
       break;
 
@@ -417,7 +443,9 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *src)
             tc->default_index ();
 
           if (i != default_index)
+          {
             throw ::CORBA::BAD_TYPECODE ();
+          }
           // Found the default branch, save its position and continue
           // trying to find the current value...
           default_member = i;
@@ -430,7 +458,9 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *src)
           {
             CORBA::Short d {};
             if ((any >>= d) && d == short_v)
+            {
               current_member = i;
+            }
           }
           break;
 
@@ -438,7 +468,9 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *src)
           {
             CORBA::UShort d {};
             if ((any >>= d) && d == ushort_v)
+            {
               current_member = i;
+            }
           }
           break;
 
@@ -446,7 +478,9 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *src)
           {
             CORBA::Long d {};
             if ((any >>= d) && d == long_v)
+            {
               current_member = i;
+            }
           }
           break;
 
@@ -454,7 +488,9 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *src)
           {
             CORBA::ULong d {};
             if ((any >>= d) && d == ulong_v)
+            {
               current_member = i;
+            }
           }
           break;
 
@@ -469,7 +505,9 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *src)
                   dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
                 if (!unk)
+                {
                   throw ::CORBA::INTERNAL ();
+                }
 
                 // We don't want unk's rd_ptr to move, in case
                 // we are shared by another Any, so we use this
@@ -497,7 +535,9 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *src)
           {
             CORBA::Char d {};
             if ((any >>= CORBA::Any::to_char (d)) && d == char_v)
+            {
               current_member = i;
+            }
           }
           break;
 
@@ -505,7 +545,9 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *src)
           {
             CORBA::WChar d {};
             if ((any >>= CORBA::Any::to_wchar (d)) && d == wchar_v)
+            {
               current_member = i;
+            }
           }
           break;
 
@@ -513,7 +555,9 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *src)
           {
             CORBA::Boolean d {};
             if ((any >>= CORBA::Any::to_boolean (d)) && d == boolean_v)
+            {
               current_member = i;
+            }
           }
           break;
 
@@ -593,7 +637,9 @@ TAO_Marshal_Sequence::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
 
   // No point decoding an empty sequence.
   if (bounds == 0)
+  {
     return TAO::TRAVERSE_CONTINUE;
+  }
 
   // Get element typecode.
   CORBA::TypeCode_var const tc2 =
@@ -660,7 +706,9 @@ TAO_Marshal_Sequence::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
     }// end of switch
 
   if (continue_skipping)
+  {
     return TAO::TRAVERSE_CONTINUE;
+  }
 
   // error exit
   if (TAO_debug_level > 0)
@@ -739,13 +787,17 @@ TAO_Marshal_Array::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
           int const stop =
             TAO_Marshal_Object::perform_skip (tc2.in (), stream);
           if (stop == TAO::TRAVERSE_STOP)
+          {
             continue_skipping = false;
+          }
         }
       break;
     }// end of switch
 
   if (continue_skipping)
+  {
     return TAO::TRAVERSE_CONTINUE;
+  }
 
   // error exit
   if (TAO_debug_level > 0)
@@ -773,7 +825,9 @@ TAO_Marshal_Alias::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *stream)
   //  tc2->_decr_refcnt ();
   if (retval == TAO::TRAVERSE_CONTINUE
       && continue_skipping)
+  {
     return TAO::TRAVERSE_CONTINUE;
+  }
 
   if (TAO_debug_level > 0)
     TAOLIB_DEBUG ((LM_DEBUG,
@@ -798,7 +852,9 @@ TAO_Marshal_Except::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
 
   // skip the Repository ID
   if (!stream->skip_string ())
+  {
     return TAO::TRAVERSE_STOP;
+  }
 
   // Number of fields in the exception
   CORBA::ULong const member_count =
@@ -814,7 +870,9 @@ TAO_Marshal_Except::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
     }
 
   if (retval == TAO::TRAVERSE_CONTINUE)
+  {
     return TAO::TRAVERSE_CONTINUE;
+  }
 
   if (TAO_debug_level > 0)
     TAOLIB_DEBUG ((LM_DEBUG,
@@ -842,7 +900,9 @@ TAO_Marshal_WString::skip (CORBA::TypeCode_ptr, TAO_InputCDR *stream)
   continue_skipping = stream->skip_wstring ();
 
   if (continue_skipping)
+  {
     return TAO::TRAVERSE_CONTINUE;
+  }
 
   if (TAO_debug_level > 0)
     TAOLIB_DEBUG ((LM_DEBUG,
@@ -921,12 +981,16 @@ TAO_Marshal_Value::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
           while (chunk_tag != -1)
             {
               if (!stream->read_long (chunk_tag))
+              {
                 return TAO::TRAVERSE_STOP;
+              }
 
               if (chunk_tag > 0)
                 {
                   if (!stream->skip_bytes(chunk_tag))
+                  {
                     return TAO::TRAVERSE_STOP;
+                  }
                 }
             }
           return TAO::TRAVERSE_CONTINUE;
@@ -968,7 +1032,9 @@ TAO_Marshal_Value::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
     }
 
   if (retval == TAO::TRAVERSE_CONTINUE)
+  {
     return TAO::TRAVERSE_CONTINUE;
+  }
 
   if (TAO_debug_level > 0)
     TAOLIB_DEBUG ((LM_DEBUG,

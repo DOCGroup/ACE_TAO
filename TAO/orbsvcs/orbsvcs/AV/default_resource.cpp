@@ -70,7 +70,9 @@ TAO_AV_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                                   argv[curarg]));
                 }
               else
+              {
                 item_owner.release ();
+              }
             }
         }
       else if (ACE_OS::strcasecmp (argv[curarg],
@@ -93,7 +95,9 @@ TAO_AV_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                                   argv[curarg]));
                 }
               else
+              {
                 item_owner.release ();
+              }
             }
         }
     }

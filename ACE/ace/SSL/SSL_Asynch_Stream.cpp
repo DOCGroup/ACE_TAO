@@ -140,7 +140,9 @@ ACE_SSL_Asynch_Stream::close ()
     flags_ |= SF_DELETE_ENABLE;
 
   if (flags_ & SF_DELETE_ENABLE)
+  {
     return 0;
+  }
 
   flags_ |= SF_REQ_SHUTDOWN;
 
@@ -227,14 +229,18 @@ ACE_SSL_Asynch_Stream::open (ACE_Handler & handler,
                                handle,
                                completion_key,
                                this->proactor_) != 0)
+  {
     return -1;
+  }
 
   // Open internal output stream
   if (this->bio_ostream_.open (*this,  // real callbacks to this
                                handle,
                                completion_key,
                                this->proactor_) != 0)
+  {
     return -1;
+  }
 
   std::unique_ptr<BIO, decltype(&::BIO_free)> bio (
     ACE_SSL_make_BIO (this),
@@ -288,13 +294,17 @@ ACE_SSL_Asynch_Stream::read (ACE_Message_Block & message_block,
     return -1;
 
   if (this->flags_ & SF_REQ_SHUTDOWN)
+  {
     return -1;
+  }
 
   // only one read operation is allowed now
   // later it will be possible to make a queue
 
   if (this->ext_read_result_ != nullptr)
+  {
     return -1;
+  }
 
   // create result for future notification
   ACE_NEW_RETURN (this->ext_read_result_,
@@ -327,13 +337,17 @@ ACE_SSL_Asynch_Stream::write (ACE_Message_Block & message_block,
     return -1;
 
   if (this->flags_ & SF_REQ_SHUTDOWN)
+  {
     return -1;
+  }
 
   // only one read operation is allowed now
   // later it will be possible to make a queue
 
   if (this->ext_write_result_ != nullptr)
+  {
     return -1;
+  }
 
   // create result for future notification
   ACE_NEW_RETURN (this->ext_write_result_,
@@ -364,7 +378,9 @@ ACE_SSL_Asynch_Stream::do_SSL_state_machine ()
     return 0;
 
   if (retval < 0)
+  {
     this->flags_ |= SF_REQ_SHUTDOWN;
+  }
 
   this->do_SSL_read ();  // execute user read request
   this->do_SSL_write (); // execute user write request
@@ -449,7 +465,9 @@ ACE_SSL_Asynch_Stream::do_SSL_handshake ()
     }
 
   if (this->flags_ & SF_REQ_SHUTDOWN)
+  {
     return -1;
+  }
 
   int retval = -1;
 
@@ -652,7 +670,9 @@ ACE_SSL_Asynch_Stream::notify_close ()
 #else
   retval = close_result->post_completion (this->proactor_->implementation ());
   if (retval == 0)
+  {
     close_result_owner.release ();
+  }
 #endif
 
   if (retval == 0)
@@ -1013,7 +1033,9 @@ ACE_SSL_Asynch_Stream::handle_wakeup ()
   }
 
   if (user_handler != nullptr)
+  {
     user_handler->handle_wakeup();
+  }
 }
 
 int
@@ -1022,10 +1044,14 @@ ACE_SSL_Asynch_Stream::pending_BIO_count ()
   int ret {};
 
   if (this->bio_inp_flag_ & BF_AIO)
+  {
     ++ret;
+  }
 
   if (this->bio_out_flag_ & BF_AIO)
+  {
     ++ret;
+  }
 
   return ret;
 }

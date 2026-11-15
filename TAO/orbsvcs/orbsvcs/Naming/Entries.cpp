@@ -41,7 +41,9 @@ TAO_IntId::operator= (TAO_IntId const &rhs)
 {
   // check for self assignment.
   if (std::addressof (rhs) == this)
+  {
     return;
+  }
 
   type_ = rhs.type_;
 
@@ -89,7 +91,9 @@ TAO_ExtId::operator= (TAO_ExtId const &rhs)
 {
   // Check for self assignment.
   if (std::addressof (rhs) == this)
+  {
     return;
+  }
 
   id_ = rhs.id_;
   kind_ = rhs.kind_;

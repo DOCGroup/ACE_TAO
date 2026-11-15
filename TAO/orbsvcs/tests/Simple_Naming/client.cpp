@@ -79,7 +79,9 @@ CosNaming_Client::parse_args ()
         break;
       case 's':
         if (this->test_ == nullptr)
+        {
           this->test_ = std::make_unique<Simple_Test> (this->orbmgr_.root_poa ());
+        }
         break;
       case 'm':
         if (this->test_ == nullptr)
@@ -95,19 +97,27 @@ CosNaming_Client::parse_args ()
         break;
       case 't':
         if (this->test_ == nullptr)
+        {
           this->test_ = std::make_unique<Tree_Test> (this->orbmgr_.root_poa ());
+        }
         break;
       case 'i':
         if (this->test_ == nullptr)
+        {
           this->test_ = std::make_unique<Iterator_Test> (this->orbmgr_.root_poa ());
+        }
         break;
       case 'e':
         if (this->test_ == nullptr)
+        {
           this->test_ = std::make_unique<Exceptions_Test> (this->orbmgr_.root_poa ());
+        }
         break;
       case 'y':
         if (this->test_ == nullptr)
+        {
           this->test_ = std::make_unique<Destroy_Test> (this->orbmgr_.root_poa ());
+        }
         break;
       case 'p':
         if (this->test_ == nullptr)
@@ -148,7 +158,9 @@ CosNaming_Client::parse_args ()
       }
 
   if (this->test_ == nullptr)
+  {
     this->test_ = std::make_unique<Simple_Test> (this->orbmgr_.root_poa ());
+  }
 
   // Indicates successful parsing of command line.
   return 0;
@@ -178,7 +190,9 @@ CosNaming_Client::init (int argc, ACE_TCHAR **argv)
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
+      {
         return -1;
+      }
 
       CORBA::ORB_var const orb = this->orbmgr_.orb ();
       return this->naming_client_.init (orb.in ());
@@ -313,7 +327,9 @@ int
 MT_Test::execute (TAO_Naming_Client &root_context)
 {
   if (CORBA::is_nil (this->orb_.in ()))
+  {
     return -1;
+  }
 
   // Create data which will be used by all threads.
 
@@ -359,7 +375,9 @@ MT_Test::execute (TAO_Naming_Client &root_context)
                                size_);
 
   if (status == -1)
+  {
     return -1;
+  }
 
   status = this->wait ();
   return status;
@@ -406,7 +424,9 @@ Simple_Test::execute (TAO_Naming_Client &root_context)
         {
           CORBA::Short const id = result_object->id ();
           if (id == CosNaming_Client::OBJ1_ID)
+          {
             ACE_DEBUG ((LM_DEBUG, "Resolved name OK\n"));
+          }
         }
 
       // Unbind the object from the Naming Context.
@@ -1083,7 +1103,9 @@ Persistent_Test_End::execute (TAO_Naming_Client &root_context)
 
       // Make sure we got the same answer through both methods.
       if (obj2->_is_equivalent (obj.in ()))
+      {
         ACE_DEBUG ((LM_DEBUG, "Persistent Naming test (part 2) OK.\n"));
+      }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -1152,9 +1174,13 @@ Persistent_List_Test::execute (TAO_Naming_Client &root_context)
       while (iter->next_one (binding.out ()))
         {
           if (binding->binding_type == CosNaming::nobject)
+          {
             ++objects_found;
+          }
           if (binding->binding_type == CosNaming::ncontext)
+          {
             ++contexts_found;
+          }
         }
 
       if (objects_found != 0 && contexts_found != 1)
@@ -1208,9 +1234,13 @@ Persistent_List_Test::execute (TAO_Naming_Client &root_context)
       while (iter->next_one (binding.out ()))
         {
           if (binding->binding_type == CosNaming::nobject)
+          {
             ++objects_found;
+          }
           if (binding->binding_type == CosNaming::ncontext)
+          {
             ++contexts_found;
+          }
         }
 
       if (objects_found != 4 && contexts_found != 1)
@@ -1242,7 +1272,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   CosNaming_Client cosnaming_client;
 
   if (cosnaming_client.init (argc, argv) == -1)
+  {
     return 1;
+  }
 
   return cosnaming_client.run ();
 }

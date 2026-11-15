@@ -63,7 +63,9 @@ void Dynamic_Bitset::set(Dynamic_Bitset::size_type bit, bool val)
   size_type bit_pos = bit%BITS_PER_BLOCK;
   block mask = 1 << bit_pos;
   if (val == false)
+  {
     mask ^= static_cast<block> (-1);
+  }
   buffer_[block_pos] |= mask;
 }
 
@@ -111,20 +113,26 @@ void Dynamic_Bitset::resize(Dynamic_Bitset::size_type num_bits, bool value)
     this->bit_size_ = tmp.bit_size_;
   }
   else
+  {
     bit_size_ = num_bits;
+  }
 }
 
 bool operator == (Dynamic_Bitset const& lhs, Dynamic_Bitset const& rhs)
 {
   Dynamic_Bitset::size_type bit_size = lhs.size();
   if (bit_size != rhs.size())
+  {
     return false;
+  }
   Dynamic_Bitset::size_type block_pos = bit_size/Dynamic_Bitset::BITS_PER_BLOCK;
   Dynamic_Bitset::size_type bit_pos = bit_size%Dynamic_Bitset::BITS_PER_BLOCK;
   Dynamic_Bitset::size_type i;
   for (i = 0; i < block_pos; ++i)
     if (lhs.buffer_[i] != rhs.buffer_[i])
+    {
       return false;
+    }
   Dynamic_Bitset::block mask = static_cast<Dynamic_Bitset::block> (-1);
   mask >>= (Dynamic_Bitset::BITS_PER_BLOCK-bit_pos);
   return ((lhs.buffer_[i] ^ rhs.buffer_[i]) & mask ) == 0;

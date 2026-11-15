@@ -75,15 +75,25 @@ Literal_Type
 ETCL_Literal_Constraint::expr_type () const
 {
   if (std::holds_alternative<String_Owner> (this->op_))
+  {
     return ACE_ETCL_STRING;
+  }
   if (std::holds_alternative<ACE_CDR::ULong> (this->op_))
+  {
     return ACE_ETCL_UNSIGNED;
+  }
   if (std::holds_alternative<ACE_CDR::Long> (this->op_))
+  {
     return ACE_ETCL_SIGNED;
+  }
   if (std::holds_alternative<ACE_CDR::Boolean> (this->op_))
+  {
     return ACE_ETCL_BOOLEAN;
+  }
   if (std::holds_alternative<ACE_CDR::Double> (this->op_))
+  {
     return ACE_ETCL_DOUBLE;
+  }
   return ACE_ETCL_UNKNOWN;
 }
 
@@ -96,7 +106,9 @@ void
 ETCL_Literal_Constraint::operator= (ETCL_Literal_Constraint const &co)
 {
   if (this != std::addressof (co))
+  {
     this->op_ = ETCL_Literal_Constraint::copy_value (co.op_);
+  }
 }
 
 ETCL_Literal_Constraint::operator ACE_CDR::ULong () const
@@ -369,7 +381,9 @@ ETCL_Literal_Constraint::operator/ (ETCL_Literal_Constraint const &rhs)
     case ACE_ETCL_DOUBLE:
       {
         if (ACE::is_equal (static_cast<ACE_CDR::Double> (rhs), 0.0))
+        {
           return ETCL_Literal_Constraint (ACE_CDR::Double {});
+        }
 
         ACE_CDR::Double const result =
           static_cast<ACE_CDR::Double> (*this) / static_cast<ACE_CDR::Double> (rhs);
@@ -379,7 +393,9 @@ ETCL_Literal_Constraint::operator/ (ETCL_Literal_Constraint const &rhs)
     case ACE_ETCL_SIGNED:
       {
         if (static_cast<ACE_CDR::Long> (rhs) == 0)
+        {
           return ETCL_Literal_Constraint (ACE_CDR::Long {});
+        }
 
         ACE_CDR::Long const result =
           static_cast<ACE_CDR::Long> (*this) / static_cast<ACE_CDR::Long> (rhs);
@@ -388,7 +404,9 @@ ETCL_Literal_Constraint::operator/ (ETCL_Literal_Constraint const &rhs)
     case ACE_ETCL_UNSIGNED:
       {
         if (static_cast<ACE_CDR::ULong> (rhs) == 0)
+        {
           return ETCL_Literal_Constraint (ACE_CDR::ULong {});
+        }
 
         ACE_CDR::ULong const result =
           static_cast<ACE_CDR::ULong> (*this) / static_cast<ACE_CDR::ULong> (rhs);
@@ -441,15 +459,25 @@ ETCL_Literal_Constraint::Value
 ETCL_Literal_Constraint::copy_value (ETCL_Literal_Constraint::Value const &value)
 {
   if (String_Owner const *str = std::get_if<String_Owner> (&value))
+  {
     return String_Owner (ACE::strnew (str->get ()));
+  }
   if (ACE_CDR::ULong const *uinteger = std::get_if<ACE_CDR::ULong> (&value))
+  {
     return *uinteger;
+  }
   if (ACE_CDR::Long const *integer = std::get_if<ACE_CDR::Long> (&value))
+  {
     return *integer;
+  }
   if (ACE_CDR::Boolean const *boolean = std::get_if<ACE_CDR::Boolean> (&value))
+  {
     return *boolean;
+  }
   if (ACE_CDR::Double const *doub = std::get_if<ACE_CDR::Double> (&value))
+  {
     return *doub;
+  }
   return {};
 }
 

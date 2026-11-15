@@ -45,7 +45,9 @@ TAO_Notify_Tests_RT_POA_Command::init (ACE_Arg_Shifter& arg_shifter)
                   if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("CLIENT")) == 0)
                     priority_model_ = RTCORBA::CLIENT_PROPAGATED;
                   else
+                  {
                     priority_model_ = RTCORBA::SERVER_DECLARED;
+                  }
                   arg_shifter.consume_arg ();
 
                   server_priority_ = ACE_OS::atoi (current_arg);
@@ -89,7 +91,9 @@ TAO_Notify_Tests_RT_POA_Command::init (ACE_Arg_Shifter& arg_shifter)
                           ++l_index;
                         }
                       else
+                      {
                         break;
+                      }
                     } /* while -- lane values */
 
                   continue;
@@ -123,7 +127,9 @@ TAO_Notify_Tests_RT_POA_Command::init (ACE_Arg_Shifter& arg_shifter)
                           ++b_index;
                         }
                       else
+                      {
                         break;
+                      }
                     } /* while -- Band values */
 
                   continue;
@@ -345,7 +351,9 @@ TAO_Notify_Tests_RT_POA_Command::create (RTCORBA::RTORB_ptr rt_orb, PortableServ
   poa_policy_list[act_index] = activation_policy;
 
   if (TAO_debug_level > 0)
+  {
     ACE_DEBUG ((LM_DEBUG, "creating POA %C\n", POA_name_.c_str ()));
+  }
 
   // Get the POA Manager.
   PortableServer::POAManager_var const poa_manager =

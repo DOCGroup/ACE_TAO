@@ -22,7 +22,9 @@ TAO_FT_Random::next_location (
 
   // No locations exist, so we can't get the next one
   if (len == 0)
+  {
     return false;
+  }
 
   CORBA::ULong i {};
   if (len > 1)

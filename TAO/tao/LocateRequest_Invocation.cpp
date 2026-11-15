@@ -118,7 +118,9 @@ namespace TAO
       this->init_target_spec (tspec, cdr);
 
       if (transport->generate_locate_request (tspec, this->details_, cdr) == -1)
+      {
         return TAO_INVOKE_FAILURE;
+      }
 
       countdown.update ();
 
@@ -126,7 +128,9 @@ namespace TAO
     }
 
     if (s != TAO_INVOKE_SUCCESS)
+    {
       return s;
+    }
 
     countdown.update ();
 
@@ -134,7 +138,9 @@ namespace TAO
     // back to cache. If the idling is successful let the
     // resolver about that.
     if (this->resolver_.transport ()->idle_after_send ())
+    {
       this->resolver_.transport_released ();
+    }
 
     s = this->wait_for_reply (max_wait_time, *rd.get (), dispatch_guard);
 
@@ -144,7 +150,9 @@ namespace TAO
     // back to  cache after receiving the reply. If the idling is
     // successful let the resolver about that.
     if (this->resolver_.transport ()->idle_after_reply ())
+    {
       this->resolver_.transport_released ();
+    }
 
     return s;
   }

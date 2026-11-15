@@ -29,7 +29,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // Create a local endpoint of communication.
   if ((s_handle = ACE_OS::socket (PF_INET, SOCK_STREAM, 0)) == ACE_INVALID_HANDLE)
+  {
     ACE_OS::perror (ACE_TEXT("socket")), ACE_OS::exit (1);
+  }
 
   // If a sockbufsize was specified, set it for both send and receive.
   if (sockbufsize > 0)
@@ -37,16 +39,22 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (ACE_OS::setsockopt (s_handle, SOL_SOCKET, SO_SNDBUF,
                               (const char *) &sockbufsize,
                               sizeof (sockbufsize)) != 0)
+      {
         ACE_OS::perror (ACE_TEXT("SO_SNDBUF")), ACE_OS::exit (1);
+      }
       if (ACE_OS::setsockopt (s_handle, SOL_SOCKET, SO_RCVBUF,
                               (const char *) &sockbufsize,
                               sizeof (sockbufsize)) != 0)
+      {
         ACE_OS::perror (ACE_TEXT("SO_RCVBUF")), ACE_OS::exit (1);
+      }
     }
 
   // Determine IP address of the server.
   if ((hp = ACE_OS::gethostbyname (ACE_TEXT_ALWAYS_CHAR(host))) == nullptr)
+  {
     ACE_OS::perror (ACE_TEXT("gethostbyname")), ACE_OS::exit (1);
+  }
 
   // Set up the address information to contact the server.
   std::memset (&saddr, 0, sizeof saddr);
@@ -58,7 +66,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (ACE_OS::connect (s_handle,
                        reinterpret_cast<sockaddr *> (&saddr),
                        sizeof saddr) == -1)
+  {
     ACE_OS::perror (ACE_TEXT("connect")), ACE_OS::exit (1);
+  }
 
   // Send data to server (correctly handles "incomplete writes" due to
   // flow control).
@@ -67,14 +77,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     for (w_bytes = 0; w_bytes < r_bytes; w_bytes += n)
       if ((n = ACE_OS::send (s_handle, buf + w_bytes,
                       r_bytes - w_bytes)) < 0)
+      {
         ACE_OS::perror (ACE_TEXT("write")), ACE_OS::exit (1);
+      }
 
   if (ACE_OS::recv (s_handle, buf, 1) == 1)
+  {
     ACE_OS::write (ACE_STDOUT, buf, 1);
+  }
 
   // Explicitly close the connection.
   if (ACE_OS::closesocket (s_handle) == -1)
+  {
     ACE_OS::perror (ACE_TEXT("close")), ACE_OS::exit (1);
+  }
 
   return 0;
 }

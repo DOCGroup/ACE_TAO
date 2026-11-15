@@ -26,7 +26,9 @@ sequence_type (CORBA::TypeCode* type_code)
               base = base->content_type ();
             }
           else
+          {
             break;
+          }
         }
 
       CORBA::TCKind base_kind = base->kind ();

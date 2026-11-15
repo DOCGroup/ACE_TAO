@@ -59,7 +59,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       if (parse_args (argc, argv, ior_output_file) != 0)
+      {
         return 1;
+      }
 
       Test_interfaceOne_i *ifo_impl {};
       ACE_NEW_RETURN (ifo_impl, Test_interfaceOne_i, 1);

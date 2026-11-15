@@ -213,10 +213,14 @@ Client::run ()
   for (int j {}; j != 100; ++j)
     {
       if (this->send (sbuf.data (), bufsz) <= 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "(%P) %p\n", "send"), -1);
+      }
 
       if (this->get_response (rbuf.data (), bufsz) <= 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "(%P) %p\n", "get_response"), -1);
+      }
     }
 
   ACE_Sample_History history (nsamples);
@@ -232,10 +236,14 @@ Client::run ()
 
       ACE_hrtime_t const start {ACE_OS::gethrtime ()};
       if (this->send (sbuf.data (), bufsz) <= 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "(%P) %p\n", "send"), -1);
+      }
 
       if ((this->get_response (rbuf.data (), bufsz)) <= 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "(%P) %p\n", "get_response"), -1);
+      }
 
       ACE_hrtime_t const end {ACE_OS::gethrtime ()};
 
@@ -317,7 +325,9 @@ Server::Server (ACE_INET_Addr const &addr)
   ACE_SOCK_Acceptor acceptor;
 
   if (acceptor.open (addr, 1) == -1)
+  {
     ACE_DEBUG ((LM_DEBUG, "%p\n", "open"));
+  }
 
   ACE_DEBUG ((LM_DEBUG, "Listening on %s:%d\n",
               addr.get_host_name (),

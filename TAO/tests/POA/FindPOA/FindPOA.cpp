@@ -37,7 +37,9 @@ find_non_existant_POA (PortableServer::POA_ptr parent,
   if (!expected_exception_raised)
     ACE_ERROR ((LM_ERROR, "ERROR: Caught incorrect exception\n"));
   else
+  {
     ACE_DEBUG ((LM_DEBUG, "Caught correct exception\n"));
+  }
 }
 
 int

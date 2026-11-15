@@ -43,7 +43,9 @@ IOGR_Maker::merge_iors (TAO_IOP::TAO_IOR_Manipulation::IORList const &list)
   if (list.length() != 1)
     obj = iorm_->merge_iors(list);
   else
+  {
     obj = CORBA::Object::_duplicate(list[0]);
+  }
   return obj._retn();
 }
 
@@ -82,7 +84,9 @@ IOGR_Maker::forge_iogr(CORBA::Object_ptr obj)
     CORBA::Object_var new_base = ior_replace_key(successor.in(), newkey.in());
 
     if (CORBA::is_nil( new_base.in() ))
+    {
       return CORBA::Object::_nil();
+    }
 
     TAO_MProfile& base_profiles = new_base->_stubobj ()->base_profiles ();
 
@@ -109,7 +113,9 @@ IOGR_Maker::forge_iogr(CORBA::Object_ptr obj)
       iorm_->add_profiles(obj, temp_obj);
   }
   else
+  {
     merged = CORBA::Object::_duplicate(obj);
+  }
 
   set_tag_components(merged.in(), obj, ft_tag_component_);
 
@@ -122,7 +128,9 @@ IOGR_Maker::ior_replace_key(CORBA::Object_ptr obj,
 {
     TAO_OutputCDR out_cdr;
     if (!(out_cdr << obj))
+    {
       return CORBA::Object::_nil();
+    }
 
     ACE_Message_Block mb;
 
@@ -136,7 +144,9 @@ IOGR_Maker::ior_replace_key(CORBA::Object_ptr obj,
     CORBA::Object_var new_obj;
     TAO_InputCDR in_cdr(&mb);
     if (!(in_cdr >> new_obj))
+    {
       return CORBA::Object::_nil();
+    }
     return new_obj._retn();
 }
 
@@ -168,7 +178,9 @@ IOGR_Maker::copy_ft_group_component(CORBA::Object_ptr ior)
           CORBA::Boolean byte_order;
 
           if (!(cdr >> ACE_InputCDR::to_boolean (byte_order)))
+          {
             return false;
+          }
 
           cdr.reset_byte_order (static_cast<int> (byte_order));
 
