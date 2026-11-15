@@ -65,7 +65,7 @@ Reference_Counted_Event_Handler::Reference_Counted_Event_Handler (int expected_n
 
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                "Reference count in Reference_Counted_Event_Handler() is %d\n",
+                "Reference count in Reference_Counted_Event_Handler() is %ld\n",
                 this->reference_count_.load ()));
 }
 
@@ -73,7 +73,7 @@ Reference_Counted_Event_Handler::~Reference_Counted_Event_Handler ()
 {
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                "Reference count in ~Reference_Counted_Event_Handler() is %d\n",
+                "Reference count in ~Reference_Counted_Event_Handler() is %ld\n",
                 this->reference_count_.load ()));
 
   if (this->expected_number_of_handle_close_calls_ != -1)
@@ -87,7 +87,7 @@ Reference_Counted_Event_Handler::handle_timeout (const ACE_Time_Value &,
 {
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                "Reference count in Reference_Counted_Event_Handler::handle_timeout() for arg = %C is %d\n",
+                "Reference count in Reference_Counted_Event_Handler::handle_timeout() for arg = %C is %ld\n",
                 (const char *) arg,
                 this->reference_count_.load ()));
 
@@ -100,9 +100,9 @@ Reference_Counted_Event_Handler::handle_close (ACE_HANDLE handle,
 {
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                "Reference_Counted_Event_Handler::handle_close() called with handle = %d and masks = %d. "
-                "Reference count is %d\n",
-                handle,
+                "Reference_Counted_Event_Handler::handle_close() called with handle = %@ and masks = %d. "
+                "Reference count is %ld\n",
+                reinterpret_cast<void *> (handle),
                 masks,
                 this->reference_count_.load ()));
 
@@ -391,8 +391,8 @@ Simple_Event_Handler::handle_close (ACE_HANDLE handle,
 {
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                "Simple_Event_Handler::handle_close() called with handle = %d and masks = %d.\n",
-                handle,
+                "Simple_Event_Handler::handle_close() called with handle = %@ and masks = %d.\n",
+                reinterpret_cast<void *> (handle),
                 masks));
 
   delete this;
