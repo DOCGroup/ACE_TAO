@@ -15,6 +15,7 @@
 
 #include "tao/Argument.h"
 
+#include <memory>
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -66,12 +67,20 @@ namespace TAO
   {
   public:
     In_Object_Clonable_Argument_T (S_ptr x);
-    ~In_Object_Clonable_Argument_T () override;
+    ~In_Object_Clonable_Argument_T () override = default;
 
     Argument* clone () override;
 
   private:
-    bool is_clone_ {};
+    struct Object_Reference_Deleter
+    {
+      void operator() (void *objref) const
+      {
+        In_Object_Argument_Cloner_T<S_ptr>::release (static_cast<S_ptr> (objref));
+      }
+    };
+
+    std::unique_ptr<void, Object_Reference_Deleter> cloned_reference_;
   };
 
   /**
