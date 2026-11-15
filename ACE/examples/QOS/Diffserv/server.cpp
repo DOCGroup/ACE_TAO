@@ -8,7 +8,6 @@
 //=============================================================================
 
 #include "ace/Reactor.h"
-#include "ace/Process.h"
 #include "ace/SOCK_Dgram.h"
 #include "ace/INET_Addr.h"
 #include "ace/Log_Msg.h"
@@ -28,29 +27,14 @@ public:
   /// @{
   ACE_HANDLE get_handle () const override;
   int handle_input (ACE_HANDLE handle) override;
-  int handle_timeout (ACE_Time_Value const &tv,
-                      void const *arg = nullptr) override;
   int handle_close (ACE_HANDLE handle,
                     ACE_Reactor_Mask close_mask) override;
   /// @}
-
-  //FUZZ: disable check_for_lack_ACE_OS
-  /// Send a datagram to the peer.
-  int send (char const *buf, size_t len, ACE_INET_Addr const &);
-  //FUZZ: enable check_for_lack_ACE_OS
 
 private:
   /// Datagram endpoint used for sending and receiving.
   ACE_SOCK_Dgram endpoint_;
 };
-
-int
-Dgram_Endpoint::send (char const *buf,
-                      size_t len,
-                      ACE_INET_Addr const &addr)
-{
-  return this->endpoint_.send (buf, len, addr);
-}
 
 Dgram_Endpoint::Dgram_Endpoint (ACE_INET_Addr const &local_addr)
   : endpoint_ (local_addr)
@@ -67,6 +51,7 @@ int
 Dgram_Endpoint::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
   this->endpoint_.close ();
+  // The registered handler's lifetime is transferred to this close callback.
   delete this;
   return 0;
 }
@@ -74,7 +59,7 @@ Dgram_Endpoint::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 int
 Dgram_Endpoint::handle_input (ACE_HANDLE)
 {
-  char buf[BUFSIZ + 1];
+  char buf[BUFSIZ + 1] {};
   ACE_INET_Addr from_addr;
 
   ssize_t const n = this->endpoint_.recv (buf, sizeof buf - 1, from_addr);
@@ -91,15 +76,6 @@ Dgram_Endpoint::handle_input (ACE_HANDLE)
                   n,
                   buf));
     }
-  return 0;
-}
-
-int
-Dgram_Endpoint::handle_timeout (ACE_Time_Value const &,
-                                void const *)
-{
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) timed out for endpoint\n"));
   return 0;
 }
 
@@ -124,6 +100,7 @@ run_test (u_short localport)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_Reactor::register_handler"),
                       -1);
+  // After registration, handle_close is responsible for deleting the handler.
   endpoint.release ();
 
   while (true)

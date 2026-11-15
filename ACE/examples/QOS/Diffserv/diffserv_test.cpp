@@ -106,16 +106,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       for (int j = 0; j < 3; ++j)
         {
-          int const ret2 = sock.send (buf, std::strlen (buf));
+          ssize_t const ret2 = sock.send (buf, std::strlen (buf));
           if (ret2 == -1)
             ACE_DEBUG ((LM_DEBUG, "send error: %m\n"));
 
-          ACE_OS::printf ("opt: %d dscp: %d, %s, setsockopt returned: %d, send returned: %d\n",
+          ACE_OS::printf ("opt: %d dscp: %d, %s, setsockopt returned: %d, send returned: %lld\n",
                           opt,
                           codepoint.value,
                           codepoint.name,
                           ret,
-                          ret2);
+                          static_cast<long long> (ret2));
           ACE_OS::sleep (1);
         }
     }
