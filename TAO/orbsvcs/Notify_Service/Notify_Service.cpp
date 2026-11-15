@@ -472,7 +472,7 @@ TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR * argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
-  ACE_TCHAR const * current_arg = nullptr;
+  ACE_TCHAR const * current_arg {};
   while (arg_shifter.is_anything_left ())
     {
       if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Factory"))) != nullptr)

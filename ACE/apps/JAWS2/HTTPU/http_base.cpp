@@ -191,7 +191,7 @@ HTTP_Base::payload_size ()
 int
 HTTP_Base::build_headers (JAWS_Headers *new_headers)
 {
-  JAWS_Header_Data *data = nullptr;
+  JAWS_Header_Data *data {};
   JAWS_Header_Data *data2 {};
   JAWS_Header_Table_Iterator iter (*new_headers);
 

@@ -327,7 +327,7 @@ ACE_Blob_Writer::receive_reply ()
   buf [num_recvd] = 0;
 
   // Parse the header
-  char *lasts = nullptr;
+  char *lasts {};
 
   // First check if this was a valid header -- HTTP/1.0
   char *token = ACE_OS::strtok_r (buf, " \t", &lasts);

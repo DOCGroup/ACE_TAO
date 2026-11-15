@@ -12,7 +12,7 @@ ObjectReferenceFactory::ObjectReferenceFactory (
 ::CORBA::ValueBase *
 ObjectReferenceFactory::_copy_value ()
 {
-  ::CORBA::ValueBase *ret_val = nullptr;
+  ::CORBA::ValueBase *ret_val {};
   ACE_NEW_THROW_EX (
     ret_val,
     ObjectReferenceFactory (old_orf_.inout ()),
