@@ -1,18 +1,11 @@
-
-//=============================================================================
 /**
- *  @file    client.cpp
- *
- *   This implements a simple CORBA client for the
- *   corbaloc: style IOR parser
- *
- *  @author  Priyanka Gontla <pgontla@ece.uci.edu>
+ * @file client.cpp
+ * @author Priyanka Gontla <pgontla@ece.uci.edu>
  */
-//=============================================================================
 
 #include "ior_corbaloc_client_i.h"
 
-int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -33,5 +26,5 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
     {
       ex._tao_print_exception ("client");
       return 1;
-  }
+    }
 }

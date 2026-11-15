@@ -1,16 +1,9 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
- *  @file    ior_corbaloc_client_i.h
- *
- *  This class implements a simple client which sends a corbaloc:
- *  style url to the server and gets a response from the
- *  server to indicate that the server has received the request.
- *
- *  @author Priyanka Gontla <pgontla@ece.uci.edu>
+ * @file ior_corbaloc_client_i.h
+ * @author Priyanka Gontla <pgontla@ece.uci.edu>
  */
-//=============================================================================
 
 #if !defined (IOR_CORBALOC_CLIENT_I_H)
 #define IOR_CORBALOC_CLIENT_I_H
@@ -20,15 +13,10 @@
 
 #include <string>
 
-/**
- * @class IOR_corbaloc_Client_i
- *
- * @brief NContextExt Client Implementation
- */
+/// Sends a corbaloc URL request and checks the server's response.
 class IOR_corbaloc_Client_i
 {
  public:
-  // = Constructor and destructor.
   IOR_corbaloc_Client_i () = default;
   ~IOR_corbaloc_Client_i () = default;
 
@@ -41,13 +29,13 @@ class IOR_corbaloc_Client_i
   int run ();
 
   /// Initialize the client communication endpoint with the server.
-  int init (int& argc, ACE_TCHAR *argv[]);
+  int init (int &argc, ACE_TCHAR *argv[]);
 
  private:
-  /// corbaloc url to test
+  /// Corbaloc URL to test.
   std::basic_string<ACE_TCHAR> corbaloc_url_;
 
-  /// Naming context
+  /// Naming context used to resolve the test object.
   CosNaming::NamingContextExt_var naming_context_ {};
 };
 
