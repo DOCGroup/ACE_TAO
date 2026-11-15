@@ -101,7 +101,7 @@ Test_Aio::init ()
 int
 Test_Aio::do_aio ()
 {
-  // = Write to the file.
+  // Write to the file.
 
   // Setup AIOCB.
   this->aiocb_write_->aio_fildes = this->out_fd_;
@@ -121,7 +121,7 @@ Test_Aio::do_aio ()
       return -1;
     }
 
-  // = Read from that file.
+  // Read from that file.
 
   // Setup AIOCB.
   this->aiocb_read_->aio_fildes = this->out_fd_;

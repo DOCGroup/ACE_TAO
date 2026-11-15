@@ -53,7 +53,7 @@ static int setup_signal_handler (int signal_number);
 static int
 setup_signal_delivery ()
 {
-  // = Mask all the signals.
+  // Mask all the signals.
 
   sigset_t full_set;
 
@@ -71,7 +71,7 @@ setup_signal_delivery ()
                        "pthread_sigmask failed"),
                       -1);
 
-  // = Make a mask with SIGRTMIN only. We use only that signal to
+  // Make a mask with SIGRTMIN only. We use only that signal to
   //   issue <aio_>'s.
 
   if (ACE_OS::sigemptyset (&completion_signal) == -1)

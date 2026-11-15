@@ -169,13 +169,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_DEBUG ((LM_DEBUG,
               "(%P | %t):Test starts\n"));
 
-  // = Get two POSIX_SIG_Proactors, one with SIGRTMIN and one with
+  // Get two POSIX_SIG_Proactors, one with SIGRTMIN and one with
   //   SIGRTMAX.
 
   ACE_Proactor  proactor1;
   // Proactor1. SIGRTMIN Proactor. (default).
 
-  // = Proactor2. SIGRTMAX Proactor.
+  // Proactor2 uses SIGRTMAX.
 #if defined (ACE_HAS_AIO_CALLS) && defined (ACE_HAS_POSIX_REALTIME_SIGNALS)
 
   ACE_DEBUG ((LM_DEBUG, "Using ACE_POSIX_SIG_Proactor\n"));
@@ -205,7 +205,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_Proactor proactor2;
 #endif /* ACE_HAS_AIO_CALLS && ACE_HAS_POSIX_REALTIME_SIGNALS */
 
-  // = Create Tasks. One pool of threads to handle completions on
+  // Create tasks. One pool of threads to handle completions on
   //   SIGRTMIN and the other one to handle completions on SIGRTMAX.
   My_Task task1, task2;
   task1.open (&proactor1);
@@ -214,7 +214,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Handler for completions.
   My_Handler handler;
 
-  // = Create a few MyResult objects and post them to Proactor.
+  // Create a few MyResult objects and post them to Proactor.
   const size_t NrCompletions (10);
   My_Result *result_objects [NrCompletions];
   int signal_number = ACE_SIGRTMAX;
