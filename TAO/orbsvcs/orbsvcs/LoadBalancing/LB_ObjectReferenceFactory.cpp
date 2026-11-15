@@ -182,7 +182,12 @@ TAO_LB_ObjectReferenceFactory::find_object_group (
                                       criteria,
                                       fcid.out ());
 
-          this->fcids_.push_back (fcid);
+          fcid_list::size_type const next_fcid_index = this->fcids_.size ();
+          if (this->fcids_.size (next_fcid_index + 1) == -1)
+            {
+              throw CORBA::NO_MEMORY ();
+            }
+          this->fcids_[next_fcid_index] = fcid;
         }
       else
         {

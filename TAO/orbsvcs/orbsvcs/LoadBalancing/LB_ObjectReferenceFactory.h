@@ -26,6 +26,7 @@
 
 #include "orbsvcs/CosLoadBalancingC.h"
 
+#include "ace/Array_Base.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Null_Mutex.h"
 #include "ace/SString.h"
@@ -79,7 +80,7 @@ class TAO_LB_ObjectReferenceFactory
     ACE_Equal_To<ACE_CString>,
     ACE_Null_Mutex>;
 
-  using fcid_list = std::vector<
+  using fcid_list = ACE_Array_Base<
     PortableGroup::GenericFactory::FactoryCreationId_var>;
 
   TAO_LB_ObjectReferenceFactory (TAO_LB_ObjectReferenceFactory const &) = delete;

@@ -217,11 +217,11 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
           iovec iovp[iovcnt];
 
           // The length of service name string.
-          iovp[0].iov_base = std::addressof (data_len);
+          iovp[0].iov_base = reinterpret_cast<char *> (std::addressof (data_len));
           iovp[0].iov_len  = sizeof (CORBA::Short);
 
           // The port at which we are listening.
-          iovp[1].iov_base = std::addressof (response_port);
+          iovp[1].iov_base = reinterpret_cast<char *> (std::addressof (response_port));
           iovp[1].iov_len  = sizeof (ACE_UINT16);
 
           // The service name string.
