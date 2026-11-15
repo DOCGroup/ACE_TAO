@@ -13,6 +13,8 @@
 #include "ace/Service_Object.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/High_Res_Timer.h"
+#include <string>
+#include <vector>
 
 class Thread_Task;
 class Task;
@@ -63,7 +65,7 @@ class RTSCHEDTESTLIB_Export DT_Creator : public ACE_Service_Object
 
   void check_ifexit ();
 
-  void log_msg (char* msg);
+  void log_msg (std::string msg);
 
   void orb (CORBA::ORB_ptr);
   CORBA::ORB_ptr orb ();
@@ -95,7 +97,7 @@ class RTSCHEDTESTLIB_Export DT_Creator : public ACE_Service_Object
   ACE_Lock* shutdown_lock_;
   int active_dt_count_;
   int active_job_count_;
-  char** log;
+  std::vector<std::string> log_ {};
   ACE_Time_Value* base_time_;
   /// A naming context.
   CosNaming::NamingContextExt_var naming_;

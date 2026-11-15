@@ -5,6 +5,7 @@
 
 #include "tao/ORB_Core.h"
 #include <atomic>
+#include <utility>
 
 #include "tao/RTScheduling/Current.h"
 
@@ -65,8 +66,6 @@ DT_Creator::dt_task_init (ACE_Arg_Shifter& arg_shifter)
   return 0;
 }
 
-int log_index = 0;
-
 int
 DT_Creator::init (int argc, ACE_TCHAR *argv [])
 {
@@ -75,8 +74,7 @@ DT_Creator::init (int argc, ACE_TCHAR *argv [])
   shutdown_lock_ = new ACE_Lock_Adapter <TAO_SYNCH_MUTEX>;
   active_dt_count_ = 0;
   active_job_count_ = 0;
-  ACE_NEW_RETURN (log, char*[BUFSIZ * 100],-1);
-
+  this->log_.clear ();
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
   ACE_TCHAR const *current_arg {};
@@ -457,7 +455,7 @@ DT_Creator::create_distributable_threads (RTScheduling::Current_ptr current)
            (int) now.sec (),
            (int) base_time_->sec());
 
-      log [log_index++] = ACE_OS::strdup (buf) ;
+      this->log_msg (buf);
 
       ACE_hthread_t curr_thr;
       ACE_Thread::self (curr_thr);
@@ -468,7 +466,7 @@ DT_Creator::create_distributable_threads (RTScheduling::Current_ptr current)
           time_t suspension_time = dt_list_[i]->start_time () - elapsed_time.sec ();
           ACE_OS::sprintf (buf, "suspension_time = %lu\n",
                            static_cast<unsigned long> (suspension_time));
-          log [log_index++] = ACE_OS::strdup (buf);
+          this->log_msg (buf);
           yield (suspension_time, dt_list_[i]);
         }
 
@@ -498,7 +496,7 @@ DT_Creator::dt_ended ()
       ACE_DEBUG ((LM_DEBUG, "Active dt count = %d\n",active_dt_count_));
     char buf [BUFSIZ];
     ACE_OS::sprintf (buf,"Active dt count = %d\n",active_dt_count_);
-    log [log_index++] = ACE_OS::strdup (buf);
+    this->log_.emplace_back (buf);
   }
   this->check_ifexit ();
 }
@@ -513,7 +511,7 @@ DT_Creator::job_ended ()
       ACE_DEBUG ((LM_DEBUG, "Active job count = %d\n",active_job_count_));
     char buf [BUFSIZ];
     ACE_OS::sprintf (buf,"Active job count = %d\n",active_job_count_);
-    log [log_index++] = ACE_OS::strdup (buf);
+    this->log_.emplace_back (buf);
   }
 
  this->check_ifexit ();
@@ -560,15 +558,16 @@ DT_Creator::check_ifexit ()
 
       if (log_file != 0)
         {
-    // first dump what the caller has to say.
-    ACE_OS::fprintf (log_file, "Log File\n");
+          // First dump what the caller has to say.
+          ACE_OS::fprintf (log_file, "Log File\n");
 
-    for (int i = 0; i < log_index; i++)
-      {
-        ACE_OS::fprintf (log_file, "%s\n", log [i]);
-      }
+          {
+            ACE_GUARD (ACE_Lock, ace_mon, *state_lock_);
+            for (std::string const & message : this->log_)
+              ACE_OS::fprintf (log_file, "%s\n", message.c_str ());
+          }
 
-    ACE_OS::fclose (log_file);
+          ACE_OS::fclose (log_file);
         }
       ACE_DEBUG ((LM_DEBUG,
       "Log File Ready\n"));
@@ -594,7 +593,6 @@ DT_Creator::DT_Creator ()
    shutdown_lock_ (0),
    active_dt_count_ (0),
    active_job_count_ (0),
-   log (0),
    base_time_ (0),
    file_name_ (),
    log_file_name_ (),
@@ -605,10 +603,6 @@ DT_Creator::DT_Creator ()
 
 DT_Creator::~DT_Creator ()
 {
-  for (int i = 0; i < log_index; ++i)
-    ACE_OS::free (log[i]);
-  delete[] log;
-
   for (int i = 0; i < this->dt_count_; ++i)
     delete this->dt_list_[i];
   delete[] dt_list_;
@@ -624,9 +618,10 @@ DT_Creator::~DT_Creator ()
 }
 
 void
-DT_Creator::log_msg (char* msg)
+DT_Creator::log_msg (std::string msg)
 {
-  log [log_index++] = ACE_OS::strdup (msg);
+  ACE_GUARD (ACE_Lock, ace_mon, *state_lock_);
+  this->log_.push_back (std::move (msg));
 }
 
 CORBA::ORB_ptr
