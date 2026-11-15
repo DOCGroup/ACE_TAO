@@ -21,14 +21,10 @@
 #include <optional>
 #include <string>
 
+/// Implements the Telecom Log Service.
 class RTEvent_Logging_Service
   : public ACE_Task_Base
 {
-  // = TITLE
-  //   RTEvent_Logging_Service
-  //
-  // = DESCRIPTION
-  //   Implementation of the Telecom Log Service
 
 public:
   RTEvent_Logging_Service () = default;
@@ -40,58 +36,61 @@ public:
   RTEvent_Logging_Service &operator= (RTEvent_Logging_Service const &) = delete;
   RTEvent_Logging_Service &operator= (RTEvent_Logging_Service &&) = delete;
 
+  /// Initializes the Telecom Log Service.
   int init (int argc, ACE_TCHAR * argv[]) override;
-  // Initializes the Telecom Log Service.
 
+  /// Runs the Telecom Log Service.
+  /// @return 0 on success, -1 on error.
   int run ();
-  // Run the Telecom Log Service.
-  // Returns 0 on success, -1 on error.
 
+  /// Shuts down the Telecom Log Service.
   void shutdown ();
-  // Shutdown the Telecom Log Service.
-  // Returns 0 on success, -1 on error.
 
 protected:
+  /// Initializes the ORB.
   void init_ORB (int & argc, ACE_TCHAR * argv []);
-  // initializes the ORB.
 
+  /// Parses the command-line arguments.
   int parse_args (int argc, ACE_TCHAR * argv[]);
-  // parse the command line args
 
+  /// Resolves the naming service.
   void resolve_naming_service ();
-  // Resolve the naming service.
 
+  /// Runs worker threads.
   int svc () override;
-  // Run worker threads.
 
 private:
-  // = Data members
+  /// @name Data members
+  /// @{
+
+  /// The ORB used by this service.
   CORBA::ORB_var orb_ {};
-  // The ORB that we use.
 
+  /// The root POA.
   PortableServer::POA_var poa_ {};
-  // Reference to the root poa.
 
+  /// Keeps the factory servant alive while it is active in the POA.
   PortableServer::ServantBase_var rtevent_log_factory_owner_ {};
-  // Keep the factory servant alive while it is active in the POA.
 
+  /// A naming context.
   CosNaming::NamingContext_var naming_ {};
-  // A naming context.
 
+  /// The name used to bind with the NameService.
   std::string service_name_ {"RTEventLogFactory"};
-  // The name we use to bind with the NameService
 
+  /// The name of the file used to output the factory IOR.
   std::optional<std::basic_string<ACE_TCHAR>> ior_file_name_ {};
-  // The name of the file were we output the factory IOR.
 
+  /// The name of the file where the process stores its PID.
   std::optional<std::basic_string<ACE_TCHAR>> pid_file_name_ {};
-  // The name of a file where the process stores its pid
 
+  /// Whether to bind to the naming service.
   bool bind_to_naming_service_ {true};
-  // If true, bind to naming service
 
+  /// Number of worker threads.
   int nthreads_ {};
-  // Number of worker threads.
+
+  /// @}
 };
 
 #endif /* RTEVENT_LOGGING_SERVICE_H */
