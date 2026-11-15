@@ -106,7 +106,7 @@ run_main (int, ACE_TCHAR *[])
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Old backend (%@) not 0 at start\n"),
-                  old_b));
+                  static_cast<void *> (old_b)));
       ++status;
     }
 

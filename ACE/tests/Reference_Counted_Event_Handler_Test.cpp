@@ -336,7 +336,7 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
           if (result_handler != handler)
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("Mismatch: result_handler %@ should be %@\n"),
-                        result_handler, handler));
+                        static_cast<void *> (result_handler), static_cast<void *> (handler)));
       }
 
       {
@@ -360,7 +360,7 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
         if (result_handler.handler () != handler)
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Mismatch 2: result_handler %@ should be %@\n"),
-                      result_handler.handler (), handler));
+                      static_cast<void *> (result_handler.handler ()), static_cast<void *> (handler)));
       }
     }
 
@@ -650,7 +650,7 @@ simple_event_handler (ACE_Reactor *reactor)
           if (result_handler != &handler)
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("Mismatch: result_handler %@ should be %@\n"),
-                        result_handler, &handler));
+                        static_cast<void *> (result_handler), static_cast<void *> (&handler)));
       }
 
       {
@@ -673,7 +673,7 @@ simple_event_handler (ACE_Reactor *reactor)
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Mismatch: line %l: result_handler.handler %@ ")
                       ACE_TEXT ("should be %@\n"),
-                      result_handler.handler (), &handler));
+                      static_cast<void *> (result_handler.handler ()), static_cast<void *> (&handler)));
       }
 
       result =

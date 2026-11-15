@@ -1149,7 +1149,7 @@ Server::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %@\n"),
                     ACE_TEXT ("act"),
-                    result.act ()));
+                    const_cast<void *> (result.act ())));
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %d\n"),
                     ACE_TEXT ("success"),
@@ -1157,7 +1157,7 @@ Server::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %@\n"),
                     ACE_TEXT ("completion_key"),
-                    result.completion_key ()));
+                    const_cast<void *> (result.completion_key ())));
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %Q\n"),
                     ACE_TEXT ("error"),
@@ -1268,7 +1268,7 @@ Server::handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %@\n"),
                     ACE_TEXT ("act"),
-                    result.act ()));
+                    const_cast<void *> (result.act ())));
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %d\n"),
                     ACE_TEXT ("success"),
@@ -1276,7 +1276,7 @@ Server::handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %@\n"),
                     ACE_TEXT ("completion_key"),
-                    result.completion_key ()));
+                    const_cast<void *> (result.completion_key ())));
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %Q\n"),
                     ACE_TEXT ("error"),
@@ -1781,7 +1781,7 @@ Client::handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %@\n"),
                     ACE_TEXT ("act"),
-                    result.act ()));
+                    const_cast<void *> (result.act ())));
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %d\n"),
                     ACE_TEXT ("success"),
@@ -1789,7 +1789,7 @@ Client::handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %@\n"),
                     ACE_TEXT ("completion_key"),
-                    result.completion_key ()));
+                    const_cast<void *> (result.completion_key ())));
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %Q\n"),
                     ACE_TEXT ("error"),
@@ -1929,7 +1929,7 @@ Client::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %@\n"),
                     ACE_TEXT ("act"),
-                    result.act ()));
+                    const_cast<void *> (result.act ())));
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %d\n"),
                     ACE_TEXT ("success"),
@@ -1937,7 +1937,7 @@ Client::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %@\n"),
                     ACE_TEXT ("completion_key"),
-                    result.completion_key ()));
+                    const_cast<void *> (result.completion_key ())));
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %Q\n"),
                     ACE_TEXT ("error"),

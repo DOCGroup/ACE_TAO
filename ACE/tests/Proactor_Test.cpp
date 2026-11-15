@@ -472,7 +472,8 @@ TestData::server_done (Server *s)
     }
   if (i >= MAX_SERVERS)
   {
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Server %@ done but not listed\n"), s));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Server %@ done but not listed\n"),
+                static_cast<void *> (s)));
   }
 
   return;
@@ -509,7 +510,8 @@ TestData::client_done (Client *c)
     }
   if (i >= MAX_CLIENTS)
   {
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Client %@ done but not listed\n"), c));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Client %@ done but not listed\n"),
+                static_cast<void *> (c)));
   }
 
   return;
@@ -886,7 +888,7 @@ Server::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %@\n"),
                     ACE_TEXT ("act"),
-                    result.act ()));
+                    const_cast<void *> (result.act ())));
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %d\n"),
                     ACE_TEXT ("success"),
@@ -894,7 +896,7 @@ Server::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %@\n"),
                     ACE_TEXT ("completion_key"),
-                    result.completion_key ()));
+                    const_cast<void *> (result.completion_key ())));
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %Q\n"),
                     ACE_TEXT ("error"),
@@ -992,7 +994,7 @@ Server::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %@\n"),
                     ACE_TEXT ("act"),
-                    result.act ()));
+                    const_cast<void *> (result.act ())));
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %d\n"),
                     ACE_TEXT ("success"),
@@ -1000,7 +1002,7 @@ Server::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %@\n"),
                     ACE_TEXT ("completion_key"),
-                    result.completion_key ()));
+                    const_cast<void *> (result.completion_key ())));
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %Q\n"),
                     ACE_TEXT ("error"),
@@ -1503,7 +1505,7 @@ Client::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %@\n"),
                     ACE_TEXT ("act"),
-                    result.act ()));
+                    const_cast<void *> (result.act ())));
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %d\n"),
                     ACE_TEXT ("success"),
@@ -1511,7 +1513,7 @@ Client::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %@\n"),
                     ACE_TEXT ("completion_key"),
-                    result.completion_key ()));
+                    const_cast<void *> (result.completion_key ())));
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %Q\n"),
                     ACE_TEXT ("error"),
@@ -1651,7 +1653,7 @@ Client::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %@\n"),
                     ACE_TEXT ("act"),
-                    result.act ()));
+                    const_cast<void *> (result.act ())));
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %d\n"),
                     ACE_TEXT ("success"),
@@ -1659,7 +1661,7 @@ Client::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %@\n"),
                     ACE_TEXT ("completion_key"),
-                    result.completion_key ()));
+                    const_cast<void *> (result.completion_key ())));
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %Q\n"),
                     ACE_TEXT ("error"),

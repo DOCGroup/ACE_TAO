@@ -68,14 +68,18 @@ run_main (int, ACE_TCHAR *[])
       }
       else if (nodes[i].node != node)
       {
-        ACE_DEBUG ((LM_ERROR, ": entry %c=%d has ALREADY moved from %@ to %@\n", nodes[i].key, nodes[i].value, nodes[i].node, node));
+        ACE_DEBUG ((LM_ERROR, ": entry %c=%d has ALREADY moved from %@ to %@\n",
+                    nodes[i].key, nodes[i].value,
+                    static_cast<void *> (nodes[i].node), static_cast<void *> (node)));
         result = 3;
       }
       else for (size_t j= i+1u; j < sizeof(nodes)/sizeof(Nodes); ++j)
       {
         if (nodes[i].node == nodes[j].node)
         {
-          ACE_DEBUG ((LM_ERROR, ": Duplicate Binding (%@) for %c=%d and %c=%d\n", nodes[i].node, nodes[i].key, nodes[i].value, nodes[j].key, nodes[j].value));
+          ACE_DEBUG ((LM_ERROR, ": Duplicate Binding (%@) for %c=%d and %c=%d\n",
+                      static_cast<void *> (nodes[i].node), nodes[i].key, nodes[i].value,
+                      nodes[j].key, nodes[j].value));
           result = 4;
        }
       }
@@ -85,7 +89,8 @@ run_main (int, ACE_TCHAR *[])
     {
       {for (size_t i= 0u; i < sizeof(nodes)/sizeof(Nodes); ++i)
       {
-        ACE_DEBUG ((LM_DEBUG, "Deleting node %c=%d @ %@\n", nodes[i].key, nodes[i].value, nodes[i].node));
+        ACE_DEBUG ((LM_DEBUG, "Deleting node %c=%d @ %@\n",
+                    nodes[i].key, nodes[i].value, static_cast<void *> (nodes[i].node)));
         if (tree.unbind (nodes[i].key))
         {
           ACE_DEBUG ((LM_ERROR, ": Can't unbind key %c from tree\n", nodes[i].key));
@@ -97,7 +102,8 @@ run_main (int, ACE_TCHAR *[])
 
           if (0 == tree.find (nodes[i].key, node))
           {
-            ACE_DEBUG ((LM_ERROR, ": Found %c=%d @ %@ in tree\n", node->key(), node->item(), node));
+            ACE_DEBUG ((LM_ERROR, ": Found %c=%d @ %@ in tree\n",
+                        node->key(), node->item(), static_cast<void *> (node)));
             result = 6;
           }
           else {for (size_t j= i+1u; j < sizeof(nodes)/sizeof(Nodes); ++j)
@@ -109,7 +115,9 @@ run_main (int, ACE_TCHAR *[])
             }
             else if (nodes[j].node != node)
             {
-              ACE_DEBUG ((LM_ERROR, ": entry %c=%d has moved from %@ to %@\n", nodes[j].key, nodes[j].value, nodes[j].node, node));
+              ACE_DEBUG ((LM_ERROR, ": entry %c=%d has moved from %@ to %@\n",
+                          nodes[j].key, nodes[j].value,
+                          static_cast<void *> (nodes[j].node), static_cast<void *> (node)));
               nodes[j].node = node;  // Don't keep reporting this same issue on further deletions.
               result = 8;
             }
