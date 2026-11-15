@@ -11,8 +11,6 @@
 #include <memory>
 #include <xercesc/util/XMLString.hpp>
 
-// Utility class that provides a std::string like facade to XMLString.
-// Doesn't implement all of the methods of std::string.
 #include "XML_Utils_Export.h"
 
 namespace XML
@@ -39,6 +37,7 @@ namespace XML
     using Xerces_String = std::unique_ptr<XMLCh, Xerces_String_Deleter>;
   }
 
+  /// Provides a subset of std::string's interface for Xerces XMLString values.
   class XML_Utils_Export XStr
   {
   public:
@@ -90,7 +89,8 @@ namespace XML
     void reset ();
 
   private:
-    detail::Xerces_String _wstr {}; // Internal representation
+    /// Owns the Xerces-allocated XML string.
+    detail::Xerces_String _wstr {};
   };
 
   XML_Utils_Export bool operator== (XStr const &lhs, XStr const &rhs);

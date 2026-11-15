@@ -104,8 +104,7 @@ namespace XML
 
   bool XStr::erase (XMLCh const *head, XMLCh const *tail)
   {
-    bool const bOK = head <= tail && head >= begin () && tail <= end ();
-    if (!bOK)
+    if (!(head <= tail && head >= begin () && tail <= end ()))
     {
       return false;
     }

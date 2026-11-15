@@ -46,7 +46,9 @@ namespace XML
   {
     impl_ = nullptr;
     if (runtime_started)
-      xercesc::XMLPlatformUtils::Terminate ();
+      {
+        xercesc::XMLPlatformUtils::Terminate ();
+      }
 
     if (owned_resolver_)
     {
@@ -65,7 +67,9 @@ namespace XML
   void XML_Helper<Resolver, Error>::init_parser ()
   {
     if (this->initialized_)
-      return;
+      {
+        return;
+      }
 
     bool runtime_started {};
 
@@ -91,7 +95,9 @@ namespace XML
 
       impl_ = xercesc::DOMImplementationRegistry::getDOMImplementation (gLS);
       if (impl_ == nullptr)
-        throw std::runtime_error ("Xerces does not provide DOM Load/Store");
+        {
+          throw std::runtime_error ("Xerces does not provide DOM Load/Store");
+        }
 
       this->initialized_ = true;
     }
@@ -118,10 +124,14 @@ namespace XML
                                                                               xercesc::DOMDocumentType *doctype) const
   {
     if (root == nullptr || ns == nullptr)
-      return nullptr;
+      {
+        return nullptr;
+      }
 
     if (!initialized_ || impl_ == nullptr)
-      throw std::logic_error ("XML_Helper is not initialized");
+      {
+        throw std::logic_error ("XML_Helper is not initialized");
+      }
 
     return this->impl_->createDocument (XStr (ns), XStr (root), doctype);
   }
@@ -132,7 +142,9 @@ namespace XML
                                                                                       ACE_TCHAR const *sid) const
   {
     if (!initialized_ || impl_ == nullptr)
-      throw std::logic_error ("XML_Helper is not initialized");
+      {
+        throw std::logic_error ("XML_Helper is not initialized");
+      }
     return this->impl_->createDocumentType (XStr (qn), XStr (pid), XStr (sid));
   }
 
@@ -140,15 +152,21 @@ namespace XML
   XERCES_CPP_NAMESPACE::DOMDocument *XML_Helper<Resolver, Error>::create_dom (ACE_TCHAR const *url) const
   {
     if (url == nullptr)
-      return nullptr;
+      {
+        return nullptr;
+      }
 
     if (!initialized_ || impl_ == nullptr)
-      throw std::logic_error ("XML_Helper is not initialized");
+      {
+        throw std::logic_error ("XML_Helper is not initialized");
+      }
 
     try
     {
       if (this->parser_ == nullptr)
-        this->parser_ = std::make_unique<xercesc::XercesDOMParser> ();
+        {
+          this->parser_ = std::make_unique<xercesc::XercesDOMParser> ();
+        }
 
       // Perform Namespace processing.
       this->parser_->setDoNamespaces (true);
@@ -192,7 +210,9 @@ namespace XML
       this->parser_->parse (ACE_TEXT_ALWAYS_CHAR (url));
 
       if (e_handler_ && e_handler_->getErrors ())
-        return nullptr;
+        {
+          return nullptr;
+        }
 
       return this->parser_->getDocument ();
     }
@@ -207,11 +227,15 @@ namespace XML
         char *const text (xercesc::XMLString::transcode (errText));
         detail::Transcoded_String cleanup_text (text);
         if (text != nullptr)
-          message = text;
+          {
+            message = text;
+          }
       }
 
       if (message.empty ())
-        message = "Xerces DOM error (code " + std::to_string (e.code) + ")";
+        {
+          message = "Xerces DOM error (code " + std::to_string (e.code) + ")";
+        }
 
       throw std::runtime_error (message);
     }
@@ -232,7 +256,9 @@ namespace XML
   void XML_Helper<Resolver, Error>::terminate_parser ()
   {
     if (!this->initialized_)
-      return;
+      {
+        return;
+      }
 
     try
     {
@@ -273,7 +299,9 @@ namespace XML
   Resolver &XML_Helper<Resolver, Error>::get_resolver ()
   {
     if (this->resolver_ == nullptr)
-      throw std::logic_error ("XML resolver is not available");
+      {
+        throw std::logic_error ("XML resolver is not available");
+      }
 
     return *this->resolver_;
   }
@@ -282,7 +310,9 @@ namespace XML
   Error &XML_Helper<Resolver, Error>::get_error_handler ()
   {
     if (this->e_handler_ == nullptr)
-      throw std::logic_error ("XML error handler is not available");
+      {
+        throw std::logic_error ("XML error handler is not available");
+      }
 
     return *this->e_handler_;
   }
@@ -291,16 +321,22 @@ namespace XML
   bool XML_Helper<Resolver, Error>::write_DOM (XERCES_CPP_NAMESPACE::DOMDocument *doc, ACE_TCHAR const *file) const
   {
     if (!initialized_ || impl_ == nullptr)
-      throw std::logic_error ("XML_Helper is not initialized");
+      {
+        throw std::logic_error ("XML_Helper is not initialized");
+      }
     if (doc == nullptr || file == nullptr)
-      return false;
+      {
+        return false;
+      }
 
     struct SerializerReleaser
     {
       void operator() (XERCES_CPP_NAMESPACE::DOMLSSerializer *p) const
       {
         if (p != nullptr)
-          p->release ();
+          {
+            p->release ();
+          }
       }
     };
     struct OutputReleaser
@@ -308,7 +344,9 @@ namespace XML
       void operator() (XERCES_CPP_NAMESPACE::DOMLSOutput *p) const
       {
         if (p != nullptr)
-          p->release ();
+          {
+            p->release ();
+          }
       }
     };
 
@@ -317,17 +355,23 @@ namespace XML
       std::unique_ptr<XERCES_CPP_NAMESPACE::DOMLSSerializer, SerializerReleaser> const serializer (
         impl_->createLSSerializer ());
       if (!serializer)
-        return false;
+        {
+          return false;
+        }
       XERCES_CPP_NAMESPACE::DOMConfiguration *const ser_config (serializer->getDomConfig ());
       std::unique_ptr<XERCES_CPP_NAMESPACE::XMLFormatTarget> const format_target =
         std::make_unique<XERCES_CPP_NAMESPACE::LocalFileFormatTarget> (ACE_TEXT_ALWAYS_CHAR (file));
 
       std::unique_ptr<XERCES_CPP_NAMESPACE::DOMLSOutput, OutputReleaser> const output (impl_->createLSOutput ());
       if (!output)
-        return false;
+        {
+          return false;
+        }
 
       if (ser_config->canSetParameter (xercesc::XMLUni::fgDOMWRTFormatPrettyPrint, true))
-        ser_config->setParameter (xercesc::XMLUni::fgDOMWRTFormatPrettyPrint, true);
+        {
+          ser_config->setParameter (xercesc::XMLUni::fgDOMWRTFormatPrettyPrint, true);
+        }
 
       output->setByteStream (format_target.get ());
 

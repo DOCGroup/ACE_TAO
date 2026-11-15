@@ -1,4 +1,3 @@
-//============================================================
 /**
  * @file XML_Helper.h
  *
@@ -7,7 +6,6 @@
  * @author Bala Natarajan <bala@dre.vanderbilt.edu>
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  */
-//============================================================
 #ifndef ACE_XML_HELPER_H
 #define ACE_XML_HELPER_H
 #include /**/ "ace/pre.h"
@@ -86,13 +84,13 @@ namespace XML
     void cleanup_parser (bool runtime_started);
 
     bool initialized_{};
-    // Xerces owns impl_; parser_ owns the parser and its parsed document.
+    /// Xerces owns impl_; parser_ owns the parser and its parsed document.
     XERCES_CPP_NAMESPACE::DOMImplementation *impl_{};
     mutable std::unique_ptr<XERCES_CPP_NAMESPACE::XercesDOMParser> parser_{};
 
     std::unique_ptr<Resolver> owned_resolver_{};
-    // resolver_ and e_handler_ either borrow caller objects or point into the
-    // corresponding owned unique_ptr.
+    /// resolver_ and e_handler_ either borrow caller objects or point into the
+    /// corresponding owned unique_ptr.
     Resolver *resolver_{};
     std::unique_ptr<Error_Handler> owned_e_handler_{};
     Error_Handler *e_handler_{};

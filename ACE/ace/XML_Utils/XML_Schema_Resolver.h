@@ -21,7 +21,6 @@
 
 namespace XML
 {
-  // forward decl.
   struct NoOp_Resolver;
 
   /**

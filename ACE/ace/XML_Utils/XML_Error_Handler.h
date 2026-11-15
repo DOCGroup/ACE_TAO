@@ -1,4 +1,3 @@
-//==============================================================
 /**
  *  @file  XML_Error_Handler.h
  *
@@ -6,7 +5,6 @@
  *
  *  @author Bala Natarajan <bala@dre.vanderbilt.edu>
  */
-//================================================================
 #ifndef ACE_XML_ERROR_HANDLER_H
 #define ACE_XML_ERROR_HANDLER_H
 

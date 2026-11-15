@@ -28,7 +28,9 @@ namespace XML
   {
     XStr path (resolver_ (publicId, systemId));
     if (path.begin () == nullptr)
-      return nullptr;
+      {
+        return nullptr;
+      }
 
     // Xerces takes ownership of the returned input source.
     return new xercesc::LocalFileInputSource (path.begin ());
