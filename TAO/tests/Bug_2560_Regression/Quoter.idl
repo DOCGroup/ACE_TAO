@@ -1,43 +1,33 @@
 
 module Quoter
 {
+  /// Raised when a stock symbol is unknown.
   exception Invalid_Stock_Symbol {};
-  // Used to report an invalid stock name
 
-  // Forward declare the Stock interface
   interface Stock;
 
+  /// A factory for stock-quoter interfaces.
   interface Stock_Factory
   {
-    // = TITLE
-    //   A factory class for the stock quoter interfaces
-    //
-    // = DESCRIPTION
-    //   Return the Quoter interfaces based on their names
-    //
+    /// Returns the stock interface identified by its symbol.
     Stock get_stock (in string stock_symbol)
       raises (Invalid_Stock_Symbol);
   };
 
+  /// Queries a stock's symbol, name, price, and price history.
   interface Stock
   {
-    // = TITLE
-    //   A simple interface to query the name and price of stock
-    //
-    // = DESCRIPTION
-    //   Return the price and name of a single stock
-    //
-    typedef sequence<double> StockHistory ;
+    typedef sequence<double> StockHistory;
 
+    /// Returns the stock symbol.
     readonly attribute string symbol;
-    // Get the stock symbol.
 
+    /// Returns the full stock name.
     readonly attribute string full_name;
-    // Get the name.
 
+    /// Returns the current stock price.
     double price ();
-    // Get the price
 
-    StockHistory history();
+    StockHistory history ();
   };
 };
