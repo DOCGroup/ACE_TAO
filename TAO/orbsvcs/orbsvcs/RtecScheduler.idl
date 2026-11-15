@@ -221,7 +221,7 @@ module RtecScheduler
 
   typedef sequence<RT_Info> RT_Info_Set;
 
-  // TODO: Find a reasonable name for this interface, maybe we should
+  /// TODO: Find a reasonable name for this interface, maybe we should
   /// change the name of the module to RtecSchedulerAdmin and name this
   /// Scheduler.
   /// Holds all RT_Info entries for a single application. During configuration,
@@ -347,7 +347,7 @@ module RtecScheduler
     void set_rt_info_enable_state_seq (in RT_Info_Enable_State_Pair_Set pair_set)
       raises (SYNCHRONIZATION_FAILURE, INTERNAL, UNKNOWN_TASK);
 
-    // TODO: Do we need the two interfaces or is it simply confusing?
+    /// TODO: Do we need the two interfaces or is it simply confusing?
     /// If we should to keep only the <handle> version: Are the extra
     /// round-trips too expensive?
     /// If we choose only the <entry_point> version: Are the copies for

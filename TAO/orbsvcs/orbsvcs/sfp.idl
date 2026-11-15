@@ -105,7 +105,7 @@ module flowProtocol
     unsigned long sequence_num;
   };
 
-  // XXX:The spec hasn't defined frameID.
+  /// XXX: The spec hasn't defined frameID.
   typedef unsigned long frameID;
   struct specialFrame
   {
