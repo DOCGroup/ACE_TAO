@@ -24,8 +24,10 @@ public:
    */
   bool process_has_started (Test::Process_out the_process);
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   void started (Test::Process_ptr the_process) override;
+  /// @}
 
 private:
   /// Synchronize changes to the internal data

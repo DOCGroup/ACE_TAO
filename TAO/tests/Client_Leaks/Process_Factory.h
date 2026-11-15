@@ -20,12 +20,14 @@ public:
   /// Return true if the shutdown message has been received already
   bool shutdown_received () const;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   Test::Process_ptr create_new_process () override;
 
   void noop () override;
 
   void shutdown () override;
+  /// @}
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

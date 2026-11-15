@@ -17,10 +17,12 @@ public:
   Process &operator= (Process const &) = delete;
   Process &operator= (Process &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   CORBA::Long get_process_id () override;
 
   void shutdown () override;
+  /// @}
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

@@ -16,10 +16,12 @@ public:
   HelloAgain &operator= (HelloAgain const &) = delete;
   HelloAgain &operator= (HelloAgain &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   char *get_string_again () override;
   char *get_string () override;
   void shutdown () override;
+  /// @}
 
 private:
   /// ORB used to shut down the application.

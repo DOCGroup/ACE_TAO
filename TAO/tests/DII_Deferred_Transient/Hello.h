@@ -16,10 +16,12 @@ public:
   Hello &operator= (Hello const &) = delete;
   Hello &operator= (Hello &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   void crash () override;
 
   char * get_string () override;
+  /// @}
 };
 
 #include /**/ "ace/post.h"

@@ -16,10 +16,12 @@ public:
   Ping_Service &operator= (Ping_Service const &) = delete;
   Ping_Service &operator= (Ping_Service &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   void ping () override;
 
   void shutdown () override;
+  /// @}
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

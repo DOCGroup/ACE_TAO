@@ -17,10 +17,12 @@ public:
   Hello &operator= (Hello &&) = delete;
   ~Hello () override = default;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   char * get_string () override;
 
   void shutdown () override;
+  /// @}
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
