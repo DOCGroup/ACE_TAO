@@ -41,7 +41,8 @@ public:
   /// Returns the current quote for the stock <stock_name>
   CORBA::Long get_quote (char const *stock_name) override;
 
-  // = Lifecycle methods
+  /// @name Lifecycle methods
+  /// @{
 
   /// Make a copy of this object
   CosLifeCycle::LifeCycleObject_ptr copy (CosLifeCycle::FactoryFinder_ptr there,
@@ -53,6 +54,7 @@ public:
 
   /// Removes the object.
   void remove () override;
+  /// @}
 
 private:
   /// This flag defines if a Generic Factory is used (false by default) or

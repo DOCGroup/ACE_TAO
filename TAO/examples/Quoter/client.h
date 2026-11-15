@@ -38,7 +38,6 @@
 class Quoter_Client
 {
 public:
-  // = Constructor and destructor.
   Quoter_Client () = default;
   ~Quoter_Client () = default;
 

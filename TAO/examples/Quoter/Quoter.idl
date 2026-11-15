@@ -1,16 +1,9 @@
-
-//=============================================================================
 /**
- *  @file    Quoter.idl
- *
- *  Quoter example that illustrate the use of the global POA and
- *  the CosLifeCycle service.
- *
- *
- *  @author Darrell Brunsch (brunsch@cs.wustl.edu) Michael Kircher (mk1@cs.wustl.edu)
+ * @file Quoter.idl
+ * @brief Quoter example showing the global POA and CosLifeCycle service.
+ * @author Darrell Brunsch <brunsch@cs.wustl.edu> and Michael Kircher
+ * <mk1@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #include "orbsvcs/CosLifeCycle.idl"
 
@@ -19,110 +12,67 @@ module Stock
   exception Invalid_Stock {};
   exception Invalid_Quoter {};
 
+  /// Provides stock information.
   interface Quoter : CosLifeCycle::LifeCycleObject
-    {
-      // = TITLE
-      //   Access Stock information.
+  {
+    /// Returns the current stock value or raises an exception.
+    long get_quote (in string stock_name)
+      raises (Invalid_Stock, Invalid_Quoter);
+  };
 
-      // Returns the current stock value or throws an exception.
-      long get_quote (in string stock_name)
-        raises (Invalid_Stock, Invalid_Quoter);
-
-      // LifeCycleObject copy(in FactoryFinder there,
-      //                      in Criteria the_criteria)
-      //    raises(NoFactory, NotCopyable, InvalidCriteria, CannotMeetCriteria);
-      // copies this object to a location "there" using the "the_criteria"
-
-      // void move(in FactoryFinder there,
-      //     in Criteria the_criteria)
-      //     raises(NoFactory, NotMovable, InvalidCriteria,  CannotMeetCriteria);
-      // moves this object to a location "there" using the "the_criteria"
-
-      // void remove()
-      //     raises(NotRemovable);
-      // removes/deletes this object
-
-    };
-
+  /// Creates Quoter objects.
   interface Quoter_Factory
-    {
-      // = TITLE
-      //   Creation of Quoter objects
+  {
+    /// Returns a new Quoter selected by name, such as "Dow Jones" or
+    /// "Reuters".
+    Quoter create_quoter (in string name)
+      raises (Invalid_Quoter);
+  };
 
-      Quoter create_quoter (in string name)
-        raises (Invalid_Quoter);
-      // Returns a new Quoter selected by name e.g., "Dow Jones,"
-      // "Reuters,", etc
-    };
-
+  /// Wraps the CosLifeCycle FactoryFinder.
   interface Quoter_Factory_Finder : CosLifeCycle::FactoryFinder
-    {
-      // = TITLE
-      //   Wrapper for the CosLifeCycle FactoryFinder
-      //
-      // inherits:
-      // Factories find_factories(in Key factory_key) raises(NoFactory);
-    };
+  {
+  };
 
+  /// Wraps the CosLifeCycle GenericFactory.
   interface Quoter_Generic_Factory : CosLifeCycle::GenericFactory
-    {
-      // = TITLE
-      //   Wrapper for the CosLifeCycle GenericFactory
-      //
-      // inherits:
-      // boolean supports(in Key k);
-      // Object create_object(in Key k, in Criteria the_criteria)
-      //      raises (NoFactory, InvalidCriteria, CannotMeetCriteria);
-    };
+  {
+  };
 
+  /// Adds a factory-registration operation to the CosLifeCycle GenericFactory.
   interface Quoter_Life_Cycle_Service : CosLifeCycle::GenericFactory
-    {
-      // = TITLE
-      //   Wrapper for the CosLifeCycle GenericFactory
-      //
-      // inherits:
-      // boolean supports(in Key k);
-      // Object create_object(in Key k, in Criteria the_criteria)
-      //      raises (NoFactory, InvalidCriteria, CannotMeetCriteria);
+  {
+    /// Registers a factory with its name, location, description, and object.
+    void register_factory (in string name,
+                           in string location,
+                           in string description,
+                           in Object _object);
+  };
 
-      void register_factory (in string name,
-                             in string location,
-                             in string description,
-                             in Object _object);
-      // provide an method for registering factories with their properties
-    };
-
+  /**
+   * @brief Evaluates CosLifeCycle criteria through a simpler interface.
+   */
   interface Criteria_Evaluator
-    {
-      // = TITLE
-      //   Criteria Evaluator
-      //
-      // = DESCRIPTION
-      //   Interface description for an evaluator of CosLifeCycle
-      //   Criterias. It is mainly a wrapper, which should make
-      //   access easier
-      //
-      typedef sequence <CosLifeCycle::NameValuePair> SeqNamedValuePair;
+  {
+    typedef sequence <CosLifeCycle::NameValuePair> SeqNamedValuePair;
+    typedef CosLifeCycle::Criteria Criteria;
 
-      typedef CosLifeCycle::Criteria Criteria;
+    /// Raised when the requested configuration is unavailable.
+    exception NotAvailable { string reason; };
 
-      exception NotAvailable { string reason; };
-      // raised if the questioned configuration is not available
+    /// Returns the initialization properties.
+    SeqNamedValuePair getInitialization ();
 
-      SeqNamedValuePair getInitialization ();
-      // get the initialization
+    /// Returns the filter string.
+    string getFilter ();
 
-      string getFilter ();
-      // get a filter string
+    /// Returns the logical location.
+    SeqNamedValuePair getLogicalLocation ();
 
-      SeqNamedValuePair getLogicalLocation ();
-      // get the logical location
+    /// Returns the preferences string; currently not implemented.
+    string getPreferences ();
 
-      string getPreferences ();
-      // get the preferences, not implemented
-
-      void setCriteria (in Criteria criteria_);
-      // set the Criteria which is searched for keywords
-    };
+    /// Sets the criteria used to search for keywords.
+    void setCriteria (in Criteria criteria_);
+  };
 };
-
