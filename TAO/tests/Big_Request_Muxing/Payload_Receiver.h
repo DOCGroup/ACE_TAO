@@ -8,9 +8,7 @@
 #include <atomic>
 
 /// Implement the Test::Payload_Receiver interface
-/**
- * Simply print count how many bytes were received.
- */
+/// Counts received payload messages.
 class Payload_Receiver
   : public virtual POA_Test::Payload_Receiver
 {
@@ -21,11 +19,13 @@ public:
   Payload_Receiver (Payload_Receiver &&) = delete;
   Payload_Receiver &operator= (Payload_Receiver &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   void more_data (Test::Payload const &payload,
                   CORBA::Boolean maybe_lost) override;
 
   void ping () override;
+  /// @}
 
   int count (bool maybe_lost = false) const;
 
