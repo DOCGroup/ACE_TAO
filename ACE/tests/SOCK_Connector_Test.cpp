@@ -78,7 +78,7 @@ find_another_host (ACE_TCHAR other_host[])
 
 #ifndef MISSING_HOSTENT_FUNCTIONS
       // These gethost-type things don't work everywhere.
-      struct hostent *h = nullptr;
+      struct hostent *h {};
       ACE_utsname un;
 
       ACE_OS::uname (&un);

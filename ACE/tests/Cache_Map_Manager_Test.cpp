@@ -98,7 +98,7 @@ static int randomize_lookups = 1;
 static int purge_percent = 10;
 static int debug = 0;
 static Caching_Strategy_Type caching_strategy_type = ACE_ALL;
-static KEY *lookup_array = nullptr;
+static KEY *lookup_array {};
 
 static void
 test_caching_utility_ownership ()
@@ -418,8 +418,8 @@ functionality_test_hash_cache (HASH_MAP_CACHING_STRATEGY &caching_strategy)
 void
 test_caching_strategy_type ()
 {
-  HASH_MAP_CACHING_STRATEGY *hash_map_caching_strategy = nullptr;
-  MAP_CACHING_STRATEGY *map_caching_strategy = nullptr;
+  HASH_MAP_CACHING_STRATEGY *hash_map_caching_strategy {};
+  MAP_CACHING_STRATEGY *map_caching_strategy {};
 
   switch (caching_strategy_type)
     {

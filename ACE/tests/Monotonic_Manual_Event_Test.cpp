@@ -34,7 +34,7 @@ static int test_result = 0;
 
 // Event used in the tests.  Start it "unsignalled" (i.e., its initial
 // state is 0).
-static ACE_Event_Base *evt = nullptr;
+static ACE_Event_Base *evt {};
 
 // use monotonic or system time policy
 static bool use_monotonic = true;

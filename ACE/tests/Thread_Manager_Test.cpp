@@ -25,7 +25,7 @@
 // Each thread keeps track of whether it has been signalled by using a
 // global array.  It must be dynamically allocated to allow sizing at
 // runtime, based on the number of threads.
-static ACE_thread_t *signalled = nullptr;
+static ACE_thread_t *signalled {};
 static size_t n_threads = ACE_MAX_THREADS;
 
 // Helper function that looks for an existing entry in the signalled
@@ -60,7 +60,7 @@ been_signalled (const ACE_thread_t t_id,
 // Synchronize starts of threads, so that they all start before the
 // main thread cancels them.  To avoid creating a static object, it is
 // dynamically allocated, before spawning any threads.
-static ACE_Barrier *thread_start = nullptr;
+static ACE_Barrier *thread_start {};
 
 extern "C" void
 handler (int /* signum */)

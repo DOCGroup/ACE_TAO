@@ -122,7 +122,7 @@ init_test (const void *base_addr = nullptr)
 static Test_Data *
 initialize (MALLOC *allocator)
 {
-  double *temp = nullptr;
+  double *temp {};
   ACE_ALLOCATOR_RETURN (temp,
                         (double *) allocator->malloc (sizeof (double)),
                         nullptr);
@@ -130,7 +130,7 @@ initialize (MALLOC *allocator)
   *temp = 5.0;
   allocator->free (temp);
 
-  void *ptr = nullptr;
+  void *ptr {};
   ACE_ALLOCATOR_RETURN (ptr,
                         allocator->malloc (sizeof (Test_Data)),
                         nullptr);
@@ -141,7 +141,7 @@ initialize (MALLOC *allocator)
   data1->i3_ = 333;
   data1->d1_ = 87.5;
 
-  void *gap = nullptr;
+  void *gap {};
   ACE_ALLOCATOR_RETURN (gap,
                         allocator->malloc (sizeof (256)),
                         nullptr);
@@ -261,7 +261,7 @@ parent (Test_Data *data)
 static int
 child ()
 {
-  void *bar = nullptr;
+  void *bar {};
   // Perform "busy waiting" here until the parent stores data under a
   // new name called "bar" in <ACE_Malloc>.  This isn't a good design
   // -- it's just to test that synchronization is working across
@@ -385,7 +385,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       // In this case we're the child process.
       ACE_APPEND_LOG (ACE_TEXT ("Malloc_Test-child"));
 
-      void *data = nullptr;
+      void *data {};
       MALLOC *myalloc = myallocator (CHILD_BASE_ADDR);
       int result = myalloc->find ("foo", data);
       ACE_TEST_ASSERT (result != -1);

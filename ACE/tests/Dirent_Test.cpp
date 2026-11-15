@@ -162,7 +162,7 @@ dirent_test ()
       ACE_ERROR_RETURN
         ((LM_ERROR, ACE_TEXT ("open of dir %s failed\n"), TestDir.c_str()), -1);
 
-  for (ACE_DIRENT *directory = nullptr;
+  for (ACE_DIRENT *directory {};
        (directory = dir.read ()) != nullptr;
        entrycount++)
     {

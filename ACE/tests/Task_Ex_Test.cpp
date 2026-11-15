@@ -58,7 +58,7 @@ int Consumer::open (void*)
 
 int Consumer::svc ()
 {
-  User_Defined_Msg* pMsg=nullptr;
+  User_Defined_Msg* pMsg{};
   while(this->getq (pMsg)!=-1)
   {
     ACE_TEST_ASSERT (pMsg!=nullptr);
@@ -89,7 +89,7 @@ ACE_THR_FUNC_RETURN producer (void *arg)
   }
   for (int i=0;i!=NUMBER_OF_MSGS;++i)
   {
-    User_Defined_Msg* pMsg=nullptr;
+    User_Defined_Msg* pMsg{};
     ACE_NEW_NORETURN(pMsg, User_Defined_Msg(i));
     if (pMsg==nullptr)
     {

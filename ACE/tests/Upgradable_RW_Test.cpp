@@ -76,7 +76,7 @@ find_last ()
   char search_string[MAX_STRING_SIZE];
   ACE_OS::snprintf (search_string, MAX_STRING_SIZE, "%d", n_entries - 1);
   ACE_CString cString (search_string);
-  Element *element_ptr = nullptr;
+  Element *element_ptr {};
 
   for (ACE_Double_Linked_List_Iterator<Element> iterator (*linked_list_ptr);
        !iterator.done ();
@@ -309,8 +309,8 @@ static int
 init ()
 {
   char entry[MAX_STRING_SIZE];
-  ACE_CString *cString_ptr = nullptr;
-  Element *element_ptr = nullptr;
+  ACE_CString *cString_ptr {};
+  Element *element_ptr {};
 
   ACE_NEW_RETURN (linked_list_ptr,
                   Linked_List,
@@ -362,7 +362,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   // for a nice start of all threads (for much contention)
 
   // Initialize the readers.
-  Reader_Task **reader_tasks = nullptr;
+  Reader_Task **reader_tasks {};
 
   ACE_NEW_RETURN (reader_tasks,
                   Reader_Task *[n_readers],
@@ -385,7 +385,7 @@ run_main (int argc, ACE_TCHAR *argv[])
     }
 
   // Create all the writers
-  Writer_Task **writer_tasks = nullptr;
+  Writer_Task **writer_tasks {};
 
   ACE_NEW_RETURN (writer_tasks,
                   Writer_Task *[n_writers],
@@ -437,8 +437,8 @@ run_main (int argc, ACE_TCHAR *argv[])
               ACE_TEXT (" (%t) exiting main thread\n")));
 
   // Delete the memory of the Double_Linked_List
-  ACE_CString *cString_ptr = nullptr;
-  Element *element_ptr = nullptr;
+  ACE_CString *cString_ptr {};
+  Element *element_ptr {};
 
   for (i = 0;
        i < n_entries;

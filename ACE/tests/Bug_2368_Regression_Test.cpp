@@ -81,7 +81,7 @@ run_main (int, ACE_TCHAR *[])
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("register_handlerB")));
 
-  ACE_Sig_Action *new_disp = nullptr;
+  ACE_Sig_Action *new_disp {};
   if (ACE_Reactor::instance ()->remove_handler
       (SIGINT,
        new_disp) == -1)

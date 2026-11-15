@@ -177,7 +177,7 @@ client (void *arg)
               ACE_TEXT ("(%P|%t) running client\n")));
   CONNECTOR connector;
 
-  Write_Handler *writer = nullptr;
+  Write_Handler *writer {};
 
   // Do exponential backoff connections
   ACE_Synch_Options options = ACE_Synch_Options::synch;
@@ -266,7 +266,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   // Manage Reactor memory automagically.
   // Note:  If opt_priority_reactor is false, the default ACE_Reactor is used
   // and we don't need to set one up.
-  ACE_Reactor *orig_reactor = nullptr;
+  ACE_Reactor *orig_reactor {};
   std::unique_ptr<ACE_Reactor> reactor;
 
   if (opt_priority_reactor)

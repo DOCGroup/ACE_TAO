@@ -22,7 +22,7 @@ int
 run_main (int, ACE_TCHAR *[])
 {
   int ret = 0;
-  int *ptr = nullptr;
+  int *ptr {};
 
   ACE_START_TEST (ACE_TEXT ("OrdMultiSet_Test"));
 
@@ -85,7 +85,7 @@ run_main (int, ACE_TCHAR *[])
       ACE_TEST_ASSERT (iter.done () == 0);
 
       // Make sure the current element is what we expect.
-      int *ptr = nullptr;
+      int *ptr {};
       iter.next (ptr);
       ACE_TEST_ASSERT (ptr != nullptr);
       ACE_TEST_ASSERT (*ptr == i);

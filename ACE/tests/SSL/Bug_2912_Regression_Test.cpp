@@ -142,7 +142,7 @@ Server_Proactor_Task::svc ()
 /**
  * This test depends on ADH since the error is related to a missing cert.pem
  */
-static DH *dh1024 = nullptr;
+static DH *dh1024 {};
 
 DH*
 get_dh1024 ()
@@ -448,7 +448,7 @@ Server_Service_Handler::read_data ()
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_, -1);
 
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
   ACE_NEW_NORETURN(mb, ACE_Message_Block (DATA_SIZE));
 
   int ret = this->read (*mb, DATA_SIZE);
@@ -468,7 +468,7 @@ Server_Service_Handler::write_data ()
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_, -1);
 
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
   ACE_NEW_NORETURN(mb, ACE_Message_Block (DATA_SIZE));
   ACE_OS::memcpy (mb->wr_ptr (), DATA, DATA_SIZE);
   mb->wr_ptr (DATA_SIZE);
@@ -755,7 +755,7 @@ Client_Service_Handler::open (ACE_HANDLE h, ACE_Message_Block&)
   }
   else
   {
-    ACE_Message_Block *mb = nullptr;
+    ACE_Message_Block *mb {};
     ACE_NEW_NORETURN(mb, ACE_Message_Block (DATA_SIZE));
 
     if (this->read_data () < 0 || this->write_data () < 0)
@@ -906,7 +906,7 @@ Client_Service_Handler::read_data ()
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_, -1);
 
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
   ACE_NEW_NORETURN(mb, ACE_Message_Block (DATA_SIZE));
 
   int ret = this->read (*mb, DATA_SIZE);
@@ -926,7 +926,7 @@ Client_Service_Handler::write_data ()
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_, -1);
 
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
   ACE_NEW_NORETURN (mb, ACE_Message_Block (DATA_SIZE));
   ACE_OS::memcpy (mb->wr_ptr (), DATA, DATA_SIZE);
   mb->wr_ptr (DATA_SIZE);

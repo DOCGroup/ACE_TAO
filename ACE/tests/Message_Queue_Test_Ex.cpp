@@ -44,7 +44,7 @@ static int chain_limit = 4;
 static ACE_Barrier tester_barrier (2);
 
 // Dynamically allocate to avoid a static.
-static ACE_High_Res_Timer *timer = nullptr;
+static ACE_High_Res_Timer *timer {};
 
 // Helper printing function
 static void
@@ -122,7 +122,7 @@ struct Send_Messages
         User_Class *tail = temp1;
         for (j = 1; j < this->chain_limit_; ++j)
           {
-            User_Class *temp2 = nullptr;
+            User_Class *temp2 {};
             ACE_NEW_RETURN (temp2,
                             User_Class (test_message),
                             -1);
@@ -192,7 +192,7 @@ single_thread_performance_test ()
     ACE_TEXT ("ACE_Message_Queue_Ex<ACE_NULL_SYNCH>, single thread");
 
   // Create a message queue.
-  QUEUE *msgq = nullptr;
+  QUEUE *msgq {};
 
   ACE_NEW_RETURN (msgq,
                   QUEUE,
@@ -200,7 +200,7 @@ single_thread_performance_test ()
 
   // Create the messages.  Allocate off the heap in case messages is
   // large relative to the amount of stack space available.
-  User_Class **send_block = nullptr;
+  User_Class **send_block {};
   ACE_NEW_RETURN (send_block,
                   User_Class *[max_messages],
                   -1);
@@ -212,7 +212,7 @@ single_thread_performance_test ()
                     User_Class (test_message),
                     -1);
 
-  User_Class **receive_block_p = nullptr;
+  User_Class **receive_block_p {};
   ACE_NEW_RETURN (receive_block_p,
                   User_Class *[max_messages],
                   -1);
@@ -380,7 +380,7 @@ receiver (void *arg)
   Queue_Wrapper *queue_wrapper = reinterpret_cast<Queue_Wrapper *> (arg);
   int i;
 
-  User_Class **receive_block_p = nullptr;
+  User_Class **receive_block_p {};
   ACE_NEW_RETURN (receive_block_p,
                   User_Class *[max_messages],
                   (void *) -1);
@@ -429,7 +429,7 @@ performance_test ()
   // large relative to the amount of stack space available.  Allocate
   // it here instead of in the sender, so that we can delete it after
   // the _receiver_ is done.
-  User_Class **send_block = nullptr;
+  User_Class **send_block {};
   ACE_NEW_RETURN (send_block,
                   User_Class *[max_messages],
                   -1);
@@ -521,7 +521,7 @@ MQ_Ex_N_Tester::receiver (void *args)
 {
   MQ_Ex_N_Tester *tester = reinterpret_cast<MQ_Ex_N_Tester *> (args);
 
-  User_Class **receive_block_p = nullptr;
+  User_Class **receive_block_p {};
   ACE_NEW_RETURN (receive_block_p,
                   User_Class *[max_messages],
                   (ACE_THR_FUNC_RETURN) -1);
@@ -639,7 +639,7 @@ int queue_priority_test (ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>& q)
   if (-1 == q.enqueue_prio (b1.get (), nullptr, prio))
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("b1")), 1);
 
-  User_Class *b = nullptr;
+  User_Class *b {};
   if (q.dequeue_head (b) == -1)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("dequeue 1")));
@@ -766,7 +766,7 @@ int queue_iterator_test (ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>& q)
   if (-1 == q.enqueue_tail (b4.get (), nullptr))
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("b4")), 1);
 
-  User_Class* b = nullptr;
+  User_Class* b {};
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, aGuard, q.lock (), 1);
     int counter = 0;

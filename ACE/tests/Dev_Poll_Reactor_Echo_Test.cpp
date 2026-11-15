@@ -527,7 +527,7 @@ run_main (int, ACE_TCHAR *[])
                        ACE_TEXT ("Unable to open server service handler")),
                       -1);
 
-  Client *client_handler = nullptr;
+  Client *client_handler {};
 
   if (client.connect (client_handler, addr) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,

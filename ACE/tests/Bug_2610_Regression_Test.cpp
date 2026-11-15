@@ -186,7 +186,7 @@ run_main (int, ACE_TCHAR *[])
   }
 
   {
-    My_Svc_Handler* handler=nullptr;
+    My_Svc_Handler* handler{};
     My_Connector connector;
     connector.connect (handler, a1);
     ACE_Event_Handler_var safe_handler (handler);

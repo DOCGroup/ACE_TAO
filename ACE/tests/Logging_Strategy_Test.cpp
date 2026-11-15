@@ -69,7 +69,7 @@ cdecl_decoration (ACE_TCHAR const *func_name)
 }
 
 // Global variables.
-static ACE_TCHAR *file_name = nullptr;
+static ACE_TCHAR *file_name {};
 static int max_size_files = 0;
 static int max_num_files = 0;
 static int interval_time = 0;

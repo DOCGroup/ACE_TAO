@@ -55,7 +55,7 @@ reverse_file (ACE_HANDLE file_handle,
 static int
 create_test_file (ACE_TCHAR *filename, int line_length, int num_lines)
 {
-  char *mybuf = nullptr;
+  char *mybuf {};
 
   ACE_NEW_RETURN (mybuf, char[line_length + 1], -1);
   const char *c = ACE_ALPHABET;

@@ -46,7 +46,7 @@ int run_main (int, ACE_TCHAR *[])
 
   // Test to be sure the iterator gets the correct count and entries.
   ITERATOR iter (vector);
-  DATA *p_item = nullptr ;
+  DATA *p_item {} ;
   size_t iter_count = 0;
   while (!iter.done ())
     {

@@ -123,7 +123,7 @@ Thread_Pool::svc ()
 
   for (int count = 1; ; count++)
     {
-      ACE_Message_Block *mb = nullptr;
+      ACE_Message_Block *mb {};
 
       int result = this->getq (mb);
 
@@ -199,7 +199,7 @@ Thread_Pool::test_queue_deactivation_shutdown ()
   if (this->open () == -1)
     return -1;
 
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
 
   // Run the main loop that generates messages and enqueues them into
   // the pool of threads managed by <ACE_Task>.
@@ -287,7 +287,7 @@ Thread_Pool::test_empty_message_shutdown ()
   if (this->open () == -1)
     return -1;
 
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
 
   // Run the main loop that generates messages and enqueues them into
   // the pool of threads managed by <ACE_Task>.

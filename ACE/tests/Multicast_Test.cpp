@@ -656,7 +656,7 @@ MCT_Task::~MCT_Task ()
 int
 MCT_Task::open (void *)
 {
-  MCT_Event_Handler *handler = nullptr;
+  MCT_Event_Handler *handler {};
 
   ACE_INET_Addr addr = this->config_.group_start ();
   int groups = this->config_.groups ();

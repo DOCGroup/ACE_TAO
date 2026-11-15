@@ -36,7 +36,7 @@ public:
     thread_id_ = id;
     while (true)
       {
-        ACE_Message_Block *mb = nullptr;
+        ACE_Message_Block *mb {};
         if (this->getq (mb) == -1)
           ACE_ERROR_BREAK
             ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("getq")));
@@ -105,7 +105,7 @@ public:
 
     while (!done ())
       {
-        ACE_Message_Block *mb = nullptr;
+        ACE_Message_Block *mb {};
         ACE_Time_Value tv ((long)MAX_TIMEOUT);
         tv += ACE_OS::time (nullptr);
 
@@ -117,7 +117,7 @@ public:
           }
 
         // Choose a worker.
-        Worker *worker = nullptr;
+        Worker *worker {};
         {
           ACE_GUARD_RETURN (ACE_Mutex,
                             worker_mon, this->workers_lock_, -1);
@@ -190,7 +190,7 @@ Manager::shut_down ()
   ACE_TRACE ("Manager::shut_down");
   ACE_Unbounded_Queue<Worker* >::ITERATOR iter =
     this->workers_.begin ();
-  Worker **worker_ptr = nullptr;
+  Worker **worker_ptr {};
   do
     {
       iter.next (worker_ptr);
@@ -203,7 +203,7 @@ Manager::shut_down ()
                  buf));
 
       // Send the hangup message.
-      ACE_Message_Block *mb = nullptr;
+      ACE_Message_Block *mb {};
       ACE_NEW_RETURN
         (mb,
          ACE_Message_Block(0,
@@ -247,7 +247,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_Time_Value tv;
   tv.msec (100);
 
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
   for (int i = 0; i < 3; i++)
     {
       ACE_NEW_RETURN

@@ -47,7 +47,7 @@ run_test ()
                           -1);
     }
 
-  HASH_STRING_ENTRY *entry = nullptr;
+  HASH_STRING_ENTRY *entry {};
   for (i = 0; cold_colors[i] != nullptr; i++)
     {
       if (colors.bind (color_sorts[1],

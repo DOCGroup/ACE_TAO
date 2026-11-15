@@ -345,7 +345,7 @@ run_test (int disable_notify_pipe,
 {
   // Create special reactors with the appropriate flags enabled.
 
-  ACE_Select_Reactor *reactor_impl = nullptr;
+  ACE_Select_Reactor *reactor_impl {};
   if (disable_notify_pipe)
     ACE_NEW_RETURN (reactor_impl,
                     ACE_Select_Reactor (nullptr, nullptr, 1),

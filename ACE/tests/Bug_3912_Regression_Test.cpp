@@ -46,7 +46,7 @@ run_test (int argc, ACE_TCHAR *argv[])
 {
   int status = 0;
   bool close_called = false;
-  Close_Handler* close_handler = nullptr;
+  Close_Handler* close_handler {};
   ACE_NEW_RETURN(close_handler, Close_Handler (&close_called), -1);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Opening service config\n")));
@@ -74,7 +74,7 @@ run_test (int argc, ACE_TCHAR *argv[])
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Finding close test module\n")));
 
-  const ACE_Service_Type* st = nullptr;
+  const ACE_Service_Type* st {};
   status = asr->find (ACE_TEXT ("Close_Test_Module"), &st);
   if (status != 0)
     ACE_ERROR_RETURN ((LM_ERROR,

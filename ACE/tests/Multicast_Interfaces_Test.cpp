@@ -74,8 +74,8 @@ get_valid_ipv4_interface_names_win32 (nameset &names)
 void
 get_valid_ipv4_interface_names_getifaddrs (nameset &names)
 {
-  ifaddrs *ifap = nullptr;
-  ifaddrs *p_if = nullptr;
+  ifaddrs *ifap {};
+  ifaddrs *p_if {};
 
   if (::getifaddrs (&ifap) != 0)
     return;
@@ -155,8 +155,8 @@ get_valid_ipv6_interface_names_win32 (nameset &names)
 void
 get_valid_ipv6_interface_names_getifaddrs (nameset &names)
 {
-  ifaddrs *ifap = nullptr;
-  ifaddrs *p_if = nullptr;
+  ifaddrs *ifap {};
+  ifaddrs *p_if {};
 
   if (::getifaddrs (&ifap) != 0)
     return;

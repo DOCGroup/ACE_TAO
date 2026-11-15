@@ -220,7 +220,7 @@ Pipe::write_handle () const
 class Connection_Cache;
 class Event_Loop_Thread;
 
-static Event_Loop_Thread *global_event_loop_thread_variable = nullptr;
+static Event_Loop_Thread *global_event_loop_thread_variable {};
 
 class Sender : public ACE_Event_Handler
 {

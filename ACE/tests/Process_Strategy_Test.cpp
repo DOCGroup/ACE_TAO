@@ -355,7 +355,7 @@ int
 Counting_Service::handle_input (ACE_HANDLE)
 {
   char buf[BUFSIZ];
-  ACE_Time_Value* timeout = nullptr;
+  ACE_Time_Value* timeout {};
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) reading from peer on %d\n"),
@@ -474,7 +474,7 @@ client (void *arg)
   ACE_SOCK_Connector connector;
 
   char buf[BUFSIZ];
-  const char *command = nullptr;
+  const char *command {};
   size_t command_len;
   size_t i;
 

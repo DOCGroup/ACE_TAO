@@ -215,7 +215,7 @@ run_test (int write_file,
       ACE_OFF_T msgsize = info.size_ - 1;
 
       // Allocate the input buffer
-      char *buffer = nullptr;
+      char *buffer {};
       ACE_NEW_RETURN (buffer,
                       char[msgsize],
                       -1);
@@ -312,7 +312,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   int opt;
   int reading = 1;
   int writing = 1;
-  ACE_TCHAR* fn = nullptr;
+  ACE_TCHAR* fn {};
   while ((opt = get_opt ()) != EOF)
     {
       switch (opt)

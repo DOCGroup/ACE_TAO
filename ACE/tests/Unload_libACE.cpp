@@ -70,7 +70,7 @@ time_stamp (char date_and_time[], int date_and_timelen, int format)
       "Sat"
     };
 
-  char *ts = nullptr;
+  char *ts {};
 
   if (date_and_timelen >= TIME_STAMP_FIELD_WIDTH)
     {
@@ -114,11 +114,11 @@ main (int, char **)
   char const *const program = "UnloadLibACE";
 
   int status = 0;
-  void *handle = nullptr;
-  char *ace_root = nullptr;
+  void *handle {};
+  char *ace_root {};
   char tbuf[BUFSIZ];
   char ybuf[BUFSIZ];
-  FILE *logfp = nullptr;
+  FILE *logfp {};
 
   if ((logfp = fopen ("log/UnloadLibACE.log", "w")) != nullptr)
     {

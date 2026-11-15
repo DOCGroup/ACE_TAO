@@ -34,7 +34,7 @@
 ACE_Timer_Queue *
 create_timer_queue ()
 {
-  ACE_Timer_Queue * tmq = nullptr;
+  ACE_Timer_Queue * tmq {};
 
   using timer_queue_type = ACE_Timer_Heap_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall, ACE_MT_SYNCH::RECURSIVE_MUTEX, ACE_HR_Time_Policy>;
   ACE_NEW_RETURN (tmq, timer_queue_type (), nullptr);
@@ -82,7 +82,7 @@ MyTask::create_reactor ()
 
   this->my_tq_ = create_timer_queue ();
 
-  ACE_TP_Reactor * pImpl = nullptr;
+  ACE_TP_Reactor * pImpl {};
   ACE_NEW_RETURN (pImpl,ACE_TP_Reactor (nullptr, this->my_tq_), -1);
 
   ACE_NEW_RETURN (my_reactor_,

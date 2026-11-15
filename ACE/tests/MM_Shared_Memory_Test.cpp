@@ -67,7 +67,7 @@ const int SHMSZ = 27;
 static ACE_TCHAR *shm_key;
 
 // Synchronize the start of the parent and the child.
-static SYNCHRONIZER *synchronizer = nullptr;
+static SYNCHRONIZER *synchronizer {};
 
 static void *
 child (void * = nullptr)

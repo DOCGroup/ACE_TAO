@@ -75,7 +75,7 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 {
   ACE_TCHAR temp[MAXPATHLEN + 1] = { 0 };
   // Ignore the error value since the directory may already exist.
-  const ACE_TCHAR *test_dir = nullptr;
+  const ACE_TCHAR *test_dir {};
 
 #if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
   test_dir = ACE_OS::getenv (ACE_TEXT ("ACE_TEST_DIR"));

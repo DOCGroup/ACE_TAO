@@ -69,7 +69,7 @@ static int disable_signal (int sigmin, int sigmax);
 static int both = 0;
 
 // Host that we're connecting to.
-static const ACE_TCHAR *host = nullptr;
+static const ACE_TCHAR *host {};
 
 // number of Senders instances
 static int senders = 1;
@@ -151,7 +151,7 @@ MyTask::create_reactor ()
 
   ACE_TEST_ASSERT (this->my_reactor_ == nullptr);
 
-  ACE_TP_Reactor * pImpl = nullptr;
+  ACE_TP_Reactor * pImpl {};
 
   ACE_NEW_RETURN (pImpl,ACE_TP_Reactor, -1);
 
@@ -391,7 +391,7 @@ Receiver::~Receiver ()
   for (; ;)
     {
       ACE_Time_Value tv = ACE_Time_Value::zero;
-      ACE_Message_Block *mb = nullptr;
+      ACE_Message_Block *mb {};
 
       if (this->getq (mb, &tv) < 0)
         break;
@@ -472,7 +472,7 @@ Receiver::handle_input (ACE_HANDLE h)
 {
   ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, this->mutex_, -1);
 
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (BUFSIZ),
                   -1);
@@ -556,7 +556,7 @@ Receiver::handle_output (ACE_HANDLE h)
   ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, this->mutex_, -1);
 
   ACE_Time_Value tv = ACE_Time_Value::zero;
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
 
   int     err = 0;
   ssize_t res = 0;
@@ -705,7 +705,7 @@ Connector::start (const ACE_INET_Addr & addr, int num)
 
   for (int i = 0 ; i < num ; i++)
     {
-      Sender * sender = nullptr;
+      Sender * sender {};
 
       if (ACE_Connector<Sender,ACE_SOCK_CONNECTOR>::connect (sender, addr) < 0)
         ACE_ERROR_RETURN
@@ -766,7 +766,7 @@ Sender::~Sender ()
   for (; ;)
     {
       ACE_Time_Value tv = ACE_Time_Value::zero;
-      ACE_Message_Block *mb = nullptr;
+      ACE_Message_Block *mb {};
 
       if (this->getq (mb, &tv) < 0)
         break;
@@ -813,7 +813,7 @@ Sender::initiate_write ()
     {
       size_t nbytes = ACE_OS::strlen (send_buf_);
 
-      ACE_Message_Block *mb = nullptr;
+      ACE_Message_Block *mb {};
       ACE_NEW_RETURN (mb,
                       ACE_Message_Block (nbytes+8),
                       -1);
@@ -881,7 +881,7 @@ Sender::handle_input (ACE_HANDLE h)
 {
   ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, this->mutex_, -1);
 
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (BUFSIZ),
                   -1);
@@ -949,7 +949,7 @@ Sender::handle_output (ACE_HANDLE h)
   ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, this->mutex_, -1);
 
   ACE_Time_Value tv = ACE_Time_Value::zero;
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
 
   int     err=0;
   ssize_t res=0;

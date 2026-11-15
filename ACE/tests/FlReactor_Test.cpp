@@ -122,7 +122,7 @@ void sides_cb (Fl_Widget *o, void *p)
 class Connection_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
-  Connection_Handler (Test_Window *w = nullptr,
+  Connection_Handler (Test_Window *w {},
                       Fl_Box* box = nullptr);
 
   //FUZZ: disable check_for_lack_ACE_OS
@@ -139,7 +139,7 @@ private:
 class Acceptor : public ACE_Acceptor<Connection_Handler,ACE_SOCK_ACCEPTOR>
 {
 public:
-  Acceptor (Test_Window *w = nullptr,
+  Acceptor (Test_Window *w {},
             Fl_Box *box = nullptr);
 
   int make_svc_handler (Connection_Handler *&sh) override;

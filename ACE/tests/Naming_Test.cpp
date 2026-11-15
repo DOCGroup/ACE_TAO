@@ -80,7 +80,7 @@ test_find_failure (ACE_Naming_Context &ns_context)
   ACE_OS::snprintf (name, BUFSIZ, "%s", "foo-bar");
   ACE_NS_WString w_name (name);
   ACE_NS_WString w_value;
-  char *l_type = nullptr;
+  char *l_type {};
 
   // Do the finds.
   for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++)
@@ -160,7 +160,7 @@ test_find (ACE_Naming_Context &ns_context, int sign, int result)
 
       ACE_NS_WString w_name (name);
       ACE_NS_WString w_value;
-      char *type_out = nullptr;
+      char *type_out {};
       ACE_NS_WString val (temp_val);
 
       int const resolve_result = ns_context.resolve (w_name, w_value, type_out);
@@ -206,7 +206,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_UNUSED_ARG (argv);
 #else
   ACE_TCHAR temp_file [BUFSIZ];
-  ACE_Naming_Context *ns_context = nullptr;
+  ACE_Naming_Context *ns_context {};
   ACE_NEW_RETURN (ns_context, ACE_Naming_Context, -1);
 
   ACE_Name_Options *name_options = ns_context->name_options ();

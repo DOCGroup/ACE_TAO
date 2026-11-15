@@ -99,7 +99,7 @@ run_main (int, ACE_TCHAR *[])
 
   // Bug 1890 is all about ACE_Select_Reactor, so run it on that reactor
   // regardless of platform.
-  ACE_Select_Reactor *impl_ptr = nullptr;
+  ACE_Select_Reactor *impl_ptr {};
   ACE_NEW_RETURN (impl_ptr, ACE_Select_Reactor, -1);
   std::unique_ptr<ACE_Select_Reactor> auto_impl (impl_ptr);
 

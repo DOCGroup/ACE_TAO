@@ -70,7 +70,7 @@ client (void *arg)
   thread_counter = opt_nthreads;
 
   // To pass or not to pass is the question
-  Handler *handler = nullptr;
+  Handler *handler {};
   if (!opt_pass_notify_data)
     handler = nullptr;
   else
@@ -90,7 +90,7 @@ client (void *arg)
 static void
 create_reactor ()
 {
-  ACE_Reactor_Impl *impl = nullptr;
+  ACE_Reactor_Impl *impl {};
 
   if (opt_wfmo_reactor)
     {
@@ -108,7 +108,7 @@ create_reactor ()
       ACE_NEW (impl, ACE_Dev_Poll_Reactor);
 #endif /* ACE_HAS_EVENT_POLL || ACE_HAS_DEV_POLL */
     }
-  ACE_Reactor *reactor = nullptr;
+  ACE_Reactor *reactor {};
   ACE_NEW (reactor, ACE_Reactor (impl));
   ACE_Reactor::instance (reactor);
 }
@@ -116,7 +116,7 @@ create_reactor ()
 static void
 print_results (ACE_Profile_Timer::ACE_Elapsed_Time &et)
 {
-  const ACE_TCHAR *reactor_type = nullptr;
+  const ACE_TCHAR *reactor_type {};
   if (opt_wfmo_reactor)
     reactor_type = ACE_TEXT ("WFMO_Reactor");
   else if (opt_select_reactor)

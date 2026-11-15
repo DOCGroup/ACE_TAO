@@ -64,7 +64,7 @@ static size_t max_aio_operations = 0;
 static int both = 0;
 
 // Host that we're connecting to.
-static const ACE_TCHAR *host = nullptr;
+static const ACE_TCHAR *host {};
 
 // number of Client instances
 static int clients = 1;
@@ -212,7 +212,7 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
 
 #elif defined (ACE_HAS_AIO_CALLS)
 
-  ACE_POSIX_Proactor * proactor_impl = nullptr;
+  ACE_POSIX_Proactor * proactor_impl {};
 
   switch (type_proactor)
     {
@@ -1027,7 +1027,7 @@ Server::initiate_read ()
   if (this->flg_cancel_ || this->handle () == ACE_INVALID_HANDLE)
     return -1;
 
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (1024), //BUFSIZ + 1),
                   -1);
@@ -1575,7 +1575,7 @@ Client::initiate_write ()
     }
 #else /* ACE_WIN32 */
 
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
 
   // No need to allocate +1 for proper printing - the memory includes
   // it already
@@ -1665,7 +1665,7 @@ Client::initiate_read ()
   size_t blksize = ( complete_message_length > BUFSIZ ) ?
                      complete_message_length : BUFSIZ;
 
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
 
   // We allocate +1 only for proper printing - we can just set the last byte
   // to '\0' before printing out

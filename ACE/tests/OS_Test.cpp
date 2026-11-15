@@ -981,7 +981,7 @@ strsignal_test ()
 
   int test_status = 0;
 
-  const char* result = nullptr;
+  const char* result {};
 
   for (int i=-1; i < (ACE_NSIG + 1); ++i)
     {

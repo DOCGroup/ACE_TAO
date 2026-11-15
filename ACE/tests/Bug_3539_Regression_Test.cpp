@@ -82,7 +82,7 @@ run_main (int, ACE_TCHAR *[])
   const u_int threads = ACE_MAX_THREADS;
 
   {
-    ObjectWithTSS *o = nullptr;
+    ObjectWithTSS *o {};
     ACE_NEW_RETURN (o, ObjectWithTSS, 1);
     std::unique_ptr<ObjectWithTSS> owner (o);
 

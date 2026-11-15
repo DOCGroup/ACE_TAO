@@ -463,7 +463,7 @@ run_main (int, ACE_TCHAR *[])
                     (u_int) resultd,
                     (u_int) resulte));
 
-        const ACE_TCHAR *name = nullptr;
+        const ACE_TCHAR *name {};
         fname.get (name);
 
         ACE_DEBUG ((LM_DEBUG,

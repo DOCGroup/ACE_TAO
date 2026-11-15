@@ -29,15 +29,15 @@ run_test (SVC_HANDLER &svc_handler,
   // <svc_handler>.
   for (size_t i = 0; i < iterations; i++)
     {
-      ACE_Message_Block *mb = nullptr;
+      ACE_Message_Block *mb {};
       ACE_NEW (mb,
                ACE_Message_Block (sizeof (ACE_TEXT("hello "))));
 
-      ACE_Message_Block *cb1 = nullptr;
+      ACE_Message_Block *cb1 {};
       ACE_NEW (cb1,
                ACE_Message_Block (sizeof (ACE_TEXT("there\n"))));
 
-      ACE_Message_Block *cb2 = nullptr;
+      ACE_Message_Block *cb2 {};
       ACE_NEW (cb2,
                ACE_Message_Block (sizeof (ACE_TEXT("there\n"))));
 

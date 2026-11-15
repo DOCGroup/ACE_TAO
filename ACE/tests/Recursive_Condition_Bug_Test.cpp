@@ -39,7 +39,7 @@ public:
     while (--max_iterations > 0)
       {
         // dequeue the next object
-        ACE_Message_Block * mb = nullptr;
+        ACE_Message_Block * mb {};
 
         if (this->getq (mb) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -104,7 +104,7 @@ public:
     void *nc_arg = const_cast<void *> (arg);
     Test_Task *test_task =
       reinterpret_cast<Test_Task *> (nc_arg);
-    ACE_Message_Block *mb = nullptr;
+    ACE_Message_Block *mb {};
     ACE_NEW_MALLOC_RETURN (mb,
                            static_cast<ACE_Message_Block *> (ACE_Allocator::instance()->malloc (sizeof (ACE_Message_Block))),
                            ACE_Message_Block (sizeof (*this),    // size
@@ -145,7 +145,7 @@ run_main (int, ACE_TCHAR *[])
                        ACE_TEXT ("open")),
                       -1);
 
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
   ACE_NEW_MALLOC_RETURN (mb,
                          static_cast<ACE_Message_Block *> (ACE_Allocator::instance()->malloc (sizeof (ACE_Message_Block))),
                          ACE_Message_Block (sizeof (handler),    // size

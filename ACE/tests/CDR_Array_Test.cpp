@@ -378,7 +378,7 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
   ACE_DEBUG((LM_DEBUG,
              ACE_TEXT( "Writing data...\n" )));
 
-  char* toread = nullptr;
+  char* toread {};
   {
     ACE_TEST_ASSERT(use_array || total % 4 == 0);
 

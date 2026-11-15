@@ -304,7 +304,7 @@ void
 cached_connect (STRAT_CONNECTOR &con,
                 const ACE_INET_Addr &server_addr)
 {
-  Svc_Handler *svc_handler = nullptr;
+  Svc_Handler *svc_handler {};
 
   for (int i = 0; i < n_client_iterations; i++)
     {
@@ -509,7 +509,7 @@ int
 spawn_processes (ACCEPTOR *acceptor,
                  ACE_INET_Addr *server_addr)
 {
-  pid_t *children_ptr = nullptr;
+  pid_t *children_ptr {};
   ACE_NEW_RETURN (children_ptr,
                   pid_t[n_servers],
                   -1);

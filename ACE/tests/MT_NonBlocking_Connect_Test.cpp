@@ -183,7 +183,7 @@ Connect_Thread::svc ()
                   hosts[i]));
 
       // Create a new handler. It's what begin_connection() in TAO does.
-      Svc_Handler *svc_handler = nullptr;
+      Svc_Handler *svc_handler {};
       result = this->base_connector_.connect (svc_handler,
                                               remote_addr,
                                               synch_options,

@@ -418,7 +418,7 @@ Secondary_Ipaddr_Handler::handle_input (ACE_HANDLE)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("(%P) Secondary_Ipaddr_Handler::handle_input -  entered\n")));
 
-  nlmsghdr *hdr = nullptr;
+  nlmsghdr *hdr {};
   iovec iov;
 
   iov.iov_base = this->recv_buff_;
@@ -639,7 +639,7 @@ Secondary_Ipaddr_Handler::fill_inet_prefix (
   char ip_buff[32];
   ACE_OS::strncpy (ip_buff, ip_slash_netmask, sizeof (ip_buff));
 
-  char* to_search = ip_buff, *dot = nullptr;
+  char* to_search = ip_buff, *dot {};
 
   for (int i = 0; i < 4; i++)
     {

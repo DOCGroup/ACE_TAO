@@ -475,7 +475,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) performing asynchronous test...\n")));
 
-  Scheduler *scheduler_ptr = nullptr;
+  Scheduler *scheduler_ptr {};
 
   // Create active objects..
   ACE_NEW_RETURN (scheduler_ptr,

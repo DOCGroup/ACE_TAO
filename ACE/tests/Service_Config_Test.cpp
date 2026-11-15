@@ -151,7 +151,7 @@ testFailedServiceInit (int, ACE_TCHAR *[])
     }
 
   // Try to find the service; it should not be there.
-  ACE_Service_Type const *svcp = nullptr;
+  ACE_Service_Type const *svcp {};
   if (-1 != ACE_Service_Repository::instance ()->find (ACE_TEXT ("Refuses_Svc"),
                                                        &svcp))
     {
@@ -492,7 +492,7 @@ testrepository (int, ACE_TCHAR *[])
   ACE_Service_Type s1 (ACE_TEXT ("1"), nullptr, handle, false);
   ACE_Service_Type s2 (ACE_TEXT ("2"), nullptr, handle, false);
   ACE_Service_Type s3 (ACE_TEXT ("3"), nullptr, handle, false);
-  ACE_Service_Type* result = nullptr;
+  ACE_Service_Type* result {};
   repository.insert (&s0);
   if (repository.current_size () != 1)
     {
