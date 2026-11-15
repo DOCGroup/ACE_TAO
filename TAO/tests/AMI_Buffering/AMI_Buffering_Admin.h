@@ -16,7 +16,8 @@ public:
   AMI_Buffering_Admin (AMI_Buffering_Admin &&) = delete;
   AMI_Buffering_Admin &operator= (AMI_Buffering_Admin &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   CORBA::ULong request_count () override;
 
   CORBA::ULong bytes_received_count () override;
@@ -26,6 +27,7 @@ public:
   void flush () override;
 
   void shutdown () override;
+  /// @}
 
 private:
   /// Use an ORB reference to shutdown the application.

@@ -16,7 +16,8 @@ public:
   Reply_Handler (Reply_Handler &&) = delete;
   Reply_Handler &operator= (Reply_Handler &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   void receive_data () override;
   void receive_data_excep (::Messaging::ExceptionHolder *holder) override;
 
@@ -25,6 +26,7 @@ public:
 
   void shutdown () override;
   void shutdown_excep (::Messaging::ExceptionHolder *holder) override;
+  /// @}
 };
 
 #include /**/ "ace/post.h"

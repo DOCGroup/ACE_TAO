@@ -17,7 +17,8 @@ public:
   AMI_Buffering (AMI_Buffering &&) = delete;
   AMI_Buffering &operator= (AMI_Buffering &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   void receive_data (Test::Payload const &the_payload) override;
 
   void flush () override;
@@ -25,6 +26,7 @@ public:
   void sync () override;
 
   void shutdown () override;
+  /// @}
 
   /// internal implementation of shutdown. This
   void try_shutdown ();
