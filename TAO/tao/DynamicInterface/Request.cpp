@@ -21,6 +21,7 @@
 
 #include <array>
 #include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -120,7 +121,8 @@ CORBA::Request::invoke ()
   TAO::NVList_Argument _tao_in_list (this->args_,
                                      this->lazy_evaluation_);
 
-  std::array<TAO::Argument *, 2> _tao_arg_list {&_tao_retval, &_tao_in_list};
+  std::array<TAO::Argument *, 2> _tao_arg_list {
+    std::addressof (_tao_retval), std::addressof (_tao_in_list)};
 
   TAO::DII_Invocation_Adapter _tao_call (
        this->target_,
@@ -155,7 +157,8 @@ CORBA::Request::send_oneway ()
   TAO::NVList_Argument _tao_in_list (this->args_,
                                      this->lazy_evaluation_);
 
-  std::array<TAO::Argument *, 2> _tao_arg_list {&_tao_retval, &_tao_in_list};
+  std::array<TAO::Argument *, 2> _tao_arg_list {
+    std::addressof (_tao_retval), std::addressof (_tao_in_list)};
 
   TAO::DII_Oneway_Invocation_Adapter _tao_call (
       this->target_,
@@ -188,7 +191,8 @@ CORBA::Request::send_deferred ()
   TAO::NVList_Argument _tao_in_list (this->args_,
                                      this->lazy_evaluation_);
 
-  std::array<TAO::Argument *, 2> _tao_arg_list {&_tao_retval, &_tao_in_list};
+  std::array<TAO::Argument *, 2> _tao_arg_list {
+    std::addressof (_tao_retval), std::addressof (_tao_in_list)};
 
   int const number_args = has_arguments ? 2 : 1;
 
@@ -217,7 +221,8 @@ CORBA::Request::sendc (CORBA::Object_ptr handler)
   TAO::NVList_Argument _tao_in_list (this->args_,
                                      this->lazy_evaluation_);
 
-  std::array<TAO::Argument *, 2> _tao_arg_list {&_tao_retval, &_tao_in_list};
+  std::array<TAO::Argument *, 2> _tao_arg_list {
+    std::addressof (_tao_retval), std::addressof (_tao_in_list)};
 
   TAO::Asynch_Invocation_Adapter _tao_call (
        this->target_,
