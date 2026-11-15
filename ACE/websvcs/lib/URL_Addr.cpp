@@ -272,9 +272,11 @@ ACE_HTTP_Addr::set (const ACE_TCHAR *host_name,
 int
 ACE_HTTP_Addr::set (const ACE_HTTP_Addr &addr)
 {
+  if (this == std::addressof (addr))
+    return 0;
+
   if (this->ACE_URL_Addr::set (addr) != 0)
     return -1;
-  this->clear ();
   if (addr.hostname_ != nullptr)
     {
       if (!duplicate_url_string (this->hostname_, addr.hostname_.get ()))
@@ -492,9 +494,6 @@ ACE_HTTP_Addr::string_to_addr (const ACE_TCHAR *address)
     return -1;
 
   this->clear ();
-  this->hostname_.reset ();
-  this->path_.reset ();
-  this->query_.reset ();
 
   // Save the original URL....
   if (this->ACE_URL_Addr::string_to_addr (address) != 0)
@@ -667,9 +666,11 @@ ACE_FTP_Addr::set (const ACE_TCHAR *host_name,
 int
 ACE_FTP_Addr::set (const ACE_FTP_Addr& addr)
 {
+  if (this == std::addressof (addr))
+    return 0;
+
   if (this->ACE_URL_Addr::set (addr) != 0)
     return -1;
-  this->clear ();
   if (!duplicate_url_string (this->hostname_, addr.hostname_.get ())
       || !duplicate_url_string (this->path_, addr.path_.get ()))
     return -1;
@@ -780,13 +781,9 @@ ACE_FTP_Addr::string_to_addr (const ACE_TCHAR *address)
     return -1;
 
   this->clear ();
-  this->hostname_.reset ();
-  this->user_.reset ();
-  this->password_.reset ();
-  this->path_.reset ();
-
   // Save the original URL....
-  this->ACE_URL_Addr::string_to_addr (address);
+  if (this->ACE_URL_Addr::string_to_addr (address) != 0)
+    return -1;
 
   const ACE_TCHAR *string = address;
   string += ftp_size;
@@ -905,9 +902,11 @@ ACE_Mailto_Addr::set (const ACE_TCHAR *user,
 int
 ACE_Mailto_Addr::set (const ACE_Mailto_Addr &addr)
 {
+  if (this == std::addressof (addr))
+    return 0;
+
   if (this->ACE_URL_Addr::set (addr) != 0)
     return -1;
-  this->clear ();
   if (!duplicate_url_string (this->user_, addr.user_.get ())
       || !duplicate_url_string (this->hostname_, addr.hostname_.get ()))
     return -1;
@@ -979,10 +978,6 @@ ACE_Mailto_Addr::string_to_addr (const ACE_TCHAR *address)
     return -1;
 
   this->clear ();
-  this->user_.reset ();
-  this->hostname_.reset ();
-  this->headers_.reset ();
-
   // Save the original URL....
   if (this->ACE_URL_Addr::string_to_addr (address) != 0)
     return -1;
