@@ -26,7 +26,6 @@ template <typename CALLBACK_TYPE>
 class Stock_Database : public ACE_Task_Base
 {
 public:
-  /// Default constructor
   /// Initializes the stock database with MSFT, IBM, and INTEL.
   /// @param rate The rate at which to perform updates.
   explicit Stock_Database (u_int rate = 1);
