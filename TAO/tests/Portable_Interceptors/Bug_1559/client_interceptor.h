@@ -23,10 +23,8 @@ class Echo_Client_Request_Interceptor
   // = Client-side echo interceptor.  For checking interceptor visually only.
 public:
   explicit Echo_Client_Request_Interceptor (char const *orb_id);
-  // ctor.
 
   ~Echo_Client_Request_Interceptor () override = default;
-  // dtor.
 
   char * name () override;
   // Canonical name of the interceptor.

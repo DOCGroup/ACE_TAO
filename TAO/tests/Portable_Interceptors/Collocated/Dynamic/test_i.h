@@ -18,7 +18,6 @@
 class Visual_i : public POA_Test_Interceptors::Visual
 {
 public:
-  /// ctor
   explicit Visual_i (CORBA::ORB_ptr orb);
 
   Visual_i (Visual_i const &) = delete;

@@ -6,7 +6,6 @@ Secure_Vault_i::Secure_Vault_i (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
-// ctor
 
 CORBA::Short
 Secure_Vault_i::ready ()

@@ -24,13 +24,11 @@ class Echo_Client_Request_Interceptor
   // = Client-side echo interceptor.  For checking interceptor visually only.
 public:
   Echo_Client_Request_Interceptor ();
-  // ctor.
   Echo_Client_Request_Interceptor (Echo_Client_Request_Interceptor const &) = delete;
   Echo_Client_Request_Interceptor (Echo_Client_Request_Interceptor &&) = delete;
   Echo_Client_Request_Interceptor &operator= (Echo_Client_Request_Interceptor const &) = delete;
   Echo_Client_Request_Interceptor &operator= (Echo_Client_Request_Interceptor &&) = delete;
   ~Echo_Client_Request_Interceptor () override = default;
-  // dtor.
 
   char * name () override;
   // Canonical name of the interceptor.

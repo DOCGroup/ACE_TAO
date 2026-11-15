@@ -30,7 +30,6 @@ public:
   Echo_Client_Request_Interceptor &operator= (Echo_Client_Request_Interceptor &&) = delete;
 
   ~Echo_Client_Request_Interceptor () override = default;
-  // dtor.
 
   char * name () override;
   // Canonical name of the interceptor.
