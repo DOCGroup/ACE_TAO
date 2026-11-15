@@ -11,7 +11,6 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// ctor
 ACE_Dynamic_Message_Strategy::ACE_Dynamic_Message_Strategy (unsigned long static_bit_field_mask,
                                                             unsigned long static_bit_field_shift,
                                                             unsigned long dynamic_priority_max,
@@ -64,14 +63,12 @@ ACE_Dynamic_Message_Strategy::priority_status (ACE_Message_Block & mb,
   // the dynamic portion of the message's priority
   mb.msg_priority((mb.msg_priority() & static_bit_field_mask_) |
                   ((priority.usec () +
-                    ACE_ONE_SECOND_IN_USECS * (suseconds_t)(priority.sec())) <<
+                    ACE_ONE_SECOND_IN_USECS * static_cast<suseconds_t> (priority.sec ())) <<
                    static_bit_field_shift_));
 
   // returns the priority status of the message
   return status;
 }
-
-// Dump the state of the strategy.
 
 void
 ACE_Dynamic_Message_Strategy::dump () const
@@ -115,6 +112,7 @@ ACE_Deadline_Message_Strategy::ACE_Deadline_Message_Strategy (unsigned long stat
 {
 }
 
+/// Dynamic priority conversion function based on time to deadline.
 void
 ACE_Deadline_Message_Strategy::convert_priority (ACE_Time_Value & priority,
                                                  const ACE_Message_Block & mb)
@@ -123,7 +121,6 @@ ACE_Deadline_Message_Strategy::convert_priority (ACE_Time_Value & priority,
   // to deadline of mb with respect to that absolute time.
   priority -= mb.msg_deadline_time ();
 }
-  // dynamic priority conversion function based on time to deadline
 
 void
 ACE_Deadline_Message_Strategy::dump () const
@@ -153,6 +150,7 @@ ACE_Laxity_Message_Strategy::ACE_Laxity_Message_Strategy (unsigned long static_b
 {
 }
 
+/// Dynamic priority conversion function based on laxity.
 void
 ACE_Laxity_Message_Strategy::convert_priority (ACE_Time_Value & priority,
                                                const ACE_Message_Block & mb)
@@ -162,8 +160,8 @@ ACE_Laxity_Message_Strategy::convert_priority (ACE_Time_Value & priority,
   priority += mb.msg_execution_time ();
   priority -= mb.msg_deadline_time ();
 }
-  // dynamic priority conversion function based on laxity
 
+/// Dumps the state of the strategy.
 void
 ACE_Laxity_Message_Strategy::dump () const
 {
@@ -180,6 +178,5 @@ ACE_Laxity_Message_Strategy::dump () const
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
-  // Dump the state of the strategy.
 
 ACE_END_VERSIONED_NAMESPACE_DECL
