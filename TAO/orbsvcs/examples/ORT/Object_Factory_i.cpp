@@ -1,6 +1,8 @@
 #include "Object_Factory_i.h"
 #include "tao/PortableServer/Root_POA.h"
 
+#include <memory>
+
 Object_Factory_i::Object_Factory_i (CORBA::ORB_ptr orb,
                                     PortableServer::POA_ptr gateway_poa)
   : orb_ (CORBA::ORB::_duplicate (orb)),
@@ -19,7 +21,8 @@ Object_Factory_i::create_object (char const *interface_repository_id,
     PortableServer::string_to_ObjectId (stringified_object.in ());
 
   PortableInterceptor::ObjectId const *obj_id =
-    reinterpret_cast<PortableInterceptor::ObjectId const *> (&id.in ());
+    reinterpret_cast<PortableInterceptor::ObjectId const *> (
+      std::addressof (id.in ()));
   ACE_UNUSED_ARG (obj_id);
   ACE_UNUSED_ARG (interface_repository_id);
 /*

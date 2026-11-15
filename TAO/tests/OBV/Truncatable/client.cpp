@@ -3,6 +3,7 @@
 #include "ace/Get_Opt.h"
 
 #include <cstring>
+#include <memory>
 
 ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 
@@ -417,7 +418,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
         OBV_TruncatableTest::TValue1_var ov1;
         CORBA::Any a;
-        a <<= &v1.inout ();
+        a <<= std::addressof (v1.inout ());
         desc = CORBA::string_dup ("A<-tB, known truncatable via Any");
         if (verbose)
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Case 10: %C: "),
@@ -444,7 +445,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
         OBV_TruncatableTest::TValue1_var ov1;
         CORBA::Any a;
-        a <<= &v1.inout ();
+        a <<= std::addressof (v1.inout ());
         desc = CORBA::string_dup ("A<-tB, unknown truncatable via Any");
         if (verbose)
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Case 11: %C: "),
