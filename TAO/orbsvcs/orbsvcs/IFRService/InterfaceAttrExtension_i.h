@@ -27,15 +27,10 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/// Provides IDL3 interface attribute extension operations.
 class TAO_IFRService_Export TAO_InterfaceAttrExtension_i
   : public virtual TAO_IRObject_i
 {
-  // = TITLE
-  //    TAO_InterfaceAttrExtension_i
-  //
-  // = DESCRIPTION
-  //    IDL3 attribute extension mixin class.
-  //
 public:
   explicit TAO_InterfaceAttrExtension_i (TAO_Repository_i *repo);
 

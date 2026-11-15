@@ -28,15 +28,10 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/// Represents an OMG IDL structure definition.
 class TAO_IFRService_Export TAO_StructDef_i : public virtual TAO_TypedefDef_i,
                                               public virtual TAO_Container_i
 {
-  // = TITLE
-  //    TAO_StructDef_i
-  //
-  // = DESCRIPTION
-  //    Represents an OMG IDL structure definition.
-  //
 public:
   explicit TAO_StructDef_i (TAO_Repository_i *repo);
 

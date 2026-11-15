@@ -29,16 +29,11 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/// Adds IDL3 attribute exception support to interface definitions.
 class TAO_IFRService_Export TAO_ExtInterfaceDef_i
   : public virtual TAO_InterfaceDef_i,
     public virtual TAO_InterfaceAttrExtension_i
 {
-  // = TITLE
-  //    TAO_ExtInterfaceDef_i
-  //
-  // = DESCRIPTION
-  //    Mixes in TAO_InterfaceAttrExtension_i to get attribute exceptions.
-  //
 public:
   explicit TAO_ExtInterfaceDef_i (TAO_Repository_i *repo);
 
