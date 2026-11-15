@@ -283,34 +283,28 @@ CORBA::Request::get_response ()
 CORBA::Boolean
 CORBA::Request::poll_response ()
 {
-  CORBA::Boolean response_received {};
-
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                       ace_mon,
                       this->lock_,
                       false);
-    response_received = this->response_received_;
+    if (this->response_received_)
+      {
+        return true;
+      }
   }
 
-  if (!response_received)
-    {
-      // If we're single-threaded, the application could starve the ORB,
-      // and the response never gets received, so let the ORB do an
-      // atom of work, if necessary, each time we poll.
-      ACE_Time_Value tv (0, 0);
-      (void) this->orb_->perform_work (&tv);
+  // If we're single-threaded, the application could starve the ORB,
+  // and the response never gets received, so let the ORB do an
+  // atom of work, if necessary, each time we poll.
+  ACE_Time_Value tv (0, 0);
+  (void) this->orb_->perform_work (&tv);
 
-      {
-        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                          ace_mon,
-                          this->lock_,
-                          false);
-        response_received = this->response_received_;
-      }
-    }
-
-  return response_received;
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                    ace_mon,
+                    this->lock_,
+                    false);
+  return this->response_received_;
 }
 
 void
