@@ -217,7 +217,7 @@ namespace CORBA
     CORBA::ORB_var orb_;
 
     /// Operation name.
-    char const* opname_ {};
+    char *opname_ {};
 
     /// Parameter list.
     CORBA::NVList_ptr args_ {};

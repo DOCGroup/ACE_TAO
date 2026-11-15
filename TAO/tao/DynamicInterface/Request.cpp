@@ -14,7 +14,6 @@
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/DynamicInterface/Request.inl"
@@ -98,7 +97,7 @@ CORBA::Request::~Request ()
   ACE_ASSERT (refcount_ == 0);
 
   ::CORBA::release (this->target_);
-  ::CORBA::string_free ((char*) this->opname_);
+  ::CORBA::string_free (this->opname_);
   this->opname_ = nullptr;
   ::CORBA::release (this->args_);
   ::CORBA::release (this->result_);
@@ -180,7 +179,7 @@ CORBA::Request::send_deferred ()
 
     this->response_received_ = false;
   }
-  CORBA::Boolean const argument_flag = this->args_->count () ? true : false;
+  bool const has_arguments = this->args_->count () != 0;
 
   TAO::NamedValue_Argument _tao_retval (this->result_);
 
@@ -189,17 +188,12 @@ CORBA::Request::send_deferred ()
 
   std::array<TAO::Argument *, 2> _tao_arg_list {&_tao_retval, &_tao_in_list};
 
-  size_t number_args {};
-
-  if (argument_flag)
-    number_args = 2;
-  else
-    number_args = 1;
+  int const number_args = has_arguments ? 2 : 1;
 
   TAO::DII_Deferred_Invocation_Adapter _tao_call (
       this->target_,
       _tao_arg_list.data (),
-      static_cast<int> (number_args),
+      number_args,
       this->opname_,
       std::strlen (this->opname_),
       0,
@@ -227,7 +221,7 @@ CORBA::Request::sendc (CORBA::Object_ptr handler)
        this->target_,
        _tao_arg_list.data (),
        static_cast<int> (_tao_arg_list.size ()),
-       const_cast<char *> (this->opname_),
+       this->opname_,
        static_cast<CORBA::ULong> (std::strlen (this->opname_)),
        0); // collocation proxy broker
 

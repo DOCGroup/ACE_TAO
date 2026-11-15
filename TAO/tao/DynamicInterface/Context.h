@@ -62,7 +62,7 @@ namespace CORBA
    * the feature may eventaully disappear from CORBA.  It is
    * implemented only to make the arg list of
    * CORBA::Object::_create_request() compliant. The only (pointer)
-   * value that should be passed is 0.
+   * value that should be passed is nullptr.
    */
   class TAO_DynamicInterface_Export Context
   {
