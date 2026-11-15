@@ -1,11 +1,8 @@
-
-//=============================================================================
 /**
  *  @file    client.cpp
  *
  *  A client which uses the AMI callback model.
  */
-//=============================================================================
 
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
@@ -101,7 +98,6 @@ private:
 class Client : public ACE_Task_Base
 {
 public:
-  /// ctor
   Client (A::AMI_Test_ptr server,
           int iterations,
           A::AMI_AMI_TestHandler_ptr handler,
@@ -110,7 +106,6 @@ public:
   Client (Client &&) = delete;
   Client &operator= (Client const &) = delete;
   Client &operator= (Client &&) = delete;
-  /// dtor
   ~Client () override = default;
 
   /// The thread entry point.
