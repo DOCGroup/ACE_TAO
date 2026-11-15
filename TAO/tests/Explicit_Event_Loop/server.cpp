@@ -57,7 +57,12 @@ Time_impl::
 get_gmt ()
 {
   time_t const time_now = ACE_OS::time (nullptr);
-  tm const *const time_p = ACE_OS::gmtime (&time_now);
+  tm time_parts {};
+  tm const *const time_p = ACE_OS::gmtime_r (&time_now, &time_parts);
+  if (time_p == nullptr)
+    {
+      throw CORBA::INTERNAL ();
+    }
 
   TimeOfDay tod {};
   tod.hour = time_p->tm_hour;

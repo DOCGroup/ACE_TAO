@@ -1,4 +1,5 @@
 #include "TimeModuleS.h"
+#include "ace/OS_NS_time.h"
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
@@ -25,9 +26,9 @@ public:
 TimeModule::TimeOfDay
 Time_impl::get_gmt ()
 {
-  std::time_t const time_now = std::time (nullptr);
-  // std::gmtime returns C runtime-owned storage.
-  std::tm const * const time_value = std::gmtime (&time_now);
+  time_t const time_now = ACE_OS::time (nullptr);
+  tm time_parts {};
+  tm const * const time_value = ACE_OS::gmtime_r (&time_now, &time_parts);
 
   TimeModule::TimeOfDay tod {};
   if (time_value == nullptr)
