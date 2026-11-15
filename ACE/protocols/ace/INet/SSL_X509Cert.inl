@@ -49,9 +49,9 @@ namespace ACE
       }
 
     ACE_INLINE
-    SSL_X509Cert& SSL_X509Cert::operator= (const SSL_X509Cert& ssl_cert)
+    SSL_X509Cert& SSL_X509Cert::operator= (SSL_X509Cert const& ssl_cert)
       {
-        return (*this = &(const_cast<SSL_X509Cert&> (ssl_cert)));
+        return (*this = ssl_cert.ssl_cert_);
       }
 
     ACE_INLINE

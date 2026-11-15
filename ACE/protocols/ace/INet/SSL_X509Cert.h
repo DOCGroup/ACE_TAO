@@ -35,7 +35,7 @@ namespace ACE
               ~SSL_X509Cert ();
 
               SSL_X509Cert& operator= (::X509* ssl_cert);
-              SSL_X509Cert& operator= (const SSL_X509Cert& ssl_cert);
+              SSL_X509Cert& operator= (SSL_X509Cert const& ssl_cert);
 
               ::X509* operator & ();
 
