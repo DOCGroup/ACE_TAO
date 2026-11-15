@@ -3,13 +3,12 @@
 #include /**/ "ace/pre.h"
 
 #include <cstddef>
-#include <memory>
-
 #include "export.h"
 
 #include "orbsvcs/AV/Protocol_Factory.h"
 
 #include "ace/Dynamic_Service.h"
+#include "ace/Message_Block.h"
 #include "ace/Service_Config.h"
 
 class TAO_TS_Export TimeStamp_Protocol_Object : public TAO_AV_Protocol_Object
@@ -40,7 +39,7 @@ public:
   int destroy () override;
 
 private:
-  std::unique_ptr<ACE_Message_Block> frame_;
+  ACE_Message_Block_Unique_Ptr frame_;
 };
 
 class TAO_TS_Export TimeStamp_Protocol_Factory : public TAO_AV_Flow_Protocol_Factory
