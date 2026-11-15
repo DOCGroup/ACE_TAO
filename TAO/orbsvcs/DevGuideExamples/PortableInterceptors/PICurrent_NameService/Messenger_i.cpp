@@ -26,7 +26,16 @@ char *Messenger_i::get_time ()
 {
   time_t current_time {};
   ACE_OS::time (&current_time);
-  struct tm const * const time_info = ACE_OS::localtime (&current_time);
+  struct tm time_info {};
+  if (ACE_OS::localtime_r (&current_time, &time_info) == nullptr)
+    {
+      throw CORBA::INTERNAL ();
+    }
 
-  return CORBA::string_dup (ACE_OS::asctime (time_info));
+  char time_string[26] {};
+  if (ACE_OS::asctime_r (&time_info, time_string, sizeof (time_string)) == nullptr)
+    {
+      throw CORBA::INTERNAL ();
+    }
+  return CORBA::string_dup (time_string);
 }

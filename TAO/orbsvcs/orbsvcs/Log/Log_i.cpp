@@ -995,14 +995,18 @@ TAO_Log_i::scheduled ()
 
       // Work out when sunday is in nanoseconds.
       time_t clock = tv.sec ();
-      struct tm *sunday = ACE_OS::localtime (&clock);
+      struct tm sunday {};
+      if (ACE_OS::localtime_r (&clock, &sunday) == nullptr)
+        {
+          return false;
+        }
 
-      sunday->tm_sec = 0;
-      sunday->tm_min = 0;
-      sunday->tm_hour = 0;
-      sunday->tm_mday -= sunday->tm_wday;
+      sunday.tm_sec = 0;
+      sunday.tm_min = 0;
+      sunday.tm_hour = 0;
+      sunday.tm_mday -= sunday.tm_wday;
 
-      tv.sec (ACE_OS::mktime (sunday));
+      tv.sec (ACE_OS::mktime (&sunday));
       tv.usec (0);
 
       TimeBase::TimeT const nano_sunday =

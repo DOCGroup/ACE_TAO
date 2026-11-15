@@ -29,6 +29,16 @@ Messenger_i::get_time ()
   time_t thetime {};
 
   ACE_OS::time (&thetime);
-  struct tm const * const timeinfo = ACE_OS::localtime (&thetime);
-  return CORBA::string_dup (ACE_OS::asctime (timeinfo));
+  struct tm timeinfo {};
+  if (ACE_OS::localtime_r (&thetime, &timeinfo) == nullptr)
+    {
+      throw CORBA::INTERNAL ();
+    }
+
+  char time_string[26] {};
+  if (ACE_OS::asctime_r (&timeinfo, time_string, sizeof (time_string)) == nullptr)
+    {
+      throw CORBA::INTERNAL ();
+    }
+  return CORBA::string_dup (time_string);
 }
