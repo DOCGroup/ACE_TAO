@@ -1779,11 +1779,12 @@ public:
 
 protected:
   /// The asynch result pointer made from the initial transmit file
-  /// request.
+  /// request. Keep this raw pointer because its protected destructor
+  /// restricts deletion to this friend handler.
   ACE_POSIX_Asynch_Transmit_File_Result *result_;
 
-  /// Message bloack used to do the transmission.
-  ACE_Message_Block *mb_;
+  /// Message block used to do the transmission.
+  ACE_Message_Block_Unique_Ptr mb_;
 
   enum ACT
   {
@@ -1832,7 +1833,6 @@ ACE_POSIX_Asynch_Transmit_Handler::ACE_POSIX_Asynch_Transmit_Handler
       (ACE_POSIX_Proactor *posix_proactor,
        ACE_POSIX_Asynch_Transmit_File_Result *result)
   : result_ (result),
-    mb_ (nullptr),
     header_act_ (this->HEADER_ACT),
     data_act_ (this->DATA_ACT),
     trailer_act_ (this->TRAILER_ACT),
@@ -1843,17 +1843,17 @@ ACE_POSIX_Asynch_Transmit_Handler::ACE_POSIX_Asynch_Transmit_Handler
     ws_ (posix_proactor)
 {
   // Allocate memory for the message block.
-  ACE_NEW (this->mb_,
-           ACE_Message_Block (this->result_->bytes_per_send ()
-                              + 1));
+  ACE_Message_Block *message_block {};
+  ACE_NEW (message_block,
+           ACE_Message_Block (this->result_->bytes_per_send () + 1));
+  this->mb_.reset (message_block);
   // Init the file size.
   file_size_ = ACE_OS::filesize (this->result_->file ());
 }
 
 ACE_POSIX_Asynch_Transmit_Handler::~ACE_POSIX_Asynch_Transmit_Handler ()
 {
-  delete result_;
-  mb_->release ();
+  delete this->result_;
 }
 
 // Do the transmission.
