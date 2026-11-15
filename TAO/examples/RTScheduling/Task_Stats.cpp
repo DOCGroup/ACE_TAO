@@ -1,6 +1,9 @@
 #include "Task_Stats.h"
 #include "ace/Log_Msg.h"
 
+#include <new>
+#include <utility>
+
 #if !defined (__ACE_INLINE__)
 #include "Task_Stats.inl"
 #endif /* __ACE_INLINE__ */
@@ -15,8 +18,8 @@ Task_Stats::Task_Stats ()
     end_time_ (0),
     max_samples_ (0),
     samples_count_ (0),
-    thr_run_time_ (0),
-    thr_count_ (0),
+    thr_run_time_ {},
+    thr_count_ {},
     exec_time_min_ (0),
     exec_time_min_at_ (0),
     exec_time_max_ (0),
@@ -26,18 +29,28 @@ Task_Stats::Task_Stats ()
 {
 }
 
-Task_Stats::~Task_Stats ()
-{
-  delete[] this->thr_run_time_;
-  delete[] this->thr_count_;
-}
+Task_Stats::~Task_Stats () = default;
 
 int
 Task_Stats::init (size_t max_samples)
 {
-  max_samples_ = max_samples;
-  ACE_NEW_RETURN (this->thr_run_time_, time_t[this->max_samples_], -1);
-  ACE_NEW_RETURN (this->thr_count_, int[this->max_samples_], -1);
+  std::unique_ptr<time_t[]> thr_run_time (new (std::nothrow) time_t[max_samples]);
+  if (!thr_run_time)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
+
+  std::unique_ptr<int[]> thr_count (new (std::nothrow) int[max_samples]);
+  if (!thr_count)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
+
+  this->thr_run_time_ = std::move (thr_run_time);
+  this->thr_count_ = std::move (thr_count);
+  this->max_samples_ = max_samples;
   return 0;
 }
 
@@ -57,7 +70,7 @@ void
 Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg)
 {
   // There's nothing to dump if this object was never initialized
-  if (this->thr_run_time_ == 0 || this->thr_count_ == 0)
+  if (!this->thr_run_time_ || !this->thr_count_)
   {
     return;
   }

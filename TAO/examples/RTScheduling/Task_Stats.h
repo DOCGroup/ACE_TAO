@@ -19,6 +19,8 @@
 #include "ace/OS_NS_time.h"
 #include "ace/Singleton.h"
 
+#include <memory>
+
 /**
  * @class Base_Time
  *
@@ -72,8 +74,8 @@ class RTSCHEDTESTLIB_Export Task_Stats
   ACE_UINT32 samples_count_;
 
   /// The samples : the time of execution. and the recorded exec. time .
-  time_t *thr_run_time_;
-  int *thr_count_;
+  std::unique_ptr<time_t[]> thr_run_time_;
+  std::unique_ptr<int[]> thr_count_;
 
   /// The minimum value
   ACE_UINT64 exec_time_min_;
