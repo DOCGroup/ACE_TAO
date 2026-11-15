@@ -15,6 +15,7 @@
 #include "ace/Node.h"
 #include "ace/os_include/os_stddef.h"
 #include <iterator>
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

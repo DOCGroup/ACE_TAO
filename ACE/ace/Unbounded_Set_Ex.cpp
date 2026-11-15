@@ -293,7 +293,7 @@ ACE_Unbounded_Set_Ex_Iterator<T, C>::ACE_Unbounded_Set_Ex_Iterator (
   ACE_Unbounded_Set_Ex<T, C> &s,
   bool end)
   : current_ (!end ? s.head_->next_ : s.head_ ),
-    set_ (&s)
+    set_ (std::addressof (s))
 {
   // ACE_TRACE ("ACE_Unbounded_Set_Ex_Iterator<T, C>::ACE_Unbounded_Set_Ex_Iterator");
 }
@@ -400,7 +400,7 @@ ACE_Unbounded_Set_Ex_Const_Iterator<T, C>::ACE_Unbounded_Set_Ex_Const_Iterator (
   const ACE_Unbounded_Set_Ex<T, C> &s,
   bool end)
   : current_ (!end ? s.head_->next_ : s.head_ ),
-    set_ (&s)
+    set_ (std::addressof (s))
 {
   // ACE_TRACE ("ACE_Unbounded_Set_Ex_Const_Iterator<T, C>::ACE_Unbounded_Set_Ex_Const_Iterator");
 }
