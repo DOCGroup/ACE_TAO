@@ -518,6 +518,7 @@ int
 TAO_Unique_Id_Strategy::unbind_using_user_id (
   PortableServer::ObjectId const &user_id)
 {
+  std::unique_ptr<TAO_Active_Object_Map_Entry> entry_owner;
   TAO_Active_Object_Map_Entry *entry {};
   int result = this->active_object_map_->user_id_map_->unbind (user_id, entry);
   if (result == 0)
@@ -544,16 +545,15 @@ TAO_Unique_Id_Strategy::unbind_using_user_id (
         {
           result =
             this->active_object_map_->id_hint_strategy_->unbind (*entry);
+          if (result == 0)
+            {
+              entry_owner.reset (entry);
+            }
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
           this->active_object_map_->monitor_->receive (
             this->active_object_map_->servant_map_->current_size ());
 #endif /* TAO_HAS_MONITOR_POINTS==1 */
-        }
-
-      if (result == 0)
-        {
-          delete entry;
         }
     }
 
@@ -719,6 +719,7 @@ int
 TAO_Multiple_Id_Strategy::unbind_using_user_id (
   PortableServer::ObjectId const &user_id)
 {
+  std::unique_ptr<TAO_Active_Object_Map_Entry> entry_owner;
   TAO_Active_Object_Map_Entry *entry {};
   int result = this->active_object_map_->user_id_map_->unbind (user_id,
                                                                entry);
@@ -740,7 +741,7 @@ TAO_Multiple_Id_Strategy::unbind_using_user_id (
 
       if (result == 0)
         {
-          delete entry;
+          entry_owner.reset (entry);
         }
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
