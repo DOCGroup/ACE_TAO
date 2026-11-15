@@ -58,7 +58,6 @@ extern "C" STATUS vmeDevCreate (char *);
 class Server
 {
 public:
-  /// Default constructor.
   Server () = default;
 
   Server (Server const &) = delete;

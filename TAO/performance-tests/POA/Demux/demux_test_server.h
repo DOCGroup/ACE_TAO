@@ -27,10 +27,8 @@
 class Demux_Test_Server
 {
 public:
-  /// ctor
   Demux_Test_Server ();
 
-  /// dtor
   ~Demux_Test_Server () = default;
 
   Demux_Test_Server (Demux_Test_Server const &) = delete;

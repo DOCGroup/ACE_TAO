@@ -39,10 +39,8 @@ public:
     OP_PTR op_;
   };
 
-  /// CTOR
   Demux_Test_Client ();
 
-  /// DTOR
   ~Demux_Test_Client () = default;
 
   Demux_Test_Client (Demux_Test_Client const &) = delete;

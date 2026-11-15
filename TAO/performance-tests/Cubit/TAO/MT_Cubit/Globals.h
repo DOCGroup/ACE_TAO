@@ -99,7 +99,6 @@ argv = force_argv;
 class Globals
 {
 public:
-  /// default constructor.
   Globals ();
 
   /// parse the arguments.

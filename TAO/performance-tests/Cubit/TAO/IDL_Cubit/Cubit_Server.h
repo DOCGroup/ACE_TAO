@@ -39,7 +39,6 @@
 class Cubit_Server
 {
 public:
-  /// Default constructor
   Cubit_Server () = default;
 
   ~Cubit_Server () = default;
