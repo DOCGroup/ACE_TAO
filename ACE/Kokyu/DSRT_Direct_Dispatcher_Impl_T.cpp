@@ -39,11 +39,11 @@ init_i (DSRT_ConfigInfo const &)
 template <class DSRT_Scheduler_Traits> int
 DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::svc ()
 {
-  ACE_hthread_t scheduler_thr_handle;
+  ACE_hthread_t scheduler_thr_handle {};
   ACE_Thread::self (scheduler_thr_handle);
 
 #ifdef KOKYU_DSRT_LOGGING
-  int prio;
+  int prio {};
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("max prio=%d\n")
               ACE_TEXT ("min prio=%d\n")
@@ -73,7 +73,7 @@ DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::svc ()
   ACE_DEBUG ((LM_DEBUG, "(%t): Scheduler thread prio is %d\n", prio));
 #endif /*DSRT_LOGGING*/
 
-  while(1)
+  while (true)
     {
       ACE_GUARD_RETURN (cond_lock_t,
                         mon,
@@ -170,8 +170,8 @@ schedule_i (Guid_t id, DSRT_QoSDescriptor const &qos)
               "(%t|%T):schedule_i enter\n"));
 #endif
 
-  DSRT_Dispatch_Item<DSRT_Scheduler_Traits>* item;
-  ACE_hthread_t thr_handle;
+  DSRT_Dispatch_Item<DSRT_Scheduler_Traits> *item {};
+  ACE_hthread_t thr_handle {};
   ACE_Thread::self (thr_handle);
 
   ACE_NEW_RETURN (item,
@@ -249,9 +249,9 @@ update_schedule_i (Guid_t guid, Block_Flag_t flag)
 #endif
 
   DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits> dispatch_item;
-  ACE_hthread_t thr_handle;
+  ACE_hthread_t thr_handle {};
 
-  int found = this->ready_queue_.find (guid, dispatch_item);
+  int const found = this->ready_queue_.find (guid, dispatch_item);
   if (found == 0 && flag == BLOCK)
     {
       thr_handle = dispatch_item->thread_handle ();
@@ -270,7 +270,7 @@ update_schedule_i (Guid_t guid, Block_Flag_t flag)
       //@@ Need to investigate this further. Also we can consider
       //using the Thread-Safe interface pattern.
       //mon.release ();
-      int rc = this->cancel_schedule (guid);
+      int const rc = this->cancel_schedule (guid);
 
 #ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG ((LM_DEBUG, "(%t): update schedule for block done\n"));

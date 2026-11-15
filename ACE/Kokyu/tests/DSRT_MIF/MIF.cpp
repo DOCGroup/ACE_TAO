@@ -72,7 +72,7 @@ public:
 
 int MyTask::svc ()
 {
-  ACE_hthread_t thr_handle;
+  ACE_hthread_t thr_handle {};
   ACE_Thread::self (thr_handle);
 
   ACE_DEBUG ((LM_DEBUG, "(%t|%T): task activated\n"));

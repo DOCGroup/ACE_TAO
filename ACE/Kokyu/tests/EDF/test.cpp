@@ -31,9 +31,9 @@ private:
 
 int MyCommand::execute ()
 {
-  ACE_hthread_t thr_handle;
+  ACE_hthread_t thr_handle {};
   ACE_Thread::self (thr_handle);
-  int prio;
+  int prio {};
 
   if (ACE_Thread::getprio (thr_handle, prio) == -1)
   {

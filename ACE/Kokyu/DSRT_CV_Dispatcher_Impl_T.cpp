@@ -34,8 +34,8 @@ schedule_i (Guid_t id, DSRT_QoSDescriptor const &qos)
               "(%t|%T):schedule_i enter\n"));
 #endif
 
-  DSRT_Dispatch_Item<DSRT_Scheduler_Traits>* item;
-  ACE_hthread_t thr_handle;
+  DSRT_Dispatch_Item<DSRT_Scheduler_Traits> *item {};
+  ACE_hthread_t thr_handle {};
   ACE_Thread::self (thr_handle);
 
   if (ACE_OS::thr_setprio (thr_handle,
@@ -164,10 +164,10 @@ update_schedule_i (Guid_t guid, Block_Flag_t flag)
 #endif
 
   DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits> dispatch_item;
-  ACE_hthread_t thr_handle;
+  ACE_hthread_t thr_handle {};
   ACE_Thread::self (thr_handle);
 
-  int found = this->ready_queue_.find (guid, dispatch_item);
+  int const found = this->ready_queue_.find (guid, dispatch_item);
 
 #ifdef KOKYU_DSRT_LOGGING
   if (found == 0)
@@ -193,7 +193,7 @@ update_schedule_i (Guid_t guid, Block_Flag_t flag)
                       ACE_TEXT ("thr_setprio failed")));
         }
 
-      int rc = this->cancel_schedule (guid);
+      int const rc = this->cancel_schedule (guid);
 
 #ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG ((LM_DEBUG, "(%t): update schedule for block done\n"));
@@ -215,7 +215,7 @@ cancel_schedule_i (Guid_t guid)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->synch_lock_, -1);
 
-  ACE_hthread_t thr_handle;
+  ACE_hthread_t thr_handle {};
   ACE_Thread::self (thr_handle);
 
 #ifdef KOKYU_DSRT_LOGGING

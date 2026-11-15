@@ -33,7 +33,7 @@ DSRT_Dispatcher_Impl (ACE_Sched_Params::Policy sched_policy,
     shutdown_flagged_ (false),
     non_rt_thr_flags_ (THR_NEW_LWP | THR_JOINABLE | THR_BOUND),
     rt_thr_flags_ (0),
-    curr_scheduled_thr_handle_ (0),
+    curr_scheduled_thr_handle_ {},
     curr_scheduled_guid_ {}
 {
   if (sched_policy_ == ACE_SCHED_FIFO)
