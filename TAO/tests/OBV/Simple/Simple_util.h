@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    Simple_util.h
  *
@@ -6,15 +5,18 @@
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_UTIL_H
 #define TAO_UTIL_H
+
+#include <memory>
 
 #include "tao/Utils/ORB_Manager.h"
 
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/SString.h"
 
 /**
  * @class Server
@@ -57,9 +59,6 @@ protected:
   /// Servant class
   Servant servant_;
 
-  /// name of the servant to be used for TAO Naming Service
-  char const *name {};
-
   /// Parses the commandline arguments.
   int parse_args ();
 
@@ -67,11 +66,10 @@ protected:
   /// registering objects.
   TAO_ORB_Manager orb_manager_;
 
-  // TAO_Naming_Server namingServer;
-  // helper class for getting access to Naming Service.
+  using IOR_File = std::unique_ptr<FILE, int (*) (FILE *)>;
 
   /// File where the IOR of the server object is stored.
-  FILE *ior_output_file_ {};
+  IOR_File ior_output_file_ {nullptr, ACE_OS::fclose};
 
   /// Number of command line arguments.
   int argc_ {};
@@ -95,7 +93,7 @@ class Client
 public:
   Client () = default;
 
-  ~Client ();
+  ~Client () = default;
 
   Client (Client const&) = delete;
   Client (Client&&) = delete;
@@ -124,9 +122,6 @@ protected:
   /// Parses the arguments passed on the command line.
   int parse_args ();
 
-//  TAO_Naming_Client namingClient;
-  // helper class for getting access to Naming Service.
-
   /// # of arguments on the command line.
   int argc_ {};
 
@@ -134,19 +129,13 @@ protected:
   ACE_TCHAR **argv_ {};
 
   /// IOR of the obj ref of the server.
-  ACE_TCHAR *ior_ {};
-
-  /// Name to be usred for the naming service
-  char *name_ {};
+  ACE_TString ior_ {};
 
   /// Remember our orb.
   CORBA::ORB_var orb_;
 
   /// Server object
   Var server_;
-
-  /// Flag to use the naming service
-  bool naming_ {};
 
   /// Flag for shutting down the server
   bool shutdown_ {};
