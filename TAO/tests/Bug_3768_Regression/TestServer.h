@@ -15,8 +15,10 @@ public:
   TestServer &operator= (TestServer const &) = delete;
   TestServer &operator= (TestServer &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   void pass_callback (Test::TestCallback_ptr test) override;
+  /// @}
 
   bool got_callback () const;
   void make_callback ();

@@ -39,10 +39,12 @@ public:
   TestCallback &operator= (TestCallback const &) = delete;
   TestCallback &operator= (TestCallback &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   void start_threads_and_block () override;
   void test_call () override;
   void shutdown () override;
+  /// @}
 
 private:
   Worker work_;

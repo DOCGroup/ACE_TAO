@@ -14,8 +14,10 @@ public:
   Simple_Test_i &operator= (Simple_Test_i const &) = delete;
   Simple_Test_i &operator= (Simple_Test_i &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   void shutdown () override;
+  /// @}
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

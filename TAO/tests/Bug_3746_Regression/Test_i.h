@@ -16,12 +16,14 @@ public:
   BoundSequences &operator= (BoundSequences const &) = delete;
   BoundSequences &operator= (BoundSequences &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   ::CORBA::ULong SendSequenceOf10Long (
     ::CORBA::ULong length_sent,
     ::Test::BoundSequences::SequenceOf10Long const &in_seq) override;
 
   void shutdown () override;
+  /// @}
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
