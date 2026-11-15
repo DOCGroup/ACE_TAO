@@ -44,7 +44,7 @@ public:
   {
     ACE_TEST_ASSERT (signal == SIGINT);
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT("Main::Test_SIGINT_Handler (%@) - %s\n"),
+                ACE_TEXT("Main::Test_SIGINT_Handler (%@) - %C\n"),
                 static_cast<void *> (this),
                 this->message_.c_str()));
     Test_SIGINT_Handler::handle_signal_count_++;
