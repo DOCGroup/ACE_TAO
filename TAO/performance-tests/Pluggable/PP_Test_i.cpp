@@ -1,11 +1,8 @@
-
-//=============================================================================
 /**
  *  @file    PP_Test_i.cpp
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "tao/Timeprobe.h"
 #include "tao/ORB_Constants.h"
@@ -13,7 +10,7 @@
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-static const char *PP_Test_i_Timeprobe_Description[] =
+static char const *PP_Test_i_Timeprobe_Description[] =
 {
   "PP_Test_i::send_oneway - start",
   "PP_Test_i::send_oneway - end",
@@ -50,8 +47,6 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (PP_Test_i_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-// Factory Constructor
-
 Pluggable_Test_Factory_i::Pluggable_Test_Factory_i (CORBA::ORB_ptr orb)
   : my_pluggable_test_ (orb)
 {
@@ -69,23 +64,17 @@ PP_Test_i::PP_Test_i (CORBA::ORB_ptr orb)
 {
 }
 
-// Oneway send
-
 void
 PP_Test_i::send_oneway ()
 {
   ACE_FUNCTION_TIMEPROBE (PP_TEST_I_SEND_ONEWAY_START);
 }
 
-// Twoway send
-
 void
 PP_Test_i::send_void ()
 {
   ACE_FUNCTION_TIMEPROBE (PP_TEST_I_SEND_VOID_START);
 }
-
-// Shutdown.
 
 void PP_Test_i::shutdown ()
 {

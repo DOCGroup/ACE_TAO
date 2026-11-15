@@ -13,7 +13,7 @@
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-  static const char *PP_Test_Client_Timeprobe_Description[] =
+  static char const *PP_Test_Client_Timeprobe_Description[] =
 {
   "PP_Test_Client::send_oneway - start",
   "PP_Test_Client::send_oneway - end",

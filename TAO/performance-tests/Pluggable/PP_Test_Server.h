@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    PP_Test_Server.h
  *
@@ -8,7 +6,6 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef _PP_TEST_SERVER_H
 #define _PP_TEST_SERVER_H
@@ -37,7 +34,6 @@
 class PP_Test_Server
 {
 public:
-  /// Default constructor
   PP_Test_Server () = default;
   PP_Test_Server (PP_Test_Server const &) = delete;
   PP_Test_Server (PP_Test_Server &&) = delete;

@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    PP_Test_Client.h
  *
@@ -8,7 +6,6 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef _PP_TEST_CLIENT_H
 #define _PP_TEST_CLIENT_H
@@ -36,7 +33,6 @@
 class PP_Test_Client
 {
 public:
-  // = Constructor and destructor.
   /// Use <testing_collocation> to control some client's behaviors.
   explicit PP_Test_Client (bool shutdown = false);
   PP_Test_Client (PP_Test_Client const &) = delete;
