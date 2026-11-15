@@ -139,8 +139,8 @@ Request_Handler::handle_input (ACE_HANDLE fd)
       ++this->nr_msgs_rcvd_;
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t) svr input; fd: 0x%x; input: %s\n",
-                  fd,
+                  "(%t) svr input; fd: %@; input: %s\n",
+                  reinterpret_cast<void *> (fd),
                   buffer));
       if (ACE_OS::strcmp (buffer, ACE_TEXT ("shutdown")) == 0)
       {
@@ -150,8 +150,8 @@ Request_Handler::handle_input (ACE_HANDLE fd)
     }
   else
     ACE_DEBUG ((LM_DEBUG,
-                "(%t) Request_Handler: 0x%x peer closed (0x%x)\n",
-                this, fd));
+                "(%t) Request_Handler: %@ peer closed (%@)\n",
+                this, reinterpret_cast<void *> (fd)));
   return -1;
 }
 
@@ -159,12 +159,12 @@ int
 Request_Handler::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) svr close; fd: 0x%x, rcvd %d msgs\n",
-              fd,
+              "(%t) svr close; fd: %@, rcvd %B msgs\n",
+              reinterpret_cast<void *> (fd),
               this->nr_msgs_rcvd_));
   if (this->nr_msgs_rcvd_ != cli_req_no)
     ACE_ERROR((LM_ERROR,
-               "(%t) Handler 0x%x: Expected %d messages; got %d\n",
+               "(%t) Handler %@: Expected %B messages; got %B\n",
                this,
                cli_req_no,
                this->nr_msgs_rcvd_));
@@ -190,8 +190,7 @@ svr_worker (void *)
 
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%t) %p\n",
-                       "Error handling events"),
+                       "(%t) Error handling events: %p\n"),
                       0);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -215,23 +214,21 @@ cli_worker (void *arg)
       if (connect.connect (stream, addr) < 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      "(%t) %p\n",
-                      "connect"));
+                      "(%t) connect: %p\n"));
           continue;
         }
 
       for (size_t j = 0; j < cli_req_no; ++j)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%t) conn_worker handle 0x%x, req %d\n",
-                      stream.get_handle (),
-                      j+1));
+                      "(%t) conn_worker handle %@, req %B\n",
+                      reinterpret_cast<void *> (stream.get_handle ()),
+                      j + 1));
           if (stream.send_n (arg,
                              (len + 1) * sizeof (ACE_TCHAR)) == -1)
             {
               ACE_ERROR ((LM_ERROR,
-                          "(%t) %p\n",
-                          "send_n"));
+                          "(%t) send_n: %p\n"));
               continue;
             }
           ACE_OS::sleep (delay);
@@ -255,7 +252,7 @@ worker (void *)
   ACE_INET_Addr addr (rendezvous);
 
   ACE_DEBUG((LM_DEBUG,
-             "(%t) Spawning %d client threads...\n",
+             "(%t) Spawning %B client threads...\n",
              cli_thrno));
   int grp = ACE_Thread_Manager::instance ()->spawn_n (cli_thrno,
                                                       &cli_worker,
@@ -271,19 +268,17 @@ worker (void *)
 
   if (connect.connect (stream, addr) == -1)
     ACE_ERROR ((LM_ERROR,
-                "(%t) %p Error while connecting\n",
-                "connect"));
+                "(%t) Error while connecting: %p\n"));
 
   const ACE_TCHAR *sbuf = ACE_TEXT ("\011shutdown");
 
   ACE_DEBUG ((LM_DEBUG,
-              "shutdown stream handle = %x\n",
-              stream.get_handle ()));
+              "shutdown stream handle = %@\n",
+              reinterpret_cast<void *> (stream.get_handle ())));
 
   if (stream.send_n (sbuf, (ACE_OS::strlen (sbuf) + 1) * sizeof (ACE_TCHAR)) == -1)
     ACE_ERROR ((LM_ERROR,
-                "(%t) %p\n",
-                "send_n"));
+                "(%t) send_n: %p\n"));
 
   stream.close ();
 
@@ -306,12 +301,11 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   if (acceptor.open (accept_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("open")),
+                       ACE_TEXT ("open: %p\n")),
                       1);
 
   ACE_DEBUG((LM_DEBUG,
-             ACE_TEXT ("(%t) Spawning %d server threads...\n"),
+             ACE_TEXT ("(%t) Spawning %B server threads...\n"),
              svr_thrno));
   ACE_Thread_Manager::instance ()->spawn_n (svr_thrno,
                                             svr_worker);
