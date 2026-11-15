@@ -7,28 +7,27 @@
 #include "rtschedtestlib_export.h"
 
 #include "tao/RTScheduling/RTScheduler.h"
+#include "tao/PortableServer/Servant_Base.h"
 #include "orbsvcs/CosNamingC.h"
 
+#include "ace/Lock.h"
 #include "ace/Service_Config.h"
 #include "ace/Service_Object.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/High_Res_Timer.h"
+#include <memory>
 #include <string>
 #include <vector>
 
 class Thread_Task;
 class Task;
 
-using DT_LIST = Thread_Task **;
-using POA_LIST = POA_Holder **;
-using JOB_LIST = Job_i **;
-
 class RTSCHEDTESTLIB_Export DT_Creator : public ACE_Service_Object
 {
  public:
   DT_Creator ();
 
-  virtual ~DT_Creator ();
+  ~DT_Creator () override;
 
   int init (int argc, ACE_TCHAR *argv []) override;
 
@@ -84,21 +83,18 @@ class RTSCHEDTESTLIB_Export DT_Creator : public ACE_Service_Object
   int activate_root_poa ();
 
  protected:
-  DT_LIST dt_list_;
-  POA_LIST poa_list_;
-  JOB_LIST job_list_;
+  std::vector<std::unique_ptr<Thread_Task>> dt_list_ {};
+  std::vector<std::unique_ptr<POA_Holder>> poa_list_ {};
+  std::vector<PortableServer::ServantBase_var> job_list_ {};
   //Fixed_Priority_Scheduler* scheduler_;
-  int dt_count_;
-  int poa_count_;
-  int job_count_;
   CORBA::ORB_var orb_;
   /// Mutex to serialize access to our internal state.
-  ACE_Lock* state_lock_;
-  ACE_Lock* shutdown_lock_;
+  std::unique_ptr<ACE_Lock> state_lock_ {};
+  std::unique_ptr<ACE_Lock> shutdown_lock_ {};
   int active_dt_count_;
   int active_job_count_;
   std::vector<std::string> log_ {};
-  ACE_Time_Value* base_time_;
+  std::unique_ptr<ACE_Time_Value> base_time_ {};
   /// A naming context.
   CosNaming::NamingContextExt_var naming_;
   ACE_TString file_name_;
