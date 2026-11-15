@@ -27,14 +27,11 @@ Control::Control (size_t peers_expected,
   , orb_ (CORBA::ORB::_duplicate (orb))
   , poa_ (PortableServer::POA::_duplicate (poa))
   , peers_count_ (0)
-  , peers_ (new Federated_Test::Peer_var[this->peers_expected_])
+  , peers_ (std::make_unique<Federated_Test::Peer_var[]> (this->peers_expected_))
 {
 }
 
-Control::~Control ()
-{
-  delete[] this->peers_;
-}
+Control::~Control () = default;
 
 void
 Control::join (Federated_Test::Peer_ptr peer)

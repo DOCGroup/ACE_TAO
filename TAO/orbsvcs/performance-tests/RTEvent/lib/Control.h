@@ -7,6 +7,7 @@
 #include /**/ "ace/pre.h"
 
 #include "Federated_TestS.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -64,7 +65,7 @@ private:
    * @todo I would like to use ACE_Array<> but the interface is too
    * confusing.  std::vector<> would be better, but I'm not allowed to
    */
-  Federated_Test::Peer_var *peers_;
+  std::unique_ptr<Federated_Test::Peer_var[]> peers_;
 };
 
 #include /**/ "ace/post.h"
