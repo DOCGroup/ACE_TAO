@@ -21,6 +21,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_netdb.h"
 
+#include <memory>
+
 // The following works around bugs with some operating systems, which
 // don't allow multiple threads/process to call accept() on the same
 // listen-mode port/socket.  Also, note that since timed accept is
@@ -178,12 +180,12 @@ namespace {
   struct IovecGuard
   {
     IovecGuard(const int count, const int slot, const buffer_len max);
-    ~IovecGuard();
     char* getBufferAtOffset(const ssize_t offset);
 
     const int iovcnt_;
     buffer_len totalBytes_;
-    iovec* iov_;
+    std::unique_ptr<iovec[]> iov_;
+    std::unique_ptr<char[]> buffer_;
     static const int ALL_SLOTS = -1;
   };
 
@@ -229,9 +231,9 @@ using CONNECTOR = ACE_Connector<Svc_Handler, ACE_SOCK_Connector>;
 
 IovecGuard::IovecGuard(const int count, const int slot, const buffer_len max)
   : iovcnt_(count),
-    totalBytes_(0)
+    totalBytes_(0),
+    iov_(new iovec[iovcnt_])
 {
-  ACE_NEW (iov_,iovec[iovcnt_]);
   int i = 0;
   char expChar = START_CHAR;
   for ( ; i < iovcnt_; ++i)
@@ -239,10 +241,9 @@ IovecGuard::IovecGuard(const int count, const int slot, const buffer_len max)
       iov_[i].iov_len = ((slot == i) || (slot == ALL_SLOTS)) ? max : 10;
       totalBytes_ += iov_[i].iov_len;
     }
-  char* totalBuffer;
   // allocate all iov_bases as one big chunk
-  ACE_NEW (totalBuffer,
-           char[totalBytes_]);
+  this->buffer_.reset (new char[this->totalBytes_]);
+  char *totalBuffer = this->buffer_.get ();
   for (i = 0; i < iovcnt_; ++i)
     {
       iov_[i].iov_base = totalBuffer;
@@ -256,19 +257,10 @@ IovecGuard::IovecGuard(const int count, const int slot, const buffer_len max)
     }
 }
 
-IovecGuard::~IovecGuard()
-{
-  // iov_bases are all just part of one big buffer
-  char* totalBuffer = static_cast<char *>(iov_[0].iov_base);
-  delete [] totalBuffer;
-  delete [] iov_;
-}
-
 char*
 IovecGuard::getBufferAtOffset(const ssize_t offset)
 {
-  char * totalBuffer = static_cast<char *>(iov_[0].iov_base);
-  return totalBuffer + offset;
+  return this->buffer_.get () + offset;
 }
 
 Svc_Handler::Svc_Handler (ACE_Thread_Manager *)
@@ -606,7 +598,7 @@ Svc_Handler::send (IovecGuard& iovec_array,
 
   if (use_sendv)
     while (((actual_send_status =
-             this->peer ().sendv (iovec_array.iov_,
+             this->peer ().sendv (iovec_array.iov_.get (),
                                   iovec_array.iovcnt_,
                                   &DEFAULT_TIME_VALUE)) == -1) &&
            (errno == EWOULDBLOCK))
@@ -614,8 +606,8 @@ Svc_Handler::send (IovecGuard& iovec_array,
       }
   else
     while (((actual_send_status =
-             this->peer ().send (iovec_array.iov_->iov_base,
-                                 iovec_array.iov_->iov_len,
+             this->peer ().send (iovec_array.iov_[0].iov_base,
+                                 iovec_array.iov_[0].iov_len,
                                  &DEFAULT_TIME_VALUE)) == -1) &&
            (errno == EWOULDBLOCK))
       {
