@@ -2498,31 +2498,18 @@ TAO_StreamEndPoint::multiconnect (AVStreams::streamQoS &/*the_qos*/,
 
 TAO_StreamEndPoint::~TAO_StreamEndPoint ()
 {
-  //this->handle_close ();
-  TAO_AV_FlowSpecSetItor begin = this->forward_flow_spec_set.begin ();
-  TAO_AV_FlowSpecSetItor end = this->forward_flow_spec_set.end ();
-
-  int i=0;
-  // @@ Naga: Will the iterator always give the entries in the order of insertion.
-  // or is it an implementation fact of ACE containers.
-  for ( ; begin != end; ++begin, ++i)
+  for (TAO_AV_FlowSpecSetItor iter = this->forward_flow_spec_set.begin ();
+       iter != this->forward_flow_spec_set.end ();
+       ++iter)
     {
-//       if (i >= FLOWSPEC_MAX)
-//         {
-          TAO_FlowSpec_Entry *entry = *begin;
-          delete entry;
-          //        }
+      delete *iter;
     }
-  begin = this->reverse_flow_spec_set.begin ();
-  end = this->reverse_flow_spec_set.end ();
-  i = 0;
-  for (; begin != end; ++begin)
+
+  for (TAO_AV_FlowSpecSetItor iter = this->reverse_flow_spec_set.begin ();
+       iter != this->reverse_flow_spec_set.end ();
+       ++iter)
     {
-//       if (i >= FLOWSPEC_MAX)
-//         {
-          TAO_FlowSpec_Entry *entry = *begin;
-          delete entry;
-          //        }
+      delete *iter;
     }
 }
 
