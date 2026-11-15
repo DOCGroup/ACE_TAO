@@ -28,12 +28,12 @@ public:
   Simple_Server_i &operator= (Simple_Server_i const &) = delete;
   Simple_Server_i &operator= (Simple_Server_i &&) = delete;
 
-  // = The Simple_Server methods.
+  /// Simple_Server methods.
   void remote_call () override;
 
   void shutdown () override;
 
- private:
+private:
   CORBA::ORB_var orb_;
 };
 

@@ -61,33 +61,32 @@ public:
   Worker &operator= (Worker const &) = delete;
   Worker &operator= (Worker &&) = delete;
 
-  // = The Task_Base methods
+  /// Task_Base methods.
   int svc () override;
 
-  // Caught any exception ?
+  /// Returns the kind of exception received by the worker.
   int received_ex_kind () const;
 
-  // Return number of received exceptions.
+  /// Returns the number of exceptions received by the worker.
   int num_received_ex () const;
 
-  // Indicate if the invocation completed.
+  /// Indicates whether the invocation completed.
   bool invocation_completed () const;
 
-  // Is test done ?
+  /// Marks the test as done.
   void done ();
 
 private:
-  // The ORB reference
+  /// The ORB reference.
   CORBA::ORB_var orb_;
   ACE_TString ior_;
-  // The exceptions caught.
+  /// The exception kind received by the worker.
   int received_ex_kind_;
-  // The number of received exceptions.
+  /// The number of exceptions received by the worker.
   int num_received_ex_;
-  // Flag indicating that the invocation was completed.
+  /// Whether the invocation completed.
   bool invocation_completed_;
-  // Flag for test completion. The result is
-  // collected before done.
+  /// Whether the test is done; the result is collected before this is set.
   bool done_;
 };
 

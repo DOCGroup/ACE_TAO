@@ -21,29 +21,29 @@ public:
   Manager &operator= (Manager const &) = delete;
   Manager &operator= (Manager &&) = delete;
 
+  /// Initializes the ORB and POA.
   int init (int argc, ACE_TCHAR *argv[]);
 
-  // Initialize the ORB, POA etc.
-
+  /// Activates the servant.
   int activate_servant ();
-  // Activate the servant etc.
 
   int make_iors_register (Manager_Options const &options);
 
+  /// Runs the ORB event loop.
   int run ();
-  // Run the  ORB event loop..
- private:
+
+private:
+  /// The ORB.
   CORBA::ORB_var orb_;
-  // Our ORB
 
+  /// The new POA.
   PortableServer::POA_var new_poa_var_;
-  // The new poa that is created..
 
+  /// Non-owning alias; servant_locator_var_ holds the servant reference.
   Servant_Locator *servant_locator_ {};
-  // Non-owning alias; servant_locator_var_ holds the servant reference.
 
+  /// The servant locator reference.
   PortableServer::ServantLocator_var servant_locator_var_;
-  // Our servant locator var
 
   CORBA::Object_var new_manager_ior_;
 };
