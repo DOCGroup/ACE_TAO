@@ -203,10 +203,10 @@ Handler::open (void *)
                        0);
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) client %s connected from %d on handle %d\n",
+              "(%P|%t) client %s connected from %d on handle %@\n",
               cli_addr.get_host_name (),
               cli_addr.get_port_number (),
-              this->peer ().get_handle ()));
+              reinterpret_cast<void *> (this->peer ().get_handle ())));
   return 0;
 }
 
@@ -214,7 +214,7 @@ int
 Handler::close (u_long)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) closing down %x\n",
+              "(%P|%t) closing down %@\n",
               this));
   delete this;
   return 0;

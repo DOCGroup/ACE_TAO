@@ -48,7 +48,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     //FUZZ: enable check_for_lack_ACE_OS
   else
   {
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("server %*C shutdown\n"), n, buf));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("server %*C shutdown\n"), static_cast<int> (n), buf));
   }
 
   // Explicitly close the connection.
