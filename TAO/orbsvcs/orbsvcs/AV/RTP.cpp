@@ -65,7 +65,7 @@ RTP_Packet::RTP_Packet(char* buffer, int length)
   if (this->ext())
     {
       index+=2;
-      int extension_data_size = ntohs(*(ACE_UINT16*)&buffer[index]);
+      int const extension_data_size = ntohs(*(ACE_UINT16*)&buffer[index]);
       index+=2;
       index+=extension_data_size;
 
@@ -336,8 +336,8 @@ TAO_AV_RTP_Object::handle_input ()
   // Handles the incoming RTP packet input.
   this->frame_.rd_ptr (this->frame_.base ());
 
-  int n = this->transport_->recv (this->frame_.rd_ptr (),
-                                  this->frame_.size ());
+  int const n = this->transport_->recv (this->frame_.rd_ptr (),
+                                        this->frame_.size ());
   if (n == 0)
   {
     ORBSVCS_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP::handle_input:connection closed\n"),-1);
@@ -398,7 +398,7 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
   int result = -1;
   std::unique_ptr<RTP_Packet> rtp_packet;
   RTP_Packet *raw_rtp_packet {};
-  ACE_UINT32 csrc_count = 0;  // Assume for now no mixers/translators
+  ACE_UINT32 const csrc_count = 0;  // Assume for now no mixers/translators
   ACE_UINT32 *csrc_list {};
 
   if (frame_info != nullptr)
@@ -466,9 +466,9 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
 
       samples_per_usec = samples_per_sec/1000000.0;
 
-      ACE_Time_Value now = ACE_OS::gettimeofday();
+      ACE_Time_Value const now = ACE_OS::gettimeofday();
 
-      ACE_UINT32 ts = (ACE_UINT32)
+      ACE_UINT32 const ts = (ACE_UINT32)
                       (now.sec () * samples_per_sec +
                        ((double)now.usec () * samples_per_usec) +
                        this->timestamp_offset_);
@@ -520,7 +520,7 @@ TAO_AV_RTP_Object::send_frame (iovec const *iov,
   int result = -1;
   std::unique_ptr<RTP_Packet> rtp_packet;
   RTP_Packet *raw_rtp_packet {};
-  ACE_UINT32 csrc_count = 0;  // Assume for now no mixers/translators
+  ACE_UINT32 const csrc_count = 0;  // Assume for now no mixers/translators
   ACE_UINT32 *csrc_list {};
 
   if (this->connection_gone_)
@@ -544,7 +544,7 @@ TAO_AV_RTP_Object::send_frame (iovec const *iov,
       // set the ssrc on the control object so the RTCP traffic can be matched
       // to the RTP traffic
       rtcp_prot_obj->ssrc(this->ssrc_);
-      ACE_UINT16 data_size = static_cast<ACE_UINT16> (iov[0].iov_len);
+      ACE_UINT16 const data_size = static_cast<ACE_UINT16> (iov[0].iov_len);
 
       ACE_NEW_RETURN (raw_rtp_packet,
                       RTP_Packet (0,                            // padding
@@ -597,13 +597,13 @@ TAO_AV_RTP_Object::send_frame (iovec const *iov,
 
       samples_per_usec = samples_per_sec/1000000.0;
 
-      ACE_Time_Value now = ACE_OS::gettimeofday();
+      ACE_Time_Value const now = ACE_OS::gettimeofday();
 
-      ACE_UINT32 ts = (ACE_UINT32)
+      ACE_UINT32 const ts = (ACE_UINT32)
                       (now.sec () * samples_per_sec +
                        ((double)now.usec () * samples_per_usec) +
                        this->timestamp_offset_);
-      ACE_UINT16 data_size = static_cast<ACE_UINT16> (iov[0].iov_len);
+      ACE_UINT16 const data_size = static_cast<ACE_UINT16> (iov[0].iov_len);
 
       ACE_NEW_RETURN (raw_rtp_packet,
                       RTP_Packet (0,                            // padding
@@ -657,7 +657,7 @@ TAO_AV_RTP_Object::TAO_AV_RTP_Object (TAO_AV_Callback *callback,
   this->timestamp_offset_ = ACE_OS::rand ();
 
   char buf [BUFSIZ];
-  int result = ACE_OS::hostname (buf, BUFSIZ);
+  int const result = ACE_OS::hostname (buf, BUFSIZ);
   unsigned long ipaddr = 0;
   if (result == 0)
   {
