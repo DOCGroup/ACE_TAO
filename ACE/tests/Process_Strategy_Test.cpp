@@ -378,10 +378,9 @@ Counting_Service::handle_input (ACE_HANDLE)
     {
       buf[len] = '\0';
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) %d bytes of input on %d is %*s\n"),
+                  ACE_TEXT ("(%P|%t) %b bytes of input on %d is %s\n"),
                   bytes,
                   this->peer ().get_handle (),
-                  bytes,
                   ACE_TEXT_CHAR_TO_TCHAR (buf)));
       // Read and return the current value in the file.
       if (std::strncmp (buf, "read", 4) == 0)

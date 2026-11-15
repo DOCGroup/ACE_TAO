@@ -96,7 +96,7 @@ Time_Handler::handle_time_out (const ACE_Time_Value &, const void *arg)
                 current_counter));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("[%@] Timer id %d with counter #%d|%B expired.\n"),
+              ACE_TEXT ("[%@] Timer id %d with counter #%B|%B expired.\n"),
               this,
               this->timer_id (),
               counter,

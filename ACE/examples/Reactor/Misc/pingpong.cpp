@@ -141,13 +141,11 @@ Ping_Pong::handle_input (ACE_HANDLE)
                        handle_,
                        ACE_TEXT ("read")),
                       -1);
-  n -= (2 * sizeof (int));
   char const *buf = this->buf_ + (2 * sizeof (int));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) reading <%d> = %*C\n"),
+              ACE_TEXT ("(%P|%t) reading <%d> = %C\n"),
               this->handle_,
-              n,
               buf));
 #endif /* ACE_HAS_STREAM_PIPES */
   return 0;

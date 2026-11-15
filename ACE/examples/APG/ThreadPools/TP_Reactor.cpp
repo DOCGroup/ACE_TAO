@@ -188,7 +188,7 @@ private:
           for (size_t j = 0; j < cli_req_no; ++j)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("Sending work to server on handle 0x%x, req %d\n"),
+                          ACE_TEXT ("Sending work to server on handle 0x%x, req %B\n"),
                           stream.get_handle (),
                           j + 1));
               if (stream.send_n (arg,

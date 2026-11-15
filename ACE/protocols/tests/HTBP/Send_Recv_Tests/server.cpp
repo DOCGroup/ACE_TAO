@@ -279,7 +279,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (len != 255)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT("(%P} server: send result %d != 255\n"), len));
+                  ACE_TEXT("(%P} server: send result %b != 255\n"), len));
       return 1;
     }
 
