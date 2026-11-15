@@ -243,18 +243,22 @@ ACE_HTTP_Addr::set (const ACE_TCHAR *host_name,
   if (host_name == nullptr || path == nullptr)
     return -1;
 
-  if (!duplicate_url_string (this->hostname_, host_name))
-    return -1;
-  this->port_number_ = port;
-  if (!duplicate_url_string (this->path_, path))
+  URL_String hostname;
+  URL_String path_copy;
+  URL_String query_copy;
+  if (!duplicate_url_string (hostname, host_name)
+      || !duplicate_url_string (path_copy, path))
     return -1;
   if (query != nullptr)
     {
-      if (!duplicate_url_string (this->query_, query))
+      if (!duplicate_url_string (query_copy, query))
         return -1;
     }
-  else
-    this->query_.reset ();
+
+  this->hostname_ = std::move (hostname);
+  this->path_ = std::move (path_copy);
+  this->query_ = std::move (query_copy);
+  this->port_number_ = port;
 
   size_t size = this->url_size (1);
 
@@ -631,24 +635,29 @@ ACE_FTP_Addr::set (const ACE_TCHAR *host_name,
 {
   if (host_name == nullptr || path == nullptr)
     return -1;
-  this->clear ();
-  if (!duplicate_url_string (this->hostname_, host_name)
-      || !duplicate_url_string (this->path_, path))
+
+  URL_String hostname;
+  URL_String path_copy;
+  URL_String user_copy;
+  URL_String password_copy;
+  if (!duplicate_url_string (hostname, host_name)
+      || !duplicate_url_string (path_copy, path))
     return -1;
   if (user != nullptr)
     {
-      if (!duplicate_url_string (this->user_, user))
+      if (!duplicate_url_string (user_copy, user))
         return -1;
     }
-  else
-    this->user_.reset ();
   if (password != nullptr)
     {
-      if (!duplicate_url_string (this->password_, password))
+      if (!duplicate_url_string (password_copy, password))
         return -1;
     }
-  else
-    this->password_.reset ();
+
+  this->hostname_ = std::move (hostname);
+  this->path_ = std::move (path_copy);
+  this->user_ = std::move (user_copy);
+  this->password_ = std::move (password_copy);
 
   size_t size = this->url_size (1);
 
@@ -876,17 +885,22 @@ ACE_Mailto_Addr::set (const ACE_TCHAR *user,
 {
   if (user == nullptr || hostname == nullptr)
     return -1;
-  this->clear ();
-  if (!duplicate_url_string (this->user_, user)
-      || !duplicate_url_string (this->hostname_, hostname))
+
+  URL_String user_copy;
+  URL_String hostname_copy;
+  URL_String headers_copy;
+  if (!duplicate_url_string (user_copy, user)
+      || !duplicate_url_string (hostname_copy, hostname))
     return -1;
   if (headers != nullptr)
     {
-      if (!duplicate_url_string (this->headers_, headers))
+      if (!duplicate_url_string (headers_copy, headers))
         return -1;
     }
-  else
-    this->headers_.reset ();
+
+  this->user_ = std::move (user_copy);
+  this->hostname_ = std::move (hostname_copy);
+  this->headers_ = std::move (headers_copy);
   size_t size = this->url_size (1);
   ACE_TCHAR *raw_buffer {};
   ACE_ALLOCATOR_RETURN (raw_buffer,

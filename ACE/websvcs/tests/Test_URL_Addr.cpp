@@ -10,6 +10,7 @@ void test_url_addr ();
 bool test_url_buffer_aliasing ();
 bool test_ftp_set_components ();
 bool test_url_self_set ();
+bool test_url_component_aliasing ();
 
 int ACE_TMAIN (int, ACE_TCHAR*[])
 {
@@ -26,6 +27,11 @@ int ACE_TMAIN (int, ACE_TCHAR*[])
   if (!test_url_self_set ())
     {
       ACE_ERROR ((LM_ERROR, "URL self-set test failed\n"));
+      return 1;
+    }
+  if (!test_url_component_aliasing ())
+    {
+      ACE_ERROR ((LM_ERROR, "URL component aliasing test failed\n"));
       return 1;
     }
 
@@ -84,6 +90,29 @@ bool test_url_self_set ()
     && ACE_OS::strcmp (ftp.get_url (), ftp_url) == 0
     && mailto.string_to_addr (mailto_url) == 0
     && mailto.set (mailto) == 0
+    && ACE_OS::strcmp (mailto.get_url (), mailto_url) == 0;
+}
+
+bool test_url_component_aliasing ()
+{
+  ACE_HTTP_Addr http;
+  ACE_FTP_Addr ftp;
+  ACE_Mailto_Addr mailto;
+  ACE_TCHAR const http_url[] = ACE_TEXT ("http://example.org/path?query");
+  ACE_TCHAR const ftp_url[] = ACE_TEXT ("ftp://user:password@example.org/path");
+  ACE_TCHAR const mailto_url[] = ACE_TEXT ("mailto:user@example.org?subject=test");
+
+  return http.string_to_addr (http_url) == 0
+    && http.set (http.get_hostname (), http.get_path (), http.get_query (),
+                 http.get_port_number ()) == 0
+    && ACE_OS::strcmp (http.get_url (), http_url) == 0
+    && ftp.string_to_addr (ftp_url) == 0
+    && ftp.set (ftp.get_hostname (), ftp.get_path (), ftp.get_user (),
+                ftp.get_passwd ()) == 0
+    && ACE_OS::strcmp (ftp.get_url (), ftp_url) == 0
+    && mailto.string_to_addr (mailto_url) == 0
+    && mailto.set (mailto.get_user (), mailto.get_hostname (),
+                   mailto.get_headers ()) == 0
     && ACE_OS::strcmp (mailto.get_url (), mailto_url) == 0;
 }
 
