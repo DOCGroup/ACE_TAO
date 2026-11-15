@@ -132,7 +132,7 @@ Request_Handler::handle_input (ACE_HANDLE fd)
       ++this->nr_msgs_rcvd_;
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t) svr input; fd: %@; input: %s\n",
+                  ACE_TEXT ("(%t) svr input; fd: %@; input: %s\n"),
                   reinterpret_cast<void *> (fd),
                   buffer));
       if (ACE_OS::strcmp (buffer, ACE_TEXT ("shutdown")) == 0)
