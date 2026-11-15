@@ -358,8 +358,8 @@ Counting_Service::handle_input (ACE_HANDLE)
   ACE_Time_Value* timeout {};
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) reading from peer on %d\n"),
-              this->peer ().get_handle ()));
+              ACE_TEXT ("(%P|%t) reading from peer on %@\n"),
+              reinterpret_cast<void *> (this->peer ().get_handle ())));
   size_t len;
   // Read the PDU length first.
   ssize_t bytes = this->peer ().recv ((void *) &len,
@@ -378,9 +378,9 @@ Counting_Service::handle_input (ACE_HANDLE)
     {
       buf[len] = '\0';
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) %b bytes of input on %d is %s\n"),
+                  ACE_TEXT ("(%P|%t) %b bytes of input on %@ is %s\n"),
                   bytes,
-                  this->peer ().get_handle (),
+                  reinterpret_cast<void *> (this->peer ().get_handle ()),
                   ACE_TEXT_CHAR_TO_TCHAR (buf)));
       // Read and return the current value in the file.
       if (std::strncmp (buf, "read", 4) == 0)

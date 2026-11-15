@@ -397,13 +397,15 @@ int TCPConnectionHandler::handle_input (ACE_HANDLE handle)
 
   if (errno != EWOULDBLOCK)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT (" (%P:%p (%d)\n"),
-                       ACE_TEXT ("TCPConnectionHandler::handle_input call with no data on handle "), handle),
+                       ACE_TEXT (" (%P:%p (%@)\n"),
+                       ACE_TEXT ("TCPConnectionHandler::handle_input call with no data on handle "),
+                       reinterpret_cast<void *> (handle)),
                       -1);
 
   ACE_ERROR ((LM_WARNING,
-              ACE_TEXT (" (%P:%p (%d)\n"),
-              ACE_TEXT ("TCPConnectionHandler::handle_input call with no data on handle "), handle));
+              ACE_TEXT (" (%P:%p (%@)\n"),
+              ACE_TEXT ("TCPConnectionHandler::handle_input call with no data on handle "),
+              reinterpret_cast<void *> (handle)));
 
   return 0;
 }
@@ -678,8 +680,8 @@ int HandlersRegister::registerTCPServer (TCPConnectionHandler *handler)
       return 0;
     }
   ACE_ERROR ((LM_ERROR,
-              ACE_TEXT ("Too many servers registered (%d). ACE_Reactor or ACE_Acceptor broken?\n"),
-              handler->get_handle ()));
+              ACE_TEXT ("Too many servers registered (%@). ACE_Reactor or ACE_Acceptor broken?\n"),
+              reinterpret_cast<void *> (handler->get_handle ())));
   return -1;
 }
 

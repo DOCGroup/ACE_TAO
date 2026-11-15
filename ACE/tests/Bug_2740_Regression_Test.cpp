@@ -95,8 +95,8 @@ int
 ClientSvcHandler::open (void* factory)
 {
   ++iter_;
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%t: client h %d, open for iteration %B\n"),
-              this->peer ().get_handle (), this->iter_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%t: client h %@, open for iteration %B\n"),
+              reinterpret_cast<void *> (this->peer ().get_handle ()), this->iter_));
 
   if (ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::open (factory) == 0)
     {
@@ -128,8 +128,8 @@ ClientSvcHandler::handle_input (ACE_HANDLE handle)
     ssize_t bc;
     bc = this->peer ().recv (buffer, sizeof (buffer));
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("%t: client h %d recv %b bytes\n"),
-                handle,
+                ACE_TEXT ("%t: client h %@ recv %b bytes\n"),
+                reinterpret_cast<void *> (handle),
                 bc));
     if (bc > 0)
       {
@@ -146,8 +146,8 @@ ClientSvcHandler::handle_input (ACE_HANDLE handle)
         if (this->echo_cnt_ == 0)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("%t: client h %d end of echo\n"),
-                        handle));
+                        ACE_TEXT ("%t: client h %@ end of echo\n"),
+                        reinterpret_cast<void *> (handle)));
             return -1;
           }
 
@@ -162,21 +162,21 @@ ClientSvcHandler::handle_input (ACE_HANDLE handle)
     else if (bc == 0) // Socket was closed by server
       {
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%t: client h %d: closed by server\n"),
-                           handle),
+                           ACE_TEXT ("%t: client h %@: closed by server\n"),
+                           reinterpret_cast<void *> (handle)),
                           -1);
       }
     else if (errno == EWOULDBLOCK) // no data ready on socket
       {
         ACE_ERROR_RETURN ((LM_DEBUG,
-                           ACE_TEXT ("%t: client h %d: recv no data\n"),
-                           handle),
+                           ACE_TEXT ("%t: client h %@: recv no data\n"),
+                           reinterpret_cast<void *> (handle)),
                           0);
       }
     else
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%t: client h %d: %p\n"),
-                         handle,
+                         ACE_TEXT ("%t: client h %@: %p\n"),
+                         reinterpret_cast<void *> (handle),
                          ACE_TEXT ("send")),
                         -1);
 
