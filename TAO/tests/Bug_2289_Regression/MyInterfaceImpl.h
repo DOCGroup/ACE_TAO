@@ -4,7 +4,7 @@
 class MyInterfaceImpl
   : public virtual POA_MyInterface
 {
-  public:
+public:
   explicit MyInterfaceImpl (CORBA::ORB_ptr orb);
   MyInterfaceImpl (MyInterfaceImpl const &) = delete;
   MyInterfaceImpl &operator= (MyInterfaceImpl const &) = delete;
@@ -13,9 +13,11 @@ class MyInterfaceImpl
 
   static char const * const my_string;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   CORBA::Boolean myMethod (char const *stringParam) override;
+  /// @}
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
