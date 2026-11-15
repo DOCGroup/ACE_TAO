@@ -46,19 +46,18 @@ class Worker : public ACE_Task_Base
 {
 public:
   explicit Worker (CORBA::ORB_ptr orb);
-  // ctor
 
   Worker (Worker const &) = delete;
   Worker &operator= (Worker const &) = delete;
   Worker (Worker &&) = delete;
   Worker &operator= (Worker &&) = delete;
 
+  /// Runs the server event loop.
   int svc () override;
-  // The thread entry point.
 
 private:
+  /// The ORB whose event loop runs in this worker.
   CORBA::ORB_var const orb_;
-  // The orb
 };
 
 int

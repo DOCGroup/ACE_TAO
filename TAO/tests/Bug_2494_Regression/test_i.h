@@ -3,31 +3,24 @@
 
 #include "testS.h"
 
+/// Implements the `Simple_Server` interface from `test.idl`.
 class Simple_Server_i : public POA_Simple_Server
 {
-  // = TITLE
-  //   Simpler Server implementation
-  //
-  // = DESCRIPTION
-  //   Implements the Simple_Server interface in test.idl
-  //
 public:
   explicit Simple_Server_i (CORBA::ORB_ptr orb);
-  // ctor
 
   Simple_Server_i (Simple_Server_i const &) = delete;
   Simple_Server_i &operator= (Simple_Server_i const &) = delete;
   Simple_Server_i (Simple_Server_i &&) = delete;
   Simple_Server_i &operator= (Simple_Server_i &&) = delete;
 
-  // = The Simple_Server methods.
   char *test_method (char const *x) override;
 
   void shutdown () override;
 
 private:
+  /// The ORB used by this servant.
   CORBA::ORB_var const orb_;
-  // The ORB
 };
 
 #if defined(__ACE_INLINE__)
