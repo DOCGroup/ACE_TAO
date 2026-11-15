@@ -8,6 +8,7 @@
 #include "tao/PortableServer/POA_Current_Impl.h"
 #include "tao/PortableServer/Collocated_Arguments_Converter.h"
 #include "tao/operation_details.h"
+#include "tao/Stub.h"
 
 #include "ace/Dynamic_Service.h"
 
@@ -31,15 +32,16 @@ TAO_DynamicImplementation::_this ()
   // object. Unlike _this() for static skeletons, its return type is
   // not interface-specific because a DSI servant may very well
   // incarnate multiple CORBA objects of different types.
-  TAO_Stub *stub = this->_create_stub ();
+  TAO_Stub_Auto_Ptr stub (this->_create_stub ());
 
   // Create a object.
-  CORBA::Object_ptr retval = CORBA::Object_ptr ();
+  CORBA::Object_ptr retval {};
   ACE_NEW_RETURN (retval,
-                  CORBA::Object (stub,
+                  CORBA::Object (stub.get (),
                                  1,
                                  this),
                   CORBA::Object::_nil ());
+  stub.release ();
 
   return retval;
 }
