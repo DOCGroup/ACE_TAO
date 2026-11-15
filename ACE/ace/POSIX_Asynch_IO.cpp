@@ -2005,7 +2005,7 @@ ACE_POSIX_Asynch_Transmit_Handler::handle_write_stream (const ACE_Asynch_Write_S
   // Not a partial write. A full write.
 
   // Check ACT to see what was sent.
-  ACT act = * (ACT *) result.act ();
+  ACT const act = *static_cast<ACT const *> (result.act ());
 
   switch (act)
     {
@@ -2069,7 +2069,7 @@ ACE_POSIX_Asynch_Transmit_Handler::handle_read_file (const ACE_Asynch_Read_File:
   // Write data to network.
   if (this->ws_.write (result.message_block (),
                        result.bytes_transferred (),
-                       (void *)&this->data_act_,
+                       std::addressof (this->data_act_),
                        this->result_->priority (),
                        this->result_->signal_number ()) == -1)
     {
@@ -2089,7 +2089,7 @@ ACE_POSIX_Asynch_Transmit_Handler::initiate_read_file ()
       // File is sent. Send the trailer.
       if (this->ws_.write (*this->result_->header_and_trailer ()->trailer (),
                            this->result_->header_and_trailer ()->trailer_bytes (),
-                           (void *)&this->trailer_act_,
+                           std::addressof (this->trailer_act_),
                            this->result_->priority (),
                            this->result_->signal_number ()) == -1)
         ACELIB_ERROR_RETURN ((LM_ERROR,
