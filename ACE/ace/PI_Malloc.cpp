@@ -37,28 +37,28 @@ ACE_PI_Control_Block::print_alignment_info ()
   ACE_TRACE ("ACE_PI_Control_Block::ACE_Control_Block::print_alignment_info");
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("Start ---> ACE_PI_Control_Block::print_alignment_info:\n")));
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Sizeof ptr: %d\n")
+              ACE_TEXT ("Sizeof ptr: %B\n")
               ACE_TEXT ("Sizeof size_t: %B\n")
-              ACE_TEXT ("Sizeof long: %d\n")
-              ACE_TEXT ("Sizeof double: %d\n")
-              ACE_TEXT ("Sizeof ACE_MALLOC_ALIGN: %d\n")
+              ACE_TEXT ("Sizeof long: %B\n")
+              ACE_TEXT ("Sizeof double: %B\n")
+              ACE_TEXT ("Sizeof ACE_MALLOC_ALIGN: %B\n")
               ACE_TEXT ("sizeof ACE_MALLOC_PADDING: %B\n")
-              ACE_TEXT ("Sizeof ACE_MALLOC_HEADER_SIZE: %d\n")
-              ACE_TEXT ("Sizeof ACE_PI_MALLOC_PADDING_SIZE: %d\n")
-              ACE_TEXT ("Sizeof ACE_PI_CONTROL_BLOCK_SIZE: %d\n")
-              ACE_TEXT ("Sizeof ACE_PI_CONTROL_BLOCK_ALIGN_BYTES: %d\n")
-              ACE_TEXT ("Sizeof (MALLOC_HEADER): %d\n")
-              ACE_TEXT ("Sizeof (CONTROL_BLOCK): %d\n"),
+              ACE_TEXT ("Sizeof ACE_MALLOC_HEADER_SIZE: %B\n")
+              ACE_TEXT ("Sizeof ACE_PI_MALLOC_PADDING_SIZE: %B\n")
+              ACE_TEXT ("Sizeof ACE_PI_CONTROL_BLOCK_SIZE: %B\n")
+              ACE_TEXT ("Sizeof ACE_PI_CONTROL_BLOCK_ALIGN_BYTES: %B\n")
+              ACE_TEXT ("Sizeof (MALLOC_HEADER): %B\n")
+              ACE_TEXT ("Sizeof (CONTROL_BLOCK): %B\n"),
               sizeof (char *),
               sizeof (size_t),
               sizeof (long),
               sizeof (double),
-              ACE_MALLOC_ALIGN,
-              ACE_MALLOC_PADDING,
-              ACE_MALLOC_HEADER_SIZE,
-              ACE_PI_MALLOC_PADDING_SIZE,
-              ACE_PI_CONTROL_BLOCK_SIZE,
-              ACE_PI_CONTROL_BLOCK_ALIGN_BYTES,
+              static_cast<size_t> (ACE_MALLOC_ALIGN),
+              static_cast<size_t> (ACE_MALLOC_PADDING),
+              static_cast<size_t> (ACE_MALLOC_HEADER_SIZE),
+              static_cast<size_t> (ACE_PI_MALLOC_PADDING_SIZE),
+              static_cast<size_t> (ACE_PI_CONTROL_BLOCK_SIZE),
+              static_cast<size_t> (ACE_PI_CONTROL_BLOCK_ALIGN_BYTES),
               sizeof (ACE_Malloc_Header),
               sizeof (ACE_PI_Control_Block)
               ));

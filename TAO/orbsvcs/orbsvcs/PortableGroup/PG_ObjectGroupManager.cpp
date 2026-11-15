@@ -848,7 +848,7 @@ TAO_PG_ObjectGroupManager::remove_entry_from_groups (int to_be_removed,
   if (TAO_debug_level > 8)
     ORBSVCS_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%P|%t) TAO_PG_ObjectGroupManager::remove_entry_from_groups -")
-                ACE_TEXT ("Found group at position %i, size = %i\n"),
+                ACE_TEXT ("Found group at position %i, size = %B\n"),
                 to_be_removed, groups->size ()));
   groups->erase (groups->begin () + to_be_removed);
   return groups->size ();

@@ -143,7 +143,7 @@ ACE_Name_Proxy::recv_reply (ACE_Name_Request &reply)
       else if (n != 0)
         {
           ACELIB_ERROR ((LM_ERROR,
-                         ACE_TEXT ("%p got %d bytes, expected %d bytes\n"),
+                         ACE_TEXT ("%p got %b bytes, expected %B bytes\n"),
                          ACE_TEXT ("recv failed"),
                          n,
                          sizeof (ACE_UINT32)));
@@ -165,7 +165,7 @@ ACE_Name_Proxy::recv_reply (ACE_Name_Request &reply)
   if (n != ssize_t (length - sizeof (ACE_UINT32)))
     {
       ACELIB_ERROR ((LM_ERROR,
-                     ACE_TEXT ("%p expected %d, got %d\n"),
+                     ACE_TEXT ("%p expected %b, got %b\n"),
                      ACE_TEXT ("invalid length"),
                      length,
                      n));
