@@ -223,21 +223,36 @@ ACE_Process::spawn (ACE_Process_Options &options)
   size_t vcount, i;
   for (vcount = 0; wargv[vcount] != 0; ++vcount)
     ;
-  char **procargv = new char *[vcount + 1];  // Need 0 at the end
-  procargv[vcount] = 0;
+  std::unique_ptr<char *[]> procargv_owner {new char *[vcount + 1]};
+  char **procargv = procargv_owner.get ();
+  std::vector<std::unique_ptr<char[]>> procargv_strings;
+  procargv_strings.reserve (vcount);
   for (i = 0; i < vcount; ++i)
-    procargv[i] = ACE_Wide_To_Ascii::convert (wargv[i]);
+    {
+      std::unique_ptr<char[]> converted {ACE_Wide_To_Ascii::convert (wargv[i])};
+      procargv[i] = converted.get ();
+      procargv_strings.push_back (std::move (converted));
+    }
+  procargv[vcount] = nullptr;
 
+  std::unique_ptr<char *[]> procenv_owner;
+  std::vector<std::unique_ptr<char[]>> procenv_strings;
   char **procenv {};
   if (options.inherit_environment ())
     {
       wargv = options.env_argv ();
       for (vcount = 0; wargv[vcount] != 0; ++vcount)
         ;
-      procenv = new char *[vcount + 1];  // Need 0 at the end
-      procenv[vcount] = 0;
+      procenv_owner.reset (new char *[vcount + 1]);
+      procenv = procenv_owner.get ();
+      procenv_strings.reserve (vcount);
       for (i = 0; i < vcount; ++i)
-        procenv[i] = ACE_Wide_To_Ascii::convert (wargv[i]);
+        {
+          std::unique_ptr<char[]> converted {ACE_Wide_To_Ascii::convert (wargv[i])};
+          procenv[i] = converted.get ();
+          procenv_strings.push_back (std::move (converted));
+        }
+      procenv[vcount] = nullptr;
     }
 # else
   const char **procargv = const_cast<const char**> (options.command_line_argv ());
@@ -256,11 +271,6 @@ ACE_Process::spawn (ACE_Process_Options &options)
       // something went wrong
       this->child_id_ = ACE_INVALID_PID;
   }
-
-# if defined (ACE_USES_WCHAR)
-  if (procenv)
-    delete [] procenv;
-# endif /* ACE_USES_WCHAR */
 
   // restore STD file descriptors (if necessary)
   if (options.get_stdin () != ACE_INVALID_HANDLE) {
@@ -423,18 +433,32 @@ ACE_Process::spawn (ACE_Process_Options &options)
         size_t vcount, i;
         for (vcount = 0; wargv[vcount] != 0; ++vcount)
           ;
-        char **procargv = new char *[vcount + 1];  // Need 0 at the end
-        procargv[vcount] = 0;
+        std::unique_ptr<char *[]> procargv_owner {new char *[vcount + 1]};
+        char **procargv = procargv_owner.get ();
+        std::vector<std::unique_ptr<char[]>> procargv_strings;
+        procargv_strings.reserve (vcount);
         for (i = 0; i < vcount; ++i)
-          procargv[i] = ACE_Wide_To_Ascii::convert (wargv[i]);
+          {
+            std::unique_ptr<char[]> converted {ACE_Wide_To_Ascii::convert (wargv[i])};
+            procargv[i] = converted.get ();
+            procargv_strings.push_back (std::move (converted));
+          }
+        procargv[vcount] = nullptr;
 
         wargv = options.env_argv ();
         for (vcount = 0; wargv[vcount] != 0; ++vcount)
           ;
-        char **procenv = new char *[vcount + 1];  // Need 0 at the end
-        procenv[vcount] = 0;
+        std::unique_ptr<char *[]> procenv_owner {new char *[vcount + 1]};
+        char **procenv = procenv_owner.get ();
+        std::vector<std::unique_ptr<char[]>> procenv_strings;
+        procenv_strings.reserve (vcount);
         for (i = 0; i < vcount; ++i)
-          procenv[i] = ACE_Wide_To_Ascii::convert (wargv[i]);
+          {
+            std::unique_ptr<char[]> converted {ACE_Wide_To_Ascii::convert (wargv[i])};
+            procenv[i] = converted.get ();
+            procenv_strings.push_back (std::move (converted));
+          }
+        procenv[vcount] = nullptr;
 # else
         const char *procname = options.process_name ();
         char *const *procargv = options.command_line_argv ();
