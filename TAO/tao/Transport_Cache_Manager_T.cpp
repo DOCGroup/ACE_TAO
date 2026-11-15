@@ -195,7 +195,7 @@ namespace TAO
       std::vector<transport_type *> transports;
       ~Purged_Transports ()
       {
-        for (transport_type *transport : this->transports)
+        for (transport_type * const transport : this->transports)
           {
             transport->remove_reference ();
           }
@@ -226,7 +226,7 @@ namespace TAO
     }
 
     // Closing can invoke transport code, so do it without the cache lock.
-    for (transport_type *transport : purged.transports)
+    for (transport_type * const transport : purged.transports)
       {
         if (TAO_debug_level > 6)
           {
@@ -642,7 +642,7 @@ namespace TAO
   bool
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::is_entry_available_i (const HASH_MAP_ENTRY &entry)
   {
-    Cache_Entries_State entry_state = entry.int_id_.recycle_state ();
+    Cache_Entries_State const entry_state = entry.int_id_.recycle_state ();
     bool result = (entry_state == ENTRY_IDLE_AND_PURGABLE);
 
     if (result && entry.int_id_.transport () != nullptr)
@@ -669,7 +669,7 @@ namespace TAO
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::is_entry_purgable_i (HASH_MAP_ENTRY &entry)
   {
     Cache_Entries_State const entry_state = entry.int_id_.recycle_state ();
-    transport_type* transport = entry.int_id_.transport ();
+    transport_type * const transport = entry.int_id_.transport ();
     bool const result = (entry_state == ENTRY_IDLE_AND_PURGABLE ||
                          entry_state == ENTRY_PURGABLE_BUT_NOT_IDLE)
                          && transport->can_be_purged ();
@@ -691,7 +691,7 @@ namespace TAO
   bool
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::is_entry_connecting_i (const HASH_MAP_ENTRY &entry)
   {
-    Cache_Entries_State entry_state = entry.int_id_.recycle_state ();
+    Cache_Entries_State const entry_state = entry.int_id_.recycle_state ();
     bool result = (entry_state == ENTRY_CONNECTING);
 
     if (!result && entry.int_id_.transport () != nullptr)
@@ -770,7 +770,7 @@ namespace TAO
             {
               if (this->is_entry_purgable_i (*sorted_set[i]))
                 {
-                  transport_type* transport = sorted_set[i]->int_id_.transport ();
+                  transport_type * const transport = sorted_set[i]->int_id_.transport ();
                   sorted_set[i]->int_id_.recycle_state (ENTRY_BUSY);
                   transport->add_reference ();
 
@@ -812,7 +812,7 @@ namespace TAO
         typename transport_set_type::iterator it (transports_to_be_closed);
         while (! it.done ())
           {
-            transport_type *transport = *it;
+            transport_type * const transport = *it;
 
             it.advance ();
 
