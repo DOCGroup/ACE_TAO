@@ -29,7 +29,6 @@ public:
   Simple_Server_i &operator= (Simple_Server_i const &) = delete;
   Simple_Server_i &operator= (Simple_Server_i &&) = delete;
 
-  // = The Simple_Server methods.
   CORBA::Long test_method (CORBA::Long x) override;
 
   void shutdown () override;

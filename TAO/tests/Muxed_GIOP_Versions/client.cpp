@@ -52,14 +52,9 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
   return 0;
 }
 
+/// Runs the client work on a separate thread using `ACE_Task_Base`.
 class Client : public ACE_Task_Base
 {
-  // = TITLE
-  //   Run the client thread
-  //
-  // = DESCRIPTION
-  //   Use the ACE_Task_Base class to run the client threads.
-  //
 public:
   Client (Simple_Server_ptr server, Client_Options const &options);
 
