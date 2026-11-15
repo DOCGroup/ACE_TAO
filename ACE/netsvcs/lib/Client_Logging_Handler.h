@@ -57,13 +57,13 @@ public:
 
   /// Activate this instance of the ACE_Client_Logging_Handler
   /// (called by the ACE_Client_Logging_Acceptor).
-  virtual int open (void * = nullptr) override;
+  int open (void * = nullptr) override;
 
   /// Return the handle of the IPC endpoint.
-  virtual ACE_HANDLE get_handle () const override;
+  ACE_HANDLE get_handle () const override;
 
   /// Called when object is removed from the ACE_Reactor.
-  virtual int close (u_long) override;
+  int close (u_long) override;
 
 private:
   /// Handle SIGPIPE.
@@ -72,7 +72,7 @@ private:
                              ucontext_t *) override;
 
   /// Receive logging records from applications.
-  virtual int handle_input (ACE_HANDLE) override;
+  int handle_input (ACE_HANDLE) override;
 
   /**
    * Receive logging records from applications.  This is necessary to
@@ -80,10 +80,10 @@ private:
    * data easily due to its overly simple interface...  This just
    * calls handle_input().
    */
-  virtual int handle_exception (ACE_HANDLE) override;
+  int handle_exception (ACE_HANDLE) override;
 
   /// Called back when it's ok to send.
-  virtual int handle_output (ACE_HANDLE) override;
+  int handle_output (ACE_HANDLE) override;
 
   /// Send the @a log_record to the logging server.
   int send (ACE_Log_Record &log_record);

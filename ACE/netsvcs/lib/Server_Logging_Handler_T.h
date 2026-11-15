@@ -47,7 +47,7 @@ public:
                                 const LOG_MESSAGE_RECEIVER &receiver );
 
   /// Process remote logging records.
-  virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE) override;
+  int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE) override;
 
 protected:
   /// Receive the logging record from a client.
@@ -102,7 +102,7 @@ class ACE_Server_Logging_Acceptor_T : public ACE_Strategy_Acceptor<SERVER_LOGGIN
 public:
   /// Dynamic linking hook.
   ACE_Server_Logging_Acceptor_T ();
-  virtual int init (int argc, ACE_TCHAR *argv[]) override;
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
 protected:
   /// Parse svc.conf arguments.
@@ -113,7 +113,7 @@ protected:
    * specialize this since the <LOG_MESSAGE_RECEIVER> held by this Acceptor must be
    * passed into the <SERVER_LOGGING_HANDLER>.
    */
-  virtual int make_svc_handler (SERVER_LOGGING_HANDLER *&) override;
+  int make_svc_handler (SERVER_LOGGING_HANDLER *&) override;
 
 private:
   // At the moment each ACE_Server_Logging_Acceptor_T contains
@@ -163,7 +163,7 @@ public:
   ACE_Server_Logging_Handler (ACE_Thread_Manager *,
                               const LOG_MESSAGE_RECEIVER &receiver);
 
-  virtual int open (void* = nullptr) override;
+  int open (void* = nullptr) override;
 };
 
 #if defined (ACE_HAS_THREADS)
@@ -191,8 +191,8 @@ public:
   ACE_Thr_Server_Logging_Handler (ACE_Thread_Manager * = nullptr);
   ACE_Thr_Server_Logging_Handler (ACE_Thread_Manager *,
                                   const LOG_MESSAGE_RECEIVER &receiver);
-  virtual int open (void * = nullptr) override;
-  virtual int svc () override;
+  int open (void * = nullptr) override;
+  int svc () override;
 };
 
 #include "Server_Logging_Handler_T.cpp"

@@ -102,17 +102,17 @@ public:
 
   /// Activate this instance of the <ACE_TS_Clerk_Handler>
   /// (called by the <ACE_TS_Clerk_Processor>).
-  virtual int open (void * = nullptr) override;
+  int open (void * = nullptr) override;
 
   /// Return the handle of the message_fifo_;
-  virtual ACE_HANDLE get_handle () const override;
+  ACE_HANDLE get_handle () const override;
 
   /// Called when object is removed from the ACE_Reactor
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
                             ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK) override;
 
   /// Receive time update from a server.
-  virtual int handle_input (ACE_HANDLE) override;
+  int handle_input (ACE_HANDLE) override;
 
   /// Restart connection asynchronously when timeout occurs.
   virtual int handle_timeout (const ACE_Time_Value &tv,
@@ -129,7 +129,7 @@ public:
 
 protected:
   /// Handle SIGPIPE.
-  virtual int handle_signal (int signum, siginfo_t *, ucontext_t *) override;
+  int handle_signal (int signum, siginfo_t *, ucontext_t *) override;
 
   static void stderr_output (int = 0);
 
@@ -203,20 +203,20 @@ protected:
   /// @{
 
   /// Called when service is linked.
-  virtual int init (int argc, ACE_TCHAR *argv[]) override;
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Called when service is unlinked.
-  virtual int fini () override;
+  int fini () override;
 
   /// Called to determine info about the service.
-  virtual int info (ACE_TCHAR **strp, size_t length) const override;
+  int info (ACE_TCHAR **strp, size_t length) const override;
   /// @}
 
   /// @name Scheduling hooks.
   /// @{
 
-  virtual int suspend () override;
-  virtual int resume () override;
+  int suspend () override;
+  int resume () override;
   /// @}
 
 private:

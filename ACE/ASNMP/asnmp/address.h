@@ -150,22 +150,22 @@ public:
   virtual void to_octet(OctetStr& octet) const = 0;
 
   /// (pure virtual) syntax type
-  virtual SmiUINT32 get_syntax() override = 0;
+  SmiUINT32 get_syntax() override = 0;
 
   /// for non const [], allows reading and writing
   unsigned char& operator[]( const int position);
 
   /// get a printable ASCII value
-  virtual const char *to_string() override = 0;
+  const char *to_string() override = 0;
 
   /// create a new instance of this Value
-  virtual SnmpSyntax *clone() const override = 0;
+  SnmpSyntax *clone() const override = 0;
 
   /// return the type of address
   virtual addr_type get_type() const = 0;
 
   /// overloaded assignment operator
-  virtual SnmpSyntax& operator=( SnmpSyntax &val) override = 0;
+  SnmpSyntax& operator=( SnmpSyntax &val) override = 0;
 
   /// return a hash key
   virtual unsigned int hashFunction() const { return 0;};

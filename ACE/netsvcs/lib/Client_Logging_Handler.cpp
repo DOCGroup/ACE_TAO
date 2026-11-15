@@ -433,23 +433,23 @@ protected:
   /// @{
 
   /// Called when service is linked.
-  virtual int init (int argc, ACE_TCHAR *argv[]) override;
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Called when service is unlinked.
-  virtual int fini () override;
+  int fini () override;
 
   /// Called to determine info about the service.
-  virtual int info (ACE_TCHAR **strp, size_t length) const override;
+  int info (ACE_TCHAR **strp, size_t length) const override;
 
   /// Factory that always returns the handler_.
-  virtual int make_svc_handler (ACE_Client_Logging_Handler *&sh) override;
+  int make_svc_handler (ACE_Client_Logging_Handler *&sh) override;
   /// @}
 
   /// @name Scheduling hooks.
   /// @{
 
-  virtual int suspend () override;
-  virtual int resume () override;
+  int suspend () override;
+  int resume () override;
   /// @}
 
 private:
