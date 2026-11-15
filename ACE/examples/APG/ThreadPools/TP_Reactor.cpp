@@ -1,10 +1,8 @@
-// == == == == == == == == == == == == == == == == == == == == == == ==
-// Stolen from $ACE_ROOT/tests/Thread_Pool_Reactor_Test.cpp
-// Thread_Pool_Reactor_Test.cpp, v 1.29 2001/03/20 01:07:21 irfan Exp
-// = AUTHOR
-//      Irfan Pyarali <irfan@cs.wustl.edu> and
-//      Nanbor Wang <nanbor@cs.wustl.edu>
-// == == == == == == == == == == == == == == == == == == == == == == ==
+/// @file TP_Reactor.cpp
+/// Stolen from $ACE_ROOT/tests/Thread_Pool_Reactor_Test.cpp
+/// Thread_Pool_Reactor_Test.cpp, v 1.29 2001/03/20 01:07:21 irfan Exp
+/// @author Irfan Pyarali <irfan@cs.wustl.edu>
+/// @author Nanbor Wang <nanbor@cs.wustl.edu>
 
 #include "ace/config-lite.h"
 #if defined (ACE_HAS_THREADS)
