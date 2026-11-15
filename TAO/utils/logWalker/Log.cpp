@@ -159,7 +159,7 @@ void
 Log::handle_msg_octets ()
 {
   int pos = this->dump_target_->add_octets(this->line_, this->offset_);
-  if (this->dump_target_ == &this->unknown_msg_)
+  if (this->dump_target_ == std::addressof (this->unknown_msg_))
     {
       for (ACE_DLList_Iterator<Thread> t_iter(this->giop_waiters_);
            !t_iter.done();
@@ -191,7 +191,7 @@ Log::handle_msg_octets ()
         }
       else
         {
-          if (this->dump_target_ == &this->unknown_msg_)
+          if (this->dump_target_ == std::addressof (this->unknown_msg_))
             ACE_ERROR ((LM_ERROR, "%d dump ended with no target owner\n", this->offset_));
         }
       this->dump_target_ = nullptr;
@@ -214,7 +214,7 @@ Log::parse_HEXDUMP_i ()
   else
     {
       this->unknown_msg_.init_buf (this->line_, this->offset_);
-      this->dump_target_ = &this->unknown_msg_;
+      this->dump_target_ = std::addressof (this->unknown_msg_);
     }
 }
 
