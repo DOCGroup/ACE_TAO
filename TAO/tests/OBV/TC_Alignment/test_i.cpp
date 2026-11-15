@@ -1,7 +1,9 @@
 #include "test_i.h"
 
+#include <memory>
+
 test_i::test_i (CORBA::ORB_ptr orb)
-  : orb_ (orb)
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
@@ -24,7 +26,7 @@ test_i::get_value (CORBA::Long offset)
                       tcOffset1_i,
                       nullptr);
       vt1->mem (offset);
-      retval.inout () <<= &vt1;
+      retval.inout () <<= std::addressof (vt1);
       break;
     }
     case 3:
@@ -34,7 +36,7 @@ test_i::get_value (CORBA::Long offset)
                       tcOffset3_i,
                       nullptr);
       vt3->mem (offset);
-      retval.inout () <<= &vt3;
+      retval.inout () <<= std::addressof (vt3);
       break;
     }
     case 5:
@@ -44,7 +46,7 @@ test_i::get_value (CORBA::Long offset)
                       tcOffset5_i,
                       nullptr);
       vt5->mem (offset);
-      retval.inout () <<= &vt5;
+      retval.inout () <<= std::addressof (vt5);
       break;
     }
     case 7:
@@ -54,7 +56,7 @@ test_i::get_value (CORBA::Long offset)
                       tcOffset7_i,
                       nullptr);
       vt7->mem (offset);
-      retval.inout () <<= &vt7;
+      retval.inout () <<= std::addressof (vt7);
       break;
     }
     default:

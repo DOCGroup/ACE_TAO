@@ -67,7 +67,7 @@ public:
   void shutdown () override;
 
 private:
-  CORBA::ORB_ptr orb_;
+  CORBA::ORB_var const orb_;
 };
 
 #endif /* TAO_OBV_TC_ALIGNMENT_TEST_I_H */

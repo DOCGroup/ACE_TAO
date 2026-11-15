@@ -127,8 +127,8 @@ run_test (test_ptr objref,
 int
 parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("dk:x"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("dk:x"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -138,7 +138,7 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
         break;
 
       case 'k':
-        options.ior_input_file = get_opts.optarg;
+        options.ior_input_file = get_opts.opt_arg ();
         break;
 
       case 'x':
@@ -166,18 +166,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
       Client_Options options;
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, options) != 0)
         {
           return 1;
         }
 
-      CORBA::Object_var obj =
-        orb->string_to_object (options.ior_input_file);
+      CORBA::Object_var const obj = orb->string_to_object (options.ior_input_file);
 
-      int status = register_factories (orb.in ());
+      int status {register_factories (orb.in ())};
 
       if (status != 0)
         {
@@ -190,9 +188,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           return -1;
         }
 
-      test_var objref = test::_narrow (obj.in ());
+      test_var const objref = test::_narrow (obj.in ());
+      if (CORBA::is_nil (objref.in ()))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Nil test object reference\n"),
+                            1);
+        }
 
-      for (CORBA::Long i = 1; i < 8; i += 2)
+      for (CORBA::Long i {1}; i < 8; i += 2)
         {
           status = run_test (objref.in (), i, options);
 
