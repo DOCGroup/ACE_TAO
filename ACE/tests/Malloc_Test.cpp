@@ -353,7 +353,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P) PARENT allocator at = %@, ")
                   ACE_TEXT ("data allocated at %@\n"),
-                  myalloc,
+                  static_cast<void *> (myalloc),
                   data));
       myalloc->dump ();
       int result = myalloc->bind ("foo", data);
@@ -393,7 +393,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P) CHILD allocator at = %@, ")
                   ACE_TEXT ("data allocated at %@\n"),
-                  myalloc,
+                  static_cast<void *> (myalloc),
                   data));
       myalloc->dump ();
       child ();

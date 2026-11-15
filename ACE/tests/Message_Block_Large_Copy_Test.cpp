@@ -40,7 +40,7 @@ run_duplicate_test (const size_t msg_block_count,
                   mb_top->reference_count ()));
       ACE_ERROR ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) duplicated: %@ %B %B\n"),
-                  mb_test,
+                  static_cast<void *> (mb_test),
                   mb_test->total_size(),
                   mb_test->total_length()));
       mb_test-> release();
@@ -81,7 +81,7 @@ run_clone_test (const size_t msg_block_count,
                   mb_top->reference_count ()));
       ACE_ERROR ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) cloned: %@ %B %B\n"),
-                  mb_test,
+                  static_cast<void *> (mb_test),
                   mb_test->total_size(),
                   mb_test->total_length()));
       mb_test-> release();
