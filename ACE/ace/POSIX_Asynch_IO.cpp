@@ -2205,11 +2205,11 @@ ACE_POSIX_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
   std::unique_ptr<ACE_POSIX_Asynch_Transmit_Handler> transmit_handler_owner (
     transmit_handler);
 
-  ssize_t return_val = transmit_handler_owner->transmit ();
+  int return_val = transmit_handler_owner->transmit ();
 
   if (return_val == -1)
     {
-      return 0;
+      return -1;
     }
   transmit_handler_owner.release ();
 
