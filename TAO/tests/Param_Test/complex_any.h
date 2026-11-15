@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file     complex_any.h
  *
@@ -9,23 +7,18 @@
  *  @author Jeff Parsons
  *  @author Frank Buschmann
  */
-//=============================================================================
 
 #ifndef PARAM_TEST_COMPLEX_ANY_H
 #define PARAM_TEST_COMPLEX_ANY_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//                        test complex Anys
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test complex Anys
 class Test_Complex_Any
 {
 public:
-  /// ctor
   Test_Complex_Any ();
 
-  /// dtor
   ~Test_Complex_Any ();
 
   /// run the SII test

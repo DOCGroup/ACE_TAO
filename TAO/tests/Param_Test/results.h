@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    results.h
  *
@@ -7,7 +5,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef RESULTS_H
 #define RESULTS_H
@@ -32,7 +29,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 class Results
 {
 public:
-  /// ctor
   Results () = default;
 
   ~Results () = default;

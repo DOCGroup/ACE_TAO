@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    ub_short_seq.h
  *
@@ -7,24 +5,19 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef PARAM_TEST_UNBOUNDED_SHORT_SEQUENCE_H
 #define PARAM_TEST_UNBOUNDED_SHORT_SEQUENCE_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//           test sequences of shorts
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test sequences of shorts
 
 class Test_Short_Sequence
 {
 public:
-  /// ctor
   Test_Short_Sequence ();
 
-  /// dtor
   ~Test_Short_Sequence ();
 
   /// run the SII test

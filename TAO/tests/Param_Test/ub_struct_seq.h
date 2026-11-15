@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    ub_struct_seq.h
  *
@@ -7,24 +5,19 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef PARAM_TEST_UNBOUNED_STRUCT_SEQUENCE_H
 #define PARAM_TEST_UNBOUNED_STRUCT_SEQUENCE_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//           test sequence of structs
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test sequence of structs
 
 class Test_Struct_Sequence
 {
 public:
-  /// ctor
   Test_Struct_Sequence ();
 
-  /// dtor
   ~Test_Struct_Sequence ();
 
   /// run the SII test
@@ -80,10 +73,8 @@ private:
 class Test_Unbounded_Struct_Sequence
 {
 public:
-  /// ctor
   Test_Unbounded_Struct_Sequence ();
 
-  /// dtor
   ~Test_Unbounded_Struct_Sequence ();
 
   /// run the SII test

@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    ub_objref_seq.h
  *
@@ -7,24 +5,19 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef PARAM_TEST_UNBOUNDED_OBJREF_SEQUENCE_H
 #define PARAM_TEST_UNBOUNDED_OBJREF_SEQUENCE_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//           test sequence of object references
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test sequence of object references
 
 class Test_ObjRef_Sequence
 {
 public:
-  /// ctor
   Test_ObjRef_Sequence ();
 
-  /// dtor
   ~Test_ObjRef_Sequence ();
 
   /// run the SII test

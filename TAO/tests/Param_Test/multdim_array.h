@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    multdim_array.h
  *
@@ -7,23 +5,18 @@
  *
  *  @author Bala
  */
-//=============================================================================
 
 #ifndef PARAM_TEST_MULTDIM_ARRAY_H
 #define PARAM_TEST_MULTDIM_ARRAY_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//                        test fixed size multidimensional arrays
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test fixed size multidimensional arrays
 class Test_Multdim_Array
 {
 public:
-  /// ctor
   Test_Multdim_Array ();
 
-  /// dtor
   ~Test_Multdim_Array ();
 
   /// run the SII test

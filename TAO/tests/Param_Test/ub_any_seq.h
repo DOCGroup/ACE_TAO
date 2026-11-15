@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    ub_any_seq.h
  *
@@ -7,23 +5,18 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef PARAM_TEST_UNBOUNDED_ANY_SEQUENCE_H
 #define PARAM_TEST_UNBOUNDED_ANY_SEQUENCE_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//                        test sequences of Anys
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test sequences of Anys
 class Test_AnySeq
 {
 public:
-  /// ctor
   Test_AnySeq ();
 
-  /// dtor
   ~Test_AnySeq ();
 
   /// run the SII test

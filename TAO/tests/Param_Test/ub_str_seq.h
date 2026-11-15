@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    ub_str_seq.h
  *
@@ -7,24 +5,19 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef PARAM_TEST_UNBOUNDED_STRING_SEQUENCE_H
 #define PARAM_TEST_UNBOUNDED_STRING_SEQUENCE_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//           test typedefed sequences (in our case, sequences of strings)
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test typedefed sequences (in our case, sequences of strings)
 
 class Test_String_Sequence
 {
 public:
-  /// ctor
   Test_String_Sequence ();
 
-  /// dtor
   ~Test_String_Sequence ();
 
   /// run the SII test

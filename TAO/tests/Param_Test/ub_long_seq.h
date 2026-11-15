@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    ub_long_seq.h
  *
@@ -7,24 +5,19 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef PARAM_TEST_UNBOUNDED_LONG_SEQUENCE_H
 #define PARAM_TEST_UNBOUNDED_LONG_SEQUENCE_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//           test sequences of longs
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test sequences of longs
 
 class Test_Long_Sequence
 {
 public:
-  /// ctor
   Test_Long_Sequence ();
 
-  /// dtor
   ~Test_Long_Sequence ();
 
   /// run the SII test

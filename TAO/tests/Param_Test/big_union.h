@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    big_union.h
  *
@@ -7,23 +5,18 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef PARAM_TEST_BIG_UNION_H
 #define PARAM_TEST_BIG_UNION_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//                        test Anys
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test Anys
 class Test_Big_Union
 {
 public:
-  /// ctor
   Test_Big_Union ();
 
-  /// dtor
   ~Test_Big_Union ();
 
   enum {

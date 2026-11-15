@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    bd_string.h
  *
@@ -7,23 +5,18 @@
  *
  *  @author   Carlos O'Ryan
  */
-//=============================================================================
 
 #ifndef PARAM_TEST_BOUNDED_STRING_H
 #define PARAM_TEST_BOUNDED_STRING_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//                        tests bounded strings
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// tests bounded strings
 class Test_Bounded_String
 {
 public:
-  /// ctor
   Test_Bounded_String ();
 
-  /// dtor
   ~Test_Bounded_String ();
 
   /// run the SII test

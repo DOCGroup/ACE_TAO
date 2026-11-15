@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    fixed_array.h
  *
@@ -7,23 +5,18 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef PARAM_TEST_FIXED_ARRAY_H
 #define PARAM_TEST_FIXED_ARRAY_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//                        test fixed arrays
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test fixed arrays
 class Test_Fixed_Array
 {
 public:
-  /// ctor
   Test_Fixed_Array ();
 
-  /// dtor
   ~Test_Fixed_Array ();
 
   /// run the SII test

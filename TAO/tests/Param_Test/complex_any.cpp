@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    complex_any.cpp
  *
@@ -9,7 +7,6 @@
  *  @author Jeff Parsons
  *  @author Frank Buschmann
  */
-//=============================================================================
 
 #include "helper.h"
 
@@ -65,7 +62,8 @@ Test_Complex_Any::dii_req_invoke (CORBA::Request *req)
   CORBA::NamedValue_ptr o2 =
     req->arguments ()->item (1);
   *o2->value () >>= tmp;
-  this->inout_ = CORBA::Any (*tmp);
+  CORBA::Any const value (*tmp);
+  this->inout_ = value;
 
   CORBA::NamedValue_ptr o3 =
     req->arguments ()->item (2);

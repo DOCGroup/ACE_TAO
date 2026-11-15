@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    objref.h
  *
@@ -7,23 +5,18 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef PARAM_TEST_OBJREF_H
 #define PARAM_TEST_OBJREF_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//                        test objrefs
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test objrefs
 class Test_ObjRef
 {
 public:
-  /// ctor
   Test_ObjRef ();
 
-  /// dtor
   ~Test_ObjRef ();
 
   /// run the SII test

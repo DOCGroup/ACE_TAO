@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    ub_array_seq.h
  *
@@ -7,24 +5,19 @@
  *
  *  @author   Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef PARAM_TEST_UNBOUNED_ARRAY_SEQUENCE_H
 #define PARAM_TEST_UNBOUNED_ARRAY_SEQUENCE_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//           test sequence of arrays
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test sequence of arrays
 
 class Test_Array_Sequence
 {
 public:
-  /// ctor
   Test_Array_Sequence ();
 
-  /// dtor
   ~Test_Array_Sequence ();
 
   /// run the SII test

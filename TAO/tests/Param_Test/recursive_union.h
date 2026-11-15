@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    recursive_union.h
  *
@@ -7,7 +5,6 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef PARAM_TEST_RECURSIVE_UNION_H
 #define PARAM_TEST_RECURSIVE_UNION_H
@@ -15,17 +12,13 @@
 #include "param_testC.h"
 #include "helper.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//           test recursive unions
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test recursive unions
 
 class Test_Recursive_Union
 {
 public:
-  /// ctor
   Test_Recursive_Union ();
 
-  /// dtor
   ~Test_Recursive_Union ();
 
   /// run the SII test

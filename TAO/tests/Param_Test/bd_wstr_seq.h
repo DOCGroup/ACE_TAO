@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    bd_wstr_seq.h
  *
@@ -7,24 +5,19 @@
  *
  *  @author   Jeff Parsons
  */
-//=============================================================================
 
 #ifndef PARAM_TEST_BOUNDED_WSTRING_SEQUENCE_H
 #define PARAM_TEST_BOUNDED_WSTRING_SEQUENCE_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//           test typedefed sequences (in our case, sequences of wstrings)
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test typedefed sequences (in our case, sequences of wstrings)
 
 class Test_Bounded_WString_Sequence
 {
 public:
-  /// ctor
   Test_Bounded_WString_Sequence ();
 
-  /// dtor
   ~Test_Bounded_WString_Sequence ();
 
   /// run the SII test

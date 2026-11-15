@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    ub_string.h
  *
@@ -7,23 +5,18 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef PARAM_TEST_UNBOUNDED_STRING_H
 #define PARAM_TEST_UNBOUNDED_STRING_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//                        test unbounded strings
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test unbounded strings
 class Test_Unbounded_String
 {
 public:
-  /// ctor
   Test_Unbounded_String ();
 
-  /// dtor
   ~Test_Unbounded_String ();
 
   /// run the SII test

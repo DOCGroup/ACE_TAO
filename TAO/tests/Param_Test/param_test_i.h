@@ -1,20 +1,16 @@
-
-//=============================================================================
 /**
  *  @file    param_test_i.h
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef PARAM_TEST_I_H
 #define PARAM_TEST_I_H
 
 #include "param_testS.h"
 
-// Implementation of the Coffee interface
+/// Implements the Coffee interface.
 class Coffee_i : public POA_Coffee
-
 {
 public:
   explicit Coffee_i (const char *name);
@@ -25,7 +21,7 @@ public:
 
   ~Coffee_i () override;
 
-  // =methods for the attribute
+  /// Coffee attribute methods.
 
   /// get attribute
   Coffee::Desc * description () override;
@@ -38,7 +34,6 @@ private:
   CORBA::String_var name_;
 };
 
-// the implementation of the Param_test interface
 /**
  * @class Param_Test_i
  *
@@ -94,8 +89,7 @@ public:
                      Param_Test::Fixed_Struct &s2,
                      Param_Test::Fixed_Struct_out s3) override;
 
-  // = Start of sequences tests...
-  /// = End of sequences tests....
+  /// Sequence test operations.
   CORBA::LongSeq * test_long_sequence (
       const CORBA::LongSeq & s1,
       CORBA::LongSeq & s2,

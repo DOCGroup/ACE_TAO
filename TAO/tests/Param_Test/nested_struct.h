@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    nested_struct.h
  *
@@ -7,24 +5,19 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef PARAM_TEST_NESTED_STRUCT_H
 #define PARAM_TEST_NESTED_STRUCT_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//           test nested structs
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test nested structs
 
 class Test_Nested_Struct
 {
 public:
-  /// ctor
   Test_Nested_Struct ();
 
-  /// dtor
   ~Test_Nested_Struct ();
 
   /// run the SII test

@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    var_struct.h
  *
@@ -7,24 +5,19 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef PARAM_TEST_VAR_STRUCT_H
 #define PARAM_TEST_VAR_STRUCT_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//           test variable sized structs
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test variable sized structs
 
 class Test_Var_Struct
 {
 public:
-  /// ctor
   Test_Var_Struct ();
 
-  /// dtor
   ~Test_Var_Struct ();
 
   /// run the SII test

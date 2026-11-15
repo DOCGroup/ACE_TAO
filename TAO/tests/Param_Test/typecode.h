@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    typecode.h
  *
@@ -7,23 +5,18 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef PARAM_TEST_TYPECODE_H
 #define PARAM_TEST_TYPECODE_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//                        test TypeCodes
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test TypeCodes
 class Test_TypeCode
 {
 public:
-  /// ctor
   Test_TypeCode ();
 
-  /// dtor
   ~Test_TypeCode ();
 
   /// run the SII test

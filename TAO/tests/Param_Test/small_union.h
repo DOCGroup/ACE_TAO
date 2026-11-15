@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    small_union.h
  *
@@ -7,23 +5,18 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef PARAM_TEST_SMALL_UNION_H
 #define PARAM_TEST_SMALL_UNION_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//                        test Anys
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test Anys
 class Test_Small_Union
 {
 public:
-  /// ctor
   Test_Small_Union ();
 
-  /// dtor
   ~Test_Small_Union ();
 
   /// run the SII test

@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    client.h
  *
@@ -7,7 +5,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef PARAM_TEST_CLIENT_H
 #define PARAM_TEST_CLIENT_H
@@ -35,7 +32,6 @@ class Param_Test_Client
 public:
   using TEST_OBJECT = T;
 
-  // = Constructor and destructor.
   /// Takes ownership of the test object.
   Param_Test_Client (CORBA::ORB_ptr orb,
                      Param_Test_ptr objref,

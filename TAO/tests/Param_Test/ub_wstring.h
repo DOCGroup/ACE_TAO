@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    ub_wstring.h
  *
@@ -7,23 +5,18 @@
  *
  *  @author   Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef PARAM_TEST_UNBOUNDED_WSTRING_H
 #define PARAM_TEST_UNBOUNDED_WSTRING_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//                        test unbounded wide strings
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test unbounded wide strings
 class Test_Unbounded_WString
 {
 public:
-  /// ctor
   Test_Unbounded_WString ();
 
-  /// dtor
   ~Test_Unbounded_WString ();
 
   /// run the SII test

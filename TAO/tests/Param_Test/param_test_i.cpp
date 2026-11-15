@@ -1,11 +1,8 @@
-
-//=============================================================================
 /**
  *  @file    param_test_i.cpp
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #include "param_test_i.h"
 
@@ -173,7 +170,7 @@ Param_Test_i::test_fixed_struct (const Param_Test::Fixed_Struct &s1,
   return s1;
 }
 
-// = Sequences
+// Sequence operations.
 
 CORBA::LongSeq *
 Param_Test_i::test_long_sequence (const CORBA::LongSeq & s1,
@@ -532,8 +529,6 @@ Param_Test_i::test_anyseq (const CORBA::AnySeq &s1,
   s3 = out;
   return ret;
 }
-
-// = end of sequences...
 
 // test for variable structs
 Param_Test::Var_Struct *

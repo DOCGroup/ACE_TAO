@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    short.h
  *
@@ -7,23 +5,18 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef PARAM_TEST_SHORT_H
 #define PARAM_TEST_SHORT_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//                        test shorts
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test shorts
 class Test_Short
 {
 public:
-  /// ctor
   Test_Short ();
 
-  /// dtor
   ~Test_Short ();
 
   /// run the SII test

@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    fixed_struct.h
  *
@@ -7,23 +5,18 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef PARAM_TEST_FIXED_STRUCT_H
 #define PARAM_TEST_FIXED_STRUCT_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//                        test fixed structs
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test fixed structs
 class Test_Fixed_Struct
 {
 public:
-  /// ctor
   Test_Fixed_Struct ();
 
-  /// dtor
   ~Test_Fixed_Struct ();
 
   /// run the SII test

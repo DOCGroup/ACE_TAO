@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    ulonglong.h
  *
@@ -7,7 +5,6 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef PARAM_TEST_ULONGLONG_H
 #define PARAM_TEST_ULONGLONG_H
@@ -17,10 +14,8 @@
 class Test_ULongLong
 {
 public:
-  /// ctor
   Test_ULongLong ();
 
-  /// dtor
   ~Test_ULongLong ();
 
   /// run the SII test

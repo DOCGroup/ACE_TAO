@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file   except.h
  *
@@ -7,7 +5,6 @@
  *
  *  @author Carlos O'Ryan
  */
-//=============================================================================
 
 #ifndef PARAM_TEST_EXCEPTION_H
 #define PARAM_TEST_EXCEPTION_H
@@ -17,10 +14,8 @@
 class Test_Exception
 {
 public:
-  /// ctor
   Test_Exception ();
 
-  /// dtor
   ~Test_Exception ();
 
   /// run the SII test

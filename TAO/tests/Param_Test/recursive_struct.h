@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    recursive_struct.h
  *
@@ -8,7 +6,6 @@
  *  @author Aniruddha Gokhale
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef PARAM_TEST_RECURSIVE_STRUCT_H
 #define PARAM_TEST_RECURSIVE_STRUCT_H
@@ -16,17 +13,13 @@
 #include "param_testC.h"
 #include "helper.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//           test recursive structs
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test recursive structs
 
 class Test_Recursive_Struct
 {
 public:
-  /// ctor
   Test_Recursive_Struct ();
 
-  /// dtor
   ~Test_Recursive_Struct ();
 
   /// run the SII test

@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    bd_wstring.h
  *
@@ -7,23 +5,18 @@
  *
  *  @author   Jeff Parsons
  */
-//=============================================================================
 
 #ifndef PARAM_TEST_BOUNDED_WSTRING_H
 #define PARAM_TEST_BOUNDED_WSTRING_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//                        tests bounded wide strings
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// tests bounded wide strings
 class Test_Bounded_WString
 {
 public:
-  /// ctor
   Test_Bounded_WString ();
 
-  /// dtor
   ~Test_Bounded_WString ();
 
   /// run the SII test
