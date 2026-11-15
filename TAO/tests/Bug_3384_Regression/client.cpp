@@ -45,8 +45,6 @@ public:
   Worker &operator= (Worker const &) = delete;
   Worker (Worker &&) = delete;
   Worker &operator= (Worker &&) = delete;
-  // ctor
-
   int svc () override;
   // The thread entry point.
 

@@ -26,7 +26,6 @@ int constexpr nthreads = 5;
 class Worker : public ACE_Task_Base
 {
 public:
-  // ctor
   explicit Worker (CORBA::ORB_ptr orb);
   Worker (Worker const &) = delete;
   Worker (Worker &&) = delete;

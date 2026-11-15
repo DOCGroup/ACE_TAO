@@ -24,7 +24,6 @@
 class Policy_Tester
 {
 public:
-  // Ctor/Dtor.
   Policy_Tester () = default;
   Policy_Tester (Policy_Tester const &) = delete;
   Policy_Tester (Policy_Tester &&) = delete;

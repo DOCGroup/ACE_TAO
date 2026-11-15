@@ -21,7 +21,6 @@ class Client : public QObject
 {
   Q_OBJECT
 public:
-  /// ctor
   Client (CORBA::ORB_ptr orb,
           QApplication &app);
 

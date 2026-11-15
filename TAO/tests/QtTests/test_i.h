@@ -30,8 +30,6 @@ class LCD_Display_imp : public QObject,
 public:
   LCD_Display_imp (CORBA::ORB_ptr);
 
-  // ctor
-
   void shutdown ();
 
   void send_val (CORBA::Long val);

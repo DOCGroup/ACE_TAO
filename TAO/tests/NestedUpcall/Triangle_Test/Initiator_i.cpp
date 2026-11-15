@@ -13,7 +13,6 @@
 #include "tao/Exception.h"
 #include "Initiator_i.h"
 
-// CTOR
 Initiator_i::Initiator_i (Object_A_ptr object_A_ptr,
                          Object_B_ptr object_B_ptr)
   : object_A_var_ (Object_A::_duplicate (object_A_ptr)),

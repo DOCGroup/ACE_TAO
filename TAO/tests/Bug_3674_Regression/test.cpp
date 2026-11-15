@@ -252,7 +252,6 @@ namespace
   class testInterface_i : public virtual POA_testInterface
     {
     public:
-      /// Constructor & Destructor.
       explicit testInterface_i (Test_State &state)
         : state_ (state)
       {

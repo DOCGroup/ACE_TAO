@@ -20,7 +20,6 @@
 class Test_i : public POA_A::Test
 {
 public:
-  /// ctor
   Test_i (CORBA::ORB_ptr orb,
           A::AMI_TestHandler_ptr rh,
           A::RunMode mode = A::RM_SLAVE);

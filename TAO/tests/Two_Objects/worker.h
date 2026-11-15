@@ -10,7 +10,6 @@
 class Worker : public ACE_Task_Base
 {
 public:
-  // Ctor
   explicit Worker (CORBA::ORB_ptr const orb);
 
   // The thread entry point.
