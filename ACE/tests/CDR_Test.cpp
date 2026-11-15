@@ -196,7 +196,7 @@ short_stream ()
                        ACE_TEXT ("buffer length not preserved")),
                       1);
 
-  for (i = 0; i < len; i++)
+  for (i = 0; i < len; ++i)
     {
       unsigned long const in_chunk =
         static_cast<unsigned long> (* (in_mb->rd_ptr () + i));
@@ -351,28 +351,28 @@ short_stream ()
                        ACE_TEXT ("fixed transfer error")),
                       1);
 
-  for (i = 0 ; i < 3; i++)
+  for (i = 0 ; i < 3; ++i)
     if (s_array1[i] != s_array[i])
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),
                          ACE_TEXT ("short array transfer error")),
                         1);
 
-  for (i = 0 ; i < 3; i++)
+  for (i = 0 ; i < 3; ++i)
     if (l_array1[i] != l_array[i])
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),
                          ACE_TEXT ("long array transfer error")),
                         1);
 
-  for (i = 0 ; i < 3; i++)
+  for (i = 0 ; i < 3; ++i)
     if (!ACE::is_equal (f_array1[i], f_array[i]))
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),
                          ACE_TEXT ("float array transfer error")),
                         1);
 
-  for (i = 0 ; i < 3; i++)
+  for (i = 0 ; i < 3; ++i)
     if (!ACE::is_equal (d_array1[i], d_array[i]))
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),
