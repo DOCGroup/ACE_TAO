@@ -17,21 +17,22 @@
 
 struct MyNode
 {
-  unsigned k;
-  MyNode () : k (0) {}
-  MyNode (int pk) : k (pk) {}
-  MyNode (const MyNode& o) : k (o.k) {}
-  MyNode (MyNode&& o) : k(o.k) {}
-  MyNode& operator=(const MyNode& o) { k = o.k; return *this; }
-  MyNode& operator=(MyNode&& o) { k = o.k; return *this; }
-  bool operator== (const MyNode& o) const { return (k == o.k); }
-  bool operator!= (const MyNode& o) const { return (k != o.k); }
+  unsigned k {};
+
+  MyNode () = default;
+  explicit MyNode (int pk) : k (pk) {}
+  MyNode (MyNode const&) = default;
+  MyNode (MyNode&&) = default;
+  MyNode& operator= (MyNode const&) = default;
+  MyNode& operator= (MyNode&&) = default;
+  bool operator== (MyNode const& o) const { return k == o.k; }
+  bool operator!= (MyNode const& o) const { return k != o.k; }
 };
 
-size_t count_const_set (const ACE_Unbounded_Set<MyNode>& cubs)
+size_t count_const_set (ACE_Unbounded_Set<MyNode> const& cubs)
 {
   size_t number_of_elements = 0;
-  for (ACE_Unbounded_Set<MyNode>::const_iterator ci (cubs); !ci.done(); ci++)
+  for (ACE_Unbounded_Set<MyNode>::const_iterator ci (cubs); !ci.done (); ++ci)
     ++number_of_elements;
   return number_of_elements;
 }
@@ -83,7 +84,7 @@ run_main (int, ACE_TCHAR *[])
     }
 
   // Insert several different values.
-  for (node.k = 1; node.k <= 5; node.k++)
+  for (node.k = 1; node.k <= 5; ++node.k)
     {
       r = ubs.insert (node);
       if (r != 0)
@@ -110,7 +111,7 @@ run_main (int, ACE_TCHAR *[])
   {
     MySet::ITERATOR it1 (ubs);
     MySet::iterator it2 (ubs2);
-    for (k = 1; k <= 5; k++)
+    for (k = 1; k <= 5; ++k)
       {
         if (it1.done ())
           {
@@ -122,8 +123,8 @@ run_main (int, ACE_TCHAR *[])
             ACE_ERROR ((LM_ERROR, "Error: it2.done ()\n"));
             retval = -1;
           }
-        MyNode n1 = *it1;
-        MyNode n2 = *it2;
+        MyNode const n1 = *it1;
+        MyNode const n2 = *it2;
         if (!(n1 == n2))
           {
             ACE_ERROR ((LM_ERROR, "Error: !(n1 == n2)\n"));
@@ -155,7 +156,7 @@ run_main (int, ACE_TCHAR *[])
     int deleted = 0;
     while (! it.done ())
       {
-        MyNode n = *it;
+        MyNode const n = *it;
         it.advance ();  /* Being friendly here: Move the iterator on
                            so that element removal does not interfere
                            with the current iterator position.
@@ -173,14 +174,14 @@ run_main (int, ACE_TCHAR *[])
         retval = -1;
       }
 
-    MyNode node2 (2);
+    MyNode const node2 (2);
     if (ubs2.find (node2) != 0)
       {
         ACE_ERROR ((LM_ERROR, "Error: ubs2.find (node2) != 0\n"));
         retval = -1;
       }
 
-    MyNode node3 (3);
+    MyNode const node3 (3);
     if (ubs2.find (node3) == 0)
       {
         ACE_ERROR ((LM_ERROR, "Error: ubs2.find (node3) == 0\n"));
@@ -190,7 +191,7 @@ run_main (int, ACE_TCHAR *[])
     ubs2.insert (node3);
   }
 
-  size_t s = count_const_set (ubs);
+  size_t const s = count_const_set (ubs);
   if (s != ubs.size ())
     {
       ACE_ERROR ((LM_ERROR, "Error: s != ubs.size ()\n"));
@@ -198,7 +199,7 @@ run_main (int, ACE_TCHAR *[])
     }
 
   ACE_Unbounded_Set<MyNode> ubs_insert;
-  MyNode node4 (4);
+  MyNode const node4 (4);
   if (ubs_insert.insert (node4) != 0)
     {
       ACE_ERROR ((LM_ERROR, "Error: insert node4 failed\n"));
@@ -213,14 +214,14 @@ run_main (int, ACE_TCHAR *[])
   // Test iterating through a set and deleting elements.
   {
     ACE_Unbounded_Set<MyNode*> ubs3;
-    MyNode *n = nullptr;
     for (int i = 0; i < 10; ++i)
       {
-        n = new MyNode (i);
+        MyNode * const n = new MyNode (i);
         ubs3.insert (n);
       }
-    MyNode **i_n = nullptr;
+    MyNode **i_n {};
     ACE_Unbounded_Set_Iterator<MyNode*> ubs3_iter (ubs3.begin ());
+    // The set stores non-owning pointers; delete each pointee after iteration.
     for (; ubs3_iter.next (i_n); ++ubs3_iter)
       delete *i_n;
   }
