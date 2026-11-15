@@ -1,5 +1,5 @@
-// file      : XSCRT/XMLSchema.hpp
-// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+/// @file XSCRT/XMLSchema.hpp
+/// @author Boris Kolpackov <boris@dre.vanderbilt.edu>
 #ifndef XSCRT_XMLSCHEMA_HPP
 #define XSCRT_XMLSCHEMA_HPP
 
@@ -334,7 +334,9 @@ namespace XMLSchema
     ID &operator= (ID const &x)
     {
       if (this != std::addressof (x))
+      {
         assign_id_ (static_cast<Base__ const &> (x));
+      }
       return *this;
     }
 
@@ -499,7 +501,8 @@ namespace XMLSchema
   };
 }
 
-// Traversal
+/// @name XML Schema traversal
+/// @{
 
 #include "ace/XML_Utils/XSCRT/Traversal.hpp"
 
@@ -518,7 +521,9 @@ namespace XMLSchema
       {
         XSCRT::Type *const referenced (r.get ());
         if (referenced != nullptr)
+        {
           dispatch (*referenced);
+        }
       }
     };
 
@@ -550,8 +555,10 @@ namespace XMLSchema
     };
   }
 }
+/// @}
 
-// ExtendedTypeInfo for XML Schema types
+/// @name XML Schema type information
+/// @{
 
 #include "ace/XML_Utils/XSCRT/ExtendedTypeInfo.hpp"
 
@@ -563,6 +570,7 @@ namespace XMLSchema
     explicit TypeInfoInitializer (XSCRT::ExtendedTypeInfoMap &);
   };
 }
+/// @}
 
 #include "ace/XML_Utils/XMLSchema/TypeInfo.tpp"
 

@@ -1,5 +1,5 @@
-// file      : XSCRT/Traversal.tpp
-// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+/// @file XSCRT/Traversal.tpp
+/// @author Boris Kolpackov <boris@dre.vanderbilt.edu>
 
 namespace XSCRT
 {
@@ -21,22 +21,30 @@ namespace XSCRT
         for (typename LevelMap::value_type const &level_entry : levels)
         {
           if (level_entry.second != l)
+          {
             continue;
+          }
 
           typename TraversalMap::const_iterator const v =
             traversal_map_.find (level_entry.first.type_id ());
           if (v == traversal_map_.end ())
+          {
             continue;
+          }
 
           for (TraverserBase<B> *traverser : v->second)
+          {
             traverser->trampoline (n);
+          }
 
           flatten_tree (level_entry.first, dispatched);
         }
 
         // Remove traversed types from the level map.
         for (ExtendedTypeInfo const &type_info : dispatched)
+        {
           levels.erase (type_info);
+        }
       }
     }
 
@@ -56,22 +64,30 @@ namespace XSCRT
         for (typename LevelMap::value_type const &level_entry : levels)
         {
           if (level_entry.second != l)
+          {
             continue;
+          }
 
           typename TraversalMap::const_iterator const v =
             traversal_map_.find (level_entry.first.type_id ());
           if (v == traversal_map_.end ())
+          {
             continue;
+          }
 
           for (TraverserBase<B> *traverser : v->second)
+          {
             traverser->trampoline (n);
+          }
 
           flatten_tree (level_entry.first, dispatched);
         }
 
         // Remove traversed types from the level map.
         for (ExtendedTypeInfo const &type_info : dispatched)
+        {
           levels.erase (type_info);
+        }
       }
     }
 
@@ -81,13 +97,16 @@ namespace XSCRT
       size_t ret (cur);
 
       if (map.find (ti) == map.end () || map[ti] < cur)
+      {
         map[ti] = cur;
+      }
 
       for (ExtendedTypeInfo::BaseIterator i = ti.begin_base (); i != ti.end_base (); ++i)
       {
-        size_t const t (compute_levels (i->type_info (), cur + 1, map));
-        if (t > ret)
+        if (size_t const t (compute_levels (i->type_info (), cur + 1, map)); t > ret)
+        {
           ret = t;
+        }
       }
 
       return ret;

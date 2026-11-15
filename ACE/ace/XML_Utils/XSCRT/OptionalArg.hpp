@@ -1,5 +1,5 @@
-// file      : XSCRT/OptionalArg.hpp
-// author    : Johnny Willemsen <jwillemsen@remedy.nl>
+/// @file XSCRT/OptionalArg.hpp
+/// @author Johnny Willemsen <jwillemsen@remedy.nl>
 
 #ifndef XSCRT_OPTIONAL_ARG_HPP
 #define XSCRT_OPTIONAL_ARG_HPP
@@ -9,8 +9,8 @@
 
 namespace XSCRT
 {
-  // A non-owning optional argument for generated constructors. The referenced
-  // value only needs to live until the constructor call has completed.
+  /// A non-owning optional argument for generated constructors. The referenced
+  /// value only needs to live until the constructor call has completed.
   template <typename T>
   class OptionalArg
   {

@@ -1,5 +1,5 @@
-// file      : XSCRT/Traversal.hpp
-// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+/// @file XSCRT/Traversal.hpp
+/// @author Boris Kolpackov <boris@dre.vanderbilt.edu>
 #ifndef XSCRT_TRAVERSAL_HPP
 #define XSCRT_TRAVERSAL_HPP
 
@@ -45,7 +45,7 @@ namespace XSCRT
       }
 
     public:
-      // Registered traversers are borrowed and must outlive their dispatcher.
+      /// Registered traversers are borrowed and must outlive their dispatcher.
       using Traversers = std::vector<TraverserBase<B> *>;
       using TraversalMap = std::map<TypeId, Traversers>;
       using Iterator = typename TraversalMap::const_iterator;
@@ -139,7 +139,9 @@ namespace XSCRT
           dispatch (*begin);
 
           if (++begin != end)
+          {
             (x.*next) (a);
+          }
         }
       }
 
@@ -155,7 +157,7 @@ namespace XSCRT
     {
       using Type = T;
 
-      // The dispatcher stores this object's address.
+      /// The dispatcher stores this object's address.
       Traverser (Traverser const &) = delete;
       Traverser (Traverser &&) = delete;
       Traverser &operator= (Traverser const &) = delete;

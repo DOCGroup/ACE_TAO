@@ -1,5 +1,5 @@
-// file      : XSCRT/ExtendedTypeInfo.hpp
-// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+/// @file XSCRT/ExtendedTypeInfo.hpp
+/// @author Boris Kolpackov <boris@dre.vanderbilt.edu>
 #ifndef XSCRT_EXTENDED_TYPE_INFO_HPP
 #define XSCRT_EXTENDED_TYPE_INFO_HPP
 
@@ -25,11 +25,6 @@ namespace XSCRT
 
     bool operator<(TypeId const &other) const;
 
-    /*
-    friend std::ostream&
-    operator << (std::ostream& os, TypeId const& t);
-    */
-
   public:
     char const *name () const
     {
@@ -37,7 +32,7 @@ namespace XSCRT
     }
 
   private:
-    // type_info objects have static lifetime; this pointer is borrowed.
+    /// type_info objects have static lifetime; this pointer is borrowed.
     std::type_info const *tid_;
   };
 
@@ -122,7 +117,9 @@ namespace XSCRT
     ExtendedTypeInfoMap::const_iterator const i (extended_type_info_map ().find (tid));
 
     if (i == extended_type_info_map ().end ())
+    {
       throw NotAvailable ();
+    }
 
     return i->second;
   }

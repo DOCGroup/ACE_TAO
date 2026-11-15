@@ -1,5 +1,5 @@
-// file      : XSCRT/Writer.hpp
-// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+/// @file XSCRT/Writer.hpp
+/// @author Boris Kolpackov <boris@dre.vanderbilt.edu>
 #ifndef XSCRT_WRITER_HPP
 #define XSCRT_WRITER_HPP
 
@@ -20,7 +20,7 @@ namespace XSCRT
     }
 
   protected:
-    // This c-tor should never be called.
+    /// This constructor should never be called.
     Writer ()
     {
       std::abort ();
@@ -56,7 +56,7 @@ namespace XSCRT
   private:
     std::stack<XML::Element<C>> stack_;
 
-    // The active attribute is borrowed from the caller.
+    /// The active attribute is borrowed from the caller.
     XML::Attribute<C> *attr__{};
 
   private:

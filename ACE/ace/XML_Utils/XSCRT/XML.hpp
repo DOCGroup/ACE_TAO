@@ -1,5 +1,5 @@
-// file      : XSCRT/XML.hpp
-// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+/// @file XSCRT/XML.hpp
+/// @author Boris Kolpackov <boris@dre.vanderbilt.edu>
 
 #ifndef XSCRT_XML_HPP
 #define XSCRT_XML_HPP
@@ -41,12 +41,18 @@ namespace XSCRT
         void operator() (XMLCh *value) const noexcept
         {
           if (value == nullptr)
+          {
             return;
+          }
 
           if (xerces_allocated)
+          {
             xercesc::XMLString::release (std::addressof (value));
+          }
           else
+          {
             delete[] value;
+          }
         }
       };
 
@@ -84,7 +90,9 @@ namespace XSCRT
       string &operator= (string &&s) noexcept
       {
         if (this != std::addressof (s))
+        {
           this->s_ = std::move (s.s_);
+        }
         return *this;
       }
 
@@ -99,7 +107,9 @@ namespace XSCRT
       static String_Ptr copy (XMLCh const *s)
       {
         if (s == nullptr)
+        {
           return String_Ptr (nullptr, Deleter{});
+        }
         size_t const n (xercesc::XMLString::stringLen (s));
         String_Ptr r (new XMLCh[n + 1], Deleter{});
         std::copy (s, s + n + 1, r.get ());
@@ -113,11 +123,15 @@ namespace XSCRT
     inline std::basic_string<char> transcode<char> (XMLCh const *s, char *)
     {
       if (s == nullptr)
+      {
         return std::basic_string<char> ();
+      }
 
       char *buf = xercesc::XMLString::transcode (s);
       if (buf == nullptr)
+      {
         throw std::bad_alloc ();
+      }
 
       std::unique_ptr<char, void (*) (char *)> buffer (
         buf,
@@ -133,7 +147,9 @@ namespace XSCRT
     inline std::basic_string<wchar_t> transcode<wchar_t> (XMLCh const *s, wchar_t *)
     {
       if (s == nullptr)
+      {
         return std::basic_string<wchar_t> ();
+      }
 
       std::basic_string<wchar_t> result;
       size_t const length (xercesc::XMLString::stringLen (s));
@@ -146,16 +162,22 @@ namespace XSCRT
         if (code_point >= 0xD800 && code_point <= 0xDBFF)
         {
           if (++i == length)
+          {
             throw std::invalid_argument ("Invalid UTF-16 surrogate pair");
+          }
 
           std::uint32_t const low (static_cast<std::uint32_t> (s[i]));
           if (low < 0xDC00 || low > 0xDFFF)
+          {
             throw std::invalid_argument ("Invalid UTF-16 surrogate pair");
+          }
 
           code_point = 0x10000 + ((code_point - 0xD800) << 10) + (low - 0xDC00);
         }
         else if (code_point >= 0xDC00 && code_point <= 0xDFFF)
+        {
           throw std::invalid_argument ("Invalid UTF-16 surrogate pair");
+        }
 
         if (sizeof (wchar_t) == 2 && code_point > 0xFFFF)
         {
@@ -164,7 +186,9 @@ namespace XSCRT
           result.push_back (static_cast<wchar_t> (0xDC00 + (code_point & 0x3FF)));
         }
         else
+        {
           result.push_back (static_cast<wchar_t> (code_point));
+        }
       }
 
       return result;
@@ -227,7 +251,9 @@ namespace XSCRT
           result[out++] = static_cast<XMLCh> (0xDC00 + (code_point & 0x3FF));
         }
         else
+        {
           result[out++] = static_cast<XMLCh> (code_point);
+        }
       }
 
       result[out] = XMLCh{};
@@ -348,7 +374,9 @@ namespace XSCRT
         xercesc::DOMElement const *const parent (dom_cast<xercesc::DOMElement const *> (ce_->getParentNode ()));
 
         if (parent == nullptr)
+        {
           throw std::out_of_range ("DOM element has no element parent");
+        }
 
         return Element<C> (parent);
       }
@@ -383,14 +411,16 @@ namespace XSCRT
       xercesc::DOMElement *dom_element ()
       {
         if (e_ == nullptr)
+        {
           throw std::logic_error ("DOM element is read-only");
+        }
 
         return e_;
       }
 
     private:
       xercesc::DOMElement *e_{};
-      // The DOM element is owned by its document.
+      /// The DOM element is owned by its document.
       xercesc::DOMElement const *ce_{};
 
       string_ name_;
@@ -464,7 +494,9 @@ namespace XSCRT
       void value (string_ const &v)
       {
         if (a_ == nullptr)
+        {
           throw std::logic_error ("DOM attribute is read-only");
+        }
 
         value_ = v;
         a_->setValue (string (v).c_str ());
@@ -479,14 +511,16 @@ namespace XSCRT
       xercesc::DOMAttr *dom_attribute ()
       {
         if (a_ == nullptr)
+        {
           throw std::logic_error ("DOM attribute is read-only");
+        }
 
         return a_;
       }
 
     private:
       xercesc::DOMAttr *a_{};
-      // The DOM attribute is owned by its document.
+      /// The DOM attribute is owned by its document.
       xercesc::DOMAttr const *ca_{};
 
       string_ name_;
@@ -498,7 +532,9 @@ namespace XSCRT
     {
       size_t i{};
       while (i < n.length () && n[i] != ':')
+      {
         ++i;
+      }
 
       return std::basic_string<C> (n, i == n.length () ? i : 0, i);
     }
@@ -508,7 +544,9 @@ namespace XSCRT
     {
       size_t i{};
       while (i < n.length () && n[i] != ':')
+      {
         ++i;
+      }
 
       return std::basic_string<C> (n.c_str () + (i == n.length () ? 0 : i + 1));
     }
