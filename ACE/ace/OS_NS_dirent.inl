@@ -1,6 +1,6 @@
 // -*- C++ -*-
 #include "ace/OS_Memory.h"
-#include <cstring>
+#include "ace/OS_NS_string.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -108,7 +108,7 @@ ACE_INLINE int
 alphasort (const void *a, const void *b)
 {
 #if defined (ACE_LACKS_ALPHASORT)
-  return std::strcmp ((*static_cast<const struct ACE_DIRENT * const *>(a))->d_name,
+  return ACE_OS::strcmp ((*static_cast<const struct ACE_DIRENT * const *>(a))->d_name,
                       (*static_cast<const struct ACE_DIRENT * const *>(b))->d_name);
 #else
 #  if defined (ACE_SCANDIR_CMP_USES_VOIDPTR)
