@@ -4,20 +4,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  ACE_INLINE
-  Profile_Transport_Resolver::Profile_Transport_Resolver (
-    CORBA::Object *p,
-    TAO_Stub *stub,
-    bool block)
-    : obj_ (p)
-    , stub_ (stub)
-    , transport_ { nullptr }
-    , profile_ {}
-    , is_released_ {}
-    , blocked_ (block)
-  {
-  }
-
   ACE_INLINE TAO_Stub *
   Profile_Transport_Resolver::stub () const
   {

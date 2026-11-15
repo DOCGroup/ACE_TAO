@@ -15,6 +15,7 @@
 #include "tao/Endpoint.h"
 #include "tao/SystemException.h"
 #include "tao/Client_Strategy_Factory.h"
+#include "tao/Policy_ForwardC.h"
 
 #include "tao/ORB_Time_Policy.h"
 #include "ace/CORBA_macros.h"
@@ -29,6 +30,19 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
+  Profile_Transport_Resolver::Profile_Transport_Resolver (
+    CORBA::Object *p,
+    TAO_Stub *stub,
+    bool block)
+    : obj_ (p),
+      stub_ (stub),
+      transport_ { nullptr },
+      profile_ {},
+      is_released_ {},
+      blocked_ (block)
+  {
+  }
+
   Profile_Transport_Resolver::~Profile_Transport_Resolver ()
   {
     if (this->profile_)

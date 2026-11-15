@@ -21,7 +21,9 @@ Storable_File_Guard (bool redundant, bool use_backup)
 }
 
 TAO::Storable_File_Guard::
-~Storable_File_Guard () noexcept(false) = default;
+~Storable_File_Guard () noexcept(false)
+{
+}
 
 void
 TAO::Storable_File_Guard::init_no_load (Method_Type method_type)
