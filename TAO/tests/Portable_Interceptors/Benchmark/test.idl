@@ -15,31 +15,25 @@ module Test_Interceptors
 {
   exception Invalid {};
 
+  /// A secure vault used to benchmark portable interceptors.
   interface Secure_Vault
   {
-    // = TITLE
-    //   A test idl for checking interceptor with the aim of
-    //   performing benchmarks.
-    //
-    // = DESCRIPTION
-    //   A secure vault into which one can store transaction details.
-
     struct Record
     {
       long check_num;
       long amount;
     };
 
+    /// No-argument operation without exceptions.
     short ready ();
-    // No args/exceptions operation.
 
+    /// Authenticates a user and may raise Invalid.
     void authenticate (in string user) raises (Invalid);
-    // throws a user exception.
 
+    /// Updates a record and returns a value.
     long update_records (in long id, in Record val);
-    // Normal operation with a return val.
 
+    /// Shuts down the ORB.
     oneway void shutdown ();
-    // shutdown the ORB
   };
 };

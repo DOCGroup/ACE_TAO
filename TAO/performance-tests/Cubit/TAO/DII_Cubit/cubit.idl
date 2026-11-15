@@ -152,8 +152,6 @@ interface Cubit
 
 interface Cubit_Factory
 {
-  // = TITLE
-  //    Creates Cubit objects.
-
+  /// Creates Cubit objects.
   Cubit make_cubit ();
 };
