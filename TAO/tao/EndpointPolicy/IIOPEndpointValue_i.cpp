@@ -19,7 +19,7 @@ IIOPEndpointValue_i::IIOPEndpointValue_i (char const* host, CORBA::UShort port)
   : host_ (host),
     port_ (port)
 {
-  if (this->addr_.set (port, host) != 0 || host == nullptr || host[0] == '\0')
+  if (host == nullptr || host[0] == '\0' || this->addr_.set (port, host) != 0)
     this->addr_.set_type (-1);
 }
 
