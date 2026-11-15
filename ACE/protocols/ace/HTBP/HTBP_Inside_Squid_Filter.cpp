@@ -91,12 +91,11 @@ ssize_t
 ACE::HTBP::Inside_Squid_Filter::send_data_header (ssize_t data_len,
                                                 ACE::HTBP::Channel *ch)
 {
-  char *buffer = new char[BUFSIZ];
-  std::unique_ptr<char[]> guard (buffer);
+  std::unique_ptr<char[]> buffer (new char[BUFSIZ]);
   ssize_t result = -1;
-  if (this->make_request_header (ch,"POST ",buffer,BUFSIZ) != -1)
+  if (this->make_request_header (ch,"POST ",buffer.get (),BUFSIZ) != -1)
     {
-      ACE_CString header (buffer);
+      ACE_CString header (buffer.get ());
       header += "Content-Type: application/octet-stream\nContent-Length: ";
       const std::string data_length = std::to_string (data_len);
       header += data_length.c_str ();
@@ -175,8 +174,7 @@ ACE::HTBP::Inside_Squid_Filter::recv_data_trailer (ACE::HTBP::Channel *ch)
 int
 ACE::HTBP::Inside_Squid_Filter::send_ack (ACE::HTBP::Channel *ch)
 {
-  char *buffer = new char[BUFSIZ];
-  std::unique_ptr<char[]> guard (buffer);
+  std::unique_ptr<char[]> buffer (new char[BUFSIZ]);
   ssize_t result = -1;
   if (ch->state() == ACE::HTBP::Channel::Ack_Sent)
     {
@@ -185,9 +183,9 @@ ACE::HTBP::Inside_Squid_Filter::send_ack (ACE::HTBP::Channel *ch)
                          ACE_TEXT("state is already ACK_SENT\n")),
                         1);
     }
-  if (this->make_request_header (ch,"GET ",buffer,BUFSIZ) != -1)
+  if (this->make_request_header (ch,"GET ",buffer.get (),BUFSIZ) != -1)
     {
-      ACE_CString header (buffer);
+      ACE_CString header (buffer.get ());
       header += "\n";
       result = ch->ace_stream().send(header.c_str(),header.length());
     }

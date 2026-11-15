@@ -439,8 +439,7 @@ ACE::HTBP::Channel::recvv (iovec iov[],
   if (this->leftovers_.length())
     {
       int ndx = 0;
-      iovec *iov2 = new iovec[iovcnt];
-      std::unique_ptr<iovec[]> guard (iov2);
+      std::unique_ptr<iovec[]> iov2 (new iovec[iovcnt]);
       for (int i = 0; i < iovcnt; i++)
         {
           size_t n = (std::min) ((size_t) iov[i].iov_len ,
@@ -460,7 +459,7 @@ ACE::HTBP::Channel::recvv (iovec iov[],
         }
       if (ndx > 0)
       {
-        result += this->ace_stream_.recvv(iov2,ndx,timeout);
+        result += this->ace_stream_.recvv(iov2.get (),ndx,timeout);
       }
     }
   else

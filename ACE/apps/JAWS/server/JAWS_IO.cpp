@@ -504,16 +504,15 @@ JAWS_Synch_IO_No_Cache::transmit_file (const char *filename,
     return;
   }
 
-  char* f = new char[size];
-  std::unique_ptr<char[]> file (f);
+  std::unique_ptr<char[]> file (new char[size]);
 
-  ACE_OS::read_n (handle, f, size);
+  ACE_OS::read_n (handle, file.get (), size);
 
   ACE_SOCK_Stream stream;
   stream.set_handle (this->handle_);
 
   if ((stream.send_n (header, header_size) == header_size)
-      && (stream.send_n (f, size) == size)
+      && (stream.send_n (file.get (), size) == size)
       && (stream.send_n (trailer, trailer_size) == trailer_size))
   {
     this->handler_->transmit_file_complete ();
