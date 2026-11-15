@@ -55,7 +55,8 @@ public:
 
   virtual ~ACE_Sbrk_Memory_Pool ();
 
-  // = Implementor operations.
+  /// @name Memory pool operations
+  /// @{
   /// Ask system for initial chunk of local memory.
   virtual void *init_acquire (size_t nbytes,
                               size_t &rounded_bytes,
@@ -90,6 +91,7 @@ public:
   /// Change the protection of the pages of the mapped region to @a prot
   /// starting at @a addr up to @a len bytes.
   virtual int protect (void *addr, size_t len, int prot = PROT_RDWR);
+  /// @}
 
   /// Dump the state of an object.
   virtual void dump () const;

@@ -39,7 +39,7 @@ class ACE_Export ACE_Shared_Memory
 public:
   virtual ~ACE_Shared_Memory ();
 
-  // = Note that all the following methods are pure virtual.
+  /// These operations are implemented by concrete shared-memory backends.
   virtual int close () = 0;
   virtual int remove () = 0;
   virtual void *malloc (size_t = 0) = 0;

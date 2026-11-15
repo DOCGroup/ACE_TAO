@@ -74,12 +74,14 @@ public:
   /// Forward to underlying System V <shmctl>.
   int control (int cmd, void *buf);
 
-  // = Segment-related info.
+  /// @name Segment information
+  /// @{
   void *get_segment_ptr () const;
   size_t get_segment_size () const;
 
   /// Return the ID of the shared memory segment (i.e., an ACE_HANDLE).
   ACE_HANDLE get_id () const;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;

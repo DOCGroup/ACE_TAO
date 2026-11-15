@@ -160,7 +160,8 @@ public:
   /// Default dtor.
   ~ACE_Sig_Action ();
 
-  // = Signal action management.
+  /// @name Signal action management
+  /// @{
   /// Register @c this as the current disposition and store old
   /// disposition into @a oaction if it is non-NULL.
   int register_action (int signum,
@@ -199,6 +200,7 @@ public:
 
   /// Get current signal handler (pointer to function).
   ACE_SignalHandler handler ();
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;

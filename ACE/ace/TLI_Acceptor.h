@@ -66,8 +66,6 @@ public:
   /// Close down the acceptor and release resources.
   int close ();
 
-  // = Passive connection acceptance method.
-
   /**
    * Accept a new data transfer connection.  A @a timeout of 0 means
    * block forever, a @a timeout of {0, 0} means poll.  <restart> == 1
@@ -82,9 +80,11 @@ public:
               netbuf *udata = nullptr,
               netbuf *opt = nullptr);
 
-  // = Meta-type info
+  /// @name Peer types
+  /// @{
   using PEER_ADDR = ACE_INET_Addr;
   using PEER_STREAM = ACE_TLI_Stream;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
