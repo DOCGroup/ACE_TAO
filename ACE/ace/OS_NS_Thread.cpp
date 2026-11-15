@@ -730,7 +730,6 @@ TSS_Cleanup_Instance::operator ->()
   return instance_;
 }
 
-// = Static object initialization.
 unsigned int TSS_Cleanup_Instance::reference_count_ = 0;
 ACE_TSS_Cleanup * TSS_Cleanup_Instance::instance_ = 0;
 ACE_Thread_Mutex* TSS_Cleanup_Instance::mutex_ = 0;
@@ -1048,8 +1047,6 @@ ACE_TSS_Cleanup::tss_keys ()
 #endif /* ACE_WIN32 || ACE_HAS_TSS_EMULATION */
 
 /*****************************************************************************/
-
-// = Static initialization.
 
 // This is necessary to deal with POSIX pthreads insanity.  This
 // guarantees that we've got a "zero'd" thread id even when

@@ -1502,9 +1502,9 @@ ACE_POSIX_SIG_Proactor::ACE_POSIX_SIG_Proactor (size_t max_aio_operations)
   :  ACE_POSIX_AIOCB_Proactor (max_aio_operations,
                                ACE_POSIX_Proactor::PROACTOR_SIG)
 {
-  // = Set up the mask we'll use to block waiting for SIGRTMIN. Use that
-  // to add it to the signal mask for this thread, and also set the process
-  // signal action to pass signal information when we want it.
+  // Set up the mask used to block while waiting for SIGRTMIN. Add it
+  // to this thread's signal mask and set the process signal action to
+  // pass signal information when requested.
 
   // Clear the signal set.
   ACE_OS::sigemptyset (&this->RT_completion_signals_);
@@ -1530,10 +1530,8 @@ ACE_POSIX_SIG_Proactor::ACE_POSIX_SIG_Proactor (const sigset_t signal_set,
   :  ACE_POSIX_AIOCB_Proactor (max_aio_operations,
                                ACE_POSIX_Proactor::PROACTOR_SIG)
 {
-  // = Keep <Signal_set> with the Proactor, mask all the signals and
-  //   setup signal actions for the signals in the <signal_set>.
-
-  // = Keep <signal_set> with the Proactor.
+  // Keep the signal set with the Proactor, mask its signals, and set
+  // up the process signal actions.
 
   // Empty the signal set first.
   if (sigemptyset (&this->RT_completion_signals_) == -1)

@@ -333,12 +333,10 @@ namespace ACE_OS {
                                              LPSECURITY_ATTRIBUTES,
                                              SECURITY_DESCRIPTOR*);
 
-  // = Win32 OS version determination function.
   /// Return the win32 OSVERSIONINFO structure.
   ACE_NAMESPACE_INLINE_FUNCTION
   const ACE_TEXT_OSVERSIONINFO &get_win32_versioninfo ();
 
-  // = A pair of functions for modifying ACE's Win32 resource usage.
   /// Return the handle of the module containing ACE's resources. By
   /// default, for a DLL build of ACE this is a handle to the ACE DLL
   /// itself, and for a static build it is a handle to the executable.

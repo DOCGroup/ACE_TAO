@@ -41,7 +41,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 namespace ACE_OS
 {
-  // = A set of wrappers for miscellaneous operations.
 }  /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

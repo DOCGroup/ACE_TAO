@@ -106,10 +106,8 @@ extern "C"
 #endif /* PIPE_BUF */
 
 #if defined (ACE_HAS_POSIX_REALTIME_SIGNALS)
-  // = Giving unique ACE scoped names for some important
-  // RTSignal-Related constants. Because sometimes, different
-  // platforms use different names for these constants.
-
+  /// Gives ACE-scoped names to real-time signal constants that vary by
+  /// platform.
   // Number of realtime signals provided in the system.
   // _POSIX_RTSIG_MAX is the upper limit on the number of real time
   // signals supported in a posix-4 compliant system.
