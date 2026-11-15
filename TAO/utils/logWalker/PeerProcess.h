@@ -12,6 +12,8 @@
 #include "ace/Containers.h"
 #include "ace/streams.h"
 
+#include <string>
+
 class PeerObject;
 class HostProcess;
 class Invocation;
@@ -65,7 +67,7 @@ using TransportList = ACE_DLList<Transport>;
 class PeerProcess
 {
 public:
-  static char *nextIdent(bool is_server);
+  static std::string nextIdent (bool is_server);
   PeerProcess (size_t offset, const ACE_CString &time, bool is_server);
 
   virtual ~PeerProcess ();
@@ -102,7 +104,7 @@ public:
   virtual void dump_invocation_detail (ostream &strm);
 
 private:
-  char *ident_;
+  std::string ident_;
   char *origin_;
   HostProcess *owner_;
   HostProcess *remote_;

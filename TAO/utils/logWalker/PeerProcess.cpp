@@ -115,17 +115,15 @@ Transport::close (size_t offset, const ACE_CString &time)
   this->close_time_ = time;
 }
 
-char *
-PeerProcess::nextIdent(bool is_server)
+std::string
+PeerProcess::nextIdent (bool is_server)
 {
   static int count {};
-  char *ident = new char[15];
-  std::sprintf (ident, "%s_%d", (is_server ? "server" : "client"), count++);
-  return ident;
+  return std::string (is_server ? "server_" : "client_") + std::to_string (count++);
 }
 
 PeerProcess::PeerProcess (size_t offset, const ACE_CString &time, bool is_server)
-  : ident_ (nullptr),
+  : ident_ (PeerProcess::nextIdent (is_server)),
     origin_ (nullptr),
     owner_ (nullptr),
     remote_ (nullptr),
@@ -140,12 +138,10 @@ PeerProcess::PeerProcess (size_t offset, const ACE_CString &time, bool is_server
     object_by_index_ (),
     first_time_ (time)
 {
-  this->ident_ = PeerProcess::nextIdent(is_server);
 }
 
 PeerProcess::~PeerProcess ()
 {
-  delete [] ident_;
   while (this->invocations_.size())
     {
       Invocation *head = this->invocations_.delete_head();
@@ -266,13 +262,13 @@ PeerProcess::id () const
       }
     }
 
-  return this->ident_;
+  return this->ident_.c_str ();
 }
 
 void
 PeerProcess::split_filename (char *buffer, size_t len) const
 {
-  std::snprintf (buffer, len, "%s.txt", this->ident_);
+  std::snprintf (buffer, len, "%s.txt", this->ident_.c_str ());
 }
 
 PeerObject *
