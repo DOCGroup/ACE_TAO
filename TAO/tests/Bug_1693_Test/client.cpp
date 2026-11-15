@@ -20,8 +20,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       IOP::CodecFactory_var const codec_factory =
         IOP::CodecFactory::_narrow (object.in ());
 
-      // ----------------------------------------------------------
-
       // Set up a structure that contains information necessary to
       // create a GIOP 1.1 CDR encapsulation Codec.
       IOP::Encoding encoding {};
@@ -33,7 +31,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       IOP::Codec_var const codec =
         codec_factory->create_codec (encoding);
 
-      // ----------------------------------------------------------
       {
         constexpr Foo::type_ulong l = 9192631;
 
