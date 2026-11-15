@@ -36,7 +36,7 @@ public:
                                 const void *arg)
     {
       // Print out when timeouts occur.
-      ACE_DEBUG ((LM_DEBUG, "(%t) %d timeout occurred for %s @ %d.\n",
+      ACE_DEBUG ((LM_DEBUG, "(%t) %d timeout occurred for %s @ %:.\n",
                   ++count_,
                   (char *) arg,
                   (tv - this->start_time_).sec ()));

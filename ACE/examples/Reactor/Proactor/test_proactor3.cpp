@@ -327,12 +327,12 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
     {
       ACE_DEBUG ((LM_DEBUG, "handle_read_stream called\n"));
       ACE_DEBUG ((LM_DEBUG, "********************\n"));
-      ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_to_read", result.bytes_to_read ()));
-      ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "handle", result.handle ()));
-      ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_transfered", result.bytes_transferred ()));
-      ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "act", (u_long) result.act ()));
+      ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_to_read", result.bytes_to_read ()));
+      ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "handle", reinterpret_cast<void *> (result.handle ())));
+      ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_transfered", result.bytes_transferred ()));
+      ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "act", const_cast<void *> (result.act ())));
       ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "success", result.success ()));
-      ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "completion_key", (u_long) result.completion_key ()));
+      ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "completion_key", const_cast<void *> (result.completion_key ())));
       ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "error", result.error ()));
       ACE_DEBUG ((LM_DEBUG, "********************\n"));
       ACE_DEBUG ((LM_DEBUG, "%s = %s\n", "message_block", result.message_block ().rd_ptr ()));
@@ -376,12 +376,12 @@ Receiver::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
       ACE_DEBUG ((LM_DEBUG, "handle_write_stream called\n"));
 
       ACE_DEBUG ((LM_DEBUG, "********************\n"));
-      ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_to_write", result.bytes_to_write ()));
-      ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "handle", result.handle ()));
-      ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_transfered", result.bytes_transferred ()));
-      ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "act", (u_long) result.act ()));
+      ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_to_write", result.bytes_to_write ()));
+      ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "handle", reinterpret_cast<void *> (result.handle ())));
+      ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_transfered", result.bytes_transferred ()));
+      ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "act", const_cast<void *> (result.act ())));
       ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "success", result.success ()));
-      ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "completion_key", (u_long) result.completion_key ()));
+      ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "completion_key", const_cast<void *> (result.completion_key ())));
       ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "error", result.error ()));
       ACE_DEBUG ((LM_DEBUG, "********************\n"));
     }
@@ -583,12 +583,12 @@ Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
       result.message_block ().rd_ptr (result.message_block ().rd_ptr () - result.bytes_transferred ());
 
       ACE_DEBUG ((LM_DEBUG, "********************\n"));
-      ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_to_write", result.bytes_to_write ()));
-      ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "handle", result.handle ()));
-      ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_transfered", result.bytes_transferred ()));
-      ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "act", (u_long) result.act ()));
+      ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_to_write", result.bytes_to_write ()));
+      ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "handle", reinterpret_cast<void *> (result.handle ())));
+      ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_transfered", result.bytes_transferred ()));
+      ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "act", const_cast<void *> (result.act ())));
       ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "success", result.success ()));
-      ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "completion_key", (u_long) result.completion_key ()));
+      ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "completion_key", const_cast<void *> (result.completion_key ())));
       ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "error", result.error ()));
       ACE_DEBUG ((LM_DEBUG, "********************\n"));
       ACE_DEBUG ((LM_DEBUG, "%s = %s\n", "message_block", result.message_block ().rd_ptr ()));
@@ -621,12 +621,12 @@ Sender::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
       result.message_block ().rd_ptr ()[result.bytes_transferred ()] = '\0';
 
       ACE_DEBUG ((LM_DEBUG, "********************\n"));
-      ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_to_read", result.bytes_to_read ()));
-      ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "handle", result.handle ()));
-      ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_transfered", result.bytes_transferred ()));
-      ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "act", (u_long) result.act ()));
+      ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_to_read", result.bytes_to_read ()));
+      ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "handle", reinterpret_cast<void *> (result.handle ())));
+      ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_transfered", result.bytes_transferred ()));
+      ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "act", const_cast<void *> (result.act ())));
       ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "success", result.success ()));
-      ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "completion_key", (u_long) result.completion_key ()));
+      ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "completion_key", const_cast<void *> (result.completion_key ())));
       ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "error", result.error ()));
       ACE_DEBUG ((LM_DEBUG, "********************\n"));
       ACE_DEBUG ((LM_DEBUG, "%s = %s\n", "message_block", result.message_block ().rd_ptr ()));

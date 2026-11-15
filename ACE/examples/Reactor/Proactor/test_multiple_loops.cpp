@@ -35,7 +35,7 @@ public:
                         const void *arg) override
     {
       // Print out when timeouts occur.
-      ACE_DEBUG ((LM_DEBUG, "(%t) %d timeout occurred for %s @ %d.\n",
+      ACE_DEBUG ((LM_DEBUG, "(%t) %d timeout occurred for %s @ %:.\n",
                   ++count_,
                   static_cast<char const *> (arg),
                   tv.sec ()));

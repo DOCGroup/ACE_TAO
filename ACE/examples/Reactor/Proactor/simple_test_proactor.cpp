@@ -149,12 +149,12 @@ Simple_Tester::handle_read_file (const ACE_Asynch_Read_File::Result &result)
   result.message_block ().rd_ptr ()[result.bytes_transferred ()] = '\0';
 
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_to_read", result.bytes_to_read ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "handle", result.handle ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_transfered", result.bytes_transferred ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "act", (u_long) result.act ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_to_read", result.bytes_to_read ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "handle", reinterpret_cast<void *> (result.handle ())));
+  ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_transfered", result.bytes_transferred ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "act", const_cast<void *> (result.act ())));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "success", result.success ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "completion_key", (u_long) result.completion_key ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "completion_key", const_cast<void *> (result.completion_key ())));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "error", result.error ()));
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
   // Watch out if you need to enable this... the ACE_Log_Record::MAXLOGMSGLEN
@@ -189,12 +189,12 @@ Simple_Tester::handle_write_file (const ACE_Asynch_Write_File::Result &result)
   result.message_block ().rd_ptr ()[result.bytes_transferred ()] = '\0';
 
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_to_write", result.bytes_to_write ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "handle", result.handle ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_transfered", result.bytes_transferred ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "act", (u_long) result.act ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_to_write", result.bytes_to_write ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "handle", reinterpret_cast<void *> (result.handle ())));
+  ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_transfered", result.bytes_transferred ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "act", const_cast<void *> (result.act ())));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "success", result.success ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "completion_key", (u_long) result.completion_key ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "completion_key", const_cast<void *> (result.completion_key ())));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "error", result.error ()));
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
   // Watch out if you need to enable this... the ACE_Log_Record::MAXLOGMSGLEN
