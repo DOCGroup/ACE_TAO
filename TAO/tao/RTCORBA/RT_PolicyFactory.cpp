@@ -75,6 +75,7 @@ TAO_RT_PolicyFactory::_create_policy (CORBA::PolicyType type)
 
       return policy;
     }
+  }
 
   throw ::CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
 }

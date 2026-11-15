@@ -13,10 +13,7 @@
 #include "tao/Profile.h"
 #include "tao/Endpoint.h"
 #include "tao/debug.h"
-#include "tao/Profile.h"
-#include "tao/Endpoint.h"
 #include "tao/Profile_Transport_Resolver.h"
-#include "tao/ORB_Core.h"
 #include "tao/SystemException.h"
 
 #include <memory>
