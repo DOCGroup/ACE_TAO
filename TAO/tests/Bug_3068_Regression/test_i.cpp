@@ -27,8 +27,6 @@ Callback_i::callback_method (CORBA::OctetSeq const &)
     ACE_OS::exit (0);
 }
 
-// ****************************************************************
-
 CORBA::Long
 Simple_Server_i::test_method (CORBA::Boolean do_callback)
 {

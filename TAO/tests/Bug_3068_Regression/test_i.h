@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   test_i.h
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_BIDIRECTIONAL_TEST_I_H
 #define TAO_BIDIRECTIONAL_TEST_I_H
@@ -51,7 +49,6 @@ private:
 class Callback_i : public POA_Callback
 {
 public:
-  /// ctor
   explicit Callback_i (CORBA::ORB_ptr orb);
   Callback_i (Callback_i const &) = delete;
   Callback_i &operator= (Callback_i const &) = delete;
@@ -80,14 +77,14 @@ private:
 class Simple_Server_i : public POA_Simple_Server
 {
 public:
-  /// ctor
   explicit Simple_Server_i (CORBA::ORB_ptr orb);
   Simple_Server_i (Simple_Server_i const &) = delete;
   Simple_Server_i &operator= (Simple_Server_i const &) = delete;
   Simple_Server_i (Simple_Server_i &&) = delete;
   Simple_Server_i &operator= (Simple_Server_i &&) = delete;
 
-  // = The Simple_Server methods.
+  /// @name Simple_Server methods
+  /// @{
   void ow_test () override;
 
   CORBA::Long test_method (CORBA::Boolean do_callback) override;
@@ -95,6 +92,7 @@ public:
   void callback_object (Callback_ptr callback) override;
 
   void shutdown () override;
+  /// @}
 
 private:
   /// The ORB
