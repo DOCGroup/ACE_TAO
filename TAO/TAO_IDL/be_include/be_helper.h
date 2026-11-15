@@ -175,7 +175,9 @@ public:
   /// Generate an endif statement
   int gen_endif ();
 
-  // =overloaded operators
+  /// @name Stream operators
+  /// @{
+
   // Avoid duplication for the underlying type of size_t
   template <typename Dummy = TAO_OutStream &>
   typename std::enable_if<std::is_same<Dummy, TAO_OutStream &>::value &&
@@ -203,12 +205,17 @@ public:
   TAO_OutStream &operator<< (const ACE_CDR::ULongLong num);
   TAO_OutStream &operator<< (const ACE_CDR::LongLong num);
 
-  // = MANIPULATORS
+  /// @}
+
+  /// @name Stream manipulators
+  /// @{
 
   TAO_OutStream &operator<< (const TAO_NL& nl);
   TAO_OutStream &operator<< (const TAO_NL_2& nl_twice);
   TAO_OutStream &operator<< (const TAO_INDENT& i);
   TAO_OutStream &operator<< (const TAO_UNINDENT& i);
+
+  /// @}
 
   // The following will be provided by specialized classes
 

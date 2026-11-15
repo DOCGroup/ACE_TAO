@@ -36,7 +36,8 @@ public:
   /// visit map
   int visit_map (be_map *node) override;
 
-  // = Visitor methods on map types
+  /// @name Visitor methods on map types
+  /// @{
 
   /// visit map
   int visit_array (be_array *node) override;
@@ -88,6 +89,8 @@ public:
 
   /// visit union
   int visit_union (be_union *node) override;
+
+  /// @}
 
 protected:
   /// helper that does the common job

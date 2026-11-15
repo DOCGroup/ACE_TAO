@@ -457,7 +457,8 @@ public:
   /// Get text that closes a "versioned" namespace for CORBA::Any operators
   std::string const& anyops_versioning_end () const;
 
-  // = Set and get methods for different file name endings.
+  /// @name File name endings
+  /// @{
 
   /// Set the client_hdr_ending.
   void client_hdr_ending (std::string const& s);
@@ -497,6 +498,8 @@ public:
 
   /// Get the implementation_hdr_ending.
   std::string const& implementation_hdr_ending () const;
+
+  /// @}
 
   ///Get implementation class prefix
   std::string const& impl_class_prefix () const;
