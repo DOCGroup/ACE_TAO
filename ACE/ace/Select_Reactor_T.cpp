@@ -1041,7 +1041,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::work_pending
 
   // Check if we have timers to fire.
   bool const timers_pending =
-    (this_timeout != nullptr && *this_timeout != mwt ? true : false);
+    this_timeout != nullptr && *this_timeout != mwt;
 
 #ifdef ACE_WIN32
   // This arg is ignored on Windows and causes pointer truncation
