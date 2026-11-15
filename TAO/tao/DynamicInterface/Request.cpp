@@ -305,7 +305,7 @@ CORBA::Request::poll_response ()
   // and the response never gets received, so let the ORB do an
   // atom of work, if necessary, each time we poll.
   ACE_Time_Value tv (0, 0);
-  (void) this->orb_->perform_work (&tv);
+  (void) this->orb_->perform_work (std::addressof (tv));
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     ace_mon,
