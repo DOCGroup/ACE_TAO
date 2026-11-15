@@ -1,13 +1,16 @@
-// file      : XMLSchema/Types.hpp
-// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+/**
+ * @file Types.hpp
+ * @author Boris Kolpackov <boris@dre.vanderbilt.edu>
+ */
 #ifndef XMLSCHEMA_TYPES_HPP
 #define XMLSCHEMA_TYPES_HPP
 
 #include "ace/XML_Utils/XSCRT/Elements.hpp"
+#include <memory>
 #include <string>
 
 #include "ace/Basic_Types.h"
-/*
+/**
  * MSVC warning C4355 is triggered by ID's member initializer passing `this`
  * to IdentityProvider. IdentityProvider stores the reference without using
  * the ID while it is being constructed.
@@ -311,7 +314,7 @@ namespace XMLSchema
     }
 
   private:
-    // IdentityProvider compares through this borrowed string reference.
+    /// IdentityProvider compares through this borrowed string reference.
     NCName<C> const &id_;
 
   private:
@@ -378,7 +381,9 @@ namespace XMLSchema
     ID &operator= (ID const &x)
     {
       if (this != std::addressof (x))
-        assign_id_ (static_cast<Base__ const &> (x));
+        {
+          assign_id_ (static_cast<Base__ const &> (x));
+        }
       return *this;
     }
 
@@ -448,7 +453,7 @@ namespace XMLSchema
     }
 
   private:
-    // This provider refers to the ID object's own string and cannot be moved.
+    /// This provider refers to the ID object's own string and cannot be moved.
     IdentityProvider<C> id_provider_;
     bool registered_{};
   };
@@ -459,7 +464,7 @@ namespace XMLSchema
 
   struct IDREF_Base : public XSCRT::Type
   {
-    // Both accessors return a target borrowed from the parsed object graph.
+    /// Both accessors return a target borrowed from the parsed object graph.
     virtual XSCRT::Type const *get () const = 0;
 
     virtual XSCRT::Type *get () = 0;
@@ -561,25 +566,25 @@ namespace XMLSchema
     XSCRT::Type const *get () const override
     {
       if (!id_.empty () && container () != this)
-      {
-        return root ()->lookup_id (id_provider_);
-      }
+        {
+          return root ()->lookup_id (id_provider_);
+        }
       else
-      {
-        return nullptr;
-      }
+        {
+          return nullptr;
+        }
     }
 
     XSCRT::Type *get () override
     {
       if (!id_.empty () && container () != this)
-      {
-        return root ()->lookup_id (id_provider_);
-      }
+        {
+          return root ()->lookup_id (id_provider_);
+        }
       else
-      {
-        return nullptr;
-      }
+        {
+          return nullptr;
+        }
     }
 
     explicit operator bool () const
@@ -589,7 +594,7 @@ namespace XMLSchema
 
   private:
     NCName<C> id_;
-    // This provider refers to id_ and cannot be moved independently.
+    /// This provider refers to id_ and cannot be moved independently.
     IdentityProvider<C> id_provider_;
   };
 
@@ -602,7 +607,7 @@ namespace XMLSchema
     using Base__ = std::basic_string<C>;
 
   public:
-    // Trait for marshaling string
+    /// Trait for marshaling string.
     using CDR_Type__ = C;
 
     anyURI () = default;

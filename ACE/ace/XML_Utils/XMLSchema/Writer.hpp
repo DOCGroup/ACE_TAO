@@ -1,5 +1,7 @@
-// file      : XMLSchema/Writer.hpp
-// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+/**
+ * @file Writer.hpp
+ * @author Boris Kolpackov <boris@dre.vanderbilt.edu>
+ */
 #ifndef XMLSCHEMA_WRITER_HPP
 #define XMLSCHEMA_WRITER_HPP
 
@@ -29,11 +31,14 @@ namespace XMLSchema
         std::basic_ostringstream<C> os;
         os << o;
 
-        XSCRT::XML::Attribute<C> *const a (attr_ ());
-        if (a != nullptr)
-          a->value (os.str ());
+        if (XSCRT::XML::Attribute<C> *const a (attr_ ()); a != nullptr)
+          {
+            a->value (os.str ());
+          }
         else
-          top_ ().value (os.str ());
+          {
+            top_ ().value (os.str ());
+          }
       }
 
     protected:
@@ -62,15 +67,22 @@ namespace XMLSchema
       {
         std::basic_ostringstream<C> os;
         if (o)
-          os << "true";
+          {
+            os << "true";
+          }
         else
-          os << "false";
+          {
+            os << "false";
+          }
 
-        XSCRT::XML::Attribute<C> *const a (attr_ ());
-        if (a != nullptr)
-          a->value (os.str ());
+        if (XSCRT::XML::Attribute<C> *const a (attr_ ()); a != nullptr)
+          {
+            a->value (os.str ());
+          }
         else
-          top_ ().value (os.str ());
+          {
+            top_ ().value (os.str ());
+          }
       }
 
     protected:
@@ -92,11 +104,14 @@ namespace XMLSchema
 
       void traverse (typename Traversal::Traverser<XMLSchema::IDREF<C>>::Type const &o) override
       {
-        XSCRT::XML::Attribute<C> *const a (XSCRT::Writer<C>::attr_ ());
-        if (a != nullptr)
-          a->value (o.id ());
+        if (XSCRT::XML::Attribute<C> *const a (XSCRT::Writer<C>::attr_ ()); a != nullptr)
+          {
+            a->value (o.id ());
+          }
         else
-          XSCRT::Writer<C>::top_ ().value (o.id ());
+          {
+            XSCRT::Writer<C>::top_ ().value (o.id ());
+          }
       }
 
     protected:

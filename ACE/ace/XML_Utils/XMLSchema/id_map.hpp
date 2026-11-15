@@ -1,5 +1,4 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  * @file    id_map.hpp
  *
@@ -13,8 +12,6 @@
  *
  * @author Jason R. Cody <jason.r.cody@vanderbilt.edu; jason.r.cody@gmail.com>
  */
-//=============================================================================
-
 #ifndef _ID_MAP_H
 #define _ID_MAP_H
 
@@ -93,8 +90,8 @@ public:
 
   void resolve_single_idref (String const &idref, XSCRT::Type *element) const
   {
-    ID_MAP::const_iterator const id_iter = this->id_map_.find (idref);
-    if (id_iter != this->id_map_.end ())
+    if (ID_MAP::const_iterator const id_iter = this->id_map_.find (idref);
+        id_iter != this->id_map_.end ())
     {
       element->set_idref (idref, id_iter->second);
     }
@@ -108,8 +105,8 @@ public:
   {
     for (IDREF_MAP::value_type const &idref_entry : this->idref_map_)
     {
-      ID_MAP::const_iterator const id_iter = this->id_map_.find (idref_entry.first);
-      if (id_iter != this->id_map_.end ())
+      if (ID_MAP::const_iterator const id_iter = this->id_map_.find (idref_entry.first);
+          id_iter != this->id_map_.end ())
       {
         idref_entry.second->set_idref (id_iter->first, id_iter->second);
       }
@@ -127,7 +124,7 @@ public:
   }
 
 private:
-  // Both maps borrow pointers from the parsed XML object graph.
+  /// Both maps borrow pointers from the parsed XML object graph.
   ID_MAP id_map_;
   IDREF_MAP idref_map_;
 };

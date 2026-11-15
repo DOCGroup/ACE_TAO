@@ -1,5 +1,7 @@
-// file      : XMLSchema/Traversal.hpp
-// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+/**
+ * @file Traversal.hpp
+ * @author Boris Kolpackov <boris@dre.vanderbilt.edu>
+ */
 #ifndef XMLSCHEMA_TRAVERSAL_HPP
 #define XMLSCHEMA_TRAVERSAL_HPP
 
@@ -15,16 +17,18 @@ namespace XMLSchema
     {
       void traverse (XMLSchema::IDREF_Base &r) override
       {
-        XSCRT::Type *const referenced (r.get ());
-        if (referenced != nullptr)
-          dispatch (*referenced);
+        if (XSCRT::Type *const referenced (r.get ()); referenced != nullptr)
+          {
+            dispatch (*referenced);
+          }
       }
 
       void traverse (XMLSchema::IDREF_Base const &r) override
       {
-        XSCRT::Type const *const referenced (r.get ());
-        if (referenced != nullptr)
-          dispatch (*referenced);
+        if (XSCRT::Type const *const referenced (r.get ()); referenced != nullptr)
+          {
+            dispatch (*referenced);
+          }
       }
     };
 

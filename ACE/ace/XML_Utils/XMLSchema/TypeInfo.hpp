@@ -1,5 +1,7 @@
-// file      : XMLSchema/TypeInfo.hpp
-// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+/**
+ * @file TypeInfo.hpp
+ * @author Boris Kolpackov <boris@dre.vanderbilt.edu>
+ */
 #ifndef XMLSCHEMA_TYPE_INFO_HPP
 #define XMLSCHEMA_TYPE_INFO_HPP
 

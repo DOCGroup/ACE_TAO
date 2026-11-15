@@ -1,5 +1,7 @@
-// file      : XMLSchema/TypeInfo.tpp
-// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+/**
+ * @file TypeInfo.tpp
+ * @author Boris Kolpackov <boris@dre.vanderbilt.edu>
+ */
 
 namespace XMLSchema
 {
