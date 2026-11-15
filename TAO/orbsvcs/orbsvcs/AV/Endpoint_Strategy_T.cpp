@@ -57,13 +57,22 @@ TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activ
   try
     {
       this->activate_stream_endpoint ();
-      if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t)TAO_AV_Endpoint_Reactive_Strategy::activated stream_endpoint\n"));
+      if (TAO_debug_level > 0)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t)TAO_AV_Endpoint_Reactive_Strategy::activated stream_endpoint\n"));
+        }
 
       this->activate_vdev ();
-      if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t)TAO_AV_Endpoint_Reactive_Strategy::activated vdev\n"));
+      if (TAO_debug_level > 0)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t)TAO_AV_Endpoint_Reactive_Strategy::activated vdev\n"));
+        }
 
       this->activate_mediactrl ();
-      if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t)TAO_AV_Endpoint_Reactive_Strategy::activated mediactrl\n"));
+      if (TAO_debug_level > 0)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t)TAO_AV_Endpoint_Reactive_Strategy::activated mediactrl\n"));
+        }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -100,7 +109,9 @@ TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activ
       // Bridge pattern. Allow subclasses to override this behavior
       T_VDev *vdev {};
       if (this->make_vdev (vdev) == -1)
-        return -1;
+        {
+          return -1;
+        }
 
       // Activate the object under the root poa.
 //      CORBA::String_var vdev_ior = this->activate_with_poa (vdev,
@@ -128,8 +139,10 @@ TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activ
   try
     {
       // Bridge pattern. Subclasses can override this
-      if (this->make_mediactrl ( media_ctrl_servant_ ) == -1)
-        return -1;
+      if (this->make_mediactrl (media_ctrl_servant_) == -1)
+        {
+          return -1;
+        }
 
       // Associate the media controller object reference with the vdev, as per the OMG spec
       CORBA::Any anyval;
@@ -214,9 +227,9 @@ TAO_AV_Endpoint_Reactive_Strategy_A<T_StreamEndpoint, T_VDev, T_MediaCtrl>::crea
                                                                                       AVStreams::VDev_ptr &vdev)
 {
   if (this->activate () == -1)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) TAO_AV_Endpoint_Reactive_Strategy_A: Error in activate ()\n"),
-                      -1);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "(%P|%t) TAO_AV_Endpoint_Reactive_Strategy_A: Error in activate ()\n"), -1);
+    }
 
   stream_endpoint = AVStreams::StreamEndPoint_A::_duplicate( this->stream_endpoint_a_.in() );
   vdev = AVStreams::VDev::_duplicate( this->vdev_.in() );
@@ -232,7 +245,9 @@ TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::act
     {
       // Use the bridge method
       if (this->make_stream_endpoint (this->stream_endpoint_a_servant_) == -1)
-        return -1;
+        {
+          return -1;
+        }
 
       // Save the object references, so that create_a can return them
       this->stream_endpoint_a_ = this->stream_endpoint_a_servant_->_this ();
@@ -274,8 +289,10 @@ TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::act
 {
   try
     {
-      if (this->make_stream_endpoint ( this->stream_endpoint_b_servant_ ) == -1)
-        return -1;
+      if (this->make_stream_endpoint (this->stream_endpoint_b_servant_) == -1)
+        {
+          return -1;
+        }
 
       this->stream_endpoint_b_ = this->stream_endpoint_b_servant_->_this ();
     }
@@ -295,9 +312,9 @@ TAO_AV_Endpoint_Reactive_Strategy_B<T_StreamEndpoint, T_VDev, T_MediaCtrl>::crea
                                                                                       AVStreams::VDev_ptr &vdev)
 {
   if (this->activate () == -1)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) TAO_AV_Endpoint_Reactive_Strategy_B: Error in activate ()\n"),
-                      -1);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "(%P|%t) TAO_AV_Endpoint_Reactive_Strategy_B: Error in activate ()\n"), -1);
+    }
 
   stream_endpoint = AVStreams::StreamEndPoint_B::_duplicate( this->stream_endpoint_b_.in() );
   vdev = AVStreams::VDev::_duplicate( this->vdev_.in() );
@@ -316,7 +333,9 @@ TAO_AV_Child_Process <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::TAO_AV_Child_Pro
 {
   this->pid_ = ACE_OS::getpid ();
   if (this->pid_ == 0)
-    ORBSVCS_ERROR ((LM_ERROR,"getpid () failed\n"));
+    {
+      ORBSVCS_ERROR ((LM_ERROR, "getpid () failed\n"));
+    }
   ACE_OS::hostname (this->host_,
                     sizeof this->host_);
 }
@@ -356,9 +375,9 @@ TAO_AV_Child_Process  <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::init (int argc,
 
   // release the semaphore the parent is waiting on
   if (this->release_semaphore () == -1)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) Error releasing semaphores\n"),
-                      -1);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "(%P|%t) Error releasing semaphores\n"), -1);
+    }
 
   return 0;
 }
@@ -389,32 +408,46 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_objects 
     {
       // bridge method to make a new stream endpoint
       if (this->make_stream_endpoint (this->stream_endpoint_) == -1)
-        return -1;
+        {
+          return -1;
+        }
 
       // bridge method to make a new vdev
       if (this->make_vdev (this->vdev_) == -1)
-        return -1;
+        {
+          return -1;
+        }
 
       // bridge method to make a new media controller
       if (this->make_mediactrl (this->media_ctrl_) == -1)
-        return -1;
+        {
+          return -1;
+        }
 
       // activate the stream_endpoint
       CORBA::String_var stream_endpoint_ior = this->activate_with_poa (this->stream_endpoint_);
-      if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,
-                                           "(%P|%t)TAO_AV_Child_Process::activate_objects,stream_endpoint_ior :%s\n",
-                                           stream_endpoint_ior.in ()));
+      if (TAO_debug_level > 0)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          "(%P|%t)TAO_AV_Child_Process::activate_objects,stream_endpoint_ior :%s\n",
+                          stream_endpoint_ior.in ()));
+        }
 
       // activate the vdev
       CORBA::String_var vdev_ior = this->activate_with_poa (this->vdev_);
-      if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,
-                                           "(%P|%t)TAO_AV_Child_Process::activate_objects, vdev ior is :%s\n",
-                                           vdev_ior.in ()));
+      if (TAO_debug_level > 0)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t)TAO_AV_Child_Process::activate_objects, vdev ior is :%s\n", vdev_ior.in ()));
+        }
 
       // activate the media controller
       CORBA::String_var media_ctrl_ior = this->activate_with_poa (this->media_ctrl_);
 
-      if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t)TAO_AV_Child_Process::activate_objects,media_ctrl_ior is: %s\n",media_ctrl_ior.in ()));
+      if (TAO_debug_level > 0)
+        {
+          ORBSVCS_DEBUG (
+            (LM_DEBUG, "(%P|%t)TAO_AV_Child_Process::activate_objects,media_ctrl_ior is: %s\n", media_ctrl_ior.in ()));
+        }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -434,9 +467,9 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::bind_to_naming_se
       CORBA::Object_var naming_obj =
         this->orb_->resolve_initial_references ("NameService");
       if (CORBA::is_nil (naming_obj.in ()))
-        ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to resolve the Name Service.\n"),
-                          -1);
+        {
+          ORBSVCS_ERROR_RETURN ((LM_ERROR, " (%P|%t) Unable to resolve the Name Service.\n"), -1);
+        }
       //  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
       this->naming_context_ =
         CosNaming::NamingContext::_narrow (naming_obj.in ());
@@ -464,7 +497,10 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::register_vdev ()
                        this->host_,
                        static_cast<long> (this->pid_));
 
-      if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",vdev_name));
+      if (TAO_debug_level > 0)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t)%s\n", vdev_name));
+        }
       // create the name
       this->vdev_name_.length (1);
       this->vdev_name_ [0].id = CORBA::string_dup (vdev_name);
@@ -539,9 +575,10 @@ TAO_AV_Child_Process  <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::release_semapho
                    this->host_,
                    pid);
 
-  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,
-              "(%P|%t) semaphore is %s\n",
-              sem_str));
+  if (TAO_debug_level > 0)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) semaphore is %s\n", sem_str));
+    }
 
   // Release the lock on which the server is waiting
   ACE_Process_Semaphore semaphore (0, // 0 means that the semaphore is
@@ -549,11 +586,9 @@ TAO_AV_Child_Process  <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::release_semapho
                                    sem_str);
 
   if (semaphore.release () == -1)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) Error releasing semaphore %s: %p\n",
-                       sem_str,
-                       "semaphore.release ()"),
-                      -1);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "(%P|%t) Error releasing semaphore %s: %p\n", sem_str, "semaphore.release ()"), -1);
+    }
 
   return 0;
 }
@@ -616,7 +651,10 @@ template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 int
 TAO_AV_Child_Process<T_StreamEndpoint, T_VDev, T_MediaCtrl>::make_mediactrl (T_MediaCtrl *&media_ctrl)
 {
-  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t) TAO_AV_Child_Process::make_mediactrl ()\n"));
+  if (TAO_debug_level > 0)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) TAO_AV_Child_Process::make_mediactrl ()\n"));
+    }
   ACE_NEW_RETURN (media_ctrl,
                   T_MediaCtrl,
                   -1);
@@ -631,7 +669,9 @@ TAO_AV_Child_Process<T_StreamEndpoint, T_VDev, T_MediaCtrl>::unbind_names ()
   try
     {
       if (CORBA::is_nil (this->naming_context_.in ()) == 0)
-        return 0;
+        {
+          return 0;
+        }
       this->naming_context_->unbind (this->stream_endpoint_name_);
 
       this->naming_context_->unbind (this->vdev_name_);
@@ -672,7 +712,10 @@ TAO_AV_Child_Process_A<T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Child_Proc
                    this->host_,
                    static_cast<long> (this->pid_));
 
-  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",stream_endpoint_name));
+  if (TAO_debug_level > 0)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t)%s\n", stream_endpoint_name));
+    }
   this->stream_endpoint_name_.length (1);
   this->stream_endpoint_name_ [0].id = CORBA::string_dup (stream_endpoint_name);
 }
@@ -696,7 +739,10 @@ TAO_AV_Child_Process_B<T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Child_Proc
                    this->host_,
                    static_cast<long> (this->pid_));
 
-  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",stream_endpoint_name));
+  if (TAO_debug_level > 0)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t)%s\n", stream_endpoint_name));
+    }
   this->stream_endpoint_name_.length (1);
   this->stream_endpoint_name_ [0].id = CORBA::string_dup (stream_endpoint_name);
 }

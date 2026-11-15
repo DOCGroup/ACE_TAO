@@ -23,8 +23,9 @@ RTCP_Packet::RTCP_Packet(char* buffer)
   this->chd_.ver_ = (buffer[0] & 0xC0) >> 6;
 
   if (this->chd_.ver_ != RTP_VERSION)
-    ORBSVCS_DEBUG ((LM_DEBUG,
-                "RTCP_Packet::RTCP_Packet version incorrect"));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG, "RTCP_Packet::RTCP_Packet version incorrect"));
+    }
 
   this->chd_.pad_ = (buffer[0] & 0x20) >> 5;
   this->chd_.count_ = buffer[0] & 0x1F;
@@ -97,8 +98,10 @@ RTCP_BYE_Packet::RTCP_BYE_Packet(ACE_UINT32 *ssrc_list,
 
       this->ssrc_list_length_ = length;
 
-      for (int i {}; i < length; ++i)
-        this->ssrc_list_[i] = ssrc_list[i];
+      for (int i{}; i < length; ++i)
+        {
+          this->ssrc_list_[i] = ssrc_list[i];
+        }
     }
 
   // Optional - if there is a reason for leaving, store it.
@@ -261,10 +264,10 @@ RTCP_BYE_Packet::dump ()
 {
   ORBSVCS_DEBUG ((LM_DEBUG,
               "\nRTCP_BYE_Packet:: from ssrc(s) "));
-  for (int i {}; i < this->ssrc_list_length_; ++i)
-    ORBSVCS_DEBUG ((LM_DEBUG,
-                "%u ",
-                this->ssrc_list_[i]));
+  for (int i{}; i < this->ssrc_list_length_; ++i)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG, "%u ", this->ssrc_list_[i]));
+    }
   ORBSVCS_DEBUG ((LM_DEBUG,
               "\n    Reason '%s'\n",
               this->reason_));
@@ -524,7 +527,10 @@ RTCP_SDES_Packet::RTCP_SDES_Packet(char* buffer, int *len):
         }
         ++i; // each chunk ends with a zero (END) item
         // each chunk must end on an even 32 bit boundary
-        while (i%4) i++;
+        while (i % 4)
+        {
+          i++;
+        }
     }
 
   *len-=(this->chd_.length_+1)*4;
@@ -551,12 +557,16 @@ RTCP_SDES_Packet::add_chunk (ACE_UINT32 ssrc)
   sdesChunk_t * const cp = chunk.get ();
   cp->ssrc_ = ssrc;
   if (this->chunk_ == nullptr)
-    this->chunk_ = std::move (chunk);
+    {
+      this->chunk_ = std::move (chunk);
+    }
   else
     {
       sdesChunk_t *tail = this->chunk_.get ();
       while (tail->next_)
-        tail = tail->next_.get ();
+        {
+          tail = tail->next_.get ();
+        }
       tail->next_ = std::move (chunk);
     }
 
@@ -579,7 +589,9 @@ RTCP_SDES_Packet::add_item_node (sdesChunk_t *chunk)
   sdesItem_t * const item_ptr = item.get ();
   std::unique_ptr<sdesItem_t> *next_item = &chunk->item_;
   while (*next_item != nullptr)
-    next_item = &(*next_item)->next_;
+    {
+      next_item = &(*next_item)->next_;
+    }
   *next_item = std::move (item);
   return item_ptr;
 }
@@ -605,7 +617,9 @@ RTCP_SDES_Packet::add_item (ACE_UINT32 ssrc,
   else
     {
       while (cp->ssrc_ != ssrc && cp->next_ != nullptr)
+      {
         cp = cp->next_.get ();
+      }
       if (cp->ssrc_ != ssrc)
         {
           cp = this->add_chunk (ssrc);
@@ -658,7 +672,9 @@ RTCP_SDES_Packet::add_priv_item (ACE_UINT32 ssrc,
   else
     {
       while (cp->ssrc_ != ssrc && cp->next_ != nullptr)
+      {
         cp = cp->next_.get ();
+      }
       if (cp->ssrc_ != ssrc)
         {
           cp = this->add_chunk (ssrc);

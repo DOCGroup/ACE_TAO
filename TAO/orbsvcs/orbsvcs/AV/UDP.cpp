@@ -74,9 +74,9 @@ ACE_HANDLE
 TAO_AV_UDP_Flow_Handler::get_handle () const
 {
   if (TAO_debug_level > 0)
-    ORBSVCS_DEBUG ((LM_DEBUG,
-                "TAO_AV_UDP_Flow_Handler::get_handle:%d\n",
-                this->sock_dgram_.get_handle ()));
+  {
+    ORBSVCS_DEBUG ((LM_DEBUG, "TAO_AV_UDP_Flow_Handler::get_handle:%d\n", this->sock_dgram_.get_handle ()));
+  }
 
   return this->sock_dgram_.get_handle () ;
 }
@@ -387,9 +387,9 @@ TAO_AV_UDP_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
       inet_addr->addr_to_string (buf, BUFSIZ);
 
       if (TAO_debug_level > 0)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    "TAO_AV_UDP_Acceptor::open: %s\n",
-                    buf));
+      {
+        ORBSVCS_DEBUG ((LM_DEBUG, "TAO_AV_UDP_Acceptor::open: %s\n", buf));
+      }
     }
 
   int result = this->open_i (inet_addr, false);
@@ -566,9 +566,9 @@ TAO_AV_UDP_Acceptor::open_i (ACE_INET_Addr *inet_addr,
       ACE_TCHAR buf[BUFSIZ];
       local_addr->addr_to_string (buf,BUFSIZ);
       if (TAO_debug_level > 0)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    "TAO_AV_UDP_ACCEPTOR::open:%s\n",
-                    buf));
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG, "TAO_AV_UDP_ACCEPTOR::open:%s\n", buf));
+        }
     }
 
   // call activate svc handler.
@@ -693,7 +693,9 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
                   TAO_AV_Flow_Handler *control_flow_handler {};
 
                   if (entry->is_multicast ())
-                    control_inet_addr =  dynamic_cast<ACE_INET_Addr*> (entry->control_address ()) ;
+                    {
+                      control_inet_addr = dynamic_cast<ACE_INET_Addr*> (entry->control_address ());
+                    }
                   else
                     {
                       if (local_addr != nullptr)
@@ -841,12 +843,13 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
       // Now disable Multicast loopback.
       // @@Should we make this a policy?
 #if defined (ACE_HAS_IP_MULTICAST)
-      if (handler->get_mcast_socket ()->set_option (IP_MULTICAST_LOOP,
-                                                    0) < 0)
+      if (handler->get_mcast_socket ()->set_option (IP_MULTICAST_LOOP, 0) < 0)
+      {
         if (TAO_debug_level > 0)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_UDP_MCast_Acceptor::multicast loop disable failed\n"));
         }
+      }
       // @@ This should also be policies.
 #endif /*ACE_HAS_IP_MULTICAST*/
 
@@ -887,9 +890,9 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
   else
     {
       if (local_addr == nullptr)
-        ACE_NEW_RETURN (local_addr,
-                        ACE_INET_Addr ("0"),
-                        -1);
+        {
+          ACE_NEW_RETURN (local_addr, ACE_INET_Addr ("0"), -1);
+        }
 
       TAO_AV_UDP_Flow_Handler *handler;
       ACE_NEW_RETURN (handler,
@@ -899,11 +902,13 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
       flow_handler = handler;
 
       if (ct == ACCEPTOR)
-        result = handler->open (*inet_addr);
+        {
+          result = handler->open (*inet_addr);
+        }
       else
-      {
-        result = handler->open (*local_addr);
-      }
+        {
+          result = handler->open (*local_addr);
+        }
       if (result < 0)
       {
         ORBSVCS_ERROR_RETURN ((LM_ERROR,"handler::open failed\n"),-1);
@@ -913,18 +918,16 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
       int sndbufsize = ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
       int rcvbufsize = ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
 
-      if (handler->get_socket ()->set_option (SOL_SOCKET,
-                                              SO_SNDBUF,
-                                              (void *) &sndbufsize,
-                                              sizeof (sndbufsize)) == -1
-          && errno != ENOTSUP)
+      if (handler->get_socket ()->set_option (SOL_SOCKET, SO_SNDBUF, (void*)&sndbufsize, sizeof (sndbufsize)) == -1 &&
+          errno != ENOTSUP)
+      {
         return 0;
-      else if (handler->get_socket ()->set_option (SOL_SOCKET,
-                                                   SO_RCVBUF,
-                                                   (void *) &rcvbufsize,
-                                                   sizeof (rcvbufsize)) == -1
-               && errno != ENOTSUP)
+      }
+      else if (handler->get_socket ()->set_option (SOL_SOCKET, SO_RCVBUF, (void*)&rcvbufsize, sizeof (rcvbufsize)) == -1 &&
+               errno != ENOTSUP)
+      {
         return 0;
+      }
 
       if (ct == CONNECTOR)
       {

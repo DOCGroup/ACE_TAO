@@ -64,7 +64,9 @@ TAO_AV_Connector_Registry::open (TAO_Base_StreamEndPoint *endpoint,
       char const *transport_protocol = entry->carrier_protocol_str ();
 
       if (flow_protocol[0] == '\0')
-        flow_protocol = transport_protocol;
+        {
+          flow_protocol = transport_protocol;
+        }
 
       if (address == nullptr)
         {
@@ -120,11 +122,13 @@ TAO_AV_Connector_Registry::open (TAO_Base_StreamEndPoint *endpoint,
                   entry->transport (transport);
                 }
               else
-                ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                                   "(%P|%t) Unable to create an "
-                                   "connector for <%s>\n",
-                                   entry->flowname ()),
-                                  -1);
+                {
+                  ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                         "(%P|%t) Unable to create an "
+                                         "connector for <%s>\n",
+                                         entry->flowname ()),
+                                        -1);
+                }
 
               // Now see if the flow factory has a control flow factory.
               TAO_AV_Flow_Protocol_Factory *control_flow_factory =
@@ -166,11 +170,13 @@ TAO_AV_Connector_Registry::open (TAO_Base_StreamEndPoint *endpoint,
                       entry->protocol_object ()->control_object (entry->control_protocol_object ());
                     }
                   else
-                    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                                       "(%P|%t) Unable to create an "
-                                       "connector for <%s>\n",
-                                       entry->flowname ()),
-                                      -1);
+                    {
+                      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                             "(%P|%t) Unable to create an "
+                                             "connector for <%s>\n",
+                                             entry->flowname ()),
+                                            -1);
+                    }
                 }
             }
         }
@@ -231,8 +237,9 @@ TAO_AV_Acceptor_Registry::open (TAO_Base_StreamEndPoint *endpoint,
   int retv = 0;
 
   if (TAO_debug_level > 0)
-    ORBSVCS_DEBUG ((LM_DEBUG,
-                "TAO_AV_Acceptor_Registry::open\n"));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG, "TAO_AV_Acceptor_Registry::open\n"));
+    }
 
   TAO_AV_FlowSpecSetItor last_flowspec
     = flow_spec_set.end ();
@@ -247,12 +254,15 @@ TAO_AV_Acceptor_Registry::open (TAO_Base_StreamEndPoint *endpoint,
       char const *transport_protocol = entry->carrier_protocol_str ();
 
       if (flow_protocol[0] == '\0')
-        flow_protocol = transport_protocol;
+        {
+          flow_protocol = transport_protocol;
+        }
 
-      if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,
-                                           "TAO_AV_Acceptor_Registry::protocol for flow %s is %s\n",
-                                           entry->flowname (),
-                                           transport_protocol));
+      if (TAO_debug_level > 0)
+        {
+          ORBSVCS_DEBUG (
+            (LM_DEBUG, "TAO_AV_Acceptor_Registry::protocol for flow %s is %s\n", entry->flowname (), transport_protocol));
+        }
 
       if (address == nullptr)
         {
@@ -326,20 +336,24 @@ TAO_AV_Acceptor_Registry::open (TAO_Base_StreamEndPoint *endpoint,
 
                               entry->protocol_object ()->control_object (entry->control_protocol_object ());
                              }
-                           else
-                             ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                                                "(%P|%t) Unable to create an "
-                                                "acceptor for <%s>\n",
-                                                entry->flowname ()),
-                                               -1);
+                          else
+                             {
+                              ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                                     "(%P|%t) Unable to create an "
+                                                     "acceptor for <%s>\n",
+                                                     entry->flowname ()),
+                                                    -1);
+                             }
                         }
                     }
                   else
-                    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                                       "(%P|%t) Unable to create an "
-                                       "acceptor for <%s>\n",
-                                       entry->flowname ()),
-                                      -1);
+                    {
+                      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                             "(%P|%t) Unable to create an "
+                                             "acceptor for <%s>\n",
+                                             entry->flowname ()),
+                                            -1);
+                    }
                 }
             }
         }
@@ -353,8 +367,9 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
                                         TAO_FlowSpec_Entry *entry)
 {
   if (TAO_debug_level > 0)
-    ORBSVCS_DEBUG ((LM_DEBUG,
-                "TAO_AV_Acceptor_Registry::open_default "));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG, "TAO_AV_Acceptor_Registry::open_default "));
+    }
 
   // No endpoints were specified, we let each protocol pick its own
   // default...
@@ -363,18 +378,22 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
   char const *transport_protocol = entry->carrier_protocol_str ();
 
   if (flow_protocol[0] == '\0')
-    flow_protocol = transport_protocol;
+    {
+      flow_protocol = transport_protocol;
+    }
 
   TAO_AV_Flow_Protocol_Factory *flow_factory =
     av_core->get_flow_protocol_factory (flow_protocol);
 
   // No matching flow protocol.
   if (flow_factory == nullptr)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       "TAO (%P|%t) (%N,%l) Unable to match protocol prefix "
-                       "for <%s>\n",
-                       flow_protocol),
-                      -1);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             "TAO (%P|%t) (%N,%l) Unable to match protocol prefix "
+                             "for <%s>\n",
+                             flow_protocol),
+                            -1);
+    }
 
   if (TAO_debug_level > 0)
   {
@@ -385,11 +404,13 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
     av_core->get_transport_factory (transport_protocol);
 
   if (transport_factory == nullptr)
+  {
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                        "TAO (%P|%t) (%N,%l) Unable to match protocol prefix "
-                        "for <%s>\n",
-                        transport_protocol),
-                       -1);
+                           "TAO (%P|%t) (%N,%l) Unable to match protocol prefix "
+                           "for <%s>\n",
+                           transport_protocol),
+                          -1);
+  }
 
   // make an acceptor
   std::unique_ptr<TAO_AV_Acceptor> acceptor_owner (
@@ -397,11 +418,13 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
   TAO_AV_Acceptor * const acceptor = acceptor_owner.get ();
 
   if (acceptor == nullptr)
+  {
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                        "TAO (%P|%t) unable to create "
-                        "an acceptor for <%d>\n",
-                        transport_protocol),
-                       -1);
+                           "TAO (%P|%t) unable to create "
+                           "an acceptor for <%d>\n",
+                           transport_protocol),
+                          -1);
+  }
 
   if (this->acceptors_.insert (acceptor) == -1)
   {
@@ -409,16 +432,14 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
   }
   acceptor_owner.release ();
 
-  if (acceptor->open_default (endpoint,
-                              av_core,
-                              entry,
-                              flow_factory,
-                              TAO_AV_Core::TAO_AV_DATA) == -1)
+  if (acceptor->open_default (endpoint, av_core, entry, flow_factory, TAO_AV_Core::TAO_AV_DATA) == -1)
+  {
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       "TAO (%P|%t) unable to open "
-                       "default acceptor for <%s>%p\n",
-                       flow_protocol),
-                      -1);
+                           "TAO (%P|%t) unable to open "
+                           "default acceptor for <%s>%p\n",
+                           flow_protocol),
+                          -1);
+  }
 
   char const *control_flow_factory_name = flow_factory->control_flow_factory ();
 
@@ -428,22 +449,26 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
         av_core->get_flow_protocol_factory (control_flow_factory_name);
 
       if (control_flow_factory == nullptr)
-        ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                           "TAO (%P|%t) Unable to match control flow "
-                           "for <%s>\n",
-                           control_flow_factory_name),
-                          -1);
+        {
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                 "TAO (%P|%t) Unable to match control flow "
+                                 "for <%s>\n",
+                                 control_flow_factory_name),
+                                -1);
+        }
 
       std::unique_ptr<TAO_AV_Acceptor> control_acceptor_owner (
         transport_factory->make_acceptor ());
       TAO_AV_Acceptor * const control_acceptor = control_acceptor_owner.get ();
 
       if (control_acceptor == nullptr)
-        ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                           "TAO (%P|%t) unable to create "
-                           "an acceptor for <%d>\n",
-                           transport_protocol),
-                          -1);
+        {
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                 "TAO (%P|%t) unable to create "
+                                 "an acceptor for <%d>\n",
+                                 transport_protocol),
+                                -1);
+        }
 
       if (this->acceptors_.insert (control_acceptor) == -1)
       {
@@ -451,16 +476,15 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
       }
       control_acceptor_owner.release ();
 
-      if (control_acceptor->open_default (endpoint,
-                                          av_core,
-                                          entry,
-                                          control_flow_factory,
-                                          TAO_AV_Core::TAO_AV_CONTROL) == -1)
+      if (control_acceptor->open_default (endpoint, av_core, entry, control_flow_factory, TAO_AV_Core::TAO_AV_CONTROL) ==
+          -1)
+      {
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                           "TAO (%P|%t) unable to open "
-                           "default acceptor for <%s>%p\n",
-                           transport_protocol),
-                          -1);
+                               "TAO (%P|%t) unable to open "
+                               "default acceptor for <%s>%p\n",
+                               transport_protocol),
+                              -1);
+      }
 
       entry->protocol_object ()->control_object (entry->control_protocol_object ());
     }
@@ -468,8 +492,9 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
   if (this->acceptors_.size () == 0)
     {
       if (TAO_debug_level > 0)
-        ORBSVCS_ERROR ((LM_ERROR,
-                    "TAO (%P%t) cannot create any default acceptor\n"));
+      {
+        ORBSVCS_ERROR ((LM_ERROR, "TAO (%P%t) cannot create any default acceptor\n"));
+      }
       return -1;
     }
 
@@ -586,7 +611,9 @@ int
 TAO_AV_Flow_Handler::cancel_timer ()
 {
   if (this->timer_id_ != -1)
-  return TAO_AV_CORE::instance()->reactor ()->cancel_timer (this->timer_id_);
+  {
+    return TAO_AV_CORE::instance ()->reactor ()->cancel_timer (this->timer_id_);
+  }
   else
   {
     return 0;

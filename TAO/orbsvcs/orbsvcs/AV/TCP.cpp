@@ -424,7 +424,9 @@ TAO_AV_TCP_Connector::connect (TAO_FlowSpec_Entry *entry,
 {
   this->entry_ = entry;
   if (flow_comp == TAO_AV_Core::TAO_AV_CONTROL)
+  {
     this->flowname_ = TAO_AV_Core::get_control_flowname (entry->flowname ());
+  }
   else
   {
     this->flowname_ = entry->flowname ();
@@ -497,8 +499,9 @@ int
 TAO_AV_TCP_Acceptor::make_svc_handler (TAO_AV_TCP_Flow_Handler *&tcp_handler)
 {
   if (TAO_debug_level > 0)
-    ORBSVCS_DEBUG ((LM_DEBUG,
-                "TAO_AV_TCP_Acceptor::make_svc_handler\n"));
+  {
+    ORBSVCS_DEBUG ((LM_DEBUG, "TAO_AV_TCP_Acceptor::make_svc_handler\n"));
+  }
 
   if (this->endpoint_ != nullptr)
     {
@@ -531,18 +534,21 @@ TAO_AV_TCP_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
   this->flow_protocol_factory_ = factory;
 
   if (TAO_debug_level > 0)
-    ORBSVCS_DEBUG ((LM_DEBUG,
-                "TAO_AV_TCP_Acceptor::open "));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG, "TAO_AV_TCP_Acceptor::open "));
+    }
 
   this->av_core_ = av_core;
   this->endpoint_ = endpoint;
   this->entry_ = entry;
   if (flow_comp == TAO_AV_Core::TAO_AV_CONTROL)
-    this->flowname_ = TAO_AV_Core::get_control_flowname (entry->flowname ());
+    {
+      this->flowname_ = TAO_AV_Core::get_control_flowname (entry->flowname ());
+    }
   else
-  {
-    this->flowname_ = entry->flowname ();
-  }
+    {
+      this->flowname_ = entry->flowname ();
+    }
   ACE_Addr *address = entry->address ();
 
   ACE_INET_Addr *inet_addr = (ACE_INET_Addr *) address;
@@ -555,10 +561,9 @@ TAO_AV_TCP_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
                              BUFSIZ);
 
   if (TAO_debug_level > 0)
-    ORBSVCS_DEBUG ((LM_DEBUG,
-                "TAO_AV_TCP_Acceptor::open: %s",
-                buf
-                ));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG, "TAO_AV_TCP_Acceptor::open: %s", buf));
+    }
 
   int result = this->acceptor_.acceptor_open (this,
                                      av_core->reactor (),
@@ -566,9 +571,9 @@ TAO_AV_TCP_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
                                      entry);
 
   if (result < 0)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       "TAO_AV_TCP_Acceptor::open failed"),
-                      -1);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "TAO_AV_TCP_Acceptor::open failed"), -1);
+    }
 
   entry->set_local_addr (address);
   return 0;
@@ -586,11 +591,13 @@ TAO_AV_TCP_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
   this->endpoint_ = endpoint;
   this->entry_ = entry;
   if (flow_comp == TAO_AV_Core::TAO_AV_CONTROL)
-    this->flowname_ = TAO_AV_Core::get_control_flowname (entry->flowname());
+    {
+      this->flowname_ = TAO_AV_Core::get_control_flowname (entry->flowname ());
+    }
   else
-  {
-    this->flowname_ = entry->flowname ();
-  }
+    {
+      this->flowname_ = entry->flowname ();
+    }
 
   ACE_INET_Addr *address {};
   ACE_NEW_RETURN (address,
@@ -603,9 +610,9 @@ TAO_AV_TCP_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
                                      entry);
 
   if (result < 0)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       "TAO_AV_TCP_Acceptor::open failed"),
-                      -1);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "TAO_AV_TCP_Acceptor::open failed"), -1);
+    }
 
   this->acceptor_.acceptor ().get_local_addr (*address);
 
@@ -616,9 +623,9 @@ TAO_AV_TCP_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
   address->addr_to_string (buf,BUFSIZ);
 
   if (TAO_debug_level > 0)
-    ORBSVCS_DEBUG ((LM_DEBUG,
-                "TAO_AV_TCP_Acceptor::open_default: %s\n",
-                buf));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG, "TAO_AV_TCP_Acceptor::open_default: %s\n", buf));
+    }
 
   entry->set_local_addr (address);
 
@@ -689,20 +696,19 @@ TAO_AV_TCP_Flow_Handler::open (void * /*arg*/)
   (void) addr.addr_to_string (server, sizeof (server));
 
   if (TAO_debug_level > 0)
-    if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,
-                "(%P|%t) connection to server <%s> on %d\n",
-                server, this->peer ().get_handle ()));
+  {
+    if (TAO_debug_level > 0)
+      {
+        ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) connection to server <%s> on %d\n", server, this->peer ().get_handle ()));
+      }
+  }
 
   this->peer ().enable (ACE_NONBLOCK);
   // Register the handler with the reactor.
-  if (this->reactor ()
-      && this->reactor ()->register_handler
-      (this,
-       ACE_Event_Handler::READ_MASK) == -1)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("unable to register client handler")),
-                      -1);
+  if (this->reactor () && this->reactor ()->register_handler (this, ACE_Event_Handler::READ_MASK) == -1)
+  {
+    ORBSVCS_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("unable to register client handler")), -1);
+  }
   return 0;
 }
 

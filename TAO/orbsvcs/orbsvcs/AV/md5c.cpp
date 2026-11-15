@@ -143,7 +143,9 @@ void MD5Update (MD5_CTX *context, unsigned char *input, unsigned int inputLen)
  MD5Transform (context->state, context->buffer);
 
  for (i = partLen; i + 63 < inputLen; i += 64)
-   MD5Transform (context->state, &input[i]);
+   {
+     MD5Transform (context->state, &input[i]);
+   }
 
  index = 0;
   }
@@ -301,8 +303,10 @@ static void Decode (UINT4 *output, unsigned char *input, unsigned int len)
   unsigned int i, j;
 
   for (i = 0, j = 0; j < len; i++, j += 4)
- output[i] = ((UINT4)input[j]) | (((UINT4)input[j+1]) << 8) |
-   (((UINT4)input[j+2]) << 16) | (((UINT4)input[j+3]) << 24);
+  {
+ output[i] =
+   ((UINT4)input[j]) | (((UINT4)input[j + 1]) << 8) | (((UINT4)input[j + 2]) << 16) | (((UINT4)input[j + 3]) << 24);
+  }
 }
 
 /* Note: Replace "for loop" with standard memcpy if possible.
@@ -313,8 +317,10 @@ static void MD5_memcpy (POINTER output, POINTER input, unsigned int len)
   unsigned int i;
 
   for (i = 0; i < len; i++)
+  {
 
  output[i] = input[i];
+  }
 }
 
 /* Note: Replace "for loop" with standard memset if possible.
@@ -324,5 +330,7 @@ static void MD5_memset (POINTER output, int value, unsigned int len)
   unsigned int i;
 
   for (i = 0; i < len; i++)
- ((char *)output)[i] = (char)value;
+  {
+ ((char*)output)[i] = (char)value;
+  }
 }

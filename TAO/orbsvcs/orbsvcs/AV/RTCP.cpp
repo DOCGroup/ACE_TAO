@@ -75,10 +75,12 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
             RTCP_SR_Packet sr(&buf_ptr[length-more],
                               std::addressof (more));
 
-            if (!sr.is_valid(first_rtcp_packet))
-              ORBSVCS_DEBUG ((LM_DEBUG,
-                          "TAO_AV_RTCP_Callback::receive_control_frame - "
-                          "warning invalid rtcp packet\n"));
+            if (!sr.is_valid (first_rtcp_packet))
+              {
+                ORBSVCS_DEBUG ((LM_DEBUG,
+                                "TAO_AV_RTCP_Callback::receive_control_frame - "
+                                "warning invalid rtcp packet\n"));
+              }
 
             if (this->inputs_.find (sr.ssrc (), c) == -1 &&
                 this->add_input_channel (sr.ssrc (), std::addressof (peer_address), c) < 0)
@@ -98,10 +100,12 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
             RTCP_RR_Packet rr(&buf_ptr[length-more],
                               std::addressof (more));
 
-            if (!rr.is_valid(first_rtcp_packet))
+            if (!rr.is_valid (first_rtcp_packet))
+            {
               ORBSVCS_DEBUG ((LM_DEBUG,
-                          "TAO_AV_RTCP_Callback::receive_control_frame - "
-                          "warning invalid rtcp packet\n"));
+                              "TAO_AV_RTCP_Callback::receive_control_frame - "
+                              "warning invalid rtcp packet\n"));
+            }
 
             if (this->inputs_.find (rr.ssrc (), c) == -1 &&
                 this->add_input_channel (rr.ssrc (), std::addressof (peer_address), c) < 0)
@@ -122,10 +126,12 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
             RTCP_SDES_Packet sdes (&buf_ptr[length-more],
                                    std::addressof (more));
 
-            if (!sdes.is_valid(first_rtcp_packet))
+            if (!sdes.is_valid (first_rtcp_packet))
+            {
               ORBSVCS_DEBUG ((LM_DEBUG,
-                          "TAO_AV_RTCP_Callback::receive_control_frame - "
-                          "warning invalid rtcp packet\n"));
+                              "TAO_AV_RTCP_Callback::receive_control_frame - "
+                              "warning invalid rtcp packet\n"));
+            }
 
             if (TAO_debug_level > 0)
             {
@@ -138,10 +144,12 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
             RTCP_BYE_Packet bye (&buf_ptr[length-more],
                                  std::addressof (more));
 
-            if (!bye.is_valid(first_rtcp_packet))
+            if (!bye.is_valid (first_rtcp_packet))
+            {
               ORBSVCS_DEBUG ((LM_DEBUG,
-                          "TAO_AV_RTCP_Callback::receive_control_frame - "
-                          "warning invalid rtcp packet\n"));
+                              "TAO_AV_RTCP_Callback::receive_control_frame - "
+                              "warning invalid rtcp packet\n"));
+            }
 
             // Inform the listener that a source(s) has left the session
             ACE_UINT32 *ssrc_list;
@@ -187,10 +195,12 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
       first_rtcp_packet = false;
     }
 
-    if (more != 0)
+  if (more != 0)
+    {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                  "TAO_AV_RTCP_Callback::receive_control_frame - "
-                  "Error in overall packet length\n"));
+                      "TAO_AV_RTCP_Callback::receive_control_frame - "
+                      "Error in overall packet length\n"));
+    }
     return 0;
 }
 
@@ -226,8 +236,10 @@ TAO_AV_RTCP::alloc_srcid (ACE_UINT32 addr)
   MD5Final (reinterpret_cast<unsigned char *> (std::addressof (digest)),
             std::addressof (context));
   r=0;
-  for (i=0; i<3; ++i)
-    r ^= digest.x[i];
+  for (i = 0; i < 3; ++i)
+      {
+      r ^= digest.x[i];
+      }
 
   return r;
 
@@ -519,7 +531,9 @@ TAO_AV_RTCP_Callback::~TAO_AV_RTCP_Callback ()
 {
   ACE_Hash_Map_Iterator<ACE_UINT32, RTCP_Channel_In*, ACE_Null_Mutex> iter (this->inputs_);
   for (; iter != this->inputs_.end (); ++iter)
-    delete (*iter).int_id_;
+    {
+      delete (*iter).int_id_;
+    }
 }
 
 int

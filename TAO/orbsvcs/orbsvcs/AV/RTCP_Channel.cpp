@@ -182,9 +182,9 @@ RTCP_Channel_In::update_seq(ACE_UINT16 seq)
           this->init_seq (seq);
 
           if (TAO_debug_level > 0)
-          ORBSVCS_DEBUG ((LM_DEBUG,
-                      "RTCP_Channel_In: large jump in sequence number",
-                      "; init seq\n"));
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG, "RTCP_Channel_In: large jump in sequence number", "; init seq\n"));
+            }
         }
       else
         {
@@ -206,17 +206,21 @@ RTCP_Channel_In::recv_rtp_packet(ACE_Message_Block *mb,
                                 ACE_Addr const *peer_address)
 {
   if (*peer_address != *this->peer_address_)
-    ORBSVCS_DEBUG ((LM_DEBUG,
-                "RTCP_Channel_In::recv_rtp_packet - possible loop/collision detected"));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG, "RTCP_Channel_In::recv_rtp_packet - possible loop/collision detected"));
+    }
 
   RTP_Packet data_packet(mb->rd_ptr (), static_cast<int> (mb->length ()));
 
   // make sure the packet is valid
   if (data_packet.is_valid ())
-    this->updateStatistics (std::addressof (data_packet));
+    {
+      this->updateStatistics (std::addressof (data_packet));
+    }
   else
-    ORBSVCS_DEBUG ((LM_DEBUG,
-                "RTCP_Channel_In::recvDataPacket - invalid RTP packet\n"));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG, "RTCP_Channel_In::recvDataPacket - invalid RTP packet\n"));
+    }
 }
 
 std::unique_ptr<RR_Block>
@@ -260,11 +264,13 @@ RTCP_Channel_In::getRRBlock()
   int const lost_interval = expected_interval - received_interval;
 
   if ((expected_interval == 0) || (lost_interval <= 0))
-    local_block_ptr->fraction_ = 0;
+    {
+      local_block_ptr->fraction_ = 0;
+    }
   else
-  {
-    local_block_ptr->fraction_ = (lost_interval << 8) / expected_interval;
-  }
+    {
+      local_block_ptr->fraction_ = (lost_interval << 8) / expected_interval;
+    }
 
   local_block_ptr->last_seq_ = extended_max;
 

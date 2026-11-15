@@ -69,28 +69,47 @@ TAO_FlowSpec_Entry::set_protocol ()
 {
   if (!this->use_flow_protocol_)
     {
-      if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"TCP") == 0)
-        this->protocol_ = TAO_AV_Core::TAO_AV_TCP;
-      else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"SCTP_SEQ") == 0)
+      if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str (), "TCP") == 0)
+        {
+          this->protocol_ = TAO_AV_Core::TAO_AV_TCP;
+        }
+      else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str (), "SCTP_SEQ") == 0)
+        {
           this->protocol_ = TAO_AV_Core::TAO_AV_SCTP_SEQ;
-      else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"UDP") == 0)
+        }
+      else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str (), "UDP") == 0)
+        {
           this->protocol_ = TAO_AV_Core::TAO_AV_UDP;
-      else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"QoS_UDP") == 0)
-        this->protocol_ = TAO_AV_Core::TAO_AV_QOS_UDP;
-      else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"AAL5") == 0)
-        this->protocol_ = TAO_AV_Core::TAO_AV_AAL5;
-      else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"AAL3_4") == 0)
-        this->protocol_ = TAO_AV_Core::TAO_AV_AAL3_4;
-      else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"AAL1") == 0)
-        this->protocol_ = TAO_AV_Core::TAO_AV_AAL1;
-      else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"RTP/UDP") == 0){
-        this->protocol_ = TAO_AV_Core::TAO_AV_UDP;
-        flow_protocol_ = "RTP";
-      }
-      else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"RTP/AAL5") == 0)
-        this->protocol_ = TAO_AV_Core::TAO_AV_RTP_AAL5;
-      else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"IPX") == 0)
-        this->protocol_ = TAO_AV_Core::TAO_AV_IPX;
+        }
+      else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str (), "QoS_UDP") == 0)
+        {
+          this->protocol_ = TAO_AV_Core::TAO_AV_QOS_UDP;
+        }
+      else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str (), "AAL5") == 0)
+        {
+          this->protocol_ = TAO_AV_Core::TAO_AV_AAL5;
+        }
+      else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str (), "AAL3_4") == 0)
+        {
+          this->protocol_ = TAO_AV_Core::TAO_AV_AAL3_4;
+        }
+      else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str (), "AAL1") == 0)
+        {
+          this->protocol_ = TAO_AV_Core::TAO_AV_AAL1;
+        }
+      else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str (), "RTP/UDP") == 0)
+        {
+          this->protocol_ = TAO_AV_Core::TAO_AV_UDP;
+          flow_protocol_ = "RTP";
+        }
+      else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str (), "RTP/AAL5") == 0)
+        {
+          this->protocol_ = TAO_AV_Core::TAO_AV_RTP_AAL5;
+        }
+      else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str (), "IPX") == 0)
+        {
+          this->protocol_ = TAO_AV_Core::TAO_AV_IPX;
+        }
       else
         {
           this->protocol_ = TAO_AV_Core::TAO_AV_NOPROTOCOL;
@@ -169,7 +188,9 @@ TAO_FlowSpec_Entry::parse_address (char const *address,
     return 0;
   }
   if (address[0] == '\0')
+  {
     return 0;
+  }
   TAO_Tokenizer protocol_tokenizer (address,'=');
 
   this->carrier_protocol_ = protocol_tokenizer[0];
@@ -339,8 +360,9 @@ TAO_FlowSpec_Entry::parse_address (char const *address,
                     u_short control_port =
                       static_cast<u_short> (inet_addr->get_port_number () + 1);
                     if (port_tokenizer[1] != nullptr)
-                      control_port = static_cast<u_short> (
-                        std::atoi (port_tokenizer[1]));
+                      {
+                      control_port = static_cast<u_short> (std::atoi (port_tokenizer[1]));
+                      }
                     control_inet_addr->set_port_number (control_port);
                     this->owned_control_address_.reset (control_inet_addr);
                     this->control_address_ = control_inet_addr;
@@ -458,9 +480,9 @@ TAO_Forward_FlowSpec_Entry::parse (char const *flowSpec_entry)
   this->flowname_ = tokenizer [TAO_AV_FLOWNAME];
 
   if (TAO_debug_level > 0)
-      ORBSVCS_DEBUG ((LM_DEBUG,
-                  "TAO_Forward_FlowSpec_Entry::parse [%C]\n",
-                  flowSpec_entry));
+    {
+    ORBSVCS_DEBUG ((LM_DEBUG, "TAO_Forward_FlowSpec_Entry::parse [%C]\n", flowSpec_entry));
+    }
 
   if (tokenizer [TAO_AV_DIRECTION] != nullptr)
   {
@@ -472,11 +494,13 @@ TAO_Forward_FlowSpec_Entry::parse (char const *flowSpec_entry)
     this->format_ = tokenizer [TAO_AV_FORMAT];
   }
 
-  if (tokenizer [TAO_AV_ADDRESS] != nullptr)
+  if (tokenizer[TAO_AV_ADDRESS] != nullptr)
+  {
     if (this->parse_address (tokenizer [TAO_AV_ADDRESS], TAO_AV_Core::TAO_AV_BOTH) < 0)
     {
       return -1;
     }
+  }
 
   if (tokenizer [TAO_AV_PEER_ADDR] != nullptr)
     {
@@ -524,10 +548,12 @@ TAO_Forward_FlowSpec_Entry::parse (char const *flowSpec_entry)
                   buf));
     }
 
-  if (tokenizer [TAO_AV_FLOW_PROTOCOL] != nullptr)
-    if (this->parse_flow_protocol_string (tokenizer [TAO_AV_FLOW_PROTOCOL]) < 0)
+  if (tokenizer[TAO_AV_FLOW_PROTOCOL] != nullptr)
     {
-      return -1;
+      if (this->parse_flow_protocol_string (tokenizer[TAO_AV_FLOW_PROTOCOL]) < 0)
+        {
+          return -1;
+        }
     }
 
   return 0;
@@ -732,8 +758,10 @@ TAO_Forward_FlowSpec_Entry::entry_to_string ()
       this->entry_ += "\\";
       this->entry_ += peer_address_str;
     }
-  else ORBSVCS_DEBUG ((LM_DEBUG,
-                   "No peer address specified\n"));
+  else
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG, "No peer address specified\n"));
+    }
 
   if (TAO_debug_level > 0)
   {
@@ -808,20 +836,24 @@ TAO_Reverse_FlowSpec_Entry::parse (char const *flowSpec_entry)
   this->flowname_ = tokenizer [TAO_AV_FLOWNAME];
 
   if (TAO_debug_level > 0)
-    ORBSVCS_DEBUG ((LM_DEBUG,
-                "TAO_Reverse_FlowSpec_Entry::parse [%C]\n",
-                flowSpec_entry));
+    {
+    ORBSVCS_DEBUG ((LM_DEBUG, "TAO_Reverse_FlowSpec_Entry::parse [%C]\n", flowSpec_entry));
+    }
 
-  if (tokenizer [TAO_AV_ADDRESS] != nullptr)
+  if (tokenizer[TAO_AV_ADDRESS] != nullptr)
+    {
     if (this->parse_address (tokenizer [TAO_AV_ADDRESS], TAO_AV_Core::TAO_AV_BOTH) < 0)
     {
       return -1;
     }
+    }
 
-  if (tokenizer [TAO_AV_FLOW_PROTOCOL] != nullptr)
+  if (tokenizer[TAO_AV_FLOW_PROTOCOL] != nullptr)
+    {
     if (this->parse_flow_protocol_string (tokenizer [TAO_AV_FLOW_PROTOCOL]) < 0)
     {
       return -1;
+    }
     }
 
   return 0;

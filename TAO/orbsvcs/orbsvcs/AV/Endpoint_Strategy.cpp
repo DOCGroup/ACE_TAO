@@ -80,10 +80,9 @@ TAO_AV_Endpoint_Process_Strategy::activate ()
 
   // Process creation failed
   if (this->pid_ == -1)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) ACE_Process:: spawn failed: %p\n",
-                       "spawn"),
-                      -1);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "(%P|%t) ACE_Process:: spawn failed: %p\n", "spawn"), -1);
+    }
 
   // Create a unique semaphore name, using my hostname, and pid.
   ACE_TCHAR sem_str [BUFSIZ];
@@ -109,11 +108,11 @@ TAO_AV_Endpoint_Process_Strategy::activate ()
       if (semaphore.acquire () == -1)
         {
           // See if my child process is still alive -- if not, return an error
-          if (ACE_OS::kill (this->pid_,
-                            0) == -1)
-            ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                               "(%P|%t) Process_Strategy: Process being waited on died unexpectedly.\n"),
-                              -1);
+          if (ACE_OS::kill (this->pid_, 0) == -1)
+            {
+              ORBSVCS_ERROR_RETURN ((LM_ERROR, "(%P|%t) Process_Strategy: Process being waited on died unexpectedly.\n"),
+                                    -1);
+            }
           // if we were not interrupted due to a EINTR, break
           if (errno != EINTR)
           {
@@ -128,10 +127,9 @@ TAO_AV_Endpoint_Process_Strategy::activate ()
 
   // The job of the semaphore is done, remove it.
   if (semaphore.remove () == -1)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) semaphore remove failed: %p\n",
-                       "remove"),
-                      -1);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "(%P|%t) semaphore remove failed: %p\n", "remove"), -1);
+    }
 
   try
     {
@@ -168,9 +166,9 @@ TAO_AV_Endpoint_Process_Strategy::bind_to_naming_service ()
         TAO_ORB_Core_instance ()->orb ()->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (naming_obj.in ()))
-        ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to resolve the Name Service.\n"),
-                          -1);
+      {
+        ORBSVCS_ERROR_RETURN ((LM_ERROR, " (%P|%t) Unable to resolve the Name Service.\n"), -1);
+      }
       this->naming_context_ =
         CosNaming::NamingContext::_narrow (naming_obj.in ());
     }
@@ -215,10 +213,10 @@ TAO_AV_Endpoint_Process_Strategy::get_vdev ()
         AVStreams::VDev::_narrow (vdev.in ());
 
       // Check if valid
-      if (CORBA::is_nil (this->vdev_.in() ))
-        ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                           " could not resolve Stream_Endpoint_B in Naming service <%s>\n"),
-                          -1);
+      if (CORBA::is_nil (this->vdev_.in ()))
+      {
+        ORBSVCS_ERROR_RETURN ((LM_ERROR, " could not resolve Stream_Endpoint_B in Naming service <%s>\n"), -1);
+      }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -247,9 +245,9 @@ TAO_AV_Endpoint_Process_Strategy_A::create_A (AVStreams::StreamEndPoint_A_ptr &s
 {
   // use the baseclass activate
   if (this->activate () == -1)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) TAO_AV_Endpoint_Process_Strategy: Error in activate ()\n"),
-                      -1);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "(%P|%t) TAO_AV_Endpoint_Process_Strategy: Error in activate ()\n"), -1);
+    }
 
   // return the object references
   stream_endpoint = AVStreams::StreamEndPoint_A::_duplicate( this->stream_endpoint_a_.in() );
@@ -290,10 +288,10 @@ TAO_AV_Endpoint_Process_Strategy_A::get_stream_endpoint ()
         AVStreams::StreamEndPoint_A::_narrow (stream_endpoint_a.in ());
 
       // Check for validity
-      if (CORBA::is_nil (this->stream_endpoint_a_.in() ))
-        ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                           " could not resolve Stream_Endpoint_A in Naming service <%s>\n"),
-                          -1);
+      if (CORBA::is_nil (this->stream_endpoint_a_.in ()))
+      {
+        ORBSVCS_ERROR_RETURN ((LM_ERROR, " could not resolve Stream_Endpoint_A in Naming service <%s>\n"), -1);
+      }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -322,10 +320,10 @@ TAO_AV_Endpoint_Process_Strategy_B::create_B (AVStreams::StreamEndPoint_B_ptr &s
 {
   try
     {
-    if (this->activate () == -1)
-      ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                         "(%P|%t) TAO_AV_Endpoint_Process_Strategy: Error in activate ()\n"),
-                        -1);
+      if (this->activate () == -1)
+      {
+        ORBSVCS_ERROR_RETURN ((LM_ERROR, "(%P|%t) TAO_AV_Endpoint_Process_Strategy: Error in activate ()\n"), -1);
+      }
 
     if (TAO_debug_level > 0)
       {
@@ -378,10 +376,10 @@ TAO_AV_Endpoint_Process_Strategy_B::get_stream_endpoint ()
         AVStreams::StreamEndPoint_B::_narrow (stream_endpoint_b.in ());
 
       // Check for validity
-      if (CORBA::is_nil (this->stream_endpoint_b_.in() ))
-        ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                           " could not resolve Stream_Endpoint_B in Naming service <%s>\n"),
-                          -1);
+      if (CORBA::is_nil (this->stream_endpoint_b_.in ()))
+      {
+        ORBSVCS_ERROR_RETURN ((LM_ERROR, " could not resolve Stream_Endpoint_B in Naming service <%s>\n"), -1);
+      }
     }
   catch (CORBA::Exception const &ex)
     {
