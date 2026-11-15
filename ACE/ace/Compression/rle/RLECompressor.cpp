@@ -123,7 +123,7 @@ ACE_RLECompressor::decompress (void const *in_ptr,
           --in_len;
           ACE_Byte const cur_byte {*in_p};
           ++in_p;
-          ACE_UINT32 const cpy_len {static_cast<ACE_UINT32> ((cur_byte & ACE_CHAR_MAX) + 1)};
+          size_t const cpy_len {static_cast<size_t> ((cur_byte & ACE_CHAR_MAX) + 1)};
 
           if (cpy_len > max_out_len)
             return (std::numeric_limits<ACE_UINT64>::max) ();
