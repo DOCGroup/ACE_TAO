@@ -218,9 +218,9 @@ int
 STDIN_Handler::handle_timeout (ACE_Time_Value const &tv, void const *)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) timeout occurred at %d sec, %d usec\n",
+              "(%t) timeout occurred at %: sec, %ld usec\n",
               tv.sec (),
-              tv.usec ()));
+              static_cast<long> (tv.usec ())));
   return 0;
 }
 
@@ -345,8 +345,8 @@ Message_Handler::handle_input (ACE_HANDLE)
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t) priority = %d\n",
-                  mb->msg_priority ()));
+                  "(%t) priority = %Q\n",
+                  static_cast<ACE_UINT64> (mb->msg_priority ())));
       mb->release ();
     }
 

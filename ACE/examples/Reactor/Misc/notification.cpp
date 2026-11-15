@@ -206,8 +206,8 @@ Thread_Handler::handle_input (ACE_HANDLE handle)
   if (n > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "input to (%t) %*s",
-                  n,
+                  "input to (%t) %.*s",
+                  static_cast<int> (n),
                   buf));
 
       ACE_DEBUG ((LM_DEBUG,
@@ -298,9 +298,9 @@ int
 Thread_Handler::handle_timeout (ACE_Time_Value const &time, void const *)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) received timeout at (%u, %u), iterations = %B\n",
+              "(%t) received timeout at (%:, %ld), iterations = %B\n",
               time.sec (),
-              time.usec (),
+              static_cast<long> (time.usec ()),
               this->iterations_));
 
   if (--this->iterations_ <= 0

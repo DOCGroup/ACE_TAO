@@ -114,8 +114,8 @@ Ping_Pong::handle_input (ACE_HANDLE)
 
   if (n != (ssize_t) this->buflen_)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) reading [%d] %p\n"),
-                       handle_,
+                       ACE_TEXT ("(%P|%t) reading [%@] %p\n"),
+                       reinterpret_cast<void *> (handle_),
                        ACE_TEXT ("read")),
                       -1);
 
@@ -126,8 +126,8 @@ Ping_Pong::handle_input (ACE_HANDLE)
   char const *message = this->buf_ + (2 * sizeof (int));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) reading <%d> (%d) [%d] = %C\n"),
-              this->handle_,
+              ACE_TEXT ("(%P|%t) reading <%@> (%d) [%d] = %C\n"),
+              reinterpret_cast<void *> (this->handle_),
               process_id,
               count,
               message));
@@ -137,15 +137,15 @@ Ping_Pong::handle_input (ACE_HANDLE)
                          this->buflen_);
   if (n == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("[%d] %p\n"),
-                       handle_,
+                       ACE_TEXT ("[%@] %p\n"),
+                       reinterpret_cast<void *> (handle_),
                        ACE_TEXT ("read")),
                       -1);
   char const *buf = this->buf_ + (2 * sizeof (int));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) reading <%d> = %C\n"),
-              this->handle_,
+              ACE_TEXT ("(%P|%t) reading <%@> = %C\n"),
+              reinterpret_cast<void *> (this->handle_),
               buf));
 #endif /* ACE_HAS_STREAM_PIPES */
   return 0;
@@ -167,8 +167,8 @@ Ping_Pong::handle_output (ACE_HANDLE)
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) writing <%d> [%d]\n"),
-                  this->handle_,
+                  ACE_TEXT ("(%P|%t) writing <%@> [%d]\n"),
+                  reinterpret_cast<void *> (this->handle_),
                   this->pid_));
       return 0;
     }
@@ -180,8 +180,8 @@ Ping_Pong::handle_output (ACE_HANDLE)
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) writing <%d>\n"),
-                  this->handle_));
+                  ACE_TEXT ("(%P|%t) writing <%@>\n"),
+                  reinterpret_cast<void *> (this->handle_)));
       return 0;
     }
 #endif /* ACE_HAS_STREAM_PIPES */
