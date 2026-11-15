@@ -42,30 +42,32 @@ constexpr ACE_TCHAR gopher[] = ACE_TEXT ("gopher:");
 constexpr size_t gopher_size = sizeof (gopher) / sizeof (gopher[0]) - 1;
 
 ACE_URL_Addr::ACE_URL_Addr ()
-  : url_ (nullptr)
+  = default;
+
+void
+ACE_URL_Addr::URL_Deleter::operator () (ACE_TCHAR *url) const
 {
+  ACE_OS::free (url);
 }
 
-ACE_URL_Addr::~ACE_URL_Addr ()
-{
-  ACE_OS::free (this->url_);
-  this->url_ = nullptr;
-}
+ACE_URL_Addr::~ACE_URL_Addr () = default;
 
 int
 ACE_URL_Addr::set (const ACE_URL_Addr& address)
 {
-  return this->ACE_URL_Addr::string_to_addr (address.url_);
+  return this->ACE_URL_Addr::string_to_addr (address.url_.get ());
 }
 
 int
 ACE_URL_Addr::string_to_addr (const ACE_TCHAR *address)
 {
-  if (this->url_ != nullptr)
-    ACE_OS::free (this->url_);
+  this->url_.reset ();
   if (address == nullptr)
     return -1;
-  ACE_ALLOCATOR_RETURN (this->url_, ACE_OS::strdup (address), -1);
+
+  ACE_TCHAR *url {};
+  ACE_ALLOCATOR_RETURN (url, ACE_OS::strdup (address), -1);
+  this->url_.reset (url);
   return 0;
 }
 
@@ -74,9 +76,9 @@ ACE_URL_Addr::addr_to_string (ACE_TCHAR *s,
                               size_t size,
                               int) const
 {
-  if (size < ACE_OS::strlen (this->url_))
+  if (size < ACE_OS::strlen (this->url_.get ()))
     return -1;
-  ACE_OS::strcpy (s, this->url_);
+  ACE_OS::strcpy (s, this->url_.get ());
   return 0;
 }
 

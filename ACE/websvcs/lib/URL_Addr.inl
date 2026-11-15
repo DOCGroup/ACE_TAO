@@ -7,7 +7,7 @@
 ACE_INLINE
 ACE_URL_Addr::ACE_URL_Addr (const ACE_URL_Addr& address)
   :  ACE_Addr (),
-     url_ (address.url_ == nullptr ? nullptr : ACE_OS::strdup (address.url_))
+     url_ (address.url_ == nullptr ? nullptr : ACE_OS::strdup (address.url_.get ()))
 {
 }
 
@@ -24,19 +24,19 @@ ACE_URL_Addr::operator= (const ACE_URL_Addr& address)
 ACE_INLINE const ACE_TCHAR *
 ACE_URL_Addr::get_url () const
 {
-  return this->url_;
+  return this->url_.get ();
 }
 
 ACE_INLINE void
 ACE_URL_Addr::set_url (ACE_TCHAR *url)
 {
-  this->url_ = url;
+  this->url_.reset (url);
 }
 
 ACE_INLINE u_long
 ACE_URL_Addr::hash () const
 {
-  return ACE::hash_pjw (this->url_);
+  return ACE::hash_pjw (this->url_.get ());
 }
 
 // ****************************************************************

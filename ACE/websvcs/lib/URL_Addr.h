@@ -20,6 +20,8 @@
 #include "websvcs_export.h"
 #include "ace/ACE.h"
 
+#include <memory>
+
 class ACE_URL_Addr_Visitor;
 
 /**
@@ -84,7 +86,12 @@ protected:
   void set_url (ACE_TCHAR *url);
 
 private:
-  ACE_TCHAR *url_;
+  struct URL_Deleter
+  {
+    void operator () (ACE_TCHAR *) const;
+  };
+
+  std::unique_ptr<ACE_TCHAR, URL_Deleter> url_ {};
 };
 
 /**
