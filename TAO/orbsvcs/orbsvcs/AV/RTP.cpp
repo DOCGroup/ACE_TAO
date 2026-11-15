@@ -271,24 +271,26 @@ RTP_Packet::is_valid ()
 
   // make sure the RTP version is correct
   if (this->ver() != RTP_VERSION)
-  {
-    return 0;
-  }
+    {
+      return false;
+    }
 
   // make sure the payload type is not SR or RR
   if ((this->pt() == RTCP_PT_SR) || (this->pt() == RTCP_PT_RR))
-  {
-    return 0;
-  }
+    {
+      return false;
+    }
 
   // if the p bit is set, the last octet of the packet must contain a valid
   // octet count, in particular, less than the total packet length minus
   // the header size.
   if (this->pad() != 0)
-    if ((unsigned int)this->packet_[this->packet_size_] >=
-        (this->packet_size_ - (12 + this->cc() + this->extension_bytes_)))
     {
-      return 0;
+      if (static_cast<unsigned int> (this->packet_[this->packet_size_]) >=
+          (this->packet_size_ - (12 + this->cc() + this->extension_bytes_)))
+        {
+          return false;
+        }
     }
 
   // If there is an extension, it is ignored (taken care of in constructor)
@@ -296,7 +298,7 @@ RTP_Packet::is_valid ()
   // The length of the packet must be consistent with CC and payload type (if
   // payloads have a known length)
 
-  return 1;
+  return true;
 }
 
 void
@@ -767,15 +769,17 @@ TAO_AV_RTP_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
 {
   TAO_AV_Callback *callback {};
 
-  if( endpoint->get_callback (entry->flowname (), callback) ) {
-    ORBSVCS_ERROR_RETURN ((LM_ERROR, "(%N,%l) Invalid callback\n"), 0);
-  }
+  if (endpoint->get_callback (entry->flowname (), callback))
+    {
+      ORBSVCS_ERROR ((LM_ERROR, "(%N,%l) Invalid callback\n"));
+      return nullptr;
+    }
 
   TAO_AV_Protocol_Object *object {};
   ACE_NEW_RETURN (object,
                   TAO_AV_RTP_Object (callback,
                                      transport),
-                  0);
+                  nullptr);
   callback->open (object,
                   handler);
   endpoint->set_protocol_object (entry->flowname (),
