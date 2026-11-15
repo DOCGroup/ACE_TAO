@@ -41,7 +41,7 @@ private:
   static void get_serial_id (time_t &t, size_t &s);
 
   /// Get the lock instance.
-  static ACE_SYNCH_MUTEX *get_lock ();
+  static ACE_SYNCH_MUTEX &get_lock ();
 
   /// Record the time last offer ID generated.
   static time_t last_time_;
@@ -49,9 +49,6 @@ private:
   /// Record serial number of last offer ID with same
   /// generation time.
   static size_t last_number_;
-
-  /// mutex to access private member.
-  static ACE_SYNCH_MUTEX *lock_;
 };
 
 #endif /* ACE_ID_GENERATOR_H */
