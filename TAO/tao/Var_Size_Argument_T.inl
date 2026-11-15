@@ -5,7 +5,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::In_Var_Size_Argument_T<S,Insert_Policy>::In_Var_Size_Argument_T (S const & x)
-  : x_ (&x)
+  : x_ (std::addressof (x))
 {
 }
 
@@ -31,7 +31,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::Inout_Var_Size_Argument_T<S,Insert_Policy>::Inout_Var_Size_Argument_T (S & x)
-  : x_ (&x)
+  : x_ (std::addressof (x))
 {
 }
 
