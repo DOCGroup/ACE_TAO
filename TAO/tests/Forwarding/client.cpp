@@ -52,11 +52,13 @@ class Worker : public ACE_Task_Base
 public:
   Worker (CORBA::ORB_ptr orb, Client_Options const &options);
 
+  /// The actual implementation of the test.
   void run_test ();
-  // The actual implementation of the test
 
-  // = The Task_Base methods
+  /// @name ACE_Task_Base methods
+  /// @{
   int svc () override;
+  /// @}
 
   Worker (Worker const &) = delete;
   Worker (Worker &&) = delete;
@@ -64,8 +66,8 @@ public:
   Worker &operator= (Worker &&) = delete;
 
 private:
+  /// The ORB reference.
   CORBA::ORB_var const orb_;
-  // The ORB reference
   std::basic_string<ACE_TCHAR> const ior_;
   int const iterations_;
 };

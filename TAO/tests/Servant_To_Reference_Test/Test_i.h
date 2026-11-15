@@ -15,8 +15,10 @@ public:
   One_Impl & operator= (One_Impl const &) = delete;
   One_Impl & operator= (One_Impl &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   char * get_string () override;
+  /// @}
 };
 
 class Two_Impl
@@ -29,8 +31,10 @@ public:
   Two_Impl & operator= (Two_Impl const &) = delete;
   Two_Impl & operator= (Two_Impl &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   char * get_string () override;
+  /// @}
 };
 
 class Three_Impl
@@ -43,8 +47,10 @@ public:
   Three_Impl & operator= (Three_Impl const &) = delete;
   Three_Impl & operator= (Three_Impl &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   char * get_string () override;
+  /// @}
 };
 
 #include /**/ "ace/post.h"

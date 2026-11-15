@@ -16,12 +16,14 @@ public:
   Hello &operator= (Hello const &) = delete;
   Hello &operator= (Hello &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   CORBA::Short sleep_sec () override;
   void sleep_sec (CORBA::Short sleep_sec) override;
   char * get_string (CORBA::Long) override;
 
   void shutdown () override;
+  /// @}
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

@@ -32,13 +32,15 @@ public:
   Receiver_i &operator= (Receiver_i const &) = delete;
   Receiver_i &operator= (Receiver_i &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   CORBA::Long receive_call () override;
 
   /// Retun the number of calls that every thread would make...
   CORBA::Long get_call_count () override;
 
   void shutdown () override;
+  /// @}
 
   /// Number of calls processed so far..
   CORBA::ULong no_calls_;

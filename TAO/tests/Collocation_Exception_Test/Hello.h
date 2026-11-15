@@ -23,7 +23,8 @@ public:
   Hello &operator= (Hello const &) = delete;
   Hello &operator= (Hello &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   char * get_string () override;
 
   void system_exception_test () override;
@@ -33,6 +34,7 @@ public:
   void user_exception_not_expected () override;
 
   void shutdown () override;
+  /// @}
 
 private:
   void throw_internal_b ();

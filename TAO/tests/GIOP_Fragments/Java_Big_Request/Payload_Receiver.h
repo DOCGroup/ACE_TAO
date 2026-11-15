@@ -15,10 +15,12 @@ class Payload_Receiver
 public:
   Payload_Receiver (CORBA::ORB_ptr orb);
 
-  // = The skeleton methods
-  virtual void more_data (const Test::Payload &payload);
+  /// @name Skeleton methods
+  /// @{
+  void more_data (const Test::Payload &payload) override;
 
-  virtual void shutdown ();
+  void shutdown () override;
+  /// @}
 
   int get_count () const;
 

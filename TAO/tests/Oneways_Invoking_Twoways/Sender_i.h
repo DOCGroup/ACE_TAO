@@ -32,7 +32,8 @@ public:
   Sender_i &operator= (Sender_i const &) = delete;
   Sender_i &operator= (Sender_i &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   void active_objects (CORBA::Short ao) override;
 
   void send_ready_message (Test::Receiver_ptr receiver) override;
@@ -40,6 +41,7 @@ public:
   void ping () override;
 
   void shutdown () override;
+  /// @}
 
 private:
   /// Our local ORB ptr

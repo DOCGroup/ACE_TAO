@@ -18,7 +18,8 @@ namespace Test
     test_i &operator= (test_i const &) = delete;
     test_i &operator= (test_i &&) = delete;
 
-    // = The skeleton methods
+    /// @name Skeleton methods
+    /// @{
     void send_stuff (char const *str,
                      CORBA::Boolean flag) override
     {
@@ -31,9 +32,9 @@ namespace Test
 
           ACE_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - Returning from send_stuff\n", str));
-        }
-
+      }
     }
+    /// @}
   };
 }
 
