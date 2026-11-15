@@ -55,9 +55,12 @@ RTP_Packet::RTP_Packet(char* buffer, int length)
 
   std::memcpy (this->packet_.data (), buffer, length);
 
-  for (int j {}; j < (int)this->cc(); ++j)
+  int const csrc_count = static_cast<int> (this->cc ());
+  for (int j {}; j < csrc_count; ++j)
     {
-      this->host_byte_order_csrc_list_[j] = ntohl(*(ACE_UINT32*)&buffer[index]);
+      ACE_UINT32 network_csrc {};
+      std::memcpy (std::addressof (network_csrc), buffer + index, sizeof (network_csrc));
+      this->host_byte_order_csrc_list_[j] = ntohl (network_csrc);
       index+=4;
     }
 
@@ -65,7 +68,11 @@ RTP_Packet::RTP_Packet(char* buffer, int length)
   if (this->ext())
     {
       index+=2;
-      int const extension_data_size = ntohs(*(ACE_UINT16*)&buffer[index]);
+      ACE_UINT16 network_extension_data_size {};
+      std::memcpy (std::addressof (network_extension_data_size),
+                   buffer + index,
+                   sizeof (network_extension_data_size));
+      int const extension_data_size = ntohs (network_extension_data_size);
       index+=2;
       index+=extension_data_size;
 
@@ -87,7 +94,14 @@ RTP_Packet::RTP_Packet(char* buffer, int length)
     {
       for (int i {}; i < payload_size_; i += 2)
         {
-          *(ACE_UINT16*)&this->host_byte_order_payload_[i] = ntohs(*(ACE_UINT16*)&this->packet_[index]);
+          ACE_UINT16 network_payload {};
+          std::memcpy (std::addressof (network_payload),
+                       this->packet_.data () + index,
+                       sizeof (network_payload));
+          ACE_UINT16 const host_payload = ntohs (network_payload);
+          std::memcpy (this->host_byte_order_payload_.data () + i,
+                       std::addressof (host_payload),
+                       sizeof (host_payload));
           index+=2;
         }
     }
@@ -144,16 +158,20 @@ RTP_Packet::RTP_Packet(unsigned char padding,
   this->packet_[index] = ((marker & 0x1) << 7 ) |
                          ((payload_type & 0x7f));
   ++index;
-  *((ACE_UINT16*)&this->packet_[index]) = (ACE_UINT16)htons(static_cast<u_short> (seq_num));
+  ACE_UINT16 const network_seq_num = htons (static_cast<ACE_UINT16> (seq_num));
+  std::memcpy (this->packet_.data () + index, std::addressof (network_seq_num), sizeof (network_seq_num));
   index+=2;
-  *((ACE_UINT32*)&this->packet_[index]) = (ACE_UINT32)htonl(timestamp);
+  ACE_UINT32 const network_timestamp = htonl (timestamp);
+  std::memcpy (this->packet_.data () + index, std::addressof (network_timestamp), sizeof (network_timestamp));
   index+=4;
-  *((ACE_UINT32*)&this->packet_[index]) = htonl(ssrc);
+  ACE_UINT32 const network_ssrc = htonl (ssrc);
+  std::memcpy (this->packet_.data () + index, std::addressof (network_ssrc), sizeof (network_ssrc));
   index+=4;
 
   for (int i {}; i < csrc_count; ++i)
     {
-      *((ACE_UINT32*)&this->packet_[index]) = htonl(this->host_byte_order_csrc_list_[i]);
+      ACE_UINT32 const network_csrc = htonl (this->host_byte_order_csrc_list_[i]);
+      std::memcpy (this->packet_.data () + index, std::addressof (network_csrc), sizeof (network_csrc));
       index+=4;
     }
 
@@ -168,7 +186,12 @@ RTP_Packet::RTP_Packet(unsigned char padding,
     {
       for (int i {}; i < this->payload_size_; i += 2)
         {
-          *(ACE_UINT16*)&this->packet_[index] = htons(*(ACE_UINT16*)&data[i]);
+          ACE_UINT16 host_payload {};
+          std::memcpy (std::addressof (host_payload), data + i, sizeof (host_payload));
+          ACE_UINT16 const network_payload = htons (host_payload);
+          std::memcpy (this->packet_.data () + index,
+                       std::addressof (network_payload),
+                       sizeof (network_payload));
           index+=2;
         }
     }
@@ -233,19 +256,25 @@ RTP_Packet::pt  ()
 ACE_UINT16
 RTP_Packet::sn  ()
 {
-  return ntohs(*(ACE_UINT16*)(&this->packet_[2])) ;
+  ACE_UINT16 network_seq_num {};
+  std::memcpy (std::addressof (network_seq_num), this->packet_.data () + 2, sizeof (network_seq_num));
+  return ntohs (network_seq_num);
 }
 
 ACE_UINT32
 RTP_Packet::ts  ()
 {
-  return ntohl(*(ACE_UINT32*)(&this->packet_[4])) ;
+  ACE_UINT32 network_timestamp {};
+  std::memcpy (std::addressof (network_timestamp), this->packet_.data () + 4, sizeof (network_timestamp));
+  return ntohl (network_timestamp);
 }
 
 ACE_UINT32
 RTP_Packet::ssrc ()
 {
-  return ntohl(*(ACE_UINT32*)(&this->packet_[8])) ;
+  ACE_UINT32 network_ssrc {};
+  std::memcpy (std::addressof (network_ssrc), this->packet_.data () + 8, sizeof (network_ssrc));
+  return ntohl (network_ssrc);
 }
 
 unsigned int
@@ -555,7 +584,7 @@ TAO_AV_RTP_Object::send_frame (iovec const *iov,
                                   this->ssrc_,                  // ssrc
                                   static_cast<unsigned char> (csrc_count),                   // csrc count
                                   csrc_list,                    // csrc list
-                                  (char *)iov[0].iov_base,      // data
+                                  static_cast<char *> (iov[0].iov_base), // data
                                   data_size),                   // data size
                                   -1);
       rtp_packet.reset (raw_rtp_packet);
@@ -614,7 +643,7 @@ TAO_AV_RTP_Object::send_frame (iovec const *iov,
                                   this->ssrc_,                  // ssrc
                                   static_cast<unsigned char> (csrc_count),                   // csrc count
                                   csrc_list,                    // csrc list
-                                  (char *)iov[0].iov_base,      // data
+                                  static_cast<char *> (iov[0].iov_base), // data
                                   data_size),                   // data size
                                   -1);
       rtp_packet.reset (raw_rtp_packet);
