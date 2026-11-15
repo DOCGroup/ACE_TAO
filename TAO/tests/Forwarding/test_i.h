@@ -22,13 +22,14 @@
 class Simple_Server_i : public POA_Simple_Server
 {
 public:
-  /// ctor
   explicit Simple_Server_i (CORBA::ORB_ptr orb);
 
-  // = The Simple_Server methods.
+  /// @name Simple_Server methods
+  /// @{
   CORBA::Boolean test_is_a (char const *type) override;
 
   void shutdown () override;
+  /// @}
 
   Simple_Server_i (Simple_Server_i const &) = delete;
   Simple_Server_i (Simple_Server_i &&) = delete;

@@ -57,17 +57,18 @@ private:
 class Simple_Server_i : public POA_Simple_Server
 {
 public:
-  /// ctor
   Simple_Server_i (CORBA::ORB_ptr orb, Simple_Window *window);
   Simple_Server_i (Simple_Server_i const &) = delete;
   Simple_Server_i (Simple_Server_i &&) = delete;
   Simple_Server_i &operator= (Simple_Server_i const &) = delete;
   Simple_Server_i &operator= (Simple_Server_i &&) = delete;
 
-  // = The Simple_Server methods.
+  /// @name Simple_Server methods
+  /// @{
   void set_x_angle (CORBA::Long x) override;
   void set_y_angle (CORBA::Long y) override;
   void shutdown () override;
+  /// @}
 
 private:
   /// The ORB
