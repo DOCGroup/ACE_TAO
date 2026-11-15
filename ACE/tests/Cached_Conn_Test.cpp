@@ -86,7 +86,7 @@ Svc_Handler::open (void *)
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("opening Svc_Handler %@ with handle %@\n"),
-                this,
+                static_cast<void *> (this),
                 reinterpret_cast<void *> (this->peer ().get_handle ())));
 
   return 0;
@@ -97,7 +97,7 @@ Svc_Handler::close (u_long flags)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Closing Svc_Handler %@ with handle %@\n"),
-              this,
+              static_cast<void *> (this),
               reinterpret_cast<void *> (this->peer ().get_handle ())));
   return ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::close (flags);
 }

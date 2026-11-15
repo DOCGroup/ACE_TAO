@@ -202,7 +202,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 Client_Handler::~Client_Handler ()
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Client %@ handle %@ down\n"),
-              this, reinterpret_cast<void *> (this->stream_.handle ())));
+              static_cast<void *> (this), reinterpret_cast<void *> (this->stream_.handle ())));
   if (this->stream_.handle () != ACE_INVALID_HANDLE)
     {
       if (this->msgs_sent_ != cli_req_no)
@@ -226,7 +226,7 @@ int
 Client_Handler::open (ACE_HANDLE handle)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Client %@ handle %@ up\n"),
-              this, reinterpret_cast<void *> (handle)));
+              static_cast<void *> (this), reinterpret_cast<void *> (handle)));
   if (this->stream_.open (*this, handle) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%t) Client_Handler::open failed: %p\n")),
@@ -253,7 +253,7 @@ Client_Handler::handle_write_stream
       return;
     }
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Client %@ handle %@ sent %B of %B bytes\n"),
-              this, reinterpret_cast<void *> (this->stream_.handle ()),
+              static_cast<void *> (this), reinterpret_cast<void *> (this->stream_.handle ()),
               result.bytes_transferred (), result.bytes_to_write ()));
   ACE_Message_Block &b = result.message_block ();
   bool send_again = true;
@@ -292,7 +292,7 @@ Client_Handler::handle_write_stream
 Server_Handler::~Server_Handler ()
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Server %@ handle %@ down\n"),
-              this, reinterpret_cast<void *> (this->stream_.handle ())));
+              static_cast<void *> (this), reinterpret_cast<void *> (this->stream_.handle ())));
   if (this->stream_.handle () != ACE_INVALID_HANDLE)
     {
       if (this->msgs_rcvd_ != cli_req_no)
@@ -316,7 +316,7 @@ int
 Server_Handler::open (ACE_HANDLE handle)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Server %@ handle %@ up\n"),
-              this, reinterpret_cast<void *> (handle)));
+              static_cast<void *> (this), reinterpret_cast<void *> (handle)));
   if (this->stream_.open (*this, handle) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%t) Server_Handler::open failed: %p\n")),
@@ -342,7 +342,7 @@ Server_Handler::handle_read_stream
       return;
     }
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Server %@ handle %@ recv %B of %B bytes\n"),
-              this, reinterpret_cast<void *> (this->stream_.handle ()),
+              static_cast<void *> (this), reinterpret_cast<void *> (this->stream_.handle ()),
               result.bytes_transferred (), result.bytes_to_read ()));
   if (result.bytes_transferred () == 0)
     {

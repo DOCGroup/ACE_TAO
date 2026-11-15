@@ -144,7 +144,7 @@ Request_Handler::handle_input (ACE_HANDLE fd)
   else
     ACE_DEBUG ((LM_DEBUG,
                 "(%t) Request_Handler: %@ peer closed (%@)\n",
-                this, reinterpret_cast<void *> (fd)));
+                static_cast<void *> (this), reinterpret_cast<void *> (fd)));
   return -1;
 }
 
@@ -158,7 +158,7 @@ Request_Handler::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask)
   if (this->nr_msgs_rcvd_ != cli_req_no)
     ACE_ERROR((LM_ERROR,
                "(%t) Handler %@: Expected %B messages; got %B\n",
-               this,
+               static_cast<void *> (this),
                cli_req_no,
                this->nr_msgs_rcvd_));
   this->destroy ();

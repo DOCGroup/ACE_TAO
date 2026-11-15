@@ -16,14 +16,14 @@ namespace DynamicAny {
 struct TAO_DynCommon : virtual DynamicAny::DynAny {
   ~TAO_DynCommon() override
   {
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT("~TAO_DynCommon %@\n"), this));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT("~TAO_DynCommon %@\n"), static_cast<void *> (this)));
   }
 };
 struct TAO_DynAny_i : virtual TAO_DynCommon, virtual DynamicAny::DynAny {
-    ~TAO_DynAny_i() override { ACE_DEBUG ((LM_DEBUG, ACE_TEXT("~TAO_DynAny_i %@\n"), this)); }
+    ~TAO_DynAny_i() override { ACE_DEBUG ((LM_DEBUG, ACE_TEXT("~TAO_DynAny_i %@\n"), static_cast<void *> (this))); }
 };
 struct TAO_DynValueCommon_i : virtual TAO_DynAny_i, virtual DynamicAny::DynValueCommon {
-    ~TAO_DynValueCommon_i() override { ACE_DEBUG ((LM_DEBUG, ACE_TEXT("~TAO_DynValueCommon_i %@\n"), this)); }
+    ~TAO_DynValueCommon_i() override { ACE_DEBUG ((LM_DEBUG, ACE_TEXT("~TAO_DynValueCommon_i %@\n"), static_cast<void *> (this))); }
 };
 // ============================================================
 // CreateDynAnyUtils<T>
@@ -49,12 +49,12 @@ struct CreateDynAnyUtils {
 // TAO_DynValue_i
 // ============================================================
 struct TAO_DynValue_i : virtual DynamicAny::DynValue, virtual TAO_DynValueCommon_i {
-    TAO_DynValue_i() { ACE_DEBUG ((LM_DEBUG, ACE_TEXT("TAO_DynValue_i ctor %@\n"), this)); }
-    ~TAO_DynValue_i() override { ACE_DEBUG ((LM_DEBUG, ACE_TEXT("~TAO_DynValue_i dtor %@\n"), this)); }
+    TAO_DynValue_i() { ACE_DEBUG ((LM_DEBUG, ACE_TEXT("TAO_DynValue_i ctor %@\n"), static_cast<void *> (this))); }
+    ~TAO_DynValue_i() override { ACE_DEBUG ((LM_DEBUG, ACE_TEXT("~TAO_DynValue_i dtor %@\n"), static_cast<void *> (this))); }
     static TAO_DynValue_i* cached ;
     std::vector<void*> da_members_;
     void from_inputCDR(bool trigger_indirection, int depth) {
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT("  from_inputCDR depth=%d this=%@\n"), depth, this));
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT("  from_inputCDR depth=%d this=%@\n"), depth, static_cast<void *> (this)));
         // Simulates deep recursion of ACE_TAO (exactly like in the real DynValue_i)
         if (depth < 3) {
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT("    Creating nested member at depth %d\n"), depth + 1));
@@ -74,7 +74,7 @@ struct TAO_DynValue_i : virtual DynamicAny::DynValue, virtual TAO_DynValueCommon
         }
         if (!cached) cached = this;
     }
-    void _add_ref() { ACE_DEBUG ((LM_DEBUG, ACE_TEXT("    _add_ref on %@\n"), this)); }
+    void _add_ref() { ACE_DEBUG ((LM_DEBUG, ACE_TEXT("    _add_ref on %@\n"), static_cast<void *> (this))); }
 };
 TAO_DynValue_i* TAO_DynValue_i::cached {};
 

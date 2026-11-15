@@ -34,7 +34,9 @@ public:
     if (this != this_pointer)
     {
       isDataCorrupt = true;
-      ACE_ERROR ((LM_ERROR, "ERROR: Invalid this %@ != %@\n", this, this_pointer));
+      ACE_ERROR ((LM_ERROR, "ERROR: Invalid this %@ != %@\n",
+                  static_cast<void *> (this),
+                  static_cast<void *> (this_pointer)));
     }
 
     // Check if number sequence is still the same

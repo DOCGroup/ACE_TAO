@@ -90,7 +90,7 @@ Service_Config_DLL::init (int argc, ACE_TCHAR *argv[])
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Service_Config_DLL::init () %@ - %s\n"),
-                  this,
+                  static_cast<void *> (this),
                   argv[0]));
     }
   else

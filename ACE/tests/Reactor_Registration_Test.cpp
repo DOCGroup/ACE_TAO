@@ -83,7 +83,7 @@ Event_Handler::Event_Handler (ACE_Reactor &reactor,
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Event_Handler::Event_Handler for %@\n"),
-              this));
+              static_cast<void *> (this)));
   this->ok_ = true;
 }
 
@@ -91,7 +91,7 @@ Event_Handler::~Event_Handler ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Event_Handler::~Event_Handler for %@\n"),
-              this));
+              static_cast<void *> (this)));
 }
 
 int
@@ -111,7 +111,7 @@ Event_Handler::handle_input (ACE_HANDLE handle)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Message %C received for %@\n"),
               buf,
-              this));
+              static_cast<void *> (this)));
 
   return -1;
 }
