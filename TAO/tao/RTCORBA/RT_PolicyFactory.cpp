@@ -35,7 +35,7 @@ TAO_RT_PolicyFactory::create_policy (
 CORBA::Policy_ptr
 TAO_RT_PolicyFactory::_create_policy (CORBA::PolicyType type)
 {
-  CORBA::Policy_ptr policy = CORBA::Policy_ptr ();
+  CORBA::Policy_ptr policy {};
 
   switch (type)
   {
@@ -51,7 +51,6 @@ TAO_RT_PolicyFactory::_create_policy (CORBA::PolicyType type)
 
       return policy;
     }
-    break;
     case RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE :
     {
       ACE_NEW_THROW_EX (policy,
@@ -64,7 +63,6 @@ TAO_RT_PolicyFactory::_create_policy (CORBA::PolicyType type)
 
       return policy;
     }
-    break;
     case RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE :
     {
       ACE_NEW_THROW_EX (policy,
@@ -77,8 +75,6 @@ TAO_RT_PolicyFactory::_create_policy (CORBA::PolicyType type)
 
       return policy;
     }
-    break;
-  }
 
   throw ::CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
 }

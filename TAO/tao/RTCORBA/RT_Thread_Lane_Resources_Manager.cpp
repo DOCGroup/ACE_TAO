@@ -26,7 +26,7 @@ TAO_RT_Thread_Lane_Resources_Manager::~TAO_RT_Thread_Lane_Resources_Manager () =
 int
 TAO_RT_Thread_Lane_Resources_Manager::open_default_resources ()
 {
-  TAO_ORB_Parameters *params =
+  TAO_ORB_Parameters * const params =
     this->orb_core_->orb_params ();
 
   TAO_EndpointSet endpoint_set;
@@ -72,13 +72,13 @@ TAO_RT_Thread_Lane_Resources_Manager::close_all_transports ()
 bool
 TAO_RT_Thread_Lane_Resources_Manager::is_collocated (TAO_MProfile const &mprofile)
 {
-  int result =
+  bool const collocated =
     this->default_lane_resources_->is_collocated (mprofile);
 
-  if (result)
-  {
-    return result;
-  }
+  if (collocated)
+    {
+      return true;
+    }
 
   return this->tp_manager_->is_collocated (mprofile);
 }
@@ -87,19 +87,23 @@ TAO_Thread_Lane_Resources &
 TAO_RT_Thread_Lane_Resources_Manager::lane_resources ()
 {
   // Get the ORB_Core's TSS resources.
-  TAO_ORB_Core_TSS_Resources &tss =
+  TAO_ORB_Core_TSS_Resources const &tss =
     *this->orb_core_->get_tss_resources ();
 
   // Get the lane for this thread.
-  TAO_Thread_Lane *lane =
+  TAO_Thread_Lane * const lane =
     static_cast <TAO_Thread_Lane *> (tss.lane_);
 
   // If we have a valid lane, use that lane's resources.
-  if (lane)
-    return lane->resources ();
+  if (lane != nullptr)
+    {
+      return lane->resources ();
+    }
   else
-    // Otherwise, return the default resources.
-    return *this->default_lane_resources_;
+    {
+      // Otherwise, return the default resources.
+      return *this->default_lane_resources_;
+    }
 }
 
 TAO_Thread_Lane_Resources &
