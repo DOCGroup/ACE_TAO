@@ -8,15 +8,11 @@
 #include <cstdio>
 #include <memory>
 
+/// Implements the Test interface declared in test.idl.
 class Test_i : public POA_Test
 {
-  // = TITLE
-  //   An implementation for the Test interface in test.idl
-  //
 public:
   explicit Test_i (CORBA::ORB_ptr orb);
-  // ctor
-
   void test_method () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
@@ -29,8 +25,8 @@ private:
   Test_i (Test_i &&) = delete;
   Test_i &operator= (Test_i &&) = delete;
 
+  /// ORB used to shut down the server.
   CORBA::ORB_var orb_;
-  // The ORB
 };
 
 Test_i::Test_i (CORBA::ORB_ptr orb)
@@ -62,7 +58,7 @@ struct Server_Options
   CORBA::ULong protocol_type {};
 };
 
-// Parse command-line arguments.
+/// Parses command-line arguments.
 int
 parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {

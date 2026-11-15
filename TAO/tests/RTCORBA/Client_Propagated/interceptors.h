@@ -24,13 +24,11 @@ class Client_Request_Interceptor
   /// context in the reply messages.
 public:
   explicit Client_Request_Interceptor (char const *orb_id);
-  // ctor.
 
   ~Client_Request_Interceptor () override = default;
-  // dtor.
 
+  /// Returns the canonical interceptor name.
   char * name () override;
-  // Canonical name of the interceptor.
 
   void destroy () override;
 
@@ -52,9 +50,8 @@ private:
 
   char const * const myname_;
 
+  /// ID of the ORB where this interceptor was created, usually from ORBInitInfo.
   CORBA::String_var orb_id_;
-  // The ID of the ORB where this interceptor was created, usually
-  // obtained from the ORBInitInfo
 
   CORBA::ORB_var orb_;
 };

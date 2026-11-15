@@ -16,12 +16,11 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+/// Client-side interceptor that verifies RTCORBA priority context in replies.
 class Client_Request_Interceptor
   : public virtual PortableInterceptor::ClientRequestInterceptor,
     public virtual ::CORBA::LocalObject
 {
-  /// Client-side interceptor.  Verifies presence of RTCORBA priority
-  /// context in the reply messages.
 public:
   explicit Client_Request_Interceptor (char const *orb_id);
   Client_Request_Interceptor (Client_Request_Interceptor const &) = delete;
@@ -31,8 +30,8 @@ public:
 
   ~Client_Request_Interceptor () override = default;
 
+  /// Returns the canonical interceptor name.
   char * name () override;
-  // Canonical name of the interceptor.
 
   void destroy () override;
 
@@ -49,9 +48,8 @@ public:
 private:
   char const * const myname_;
 
+  /// ID of the ORB where this interceptor was created, usually from ORBInitInfo.
   CORBA::String_var const orb_id_;
-  // The ID of the ORB where this interceptor was created, usually
-  // obtained from the ORBInitInfo
 
   CORBA::ORB_var orb_;
 };

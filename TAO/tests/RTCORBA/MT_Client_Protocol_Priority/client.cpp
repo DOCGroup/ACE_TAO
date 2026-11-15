@@ -12,16 +12,14 @@
 
 #include <cstdio>
 
+/**
+ * Runs a client worker thread.
+ *
+ * Sets the ClientProtocolPolicy override and thread priority, synchronizes
+ * with the other workers, then repeatedly invokes the server object.
+ */
 class Worker_Thread : public ACE_Task_Base
 {
-  // = TITLE
-  //   Runs one client worker thread.
-  //
-  // = DESCRIPTION
-  //   Sets ClientProtocolPolicy override to the specified value on
-  //   the Current level, sets thread priority to the specified value
-  //   and waits on barrier for other worker threads.  Then loops
-  //   making invocations on the specified server object.
   //
 public:
   Worker_Thread (CORBA::ORB_ptr orb,
@@ -34,24 +32,24 @@ public:
   Worker_Thread &operator= (Worker_Thread const &) = delete;
   Worker_Thread &operator= (Worker_Thread &&) = delete;
 
+  /// Runs the worker's invocation loop.
   int svc () override;
-  // Do work.
 
 private:
+  /// Borrowed ORB reference; the owning task outlives this worker.
   CORBA::ORB_ptr const orb_;
-  // Borrowed ORB reference. The owning Task outlives this worker.
 
+  /// Borrowed server reference; the owning task outlives this worker.
   Test_ptr const server_;
-  // Borrowed server reference. The owning Task outlives this worker.
 
+  /// Protocol identifier for ClientProtocolPolicy.
   CORBA::ULong protocol_type_;
-  // Protocol for ClientProtocolPolicy.
 
+  /// Number of server invocations to make.
   int iterations_;
-  // Number of server invocations to make.
 
+  /// Synchronizes this worker with the other worker threads.
   ACE_Barrier * const synchronizer_;
-  // Mechanism for synchronization with other worker threads.
 };
 
 // ****************************************************************

@@ -14,27 +14,25 @@ struct Server_Options
   ACE_TCHAR const *ior_output_file {ACE_TEXT ("test.ior")};
 };
 
+/// Implements the Test interface declared in test.idl.
 class Test_i : public POA_Test
 {
-  // = TITLE
-  //   An implementation for the Test interface in test.idl
-  //
 public:
   explicit Test_i (CORBA::ORB_ptr orb);
   Test_i (Test_i const &) = delete;
   Test_i (Test_i &&) = delete;
   Test_i &operator= (Test_i const &) = delete;
   Test_i &operator= (Test_i &&) = delete;
-  // ctor
-
-  // = The Test methods.
+  /// @name Test operations
+  /// @{
   void test_method (CORBA::Short priority) override;
 
   void shutdown () override;
+  /// @}
 
 private:
+  /// ORB used to inspect RTCurrent and shut down the server.
   CORBA::ORB_var const orb_;
-  // The ORB
 };
 
 Test_i::Test_i (CORBA::ORB_ptr orb)
@@ -80,7 +78,7 @@ Test_i::shutdown ()
 
 //*************************************************************************
 
-// Parse command-line arguments.
+/// Parses command-line arguments.
 int
 parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
