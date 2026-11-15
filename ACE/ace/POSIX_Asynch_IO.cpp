@@ -2186,20 +2186,31 @@ ACE_POSIX_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
                                                          priority,
                                                          signal_number),
                   -1);
+  auto result_deleter = [] (ACE_POSIX_Asynch_Transmit_File_Result *result)
+    {
+      delete result;
+    };
+  std::unique_ptr<ACE_POSIX_Asynch_Transmit_File_Result, decltype (result_deleter)>
+    result_owner (result, result_deleter);
 
   // Make the auxillary handler and initiate transmit.
   ACE_POSIX_Asynch_Transmit_Handler *transmit_handler {};
 
   ACE_NEW_RETURN (transmit_handler,
                   ACE_POSIX_Asynch_Transmit_Handler (this->posix_proactor (),
-                                                     result),
+                                                     result_owner.get ()),
                   -1);
+  result_owner.release ();
+  std::unique_ptr<ACE_POSIX_Asynch_Transmit_Handler> transmit_handler_owner (
+    transmit_handler);
 
-  ssize_t return_val = transmit_handler->transmit ();
+  ssize_t return_val = transmit_handler_owner->transmit ();
 
   if (return_val == -1)
-    // This deletes the <result> in it too.
-    delete transmit_handler;
+    {
+      return 0;
+    }
+  transmit_handler_owner.release ();
 
   return 0;
 }
