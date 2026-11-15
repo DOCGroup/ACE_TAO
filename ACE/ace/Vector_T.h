@@ -84,9 +84,6 @@ public:
   explicit ACE_Vector (size_t const init_size = DEFAULT_SIZE,
                        ACE_Allocator *alloc = nullptr);
 
-  /**
-   * Destructor.
-   */
   ~ACE_Vector () = default;
 
   /// Declare the dynamic allocation hooks.

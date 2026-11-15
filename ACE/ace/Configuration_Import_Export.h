@@ -52,9 +52,6 @@ public:
   /// Constructor taking the ACE_Configuration to import/export to
   explicit ACE_Config_ImpExp_Base (ACE_Configuration& config);
 
-  /**
-   * Destructor
-   */
   virtual ~ACE_Config_ImpExp_Base () = default;
 
    /**
@@ -96,10 +93,8 @@ public:
   ACE_Registry_ImpExp &operator= (ACE_Registry_ImpExp const &) = delete;
   ACE_Registry_ImpExp &operator= (ACE_Registry_ImpExp &&) = delete;
 
-  /// Construction
   ACE_Registry_ImpExp (ACE_Configuration&);
 
-  /// Destruction.
   ~ACE_Registry_ImpExp () override = default;
 
   /**
@@ -166,14 +161,8 @@ public:
   ACE_Ini_ImpExp &operator= (ACE_Ini_ImpExp const &) = delete;
   ACE_Ini_ImpExp &operator= (ACE_Ini_ImpExp &&) = delete;
 
-  /**
-   * Construction
-   */
   ACE_Ini_ImpExp (ACE_Configuration&);
 
-  /**
-   * Destructor
-   */
   ~ACE_Ini_ImpExp () override = default;
 
   /**
