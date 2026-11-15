@@ -66,12 +66,14 @@ public:
   /// Get underlying protocol options.
   int get_option (int level, int option, void *optval, int &optlen);
 
-  // = Calls to underlying TLI operations.
+  /// @name Underlying TLI operations
+  /// @{
   int look () const;
   int rcvdis (struct t_discon * = nullptr) const;
   int snddis (struct t_call * = nullptr) const;
   int sndrel () const;
   int rcvrel () const;
+  /// @}
 
   /// Return our local endpoint address.
   int get_local_addr (ACE_Addr &) const;
@@ -83,7 +85,8 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  // = Ensure we are an abstract class.
+  /// @name Protected construction and destruction
+  /// @{
   /// Default constructor.
   ACE_TLI ();
 
@@ -91,6 +94,7 @@ protected:
 
   /// Initialize a TLI endpoint.
   ACE_TLI (const char device[], int oflag = O_RDWR, struct t_info *info = nullptr);
+  /// @}
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

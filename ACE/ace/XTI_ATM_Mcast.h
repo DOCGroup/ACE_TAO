@@ -109,9 +109,11 @@ public:
                 ACE_INT32 leaf_id,
                 ACE_Time_Value *timeout = nullptr);
 
-  // = Meta-type info
+  /// @name Meta types
+  /// @{
   using PEER_ADDR = ACE_ATM_Addr;
   using PEER_STREAM = ACE_TLI_Stream;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;

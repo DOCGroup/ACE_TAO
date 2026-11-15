@@ -115,7 +115,8 @@ using ACE_TBIND = struct t_bind;
  */
 namespace ACE_OS
 {
-  // = A set of wrappers for XTI/TLI.
+  /// @name XTI/TLI wrappers
+  /// @{
   ACE_NAMESPACE_INLINE_FUNCTION
   int t_accept (ACE_HANDLE fildes,
                 ACE_HANDLE resfd,
@@ -217,6 +218,7 @@ namespace ACE_OS
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int t_unbind (ACE_HANDLE fildes);
+  /// @}
 } /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
