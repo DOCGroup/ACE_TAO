@@ -15,6 +15,7 @@
 
 #include <cstring>
 #include <cstdio>
+#include <memory>
 
 #define TODO int todo;
 
@@ -279,14 +280,14 @@ TAO::PG_Object_Group::add_member (PortableGroup::Location const & the_location,
                     MemberInfo (member_ior.in (),
                                 the_location),
                     CORBA::NO_MEMORY());
+  std::unique_ptr<MemberInfo> info_guard {info};
 
   if (this->members_.bind (the_location, info) != 0)
     {
-      delete info;
-
       // @@ Dale why this is a NO MEMORY exception?
       throw CORBA::NO_MEMORY();
     }
+  info_guard.release ();
 
   this->reference_ = new_reference; // note var-to-var assignment does
                                     // a duplicate
@@ -306,9 +307,9 @@ TAO::PG_Object_Group::add_member (PortableGroup::Location const & the_location,
         }
       // Must unbind the new member and delete it.
       if (this->members_.unbind (the_location, info) == 0)
-      {
-        delete info;
-      }
+        {
+          std::unique_ptr<MemberInfo> info_guard {info};
+        }
       throw PortableGroup::ObjectNotAdded ();
     }
 
@@ -400,18 +401,17 @@ TAO::PG_Object_Group::remove_member (
   MemberInfo * info {};
   if (this->members_.unbind (the_location, info) == 0)
     {
+      std::unique_ptr<MemberInfo> info_guard {info};
       if (this->members_.current_size () > 0)
         {
           this->reference_ =
             this->manipulator_.remove_profiles (this->reference_.in (),
-                                                info->member_.in ());
+                                                info_guard->member_.in ());
         }
       else
         {
           empty_ = true;
         }
-
-      delete info;
 
       if (the_location == this->primary_location_)
         {
@@ -586,6 +586,7 @@ TAO::PG_Object_Group::locations_of_members ()
     result,
     PortableGroup::Locations (count),
     CORBA::NO_MEMORY() );
+  std::unique_ptr<PortableGroup::Locations> result_guard {result};
 
   result->length (count);
 
@@ -599,7 +600,7 @@ TAO::PG_Object_Group::locations_of_members ()
     out = location;
     ++pos;
   }
-  return result;
+  return result_guard.release ();
 }
 
 CORBA::Object_ptr
@@ -723,11 +724,13 @@ TAO::PG_Object_Group::create_member (
                                                  factory_info.the_factory,
                                                  fcid.in ()),
                                 CORBA::NO_MEMORY());
+              std::unique_ptr<MemberInfo> info_guard {info};
 
               if (this->members_.bind (the_location, info) != 0)
                 {
                   throw CORBA::NO_MEMORY();
                 }
+              info_guard.release ();
 
               this->reference_ = new_reference; // note var-to-var
                                                 // assignment does a
@@ -805,11 +808,13 @@ TAO::PG_Object_Group::create_members (size_t count)
                                                      factory_info.the_factory,
                                                      fcid.in ()),
                                     CORBA::NO_MEMORY());
+                  std::unique_ptr<MemberInfo> info_guard {info};
 
                   if (this->members_.bind (factory_location, info) != 0)
                     {
                       throw CORBA::NO_MEMORY();
                     }
+                  info_guard.release ();
                   this->reference_ =
                     new_reference; // note var-to-var assignment does
                                    // a duplicate
@@ -911,8 +916,7 @@ TAO::PG_Object_Group::clear_members_map ()
       it != this->members_.end();
       ++it)
     {
-      MemberInfo * member = (*it).int_id_;
-      delete member;
+      std::unique_ptr<MemberInfo> member {(*it).int_id_};
     }
   this->members_.unbind_all ();
 }

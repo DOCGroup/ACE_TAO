@@ -340,7 +340,8 @@ namespace TAO
      */
     std::optional<std::string> group_name_;
 
-    // group members
+    // The map stores raw pointers; PG_Object_Group owns and deletes each
+    // MemberInfo when a member is removed or the group is destroyed.
     MemberMap members_;
 
     PortableGroup::Location primary_location_;
