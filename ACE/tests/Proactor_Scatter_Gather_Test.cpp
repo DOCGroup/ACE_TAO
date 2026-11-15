@@ -44,6 +44,8 @@
 #include "ace/SOCK_Connector.h"
 #include <algorithm>
 
+#include <memory>
+
 // For the Acceptor/Connector handlers maintenance lists
 static constexpr int SENDERS = 1;
 static constexpr int RECEIVERS = 2;
@@ -599,7 +601,7 @@ void
 Acceptor::on_new_receiver (Receiver & rcvr)
 {
   ++this->sessions_;
-  this->list_receivers_[rcvr.index_] = &rcvr;
+  this->list_receivers_[rcvr.index_] = std::addressof (rcvr);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Receiver::CTOR sessions_ = %d\n"),
               this->sessions_));
@@ -611,7 +613,7 @@ Acceptor::on_delete_receiver (Receiver & rcvr)
   --this->sessions_;
   if (rcvr.index_ >= 0
       && rcvr.index_ < RECEIVERS
-      && this->list_receivers_[rcvr.index_] == &rcvr)
+      && this->list_receivers_[rcvr.index_] == std::addressof (rcvr))
     this->list_receivers_[rcvr.index_] = 0;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -1001,7 +1003,7 @@ void
 Connector::on_new_sender (Sender &sndr)
 {
   ++this->sessions_;
-  this->list_senders_[sndr.index_] = &sndr;
+  this->list_senders_[sndr.index_] = std::addressof (sndr);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Sender::CTOR sessions_ = %d\n"),
               this->sessions_));
@@ -1013,7 +1015,7 @@ Connector::on_delete_sender (Sender &sndr)
   --this->sessions_;
   if (sndr.index_ >= 0
       && sndr.index_ < SENDERS
-      && this->list_senders_[sndr.index_] == &sndr)
+      && this->list_senders_[sndr.index_] == std::addressof (sndr))
     this->list_senders_[sndr.index_] = 0;
 
   ACE_DEBUG ((LM_DEBUG,

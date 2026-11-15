@@ -61,6 +61,8 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Semaphore.h"
 
+#include <memory>
+
 //  Some debug helper functions
 static int disable_signal (int sigmin, int sigmax);
 
@@ -292,7 +294,7 @@ Acceptor::on_new_receiver (Receiver &rcvr)
 {
   ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
   ++this->sessions_;
-  this->list_receivers_[rcvr.index_] = & rcvr;
+  this->list_receivers_[rcvr.index_] = std::addressof (rcvr);
   ACE_DEBUG ((LM_DEBUG,
               "Receiver::CTOR sessions_=%d\n",
               this->sessions_));
@@ -311,7 +313,7 @@ Acceptor::on_delete_receiver (Receiver &rcvr)
   this->total_r_   += rcvr.get_total_r ();
 
   if (rcvr.index_ < MAX_RECEIVERS
-      && this->list_receivers_[rcvr.index_] == &rcvr)
+      && this->list_receivers_[rcvr.index_] == std::addressof (rcvr))
   {
     this->list_receivers_[rcvr.index_] = nullptr;
   }
@@ -690,7 +692,7 @@ Connector::on_new_sender (Sender & sndr)
 {
   ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
   ++this->sessions_;
-  this->list_senders_[sndr.index_] = &sndr;
+  this->list_senders_[sndr.index_] = std::addressof (sndr);
   ACE_DEBUG ((LM_DEBUG,
               "Sender::CTOR sessions_=%d\n",
               this->sessions_));
@@ -708,7 +710,7 @@ Connector::on_delete_sender (Sender & sndr)
   this->total_r_   += sndr.get_total_r();
 
   if (sndr.index_ < MAX_SENDERS
-      && this->list_senders_[sndr.index_] == &sndr)
+      && this->list_senders_[sndr.index_] == std::addressof (sndr))
   {
     this->list_senders_[sndr.index_] = nullptr;
   }

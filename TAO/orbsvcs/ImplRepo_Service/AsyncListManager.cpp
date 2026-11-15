@@ -6,6 +6,8 @@
 
 #include "orbsvcs/Log_Macros.h"
 
+#include <memory>
+
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 
@@ -172,13 +174,13 @@ AsyncListManager::final_state ()
         {
           alt_list[i] = this->server_list_[i + this->first_];
         }
-      sil = &alt_list;
+      sil = std::addressof (alt_list);
     }
 
   if (!CORBA::is_nil (this->primary_.in ()))
     {
       ImplementationRepository::ServerInformationIterator_var server_iterator;
-      if (sil !=  &this->server_list_)
+      if (sil != std::addressof (this->server_list_))
         {
           excepted = !this->make_iterator (server_iterator.out(), this->how_many_);
         }

@@ -165,7 +165,7 @@ TAO_ECG_CDR_Message_Receiver::Requests::~Requests ()
       TAO_ECG_UDP_Request_Entry* request =
         this->fragmented_requests_[i];
 
-      if (request != &TAO_ECG_CDR_Message_Receiver::Request_Completed_)
+      if (request != std::addressof (TAO_ECG_CDR_Message_Receiver::Request_Completed_))
       {
         delete request;
       }
@@ -227,7 +227,7 @@ TAO_ECG_CDR_Message_Receiver::Requests::purge_requests (
     {
       size_t index = i % this->size_;
       if (this->fragmented_requests_[index]
-          != &TAO_ECG_CDR_Message_Receiver::Request_Completed_)
+          != std::addressof (TAO_ECG_CDR_Message_Receiver::Request_Completed_))
         {
           delete this->fragmented_requests_[index];
         }
@@ -392,7 +392,7 @@ TAO_ECG_CDR_Message_Receiver::mark_received (const ACE_INET_Addr &from,
                               "below currently expected range.\n"));
       return 0;
     }
-  if (*request == &Request_Completed_)
+  if (*request == std::addressof (Request_Completed_))
     {
       ORBSVCS_DEBUG ((LM_INFO, "Received duplicate mcast fragment. "
                            "(Request already complete).\n"));
@@ -433,7 +433,7 @@ TAO_ECG_CDR_Message_Receiver::process_fragment (
                               "below currently expected range.\n"));
       return 0;
     }
-  if (*request == &Request_Completed_)
+  if (*request == std::addressof (Request_Completed_))
     {
       ORBSVCS_DEBUG ((LM_INFO, "Received duplicate mcast fragment. "
                            "(Request already complete).\n"));

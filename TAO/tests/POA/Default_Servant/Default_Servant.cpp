@@ -10,6 +10,8 @@
 #include "testS.h"
 #include "tao/PortableServer/ServantManagerC.h"
 
+#include <memory>
+
 class test_i : public POA_test
 {
 public:
@@ -190,7 +192,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       test_set_servant_manager (default_servant_poa.in ());
 
       // Register default servant.
-      default_servant_poa->set_servant (&test);
+      default_servant_poa->set_servant (std::addressof (test));
       ++expected_refcount;
 
       // Create dummy id.
@@ -207,7 +209,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ++expected_refcount;
 
       // Assert correctness.
-      ACE_ASSERT (&test == servant.in ());
+      ACE_ASSERT (std::addressof (test) == servant.in ());
 
       // Invoke reference_to_servant(). Should retrieve default servant.
       servant =
@@ -215,7 +217,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ++expected_refcount;
 
       // Assert correctness.
-      ACE_ASSERT (&test == servant.in ());
+      ACE_ASSERT (std::addressof (test) == servant.in ());
 
       // Report success.
       ACE_DEBUG ((LM_DEBUG,

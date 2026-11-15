@@ -19,6 +19,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/ACE.h"
 
+#include <memory>
+
 static const char message[] = "abcdefghijklmnopqrstuvwxyz";
 static constexpr int message_size = 26;
 static int test_select_reactor = 1;
@@ -647,10 +649,11 @@ simple_event_handler (ACE_Reactor *reactor)
                       ACE_TEXT ("%p\n"),
                       ACE_TEXT ("Looking up pipe read handler")));
         else
-          if (result_handler != &handler)
+          if (result_handler != std::addressof (handler))
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("Mismatch: result_handler %@ should be %@\n"),
-                        static_cast<void *> (result_handler), static_cast<void *> (&handler)));
+                      static_cast<void *> (result_handler),
+                      static_cast<void *> (std::addressof (handler))));
       }
 
       {
@@ -669,11 +672,12 @@ simple_event_handler (ACE_Reactor *reactor)
       {
         ACE_Event_Handler_var result_handler =
           reactor->find_handler (handler.pipe_.read_handle ());
-        if (result_handler.handler () != &handler)
+        if (result_handler.handler () != std::addressof (handler))
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Mismatch: line %l: result_handler.handler %@ ")
                       ACE_TEXT ("should be %@\n"),
-                      static_cast<void *> (result_handler.handler ()), static_cast<void *> (&handler)));
+                      static_cast<void *> (result_handler.handler ()),
+                      static_cast<void *> (std::addressof (handler))));
       }
 
       result =

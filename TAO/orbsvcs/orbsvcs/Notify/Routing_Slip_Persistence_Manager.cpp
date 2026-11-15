@@ -604,7 +604,7 @@ Routing_Slip_Persistence_Manager::build_chain(
       // only.
       result &= this->allocator_->write(prevblk);
 
-      if (prevhdr != &first_header)
+      if (prevhdr != std::addressof (first_header))
       {
         delete prevhdr;
       }
@@ -617,7 +617,7 @@ Routing_Slip_Persistence_Manager::build_chain(
     prevhdr->put_header(*prevblk);
     result &= this->allocator_->write(prevblk);
 
-    if (prevhdr != &first_header)
+    if (prevhdr != std::addressof (first_header))
     {
       delete prevhdr;
     }

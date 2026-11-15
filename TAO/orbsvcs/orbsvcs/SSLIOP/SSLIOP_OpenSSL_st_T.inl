@@ -94,7 +94,7 @@ TAO::SSLIOP::OpenSSL_st_var<T>::operator= (
 template <typename T> ACE_INLINE TAO::SSLIOP::OpenSSL_st_var<T> &
 TAO::SSLIOP::OpenSSL_st_var<T>::operator= (T const & st)
 {
-  if (this->st_ != &st)
+  if (this->st_ != std::addressof (st))
     {
       TAO::SSLIOP::OpenSSL_traits<T>::release (this->st_);
       this->st_ = TAO::SSLIOP::OpenSSL_traits<T>::copy (st);

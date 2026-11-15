@@ -33,6 +33,9 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
 #include "ace/Asynch_IO.h" // for ACE_INFINITE
+#include "ace/Time_Value.h"
+
+#include <memory>
 
 static ACE_HANDLE file_handle = ACE_INVALID_HANDLE;
 static ACE_Message_Block mb1 (BUFSIZ + 1);
@@ -178,11 +181,7 @@ query_aio_completions ()
        number_of_compleions < 3;
        number_of_compleions ++)
     {
-      // Wait for <milli_seconds> amount of time.  @@ Assigning
-      // <milli_seconds> to tv_sec.
-      timespec timeout;
-      timeout.tv_sec = ACE_INFINITE;
-      timeout.tv_nsec = 0;
+      ACE_Time_Value const timeout (ACE_INFINITE);
 
       // To get back the signal info.
       siginfo_t sig_info;
@@ -237,7 +236,7 @@ query_aio_completions ()
 
       // Retrive the aiocb.
       aiocb* aiocb_ptr = (aiocb *) sig_info.si_value.sival_ptr;
-      if (aiocb_ptr == &aiocb3)
+      if (aiocb_ptr == std::addressof (aiocb3))
         {
           ACE_ASSERT (sig_info.si_code == SI_QUEUE);
           ACE_DEBUG ((LM_DEBUG, "sigqueue caught... good\n"));

@@ -15,6 +15,8 @@
 #include "ace/OS_NS_stdio.h"
 #include <cstring>
 
+#include <memory>
+
 #define DEFINE_TRAP_CONSTANTS_
 #include "asnmp/enttraps.h"
 
@@ -240,7 +242,7 @@ int wpdu::load_vbs (snmp_pdu *raw_pdu, Pdu const &pdu)
 // static
 void wpdu::copy_iovec (iovec &dest, iovec const &src)
 {
-  if (&dest == &src)
+  if (std::addressof (dest) == std::addressof (src))
   {
     return;
   }

@@ -351,7 +351,7 @@ ACE_String_Base<ACE_CHAR_T>::fast_clear ()
   if (this->release_)
     {
       // String retains the original buffer.
-      if (this->rep_ != &ACE_String_Base<ACE_CHAR_T>::NULL_String_)
+      if (this->rep_ != std::addressof (ACE_String_Base<ACE_CHAR_T>::NULL_String_))
         this->rep_[0] = 0;
     }
   else

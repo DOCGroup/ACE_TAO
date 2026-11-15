@@ -11,6 +11,8 @@
 #include "tao/ORB_Core.h"
 #include "tao/Server_Strategy_Factory.h"
 
+#include <memory>
+
 class test_i : public POA_test
 {
 public:
@@ -113,7 +115,7 @@ test_poas (CORBA::ORB_ptr orb,
     PortableServer::ObjectId_var const id = root_poa->reference_to_id (obj.in ());
 
     root_poa->activate_object_with_id (id.in (),
-                                       &servant);
+                                       std::addressof (servant));
 
     obj = root_poa->id_to_reference (id.in ());
 
@@ -128,14 +130,14 @@ test_poas (CORBA::ORB_ptr orb,
       root_poa->id_to_servant (id.in ());
 
     if (servant_from_reference.in () != servant_from_id.in ()
-        || servant_from_reference.in () != &servant)
+        || servant_from_reference.in () != std::addressof (servant))
       {
         ACE_ERROR ((LM_ERROR,
                     "Mismatched servant_from_reference, "
                     "servant_from_id and &servant\n"));
       }
 
-    obj = root_poa->servant_to_reference (&servant);
+    obj = root_poa->servant_to_reference (std::addressof (servant));
 
     string = orb->object_to_string (obj.in ());
 
@@ -147,7 +149,8 @@ test_poas (CORBA::ORB_ptr orb,
 
     ACE_DEBUG ((LM_DEBUG, "%C\n", string.in ()));
 
-    PortableServer::ObjectId_var const id_from_servant = root_poa->servant_to_id (&servant);
+    PortableServer::ObjectId_var const id_from_servant =
+      root_poa->servant_to_id (std::addressof (servant));
 
     ACE_ASSERT (id_from_servant.in () == id.in ());
 
@@ -156,11 +159,11 @@ test_poas (CORBA::ORB_ptr orb,
     if (perform_deactivation_test)
       {
         root_poa->activate_object_with_id (id.in (),
-                                           &servant);
+                                           std::addressof (servant));
 
         servant_from_reference = root_poa->reference_to_servant (obj.in ());
 
-        ACE_ASSERT (servant_from_reference.in () == &servant);
+        ACE_ASSERT (servant_from_reference.in () == std::addressof (servant));
 
         root_poa->deactivate_object (id.in ());
       }
@@ -169,7 +172,7 @@ test_poas (CORBA::ORB_ptr orb,
   {
     test_i servant (root_poa);
 
-    PortableServer::ObjectId_var const id = root_poa->activate_object (&servant);
+    PortableServer::ObjectId_var const id = root_poa->activate_object (std::addressof (servant));
 
     CORBA::Object_var obj = root_poa->id_to_reference (id.in ());
 
@@ -199,7 +202,7 @@ test_poas (CORBA::ORB_ptr orb,
     PortableServer::ObjectId_var const id = first_poa->reference_to_id (obj.in ());
 
     first_poa->activate_object_with_id (id.in (),
-                                        &servant);
+                                        std::addressof (servant));
 
     obj = first_poa->id_to_reference (id.in ());
 
@@ -214,7 +217,7 @@ test_poas (CORBA::ORB_ptr orb,
       first_poa->id_to_servant (id.in ());
 
     if (servant_from_reference .in () != servant_from_id.in ()
-        || servant_from_reference.in () != &servant)
+        || servant_from_reference.in () != std::addressof (servant))
       {
         ACE_ERROR ((LM_ERROR,
                     "Mismatched servant_from_reference, "
@@ -226,11 +229,11 @@ test_poas (CORBA::ORB_ptr orb,
     if (perform_deactivation_test)
       {
         first_poa->activate_object_with_id (id.in (),
-                                            &servant);
+                                            std::addressof (servant));
 
         servant_from_reference = first_poa->reference_to_servant (obj.in ());
 
-        ACE_ASSERT (servant_from_reference.in () == &servant);
+        ACE_ASSERT (servant_from_reference.in () == std::addressof (servant));
 
         first_poa->deactivate_object (id.in ());
       }
@@ -239,7 +242,7 @@ test_poas (CORBA::ORB_ptr orb,
   {
     test_i servant (first_poa);
 
-    PortableServer::ObjectId_var const id = first_poa->activate_object (&servant);
+    PortableServer::ObjectId_var const id = first_poa->activate_object (std::addressof (servant));
 
     CORBA::Object_var obj = first_poa->id_to_reference (id.in ());
 
@@ -269,7 +272,7 @@ test_poas (CORBA::ORB_ptr orb,
     PortableServer::ObjectId_var const id = second_poa->reference_to_id (obj.in ());
 
     second_poa->activate_object_with_id (id.in (),
-                                         &servant);
+                                         std::addressof (servant));
 
     obj = second_poa->id_to_reference (id.in ());
 
@@ -284,14 +287,14 @@ test_poas (CORBA::ORB_ptr orb,
       second_poa->id_to_servant (id.in ());
 
     if (servant_from_reference.in () != servant_from_id.in ()
-        || servant_from_reference.in () != &servant)
+        || servant_from_reference.in () != std::addressof (servant))
       {
         ACE_ERROR ((LM_ERROR,
                     "Mismatched servant_from_reference, "
                     "servant_from_id and &servant\n"));
       }
 
-    obj = second_poa->servant_to_reference (&servant);
+    obj = second_poa->servant_to_reference (std::addressof (servant));
 
     string = orb->object_to_string (obj.in ());
 
@@ -303,7 +306,8 @@ test_poas (CORBA::ORB_ptr orb,
 
     ACE_DEBUG ((LM_DEBUG, "%C\n", string.in ()));
 
-    PortableServer::ObjectId_var const id_from_servant = second_poa->servant_to_id (&servant);
+    PortableServer::ObjectId_var const id_from_servant =
+      second_poa->servant_to_id (std::addressof (servant));
 
     ACE_ASSERT (id_from_servant.in () == id.in ());
 
@@ -312,11 +316,11 @@ test_poas (CORBA::ORB_ptr orb,
     if (perform_deactivation_test)
       {
         second_poa->activate_object_with_id (id.in (),
-                                             &servant);
+                                             std::addressof (servant));
 
         servant_from_reference = second_poa->reference_to_servant (obj.in ());
 
-        ACE_ASSERT (servant_from_reference.in () == &servant);
+        ACE_ASSERT (servant_from_reference.in () == std::addressof (servant));
 
         second_poa->deactivate_object (id.in ());
       }
@@ -325,7 +329,7 @@ test_poas (CORBA::ORB_ptr orb,
   {
     test_i servant (second_poa);
 
-    PortableServer::ObjectId_var const id = second_poa->activate_object (&servant);
+    PortableServer::ObjectId_var const id = second_poa->activate_object (std::addressof (servant));
 
     CORBA::Object_var obj = second_poa->id_to_reference (id.in ());
 
@@ -362,7 +366,7 @@ test_poas (CORBA::ORB_ptr orb,
     ACE_ASSERT (id_from_reference.in () == id.in ());
 
     third_poa->activate_object_with_id (id.in (),
-                                        &servant);
+                                        std::addressof (servant));
 
     obj = third_poa->id_to_reference (id.in ());
 
@@ -377,14 +381,14 @@ test_poas (CORBA::ORB_ptr orb,
       third_poa->id_to_servant (id.in ());
 
     if (servant_from_reference.in () != servant_from_id.in ()
-        || servant_from_reference.in () != &servant)
+        || servant_from_reference.in () != std::addressof (servant))
       {
         ACE_ERROR ((LM_ERROR,
                     "Mismatched servant_from_reference, "
                     "servant_from_id and &servant\n"));
       }
 
-    obj = third_poa->servant_to_reference (&servant);
+    obj = third_poa->servant_to_reference (std::addressof (servant));
 
     string = orb->object_to_string (obj.in ());
 
@@ -396,7 +400,8 @@ test_poas (CORBA::ORB_ptr orb,
 
     ACE_DEBUG ((LM_DEBUG, "%C\n", string.in ()));
 
-    PortableServer::ObjectId_var const id_from_servant = third_poa->servant_to_id (&servant);
+    PortableServer::ObjectId_var const id_from_servant =
+      third_poa->servant_to_id (std::addressof (servant));
 
     string = PortableServer::ObjectId_to_string (id_from_servant.in ());
     ACE_DEBUG ((LM_DEBUG, "%C\n", string.in ()));
@@ -408,11 +413,11 @@ test_poas (CORBA::ORB_ptr orb,
     if (perform_deactivation_test)
       {
         third_poa->activate_object_with_id (id.in (),
-                                            &servant);
+                                            std::addressof (servant));
 
         servant_from_reference = third_poa->reference_to_servant (obj.in ());
 
-        ACE_ASSERT (servant_from_reference.in () == &servant);
+        ACE_ASSERT (servant_from_reference.in () == std::addressof (servant));
 
         third_poa->deactivate_object (id.in ());
       }
@@ -437,7 +442,7 @@ test_poas (CORBA::ORB_ptr orb,
     ACE_ASSERT (id_from_reference.in () == id.in ());
 
     forth_poa->activate_object_with_id (id.in (),
-                                        &servant);
+                                        std::addressof (servant));
 
     obj = forth_poa->id_to_reference (id.in ());
 
@@ -452,7 +457,7 @@ test_poas (CORBA::ORB_ptr orb,
       forth_poa->id_to_servant (id.in ());
 
     if (servant_from_reference.in () != servant_from_id.in ()
-        || servant_from_reference.in () != &servant)
+        || servant_from_reference.in () != std::addressof (servant))
       {
         ACE_ERROR ((LM_ERROR,
                     "Mismatched servant_from_reference, "
@@ -464,11 +469,11 @@ test_poas (CORBA::ORB_ptr orb,
     if (perform_deactivation_test)
       {
         forth_poa->activate_object_with_id (id.in (),
-                                            &servant);
+                                            std::addressof (servant));
 
         servant_from_reference = forth_poa->reference_to_servant (obj.in ());
 
-        ACE_ASSERT (servant_from_reference.in () == &servant);
+        ACE_ASSERT (servant_from_reference.in () == std::addressof (servant));
 
         forth_poa->deactivate_object (id.in ());
       }

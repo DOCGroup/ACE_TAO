@@ -8,6 +8,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_typeinfo.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # include "ace/Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
@@ -155,7 +157,7 @@ ACE_OS_Exit_Info::call_hooks ()
             reinterpret_cast<ACE_Cleanup *> (iter->object ()),
             iter->param ());
         }
-      else if (iter->object () == &ace_exit_hook_marker)
+      else if (iter->object () == std::addressof (ace_exit_hook_marker))
         {
           // The hook is an ACE_EXIT_HOOK.
           (* reinterpret_cast<ACE_EXIT_HOOK> (iter->cleanup_hook ())) ();

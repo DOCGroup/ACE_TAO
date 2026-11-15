@@ -1822,14 +1822,14 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
 
   if (attributes == nullptr)
   {
-    attributes = &l_attributes;
+    attributes = std::addressof (l_attributes);
   }
   int result = 0;
   int attr_init = 0;  // have we initialized the local attributes.
 
   // Only do these initializations if the <attributes> parameter
   // wasn't originally set.
-  if (attributes == &l_attributes)
+  if (attributes == std::addressof (l_attributes))
   {
       if (ACE_ADAPT_RETVAL (::pthread_mutexattr_init (attributes), result) == 0)
         {
@@ -1882,7 +1882,7 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
 
   // Only do the deletions if the <attributes> parameter wasn't
   // originally set.
-  if (attributes == &l_attributes && attr_init)
+  if (attributes == std::addressof (l_attributes) && attr_init)
   {
     ::pthread_mutexattr_destroy (&l_attributes);
   }
@@ -3985,7 +3985,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
     }
 
   // Close down the handle if no one wants to use it.
-  if (thr_handle == &tmp_handle && tmp_handle != 0)
+  if (thr_handle == std::addressof (tmp_handle) && tmp_handle != 0)
     ::CloseHandle (tmp_handle);
 
   if (*thr_handle != 0)

@@ -18,6 +18,8 @@
 #include "utl_identifier.h"
 #include "global_extern.h"
 
+#include <memory>
+
 #include <string>
 
 be_string::be_string (AST_Decl::NodeType nt,
@@ -108,7 +110,7 @@ be_string::compute_tc_name ()
   ACE_CDR::ULong const val = 0UL;
   AST_Expression zero (val);
 
-  if (*this->max_size () == &zero)
+  if (*this->max_size () == std::addressof (zero))
     {
       // If the string is unbounded, use the string TypeCode
       // constants.

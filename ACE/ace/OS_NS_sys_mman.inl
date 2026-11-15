@@ -5,6 +5,8 @@
 #include "ace/OS_NS_macros.h"
 #include "ace/OS_NS_errno.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_HAS_VOIDPTR_MMAP)
@@ -116,7 +118,7 @@ ACE_OS::mmap (void *addr,
                                           addr);
 
   // Only close this down if we used the temporary.
-  if (file_mapping == &local_handle)
+  if (file_mapping == std::addressof (local_handle))
     ::CloseHandle (*file_mapping);
 
   if (addr_mapping == 0)
