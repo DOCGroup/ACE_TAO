@@ -75,9 +75,16 @@ valuetype Copy_Leaf
 
 typedef Copy_Leaf Copy_Leaf_Alias;
 
+typedef sequence<Copy_Leaf_Alias> Copy_Leaf_Sequence;
+
 valuetype Copy_Alias_Holder
 {
   public Copy_Leaf_Alias leaf;
+};
+
+valuetype Copy_Sequence_Holder
+{
+  public Copy_Leaf_Sequence leaves;
 };
 
 enum ValueSort2 {

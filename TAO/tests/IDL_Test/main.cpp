@@ -287,6 +287,41 @@ test_valuetype_copy (int &error_count)
             leaf->leaf_value (), 51);
         }
     }
+
+  Copy_Leaf_Sequence leaves;
+  leaves.length (1);
+  leaf->_add_ref ();
+  Copy_Leaf_var leaf_ref (leaf);
+  leaves[0] = leaf_ref;
+  OBV_Copy_Sequence_Holder sequence_holder;
+  sequence_holder.leaves (leaves);
+  CORBA::ValueBase_var sequence_copy (sequence_holder._copy_value ());
+  Copy_Sequence_Holder * const sequence_downcast =
+    Copy_Sequence_Holder::_downcast (sequence_copy.in ());
+  if (sequence_downcast == nullptr)
+    {
+      ++error_count;
+      ACE_ERROR ((LM_ERROR, "Copy_Sequence_Holder copy has wrong type\n"));
+    }
+  else
+    {
+      Copy_Leaf * const copied_leaf = sequence_downcast->leaves ()[0];
+      if (copied_leaf == leaf)
+        {
+          ++error_count;
+          ACE_ERROR ((LM_ERROR, "Copy_Sequence_Holder shares a valuetype\n"));
+        }
+      else
+        {
+          expect_equals<CORBA::Long> (
+            error_count, "Copy_Sequence_Holder copied leaf",
+            copied_leaf->leaf_value (), 51);
+          copied_leaf->leaf_value (53);
+          expect_equals<CORBA::Long> (
+            error_count, "Copy_Sequence_Holder original leaf unchanged",
+            leaf->leaf_value (), 51);
+        }
+    }
 }
 
 void
