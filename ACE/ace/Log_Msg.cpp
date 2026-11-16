@@ -2235,7 +2235,10 @@ ACE_Log_Formatter::ACE_Log_Formatter (ACE_Log_Priority prio, const char *fmt)
   this->logger_->conditional_values_.is_set_ = false;
 
   this->enabled_ = this->logger_->log_priority_enabled (prio);
-  if (!this->enabled_) return;
+  if (!this->enabled_)
+    {
+      return;
+    }
 
   if (conditional_values)
     this->logger_->set (this->logger_->conditional_values_.file_,
@@ -2290,7 +2293,10 @@ void ACE_Log_Formatter::prepare_format ()
   switch (in_progress)
     {
     case '*':
-      if (!this->process_conversion ()) return;
+      if (!this->process_conversion ())
+        {
+          return;
+        }
       break;
     case 'p':
       {
@@ -2328,13 +2334,19 @@ void ACE_Log_Formatter::prepare_format ()
       const bool escaped = pct[1] == '%';
       this->format_ += 1 + this->copy_trunc (this->format_,
                                              pct - this->format_ + escaped);
-      if (!this->bspace_) return;
+      if (!this->bspace_)
+        {
+          return;
+        }
       if (!escaped)
         {
           std::strcpy (this->fmt_out_, "%");
           this->fp_ = this->fmt_out_ + 1;
           this->last_star_ = 0;
-          if (!this->process_conversion ()) return;
+          if (!this->process_conversion ())
+            {
+              return;
+            }
         }
     }
 
@@ -2345,7 +2357,10 @@ bool ACE_Log_Formatter::process_conversion ()
 {
   const size_t n = std::strspn (this->format_, "-+ #0123456789.Lh");
   const size_t fspace = sizeof this->fmt_out_ - (this->fp_ - this->fmt_out_);
-  if (n >= fspace || !this->format_[n]) return true;
+  if (n >= fspace || !this->format_[n])
+    {
+      return true;
+    }
 
   // when copying to fmt_out_, convert L (used by ACE) to l (used by std)
   for (size_t i = 0; i < n; ++i)
@@ -2596,7 +2611,10 @@ void ACE_Log_Formatter::insert_pct_S (int sig)
 template <typename ArgT>
 void ACE_Log_Formatter::insert_arg (ArgT arg, bool allow_star)
 {
-  if (!this->enabled_) return;
+  if (!this->enabled_)
+    {
+      return;
+    }
 
   this->prepare_format ();
 
@@ -2628,7 +2646,10 @@ void ACE_Log_Formatter::insert_arg (ArgT arg, bool allow_star)
 template <typename ArgT>
 void ACE_Log_Formatter::insert_arg (ArgT *arg)
 {
-  if (!this->enabled_) return;
+  if (!this->enabled_)
+    {
+      return;
+    }
 
   this->prepare_format ();
 
@@ -2730,7 +2751,10 @@ ACE_Log_Formatter &ACE_Log_Formatter::operator, (const void *pct_at)
 
 ACE_Log_Formatter &ACE_Log_Formatter::operator, (const ACE_Time_Value *pct_DT)
 {
-  if (!this->enabled_) return *this;
+  if (!this->enabled_)
+    {
+      return *this;
+    }
 
   this->prepare_format ();
 
@@ -2762,10 +2786,16 @@ ACE_Log_Formatter &ACE_Log_Formatter::operator, (unsigned long pct_Lmodifier)
 
 bool ACE_Log_Formatter::to_record (ACE_Log_Record &record)
 {
-  if (!this->enabled_) return false;
+  if (!this->enabled_)
+    {
+      return false;
+    }
 
   this->prepare_format ();
-  if (this->bspace_) *this->bp_ = 0;
+  if (this->bspace_)
+    {
+      *this->bp_ = 0;
+    }
 
   record.priority (this->priority_);
   record.time_stamp (ACE_OS::gettimeofday ());
