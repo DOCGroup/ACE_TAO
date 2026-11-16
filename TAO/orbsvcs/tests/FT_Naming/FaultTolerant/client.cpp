@@ -39,13 +39,11 @@ public:
 
   ~My_Test_Object ();
 
-  // = Interface implementation accessor methods.
-
+  /// Sets the test object's id.
   void id (CORBA::Short id) override;
-  // Sets id.
 
+  /// Gets the test object's id.
   CORBA::Short id () override;
-  // Gets id.
 
 private:
   short id_;

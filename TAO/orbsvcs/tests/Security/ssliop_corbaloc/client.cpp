@@ -31,8 +31,6 @@ public:
 
   ~My_Test_Object () override = default;
 
-  // = Interface implementation accessor methods.
-
   /// Sets id.
   void id (CORBA::Short id) override;
 
