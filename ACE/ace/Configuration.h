@@ -721,8 +721,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// Destructor, releases the stored path.
-  ~ACE_Configuration_Section_Key_Heap () override;
+  ~ACE_Configuration_Section_Key_Heap () override = default;
 
   // Not used
   ACE_Configuration_Section_Key_Heap (const ACE_Configuration_Section_Key_Heap& rhs);

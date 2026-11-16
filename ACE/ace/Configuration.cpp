@@ -1200,10 +1200,6 @@ ACE_Configuration_Section_Key_Heap::ACE_Configuration_Section_Key_Heap (const AC
 {
 }
 
-ACE_Configuration_Section_Key_Heap::~ACE_Configuration_Section_Key_Heap ()
-{
-}
-
 ACE_ALLOC_HOOK_DEFINE(ACE_Configuration_Section_Key_Heap)
 
 //////////////////////////////////////////////////////////////////////////////
