@@ -144,7 +144,10 @@ namespace ACE_TMCast
             {
               // free revc_ buffer if necessary
               //
-              if (recv_.get ()) recv_ = RecvPtr ();
+              if (recv_.get ())
+                {
+                  recv_ = RecvPtr ();
+                }
             }
 
 
@@ -173,7 +176,10 @@ namespace ACE_TMCast
       case Protocol::TS_COMMITED:
       case Protocol::TS_ABORTED:
         {
-          if (separation_duration_ > 0) --separation_duration_;
+          if (separation_duration_ > 0)
+            {
+              --separation_duration_;
+            }
           break;
         }
       case Protocol::TS_BEGIN:

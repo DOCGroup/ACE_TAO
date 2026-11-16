@@ -68,7 +68,10 @@ namespace ACE_TMCast
     {
       ACE_Unbounded_Queue_Iterator<T> f (queue_);
       T* tmp;
-      if (!f.next (tmp)) throw Empty ();
+      if (!f.next (tmp))
+        {
+          throw Empty ();
+        }
 
       return *tmp;
     }
@@ -79,7 +82,10 @@ namespace ACE_TMCast
     {
       ACE_Unbounded_Queue_Const_Iterator<T> f (queue_);
       T* tmp;
-      if (!f.next (tmp)) throw Empty ();
+      if (!f.next (tmp))
+        {
+          throw Empty ();
+        }
 
       return *tmp;
     }

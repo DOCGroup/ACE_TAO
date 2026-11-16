@@ -83,7 +83,10 @@ namespace ACE_TMCast
         control_.push (MessagePtr (new Terminate));
       }
 
-      if (ACE_OS::thr_join (thread_, nullptr) != 0) ACE_OS::abort ();
+      if (ACE_OS::thr_join (thread_, nullptr) != 0)
+        {
+          ACE_OS::abort ();
+        }
 
       // cerr << "Link listener is down." << endl;
     }
@@ -118,7 +121,10 @@ namespace ACE_TMCast
           {
             MessageQueueAutoLock lock (control_);
 
-            if (!control_.empty ()) break;
+            if (!control_.empty ())
+              {
+                break;
+              }
           }
 
           ACE_INET_Addr junk;
@@ -130,7 +136,10 @@ namespace ACE_TMCast
 
           if (n != -1)
           {
-            if (n < header_size) throw false;
+            if (n < header_size)
+              {
+                throw false;
+              }
 
             Protocol::MessageHeader* header =
               reinterpret_cast<Protocol::MessageHeader*> (msg);
