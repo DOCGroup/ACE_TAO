@@ -878,7 +878,7 @@ Iterator_Test::execute (TAO_Naming_Client &root_context)
           || bindings_list[0u].binding_type != CosNaming::nobject)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Iterator_Test -> CosNaming::list does not function properly. \
-Should have returned one CosNaming::nobject element in bindings_list. Length = %d, \
+Should have returned one CosNaming::nobject element in bindings_list. Length = %u, \
 Binding Type = %d\n", bindings_list->length (), bindings_list[0u].binding_type),
                           -1);
       ACE_DEBUG ((LM_DEBUG,
