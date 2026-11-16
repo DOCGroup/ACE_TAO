@@ -7,7 +7,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Implementation skeleton constructor
 TAO_CEC_TypedSupplierAdmin::TAO_CEC_TypedSupplierAdmin (TAO_CEC_TypedEventChannel *ec)
   :  typed_event_channel_ (ec),
      typed_push_admin_ (ec)

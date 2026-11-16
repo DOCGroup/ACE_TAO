@@ -35,10 +35,8 @@
 #include <utility>
 #include <memory>
 
-//=====================[ constructor no args ]=========================
 Pdu::Pdu() = default;
 
-//=====================[ constructor with vbs_ and count ]==============
 Pdu::Pdu (Vb *pvbs, int pvb_count)
 {
    // zero is ok
@@ -76,13 +74,11 @@ Pdu::Pdu (Vb *pvbs, int pvb_count)
    validity_ = 1;
 }
 
-//=====================[ constructor with another Pdu instance ]========
 Pdu::Pdu (Pdu const &pdu)
 {
    *this = pdu;
 }
 
-//=====================[ destructor ]====================================
 Pdu::~Pdu() = default;
 
 //=====================[ assignment to another Pdu object overloaded ]===

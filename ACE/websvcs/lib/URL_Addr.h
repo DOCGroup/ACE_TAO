@@ -36,7 +36,6 @@ class ACE_WEBSVCS_Export ACE_URL_Addr : public ACE_Addr
 public:
   ACE_URL_Addr ();
 
-  /// The copy constructor.
   ACE_URL_Addr (const ACE_URL_Addr& address);
 
   /// The assignment operator

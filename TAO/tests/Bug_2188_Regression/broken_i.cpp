@@ -51,7 +51,6 @@ ServerAdmin_i::shutdown ()
   orb->shutdown();
 }
 
-// Implementation skeleton constructor
 ArrayTest_i::ArrayTest_i ()
   :longArray_ (LongArray_alloc()),
    ulongArray_ (ULongArray_alloc()),
@@ -70,7 +69,6 @@ ArrayTest_i::ArrayTest_i ()
 {
 }
 
-// Implementation skeleton destructor
 ArrayTest_i::~ArrayTest_i ()
 {
   LongArray_free (longArray_);

@@ -16,7 +16,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 using TAO_CEC_Unlock = ACE_Reverse_Lock<ACE_Lock>;
 
-// Implementation skeleton constructor
 TAO_CEC_TypedProxyPushConsumer::TAO_CEC_TypedProxyPushConsumer
 (TAO_CEC_TypedEventChannel* ec, ACE_Time_Value const &timeout)
   : typed_event_channel_ (ec),
@@ -50,7 +49,6 @@ TAO_CEC_TypedProxyPushConsumer::TAO_CEC_TypedProxyPushConsumer
   }
 }
 
-// Implementation skeleton destructor
 TAO_CEC_TypedProxyPushConsumer::~TAO_CEC_TypedProxyPushConsumer ()
 {
   try{

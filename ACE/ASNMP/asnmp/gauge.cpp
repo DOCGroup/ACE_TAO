@@ -29,7 +29,6 @@
 #include "asnmp/gauge.h"          // header file for gauge class
 #include <memory>
 
-// constructor with a value
 Gauge32::Gauge32 (unsigned long i)
   : SnmpUInt32 (i)
 {

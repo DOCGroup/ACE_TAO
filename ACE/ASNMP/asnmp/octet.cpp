@@ -77,7 +77,6 @@ int copy_octet_smi (SmiVALUE &smi, SmiUINT32 size, char const *src, int &valid_f
   return 0;
 }
 
-//============[ default constructor ]=========================
 OctetStr::OctetStr (char const *string, long size)
 {
   init_octet_smi (smival);
@@ -131,7 +130,6 @@ void OctetStr::set_data (SmiBYTE const *string, long size)
                   reinterpret_cast<char const *> (string), validity);
 }
 
-//============[ constructor using another octet object ]==============
 OctetStr::OctetStr (OctetStr const &octet)
   : SnmpSyntax (octet), validity (1)
 {
@@ -154,7 +152,6 @@ OctetStr::OctetStr (OctetStr const &octet)
                   reinterpret_cast<char const *> (octet.smival.value.string.ptr), validity);
 }
 
-//=============[ destructor ]=========================================
 OctetStr::~OctetStr ()
 {
   reset_octet_smi (smival);

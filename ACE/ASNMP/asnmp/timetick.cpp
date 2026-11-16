@@ -29,7 +29,6 @@
 #include <cstdio>
 #include <memory>
 
-// constructor with a value
 TimeTicks::TimeTicks (unsigned long const i)
   : SnmpUInt32 (i)
 {

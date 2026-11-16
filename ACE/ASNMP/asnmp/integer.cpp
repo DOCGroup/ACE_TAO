@@ -30,7 +30,6 @@
 #include <cstdio>
 #include <memory>
 
-// constructor with value
 SnmpUInt32::SnmpUInt32 (unsigned long const i)
 {
   smival.value.uNumber = i;
@@ -128,7 +127,6 @@ SnmpInt32::SnmpInt32 (long const i)
   valid_flag = true;
 }
 
-// constructor with value
 SnmpInt32::SnmpInt32 (SnmpInt32 const &c)
   : SnmpSyntax (c)
 {

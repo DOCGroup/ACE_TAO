@@ -210,7 +210,6 @@ SmiUINT32 IpAddress::get_syntax()
   return sNMP_SYNTAX_IPADDR;
 }
 
-//-----[ IP Address copy constructor ]---------------------------------
 IpAddress::IpAddress(const IpAddress &ipaddr)
   : Address (ipaddr)
 {
@@ -283,7 +282,6 @@ IpAddress::IpAddress( const GenAddress &genaddr)
   IpAddress::format_output();
 }
 
-//-----[ destructor ]--------------------------------------------------
 IpAddress::~IpAddress()
 = default;
 
@@ -752,7 +750,6 @@ UdpAddress::UdpAddress( const UdpAddress  &udpaddr):IpAddress(udpaddr)
   format_output();
 }
 
-// default constructor with a dotted string
 UdpAddress::UdpAddress( const char *inaddr):IpAddress()
 {
   if (std::strlen (inaddr) == 0) {
@@ -827,7 +824,6 @@ UdpAddress::UdpAddress( const IpAddress &ipaddr):IpAddress(ipaddr)
   format_output();
 }
 
-//-----[ destructor ]--------------------------------------------------
 UdpAddress::~UdpAddress()
 = default;
 
@@ -1188,7 +1184,6 @@ SmiUINT32 IpxAddress::get_syntax()
   return sNMP_SYNTAX_OCTETS;
 }
 
-//----------[ default constructor with a string arg ]---------------------------
 IpxAddress::IpxAddress( const char  *inaddr):Address( )
 {
   if (std::strlen (inaddr) == 0) {
@@ -1212,7 +1207,6 @@ IpxAddress::IpxAddress( const char  *inaddr):Address( )
   IpxAddress::format_output();
 }
 
-//-----[ IPX Address copy constructor ]----------------------------------
 IpxAddress::IpxAddress(const IpxAddress &ipxaddr)
   : Address (ipxaddr)
 {
@@ -1260,7 +1254,6 @@ IpxAddress::IpxAddress( const GenAddress &genaddr)
   IpxAddress::format_output();
 }
 
-//-----[ destructor ]--------------------------------------------------
 IpxAddress::~IpxAddress()
 = default;
 
@@ -1643,7 +1636,6 @@ IpxSockAddress::IpxSockAddress( const IpxAddress &ipxaddr):IpxAddress(ipxaddr)
   format_output();
 }
 
-//-----[ destructor ]--------------------------------------------------
 IpxSockAddress::~IpxSockAddress()
 = default;
 
@@ -1799,7 +1791,6 @@ SmiUINT32 MacAddress::get_syntax()
   return sNMP_SYNTAX_OCTETS;
 }
 
-//-----[ MAC Address copy constructor ]---------------------------------
 MacAddress::MacAddress(const MacAddress &macaddr)
   : Address (macaddr)
 {
@@ -1816,7 +1807,6 @@ MacAddress::MacAddress(const MacAddress &macaddr)
   format_output();
 }
 
-//---------[ constructor with a string argument ]-------------------------
 MacAddress::MacAddress( const char  *inaddr):Address( )
 {
   if (std::strlen (inaddr) == 0) {
@@ -1862,7 +1852,6 @@ MacAddress::MacAddress( const GenAddress &genaddr)
   format_output();
 }
 
-//-----[ destructor ]--------------------------------------------------
 MacAddress::~MacAddress()
 = default;
 
@@ -2118,7 +2107,6 @@ void GenAddress::copy_smi_value ()
   }
 }
 
-//-----------[ constructor with a string argument ]----------------------
 GenAddress::GenAddress (char const *addr)
 {
   valid_flag = 0;
@@ -2139,7 +2127,6 @@ GenAddress::GenAddress (char const *addr)
   copy_smi_value ();
 }
 
-//-----------[ constructor with an Address argument ]--------------------
 GenAddress::GenAddress (Address const &addr)
 {
   valid_flag = 0;
@@ -2166,7 +2153,6 @@ GenAddress::GenAddress (Address const &addr)
   format_output();
 }
 
-//-----------------[ constructor with another GenAddress object ]-------------
 GenAddress::GenAddress (GenAddress const &addr)
   : Address (addr)
 {
@@ -2195,7 +2181,6 @@ GenAddress::GenAddress (GenAddress const &addr)
   format_output();
 }
 
-//----------[ destructor ] ------------------------------------------------
 GenAddress::~GenAddress() = default;
 
 //----------[ create a new instance of this Value ]------------------------

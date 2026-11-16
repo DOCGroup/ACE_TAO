@@ -28,7 +28,6 @@
 #include "asnmp/counter.h"
 #include <memory>
 
-// constructor with a value
 Counter32::Counter32 (unsigned long i)
   : SnmpUInt32 (i)
 {

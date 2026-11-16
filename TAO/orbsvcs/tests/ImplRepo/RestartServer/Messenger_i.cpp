@@ -12,7 +12,6 @@
 
 #include <iostream>
 
-// Implementation skeleton constructor
 Messenger_i::Messenger_i (CORBA::ORB_ptr orb, Terminator &terminator)
   : orb_ (CORBA::ORB::_duplicate (orb))
   , message_count_ (0)
@@ -20,7 +19,6 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb, Terminator &terminator)
 {
 }
 
-// Implementation skeleton destructor
 Messenger_i::~Messenger_i ()
 {
 }

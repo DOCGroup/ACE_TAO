@@ -3,7 +3,6 @@
 #include "Messenger_i.h"
 #include "Client_Task.h"
 
-// Implementation skeleton constructor
 Messenger_i::Messenger_i (CORBA::ORB_var orb)
   : orb_ (orb)
 {

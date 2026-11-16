@@ -9,7 +9,6 @@
 #include "Stock_PriorityMapping.h"
 #include "Stock_Database.h"
 
-// Implementation skeleton constructor
 Stock_StockBroker_i::Stock_StockBroker_i (CORBA::ORB_ptr orb,
                                           Stock::StockDistributor_ptr dist,
                                           char const *stock_name)
@@ -52,7 +51,6 @@ Stock_StockBroker_i::Stock_StockBroker_i (CORBA::ORB_ptr orb,
   rt_poa->activate_object (this->consumer_);
 }
 
-// Implementation skeleton destructor
 Stock_StockBroker_i::~Stock_StockBroker_i () = default;
 
 ::Stock::StockNameConsumer_ptr
@@ -95,7 +93,6 @@ Stock_StockBroker_i::shutdown ()
   this->_default_POA ()->deactivate_object (oid.in ());
 }
 
-// Implementation skeleton constructor
 Stock_StockBrokerHome_i::Stock_StockBrokerHome_i (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
@@ -121,7 +118,6 @@ Stock_StockBrokerHome_i::Stock_StockBrokerHome_i (CORBA::ORB_ptr orb)
                 "register_handler\n"));
 }
 
-// Implementation skeleton destructor
 Stock_StockBrokerHome_i::~Stock_StockBrokerHome_i () = default;
 
 ::Stock::StockBroker_ptr

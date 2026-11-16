@@ -17,7 +17,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Implementation skeleton constructor
 TAO_CEC_TypedEventChannel::
 TAO_CEC_TypedEventChannel (TAO_CEC_TypedEventChannel_Attributes const &attr,
                            TAO_CEC_Factory *factory,
@@ -53,7 +52,6 @@ TAO_CEC_TypedEventChannel (TAO_CEC_TypedEventChannel_Attributes const &attr,
     this->factory_->create_supplier_control (this);
 }
 
-// Implementation skeleton destructor
 TAO_CEC_TypedEventChannel::~TAO_CEC_TypedEventChannel ()
 {
   this->clear_ifr_cache ();

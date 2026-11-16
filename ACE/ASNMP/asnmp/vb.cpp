@@ -42,14 +42,12 @@
 #include <utility>
 
 //---------------[ Vb::Vb() ]--------------------------------------
-// constructor with no arguments
 // makes an vb, unitialized
 Vb::Vb ()
 {
 }
 
 //---------------[ Vb::Vb( const Oid &oid) ]-----------------------------
-// constructor to initialize the oid
 // makes a vb with oid portion initialized
 Vb::Vb (Oid const &oid)
   : iv_vb_oid_ (oid)

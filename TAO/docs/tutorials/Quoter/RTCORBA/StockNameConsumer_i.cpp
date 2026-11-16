@@ -2,7 +2,6 @@
 #include "StockNameConsumer_i.h"
 #include "Broker_i.h"
 
-// Implementation skeleton constructor
 Stock_StockNameConsumer_i::Stock_StockNameConsumer_i (Stock_StockBroker_i &context,
                                                       char const *stock_name)
   : context_ (context),

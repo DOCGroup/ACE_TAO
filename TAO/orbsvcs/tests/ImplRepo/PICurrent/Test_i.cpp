@@ -10,14 +10,12 @@
 
 #include <iostream>
 
-// Implementation skeleton constructor
 Test_i::Test_i (Terminator &terminator)
   : message_count_ (0)
   , terminator_ (terminator)
 {
 }
 
-// Implementation skeleton destructor
 Test_i::~Test_i ()
 {
 }

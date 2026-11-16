@@ -18,12 +18,10 @@
 
 #include "MessengerI.h"
 
-// Implementation skeleton constructor
 Messenger_i::Messenger_i ()
   {
   }
 
-// Implementation skeleton destructor
 Messenger_i::~Messenger_i ()
   {
   }

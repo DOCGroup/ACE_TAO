@@ -29,7 +29,6 @@
 
 #include "TestI.h"
 
-// Implementation skeleton constructor
 Test_i::Test_i (CORBA::ORB_ptr const orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {

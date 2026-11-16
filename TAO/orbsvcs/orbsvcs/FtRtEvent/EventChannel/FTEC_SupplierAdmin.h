@@ -58,7 +58,6 @@ public:
   TAO_FTEC_SupplierAdmin& operator=(TAO_FTEC_SupplierAdmin const&) = delete;
   TAO_FTEC_SupplierAdmin& operator=(TAO_FTEC_SupplierAdmin&&) = delete;
 
-  /// destructor...
   ~TAO_FTEC_SupplierAdmin () override = default;
 
   /// @name RtecEventChannelAdmin::SupplierAdmin methods

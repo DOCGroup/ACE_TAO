@@ -56,7 +56,6 @@ public:
   TAO_FTEC_ConsumerAdmin& operator=(TAO_FTEC_ConsumerAdmin const&) = delete;
   TAO_FTEC_ConsumerAdmin& operator=(TAO_FTEC_ConsumerAdmin&&) = delete;
 
-  /// destructor...
   ~TAO_FTEC_ConsumerAdmin () override = default;
 
   /// @name RtecEventChannelAdmin::ConsumerAdmin methods

@@ -37,7 +37,6 @@ SmiUINT32 Counter64::get_syntax()
   return sNMP_SYNTAX_CNTR64;
 }
 
-//------------------[ constructor with values ]--------------------------
 Counter64::Counter64 (unsigned long hiparm, unsigned long loparm)
 {
   smival.syntax = sNMP_SYNTAX_CNTR64;
@@ -45,7 +44,6 @@ Counter64::Counter64 (unsigned long hiparm, unsigned long loparm)
   smival.value.hNumber.lopart = loparm;
 }
 
-//------------------[ constructor with low value only ]------------------
 Counter64::Counter64 (ACE_UINT64 llw)
 {
   smival.syntax = sNMP_SYNTAX_CNTR64;
@@ -53,7 +51,6 @@ Counter64::Counter64 (ACE_UINT64 llw)
   smival.value.hNumber.lopart = static_cast<unsigned long> (llw & 0xffffffffULL);
 }
 
-//------------------[ copy constructor ]---------------------------------
 Counter64::Counter64 (Counter64 const &ctr64)
   : SnmpSyntax (ctr64)
 {

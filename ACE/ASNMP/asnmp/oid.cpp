@@ -53,9 +53,6 @@ SmiUINT32 Oid::get_syntax()
   return sNMP_SYNTAX_OID;
 }
 
-//=============[Oid::Oid( const char *dotted_string ]=====================
-// constructor using a dotted string
-//
 // do a string to oid using the string passed in
 Oid::Oid( const char * dotted_oid_string, size_t size)
 {
@@ -99,9 +96,6 @@ Oid::Oid( const char * dotted_oid_string, size_t size)
   }
 }
 
-//=============[Oid::Oid( const Oid &oid) ]================================
-// constructor using another oid object
-//
 // do an oid copy using the oid object passed in
 Oid::Oid ( const Oid &oid)
   : SnmpSyntax (oid)
@@ -119,9 +113,6 @@ Oid::Oid ( const Oid &oid)
   }
 }
 
-//=============[Oid::Oid( const unsigned long *raw_oid, int oid_len) ]====
-// constructor using raw numeric form
-//
 // copy the integer values into the private member
 Oid::Oid(const unsigned long *raw_oid, size_t oid_len)
 {

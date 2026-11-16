@@ -17,7 +17,6 @@
 // STL headers
 #include <sstream>
 
-// Implementation skeleton constructor
 StockDistributor_i::StockDistributor_i (RTPortableServer::POA_ptr poa)
   : rate_ (3), // Default is 3 seconds (3000 milliseconds).
     rt_poa_ (RTPortableServer::POA::_duplicate (poa)),
@@ -25,7 +24,6 @@ StockDistributor_i::StockDistributor_i (RTPortableServer::POA_ptr poa)
 {
 }
 
-// Implementation skeleton destructor
 StockDistributor_i::~StockDistributor_i ()
 {
   this->active_ = false;
@@ -263,7 +261,6 @@ StockQuoter_i::get_stock_info (const char * stock_name)
 
 }
 
-// Implementation skeleton constructor
 StockDistributorHome_i::StockDistributorHome_i (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     rt_poa_ (RTPortableServer::POA::_nil ()),
@@ -337,7 +334,6 @@ StockDistributorHome_i::StockDistributorHome_i (CORBA::ORB_ptr orb)
   this->create_distributor ();
 }
 
-// Implementation skeleton destructor
 StockDistributorHome_i::~StockDistributorHome_i () = default;
 
 ::Stock::StockDistributor_ptr
