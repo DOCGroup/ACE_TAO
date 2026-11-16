@@ -16,10 +16,11 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
   TAO_OutputCDR & cdr,
   CORBA::ULong offset) const
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
-                    guard,
-                    this->lock_,
-                    false);
+  ACE_Guard<TAO_SYNCH_RECURSIVE_MUTEX> const guard (this->lock_);
+  if (!guard.locked ())
+    {
+      return false;
+    }
 
   // Top-level TypeCode case.
   if (this->recursion_start_offset_ == 0)
@@ -36,7 +37,7 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
       // marshaling is done.
       //
       // Only reset the recursion flag at the top-level.
-      Reset flag (this->recursion_start_offset_);
+      Reset const flag (this->recursion_start_offset_);
 
       return this->TypeCodeBase::tao_marshal (cdr, offset);
     }
@@ -56,10 +57,11 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
                               MemberArrayType>::equal_i (
   CORBA::TypeCode_ptr tc) const
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
-                    guard,
-                    this->lock_,
-                    false);
+  ACE_Guard<TAO_SYNCH_RECURSIVE_MUTEX> const guard (this->lock_);
+  if (!guard.locked ())
+    {
+      return false;
+    }
 
   // Top-level TypeCode case.
   if (this->recursion_start_offset_ == 0)
@@ -72,7 +74,7 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
       // equality determination is done.
       //
       // Only reset the recursion flag at the top-level.
-      Reset flag (this->recursion_start_offset_);
+      Reset const flag (this->recursion_start_offset_);
 
       return this->TypeCodeBase::equal_i (tc);
     }
@@ -88,10 +90,11 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
                               MemberArrayType>::equivalent_i (
   CORBA::TypeCode_ptr tc) const
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
-                    guard,
-                    this->lock_,
-                    false);
+  ACE_Guard<TAO_SYNCH_RECURSIVE_MUTEX> const guard (this->lock_);
+  if (!guard.locked ())
+    {
+      return false;
+    }
 
   // Top-level TypeCode case.
   if (this->recursion_start_offset_ == 0)
@@ -104,7 +107,7 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
       // equivalence determination is done.
       //
       // Only reset the recursion flag at the top-level.
-      Reset flag (this->recursion_start_offset_);
+      Reset const flag (this->recursion_start_offset_);
 
       return this->TypeCodeBase::equivalent_i (tc);
     }
@@ -120,10 +123,11 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
                               MemberArrayType>::tao_marshal_kind (
   TAO_OutputCDR & cdr) const
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
-                    guard,
-                    this->lock_,
-                    false);
+  ACE_Guard<TAO_SYNCH_RECURSIVE_MUTEX> const guard (this->lock_);
+  if (!guard.locked ())
+    {
+      return false;
+    }
 
   // Top-level TypeCode case.
   if (this->recursion_start_offset_ == 0)

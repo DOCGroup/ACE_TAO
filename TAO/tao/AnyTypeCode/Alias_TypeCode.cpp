@@ -128,7 +128,7 @@ TAO::TypeCode::Alias<StringType,
       throw ::CORBA::INITIALIZE ();
     }
 
-  CORBA::TypeCode_var compact_content_type =
+  CORBA::TypeCode_var const compact_content_type =
     Traits<StringType>::get_typecode (
       this->content_type_)->get_compact_typecode ();
 

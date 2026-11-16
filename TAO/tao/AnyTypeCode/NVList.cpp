@@ -14,6 +14,7 @@
 #include <memory>
 #include "ace/Log_Msg.h"
 #include "ace/CORBA_macros.h"
+#include "ace/Guard_T.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/AnyTypeCode/NVList.inl"
@@ -258,7 +259,11 @@ CORBA::NVList::_tao_incoming_cdr (TAO_InputCDR &cdr,
       return;
     }
 
-  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
+  ACE_Guard<TAO_SYNCH_MUTEX> const ace_mon (this->lock_);
+  if (!ace_mon.locked ())
+    {
+      return;
+    }
 
   this->incoming_.reset ();
   TAO_InputCDR *incoming {};
@@ -270,9 +275,11 @@ CORBA::NVList::_tao_incoming_cdr (TAO_InputCDR &cdr,
 void
 CORBA::NVList::_tao_encode (TAO_OutputCDR &cdr, int flag)
 {
-  ACE_GUARD (TAO_SYNCH_MUTEX,
-             ace_mon,
-             this->lock_);
+  ACE_Guard<TAO_SYNCH_MUTEX> const ace_mon (this->lock_);
+  if (!ace_mon.locked ())
+    {
+      return;
+    }
 
   if (this->incoming_ != nullptr)
     {
@@ -384,10 +391,11 @@ CORBA::NVList::_tao_decode (TAO_InputCDR &incoming, int flag)
 ptrdiff_t
 CORBA::NVList::_tao_target_alignment ()
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                    ace_mon,
-                    this->lock_,
-                    ACE_CDR::MAX_ALIGNMENT);
+  ACE_Guard<TAO_SYNCH_MUTEX> const ace_mon (this->lock_);
+  if (!ace_mon.locked ())
+    {
+      return ACE_CDR::MAX_ALIGNMENT;
+    }
 
   if (this->incoming_ == nullptr)
     {
@@ -408,7 +416,11 @@ CORBA::NVList::_tao_target_alignment ()
 void
 CORBA::NVList::evaluate ()
 {
-  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
+  ACE_Guard<TAO_SYNCH_MUTEX> const ace_mon (this->lock_);
+  if (!ace_mon.locked ())
+    {
+      return;
+    }
 
   if (this->incoming_ != nullptr)
     {
