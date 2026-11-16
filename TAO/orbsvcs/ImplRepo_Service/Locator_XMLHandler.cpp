@@ -27,7 +27,7 @@ const ACE_TCHAR* Locator_XMLHandler::ALTKEY_TAG = ACE_TEXT("altkey");
 
 Locator_XMLHandler::Locator_XMLHandler (XML_Backing_Store& repo)
   : repo_(repo),
-    si_ (0),
+    si_ {},
     server_started_ (false),
     extra_params_ (),
     env_vars_ (),
@@ -66,7 +66,9 @@ Locator_XMLHandler::startElement (const ACEXML_Char*,
 {
   if (ACE_OS::strcasecmp (qName, SERVER_INFO_TAG) == 0)
     {
-      ACE_NEW (this->si_, Server_Info);
+      Server_Info *si {};
+      ACE_NEW (si, Server_Info);
+      this->si_.reset (si);
       this->env_vars_.clear ();
 
       // if attrs exists and if the previously required 9 fields
@@ -186,7 +188,7 @@ Locator_XMLHandler::endElement (const ACEXML_Char*,
     convertEnvList (this->env_vars_, this->si_->env_vars);
     convertPeerList (this->peer_list_, this->si_->peers);
 
-    this->repo_.load_server (this->si_,
+    this->repo_.load_server (this->si_.release (),
                              this->server_started_,
                              this->extra_params_);
   }

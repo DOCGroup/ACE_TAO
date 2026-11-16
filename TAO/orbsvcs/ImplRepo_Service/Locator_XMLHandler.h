@@ -15,6 +15,7 @@
 #include "Server_Info.h"
 #include "Activator_Info.h"
 
+#include <memory>
 #include <vector>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -79,7 +80,7 @@ public:
  private:
   /// the repository
   XML_Backing_Store& repo_;
-  Server_Info *si_;
+  std::unique_ptr<Server_Info> si_;
   bool server_started_;
   NameValues extra_params_;
   EnvList env_vars_;
