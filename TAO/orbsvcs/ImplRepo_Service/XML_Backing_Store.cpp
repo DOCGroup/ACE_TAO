@@ -11,6 +11,7 @@
 #include "ACEXML/parser/parser/Parser.h"
 #include "ACEXML/common/FileCharStream.h"
 #include "ACEXML/common/XML_Util.h"
+#include <memory>
 
 XML_Backing_Store::XML_Backing_Store(const Options& opts,
                                      CORBA::ORB_ptr orb,
@@ -217,21 +218,16 @@ XML_Backing_Store::load_file (const ACE_TString& filename,
                               unsigned int debug,
                               FILE* open_file)
 {
-  // xml input source will take ownership
-  ACEXML_FileCharStream* fstm;
-  ACE_NEW_RETURN (fstm,
+  ACEXML_FileCharStream* fstm_raw {};
+  ACE_NEW_RETURN (fstm_raw,
                   ACEXML_FileCharStream,
                   -1);
+  std::unique_ptr<ACEXML_FileCharStream> fstm (fstm_raw);
 
-  int err;
   // use the open_file stream if it is provided
-  if (open_file != 0)
-    err = fstm->use_stream(open_file,
-                           filename.c_str());
-  else
-  {
-    err = fstm->open (filename.c_str());
-  }
+  int const err = open_file != nullptr
+    ? fstm->use_stream (open_file, filename.c_str ())
+    : fstm->open (filename.c_str ());
 
   if (debug > 9)
     {
@@ -242,14 +238,12 @@ XML_Backing_Store::load_file (const ACE_TString& filename,
 
   if (err != 0)
     {
-      delete fstm;
       return err;
     }
 
   ACEXML_Parser parser;
 
-  // InputSource takes ownership
-  ACEXML_InputSource input (fstm);
+  ACEXML_InputSource input (fstm.release ());
 
   parser.setContentHandler (&xml_handler);
   parser.setDTDHandler (&xml_handler);
