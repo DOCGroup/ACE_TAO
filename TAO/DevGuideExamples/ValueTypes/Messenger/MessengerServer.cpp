@@ -35,10 +35,17 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-void write_ior (char const *ior)
+bool write_ior (char const *ior)
 {
   std::ofstream out (ACE_TEXT_ALWAYS_CHAR (ior_output_file));
+  if (!out)
+    {
+      return false;
+    }
+
   out << ior;
+  out.close ();
+  return static_cast<bool> (out);
 }
 
 int
@@ -65,7 +72,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::ObjectId_var id = poa->activate_object (svt.in ());
       obj = poa->id_to_reference (id.in ());
       CORBA::String_var ior = orb->object_to_string (obj.in ());
-      write_ior (ior.in ());
+      if (!write_ior (ior.in ()))
+        {
+          std::cerr << "Cannot write IOR file." << std::endl;
+          return 1;
+        }
 
       std::cout << "Starting server." << std::endl;
 
