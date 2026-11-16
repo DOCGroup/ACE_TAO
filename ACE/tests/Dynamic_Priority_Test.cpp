@@ -46,6 +46,8 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Sched_Params.h"
 
+#include <cstring>
+
 #if defined (VXWORKS) || defined (INTEGRITY)
 # include "ace/OS_NS_string.h"
 #endif
@@ -71,7 +73,7 @@ public:
   ACE_Message_Block **array_;
 
   /// expected message count
-  u_int expected_count_;
+  size_t expected_count_;
 };
 
 // Order in which messages are sent.
@@ -142,7 +144,7 @@ order_consumer (void *args)
   ACE_TEST_ASSERT (receipt_order != 0);
   ACE_TEST_ASSERT (msg_queue != 0);
 
-  u_int local_count = 0;
+  size_t local_count = 0;
 
   // Keep looping, reading a message out of the queue, until we reach
   // the end of the receipt order string, which signals us to quit.
@@ -163,7 +165,7 @@ order_consumer (void *args)
     ACE_TEST_ASSERT (*expected == *mb->rd_ptr ());
   }
 
-  ACE_TEST_ASSERT (local_count == ACE_OS::strlen (receipt_order));
+  ACE_TEST_ASSERT (local_count == std::strlen (receipt_order));
   ACE_TEST_ASSERT (local_count == expected_count);
   return 0;
 }
@@ -193,7 +195,7 @@ order_producer (void *args)
   // Iterate through the send order string and the message block
   // array, setting the current message block's read pointer to the
   // current position in the send order string.
-  int local_count = 0;
+  size_t local_count = 0;
   const char *c;
 
   for (local_count = 0, c = send_order; *c != '\0'; ++local_count, ++c)
@@ -222,19 +224,19 @@ run_order_test (ACE_Message_Queue<ACE_SYNCH>* msg_queue,
                 const char *send_order,
                 const char *receipt_order)
 {
-  u_int i;
-  u_int array_size = ACE_OS::strlen (send_order);
+  size_t i;
+  size_t array_size = std::strlen (send_order);
 
   ACE_TEST_ASSERT (msg_queue != 0);
   ACE_TEST_ASSERT (send_order != 0);
   ACE_TEST_ASSERT (receipt_order != 0);
-  ACE_TEST_ASSERT (ACE_OS::strlen (send_order) == ACE_OS::strlen (receipt_order));
+  ACE_TEST_ASSERT (std::strlen (send_order) == std::strlen (receipt_order));
 
   ArgStruct supplier_args, consumer_args;
 
   supplier_args.queue_ = msg_queue;
   supplier_args.order_string_ = send_order;
-  supplier_args.expected_count_ = ACE_OS::strlen (send_order);
+  supplier_args.expected_count_ = std::strlen (send_order);
 
   // Allocate message blocks, fill in pointer array, set static
   // information.
@@ -261,7 +263,7 @@ run_order_test (ACE_Message_Queue<ACE_SYNCH>* msg_queue,
 
   consumer_args.queue_ = msg_queue;
   consumer_args.order_string_ = receipt_order;
-  consumer_args.expected_count_ = ACE_OS::strlen (receipt_order);
+  consumer_args.expected_count_ = std::strlen (receipt_order);
   consumer_args.array_ = 0;
 
   // Construct pending and late absolute deadline times.
