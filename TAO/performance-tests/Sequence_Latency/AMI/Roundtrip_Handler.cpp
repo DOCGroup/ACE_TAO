@@ -19,8 +19,6 @@ Roundtrip_Handler::dump_results (
   this->latency_stats_.dump_results (ACE_TEXT("AMI Latency"), gsf);
 }
 
-// = The skeleton methods for test octet load
-
 void
 Roundtrip_Handler::test_octet_method (Test::Timestamp send_time)
 {
@@ -43,8 +41,6 @@ Roundtrip_Handler::test_octet_method_excep (::Messaging::ExceptionHolder *holder
       ex._tao_print_exception ("test_octet_method:");
     }
 }
-
-// = The skeleton methods for test char load
 
 void
 Roundtrip_Handler::test_char_method (Test::Timestamp send_time)
@@ -69,8 +65,6 @@ Roundtrip_Handler::test_char_method_excep (::Messaging::ExceptionHolder *holder)
     }
 }
 
-// = The skeleton methods for test long load
-
 void
 Roundtrip_Handler::test_long_method (Test::Timestamp send_time)
 {
@@ -93,8 +87,6 @@ Roundtrip_Handler::test_long_method_excep (::Messaging::ExceptionHolder *holder)
       ex._tao_print_exception ("test_long_method:");
     }
 }
-
-// = The skeleton methods for test short load
 
 void
 Roundtrip_Handler::test_short_method (Test::Timestamp send_time)
@@ -119,8 +111,6 @@ Roundtrip_Handler::test_short_method_excep (::Messaging::ExceptionHolder *holder
     }
 }
 
-// = The skeleton methods for test double load
-
 void
 Roundtrip_Handler::test_double_method (Test::Timestamp send_time)
 {
@@ -144,8 +134,6 @@ Roundtrip_Handler::test_double_method_excep (::Messaging::ExceptionHolder *holde
     }
 }
 
-// = The skeleton methods for test longlong load
-
 void
 Roundtrip_Handler::test_longlong_method (Test::Timestamp send_time)
 {
@@ -168,8 +156,6 @@ Roundtrip_Handler::test_longlong_method_excep (::Messaging::ExceptionHolder *hol
       ex._tao_print_exception ("test_longlong_method:");
     }
   }
-
-// = Other methods
 
 void
 Roundtrip_Handler::shutdown ()
