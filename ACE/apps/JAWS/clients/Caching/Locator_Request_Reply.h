@@ -94,13 +94,12 @@ protected:
   /// this request.
   size_t size ();
 
+  /// Bit masks identifying which request fields are present.
   enum {
     VALID_SEQ1 = 0x1,
     VALID_SEQ2 = 0X2,
     VALID_OFFER = 0X4
   };
-  // These constants used to indicate which pointers are valid.
-
   /// Request type code.
   u_int code_;
 
@@ -171,7 +170,7 @@ public:
    */
   size_t decode (void *buffer);
 
-  // Accessor function.
+  /// Accessors for reply fields.
   size_t num_offers () const;
   ACE_URL_Offer const *offer () const;
   ACE_URL_Offer_Seq const *offers () const;
@@ -187,12 +186,11 @@ protected:
   /// this request.
   size_t size ();
 
+  /// Bit masks identifying which reply fields are present.
   enum {
     VALID_OFFER = 0x1,
     VALID_OFFERS = 0x2
   };
-  // Valid pointer masks.
-
   /// Holds the original op code.
   u_int code_;
 

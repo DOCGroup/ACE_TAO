@@ -28,7 +28,7 @@
 class ACE_Svc_Export ACE_URL_Locator
 {
 public:
-  // Request type
+  /// Request operation codes.
   enum ACE_URL_Locator_Op_Type
   {
     QUERY = 0,
@@ -53,7 +53,7 @@ public:
 
   static const char * const selection_name[];
 
-    /// errno will set to one of these value.
+  /// Error codes reported through errno.
   enum ACE_URL_Locator_Error
   {
     OK,                         // Everything is fine.
@@ -65,8 +65,6 @@ public:
     UNKNOWN,                    // Unknown error.
     MAX_URL_ERROR
   };
-  // Possible error code of URL_Locator.
-
   /// Human readable error status.
   static const char * const err_name[];
 

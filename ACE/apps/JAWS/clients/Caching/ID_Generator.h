@@ -23,14 +23,12 @@
 /**
  * @class ACE_ID_Generator
  *
- * @brief An unique ID generator.
+ * @brief Generates unique offer IDs.
+ *
+ * IDs are based on the current time and are unique within a process, including
+ * when generated concurrently by multiple threads.
  */
 class ACE_ID_Generator
-
-  //     Generate an offer ID according to current time and avoid
-  //     duplicate ID.  It guarantees ID uniqueness within a process,
-  //     i.e. no two threads may get the same ID string.  Using a
-  //     similar method like the backery algorithm.
 {
 public:
   /// allocate a new ID string and point <id> to it.

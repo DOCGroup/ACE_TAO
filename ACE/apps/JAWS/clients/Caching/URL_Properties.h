@@ -129,8 +129,8 @@ protected:
   ACE_NS_WString value_;
 } ;
 
+/// Sequence of URL properties.
 using ACE_URL_Property_Seq = ACE_Array<ACE_URL_Property>;
-// type of URL_Property collections.
 
 /**
  * @class ACE_URL_Offer
@@ -203,8 +203,8 @@ protected:
   ACE_URL_Property_Seq prop_;
 };
 
+/// Sequence of URL offers.
 using ACE_URL_Offer_Seq = ACE_Array<ACE_URL_Offer>;
-// type of URL offer collections.
 
 #if defined (__ACE_INLINE__)
 #include "URL_Properties.inl"
