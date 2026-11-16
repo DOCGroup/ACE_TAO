@@ -101,7 +101,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   // Create an ORB to obtain Priority Mapping functionality.
   CORBA::ORB_var orb;
-  RTCORBA::PriorityMapping *pm = 0;
+  RTCORBA::PriorityMapping *pm {};
 
   try
     {

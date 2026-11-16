@@ -246,7 +246,7 @@ MonitorTestInterface_i::brain_dump (char const* /*context*/)
   ACE_DEBUG ((LM_DEBUG, "Statistic names [%d]\n", (int)length));
 
   // It's much easier to read once it's sorted
-  const char** narray = 0;
+  const char **narray {};
   ACE_NEW_THROW_EX (narray,
                     const char* [length],
                     CORBA::NO_MEMORY ());

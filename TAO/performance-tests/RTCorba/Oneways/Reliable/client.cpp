@@ -90,7 +90,7 @@ print_params ()
     }
   else
     {
-      const char *one_way_style = 0;
+      const char *one_way_style {};
       if (sync_scope == Messaging::SYNC_NONE)
         one_way_style = "SYNC_NONE";
       else if (sync_scope == Messaging::SYNC_WITH_TRANSPORT)
@@ -100,7 +100,7 @@ print_params ()
       else if (sync_scope == Messaging::SYNC_WITH_TARGET)
         one_way_style = "SYNC_WITH_TARGET";
 
-      const char *payload_style = 0;
+      const char *payload_style {};
       if (payload_test)
         payload_style = "Payload based";
       else

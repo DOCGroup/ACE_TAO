@@ -235,7 +235,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   try
     {
-      ORBInitializer *initializer = 0;
+      ORBInitializer *initializer {};
       ACE_NEW_RETURN (initializer,
                       ORBInitializer,
                       -1);  // No exceptions yet!

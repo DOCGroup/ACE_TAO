@@ -4,7 +4,7 @@
 #include "ace/Read_Buffer.h"
 #include "testC.h"
 
-static ACE_TCHAR *IOR = 0;
+static ACE_TCHAR *IOR {};
 static int iterations = 1;
 static int oneway = 0;
 static int shutdown_server = 0;
