@@ -31,6 +31,7 @@ namespace TAO
   class Invocation_Retry_State
   {
   public:
+    Invocation_Retry_State () = delete;
     explicit Invocation_Retry_State (TAO_Stub &stub);
 
     ~Invocation_Retry_State () = default;

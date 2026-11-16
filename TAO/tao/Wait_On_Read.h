@@ -27,6 +27,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Wait_On_Read : public TAO_Wait_Strategy
 {
 public:
+  TAO_Wait_On_Read () = delete;
   explicit TAO_Wait_On_Read (TAO_Transport *transport);
 
   ~TAO_Wait_On_Read () override = default;

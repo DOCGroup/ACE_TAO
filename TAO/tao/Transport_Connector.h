@@ -56,6 +56,7 @@ namespace TAO
 class TAO_Export TAO_Connector
 {
 public:
+  TAO_Connector () = delete;
   explicit TAO_Connector (CORBA::ULong tag);
 
   virtual ~TAO_Connector ();

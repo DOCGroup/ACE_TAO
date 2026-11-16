@@ -53,6 +53,7 @@ namespace CORBA
 class TAO_Export TAO_Profile
 {
 public:
+  TAO_Profile () = delete;
   TAO_Profile (CORBA::ULong tag,
                TAO_ORB_Core *orb_core,
                TAO_GIOP_Message_Version const &version);

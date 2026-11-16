@@ -38,6 +38,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Wait_On_Leader_Follower : public TAO_Wait_Strategy
 {
 public:
+  TAO_Wait_On_Leader_Follower () = delete;
   explicit TAO_Wait_On_Leader_Follower (TAO_Transport *transport);
 
   ~TAO_Wait_On_Leader_Follower () override = default;

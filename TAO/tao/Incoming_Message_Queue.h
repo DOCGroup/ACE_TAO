@@ -50,6 +50,7 @@ class TAO_Transport;
 class TAO_Export TAO_Incoming_Message_Queue
 {
 public:
+  TAO_Incoming_Message_Queue () = delete;
   explicit TAO_Incoming_Message_Queue (TAO_ORB_Core *orb_core);
 
   ~TAO_Incoming_Message_Queue ();

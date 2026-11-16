@@ -43,6 +43,7 @@ class TAO_Export TAO_Synch_Reply_Dispatcher
   , public TAO_LF_Invocation_Event
 {
 public:
+  TAO_Synch_Reply_Dispatcher () = delete;
   TAO_Synch_Reply_Dispatcher (TAO_ORB_Core *orb_core,
                               IOP::ServiceContextList &sc);
 
