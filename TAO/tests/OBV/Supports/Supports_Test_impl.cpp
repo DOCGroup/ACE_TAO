@@ -241,6 +241,11 @@ node_impl::_copy_value ()
 node_impl *
 node_impl::copy_node (node_impl const *node, Node_Copy_Map& copies)
 {
+  if (node == nullptr)
+    {
+      throw CORBA::BAD_PARAM ();
+    }
+
   Node_Copy_Map::const_iterator const found = copies.find (node);
   if (found != copies.end ())
     {

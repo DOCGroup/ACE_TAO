@@ -1236,17 +1236,10 @@ DRV_pre_proc (std::string const& myfile)
 
   if (copy_input_file)
     {
-      try
-        {
-          DRV_copy_input (file.get (),
-                          ti_file.get (),
-                          tmp_ifile,
-                          myfile);
-        }
-      catch (...)
-        {
-          throw;
-        }
+      DRV_copy_input (file.get (),
+                      ti_file.get (),
+                      tmp_ifile,
+                      myfile);
       if (ACE_OS::fclose (ti_file.release ()) == EOF)
         {
           ACE_ERROR ((LM_ERROR,

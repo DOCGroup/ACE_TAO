@@ -143,6 +143,8 @@ be_valuetype::redefine (AST_Interface *from)
 
   this->AST_ValueType::redefine (from);
   this->have_operation_computed_ = false;
+  this->obv_need_ref_counter_computed_ = false;
+  this->obv_have_ref_counter_computed_ = false;
 }
 
 // Is true if non-virtual accessor and modifier should be generated
@@ -150,7 +152,8 @@ be_valuetype::redefine (AST_Interface *from)
 bool
 be_valuetype::opt_accessor ()
 {
-  return be_global->obv_opt_accessor ();
+  // Operation-free valuetypes need a concrete OBV_ class for their factory.
+  return be_global->obv_opt_accessor () && this->have_operation ();
 }
 
 // Compute stringified fully scoped skeleton name (OBV_name).
@@ -291,13 +294,6 @@ be_valuetype::have_operation ()
   if (! have_operation)
     {
       // Now traverse inheritance tree.
-      be_valuetype * const concrete =
-        dynamic_cast<be_valuetype *> (this->inherits_concrete ());
-      if (concrete != nullptr && concrete->have_operation ())
-        {
-          have_operation = true;
-        }
-
       AST_Type_List const& inherits = this->inherits ();
 
       for (size_t i = 0; i < inherits.size (); ++i)

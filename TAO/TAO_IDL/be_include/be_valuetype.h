@@ -146,6 +146,8 @@ public:
   void is_amh_excep_holder (bool val);
 
 private:
+  friend class be_visitor_valuetype;
+
   /// Do we support at least one abstract interface?
   bool supports_abstract_ {};
 
@@ -161,6 +163,10 @@ private:
   /// Cache operation lookup after the IDL scope is complete.
   mutable bool have_operation_computed_ {};
   mutable bool have_operation_cache_ {};
+  mutable bool obv_need_ref_counter_computed_ {};
+  mutable bool obv_need_ref_counter_cache_ {};
+  mutable bool obv_have_ref_counter_computed_ {};
+  mutable bool obv_have_ref_counter_cache_ {};
 };
 
 #endif  // if !defined

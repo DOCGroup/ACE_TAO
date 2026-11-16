@@ -19,6 +19,7 @@
 #include "expressionsC.h"
 #include "structC.h"
 #include "valuetypeC.h"
+#include "valuetype_opt_accessorC.h"
 #include "fixedA.h"
 #include "arrayC.h"
 
@@ -34,6 +35,10 @@ static_assert (std::is_abstract<OBV_Supports_Inherited_Operation>::value,
                "A valuetype that supports an inherited operation is abstract");
 static_assert (!std::is_abstract<OBV_Supported_Interface_Derived>::value,
                "An inherited supported interface needs refcount overrides");
+static_assert (!std::is_abstract<OBV_Concrete_From_Abstract>::value,
+               "Abstract valuetype bases must not claim an OBV refcount base");
+static_assert (!std::is_abstract<OBV_Accessor_Optimized_Value>::value,
+               "Operation-free optimized valuetypes need a concrete OBV class");
 static_assert (std::is_abstract<OBV_Copy_Operation_Derived>::value,
                "Operation-bearing derived OBV classes must redeclare copy");
 
@@ -223,6 +228,24 @@ test_default_initialized_valuetype (int &error_count)
 void
 test_valuetype_copy (int &error_count)
 {
+  OBV_Concrete_From_Abstract abstract_base_value;
+  abstract_base_value.value (61);
+  CORBA::ValueBase_var abstract_base_copy_value (
+    abstract_base_value._copy_value ());
+  Concrete_From_Abstract * const abstract_base_copy =
+    Concrete_From_Abstract::_downcast (abstract_base_copy_value.in ());
+  if (abstract_base_copy == nullptr)
+    {
+      ++error_count;
+      ACE_ERROR ((LM_ERROR, "Concrete_From_Abstract copy has wrong type\n"));
+    }
+  else
+    {
+      expect_equals<CORBA::Long> (
+        error_count, "Concrete_From_Abstract copied value",
+        abstract_base_copy->value (), 61);
+    }
+
   OBV_Factory_Initialized_Value factory_value;
   factory_value.value (17);
   CORBA::ValueBase_var factory_copy (factory_value._copy_value ());

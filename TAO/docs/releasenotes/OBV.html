@@ -52,7 +52,9 @@
         Relevant option of TAO's IDL compiler is: <P>
             <UL>
             <LI>-Wb,obv_opt_accessor Make accessor and modifier functions inline.
-            Overriding them is not allowed in this mode.</LI>
+            Overriding them is not allowed in this mode. Operation-free
+            valuetypes retain a concrete OBV class because their factory must
+            be able to instantiate them.</LI>
             </UL></P>
 	    <p></p>
         </li>
@@ -60,7 +62,16 @@
             <CODE>_copy_value()</CODE> and the required reference-count base.
             Applications that add
             <CODE>CORBA::DefaultValueRefCountBase</CODE> to a derived
-            implementation should remove that redundant base.</p>
+            implementation should remove that redundant base. Existing code
+            that derives non-virtually from this base may need adjustment to
+            avoid ambiguous reference-count operations.</p>
+        </li>
+        <li><p>Generated <CODE>_copy_value()</CODE> copies direct valuetype
+            fields and the supported one-level valuetype members in structs
+            and sequences. It does not recursively traverse arbitrary arrays,
+            unions, or nested aggregates, preserve shared references, or
+            handle cycles. Applications requiring a recursive graph copy
+            must provide their own <CODE>_copy_value()</CODE> implementation.</p>
         </li>
         <li><p><CODE>Valuetype</CODE>s can be used as arguments in CORBA invocations.
             There is an example in

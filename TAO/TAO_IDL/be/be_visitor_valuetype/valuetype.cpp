@@ -817,46 +817,40 @@ be_visitor_valuetype::gen_obv_init_constructor_args (be_valuetype *node,
 bool
 be_visitor_valuetype::obv_need_ref_counter (be_valuetype* node)
 {
-  // Go thru our base VTs and see if one has already.
-  for (int i = 0; i < node->n_inherits (); ++i)
-    {
-      be_valuetype *vt =
-        dynamic_cast<be_valuetype*> (node->inherits ()[i]);
-
-      if (vt != nullptr)
-        {
-          if (be_visitor_valuetype::obv_have_ref_counter (vt))
-            {
-              return false;
-            }
-        }
-    }
-
-  be_valuetype * const concrete =
-    dynamic_cast<be_valuetype *> (node->inherits_concrete ());
-  if (concrete != nullptr
-      && be_visitor_valuetype::obv_have_ref_counter (concrete))
+  if (node == nullptr)
     {
       return false;
+    }
+
+  if (node->obv_need_ref_counter_computed_)
+    {
+      return node->obv_need_ref_counter_cache_;
+    }
+
+  // Go thru our base VTs and see if one has already.
+  bool base_has_ref_counter {};
+  for (int i = 0; i < node->n_inherits (); ++i)
+    {
+      be_valuetype * const vt =
+        dynamic_cast<be_valuetype*> (node->inherits ()[i]);
+
+      if (vt != nullptr && be_visitor_valuetype::obv_have_ref_counter (vt))
+        {
+          base_has_ref_counter = true;
+          break;
+        }
     }
 
   // If we inherit from CORBA::Object and/or CORBA::AbstractBase
   // (in addition to CORBA::ValueBase) we have to override _add_ref()
   // and _remove_ref() by calling the one in DefaultValueRefCountBase
   // to avoid ambiguity.
-  if (node->has_supported_interface ())
-    {
-      return true;
-    }
-
-  // An operation-free OBV class gets a generated _copy_value() and can be
-  // instantiated directly, so it needs a reference-count implementation.
-  if (!node->have_operation ())
-    {
-      return true;
-    }
-
-  return false;
+  bool const needs_ref_counter =
+    !base_has_ref_counter
+    && (node->has_supported_interface () || !node->have_operation ());
+  node->obv_need_ref_counter_cache_ = needs_ref_counter;
+  node->obv_need_ref_counter_computed_ = true;
+  return needs_ref_counter;
 }
 
 bool
@@ -868,37 +862,36 @@ be_visitor_valuetype::obv_have_ref_counter (be_valuetype* node)
       return false;
     }
 
-  if (!node->is_abstract ()
-      && be_visitor_valuetype::obv_need_ref_counter (node))
+  if (node->obv_have_ref_counter_computed_)
     {
-      return true;
+      return node->obv_have_ref_counter_cache_;
     }
 
-  // Now go thru our base VTs.
+  bool have_ref_counter =
+    !node->is_abstract ()
+    && be_visitor_valuetype::obv_need_ref_counter (node);
+
+  // Now go thru our base VTs, skipping the abstract bases that have no OBV_ class.
   for (int i = 0; i < node->n_inherits (); ++i)
     {
-      be_valuetype *vt = dynamic_cast<be_valuetype*> (node->inherits ()[i]);
+      be_valuetype * const vt =
+        dynamic_cast<be_valuetype*> (node->inherits ()[i]);
 
       if (vt != nullptr)
         {
-          if (be_visitor_valuetype::obv_need_ref_counter (vt)
+          if ((!vt->is_abstract ()
+               && be_visitor_valuetype::obv_need_ref_counter (vt))
               || be_visitor_valuetype::obv_have_ref_counter (vt))
             {
-              return true;
+              have_ref_counter = true;
+              break;
             }
         }
     }
 
-  be_valuetype * const concrete =
-    dynamic_cast<be_valuetype *> (node->inherits_concrete ());
-  if (concrete != nullptr
-      && (be_visitor_valuetype::obv_need_ref_counter (concrete)
-          || be_visitor_valuetype::obv_have_ref_counter (concrete)))
-    {
-      return true;
-    }
-
-  return false;
+  node->obv_have_ref_counter_cache_ = have_ref_counter;
+  node->obv_have_ref_counter_computed_ = true;
+  return have_ref_counter;
 }
 
 bool
