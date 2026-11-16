@@ -52,8 +52,8 @@ TAO_LB_ObjectReferenceFactory::~TAO_LB_ObjectReferenceFactory ()
   // "_var" object, meaning that will be done automatically.
   if (!CORBA::is_nil (this->lm_.in ()))
     {
-      const CORBA::ULong len = this->fcids_.size ();
-      for (CORBA::ULong i {}; i < len; ++i)
+      fcid_list::size_type const len = this->fcids_.size ();
+      for (fcid_list::size_type i {}; i < len; ++i)
         {
           try
             {
