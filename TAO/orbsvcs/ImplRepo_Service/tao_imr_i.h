@@ -30,7 +30,6 @@ class TAO_IMR_Op;
 class TAO_IMR_i
 {
 public:
-  // = Constructor and destructor.
   TAO_IMR_i ();
   ~TAO_IMR_i ();
 

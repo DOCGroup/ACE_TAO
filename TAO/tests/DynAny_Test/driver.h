@@ -17,7 +17,6 @@
 class Driver
 {
 public:
-  // = Constructor and destructor.
   Driver () = default;
   ~Driver ();
   Driver (Driver const&) = delete;

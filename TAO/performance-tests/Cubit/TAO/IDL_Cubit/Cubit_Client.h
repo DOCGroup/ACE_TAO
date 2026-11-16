@@ -39,7 +39,6 @@
 class Cubit_Client
 {
 public:
-  // = Constructor and destructor.
   Cubit_Client (int shutdown = 0);
 
   ~Cubit_Client ();

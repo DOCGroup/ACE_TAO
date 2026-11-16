@@ -28,7 +28,6 @@
 class Airplane_Client_i
 {
 public:
-  // = Constructor and destructor.
   Airplane_Client_i () = default;
   ~Airplane_Client_i () = default;
 

@@ -52,7 +52,6 @@ constexpr size_t NUMBER_OF_TESTS = 10;
 class DII_Cubit_Client
 {
 public:
-  // = Constructor and destructor.
   DII_Cubit_Client () = default;
 
   ~DII_Cubit_Client () = default;

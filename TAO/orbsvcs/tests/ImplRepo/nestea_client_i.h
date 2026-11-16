@@ -28,7 +28,6 @@
 class Nestea_Client_i
 {
 public:
-  // = Constructor and destructor.
   Nestea_Client_i () = default;
   ~Nestea_Client_i () = default;
 

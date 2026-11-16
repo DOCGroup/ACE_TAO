@@ -19,7 +19,6 @@
 class Counter_Servant : public POA_Counter
 {
 public:
-  // = Ctor-Dtor Declaration
   explicit Counter_Servant (Policy_Tester *policy_tester);
   ~Counter_Servant () override = default;
   Counter_Servant (Counter_Servant const &) = delete;
