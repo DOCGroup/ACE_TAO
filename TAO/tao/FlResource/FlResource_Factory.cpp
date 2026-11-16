@@ -2,6 +2,7 @@
 #include "tao/FlResource/FlResource_Factory.h"
 #include "tao/debug.h"
 #include "ace/FlReactor/FlReactor.h"
+#include <cerrno>
 #include <memory>
 #include <new>
 
@@ -19,14 +20,16 @@ namespace TAO
           new (std::nothrow) ACE_FlReactor ()
         };
         if (reactor_impl == nullptr)
-          return nullptr;
+          {
+            errno = ENOMEM;
+            return nullptr;
+          }
 
         if (TAO_debug_level > 0)
           TAOLIB_DEBUG ((LM_DEBUG,
                          "TAO (%P|%t) - ACE_FlReactor created\n"));
 
-        this->reactor_impl_ = reactor_impl.get ();
-        reactor_impl.release ();
+        this->reactor_impl_ = reactor_impl.release ();
       }
 
     return this->reactor_impl_;

@@ -1,6 +1,7 @@
 #include "tao/XtResource/XtResource_Factory.h"
 #include "tao/debug.h"
 #include "ace/XtReactor/XtReactor.h"
+#include <cerrno>
 #include <memory>
 #include <new>
 
@@ -31,14 +32,16 @@ namespace TAO
           new (std::nothrow) ACE_XtReactor (this->context_)
         };
         if (reactor_impl == nullptr)
-          return nullptr;
+          {
+            errno = ENOMEM;
+            return nullptr;
+          }
 
         if (TAO_debug_level > 0)
           TAOLIB_DEBUG ((LM_DEBUG,
                          "TAO (%P|%t) - ACE_XtReactor created\n"));
 
-        this->reactor_impl_ = reactor_impl.get ();
-        reactor_impl.release ();
+        this->reactor_impl_ = reactor_impl.release ();
       }
 
     return this->reactor_impl_;

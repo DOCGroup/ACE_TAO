@@ -1,6 +1,9 @@
 #include "tao/QtResource/QtResource_Factory.h"
 #include "tao/debug.h"
 #include "ace/QtReactor/QtReactor.h"
+#include <cerrno>
+#include <memory>
+#include <new>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -25,13 +28,20 @@ namespace TAO
 
     if (!this->reactor_impl_)
       {
-        ACE_NEW_RETURN (this->reactor_impl_,
-                        ACE_QtReactor (qapp_),
-                        nullptr);
+        std::unique_ptr<ACE_QtReactor> reactor_impl {
+          new (std::nothrow) ACE_QtReactor (this->qapp_)
+        };
+        if (reactor_impl == nullptr)
+          {
+            errno = ENOMEM;
+            return nullptr;
+          }
 
         if (TAO_debug_level > 0)
           TAOLIB_DEBUG ((LM_DEBUG,
                          "TAO (%P|%t) - ACE_QtReactor created\n"));
+
+        this->reactor_impl_ = reactor_impl.release ();
       }
 
     return this->reactor_impl_;

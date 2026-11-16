@@ -49,7 +49,7 @@ namespace TAO
     ACE_Reactor_Impl *reactor_impl () override;
 
   private:
-    /// Reactor created by this factory.
+    /// Non-owning cache; ACE_Reactor owns the implementation after wrapping it.
     ACE_XtReactor *reactor_impl_ {};
 
     /// Xt context for XtReactor
