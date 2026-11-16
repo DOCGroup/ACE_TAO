@@ -1723,7 +1723,7 @@ ACE_DynScheduler::status_t
 ACE_DynScheduler::create_timeline ()
 {
   // queue of previously scheduled entries that need to be rescheduled
-  std::deque<Dispatch_Entry *> reschedule_queue;
+  ACE_Unbounded_Queue <Dispatch_Entry *> reschedule_queue;
 
   status_t status = SUCCEEDED;
 
@@ -1767,11 +1767,14 @@ ACE_DynScheduler::create_timeline ()
     }
 
     // iterate through the set of dispatch entries that need to be rescheduled
-    Dispatch_Entry *rescheduled_entry {};
-    while (!reschedule_queue.empty ())
+    Dispatch_Entry *rescheduled_entry;
+    while (reschedule_queue.is_empty () == 0)
     {
-      rescheduled_entry = reschedule_queue.front ();
-      reschedule_queue.pop_front ();
+      if (reschedule_queue.dequeue_head (rescheduled_entry) < 0)
+      {
+        status = ST_BAD_INTERNAL_POINTER;
+        break;
+      }
 
       status = schedule_timeline_entry (*rescheduled_entry, reschedule_queue);
       if (status != SUCCEEDED)
@@ -1831,10 +1834,13 @@ ACE_DynScheduler::create_timeline ()
         break;
       }
 
-      while (!reschedule_queue.empty ())
+      while (reschedule_queue.is_empty () == 0)
       {
-        rescheduled_entry = reschedule_queue.front ();
-        reschedule_queue.pop_front ();
+        if (reschedule_queue.dequeue_head (rescheduled_entry) < 0)
+        {
+          status = ST_BAD_INTERNAL_POINTER;
+          break;
+        }
         status = schedule_timeline_entry (*rescheduled_entry, reschedule_queue);
         if (status != SUCCEEDED)
         {

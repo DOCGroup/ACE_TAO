@@ -390,7 +390,7 @@ ACE_Strategy_Scheduler::minimum_critical_priority ()
 ACE_DynScheduler::status_t
 ACE_Strategy_Scheduler::schedule_timeline_entry (
   Dispatch_Entry &dispatch_entry,
-  std::deque<Dispatch_Entry *> &reschedule_queue)
+  ACE_Unbounded_Queue <Dispatch_Entry *> &reschedule_queue)
 {
   status_t status = SUCCEEDED;
 
@@ -439,14 +439,7 @@ ACE_Strategy_Scheduler::schedule_timeline_entry (
 
       // Put the dispatch entry into the set of entries that will be
       // rescheduled at the end of this method (tail recursively).
-      try
-        {
-          reschedule_queue.push_back (removed_dispatch_entry);
-        }
-      catch (std::bad_alloc const &)
-        {
-          return ST_VIRTUAL_MEMORY_EXHAUSTED;
-        }
+      reschedule_queue.enqueue_tail (removed_dispatch_entry);
 
       // Advance the iterator to the next timeline entry (if there is one)
       // that is not for the dispatch entry being removed.
