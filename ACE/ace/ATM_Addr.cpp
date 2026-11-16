@@ -142,9 +142,7 @@ ACE_ATM_Addr::init (u_char selector)
   atm_addr_.sap.t_atm_sap_appl.SVE_tag = (int8_t) T_ATM_PRESENT;
   atm_addr_.sap.t_atm_sap_appl.ID_type = (u_int8_t) T_ATM_USER_APP_ID;
 
-  ACE_OS::memcpy (atm_addr_.sap.t_atm_sap_appl.ID.user_defined_ID,
-                  BHLI_MAGIC,
-                  sizeof atm_addr_.sap.t_atm_sap_appl.ID);
+  ACE_OS::memcpy (atm_addr_.sap.t_atm_sap_appl.ID.user_defined_ID, BHLI_MAGIC, sizeof atm_addr_.sap.t_atm_sap_appl.ID);
 #elif defined (ACE_HAS_FORE_ATM_WS2)
   ACE_OS::memset ((void *)&atm_addr_, 0, sizeof atm_addr_);
   atm_addr_.satm_number.Addr[ ATM_ADDR_SIZE - 1 ] = (char)selector;
