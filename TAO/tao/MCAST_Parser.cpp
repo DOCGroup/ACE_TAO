@@ -225,7 +225,7 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
           iovp[1].iov_len  = sizeof (ACE_UINT16);
 
           // The service name string.
-          iovp[2].iov_base = (char *) service_name;
+          iovp[2].iov_base = const_cast<char *> (service_name);
           iovp[2].iov_len  =
             static_cast<u_long> (std::strlen (service_name) + 1);
 
