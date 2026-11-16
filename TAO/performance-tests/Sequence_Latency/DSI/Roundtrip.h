@@ -23,7 +23,7 @@ public:
   Roundtrip &operator= (Roundtrip const &) = delete;
   Roundtrip &operator= (Roundtrip &&) = delete;
 
-  // = The DSI methods
+  /// The DSI methods
   void invoke (CORBA::ServerRequest_ptr request) override;
   CORBA::RepositoryId _primary_interface (
       PortableServer::ObjectId const &oid,

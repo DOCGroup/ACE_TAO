@@ -19,7 +19,7 @@ class Roundtrip
 public:
   Roundtrip (CORBA::ORB_ptr orb);
 
-  // = The DSI methods
+  /// The DSI methods
   virtual void invoke (CORBA::ServerRequest_ptr request);
   virtual CORBA::RepositoryId _primary_interface (
       const PortableServer::ObjectId &oid,

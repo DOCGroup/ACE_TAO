@@ -15,7 +15,7 @@ public:
   Worker_Thread &operator= (Worker_Thread const &) = delete;
   Worker_Thread &operator= (Worker_Thread &&) = delete;
 
-  // = The service method
+  /// The service method
   int svc () override;
 
 private:

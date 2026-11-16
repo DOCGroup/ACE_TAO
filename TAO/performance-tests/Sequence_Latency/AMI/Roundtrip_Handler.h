@@ -23,32 +23,32 @@ public:
   /// Dump the results
   void dump_results (ACE_High_Res_Timer::global_scale_factor_type gsf);
 
-  // = The skeleton methods for test octet load
+  /// The skeleton methods for test octet load
   void test_octet_method (Test::Timestamp send_time) override;
 
   void test_octet_method_excep (::Messaging::ExceptionHolder *holder) override;
 
-  // = The skeleton methods for test char load
+  /// The skeleton methods for test char load
   void test_char_method (Test::Timestamp send_time) override;
   void test_char_method_excep (::Messaging::ExceptionHolder *holder) override;
 
-  // = The skeleton methods for test long load
+  /// The skeleton methods for test long load
   void test_long_method (Test::Timestamp send_time) override;
   void test_long_method_excep (::Messaging::ExceptionHolder *holder) override;
 
-  // = The skeleton methods for test short load
+  /// The skeleton methods for test short load
   void test_short_method (Test::Timestamp send_time) override;
   void test_short_method_excep (::Messaging::ExceptionHolder *holder) override;
 
-  // = The skeleton methods for test longlong load
+  /// The skeleton methods for test longlong load
   void test_longlong_method (Test::Timestamp send_time) override;
   void test_longlong_method_excep (::Messaging::ExceptionHolder *holder) override;
 
-  // = The skeleton methods for test double load
+  /// The skeleton methods for test double load
   void test_double_method (Test::Timestamp send_time) override;
   void test_double_method_excep (::Messaging::ExceptionHolder *holder) override;
 
-  // = Other methods
+  /// Other methods
 
   void shutdown () override;
   void shutdown_excep (::Messaging::ExceptionHolder *holder) override;
