@@ -27,7 +27,7 @@ Foo_Statistics::actual (unsigned op_num, unsigned count)
 bool
 Foo_Statistics::actual_vs_expected () const
 {
-  for (unsigned i = 0; i < this->expected_.size (); i++)
+  for (unsigned i = 0; i < this->expected_.size (); ++i)
     {
       if (this->expected_[i] != this->actual_[i])
         {
@@ -47,7 +47,7 @@ Foo_Statistics::total () const
 {
   unsigned total {};
 
-  for (unsigned i = 0; i < this->expected_.size (); i++)
+  for (unsigned i = 0; i < this->expected_.size (); ++i)
     {
       total += this->expected_[i];
     }

@@ -169,7 +169,7 @@ LB_server::create_object_group ()
                                  "Basic Group", "Java Group", "Forth Group",
                                  "COBOL Group", "Ruby Group", "Scala Group",
                                  "R Group", 0};
-      for (int i = 0; group_names[i] != 0; i++)
+      for (int i = 0; group_names[i] != 0; ++i)
         {
           try
             {

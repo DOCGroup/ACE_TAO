@@ -136,7 +136,7 @@ WxSelectNSDialog::WxSelectNSDialog( wxWindow* parent)
 WxSelectNSDialog::~WxSelectNSDialog()
 {
   int count = servers->Number();
-  for (int i = 0; i < count; i++) {
+  for (int i = 0; i < count; ++i) {
     delete static_cast<wxString*>( servers->GetClientData( i));
   }
 }

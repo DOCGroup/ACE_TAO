@@ -124,7 +124,7 @@ ServerApp::collocated_setup ()
 {
   unsigned client_id = this->num_remote_clients_;
 
-  for (unsigned i = 0; i < this->num_collocated_clients_; i++)
+  for (unsigned i = 0; i < this->num_collocated_clients_; ++i)
     {
       ++client_id;
 
@@ -352,7 +352,7 @@ ServerApp::check_results ()
 
   Foo_ClientEngine::expected_results (this->stats_);
 
-  for (unsigned i = 0; i < this->num_servants_; i++)
+  for (unsigned i = 0; i < this->num_servants_; ++i)
     {
       this->servants_.servant (i)->gather_stats (this->stats_);
     }

@@ -50,7 +50,7 @@ Server::Server (int, ACE_TCHAR *argv[])
 
     my_argv = args_2.argv();
     my_argc = args_2.argc();
-    for (count = 0; count < my_argc; count++) {
+    for (count = 0; count < my_argc; ++count) {
       if (ACE_OS::strcasecmp (ACE_TEXT("-ORBEndpoint"), my_argv[count]) == 0) {
         break;
       }

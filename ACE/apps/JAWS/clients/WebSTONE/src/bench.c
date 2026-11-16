@@ -318,7 +318,7 @@ text_to_stats(char *stats_as_text) {
   the_stats->datatime = text_to_timeval(strtok((char *)0, "\t"));
   the_stats->totalpages = (unsigned long) text_to_double(strtok((char *)0, "\t"));
   the_stats->total_num_of_files = (unsigned int) text_to_double(strtok((char *)0, "\t"));
-  for (i = 0; i < number_of_pages; i++)
+  for (i = 0; i < number_of_pages; ++i)
     {
       the_stats->page_numbers[i] = (unsigned int) text_to_double(strtok((char *)0, "\t"));
     }
@@ -360,7 +360,7 @@ stats_to_text(const stats_t *the_stats) {
   tmpbuf = double_to_text((the_stats->total_num_of_files));
   strcat(stats_as_text, tmpbuf);
 
-  for (i = 0; i < number_of_pages; i++)
+  for (i = 0; i < number_of_pages; ++i)
     {
       tmpbuf = double_to_text((the_stats->page_numbers[i]));
       strcat(stats_as_text, tmpbuf);

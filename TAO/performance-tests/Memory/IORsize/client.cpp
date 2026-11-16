@@ -84,13 +84,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       for (CORBA::ULong l = 0;
            l != pl.length ();
-           l++)
+           ++l)
         {
           pl[l] = foo;
         }
 
       // Make a few calls to the remote object
-      for (int iter = 0; iter != n; iter++)
+      for (int iter = 0; iter != n; ++iter)
         {
           mem->send_objref (pl);
         }

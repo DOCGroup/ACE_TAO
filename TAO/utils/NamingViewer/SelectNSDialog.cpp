@@ -127,7 +127,7 @@ void CSelectNSDialog::OnDestroy()
 
   // TODO: Add your message handler code here
   int const count = m_Servers.GetCount();
-  for(int i=0; i < count; i++)
+  for(int i=0; i < count; ++i)
   {
     delete (char*)m_Servers.GetItemData(i);
   }

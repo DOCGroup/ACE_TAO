@@ -14,14 +14,14 @@ Roundtrip::test_method (Test::Timestamp send_time,
 {
   if (cl_number % 2 == 0)
   {
-    for (int i = 1; i < 10000; i++)
+    for (int i = 1; i < 10000; ++i)
     {
       (void) ACE::is_prime (900090, 2, 400090);
     }
   }
   else
   {
-    for (int i = 1; i < 5000; i++)
+    for (int i = 1; i < 5000; ++i)
     {
       (void) ACE::is_prime (900090, 2, 400090);
     }

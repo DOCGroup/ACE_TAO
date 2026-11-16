@@ -49,7 +49,7 @@ Foo_i::done ()
 void
 Foo_i::gather_stats (Foo_Statistics& stats)
 {
-  for (unsigned i = 0; i < this->op_count_.size (); i++)
+  for (unsigned i = 0; i < this->op_count_.size (); ++i)
     {
       stats.actual (i + 1, this->op_count_[i]);
     }

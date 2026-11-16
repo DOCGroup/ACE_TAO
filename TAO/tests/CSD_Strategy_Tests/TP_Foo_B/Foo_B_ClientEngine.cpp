@@ -44,7 +44,7 @@ Foo_B_ClientEngine::execute()
       check_validity = false;
     }
 
-  for (CORBA::ULong j = 1; j <= 5; j++)
+  for (CORBA::ULong j = 1; j <= 5; ++j)
     {
       this->obj_->op4(495 + (this->client_id_ * 5) + j);
     }
@@ -103,7 +103,7 @@ Foo_B_ClientEngine::execute()
 
   Fixed_Array fixed_array;
 
-  for (CORBA::ULong m = 0 ; m < 20; m ++)
+  for (CORBA::ULong m = 0 ; m < 20; ++m)
   {
      fixed_array[m] = this->client_id_ + m;
   }
@@ -112,7 +112,7 @@ Foo_B_ClientEngine::execute()
 
   Var_Array var_array;
 
-  for (CORBA::ULong k = 0; k < 3; k++)
+  for (CORBA::ULong k = 0; k < 3; ++k)
     {
       ACE_OS::sprintf (buffer, "%d %s %d",
                        this->client_id_, ONEWAY_ARG_TEST_STR, k);

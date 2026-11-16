@@ -87,7 +87,7 @@ Thread_Pool::svc ()
   // Keep looping, reading a message out of the queue, until we get a
   // message with a length == 0, which signals us to quit.
 
-  for (;; count++)
+  for (;; ++count)
     {
       ACE_Message_Block *mb {};
 

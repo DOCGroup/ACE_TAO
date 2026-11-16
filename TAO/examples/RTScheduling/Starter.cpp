@@ -81,7 +81,7 @@ Starter::add_to_synchs (CosNaming::BindingList &binding_list)
   ACE_Time_Value base_time = ACE_OS::gettimeofday ();
   for (CORBA::ULong i = 0;
        i < binding_list.length ();
-       i++)
+       ++i)
     {
       // Get the receiver name from the binding list.
       ACE_CString synch_name =

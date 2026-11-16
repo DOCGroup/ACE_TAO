@@ -27,7 +27,7 @@ JAWS_Cached_Allocator<T, ACE_LOCK>::extend_pool ()
   char *new_pool {};
   ACE_NEW (new_pool, char[this->pool_size_ + sizeof (char *)]);
 
-  for (size_t c = 0; c < (this->pool_size_ / sizeof (T)); c++)
+  for (size_t c = 0; c < (this->pool_size_ / sizeof (T)); ++c)
     {
       void *placement = new_pool + c * sizeof (T);
       this->free_list_.add (new (placement) ACE_Cached_Mem_Pool_Node<T>);

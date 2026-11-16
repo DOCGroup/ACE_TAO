@@ -34,7 +34,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   int num_leaves = argc / 2 - 2;
 
   ACE_OS::printf( "ATM_Client: Connecting to ...\n" );
-  for ( int i = 0; i < num_leaves; i++ )
+  for ( int i = 0; i < num_leaves; ++i )
   {
     hosts[ i ].set( argv[ i*2 + 4 ],
                     ( argv[ i*2 + 5 ] != nullptr )
@@ -125,7 +125,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   } else {
     // Point-to-multipoint connection
-    for ( int i = 0; i < num_leaves; i++ ) {
+    for ( int i = 0; i < num_leaves; ++i ) {
       con.add_leaf( atm_stream,
                     hosts[ i ],
                     i,

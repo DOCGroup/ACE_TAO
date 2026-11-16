@@ -178,7 +178,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           payload[j] = j % 256;
         }
 
-      for (ssize_t ni = 0; ni < options.iterations; ni++)
+      for (ssize_t ni = 0; ni < options.iterations; ++ni)
         {
           if (options.debug)
             {

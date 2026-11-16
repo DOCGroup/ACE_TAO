@@ -316,7 +316,7 @@ static void MD5_memcpy (POINTER output, POINTER input, unsigned int len)
 {
   unsigned int i;
 
-  for (i = 0; i < len; i++)
+  for (i = 0; i < len; ++i)
   {
 
  output[i] = input[i];
@@ -329,7 +329,7 @@ static void MD5_memset (POINTER output, int value, unsigned int len)
 {
   unsigned int i;
 
-  for (i = 0; i < len; i++)
+  for (i = 0; i < len; ++i)
   {
  ((char*)output)[i] = (char)value;
   }

@@ -57,7 +57,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_ASSERT (result == 0);
   ACE_UNUSED_ARG (result); // To avoid compile warning with ACE_NDEBUG.
 
-  for (int i = 1; i <= iterations; i++)
+  for (int i = 1; i <= iterations; ++i)
     {
       // Add dummy handle to dummy set
       dummy_handle_set.set_bit (dummy_pipe.read_handle ());

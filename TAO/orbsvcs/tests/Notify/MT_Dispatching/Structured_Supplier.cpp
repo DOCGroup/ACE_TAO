@@ -155,7 +155,7 @@ SendEvent (Suppliers const& suppliers, unsigned int supplier_count)
 
   try
   {
-    for (unsigned int i = 0; i < supplier_count; i++)
+    for (unsigned int i = 0; i < supplier_count; ++i)
     {
       suppliers[i]->send_event (event);
     }
@@ -172,7 +172,7 @@ create_suppliers (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
                   unsigned int supplier_count,
                   Suppliers& suppliers)
 {
-  for (unsigned int i = 0; i < supplier_count; i++)
+  for (unsigned int i = 0; i < supplier_count; ++i)
   {
     ACE_NEW_THROW_EX (suppliers[i],
       TAO_Notify_Tests_StructuredPushSupplier (),

@@ -712,7 +712,7 @@ DII_Cubit_Client::run ()
   // Order and format of test calls matches that of SII (IDL) tests
   // for easy comparison.
 
-  for (size_t j = 0; j < NUMBER_OF_TESTS; j++)
+  for (size_t j = 0; j < NUMBER_OF_TESTS; ++j)
     {
       this->call_count_ = 0;
 
@@ -720,7 +720,7 @@ DII_Cubit_Client::run ()
 
       dii_timer.start ();
 
-      for (CORBA::ULong i = 0; i < this->loop_count_; i++)
+      for (CORBA::ULong i = 0; i < this->loop_count_; ++i)
         (this->*op_array_[j]) ();
 
       dii_timer.stop ();

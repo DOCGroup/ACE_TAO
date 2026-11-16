@@ -311,7 +311,7 @@ connecttomaster(char *str)
      */
 #define MAXTRIES 30
 #define TRYDELAY_SEC  1
-    for (tries = 0; tries < MAXTRIES; tries++) {
+    for (tries = 0; tries < MAXTRIES; ++tries) {
 
         sock = connectsock(ConnectStr,(NETPORT)atoi(tempch),"tcp");
 
@@ -432,7 +432,7 @@ makeload(int maxcount, int pageval, THREAD rqst_timer_t *timerarray, THREAD stat
     page_stats_init(&page_stats_tmp);
     D_PRINTF( "Page stats initialized\n" );
 
-    for (cnt = 0; cnt < maxcount; cnt++)
+    for (cnt = 0; cnt < maxcount; ++cnt)
     {
   D_PRINTF( "Loop count %d in makeload()\n", cnt );
   if (pageval == -1)
@@ -698,7 +698,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     D_PRINTF( "Running in debug mode\n\n" );
 
     /* print the command line */
-    for (i = 0; i < argc; i++)
+    for (i = 0; i < argc; ++i)
   D_PRINTF( "%s ", argv[i] );
     D_PRINTF( "\n\n" );
 
@@ -815,9 +815,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       /* allocate memory */
       D_PRINTF( "Allocating page list: %ld by %d\n",
   number_of_pages, numfiles );
-      for (i=0; i<number_of_pages; i++)
+      for (i=0; i<number_of_pages; ++i)
   {
-    for (j=0; j<MAXNUMOFFILES; j++)
+    for (j=0; j<MAXNUMOFFILES; ++j)
       {
         load_file_list[i].servername[j] =
     (char *)mymalloc(URL_SIZE);
@@ -859,7 +859,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
      * FIRST, SET UP SIGNAL HANDLING
      */
     signal(SIGCHLD, childhandler);
-    for(i = 0; i < numclients; i++)
+    for(i = 0; i < numclients; ++i)
     {
       thr_create (0, 0, ClientThread, 0, THR_BOUND, 0);
 
@@ -892,7 +892,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
        } */
 #else
     /* start threads on NT */
-    for (i = 0; i < numclients; i++)
+    for (i = 0; i < numclients; ++i)
     {
   if (_beginthread(ClientThread, 0, 0) == -1)
   {
@@ -960,7 +960,7 @@ void ClientThread(void *dummy)
     page_stats =
       (page_stats_t *)mymalloc((number_of_pages)*sizeof(page_stats_t));
 
-    for (i=0; i < number_of_pages; i++) {
+    for (i=0; i < number_of_pages; ++i) {
         page_stats_init(&(page_stats[i]));
     }
 
@@ -992,7 +992,7 @@ void ClientThread(void *dummy)
     rand_r(&junk);
     D_PRINTF( "Random seed: %d\n", junk );
 
-    for (i=0; i < MAXNUMOFFILES; i++)
+    for (i=0; i < MAXNUMOFFILES; ++i)
     {
   rqtimer_init(&(timerarray[i]));
     }
@@ -1058,7 +1058,7 @@ void ClientThread(void *dummy)
     GETTIMEOFDAY(&(timestat.starttime), &(timestat.starttimezone));
 
     /* LOOP UNTIL WE HIT numloops, OR WE RUN OUT OF TIME */
-    for(loopcnt = 0;  (loopcnt < numloops) && !timeexpired;  loopcnt++)
+    for(loopcnt = 0;  (loopcnt < numloops) && !timeexpired;  ++loopcnt)
     {
   /*
    * THIS IS WHERE LOAD TESTING IS DONE.
@@ -1106,7 +1106,7 @@ void ClientThread(void *dummy)
       {
     for (page_number = 0;
          page_number < number_of_pages;
-         page_number++)
+         ++page_number)
     {
         filecnt = makeload(load_file_list[page_number].num_of_files,
       page_number, timerarray, &timestat, mastersock, page_stats);
@@ -1151,7 +1151,7 @@ void ClientThread(void *dummy)
   /*
    * DUMP THE LOG FILE INFORMATION.
    */
-  for (loop=0; loop < (loopcnt * file_count); loop++)
+  for (loop=0; loop < (loopcnt * file_count); ++loop)
   {
       fprintf(logfile, " entertime \t%d.%d\n"
            " beforeconnect \t%d.%d\n"
@@ -1214,7 +1214,7 @@ void ClientThread(void *dummy)
     /* write pagestats */
     {
       char *page_stats_as_text;
-      for (i = 0; i < number_of_pages; i++)
+      for (i = 0; i < number_of_pages; ++i)
         {
     D_PRINTF( "On page_stats[%d]\n", i );
     page_stats_as_text = page_stats_to_text(&page_stats[i]);
@@ -1265,7 +1265,7 @@ void ClientThread(void *dummy)
 
   if (uil_filelist_f && numloops && verbose)
   {
-      for (loop = 0; loop < number_of_pages; loop++)
+      for (loop = 0; loop < number_of_pages; ++loop)
       {
     if (timestat.page_numbers[loop] != 0)
     {

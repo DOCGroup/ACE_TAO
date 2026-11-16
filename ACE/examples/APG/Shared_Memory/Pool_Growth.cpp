@@ -217,7 +217,7 @@ int handle_parent (ACE_TCHAR *cmdLine)
   // Make sure the child does map a partial pool in memory.
   ACE_OS::sleep (2);
 
-  for (int i = 0; i < 100; i++)
+  for (int i = 0; i < 100; ++i)
     sendRecord (i, shmem_allocator);
   sendRecord (-1, shmem_allocator);
 

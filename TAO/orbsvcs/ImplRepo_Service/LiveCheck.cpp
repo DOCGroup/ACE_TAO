@@ -705,13 +705,13 @@ LiveCheck::LiveCheck ()
 
 LiveCheck::~LiveCheck ()
 {
-  for (LiveEntryMap::iterator em (this->entry_map_); !em.done(); em++)
+  for (LiveEntryMap::iterator em (this->entry_map_); !em.done(); ++em)
     {
       delete em->int_id_;
     }
   this->entry_map_.unbind_all();
 
-  for (PerClientStack::iterator pc (this->per_client_); !pc.done(); pc++)
+  for (PerClientStack::iterator pc (this->per_client_); !pc.done(); ++pc)
     {
       delete *pc;
     }

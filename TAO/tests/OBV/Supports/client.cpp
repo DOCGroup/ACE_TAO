@@ -118,7 +118,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       my_test->start ();
 
-      for (int i = 0; i < options.num_trials; i++)
+      for (int i = 0; i < options.num_trials; ++i)
         {
           // Create a vt_graph_impl instance and store the reference as a
           // vt_graph_var. Then register the instance with the POA to obtain an

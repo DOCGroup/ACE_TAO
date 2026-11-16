@@ -218,7 +218,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     Test_Result = 1;
   }
 
-  for (i = 0; Test_Result == 0 && i < 255; i++)
+  for (i = 0; Test_Result == 0 && i < 255; ++i)
     if (buffer2[i] != buffer[i])
       {
         ACE_ERROR ((LM_ERROR,

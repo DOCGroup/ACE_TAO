@@ -22,7 +22,7 @@ class Client_Task : public ACE_Task_Base
     {
       ACE_Time_Value start = ACE_OS::gettimeofday ();
       ACE_Time_Value elapsed;
-      for (int i = 0; elapsed < ACE_Time_Value (test_duration_sec); i++)
+      for (int i = 0; elapsed < ACE_Time_Value (test_duration_sec); ++i)
       {
         try
         {

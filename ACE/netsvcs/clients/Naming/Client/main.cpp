@@ -26,7 +26,7 @@ ACE_TMAIN (int, ACE_TCHAR *argv[])
               new_args.argc ()));
 
   // Print the contents of the combined <ACE_ARGV>.
-  for (int i = 0; i < new_args.argc (); i++)
+  for (int i = 0; i < new_args.argc (); ++i)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%d) %s\n"),
                 i,

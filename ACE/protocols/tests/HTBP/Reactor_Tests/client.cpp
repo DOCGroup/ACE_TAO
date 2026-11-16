@@ -107,7 +107,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   char buffer[1000];
   ssize_t n {};
   int retrycount = 10;
-  for (int i {}; i < 3; i++)
+  for (int i {}; i < 3; ++i)
     {
       ACE::HTBP::Channel * const ch = session.outbound();
       ACE_OS::sprintf (buffer,"Do you hear me? %d",i);

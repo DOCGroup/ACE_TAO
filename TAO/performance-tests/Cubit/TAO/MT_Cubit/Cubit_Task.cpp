@@ -84,7 +84,7 @@ Cubit_Task::svc ()
   // Need to clean up and do a CORBA::release on everything we've
   // created!
 
-  for (u_int i = 0; i < num_of_objs_; i++)
+  for (u_int i = 0; i < num_of_objs_; ++i)
     delete this->servants_[i];
 
   return 0;
@@ -194,7 +194,7 @@ Cubit_Task::create_servants ()
       // IORs.
       for (u_int i = 0;
            i < this->num_of_objs_;
-           i++)
+           ++i)
         {
           ACE_OS::sprintf (buffer,
                            "%s%02d",

@@ -115,7 +115,7 @@ query_aio_completions ()
   size_t number_of_compleions = 0;
   for (number_of_compleions = 0;
        number_of_compleions < 2;
-       number_of_compleions ++)
+       ++number_of_compleions)
     {
       // Wait for <milli_seconds> amount of time.
       // @@ Assigning <milli_seconds> to tv_sec.

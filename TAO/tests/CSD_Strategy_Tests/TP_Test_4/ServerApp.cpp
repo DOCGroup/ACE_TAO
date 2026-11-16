@@ -109,7 +109,7 @@ ServerApp::collocated_setup()
 
   unsigned servant_index = 0;
 
-  for (unsigned i = 0; i < this->num_collocated_clients_; i++)
+  for (unsigned i = 0; i < this->num_collocated_clients_; ++i)
     {
       if (i > 0)
         {
@@ -160,7 +160,7 @@ ServerApp::run_orb_event_loop()
 void
 ServerApp::cleanup()
 {
-  for (unsigned i = 0; i < this->num_servants_; i++)
+  for (unsigned i = 0; i < this->num_servants_; ++i)
     {
       this->servants_.servant(i)->dump();
     }
@@ -337,7 +337,7 @@ ServerApp::check_validity ()
   Foo_C_ClientEngine::expected_results (stats);
   Foo_C_Custom_ClientEngine::expected_results (stats);
 
-  for (unsigned i = 0; i < this->num_servants_; i++)
+  for (unsigned i = 0; i < this->num_servants_; ++i)
     {
       this->servants_.servant(i)->gather_stats(stats);
     }

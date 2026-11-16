@@ -28,7 +28,7 @@ Grid_i::Grid_i (CORBA::Short x,
                      static_cast<CORBA::Long **> (mem_pool->malloc (y * sizeof (CORBA::Long *))));
       if (array_)
         {
-          for (int ctr = 0; ctr < y; ctr++)
+          for (int ctr = 0; ctr < y; ++ctr)
             {
               ACE_ALLOCATOR (array_[ctr],
                              static_cast<CORBA::Long *> (mem_pool->malloc (x *
@@ -107,7 +107,7 @@ void
 Grid_i::destroy ( )
 {
   // Delete the array.
-  for (int i = 0; i < height_; i++)
+  for (int i = 0; i < height_; ++i)
     this->pool_t_->free (array_[i]);
 
   this->pool_t_->free (array_);

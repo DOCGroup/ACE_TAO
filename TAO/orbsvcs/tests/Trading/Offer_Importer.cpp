@@ -127,7 +127,7 @@ TAO_Offer_Importer::perform_queries_with_policies (
       CosTrading::PropertyNameSeq prop_name_seq (4, 4, props, 0);
       desired_props.prop_names (prop_name_seq);
 
-      for (int i = 0; i < TT_Info::NUM_QUERIES; i++)
+      for (int i = 0; i < TT_Info::NUM_QUERIES; ++i)
         {
           ACE_DEBUG ((LM_DEBUG, "\n"));
           ACE_DEBUG ((LM_DEBUG, "*** Performing query for %C.\n", TT_Info::QUERIES[i][0]));
@@ -197,7 +197,7 @@ TAO_Offer_Importer::perform_queries_with_policies (
                 ACE_DEBUG ((LM_DEBUG, "*** Limits Applied:\n\n"));
               }
 
-              for (int length = limits_applied->length (), j = 0; j < length; j++)
+              for (int length = limits_applied->length (), j = 0; j < length; ++j)
                 {
                   char const *policy_name = (*limits_applied.ptr ())[j];
                   ACE_DEBUG ((LM_DEBUG, "%C\n",
@@ -222,7 +222,7 @@ TAO_Offer_Importer::display_results (const CosTrading::OfferSeq& offer_seq,
       ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
       ACE_DEBUG ((LM_DEBUG, "Offers in the sequence:\n"));
       ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
-      for (CORBA::ULong i = 0; i < offer_seq.length (); i++)
+      for (CORBA::ULong i = 0; i < offer_seq.length (); ++i)
         {
           // Call back to the exported object.
           // FIXME: shouldn't this be done in a separate 'verify_results' method?
@@ -251,7 +251,7 @@ TAO_Offer_Importer::display_results (const CosTrading::OfferSeq& offer_seq,
               CORBA::ULong const how_many {100};
               any_left = offer_iterator->next_n (how_many, offers.out ());
 
-              for (CORBA::ULong i = 0; i < offers->length (); i++)
+              for (CORBA::ULong i = 0; i < offers->length (); ++i)
                 {
                   // Call back to the exported object.
                   // FIXME: shouldn't this be done in a separate 'verify_results' method?

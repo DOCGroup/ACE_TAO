@@ -225,7 +225,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   Completions_To_Go = NrCompletions;
 
   // Creation.
-  for (ri = 0; ri < NrCompletions; ri++)
+  for (ri = 0; ri < NrCompletions; ++ri)
     {
       // Use RTMIN and RTMAX proactor alternatively, to post
       // completions.
@@ -246,7 +246,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_OS::sleep(5);
   // Post all the result objects.
   ACE_Proactor *proactor;
-  for (ri = 0; ri < NrCompletions; ri++)
+  for (ri = 0; ri < NrCompletions; ++ri)
     {
       // Use RTMIN and RTMAX Proactor alternatively, to post
       // completions.

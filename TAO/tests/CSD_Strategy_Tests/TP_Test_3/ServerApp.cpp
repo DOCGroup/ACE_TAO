@@ -149,7 +149,7 @@ ServerApp::collocated_setup()
 
   unsigned client_id = this->num_remote_clients_;
 
-  for (unsigned i = 0; i < this->num_collocated_clients_; i++)
+  for (unsigned i = 0; i < this->num_collocated_clients_; ++i)
     {
       ++client_id;
       // Dole out the servant object references in a round-robin fashion.
@@ -365,7 +365,7 @@ ServerApp::check_validity ()
 
   Foo_B_ClientEngine::expected_results (stats);
 
-  for (unsigned i = 0; i < this->num_servants_; i++)
+  for (unsigned i = 0; i < this->num_servants_; ++i)
     {
       this->foo_servants_.servant(i)->gather_stats (stats);
     }

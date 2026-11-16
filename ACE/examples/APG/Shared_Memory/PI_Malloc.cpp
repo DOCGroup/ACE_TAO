@@ -64,7 +64,7 @@ int addRecords ()
 {
   char buf[32];
 
-  for (int i = 0; i < 10; i++)
+  for (int i = 0; i < 10; ++i)
     {
       ACE_OS::sprintf (buf, "%s:%d", "Record", i);
 

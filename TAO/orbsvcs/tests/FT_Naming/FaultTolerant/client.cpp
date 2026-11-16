@@ -543,7 +543,7 @@ do_failover_name_test (
     level1_context = root_context_1->bind_new_context (level1);
     ACE_OS::thr_yield ();
 
-    for (i=0; i<o_breadth; i++)
+    for (i=0; i<o_breadth; ++i)
     {
       // Instantiate a dummy object and bind it under the new context.
       My_Test_Object *impl1 = new My_Test_Object (i+1);
@@ -604,7 +604,7 @@ do_failover_name_test (
   try
   {
     CosNaming::NamingContext_var next_context = root_context_1;
-    for (i=0; i<c_depth; i++)
+    for (i=0; i<c_depth; ++i)
     {
       // Bind level1 context under root.
       CosNaming::Name deep;
@@ -628,7 +628,7 @@ do_failover_name_test (
   // Create a wide context tree
   try
   {
-    for (i=0; i<c_breadth; i++)
+    for (i=0; i<c_breadth; ++i)
     {
       // Bind all level of context under root.
       CosNaming::Name wide;
@@ -748,7 +748,7 @@ do_failover_name_test (
     deep.length (c_depth);
 
     char deep_name[16];
-    for (i=0; i<c_depth; i++)
+    for (i=0; i<c_depth; ++i)
     {
       ACE_OS::sprintf (deep_name, "deep_%d", i);
       deep[i].id = CORBA::string_dup (deep_name);
@@ -931,7 +931,7 @@ do_failover_name_test (
     CosNaming::Name deep;
     deep.length (c_depth);
     char deep_name[16];
-    for (i=0; i<c_depth; i++)
+    for (i=0; i<c_depth; ++i)
     {
       ACE_OS::sprintf (deep_name, "deep_%d", i);
       deep[i].id = CORBA::string_dup (deep_name);
@@ -962,7 +962,7 @@ do_failover_name_test (
     CosNaming::Name deep;
     deep.length (c_depth-1);
     char deep_name[16];
-    for (i=0; i<c_depth-1; i++)
+    for (i=0; i<c_depth-1; ++i)
     {
       ACE_OS::sprintf (deep_name, "deep_%d", i);
       deep[i].id = CORBA::string_dup (deep_name);
@@ -1168,7 +1168,7 @@ do_persistence_name_test (
       ACE_OS::thr_yield ();
     }
 
-    for (i=0; i<o_breadth; i++)
+    for (i=0; i<o_breadth; ++i)
     {
       // Instantiate a dummy object and bind it under the new context.
       My_Test_Object *impl1 = new My_Test_Object (i+1);
@@ -1226,7 +1226,7 @@ do_persistence_name_test (
     try
     {
       CosNaming::NamingContext_var next_context = root_context_1;
-      for (i=0; i<c_depth; i++)
+      for (i=0; i<c_depth; ++i)
       {
         // Bind level1 context under root.
         CosNaming::Name deep;
@@ -1251,7 +1251,7 @@ do_persistence_name_test (
   // Create a wide context tree
   try
   {
-    for (i=0; i<c_breadth; i++)
+    for (i=0; i<c_breadth; ++i)
     {
       // Bind all level of context under root.
       CosNaming::Name wide;
@@ -1749,7 +1749,7 @@ do_equivalence_name_test (
     level1_context = root_context_1->bind_new_context (level1);
     ACE_OS::thr_yield ();
 
-    for (i=0; i<o_breadth; i++)
+    for (i=0; i<o_breadth; ++i)
     {
       // Instantiate a dummy object and bind it under the new context.
       My_Test_Object *impl1 = new My_Test_Object (i+1);
@@ -1805,7 +1805,7 @@ do_equivalence_name_test (
   try
   {
     CosNaming::NamingContext_var next_context = root_context_1;
-    for (i=0; i<c_depth; i++)
+    for (i=0; i<c_depth; ++i)
     {
       // Bind level1 context under root.
       CosNaming::Name deep;
@@ -1829,7 +1829,7 @@ do_equivalence_name_test (
   // Create a wide context tree
   try
   {
-    for (i=0; i<c_breadth; i++)
+    for (i=0; i<c_breadth; ++i)
     {
       // Bind all level of context under root.
       CosNaming::Name wide;
@@ -1954,7 +1954,7 @@ do_equivalence_name_test (
     CosNaming::Name deep;
     deep.length (c_depth);
     char deep_name[16];
-    for (i=0; i<c_depth; i++)
+    for (i=0; i<c_depth; ++i)
     {
       ACE_OS::sprintf (deep_name, "deep_%d", i);
       deep[i].id = CORBA::string_dup (deep_name);
@@ -2137,7 +2137,7 @@ do_equivalence_name_test (
     CosNaming::Name deep;
     deep.length (c_depth);
     char deep_name[16];
-    for (i=0; i<c_depth; i++)
+    for (i=0; i<c_depth; ++i)
     {
       ACE_OS::sprintf (deep_name, "deep_%d", i);
       deep[i].id = CORBA::string_dup (deep_name);
@@ -2168,7 +2168,7 @@ do_equivalence_name_test (
     CosNaming::Name deep;
     deep.length (c_depth-1);
     char deep_name[16];
-    for (i=0; i<c_depth-1; i++)
+    for (i=0; i<c_depth-1; ++i)
     {
       ACE_OS::sprintf (deep_name, "deep_%d", i);
       deep[i].id = CORBA::string_dup (deep_name);

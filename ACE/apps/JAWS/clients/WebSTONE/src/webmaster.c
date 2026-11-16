@@ -228,7 +228,7 @@ void echo_client(void *stream)
 
     while (1) {
   FD_ZERO(&readfds);
-  for (i = 0; i < num_rexecs; i++)
+  for (i = 0; i < num_rexecs; ++i)
       if (sockarr[i] != BADSOCKET_VALUE)
     FD_SET(sockarr[i], &readfds);
   rv = select(num_rexecs, &readfds, 0, 0, &timeout);
@@ -240,7 +240,7 @@ void echo_client(void *stream)
       errexit("Error in echo_client(): select() returns %d: %s\n", rv, neterrstr());
 
   /* loop over the sockets that are ready with data */
-  for (i = 0; i < num_rexecs; i++) {
+  for (i = 0; i < num_rexecs; ++i) {
       if (sockarr[i] != BADSOCKET_VALUE && FD_ISSET(sockarr[i], &readfds)) {
     len = NETREAD(sockarr[i], buf, sizeof(buf));
     if (len <= 0) {
@@ -307,7 +307,7 @@ int i;
   return master_phe->h_name;
     }
 
-    for (i = 0; master_phe->h_addr_list[i] != 0; i++) {
+    for (i = 0; master_phe->h_addr_list[i] != 0; ++i) {
   if ((*(int *)(master_phe->h_addr_list[i]) & netmask) ==
     (client_addr & netmask))
       goto gotit;
@@ -793,7 +793,7 @@ int sock;
      */
 
     D_PRINTF( "Beginning accept loop\n" );
-    for (cnt = 0; cnt < totalnumclients; cnt++)
+    for (cnt = 0; cnt < totalnumclients; ++cnt)
     {
   D_PRINTF( "Client %d:\t", cnt );
 
@@ -867,7 +867,7 @@ int sock;
     {
 #endif /* WIN32 */
 
-        for (cnt = 0; cnt < totalnumclients; cnt++)
+        for (cnt = 0; cnt < totalnumclients; ++cnt)
         {
             /*
              * SEE WHICH SOCKETS HAVE A INPUT ON THEM PENDING
@@ -912,7 +912,7 @@ int *socknum;
 {
   int cnt;
   fprintf(stdout,"Sending GO to all clients\n");
-  for(cnt = 0; cnt < totalnumclients; cnt++)
+  for(cnt = 0; cnt < totalnumclients; ++cnt)
     {
       if(socknum[cnt] > 0)
         {
@@ -990,7 +990,7 @@ stats_t statarray[MAXCLIENTS];
     tmpfdset = leftfdset;
     {
 #endif /* WIN32 */
-  for(cnt = 0; cnt < totalnumclients; cnt++)
+  for(cnt = 0; cnt < totalnumclients; ++cnt)
   {
       /*
        * SEE WHICH SOCKETS HAVE A INPUT ON THEM PENDING AND
@@ -1035,7 +1035,7 @@ stats_t statarray[MAXCLIENTS];
 
     if(uil_filelist_f) /* READ PAGE STATS */
     {
-      for (i = 0; i < number_of_pages; i++)
+      for (i = 0; i < number_of_pages; ++i)
         {
           D_PRINTF( "On page_stats[%d][%d]\n", cnt, i );
           returnval = recvdata(socknum[cnt], page_stats_as_text,
@@ -1106,7 +1106,7 @@ page_stats_t *page_stats_total;
      * PRINT EVERYTHING OUT
      */
     stats_init(&masterstat);
-    for(cnt = 0; cnt < totalnumclients; cnt++)
+    for(cnt = 0; cnt < totalnumclients; ++cnt)
     {
         if((statarray[cnt].rs.totalconnects > 0) && (dumpall))
         {
@@ -1135,9 +1135,9 @@ page_stats_t *page_stats_total;
   }
     }
 
-    for (i=0; i < totalnumclients; i++)
+    for (i=0; i < totalnumclients; ++i)
     {
-  for (j=0; j < number_of_pages; j++)
+  for (j=0; j < number_of_pages; ++j)
   {
       D_PRINTF( "Summing page stats for %d, page %d, with %d connects\n",
         i, j, statarray[i].page_numbers[j] );
@@ -1165,7 +1165,7 @@ page_stats_t *page_stats_total;
 
     /* print page statistics */
     if (verbose) {
-  for (i = 0; i < number_of_pages; i++)
+  for (i = 0; i < number_of_pages; ++i)
   {
       if (page_stats_total[i].page_valid == 1)
       {
@@ -1192,7 +1192,7 @@ page_stats_t *page_stats_total;
      * Validate run.
      */
     masterstat.total_num_of_files = statarray[0].total_num_of_files;
-    for (i=1; i < totalnumclients; i++)
+    for (i=1; i < totalnumclients; ++i)
     {
         if ((statarray[i].rs.totalconnects > 0) &&
       (statarray[i].total_num_of_files != masterstat.total_num_of_files))
@@ -1311,7 +1311,7 @@ main(const int argc, char *argv[])
     FD_ZERO(&zerofdset);
     FD_ZERO(&fdset);
 
-    for(i = 0; i < MAXCLIENTS; i++)
+    for(i = 0; i < MAXCLIENTS; ++i)
     {
         socknum[i] = BADSOCKET_VALUE;
         statarray[i].rs.totalconnects = 0;
@@ -1331,7 +1331,7 @@ main(const int argc, char *argv[])
     page_stats =
       (page_stats_t **)
       mymalloc(totalnumclients*sizeof(page_stats_t *));
-    for (i=0; i < totalnumclients; i++)
+    for (i=0; i < totalnumclients; ++i)
       {
   page_stats[i] = (page_stats_t *)
     mymalloc(number_of_pages*sizeof(page_stats_t));
@@ -1339,19 +1339,19 @@ main(const int argc, char *argv[])
     page_stats_total =
       (page_stats_t *)mymalloc(number_of_pages*sizeof(page_stats_t));
 
-    for (i=0; i < totalnumclients; i++) {
+    for (i=0; i < totalnumclients; ++i) {
         stats_init(&(statarray[i]));
     }
-    for (i=0; i < totalnumclients; i++) {
-        for (j=0; j < number_of_pages; j++) {
+    for (i=0; i < totalnumclients; ++i) {
+        for (j=0; j < number_of_pages; ++j) {
             page_stats_init(&(page_stats[i][j]));
   }
     }
-    for (i=0; i < number_of_pages; i++) {
+    for (i=0; i < number_of_pages; ++i) {
         page_stats_init(&(page_stats_total[i]));
     }
 
-    for(i = 0; i < totalnumclients; i++)
+    for(i = 0; i < totalnumclients; ++i)
     {
         socknum[i] = BADSOCKET_VALUE;
         statarray[i].rs.totalconnects = 0;
@@ -1393,7 +1393,7 @@ main(const int argc, char *argv[])
      page_stats_total);
 
     /* free memory */
-    for (i = 0; i < totalnumclients; i++)
+    for (i = 0; i < totalnumclients; ++i)
       {
   free(page_stats[i]);
       }

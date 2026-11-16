@@ -20,7 +20,7 @@ TAO_NT_Notify_Service::~TAO_NT_Notify_Service ()
 {
   if (argv_save_)
     {
-      for (int i = 0; i < argc_save_; i++)
+      for (int i = 0; i < argc_save_; ++i)
         ACE_OS::free (argv_save_[i]);
 
       ACE_OS::free (argv_save_);
@@ -210,11 +210,11 @@ TAO_NT_Notify_Service::init (int argc,
 
       // Copy the values into the internal args buffer.
       int i;
-      for (i = 0; i < argc; i++)
+      for (i = 0; i < argc; ++i)
         argv_save_[i] = ACE_OS::strdup (argv[i]);
 
       int j = 0;
-      for (i = argc; i < static_cast<int> ((args.argc () + argc)); i++)
+      for (i = argc; i < static_cast<int> ((args.argc () + argc)); ++i)
         argv_save_[i] = ACE_OS::strdup (args.argv ()[j++]);
 
       // Set the arg counter.

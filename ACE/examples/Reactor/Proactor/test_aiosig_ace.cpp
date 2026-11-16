@@ -179,7 +179,7 @@ query_aio_completions ()
 {
   for (size_t number_of_compleions = 0;
        number_of_compleions < 3;
-       number_of_compleions ++)
+       ++number_of_compleions)
     {
       ACE_Time_Value const timeout (ACE_INFINITE);
 

@@ -133,7 +133,7 @@ void WxNamingTree::listBindingList(
       CosNaming::BindingList_var& bl)
 {
   try {
-    for( unsigned int i=0; i < bl->length(); i++) {
+    for( unsigned int i=0; i < bl->length(); ++i) {
       // Add each entry into the tree control
       CORBA::Object_var object = context->resolve( bl[i].binding_name);
       bool isContext =(bl[i].binding_type == CosNaming::ncontext);

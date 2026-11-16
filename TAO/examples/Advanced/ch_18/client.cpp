@@ -182,7 +182,7 @@ operator<< (std::ostream& os, CCS::Thermostat::BtData const& btd)
 static std::ostream &
 operator<< (std::ostream& os, CCS::Controller::EChange const& ec)
 {
-    for (CORBA::ULong i = 0; i < ec.errors.length(); i++) {
+    for (CORBA::ULong i = 0; i < ec.errors.length(); ++i) {
         os << "Change failed:" << std::endl;
         os << ec.errors[i].tmstat_ref.in(); // Overloaded <<
         os << ec.errors[i].info << std::endl;    // Overloaded <<

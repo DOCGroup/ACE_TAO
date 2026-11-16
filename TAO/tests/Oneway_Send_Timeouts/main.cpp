@@ -94,7 +94,7 @@ MyMain::MyMain (int argc, ACE_TCHAR *argv[])
   , shutdown_ (false)
 {
   --argc;
-  for (int p = 1; p <= argc; p++)
+  for (int p = 1; p <= argc; ++p)
   {
     if (ACE_OS::strcmp (argv[p], ACE_TEXT ("-?")) == 0)
     {

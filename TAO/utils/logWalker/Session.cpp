@@ -26,7 +26,7 @@ Session::~Session ()
 {
   for (Processes::iterator i = processes_.begin();
        i != processes_.end();
-       i++)
+       ++i)
     {
       delete i->item();
     }

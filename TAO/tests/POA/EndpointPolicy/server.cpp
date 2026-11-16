@@ -38,7 +38,7 @@ HostNameForm host_form = HostNameForm::from_hostname;
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  for (int c = 1; c < argc; c++) {
+  for (int c = 1; c < argc; ++c) {
     if (ACE_OS::strcasecmp (argv[c], ACE_TEXT ("-g")) == 0)
       {
         good_ior_file = argv[++c];

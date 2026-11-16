@@ -88,7 +88,7 @@ Test_Task::close (u_long)
 int
 Test_Task::svc ()
 {
-  for (int i = 0; i < NUM_INVOCATIONS; i++)
+  for (int i = 0; i < NUM_INVOCATIONS; ++i)
     {
       ACE_OS::thr_yield ();
 
@@ -169,7 +169,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   Test_Task tt1[MAX_TASKS] {};
   Test_Task tt2[MAX_TASKS] {};
 
-  for (int i = 0; i < MAX_TASKS; i++)
+  for (int i = 0; i < MAX_TASKS; ++i)
     {
       tt1[i].open (react1);
       tt2[i].open (react2.get ());

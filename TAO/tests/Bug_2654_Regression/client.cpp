@@ -89,7 +89,7 @@ Worker::svc ()
   }
   bool excep {};
   ACE_DEBUG ((LM_DEBUG, "(%t) starting loop\n"));
-  for (int i = 0; i < 40; i++)
+  for (int i = 0; i < 40; ++i)
     {
       try
         {

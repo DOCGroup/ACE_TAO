@@ -191,7 +191,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       CORBA::Long l = 931247;
 
-      for (ssize_t ni = 0; ni < niterations; ni++)
+      for (ssize_t ni = 0; ni < niterations; ++ni)
         {
           ACE_DEBUG ((LM_DEBUG,
                           "Sending asynch message: %b\n",

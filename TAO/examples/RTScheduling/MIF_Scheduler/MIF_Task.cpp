@@ -96,7 +96,7 @@ MIF_Task::perform_task ()
       sched_param = dt_creator_->sched_param (this->importance_);
       char const *name {};
 
-      for (int i = 0; i < this->iter_; i++)
+      for (int i = 0; i < this->iter_; ++i)
         {
           ACE_Time_Value run_time = ACE_OS::gettimeofday () - *base_time_;
           TASK_STATS::instance ()->sample (run_time.sec (), count_);
@@ -123,7 +123,7 @@ MIF_Task::perform_task ()
           this->job_->work (this->load_,
                             this->importance_);
 
-          for (int j = 0; j < this->iter_; j++)
+          for (int j = 0; j < this->iter_; ++j)
             {
               ACE_Time_Value run_time = ACE_OS::gettimeofday () - *base_time_;
               TASK_STATS::instance ()->sample (run_time.sec (), count_);

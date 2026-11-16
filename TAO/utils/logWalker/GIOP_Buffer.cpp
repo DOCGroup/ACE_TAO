@@ -227,7 +227,7 @@ GIOP_Buffer::add_octets (const char *text, size_t offset)
   char *err;
   for (int count {};
        count < 16 && this->cur_size() < this->buffer_size_;
-       count++)
+       ++count)
     {
       if (count == 8)
       {

@@ -99,7 +99,7 @@ create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
                   Consumer_Options const& options,
                   Consumers& consumers)
 {
-  for (unsigned int i = 0; i < options.consumer_count; i++)
+  for (unsigned int i = 0; i < options.consumer_count; ++i)
   {
     ACE_NEW_THROW_EX (consumers[i],
       Notify_Structured_Push_Consumer (options.expected_events, client),
@@ -114,7 +114,7 @@ create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
 static void
 disconnect_consumers (Consumers const& consumers, unsigned int consumer_count)
 {
-  for (unsigned int i = 0; i < consumer_count; i++)
+  for (unsigned int i = 0; i < consumer_count; ++i)
   {
     consumers[i]->disconnect ();
   }

@@ -51,7 +51,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Wait for a connection from a client.  This is an example of a
   // concurrent server.
 
-  for (int count = 1; ; count++)
+  for (int count = 1; ; ++count)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "thread %t, blocking for accept #%d\n",

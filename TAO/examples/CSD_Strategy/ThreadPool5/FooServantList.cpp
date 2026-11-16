@@ -31,7 +31,7 @@ FooServantList::create_and_activate (PortableServer::POA_ptr poa)
 {
   poa_ = PortableServer::POA::_duplicate (poa);
 
-  for (unsigned i = 0; i < this->num_servants_; i++)
+  for (unsigned i = 0; i < this->num_servants_; ++i)
     {
       ACE_TCHAR buf[32];
       ACE_OS::sprintf(buf, ACE_TEXT("%02u"), i + 1);
@@ -142,7 +142,7 @@ FooServantList::collocated_client () const
 void
 FooServantList::deactivate_servant ()
 {
-  for (unsigned i = 0; i < this->num_servants_; i++)
+  for (unsigned i = 0; i < this->num_servants_; ++i)
     {
       if ((this->servant_to_deactivate_ == 0) ||
            ((this->servant_to_deactivate_ > 0) &&

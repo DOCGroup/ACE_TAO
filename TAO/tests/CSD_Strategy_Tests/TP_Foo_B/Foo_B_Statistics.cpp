@@ -30,7 +30,7 @@ void
 Foo_B_Statistics::actual(unsigned op_num, LongVector lv)
 {
   unsigned sz = lv.size();
-  for (unsigned i = 0; i < sz; i++)
+  for (unsigned i = 0; i < sz; ++i)
     {
       this->actual_in_long_[op_num-1].push_back (lv[i]);
     }
@@ -40,7 +40,7 @@ void
 Foo_B_Statistics::actual(unsigned op_num, StringVector sv)
 {
   unsigned sz = sv.size();
-  for (unsigned i = 0; i < sz; i++)
+  for (unsigned i = 0; i < sz; ++i)
     {
       this->actual_in_string_[op_num-1].push_back (sv[i]);
     }
@@ -94,7 +94,7 @@ Foo_B_Statistics::actual_vs_expected()
     }
 
   // Verify the number of operations server received.
-  for (unsigned int z = 0; z < 16; z++)
+  for (unsigned int z = 0; z < 16; ++z)
     {
       if (this->expected_op_count_[z] != this->actual_op_count_[z])
         {
@@ -111,7 +111,7 @@ Foo_B_Statistics::actual_vs_expected()
   Foo_B_Statistics stats (1, 0);
   Foo_B_ClientEngine::expected_results (stats);
 
-  for (unsigned i = 0; i < 16; i++)
+  for (unsigned i = 0; i < 16; ++i)
     {
       switch (expected_in_value_type_[i])
       {
@@ -132,7 +132,7 @@ Foo_B_Statistics::actual_vs_expected()
               }
             sort (this->actual_in_long_[i]);
 
-            for (unsigned j = 0; j < actual_size - 1; j++)
+            for (unsigned j = 0; j < actual_size - 1; ++j)
               {
                 if (this->actual_in_long_[i][j] != this->actual_in_long_[i][j + 1] - 1)
                   {
@@ -167,7 +167,7 @@ Foo_B_Statistics::actual_vs_expected()
             LongVector lvec;
             char buffer[50];
 
-            for (unsigned k = 0; k < actual_size; k++)
+            for (unsigned k = 0; k < actual_size; ++k)
               {
                 unsigned client_id;
                 sscanf (this->actual_in_string_[i][k].c_str(), "%u %s", &client_id, buffer);
@@ -186,7 +186,7 @@ Foo_B_Statistics::actual_vs_expected()
 
             sort (lvec);
 
-            for (unsigned j = 0; j < actual_size - 1; j++)
+            for (unsigned j = 0; j < actual_size - 1; ++j)
               {
                 if (lvec[j] != lvec[j + 1] - 1)
                   {

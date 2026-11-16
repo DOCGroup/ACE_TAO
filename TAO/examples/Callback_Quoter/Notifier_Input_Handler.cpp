@@ -118,7 +118,7 @@ Notifier_Input_Handler::init (int argc,
   ACE_TCHAR **argv_copy {};
   ACE_NEW_RETURN (argv_copy, ACE_TCHAR *[argc], -1);
   this->argv_.reset (argv_copy);
-  for (int i = 0; i < argc; i++)
+  for (int i = 0; i < argc; ++i)
     this->argv_[i] = argv[i];
 
   if (this->orb_manager_.init_child_poa (this->argc_,

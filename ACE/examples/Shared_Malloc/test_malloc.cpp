@@ -228,7 +228,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       for (size_t i = 0;
            i < options->spawn_count ();
-           i++)
+           ++i)
         spawn ();
 
       wait_for_children ();

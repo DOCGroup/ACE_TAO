@@ -219,7 +219,7 @@ int wpdu::load_vbs (snmp_pdu *raw_pdu, Pdu const &pdu)
 
    vb_count = pdu.get_vb_count();
 
-   for (int z = 0; z < vb_count; z++) {
+   for (int z = 0; z < vb_count; ++z) {
       pdu.get_vb( tempvb, z);
       tempvb.get_oid( tempoid);
       smioid = tempoid.oidval();
@@ -315,7 +315,7 @@ int wpdu::convert_vb_to_smival (Vb &tempvb, SmiVALUE *smival)
         ACE_NEW_RETURN(smival->value.string.ptr,
                 SmiBYTE [smival->value.string.len], 1);
         if ( smival->value.string.ptr )  {
-          for (int i=0; i<(int) smival->value.string.len ; i++)
+          for (int i=0; i<(int) smival->value.string.len ; ++i)
             smival->value.string.ptr[i] = os[i];
         }
         else   {

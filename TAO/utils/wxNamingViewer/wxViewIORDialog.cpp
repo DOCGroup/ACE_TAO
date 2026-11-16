@@ -195,7 +195,7 @@ void WxViewIORDialog::decodeIOR()
   const TAO_MProfile& baseProfiles = stub->base_profiles();
   CORBA::ULong count = baseProfiles.profile_count();
   wxTreeItemId rootItem = profiles->AddRoot( "Profiles");
-  for( CORBA::ULong slot = 0; slot < count; slot++) {
+  for( CORBA::ULong slot = 0; slot < count; ++slot) {
     const TAO_Profile* profile = baseProfiles.get_profile( slot);
     try{
       // The need to const_cast should disappear in TAO 1.1.2 BUT IT DIDN'T

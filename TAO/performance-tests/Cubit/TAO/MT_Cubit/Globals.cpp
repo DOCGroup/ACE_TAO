@@ -169,7 +169,7 @@ MT_Priority::get_low_priority (u_int num_low_priority,
       // increase with increasing client number.
       for (u_int j = 0;
            j < num_low_priority;
-           j++)
+           ++j)
         {
           low_priority =
             ACE_Sched_Params::previous_priority (policy,

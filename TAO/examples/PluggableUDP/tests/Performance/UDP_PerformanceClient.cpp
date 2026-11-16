@@ -55,7 +55,7 @@ UDP_PerformanceClient::svc ()
           timer.start ();
           for (ACE_UINT32 j = 1;
                j <= burst_messages_;
-               j++)
+               ++j)
             {
               udp_->invoke (corba_client_name.in (),
                             j);

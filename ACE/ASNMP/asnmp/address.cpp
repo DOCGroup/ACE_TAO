@@ -1368,14 +1368,14 @@ int IpxAddress::parse_address( const char *inaddr)
 
   // convert the string to all lower case
   // this allows hex values to be in upper or lower
-  for (z=0;z< tmplen;z++)
+  for (z=0;z< tmplen;++z)
     temp[z] = ACE_OS::ace_tolower(temp[z]);
 
   // check for separated nodeid
   // if found remove it
   if (temp[15] == '-')
   {
-     for(z=16;z<tmplen;z++)
+     for(z=16;z<tmplen;++z)
         temp[z-1] = temp[z];
      temp[tmplen-1] = 0;
   }
@@ -1971,7 +1971,7 @@ int MacAddress::parse_address( const char *inaddr)
   temp[i] = 0;
 
   // convert to lower
-  for(z=0;z<std::strlen (temp);z++)
+  for(z=0;z<std::strlen (temp);++z)
     temp[z] = ACE_OS::ace_tolower( temp[z]);
 
   // check out the MAC address

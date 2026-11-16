@@ -58,7 +58,7 @@ lookup_name (ACE_HANDLE handle)
   employee_id = ACE_OS::atoi (recvline);
   found = 0;
 
-  for (index = 0; found == 0 && employee_db[index].emp_id; index++)
+  for (index = 0; found == 0 && employee_db[index].emp_id; ++index)
     if (employee_id == employee_db[index].emp_id)
       {
         found = 1;

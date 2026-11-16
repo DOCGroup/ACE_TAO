@@ -23,13 +23,13 @@ HostProcess::~HostProcess ()
 {
   for (AddrList::ITERATOR i(this->listen_endpoints_);
        !i.done();
-       i++)
+       ++i)
     {
       delete reinterpret_cast<Endpoint *>(i.next()->item_);
     }
   for (ThreadList::ITERATOR i(this->threads_);
        !i.done();
-       i++)
+       ++i)
     {
       delete reinterpret_cast<Thread *>(i.next()->item_);
     }
@@ -137,7 +137,7 @@ HostProcess::find_peer (long h)
   }
   for (PeerArray::ITERATOR i(this->by_handle_);
        !i.done();
-       i++)
+       ++i)
     {
       PeerNode *node = reinterpret_cast<PeerNode *>(i.next()->item_);
       if (node->handle_ == h)
@@ -227,7 +227,7 @@ HostProcess::remove_peer(long h)
   }
   for (PeerArray::ITERATOR i(this->by_handle_);
        !i.done();
-       i++)
+       ++i)
     {
       PeerNode *node = reinterpret_cast<PeerNode *>(i.next()->item_);
       if (node->handle_ == h)

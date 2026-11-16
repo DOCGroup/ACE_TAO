@@ -305,7 +305,7 @@ MIF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_
   srv_con.context_data.length (cxt_data_length);
 
   int i = 0;
-  for (;i < guid_length;i++)
+  for (;i < guid_length;++i)
     {
       srv_con.context_data [i] = seq_buf [i];
     }
@@ -316,7 +316,7 @@ MIF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_
   ACE_OS::memcpy (int_buf.get_buffer (), &importance, sizeof (importance));
 
   int j = 0;
-  for (;i < cxt_data_length;i++)
+  for (;i < cxt_data_length;++i)
     {
       srv_con.context_data [i] = int_buf [j++];
     }
@@ -403,7 +403,7 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
       CORBA::OctetSeq int_buf (sizeof (long));
       int_buf.length (int_buf.maximum ());
       int i = sizeof (long);
-      for (unsigned int j = 0;j < sizeof (int);j++)
+      for (unsigned int j = 0;j < sizeof (int);++j)
         {
           int_buf [j] = serv_cxt->context_data [i++];
         }

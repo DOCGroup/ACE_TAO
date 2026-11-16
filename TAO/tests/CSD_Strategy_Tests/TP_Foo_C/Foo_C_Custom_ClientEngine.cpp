@@ -38,7 +38,7 @@ Foo_C_Custom_ClientEngine::execute()
       check_validity = false;
     }
 
-  for (CORBA::Long j = 1; j <= 5; j++)
+  for (CORBA::Long j = 1; j <= 5; ++j)
     {
       this->proxy_.op4(495 + (i * 5) + j);
     }
@@ -70,7 +70,7 @@ Foo_C_Custom_ClientEngine::execute()
       check_validity = false;
     }
 
-  for (long cust_j = 1; cust_j <= 5; cust_j++)
+  for (long cust_j = 1; cust_j <= 5; ++cust_j)
     {
       this->proxy_.cust_op4(495 + (cust_i * 5) + cust_j);
     }

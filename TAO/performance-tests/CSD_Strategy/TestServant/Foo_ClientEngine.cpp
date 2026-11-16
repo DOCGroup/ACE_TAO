@@ -28,7 +28,7 @@ Foo_ClientEngine::execute (unsigned num_loops)
   // Verify the return values and return the results.
   bool success = true;
 
-  for (unsigned loop = 0; loop < num_loops; loop++)
+  for (unsigned loop = 0; loop < num_loops; ++loop)
     {
       CORBA::Long const i = this->client_id_;
 
@@ -38,7 +38,7 @@ Foo_ClientEngine::execute (unsigned num_loops)
       CORBA::Long const value = this->obj_->op3 (i);
       success = value == i && success;
 
-      for (CORBA::Long j = 1; j <= 5; j++)
+      for (CORBA::Long j = 1; j <= 5; ++j)
         {
           this->obj_->op4 (495 + (i * 5) + j);
         }

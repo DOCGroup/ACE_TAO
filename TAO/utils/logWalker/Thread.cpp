@@ -393,7 +393,7 @@ Thread::dump_incidents (ostream &strm, const ACE_Time_Value& relstart)
           size_t inv_line = inv->req_line ();
           for (std::deque<Invocation *>::iterator j = nested_queue.begin ();
                j != nested_queue.end ();
-               j++)
+               ++j)
             {
               if ((*j)->repl_line () < inv_line)
                 {

@@ -166,10 +166,10 @@ ACE::HTBP::Stream::sendv (const iovec iov[],
       ACE_Message_Block *msg {};
       size_t total = 0;
       int i = 0;
-      for (; i < iovcnt; i++)
+      for (; i < iovcnt; ++i)
         total += iov[i].iov_len;
       ACE_NEW_RETURN (msg,ACE_Message_Block(total),-1);
-      for (i = 0; i < iovcnt; i++)
+      for (i = 0; i < iovcnt; ++i)
         msg->copy (static_cast<char const*> (iov[i].iov_base), iov[i].iov_len);
       return this->session_->enqueue(msg);
     }

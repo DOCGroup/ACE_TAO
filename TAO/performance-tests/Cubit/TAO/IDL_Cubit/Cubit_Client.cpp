@@ -699,7 +699,7 @@ Cubit_Client::cube_long_sequence (int,
       input[0] = 4;
 
 #if defined (ACE_HAS_MEMORY_PROFILER)
-      for (int i = 1; i < l; i++)
+      for (int i = 1; i < l; ++i)
         input[i]=11;
 #endif /* ACE_HAS_MEMORY_PROFILER */
 
@@ -769,7 +769,7 @@ Cubit_Client::cube_octet_sequence (int,
 
       // Now copy over each byte.
       char* base = mb.data_block ()->base ();
-      for(CORBA::ULong i = 0; i < length; i++)
+      for(CORBA::ULong i = 0; i < length; ++i)
         {
           input[i] = base[i];
         }
@@ -781,7 +781,7 @@ Cubit_Client::cube_octet_sequence (int,
       input[0] = 4;
 
 #if defined (ACE_INITIALIZE_MEMORY_BEFORE_USE)
-      for (int i = 1 ; i < l; i++)
+      for (int i = 1 ; i < l; ++i)
         input[i]=10;
 #endif /* ACE_INITIALIZE_MEMORY_BEFORE_USE */
 
@@ -851,7 +851,7 @@ Cubit_Client::cube_many_sequence (int,
       in.o = 6;
 
 #if defined (ACE_HAS_PURIFY) && (ACE_HAS_PURIFY == 1)
-      for(int i=1; i < l; i++)
+      for(int i=1; i < l; ++i)
         {
           Cubit::Many &inb = input[i];
           inb.l=7;

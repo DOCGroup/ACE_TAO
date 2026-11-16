@@ -188,7 +188,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     CosNaming::NamingContext_var level1_context;
     level1_context = root_context_1->bind_new_context (level1);
 
-    for (i=0; i<o_breadth; i++)
+    for (i=0; i<o_breadth; ++i)
     {
       // Instantiate a dummy object and bind it under the new context.
       My_Test_Object *impl1 = new My_Test_Object (i+1);
@@ -239,7 +239,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   try
   {
     CosNaming::NamingContext_var next_context = root_context_1;
-    for (i=0; i<c_depth; i++)
+    for (i=0; i<c_depth; ++i)
     {
       // Bind level1 context under root.
       CosNaming::Name deep;
@@ -261,7 +261,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   // Create a wide context tree
   try
   {
-    for (i=0; i<c_breadth; i++)
+    for (i=0; i<c_breadth; ++i)
     {
       // Bind all level of context under root.
       CosNaming::Name wide;
@@ -364,7 +364,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     CosNaming::Name deep;
     deep.length (c_depth);
     char deep_name[16];
-    for (i=0; i<c_depth; i++)
+    for (i=0; i<c_depth; ++i)
     {
       ACE_OS::sprintf(deep_name, "deep_%d", i);
       deep[i].id = CORBA::string_dup (deep_name);
@@ -523,7 +523,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     CosNaming::Name deep;
     deep.length (c_depth);
     char deep_name[16];
-    for (i=0; i<c_depth; i++)
+    for (i=0; i<c_depth; ++i)
     {
       ACE_OS::sprintf(deep_name, "deep_%d", i);
       deep[i].id = CORBA::string_dup (deep_name);
@@ -552,7 +552,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     CosNaming::Name deep;
     deep.length (c_depth-1);
     char deep_name[16];
-    for (i=0; i<c_depth-1; i++)
+    for (i=0; i<c_depth-1; ++i)
     {
       ACE_OS::sprintf(deep_name, "deep_%d", i);
       deep[i].id = CORBA::string_dup (deep_name);
@@ -601,7 +601,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     ACE_hrtime_t start = ACE_OS::gethrtime ();
 
     // Test how long it takes to bind
-    for (i=0; i<test_runs; i++)
+    for (i=0; i<test_runs; ++i)
     {
       level1.length (1);
       char wide_name[16];
@@ -620,7 +620,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     // Test how long it takes to resolve
     start = ACE_OS::gethrtime ();
-    for (i=0; i<test_runs; i++)
+    for (i=0; i<test_runs; ++i)
     {
       level1.length (1);
       char wide_name[16];
@@ -640,7 +640,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     // Test how long it takes to unbind
     start = ACE_OS::gethrtime ();
-    for (i=0; i<test_runs; i++)
+    for (i=0; i<test_runs; ++i)
     {
       level1.length (1);
       char wide_name[16];

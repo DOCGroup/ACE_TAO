@@ -250,12 +250,12 @@ MonitorTestInterface_i::brain_dump (char const* /*context*/)
   ACE_NEW_THROW_EX (narray,
                     const char* [length],
                     CORBA::NO_MEMORY ());
-  for(CORBA::ULong i = 0; i < length; i++)
+  for(CORBA::ULong i = 0; i < length; ++i)
     narray[i] = names[i].in ();
   ACE_OS::qsort (narray, length,
                  sizeof (const char*), sorter);
 
-  for(CORBA::ULong i = 0; i < length; i++)
+  for(CORBA::ULong i = 0; i < length; ++i)
     {
       stat_dump(narray[i]);
     }

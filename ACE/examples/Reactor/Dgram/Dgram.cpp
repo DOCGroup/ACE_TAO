@@ -161,7 +161,7 @@ run_test (u_short localport,
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) sending data\n"));
 
-      for (size_t i = 0; i < 20; i++)
+      for (size_t i = 0; i < 20; ++i)
         {
           endpoint->send (buf, len, remote_addr);
           ACE_DEBUG ((LM_DEBUG,
@@ -170,7 +170,7 @@ run_test (u_short localport,
         }
     }
 
-  for (int i = 0; i < 40; i++)
+  for (int i = 0; i < 40; ++i)
     {
       // Wait up to 10 seconds for data.
       ACE_Time_Value tv (10, 0);

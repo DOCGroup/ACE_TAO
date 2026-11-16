@@ -47,7 +47,7 @@ Foo_A_i::done()
 void
 Foo_A_i::gather_stats(Foo_A_Statistics& stats)
 {
-  for (unsigned i = 0; i < 5; i++)
+  for (unsigned i = 0; i < 5; ++i)
     {
       stats.actual (i + 1, this->op_count_[i]);
       stats.actual_in_values (i + 1, this->in_values_[i]);

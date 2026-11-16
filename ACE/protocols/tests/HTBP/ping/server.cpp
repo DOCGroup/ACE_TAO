@@ -128,7 +128,7 @@ ACE_TMAIN (int argc , ACE_TCHAR *argv[])
               sock[1].get_handle(),
               session));
 
-  for (int i {}; i >= 0; i++)
+  for (int i {}; i >= 0; ++i)
     {
       int retrycount = 10;
       while ((n = stream.recv(buffer,1000)) == -1

@@ -34,7 +34,7 @@ main()
     return -1;
   }
 
-  for (index=0; index< filesize; index++)
+  for (index=0; index< filesize; ++index)
     /* generate random characters from A-Z */
     buffer[index] = rand() %26 + 63;
 

@@ -626,7 +626,7 @@ Client_i::do_priority_inversion_test ()
               "(%P|%t) <<<<<<< starting test on %D\n"));
   GLOBALS::instance ()->num_of_objs = 1;
 
-  for (int j = 0; j < this->argc_; j++)
+  for (int j = 0; j < this->argc_; ++j)
     if (ACE_OS::strcmp (this->argv_[j], ACE_TEXT("-u")) == 0)
       {
         this->start_servant ();

@@ -64,7 +64,7 @@ Broadcaster_i::remove (Receiver_ptr receiver)
   // wants to be removed.
   for (RECEIVER_SET_ITERATOR iter = this->receiver_set_.begin ();
        iter != this->receiver_set_.end ();
-       iter++)
+       ++iter)
     {
       // The <_is_equivalent> function checks if the _var and _ptr objects
       // are the same.  NOTE: this call might not behave well on other
@@ -104,7 +104,7 @@ Broadcaster_i::say (Receiver_ptr receiver,
 
       for (RECEIVER_SET_ITERATOR iter = this->receiver_set_.begin ();
            iter != this->receiver_set_.end ();
-           iter++)
+           ++iter)
         {
            // The <_is_equivalent> function checks if the _var and
            // _ptr objects are the same.  NOTE: this call might not
@@ -134,7 +134,7 @@ Broadcaster_i::broadcast (char const *text)
 
   for (RECEIVER_SET_ITERATOR iter = this->receiver_set_.begin ();
        iter != this->receiver_set_.end ();
-       iter++)
+       ++iter)
     {
       try
         {

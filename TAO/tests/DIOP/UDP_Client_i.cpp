@@ -29,7 +29,7 @@ UDP_Client_i::svc ()
 
       for (size_t i = 0;
            i < iterations_;
-           i++)
+           ++i)
         {
           CORBA::Long const request_id = static_cast<CORBA::Long> (i);
           udp_->invoke (corba_client_name.in (),

@@ -36,8 +36,8 @@ ACE_URL_Local_Locator::url_query (const ACE_URL_Locator::ACE_Selection_Criteria 
       // Now this is a stupid implementation.  Perhaps we can
       // implement this using Hash_Map.  Better yet, I think we should
       // put this in a database and put SQL query here.
-      for (i_query = 0; found == 0 && i_query < pseq->size (); i_query++)
-        for (i_db = 0; i_db < item->offer_->url_properties ().size (); i_db++)
+      for (i_query = 0; found == 0 && i_query < pseq->size (); ++i_query)
+        for (i_db = 0; i_db < item->offer_->url_properties ().size (); ++i_db)
           {
             if ((*pseq)[i_query].name () == item->offer_->url_properties ()[i_db].name ())
               if (how == ACE_URL_Locator::SOME)
@@ -190,10 +190,10 @@ ACE_URL_Local_Locator::modify_offer (const ACE_WString &offer_id,
             {
               // Argh, this is really a stupid design.
               // Go thru every property we want to delete
-              for (size_t i = 0; i < del->size () && sz > 0; i++)
+              for (size_t i = 0; i < del->size () && sz > 0; ++i)
                 // For earch, go thru our property sequence and
                 // search for the property.
-                for (size_t j = 0; j < sz; j++)
+                for (size_t j = 0; j < sz; ++j)
                   if ((*del)[i].name () == working[j].name ())
                     {
                       sz -= 1;
@@ -208,11 +208,11 @@ ACE_URL_Local_Locator::modify_offer (const ACE_WString &offer_id,
             {
               // This is also stupid.
               // Go thru every property we want to modify/add
-              for (size_t i = 0; i < modify->size () && sz > 0; i++)
+              for (size_t i = 0; i < modify->size () && sz > 0; ++i)
                 {
                   // For each property, go thru our property list
                   // and search for the matching property
-                  for (size_t j = 0; j < sz; j++)
+                  for (size_t j = 0; j < sz; ++j)
                     if ((*modify)[i].name () == working[j].name ())
                       {
                         // A match found.
@@ -230,7 +230,7 @@ ACE_URL_Local_Locator::modify_offer (const ACE_WString &offer_id,
 
       // Yes, all operations passed.  We can now copy the working version back.
       item->offer_->url_properties (ACE_URL_Property_Seq (sz));
-      for (size_t i = 0; i < sz; i ++)
+      for (size_t i = 0; i < sz; ++i)
         item->offer_->url_properties ()[i] = working[i];
 
       if (url != 0)

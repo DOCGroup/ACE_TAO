@@ -155,7 +155,7 @@ Task_State::parse_args (int argc,ACE_TCHAR *argv[])
       for (i = 0;
            ACE_OS::fgets (buf, BUFSIZ, ior_file) != 0
              && i < thread_count_;
-           i++)
+           ++i)
         {
           ACE_DEBUG ((LM_DEBUG,
                       buf));
@@ -218,7 +218,7 @@ Task_State::~Task_State ()
   }
 
   // Delete the strduped memory.
-  for (i = 0; i < this->iors_count_; i++)
+  for (i = 0; i < this->iors_count_; ++i)
     ACE_OS::free (this->iors_ [i]);
 
   delete [] this->iors_;
@@ -296,7 +296,7 @@ Client::get_low_priority_latency ()
 
   for (u_int i = 1;
        i < this->ts_->thread_count_;
-       i++)
+       ++i)
     l += (ACE_timer_t) this->ts_->latency_[i];
 
   // Return the average latency for the low priority threads.
@@ -382,7 +382,7 @@ Client::get_low_priority_jitter ()
 
   for (u_int j = 1;
        j < this->ts_->thread_count_;
-       j++)
+       ++j)
     {
       ACE_DEBUG ((LM_DEBUG, "count: %u\n", ts_->count_[j]));
 
@@ -991,7 +991,7 @@ Client::do_test ()
        // lowest frequency thread.
        || (this->ts_->thread_per_rate_ == 1
            && id_ < (this->ts_->thread_count_ - 1));
-       i++)
+       ++i)
     {
       // Start timing a call.
       if ((i % this->ts_->granularity_) == 0 &&

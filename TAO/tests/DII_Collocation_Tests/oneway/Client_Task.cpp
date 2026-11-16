@@ -78,7 +78,7 @@ Client_Task::svc ()
 
       ::Test::Fixed_Array fixed_array {};
 
-      for (CORBA::ULong m = 0 ; m < ::Test::FIX_ARRAY_SIZE; m ++)
+      for (CORBA::ULong m = 0 ; m < ::Test::FIX_ARRAY_SIZE; ++m)
       {
         fixed_array[m] = m + 999;
       }

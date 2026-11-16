@@ -778,7 +778,7 @@ prusage (struct rusage *r0, struct rusage *r1,
 #else
   cp = "%Uuser %Ssys %Ereal %P %Xi+%Dd %Mmaxrss %F+%Rpf %Ccsw";
 #endif
-  for (; *cp; cp++)
+  for (; *cp; ++cp)
     {
       if (*cp != '%')
         *outp++ = *cp;

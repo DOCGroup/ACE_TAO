@@ -29,7 +29,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
     Message msg {};
 
-    for (unsigned short i = 0; i < payload_size; i++)
+    for (unsigned short i = 0; i < payload_size; ++i)
     {
       msg.payload[i] = i;
     }

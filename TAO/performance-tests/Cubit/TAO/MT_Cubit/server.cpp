@@ -77,7 +77,7 @@ Server::prelim_args_process ()
 {
   int i;
 
-  for (i = 0; i < this->argc_ ; i++)
+  for (i = 0; i < this->argc_ ; ++i)
     {
       if (ACE_OS::strcmp (this->argv_[i], ACE_TEXT("-e")) == 0 &&
           i - 1 < this->argc_)

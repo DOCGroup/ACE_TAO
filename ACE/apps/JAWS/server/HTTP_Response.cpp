@@ -309,7 +309,7 @@ HTTP_Response::cgi_response ()
   ACE_OS::strcpy (buf, ACE_TEXT ("HTTP_"));
   p = q = buf + ACE_OS::strlen (buf);
 
-  for (size_t i = 0; i < HTTP_Request::NUM_HEADER_STRINGS; i++)
+  for (size_t i = 0; i < HTTP_Request::NUM_HEADER_STRINGS; ++i)
     {
       int j = 0;
 

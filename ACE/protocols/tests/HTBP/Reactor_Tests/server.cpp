@@ -112,7 +112,7 @@ Accept_Handler::handle_input (ACE_HANDLE h)
                                          ACE_Event_Handler::READ_MASK);
       return 0;
     }
-  for (int i {}; i < 2; i++)
+  for (int i {}; i < 2; ++i)
     if (channels_[i] != nullptr && channels_[i]->get_handle() == h)
       {
         ch = std::addressof (channels_[i]);

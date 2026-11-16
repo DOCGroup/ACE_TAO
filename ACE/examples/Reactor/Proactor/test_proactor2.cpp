@@ -758,7 +758,7 @@ int PrintSigMask ()
                     "Error:(%P | %t):%p\n",
                     "ACE_OS::pthread_sigmask failed"));
       }
-    else  for (int i = 1 ; i < 1000; i++)
+    else  for (int i = 1 ; i < 1000; ++i)
       {
         member = ACE_OS::sigismember (&mask,i);
 

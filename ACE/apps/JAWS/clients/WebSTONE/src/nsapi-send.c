@@ -70,7 +70,7 @@ int nsapi_send(pblock *pb, Session *sn, Request *rq)
 
     /* Generate the output */
     maxindex = sizeof(HEADERS) + filesize;
-    for (index=sizeof(HEADERS); index < (maxindex); index++)
+    for (index=sizeof(HEADERS); index < (maxindex); ++index)
         /* generate random characters from A-Z */
         buffer[index] = rand() %26 + 63;
 

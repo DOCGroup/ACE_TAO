@@ -710,7 +710,7 @@ ACE_Scheduler_Factory::log_scheduling_tuples(
      "%13d, /* preemption_priority */\n"
      "%13d } /* enabled */\n";
 
-   for (int ndx = 0; ndx < tuple_ptr_array_size; ndx++)
+   for (int ndx = 0; ndx < tuple_ptr_array_size; ++ndx)
      {
        ACE_OS::fprintf(file,
                        subset_tuple_format,

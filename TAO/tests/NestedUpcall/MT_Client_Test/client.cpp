@@ -125,7 +125,7 @@ MT_Client::run ()
 {
   try
     {
-      for (unsigned long i = 0; i < this->iterations_; i++)
+      for (unsigned long i = 0; i < this->iterations_; ++i)
         {
           // call the recursive object MT_Object for nested upcalls
           // testing

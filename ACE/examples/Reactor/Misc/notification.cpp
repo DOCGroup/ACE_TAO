@@ -146,7 +146,7 @@ Thread_Handler::Thread_Handler (
 
   // Create N new threads of control Thread_Handlers.
 
-  for (size_t i = 0; i < n_threads; i++)
+  for (size_t i = 0; i < n_threads; ++i)
     {
       Thread_Handler *thread_handler {};
       ACE_NEW (thread_handler,

@@ -165,7 +165,7 @@ HTTP_Helper::HTTP_date (char *s)
 int
 HTTP_Helper::HTTP_month (const char *month)
 {
-  for (size_t i = 0; i < 12; i++)
+  for (size_t i = 0; i < 12; ++i)
     if (std::strcmp (month, HTTP_Helper::months_[i]) == 0)
     {
       return i;
@@ -414,7 +414,7 @@ HTTP_Status_Code::instance ()
         {
           for (size_t i = 0;
                i < HTTP_Status_Code::MAX_STATUS_CODE + 1;
-               i++)
+               ++i)
             {
               switch (i)
                 {

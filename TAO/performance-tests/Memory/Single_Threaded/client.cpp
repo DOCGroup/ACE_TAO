@@ -61,7 +61,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       // Make a few calls to the remote object
-      for (int iter = 0; iter != n; iter++)
+      for (int iter = 0; iter != n; ++iter)
         {
           mem->ping ();
         }

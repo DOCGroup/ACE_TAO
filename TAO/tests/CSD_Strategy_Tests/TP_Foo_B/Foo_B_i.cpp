@@ -96,7 +96,7 @@ Foo_B_i::test_fixed_array_arg(const Fixed_Array message)
 {
   this->op_count_[9] ++;
 
-  for (unsigned i = 0; i < 19; i++)
+  for (unsigned i = 0; i < 19; ++i)
     {
       //ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_B_i::test_fixed_array_arg ")
       //                     ACE_TEXT("got fixed array[i] = %d\n"),
@@ -158,7 +158,7 @@ Foo_B_i::test_var_array_arg(const Var_Array messages)
   //                     ACE_TEXT(" %s\n"), messages[2].in ()));
   unsigned cur_client_id = 0;
 
-  for (unsigned i = 0 ; i < 3; i ++)
+  for (unsigned i = 0 ; i < 3; ++i)
   {
     unsigned client_id = 0;
     unsigned str_id = 0;
@@ -223,7 +223,7 @@ Foo_B_i::done()
 void
 Foo_B_i::gather_stats (Foo_B_Statistics& stats)
 {
-  for (unsigned i = 0; i < 16; i++)
+  for (unsigned i = 0; i < 16; ++i)
     {
       stats.actual (i+1, this->op_count_[i]);
       stats.actual (i+1, this->in_string_[i]);

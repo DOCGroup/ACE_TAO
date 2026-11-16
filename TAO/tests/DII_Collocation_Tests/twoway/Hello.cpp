@@ -266,7 +266,7 @@ void Hello::test_args_3 (
   if (arg3.length () != std::strlen (TEST_STR)
       || std::memcmp (arg3.get_buffer (), TEST_STR, arg3.length ()) != 0)
     ERROR_COUNT ("Hello::test_args_3")
-  for (CORBA::ULong i = 0; i != ::Test::VAR_ARRAY_SIZE; i ++)
+  for (CORBA::ULong i = 0; i != ::Test::VAR_ARRAY_SIZE; ++i)
   {
     if (std::strcmp (arg4[i].in (), TEST_STR) != 0)
       ERROR_COUNT ("Hello::test_args_3")

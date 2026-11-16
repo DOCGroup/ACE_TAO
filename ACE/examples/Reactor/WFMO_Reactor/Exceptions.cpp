@@ -65,7 +65,7 @@ class ACE_WFMO_Reactor_Test
 public:
   static void doit (ACE_WFMO_Reactor &wfmo_reactor)
   {
-    for (int i = 1; i <= 10; i++)
+    for (int i = 1; i <= 10; ++i)
       {
         ACE_DEBUG ((LM_DEBUG,
                     "Active threads in WFMO_Reactor (before handle_events) = %d\n",

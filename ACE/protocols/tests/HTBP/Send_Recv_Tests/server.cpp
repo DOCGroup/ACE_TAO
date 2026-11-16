@@ -219,7 +219,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("(%P) server, Test 1: recvd len = %b\n"),len));
 
-  for (i = 0; i < 255; i++)
+  for (i = 0; i < 255; ++i)
     if (buffer[i] != i)
       {
         ACE_ERROR ((LM_ERROR,

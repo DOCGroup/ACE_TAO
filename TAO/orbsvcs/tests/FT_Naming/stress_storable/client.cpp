@@ -32,7 +32,7 @@ public:
 
   int svc ()
   {
-    for (int g = 0, i = 0; i < 100; i++)
+    for (int g = 0, i = 0; i < 100; ++i)
       {
         try {
           group_svc.member_list (group_names[g]);
@@ -137,7 +137,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Test::Basic_var basic;
 
       // Iterate enough so we get a few wrap-arounds
-      for (int i = 0; i < 15; i++)
+      for (int i = 0; i < 15; ++i)
       {
         if (i == 3) {
           hammer.activate (THR_NEW_LWP | THR_JOINABLE, hammers);

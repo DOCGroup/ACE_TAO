@@ -283,7 +283,7 @@ Quoter_Client::init (int argc, ACE_TCHAR **argv)
   ACE_NEW_RETURN (argv_copy, ACE_TCHAR *[argc], -1);
   this->argv_.reset (argv_copy);
 
-  for (int i = 0; i < argc; i++)
+  for (int i = 0; i < argc; ++i)
     this->argv_[i] = argv[i];
 
   try
@@ -357,7 +357,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int threads = 1;
 
-  for (int i = 0; i < argc; i++)
+  for (int i = 0; i < argc; ++i)
     if (argv[i] != nullptr && ACE_OS::strcmp (argv[i], ACE_TEXT("-n")) == 0)
       {
         if (i + 1 >= argc)
@@ -376,7 +376,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   try
     {
       clients.reserve (threads);
-      for (int i = 0; i < threads; i++)
+      for (int i = 0; i < threads; ++i)
         clients.emplace_back (std::make_unique<Quoter_Task> (argc, argv));
     }
   catch (std::bad_alloc const&)

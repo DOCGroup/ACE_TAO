@@ -115,7 +115,7 @@ void
 TAO_Service_Type_Exporter::
 add_all_types_to (CosTradingRepos::ServiceTypeRepository_ptr repos)
 {
-  for (int i = 0; i < NUM_TYPES; i++)
+  for (int i = 0; i < NUM_TYPES; ++i)
     {
       try
         {
@@ -219,7 +219,7 @@ TAO_Service_Type_Exporter::describe_all_types ()
       ACE_DEBUG ((LM_DEBUG, "*** TAO_Service_Type_Exporter::"
                   "describing all types in the Repository.\n"));
 
-      for (int i = 0; i < NUM_TYPES; i++)
+      for (int i = 0; i < NUM_TYPES; ++i)
         {
           CosTradingRepos::ServiceTypeRepository::TypeStruct_var type_struct =
             this->repos_->describe_type (TT_Info::INTERFACE_NAMES[i]);
@@ -246,7 +246,7 @@ TAO_Service_Type_Exporter::fully_describe_all_types ()
       ACE_DEBUG ((LM_DEBUG, "*** TAO_Service_Type_Exporter::"
                   "fully describing all types in the Repository.\n"));
 
-      for (int i = 0; i < NUM_TYPES; i++)
+      for (int i = 0; i < NUM_TYPES; ++i)
         {
           CosTradingRepos::ServiceTypeRepository::TypeStruct_var type_struct =
             this->repos_->fully_describe_type (TT_Info::INTERFACE_NAMES[i]);

@@ -44,7 +44,7 @@ Client_Task::svc ()
 void
 Client_Task::validate_connections ()
 {
-  for (int i = 0 ; i != 100; i++)
+  for (int i = 0 ; i != 100; ++i)
     {
       try
         {

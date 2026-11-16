@@ -559,7 +559,7 @@ SnmpSyntax *OctetStr::clone () const
 //================[ ASCII format return ]=============================
 char const *OctetStr::to_string ()
 {
-  for ( unsigned long i=0; i < smival.value.string.len; i++) {
+  for ( unsigned long i=0; i < smival.value.string.len; ++i) {
     if (( smival.value.string.ptr[i] != '\r')&&
                 ( smival.value.string.ptr[i] != '\n')&&
                 (ACE_OS::ace_isprint((int) (smival.value.string.ptr[i]))==0))

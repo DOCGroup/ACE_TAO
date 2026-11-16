@@ -275,7 +275,7 @@ load_percent(page_list_t *page_list, long int number_of_pages)
   int i;
   long int index_number = 0;
 
-  for (i = 0; i < number_of_pages; i++)
+  for (i = 0; i < number_of_pages; ++i)
     {
       index_number += page_list[i].load_num;
     }

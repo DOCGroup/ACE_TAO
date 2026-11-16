@@ -30,7 +30,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_DEBUG ((LM_STARTUP, "starting up the test\n"));
 
-  for (int i = 0; i < iterations; i++)
+  for (int i = 0; i < iterations; ++i)
     {
       int priority = ACE_OS::rand () % static_cast<int> (LM_MAX);
       ACE_POW (priority);

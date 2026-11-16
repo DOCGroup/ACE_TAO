@@ -257,7 +257,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                       "\n",
                       argv [0], LAST_TEST));
           ACE_ERROR ((LM_ERROR, "Available tests:\n"));
-          for (int i = 0; i < LAST_TEST; i++)
+          for (int i = 0; i < LAST_TEST; ++i)
             ACE_ERROR ((LM_ERROR, " %d - %s\n",i, test_name[i]));
           return -1;
         }

@@ -139,7 +139,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       int i = 0;
 
-      for (i = 0; i < iterations; i++)
+      for (i = 0; i < iterations; ++i)
         {
           if (oneway && timed_method)
             {

@@ -9,7 +9,7 @@ ServantList<T>::create_and_activate(unsigned                num_servants,
                                     PortableServer::POA_ptr poa,
                                     const ACE_TCHAR*        ior_fname_prefix)
 {
-  for (unsigned i = 0; i < num_servants; i++)
+  for (unsigned i = 0; i < num_servants; ++i)
     {
       ACE_TCHAR buf[32];
       ACE_OS::sprintf(buf, ACE_TEXT("%02d"), i + 1);
@@ -40,7 +40,7 @@ void
 ServantList<T>::create_and_activate(unsigned                num_servants,
                                     PortableServer::POA_ptr poa)
 {
-  for (unsigned i = 0; i < num_servants; i++)
+  for (unsigned i = 0; i < num_servants; ++i)
     {
       ServantRecord record;
       record.servant_ = new T();

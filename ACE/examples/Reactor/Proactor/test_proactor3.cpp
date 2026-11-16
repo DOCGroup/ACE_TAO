@@ -811,7 +811,7 @@ disable_signal (int sigmin, int sigmax)
                 "Error:(%P | %t):%p\n",
                 "sigemptyset failed"));
 
-  for (int i = sigmin; i <= sigmax; i++)
+  for (int i = sigmin; i <= sigmax; ++i)
     ACE_OS::sigaddset (&signal_set, i);
 
   //  Put the <signal_set>.
@@ -844,7 +844,7 @@ print_sigmask ()
                 "Error:(%P | %t):%p\n",
                 "ACE_OS::pthread_sigmask failed"));
   else
-    for (int i = 1; i < 1000; i++)
+    for (int i = 1; i < 1000; ++i)
       {
         member = ACE_OS::sigismember (&mask,i);
 

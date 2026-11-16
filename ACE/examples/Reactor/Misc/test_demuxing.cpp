@@ -300,7 +300,7 @@ Message_Handler::Message_Handler ()
 int
 Message_Handler::svc ()
 {
-  for (int i = 0;; i++)
+  for (int i = 0;; ++i)
     {
       ACE_Message_Block *message_block {};
       ACE_NEW_RETURN (message_block, ACE_Message_Block (1), 0);

@@ -591,7 +591,7 @@ FilterClient::send_events ()
   // any
   event.remainder_of_body <<= (CORBA::Long)4;
 
-   for (int i = 0; i < EVENTS_TO_SEND; i++)
+   for (int i = 0; i < EVENTS_TO_SEND; ++i)
     {
       event.filterable_data[0].value <<= (CORBA::Long)i;
 

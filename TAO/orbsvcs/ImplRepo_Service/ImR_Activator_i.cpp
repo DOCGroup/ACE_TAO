@@ -416,7 +416,7 @@ ImR_Activator_i::kill_server (const char* name, CORBA::Long lastpid, CORBA::Shor
   bool found = false;
   int result = -1;
   for (ProcessMap::iterator iter = process_map_.begin();
-       !found && iter != process_map_.end (); iter++)
+       !found && iter != process_map_.end (); ++iter)
     {
       if (iter->item () == name)
         {
@@ -489,7 +489,7 @@ ImR_Activator_i::still_running_i (const char *name, pid_t &pid)
       pid = ACE_INVALID_PID;
       for (ProcessMap::ITERATOR iter = this->process_map_.begin ();
            iter != process_map_.end ();
-           iter++)
+           ++iter)
         {
           if (std::strcmp (name, iter->item ().c_str ()) == 0)
             {

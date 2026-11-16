@@ -441,7 +441,7 @@ Object_Group_Factory_i::list_groups (bool random)
 
   // Iterate over groups and populate the list.
   HASH_MAP::ENTRY *hash_entry {};
-  for (CORBA::ULong i = 0; i < len; i++)
+  for (CORBA::ULong i = 0; i < len; ++i)
     {
       group_iter->next (hash_entry);
       group_iter->advance ();
@@ -813,7 +813,7 @@ Object_Group_i::members ()
 
   char **item {};
   // Iterate over groups and populate the list.
-  for (CORBA::ULong i = 0; i < len; i++)
+  for (CORBA::ULong i = 0; i < len; ++i)
     {
       this->member_id_list_->get (item);
       (*list)[i] = *(id_iter.next ());

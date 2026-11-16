@@ -62,7 +62,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       int die_on_ping = 1;
       int ping_count = 0;
 
-      for (int i = 1; i < argc; i++)
+      for (int i = 1; i < argc; ++i)
         {
           ACE_TCHAR *c = argv[i];
           if (ACE_OS::strcasecmp (ACE_TEXT ("-n"), c) == 0)

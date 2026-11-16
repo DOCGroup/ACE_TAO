@@ -114,7 +114,7 @@ SyncLocatorTask::SyncLocatorTask (CORBA::ORB_ptr orb,
 int
 parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
-  for (int c = 1; c < argc; c++)
+  for (int c = 1; c < argc; ++c)
     {
       if (ACE_OS::strcasecmp (argv[c], ACE_TEXT ("-aa")) == 0)
         {

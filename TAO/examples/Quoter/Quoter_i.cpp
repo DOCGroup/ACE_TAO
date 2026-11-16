@@ -40,7 +40,7 @@ int Quoter_Factory_i::init ()
       return -1;
     }
 
-  for (size_t i = 0; i < this->quoter_num_; i++)
+  for (size_t i = 0; i < this->quoter_num_; ++i)
     {
       Quoter_i *quoter {};
       ACE_NEW_RETURN (quoter,
@@ -150,7 +150,7 @@ Quoter_i::copy (CosLifeCycle::FactoryFinder_ptr there,
       // Now it is known that there is at least one factory.
       Stock::Quoter_var quoter_var;
 
-      for (CORBA::ULong i = 0; i < factories->length (); i++)
+      for (CORBA::ULong i = 0; i < factories->length (); ++i)
       {
         // Get the first object reference to a factory.
         CORBA::Object_ptr const generic_FactoryObj_ptr = (*factories)[i];

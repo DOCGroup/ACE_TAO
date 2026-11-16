@@ -93,7 +93,7 @@ FP_Task::perform_task ()
 {
   static CORBA::ULong prime_number = 9619;
 
-  for (int j = 0; j < this->iter_; j++)
+  for (int j = 0; j < this->iter_; ++j)
     {
       ACE_Time_Value run_time = ACE_OS::gettimeofday () - *base_time_;
       TASK_STATS::instance ()->sample (run_time.sec (), count_);
@@ -120,7 +120,7 @@ FP_Task::perform_task ()
     {
       job_->work (this->load_, this->importance_);
 
-      for (int j = 0; j < this->iter_; j++)
+      for (int j = 0; j < this->iter_; ++j)
         {
           ACE_Time_Value run_time = ACE_OS::gettimeofday () - *base_time_;
           TASK_STATS::instance ()->sample (run_time.sec (), count_);
