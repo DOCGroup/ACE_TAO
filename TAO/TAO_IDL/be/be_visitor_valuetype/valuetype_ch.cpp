@@ -400,7 +400,8 @@ be_visitor_valuetype_ch::visit_operation (be_operation *node)
   TAO_INSERT_COMMENT (os);
 
   bool const supported_operation =
-    this->ctx_->interface () != nullptr;
+    this->ctx_->interface () != nullptr
+    && this->ctx_->interface () != node->defined_in ();
 
   *os << be_uidt_nl << "public:" << be_idt_nl;
   if (!supported_operation)

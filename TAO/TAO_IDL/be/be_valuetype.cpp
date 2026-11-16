@@ -301,18 +301,17 @@ be_valuetype::have_operation ()
 
   if (! have_operation)
     {
-      // Check for operations on supported interfaces
-      AST_Type * supported = this->supports_concrete ();
-
-      if (supported != nullptr)
+      // Check operations on every supported interface. An abstract supported
+      // interface can make the valuetype abstract too.
+      AST_Type_List const& supports = this->supports ();
+      for (size_t i = 0; i < supports.size (); ++i)
         {
-          be_interface *intf =
-            dynamic_cast<be_interface*> (supported);
+          be_interface *intf = dynamic_cast<be_interface*> (supports[i]);
 
-          if (intf != nullptr)
+          if (intf != nullptr && be_valuetype::have_supported_op (intf))
             {
-              have_operation =
-                be_valuetype::have_supported_op (intf);
+              have_operation = true;
+              break;
             }
         }
     }

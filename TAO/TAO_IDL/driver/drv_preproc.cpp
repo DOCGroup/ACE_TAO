@@ -720,8 +720,6 @@ DRV_cpp_post_init ()
 // Local/internal helper function.
 namespace
 {
-  using File_Handle = std::unique_ptr<FILE, int (*) (FILE *)>;
-
   /// Owns a temporary file descriptor until it is closed or fdopen takes over.
   class File_Descriptor_Guard
   {
@@ -733,10 +731,7 @@ namespace
 
     ~File_Descriptor_Guard ()
     {
-      if (this->handle_ != ACE_INVALID_HANDLE)
-        {
-          ACE_OS::close (this->handle_);
-        }
+      this->reset ();
     }
 
     ACE_HANDLE get () const
@@ -749,6 +744,14 @@ namespace
       ACE_HANDLE const handle = this->handle_;
       this->handle_ = ACE_INVALID_HANDLE;
       return handle;
+    }
+
+    void reset ()
+    {
+      if (this->handle_ != ACE_INVALID_HANDLE)
+        {
+          ACE_OS::close (this->release ());
+        }
     }
 
     File_Descriptor_Guard (File_Descriptor_Guard const &) = delete;
@@ -958,8 +961,8 @@ DRV_get_orb_idl_includes ()
 
  // Search for orb.idl in supplied include file search paths.
   std::string directory;
-  File_Handle fp (FE_Utils::open_included_file (orb_idl, directory),
-                  ACE_OS::fclose);
+  FE_Utils::File_Handle fp =
+    FE_Utils::open_included_file (orb_idl, directory);
 
   if (!fp)
     {
@@ -1184,6 +1187,7 @@ DRV_pre_proc (std::string const& myfile)
 
       if (copy_input_file)
         {
+          ti_fd.reset ();
           (void) ACE_OS::unlink (tmp_ifile.c_str ());
         }
       throw Bailout ();
@@ -1209,7 +1213,7 @@ DRV_pre_proc (std::string const& myfile)
 
   // Rename temporary files so that they have extensions accepted
   // by the preprocessor.
-  File_Handle file (ACE_OS::fopen (myfile.c_str (), "r"), ACE_OS::fclose);
+  FE_Utils::File_Handle file (ACE_OS::fopen (myfile.c_str (), "r"), ACE_OS::fclose);
   if (!file)
     {
       ACE_ERROR ((LM_ERROR,
@@ -1218,6 +1222,7 @@ DRV_pre_proc (std::string const& myfile)
                   myfile.c_str ()));
       if (copy_input_file)
         {
+          ti_fd.reset ();
           (void) ACE_OS::unlink (tmp_ifile.c_str ());
         }
       (void) ACE_OS::unlink (tmp_file.c_str ());
@@ -1233,12 +1238,13 @@ DRV_pre_proc (std::string const& myfile)
                       "%C: cannot open temp file \"%C\" for writing: %m\n",
                       idl_global->prog_name ().c_str (),
                       tmp_ifile.c_str ()));
+          ti_fd.reset ();
           (void) ACE_OS::unlink (tmp_ifile.c_str ());
           (void) ACE_OS::unlink (tmp_file.c_str ());
           throw Bailout ();
         }
       ti_fd.release ();
-      File_Handle copy_output_file (copy_output, ACE_OS::fclose);
+      FE_Utils::File_Handle copy_output_file (copy_output, ACE_OS::fclose);
       try
         {
           DRV_copy_input (file.get (),
@@ -1248,6 +1254,7 @@ DRV_pre_proc (std::string const& myfile)
         }
       catch (...)
         {
+          copy_output_file.reset ();
           (void) ACE_OS::unlink (tmp_ifile.c_str ());
           (void) ACE_OS::unlink (tmp_file.c_str ());
           throw;
@@ -1497,8 +1504,8 @@ DRV_pre_proc (std::string const& myfile)
 
   if (idl_global->compile_flags () & IDL_CF_ONLY_PREPROC)
     {
-      File_Handle preproc (ACE_OS::fopen (t_file.c_str (), "r"),
-                           ACE_OS::fclose);
+      FE_Utils::File_Handle preproc (ACE_OS::fopen (t_file.c_str (), "r"),
+                                     ACE_OS::fclose);
       char buffer[ACE_MAXLOGMSGLEN];
       size_t bytes;
 

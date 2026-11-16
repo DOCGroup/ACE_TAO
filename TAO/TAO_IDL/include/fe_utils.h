@@ -7,6 +7,7 @@
 #include "utl_strlist.h"
 
 #include <cstddef>
+#include <cstdio>
 #include <memory>
 #include <string>
 #include <vector>
@@ -34,6 +35,7 @@ struct TAO_IDL_FE_Export FE_Utils
   };
 
   using T_PARAMLIST_INFO = std::vector<T_Param_Info>;
+  using File_Handle = std::unique_ptr<std::FILE, int (*) (std::FILE *)>;
 
   struct TAO_IDL_FE_Export Scoped_Name_Deleter
   {
@@ -96,7 +98,7 @@ struct TAO_IDL_FE_Export FE_Utils
   /// Attempt to open file for reading until it is found in one of the
   /// supplied include paths.  If the file was successfully opened, the
   /// directory within which it was found is returned as well.
-  static FILE *
+  static File_Handle
   open_included_file (std::string const& filename,
                       std::string &directory);
 

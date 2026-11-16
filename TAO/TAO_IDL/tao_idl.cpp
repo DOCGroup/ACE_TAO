@@ -76,6 +76,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "utl_string.h"
 #include "utl_identifier.h"
+#include "fe_utils.h"
 
 #include <cstdio>
 #include <memory>
@@ -393,7 +394,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           throw Bailout ();
         }
 
-      std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+      FE_Utils::File_Handle output_file (
         nullptr, ACE_OS::fclose);
 
       if (idl_global->multi_file_input ())

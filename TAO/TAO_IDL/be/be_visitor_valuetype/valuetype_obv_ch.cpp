@@ -188,9 +188,10 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
         }
       *os << node->local_name () << " () override;";
 
-      // An OBV_ class that supports interfaces is abstract, so its
-      // _copy_value() implementation must be provided by a concrete subclass.
-      if (this->obv_need_ref_counter (node) && node->n_supports () == 0)
+      // Concrete factory classes need their own _copy_value() implementation.
+      if (this->obv_need_ref_counter (node)
+          && node->determine_factory_style ()
+               == be_valuetype::FS_CONCRETE_FACTORY)
         {
           *os << be_uidt_nl << be_nl << "public:" << be_idt_nl
               << "::CORBA::ValueBase *_copy_value () override;";

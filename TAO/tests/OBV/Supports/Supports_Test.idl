@@ -21,6 +21,25 @@
 module Supports_Test
 {
 
+  interface empty_marker
+  {
+  };
+
+  valuetype simple_value supports empty_marker
+  {
+    public long value_;
+  };
+
+  abstract interface operation_interface
+  {
+    void ping ();
+  };
+
+  valuetype abstract_value supports operation_interface
+  {
+    public long value_;
+  };
+
   valuetype Node;
 
   typedef sequence<Node> Node_List;
