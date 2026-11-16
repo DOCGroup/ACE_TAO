@@ -803,52 +803,46 @@ int
 TAO_SCIOP_Acceptor::parse_multiple_hostnames (const char *hostnames,
                                               ACE_Array<ACE_CString> &hostnames_out)
 {
-  // Make a copy of hostnames string
-  int const hostnames_string_length = std::strlen(hostnames) + 1;
-  char *hostnames_copy {};
-  ACE_NEW_RETURN (hostnames_copy,
-                  char[hostnames_string_length],
-                  -1);
-  std::unique_ptr<char[]> hostnames_copy_auto(hostnames_copy);
-  std::strncpy (hostnames_copy, hostnames, hostnames_string_length);
-
-  // Count the number of hostnames separated by "+"
+  size_t const hostnames_length = std::strlen (hostnames);
   size_t num_hostnames {};
-  char *last {};
-  const char* hostname = ACE_OS::strtok_r (hostnames_copy, "+", &last);
+  for (size_t i {}; i < hostnames_length;)
+    {
+      while (i < hostnames_length && hostnames[i] == '+')
+        ++i;
+      if (i == hostnames_length)
+        break;
 
-  while (hostname != nullptr) {
-    ++num_hostnames;
-    hostname = ACE_OS::strtok_r (0, "+", &last);
-  }
+      ++num_hostnames;
+      while (i < hostnames_length && hostnames[i] != '+')
+        ++i;
+    }
 
-  // Set the size of the array to the number of hostnames
-  if (hostnames_out.size(num_hostnames) == -1) {
-    TAOLIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("TAO (%P|%t) Could not allocate storage ")
-                       ACE_TEXT ("for %d hostnames in SCIOP endpoint\n"),
-                       num_hostnames),
-                      -1);
-  }
+  if (hostnames_out.size (num_hostnames) == -1)
+    {
+      TAOLIB_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("TAO (%P|%t) Could not allocate storage ")
+                         ACE_TEXT ("for %B hostnames in SCIOP endpoint\n"),
+                         num_hostnames),
+                        -1);
+    }
 
-  // Refresh copy of hostnames string
-  ACE_NEW_RETURN (hostnames_copy,
-                  char[hostnames_string_length],
-                  -1);
-  hostnames_copy_auto.reset(hostnames_copy);
-  std::strncpy (hostnames_copy, hostnames, hostnames_string_length);
-
-  // Iterate over the hostnames and stuff them into the array
   size_t index {};
-  last = nullptr;
-  hostname = ACE_OS::strtok_r (hostnames_copy, "+", &last);
+  for (size_t start {}; start < hostnames_length;)
+    {
+      while (start < hostnames_length && hostnames[start] == '+')
+        ++start;
+      if (start == hostnames_length)
+        break;
 
-  while (index < num_hostnames) {
-    ACE_CString hostname_object(hostname);
-    hostnames_out.set(hostname_object, index++);
+      size_t end = start;
+      while (end < hostnames_length && hostnames[end] != '+')
+        ++end;
 
-    hostname = ACE_OS::strtok_r (0, "+", &last);
-  }
+      ACE_CString const hostname (hostnames + start, end - start);
+      hostnames_out.set (hostname, index);
+      ++index;
+      start = end;
+    }
 
   return 0;
 }
