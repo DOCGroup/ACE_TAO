@@ -93,7 +93,10 @@ be_map::primitive_key_type () const
   if (type_node && type_node->node_type () == AST_Decl::NT_typedef)
     {
       be_typedef *const typedef_node = dynamic_cast<be_typedef *> (type_node);
-      if (!typedef_node) return nullptr;
+      if (!typedef_node)
+        {
+          return nullptr;
+        }
       type_node = typedef_node->primitive_base_type ();
     }
   return type_node;
@@ -106,7 +109,10 @@ be_map::primitive_value_type () const
   if (type_node && type_node->node_type () == AST_Decl::NT_typedef)
     {
       be_typedef *const typedef_node = dynamic_cast<be_typedef *> (type_node);
-      if (!typedef_node) return nullptr;
+      if (!typedef_node)
+        {
+          return nullptr;
+        }
       type_node = typedef_node->primitive_base_type ();
     }
   return type_node;
