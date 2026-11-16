@@ -24,10 +24,10 @@ TAO_DiffServPolicy_ORBInitializer::pre_init (
     {
       if (TAO_debug_level > 0)
         TAOLIB_ERROR ((LM_ERROR,
-                    "(%P|%t) TAO_RT_ORBInitializer::pre_init:\n"
-                    "(%P|%t)    Unable to narrow "
-                    "\"PortableInterceptor::ORBInitInfo_ptr\" to\n"
-                    "(%P|%t)   \"TAO_ORBInitInfo *.\"\n"));
+                       "(%P|%t) TAO_DiffServPolicy_ORBInitializer::pre_init:\n"
+                       "(%P|%t)    Unable to narrow "
+                       "\"PortableInterceptor::ORBInitInfo_ptr\" to\n"
+                       "(%P|%t)   \"TAO_ORBInitInfo *.\"\n"));
 
       throw ::CORBA::INTERNAL ();
     }
@@ -52,7 +52,7 @@ TAO_DiffServPolicy_ORBInitializer::register_policy_factories (
 {
   if (CORBA::is_nil (this->policy_factory_.in ()))
     {
-      PortableInterceptor::PolicyFactory_ptr policy_factory;
+      PortableInterceptor::PolicyFactory_ptr policy_factory {};
       ACE_NEW_THROW_EX (policy_factory,
                         TAO_DiffServ_PolicyFactory,
                           CORBA::NO_MEMORY (
