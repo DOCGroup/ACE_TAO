@@ -296,14 +296,38 @@ be_visitor_valuetype_obv_cs::gen_obv_call_base_constructor_args (
               t = td->primitive_base_type ();
             }
 
-          if (dynamic_cast<be_valuetype_fwd*> (t) ||
-              dynamic_cast<be_valuetype*> (t) ||
-              dynamic_cast<be_valuebox*> (t) )
+          be_sequence *sequence = dynamic_cast<be_sequence*> (t);
+          be_type *sequence_element =
+            sequence != nullptr ? sequence->primitive_base_type () : nullptr;
+          if (sequence != nullptr
+              && (dynamic_cast<be_valuetype_fwd*> (sequence_element)
+                  || dynamic_cast<be_valuetype*> (sequence_element)
+                  || dynamic_cast<be_valuebox*> (sequence_element)))
+            {
+              *os << "[&] ()" << be_nl << "{" << be_idt_nl
+                  << "auto _tao_copy = " << f->local_name () << " ();"
+                  << be_nl
+                  << "for (::CORBA::ULong i {}; i < _tao_copy.length (); ++i)"
+                  << be_idt_nl << "{" << be_idt_nl
+                  << "if (_tao_copy[i] != nullptr)" << be_idt_nl
+                  << "{" << be_idt_nl
+                  << "::CORBA::ValueBase_var _tao_value ("
+                  << "_tao_copy[i]->_copy_value ());" << be_nl
+                  << "_tao_copy[i] = " << sequence_element->full_name ()
+                  << "::_downcast (_tao_value._retn ());" << be_uidt_nl
+                  << "}" << be_uidt_nl << "}" << be_nl
+                  << "return _tao_copy;" << be_uidt_nl
+                  << "} ()";
+            }
+          else if (dynamic_cast<be_valuetype_fwd*> (t) ||
+                   dynamic_cast<be_valuetype*> (t) ||
+                   dynamic_cast<be_valuebox*> (t))
             {
               // Nested valuetypes/boxes need to be deep copied also
               *os << "(" << f->local_name () << " () ?" << be_idt_nl
-                  << t->full_name () << "::_downcast (" << f->local_name ()
-                  << " ()->_copy_value ())" << be_nl
+                  << t->full_name () << "::_downcast ("
+                  << "::CORBA::ValueBase_var (" << f->local_name ()
+                  << " ()->_copy_value ()).in ())" << be_nl
                   << ": 0)" << be_uidt;
             }
           else // Simple non-nested type
