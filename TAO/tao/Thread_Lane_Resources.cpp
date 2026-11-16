@@ -23,18 +23,15 @@ TAO_Thread_Lane_Resources::TAO_Thread_Lane_Resources (
     new_leader_generator_ (new_leader_generator)
 {
   // Create the transport cache.
-  TAO::Transport_Cache_Manager *transport_cache {};
-  ACE_NEW (transport_cache,
-           TAO::Transport_Cache_Manager (
-            *this->leader_follower ().reactor (),
-            orb_core.resource_factory ()->purge_percentage (),
-            orb_core.resource_factory ()->create_purging_strategy (),
-            orb_core.resource_factory ()->cache_maximum (),
-            orb_core.resource_factory ()->locked_transport_cache (),
-            orb_core.orbid (),
-            orb_core.resource_factory ()->transport_idle_timeout (),
-            orb_core.resource_factory ()->transport_idle_scan_interval ()));
-  this->transport_cache_.reset (transport_cache);
+  this->transport_cache_ = std::make_unique<TAO::Transport_Cache_Manager> (
+    *this->leader_follower ().reactor (),
+    orb_core.resource_factory ()->purge_percentage (),
+    orb_core.resource_factory ()->create_purging_strategy (),
+    orb_core.resource_factory ()->cache_maximum (),
+    orb_core.resource_factory ()->locked_transport_cache (),
+    orb_core.orbid (),
+    orb_core.resource_factory ()->transport_idle_timeout (),
+    orb_core.resource_factory ()->transport_idle_scan_interval ());
 }
 
 TAO_Thread_Lane_Resources::~TAO_Thread_Lane_Resources () = default;
