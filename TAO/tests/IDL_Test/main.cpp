@@ -256,6 +256,40 @@ test_valuetype_copy (int &error_count)
         error_count, "Copy_Derived member",
         derived_downcast->derived_value (), 42);
     }
+
+  CORBA::ValueBase_var leaf_value (new OBV_Copy_Leaf);
+  Copy_Leaf * const leaf = Copy_Leaf::_downcast (leaf_value.in ());
+  leaf->leaf_value (51);
+
+  OBV_Copy_Alias_Holder alias_holder;
+  alias_holder.leaf (leaf);
+  CORBA::ValueBase_var alias_copy (alias_holder._copy_value ());
+  Copy_Alias_Holder * const alias_downcast =
+    Copy_Alias_Holder::_downcast (alias_copy.in ());
+  if (alias_downcast == nullptr)
+    {
+      ++error_count;
+      ACE_ERROR ((LM_ERROR, "Copy_Alias_Holder copy has wrong type\n"));
+    }
+  else
+    {
+      Copy_Leaf * const copied_leaf = alias_downcast->leaf ();
+      if (copied_leaf == leaf)
+        {
+          ++error_count;
+          ACE_ERROR ((LM_ERROR, "Copy_Alias_Holder shares its aliased valuetype\n"));
+        }
+      else
+        {
+          expect_equals<CORBA::Long> (
+            error_count, "Copy_Alias_Holder copied leaf",
+            copied_leaf->leaf_value (), 51);
+          copied_leaf->leaf_value (52);
+          expect_equals<CORBA::Long> (
+            error_count, "Copy_Alias_Holder original leaf unchanged",
+            leaf->leaf_value (), 51);
+        }
+    }
 }
 
 void
