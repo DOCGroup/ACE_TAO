@@ -3,7 +3,10 @@
 #include "Task_Stats.h"
 
 #include "tao/ORB_Core.h"
+
 #include <atomic>
+#include <cerrno>
+#include <new>
 #include <utility>
 
 #include "tao/RTScheduling/Current.h"
@@ -141,14 +144,18 @@ DT_Creator::init (int argc, ACE_TCHAR *argv [])
         {
           arg_shifter.consume_arg ();
 
-          POA_Holder *holder {};
-          ACE_NEW_RETURN (holder, POA_Holder (), -1);
-          std::unique_ptr<POA_Holder> holder_ptr (holder);
-          if (holder_ptr->init (arg_shifter) == -1)
-          {
-            return -1;
-          }
-          this->poa_list_.push_back (std::move (holder_ptr));
+          std::unique_ptr<POA_Holder> holder (
+            new (std::nothrow) POA_Holder ());
+          if (!holder)
+            {
+              errno = ENOMEM;
+              return -1;
+            }
+          if (holder->init (arg_shifter) == -1)
+            {
+              return -1;
+            }
+          this->poa_list_.push_back (std::move (holder));
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Job")) == 0)
         {
