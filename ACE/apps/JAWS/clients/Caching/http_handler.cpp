@@ -260,7 +260,7 @@ HTTP_Connector::parseurl (std::string const &url,
           || result.ec != std::errc {}
           || result.ptr != port_text.data () + port_text.size ()
           || parsed_port == 0
-          || parsed_port > std::numeric_limits<u_short>::max ())
+          || parsed_port > (std::numeric_limits<u_short>::max) ())
         {
           return -1;
         }
