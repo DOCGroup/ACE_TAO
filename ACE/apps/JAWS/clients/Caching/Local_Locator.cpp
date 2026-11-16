@@ -150,7 +150,7 @@ ACE_URL_Local_Locator::modify_offer (const ACE_WString &offer_id,
 
   for (; iter.next (item) != 0; iter.advance ())
     {
-      if (url != 0 && *url == item->offer_->url ())
+      if (url != nullptr && *url == item->offer_->url ())
         {
           errno = ACE_URL_Locator::OFFER_EXIST;
           return -1;
@@ -159,16 +159,16 @@ ACE_URL_Local_Locator::modify_offer (const ACE_WString &offer_id,
         target = item;
     }
 
-  if (target != 0)  // Aha, we found a target to work on
+  if (target != nullptr)  // Aha, we found a target to work on
     {
-      if (del != 0 && modify != 0)
+      if (del != nullptr && modify != nullptr)
         {
           // We need to make a copy of the original property sequence
           // so if any error occurs, we can revert our change easily.
 
           // First we need to calculate the maximum number of perperties.
           int psize = target->offer_->url_properties ().size ();
-          if (del != 0)
+          if (del != nullptr)
             if ((psize -= del->size ()) < 0)
               {
                 // If you try to delete more properties than we have,
@@ -176,7 +176,7 @@ ACE_URL_Local_Locator::modify_offer (const ACE_WString &offer_id,
                 errno = ACE_URL_Locator::INVALID_ARGUMENT;
                 return -1;
               }
-          if (modify != 0)
+          if (modify != nullptr)
             // In the worst case, all properties in <modify> will be added.
             psize += modify->size ();
 
@@ -186,7 +186,7 @@ ACE_URL_Local_Locator::modify_offer (const ACE_WString &offer_id,
           for (; sz < item->offer_->url_properties ().size ())
             working[sz] = item->offer_->url_properties() [sz];
 
-          if (del != 0)
+          if (del != nullptr)
             {
               // Argh, this is really a stupid design.
               // Go thru every property we want to delete
@@ -204,7 +204,7 @@ ACE_URL_Local_Locator::modify_offer (const ACE_WString &offer_id,
               // imaginary property.  Is this appropriate?
             }
 
-          if (modify != 0)
+          if (modify != nullptr)
             {
               // This is also stupid.
               // Go thru every property we want to modify/add
@@ -233,7 +233,7 @@ ACE_URL_Local_Locator::modify_offer (const ACE_WString &offer_id,
       for (size_t i = 0; i < sz; ++i)
         item->offer_->url_properties ()[i] = working[i];
 
-      if (url != 0)
+      if (url != nullptr)
         item->offer_->url (url->fast_rep ()); // replace URL location.
       return 0;
     }
