@@ -49,7 +49,8 @@ namespace TAO
       Protocol_Factory& operator= (Protocol_Factory&&) = delete;
       ~Protocol_Factory () override;
 
-      // = Service Configurator hooks.
+      /// @name Service Configurator hooks
+      /// @{
       /// Dynamic linking hook
       int init (int argc, ACE_TCHAR* argv[]) override;
 
@@ -62,11 +63,14 @@ namespace TAO
       /// Return the character used to mark where an endpoint ends and
       /// where its options begin.
       char options_delimiter () const override;
+      /// @}
 
-      // = Check Protocol_Factory.h for a description of these methods.
+      /// @name Protocol factory operations documented in Protocol_Factory.h
+      /// @{
       TAO_Acceptor  *make_acceptor () override;
       TAO_Connector *make_connector () override;
       int requires_explicit_endpoint () const override;
+      /// @}
 
     private:
       /// Configuration reference

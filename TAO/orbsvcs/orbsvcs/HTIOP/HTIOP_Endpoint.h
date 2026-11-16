@@ -69,9 +69,8 @@ namespace TAO
 
       ~Endpoint () override;
 
-      // = Implementation of abstract TAO_Endpoint methods.  See
-      // Endpoint.h for their documentation.
-
+      /// @name TAO_Endpoint overrides
+      /// @{
       TAO_Endpoint *next () override;
       int addr_to_string (char *buffer, size_t length) override;
       virtual void reset_hint ();
@@ -85,11 +84,10 @@ namespace TAO
 
       /// Return a hash value for this object.
       CORBA::ULong hash () override;
+      /// @}
 
-      // Allocates memory and returns a copy of <this>
-
-      // = HTIOP_Endpoint-specific methods.
-
+      /// @name HTIOP_Endpoint-specific methods
+      /// @{
       /// Return a reference to the <object_addr>.
       const ACE::HTBP::Addr &object_addr () const;
 
@@ -114,6 +112,7 @@ namespace TAO
       /// Copy the string @a h into <host_> and return the resulting pointer.
       /// This object maintains ownership of this string.
       const char *htid (const char *h);
+      /// @}
 
       //Connection_Handler *&hint ();
       // Access to our <hint_>.

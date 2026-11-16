@@ -91,8 +91,8 @@ namespace TAO
       /// @}
 
     protected:
-      // = The TAO_Connector methods, please check the documentation on
-      // Transport_Connector.h
+      /// @name Additional TAO_Connector overrides
+      /// @{
       int set_validate_endpoint (TAO_Endpoint *ep) override;
 
       TAO_Transport *make_connection (TAO::Profile_Transport_Resolver *r,
@@ -107,6 +107,7 @@ namespace TAO
       /// Its not clear what it means to cancel in HTIOP, since there's no
       /// base connector.
       int cancel_svc_handler (TAO_Connection_Handler *svc_handler) override;
+      /// @}
 
     private:
       /// Return the remote endpoint, a helper function

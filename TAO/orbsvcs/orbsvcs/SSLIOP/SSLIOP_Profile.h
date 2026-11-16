@@ -70,10 +70,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
       /// connections are used.
       explicit TAO_SSLIOP_Profile (TAO_ORB_Core * orb_core, bool ssl_only = false);
 
-      // = Please see Profile.h for the documentation of these methods.
+      /// @name Profile.h overrides
+      /// @{
       int decode (TAO_InputCDR& cdr) override;
       int encode_endpoints () override;
       TAO_Endpoint *endpoint () override;
+      /// @}
 
       /**
        * Override parse_string() from the base class to update the SSL
