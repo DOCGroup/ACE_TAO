@@ -420,9 +420,15 @@ annotation_tests ()
 
     // Get Sequence
     AST_Typedef *typedef_node = dynamic_cast<AST_Typedef *> (value->field_type ());
-    if (!typedef_node) t.failed ("Could not get AST_Typedef");
+    if (!typedef_node)
+    {
+      t.failed ("Could not get AST_Typedef");
+    }
     AST_Sequence *seq = dynamic_cast<AST_Sequence *> (typedef_node->base_type ());
-    if (!seq) t.failed ("Could get AST_Sequence");
+    if (!seq)
+    {
+      t.failed ("Could get AST_Sequence");
+    }
 
     // Verify Annotation on Base Type
     AST_Annotation_Appls &annotations = seq->base_type_annotations ();
@@ -431,7 +437,7 @@ annotation_tests ()
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Annotation Test Error: %C:\n")
           ACE_TEXT ("expected one annotation on test_seq_t base type, ")
-          ACE_TEXT ("it has %d annotations!\n"),
+          ACE_TEXT ("it has %B annotations!\n"),
           t.name_.c_str (), count));
         t.failed ();
       }
@@ -557,7 +563,7 @@ annotation_tests ()
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Annotation Test Error: %C:\n")
           ACE_TEXT ("expected one annotation on test_union discriminator, ")
-          ACE_TEXT ("it has %d annotations!\n"),
+          ACE_TEXT ("it has %B annotations!\n"),
           t.name_.c_str (), count));
         t.failed ();
       }
@@ -735,7 +741,10 @@ annotation_tests ()
     ).assert_node<AST_Typedef> ("::struct12Array");
     AST_Array *struct12Array =
       dynamic_cast<AST_Array *> (thetypedef->base_type ());
-    if (!struct12Array) t.failed ("Could not get AST_Array");
+    if (!struct12Array)
+    {
+      t.failed ("Could not get AST_Array");
+    }
 
     // Verify Annotation on Base Type
     AST_Annotation_Appls &annotations =
@@ -745,7 +754,7 @@ annotation_tests ()
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Annotation Test Error: %C:\n")
           ACE_TEXT ("expected one annotation on struct12Array base type, ")
-          ACE_TEXT ("it has %d annotations!\n"),
+          ACE_TEXT ("it has %B annotations!\n"),
           t.name_.c_str (), count));
         t.failed ();
       }
@@ -1054,10 +1063,10 @@ annotation_tests ()
     if (member->visibility () != AST_Field::vis_NA)
       {
         char buffer[100];
-        ACE_OS::snprintf (&buffer[0], 100,
+        ACE_OS::snprintf (buffer, 100,
           "struct field visibility is %u, which is not equal to vis_NA",
           static_cast<unsigned> (member->visibility ()));
-        t.failed (&buffer[0]);
+        t.failed (buffer);
       }
   } catch (Failed const &) {}
 

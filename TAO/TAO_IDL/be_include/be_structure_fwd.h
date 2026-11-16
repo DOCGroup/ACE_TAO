@@ -20,14 +20,10 @@
 class be_visitor;
 class be_structure;
 
+/// Extends AST_StructureFwd with additional means for C++ mapping of a struct.
 class be_structure_fwd : public virtual AST_StructureFwd,
                          public virtual be_type
 {
-  // =TITLE
-  //   be_structure_fwd
-  //
-  // =DESCRIPTION
-  //   Extensions to the AST_StructureFwd class
 public:
   be_structure_fwd (AST_Structure *dummy,
                     UTL_ScopedName *n);

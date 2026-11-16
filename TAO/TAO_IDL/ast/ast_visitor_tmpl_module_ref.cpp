@@ -106,4 +106,3 @@ ast_visitor_tmpl_module_ref::visit_template_module_ref (
   return 0;
 }
 
-

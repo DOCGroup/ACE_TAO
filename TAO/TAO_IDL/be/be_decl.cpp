@@ -699,7 +699,6 @@ be_decl::impl_hdr_gen (bool val)
   this->impl_hdr_gen_ = val;
 }
 
-
 void
 be_decl::srv_skel_gen (bool val)
 {

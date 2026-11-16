@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_VALUETYPE_FIELD_CH_H_
 #define _BE_VISITOR_VALUETYPE_FIELD_CH_H_
 
@@ -39,8 +38,8 @@ public:
   /// visit the field node
   int visit_field (be_field *node) override;
 
-  // =visit operations on all possible data types that a valuetype
-  //  state member can be.
+  /// @name Visitor methods for valuetype state member types
+  /// @{
 
   /// visit array type
   int visit_array (be_array *node) override;
@@ -86,6 +85,7 @@ public:
   std::string const& pre_op () const;
   std::string const& post_op () const;
 
+  /// @}
 private:
   std::string pre_op_ {};
   std::string post_op_ {};

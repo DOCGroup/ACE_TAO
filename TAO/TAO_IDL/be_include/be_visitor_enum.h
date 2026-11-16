@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_BE_VISITOR_ENUM_H
 #define TAO_BE_VISITOR_ENUM_H
 

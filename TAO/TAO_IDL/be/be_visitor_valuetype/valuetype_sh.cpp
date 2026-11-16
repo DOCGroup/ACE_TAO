@@ -99,7 +99,6 @@ be_visitor_valuetype_sh::visit_valuetype (be_valuetype *node)
       << class_name << " (" << class_name
       << " const &rhs);" << be_uidt_nl;
 
-
   *os << "};" << be_nl_2;
 
   return 0;

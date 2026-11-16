@@ -86,4 +86,3 @@ be_visitor_operation_ih::visit_operation (be_operation *node)
   return 0;
 }
 
-

@@ -31,7 +31,7 @@ public:
                 AST_Type_List const& supports,
                 long n_supports,
                 AST_Interface_List const& supports_flat,
-                std::size_t n_supports_flat);
+                size_t n_supports_flat);
 
   ~be_component () override;
 
@@ -48,13 +48,13 @@ public:
   /// Visiting.
   int accept (be_visitor *visitor) override;
 
-  std::size_t n_provides () const;
-  std::size_t n_remote_provides () const;
-  std::size_t n_uses () const;
+  size_t n_provides () const;
+  size_t n_remote_provides () const;
+  size_t n_uses () const;
   bool has_uses_multiple () const;
-  std::size_t n_publishes () const;
-  std::size_t n_consumes () const;
-  std::size_t n_emits () const;
+  size_t n_publishes () const;
+  size_t n_consumes () const;
+  size_t n_emits () const;
 
   /// Update the has_* members.
   void scan (UTL_Scope *s);
@@ -74,13 +74,13 @@ private:
 
 private:
   /// Used by visitors to reduce footprint.
-  std::size_t n_provides_ {};
-  std::size_t n_remote_provides_ {};
-  std::size_t n_uses_ {};
+  size_t n_provides_ {};
+  size_t n_remote_provides_ {};
+  size_t n_uses_ {};
   bool has_uses_multiple_ {};
-  std::size_t n_publishes_ {};
-  std::size_t n_consumes_ {};
-  std::size_t n_emits_ {};
+  size_t n_publishes_ {};
+  size_t n_consumes_ {};
+  size_t n_emits_ {};
 };
 
 #endif  // if !defined

@@ -64,7 +64,6 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
           << "}" << be_nl_2;
     }
 
-  // Destructor.
   *os << node->full_obv_skel_name () << "::~";
   if (! node->is_nested ())
     {
@@ -73,13 +72,9 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
   *os << node->local_name () << " ()" << be_nl
       << "{}";
 
-  // Virtual _copy_value() only provided in OBV_* class when
-  // ::CORBA::DefaultValueRefCountBase has been included.
-  // The OBV_ class is concrete in this case and so requires
-  // a _copy_value definition.
-  // Otherwise, the end user must derive from this abstract
-  // OBV_* class and it is up to them to provide the correct
-  // implimentation of the _copy_value() there.
+  // The generated value factory instantiates the OBV_ class, so it needs the
+  // default _copy_value() implementation even when interfaces are supported.
+  // Derived implementations can override it to preserve their dynamic type.
   if (this->obv_need_ref_counter (node))
     {
       *os << be_nl_2
@@ -194,8 +189,7 @@ be_visitor_valuetype_obv_cs::visit_field (be_field *node)
 void
 be_visitor_valuetype_obv_cs::gen_obv_init_base_constructor_args (
     be_valuetype *node,
-    unsigned long &index
-  )
+    unsigned long &index)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   AST_Type *parent = node->inherits_concrete ();
@@ -230,8 +224,7 @@ be_visitor_valuetype_obv_cs::gen_obv_init_base_constructor_args (
 
 void
 be_visitor_valuetype_obv_cs::gen_obv_init_constructor_inits (
-    be_valuetype *node
-  )
+    be_valuetype *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   AST_Type *parent = node->inherits_concrete ();
@@ -267,8 +260,7 @@ be_visitor_valuetype_obv_cs::gen_obv_init_constructor_inits (
 void
 be_visitor_valuetype_obv_cs::gen_obv_call_base_constructor_args (
   be_valuetype *node,
-  unsigned long &index
-  )
+  unsigned long &index)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 

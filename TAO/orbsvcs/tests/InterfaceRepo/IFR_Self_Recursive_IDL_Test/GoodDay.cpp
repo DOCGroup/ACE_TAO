@@ -21,7 +21,6 @@ GoodDay::shutdown ()
   this->orb_->shutdown (false);
 }
 
-
 ::Test::GoodDay::RoughWeek*
 GoodDay::this_week ()
 {

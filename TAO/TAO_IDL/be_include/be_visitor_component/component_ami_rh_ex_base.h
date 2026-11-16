@@ -17,16 +17,11 @@
 
 class be_visitor_context;
 
-/// This class inherits from the AMI connector visitor that its
-/// code generation tracks closely.
+/// Base visitor for concrete AMI4CCM reply-handler implementation visitors.
+/// It follows the AMI connector visitor's code generation closely.
 class be_visitor_component_ami_rh_ex_base
   : public be_visitor_scope
 {
-  // = DESCRIPTION
-  //   This is a base class visitor for the AMI4CCM reply
-  //   handler implementation concrete visitors.
-  //
-  //
 public:
   explicit be_visitor_component_ami_rh_ex_base (be_visitor_context *ctx);
   ~be_visitor_component_ami_rh_ex_base () override;

@@ -149,7 +149,6 @@ int be_visitor_args_vardecl_ss::visit_interface_fwd (
   return this->emit_common (node);
 }
 
-
 int be_visitor_args_vardecl_ss::visit_valuebox (
   be_valuebox *node)
 {
@@ -258,7 +257,9 @@ int be_visitor_args_vardecl_ss::visit_fixed (be_fixed *)
   be_argument * const arg = dynamic_cast<be_argument*> (this->ctx_->node ());
 
   if (arg == nullptr)
+  {
     return -1;
+  }
 
   *this->ctx_->stream () << "::ACE_CDR::Fixed " << arg->local_name () << ";";
   return 0;
@@ -373,36 +374,31 @@ int be_visitor_args_vardecl_ss::visit_typedef (
 
 int
 be_visitor_args_vardecl_ss::visit_component (
-    be_component *node
-  )
+    be_component *node)
 {
   return this->visit_interface (node);
 }
 
 int
 be_visitor_args_vardecl_ss::visit_component_fwd (
-    be_component_fwd *node
-  )
+    be_component_fwd *node)
 {
   return this->visit_interface_fwd (node);
 }
 
 int
 be_visitor_args_vardecl_ss::visit_eventtype (
-    be_eventtype *node
-  )
+    be_eventtype *node)
 {
   return this->visit_valuetype (node);
 }
 
 int
 be_visitor_args_vardecl_ss::visit_eventtype_fwd (
-    be_eventtype_fwd *node
-  )
+    be_eventtype_fwd *node)
 {
   return this->visit_valuetype_fwd (node);
 }
-
 
 int
 be_visitor_args_vardecl_ss::emit_common (
@@ -439,7 +435,6 @@ be_visitor_args_vardecl_ss::emit_common (
 
   return 0;
 }
-
 
 int
 be_visitor_args_vardecl_ss::emit_common2 (be_type *node)

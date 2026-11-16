@@ -36,7 +36,9 @@ TAO::be_visitor_enum_typecode::visit_enum (be_enum * node)
      << "{" << be_idt_nl;
 
   if (this->visit_members (node) != 0)
+  {
     return -1;
+  }
 
   os << be_uidt_nl
      << "};" << be_uidt_nl << be_nl;
@@ -55,7 +57,9 @@ TAO::be_visitor_enum_typecode::visit_enum (be_enum * node)
     << be_uidt_nl;
 
   if (this->gen_typecode_ptr (node) != 0)
+  {
     return -1;
+  }
 
   return 0;
 }
@@ -65,8 +69,8 @@ TAO::be_visitor_enum_typecode::visit_members (be_enum * node)
 {
   TAO_OutStream & os = *this->ctx_->stream ();
 
-  std::size_t const count = node->member_count ();
-  std::size_t n {};
+  size_t const count = node->member_count ();
+  size_t n {};
 
   for (UTL_ScopeActiveIterator i (node, UTL_Scope::IK_decls);
        !i.is_done ();

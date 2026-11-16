@@ -174,7 +174,9 @@ be_visitor_valuetype_marshal_cs::unmarshal_state (be_valuetype *node)
       *os << "return ci.handle_chunking (strm);" << be_uidt << be_nl_2;
     }
     else
+    {
       *os << "return true;";
+    }
   return 0;
 }
 
@@ -299,7 +301,7 @@ int
 be_visitor_valuetype_marshal_cs::gen_fields (be_valuetype *node,
                                              be_visitor_context &ctx)
 {
-  std::size_t n_processed {};
+  size_t n_processed {};
   TAO_OutStream *os = ctx.stream ();
   this->elem_number_ = 0;
 

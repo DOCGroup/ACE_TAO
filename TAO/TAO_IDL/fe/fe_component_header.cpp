@@ -39,7 +39,7 @@ FE_ComponentHeader::supports () const
   return this->inherits ();
 }
 
-std::size_t
+size_t
 FE_ComponentHeader::n_supports () const
 {
   return this->n_inherits ();
@@ -51,7 +51,7 @@ FE_ComponentHeader::supports_flat () const
   return this->inherits_flat ();
 }
 
-std::size_t
+size_t
 FE_ComponentHeader::n_supports_flat () const
 {
   return this->n_inherits_flat ();

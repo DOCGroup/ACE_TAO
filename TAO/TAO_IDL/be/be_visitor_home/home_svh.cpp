@@ -268,4 +268,3 @@ be_visitor_home_svh::op_attr_decl_helper (be_interface * /* derived */,
   return visitor.visit_scope (ancestor);
 }
 
-

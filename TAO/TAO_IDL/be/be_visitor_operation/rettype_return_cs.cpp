@@ -105,8 +105,7 @@ be_visitor_operation_rettype_return_cs::visit_valuetype_fwd (
 
 int
 be_visitor_operation_rettype_return_cs::visit_predefined_type (
-    be_predefined_type *node
-  )
+    be_predefined_type *node)
 {
   TAO_OutStream * const os = this->ctx_->stream ();
 
@@ -218,8 +217,7 @@ be_visitor_operation_rettype_return_cs::visit_component (
 
 int
 be_visitor_operation_rettype_return_cs::visit_component_fwd (
-    be_component_fwd *node
-  )
+    be_component_fwd *node)
 {
   return this->visit_interface_fwd (node);
 }
@@ -233,8 +231,7 @@ be_visitor_operation_rettype_return_cs::visit_eventtype (
 
 int
 be_visitor_operation_rettype_return_cs::visit_eventtype_fwd (
-    be_eventtype_fwd *node
-  )
+    be_eventtype_fwd *node)
 {
   return this->visit_valuetype_fwd (node);
 }
@@ -245,5 +242,4 @@ be_visitor_operation_rettype_return_cs::visit_home (
 {
   return this->visit_interface (node);
 }
-
 

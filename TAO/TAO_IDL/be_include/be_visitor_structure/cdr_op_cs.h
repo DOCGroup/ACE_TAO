@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_STRUCTURE_CDR_OP_CS_H_
 #define _BE_VISITOR_STRUCTURE_CDR_OP_CS_H_
 

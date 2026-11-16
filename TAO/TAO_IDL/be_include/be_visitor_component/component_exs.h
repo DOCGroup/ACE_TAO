@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_COMPONENT_COMPONENT_EXS_H_
 #define _BE_COMPONENT_COMPONENT_EXS_H_
 

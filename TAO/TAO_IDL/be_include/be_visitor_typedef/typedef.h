@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_TYPEDEF_TYPEDEF_H_
 #define _BE_VISITOR_TYPEDEF_TYPEDEF_H_
 
@@ -37,8 +36,8 @@ public:
   /// must be overridden
   int visit_typedef (be_typedef *node) override;
 
-  // =visit methods on all elements syntactically valid as types that can be
-  // typedefed.
+  /// @name Visitor methods for types that can be typedefed
+  /// @{
 
   /// visit a array
   int visit_array (be_array *node) override;
@@ -57,6 +56,7 @@ public:
 
   /// visit a union
   int visit_union (be_union *node) override;
+  /// @}
 };
 
 #endif /* _BE_VISITOR_TYPEDEF_TYPEDEF_H_ */

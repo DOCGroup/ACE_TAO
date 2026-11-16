@@ -65,7 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_EXTERN_AST_EXTERN_HH
 #define _AST_EXTERN_AST_EXTERN_HH
 
-
 class AST_Type;
 class AST_Decl;
 

@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_ARRAY_ANY_OP_CH_H_
 #define _BE_VISITOR_ARRAY_ANY_OP_CH_H_
 

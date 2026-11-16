@@ -20,7 +20,6 @@ be_visitor_typedef::be_visitor_typedef (be_visitor_context *ctx)
 {
 }
 
-
 int be_visitor_typedef::visit_typedef (be_typedef *)
 {
   return -1; // Must be overridden.

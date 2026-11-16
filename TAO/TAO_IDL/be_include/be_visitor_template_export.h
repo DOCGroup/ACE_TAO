@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_BE_VISITOR_TEMPLATE_EXPORT_H
 #define TAO_BE_VISITOR_TEMPLATE_EXPORT_H
 
@@ -44,6 +43,5 @@ public:
 
   int visit_sequence (be_sequence *node) override;
 };
-
 
 #endif // TAO_BE_VISITOR_TEMPLATE_EXPORT_H

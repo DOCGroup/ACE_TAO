@@ -248,7 +248,6 @@ public:
   Identifier *local_name () const;
   void local_name (Identifier *id);
 
-
   virtual std::string const& full_name () const;
   // Return the stringified full name.
 
@@ -321,7 +320,6 @@ public:
   // Useful for GIOP to know if a wstring is being marshaled.
   virtual int contains_wstring ();
   void contains_wstring (int val);
-
 
   // Accessors for the member.
   bool in_tmpl_mod_not_aliased () const;

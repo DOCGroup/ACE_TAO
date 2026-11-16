@@ -38,6 +38,18 @@ TAO_CodeGen::TAO_CodeGen ()
 
 TAO_CodeGen::~TAO_CodeGen () = default;
 
+int
+TAO_CodeGen::reset_out_stream (std::unique_ptr<TAO_OutStream> &stream)
+{
+  stream.reset ();
+
+  TAO_OutStream *new_stream {};
+  ACE_NEW_RETURN (new_stream, TAO_OutStream, -1);
+
+  stream.reset (new_stream);
+  return 0;
+}
+
 // Change the string to all upper case.
 std::string
 TAO_CodeGen::upcase (std::string const& str)
@@ -97,21 +109,20 @@ TAO_CodeGen::start_client_header (const std::string &fname)
   FE_Utils::validate_included_idl_files ();
 
   // Clean up between multiple files.
-  delete this->client_header_;
-
-  ACE_NEW_RETURN (this->client_header_,
-                  TAO_OutStream,
-                  -1);
+  if (this->reset_out_stream (this->client_header_) == -1)
+    {
+      return -1;
+    }
 
   if (this->client_header_->open (fname, TAO_OutStream::TAO_CLI_HDR) == -1)
     {
       return -1;
     }
 
-  TAO_INSERT_COMMENT (this->client_header_);
+  TAO_INSERT_COMMENT (this->client_header_.get ());
 
   // Generate the #ident string, if any.
-  this->gen_ident_string (this->client_header_);
+  this->gen_ident_string (this->client_header_.get ());
 
   std::string const& filename = idl_global->filename ();
   bool const got_pidl = filename.size () >= 5
@@ -121,7 +132,7 @@ TAO_CodeGen::start_client_header (const std::string &fname)
     {
       // Generate the #ifndef clause.
       this->gen_ifndef_string (fname,
-                               this->client_header_,
+                               this->client_header_.get (),
                                "_TAO_IDL_",
                                "_H_");
     }
@@ -129,7 +140,7 @@ TAO_CodeGen::start_client_header (const std::string &fname)
     {
       // Generate the #ifndef clause.
       this->gen_ifndef_string (fname,
-                               this->client_header_,
+                               this->client_header_.get (),
                                "_TAO_PIDL_",
                                "_H_");
     }
@@ -163,7 +174,7 @@ TAO_CodeGen::start_client_header (const std::string &fname)
     }
 
   // To get ACE_UNUSED_ARGS
-  this->gen_standard_include (this->client_header_, "ace/config-all.h", true);
+  this->gen_standard_include (this->client_header_.get (), "ace/config-all.h", true);
 
   // Some compilers don't optimize the #ifndef header include
   // protection, but do optimize based on #pragma once.
@@ -202,14 +213,14 @@ TAO_CodeGen::start_client_header (const std::string &fname)
     {
       if (be_global->alt_mapping ())
         {
-          this->gen_system_include (this->client_header_, "string");
-          this->gen_system_include (this->client_header_, "vector");
+          this->gen_system_include (this->client_header_.get (), "string");
+          this->gen_system_include (this->client_header_.get (), "vector");
           *this->client_header_ << "\n";
         }
 
       this->gen_stub_hdr_includes ();
 
-      std::size_t const nfiles = idl_global->n_included_idl_files ();
+      size_t const nfiles = idl_global->n_included_idl_files ();
 
       if (nfiles > 0)
         {
@@ -221,7 +232,7 @@ TAO_CodeGen::start_client_header (const std::string &fname)
       // We will use the included IDL file names as they appeared
       // in the original main IDL file, not the one which went
       // thru CC preprocessor.
-      for (std::size_t j = 0; j < nfiles; ++j)
+      for (size_t j = 0; j < nfiles; ++j)
         {
           std::string const &idl_name = idl_global->included_idl_files ()[j];
 
@@ -294,7 +305,7 @@ TAO_CodeGen::start_client_header (const std::string &fname)
 TAO_OutStream *
 TAO_CodeGen::client_header ()
 {
-  return this->client_header_;
+  return this->client_header_.get ();
 }
 
 // Set the client stub stream.
@@ -302,23 +313,22 @@ int
 TAO_CodeGen::start_client_stubs (const std::string &fname)
 {
   // Clean up between multiple files.
-  delete this->client_stubs_;
-
-  ACE_NEW_RETURN (this->client_stubs_,
-                  TAO_OutStream,
-                  -1);
+  if (this->reset_out_stream (this->client_stubs_) == -1)
+    {
+      return -1;
+    }
 
   if (this->client_stubs_->open (fname, TAO_OutStream::TAO_CLI_IMPL) == -1)
     {
       return -1;
     }
 
-  TAO_INSERT_COMMENT (this->client_stubs_);
+  TAO_INSERT_COMMENT (this->client_stubs_.get ());
 
   this->gen_stub_src_includes ();
 
   // Generate the ident string, if any.
-  this->gen_ident_string (this->client_stubs_);
+  this->gen_ident_string (this->client_stubs_.get ());
 
   // Only when we generate a client inline file generate the include
   if (be_global->gen_client_inline ())
@@ -343,7 +353,7 @@ TAO_CodeGen::start_client_stubs (const std::string &fname)
 TAO_OutStream *
 TAO_CodeGen::client_stubs ()
 {
-  return this->client_stubs_;
+  return this->client_stubs_.get ();
 }
 
 // Set the client inline stream.
@@ -351,11 +361,10 @@ int
 TAO_CodeGen::start_client_inline (const std::string &fname)
 {
   // Clean up between multiple files.
-  delete this->client_inline_;
-
-  ACE_NEW_RETURN (this->client_inline_,
-                  TAO_OutStream,
-                  -1);
+  if (this->reset_out_stream (this->client_inline_) == -1)
+    {
+      return -1;
+    }
 
   if (this->client_inline_->open (fname, TAO_OutStream::TAO_CLI_INL) == -1)
     {
@@ -365,7 +374,7 @@ TAO_CodeGen::start_client_inline (const std::string &fname)
   this->gen_stub_inline_includes ();
 
   // Generate the ident string, if any.
-  this->gen_ident_string (this->client_inline_);
+  this->gen_ident_string (this->client_inline_.get ());
 
   // Begin versioned namespace support after initial headers, if any,
   // have been included.
@@ -378,7 +387,7 @@ TAO_CodeGen::start_client_inline (const std::string &fname)
 TAO_OutStream *
 TAO_CodeGen::client_inline ()
 {
-  return this->client_inline_;
+  return this->client_inline_.get ();
 }
 
 // Set the server header stream.
@@ -386,25 +395,24 @@ int
 TAO_CodeGen::start_server_header (const std::string &fname)
 {
   // Clean up between multiple files.
-  delete this->server_header_;
-
-  ACE_NEW_RETURN (this->server_header_,
-                  TAO_OutStream,
-                  -1);
+  if (this->reset_out_stream (this->server_header_) == -1)
+    {
+      return -1;
+    }
 
   if (this->server_header_->open (fname, TAO_OutStream::TAO_SVR_HDR) == -1)
     {
       return -1;
     }
 
-  TAO_INSERT_COMMENT (this->server_header_);
+  TAO_INSERT_COMMENT (this->server_header_.get ());
 
   // Generate the ident string, if any.
-  this->gen_ident_string (this->server_header_);
+  this->gen_ident_string (this->server_header_.get ());
 
   // Generate the #ifndef clause.
   this->gen_ifndef_string (fname,
-                           this->server_header_,
+                           this->server_header_.get (),
                            "_TAO_IDL_",
                            "_H_");
 
@@ -436,7 +444,7 @@ TAO_CodeGen::start_server_header (const std::string &fname)
   // We will use the included IDL file names as they appeared
   // in the original main IDL file, not the one which went
   // thru CC preprocessor.
-  for (std::size_t j = 0;
+  for (size_t j = 0;
        j < idl_global->n_included_idl_files ();
        ++j)
     {
@@ -452,7 +460,7 @@ TAO_CodeGen::start_server_header (const std::string &fname)
   /// check below.
   if (be_global->gen_arg_traits ())
     {
-      this->gen_skel_arg_file_includes (this->server_header_);
+      this->gen_skel_arg_file_includes (this->server_header_.get ());
     }
 
   if (be_global->gen_skel_files ())
@@ -493,7 +501,7 @@ TAO_CodeGen::start_server_header (const std::string &fname)
 TAO_OutStream *
 TAO_CodeGen::server_header ()
 {
-  return this->server_header_;
+  return this->server_header_.get ();
 }
 
 // Set the server header stream.
@@ -501,11 +509,10 @@ int
 TAO_CodeGen::start_server_template_header (const std::string &fname)
 {
   // Clean up between multiple files.
-  delete this->server_template_header_;
-
-  ACE_NEW_RETURN (this->server_template_header_,
-                  TAO_OutStream,
-                  -1);
+  if (this->reset_out_stream (this->server_template_header_) == -1)
+    {
+      return -1;
+    }
 
   int const status =
     this->server_template_header_->open (
@@ -517,14 +524,14 @@ TAO_CodeGen::start_server_template_header (const std::string &fname)
       return -1;
     }
 
-  TAO_INSERT_COMMENT (this->server_template_header_);
+  TAO_INSERT_COMMENT (this->server_template_header_.get ());
 
   // Generate the ident string, if any.
-  this->gen_ident_string (this->server_template_header_);
+  this->gen_ident_string (this->server_template_header_.get ());
 
   // Generate the #ifndef clause.
   this->gen_ifndef_string (fname,
-                           this->server_template_header_,
+                           this->server_template_header_.get (),
                            "_TAO_IDL_",
                            "_H_");
 
@@ -547,7 +554,7 @@ TAO_CodeGen::start_server_template_header (const std::string &fname)
 TAO_OutStream *
 TAO_CodeGen::server_template_header ()
 {
-  return this->server_template_header_;
+  return this->server_template_header_.get ();
 }
 
 // Set the server skeletons stream.
@@ -555,11 +562,10 @@ int
 TAO_CodeGen::start_server_skeletons (const std::string &fname)
 {
   // Clean up between multiple files.
-  delete this->server_skeletons_;
-
-  ACE_NEW_RETURN (this->server_skeletons_,
-                  TAO_OutStream,
-                  -1);
+  if (this->reset_out_stream (this->server_skeletons_) == -1)
+    {
+      return -1;
+    }
 
   if (this->server_skeletons_->open (fname,
                                      TAO_OutStream::TAO_SVR_IMPL)
@@ -568,10 +574,10 @@ TAO_CodeGen::start_server_skeletons (const std::string &fname)
       return -1;
     }
 
-  TAO_INSERT_COMMENT (this->server_skeletons_);
+  TAO_INSERT_COMMENT (this->server_skeletons_.get ());
 
   // Generate the ident string, if any.
-  this->gen_ident_string (this->server_skeletons_);
+  this->gen_ident_string (this->server_skeletons_.get ());
 
   // Generate the include statement for the precompiled header file.
   if (!be_global->pch_include ().empty ())
@@ -583,7 +589,7 @@ TAO_CodeGen::start_server_skeletons (const std::string &fname)
 
   // Generate the #ifndef clause.
   this->gen_ifndef_string (fname,
-                           this->server_skeletons_,
+                           this->server_skeletons_.get (),
                            "_TAO_IDL_",
                            "_CPP_");
 
@@ -607,7 +613,7 @@ TAO_CodeGen::start_server_skeletons (const std::string &fname)
 TAO_OutStream *
 TAO_CodeGen::server_skeletons ()
 {
-  return this->server_skeletons_;
+  return this->server_skeletons_.get ();
 }
 
 // Start the server template skeleton stream.
@@ -615,11 +621,10 @@ int
 TAO_CodeGen::start_server_template_skeletons (const std::string &fname)
 {
   // Clean up between multiple files.
-  delete this->server_template_skeletons_;
-
-  ACE_NEW_RETURN (this->server_template_skeletons_,
-                  TAO_OutStream,
-                  -1);
+  if (this->reset_out_stream (this->server_template_skeletons_) == -1)
+    {
+      return -1;
+    }
 
   if (this->server_template_skeletons_->open (fname,
                                               TAO_OutStream::TAO_SVR_TMPL_IMPL)
@@ -628,14 +633,14 @@ TAO_CodeGen::start_server_template_skeletons (const std::string &fname)
       return -1;
     }
 
-  TAO_INSERT_COMMENT (this->server_template_skeletons_);
+  TAO_INSERT_COMMENT (this->server_template_skeletons_.get ());
 
   // Generate the ident string, if any.
-  this->gen_ident_string (this->server_template_skeletons_);
+  this->gen_ident_string (this->server_template_skeletons_.get ());
 
   // Generate the #ifndef clause.
   this->gen_ifndef_string (fname,
-                           this->server_template_skeletons_,
+                           this->server_template_skeletons_.get (),
                            "_TAO_IDL_",
                            "_CPP_");
 
@@ -657,7 +662,7 @@ TAO_CodeGen::start_server_template_skeletons (const std::string &fname)
 TAO_OutStream *
 TAO_CodeGen::server_template_skeletons ()
 {
-  return this->server_template_skeletons_;
+  return this->server_template_skeletons_.get ();
 }
 
 int
@@ -672,11 +677,10 @@ TAO_CodeGen::start_anyop_header (const std::string &fname)
     }
 
   // Clean up between multiple files.
-  delete this->anyop_header_;
-
-  ACE_NEW_RETURN (this->anyop_header_,
-                  TAO_OutStream,
-                  -1);
+  if (this->reset_out_stream (this->anyop_header_) == -1)
+    {
+      return -1;
+    }
 
   if (this->anyop_header_->open (fname,
                                  TAO_OutStream::TAO_CLI_HDR)
@@ -704,14 +708,14 @@ TAO_CodeGen::start_anyop_header (const std::string &fname)
       return 0;
     }
 
-  TAO_INSERT_COMMENT (this->anyop_header_);
+  TAO_INSERT_COMMENT (this->anyop_header_.get ());
 
   // Generate the #ident string, if any.
-  this->gen_ident_string (this->anyop_header_);
+  this->gen_ident_string (this->anyop_header_.get ());
 
   // Generate the #ifndef clause.
   this->gen_ifndef_string (fname,
-                           this->anyop_header_,
+                           this->anyop_header_.get (),
                            "_TAO_IDL_",
                            "_H_");
 
@@ -784,7 +788,7 @@ TAO_CodeGen::start_anyop_header (const std::string &fname)
   // need to include the *A.h file from all .pidl files here.
   if (be_global->gen_anyop_files ())
     {
-      for (std::size_t j = 0; j < idl_global->n_included_idl_files (); ++j)
+      for (size_t j = 0; j < idl_global->n_included_idl_files (); ++j)
         {
           std::string const &idl_name = idl_global->included_idl_files ()[j];
 
@@ -856,11 +860,10 @@ TAO_CodeGen::start_anyop_source (const std::string &fname)
     }
 
   // Clean up between multiple files.
-  delete this->anyop_source_;
-
-  ACE_NEW_RETURN (this->anyop_source_,
-                  TAO_OutStream,
-                  -1);
+  if (this->reset_out_stream (this->anyop_source_) == -1)
+    {
+      return -1;
+    }
 
   if (this->anyop_source_->open (fname, TAO_OutStream::TAO_CLI_IMPL) == -1)
     {
@@ -884,10 +887,10 @@ TAO_CodeGen::start_anyop_source (const std::string &fname)
                        << be_global->be_get_anyop_header_fname (true)
                        << "\"";
 
-  this->gen_system_include (this->anyop_source_, "memory");
-  this->gen_typecode_includes (this->anyop_source_);
+  this->gen_system_include (this->anyop_source_.get (), "memory");
+  this->gen_typecode_includes (this->anyop_source_.get ());
 
-  this->gen_any_file_includes (this->anyop_source_);
+  this->gen_any_file_includes (this->anyop_source_.get ());
 
   // Begin versioned namespace support after initial headers have been
   // included, but before the inline file and post include
@@ -900,24 +903,23 @@ TAO_CodeGen::start_anyop_source (const std::string &fname)
 TAO_OutStream *
 TAO_CodeGen::anyop_header ()
 {
-  return this->anyop_header_;
+  return this->anyop_header_.get ();
 }
 
 TAO_OutStream *
 TAO_CodeGen::anyop_source ()
 {
-  return this->anyop_source_;
+  return this->anyop_source_.get ();
 }
 
 int
 TAO_CodeGen::start_ciao_svnt_header (const std::string &fname)
 {
   // Clean up between multiple files.
-  delete this->ciao_svnt_header_;
-
-  ACE_NEW_RETURN (this->ciao_svnt_header_,
-                  TAO_OutStream,
-                  -1);
+  if (this->reset_out_stream (this->ciao_svnt_header_) == -1)
+    {
+      return -1;
+    }
 
   int const status =
     this->ciao_svnt_header_->open (fname,
@@ -936,11 +938,11 @@ TAO_CodeGen::start_ciao_svnt_header (const std::string &fname)
   TAO_INSERT_COMMENT (&os);
 
   // Generate the #ident string, if any.
-  this->gen_ident_string (this->ciao_svnt_header_);
+  this->gen_ident_string (this->ciao_svnt_header_.get ());
 
   // Generate the #ifndef clause.
   this->gen_ifndef_string (fname,
-                           this->ciao_svnt_header_,
+                           this->ciao_svnt_header_.get (),
                            "CIAO_SESSION_",
                            "_H_");
 
@@ -975,7 +977,6 @@ TAO_CodeGen::start_ciao_svnt_header (const std::string &fname)
      << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n"
      << be_nl;
 
-
   for (std::string const &path_tmp : idl_global->ciao_lem_file_names ())
     {
       std::string const& filename = path_tmp;
@@ -1000,7 +1001,7 @@ TAO_CodeGen::start_ciao_svnt_header (const std::string &fname)
           << "\"" << be_nl;
     }
 
-  this->gen_svnt_hdr_includes (this->ciao_svnt_header_);
+  this->gen_svnt_hdr_includes (this->ciao_svnt_header_.get ());
 
   return 0;
 }
@@ -1009,11 +1010,10 @@ int
 TAO_CodeGen::start_ciao_svnt_source (const std::string &fname)
 {
   // Clean up between multiple files.
-  delete this->ciao_svnt_source_;
-
-  ACE_NEW_RETURN (this->ciao_svnt_source_,
-                  TAO_OutStream,
-                  -1);
+  if (this->reset_out_stream (this->ciao_svnt_source_) == -1)
+    {
+      return -1;
+    }
 
   int const status =
     this->ciao_svnt_source_->open (fname,
@@ -1033,7 +1033,7 @@ TAO_CodeGen::start_ciao_svnt_source (const std::string &fname)
   TAO_INSERT_COMMENT (&os);
 
   // Generate the #ident string, if any.
-  this->gen_ident_string (this->ciao_svnt_source_);
+  this->gen_ident_string (this->ciao_svnt_source_.get ());
 
   // Generate the include statement for the server header.
   *this->ciao_svnt_source_
@@ -1041,7 +1041,7 @@ TAO_CodeGen::start_ciao_svnt_source (const std::string &fname)
     << be_global->be_get_ciao_svnt_hdr_fname (true)
     << "\"" << be_nl;
 
-  this->gen_svnt_src_includes (this->ciao_svnt_source_);
+  this->gen_svnt_src_includes (this->ciao_svnt_source_.get ());
 
   return 0;
 }
@@ -1050,11 +1050,10 @@ int
 TAO_CodeGen::start_ciao_svnt_template_header (const std::string &fname)
 {
   // Clean up between multiple files.
-  delete this->ciao_svnt_template_header_;
-
-  ACE_NEW_RETURN (this->ciao_svnt_template_header_,
-                  TAO_OutStream,
-                  -1);
+  if (this->reset_out_stream (this->ciao_svnt_template_header_) == -1)
+    {
+      return -1;
+    }
 
   int const status =
     this->ciao_svnt_template_header_->open (fname,
@@ -1073,11 +1072,11 @@ TAO_CodeGen::start_ciao_svnt_template_header (const std::string &fname)
   TAO_INSERT_COMMENT (&os);
 
   // Generate the #ident string, if any.
-  this->gen_ident_string (this->ciao_svnt_template_header_);
+  this->gen_ident_string (this->ciao_svnt_template_header_.get ());
 
   // Generate the #ifndef clause.
   this->gen_ifndef_string (fname,
-                           this->ciao_svnt_template_header_,
+                           this->ciao_svnt_template_header_.get (),
                            "CIAO_SERVANT_",
                            "_H_");
 
@@ -1111,7 +1110,7 @@ TAO_CodeGen::start_ciao_svnt_template_header (const std::string &fname)
      << "# pragma once\n"
      << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n\n";
 
-  this->gen_svnt_tmpl_hdr_includes (this->ciao_svnt_template_header_);
+  this->gen_svnt_tmpl_hdr_includes (this->ciao_svnt_template_header_.get ());
 
   if (idl_global->ami_connector_seen_)
     {
@@ -1128,11 +1127,10 @@ int
 TAO_CodeGen::start_ciao_svnt_template_source (const std::string &fname)
 {
   // Clean up between multiple files.
-  delete this->ciao_svnt_template_source_;
-
-  ACE_NEW_RETURN (this->ciao_svnt_template_source_,
-                  TAO_OutStream,
-                  -1);
+  if (this->reset_out_stream (this->ciao_svnt_template_source_) == -1)
+    {
+      return -1;
+    }
 
   int const status =
     this->ciao_svnt_template_source_->open (fname,
@@ -1152,15 +1150,15 @@ TAO_CodeGen::start_ciao_svnt_template_source (const std::string &fname)
   TAO_INSERT_COMMENT (&os);
 
   // Generate the #ident string, if any.
-  this->gen_ident_string (this->ciao_svnt_template_source_);
+  this->gen_ident_string (this->ciao_svnt_template_source_.get ());
 
   // Generate the #ifndef clause.
   this->gen_ifndef_string (fname,
-                           this->ciao_svnt_template_source_,
+                           this->ciao_svnt_template_source_.get (),
                            "CIAO_SERVANT_",
                            "_CPP_");
 
-  this->gen_svnt_src_includes (this->ciao_svnt_template_source_);
+  this->gen_svnt_src_includes (this->ciao_svnt_template_source_.get ());
 
   return 0;
 }
@@ -1168,36 +1166,35 @@ TAO_CodeGen::start_ciao_svnt_template_source (const std::string &fname)
 TAO_OutStream *
 TAO_CodeGen::ciao_svnt_header ()
 {
-  return this->ciao_svnt_header_;
+  return this->ciao_svnt_header_.get ();
 }
 
 TAO_OutStream *
 TAO_CodeGen::ciao_svnt_source ()
 {
-  return this->ciao_svnt_source_;
+  return this->ciao_svnt_source_.get ();
 }
 
 TAO_OutStream *
 TAO_CodeGen::ciao_svnt_template_header ()
 {
-  return this->ciao_svnt_template_header_;
+  return this->ciao_svnt_template_header_.get ();
 }
 
 TAO_OutStream *
 TAO_CodeGen::ciao_svnt_template_source ()
 {
-  return this->ciao_svnt_template_source_;
+  return this->ciao_svnt_template_source_.get ();
 }
 
 int
 TAO_CodeGen::start_ciao_exec_header (const std::string &fname)
 {
   // Clean up between multiple files.
-  delete this->ciao_exec_header_;
-
-  ACE_NEW_RETURN (this->ciao_exec_header_,
-                  TAO_OutStream,
-                  -1);
+  if (this->reset_out_stream (this->ciao_exec_header_) == -1)
+    {
+      return -1;
+    }
 
   int const status =
    this->ciao_exec_header_->open (fname,
@@ -1214,11 +1211,11 @@ TAO_CodeGen::start_ciao_exec_header (const std::string &fname)
   TAO_OutStream &os = *this->ciao_exec_header_;
 
   // Generate the #ident string, if any.
-  this->gen_ident_string (this->ciao_exec_header_);
+  this->gen_ident_string (this->ciao_exec_header_.get ());
 
   // Generate the #ifndef clause.
   this->gen_ifndef_string (fname,
-                           this->ciao_exec_header_,
+                           this->ciao_exec_header_.get (),
                            "CIAO_",
                            "_H_");
 
@@ -1229,7 +1226,7 @@ TAO_CodeGen::start_ciao_exec_header (const std::string &fname)
          << "\"\n";
     }
 
-  this->gen_standard_include (this->ciao_exec_header_, be_global->be_get_ciao_exec_stub_hdr_fname (true));
+  this->gen_standard_include (this->ciao_exec_header_.get (), be_global->be_get_ciao_exec_stub_hdr_fname (true));
 
   // Some compilers don't optimize the #ifndef header include
   // protection, but do optimize based on #pragma once.
@@ -1246,11 +1243,10 @@ int
 TAO_CodeGen::start_ciao_exec_source (const std::string &fname)
 {
   // Clean up between multiple files.
-  delete this->ciao_exec_source_;
-
-  ACE_NEW_RETURN (this->ciao_exec_source_,
-                  TAO_OutStream,
-                  -1);
+  if (this->reset_out_stream (this->ciao_exec_source_) == -1)
+    {
+      return -1;
+    }
 
   int const status =
     this->ciao_exec_source_->open (fname,
@@ -1265,7 +1261,7 @@ TAO_CodeGen::start_ciao_exec_source (const std::string &fname)
     }
 
   // Generate the #ident string, if any.
-  this->gen_ident_string (this->ciao_exec_source_);
+  this->gen_ident_string (this->ciao_exec_source_.get ());
 
   this->gen_exec_src_includes ();
 
@@ -1275,24 +1271,23 @@ TAO_CodeGen::start_ciao_exec_source (const std::string &fname)
 TAO_OutStream *
 TAO_CodeGen::ciao_exec_header ()
 {
-  return this->ciao_exec_header_;
+  return this->ciao_exec_header_.get ();
 }
 
 TAO_OutStream *
 TAO_CodeGen::ciao_exec_source ()
 {
-  return this->ciao_exec_source_;
+  return this->ciao_exec_source_.get ();
 }
 
 int
 TAO_CodeGen::start_ciao_exec_idl (const std::string &fname)
 {
   // Clean up between multiple files.
-  delete this->ciao_exec_idl_;
-
-  ACE_NEW_RETURN (this->ciao_exec_idl_,
-                  TAO_OutStream,
-                  -1);
+  if (this->reset_out_stream (this->ciao_exec_idl_) == -1)
+    {
+      return -1;
+    }
 
   int const status =
     this->ciao_exec_idl_->open (fname,
@@ -1312,7 +1307,7 @@ TAO_CodeGen::start_ciao_exec_idl (const std::string &fname)
 
   // Generate the #ifndef clause.
   this->gen_ifndef_string (fname,
-                           this->ciao_exec_idl_,
+                           this->ciao_exec_idl_.get (),
                            "_CIAO_",
                            "_IDL_");
 
@@ -1324,18 +1319,17 @@ TAO_CodeGen::start_ciao_exec_idl (const std::string &fname)
 TAO_OutStream *
 TAO_CodeGen::ciao_exec_idl ()
 {
-  return this->ciao_exec_idl_;
+  return this->ciao_exec_idl_.get ();
 }
 
 int
 TAO_CodeGen::start_ciao_conn_header (const std::string &fname)
 {
   // Clean up between multiple files.
-  delete this->ciao_conn_header_;
-
-  ACE_NEW_RETURN (this->ciao_conn_header_,
-                  TAO_OutStream,
-                  -1);
+  if (this->reset_out_stream (this->ciao_conn_header_) == -1)
+    {
+      return -1;
+    }
 
   int const status =
     this->ciao_conn_header_->open (fname,
@@ -1354,11 +1348,11 @@ TAO_CodeGen::start_ciao_conn_header (const std::string &fname)
   TAO_INSERT_COMMENT (&os);
 
   // Generate the #ident string, if any.
-  this->gen_ident_string (this->ciao_conn_header_);
+  this->gen_ident_string (this->ciao_conn_header_.get ());
 
   // Generate the #ifndef clause.
   this->gen_ifndef_string (fname,
-                           this->ciao_conn_header_,
+                           this->ciao_conn_header_.get (),
                            "CIAO_",
                            "_H_");
 
@@ -1372,7 +1366,7 @@ TAO_CodeGen::start_ciao_conn_header (const std::string &fname)
   // This will almost certainly be true, but just in case...
   if (!be_global->conn_export_include ().empty ())
     {
-      this->gen_standard_include (this->ciao_conn_header_, be_global->conn_export_include (), true);
+      this->gen_standard_include (this->ciao_conn_header_.get (), be_global->conn_export_include (), true);
     }
 
   // Some compilers don't optimize the #ifndef header include
@@ -1389,18 +1383,17 @@ TAO_CodeGen::start_ciao_conn_header (const std::string &fname)
 TAO_OutStream *
 TAO_CodeGen::ciao_conn_header ()
 {
-  return this->ciao_conn_header_;
+  return this->ciao_conn_header_.get ();
 }
 
 int
 TAO_CodeGen::start_ciao_conn_source (const std::string &fname)
 {
   // Clean up between multiple files.
-  delete this->ciao_conn_source_;
-
-  ACE_NEW_RETURN (this->ciao_conn_source_,
-                  TAO_OutStream,
-                  -1);
+  if (this->reset_out_stream (this->ciao_conn_source_) == -1)
+    {
+      return -1;
+    }
 
   int const status =
     this->ciao_conn_source_->open (fname,
@@ -1420,7 +1413,7 @@ TAO_CodeGen::start_ciao_conn_source (const std::string &fname)
   TAO_INSERT_COMMENT (&os);
 
   // Generate the #ident string, if any.
-  this->gen_ident_string (this->ciao_conn_source_);
+  this->gen_ident_string (this->ciao_conn_source_.get ());
 
   this->gen_conn_src_includes ();
 
@@ -1430,18 +1423,17 @@ TAO_CodeGen::start_ciao_conn_source (const std::string &fname)
 TAO_OutStream *
 TAO_CodeGen::ciao_conn_source ()
 {
-  return this->ciao_conn_source_;
+  return this->ciao_conn_source_.get ();
 }
 
 int
 TAO_CodeGen::start_ciao_ami_conn_idl (const std::string &fname)
 {
   // Clean up between multiple files.
-  delete this->ciao_ami_conn_idl_;
-
-  ACE_NEW_RETURN (this->ciao_ami_conn_idl_,
-                  TAO_OutStream,
-                  -1);
+  if (this->reset_out_stream (this->ciao_ami_conn_idl_) == -1)
+    {
+      return -1;
+    }
 
   int const status =
     this->ciao_ami_conn_idl_->open (fname,
@@ -1461,7 +1453,7 @@ TAO_CodeGen::start_ciao_ami_conn_idl (const std::string &fname)
 
   // Generate the #ifndef clause.
   this->gen_ifndef_string (fname,
-                           this->ciao_ami_conn_idl_,
+                           this->ciao_ami_conn_idl_.get (),
                            "_CIAO_",
                            "_IDL_");
 
@@ -1473,7 +1465,7 @@ TAO_CodeGen::start_ciao_ami_conn_idl (const std::string &fname)
 TAO_OutStream *
 TAO_CodeGen::ciao_ami_conn_idl ()
 {
-  return this->ciao_ami_conn_idl_;
+  return this->ciao_ami_conn_idl_.get ();
 }
 
 // Set the server header stream.
@@ -1481,11 +1473,10 @@ int
 TAO_CodeGen::start_implementation_header (const std::string &fname)
 {
   // Clean up between multiple files.
-  delete this->implementation_header_;
-
-  ACE_NEW_RETURN (this->implementation_header_,
-                  TAO_OutStream,
-                  -1);
+  if (this->reset_out_stream (this->implementation_header_) == -1)
+    {
+      return -1;
+    }
 
   if (this->implementation_header_->open (fname,
                                           TAO_OutStream::TAO_IMPL_HDR) == -1)
@@ -1493,14 +1484,14 @@ TAO_CodeGen::start_implementation_header (const std::string &fname)
       return -1;
     }
 
-  TAO_INSERT_COMMENT (this->implementation_header_);
+  TAO_INSERT_COMMENT (this->implementation_header_.get ());
 
   // Generate the ident string, if any.
-  this->gen_ident_string (this->implementation_header_);
+  this->gen_ident_string (this->implementation_header_.get ());
 
   // Generate the #ifndef clause.
   this->gen_ifndef_string (fname,
-                           this->implementation_header_,
+                           this->implementation_header_.get (),
                            "",
                            "_H_");
 
@@ -1520,25 +1511,22 @@ TAO_CodeGen::start_implementation_header (const std::string &fname)
   return 0;
 }
 
-
 // Get the implementation header stream.
 TAO_OutStream *
 TAO_CodeGen::implementation_header ()
 {
-  return this->implementation_header_;
+  return this->implementation_header_.get ();
 }
-
 
 // Set the implementation skeleton stream.
 int
 TAO_CodeGen::start_implementation_skeleton (const std::string &fname)
 {
   // Clean up between multiple files.
-  delete this->implementation_skeleton_;
-
-  ACE_NEW_RETURN (this->implementation_skeleton_,
-                  TAO_OutStream,
-                  -1);
+  if (this->reset_out_stream (this->implementation_skeleton_) == -1)
+    {
+      return -1;
+    }
 
   if (this->implementation_skeleton_->open (fname,
                                             TAO_OutStream::TAO_IMPL_SKEL)
@@ -1547,10 +1535,10 @@ TAO_CodeGen::start_implementation_skeleton (const std::string &fname)
       return -1;
     }
 
-  TAO_INSERT_COMMENT (this->implementation_skeleton_);
+  TAO_INSERT_COMMENT (this->implementation_skeleton_.get ());
 
   // Generate the ident string, if any.
-  this->gen_ident_string (this->implementation_skeleton_);
+  this->gen_ident_string (this->implementation_skeleton_.get ());
 
   std::string const impl_hdr =
     BE_GlobalData::be_get_implementation_hdr_fname ();
@@ -1564,7 +1552,7 @@ TAO_CodeGen::start_implementation_skeleton (const std::string &fname)
 TAO_OutStream *
 TAO_CodeGen::implementation_skeleton ()
 {
-  return this->implementation_skeleton_;
+  return this->implementation_skeleton_.get ();
 }
 
 // Put the last #endif in the client and server headers.
@@ -1573,7 +1561,7 @@ TAO_CodeGen::end_client_header ()
 {
   // Generate the <<= and >>= operators here.
 
-  TAO_INSERT_COMMENT (this->client_header_);
+  TAO_INSERT_COMMENT (this->client_header_.get ());
 
   // End versioned namespace support before remaining include
   // directives at end of file.
@@ -1632,7 +1620,7 @@ TAO_CodeGen::end_client_stubs ()
 int
 TAO_CodeGen::end_server_header ()
 {
-  TAO_OutStream *os = this->server_header_;
+  TAO_OutStream *os = this->server_header_.get ();
 
   // End versioned namespace support.  Do not place include directives
   // before this.
@@ -1676,12 +1664,12 @@ TAO_CodeGen::end_implementation_header (const std::string &fname)
     }
 
   std::string macro_name;
-  std::size_t const extension = fname.find_last_of ('.');
-  std::size_t const length = extension == std::string::npos ? 0 : extension;
+  size_t const extension = fname.find_last_of ('.');
+  size_t const length = extension == std::string::npos ? 0 : extension;
   macro_name.reserve (length + 3);
 
   // Convert letters in fname to upper case.
-  for (std::size_t i = 0; i < length; ++i)
+  for (size_t i = 0; i < length; ++i)
     {
       if (std::isalpha (static_cast<unsigned char> (fname [i])))
         {
@@ -1708,7 +1696,7 @@ TAO_CodeGen::end_implementation_header (const std::string &fname)
 int
 TAO_CodeGen::end_server_template_header ()
 {
-  TAO_INSERT_COMMENT (this->server_template_header_);
+  TAO_INSERT_COMMENT (this->server_template_header_.get ());
 
   // End versioned namespace support.  Do not place include directives
   // before this.
@@ -1769,7 +1757,6 @@ TAO_CodeGen::end_anyop_header ()
   // End versioned namespace support.  Do not place include directives
   // before this.
   *this->anyop_header_ << be_global->versioning_end ();
-
 
   if (!be_global->post_include ().empty ())
     {
@@ -2165,13 +2152,13 @@ TAO_CodeGen::gen_ifndef_string (std::string const& fname,
                                 std::string const& prefix,
                                 std::string const& suffix)
 {
-  std::size_t const extension = fname.find_last_of ('.');
-  std::size_t const length = extension == std::string::npos ? 0 : extension;
+  size_t const extension = fname.find_last_of ('.');
+  size_t const length = extension == std::string::npos ? 0 : extension;
   std::string macro_name (prefix);
   macro_name.reserve (prefix.size () + length + suffix.size () + 7);
 
   // Convert letters in fname to upper case.
-  for (std::size_t i = 0; i < length; ++i)
+  for (size_t i = 0; i < length; ++i)
     {
       if (std::isalpha (static_cast<unsigned char> (fname [i])))
         {
@@ -2213,18 +2200,17 @@ TAO_CodeGen::gen_stub_hdr_includes ()
   this->gen_cond_file_include (be_global->tc_support ()
                                && !be_global->gen_anyop_files (),
                                "tao/AnyTypeCode/AnyTypeCode_methods.h",
-                               this->client_header_);
+                               this->client_header_.get ());
 
   this->gen_cond_file_include (be_global->tc_support ()
                                && !be_global->gen_anyop_files (),
                                "tao/AnyTypeCode/Any.h",
-                               this->client_header_);
-
+                               this->client_header_.get ());
 
   if (idl_global->abstract_iface_seen_ || idl_global->abstractbase_seen_)
     {
       // Include the AbstractBase file from the Valuetype library.
-      this->gen_standard_include (this->client_header_, "tao/Valuetype/AbstractBase.h");
+      this->gen_standard_include (this->client_header_.get (), "tao/Valuetype/AbstractBase.h");
 
       if (idl_global->abstract_iface_seen_)
         {
@@ -2236,10 +2222,10 @@ TAO_CodeGen::gen_stub_hdr_includes ()
   if (idl_global->valuebase_seen_)
     {
       // Include files from the Valuetype library.
-      this->gen_standard_include (this->client_header_, "tao/Valuetype/ValueBase.h");
+      this->gen_standard_include (this->client_header_.get (), "tao/Valuetype/ValueBase.h");
 
       // Valuebox needs CDR for _tao_marshal_v code in .inl file
-      this->gen_standard_include (this->client_header_, "tao/CDR.h");
+      this->gen_standard_include (this->client_header_.get (), "tao/CDR.h");
     }
 
   if (idl_global->valuetype_seen_)
@@ -2247,17 +2233,17 @@ TAO_CodeGen::gen_stub_hdr_includes ()
       // Don't want to generate this twice.
       if (!idl_global->valuebase_seen_)
         {
-          this->gen_standard_include (this->client_header_, "tao/Valuetype/ValueBase.h");
+          this->gen_standard_include (this->client_header_.get (), "tao/Valuetype/ValueBase.h");
         }
 
-      this->gen_standard_include (this->client_header_, "tao/Valuetype/Valuetype_Adapter_Factory_Impl.h");
+      this->gen_standard_include (this->client_header_.get (), "tao/Valuetype/Valuetype_Adapter_Factory_Impl.h");
 
       // Check for setting this bit performed in y.tab.cpp, actual checking
       // code is in be_valuetype.cpp.
       this->gen_cond_file_include (
           idl_global->valuefactory_seen_,
           "tao/Valuetype/ValueFactory.h",
-          this->client_header_
+          this->client_header_.get ()
         );
     }
 
@@ -2266,25 +2252,25 @@ TAO_CodeGen::gen_stub_hdr_includes ()
   this->gen_cond_file_include (
       be_global->gen_orb_h_include (),
       "tao/ORB.h",
-      this->client_header_
+      this->client_header_.get ()
     );
 
   this->gen_cond_file_include (
       idl_global->operation_seen_ || idl_global->valuefactory_seen_
          || idl_global->valuebase_seen_,
       "tao/SystemException.h",
-      this->client_header_
+      this->client_header_.get ()
     );
 
   // For IDL exception, we need full knowledge of CORBA::UserException.
   this->gen_cond_file_include (
       idl_global->exception_seen_,
       "tao/UserException.h",
-      this->client_header_
+      this->client_header_.get ()
     );
 
   const bool idl4 = idl_global->idl_version_ >= IDL_VERSION_4;
-  this->gen_standard_include (this->client_header_, idl4 ? "tao/Basic_Types_IDLv4.h" : "tao/Basic_Types.h");
+  this->gen_standard_include (this->client_header_.get (), idl4 ? "tao/Basic_Types_IDLv4.h" : "tao/Basic_Types.h");
 
   if (idl4)
     {
@@ -2303,7 +2289,7 @@ TAO_CodeGen::gen_stub_hdr_includes ()
       idl_global->operation_seen_ || idl_global->valuefactory_seen_
          || idl_global->valuebase_seen_,
       "tao/ORB_Constants.h",
-      this->client_header_
+      this->client_header_.get ()
     );
 
   // Conditionally included.
@@ -2316,11 +2302,10 @@ TAO_CodeGen::gen_stub_hdr_includes ()
         {
           for (std::string const &ts_file : idl_global->ciao_oci_ts_file_names ())
             {
-              this->gen_standard_include (this->client_header_, ts_file);
+              this->gen_standard_include (this->client_header_.get (), ts_file);
             }
         }
     }
-
 
   // DDS/DCPS zero-copy read sequence type support.
   if (idl_global->dcps_support_zero_copy_read ())
@@ -2329,13 +2314,13 @@ TAO_CodeGen::gen_stub_hdr_includes ()
       this->gen_cond_file_include (
           true, // for Infrastructure.idl as well as Foo types
           "dds/DCPS/ZeroCopyInfoSeq_T.h",
-          this->client_header_
+          this->client_header_.get ()
         );
       // include needed for type specific sample sequence template instantitation.
       this->gen_cond_file_include (
           idl_global->dcps_gen_zero_copy_read (),
           "dds/DCPS/ZeroCopySeq_T.h",
-          this->client_header_
+          this->client_header_.get ()
         );
     }
 
@@ -2345,7 +2330,7 @@ TAO_CodeGen::gen_stub_hdr_includes ()
       | idl_global->local_iface_seen_
       | idl_global->base_object_seen_,
     "tao/Object.h",
-    this->client_header_);
+    this->client_header_.get ());
 
   // This is true if we have a typecode or TCKind in the IDL file.
   // If not included here, it will appear in *C.cpp, if TCs not suppressed.
@@ -2353,46 +2338,46 @@ TAO_CodeGen::gen_stub_hdr_includes ()
     idl_global->typecode_seen_
       | idl_global->any_seen_,
     "tao/AnyTypeCode/TypeCode.h",
-    this->client_header_);
+    this->client_header_.get ());
 
   this->gen_cond_file_include (
     idl_global->any_seen_
       | idl_global->typecode_seen_,
     "tao/AnyTypeCode/TypeCode_Constants.h",
-    this->client_header_);
+    this->client_header_.get ());
 
   // This is true if we have an 'any' in the IDL file.
   // If not included here, it will appear in *C.cpp, if Anys not suppressed.
   this->gen_cond_file_include (
     idl_global->any_seen_,
     "tao/AnyTypeCode/Any.h",
-    this->client_header_);
+    this->client_header_.get ());
 
   // Generated if (w)string member of struct/union/exception/array/valuetype
   // has been seen.
   this->gen_cond_file_include (idl_global->string_member_seen_,
                                "tao/String_Manager_T.h",
-                               this->client_header_);
+                               this->client_header_.get ());
 
   // Include the Messaging library entry point, if AMI is enabled.
   if (be_global->ami_call_back ())
     {
       // Include Messaging skeleton file.
-      this->gen_standard_include (this->client_header_, "tao/Messaging/Messaging.h");
+      this->gen_standard_include (this->client_header_.get (), "tao/Messaging/Messaging.h");
     }
 
   // Include the AMI4CCM library entry point, if AMI4CCM is enabled.
   if (be_global->ami4ccm_call_back ())
     {
       // Include Messaging skeleton file.
-      this->gen_standard_include (this->client_header_, "connectors/ami4ccm/ami4ccm/ami4ccm.h");
+      this->gen_standard_include (this->client_header_.get (), "connectors/ami4ccm/ami4ccm/ami4ccm.h");
     }
 
   // Include the smart proxy base class if smart proxies are enabled.
   if (be_global->gen_smart_proxies ())
     {
-      this->gen_standard_include (this->client_header_, "tao/SmartProxies/Smart_Proxies.h");
-      this->gen_standard_include (this->client_header_, "tao/TAO_Singleton.h");
+      this->gen_standard_include (this->client_header_.get (), "tao/SmartProxies/Smart_Proxies.h");
+      this->gen_standard_include (this->client_header_.get (), "tao/TAO_Singleton.h");
     }
 
   // If we have not suppressed Any operator generation and also
@@ -2400,7 +2385,7 @@ TAO_CodeGen::gen_stub_hdr_includes ()
   // need to include the *A.h file from all .pidl files here.
   if (be_global->any_support () && !be_global->gen_anyop_files ())
     {
-      for (std::size_t j = 0; j < idl_global->n_included_idl_files (); ++j)
+      for (size_t j = 0; j < idl_global->n_included_idl_files (); ++j)
         {
           std::string const &idl_name = idl_global->included_idl_files ()[j];
 
@@ -2451,7 +2436,6 @@ TAO_CodeGen::gen_stub_hdr_includes ()
         }
     }
 
-
   // Must have knowledge of the base class.
   this->gen_seq_file_includes ();
 
@@ -2461,18 +2445,18 @@ TAO_CodeGen::gen_stub_hdr_includes ()
   if (be_global->gen_arg_traits ())
     {
       // Includes whatever arg helper template classes that may be needed.
-      this->gen_stub_arg_file_includes (this->client_header_);
+      this->gen_stub_arg_file_includes (this->client_header_.get ());
     }
 
   // Version file, for code that checks needs for regeneration.
-  this->gen_standard_include (this->client_header_, "tao/Version.h", true);
+  this->gen_standard_include (this->client_header_.get (), "tao/Version.h", true);
 
   // Versioned namespace support.
-  this->gen_standard_include (this->client_header_, "tao/Versioned_Namespace.h", true);
+  this->gen_standard_include (this->client_header_.get (), "tao/Versioned_Namespace.h", true);
 
   if (!be_global->versioning_include ().empty ())
     {
-      this->gen_standard_include (this->client_header_,
+      this->gen_standard_include (this->client_header_.get (),
                                   be_global->versioning_include (),
                                   true);
     }
@@ -2483,7 +2467,7 @@ TAO_CodeGen::gen_stub_hdr_includes ()
   // include if gen_ostream_operators_ is true.
   if (be_global->gen_ostream_operators ())
     {
-      this->gen_standard_include (this->client_header_, "ace/streams.h");
+      this->gen_standard_include (this->client_header_.get (), "ace/streams.h");
     }
 }
 
@@ -2492,8 +2476,8 @@ TAO_CodeGen::gen_stub_inline_includes ()
 {
   if (idl_global->union_seen_)
     {
-      this->gen_system_include (this->client_inline_, "memory");
-      this->gen_system_include (this->client_inline_, "new");
+      this->gen_system_include (this->client_inline_.get (), "memory");
+      this->gen_system_include (this->client_inline_.get (), "new");
     }
 }
 
@@ -2529,56 +2513,56 @@ TAO_CodeGen::gen_stub_src_includes ()
       || idl_global->exception_seen_
       || idl_global->union_seen_)
     {
-      this->gen_system_include (this->client_stubs_, "cstring");
+      this->gen_system_include (this->client_stubs_.get (), "cstring");
     }
 
   if (be_global->gen_ostream_operators () && idl_global->wstring_seen_)
     {
-      this->gen_system_include (this->client_stubs_, "cwchar");
+      this->gen_system_include (this->client_stubs_.get (), "cwchar");
     }
 
-  this->gen_system_include (this->client_stubs_, "memory");
+  this->gen_system_include (this->client_stubs_.get (), "memory");
 
   if (idl_global->union_seen_)
     {
-      this->gen_system_include (this->client_stubs_, "new");
+      this->gen_system_include (this->client_stubs_.get (), "new");
     }
 
   if (be_global->tc_support ()
       && !be_global->gen_anyop_files ())
     {
-      this->gen_typecode_includes (this->client_stubs_);
+      this->gen_typecode_includes (this->client_stubs_.get ());
     }
 
   // Always generated.
-  this->gen_standard_include (this->client_stubs_, "tao/CDR.h");
+  this->gen_standard_include (this->client_stubs_.get (), "tao/CDR.h");
 
   // Conditional includes.
 
    if (idl_global->non_local_op_seen_)
     {
-      this->gen_standard_include (this->client_stubs_, "tao/Exception_Data.h");
+      this->gen_standard_include (this->client_stubs_.get (), "tao/Exception_Data.h");
     }
 
   // Operations for local interfaces are pure virtual.
   if (idl_global->non_local_op_seen_)
     {
-      this->gen_standard_include (this->client_stubs_, "tao/Invocation_Adapter.h");
+      this->gen_standard_include (this->client_stubs_.get (), "tao/Invocation_Adapter.h");
     }
 
   // Any abstract interface present will probably have an operation.
   if (idl_global->abstract_iface_seen_)
     {
-      this->gen_standard_include (this->client_stubs_, "tao/Valuetype/AbstractBase_Invocation_Adapter.h");
+      this->gen_standard_include (this->client_stubs_.get (), "tao/Valuetype/AbstractBase_Invocation_Adapter.h");
 
-      this->gen_standard_include (this->client_stubs_, "tao/Valuetype/AbstractBase_T.h");
+      this->gen_standard_include (this->client_stubs_.get (), "tao/Valuetype/AbstractBase_T.h");
     }
 
   if (be_global->ami_call_back () == true)
     {
-      this->gen_standard_include (this->client_stubs_, "tao/Messaging/Asynch_Invocation_Adapter.h");
+      this->gen_standard_include (this->client_stubs_.get (), "tao/Messaging/Asynch_Invocation_Adapter.h");
 
-      this->gen_standard_include (this->client_stubs_, "tao/Messaging/ExceptionHolder_i.h");
+      this->gen_standard_include (this->client_stubs_.get (), "tao/Messaging/ExceptionHolder_i.h");
     }
 
   // If valuefactory_seen_ was set, this was generated in the stub header file,
@@ -2586,20 +2570,20 @@ TAO_CodeGen::gen_stub_src_includes ()
   if (idl_global->valuetype_seen_
       && !idl_global->valuefactory_seen_)
     {
-      this->gen_standard_include (this->client_stubs_, "tao/Valuetype/ValueFactory.h");
+      this->gen_standard_include (this->client_stubs_.get (), "tao/Valuetype/ValueFactory.h");
     }
 
   if (idl_global->non_local_iface_seen_)
     {
       // Needed for _narrow(), which is now template-based.
-      this->gen_standard_include (this->client_stubs_, "tao/Object_T.h");
+      this->gen_standard_include (this->client_stubs_.get (), "tao/Object_T.h");
     }
 
   if (idl_global->octet_seq_seen_)
     {
       // Needed for the TAO_NO_COPY_OCTET_SEQUENCES optimization. Note that
       // it is preferable to just refer to CORBA::OctetSeq in the IDL file.
-      this->gen_standard_include (this->client_stubs_, "tao/ORB_Core.h");
+      this->gen_standard_include (this->client_stubs_.get (), "tao/ORB_Core.h");
     }
 
   // The UserException::_tao_{en,de}code() methods can throw a
@@ -2607,22 +2591,22 @@ TAO_CodeGen::gen_stub_src_includes ()
   // fully declared/defined by including "tao/SystemException.h".
   if (idl_global->exception_seen_)
     {
-      this->gen_standard_include (this->client_stubs_, "tao/SystemException.h");
+      this->gen_standard_include (this->client_stubs_.get (), "tao/SystemException.h");
     }
 
   // Includes whatever Any template classes that may be needed.
   if (!be_global->gen_anyop_files ())
     {
-      this->gen_any_file_includes (this->client_stubs_);
+      this->gen_any_file_includes (this->client_stubs_.get ());
     }
 
   if (be_global->alt_mapping () && idl_global->seq_seen_)
     {
-      this->gen_standard_include (this->client_stubs_, "tao/Vector_CDR_T.h");
+      this->gen_standard_include (this->client_stubs_.get (), "tao/Vector_CDR_T.h");
 
       if (be_global->any_support ())
         {
-          this->gen_standard_include (this->client_stubs_, "tao/AnyTypeCode/Vector_AnyOp_T.h");
+          this->gen_standard_include (this->client_stubs_.get (), "tao/AnyTypeCode/Vector_AnyOp_T.h");
         }
     }
 
@@ -2642,15 +2626,15 @@ TAO_CodeGen::gen_skel_hdr_includes ()
       if (be_global->ami_call_back () == true)
         {
           // Include Messaging skeleton file.
-          this->gen_standard_include (this->server_header_, "tao/Messaging/MessagingS.h");
+          this->gen_standard_include (this->server_header_.get (), "tao/Messaging/MessagingS.h");
         }
 
-      this->gen_standard_include (this->server_header_, "tao/PortableServer/PortableServer.h");
-      this->gen_standard_include (this->server_header_, "tao/PortableServer/Servant_Base.h");
+      this->gen_standard_include (this->server_header_.get (), "tao/PortableServer/PortableServer.h");
+      this->gen_standard_include (this->server_header_.get (), "tao/PortableServer/Servant_Base.h");
 
       if (be_global->gen_amh_classes ())
         {
-          this->gen_standard_include (this->server_header_, "tao/Messaging/AMH_Response_Handler.h");
+          this->gen_standard_include (this->server_header_.get (), "tao/Messaging/AMH_Response_Handler.h");
         }
     }
 }
@@ -2669,70 +2653,70 @@ TAO_CodeGen::gen_skel_src_includes ()
     {
       case BE_GlobalData::TAO_DYNAMIC_HASH:
         {
-          this->gen_standard_include (this->server_skeletons_, "tao/PortableServer/Operation_Table_Dynamic_Hash.h");
+          this->gen_standard_include (this->server_skeletons_.get (), "tao/PortableServer/Operation_Table_Dynamic_Hash.h");
         }
         break;
       case BE_GlobalData::TAO_LINEAR_SEARCH:
         {
-          this->gen_standard_include (this->server_skeletons_, "tao/PortableServer/Operation_Table_Linear_Search.h");
+          this->gen_standard_include (this->server_skeletons_.get (), "tao/PortableServer/Operation_Table_Linear_Search.h");
         }
         break;
       case BE_GlobalData::TAO_BINARY_SEARCH:
         {
-          this->gen_standard_include (this->server_skeletons_, "tao/PortableServer/Operation_Table_Binary_Search.h");
+          this->gen_standard_include (this->server_skeletons_.get (), "tao/PortableServer/Operation_Table_Binary_Search.h");
         }
         break;
       case BE_GlobalData::TAO_PERFECT_HASH:
         {
-          this->gen_standard_include (this->server_skeletons_, "tao/PortableServer/Operation_Table_Perfect_Hash.h");
+          this->gen_standard_include (this->server_skeletons_.get (), "tao/PortableServer/Operation_Table_Perfect_Hash.h");
         }
         break;
     }
 
-  this->gen_system_include (this->server_skeletons_, "array");
-  this->gen_system_include (this->server_skeletons_, "cstddef");
-  this->gen_system_include (this->server_skeletons_, "cstring");
-  this->gen_system_include (this->server_skeletons_, "memory");
+  this->gen_system_include (this->server_skeletons_.get (), "array");
+  this->gen_system_include (this->server_skeletons_.get (), "cstddef");
+  this->gen_system_include (this->server_skeletons_.get (), "cstring");
+  this->gen_system_include (this->server_skeletons_.get (), "memory");
 
   if (be_global->gen_direct_collocation ())
     {
-      this->gen_standard_include (this->server_skeletons_, "tao/PortableServer/Direct_Collocation_Upcall_Wrapper.h");
+      this->gen_standard_include (this->server_skeletons_.get (), "tao/PortableServer/Direct_Collocation_Upcall_Wrapper.h");
     }
 
   if (be_global->ami_call_back () == true)
     {
-      this->gen_standard_include (this->server_skeletons_, "tao/Exception_Data.h");
-      this->gen_standard_include (this->server_skeletons_, "tao/Messaging/ExceptionHolder_i.h");
+      this->gen_standard_include (this->server_skeletons_.get (), "tao/Exception_Data.h");
+      this->gen_standard_include (this->server_skeletons_.get (), "tao/Messaging/ExceptionHolder_i.h");
     }
 
-  this->gen_standard_include (this->server_skeletons_, "tao/PortableServer/Upcall_Command.h");
-  this->gen_standard_include (this->server_skeletons_, "tao/PortableServer/Upcall_Wrapper.h");
+  this->gen_standard_include (this->server_skeletons_.get (), "tao/PortableServer/Upcall_Command.h");
+  this->gen_standard_include (this->server_skeletons_.get (), "tao/PortableServer/Upcall_Wrapper.h");
 
-  this->gen_standard_include (this->server_skeletons_, "tao/TAO_Server_Request.h");
-  this->gen_standard_include (this->server_skeletons_, "tao/ORB_Core.h");
-  this->gen_standard_include (this->server_skeletons_, "tao/Profile.h");
-  this->gen_standard_include (this->server_skeletons_, "tao/Stub.h");
-  this->gen_standard_include (this->server_skeletons_, "tao/IFR_Client_Adapter.h");
-  this->gen_standard_include (this->server_skeletons_, "tao/Object_T.h");
-  this->gen_standard_include (this->server_skeletons_, "tao/AnyTypeCode/TypeCode.h");
-  this->gen_standard_include (this->server_skeletons_, "tao/AnyTypeCode/DynamicC.h");
-  this->gen_standard_include (this->server_skeletons_, "tao/CDR.h");
-  this->gen_standard_include (this->server_skeletons_, "tao/operation_details.h");
-  this->gen_standard_include (this->server_skeletons_, "tao/PortableInterceptor.h");
+  this->gen_standard_include (this->server_skeletons_.get (), "tao/TAO_Server_Request.h");
+  this->gen_standard_include (this->server_skeletons_.get (), "tao/ORB_Core.h");
+  this->gen_standard_include (this->server_skeletons_.get (), "tao/Profile.h");
+  this->gen_standard_include (this->server_skeletons_.get (), "tao/Stub.h");
+  this->gen_standard_include (this->server_skeletons_.get (), "tao/IFR_Client_Adapter.h");
+  this->gen_standard_include (this->server_skeletons_.get (), "tao/Object_T.h");
+  this->gen_standard_include (this->server_skeletons_.get (), "tao/AnyTypeCode/TypeCode.h");
+  this->gen_standard_include (this->server_skeletons_.get (), "tao/AnyTypeCode/DynamicC.h");
+  this->gen_standard_include (this->server_skeletons_.get (), "tao/CDR.h");
+  this->gen_standard_include (this->server_skeletons_.get (), "tao/operation_details.h");
+  this->gen_standard_include (this->server_skeletons_.get (), "tao/PortableInterceptor.h");
 
   // The following header must always be included.
   if (be_global->gen_amh_classes ())
     {
-      this->gen_standard_include (this->server_skeletons_, "tao/Thread_Lane_Resources.h");
-      this->gen_standard_include (this->server_skeletons_, "tao/Buffer_Allocator_T.h");
-      this->gen_standard_include (this->server_skeletons_, "tao/Messaging/AMH_Skeletons.h");
-      this->gen_standard_include (this->server_skeletons_, "ace/Auto_Functor.h");
+      this->gen_standard_include (this->server_skeletons_.get (), "tao/Thread_Lane_Resources.h");
+      this->gen_standard_include (this->server_skeletons_.get (), "tao/Buffer_Allocator_T.h");
+      this->gen_standard_include (this->server_skeletons_.get (), "tao/Messaging/AMH_Skeletons.h");
+      this->gen_standard_include (this->server_skeletons_.get (), "ace/Auto_Functor.h");
     }
 
-  this->gen_standard_include (this->server_skeletons_, "ace/Dynamic_Service.h");
+  this->gen_standard_include (this->server_skeletons_.get (), "ace/Dynamic_Service.h");
 
   // For Static_Allocator_Base
-  this->gen_standard_include (this->server_skeletons_, "ace/Malloc_Allocator.h");
+  this->gen_standard_include (this->server_skeletons_.get (), "ace/Malloc_Allocator.h");
 }
 
 void
@@ -2744,13 +2728,13 @@ TAO_CodeGen::gen_seq_file_includes ()
   this->gen_cond_file_include (
       idl_global->vt_seq_seen_,
       "tao/Valuetype/Sequence_T.h",
-      this->client_header_
+      this->client_header_.get ()
     );
 
   this->gen_cond_file_include (
       idl_global->seq_seen_,
       "tao/Sequence_T.h",
-      this->client_header_
+      this->client_header_.get ()
     );
 }
 
@@ -2805,38 +2789,38 @@ TAO_CodeGen::gen_var_file_includes ()
       idl_global->valuetype_seen_
       | idl_global->fwd_valuetype_seen_,
       "tao/Valuetype/Value_VarOut_T.h",
-      this->client_header_
+      this->client_header_.get ()
     );
 
   this->gen_cond_file_include (
       idl_global->interface_seen_
       | idl_global->fwd_iface_seen_,
       "tao/Objref_VarOut_T.h",
-      this->client_header_
+      this->client_header_.get ()
     );
 
   this->gen_cond_file_include (
       idl_global->seq_seen_,
       "tao/Seq_Var_T.h",
-      this->client_header_
+      this->client_header_.get ()
     );
 
   this->gen_cond_file_include (
       idl_global->seq_seen_,
       "tao/Seq_Out_T.h",
-      this->client_header_
+      this->client_header_.get ()
     );
 
   this->gen_cond_file_include (
       idl_global->aggregate_seen_,
       "tao/VarOut_T.h",
-      this->client_header_
+      this->client_header_.get ()
     );
 
   this->gen_cond_file_include (
       idl_global->array_seen_,
       "tao/Array_VarOut_T.h",
-      this->client_header_
+      this->client_header_.get ()
     );
 }
 
@@ -3213,21 +3197,21 @@ TAO_CodeGen::gen_exec_hdr_includes ()
   // Eventually, there should be a way to completely decouple them.
   if (!be_global->exec_export_include ().empty ())
     {
-      this->gen_standard_include (this->ciao_exec_header_, be_global->exec_export_include (), true);
+      this->gen_standard_include (this->ciao_exec_header_.get (), be_global->exec_export_include (), true);
     }
 
-  this->gen_standard_include (this->ciao_exec_header_, "tao/LocalObject.h");
+  this->gen_standard_include (this->ciao_exec_header_.get (), "tao/LocalObject.h");
 }
 
 void
 TAO_CodeGen::gen_exec_src_includes ()
 {
   // Generate the include statement for the exec source.
-  this->gen_standard_include (this->ciao_exec_source_, be_global->be_get_ciao_exec_hdr_fname (true));
+  this->gen_standard_include (this->ciao_exec_source_.get (), be_global->be_get_ciao_exec_hdr_fname (true));
   if (be_global->gen_ciao_exec_reactor_impl ())
     {
-      this->gen_standard_include (this->ciao_exec_source_, "tao/ORB_Core.h");
-      this->gen_standard_include (this->ciao_exec_source_, "ace/Reactor.h");
+      this->gen_standard_include (this->ciao_exec_source_.get (), "tao/ORB_Core.h");
+      this->gen_standard_include (this->ciao_exec_source_.get (), "ace/Reactor.h");
     }
 }
 
@@ -3236,22 +3220,21 @@ TAO_CodeGen::gen_exec_idl_includes ()
 {
   if (!be_global->gen_noeventccm ())
     {
-      this->gen_standard_include (this->ciao_exec_idl_, "ccm/CCM_Events.idl");
+      this->gen_standard_include (this->ciao_exec_idl_.get (), "ccm/CCM_Events.idl");
      }
 
-  this->gen_standard_include (this->ciao_exec_idl_, "ccm/CCM_Home.idl");
+  this->gen_standard_include (this->ciao_exec_idl_.get (), "ccm/CCM_Home.idl");
 
-  this->gen_standard_include (this->ciao_exec_idl_, "ccm/CCM_Object.idl");
+  this->gen_standard_include (this->ciao_exec_idl_.get (), "ccm/CCM_Object.idl");
 
   if (!be_global->gen_lwccm ())
     {
-      this->gen_standard_include (this->ciao_exec_idl_, "ccm/CCM_Enumeration.idl");
+      this->gen_standard_include (this->ciao_exec_idl_.get (), "ccm/CCM_Enumeration.idl");
     }
 
-  this->gen_standard_include (this->ciao_exec_idl_, "ccm/CCM_CCMException.idl");
+  this->gen_standard_include (this->ciao_exec_idl_.get (), "ccm/CCM_CCMException.idl");
 
-  this->gen_standard_include (this->ciao_exec_idl_, "ccm/CCM_HomeExecutorBase.idl");
-
+  this->gen_standard_include (this->ciao_exec_idl_.get (), "ccm/CCM_HomeExecutorBase.idl");
 
   std::string const container_type (be_global->ciao_container_type ());
   std::string component_file ("ccm/");
@@ -3260,21 +3243,21 @@ TAO_CodeGen::gen_exec_idl_includes ()
   component_file += container_type;
   component_file += "Component.idl";
 
-  this->gen_standard_include (this->ciao_exec_idl_, component_file);
+  this->gen_standard_include (this->ciao_exec_idl_.get (), component_file);
 
   if (be_global->ami4ccm_call_back ())
     {
-      this->gen_standard_include (this->ciao_exec_idl_, "connectors/ami4ccm/ami4ccm/ami4ccm.idl");
+      this->gen_standard_include (this->ciao_exec_idl_.get (), "connectors/ami4ccm/ami4ccm/ami4ccm.idl");
     }
 
   if (!be_global->stripped_filename ().empty ())
     {
-      this->gen_standard_include (this->ciao_exec_idl_, be_global->stripped_filename ());
+      this->gen_standard_include (this->ciao_exec_idl_.get (), be_global->stripped_filename ());
     }
   else
     {
       this->gen_standard_include (
-        this->ciao_exec_idl_,
+        this->ciao_exec_idl_.get (),
         idl_global->stripped_filename ());
     }
 
@@ -3285,7 +3268,7 @@ TAO_CodeGen::gen_exec_idl_includes ()
 
       bool skip_incl {};
       // special case for ami4ccm, if xxxE.idl. don't include xxxAE.idl.
-      std::size_t const base = exec_idl_fname.find ("E.idl");
+      size_t const base = exec_idl_fname.find ("E.idl");
       if (base != std::string::npos)
         {
           std::string const test = exec_idl_fname.substr (0, base) + "AE.idl";
@@ -3300,7 +3283,7 @@ TAO_CodeGen::gen_exec_idl_includes ()
       // No need to have the exec IDL file include itself.
       if (path_tmp != exec_idl_fname && !skip_incl)
         {
-          this->gen_standard_include (this->ciao_exec_idl_, path_tmp);
+          this->gen_standard_include (this->ciao_exec_idl_.get (), path_tmp);
         }
     }
 }
@@ -3322,7 +3305,7 @@ TAO_CodeGen::gen_conn_hdr_includes ()
       lem_str = lem_str.substr (0, lem_str.find (".idl"));
       lem_str.append (be_global->client_hdr_ending ());
 
-      this->gen_standard_include (this->ciao_conn_header_, lem_str);
+      this->gen_standard_include (this->ciao_conn_header_.get (), lem_str);
     }
 
   *this->ciao_conn_header_ << be_nl;
@@ -3357,15 +3340,15 @@ TAO_CodeGen::gen_conn_hdr_includes ()
 
   for (std::string const &impl_fname : idl_global->dds4ccm_impl_fnames ())
     {
-      this->gen_standard_include (this->ciao_conn_header_, impl_fname);
+      this->gen_standard_include (this->ciao_conn_header_.get (), impl_fname);
     }
 
   if (idl_global->ami_connector_seen_)
     {
-      this->gen_standard_include (this->ciao_conn_header_, "tao/LocalObject.h");
+      this->gen_standard_include (this->ciao_conn_header_.get (), "tao/LocalObject.h");
     }
 
-  for (std::size_t j = 0; j < idl_global->n_included_idl_files (); ++j)
+  for (size_t j = 0; j < idl_global->n_included_idl_files (); ++j)
     {
       if (j == 0)
         {
@@ -3375,19 +3358,18 @@ TAO_CodeGen::gen_conn_hdr_includes ()
       std::string const &idl_name =
         idl_global->included_idl_files ()[j];
 
-
       if (this->is_system_file (idl_name))
         {
           continue;
         }
 
-      this->gen_standard_include (this->ciao_conn_header_,
+      this->gen_standard_include (this->ciao_conn_header_.get (),
                                   BE_GlobalData::be_get_server_hdr (idl_name, true));
 
     }
 
   this->gen_standard_include (
-    this->ciao_conn_header_,
+    this->ciao_conn_header_.get (),
     BE_GlobalData::be_get_ciao_exec_stub_header (
       idl_global->stripped_filename ()));
 }
@@ -3396,12 +3378,12 @@ void
 TAO_CodeGen::gen_conn_src_includes ()
 {
   // Generate the include statement for the connector exec source.
-  this->gen_standard_include (this->ciao_conn_source_, be_global->be_get_ciao_conn_hdr_fname (true));
+  this->gen_standard_include (this->ciao_conn_source_.get (), be_global->be_get_ciao_conn_hdr_fname (true));
 
   // Include the AMI4CCM library entry point, if AMI4CCM is enabled.
   if (idl_global->ami_connector_seen_)
     {
-      this->gen_standard_include (this->ciao_conn_source_, "connectors/ami4ccm/ami4ccm/ami4ccm.h");
+      this->gen_standard_include (this->ciao_conn_source_.get (), "connectors/ami4ccm/ami4ccm/ami4ccm.h");
     }
 }
 
@@ -3411,11 +3393,13 @@ TAO_CodeGen::gen_ami_conn_idl_includes ()
   // Include the AMI4CCM library entry point, if AMI4CCM is enabled.
   if (be_global->ami4ccm_call_back ())
     {
-      this->gen_standard_include (this->ciao_ami_conn_idl_, "connectors/ami4ccm/ami4ccm/ami4ccm.idl");
+      this->gen_standard_include (
+        this->ciao_ami_conn_idl_.get (),
+        "connectors/ami4ccm/ami4ccm/ami4ccm.idl");
     }
 
   this->gen_standard_include (
-    this->ciao_ami_conn_idl_,
+    this->ciao_ami_conn_idl_.get (),
     idl_global->stripped_filename ());
 }
 
@@ -3426,9 +3410,9 @@ TAO_CodeGen::make_rand_extension (std::string &name)
   std::random_device rd;  // non-deterministic generator
   std::mt19937 gen(rd()); // mersenne twister engine
   char constexpr alphabet[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  std::uniform_int_distribution<std::size_t> dist(0, sizeof(alphabet) - 2); // exclude null
+  std::uniform_int_distribution<size_t> dist(0, sizeof(alphabet) - 2); // exclude null
 
-  for (std::size_t i = 0; i < 6; ++i)
+  for (size_t i = 0; i < 6; ++i)
     {
       name.push_back (alphabet[dist(gen)]);
     }
@@ -3445,31 +3429,33 @@ TAO_CodeGen::gen_conn_ts_includes (
 
   for (std::string const &ts_file : ts_files)
     {
-      this->gen_standard_include (this->ciao_conn_header_, ts_file);
+      this->gen_standard_include (this->ciao_conn_header_.get (), ts_file);
     }
 }
 
 void
 TAO_CodeGen::destroy ()
 {
-  delete this->client_header_;
-  delete this->server_header_;
-  delete this->implementation_header_;
-  delete this->implementation_skeleton_;
-  delete this->server_template_header_;
-  delete this->client_stubs_;
-  delete this->server_skeletons_;
-  delete this->server_template_skeletons_;
-  delete this->client_inline_;
-  delete this->anyop_source_;
-  delete this->anyop_header_;
-  delete this->ciao_svnt_header_;
-  delete this->ciao_svnt_source_;
-  delete this->ciao_exec_header_;
-  delete this->ciao_exec_source_;
-  delete this->ciao_exec_idl_;
-  delete this->ciao_conn_header_;
-  delete this->ciao_conn_source_;
-  delete this->ciao_ami_conn_idl_;
+  this->client_header_.reset ();
+  this->client_stubs_.reset ();
+  this->client_inline_.reset ();
+  this->server_header_.reset ();
+  this->implementation_header_.reset ();
+  this->implementation_skeleton_.reset ();
+  this->server_template_header_.reset ();
+  this->server_skeletons_.reset ();
+  this->server_template_skeletons_.reset ();
+  this->anyop_header_.reset ();
+  this->anyop_source_.reset ();
+  this->ciao_svnt_header_.reset ();
+  this->ciao_svnt_source_.reset ();
+  this->ciao_svnt_template_header_.reset ();
+  this->ciao_svnt_template_source_.reset ();
+  this->ciao_exec_header_.reset ();
+  this->ciao_exec_source_.reset ();
+  this->ciao_exec_idl_.reset ();
+  this->ciao_conn_header_.reset ();
+  this->ciao_conn_source_.reset ();
+  this->ciao_ami_conn_idl_.reset ();
   this->gperf_input_stream_.reset ();
 }

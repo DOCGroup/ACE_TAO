@@ -700,7 +700,7 @@ be_visitor_servant_svs::gen_provides_top ()
 void
 be_visitor_servant_svs::gen_publishes_top ()
 {
-  std::size_t const npubs = this->node_->n_publishes ();
+  size_t const npubs = this->node_->n_publishes ();
 
   if (npubs > 0UL)
     {
@@ -807,7 +807,7 @@ be_visitor_servant_svs::gen_publishes_top ()
 void
 be_visitor_servant_svs::gen_uses_top ()
 {
-  std::size_t const nuses = this->node_->n_uses ();
+  size_t const nuses = this->node_->n_uses ();
 
   if (nuses > 0UL)
     {

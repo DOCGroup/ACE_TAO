@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_ARGUMENT_ARGUMENT_H_
 #define _BE_VISITOR_ARGUMENT_ARGUMENT_H_
 
@@ -43,7 +42,6 @@ public:
   be_visitor_args &operator= (be_visitor_args const &) = delete;
   be_visitor_args &operator= (be_visitor_args &&) = delete;
 
-  //= helper
   /// helper that produces either a nested name for
   /// header files or full name for others.
   virtual std::string type_name (be_type *type,

@@ -181,7 +181,6 @@ be_visitor_sequence_base_template_args (be_visitor_context *ctx,
 {
 }
 
-
 be_visitor_sequence_base_template_args::~be_visitor_sequence_base_template_args () = default;
 
 int
@@ -215,8 +214,7 @@ be_visitor_sequence_base_template_args::visit_interface (be_interface *node)
 
 int
 be_visitor_sequence_base_template_args::visit_interface_fwd (
-    be_interface_fwd *node
-  )
+    be_interface_fwd *node)
 {
   TAO_OutStream * const os = this->ctx_->stream ();
   be_type *bt {};
@@ -252,16 +250,14 @@ be_visitor_sequence_base_template_args::visit_valuetype (be_valuetype *node)
 
 int
 be_visitor_sequence_base_template_args::visit_valuetype_fwd (
-    be_valuetype_fwd *node
-  )
+    be_valuetype_fwd *node)
 {
   return this->visit_interface_fwd (node);
 }
 
 int
 be_visitor_sequence_base_template_args::visit_predefined_type (
-    be_predefined_type *node
-  )
+    be_predefined_type *node)
 {
   TAO_OutStream * const os = this->ctx_->stream ();
   *os << "::" << node->name ();

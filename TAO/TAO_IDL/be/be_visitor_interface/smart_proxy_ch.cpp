@@ -104,7 +104,6 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
       << ": public virtual "
       << bt->nested_type_name (this->ctx_->scope ()->decl ());
 
-
   if (node->n_inherits () > 0)
     {
       long i;

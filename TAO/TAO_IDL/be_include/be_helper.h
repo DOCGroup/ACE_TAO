@@ -175,14 +175,16 @@ public:
   /// Generate an endif statement
   int gen_endif ();
 
-  // =overloaded operators
-  // Avoid duplication for the underlying type of std::size_t
+  /// @name Stream operators
+  /// @{
+
+  // Avoid duplication for the underlying type of size_t
   template <typename Dummy = TAO_OutStream &>
   typename std::enable_if<std::is_same<Dummy, TAO_OutStream &>::value &&
-                          !std::is_same<ACE_CDR::ULongLong, std::size_t>::value &&
-                          !std::is_same<ACE_CDR::ULong, std::size_t>::value,
+                          !std::is_same<ACE_CDR::ULongLong, size_t>::value &&
+                          !std::is_same<ACE_CDR::ULong, size_t>::value,
                           TAO_OutStream &>::type
-  operator << (std::size_t const num)
+  operator << (size_t const num)
   {
     this->flush_pending_whitespace ();
     std::fprintf (this->fp_,
@@ -203,12 +205,17 @@ public:
   TAO_OutStream &operator<< (const ACE_CDR::ULongLong num);
   TAO_OutStream &operator<< (const ACE_CDR::LongLong num);
 
-  // = MANIPULATORS
+  /// @}
+
+  /// @name Stream manipulators
+  /// @{
 
   TAO_OutStream &operator<< (const TAO_NL& nl);
   TAO_OutStream &operator<< (const TAO_NL_2& nl_twice);
   TAO_OutStream &operator<< (const TAO_INDENT& i);
   TAO_OutStream &operator<< (const TAO_UNINDENT& i);
+
+  /// @}
 
   // The following will be provided by specialized classes
 

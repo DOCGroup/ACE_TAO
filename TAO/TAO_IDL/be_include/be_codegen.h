@@ -442,71 +442,73 @@ private:
   void gen_conn_ts_includes (std::vector<std::string> const &ts_files);
 
 private:
+  int reset_out_stream (std::unique_ptr<TAO_OutStream> &stream);
+
   /// Client header stream.
-  TAO_OutStream *client_header_ {};
+  std::unique_ptr<TAO_OutStream> client_header_;
 
   /// Client stub file stream
-  TAO_OutStream *client_stubs_ {};
+  std::unique_ptr<TAO_OutStream> client_stubs_;
 
   /// Client side inline definitions.
-  TAO_OutStream *client_inline_ {};
+  std::unique_ptr<TAO_OutStream> client_inline_;
 
   /// Server header stream.
-  TAO_OutStream *server_header_ {};
+  std::unique_ptr<TAO_OutStream> server_header_;
 
   /// Implementation header stream.
-  TAO_OutStream *implementation_header_ {};
+  std::unique_ptr<TAO_OutStream> implementation_header_;
 
   /// Implementation skeleton stream.
-  TAO_OutStream *implementation_skeleton_ {};
+  std::unique_ptr<TAO_OutStream> implementation_skeleton_;
 
   /// Server header template stream.
-  TAO_OutStream *server_template_header_ {};
+  std::unique_ptr<TAO_OutStream> server_template_header_;
 
   /// Server skeleton stream.
-  TAO_OutStream *server_skeletons_ {};
+  std::unique_ptr<TAO_OutStream> server_skeletons_;
 
   /// Server skeleton template stream.
-  TAO_OutStream *server_template_skeletons_ {};
+  std::unique_ptr<TAO_OutStream> server_template_skeletons_;
 
   /// Anyop header file.
-  TAO_OutStream *anyop_header_ {};
+  std::unique_ptr<TAO_OutStream> anyop_header_;
 
   /// Anyop source file.
-  TAO_OutStream *anyop_source_ {};
+  std::unique_ptr<TAO_OutStream> anyop_source_;
 
   /// TAO_OutStream to collect the input for gperf program.
   std::unique_ptr<TAO_OutStream> gperf_input_stream_;
 
   /// Component servant header file.
-  TAO_OutStream *ciao_svnt_header_ {};
+  std::unique_ptr<TAO_OutStream> ciao_svnt_header_;
 
   /// Component servant source file.
-  TAO_OutStream *ciao_svnt_source_ {};
+  std::unique_ptr<TAO_OutStream> ciao_svnt_source_;
 
   /// Template component servant header file.
-  TAO_OutStream *ciao_svnt_template_header_ {};
+  std::unique_ptr<TAO_OutStream> ciao_svnt_template_header_;
 
   /// Template component servant source file.
-  TAO_OutStream *ciao_svnt_template_source_ {};
+  std::unique_ptr<TAO_OutStream> ciao_svnt_template_source_;
 
   /// Component executor impl header file.
-  TAO_OutStream *ciao_exec_header_ {};
+  std::unique_ptr<TAO_OutStream> ciao_exec_header_;
 
   /// Component executor impl source file.
-  TAO_OutStream *ciao_exec_source_ {};
+  std::unique_ptr<TAO_OutStream> ciao_exec_source_;
 
   /// Component executor impl source file.
-  TAO_OutStream *ciao_exec_idl_ {};
+  std::unique_ptr<TAO_OutStream> ciao_exec_idl_;
 
   /// Component connector impl header file.
-  TAO_OutStream *ciao_conn_header_ {};
+  std::unique_ptr<TAO_OutStream> ciao_conn_header_;
 
   /// Component connector impl source file.
-  TAO_OutStream *ciao_conn_source_ {};
+  std::unique_ptr<TAO_OutStream> ciao_conn_source_;
 
   /// Component connector impl source file.
-  TAO_OutStream *ciao_ami_conn_idl_ {};
+  std::unique_ptr<TAO_OutStream> ciao_ami_conn_idl_;
 
   /**
    * Name of the temp file used to collect the input for gperf

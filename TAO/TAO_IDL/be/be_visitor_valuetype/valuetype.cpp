@@ -158,7 +158,6 @@ be_visitor_valuetype::visit_attribute (be_attribute *node)
   return 0;
 }
 
-
 int
 be_visitor_valuetype::visit_constant (be_constant *node)
 {
@@ -657,7 +656,6 @@ be_visitor_valuetype::visit_field (be_field *)
   // Is overridden in derived visitors.
   return 0;
 }
-
 
 // Private data fields for scope.
 int

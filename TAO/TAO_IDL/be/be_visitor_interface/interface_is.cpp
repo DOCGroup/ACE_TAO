@@ -36,8 +36,6 @@ be_visitor_interface_is::visit_interface (be_interface *node)
       TAO_INSERT_COMMENT (os);
     }
 
-  *os << "// Implementation skeleton constructor" << be_nl;
-
   // Find if we are at the top scope or inside some module.
   *os << be_global->impl_class_prefix () << node->flat_name ()
       << be_global->impl_class_suffix () <<"::"
@@ -49,8 +47,6 @@ be_visitor_interface_is::visit_interface (be_interface *node)
       << "}" << be_nl_2;
 
   os->indent ();
-  *os << "// Implementation skeleton destructor" << be_nl;
-
   *os << be_global->impl_class_prefix () << node->flat_name ()
       << be_global->impl_class_suffix () <<"::~"
       << be_global->impl_class_prefix () << node->flat_name ()
@@ -62,8 +58,6 @@ be_visitor_interface_is::visit_interface (be_interface *node)
 
   if (be_global->gen_assign_op ())
     {
-      *os << "//Implementation Skeleton Copy Assignment" << be_nl;
-
       *os << be_global->impl_class_prefix () << node->flat_name ()
           << be_global->impl_class_suffix () << "& "
           << be_global->impl_class_prefix () << node->flat_name ()
@@ -103,7 +97,6 @@ be_visitor_interface_is::visit_interface (be_interface *node)
 
   return 0;
 }
-
 
 // Helper method to generate the members in the scope of the base classes.
 int

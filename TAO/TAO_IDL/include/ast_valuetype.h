@@ -18,9 +18,9 @@ public:
                  long n_inherits,
                  AST_Type *inherits_concrete,
                  AST_Interface_List const& inherits_flat,
-                 std::size_t n_inherits_flat,
+                 size_t n_inherits_flat,
                  AST_Type_List const& supports,
-                 std::size_t n_supports,
+                 size_t n_supports,
                  AST_Type *supports_concrete,
                  bool abstract,
                  bool truncatable,
@@ -36,7 +36,7 @@ public:
 
   AST_Type_List const& supports () const;
 
-  std::size_t n_supports () const;
+  size_t n_supports () const;
 
   AST_Type *inherits_concrete () const;
 

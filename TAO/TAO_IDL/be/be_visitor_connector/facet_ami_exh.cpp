@@ -67,7 +67,6 @@ be_visitor_facet_ami_exh::visit_provides (be_provides *node)
             -1);
    }
 
-
   if (this->gen_facet_executor_class () == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -212,7 +211,9 @@ be_visitor_facet_ami_exh::init (bool for_impl)
   this->callback_iface_ = dynamic_cast<be_interface*> (d);
 
   if (this->callback_iface_ == nullptr)
+  {
     this->sync_  = true;
+  }
 }
 
 int
@@ -223,7 +224,9 @@ be_visitor_facet_ami_exh::gen_reply_handler_class ()
   std::string const suffix = "_reply_handler";
   this->init (false);
   if (this->sync_)
+  {
     return 0;
+  }
   os_ << be_nl
       << "class " << this->export_macro_ << " "
       << this->iface_name_ << suffix << be_idt_nl
@@ -288,7 +291,6 @@ be_visitor_facet_ami_exh::gen_facet_executor_class ()
       << "virtual ~" << iface_name << suffix
       << " ();";
 
-
   std::string handler_str (
     ScopeAsDecl (this->iface_->defined_in ())->full_name ());
   handler_str += "::";
@@ -297,7 +299,9 @@ be_visitor_facet_ami_exh::gen_facet_executor_class ()
   if (iface_name.find ("AMI4CCM") != std::string::npos)
     this->sync_ = false;
   else
+  {
     this->sync_ = true;
+  }
   if (this->sync_)
    {
      UTL_Scope *ss = this->iface_->defined_in();
@@ -314,7 +318,6 @@ be_visitor_facet_ami_exh::gen_facet_executor_class ()
      sync_iface->get_insert_queue ().clear ();
      sync_iface->get_del_queue ().clear ();
      sync_iface->get_insert_queue ().push_back (sync_iface);
-
 
      Facet_AMI_ExecH_Op_Attr_Generator op_attr_gen (this);
      int const status =

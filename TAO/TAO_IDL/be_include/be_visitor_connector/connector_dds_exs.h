@@ -10,22 +10,13 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_CONNECTOR_CONNECTOR_DDS_EXS_H_
 #define _BE_CONNECTOR_CONNECTOR_DDS_EXS_H_
 
+/// Generates DDS connector executor implementation source.
 class be_visitor_connector_dds_exs
   : public be_visitor_connector_dds_ex_base
 {
-  //
-  // = TITLE
-  //   be_visitor_connector_dds_exs
-  //
-  // = DESCRIPTION
-  //   This is a concrete visitor to generate
-  //   the executor implementation source for connectors.
-  //
-  //
 public:
   explicit be_visitor_connector_dds_exs (be_visitor_context *ctx);
 

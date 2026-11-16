@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "ast_visitor_context.h"
 
 ast_visitor_context::ast_visitor_context () = default;

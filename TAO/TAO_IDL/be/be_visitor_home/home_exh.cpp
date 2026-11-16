@@ -113,11 +113,9 @@ be_visitor_home_exh::gen_exec_class ()
       << "public:" << be_idt;
 
   os_ << be_nl
-      << "/// Constructor" << be_nl
       << lname << "_exec_i ();";
 
   os_ << be_nl_2
-      << "/// Destructor" << be_nl
       << "virtual ~" << lname << "_exec_i ();";
 
   be_home *h = node_;

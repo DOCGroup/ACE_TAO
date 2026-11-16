@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef BE_DIRECT_PROXY_IMPL_SH_H_
 #define BE_DIRECT_PROXY_IMPL_SH_H_
 

@@ -96,7 +96,6 @@ be_visitor_operation_upcall_command_ss::visit (
      << "{" << be_nl
      << "public:" << be_idt_nl;
 
-  // Generate constructor
   os << "inline " << upcall_command_name
      << " (" << be_idt
      << full_skel_name << " * servant";
@@ -108,7 +107,9 @@ be_visitor_operation_upcall_command_ss::visit (
       os << "," << be_nl;
 
       if (be_global->gen_thru_poa_collocation ())
+      {
         os << "TAO_Operation_Details const * operation_details," << be_nl;
+      }
 
       os << "TAO::Argument * const args[])" << be_nl;
     }
@@ -199,7 +200,9 @@ be_visitor_operation_upcall_command_ss::visit (
       os << be_nl;
 
       if (be_global->gen_thru_poa_collocation ())
+      {
         os << "TAO_Operation_Details const * const operation_details_;" << be_nl;
+      }
 
       os << "TAO::Argument * const * const args_;";
     }
@@ -251,7 +254,7 @@ be_visitor_operation_upcall_command_ss::gen_upcall (
               std::string::size_type const excepholder_len =
                 excepholder.size ();
               std::string const& param_name = value_type->full_name ();
-              std::size_t const excepholder_pos = param_name.find (excepholder);
+              size_t const excepholder_pos = param_name.find (excepholder);
               excep_method = excepholder_pos != std::string::npos
                 && excepholder_pos + excepholder_len == param_name.size ();
             }
@@ -370,7 +373,7 @@ be_visitor_operation_upcall_command_ss::gen_upcall (
          << be_nl;
     }
 
-  std::size_t const count = node->argument_count ();
+  size_t const count = node->argument_count ();
   if (!node->void_return_type ())
     {
       os << "retval =";

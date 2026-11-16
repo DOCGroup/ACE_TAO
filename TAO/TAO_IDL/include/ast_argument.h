@@ -70,7 +70,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_field.h"
 
-
 class TAO_IDL_FE_Export AST_Argument : public virtual AST_Field
 {
 public:

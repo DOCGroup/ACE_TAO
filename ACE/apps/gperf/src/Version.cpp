@@ -25,5 +25,4 @@
 
 #include "ace/Version.h"
 
-
 char const *version_string = ACE_VERSION;

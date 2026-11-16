@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_IFR_ADDING_VISITOR_OPERATION_H
 #define TAO_IFR_ADDING_VISITOR_OPERATION_H
 
@@ -31,10 +30,8 @@
 class ifr_adding_visitor_operation : public ifr_adding_visitor
 {
 public:
-  /// Constructor.
   explicit ifr_adding_visitor_operation (AST_Decl *scope);
 
-  /// Destructor.
   ~ifr_adding_visitor_operation () override;
   ifr_adding_visitor_operation (ifr_adding_visitor_operation const &) = delete;
   ifr_adding_visitor_operation (ifr_adding_visitor_operation &&) = delete;

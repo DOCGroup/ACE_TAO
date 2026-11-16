@@ -155,7 +155,6 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
 
       *os << be_nl;
 
-      // Default constructor.
       if (! node->is_nested ())
         {
           *os << "OBV_";
@@ -182,7 +181,6 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
               << ");" << be_uidt;
         }
 
-      // Virtual destructor.
       *os << be_nl << "~";
       if (! node->is_nested ())
         {
@@ -190,13 +188,10 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
         }
       *os << node->local_name () << " () override;";
 
-      // Virtual _copy_value() only provided in OBV_* class when
-      // ::CORBA::DefaultValueRefCountBase has been included.
-      // The OBV_ class is concrete in this case and so requires
-      // a _copy_value definition.
-      // Otherwise, the end user derives from this abstract
-      // OBV_* class and it is up to them to provide the correct
-      // implimentation of the _copy_value() there.
+      // The generated value factory instantiates the OBV_ class, so it needs
+      // the default _copy_value() implementation even when interfaces are
+      // supported. Derived implementations can override it to preserve their
+      // dynamic type when copying.
       if (this->obv_need_ref_counter (node))
         {
           *os << be_uidt_nl << be_nl << "public:" << be_idt_nl

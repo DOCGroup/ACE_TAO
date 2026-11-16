@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Operation_Table_Dynamic_Hash.h
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
-
 #ifndef TAO_OPERATION_TABLE_DYNAMIC_HASH_H
 #define TAO_OPERATION_TABLE_DYNAMIC_HASH_H
 
@@ -48,7 +44,6 @@ public:
                             CORBA::ULong hashtblsize,
                             ACE_Allocator *alloc);
 
-  /// Destructor
   ~TAO_Dynamic_Hash_OpTable () override;
 
   TAO_Dynamic_Hash_OpTable (TAO_Dynamic_Hash_OpTable const &) = delete;
@@ -62,12 +57,12 @@ public:
 
   int find (char const *opname,
             TAO_Skeleton &skelfunc,
-            std::size_t const length = 0) override;
+            size_t const length = 0) override;
 
   int find (char const *opname,
             TAO_Collocated_Skeleton &skelfunc,
             TAO::Collocation_Strategy s,
-            std::size_t const length = 0) override;
+            size_t const length = 0) override;
 private:
   using OP_MAP_MANAGER = ACE_Hash_Map_Manager_Ex<const char *,
                                   TAO::Operation_Skeletons,

@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef BE_VISITOR_ATTR_INIT_H
 #define BE_VISITOR_ATTR_INIT_H
 

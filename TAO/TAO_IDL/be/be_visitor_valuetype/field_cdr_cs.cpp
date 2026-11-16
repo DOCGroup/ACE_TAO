@@ -861,7 +861,6 @@ be_visitor_valuetype_field_cdr_cs::visit_union (be_union *node)
   return 0;
 }
 
-
 // ****************************************************************
 
 be_visitor_valuetype_field_cdr_decl::be_visitor_valuetype_field_cdr_decl (

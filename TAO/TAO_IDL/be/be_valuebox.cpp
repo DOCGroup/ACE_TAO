@@ -55,7 +55,6 @@ be_valuebox::accept (be_visitor *visitor)
   return visitor->visit_valuebox (this);
 }
 
-
 void
 be_valuebox::destroy ()
 {

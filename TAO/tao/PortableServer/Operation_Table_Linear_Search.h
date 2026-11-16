@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Operation_Table_Linear_Search.h
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
-
 #ifndef TAO_OPERATION_TABLE_LINEAR_SEARCH_H
 #define TAO_OPERATION_TABLE_LINEAR_SEARCH_H
 
@@ -33,25 +29,23 @@ class TAO_PortableServer_Export TAO_Linear_Search_OpTable
   : public TAO_Operation_Table
 {
 public:
-  /// Destructor.
   ~TAO_Linear_Search_OpTable () override = default;
 
   /// See the documentation in the base class for details.
   int find (char const *opname,
             TAO_Skeleton &skel_ptr,
-            std::size_t const length = 0) override;
+            size_t const length = 0) override;
 
   int find (char const *opname,
             TAO_Collocated_Skeleton &skelfunc,
             TAO::Collocation_Strategy s,
-            std::size_t const length = 0) override;
+            size_t const length = 0) override;
 
   int bind (char const *opname,
             TAO::Operation_Skeletons const skelptr) override;
 
 private:
-  // = Method that should defined by the subclasses. GPERF program
-  //   will generate this routine routines.
+  /// Implemented by subclasses, including gperf-generated lookup tables.
   virtual TAO_operation_db_entry const *lookup (char const *str) = 0;
 };
 

@@ -25,7 +25,6 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Operation_Table_Timeprobe_Description,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// constructor
 TAO_Dynamic_Hash_OpTable::TAO_Dynamic_Hash_OpTable (
   TAO_operation_db_entry const * db,
   CORBA::ULong dbsize,
@@ -35,7 +34,7 @@ TAO_Dynamic_Hash_OpTable::TAO_Dynamic_Hash_OpTable (
 {
   // Iterate thru each entry in the database and bind the operation
   // name to its corresponding skeleton.
-  for (CORBA::ULong i = 0; i < dbsize; ++i)
+  for (CORBA::ULong i {}; i < dbsize; ++i)
     {
       TAO::Operation_Skeletons s;
       s.skel_ptr = db[i].skel_ptr;
@@ -57,7 +56,7 @@ TAO_Dynamic_Hash_OpTable::~TAO_Dynamic_Hash_OpTable ()
   // these are strings.
   OP_MAP_MANAGER::ITERATOR iterator (this->hash_);
 
-  for (OP_MAP_MANAGER::ENTRY *entry = nullptr;
+  for (OP_MAP_MANAGER::ENTRY *entry {};
        iterator.next (entry) != 0;
        iterator.advance ())
     {
@@ -78,7 +77,7 @@ TAO_Dynamic_Hash_OpTable::bind (char const *opname,
 int
 TAO_Dynamic_Hash_OpTable::find (char const *opname,
                                 TAO_Skeleton &skel_ptr,
-                                std::size_t const)
+                                size_t const)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_DYNAMIC_HASH_OPTABLE_FIND_START);
   TAO::Operation_Skeletons s;
@@ -97,7 +96,7 @@ int
 TAO_Dynamic_Hash_OpTable::find (char const *opname,
                                 TAO_Collocated_Skeleton &skel_ptr,
                                 TAO::Collocation_Strategy s,
-                                std::size_t const)
+                                size_t const)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_DYNAMIC_HASH_OPTABLE_FIND_START);
 

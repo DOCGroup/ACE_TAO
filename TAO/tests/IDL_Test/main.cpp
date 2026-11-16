@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "pragmaS.h"
 #include "unionC.h"
 #include "repo_id_modC.h"
@@ -921,7 +920,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       field.value._d (FTYPE_VARCHAR);
       CORBA::Any any1;
       any1 <<= field;
-      const Field *outfield = 0;
+      const Field *outfield {};
 
       if ((any1 >>= outfield) == 0)
         {

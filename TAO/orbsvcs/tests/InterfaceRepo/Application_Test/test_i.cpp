@@ -1,26 +1,26 @@
 // -*- C++ -*-
 #include "test_i.h"
 
-#include "ace/SString.h"
+#include <string>
 
 CORBA::Boolean
 inventory_i::getCDinfo (char const* artist,
                         char*& title,
                         CORBA::Float_out price)
 {
-  CORBA::Boolean in_stock = false;
+  CORBA::Boolean in_stock {};
   price = 0.0f;
-  ACE_CString name_key ("Beatles");
-  ACE_CString name (artist);
-  CORBA::String_var tmp = title;
+  std::string const name_key ("Beatles");
+  std::string const name (artist);
+  CORBA::String_var const tmp {title};
   ACE_UNUSED_ARG (tmp);
 
-  if (name.strstr (name_key) != ACE_CString::npos)
+  if (name.find (name_key) != std::string::npos)
     {
-      ACE_CString title_key ("Sgt. Pepper");
-      ACE_CString working_title (title);
+      std::string const title_key ("Sgt. Pepper");
+      std::string const working_title (title);
 
-      if (working_title.strstr (title_key) != ACE_CString::npos)
+      if (working_title.find (title_key) != std::string::npos)
         {
           title =
             CORBA::string_dup ("Sgt. Pepper's Lonely Hearts Club Band");

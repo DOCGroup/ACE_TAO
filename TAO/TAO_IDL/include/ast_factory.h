@@ -86,7 +86,7 @@ public:
   UTL_ExceptList *exceptions () const;
   // Return exception list.
 
-  std::size_t n_exceptions () const;
+  size_t n_exceptions () const;
   // Return exception count.
 
   virtual int argument_count ();
@@ -117,7 +117,7 @@ protected:
   UTL_ExceptList_Owner pd_exceptions;
   // Exceptions raised
 
-  std::size_t pd_n_exceptions {};
+  size_t pd_n_exceptions {};
   // Exception count.
 
   int argument_count_ {-1};

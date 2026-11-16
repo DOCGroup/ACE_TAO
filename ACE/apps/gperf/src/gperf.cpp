@@ -34,17 +34,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Sets the Options.
   if (option.parse_args (argc, argv) == -1)
+  {
     return 1;
+  }
 
-  time_t clock;
-  ACE_OS::time (&clock);
-  struct tm *tm = ACE_OS::localtime (&clock);
-
-  if (option[DEBUGGING])
+  time_t clock = ACE_OS::time ();
+  struct tm time_data {};
+  if (option[DEBUGGING]
+      && ACE_OS::localtime_r (&clock, &time_data) != nullptr)
     ACE_OS::printf ("/* starting time is %d:%02d:%02d */\n",
-                    tm->tm_hour,
-                    tm->tm_min,
-                    tm->tm_sec);
+                    time_data.tm_hour,
+                    time_data.tm_min,
+                    time_data.tm_sec);
 
   // Initializes the key word list.
   Gen_Perf gperf;
@@ -53,13 +54,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // it skips the destructors.
   int const status = gperf.run ();
 
-  ACE_OS::time (&clock);
-  tm = ACE_OS::localtime (&clock);
-
-  if (option[DEBUGGING])
+  clock = ACE_OS::time ();
+  if (option[DEBUGGING]
+      && ACE_OS::localtime_r (&clock, &time_data) != nullptr)
     ACE_OS::printf ("/* ending time is %d:%02d:%02d */\n",
-                    tm->tm_hour,
-                    tm->tm_min,
-                    tm->tm_sec);
+                    time_data.tm_hour,
+                    time_data.tm_min,
+                    time_data.tm_sec);
   return status;
 }

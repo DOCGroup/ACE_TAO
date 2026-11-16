@@ -135,7 +135,7 @@ private:
   static bool
   check_one_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list,
                           std::string const &param_id,
-                          std::size_t index);
+                          size_t index);
 
   static AST_Template_Module *
   get_tm_container (AST_Decl *contained);

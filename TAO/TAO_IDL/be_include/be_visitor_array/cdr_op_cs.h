@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_ARRAY_CDR_OP_CS_H_
 #define _BE_VISITOR_ARRAY_CDR_OP_CS_H_
 
@@ -40,7 +39,8 @@ public:
   /// visit array
   int visit_array (be_array *node) override;
 
-  // = Visitor methods on array types
+  /// @name Visitor methods on array types
+  /// @{
   int visit_enum (be_enum *node) override;
   int visit_interface (be_interface *node) override;
   int visit_interface_fwd (be_interface_fwd *node) override;
@@ -54,6 +54,8 @@ public:
   int visit_structure (be_structure *node) override;
   int visit_typedef (be_typedef *node) override;
   int visit_union (be_union *node) override;
+
+  /// @}
 
 protected:
   /// helper that does the common job

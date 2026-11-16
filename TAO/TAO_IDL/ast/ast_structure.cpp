@@ -184,7 +184,9 @@ AST_Structure::in_recursion (std::vector<AST_Type *> &list)
           if (type->in_recursion (list))
             {
               if (self_test)
+              {
                 this->in_recursion_ = Recursion_State::recursive;
+              }
               idl_global->recursive_type_seen_ = true;
               return true;
             }
@@ -193,7 +195,9 @@ AST_Structure::in_recursion (std::vector<AST_Type *> &list)
 
   // Not in recursion.
   if (self_test)
+  {
     this->in_recursion_ = Recursion_State::not_recursive;
+  }
   return false;
 }
 
@@ -589,14 +593,14 @@ bool AST_Structure::annotatable () const
 }
 
 AST_Decl *
-AST_Structure::operator[] (std::size_t const index)
+AST_Structure::operator[] (size_t const index)
 {
-  std::size_t const count = member_count_ <= 0 ? 0 : member_count_;
+  size_t const count = member_count_ <= 0 ? 0 : member_count_;
   if (index >= count)
     {
       return nullptr;
     }
-  std::size_t i {};
+  size_t i {};
   for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
        !si.is_done ();
        si.next ())

@@ -296,7 +296,9 @@ AST_Union::in_recursion (std::vector<AST_Type *> &list)
           if (type->in_recursion (list))
             {
               if (self_test)
+              {
                 this->in_recursion_ = Recursion_State::recursive;
+              }
               idl_global->recursive_type_seen_ = true;
               return true;
             }
@@ -305,7 +307,9 @@ AST_Union::in_recursion (std::vector<AST_Type *> &list)
 
   // Not in recursion.
   if (self_test)
+  {
     this->in_recursion_ = Recursion_State::not_recursive;
+  }
   return false;
 }
 
@@ -358,7 +362,7 @@ AST_Union::compute_default_value ()
       if (ub != nullptr)
         {
           // If the label is a case label, increment by 1.
-          for (std::size_t i {}; i < ub->label_list_length (); ++i)
+          for (size_t i {}; i < ub->label_list_length (); ++i)
             {
               if (ub->label (i)->label_kind () == AST_UnionLabel::UL_label)
                 {
@@ -535,7 +539,7 @@ AST_Union::compute_default_value ()
 
           if (ub != nullptr)
             {
-              for (std::size_t i {};
+              for (size_t i {};
                    i < ub->label_list_length () && !break_loop;
                    ++i)
                 {
@@ -715,7 +719,7 @@ AST_Union::compute_default_index ()
             {
               ub = dynamic_cast<AST_UnionBranch*> (d);
 
-              for (std::size_t j {}; j < ub->label_list_length (); ++j)
+              for (size_t j {}; j < ub->label_list_length (); ++j)
                 {
                   // Check if we are printing the default case.
                   AST_UnionLabel::UnionLabel const ulk = ub->label (j)->label_kind ();
@@ -752,7 +756,7 @@ AST_Union::fe_add_union_branch (AST_UnionBranch *t)
 
   bool duplicate_label {};
 
-  for (std::size_t i {};
+  for (size_t i {};
        i < branch->label_list_length () && !duplicate_label;
        ++i)
     {
@@ -770,11 +774,11 @@ AST_Union::fe_add_union_branch (AST_UnionBranch *t)
               continue;
             }
 
-          std::size_t const other_label_count = other_branch == branch
+          size_t const other_label_count = other_branch == branch
             ? i
             : other_branch->label_list_length ();
 
-          for (std::size_t j {}; j < other_label_count; ++j)
+          for (size_t j {}; j < other_label_count; ++j)
             {
               AST_UnionLabel *other_label = other_branch->label (j);
               bool const both_default =

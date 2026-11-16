@@ -84,7 +84,7 @@ AST_String::NT = AST_Decl::NT_string;
 AST_String::AST_String (AST_Decl::NodeType nt,
                         UTL_ScopedName *n,
                         AST_Expression *ms,
-                        std::size_t wide)
+                        size_t wide)
   : COMMON_Base (),
     AST_Decl (nt, n, true),
     AST_Type (nt, n),
@@ -174,7 +174,7 @@ AST_String::max_size () const
   return this->pd_max_size.get ();
 }
 
-std::size_t
+size_t
 AST_String::width () const
 {
   return this->pd_width;

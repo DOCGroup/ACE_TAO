@@ -50,7 +50,9 @@ be_visitor_operation_argument_invoke::pre_process (be_decl *bd)
         {
           if (this->last_arg_printed_ !=
               be_visitor_operation_argument_invoke::TAO_ARG_NONE)
+          {
             *os << " &&" << be_nl;
+          }
         }
       else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
         {
@@ -62,13 +64,17 @@ be_visitor_operation_argument_invoke::pre_process (be_decl *bd)
         {
           if (this->last_arg_printed_ !=
               be_visitor_operation_argument_invoke::TAO_ARG_NONE)
+          {
             *os << " &&" << be_nl;
+          }
         }
       else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
         {
           if (this->last_arg_printed_ !=
               be_visitor_operation_argument_invoke::TAO_ARG_NONE)
+          {
             *os << " &&" << be_nl;
+          }
         }
       break;
     case AST_Argument::dir_OUT:
@@ -80,7 +86,9 @@ be_visitor_operation_argument_invoke::pre_process (be_decl *bd)
         {
           if (this->last_arg_printed_ !=
               be_visitor_operation_argument_invoke::TAO_ARG_NONE)
+          {
             *os << " &&" << be_nl;
+          }
         }
       break;
     }

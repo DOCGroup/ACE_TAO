@@ -79,11 +79,9 @@ be_visitor_executor_exh::visit_component (be_component *node)
       << "{" << be_nl
       << "public:" << be_idt_nl;
 
-  os_ << "/// Constructor" << be_nl
-      << lname << "_exec_i ();";
+  os_ << lname << "_exec_i ();";
 
   os_ << be_nl
-      << "/// Destructor" << be_nl
       << "virtual ~" << lname << "_exec_i ();";
 
   os_ << be_nl_2
@@ -172,7 +170,6 @@ be_visitor_executor_exh::visit_component (be_component *node)
       << global << sname_str << "::CCM_" << lname
       << "_Context_var ciao_context_;" << be_nl_2;
 
-
   // Traverse inheritance graph twice to group
   // component attributes and component facets for DOxygen documentation
 
@@ -248,7 +245,6 @@ be_visitor_executor_exh::visit_component (be_component *node)
 
   os_<< be_nl << "//@}" << be_nl_2;
 
-
   os_ << "/** @name User defined members. */" << be_nl
       << "//@{";
 
@@ -273,7 +269,6 @@ be_visitor_executor_exh::visit_component (be_component *node)
 
   return 0;
 }
-
 
 int
 be_visitor_executor_exh::visit_provides (be_provides *node)

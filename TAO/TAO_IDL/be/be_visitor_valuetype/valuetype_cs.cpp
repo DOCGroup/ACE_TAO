@@ -152,9 +152,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
   // Make sure we are generating to *C.cpp regardless of the above.
   os = tao_cg->client_stubs ();
 
-  // Generate destructor.
-  //
-  // @@ Do not inline this destructor.  It is virtual.  Inlining
+  // Do not inline this destructor. It is virtual. Inlining
   //    virtual functions, including virtual destructors, wreaks havoc
   //    with g++ >= 4.0 RTTI support when the
   //    "-fvisibility-inlines-hidden" command line option is used.
@@ -223,7 +221,6 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << "{" << be_idt_nl
           << "return false;"<< be_uidt_nl
           << "}" << be_nl_2;
-
 
       if (!node->opt_accessor () && !node->is_abstract ())
         {

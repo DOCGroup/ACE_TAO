@@ -6,12 +6,11 @@
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  //init IFR objref
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      TAO_IFR_Client_Adapter* ifr_client =
+      TAO_IFR_Client_Adapter * const ifr_client =
         ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
           TAO_ORB_Core::ifr_client_adapter_name ());
 
@@ -22,7 +21,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Got IFR_Client ref.\n"));
 
-      CORBA::InterfaceDef_var intDef =
+      CORBA::InterfaceDef_var const intDef =
         ifr_client->get_interface (orb.in (), "IDL:IFR_Test/test_if:1.0");
 
       if (CORBA::is_nil (intDef.in ()))
@@ -34,16 +33,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       CORBA::ContainedSeq_var attributes =
         intDef->contents (CORBA::dk_Attribute, 1);
-      CORBA::ULong n_ats = attributes->length ();
+      CORBA::ULong const n_ats = attributes->length ();
 
-      CORBA::ULong index = 0UL;
-      CORBA::String_var name = attributes[index]->name ();
+      CORBA::ULong const index {};
+      CORBA::String_var const name = attributes[index]->name ();
       ACE_DEBUG ((LM_DEBUG,
                   "found %d attributes, name = %s\n",
                   n_ats,
                   name.in ()));
 
-      CORBA::AttributeDef_var attr =
+      CORBA::AttributeDef_var const attr =
         CORBA::AttributeDef::_narrow (attributes[index]);
 
       if (CORBA::is_nil (attr.in ()))
@@ -53,11 +52,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      CORBA::TypeCode_var tc = attr->type ();
+      CORBA::TypeCode_var const tc = attr->type ();
 
       ACE_DEBUG ((LM_DEBUG, "foo attr typecode = %s\n", tc->id ()));
     }
-  catch (::CORBA::Exception const& ex)
+  catch (::CORBA::Exception const &ex)
     {
       ex._tao_print_exception("ERROR : unexpected CORBA exception caugth :");
       return 1;

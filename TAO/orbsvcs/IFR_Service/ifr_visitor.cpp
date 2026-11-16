@@ -130,7 +130,6 @@ ifr_visitor::visit_param_holder(AST_Param_Holder *)
   return 0;
 }
 
-
 int ifr_visitor::visit_porttype (AST_PortType *)
 {
   return 0;

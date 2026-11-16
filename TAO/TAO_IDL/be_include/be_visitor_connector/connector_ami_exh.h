@@ -15,19 +15,10 @@
 
 class be_visitor_context;
 
+/// Generates executor implementation headers for AMI4CCM connectors.
 class be_visitor_connector_ami_exh
   : public be_visitor_component_scope
 {
-  //
-  // = TITLE
-  //   be_visitor_connector_ami_exh
-  //
-  // = DESCRIPTION
-  //   This is a concrete visitor to generate
-  //   the executor implementation header for
-  //   AMI4CCM connectors.
-  //
-  //
 public:
   explicit be_visitor_connector_ami_exh (be_visitor_context *ctx);
 

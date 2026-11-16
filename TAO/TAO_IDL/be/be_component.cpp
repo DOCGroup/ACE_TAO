@@ -27,7 +27,7 @@ be_component::be_component (UTL_ScopedName *n,
                             AST_Type_List const& supports,
                             long n_supports,
                             AST_Interface_List const& supports_flat,
-                            std::size_t n_supports_flat)
+                            size_t n_supports_flat)
   : COMMON_Base (false,
                  false),
     AST_Decl (AST_Decl::NT_component,
@@ -96,19 +96,19 @@ be_component::accept (be_visitor *visitor)
             : visitor->visit_component (this));
 }
 
-std::size_t
+size_t
 be_component::n_provides () const
 {
   return this->n_provides_;
 }
 
-std::size_t
+size_t
 be_component::n_remote_provides () const
 {
   return this->n_remote_provides_;
 }
 
-std::size_t
+size_t
 be_component::n_uses () const
 {
   return this->n_uses_;
@@ -120,19 +120,19 @@ be_component::has_uses_multiple () const
   return this->has_uses_multiple_;
 }
 
-std::size_t
+size_t
 be_component::n_publishes () const
 {
   return this->n_publishes_;
 }
 
-std::size_t
+size_t
 be_component::n_consumes () const
 {
   return this->n_consumes_;
 }
 
-std::size_t
+size_t
 be_component::n_emits () const
 {
   return this->n_emits_;
@@ -272,13 +272,13 @@ be_component::gen_stub_inheritance (TAO_OutStream *os)
     }
 
   AST_Type_List const& supports = this->supports ();
-  std::size_t const nsupports = supports.size ();
+  size_t const nsupports = supports.size ();
 
   if (nsupports > 0)
     {
       *os << be_idt;
 
-      for (std::size_t i = 0; i < nsupports; ++i)
+      for (size_t i = 0; i < nsupports; ++i)
         {
           *os << "," << be_nl
               << "public virtual ::"
@@ -306,9 +306,9 @@ be_component::gen_skel_inheritance (TAO_OutStream *os)
     }
 
   AST_Type_List const& supports = this->supports ();
-  std::size_t const nsupports = supports.size ();
+  size_t const nsupports = supports.size ();
 
-  for (std::size_t i = 0; i < nsupports; ++i)
+  for (size_t i = 0; i < nsupports; ++i)
     {
       AST_Type * const supported = supports[i];
 

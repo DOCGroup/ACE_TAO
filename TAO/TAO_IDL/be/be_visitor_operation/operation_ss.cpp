@@ -266,7 +266,9 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
       // server_request.operation_details () will be non-zero in the
       // thru-POA collocation case.  Use them if available.
       if (be_global->gen_thru_poa_collocation ())
+      {
         *os << "server_request.operation_details ()," << be_nl;
+      }
 
       *os << "args);" << be_uidt_nl << be_nl;
     }

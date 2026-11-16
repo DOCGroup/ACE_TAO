@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VALUETYPE_VALUETYPE_CH_H_
 #define _BE_VALUETYPE_VALUETYPE_CH_H_
 

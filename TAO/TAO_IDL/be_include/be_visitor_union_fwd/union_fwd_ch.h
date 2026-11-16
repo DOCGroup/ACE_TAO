@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_INTERFACE_UNION_FWD_CH_H_
 #define _BE_INTERFACE_UNION_FWD_CH_H_
 

@@ -3,55 +3,47 @@
 #include "be_extern.h"
 #include "../../tao/Version.h"
 
-#include "ace/SString.h"
-
+#include <cstddef>
 #include <string>
 
 int
 BE_save_orb_args (int &argc, ACE_TCHAR *argv[])
 {
   int i = 1;
-  ACE_TString holder;
+  std::basic_string<ACE_TCHAR> holder;
 
   while (i < argc)
     {
       if (ACE_OS::strncmp (argv[i], ACE_TEXT("-ORB"), 4) == 0)
         {
-          holder += ACE_TString (argv[i]);
-          holder += ACE_TEXT(" ");
+          holder += argv[i];
+          holder += ACE_TEXT (" ");
 
           // Could be another -ORBxxx arg or an IDL compiler arg.
-          if (*argv[i + 1] == '-')
+          if (i + 1 == argc || *argv[i + 1] == '-')
             {
               ++i;
               continue;
             }
 
-          // No-copy constructor.
-          ACE_TString tmp (argv[i + 1],
-                           0,
-                           false);
+          std::basic_string<ACE_TCHAR> const tmp (argv[i + 1]);
 
           // If the arg ends with either .idl or .pidl, we're done.
 
-          size_t len = tmp.length ();
-          ssize_t pos = tmp.find (ACE_TEXT(".idl"));
-
-          if (len - pos == 4)
+          size_t const len = tmp.length ();
+          if (len >= 4 && tmp.compare (len - 4, 4, ACE_TEXT (".idl")) == 0)
             {
               return 0;
             }
 
-          pos = tmp.find (ACE_TEXT(".pidl"));
-
-          if (len - pos == 5)
+          if (len >= 5 && tmp.compare (len - 5, 5, ACE_TEXT (".pidl")) == 0)
             {
               return 0;
             }
 
           // If we're here, the next arg goes with the preceding -ORBxxx.
           holder += tmp;
-          holder += ACE_TEXT(" ");
+          holder += ACE_TEXT (" ");
           i += 2;
         }
       else
@@ -108,7 +100,7 @@ BE_init (int &argc, ACE_TCHAR *argv[])
                   BE_GlobalData,
                   -1);
 
-  int status = BE_save_orb_args (argc, argv);
+  int const status = BE_save_orb_args (argc, argv);
 
   if (status != 0)
     {

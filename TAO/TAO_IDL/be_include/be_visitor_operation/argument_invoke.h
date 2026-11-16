@@ -11,25 +11,14 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_OPERATION_ARGUMENT_INVOKE_H_
 #define _BE_VISITOR_OPERATION_ARGUMENT_INVOKE_H_
 
-// ************************************************************
-// generic operation visitor for docall, upcall, pre/post
-// ************************************************************
-
+/// Visitor for generating an operation's argument declarations used when
+/// passing arguments to CDR operators in compiled stubs and skeletons.
 class be_visitor_operation_argument_invoke
   : public be_visitor_operation_argument
 {
-  //
-  // = TITLE
-  //   be_compiled_visitor_operation_argument_invoke
-  //
-  // = DESCRIPTION
-  //   This is a visitor to generate a variable declaration of an operation
-  //   return type
-  //
 public:
   explicit be_visitor_operation_argument_invoke (be_visitor_context *ctx);
 

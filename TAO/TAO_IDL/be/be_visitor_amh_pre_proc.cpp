@@ -149,8 +149,7 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
 be_interface *
 be_visitor_amh_pre_proc::create_response_handler (
     be_interface *node,
-    be_valuetype *exception_holder
-  )
+    be_valuetype *exception_holder)
 {
   // Generate 'AMH_InterfaceResponseHandler'
   std::string class_name;
@@ -304,8 +303,7 @@ int
 be_visitor_amh_pre_proc::create_response_handler_operation (
     be_operation *node,
     be_interface *response_handler,
-    be_valuetype *exception_holder
-  )
+    be_valuetype *exception_holder)
 {
   if (node == nullptr)
     {
@@ -332,8 +330,7 @@ int
 be_visitor_amh_pre_proc::create_response_handler_attribute (
     be_attribute *node,
     be_interface *response_handler,
-    be_valuetype *exception_holder
-  )
+    be_valuetype *exception_holder)
 {
   // Temporarily generate the get operation.
   std::unique_ptr<be_operation, BE_AST_Decl_Deleter> const get_operation (
@@ -711,8 +708,7 @@ int
 be_visitor_amh_pre_proc::create_raise_operation (
     be_decl *node,
     be_valuetype *excep_holder,
-    Operation_Kind operation_kind
-  )
+    Operation_Kind operation_kind)
 {
   be_operation *orig_op {};
 

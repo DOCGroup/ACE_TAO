@@ -66,6 +66,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include <cstddef>
 #include <cstdio>
+#include <memory>
 #include <optional>
 #include <string>
 #include <utility>
@@ -99,7 +100,7 @@ constexpr unsigned long DRV_MAX_ARGCOUNT = 1024;
 std::vector<std::basic_string<ACE_TCHAR>> DRV_arglist;
 
 static std::basic_string<ACE_TCHAR> output_arg_format;
-static std::size_t output_arg_index {};
+static size_t output_arg_index {};
 
 constexpr ACE_TCHAR TCHAR_DIR_DOT[] = ACE_TEXT(".");
 
@@ -119,7 +120,7 @@ static constexpr bool copy_input_file {true};
 
 // Lines can be 1024 chars long intially -
 // it will expand as required.
-constexpr std::size_t LINEBUF_SIZE = 1024;
+constexpr size_t LINEBUF_SIZE = 1024;
 std::string drv_line;
 
 static void
@@ -192,7 +193,7 @@ DRV_cpp_expand_output_arg (std::string const& filename)
       std::basic_string<ACE_TCHAR> const tchar_filename (
         ACE_TEXT_CHAR_TO_TCHAR (filename.c_str ()));
       std::basic_string<ACE_TCHAR> output_arg (output_arg_format);
-      std::size_t const placeholder = output_arg.find (ACE_TEXT ("%s"));
+      size_t const placeholder = output_arg.find (ACE_TEXT ("%s"));
 
       if (placeholder != std::basic_string<ACE_TCHAR>::npos)
         {
@@ -235,7 +236,7 @@ DRV_get_line (FILE *file)
       drv_line.append (buffer);
 
       // Check for line continuation escape...
-      std::size_t len = drv_line.size ();
+      size_t len = drv_line.size ();
       if (2 <= len &&
           '\n' == drv_line [len - 1] &&
           '\\' == drv_line [len - 2])
@@ -286,8 +287,8 @@ DRV_cpp_init ()
   ACE_ARGV direct_input_arglist (
     ACE_TEXT_CHAR_TO_TCHAR (ACE_CC_PREPROCESSOR_DIRECT_INPUT_ARGS));
 
-  for (std::size_t i {};
-       i < static_cast<std::size_t> (direct_input_arglist.argc ());
+  for (size_t i {};
+       i < static_cast<size_t> (direct_input_arglist.argc ());
        ++i)
     {
       DRV_cpp_putarg (ACE_TEXT_ALWAYS_CHAR (direct_input_arglist[i]));
@@ -378,8 +379,8 @@ DRV_cpp_init ()
   ACE_ARGV platform_arglist (
     ACE_TEXT_CHAR_TO_TCHAR (platform_cpp_args.c_str ()));
 
-  for (std::size_t i {};
-       i < static_cast<std::size_t> (platform_arglist.argc ());
+  for (size_t i {};
+       i < static_cast<size_t> (platform_arglist.argc ());
        ++i)
     {
       // Check for an argument that specifies
@@ -444,7 +445,7 @@ DRV_sweep_dirs (std::string const& rel_path,
                             -1);
         }
 
-      std::size_t len {};
+      size_t len {};
 
       switch (stat_buf.st_mode & S_IFMT)
         {
@@ -719,6 +720,46 @@ DRV_cpp_post_init ()
 // Local/internal helper function.
 namespace
 {
+  using File_Handle = std::unique_ptr<FILE, int (*) (FILE *)>;
+
+  /// Owns a temporary file descriptor until it is closed or fdopen takes over.
+  class File_Descriptor_Guard
+  {
+  public:
+    explicit File_Descriptor_Guard (ACE_HANDLE handle)
+      : handle_ (handle)
+    {
+    }
+
+    ~File_Descriptor_Guard ()
+    {
+      if (this->handle_ != ACE_INVALID_HANDLE)
+        {
+          ACE_OS::close (this->handle_);
+        }
+    }
+
+    ACE_HANDLE get () const
+    {
+      return this->handle_;
+    }
+
+    ACE_HANDLE release ()
+    {
+      ACE_HANDLE const handle = this->handle_;
+      this->handle_ = ACE_INVALID_HANDLE;
+      return handle;
+    }
+
+    File_Descriptor_Guard (File_Descriptor_Guard const &) = delete;
+    File_Descriptor_Guard (File_Descriptor_Guard &&) = delete;
+    File_Descriptor_Guard &operator= (File_Descriptor_Guard const &) = delete;
+    File_Descriptor_Guard &operator= (File_Descriptor_Guard &&) = delete;
+
+  private:
+    ACE_HANDLE handle_;
+  };
+
   // Advances the input char buffer to the first non-white
   // space character, handles /**/ comments as well.
   char
@@ -917,9 +958,10 @@ DRV_get_orb_idl_includes ()
 
  // Search for orb.idl in supplied include file search paths.
   std::string directory;
-  FILE * fp = FE_Utils::open_included_file (orb_idl, directory);
+  File_Handle fp (FE_Utils::open_included_file (orb_idl, directory),
+                  ACE_OS::fclose);
 
-  if (fp == nullptr)
+  if (!fp)
     {
       // Fall back on $TAO_ROOT/tao/orb.idl if orb.idl is not in the
       // include path.
@@ -927,9 +969,9 @@ DRV_get_orb_idl_includes ()
       orb_idl_path += '/';
       orb_idl_path += orb_idl;
 
-      fp = ACE_OS::fopen (orb_idl_path.c_str (), "r");
+      fp.reset (ACE_OS::fopen (orb_idl_path.c_str (), "r"));
 
-      if (fp == nullptr)
+      if (!fp)
         {
           ACE_ERROR ((LM_ERROR,
                       "TAO_IDL: cannot open or find file: %C\n",
@@ -947,14 +989,13 @@ DRV_get_orb_idl_includes ()
       DRV_add_include_path (include_path_arg, directory, "/tao", true);
     }
 
-  while (DRV_get_line (fp))
+  while (DRV_get_line (fp.get ()))
     {
       // Find the included .pidl files in orb.idl and add them to the
       // included IDL file list.
       DRV_check_for_include (drv_line);
     }
 
-  ACE_OS::fclose (fp);
 }
 
 // Copy to a file.
@@ -1026,8 +1067,6 @@ DRV_copy_input (FILE *fin,
       DRV_check_for_include (drv_line);
     }
 
-  // Close the temporary file.
-  ACE_OS::fclose (f);
 }
 
 // Strip down a name to the last component,
@@ -1035,7 +1074,7 @@ DRV_copy_input (FILE *fin,
 static std::string
 DRV_stripped_name (std::string const& filename)
 {
-  std::size_t const separator = filename.find_last_of ("/\\");
+  size_t const separator = filename.find_last_of ("/\\");
   return separator == std::string::npos
     ? filename
     : filename.substr (separator + 1);
@@ -1091,11 +1130,11 @@ DRV_pre_proc (std::string const& myfile)
       tmp_ifile += tao_idli_template;
     }
 
-  ACE_HANDLE ti_fd = ACE_INVALID_HANDLE;
+  File_Descriptor_Guard ti_fd (
+    copy_input_file ? ACE_OS::mkstemp (tmp_ifile.data ()) : ACE_INVALID_HANDLE);
   if (copy_input_file)
     {
-      ti_fd = ACE_OS::mkstemp (tmp_ifile.data ());
-      if (ti_fd == ACE_INVALID_HANDLE)
+      if (ti_fd.get () == ACE_INVALID_HANDLE)
         {
           ACE_ERROR ((LM_ERROR,
                       "%C: Unable to create temporary file \"%C\": %m\n",
@@ -1106,9 +1145,9 @@ DRV_pre_proc (std::string const& myfile)
         }
     }
 
-  ACE_HANDLE const tf_fd = ACE_OS::mkstemp (tmp_file.data ());
+  File_Descriptor_Guard tf_fd (ACE_OS::mkstemp (tmp_file.data ()));
 
-  if (tf_fd == ACE_INVALID_HANDLE)
+  if (tf_fd.get () == ACE_INVALID_HANDLE)
     {
       ACE_ERROR ((LM_ERROR,
                   "%C: Unable to create temporary file \"%C\": %m\n",
@@ -1138,12 +1177,12 @@ DRV_pre_proc (std::string const& myfile)
   std::string const &t_ifile = tmp_cpp_ifile;
   std::string const input_file = copy_input_file ? t_ifile : myfile;
 
-  ACE_OS::close (tf_fd);
+  ACE_OS::close (tf_fd.release ());
 
   // Rename temporary files so that they have extensions accepted
   // by the preprocessor.
-  FILE * const file = ACE_OS::fopen (myfile.c_str (), "r");
-  if (file == nullptr)
+  File_Handle file (ACE_OS::fopen (myfile.c_str (), "r"), ACE_OS::fclose);
+  if (!file)
     {
       ACE_ERROR ((LM_ERROR,
                   "%C: ERROR: Unable to open file (fopen) \"%C\": %m\n",
@@ -1159,19 +1198,32 @@ DRV_pre_proc (std::string const& myfile)
 
   if (copy_input_file)
     {
-      DRV_copy_input (file,
-                      ACE_OS::fdopen (ti_fd, ACE_TEXT("w")),
+      FILE *const copy_output = ACE_OS::fdopen (ti_fd.get (), ACE_TEXT("w"));
+      if (copy_output == nullptr)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%C: cannot open temp file \"%C\" for writing: %m\n",
+                      idl_global->prog_name ().c_str (),
+                      tmp_ifile.c_str ()));
+          (void) ACE_OS::unlink (tmp_ifile.c_str ());
+          (void) ACE_OS::unlink (tmp_file.c_str ());
+          throw Bailout ();
+        }
+      ti_fd.release ();
+      File_Handle copy_output_file (copy_output, ACE_OS::fclose);
+      DRV_copy_input (file.get (),
+                      copy_output_file.get (),
                       tmp_ifile,
                       myfile);
     }
   else
     {
-      while (DRV_get_line (file))
+      while (DRV_get_line (file.get ()))
         {
           DRV_check_for_include (drv_line);
         }
     }
-  ACE_OS::fclose (file);
+  file.reset ();
 
   idl_global->set_main_filename (myfile);
   std::string const stripped_filename (DRV_stripped_name (myfile));
@@ -1232,7 +1284,6 @@ DRV_pre_proc (std::string const& myfile)
                   idl_global->prog_name ().c_str (),
                   tmp_file.c_str (),
                   t_file.c_str ()));
-
 
       (void) ACE_OS::unlink (tmp_ifile.c_str ());
       (void) ACE_OS::unlink (tmp_file.c_str ());
@@ -1303,7 +1354,6 @@ DRV_pre_proc (std::string const& myfile)
                   "%C: spawn of \"%s\" failed\n",
                   idl_global->prog_name ().c_str (),
                   DRV_arglist[0].c_str ()));
-
 
       (void) ACE_OS::unlink (t_file.c_str ());
       (void) ACE_OS::unlink (t_ifile.c_str ());
@@ -1399,11 +1449,12 @@ DRV_pre_proc (std::string const& myfile)
 
   if (idl_global->compile_flags () & IDL_CF_ONLY_PREPROC)
     {
-      FILE *const preproc = ACE_OS::fopen (t_file.c_str (), "r");
+      File_Handle preproc (ACE_OS::fopen (t_file.c_str (), "r"),
+                           ACE_OS::fclose);
       char buffer[ACE_MAXLOGMSGLEN];
-      std::size_t bytes;
+      size_t bytes;
 
-      if (preproc == nullptr)
+      if (!preproc)
         {
           ACE_ERROR ((LM_ERROR,
                       "%C: Could not open cpp "
@@ -1429,14 +1480,13 @@ DRV_pre_proc (std::string const& myfile)
       while ((bytes = ACE_OS::fread (buffer,
                                      sizeof (char),
                                      ACE_MAXLOGMSGLEN - 1,
-                                     preproc))
+                                     preproc.get ()))
                != 0)
         {
           buffer[bytes] = '\0';
           ACE_DEBUG ((LM_DEBUG, buffer));
         }
 
-      ACE_OS::fclose (preproc);
     }
 
   if (copy_input_file && ACE_OS::unlink (t_ifile.c_str ()) == -1)

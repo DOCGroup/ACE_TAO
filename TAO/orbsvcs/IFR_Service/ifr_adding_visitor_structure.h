@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_IFR_ADDING_VISITOR_STRUCTURE_H
 #define TAO_IFR_ADDING_VISITOR_STRUCTURE_H
 

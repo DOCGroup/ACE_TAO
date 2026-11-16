@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_BE_VISITOR_VALUEBOX_H
 #define TAO_BE_VISITOR_VALUEBOX_H
 

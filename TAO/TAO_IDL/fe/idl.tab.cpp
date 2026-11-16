@@ -369,7 +369,9 @@ namespace tao_yy {
     if (state == empty_state)
       return symbol_kind::S_YYEMPTY;
     else
+    {
       return YY_CAST (symbol_kind_type, yystos_[+state]);
+    }
   }
 
   parser::stack_symbol_type::stack_symbol_type ()
@@ -416,7 +418,9 @@ namespace tao_yy {
   parser::yy_destroy_ (const char* yymsg, basic_symbol<Base>& yysym) const
   {
     if (yymsg)
+    {
       YY_SYMBOL_PRINT (yymsg, yysym);
+    }
 
     // User destructor.
     YY_USE (yysym.kind ());
@@ -446,7 +450,9 @@ namespace tao_yy {
   parser::yypush_ (const char* m, YY_MOVE_REF (stack_symbol_type) sym)
   {
     if (m)
+    {
       YY_SYMBOL_PRINT (m, sym);
+    }
     yystack_.push (YY_MOVE (sym));
   }
 
@@ -501,7 +507,9 @@ namespace tao_yy {
     if (0 <= yyr && yyr <= yylast_ && yycheck_[yyr] == yystate)
       return yytable_[yyr];
     else
+    {
       return yydefgoto_[yysym - YYNTOKENS];
+    }
   }
 
   bool
@@ -562,7 +570,9 @@ namespace tao_yy {
 
     // Accept?
     if (yystack_[0].state == yyfinal_)
+    {
       YYACCEPT;
+    }
 
     goto yybackup;
 
@@ -574,7 +584,9 @@ namespace tao_yy {
     // Try to take a decision without lookahead.
     yyn = yypact_[+yystack_[0].state];
     if (yy_pact_value_is_default_ (yyn))
+    {
       goto yydefault;
+    }
 
     // Read a lookahead token.
     if (yyla.empty ())
@@ -620,14 +632,18 @@ namespace tao_yy {
     if (yyn <= 0)
       {
         if (yy_table_value_is_error_ (yyn))
+        {
           goto yyerrlab;
+        }
         yyn = -yyn;
         goto yyreduce;
       }
 
     // Count tokens shifted since error; after three, turn off error status.
     if (yyerrstatus_)
+    {
       --yyerrstatus_;
+    }
 
     // Shift the lookahead token.
     yypush_ ("Shifting", state_type (yyn), YY_MOVE (yyla));
@@ -640,7 +656,9 @@ namespace tao_yy {
   yydefault:
     yyn = yydefact_[+yystack_[0].state];
     if (yyn == 0)
+    {
       goto yyerrlab;
+    }
     goto yyreduce;
 
 
@@ -661,7 +679,9 @@ namespace tao_yy {
       if (yylen)
         yylhs.value = yystack_[yylen - 1].value;
       else
+      {
         yylhs.value = yystack_[0].value;
+      }
 
 
       // Perform the reduction.
@@ -2038,7 +2058,7 @@ namespace tao_yy {
 #line 1528 "fe/idl.ypp"
         {
           AST_Decl *&node = (yystack_[0].value.dcval);
-          AST_Decls *value = nullptr;
+          AST_Decls *value {};
           if (node)
             {
               value = new AST_Decls;
@@ -2053,7 +2073,7 @@ namespace tao_yy {
 #line 1539 "fe/idl.ypp"
         {
           AST_Decl *&node = (yystack_[0].value.dcval);
-          AST_Decls *value = nullptr;
+          AST_Decls *value {};
           if (node)
             {
               value = new AST_Decls;
@@ -4321,7 +4341,7 @@ namespace tao_yy {
           FE_Declarator *d {};
           AST_Field *f {};
           idl_global->set_parse_state (IDL_GlobalData::PS_MemberDeclsCompleted);
-          AST_Decls *members = nullptr;
+          AST_Decls *members {};
 
           /*
            * Check for illegal recursive use of type.
@@ -5108,7 +5128,7 @@ namespace tao_yy {
   case 357: // map_type_spec: map_head ',' positive_int_expr '>'
 #line 3917 "fe/idl.ypp"
         {
-          AST_Map *map = nullptr;
+          AST_Map *map {};
           Decl_Annotations_Pair_Pair *type_pair = (yystack_[3].value.decl_annotations_pair_val_pair);
           Decl_Annotations_Pair *key_type = type_pair->first;
           Decl_Annotations_Pair *val_type = type_pair->second;
@@ -5126,8 +5146,8 @@ namespace tao_yy {
 
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
 
-          AST_Expression::AST_ExprValue *ev = nullptr;
-          AST_Param_Holder *param_holder = nullptr;
+          AST_Expression::AST_ExprValue *ev {};
+          AST_Param_Holder *param_holder {};
           if (max_size)
             {
               param_holder = max_size->param_holder ();
@@ -5183,7 +5203,7 @@ namespace tao_yy {
   case 358: // map_type_spec: map_head '>'
 #line 3988 "fe/idl.ypp"
         {
-          AST_Map *map = nullptr;
+          AST_Map *map {};
           Decl_Annotations_Pair_Pair *type_pair = (yystack_[1].value.decl_annotations_pair_val_pair);
           Decl_Annotations_Pair *key_type = type_pair->first;
           Decl_Annotations_Pair *val_type = type_pair->second;
@@ -9327,7 +9347,9 @@ namespace tao_yy {
     /* Pacify compilers when the user code never invokes YYERROR and
        the label yyerrorlab therefore never appears in user code.  */
     if (false)
+    {
       YYERROR;
+    }
 
     /* Do not reclaim the symbols of the rule whose action triggered
        this YYERROR.  */
@@ -9354,13 +9376,17 @@ namespace tao_yy {
               {
                 yyn = yytable_[yyn];
                 if (0 < yyn)
+                {
                   break;
+                }
               }
           }
 
         // Pop the current state because it cannot handle the error token.
         if (yystack_.size () == 1)
+        {
           YYABORT;
+        }
 
         yy_destroy_ ("Error: popping", yystack_[0]);
         yypop_ ();
@@ -9398,7 +9424,9 @@ namespace tao_yy {
   `-----------------------------------------------------*/
   yyreturn:
     if (!yyla.empty ())
+    {
       yy_destroy_ ("Cleanup: discarding lookahead", yyla);
+    }
 
     /* Do not reclaim the symbols of the rule whose action triggered
        this YYABORT or YYACCEPT.  */
@@ -9419,7 +9447,9 @@ namespace tao_yy {
         // Do not try to display the values of the reclaimed symbols,
         // as their printers might throw an exception.
         if (!yyla.empty ())
+        {
           yy_destroy_ (YY_NULLPTR, yyla);
+        }
 
         while (1 < yystack_.size ())
           {
@@ -10661,7 +10691,9 @@ namespace tao_yy {
     else if (t <= code_max)
       return static_cast <symbol_kind_type> (translate_table[t]);
     else
+    {
       return symbol_kind::S_YYUNDEF;
+    }
   }
 
 #line 73 "fe/idl.ypp"

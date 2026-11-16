@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_ARGUMENT_UPCALL_SS_H_
 #define _BE_VISITOR_ARGUMENT_UPCALL_SS_H_
 
@@ -35,7 +34,8 @@ public:
   /// visit the argument node
   int visit_argument (be_argument *node) override;
 
-  // =visit all the nodes that can be the types for the argument
+  /// @name Visitor methods for argument types
+  /// @{
 
   /// visit array type
   int visit_array (be_array *node) override;
@@ -89,6 +89,7 @@ public:
   /// visit a forward declared eventtype node
   int visit_eventtype_fwd (be_eventtype_fwd *node) override;
 
+  /// @}
  private:
   int emit_common ();
   int emit_common2 (be_type *node);

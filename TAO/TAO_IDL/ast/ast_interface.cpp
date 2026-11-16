@@ -109,7 +109,7 @@ AST_Interface::AST_Interface (UTL_ScopedName *n,
                               AST_Type_List const& ih,
                               long nih,
                               AST_Interface_List const& ih_flat,
-                              std::size_t nih_flat,
+                              size_t nih_flat,
                               bool local,
                               bool abstract)
   : COMMON_Base (local,
@@ -393,9 +393,9 @@ AST_Interface::redef_clash_populate_r (AST_Type *t)
       AST_Interface *i = dynamic_cast<AST_Interface*> (t);
 
       AST_Type_List const& parents = i->inherits ();
-      std::size_t const n_parents = parents.size ();
+      size_t const n_parents = parents.size ();
 
-      for (std::size_t j {}; j < n_parents; ++j)
+      for (size_t j {}; j < n_parents; ++j)
         {
           this->redef_clash_populate_r (parents[j]);
         }
@@ -405,9 +405,9 @@ AST_Interface::redef_clash_populate_r (AST_Type *t)
     {
       AST_ValueType *v = dynamic_cast<AST_ValueType*> (t);
       AST_Type_List const& supports = v->supports ();
-      std::size_t const n_supports = supports.size ();
+      size_t const n_supports = supports.size ();
 
-      for (std::size_t i {}; i < n_supports; ++i)
+      for (size_t i {}; i < n_supports; ++i)
         {
           this->redef_clash_populate_r (supports[i]);
         }
@@ -416,9 +416,9 @@ AST_Interface::redef_clash_populate_r (AST_Type *t)
     {
       AST_Component *c = dynamic_cast<AST_Component*> (t);
       AST_Type_List const& supports = c->supports ();
-      std::size_t const n_supports = supports.size ();
+      size_t const n_supports = supports.size ();
 
-      for (std::size_t j {}; j < n_supports; ++j)
+      for (size_t j {}; j < n_supports; ++j)
         {
           this->redef_clash_populate_r (supports[j]);
         }
@@ -551,7 +551,7 @@ AST_Interface::inherits_flat () const
   return this->pd_inherits_flat;
 }
 
-std::size_t
+size_t
 AST_Interface::n_inherits_flat () const
 {
   return this->pd_inherits_flat.size ();
@@ -579,7 +579,7 @@ AST_Interface::redef_clash ()
   AST_Decl *group2_member_item {};
 
   // Now compare all pairs.
-  for (std::size_t i {}; i < this->insert_queue.size (); ++i)
+  for (size_t i {}; i < this->insert_queue.size (); ++i)
     {
       AST_Type *group1_member = this->insert_queue[i];
       UTL_Scope *s = DeclAsScope (group1_member);
@@ -605,7 +605,7 @@ AST_Interface::redef_clash ()
                 }
 
               Identifier *pid1 = group1_member_item->local_name ();
-              for (std::size_t j = i + 1; j < this->insert_queue.size (); ++j)
+              for (size_t j = i + 1; j < this->insert_queue.size (); ++j)
                 {
                   AST_Type *group2_member = this->insert_queue[j];
                   UTL_Scope *ss = DeclAsScope (group2_member);
@@ -696,7 +696,7 @@ AST_Interface::look_in_inherited (UTL_ScopedName *e,
   // (Don't leave the inheritance hierarchy, no module or global ...)
   // Find all and report ambiguous results as error.
 
-  for (std::size_t j {}; j < inherited.size (); ++j)
+  for (size_t j {}; j < inherited.size (); ++j)
     {
       AST_Interface *i = dynamic_cast<AST_Interface*> (inherited[j]);
 
@@ -762,7 +762,7 @@ AST_Interface::look_in_inherited_local (Identifier *e,
   AST_Type_List const& inherited = this->inherits ();
 
   /// OK, loop through inherited interfaces.
-  for (std::size_t j {}; j < inherited.size (); ++j)
+  for (size_t j {}; j < inherited.size (); ++j)
     {
       AST_Interface *i = dynamic_cast<AST_Interface*> (inherited[j]);
 
@@ -812,7 +812,7 @@ AST_Interface::lookup_for_add (AST_Decl *d)
         }
     }
 
-  for (std::size_t j {}; j < inherited.size (); ++j)
+  for (size_t j {}; j < inherited.size (); ++j)
     {
       prev = inherited[j]->lookup_by_name_local (id, false);
 

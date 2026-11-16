@@ -11,10 +11,8 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VALUETYPE_VALUETYPE_H_
 #define _BE_VALUETYPE_VALUETYPE_H_
-
 
 /**
  * @class be_visitor_valuetype
@@ -42,7 +40,8 @@ public:
   virtual void begin_public ();
   virtual void begin_private ();
 
- // =visit methods on all elements syntactically valid in a Valuetype scope
+  /// @name Visitor methods for elements allowed in a valuetype scope
+  /// @{
 
   /// visit attribute
   int visit_attribute (be_attribute *node) override;
@@ -74,7 +73,10 @@ public:
   /// visit a field
   int visit_field (be_field *node) override;
 
-  // =helper methods for generation of fields
+  /// @}
+
+  /// @name Field generation helpers
+  /// @{
 
   /// private data fields for scope
   int gen_pd (be_valuetype *node);
@@ -85,6 +87,8 @@ public:
   /// Recursively generate args for the initializing constuctor.
   void gen_obv_init_constructor_args (be_valuetype *node,
                                       unsigned long &index);
+
+  /// @}
 
 protected:
   /// check is VT needs a RefCounter mix-in in OBV_ class

@@ -392,12 +392,14 @@ public:
 
   std::vector<std::string> const& include_file_names () const;
 
-  std::size_t n_include_file_names () const;
+  size_t n_include_file_names () const;
 
   void             reset_flag_seen ();
 
-  // = Types & methods supporting DDS DCPS sequence definitions (from #pragma)
-  // = Types & methods supporting DDS DCPS data type/key definition (from #pragma)
+  /// @name DDS DCPS pragma support
+  /// Sequence definitions, data types, keys, and zero-copy read settings.
+  /// @{
+
   using DCPS_Key_List = std::vector<std::string>;
 
   struct DCPS_Data_Type_Info
@@ -415,45 +417,49 @@ public:
   using DCPS_Type_Info_Map =
     std::unordered_map<std::string, std::unique_ptr<DCPS_Data_Type_Info>>;
 
-  // FE calls when #pragma DCPS_DATA_TYPE is processed
+  /// Record a type when processing #pragma DCPS_DATA_TYPE.
   void add_dcps_data_type (std::string const& id);
 
-  // FE calls when #pragma DCPS_DATA_KEY is processed
+  /// Record a key when processing #pragma DCPS_DATA_KEY.
   bool add_dcps_data_key (std::string const& id, std::string const& key);
 
-  // returns null if not matching; otherwise pointer to the info
+  /// Return the matching type information, or null if there is no match.
   DCPS_Data_Type_Info* is_dcps_type (UTL_ScopedName* target);
 
-  // FE calls when #pragma DCPS_SUPPORT_ZERO_COPY_READ is processed
+  /// Set zero-copy read support when processing #pragma DCPS_SUPPORT_ZERO_COPY_READ.
   void dcps_support_zero_copy_read (bool value);
 
-  // BE calls to check the status of zero-copy read support
+  /// Return whether zero-copy read support is enabled.
   bool dcps_support_zero_copy_read () const;
 
-  // FE calls when #pragma DCPS_DATA_SEQUENCE_TYPE is processed
+  /// Set the sequence type when processing #pragma DCPS_DATA_SEQUENCE_TYPE.
   void set_dcps_sequence_type (std::string const& seq_type);
 
-  // BE calls to check whether pragma for this sequence has been set
+  /// Return whether the pragma for this sequence type has been set.
   bool dcps_sequence_type_defined (std::string const& seq_type) const;
 
-  // FE calls when #pragma DCPS_GEN_ZERO_COPY_READ is processed
+  /// Set generated zero-copy read support when processing #pragma DCPS_GEN_ZERO_COPY_READ.
   void dcps_gen_zero_copy_read (bool value);
 
-  // BE calls to check the status of zero-copy read support
+  /// Return whether zero-copy read generation is enabled.
   bool dcps_gen_zero_copy_read () const;
 
-  // = Access methods to deal with other IDL files included in the main
-  //   IDL file. These IDL files are exactly the same strings that are
-  //   "#include"d in the main IDL file, not the ones after CC
-  //   preprocessor parsed the file.
+  /// @}
 
+  /// @name Included IDL files
+  /// These are the original include strings, before C preprocessing.
+  /// @{
+
+  /// Add an IDL file included in the main IDL file.
   void add_to_included_idl_files (std::string const& file_name);
 
-  // Get all the files.
+  /// Return all included IDL file names.
   std::vector<std::string> & included_idl_files ();
 
-  // The number of currently availabe include files.
-  std::size_t n_included_idl_files ();
+  /// Return the number of included IDL files.
+  size_t n_included_idl_files ();
+
+  /// @}
 
   ParseState parse_state ();       // What state we're in
   void set_parse_state (ParseState s); // Set it

@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef BE_VISITOR_NULL_RETURN_VALUE_H
 #define BE_VISITOR_NULL_RETURN_VALUE_H
 

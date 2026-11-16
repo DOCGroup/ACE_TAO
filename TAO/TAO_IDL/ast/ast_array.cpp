@@ -82,7 +82,7 @@ AST_Decl::NodeType const
 AST_Array::NT = AST_Decl::NT_array;
 
 AST_Array::AST_Array (UTL_ScopedName *n,
-                      std::size_t nd,
+                      size_t nd,
                       UTL_ExprList *ds,
                       bool local,
                       bool abstract)
@@ -107,7 +107,7 @@ AST_Array::~AST_Array () = default;
 // Collect the array's owned dimension expressions.
 std::vector<std::unique_ptr<AST_Expression>>
 AST_Array::compute_dims (UTL_ExprList *ds,
-                         std::size_t nds)
+                         size_t nds)
 {
   if (ds == nullptr)
     {
@@ -119,7 +119,7 @@ AST_Array::compute_dims (UTL_ExprList *ds,
 
   UTL_ExprlistActiveIterator iter (ds);
 
-  for (std::size_t i {};
+  for (size_t i {};
        !iter.is_done () && i < nds;
        iter.next (), ++i)
     {
@@ -154,7 +154,7 @@ AST_Array::dump (ACE_OSTREAM_TYPE &o)
 
   this->local_name ()->dump (o);
 
-  for (std::size_t i {}; i < this->n_dims (); ++i)
+  for (size_t i {}; i < this->n_dims (); ++i)
     {
       this->dump_i (o, "[");
 
@@ -193,7 +193,7 @@ AST_Array::compute_size_type ()
 }
 
 // Data accessors.
-std::size_t
+size_t
 AST_Array::n_dims () const
 {
   return this->pd_dims.size ();

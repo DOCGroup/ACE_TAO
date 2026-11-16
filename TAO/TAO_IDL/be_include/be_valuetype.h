@@ -35,9 +35,9 @@ public:
                 long n_inherits,
                 AST_Type *inherits_concrete,
                 AST_Interface_List const& inherits_flat,
-                std::size_t n_inherits_flat,
+                size_t n_inherits_flat,
                 AST_Type_List const& supports,
-                std::size_t n_supports,
+                size_t n_supports,
                 AST_Type *supports_concrete,
                 bool abstract,
                 bool truncatable,
@@ -80,8 +80,7 @@ public:
       tao_code_emitter gen,
       TAO_OutStream *os,
       bool use_abstract_paths = true,
-      bool use_concrete_paths = true
-    );
+      bool use_concrete_paths = true);
 
   /// Do we support at least one abstract interface?
   bool supports_abstract () const;
@@ -97,8 +96,7 @@ public:
 
   /// Compute the count of private/public/all data members.
   ACE_CDR::ULong data_members_count (
-      AST_Field::Visibility vis = AST_Field::vis_NA
-    );
+      AST_Field::Visibility vis = AST_Field::vis_NA);
 
   /// Accessor to the member.
   std::string const& fwd_helper_name () const;

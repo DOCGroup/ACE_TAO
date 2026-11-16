@@ -3,6 +3,7 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_main.h"
 #include <string>
+#include <utility>
 
 template <typename T>
 int check (T const &map)
@@ -46,7 +47,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   int ret = check (testData.stringStructsMap);
 
   testData.stringSequenceMap["test"] = testStructSeq;
-  testData.stringSequenceMap["abc"] = testStructSeq;
+  testData.stringSequenceMap["abc"] = std::move (testStructSeq);
   ret += check (testData.stringSequenceMap);
 
   testData.stringMapMap["test"] = testStructMap;

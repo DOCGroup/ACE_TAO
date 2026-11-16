@@ -355,8 +355,7 @@ be_visitor_union_branch_public_reset_cs::visit_valuetype_fwd (
 
 int
 be_visitor_union_branch_public_reset_cs::visit_predefined_type (
-    be_predefined_type *node
-  )
+    be_predefined_type *node)
 {
   be_union_branch * const ub =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());

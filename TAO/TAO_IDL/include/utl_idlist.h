@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _UTL_IDLIST_UTL_IDLIST_HH
 #define _UTL_IDLIST_UTL_IDLIST_HH
 
-// List of Identifiers
-
 // NOTE: This list class only works correctly because we use single public
 //       inheritance, as opposed to multiple inheritance or public virtual.
 //       It relies on a type-unsafe cast from UTL_List to subclasses, which
@@ -80,42 +78,37 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 class Identifier;
 
+/// Maintains a list of identifiers, primarily to represent scoped names.
 class TAO_IDL_FE_Export UTL_IdList : public UTL_List
 {
-  // =TITLE
-  //  UTL_IdList
-  // =DESCRIPTION
-  //  Used to maintain a list of identifiers. The primary usage of this class
-  //  is to maintain a scoped name.
 public:
   explicit UTL_IdList (Identifier *car, UTL_IdList *cdr = nullptr);
-  // Constructor(s)
 
   ~UTL_IdList () override = default;
 
+  /// Write this list to an output stream.
   virtual void dump (ACE_OSTREAM_TYPE &o);
-  // Dump to ostream.
 
+  /// Clean up this list.
   void destroy () override;
-  // Cleanup function.
 
+  /// Return a copy of this list.
   UTL_IdList *copy () override;
-  // Copy the list.
 
+  /// Return the first element.
   Identifier *head ();
   Identifier const *head () const;
-  // Get element.
 
+  /// Return the last element in this list.
   Identifier *last_component ();
   Identifier const *last_component () const;
-  // Get last element in this list.
 
+  /// Return the first element in this list that has a non-empty string.
   Identifier *first_component ();
   Identifier const *first_component () const;
-  // Get first element in this list holding a non-empty string.
 
+  /// Compare each component for equality.
   int compare (UTL_IdList const *other) const;
-  // Compares each component for equality.
 
   /**
    * Return a copy of the contents as a string
@@ -131,15 +124,10 @@ private:
   Identifier *pd_car_data;
 };
 
-// Active iterator for UTL_IdList.
-
+/// Iterates over a UTL_IdList.
 class TAO_IDL_FE_Export UTL_IdListActiveIterator
   : public UTL_ListActiveIterator
 {
-  // =TITLE
-  //  UTL_IdListActiveIterator
-  // =DESCRIPTION
-  //  Iterator for the IDList
 public:
   explicit UTL_IdListActiveIterator (UTL_IdList *s);
 

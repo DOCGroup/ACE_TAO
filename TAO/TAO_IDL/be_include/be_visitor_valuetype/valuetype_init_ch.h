@@ -11,10 +11,8 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VALUETYPE_VALUETYPE_INIT_CH_H_
 #define _BE_VALUETYPE_VALUETYPE_INIT_CH_H_
-
 
 /**
  * @class be_visitor_valuetype_init_ch

@@ -188,8 +188,7 @@ be_visitor_exception_ctor_assign::visit_valuetype (be_valuetype *node)
 }
 
 int be_visitor_exception_ctor_assign::visit_valuetype_fwd (
-    be_valuetype_fwd *node
-  )
+    be_valuetype_fwd *node)
 {
   return this->emit_valuetype_common (node);
 }
