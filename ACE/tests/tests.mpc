@@ -1215,6 +1215,13 @@ project(Message Queue Test) : acetest {
   }
 }
 
+project(Read Buffer Test) : acetest {
+  exename = Read_Buffer_Test
+  Source_Files {
+    Read_Buffer_Test.cpp
+  }
+}
+
 project(Monotonic_Manual_Event Test) : acetest {
   exename = Monotonic_Manual_Event_Test
   Source_Files {
