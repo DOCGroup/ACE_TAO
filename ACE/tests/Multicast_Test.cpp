@@ -37,6 +37,7 @@
 #include "ace/SString.h"
 #include "ace/Signal.h"
 #include <algorithm>
+#include <cstring>
 #include <vector>
 
 #if defined (ACE_HAS_IP_MULTICAST) && defined (ACE_HAS_THREADS)
@@ -577,7 +578,7 @@ MCT_Event_Handler::handle_input (ACE_HANDLE /*handle*/)
     }
 
   // Zero length buffer means we are done.
-  if (ACE_OS::strlen (buf) == 0)
+  if (buf[0] == '\0')
     return -1;
   else if (this->find (buf) == -1)
     {
@@ -765,7 +766,7 @@ int send_dgram (ACE_SOCK_Dgram &socket, ACE_INET_Addr addr, int done = 0)
         ACE_OS::snprintf (buf, MAX_STRING_SIZE, "%s/%d", address, port);
       }
 
-      if (socket.send (buf, ACE_OS::strlen (buf),addr) == -1)
+      if (socket.send (buf, std::strlen (buf),addr) == -1)
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Send to %C, %p\n"),
                            address,
                            ACE_TEXT ("send_dgram - error calling send on ")
