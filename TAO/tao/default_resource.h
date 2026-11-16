@@ -214,10 +214,12 @@ protected:
   /// The type of data blocks that the ORB should use
   int use_locked_data_blocks_;
 
-  /// The number of the different types of Parsers.
+  /// Number of parser names in the owned array below.
   int parser_names_count_;
 
-  /// Array consisting of the names of the parsers
+  /// Owns the CORBA strings and pointer array returned through the legacy
+  /// get_parser_names(char **&) API. The array is allocated with ACE_NEW_RETURN
+  /// to preserve ACE allocator hooks; each string is freed with string_free.
   char **parser_names_;
 
   /// Index of the current element in the parser_names_ array
