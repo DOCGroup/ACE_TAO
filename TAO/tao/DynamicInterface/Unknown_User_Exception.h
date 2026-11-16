@@ -46,7 +46,6 @@ namespace CORBA
 
     explicit UnknownUserException (CORBA::Any& exception);
 
-    /// Copy constructor.
     UnknownUserException (UnknownUserException const& e);
 
     ~UnknownUserException () override;
