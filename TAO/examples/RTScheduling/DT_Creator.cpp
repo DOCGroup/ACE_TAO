@@ -55,13 +55,13 @@ DT_Creator::dt_task_init (ACE_Arg_Shifter& arg_shifter)
       arg_shifter.consume_arg ();
     }
 
-  std::unique_ptr<Thread_Task> task (
+  std::unique_ptr<Thread_Task> task =
     this->create_thr_task (importance,
                            start_time,
                            load,
                            iter,
                            dist,
-                           job_name));
+                           job_name);
   if (!task)
   {
     return -1;

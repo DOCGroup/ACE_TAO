@@ -2,12 +2,15 @@
 #include "test.h"
 #include "MIF_Task.h"
 
+#include <cerrno>
+#include <new>
+
 MIF_DT_Creator::MIF_DT_Creator ()
 {
   DT_TEST::instance ()->dt_creator (this);
 }
 
-Thread_Task*
+std::unique_ptr<Thread_Task>
 MIF_DT_Creator::create_thr_task (int importance,
                                  time_t start_time,
                                  int load,
@@ -15,16 +18,18 @@ MIF_DT_Creator::create_thr_task (int importance,
                                  int dist,
                                  char *job_name)
 {
-  MIF_Task* task;
-  ACE_NEW_RETURN (task,
-                  MIF_Task (importance,
-                            start_time,
-                            load,
-                            iter,
-                            dist,
-                            job_name,
-                            this),
-                  0);
+  std::unique_ptr<Thread_Task> task (
+    new (std::nothrow) MIF_Task (importance,
+                                 start_time,
+                                 load,
+                                 iter,
+                                 dist,
+                                 job_name,
+                                 this));
+  if (!task)
+    {
+      errno = ENOMEM;
+    }
   return task;
 }
 

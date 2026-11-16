@@ -133,6 +133,8 @@ public ::CORBA::LocalObject
   RTCORBA::PriorityMappingManager_var mapping_manager_;
   TAO_SYNCH_MUTEX lock_;
   TAO_SYNCH_CONDITION wait_cond_;
+  /// ACE queues use raw intrusive links; this scheduler retains ownership of
+  /// DT blocks while they move through the queues.
   DT_Message_Queue ready_que_;
   DT_Message_Queue free_que_;
   int wait_;
