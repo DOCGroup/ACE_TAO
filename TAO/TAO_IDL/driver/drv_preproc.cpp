@@ -1119,6 +1119,12 @@ DRV_pre_proc (std::string const& myfile)
     }
 
   FE_Utils::File_Handle ti_file (nullptr, ACE_OS::fclose);
+  auto unlink_input_file = [&]()
+    {
+      ti_file.reset ();
+      (void) ACE_OS::unlink (tmp_ifile.c_str ());
+    };
+
   if (copy_input_file)
     {
       ACE_HANDLE const ti_fd = ACE_OS::mkstemp (tmp_ifile.data ());
@@ -1140,7 +1146,7 @@ DRV_pre_proc (std::string const& myfile)
                       "%C: cannot open temp file \"%C\" for writing: %m\n",
                       idl_global->prog_name ().c_str (),
                       tmp_ifile.c_str ()));
-          (void) ACE_OS::unlink (tmp_ifile.c_str ());
+          unlink_input_file ();
           throw Bailout ();
         }
     }
@@ -1155,8 +1161,7 @@ DRV_pre_proc (std::string const& myfile)
 
       if (copy_input_file)
         {
-          ti_file.reset ();
-          (void) ACE_OS::unlink (tmp_ifile.c_str ());
+          unlink_input_file ();
         }
       throw Bailout ();
     }
@@ -1172,8 +1177,7 @@ DRV_pre_proc (std::string const& myfile)
                   tmp_file.c_str ()));
       if (copy_input_file)
         {
-          ti_file.reset ();
-          (void) ACE_OS::unlink (tmp_ifile.c_str ());
+          unlink_input_file ();
         }
       (void) ACE_OS::unlink (tmp_file.c_str ());
       throw Bailout ();
@@ -1208,8 +1212,7 @@ DRV_pre_proc (std::string const& myfile)
                   myfile.c_str ()));
       if (copy_input_file)
         {
-          ti_file.reset ();
-          (void) ACE_OS::unlink (tmp_ifile.c_str ());
+          unlink_input_file ();
         }
       (void) ACE_OS::unlink (tmp_file.c_str ());
       throw Bailout ();
@@ -1226,8 +1229,7 @@ DRV_pre_proc (std::string const& myfile)
         }
       catch (...)
         {
-          ti_file.reset ();
-          (void) ACE_OS::unlink (tmp_ifile.c_str ());
+          unlink_input_file ();
           (void) ACE_OS::unlink (tmp_file.c_str ());
           throw;
         }
@@ -1238,7 +1240,7 @@ DRV_pre_proc (std::string const& myfile)
                       idl_global->prog_name ().c_str (),
                       tmp_ifile.c_str (),
                       myfile.c_str ()));
-          (void) ACE_OS::unlink (tmp_ifile.c_str ());
+          unlink_input_file ();
           (void) ACE_OS::unlink (tmp_file.c_str ());
           throw Bailout ();
         }
