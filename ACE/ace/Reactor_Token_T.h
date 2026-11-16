@@ -60,11 +60,7 @@ public:
   /// Called just before a token waiter goes to sleep.
   /// @see ACE_Token::sleep_hook
   // ACE_TOKEN_TYPE may be ACE_Noop_Token, which has no virtual sleep_hook.
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  void sleep_hook () override;
-#else
   virtual void sleep_hook ();
-#endif
 
   /// Get the reactor implementation
   ACE_Reactor_Impl &reactor ();
