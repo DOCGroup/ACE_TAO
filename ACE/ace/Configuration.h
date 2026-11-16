@@ -865,7 +865,7 @@ private:
   ACE_Configuration_Heap (const ACE_Configuration_Heap& rhs);
   ACE_Configuration_Heap& operator= (const ACE_Configuration_Heap& rhs);
 
-  ACE_Allocator *allocator_;
+  std::unique_ptr<ACE_Allocator> allocator_;
   SECTION_MAP *index_;
   size_t default_map_size_;
 };
