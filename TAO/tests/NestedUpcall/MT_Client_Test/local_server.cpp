@@ -51,7 +51,8 @@ MT_Server::read_ior (ACE_TCHAR const *filename)
                       -1);
 
   ACE_Read_Buffer ior_buffer (f_handle, true);
-  MT_ACE_Allocated_Buffer ior_buffer_data {ior_buffer.read ()};
+  ACE_Read_Buffer_Unique_Ptr ior_buffer_data (
+    ior_buffer.read (), {ior_buffer.alloc ()});
   if (!ior_buffer_data)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to allocate memory to read ior.\n"),

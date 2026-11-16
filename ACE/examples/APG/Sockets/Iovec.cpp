@@ -14,19 +14,7 @@ constexpr char TEMPERATURE[] = "temperature";
 void addCommand (iovec [], char const *)
 {}
 
-struct Iovec_Buffer_Deleter
-{
-  void operator() (char *buffer) const
-  {
-#if defined (ACE_HAS_ALLOC_HOOKS)
-    ACE_Allocator::instance ()->free (buffer);
-#else
-    delete [] buffer;
-#endif
-  }
-};
-
-using Iovec_Buffer_Owner = std::unique_ptr<char, Iovec_Buffer_Deleter>;
+using Iovec_Buffer_Owner = std::unique_ptr<char, ACE_Array_Deleter<char>>;
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
