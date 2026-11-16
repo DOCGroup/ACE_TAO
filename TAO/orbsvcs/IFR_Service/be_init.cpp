@@ -33,12 +33,12 @@ BE_save_orb_args (int &argc, ACE_TCHAR *argv[])
           size_t const len = tmp.length ();
           if (len >= 4 && tmp.compare (len - 4, 4, ACE_TEXT (".idl")) == 0)
             {
-              return 0;
+              break;
             }
 
           if (len >= 5 && tmp.compare (len - 5, 5, ACE_TEXT (".pidl")) == 0)
             {
-              return 0;
+              break;
             }
 
           // If we're here, the next arg goes with the preceding -ORBxxx.
