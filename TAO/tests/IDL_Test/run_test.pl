@@ -14,4 +14,25 @@ if ($status != 0) {
     print STDERR "ERROR: test returned $status\n";
 }
 
+if ($status == 0) {
+    my @checks = (
+        ["valuetype_opt_accessorC.h", qr/ValueBase\s*\*\s*_copy_value\s*\(/],
+        ["valuetype_opt_accessorC.cpp", qr/Accessor_Optimized_Value::_copy_value\s*\(/],
+    );
+
+    foreach my $check (@checks) {
+        my ($file, $unexpected_pattern) = @{$check};
+        open my $generated, "<", $file
+          or die "ERROR: cannot open generated file <$file>: $!\n";
+        local $/;
+        my $contents = <$generated>;
+        close $generated;
+
+        if ($contents =~ $unexpected_pattern) {
+            print STDERR "ERROR: unexpected _copy_value in <$file>\n";
+            $status = 1;
+        }
+    }
+}
+
 exit $status;

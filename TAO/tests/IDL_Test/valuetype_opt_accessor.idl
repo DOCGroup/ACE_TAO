@@ -1,0 +1,4 @@
+valuetype Accessor_Optimized_Value
+{
+  public long value;
+};
