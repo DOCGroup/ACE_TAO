@@ -14,6 +14,17 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
+ACE_Read_Buffer_Unique_Ptr_Deleter::operator() (char *buffer) const
+{
+  if (buffer != nullptr)
+    {
+      ACE_Allocator * const allocator =
+        this->allocator != nullptr ? this->allocator : ACE_Allocator::instance ();
+      allocator->free (buffer);
+    }
+}
+
+void
 ACE_Read_Buffer::dump () const
 {
 #if defined (ACE_HAS_DUMP)

@@ -6,7 +6,6 @@
 # include "Simple_util.h"
 # include "tao/debug.h"
 # include "ace/OS_NS_stdio.h"
-# include "ace/Malloc_Base.h"
 
 #include <cstdio>
 #include <memory>
@@ -141,18 +140,8 @@ Client<InterfaceObj, Var>::read_ior (ACE_TCHAR const *filename)
 
   ACE_Read_Buffer ior_buffer (ior_file, true);
 
-  struct Read_Buffer_Deleter
-  {
-    ACE_Allocator *allocator;
-
-    void operator() (char *data) const
-    {
-      this->allocator->free (data);
-    }
-  };
-
-  std::unique_ptr<char, Read_Buffer_Deleter> data (
-    ior_buffer.read (), Read_Buffer_Deleter {ior_buffer.alloc ()});
+  ACE_Read_Buffer_Unique_Ptr data (
+    ior_buffer.read (), {ior_buffer.alloc ()});
 
   if (!data)
     ACE_ERROR_RETURN ((LM_ERROR,

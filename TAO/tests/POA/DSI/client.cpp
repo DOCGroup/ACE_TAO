@@ -14,7 +14,6 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"
 
-#include <memory>
 #include <string>
 
 struct Client_Options
@@ -22,16 +21,6 @@ struct Client_Options
   std::string ior;
   ACE_TCHAR const *ior_file {};
   bool shutdown_server {};
-};
-
-struct Read_Buffer_Deleter
-{
-  ACE_Allocator *allocator;
-
-  void operator() (char *data) const
-  {
-    this->allocator->free (data);
-  }
 };
 
 static int
@@ -93,8 +82,8 @@ read_IOR_from_file (ACE_TCHAR const *ior_file, std::string &ior)
       ACE_ERROR_RETURN ((LM_ERROR, "Unable to read ior\n"), -1);
     }
 
-  std::unique_ptr<char, Read_Buffer_Deleter> const owned_data (
-    data, Read_Buffer_Deleter {ior_buffer.alloc ()});
+  ACE_Read_Buffer_Unique_Ptr const owned_data (
+    data, {ior_buffer.alloc ()});
   ACE_OS::close (f_handle);
   ior = owned_data.get ();
   return 0;

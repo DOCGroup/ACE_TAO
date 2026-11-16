@@ -23,9 +23,25 @@
 #include "ace/Global_Macros.h"
 #include "ace/os_include/os_stdio.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Allocator;
+
+/// Frees memory allocated by ACE_Read_Buffer::read () with its allocator.
+struct ACE_Export ACE_Read_Buffer_Unique_Ptr_Deleter
+{
+  /// Borrowed from ACE_Read_Buffer; null selects the default allocator.
+  /// A supplied allocator must outlive the owned buffer.
+  ACE_Allocator *allocator {};
+
+  void operator() (char *buffer) const;
+};
+
+/// Owns a buffer returned by ACE_Read_Buffer::read ().
+using ACE_Read_Buffer_Unique_Ptr =
+  std::unique_ptr<char, ACE_Read_Buffer_Unique_Ptr_Deleter>;
 
 /**
  * @class ACE_Read_Buffer

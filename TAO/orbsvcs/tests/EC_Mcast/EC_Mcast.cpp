@@ -10,7 +10,6 @@
 #include "tao/ORB_Core.h"
 
 #include "ace/Get_Opt.h"
-#include "ace/Malloc_Base.h"
 #include "ace/Sched_Params.h"
 #include "ace/Read_Buffer.h"
 #include "ace/OS_NS_sys_time.h"
@@ -19,16 +18,6 @@
 
 #include <memory>
 #include <utility>
-
-struct ECM_Read_Buffer_Deleter
-{
-  ACE_Allocator* allocator;
-
-  void operator() (char* buffer) const
-  {
-    this->allocator->free (buffer);
-  }
-};
 
 #if !defined (__ACE_INLINE__)
 #include "EC_Mcast.inl"
@@ -418,8 +407,8 @@ ECM_Driver::parse_config_file ()
         return -1;
       }
       ACE_Read_Buffer reader (cfg);
-      std::unique_ptr<char, ECM_Read_Buffer_Deleter> buf (
-        reader.read (' ', ' ', '\0'), ECM_Read_Buffer_Deleter {reader.alloc ()});
+      ACE_Read_Buffer_Unique_Ptr buf (
+        reader.read (' ', ' ', '\0'), {reader.alloc ()});
       if (!buf)
       {
         ACE_ERROR_RETURN ((LM_ERROR, "problem reading federation name\n"), -1);
@@ -535,8 +524,8 @@ ECM_Driver::parse_name_list (FILE* file,
                              i, error_msg), -1);
         }
       ACE_Read_Buffer tmp (file);
-      std::unique_ptr<char, ECM_Read_Buffer_Deleter> buf (
-        tmp.read ('\n', '\n', '\0'), ECM_Read_Buffer_Deleter {tmp.alloc ()});
+      ACE_Read_Buffer_Unique_Ptr buf (
+        tmp.read ('\n', '\n', '\0'), {tmp.alloc ()});
       if (!buf)
         ACE_ERROR_RETURN ((LM_ERROR, "could not read item %B while %s\n",
                            i, error_msg), -1);

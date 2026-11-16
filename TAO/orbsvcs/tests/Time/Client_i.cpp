@@ -7,25 +7,9 @@
 #include "ace/Read_Buffer.h"
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/Malloc_Base.h"
 #include "ace/os_include/os_netdb.h"
 
 #include <array>
-#include <memory>
-
-// The allocator is owned by ACE_Read_Buffer and must outlive this deleter.
-struct Read_Buffer_Deleter
-{
-  ACE_Allocator *allocator {};
-
-  void operator() (char *buffer) const
-  {
-    if (buffer != nullptr)
-    {
-      this->allocator->free (buffer);
-    }
-  }
-};
 
 /// This test expects the server to report that secure universal time is not
 /// implemented.
@@ -189,8 +173,8 @@ Client_i::read_ior (ACE_TCHAR const *filename)
                       -1);
 
   ACE_Read_Buffer ior_buffer (f_handle, true);
-  std::unique_ptr<char, Read_Buffer_Deleter> const data (
-    ior_buffer.read (), Read_Buffer_Deleter {ior_buffer.alloc ()});
+  ACE_Read_Buffer_Unique_Ptr const data (
+    ior_buffer.read (), {ior_buffer.alloc ()});
 
   if (!data)
     ACE_ERROR_RETURN ((LM_ERROR,
