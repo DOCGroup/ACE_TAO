@@ -288,6 +288,7 @@ private:
   : public ACE_Intrusive_List_Node<Deferred_Event>
   {
   public:
+    Deferred_Event () = delete;
     explicit Deferred_Event (ACE_Event_Handler *h);
 
     ACE_Event_Handler *handler () const;

@@ -136,6 +136,7 @@ namespace TAO
   class TAO_Export Storable_Exception
   {
   public:
+    Storable_Exception () = delete;
     explicit Storable_Exception (std::string const &file_name);
 
     virtual ~Storable_Exception ();
@@ -151,6 +152,7 @@ namespace TAO
   class TAO_Export Storable_Read_Exception : public Storable_Exception
   {
   public:
+    Storable_Read_Exception () = delete;
     Storable_Read_Exception (Storable_Base::Storable_State state,
                              std::string const &file_name);
 
@@ -165,6 +167,7 @@ namespace TAO
   class TAO_Export Storable_Write_Exception : public Storable_Exception
   {
   public:
+    Storable_Write_Exception () = delete;
     Storable_Write_Exception (Storable_Base::Storable_State state,
                               std::string const &file_name);
 

@@ -49,6 +49,7 @@ namespace TAO
   class TAO_Export Synch_Twoway_Invocation : public Remote_Invocation
   {
   public:
+    Synch_Twoway_Invocation () = delete;
     /// Constructor used by TAO::Invocation_Adapter
     /**
      * @param otarget The original target on which this invocation
@@ -145,6 +146,7 @@ namespace TAO
     : public Synch_Twoway_Invocation
   {
   public:
+    Synch_Oneway_Invocation () = delete;
     /// Constructor used by TAO::Invocation_Adapter
     /**
      * @param otarget The original target on which this invocation

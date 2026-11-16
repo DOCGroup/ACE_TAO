@@ -97,6 +97,7 @@ class TAO_Export TAO_Pluggable_Reply_Params
   : public TAO_Pluggable_Reply_Params_Base
 {
 public:
+  TAO_Pluggable_Reply_Params () = delete;
   explicit TAO_Pluggable_Reply_Params (TAO_Transport *t);
 
   /// The stream with the non-demarshaled reply. This stream will be

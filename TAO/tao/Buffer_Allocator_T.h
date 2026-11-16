@@ -37,6 +37,7 @@ namespace TAO
     public:
       using HANDLER_TYPE = handler_type;
       using ALLOC_TYPE = alloc_type;
+      TAO_Buffer_Allocator () = delete;
       explicit TAO_Buffer_Allocator (alloc_type *allocator);
 
       handler_type *allocate () override;

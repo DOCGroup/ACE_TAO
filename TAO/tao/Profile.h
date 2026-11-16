@@ -411,6 +411,7 @@ operator>> (TAO_InputCDR &, TAO_opaque &);
 class TAO_Export TAO_Unknown_Profile : public TAO_Profile
 {
 public:
+  TAO_Unknown_Profile () = delete;
   /// Create the profile
   TAO_Unknown_Profile (CORBA::ULong tag,
                        TAO_ORB_Core *orb_core);

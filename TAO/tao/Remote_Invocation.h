@@ -45,6 +45,7 @@ namespace TAO
   class TAO_Export Remote_Invocation : public Invocation_Base
   {
   public:
+    Remote_Invocation () = delete;
     /**
      * @param otarget The original target on which this invocation
      * was started. This is there to be passed up to its parent

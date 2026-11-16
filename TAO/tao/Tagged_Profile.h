@@ -47,6 +47,7 @@ public:
   /// clone the TAO_Tagged_Profile data member in TAO_ServerRequest.
   friend class TAO::CSD::FW_Server_Request_Wrapper;
 
+  TAO_Tagged_Profile () = delete;
   explicit TAO_Tagged_Profile (TAO_ORB_Core *orb_core);
 
   /// Unmarshal the GIOP 1.2 target address field.
