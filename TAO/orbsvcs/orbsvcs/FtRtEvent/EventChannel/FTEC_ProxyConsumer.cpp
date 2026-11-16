@@ -38,7 +38,6 @@ TAO_FTEC_ProxyPushConsumer::activate (
   }
 }
 
-// = The RtecEventChannelAdmin::ProxyPushConsumer methods...
 void TAO_FTEC_ProxyPushConsumer::connect_push_supplier (
                 RtecEventComm::PushSupplier_ptr push_supplier,
                 const RtecEventChannelAdmin::SupplierQOS& qos)

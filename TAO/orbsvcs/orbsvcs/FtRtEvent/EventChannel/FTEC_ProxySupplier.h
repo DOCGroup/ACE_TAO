@@ -40,14 +40,14 @@ public:
   void activate (
     RtecEventChannelAdmin::ProxyPushSupplier_ptr &proxy) override;
   /// @name RtecEventChannelAdmin::ProxyPushSupplier operations
-  //@{
+  /// @{
   void connect_push_consumer (
                 RtecEventComm::PushConsumer_ptr push_consumer,
                 RtecEventChannelAdmin::ConsumerQOS const& qos) override;
   void disconnect_push_supplier () override;
   void suspend_connection () override;
   void resume_connection () override;
-  //@}
+  /// @}
 
   const FtRtecEventChannelAdmin::ObjectId& id() const;
 
