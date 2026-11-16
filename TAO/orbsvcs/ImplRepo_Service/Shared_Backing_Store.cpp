@@ -20,6 +20,7 @@
 #include "tao/ORB_Core.h"
 
 #include <cstdlib>
+#include <memory>
 #include <string>
 
 namespace {
@@ -906,6 +907,8 @@ Shared_Backing_Store::load_server (Server_Info *info,
                                    bool server_started,
                                    const NameValues& extra_params)
 {
+  std::unique_ptr<Server_Info> info_owner (info);
+
   if (this->opts_.debug() > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
@@ -921,7 +924,9 @@ Shared_Backing_Store::load_server (Server_Info *info,
   if (this->servers ().find (info->key_name_, si) != 0)
     {
       // Create new or replace the existing entry
-      XML_Backing_Store::load_server (info, server_started, extra_params);
+      XML_Backing_Store::load_server (info_owner.release (),
+                                      server_started,
+                                      extra_params);
       return;
     }
 
@@ -929,7 +934,6 @@ Shared_Backing_Store::load_server (Server_Info *info,
   bool was_started = si->is_running ();
 
   *si.get () = *info;
-  delete info;
 
   if (!server_started)
     {
