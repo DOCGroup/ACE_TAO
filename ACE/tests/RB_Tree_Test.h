@@ -26,11 +26,12 @@ class ACE_RB_Tree_Test
   //   RB_Tree, simply instantiate the test class template with the
   //   same type parameters, and invoke the run_test method.
 public:
-  // = Traits
-
+  /// @name Red-black tree types
+  /// @{
   using TREE = ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>;
   using ITERATOR = ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>;
   using REVERSE_ITERATOR = ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>;
+  /// @}
 
   ACE_RB_Tree_Test (int entry_count,
                     EXT_ID key_array [],

@@ -44,26 +44,27 @@ public:
   int open (void *v) override;
 
 protected:
-  // = Methods invoked via "pointer to method" table entry.
-
   /// Handle the THREAD case.
   int svc () override;
 
-  // = Operations corresponding to requests from the client.
+  /// @name Operations corresponding to client requests
+  /// @{
   /// Execute the read operation on the file.
   int read ();
 
   /// Execute the increment operation on the file.
   int inc ();
+  /// @}
 
-  // = Hooks called by <Reactor> and <Strategy_Acceptor>.
-
+  /// @name Reactor and acceptor hooks
+  /// @{
   /// Hook called by the <Reactor> when data arrives from the client.
   int handle_input (ACE_HANDLE p = ACE_INVALID_HANDLE) override;
 
   /// Closing down
   int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
                     ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK) override;
+  /// @}
 };
 
 class Process_Strategy : public ACE_Process_Strategy<Counting_Service>
@@ -104,9 +105,11 @@ public:
     THREAD    // Run the test as in separate threads.
   };
 
-  // = Get/set concurrency type.
+  /// @name Get and set the concurrency type
+  /// @{
   Concurrency_Type concurrency_type ();
   void concurrency_type (Concurrency_Type);
+  /// @}
 
   /// Returns the file lock.
   ACE_File_Lock &file_lock ();

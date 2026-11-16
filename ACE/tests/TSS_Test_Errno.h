@@ -81,8 +81,7 @@ public:
 #endif /* ACE_HAS_THREADS */
 
 private:
-  // = errno_ and lineno_ will be thread-specific data so they don't
-  // need a lock.
+  /// errno_ and lineno_ are thread-specific data, so they need no lock.
   int errno_;
   int lineno_;
 
