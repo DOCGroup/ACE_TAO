@@ -1,6 +1,7 @@
 #include "ace/FlReactor/FlReactor.h"
 
 #include /**/ <FL/Fl.H>
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -58,8 +59,10 @@ ACE_FlReactor::wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_s
                           temp_set.rd_mask_,
                           temp_set.wr_mask_,
                           temp_set.ex_mask_,
-                          &zero) == -1)
-        return -1; // Bad file arguments...
+                          std::addressof (zero)) == -1)
+        {
+          return -1; // Bad file arguments...
+        }
 
       // Instead of waiting using <select>, just use the Fl mechanism
       // to wait for one or more events...
@@ -67,7 +70,9 @@ ACE_FlReactor::wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_s
       // Wait for something to happen.
       double t {};
       if (max_wait_time != nullptr)
-        t = max_wait_time->sec () + max_wait_time->usec () / 1000000.0F;
+        {
+          t = max_wait_time->sec () + max_wait_time->usec () / 1000000.0F;
+        }
 
       while (t > 0)
         t = Fl::wait (t);
@@ -81,7 +86,7 @@ ACE_FlReactor::wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_s
                                handle_set.rd_mask_,
                                handle_set.wr_mask_,
                                handle_set.ex_mask_,
-                               &zero);
+                               std::addressof (zero));
     } while (nfound == -1 && this->handle_error () > 0);
 
   if (nfound > 0)
@@ -109,11 +114,17 @@ ACE_FlReactor::fl_io_proc (int const fd, void *const reactor)
 
   // - read which kind of event
   if (self->wait_set_.rd_mask_.is_set (handle))
-    wait_set.rd_mask_.set_bit (handle);
+    {
+      wait_set.rd_mask_.set_bit (handle);
+    }
   if (self->wait_set_.wr_mask_.is_set (handle))
-    wait_set.wr_mask_.set_bit (handle);
+    {
+      wait_set.wr_mask_.set_bit (handle);
+    }
   if (self->wait_set_.ex_mask_.is_set (handle))
-    wait_set.ex_mask_.set_bit (handle);
+    {
+      wait_set.ex_mask_.set_bit (handle);
+    }
 
   ACE_Select_Reactor_Handle_Set dispatch_set;
 
@@ -122,14 +133,20 @@ ACE_FlReactor::fl_io_proc (int const fd, void *const reactor)
                       wait_set.rd_mask_,
                       wait_set.wr_mask_,
                       wait_set.ex_mask_,
-                      &zero) > 0)
+                      std::addressof (zero)) > 0)
     {
       if (wait_set.rd_mask_.is_set (handle))
-        dispatch_set.rd_mask_.set_bit (handle);
+        {
+          dispatch_set.rd_mask_.set_bit (handle);
+        }
       if (wait_set.wr_mask_.is_set (handle))
-        dispatch_set.wr_mask_.set_bit (handle);
+        {
+          dispatch_set.wr_mask_.set_bit (handle);
+        }
       if (wait_set.ex_mask_.is_set (handle))
-        dispatch_set.ex_mask_.set_bit (handle);
+        {
+          dispatch_set.ex_mask_.set_bit (handle);
+        }
 
       self->dispatch (1, dispatch_set);
     }
@@ -156,18 +173,28 @@ ACE_FlReactor::register_handler_i (ACE_HANDLE handle,
   if (ACE_Select_Reactor::register_handler_i (handle,
                                                handler,
                                                mask) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   int condition {};
 
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::READ_MASK))
-    ACE_SET_BITS (condition, FL_READ);
+    {
+      ACE_SET_BITS (condition, FL_READ);
+    }
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::WRITE_MASK))
-    ACE_SET_BITS (condition, FL_WRITE);
+    {
+      ACE_SET_BITS (condition, FL_WRITE);
+    }
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::EXCEPT_MASK))
-    ACE_SET_BITS (condition, FL_EXCEPT);
+    {
+      ACE_SET_BITS (condition, FL_EXCEPT);
+    }
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::ACCEPT_MASK))
-    ACE_SET_BITS (condition, FL_READ);
+    {
+      ACE_SET_BITS (condition, FL_READ);
+    }
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::CONNECT_MASK))
     {
       ACE_SET_BITS (condition, FL_WRITE); // connected, you may write
@@ -250,7 +277,9 @@ ACE_FlReactor::reset_timer_interval
                                               interval);
 
   if (result == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   this->reset_timeout ();
   return result;
@@ -270,7 +299,9 @@ ACE_FlReactor::schedule_timer (ACE_Event_Handler *event_handler,
                                                          delay,
                                                          interval);
   if (result == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   this->reset_timeout ();
   return result;
@@ -284,7 +315,9 @@ ACE_FlReactor::cancel_timer (ACE_Event_Handler *handler,
 
   if (ACE_Select_Reactor::cancel_timer (handler,
                                         dont_call_handle_close) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   this->reset_timeout ();
   return 0;
@@ -300,7 +333,9 @@ ACE_FlReactor::cancel_timer (long timer_id,
   if (ACE_Select_Reactor::cancel_timer (timer_id,
                                         arg,
                                         dont_call_handle_close) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   this->reset_timeout ();
   return 0;
