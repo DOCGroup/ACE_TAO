@@ -84,7 +84,7 @@ Oid::Oid( const char * dotted_oid_string, size_t size)
         return;
       }
 
-    ACE_OS::memcpy (truncated_string.get (), dotted_oid_string, size);
+    std::memcpy (truncated_string.get (), dotted_oid_string, size);
     truncated_string[size] = '\0';
     parse_string = truncated_string.get ();
   }
@@ -208,7 +208,7 @@ void Oid::init_value(const unsigned long *raw_oid, size_t oid_len)
   }
 
   ACE_NEW(smival.value.oid.ptr, SmiUINT32[ oid_len]);
-  ACE_OS::memcpy((SmiLPBYTE) smival.value.oid.ptr, (SmiLPBYTE) raw_oid, (size_t) (oid_len * sizeof(SmiUINT32)));
+  std::memcpy (smival.value.oid.ptr, raw_oid, oid_len * sizeof (SmiUINT32));
   smival.value.oid.len = oid_len;
 }
 
@@ -498,9 +498,9 @@ Oid& Oid::operator+=( const Oid &o)
     }
 
   if (old_length != 0)
-    ACE_OS::memcpy (new_oid.get (), smival.value.oid.ptr, old_length * sizeof (SmiUINT32));
+    std::memcpy (new_oid.get (), smival.value.oid.ptr, old_length * sizeof (SmiUINT32));
 
-  ACE_OS::memcpy (new_oid.get () + old_length, o.smival.value.oid.ptr, o.smival.value.oid.len * sizeof (SmiUINT32));
+  std::memcpy (new_oid.get () + old_length, o.smival.value.oid.ptr, o.smival.value.oid.len * sizeof (SmiUINT32));
 
   delete [] smival.value.oid.ptr;
   smival.value.oid.ptr = new_oid.release ();
@@ -573,9 +573,9 @@ int Oid::suboid(Oid& new_oid, size_t start, size_t how_many)
   ACE_NEW_RETURN(new_oid.smival.value.oid.ptr,
         SmiUINT32 [ new_oid.smival.value.oid.len], -1);
   // copy source to destination
-  ACE_OS::memcpy( (SmiLPBYTE) new_oid.smival.value.oid.ptr,
-                    (SmiLPBYTE) (smival.value.oid.ptr + start),
-                    new_size * sizeof(SmiUINT32));
+  std::memcpy (new_oid.smival.value.oid.ptr,
+               smival.value.oid.ptr + start,
+               new_size * sizeof (SmiUINT32));
   return 0;
 }
 
@@ -631,7 +631,7 @@ int Oid::StrToOid( const char *string, SmiLPOID dstOid, size_t& how_many)
   // get some space for the real oid
   ACE_NEW_RETURN(dstOid->ptr, SmiUINT32[ index], -1);
   // copy in the temp data
-  ACE_OS::memcpy (dstOid->ptr, temp.get (), index * sizeof (SmiUINT32));
+  std::memcpy (dstOid->ptr, temp.get (), index * sizeof (SmiUINT32));
 
   // set the len of the oid
   dstOid->len = index;
@@ -651,7 +651,7 @@ int Oid::OidCopy( SmiLPOID srcOid, SmiLPOID dstOid, size_t& how_many_bytes)
   }
 
   // copy source to destination
-  ACE_OS::memcpy((SmiLPBYTE) dstOid->ptr, (SmiLPBYTE) srcOid->ptr, (size_t) (srcOid->len * sizeof(SmiUINT32)));
+  std::memcpy (dstOid->ptr, srcOid->ptr, srcOid->len * sizeof (SmiUINT32));
 
   //set the new len
   dstOid->len = srcOid->len;
