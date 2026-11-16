@@ -49,7 +49,7 @@ public:
   Scheduler ();
 
   /// Initializer.
-  int open (void *args = 0) override;
+  int open (void *args = nullptr) override;
 
   /// Terminator.
   int close (u_long flags = 0) override;

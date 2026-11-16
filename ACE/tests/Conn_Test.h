@@ -28,13 +28,13 @@ class Svc_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
   /// Do-nothing constructor.
-  Svc_Handler (ACE_Thread_Manager * = 0);
+  Svc_Handler (ACE_Thread_Manager * = nullptr);
 
   /// Initialization hook.
   int open (void *) override;
 
   /// Prepare for recycling.
-  int recycle (void * = 0) override;
+  int recycle (void * = nullptr) override;
 
   /// Send data to server.
   void send_data ();
