@@ -53,10 +53,10 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
     }
   std::unique_ptr<ACE_TCHAR[], ACE_Array_Deleter<ACE_TCHAR>> buffer_owner {buffer};
   ACE_Configuration_Section_Key section;
-  ACE_TCHAR *end {};
 
   while (ACE_OS::fgets (buffer+read_pos, buffer_size - read_pos, in.get ()))
     {
+      ACE_TCHAR *end {};
       // Check if we got all the line.
       end = ACE_OS::strrchr (buffer + read_pos,
                              ACE_TEXT ('\n')); // look for end of line
@@ -121,7 +121,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
 
           // null terminate the name
           *end = 0;
-          ACE_TCHAR* name = buffer + 1;
+          ACE_TCHAR * const name = buffer + 1;
           end+=2;
           // determine the type
           if (*end == '\"')
@@ -129,7 +129,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
               // string type
               // truncate trailing "
               ++end;
-              ACE_TCHAR* trailing = ACE_OS::strrchr (end, '"');
+              ACE_TCHAR * const trailing = ACE_OS::strrchr (end, '"');
               if (trailing)
               {
                 *trailing = 0;
@@ -143,7 +143,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
             {
               // number type
               ACE_TCHAR* endptr {};
-              unsigned long value = ACE_OS::strtoul (end + 6, &endptr, 16);
+              unsigned long const value = ACE_OS::strtoul (end + 6, &endptr, 16);
               if (config_.set_integer_value (section, name,
                                              static_cast<u_int> (value)))
                 {
@@ -153,9 +153,9 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
           else if (ACE_OS::strncmp (end, ACE_TEXT ("hex:"), 4) == 0)
             {
               // binary type
-              size_t string_length = ACE_OS::strlen (end + 4);
+              size_t const string_length = ACE_OS::strlen (end + 4);
               // divide by 3 to get the actual buffer length
-              size_t length = string_length / 3;
+              size_t const length = string_length / 3;
               size_t remaining = length;
               u_char* data {};
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -173,7 +173,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
               ACE_TCHAR* endptr {};
               while (remaining)
                 {
-                  u_char charin = (u_char) ACE_OS::strtoul (inb, &endptr, 16);
+                  u_char const charin = (u_char) ACE_OS::strtoul (inb, &endptr, 16);
                   *out = charin;
                   ++out;
                   --remaining;
@@ -359,9 +359,9 @@ ACE_Registry_ImpExp::export_section (const ACE_Configuration_Section_Key& sectio
     }
   // Export all sub sections
   ACE_TString name;
-  ACE_Configuration_Section_Key sub_key;
   for (int index {}; !config_.enumerate_sections (section, index, name); ++index)
     {
+      ACE_Configuration_Section_Key sub_key;
       ACE_TString sub_section (path);
       if (path.length ())
       {
