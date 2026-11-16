@@ -105,7 +105,7 @@ TAO_IMR_i::parse_args ()
       return -1;
     }
 
-  this->op_.reset (TAO_IMR_Op::make_op (this->argv_[1]));
+  this->op_ = TAO_IMR_Op::make_op (this->argv_[1]);
 
   // Check for unrecognized operation
 
@@ -142,38 +142,38 @@ TAO_IMR_i::print_usage ()
 
 // Factory for operations
 
-TAO_IMR_Op *
+std::unique_ptr<TAO_IMR_Op>
 TAO_IMR_Op::make_op (ACE_TCHAR const *op_name)
 {
   if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("activate")) == 0)
     {
       ORBSVCS_ERROR((LM_ERROR, "Warning: The activate option has been renamed to start.\n"));
-      return new TAO_IMR_Op_Activate ();
+      return std::make_unique<TAO_IMR_Op_Activate> ();
     }
   else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("start")) == 0)
-    return new TAO_IMR_Op_Activate ();
+    return std::make_unique<TAO_IMR_Op_Activate> ();
   else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("add")) == 0)
-    return new TAO_IMR_Op_Register (true);
+    return std::make_unique<TAO_IMR_Op_Register> (true);
   else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("autostart")) == 0)
-    return new TAO_IMR_Op_Autostart();
+    return std::make_unique<TAO_IMR_Op_Autostart> ();
   else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("ior")) == 0)
-    return new TAO_IMR_Op_IOR();
+    return std::make_unique<TAO_IMR_Op_IOR> ();
   else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("kill")) == 0)
-    return new TAO_IMR_Op_Kill ();
+    return std::make_unique<TAO_IMR_Op_Kill> ();
   else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("link")) == 0)
-    return new TAO_IMR_Op_Link ();
+    return std::make_unique<TAO_IMR_Op_Link> ();
   else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("list")) == 0)
-    return new TAO_IMR_Op_List ();
+    return std::make_unique<TAO_IMR_Op_List> ();
   else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("remove")) == 0)
-    return new TAO_IMR_Op_Remove ();
+    return std::make_unique<TAO_IMR_Op_Remove> ();
   else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("shutdown")) == 0)
-    return new TAO_IMR_Op_Shutdown ();
+    return std::make_unique<TAO_IMR_Op_Shutdown> ();
   else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("shutdown-repo")) == 0)
-    return new TAO_IMR_Op_ShutdownRepo ();
+    return std::make_unique<TAO_IMR_Op_ShutdownRepo> ();
   else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("update")) == 0)
-    return new TAO_IMR_Op_Register (false);
+    return std::make_unique<TAO_IMR_Op_Register> (false);
 
-  return nullptr;
+  return {};
 }
 
 TAO_IMR_Op::~TAO_IMR_Op ()

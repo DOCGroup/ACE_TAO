@@ -84,7 +84,7 @@ public:
   };
 
   /// Factory.
-  static TAO_IMR_Op *make_op (ACE_TCHAR const *op_name);
+  static std::unique_ptr<TAO_IMR_Op> make_op (ACE_TCHAR const *op_name);
 
   virtual ~TAO_IMR_Op ();
 
