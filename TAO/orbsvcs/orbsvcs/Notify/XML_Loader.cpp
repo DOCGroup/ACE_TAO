@@ -177,7 +177,7 @@ namespace TAO_Notify
     ACE_ASSERT (xml_attrs != nullptr);
     if (this->live_)
     {
-      ACE_ASSERT (object_stack_.size () > 0);
+      ACE_ASSERT (!object_stack_.empty ());
       if (! object_stack_.empty ())
         {
           Topology_Object* cur = object_stack_.back ();
@@ -212,7 +212,7 @@ namespace TAO_Notify
     ACE_UNUSED_ARG (name);
     if (this->live_)
     {
-      ACE_ASSERT (object_stack_.size () > 0);
+      ACE_ASSERT (!object_stack_.empty ());
       if (DEBUG_LEVEL > 5)
         {
           ORBSVCS_DEBUG ((LM_INFO,
