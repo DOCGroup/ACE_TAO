@@ -99,8 +99,6 @@ public:
    */
   friend class TAO_AMH_Response_Handler;
 
-  // Constructors.
-
   TAO_ServerRequest (TAO_GIOP_Message_Base *mesg_base,
                      TAO_InputCDR &input,
                      TAO_OutputCDR &output,
