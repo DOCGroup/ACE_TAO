@@ -26,16 +26,16 @@
 class Client_Svc_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
-  Client_Svc_Handler (ACE_Thread_Manager *t = 0);
-  int open (void *v = 0) override;
+  Client_Svc_Handler (ACE_Thread_Manager *t = nullptr);
+  int open (void *v = nullptr) override;
   int close (u_long flags = 0) override;
 };
 
 class Server_Svc_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
-  Server_Svc_Handler (ACE_Thread_Manager *t = 0);
-  int open (void *v = 0) override;
+  Server_Svc_Handler (ACE_Thread_Manager *t = nullptr);
+  int open (void *v = nullptr) override;
 };
 
 using ATTRIBUTES = size_t;

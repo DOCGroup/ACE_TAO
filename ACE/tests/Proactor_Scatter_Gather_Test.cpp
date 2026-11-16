@@ -276,7 +276,7 @@ class Receiver : public ACE_Service_Handler
   friend class Writer;
 
 public:
-  Receiver  (Acceptor *acceptor = 0, int index = -1);
+  Receiver  (Acceptor *acceptor = nullptr, int index = -1);
   virtual ~Receiver ();
 
   //FUZZ: disable check_for_lack_ACE_OS
@@ -916,7 +916,7 @@ class Sender : public ACE_Service_Handler
 {
   friend class Connector;
 public:
-  Sender  (Connector *connector = 0, int index = -1);
+  Sender  (Connector *connector = nullptr, int index = -1);
 
   virtual ~Sender ();
 

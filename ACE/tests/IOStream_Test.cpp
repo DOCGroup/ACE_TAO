@@ -146,7 +146,7 @@ operator<< (ostream &stream, qchar *buf)
 // the server.
 
 static void *
-client (void *arg = 0)
+client (void *arg = nullptr)
 {
   ACE_UNUSED_ARG (arg);
 
@@ -263,7 +263,7 @@ client (void *arg = 0)
 // begin a two-way conversation.
 
 static void *
-server (void *arg = 0)
+server (void *arg = nullptr)
 {
   // We don't _need_ to dynamically allocate the ACE_SOCK_IOStream.
   // But if we don't, it doesn't get destroyed on some platforms,
