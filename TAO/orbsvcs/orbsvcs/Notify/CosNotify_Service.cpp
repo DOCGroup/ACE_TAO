@@ -11,6 +11,8 @@
 #include "orbsvcs/NotifyExtC.h"
 #include "tao/debug.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_CosNotify_Service::TAO_CosNotify_Service ()
@@ -335,7 +337,7 @@ TAO_CosNotify_Service::init_service (CORBA::ORB_ptr orb)
 
           int argc {};
           ACE_TCHAR *argv0 {};
-          ACE_TCHAR **argv = &argv0;  // ansi requires argv be null terminated.
+          ACE_TCHAR **argv = std::addressof (argv0);  // ansi requires argv be null terminated.
           CORBA::ORB_var dispatcher = CORBA::ORB_init (argc, argv,
                                                        "default_dispatcher");
 

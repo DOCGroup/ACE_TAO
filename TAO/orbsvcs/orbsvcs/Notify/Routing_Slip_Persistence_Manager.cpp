@@ -558,7 +558,7 @@ Routing_Slip_Persistence_Manager::build_chain(
   }
   size_t pos = first_header.put_header(
     *first_block);
-  const ACE_Message_Block* mblk = &data;
+  const ACE_Message_Block* mblk = std::addressof (data);
   remainder = this->fill_block(*first_block, pos, mblk, 0);
   while ((remainder == 0) && (mblk->cont() != nullptr))
   {
@@ -570,7 +570,7 @@ Routing_Slip_Persistence_Manager::build_chain(
     static_cast<TAO_Notify::Routing_Slip_Persistence_Manager::Block_Size> (data_size - remainder);
   first_header.next_overflow = 0;
 
-  Block_Header* prevhdr = &first_header;
+  Block_Header* prevhdr = std::addressof (first_header);
   Persistent_Storage_Block* prevblk = first_block;
 
   while (remainder > 0)

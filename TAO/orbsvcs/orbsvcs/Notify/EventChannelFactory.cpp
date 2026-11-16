@@ -20,6 +20,7 @@
 #include "ace/Dynamic_Service.h"
 
 #include <algorithm>
+#include <memory>
 #include <new>
 
 #include "tao/debug.h"
@@ -412,7 +413,7 @@ TAO_Notify_EventChannelFactory::load_child (ACE_CString const &type,
   }
   else if (type == TAO_Notify::REGISTRY_TYPE)
   {
-    result = & this->reconnect_registry_;
+    result = std::addressof (this->reconnect_registry_);
   }
   return result;
 }

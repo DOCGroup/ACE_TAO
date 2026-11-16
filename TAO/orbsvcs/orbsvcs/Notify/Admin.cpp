@@ -144,7 +144,7 @@ TAO_Notify_Admin::save_persistent (TAO_Notify::Topology_Saver& saver)
 
       TAO_Notify::Save_Persist_Worker<TAO_Notify_Proxy>
         wrk(saver, want_all_children);
-      this->proxy_container().collection()->for_each(&wrk);
+      this->proxy_container().collection()->for_each (std::addressof (wrk));
 
       saver.end_object(this->id(), type);
     }
@@ -205,7 +205,7 @@ TAO_Notify_Admin::load_child (ACE_CString const &type,
                     ACE_TEXT ("(%P|%t) Admin reload filter_admin %d\n"),
                     static_cast<int> (id)
                     ));
-      result = & this->filter_admin_;
+      result = std::addressof (this->filter_admin_);
     }
   return result;
 }
@@ -214,7 +214,7 @@ void
 TAO_Notify_Admin::reconnect ()
 {
   TAO_Notify::Reconnect_Worker<TAO_Notify_Proxy> wrk;
-  this->proxy_container().collection()->for_each(&wrk);
+  this->proxy_container().collection()->for_each (std::addressof (wrk));
 }
 
 void

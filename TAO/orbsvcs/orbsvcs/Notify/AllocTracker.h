@@ -4,6 +4,8 @@
 
 #include "orbsvcs/Notify/notify_export.h"
 
+#include <memory>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -59,7 +61,7 @@ public:
      _CrtSetReportFile( _CRT_ERROR, _CRTDBG_FILE_STDOUT );
      _CrtSetReportMode( _CRT_ASSERT, _CRTDBG_MODE_FILE );
      _CrtSetReportFile( _CRT_ASSERT, _CRTDBG_FILE_STDOUT );
-     _CrtMemDumpAllObjectsSince (&this->before_);
+     _CrtMemDumpAllObjectsSince (std::addressof (this->before_));
     }
   }
 

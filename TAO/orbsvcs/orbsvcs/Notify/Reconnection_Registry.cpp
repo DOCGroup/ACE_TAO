@@ -12,6 +12,7 @@
 #include "orbsvcs/Notify/Properties.h"
 #include "orbsvcs/Notify/Topology_Saver.h"
 #include <vector>
+#include <memory>
 //#define DEBUG_LEVEL 10
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
@@ -29,7 +30,7 @@ namespace TAO_Notify
   Reconnection_Registry::Reconnection_Registry (Topology_Parent & parent)
   {
     // not the best technique, here.  Take advantage of "protected"
-    Topology_Object::topology_parent_ = &parent;
+    Topology_Object::topology_parent_ = std::addressof (parent);
   }
 
   Reconnection_Registry::~Reconnection_Registry () = default;

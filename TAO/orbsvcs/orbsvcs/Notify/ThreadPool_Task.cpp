@@ -9,6 +9,8 @@
 
 #include "ace/OS_NS_errno.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_ThreadPool_Task::TAO_Notify_ThreadPool_Task () = default;
@@ -125,7 +127,7 @@ TAO_Notify_ThreadPool_Task::svc ()
           if (!this->timer_->impl().is_empty ())
             {
               earliest_time = this->timer_->impl().earliest_time ();
-              dequeue_blocking_time = &earliest_time;
+              dequeue_blocking_time = std::addressof (earliest_time);
             }
 
           // Dequeue 1 item
