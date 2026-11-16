@@ -393,7 +393,7 @@ TAO_Advanced_Resource_Factory::init_protocol_factories ()
 TAO_ProtocolFactorySet *
 TAO_Advanced_Resource_Factory::get_protocol_factories ()
 {
-  return &protocol_factories_;
+  return std::addressof (protocol_factories_);
 }
 
 ACE_Reactor_Impl *
