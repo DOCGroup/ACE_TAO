@@ -189,19 +189,22 @@ protected:
   CosNotifyChannelAdmin::ProxyID proxy_supplier_id_;
   //@}
 
-  // = Methods
   virtual ~Filter_StructuredPushConsumer ();
 
-  // = NotifyPublish method
-    void offer_change (
-        const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed) override;
+  /// @name NotifyPublish operations
+  //@{
+  void offer_change (
+      const CosNotification::EventTypeSeq & added,
+      const CosNotification::EventTypeSeq & removed) override;
+  //@}
 
-  // = StructuredPushSupplier methods
+  /// @name StructuredPushConsumer operations
+  //@{
   void push_structured_event (
         const CosNotification::StructuredEvent & notification) override;
 
   void disconnect_structured_push_consumer () override;
+  //@}
 };
 
 /*****************************************************************/
@@ -241,16 +244,19 @@ protected:
   CosNotifyChannelAdmin::ProxyID proxy_consumer_id_;
   //@}
 
-  // = Protected Methods
   virtual ~Filter_StructuredPushSupplier ();
 
-  // = NotifySubscribe
+  /// @name NotifySubscribe operations
+  //@{
   void subscription_change (
         const CosNotification::EventTypeSeq & added,
         const CosNotification::EventTypeSeq & removed) override;
+  //@}
 
-  // = StructuredPushSupplier method
+  /// @name StructuredPushSupplier operations
+  //@{
   void disconnect_structured_push_supplier () override;
+  //@}
 };
 
 /***************************************************************************/

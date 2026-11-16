@@ -115,8 +115,8 @@ protected:
 
   int expected_count_; // (s+c)*t
 
-  // = command line params
-
+  /// @name Command-line parameters
+  //@{
   /// The number of iterations to connect disconnect.
   int count_;
 
@@ -125,6 +125,7 @@ protected:
 
   /// The number of suppliers to create.
   int suppliers_;
+  //@}
 };
 
 /***************************************************************************/

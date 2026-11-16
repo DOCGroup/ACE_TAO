@@ -25,8 +25,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// = Predefined event types.  All application defined types should be
-// relative to ACE_ES_EVENT_UNDEFINED.
+/// @name Predefined event types
+//@{
+/// Application-defined event types should be relative to ACE_ES_EVENT_UNDEFINED.
 const long ACE_ES_EVENT_ANY = 0;
 const long ACE_ES_EVENT_SHUTDOWN = 1;
 const long ACE_ES_EVENT_ACT = 2;
@@ -43,6 +44,7 @@ const long ACE_ES_BITMASK_DESIGNATOR = 12;
 const long ACE_ES_MASKED_TYPE_DESIGNATOR = 13;
 const long ACE_ES_NULL_DESIGNATOR = 14;
 const long ACE_ES_EVENT_UNDEFINED = 16;
+//@}
 
 ///  Predefined event sources.
 const long ACE_ES_EVENT_SOURCE_ANY = 0;

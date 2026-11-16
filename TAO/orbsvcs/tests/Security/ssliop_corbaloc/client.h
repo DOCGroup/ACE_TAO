@@ -219,9 +219,11 @@ public:
   int execute (TAO_Naming_Client &root_context) override;
 
 private:
-  // = The following functions isolate specific tests.
+  /// @name Naming context failure tests
+  //@{
   void not_empty_test (CosNaming::NamingContext_var &ref);
   void not_exist_test (CosNaming::NamingContext_var &ref);
+  //@}
 };
 
 /**
@@ -320,7 +322,7 @@ public:
   /// Initialize the client communication endpoint with server.
   int init (int argc, ACE_TCHAR **argv) override;
 
-  // = Symbolic ids.
+  /// Symbolic object IDs used by the client.
   enum OBJ_ID
   {
     OBJ1_ID = 5,

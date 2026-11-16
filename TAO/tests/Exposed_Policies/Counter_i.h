@@ -26,8 +26,8 @@ public:
   Counter_Servant &operator= (Counter_Servant const &) = delete;
   Counter_Servant &operator= (Counter_Servant &&) = delete;
 
-  // = Counter Interface Methods Overloading.
-
+  /// @name Counter interface operations
+  //@{
   void increment () override;
 
   CORBA::Long get_count () override;
@@ -35,6 +35,7 @@ public:
   void reset () override;
 
   void shutdown () override;
+  //@}
 
 protected:
   CORBA::Long count_ {};

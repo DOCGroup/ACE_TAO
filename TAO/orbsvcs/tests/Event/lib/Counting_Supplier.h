@@ -32,8 +32,6 @@ class EC_Test_Export EC_Counting_Supplier : public POA_RtecEventComm::PushSuppli
 public:
   EC_Counting_Supplier ();
 
-  // = The RtecEventComm::PushSupplier methods
-
   /**
    * Connect as a consumer to receive a TIMEOUT every <period>
    * milliseconds.
