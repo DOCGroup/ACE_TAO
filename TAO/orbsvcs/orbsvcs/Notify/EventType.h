@@ -45,7 +45,6 @@ public:
   /// Assignment from CosNotification::EventType
   TAO_Notify_EventType& operator=(const CosNotification::EventType& event_type);
 
-  /// Assignment operator.
   TAO_Notify_EventType& operator=(const TAO_Notify_EventType& event_type);
 
   /// @name Comparison operators
