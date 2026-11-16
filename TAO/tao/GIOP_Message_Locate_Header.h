@@ -31,6 +31,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_GIOP_Locate_Request_Header
 {
 public:
+  TAO_GIOP_Locate_Request_Header () = delete;
+
   TAO_GIOP_Locate_Request_Header (TAO_InputCDR &msg,
                                   TAO_ORB_Core *core);
 
