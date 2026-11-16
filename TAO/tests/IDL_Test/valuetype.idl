@@ -120,36 +120,6 @@ valuetype Copy_Struct_Holder
   public Copy_Leaf_Struct_Alias value;
 };
 
-valuetype Copy_Node;
-typedef sequence<Copy_Node> Copy_Node_Sequence;
-valuetype Copy_Node
-{
-  public long value;
-  public Copy_Node_Sequence children;
-};
-
-union Copy_Leaf_Union switch (boolean)
-{
-  case TRUE:
-    Copy_Leaf leaf;
-  default:
-    long number;
-};
-
-typedef Copy_Leaf Copy_Leaf_Array[2];
-
-struct Copy_Nested_Aggregate
-{
-  Copy_Leaf_Sequence leaves;
-  Copy_Leaf_Union choice;
-  Copy_Leaf_Array array;
-};
-
-valuetype Copy_Aggregate_Holder
-{
-  public Copy_Nested_Aggregate aggregate;
-};
-
 enum ValueSort2 {
   SYMBOL_TYPE2
 };
