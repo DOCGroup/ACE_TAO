@@ -40,7 +40,7 @@ TAO_Dynamic_Adapter_Impl::request (CORBA::Object_ptr obj,
                                    CORBA::ORB_ptr orb,
                                    char const* operation)
 {
-  CORBA::Request_ptr req = CORBA::Request::_nil ();
+  CORBA::Request_ptr req {};
   ACE_NEW_THROW_EX (req,
                     CORBA::Request (obj,
                                     orb,

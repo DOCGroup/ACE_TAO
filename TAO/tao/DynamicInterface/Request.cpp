@@ -304,7 +304,7 @@ CORBA::Request::poll_response ()
   // If we're single-threaded, the application could starve the ORB,
   // and the response never gets received, so let the ORB do an
   // atom of work, if necessary, each time we poll.
-  ACE_Time_Value tv (0, 0);
+  ACE_Time_Value tv {};
   (void) this->orb_->perform_work (std::addressof (tv));
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
