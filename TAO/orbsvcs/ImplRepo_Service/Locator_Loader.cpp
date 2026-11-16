@@ -43,7 +43,7 @@ ImR_Locator_Loader::init (int argc, ACE_TCHAR *argv[])
 
       // Create a thread in which to run the service
       ACE_ASSERT (this->runner_.get () == nullptr);
-      this->runner_.reset(new ImR_Locator_ORB_Runner (*this));
+      this->runner_ = std::make_unique<ImR_Locator_ORB_Runner> (*this);
       this->runner_->activate ();
     }
   catch (const CORBA::Exception&)
@@ -62,7 +62,7 @@ ImR_Locator_Loader::fini ()
       int ret = this->service_.fini ();
 
       this->runner_->wait ();
-      this->runner_.reset (nullptr);
+      this->runner_.reset ();
       return ret;
     }
   catch (const CORBA::Exception&)

@@ -115,27 +115,27 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb)
     {
     case Options::REPO_REGISTRY:
       {
-        repository_.reset(new Registry_Backing_Store(*this->opts_, orb));
+        repository_.reset (new Registry_Backing_Store (*this->opts_, orb));
         break;
       }
     case Options::REPO_HEAP_FILE:
       {
-        repository_.reset(new Heap_Backing_Store(*this->opts_, orb));
+        repository_.reset (new Heap_Backing_Store (*this->opts_, orb));
         break;
       }
     case Options::REPO_XML_FILE:
       {
-        repository_.reset(new XML_Backing_Store(*this->opts_, orb));
+        repository_.reset (new XML_Backing_Store (*this->opts_, orb));
         break;
       }
     case Options::REPO_SHARED_FILES:
       {
-        repository_.reset(new Shared_Backing_Store(*this->opts_, orb, this));
+        repository_.reset (new Shared_Backing_Store (*this->opts_, orb, this));
         break;
       }
     case Options::REPO_NONE:
       {
-        repository_.reset(new No_Backing_Store(*this->opts_, orb));
+        repository_.reset (new No_Backing_Store (*this->opts_, orb));
         break;
       }
     default:

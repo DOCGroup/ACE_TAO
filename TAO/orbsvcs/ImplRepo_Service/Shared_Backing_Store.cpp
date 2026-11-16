@@ -97,9 +97,9 @@ namespace {
 #if defined (ACE_WIN32)
       this->file_ = ACE_OS::fopen (file.c_str(), flags_str);
 #else
-      this->file_lock_.reset
-        (new ACE_File_Lock (file.c_str (),
-                            flags_, 0666, unlink_in_destructor));
+      this->file_lock_ = std::make_unique<ACE_File_Lock> (file.c_str (),
+                                                          flags_, 0666,
+                                                          unlink_in_destructor);
 
       // Truncating output so this will not allow reading then writing
       ACE_OS::ftruncate (this->file_lock_->get_handle (), 0);
