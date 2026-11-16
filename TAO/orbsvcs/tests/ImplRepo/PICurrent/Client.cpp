@@ -35,7 +35,7 @@ public:
   Worker (Messenger_ptr m)
     : messenger(Messenger::_duplicate (m)) {}
 
-  int svc ()
+  int svc () override
   {
     int offset = get_offset ();
     CORBA::String_var message = CORBA::string_dup( "Hello!");
@@ -75,32 +75,32 @@ class Client_Req_Int
     public virtual ::CORBA::LocalObject
 {
 public:
-  virtual char * name ()
+  char * name () override
   {
     return CORBA::string_dup ("Client_Req_Int");
   }
 
-  virtual void destroy ()
+  void destroy () override
   {
   }
 
-  virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr)
+  void send_poll (PortableInterceptor::ClientRequestInfo_ptr) override
   {
   }
 
-  virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr)
+  void receive_reply (PortableInterceptor::ClientRequestInfo_ptr) override
   {
   }
 
-  virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr)
+  void receive_other (PortableInterceptor::ClientRequestInfo_ptr) override
   {
   }
 
-  virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr)
+  void receive_exception (PortableInterceptor::ClientRequestInfo_ptr) override
   {
   }
 
-  virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
+  void send_request (PortableInterceptor::ClientRequestInfo_ptr ri) override
   {
     if (CORBA::is_nil (this->pic_.in()))
       {
@@ -148,13 +148,11 @@ class ORB_Initializer : public virtual PortableInterceptor::ORBInitializer,
                         public virtual ::CORBA::LocalObject
 {
 public:
-  virtual void
-  pre_init (PortableInterceptor::ORBInitInfo_ptr)
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr) override
   {
   }
 
-  virtual void
-  post_init (PortableInterceptor::ORBInitInfo_ptr info)
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override
   {
     slot_id = info->allocate_slot_id ();
     ACE_DEBUG ((LM_DEBUG, "Allocated slot with id %d.\n", slot_id));

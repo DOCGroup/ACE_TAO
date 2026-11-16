@@ -17,12 +17,12 @@ class  Test_i : public virtual POA_Messenger
 public:
   Test_i (Terminator &terminator);
 
-  virtual ~Test_i ();
+  ~Test_i () override;
 
-  virtual CORBA::Boolean send_message (
+  CORBA::Boolean send_message (
     const char * user_name,
     const char * subject,
-    char *& message);
+    char *& message) override;
 
 private:
   int message_count_;
