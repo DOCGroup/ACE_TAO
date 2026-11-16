@@ -15,12 +15,50 @@
 
 #include <cstring>
 #include <memory>
+#include <unordered_map>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Valuetype/ValueBase.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+namespace
+{
+  thread_local size_t valuetype_copy_depth {};
+  thread_local std::unordered_map<CORBA::ValueBase const *,
+                                 CORBA::ValueBase *> valuetype_copies;
+}
+
+TAO::Valuetype_Copy_Context::Valuetype_Copy_Context ()
+{
+  if (valuetype_copy_depth++ == 0)
+    {
+      valuetype_copies.clear ();
+    }
+}
+
+TAO::Valuetype_Copy_Context::~Valuetype_Copy_Context ()
+{
+  if (--valuetype_copy_depth == 0)
+    {
+      valuetype_copies.clear ();
+    }
+}
+
+CORBA::ValueBase *
+TAO::Valuetype_Copy_Context::find (CORBA::ValueBase const *source)
+{
+  const auto pos = valuetype_copies.find (source);
+  return pos != valuetype_copies.end () ? pos->second : nullptr;
+}
+
+void
+TAO::Valuetype_Copy_Context::remember (CORBA::ValueBase const *source,
+                                       CORBA::ValueBase *copy)
+{
+  valuetype_copies.emplace (source, copy);
+}
 
 // Static operations in namespace CORBA.
 

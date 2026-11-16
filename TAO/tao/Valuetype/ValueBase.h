@@ -398,6 +398,20 @@ operator<< (std::ostream&, CORBA::ValueBase *);
 /// Used in generated code if CORBA::ValueBase is an argument or return type.
 namespace TAO
 {
+  /** Keeps one deep-copy operation's valuetype graph consistent. */
+  class TAO_Valuetype_Export Valuetype_Copy_Context
+  {
+  public:
+    Valuetype_Copy_Context ();
+    ~Valuetype_Copy_Context ();
+
+    Valuetype_Copy_Context (Valuetype_Copy_Context const &) = delete;
+    Valuetype_Copy_Context &operator= (Valuetype_Copy_Context const &) = delete;
+
+    static CORBA::ValueBase *find (CORBA::ValueBase const *);
+    static void remember (CORBA::ValueBase const *, CORBA::ValueBase *);
+  };
+
   template<>
   class TAO_Valuetype_Export Arg_Traits<CORBA::ValueBase>
     : public Object_Arg_Traits_T<CORBA::ValueBase *,

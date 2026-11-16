@@ -386,6 +386,77 @@ test_valuetype_copy (int &error_count)
             leaf->leaf_value (), 51);
         }
     }
+
+  Copy_Nested_Aggregate aggregate;
+  aggregate.leaves.length (1);
+  leaf->_add_ref ();
+  aggregate.leaves[0] = leaf;
+  aggregate.choice.leaf (leaf);
+  leaf->_add_ref ();
+  aggregate.array[0] = leaf;
+  OBV_Copy_Aggregate_Holder aggregate_holder;
+  aggregate_holder.aggregate (aggregate);
+  Copy_Leaf_var retained_aggregate_leaf;
+  {
+    CORBA::ValueBase_var aggregate_copy_value (
+      aggregate_holder._copy_value ());
+    Copy_Aggregate_Holder * const aggregate_copy =
+      Copy_Aggregate_Holder::_downcast (aggregate_copy_value.in ());
+    if (aggregate_copy == nullptr)
+      {
+        ++error_count;
+        ACE_ERROR ((LM_ERROR, "Copy_Aggregate_Holder copy has wrong type\n"));
+      }
+    else
+      {
+        Copy_Nested_Aggregate const &copied_aggregate = aggregate_copy->aggregate ();
+        Copy_Leaf * const copied_leaf = copied_aggregate.leaves[0];
+        if (copied_leaf == nullptr || copied_leaf == leaf
+            || copied_aggregate.choice.leaf () != copied_leaf
+            || copied_aggregate.array[0] != copied_leaf)
+          {
+            ++error_count;
+            ACE_ERROR ((LM_ERROR, "Copy_Aggregate_Holder did not preserve its graph\n"));
+          }
+        else
+          {
+            copied_leaf->_add_ref ();
+            retained_aggregate_leaf = copied_leaf;
+          }
+      }
+  }
+  if (retained_aggregate_leaf.in () != nullptr
+      && retained_aggregate_leaf->_refcount_value () != 1)
+    {
+      ++error_count;
+      ACE_ERROR ((LM_ERROR, "Copy_Aggregate_Holder leaked its nested copy\n"));
+    }
+
+  CORBA::ValueBase_var cyclic_value (new OBV_Copy_Node);
+  Copy_Node * const cyclic_node = Copy_Node::_downcast (cyclic_value.in ());
+  cyclic_node->value (61);
+  cyclic_node->children ().length (1);
+  cyclic_node->_add_ref ();
+  cyclic_node->children ()[0] = cyclic_node;
+
+  CORBA::ValueBase_var cyclic_copy_value (cyclic_node->_copy_value ());
+  Copy_Node * const cyclic_copy = Copy_Node::_downcast (cyclic_copy_value.in ());
+  if (cyclic_copy == nullptr || cyclic_copy->children ().length () != 1
+      || cyclic_copy->children ()[0] != cyclic_copy)
+    {
+      ++error_count;
+      ACE_ERROR ((LM_ERROR, "Copy_Node did not preserve its self-cycle\n"));
+    }
+  else
+    {
+      expect_equals<CORBA::Long> (
+        error_count, "Copy_Node copied value", cyclic_copy->value (), 61);
+    }
+  cyclic_node->children ()[0] = nullptr;
+  if (cyclic_copy != nullptr && cyclic_copy->children ().length () != 0)
+    {
+      cyclic_copy->children ()[0] = nullptr;
+    }
 }
 
 void
