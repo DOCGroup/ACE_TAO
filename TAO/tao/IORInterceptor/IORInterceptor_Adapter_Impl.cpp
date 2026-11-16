@@ -39,9 +39,9 @@ TAO_IORInterceptor_Adapter_Impl::establish_components (TAO_Root_POA *poa)
   size_t const interceptor_count = this->ior_interceptor_list_.size ();
 
   if (interceptor_count == 0)
-  {
-    return;
-  }
+    {
+      return;
+    }
 
   TAO_IORInfo *tao_info {};
   ACE_NEW_THROW_EX (tao_info,
@@ -145,9 +145,9 @@ TAO_IORInterceptor_Adapter_Impl::adapter_state_changed (
   size_t const interceptor_count = this->ior_interceptor_list_.size ();
 
   if (interceptor_count == 0)
-  {
-    return;
-  }
+    {
+      return;
+    }
 
   PortableInterceptor::ObjectReferenceTemplateSeq seq_obj_ref_template;
 
@@ -189,9 +189,9 @@ TAO_IORInterceptor_Adapter_Impl::adapter_manager_state_changed (
   size_t const interceptor_count = this->ior_interceptor_list_.size ();
 
   if (interceptor_count == 0)
-  {
-    return;
-  }
+    {
+      return;
+    }
 
   for (size_t i {}; i < interceptor_count; ++i)
     {
