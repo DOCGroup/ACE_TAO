@@ -27,12 +27,14 @@ TAO_UIOP_Endpoint::TAO_UIOP_Endpoint ()
 int
 TAO_UIOP_Endpoint::addr_to_string (char *buffer, size_t length)
 {
-  if (length < (std::strlen (this->rendezvous_point ()) + 1))
-  {
-    return -1;
-  }
+  char const * const rendezvous_point = this->rendezvous_point ();
+  size_t const actual_len = std::strlen (rendezvous_point);
+  if (length <= actual_len)
+    {
+      return -1;
+    }
 
-  std::strcpy (buffer, this->rendezvous_point ());
+  std::memcpy (buffer, rendezvous_point, actual_len + 1);
 
   return 0;
 }
@@ -74,9 +76,9 @@ CORBA::ULong
 TAO_UIOP_Endpoint::hash ()
 {
   if (this->hash_val_ != 0)
-  {
-    return this->hash_val_;
-  }
+    {
+      return this->hash_val_;
+    }
 
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
@@ -85,9 +87,9 @@ TAO_UIOP_Endpoint::hash ()
                       this->hash_val_);
     // .. DCL
     if (this->hash_val_ != 0)
-    {
-      return this->hash_val_;
-    }
+      {
+        return this->hash_val_;
+      }
 
     this->hash_val_ =
       ACE::hash_pjw (this->rendezvous_point ());
