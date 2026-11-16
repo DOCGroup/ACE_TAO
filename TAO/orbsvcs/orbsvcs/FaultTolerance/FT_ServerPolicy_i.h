@@ -34,19 +34,17 @@ class TAO_FT_Heart_Beat_Enabled_Policy
 public:
   explicit TAO_FT_Heart_Beat_Enabled_Policy (CORBA::Boolean const boolean);
 
-  /// Copy constructor.
   TAO_FT_Heart_Beat_Enabled_Policy (
       TAO_FT_Heart_Beat_Enabled_Policy const &rhs);
 
+  /// Helper method for the implementation of CORBA::ORB::create_policy.
   static CORBA::Policy_ptr create (CORBA::Any const &val);
-
-  // Helper method for the implementation of
-  // CORBA::ORB::create_policy.
 
   /// Returns a copy of <this>.
   TAO_FT_Heart_Beat_Enabled_Policy *clone () const;
 
-  // = The FT::HeartBeatPolicy methods
+  /// @name FT::HeartbeatEnabledPolicy methods
+  /// @{
   CORBA::Boolean heartbeat_enabled_policy_value () override;
 
   CORBA::PolicyType policy_type () override;
@@ -54,6 +52,7 @@ public:
   CORBA::Policy_ptr copy () override;
 
   void destroy () override;
+  /// @}
 
 private:
   /// indicates whether heartbeating is enabled or not.

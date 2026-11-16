@@ -46,7 +46,6 @@ class TAO_FT_Request_Duration_Policy
 public:
   explicit TAO_FT_Request_Duration_Policy (TimeBase::TimeT const &relative_expiry);
 
-  /// Copy constructor.
   TAO_FT_Request_Duration_Policy (TAO_FT_Request_Duration_Policy const &rhs);
 
   /// Helper method for the implementation of
@@ -56,7 +55,8 @@ public:
   /// Returns a copy of <this>.
   TAO_FT_Request_Duration_Policy *clone () const;
 
-  // = The FT::RequestDurationPolicy methods
+  /// @name FT::RequestDurationPolicy methods
+  /// @{
   TimeBase::TimeT request_duration_policy_value () override;
 
   CORBA::PolicyType policy_type () override;
@@ -64,6 +64,7 @@ public:
   CORBA::Policy_ptr copy () override;
 
   void destroy () override;
+  /// @}
 
   /// Change the CORBA representation to the ACE representation.
   void set_time_value (ACE_Time_Value &time_value);
@@ -90,7 +91,6 @@ public:
                             TimeBase::TimeT const &interval,
                             TimeBase::TimeT const &timeout);
 
-  /// Copy constructor.
   TAO_FT_Heart_Beat_Policy (TAO_FT_Heart_Beat_Policy const &rhs);
 
   /// Helper method for the implementation of
@@ -100,7 +100,8 @@ public:
   /// Returns a copy of <this>.
   TAO_FT_Heart_Beat_Policy *clone () const;
 
-  // = The FT::HeartBeatPolicy methods
+  /// @name FT::HeartbeatPolicy methods
+  /// @{
   FT::HeartbeatPolicyValue heartbeat_policy_value () override;
 
   CORBA::PolicyType policy_type () override;
@@ -108,13 +109,15 @@ public:
   CORBA::Policy_ptr copy () override;
 
   void destroy () override;
+  /// @}
 
   /// Change the CORBA representation to the ACE representation.
   void set_time_value (ACE_Time_Value &time_value,
                        TimeBase::TimeT const &timebase);
 
 private:
-  // The attributes
+  /// @name Attributes
+  /// @{
   /// <heartbeat_> indicates whether heartbeating is enabled or not.
   CORBA::Boolean heartbeat_;
 
@@ -123,6 +126,7 @@ private:
 
   /// The timeouts for the heartbeats
   TimeBase::TimeT heartbeat_timeout_;
+  /// @}
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
