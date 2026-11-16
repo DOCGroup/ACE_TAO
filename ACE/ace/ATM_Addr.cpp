@@ -189,8 +189,8 @@ ACE_ATM_Addr::set (const ACE_ATM_Addr &sap,
   ACE_ASSERT (sap.get_type () == PF_ATMSVC);
 #endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 */
 
- (void) ACE_OS::memcpy ((void *) &this->atm_addr_,
- (void *) &sap.atm_addr_,
+  (void) ACE_OS::memcpy ((void *) &this->atm_addr_,
+                         (void *) &sap.atm_addr_,
                          sizeof this->atm_addr_);
   return 0;
 }
@@ -212,8 +212,8 @@ ACE_ATM_Addr::set (const ATM_Addr *sap,
 #endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 */
                             sizeof (*sap));
 
- (void) ACE_OS::memcpy ((void *) &this->atm_addr_,
- (void *) sap,
+  (void) ACE_OS::memcpy ((void *) &this->atm_addr_,
+                         (void *) sap,
                          sizeof this->atm_addr_);
   return 0;
 }
