@@ -47,8 +47,8 @@ TAO_Endpoint_Acceptor_Filter::fill_profile (TAO::ObjectKey const& object_key,
   if (TAO_debug_level > 2)
     TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%P|%t) EndpointPolicy filtering acceptors")
-                ACE_TEXT (" - mprofile has %d profiles,")
-                ACE_TEXT (" endpoint list has %d entries\n"),
+                ACE_TEXT (" - mprofile has %u profiles,")
+                ACE_TEXT (" endpoint list has %u entries\n"),
                 mprofile.profile_count (), num_endpoints));
 
   for (TAO_PHandle pfile_ndx {};
@@ -60,8 +60,8 @@ TAO_Endpoint_Acceptor_Filter::fill_profile (TAO::ObjectKey const& object_key,
 
       if (TAO_debug_level > 2)
         TAOLIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("(%P|%t) Testing profile %d - ")
-                    ACE_TEXT("it contains %d endpoints\n"),
+                    ACE_TEXT("(%P|%t) Testing profile %u - ")
+                    ACE_TEXT("it contains %u endpoints\n"),
                     pfile_ndx, pfile->endpoint_count()));
 
       bool first_endpoint {true};
@@ -135,7 +135,7 @@ TAO_Endpoint_Acceptor_Filter::fill_profile (TAO::ObjectKey const& object_key,
           if (TAO_debug_level > 2)
             TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("(%P|%t) EndpointPolicy filter ")
-                        ACE_TEXT ("profile retained with %d endpoints\n"),
+                        ACE_TEXT ("profile retained with %u endpoints\n"),
                         ep_count));
         }
     }
@@ -153,7 +153,7 @@ TAO_Endpoint_Acceptor_Filter::fill_profile (TAO::ObjectKey const& object_key,
   if (TAO_debug_level > 2)
     TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%P|%t) EndpointPolicy filter returning mprofile ")
-                ACE_TEXT ("with %d profiles\n"),
+                ACE_TEXT ("with %u profiles\n"),
                 mprofile.profile_count ()));
 
   return 0;
