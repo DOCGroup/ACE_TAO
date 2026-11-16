@@ -729,13 +729,15 @@ TAO_AV_SCTP_SEQ_Flow_Handler::change_qos (AVStreams::QoS qos)
   // passed into this method
   if (dscp_flag || ecn != 0)
     {
-      int tos;
-      tos = (int)(dscp << 2);
+      int tos = static_cast<int> (dscp << 2);
       if (ecn != 0)
         {
           tos |= ecn;
         }
-      ret = this->peer ().set_option(IPPROTO_IP, IP_TOS, (int *)&tos , (int)sizeof(tos));
+      ret = this->peer ().set_option (IPPROTO_IP,
+                                      IP_TOS,
+                                      std::addressof (tos),
+                                      static_cast<int> (sizeof (tos)));
 
       if(TAO_debug_level > 0)
         {
