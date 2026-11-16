@@ -12,6 +12,7 @@
 
 #include "ace/OS_main.h"
 #include "ace/ACE.h"
+#include "ace/Malloc_Base.h"
 #include "ace/SString.h"
 #include "ace/Naming_Context.h"
 #include "ace/Profile_Timer.h"
@@ -29,15 +30,7 @@ static std::array<char, BUFSIZ> name {};
 static std::array<char, BUFSIZ> value {};
 static std::array<char, BUFSIZ> type {};
 
-struct ACE_String_Deleter
-{
-  void operator() (char *string) const
-  {
-    ACE::strdelete (string);
-  }
-};
-
-using ACE_String_Unique_Ptr = std::unique_ptr<char, ACE_String_Deleter>;
+using ACE_String_Unique_Ptr = std::unique_ptr<char, ACE_Array_Deleter<char>>;
 
 static void
 format_entry (std::array<char, BUFSIZ> &buffer,
