@@ -48,7 +48,7 @@ Client::init (int argc,
 int
 Client::property_tester ()
 {
-  // = Testing PropertySet & Iterators.
+  // Testing PropertySet and iterators.
 
   // Testing define_property () of PropertySet interface.
   this->test_define_property ();
@@ -86,7 +86,7 @@ Client::property_tester ()
   // Testing get_all_properties.
   this->test_get_all_properties ();
 
-  // = Testing PropertySetDef & Iterators.
+  // Testing PropertySetDef and iterators.
 
   // Testing define_property_with_mode.
   this->test_define_property_with_mode ();

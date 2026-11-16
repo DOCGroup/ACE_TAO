@@ -407,8 +407,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                                 argv,
                                                 "internet");
 
-      // = Checking PropertySet interface.
-
       ACE_DEBUG ((LM_DEBUG,
                   "\nTAO_PropertySet Testing\n"));
       TAO_PropertySet_Tester propertyset_tester;
@@ -454,8 +452,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Test the number of properties and print it out.
       propertyset_tester.test_get_number_of_properties ();
-
-      // = Checking the PropertyNamesIterator interface.
 
       ACE_DEBUG ((LM_DEBUG,
                   "\nTAO_PropertyNamesIterator Testing\n"));
