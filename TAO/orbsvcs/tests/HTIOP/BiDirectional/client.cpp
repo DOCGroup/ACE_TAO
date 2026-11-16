@@ -40,7 +40,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   CORBA::ORB_var orb = CORBA::ORB::_nil();
   PortableServer::POA_var root_poa = PortableServer::POA::_nil();
-  Callback_i *servant = 0;
+  Callback_i *servant {};
 
   try
     {

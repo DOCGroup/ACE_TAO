@@ -2,7 +2,7 @@
 #include "ace/Get_Opt.h"
 #include "TestC.h"
 
-const ACE_TCHAR *ior_server = 0;
+const ACE_TCHAR *ior_server {};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

@@ -127,7 +127,7 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
     return -1;
   }
 #else /* when ACE_LACKS_IOSTREAM_TOTALLY */
-  ACE_TCHAR *fmode = 0;
+  ACE_TCHAR *fmode {};
   if (append)
     fmode = ACE_TEXT ("a");
   else
