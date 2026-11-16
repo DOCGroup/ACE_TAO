@@ -325,6 +325,39 @@ test_valuetype_copy (int &error_count)
             leaf->leaf_value (), 51);
         }
     }
+
+  Copy_Leaf_Struct leaf_struct;
+  leaf->_add_ref ();
+  leaf_struct.leaf = leaf;
+  OBV_Copy_Struct_Holder struct_holder;
+  struct_holder.value (leaf_struct);
+  CORBA::ValueBase_var struct_copy (struct_holder._copy_value ());
+  Copy_Struct_Holder * const struct_downcast =
+    Copy_Struct_Holder::_downcast (struct_copy.in ());
+  if (struct_downcast == nullptr)
+    {
+      ++error_count;
+      ACE_ERROR ((LM_ERROR, "Copy_Struct_Holder copy has wrong type\n"));
+    }
+  else
+    {
+      Copy_Leaf * const copied_leaf = struct_downcast->value ().leaf.in ();
+      if (copied_leaf == leaf)
+        {
+          ++error_count;
+          ACE_ERROR ((LM_ERROR, "Copy_Struct_Holder shares a valuetype\n"));
+        }
+      else
+        {
+          expect_equals<CORBA::Long> (
+            error_count, "Copy_Struct_Holder copied leaf",
+            copied_leaf->leaf_value (), 51);
+          copied_leaf->leaf_value (54);
+          expect_equals<CORBA::Long> (
+            error_count, "Copy_Struct_Holder original leaf unchanged",
+            leaf->leaf_value (), 51);
+        }
+    }
 }
 
 void

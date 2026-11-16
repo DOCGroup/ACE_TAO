@@ -81,6 +81,11 @@ typedef Copy_Leaf Copy_Leaf_Alias;
 
 typedef sequence<Copy_Leaf_Alias> Copy_Leaf_Sequence;
 
+struct Copy_Leaf_Struct
+{
+  Copy_Leaf_Alias leaf;
+};
+
 valuetype Copy_Alias_Holder
 {
   public Copy_Leaf_Alias leaf;
@@ -89,6 +94,11 @@ valuetype Copy_Alias_Holder
 valuetype Copy_Sequence_Holder
 {
   public Copy_Leaf_Sequence leaves;
+};
+
+valuetype Copy_Struct_Holder
+{
+  public Copy_Leaf_Struct value;
 };
 
 enum ValueSort2 {
