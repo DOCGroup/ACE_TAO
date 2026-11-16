@@ -169,7 +169,7 @@ Annotation_Test::run (const std::string &idl)
 AST_Decl *
 Annotation_Test::assert_node (const char *name, UTL_Scope *from)
 {
-  AST_Decl *node = 0;
+  AST_Decl *node = nullptr;
   UTL_ScopedName *scoped_name = FE_Utils::string_to_scoped_name (name);
 
   UTL_Scope *scope = from ? from : (scope_ ? scope_ : idl_global->scopes ().bottom ());

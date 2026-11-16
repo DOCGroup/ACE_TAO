@@ -10,7 +10,7 @@
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/ARGV.h"
 
-BE_GlobalData *be_global = 0;
+BE_GlobalData *be_global = nullptr;
 
 BE_GlobalData::BE_GlobalData ()
 {
