@@ -38,10 +38,11 @@ public:
   Supplier &operator= (Supplier const &) = delete;
   Supplier &operator= (Supplier &&) = delete;
 
-  // = The RtecEventComm::PushSupplier methods
-
+  /// @name RtecEventComm::PushSupplier methods
+  /// @{
   /// The skeleton methods.
   void disconnect_push_supplier () override;
+  /// @}
 };
 
 #endif /* SUPPLIER_H */

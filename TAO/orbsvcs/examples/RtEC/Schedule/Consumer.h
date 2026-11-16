@@ -38,11 +38,12 @@ public:
   Consumer &operator= (Consumer const &) = delete;
   Consumer &operator= (Consumer &&) = delete;
 
-  // = The RtecEventComm::PushConsumer methods
-
+  /// @name RtecEventComm::PushConsumer methods
+  /// @{
   /// The skeleton methods.
   void push (RtecEventComm::EventSet const &events) override;
   void disconnect_push_consumer () override;
+  /// @}
 };
 
 #endif /* CONSUMER_H */

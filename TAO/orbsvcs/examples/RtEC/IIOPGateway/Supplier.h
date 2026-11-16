@@ -35,10 +35,11 @@ public:
   /// Run the test
   int run (int argc, ACE_TCHAR* argv[]);
 
-  // = The RtecEventComm::PushSupplier methods
-
+  /// @name RtecEventComm::PushSupplier methods
+  /// @{
   /// The skeleton methods.
   void disconnect_push_supplier () override;
+  /// @}
 
 private:
   int parse_args (int argc, ACE_TCHAR *argv[]);

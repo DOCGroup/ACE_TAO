@@ -40,10 +40,11 @@ public:
   Supplier &operator= (Supplier const &) = delete;
   Supplier &operator= (Supplier &&) = delete;
 
-  // = The RtecEventComm::PushSupplier methods
-
+  /// @name RtecEventComm::PushSupplier methods
+  /// @{
   /// The skeleton methods.
   void disconnect_push_supplier () override;
+  /// @}
 
   void timeout_occurred ();
 
@@ -71,11 +72,12 @@ public:
   Timeout_Consumer &operator= (Timeout_Consumer const &) = delete;
   Timeout_Consumer &operator= (Timeout_Consumer &&) = delete;
 
-  // = The RtecEventComm::PushConsumer methods
-
+  /// @name RtecEventComm::PushConsumer methods
+  /// @{
   /// The skeleton methods.
   void push (RtecEventComm::EventSet const &events) override;
   void disconnect_push_consumer () override;
+  /// @}
 
 private:
   // Borrowed from the Supplier objects in Service::ACE_TMAIN.

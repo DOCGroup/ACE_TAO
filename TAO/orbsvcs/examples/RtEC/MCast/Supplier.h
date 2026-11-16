@@ -44,10 +44,11 @@ public:
   /// Push a single event
   void perform_push ();
 
-  // = The RtecEventComm::PushSupplier methods
-
+  /// @name RtecEventComm::PushSupplier methods
+  /// @{
   /// The skeleton methods.
   void disconnect_push_supplier () override;
+  /// @}
 
 private:
   /// The proxy

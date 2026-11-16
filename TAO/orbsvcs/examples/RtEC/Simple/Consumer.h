@@ -36,11 +36,12 @@ public:
   /// Run the test
   int run (int argc, ACE_TCHAR* argv[]);
 
-  // = The RtecEventComm::PushConsumer methods
-
+  /// @name RtecEventComm::PushConsumer methods
+  /// @{
   /// The skeleton methods.
   void push (RtecEventComm::EventSet const &events) override;
   void disconnect_push_consumer () override;
+  /// @}
 
 private:
   /// Keep track of the number of events received.
