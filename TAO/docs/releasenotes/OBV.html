@@ -56,6 +56,12 @@
             </UL></P>
 	    <p></p>
         </li>
+        <li><p>Generated OBV classes for operation-free valuetypes provide
+            <CODE>_copy_value()</CODE> and the required reference-count base.
+            Applications that add
+            <CODE>CORBA::DefaultValueRefCountBase</CODE> to a derived
+            implementation should remove that redundant base.</p>
+        </li>
         <li><p><CODE>Valuetype</CODE>s can be used as arguments in CORBA invocations.
             There is an example in
             <A HREF="../../examples/OBV/Typed_Events">$TAO_ROOT/TAO/examples/OBV/Typed_Events</A>.
