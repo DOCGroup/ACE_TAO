@@ -12,7 +12,7 @@ Default_Dispatcher_Impl::Default_Dispatcher_Impl () = default;
 int
 Default_Dispatcher_Impl::init_i (Dispatcher_Attributes const &attrs)
 {
-  int const size = ACE_Utils::truncate_cast<int> (attrs.config_info_set_.size ());
+  size_t const size = attrs.config_info_set_.size ();
 
   if (size == 0)
     {
@@ -27,7 +27,7 @@ Default_Dispatcher_Impl::init_i (Dispatcher_Attributes const &attrs)
   this->tasks_.reset (tasks_array);
 
   ConfigInfoSet::const_iterator iter = attrs.config_info_set_.begin ();
-  int i {};
+  size_t i {};
   for (; i < size; ++i, ++iter)
     {
       Dispatcher_Task *task {};
@@ -57,7 +57,7 @@ Default_Dispatcher_Impl::activate_i ()
       return 0;
     }
 
-  for (int i {}; i < this->ntasks_; ++i)
+  for (size_t i {}; i < this->ntasks_; ++i)
     {
       Priority_t const priority =
         this->tasks_[i]->get_curr_config_info ().thread_priority_;
@@ -81,7 +81,7 @@ Default_Dispatcher_Impl::find_task_with_preemption_prio (Priority_t prio)
 {
   if (prio >= 0)
     {
-      for (int i {}; i < this->ntasks_; ++i)
+      for (size_t i {}; i < this->ntasks_; ++i)
         {
           if (this->tasks_[i]->preemption_priority () == prio)
             {
@@ -123,7 +123,7 @@ Default_Dispatcher_Impl::shutdown_i ()
   //consistent cut through the queues
 
   //post shutdown command to all tasks
-  for (int i {}; i < this->ntasks_; ++i)
+  for (size_t i {}; i < this->ntasks_; ++i)
     {
       QoSDescriptor const qos_info {};
       Shutdown_Task_Command *raw_shutdown_cmd {};
@@ -136,7 +136,7 @@ Default_Dispatcher_Impl::shutdown_i ()
     }
 
   //wait for all tasks to exit
-  for (int i {}; i < this->ntasks_; ++i)
+  for (size_t i {}; i < this->ntasks_; ++i)
     {
       this->tasks_[i]->wait ();
     }
