@@ -229,8 +229,8 @@ sender (void *arg)
           ssize_t cnt = socks[i].send (ACE_ALPHABET, send_cnt);
           if (opt_debug)
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%t) h %d sent %b\n"),
-                        socks[i].get_handle(),
+                        ACE_TEXT ("(%t) h %@ sent %b\n"),
+                        reinterpret_cast<void *> (socks[i].get_handle ()),
                         cnt));
           if (cnt > 0)
             {

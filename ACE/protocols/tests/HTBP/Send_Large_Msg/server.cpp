@@ -87,14 +87,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   channels[0] = std::make_unique<ACE::HTBP::Channel> (sock[0]);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("(%P|%t) Server: ")
-              ACE_TEXT("Got sock[0], handle = %d\n"),
-              sock[0].get_handle()));
+              ACE_TEXT("Got sock[0], handle = %@\n"),
+              reinterpret_cast<void *> (sock[0].get_handle())));
   acc.accept(sock[1]);
   channels[1] = std::make_unique<ACE::HTBP::Channel> (sock[1]);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("(%P|%t) Server: ")
-              ACE_TEXT("Got sock[1], handle = %d\n"),
-              sock[1].get_handle()));
+              ACE_TEXT("Got sock[1], handle = %@\n"),
+              reinterpret_cast<void *> (sock[1].get_handle())));
   int res {};
   while ((res = channels[0]->pre_recv()) != 0)
     {

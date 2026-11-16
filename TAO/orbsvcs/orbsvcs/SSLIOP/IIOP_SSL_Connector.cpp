@@ -210,9 +210,9 @@ TAO::IIOP_SSL_Connector::make_connection (
   if (TAO_debug_level > 2)
     ORBSVCS_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - IIOP_SSL_Connector::make_connection, "
-                "new connection to <%s:%d> on Transport[%B]\n",
+                "new connection to <%s:%d> on handle %@\n",
                 iiop_endpoint->host (), iiop_endpoint->port (),
-                svc_handler->peer ().get_handle ()));
+                reinterpret_cast<void *> (svc_handler->peer ().get_handle ())));
 
   // Add the handler to Cache
   int retval =

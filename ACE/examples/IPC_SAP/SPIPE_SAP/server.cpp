@@ -90,8 +90,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                         "get_remote_addr failed"));
 
           ACE_DEBUG ((LM_DEBUG,
-                      "n_handle = %d, uid = %d, gid = %d\n",
-                      n_handle,
+                      "n_handle = %@, uid = %d, gid = %d\n",
+                      reinterpret_cast<void *> (n_handle),
                       client.user_id (),
                       client.group_id ()));
 

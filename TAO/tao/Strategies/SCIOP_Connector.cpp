@@ -258,10 +258,10 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
   if (TAO_debug_level > 2)
     TAOLIB_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - SCIOP_Connector::make_connection_i, "
-                "new %C connection to <%C:%d> on Transport[%B]\n",
+                "new %C connection to <%C:%d> on handle [%@]\n",
                 transport->is_connected() ? "connected" : "not connected",
                 sciop_endpoint->host (), sciop_endpoint->port (),
-                svc_handler->peer ().get_handle ()));
+                reinterpret_cast<void *> (svc_handler->peer ().get_handle ())));
 
   // Add the handler to Cache
   int retval =

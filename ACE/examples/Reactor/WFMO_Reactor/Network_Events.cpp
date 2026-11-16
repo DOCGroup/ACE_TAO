@@ -66,7 +66,8 @@ Network_Handler::get_handle () const
 int
 Network_Handler::handle_input (ACE_HANDLE handle)
 {
-  ACE_DEBUG ((LM_DEBUG, "Network_Handler::handle_input handle = %d\n", handle));
+  ACE_DEBUG ((LM_DEBUG, "Network_Handler::handle_input handle = %@\n",
+              reinterpret_cast<void *> (handle)));
 
   while (true)
     {
@@ -98,7 +99,8 @@ int
 Network_Handler::handle_close (ACE_HANDLE handle,
                                ACE_Reactor_Mask)
 {
-  ACE_DEBUG ((LM_DEBUG, "Network_Handler::handle_close handle = %d\n", handle));
+  ACE_DEBUG ((LM_DEBUG, "Network_Handler::handle_close handle = %@\n",
+              reinterpret_cast<void *> (handle)));
 
   this->stream_.close ();
   delete this;
@@ -149,7 +151,8 @@ Network_Listener::get_handle () const
 int
 Network_Listener::handle_input (ACE_HANDLE handle)
 {
-  ACE_DEBUG ((LM_DEBUG, "Network_Listener::handle_input handle = %d\n", handle));
+  ACE_DEBUG ((LM_DEBUG, "Network_Listener::handle_input handle = %@\n",
+              reinterpret_cast<void *> (handle)));
 
   ACE_INET_Addr remote_address;
   ACE_SOCK_Stream stream;
@@ -183,7 +186,8 @@ int
 Network_Listener::handle_close (ACE_HANDLE handle,
                                 ACE_Reactor_Mask)
 {
-  ACE_DEBUG ((LM_DEBUG, "Network_Listener::handle_close handle = %d\n", handle));
+  ACE_DEBUG ((LM_DEBUG, "Network_Listener::handle_close handle = %@\n",
+              reinterpret_cast<void *> (handle)));
 
   this->acceptor_.close ();
 

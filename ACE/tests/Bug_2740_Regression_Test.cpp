@@ -107,8 +107,8 @@ ClientSvcHandler::open (void* factory)
       size_t send_len = ACE_OS::strlen (ClientSvcHandler::send_str);
       if (-1 == this->peer().send_n (ClientSvcHandler::send_str, send_len))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%t: client h %d, %p\n"),
-                           this->peer ().get_handle(),
+                           ACE_TEXT ("%t: client h %@, %p\n"),
+                           reinterpret_cast<void *> (this->peer ().get_handle ()),
                            ACE_TEXT ("send")),
                           -1);
       return 0;

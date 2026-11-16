@@ -532,8 +532,8 @@ TAO_AV_UDP_QoS_Flow_Handler::get_handle () const
 {
   if (TAO_debug_level > 0)
     ORBSVCS_DEBUG ((LM_DEBUG,
-                "(%N,%l) TAO_AV_UDP_QoS_Flow_Handler::get_handle:%d\n",
-                this->qos_sock_dgram_.get_handle ()));
+                "(%N,%l) TAO_AV_UDP_QoS_Flow_Handler::get_handle:%@\n",
+                reinterpret_cast<void *> (this->qos_sock_dgram_.get_handle ())));
 
   return this->qos_sock_dgram_.get_handle () ;
 }

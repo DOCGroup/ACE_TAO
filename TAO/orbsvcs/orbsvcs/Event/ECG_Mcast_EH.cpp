@@ -272,7 +272,7 @@ TAO_ECG_Mcast_EH::add_new_subscriptions (Address_Set& multicast_addresses)
           && errno != ENOTSUP )
         {
           ORBSVCS_ERROR ((LM_ERROR,
-                      "Error: %d - Unable to set mcast_eh recvbuf_size:%d\n",
+                      "Error: %d - Unable to set mcast_eh recvbuf_size:%B\n",
                       ACE_ERRNO_GET,
                       this->recvbuf_size_));
         }

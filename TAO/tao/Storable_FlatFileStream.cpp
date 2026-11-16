@@ -168,8 +168,8 @@ TAO::Storable_FlatFileStream::reopen ()
     {
       TAOLIB_DEBUG ((LM_DEBUG,
                      ACE_TEXT ("TAO (%P|%t) Storable_FlatFileStream::reopen, ")
-                     ACE_TEXT (" handle = %d\n"),
-                     filelock_.handle_));
+                     ACE_TEXT (" handle = %@\n"),
+                     reinterpret_cast<void *> (filelock_.handle_)));
     }
   this->close();
   return this->open();
@@ -372,8 +372,10 @@ TAO::Storable_FlatFileStream::last_changed ()
                   TAOLIB_ERROR ((LM_ERROR,
                                  ACE_TEXT ("TAO (%P|%t) - ")
                                  ACE_TEXT ("Storable_FlatFileStream::last_changed, ")
-                                 ACE_TEXT ("File %C, handle %d,  %p\n"),
-                                 file_.c_str (), filelock_.handle_,  ACE_TEXT ("fstat")));
+                                 ACE_TEXT ("File %C, handle %@,  %p\n"),
+                                 file_.c_str (),
+                                 reinterpret_cast<void *> (filelock_.handle_),
+                                 ACE_TEXT ("fstat")));
                 }
               if (errno != EBADF)
               {
@@ -396,8 +398,10 @@ TAO::Storable_FlatFileStream::last_changed ()
       TAOLIB_ERROR ((LM_ERROR,
                      ACE_TEXT ("TAO (%P|%t) - ")
                      ACE_TEXT ("Storable_FlatFileStream::last_changed, ")
-                     ACE_TEXT ("Error getting file information for %C, handle %d, %p\n"),
-                     this->file_.c_str(), filelock_.handle_, ACE_TEXT ("fstat")));
+                     ACE_TEXT ("Error getting file information for %C, handle %@, %p\n"),
+                     this->file_.c_str (),
+                     reinterpret_cast<void *> (filelock_.handle_),
+                     ACE_TEXT ("fstat")));
       throw Storable_Exception (this->file_);
     }
 

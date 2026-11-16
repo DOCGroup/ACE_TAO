@@ -782,8 +782,9 @@ TAO_AV_SCTP_SEQ_Flow_Handler::open (void * /*arg*/)
   if (TAO_debug_level > 0)
     if (TAO_debug_level > 0)
       ORBSVCS_DEBUG ((LM_DEBUG,
-                  "(%P|%t) connection to server <%s> on %d\n",
-                  server, this->peer ().get_handle ()));
+                  "(%P|%t) connection to server <%s> on %@\n",
+                  server,
+                  reinterpret_cast<void *> (this->peer ().get_handle ())));
 
   this->peer ().disable (ACE_NONBLOCK);
 

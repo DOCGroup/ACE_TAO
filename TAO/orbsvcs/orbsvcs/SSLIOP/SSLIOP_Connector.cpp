@@ -724,9 +724,9 @@ TAO::SSLIOP::Connector::ssliop_connect (
           if (TAO_debug_level > 2)
             ORBSVCS_DEBUG ((LM_DEBUG,
                         "TAO (%P|%t) - SSLIOP_Connector::ssliop_connect, "
-                        "new SSL connection to port %d on transport[%B]\n",
+                        "new SSL connection to port %d on handle %@\n",
                         remote_address.get_port_number (),
-                        svc_handler->peer ().get_handle ()));
+                        reinterpret_cast<void *> (svc_handler->peer ().get_handle ())));
 
           // Add the handler to Cache
           int retval =

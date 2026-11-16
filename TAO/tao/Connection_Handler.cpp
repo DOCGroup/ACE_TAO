@@ -241,9 +241,9 @@ TAO_Connection_Handler::handle_input_eh (ACE_HANDLE h, ACE_Event_Handler *eh)
           if (TAO_debug_level > 5)
             TAOLIB_ERROR ((LM_ERROR,
                       "TAO (%P|%t) - Connection_Handler[%B]::handle_input_eh, "
-                      "Error deferring upcall handler[%d]\n",
+                      "Error deferring upcall handler[%@]\n",
                       this->transport ()->id (),
-                      eh->get_handle ()));
+                      reinterpret_cast<void *> (eh->get_handle ())));
           return -1;
         }
       // Returning 0 causes the wait strategy to exit and the leader thread
@@ -279,8 +279,10 @@ TAO_Connection_Handler::handle_input_internal (
       ACE_HANDLE const handle = eh->get_handle();
       TAOLIB_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - Connection_Handler[%B]::handle_input_internal, "
-                  "handle = %d/%d\n",
-                  t_id, handle, h));
+                  "handle = %@/%@\n",
+                  t_id,
+                  reinterpret_cast<void *> (handle),
+                  reinterpret_cast<void *> (h)));
     }
 
   TAO_Resume_Handle resume_handle (this->orb_core (), eh->get_handle ());
@@ -307,8 +309,11 @@ TAO_Connection_Handler::handle_input_internal (
       ACE_HANDLE const handle = eh->get_handle ();
       TAOLIB_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - Connection_Handler[%B]::handle_input_internal, "
-                  "handle = %d/%d, retval = %d\n",
-                  t_id, handle, h, return_value));
+                  "handle = %@/%@, retval = %d\n",
+                  t_id,
+                  reinterpret_cast<void *> (handle),
+                  reinterpret_cast<void *> (h),
+                  return_value));
     }
 
   if (return_value != 0)

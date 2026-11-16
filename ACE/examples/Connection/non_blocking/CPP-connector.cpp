@@ -23,8 +23,8 @@ template <typename PEER_STREAM> int
 Peer_Handler<PEER_STREAM>::open (void *)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("activating %d\n"),
-              this->peer ().get_handle ()));
+              ACE_TEXT ("activating %@\n"),
+              reinterpret_cast<void *> (this->peer ().get_handle ())));
   this->action_ = &Peer_Handler<PEER_STREAM>::connected;
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("please enter input..: ")));

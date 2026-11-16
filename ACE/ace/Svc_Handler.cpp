@@ -163,9 +163,9 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::open (void *)
                        ACE_TEXT ("can't obtain peer's address")),
                       -1);
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("connected to %s on fd %d\n"),
+              ACE_TEXT ("connected to %s on fd %@\n"),
               buf,
-              this->peer_.get_handle ()));
+              reinterpret_cast<void *> (this->peer_.get_handle ())));
 #endif /* ACELIB_DEBUGGING */
   if (this->reactor ()
       && this->reactor ()->register_handler

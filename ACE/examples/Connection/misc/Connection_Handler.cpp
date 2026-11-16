@@ -139,15 +139,15 @@ Connection_Handler::handle_input (ACE_HANDLE)
                         -1);
     case 0:
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%P|%t) closing log daemon (fd = %d)\n"),
-                         this->get_handle ()),
+                         ACE_TEXT ("(%P|%t) closing log daemon (fd = %@)\n"),
+                         reinterpret_cast<void *> (this->get_handle ())),
                         -1);
     default:
       buf[n] = '\0';
       if (buf[0] == static_cast<char> (EOF))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) closing log daemon (fd = %d)\n"),
-                           this->get_handle ()),
+                           ACE_TEXT ("(%P|%t) closing log daemon (fd = %@)\n"),
+                           reinterpret_cast<void *> (this->get_handle ())),
                           -1);
       else
       {

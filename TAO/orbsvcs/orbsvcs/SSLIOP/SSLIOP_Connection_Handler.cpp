@@ -227,9 +227,9 @@ TAO::SSLIOP::Connection_Handler::open (void *)
 
       ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) SSLIOP connection from ")
-                  ACE_TEXT ("client <%s> on [%d]\n"),
+                  ACE_TEXT ("client <%s> on [%@]\n"),
                   client,
-                  this->peer ().get_handle ()));
+                  reinterpret_cast<void *> (this->peer ().get_handle ())));
 
       // Verify that we can resolve our hostname.
       if (local_addr.addr_to_string (client,
@@ -240,9 +240,9 @@ TAO::SSLIOP::Connection_Handler::open (void *)
 
       ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) SSLIOP connection accepted from ")
-                  ACE_TEXT ("server <%s> on [%d]\n"),
+                  ACE_TEXT ("server <%s> on [%@]\n"),
                   client,
-                  this->get_handle ()));
+                  reinterpret_cast<void *> (this->get_handle ())));
     }
 
   // Set that the transport is now connected, if fails we return -1

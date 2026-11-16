@@ -100,8 +100,8 @@ Dgram_Endpoint::handle_input (ACE_HANDLE)
   ACE_INET_Addr from_addr;
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) activity occurred on handle %d!\n",
-              this->endpoint_.get_handle ()));
+              "(%P|%t) activity occurred on handle %@!\n",
+              reinterpret_cast<void *> (this->endpoint_.get_handle ())));
 
   ssize_t const n = this->endpoint_.recv (buf, sizeof buf, from_addr);
 

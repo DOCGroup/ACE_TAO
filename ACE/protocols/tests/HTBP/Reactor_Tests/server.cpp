@@ -121,7 +121,8 @@ Accept_Handler::handle_input (ACE_HANDLE h)
   if (ch == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%P|%t) Server Accept_Handler::handle_input, ")
-                       ACE_TEXT ("unknown handle %d\n") ,h),
+                       ACE_TEXT ("unknown handle %@\n"),
+                       reinterpret_cast<void *> (h)),
                       -1);
   int result = (*ch)->pre_recv();
   if (result == 0)
@@ -141,16 +142,16 @@ Accept_Handler::handle_input (ACE_HANDLE h)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) Server Accept_Handler::handle_input ")
-                      ACE_TEXT ("Creating new stream handler for %d\n"),
-                      stream->get_handle()));
+                      ACE_TEXT ("Creating new stream handler for %@\n"),
+                      reinterpret_cast<void *> (stream->get_handle ())));
           Stream_Handler *sh = new Stream_Handler(*stream);
           session->handler (sh);
         }
       else
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) Server Accept_Handler::handle_input ")
-                    ACE_TEXT ("There is already a handler for %d\n"),
-                    stream->get_handle()));
+                    ACE_TEXT ("There is already a handler for %@\n"),
+                    reinterpret_cast<void *> (stream->get_handle ())));
 
       if ((*ch)->state() == ACE::HTBP::Channel::Data_Queued)
         {
@@ -198,8 +199,8 @@ Stream_Handler::handle_input (ACE_HANDLE h)
       if (ch != nullptr)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) Server Stream_Handler::handle_input ")
-                    ACE_TEXT ("Sending reply on %d\n"),
-                    ch->ace_stream().get_handle()));
+                    ACE_TEXT ("Sending reply on %@\n"),
+                    reinterpret_cast<void *> (ch->ace_stream().get_handle())));
       else
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) Server Stream_Handler::handle_input ")

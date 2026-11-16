@@ -165,8 +165,8 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   if (TAO_debug_level > 2)
     TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO (%P|%t) - DIOP_Connector::connect, ")
-                ACE_TEXT ("new connection on HANDLE %d\n"),
-                svc_handler->peer ().get_handle ()));
+                ACE_TEXT ("new connection on HANDLE %@\n"),
+                reinterpret_cast<void *> (svc_handler->peer ().get_handle ())));
 
   TAO_DIOP_Transport *transport =
     dynamic_cast <TAO_DIOP_Transport *> (svc_handler->transport ());

@@ -699,7 +699,9 @@ TAO_AV_TCP_Flow_Handler::open (void * /*arg*/)
   {
     if (TAO_debug_level > 0)
       {
-        ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) connection to server <%s> on %d\n", server, this->peer ().get_handle ()));
+        ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) connection to server <%s> on %@\n",
+                        server,
+                        reinterpret_cast<void *> (this->peer ().get_handle ())));
       }
   }
 

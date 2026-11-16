@@ -134,8 +134,9 @@ TAO::HTIOP::Connection_Handler::open (void*)
 
       ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) TAO_HTIOP connection to peer ")
-                  ACE_TEXT ("<%s> on %d\n"),
-                  client, this->peer ().get_handle ()));
+                  ACE_TEXT ("<%s> on %@\n"),
+                  client,
+                  reinterpret_cast<void *> (this->peer ().get_handle ())));
     }
 
   // Set the id in the transport now that we're active.
@@ -178,8 +179,8 @@ TAO::HTIOP::Connection_Handler::handle_input (ACE_HANDLE h)
           if (TAO_debug_level > 2)
             ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT("TAO::HTIOP::Connection_Handler::handle_input: ")
-                        ACE_TEXT("now binding to %d\n"),
-                        peer().get_handle()));
+                        ACE_TEXT("now binding to %@\n"),
+                        reinterpret_cast<void *> (peer().get_handle())));
         }
       return result;
     }
