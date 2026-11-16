@@ -35,7 +35,6 @@ public:
                 const ACE_TCHAR *path_name,
                 u_short port = ACE_DEFAULT_HTTP_PORT);
 
-  /// Copy constructor.
   ACE_URL_Addr (const ACE_URL_Addr &addr);
 
   /// Essentially the copy constructor.
@@ -77,7 +76,6 @@ public:
    */
   virtual const ACE_TCHAR *addr_to_string (int ipaddr_format = 1) const;
 
-  /// Assignment operator.
   void operator= (const ACE_URL_Addr &addr);
 
   ~ACE_URL_Addr () = default;
