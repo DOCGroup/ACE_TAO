@@ -45,6 +45,7 @@ namespace TAO
     XtResource_Factory (XtResource_Factory &&) = delete;
     XtResource_Factory &operator= (XtResource_Factory &&) = delete;
 
+  protected:
     /// Create or obtain current reactor implementation
     ACE_Reactor_Impl *reactor_impl () override;
 
