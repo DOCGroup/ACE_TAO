@@ -58,7 +58,7 @@ public:
   int open (ACE_Reactor * const    reactor,
             const ACE_Time_Value & reply_wait,
             const ACE_INET_Addr &  remote_addr,
-            ACE_TCHAR *            success_status = 0,
+            ACE_TCHAR *            success_status = nullptr,
             size_t                 max_attempts_num = 1,
             const ACE_Addr &       local_addr = ACE_Addr::sap_any,
             int                    connect_to_remote = 0);
@@ -84,7 +84,7 @@ public:
             ACE_Time_Value const & reply_wait,
             ACE_INET_Addr const    remote_addrs[],
             size_t                 number_remotes,
-            ACE_TCHAR *            success_status = 0,
+            ACE_TCHAR *            success_status = nullptr,
             size_t                 max_attempts_num = 1,
             ACE_Addr const &       local_addr = ACE_Addr::sap_any);
 
@@ -104,7 +104,7 @@ public:
    * if not returns -1 to initiate clean-up.
    */
   int handle_timeout (ACE_Time_Value const & tv,
-                      void const * arg = 0) override;
+                      void const * arg = nullptr) override;
 
   /// Makes clean-up
   int handle_close (ACE_HANDLE handle,
@@ -178,10 +178,11 @@ public:
   int handle_input (ACE_HANDLE) override;
 
   // Dispatches handle_input () notification.
-  int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0) override;
+  int handle_signal (int signum, siginfo_t * = nullptr,
+                     ucontext_t * = nullptr) override;
 
   int handle_timeout (ACE_Time_Value const & current_time,
-                      void const * act = 0) override;
+                      void const * act = nullptr) override;
 
   // Register handler with us for stopping.
   virtual int register_handler (ACE_Event_Handler * handler);
@@ -224,7 +225,7 @@ public:
 
   // dispatches a new echo-checks series
   int handle_timeout (ACE_Time_Value const & current_time,
-                      void const * act = 0) override;
+                      void const * act = nullptr) override;
 
 private:
   // an instance of a handler

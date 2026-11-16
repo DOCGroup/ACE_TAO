@@ -41,9 +41,9 @@ class Element
   friend class ACE_Double_Linked_List_Reverse_Iterator<Element>;
 
 public:
-  Element (ACE_CString *item = 0,
-           Element *p = 0,
-           Element *n = 0)
+  Element (ACE_CString *item = nullptr,
+           Element *p = nullptr,
+           Element *n = nullptr)
     : prev_ (p),
       next_(n),
       item_(item)

@@ -37,7 +37,7 @@
 class Counting_Service : public ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
-  Counting_Service (ACE_Thread_Manager * = 0);
+  Counting_Service (ACE_Thread_Manager * = nullptr);
 
   /// Hook that is used to initialize the service (called by the
   /// <ACE_Strategy_Acceptor::handle_input> Template Method).
@@ -71,8 +71,8 @@ class Process_Strategy : public ACE_Process_Strategy<Counting_Service>
 {
 public:
   Process_Strategy (size_t n_processes = 1,
-                    ACE_Event_Handler *acceptor = 0,
-                    ACE_Reactor * = 0,
+                    ACE_Event_Handler *acceptor = nullptr,
+                    ACE_Reactor * = nullptr,
                     int flags = 0);
 
   ~Process_Strategy ();
@@ -80,7 +80,7 @@ public:
   // Overwrite the process creation method to include connection
   // counting
   int activate_svc_handler (Counting_Service *svc_handler,
-                            void *arg = 0) override;
+                            void *arg = nullptr) override;
 };
 
 /**

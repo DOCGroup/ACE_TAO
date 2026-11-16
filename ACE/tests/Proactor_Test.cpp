@@ -1306,9 +1306,9 @@ Client::initiate_write_stream ()
 
 #if defined (ACE_WIN32)
 
-  ACE_Message_Block *mb1 = 0,
-                    *mb2 = 0,
-                    *mb3 = 0;
+  ACE_Message_Block *mb1 {},
+                    *mb2 {},
+                    *mb3 {};
 
   // No need to allocate +1 for proper printing - the memory includes it already
   ACE_NEW_RETURN (mb1,
@@ -1388,12 +1388,12 @@ Client::initiate_read_stream ()
     ACE_OS::strlen (complete_message);
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
-  ACE_Message_Block *mb1 = 0,
-                    *mb2 = 0,
-                    *mb3 = 0,
-                    *mb4 = 0,
-                    *mb5 = 0,
-                    *mb6 = 0;
+  ACE_Message_Block *mb1 {},
+                    *mb2 {},
+                    *mb3 {},
+                    *mb4 {},
+                    *mb5 {},
+                    *mb6 {};
 
   // We allocate +1 only for proper printing - we can just set the last byte
   // to '\0' before printing out

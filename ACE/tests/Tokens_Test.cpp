@@ -197,7 +197,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("Tokens_Test"));
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_TOKENS_LIBRARY)
-  ACE_Token_Proxy *A = 0, *B = 0, *R = 0, *W = 0;
+  ACE_Token_Proxy *A {}, *B {}, *R {}, *W {};
 
   ACE_NEW_RETURN (A,
                   ACE_Local_Mutex (ACE_TEXT ("L Mutex A"), 0, 0),
