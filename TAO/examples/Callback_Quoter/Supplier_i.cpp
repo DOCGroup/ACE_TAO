@@ -42,18 +42,16 @@ Supplier::read_ior (ACE_TCHAR const *filename)
                         filename),
                         -1);
 
-  ACE_Read_Buffer ior_buffer (f_handle);
-  char *data = ior_buffer.read ();
+  ACE_Read_Buffer ior_buffer (f_handle, true);
+  ACE_Read_Buffer_Unique_Ptr data (
+    ior_buffer.read (), {ior_buffer.alloc ()});
 
   if (data == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to read ior\n"),
                       -1);
 
-  this->ior_ = ACE_TEXT_CHAR_TO_TCHAR(data);
-  ior_buffer.alloc ()->free (data);
-
-  ACE_OS::close (f_handle);
+  this->ior_ = ACE_TEXT_CHAR_TO_TCHAR (data.get ());
 
   return 0;
 }

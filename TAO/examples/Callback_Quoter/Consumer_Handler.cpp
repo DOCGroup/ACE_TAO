@@ -17,7 +17,6 @@
 
 #include "ace/Read_Buffer.h"
 #include "ace/Get_Opt.h"
-#include "ace/Read_Buffer.h"
 #include "ace/Reactor.h"
 #include "ace/Event_Handler.h"
 #include "ace/OS_NS_fcntl.h"
@@ -51,18 +50,16 @@ Consumer_Handler::read_ior (ACE_TCHAR const *filename)
                        filename),
                       -1);
 
-  ACE_Read_Buffer ior_buffer (f_handle);
-  char *data = ior_buffer.read ();
+  ACE_Read_Buffer ior_buffer (f_handle, true);
+  ACE_Read_Buffer_Unique_Ptr data (
+    ior_buffer.read (), {ior_buffer.alloc ()});
 
   if (data == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to read ior: %p\n"),
                       -1);
 
-  this->ior_ = ACE_TEXT_CHAR_TO_TCHAR(data);
-  ior_buffer.alloc ()->free (data);
-
-  ACE_OS::close (f_handle);
+  this->ior_ = ACE_TEXT_CHAR_TO_TCHAR (data.get ());
 
   return 0;
 }
