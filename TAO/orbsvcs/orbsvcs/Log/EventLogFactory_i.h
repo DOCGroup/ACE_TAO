@@ -51,11 +51,12 @@ class TAO_EventLog_Serv_Export TAO_EventLogFactory_i :
 
 {
 public:
-  //= Initialization and termination code.
-
+  /// @name Initialization and termination
+  /// @{
   TAO_EventLogFactory_i ();
 
   ~TAO_EventLogFactory_i () override;
+  /// @}
 
   /// Initialise the EventChannel and obtain a
   /// pointer to it.

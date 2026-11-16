@@ -46,14 +46,15 @@ class TAO_NotifyLog_Serv_Export TAO_NotifyLogFactory_i :
   public TAO_LogMgr_i
 {
 public:
-  //= Initialization and termination code.
-
+  /// @name Initialization and termination
+  /// @{
   /// Constructor - default.
   TAO_NotifyLogFactory_i ();
 
   explicit TAO_NotifyLogFactory_i (CosNotifyChannelAdmin::EventChannelFactory_ptr ecf);
 
   ~TAO_NotifyLogFactory_i () override;
+  /// @}
 
   /// Activate this servant with the ORB and POA passed in.
   DsNotifyLogAdmin::NotifyLogFactory_ptr

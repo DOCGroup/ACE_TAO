@@ -50,11 +50,12 @@ class TAO_RTEventLog_Serv_Export TAO_RTEventLogFactory_i :
   public TAO_LogMgr_i
 {
 public:
-  //= Initialization and termination code.
-
+  /// @name Initialization and termination
+  /// @{
   TAO_RTEventLogFactory_i ();
 
   ~TAO_RTEventLogFactory_i () override;
+  /// @}
 
   /// Initialise the EventChannel and obtain a
   /// pointer to it.
@@ -81,9 +82,9 @@ public:
         DsLogAdmin::CapacityAlarmThresholdList const & thresholds) override;
 
   /// @name RtecEventChannelAdmin::ConsumerAdmin operations
-  //@{
+  /// @{
   RtecEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier () override;
-  //@}
+  /// @}
 
 protected:
   CORBA::RepositoryId create_repositoryid () override;
