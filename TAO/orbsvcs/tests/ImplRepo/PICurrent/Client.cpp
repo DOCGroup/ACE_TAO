@@ -108,7 +108,7 @@ public:
         if (CORBA::is_nil (this->pic_.in()))
           {
             int argc = 0;
-            ACE_TCHAR **argv = 0;
+            ACE_TCHAR **argv {};
             CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
             CORBA::Object_var obj = orb->resolve_initial_references ("PICurrent");
             this->pic_ = PortableInterceptor::Current::_narrow (obj.in ());

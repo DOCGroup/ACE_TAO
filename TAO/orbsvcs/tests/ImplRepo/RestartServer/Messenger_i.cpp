@@ -38,7 +38,7 @@ CORBA::Boolean Messenger_i::send_message (
 void
 Messenger_i::abort (CORBA::Short delay_secs)
 {
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb {};
   ACE_NEW(mb, ACE_Message_Block(2));
   ACE_OS::sprintf(mb->wr_ptr (), "%d", delay_secs);
   terminator_.putq(mb);
