@@ -4,11 +4,11 @@
 
 #include <omg/PortableInterceptor.hh>
 
+/// Server-side echo interceptor.  For checking interceptor visually only.
 class Echo_Server_Request_Interceptor
   : public virtual PortableInterceptor::ServerRequestInterceptor,
     public virtual ::CORBA::LocalObject
 {
-  // = Server-side echo interceptor.  For checking interceptor visually only.
 public:
   Echo_Server_Request_Interceptor ();
   // cotr.

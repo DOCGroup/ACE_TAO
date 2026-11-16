@@ -17,11 +17,11 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+/// Client-side Vault interceptor.  For checking interceptor visually only.
 class Vault_Client_Request_Interceptor
   : public virtual PortableInterceptor::ClientRequestInterceptor,
     public virtual ::CORBA::LocalObject
 {
-  // = Client-side Vault interceptor.  For checking interceptor visually only.
 public:
   Vault_Client_Request_Interceptor () = default;
   ~Vault_Client_Request_Interceptor () override = default;
@@ -49,11 +49,11 @@ private:
   char const *const myname_ { "Vault_Client_Interceptor" };
 };
 
+/// Client-side Vault interceptor.  For checking interceptor visually only.
 class Vault_Client_Request_Context_Interceptor
   : public virtual PortableInterceptor::ClientRequestInterceptor,
     public virtual ::CORBA::LocalObject
 {
-  // = Client-side Vault interceptor.  For checking interceptor visually only.
 public:
   Vault_Client_Request_Context_Interceptor () = default;
   ~Vault_Client_Request_Context_Interceptor () override = default;
@@ -81,11 +81,11 @@ private:
   char const *const myname_ { "Vault_Client_Context_Interceptor" };
 };
 
+/// Client-side Vault interceptor.  For checking interceptor visually only.
 class Vault_Client_Request_Dynamic_Interceptor
   : public virtual PortableInterceptor::ClientRequestInterceptor,
     public virtual ::CORBA::LocalObject
 {
-  // = Client-side Vault interceptor.  For checking interceptor visually only.
 public:
   Vault_Client_Request_Dynamic_Interceptor () = default;
   ~Vault_Client_Request_Dynamic_Interceptor () override = default;
@@ -113,11 +113,11 @@ private:
   char const *const myname_ { "Vault_Client_Dynamic_Interceptor" };
 };
 
+/// Client-side Vault interceptor.  For checking interceptor visually only.
 class Vault_Client_Request_NOOP_Interceptor
   : public virtual PortableInterceptor::ClientRequestInterceptor,
     public virtual ::CORBA::LocalObject
 {
-  // = Client-side Vault interceptor.  For checking interceptor visually only.
 public:
   Vault_Client_Request_NOOP_Interceptor () = default;
   ~Vault_Client_Request_NOOP_Interceptor () override = default;

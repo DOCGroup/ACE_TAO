@@ -18,11 +18,11 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+/// Client-side echo interceptor.  For checking interceptor visually only.
 class Echo_Client_Request_Interceptor
   : public virtual PortableInterceptor::ClientRequestInterceptor,
     public virtual ::CORBA::LocalObject
 {
-  // = Client-side echo interceptor.  For checking interceptor visually only.
 public:
   Echo_Client_Request_Interceptor () = default;
   ~Echo_Client_Request_Interceptor () override = default;
@@ -52,11 +52,11 @@ private:
   char const *const myname_ { "Echo_Client_Interceptor" };
 };
 
+/// Server-side echo interceptor.  For checking interceptor visually only.
 class Echo_Server_Request_Interceptor
   : public PortableInterceptor::ServerRequestInterceptor,
     public virtual ::CORBA::LocalObject
 {
-  // = Server-side echo interceptor.  For checking interceptor visually only.
 public:
   Echo_Server_Request_Interceptor () = default;
   ~Echo_Server_Request_Interceptor () override = default;
