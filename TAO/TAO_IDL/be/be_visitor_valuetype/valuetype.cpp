@@ -841,6 +841,13 @@ be_visitor_valuetype::obv_need_ref_counter (be_valuetype* node)
       return true;
     }
 
+  // An operation-free OBV class gets a generated _copy_value() and can be
+  // instantiated directly, so it needs a reference-count implementation.
+  if (!node->have_operation ())
+    {
+      return true;
+    }
+
   // VT needs RefCounter if it has concrete factory.
   if (be_valuetype::FS_CONCRETE_FACTORY == node->determine_factory_style ())
     {

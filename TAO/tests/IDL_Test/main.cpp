@@ -215,6 +215,48 @@ test_default_initialized_valuetype (int &error_count)
 }
 
 void
+test_valuetype_copy (int &error_count)
+{
+  OBV_Factory_Initialized_Value factory_value;
+  factory_value.value (17);
+  CORBA::ValueBase_var factory_copy (factory_value._copy_value ());
+  Factory_Initialized_Value * const factory_downcast =
+    Factory_Initialized_Value::_downcast (factory_copy.in ());
+  if (factory_downcast == nullptr)
+    {
+      ++error_count;
+      ACE_ERROR ((LM_ERROR, "Factory_Initialized_Value copy has wrong type\n"));
+    }
+  else
+    {
+      expect_equals<CORBA::Long> (
+        error_count, "Factory_Initialized_Value copy",
+        factory_downcast->value (), 17);
+    }
+
+  OBV_Copy_Derived derived_value;
+  derived_value.base_value (23);
+  derived_value.derived_value (42);
+  CORBA::ValueBase_var derived_copy (derived_value._copy_value ());
+  Copy_Derived * const derived_downcast =
+    Copy_Derived::_downcast (derived_copy.in ());
+  if (derived_downcast == nullptr)
+    {
+      ++error_count;
+      ACE_ERROR ((LM_ERROR, "Copy_Derived copy has wrong type\n"));
+    }
+  else
+    {
+      expect_equals<CORBA::Long> (
+        error_count, "Copy_Derived base member",
+        derived_downcast->base_value (), 23);
+      expect_equals<CORBA::Long> (
+        error_count, "Copy_Derived member",
+        derived_downcast->derived_value (), 42);
+    }
+}
+
+void
 test_default_initialized_union (int &error_count)
 {
   U87 value;
@@ -987,6 +1029,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   test_default_initialized_struct (error_count);
   test_default_initialized_exception (error_count);
   test_default_initialized_valuetype (error_count);
+  test_valuetype_copy (error_count);
   test_default_initialized_union (error_count);
   test_fixed_typecodes (error_count);
   test_union_discriminators (error_count);

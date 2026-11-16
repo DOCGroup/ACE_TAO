@@ -72,10 +72,9 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
   *os << node->local_name () << " ()" << be_nl
       << "{}";
 
-  // Concrete factory classes need their own _copy_value() implementation.
-  if (this->obv_need_ref_counter (node)
-      && node->determine_factory_style ()
-           == be_valuetype::FS_CONCRETE_FACTORY)
+  // A generated _copy_value() is needed for every valuetype without
+  // operations, including derived valuetypes and factory-based values.
+  if (!node->have_operation ())
     {
       *os << be_nl_2
           << "::CORBA::ValueBase *" << be_nl

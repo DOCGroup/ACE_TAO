@@ -720,49 +720,6 @@ DRV_cpp_post_init ()
 // Local/internal helper function.
 namespace
 {
-  /// Owns a temporary file descriptor until it is closed or fdopen takes over.
-  class File_Descriptor_Guard
-  {
-  public:
-    explicit File_Descriptor_Guard (ACE_HANDLE handle)
-      : handle_ (handle)
-    {
-    }
-
-    ~File_Descriptor_Guard ()
-    {
-      this->reset ();
-    }
-
-    ACE_HANDLE get () const
-    {
-      return this->handle_;
-    }
-
-    ACE_HANDLE release ()
-    {
-      ACE_HANDLE const handle = this->handle_;
-      this->handle_ = ACE_INVALID_HANDLE;
-      return handle;
-    }
-
-    void reset ()
-    {
-      if (this->handle_ != ACE_INVALID_HANDLE)
-        {
-          ACE_OS::close (this->release ());
-        }
-    }
-
-    File_Descriptor_Guard (File_Descriptor_Guard const &) = delete;
-    File_Descriptor_Guard (File_Descriptor_Guard &&) = delete;
-    File_Descriptor_Guard &operator= (File_Descriptor_Guard const &) = delete;
-    File_Descriptor_Guard &operator= (File_Descriptor_Guard &&) = delete;
-
-  private:
-    ACE_HANDLE handle_;
-  };
-
   // Advances the input char buffer to the first non-white
   // space character, handles /**/ comments as well.
   char
@@ -1161,11 +1118,11 @@ DRV_pre_proc (std::string const& myfile)
       tmp_ifile += tao_idli_template;
     }
 
-  File_Descriptor_Guard ti_fd (
-    copy_input_file ? ACE_OS::mkstemp (tmp_ifile.data ()) : ACE_INVALID_HANDLE);
+  FE_Utils::File_Handle ti_file (nullptr, ACE_OS::fclose);
   if (copy_input_file)
     {
-      if (ti_fd.get () == ACE_INVALID_HANDLE)
+      ACE_HANDLE const ti_fd = ACE_OS::mkstemp (tmp_ifile.data ());
+      if (ti_fd == ACE_INVALID_HANDLE)
         {
           ACE_ERROR ((LM_ERROR,
                       "%C: Unable to create temporary file \"%C\": %m\n",
@@ -1174,11 +1131,22 @@ DRV_pre_proc (std::string const& myfile)
 
           throw Bailout ();
         }
+
+      ti_file.reset (ACE_OS::fdopen (ti_fd, ACE_TEXT ("w")));
+      if (!ti_file)
+        {
+          ACE_OS::close (ti_fd);
+          ACE_ERROR ((LM_ERROR,
+                      "%C: cannot open temp file \"%C\" for writing: %m\n",
+                      idl_global->prog_name ().c_str (),
+                      tmp_ifile.c_str ()));
+          (void) ACE_OS::unlink (tmp_ifile.c_str ());
+          throw Bailout ();
+        }
     }
 
-  File_Descriptor_Guard tf_fd (ACE_OS::mkstemp (tmp_file.data ()));
-
-  if (tf_fd.get () == ACE_INVALID_HANDLE)
+  ACE_HANDLE const tf_fd = ACE_OS::mkstemp (tmp_file.data ());
+  if (tf_fd == ACE_INVALID_HANDLE)
     {
       ACE_ERROR ((LM_ERROR,
                   "%C: Unable to create temporary file \"%C\": %m\n",
@@ -1187,9 +1155,27 @@ DRV_pre_proc (std::string const& myfile)
 
       if (copy_input_file)
         {
-          ti_fd.reset ();
+          ti_file.reset ();
           (void) ACE_OS::unlink (tmp_ifile.c_str ());
         }
+      throw Bailout ();
+    }
+
+  FE_Utils::File_Handle tf_file (
+    ACE_OS::fdopen (tf_fd, ACE_TEXT ("w")), ACE_OS::fclose);
+  if (!tf_file)
+    {
+      ACE_OS::close (tf_fd);
+      ACE_ERROR ((LM_ERROR,
+                  "%C: cannot open temp file \"%C\" for writing: %m\n",
+                  idl_global->prog_name ().c_str (),
+                  tmp_file.c_str ()));
+      if (copy_input_file)
+        {
+          ti_file.reset ();
+          (void) ACE_OS::unlink (tmp_ifile.c_str ());
+        }
+      (void) ACE_OS::unlink (tmp_file.c_str ());
       throw Bailout ();
     }
 
@@ -1209,7 +1195,7 @@ DRV_pre_proc (std::string const& myfile)
   std::string const &t_ifile = tmp_cpp_ifile;
   std::string const input_file = copy_input_file ? t_ifile : myfile;
 
-  ACE_OS::close (tf_fd.release ());
+  tf_file.reset ();
 
   // Rename temporary files so that they have extensions accepted
   // by the preprocessor.
@@ -1222,7 +1208,7 @@ DRV_pre_proc (std::string const& myfile)
                   myfile.c_str ()));
       if (copy_input_file)
         {
-          ti_fd.reset ();
+          ti_file.reset ();
           (void) ACE_OS::unlink (tmp_ifile.c_str ());
         }
       (void) ACE_OS::unlink (tmp_file.c_str ());
@@ -1231,35 +1217,21 @@ DRV_pre_proc (std::string const& myfile)
 
   if (copy_input_file)
     {
-      FILE *const copy_output = ACE_OS::fdopen (ti_fd.get (), ACE_TEXT("w"));
-      if (copy_output == nullptr)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "%C: cannot open temp file \"%C\" for writing: %m\n",
-                      idl_global->prog_name ().c_str (),
-                      tmp_ifile.c_str ()));
-          ti_fd.reset ();
-          (void) ACE_OS::unlink (tmp_ifile.c_str ());
-          (void) ACE_OS::unlink (tmp_file.c_str ());
-          throw Bailout ();
-        }
-      ti_fd.release ();
-      FE_Utils::File_Handle copy_output_file (copy_output, ACE_OS::fclose);
       try
         {
           DRV_copy_input (file.get (),
-                          copy_output_file.get (),
+                          ti_file.get (),
                           tmp_ifile,
                           myfile);
         }
       catch (...)
         {
-          copy_output_file.reset ();
+          ti_file.reset ();
           (void) ACE_OS::unlink (tmp_ifile.c_str ());
           (void) ACE_OS::unlink (tmp_file.c_str ());
           throw;
         }
-      if (ACE_OS::fclose (copy_output_file.release ()) == EOF)
+      if (ACE_OS::fclose (ti_file.release ()) == EOF)
         {
           ACE_ERROR ((LM_ERROR,
                       "%C: cannot close temp file \"%C\" after copying from \"%C\": %m\n",

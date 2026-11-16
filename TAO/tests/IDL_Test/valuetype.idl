@@ -35,6 +35,42 @@ valuetype DefaultInitializedValue
   public long long_value;
 };
 
+interface Valuetype_Operation_Base
+{
+  void inherited_operation ();
+};
+
+interface Empty_Valuetype_Operation : Valuetype_Operation_Base
+{
+};
+
+/// The supported interface has no local members but inherits an operation.
+valuetype Supports_Inherited_Operation supports Empty_Valuetype_Operation
+{
+  public long value;
+};
+
+interface Empty_Valuetype_Interface
+{
+};
+
+/// Factory initializers must not make the generated OBV class abstract.
+valuetype Factory_Initialized_Value supports Empty_Valuetype_Interface
+{
+  public long value;
+  factory create ();
+};
+
+valuetype Copy_Base
+{
+  public long base_value;
+};
+
+valuetype Copy_Derived : Copy_Base
+{
+  public long derived_value;
+};
+
 enum ValueSort2 {
   SYMBOL_TYPE2
 };
