@@ -475,7 +475,8 @@ FILE *
 FE_Utils::open_included_file (std::string const& filename,
                               std::string &directory)
 {
-  FILE * f {};
+  std::unique_ptr<FILE, int (*) (FILE *)> file (
+    nullptr, ACE_OS::fclose);
   std::string the_file ("/");
   the_file += filename;
 
@@ -484,16 +485,16 @@ FE_Utils::open_included_file (std::string const& filename,
     {
       std::string const complete_filename = path_info.path_ + the_file;
 
-      f = ACE_OS::fopen (complete_filename.c_str (), "r");
+      file.reset (ACE_OS::fopen (complete_filename.c_str (), "r"));
 
-      if (f != nullptr)
+      if (file)
         {
           directory = path_info.path_;
           break;
         }
     }
 
-  return f;
+  return file.release ();
 }
 
 bool
@@ -516,9 +517,10 @@ FE_Utils::is_include_file_found (std::string &inc_file,
   inc_file += idl_file_name;
   if (ACE_OS::realpath (inc_file.c_str (), abspath) != nullptr)
     {
-      FILE *test = ACE_OS::fopen (abspath, "r");
+      std::unique_ptr<FILE, int (*) (FILE *)> test (
+        ACE_OS::fopen (abspath, "r"), ACE_OS::fclose);
 
-      if (test == nullptr)
+      if (!test)
         {
           return false;
         }
@@ -527,7 +529,6 @@ FE_Utils::is_include_file_found (std::string &inc_file,
           // Overwrite inc_file with abspath since the later
           // is normalized to the native OS representation.
           inc_file = abspath;
-          ACE_OS::fclose (test);
           return true;
         }
     }
