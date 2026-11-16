@@ -93,7 +93,8 @@ class FilterClient
                       const char* constraint_expr,
                       const char* mod_constraint_expr);
 
-  // = Data Members
+  /// @name Data members
+  //@{
   /// Reference to the root poa.
   PortableServer::POA_var root_poa_;
 
@@ -148,6 +149,7 @@ class FilterClient
 
   // Set this flag to exit the run loop.
   CORBA::Boolean done_;
+  //@}
 };
 
 /*****************************************************************/
@@ -171,7 +173,8 @@ public:
   virtual void disconnect ();
 
 protected:
-  // = Data members
+  /// @name Data members
+  //@{
 
   /// The callback for <done>
   FilterClient* filter_;
@@ -184,6 +187,7 @@ protected:
 
   /// The proxy_supplier id.
   CosNotifyChannelAdmin::ProxyID proxy_supplier_id_;
+  //@}
 
   // = Methods
   virtual ~Filter_StructuredPushConsumer ();
@@ -225,7 +229,8 @@ public:
   virtual void send_event (const CosNotification::StructuredEvent& event);
 
 protected:
-  // = Data members
+  /// @name Data members
+  //@{
   /// The name of this consumer.
   ACE_CString my_name_;
 
@@ -234,6 +239,7 @@ protected:
 
   /// This supplier's id.
   CosNotifyChannelAdmin::ProxyID proxy_consumer_id_;
+  //@}
 
   // = Protected Methods
   virtual ~Filter_StructuredPushSupplier ();

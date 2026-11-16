@@ -80,7 +80,8 @@ protected:
   /// Try to resolve the Notify factory from the Naming service.
   void resolve_Notify_factory ();
 
-  // = Data Members
+  /// @name Data members
+  //@{
   /// Reference to the root poa.
   PortableServer::POA_var root_poa_;
 
@@ -101,6 +102,7 @@ protected:
 
   /// Initial admin props specified to the factory when creating the EC.
   CosNotification::AdminProperties initial_admin_;
+  //@}
 
 private:
   std::atomic<int> num_clients_ {0};

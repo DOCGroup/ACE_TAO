@@ -92,13 +92,14 @@ protected:
   /// Disconnect from proxy.
   virtual void disconnect_from_proxy () = 0;
 
-  // = Data Members
-
+  /// @name Data members
+  //@{
   /// The proxy that we are connected to.
    typename Proxy_Traits::VAR proxy_;
 
   /// This <proxy_> id.
    typename Proxy_Traits::ID proxy_id_;
+  //@}
 };
 
 #include "Peer_T.cpp"
