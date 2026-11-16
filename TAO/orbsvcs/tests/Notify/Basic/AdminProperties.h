@@ -28,8 +28,10 @@ class AdminProperties_StructuredPushConsumer : public TAO_Notify_Tests_Structure
 public:
   explicit AdminProperties_StructuredPushConsumer (AdminProperties *client);
 
-  // = StructuredPushSupplier methods
+  /// @name StructuredPushConsumer operations
+  //@{
   void push_structured_event (CosNotification::StructuredEvent const &notification) override;
+  //@}
 
 protected:
   AdminProperties* client_;

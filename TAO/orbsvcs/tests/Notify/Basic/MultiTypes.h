@@ -49,8 +49,10 @@ class MultiTypes_StructuredPushConsumer : public TAO_Notify_Tests_StructuredPush
 public:
   explicit MultiTypes_StructuredPushConsumer (MultiTypes *client);
 
-  // = StructuredPushSupplier methods
+  /// @name StructuredPushConsumer operations
+  //@{
   void push_structured_event (CosNotification::StructuredEvent const &notification) override;
+  //@}
 
 protected:
   MultiTypes* client_;
@@ -61,9 +63,11 @@ class MultiTypes_SequencePushConsumer : public TAO_Notify_Tests_SequencePushCons
 public:
   explicit MultiTypes_SequencePushConsumer (MultiTypes *client);
 
-  // = SequencePushConsumer methods
+  /// @name SequencePushConsumer operations
+  //@{
   void push_structured_events (
         CosNotification::EventBatch const &notifications) override;
+  //@}
 
 protected:
   MultiTypes* client_;

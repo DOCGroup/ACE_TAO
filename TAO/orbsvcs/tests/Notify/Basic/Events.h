@@ -31,9 +31,11 @@ class Event_StructuredPushConsumer : public TAO_Notify_Tests_StructuredPushConsu
 public:
   explicit Event_StructuredPushConsumer (Events *test_client);
 
-  // = StructuredPushSupplier methods.
+  /// @name StructuredPushConsumer operations
+  //@{
   void push_structured_event (
       CosNotification::StructuredEvent const &notification) override;
+  //@}
 
 protected:
   Events * test_client_;

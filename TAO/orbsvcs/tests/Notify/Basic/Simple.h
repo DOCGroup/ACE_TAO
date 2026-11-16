@@ -32,8 +32,10 @@ class Event_AnyPushConsumer : public TAO_Notify_Tests_PushConsumer
 public:
   explicit Event_AnyPushConsumer (Simple_Test *test_client);
 
-  // = PushSupplier methods
+  /// @name PushConsumer operations
+  //@{
   void push (CORBA::Any const &data) override;
+  //@}
 
 protected:
   Simple_Test * test_client_;

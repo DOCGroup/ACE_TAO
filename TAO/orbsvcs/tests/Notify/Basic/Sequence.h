@@ -31,9 +31,11 @@ class SequencePushConsumer : public TAO_Notify_Tests_SequencePushConsumer
 public:
   explicit SequencePushConsumer (Sequence *client);
 
-  // = SequencePushConsumer methods
+  /// @name SequencePushConsumer operations
+  //@{
   void push_structured_events (
         CosNotification::EventBatch const &notifications) override;
+  //@}
 
 protected:
   Sequence* test_client_;
