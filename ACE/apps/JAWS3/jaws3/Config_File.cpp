@@ -14,7 +14,7 @@
 #include "jaws3/Config_File.h"
 #include "jaws3/Symbol_Table.h"
 
-// = Helper class to manage "constant" strings.
+/// Helper class for managing constant strings.
 
 class JAWS_strings
 {
@@ -57,7 +57,7 @@ private:
   ACE_Unbounded_Queue<ACE_TCHAR *> queue_;
 };
 
-// = Underlying implementation class.
+/// Implementation of JAWS_Config_File.
 
 class JAWS_Config_File_Impl
 {

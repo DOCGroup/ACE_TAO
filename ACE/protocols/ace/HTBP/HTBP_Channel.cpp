@@ -298,7 +298,8 @@ ACE::HTBP::Channel::consume_error ()
 }
 
 //---------------------------------------------------------------------------
-// = I/O functions.
+/// @name I/O functions
+/// @{
 
 /// The ACE::HTBP::Channel is a sibling of the ACE_SOCK_IO class, rather than a
 /// decendant. This is due to the requirement to wrap all messages with
@@ -600,6 +601,7 @@ ACE::HTBP::Channel::sendv (const iovec iov[],
   return result;
 }
 
+/// @}
 int
 ACE::HTBP::Channel::enable (int value) const
 {

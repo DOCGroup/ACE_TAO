@@ -37,7 +37,8 @@ ACE::HTBP::Stream::dump () const
 }
 
 //---------------------------------------------------------------------------
-// = I/O functions.
+/// @name I/O functions
+/// @{
 
 /// Recv an <n> byte buffer from the connected socket.
 ssize_t
@@ -280,6 +281,7 @@ ACE::HTBP::Stream::sendv_n (const iovec [],
                     -1);
 }
 
+/// @}
 int
 ACE::HTBP::Stream::close_reader ()
 {
