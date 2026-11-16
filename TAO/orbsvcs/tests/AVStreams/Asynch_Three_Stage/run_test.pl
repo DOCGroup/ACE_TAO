@@ -6,7 +6,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
-use File::stat;
+use File::Compare;
 
 $status = 0;
 $debug_level = '0';
@@ -63,6 +63,21 @@ if ($sv->PutFile ($inputfile) == -1) {
 if ($sv1->PutFile ($inputfile) == -1) {
     print STDERR "ERROR: cannot set file <$sv1_inputfile>\n";
     exit 1;
+}
+
+sub check_output {
+    my ($target, $outputfile, $local_outputfile) = @_;
+
+    if ($target->GetFile ($outputfile) == -1) {
+        print STDERR "ERROR: cannot retrieve file <$local_outputfile>\n";
+        $status = 1;
+    }
+    elsif (File::Compare::compare ($inputfile, $outputfile) != 0) {
+        print STDERR "ERROR: received file <$local_outputfile> differs from input\n";
+        $status = 1;
+    }
+
+    unlink $outputfile;
 }
 
 $NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
@@ -200,6 +215,9 @@ if ($NS_status != 0) {
     $status = 1;
 }
 
+check_output ($re1, $outputfile1, $re1_outputfile1);
+check_output ($re2, $outputfile2, $re2_outputfile2);
+
 $ns->DeleteFile ($nsiorfile);
 $sv->DeleteFile ($nsiorfile);
 $sv1->DeleteFile ($nsiorfile);
@@ -317,6 +335,9 @@ if ($NS_status != 0) {
     print STDERR "ERROR: Naming Service returned $NS_status\n";
     $status = 1;
 }
+
+check_output ($re1, $outputfile1, $re1_outputfile1);
+check_output ($re2, $outputfile2, $re2_outputfile2);
 
 $ns->DeleteFile ($nsiorfile);
 $sv->DeleteFile ($nsiorfile);
@@ -447,6 +468,9 @@ if ($NS_status != 0) {
     print STDERR "ERROR: Naming Service returned $NS_status\n";
     $status = 1;
 }
+
+check_output ($re1, $outputfile1, $re1_outputfile1);
+check_output ($re2, $outputfile2, $re2_outputfile2);
 
 $ns->DeleteFile ($nsiorfile);
 $sv->DeleteFile ($nsiorfile);
