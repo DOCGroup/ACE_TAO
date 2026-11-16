@@ -28,6 +28,10 @@ public:
       CORBA::Boolean release)
     : bounded_basic_string_sequence<charT, MAX>(length, data, release)
   {}
+  bounded_bd_string_sequence (bounded_bd_string_sequence const &) = default;
+  bounded_bd_string_sequence (bounded_bd_string_sequence &&) noexcept = default;
+  bounded_bd_string_sequence &operator= (bounded_bd_string_sequence const &) = default;
+  bounded_bd_string_sequence &operator= (bounded_bd_string_sequence &&) noexcept = default;
 
   inline CORBA::ULong bd_string_maximum() const
   {

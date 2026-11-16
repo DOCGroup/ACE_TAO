@@ -45,6 +45,10 @@ public:
       CORBA::Boolean release)
     : impl_(MAX, length, data, release)
   {}
+  bounded_valuetype_sequence (bounded_valuetype_sequence const &) = default;
+  bounded_valuetype_sequence (bounded_valuetype_sequence &&) noexcept = default;
+  bounded_valuetype_sequence &operator= (bounded_valuetype_sequence const &) = default;
+  bounded_valuetype_sequence &operator= (bounded_valuetype_sequence &&) noexcept = default;
 
   /* Use default ctor, operator= and dtor */
   inline CORBA::ULong maximum() const {

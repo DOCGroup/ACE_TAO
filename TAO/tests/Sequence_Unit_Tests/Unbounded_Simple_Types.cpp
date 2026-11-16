@@ -7,10 +7,19 @@
  * @author Carlos O'Ryan
  */
 #include "tao/Unbounded_Value_Sequence_T.h"
+#include "tao/Valuetype/Bounded_Valuetype_Sequence_T.h"
+#include "tao/Valuetype/Unbounded_Valuetype_Sequence_T.h"
+#include "tao/Valuetype/ValueBase.h"
 #include "tao/LongSeqC.h"
 #include "ace/Log_Msg.h"
 
+#include <type_traits>
 #include <utility>
+
+static_assert (std::is_nothrow_move_constructible<
+  TAO::unbounded_valuetype_sequence<CORBA::ValueBase, CORBA::ValueBase_var>>::value);
+static_assert (std::is_nothrow_move_constructible<
+  TAO::bounded_valuetype_sequence<CORBA::ValueBase, CORBA::ValueBase_var, 4>>::value);
 
 struct Foo
 {

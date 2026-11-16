@@ -46,6 +46,10 @@ public:
       CORBA::Boolean release)
     : impl_(MAX, length, data, release)
   {}
+  bounded_object_reference_sequence (bounded_object_reference_sequence const &) = default;
+  bounded_object_reference_sequence (bounded_object_reference_sequence &&) noexcept = default;
+  bounded_object_reference_sequence &operator= (bounded_object_reference_sequence const &) = default;
+  bounded_object_reference_sequence &operator= (bounded_object_reference_sequence &&) noexcept = default;
 
   /* Use default ctor, operator= and dtor */
   // @copydoc TAO::details::generic_sequence::maximum()

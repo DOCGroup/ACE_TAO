@@ -20,11 +20,16 @@
 #include "structC.h"
 #include "valuetypeC.h"
 #include "fixedA.h"
+#include "arrayC.h"
 
 #include "ace/Log_Msg.h"
 #include "tao/AnyTypeCode/Any.h"
 
 #include <cstring>
+#include <type_traits>
+
+static_assert (std::is_nothrow_move_constructible<testdata::ArraycharList>::value);
+static_assert (std::is_nothrow_move_constructible<testdata::BdArraycharList>::value);
 
 class hello_i : public virtual POA_hello
 {

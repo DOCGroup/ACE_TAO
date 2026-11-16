@@ -41,6 +41,10 @@ public:
       CORBA::Boolean release = false)
     : impl_(MAX, length, data, release)
   {}
+  bounded_array_sequence (bounded_array_sequence const &) = default;
+  bounded_array_sequence (bounded_array_sequence &&) noexcept = default;
+  bounded_array_sequence &operator= (bounded_array_sequence const &) = default;
+  bounded_array_sequence &operator= (bounded_array_sequence &&) noexcept = default;
   inline CORBA::ULong maximum() const {
     return impl_.maximum();
   }
