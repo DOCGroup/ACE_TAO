@@ -153,7 +153,7 @@ public:
                     int burst_pause,
                     int payload_size,
                     int shutdown_event_type,
-                    ACE_Thread_Manager* thr_mgr = 0);
+                    ACE_Thread_Manager* thr_mgr = nullptr);
 
   /// The svc call
   int svc () override;

@@ -13,7 +13,7 @@
 class ViewIORDialog : public CDialog
 {
 public:
-  ViewIORDialog(CORBA::ORB_ptr pORB, CORBA::Object_ptr pObject, CWnd* pParent = 0);   // standard constructor
+  ViewIORDialog(CORBA::ORB_ptr pORB, CORBA::Object_ptr pObject, CWnd* pParent = nullptr);   // standard constructor
 
 // Dialog Data
   //{{AFX_DATA(ViewIORDialog)
