@@ -19,7 +19,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Guard_T.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/Synch_Traits.h"
 

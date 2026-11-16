@@ -1,4 +1,5 @@
 #include "Compressor.h"
+#include "ace/Guard_T.h"
 
 #if !defined (__ACE_INLINE__)
 #include "Compressor.inl"
