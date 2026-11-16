@@ -38,8 +38,8 @@ public:
              std::string const& event_type);
 
 protected:
-  // = Data members
-
+  /// @name Data members
+  /// @{
   /// ORB Objects.
   TAO_Notify_ORB_Objects& orb_objects_;
 
@@ -49,20 +49,22 @@ protected:
   /// The proxy_supplier id.
   CosNotifyChannelAdmin::ProxyID proxy_supplier_id_ {};
 
-  // POA.
+  /// POA.
   PortableServer::POA_var default_POA_ {};
 
-  // The Consumer Admin
+  /// The Consumer Admin.
   CosNotifyChannelAdmin::ConsumerAdmin_var admin_ {};
 
   /// The Type the Consumer should subscribe to.
   std::string event_type_;
+  /// @}
 
-  // = Methods
   ~TAO_Notify_Lanes_Consumer () override = default;
 
-  // = ServantBase operations
+  /// @name ServantBase operations
+  /// @{
   PortableServer::POA_ptr _default_POA () override;
+  /// @}
 
   /// Connect the Consumer to the EventChannel.
   /// Creates a new proxy supplier and connects to it.
@@ -74,14 +76,18 @@ protected:
   /// Deactivate.
   void deactivate ();
 
-  // = NotifyPublish method
+  /// @name NotifyPublish method
+  /// @{
   void offer_change (CosNotification::EventTypeSeq const& added,
                      CosNotification::EventTypeSeq const& removed) override;
+  /// @}
 
-  // = StructuredPushSupplier methods
+  /// @name StructuredPushSupplier methods
+  /// @{
   void push_structured_event (CosNotification::StructuredEvent const& notification) override;
 
   void disconnect_structured_push_consumer () override;
+  /// @}
 };
 
 #include /**/ "ace/post.h"

@@ -37,8 +37,8 @@ public:
   void run ();
 
 protected:
-  // = Protected Methods
-
+  /// @name Supplier methods
+  /// @{
   /// Connect the Supplier to the EventChannel.
   /// Creates a new proxy consumer and connects to it.
   void connect ();
@@ -51,17 +51,23 @@ protected:
 
   /// Send one event.
   void send_event (CosNotification::StructuredEvent const& event);
+  /// @}
 
   ~TAO_Notify_Lanes_Supplier () override = default;
 
-  // = NotifySubscribe
+  /// @name NotifySubscribe methods
+  /// @{
   void subscription_change (CosNotification::EventTypeSeq const& added,
                             CosNotification::EventTypeSeq const& removed) override;
+  /// @}
 
-  // = StructuredPushSupplier method
+  /// @name StructuredPushSupplier method
+  /// @{
   void disconnect_structured_push_supplier () override;
-  /// = Data members
+  /// @}
 
+  /// @name Data members
+  /// @{
   /// ORB Objects.
   TAO_Notify_ORB_Objects& orb_objects_;
 
@@ -74,7 +80,7 @@ protected:
   /// Number of Consumers expected to connect.
   int expected_consumer_count_ {2};
 
-  // The Supplier Admin
+  /// The Supplier Admin.
   CosNotifyChannelAdmin::SupplierAdmin_var admin_ {};
 
   /// Lock to serialize internal state.
@@ -85,6 +91,7 @@ protected:
 
   /// Number of consumers connected.
   int consumer_count_ {};
+  /// @}
 };
 
 #include /**/ "ace/post.h"
