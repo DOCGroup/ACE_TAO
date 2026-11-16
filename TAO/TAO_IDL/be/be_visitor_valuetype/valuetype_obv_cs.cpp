@@ -290,6 +290,12 @@ be_visitor_valuetype_obv_cs::gen_obv_call_base_constructor_args (
 
           // Check the member type for nested valuetypes
           be_type *t = dynamic_cast<be_type*> (f->field_type ());
+          be_typedef *td = dynamic_cast<be_typedef*> (t);
+          if (td != nullptr)
+            {
+              t = td->primitive_base_type ();
+            }
+
           if (dynamic_cast<be_valuetype_fwd*> (t) ||
               dynamic_cast<be_valuetype*> (t) ||
               dynamic_cast<be_valuebox*> (t) )

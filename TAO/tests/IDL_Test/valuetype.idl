@@ -68,6 +68,18 @@ valuetype Copy_Derived : Copy_Base
   public long derived_value;
 };
 
+valuetype Copy_Leaf
+{
+  public long leaf_value;
+};
+
+typedef Copy_Leaf Copy_Leaf_Alias;
+
+valuetype Copy_Alias_Holder
+{
+  public Copy_Leaf_Alias leaf;
+};
+
 enum ValueSort2 {
   SYMBOL_TYPE2
 };
