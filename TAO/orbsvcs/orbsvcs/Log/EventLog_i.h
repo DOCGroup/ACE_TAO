@@ -77,10 +77,12 @@ public:
   void
   activate ();
 
-  // = The CosEventChannelAdmin::EventChannel interface methods.
+  /// @name CosEventChannelAdmin::EventChannel interface methods
+  /// @{
   CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers () override;
 
   CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers () override;
+  /// @}
 
 protected:
   /**

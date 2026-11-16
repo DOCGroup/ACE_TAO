@@ -62,15 +62,19 @@ public:
 protected:
   ~TAO_Notify_LogConsumer () override;
 
-  // = NotifyPublish method
+  /// @name NotifyPublish method
+  /// @{
   void offer_change (
     CosNotification::EventTypeSeq const & added,
     CosNotification::EventTypeSeq const & removed) override;
+  /// @}
 
-  // = PushSupplier methods
+  /// @name PushSupplier methods
+  /// @{
   void push (CORBA::Any const & event) override;
 
   void disconnect_push_consumer () override;
+  /// @}
 
   TAO_Notify_LogConsumer (TAO_Notify_LogConsumer const &) = delete;
   TAO_Notify_LogConsumer (TAO_Notify_LogConsumer &&) = delete;

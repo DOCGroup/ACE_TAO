@@ -77,7 +77,8 @@ public:
         CosNotification::QoSProperties const & initial_qos,
         CosNotification::AdminProperties const & initial_admin) override;
 
-  // = Methods from CosNotifyChannelAdmin::ConsumerAdmin.
+  /// @name CosNotifyChannelAdmin::ConsumerAdmin methods
+  /// @{
   CosNotifyChannelAdmin::AdminID MyID () override;
 
   CosNotifyChannelAdmin::EventChannel_ptr MyChannel () override;
@@ -126,6 +127,7 @@ public:
   CosNotifyFilter::Filter_ptr get_filter (CosNotifyFilter::FilterID) override;
   CosNotifyFilter::FilterIDSeq* get_all_filters () override;
   void remove_all_filters () override;
+  /// @}
 
 protected:
   CORBA::RepositoryId create_repositoryid () override;

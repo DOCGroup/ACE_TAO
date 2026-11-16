@@ -76,7 +76,8 @@ public:
   void
   activate ();
 
-  // = Methods from CosNotifyChannelAdmin::EventChannel.
+  /// @name CosNotifyChannelAdmin::EventChannel methods
+  /// @{
   CosNotifyFilter::Filter_ptr get_filter () override;
 
   void set_filter (CosNotifyFilter::Filter_ptr filter) override;
@@ -106,7 +107,10 @@ public:
   CosNotifyChannelAdmin::AdminIDSeq * get_all_consumeradmins () override;
 
   CosNotifyChannelAdmin::AdminIDSeq * get_all_supplieradmins () override;
+  /// @}
 
+  /// @name CosNotification::QoSAdmin methods
+  /// @{
   CosNotification::AdminProperties * get_admin () override;
 
   void set_admin (CosNotification::AdminProperties const & admin) override;
@@ -117,11 +121,14 @@ public:
 
   void validate_qos (CosNotification::QoSProperties const &,
     CosNotification::NamedPropertyRangeSeq_out) override;
+  /// @}
 
-  // = Methods from DsEventLogAdmin::EventLog.
+  /// @name DsEventLogAdmin::EventLog methods
+  /// @{
   CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers () override;
 
   CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers () override;
+  /// @}
 
 private:
   /// The PushConsumer that consumes the events and stores them
