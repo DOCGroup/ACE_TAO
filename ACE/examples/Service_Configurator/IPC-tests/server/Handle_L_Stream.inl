@@ -111,8 +111,8 @@ Handle_L_Stream::handle_input (ACE_HANDLE)
     return -1;
   else
     ACE_DEBUG ((LM_INFO,
-                ACE_TEXT ("received file descriptor %d on ACE_Stream %s\n"),
-                handle, sa.get_path_name ()));
+                ACE_TEXT ("received file descriptor %@ on ACE_Stream %s\n"),
+                reinterpret_cast<void *> (handle), sa.get_path_name ()));
 
   ACE_OS::puts ("----------------------------------------");
 

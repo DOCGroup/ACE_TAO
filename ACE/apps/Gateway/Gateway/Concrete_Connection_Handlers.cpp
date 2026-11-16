@@ -148,8 +148,8 @@ Consumer_Handler::handle_output (ACE_HANDLE)
   ACE_Message_Block *event {};
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT("(%t) Receiver signalled 'resume transmission' %d\n"),
-              this->get_handle ()));
+              ACE_TEXT("(%t) Receiver signalled 'resume transmission' %@\n"),
+              reinterpret_cast<void *> (this->get_handle ())));
 
   // WIN32 Notes: When the receiver blocked, we started adding to the
   // consumer handler's message Q. At this time, we registered a

@@ -350,8 +350,8 @@ ACE::HTBP::Channel::pre_recv()
       if (ACE::debug())
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) ACE::HTBP::Channel::pre_recv ")
-                    ACE_TEXT("channel[%d] state = %d, %p\n"),
-                    this->get_handle(),
+                    ACE_TEXT("channel[%@] state = %d, %p\n"),
+                    reinterpret_cast<void *> (this->get_handle ()),
                     this->state_,
                     ACE_TEXT("pre_recv")));
     }

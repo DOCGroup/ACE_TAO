@@ -37,9 +37,9 @@ Handle_L_Pipe::handle_input (ACE_HANDLE)
     return -1;
   else
     ACE_DEBUG ((LM_INFO,
-                ACE_TEXT ("received file descriptors %d and %d\n"),
-                fd1,
-                fd2));
+                ACE_TEXT ("received file descriptors %@ and %@\n"),
+                reinterpret_cast<void *> (fd1),
+                reinterpret_cast<void *> (fd2)));
 
   if ((n = ACE_OS::read (fd1, buf, sizeof buf)) == -1)
     return -1;

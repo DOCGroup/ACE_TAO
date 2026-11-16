@@ -406,8 +406,8 @@ TAO_IIOP_Connection_Handler::close_connection ()
             {
               TAOLIB_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("TAO (%P|%t) Unable to set ")
-                          ACE_TEXT ("SO_LINGER on %d\n"),
-                          this->peer ().get_handle ()));
+                          ACE_TEXT ("SO_LINGER on %@\n"),
+                          reinterpret_cast<void *> (this->peer ().get_handle ())));
             }
         }
     }
@@ -687,8 +687,8 @@ TAO_IIOP_Connection_Handler::abort ()
         {
           TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) Unable to set ")
-                      ACE_TEXT ("SO_LINGER on %d\n"),
-                      this->peer ().get_handle ()));
+                      ACE_TEXT ("SO_LINGER on %@\n"),
+                      reinterpret_cast<void *> (this->peer ().get_handle ())));
         }
     }
 }
