@@ -242,6 +242,8 @@ TAO_Active_Object_Map::find_user_id_using_system_id (
   PortableServer::ObjectId id;
   if (this->id_hint_strategy_->recover_key (system_id, id) == 0)
     {
+      // recover_key can return a view of system_id's buffer. The returned
+      // ObjectId must own its data after system_id goes out of scope.
       ACE_NEW_RETURN (user_id,
                       PortableServer::ObjectId (id),
                       -1);

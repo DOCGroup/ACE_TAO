@@ -45,6 +45,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Assert correctness.
       ACE_ASSERT (hello_impl == servant.in ());
 
+      // The ObjectId returned by reference_to_id must own its key data.
+      obj_var = CORBA::Object::_nil ();
+
       root_poa->deactivate_object (new_obj_id.in ());
 
       orb->destroy ();
