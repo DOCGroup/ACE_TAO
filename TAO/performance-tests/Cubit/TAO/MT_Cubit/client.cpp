@@ -192,7 +192,7 @@ Client_i::get_context_switches ()
 void
 Client_i::output_latency ()
 {
-  FILE *latency_file_handle = 0;
+  FILE *latency_file_handle {};
   char latency_file[BUFSIZ];
   char buffer[BUFSIZ];
 
@@ -223,7 +223,7 @@ Client_i::output_latency ()
         this->ts_->global_jitter_array_ [j]->begin ();
 
       u_int i = 0;
-      ACE_timer_t *latency = 0;
+      ACE_timer_t *latency {};
 
       for (iterator.first ();
            (i < (j == 0
