@@ -49,7 +49,6 @@ public:
 
   ~be_visitor_context ();
 
-  /// assignment operator
   be_visitor_context &operator= (be_visitor_context const& ctx);
 
   be_visitor_context &operator= (be_visitor_context &&) = delete;
