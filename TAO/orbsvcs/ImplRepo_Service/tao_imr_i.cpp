@@ -857,9 +857,6 @@ TAO_IMR_Op_Register::parse (int argc, ACE_TCHAR **argv)
   return 0;
 }
 
-// ============================================================================
-// = Run methods
-
 int
 TAO_IMR_Op_Activate::run ()
 {
@@ -1435,9 +1432,6 @@ TAO_IMR_Op_Register::run ()
 
   return TAO_IMR_Op::NORMAL;
 }
-
-// ============================================================================
-// = Display Server Information methods
 
 void
 TAO_IMR_Op_List::display_server_information (const ImplementationRepository::ServerInformation &info)

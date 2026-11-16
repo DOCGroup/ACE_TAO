@@ -64,7 +64,8 @@ protected:
   /// Owns the priority mapping registered as a borrowed pointer with the lookup manager.
   std::unique_ptr<TAO_Notify_Tests_Priority_Mapping> priority_mapping_;
 
-  ///= Handlers
+  /// @name Command handlers
+  /// @{
   virtual void handle_init ();
   void handle_run ();
   void handle_wait_for_completion ();
@@ -72,6 +73,7 @@ protected:
   void handle_dump_stats ();
   void handle_signal_peer ();
   void handle_wait_to_start ();
+  /// @}
 };
 
 #include /**/ "ace/post.h"

@@ -138,18 +138,17 @@ TAO_Notify_Tests_Application_Command::handle_dump_stats ()
 void
 TAO_Notify_Tests_Application_Command::handle_run ()
 {
-  // Run the Consumers
-
-  //= Run the Suppliers
   TAO_Notify_Tests_Activation_Manager* act_mgr {};
   LOOKUP_MANAGER->resolve (act_mgr);
 
   if (act_mgr->activate_suppliers () == 0)
-    ACE_DEBUG ((LM_DEBUG, "Suppliers activated...\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG, "Suppliers activated...\n"));
+    }
   else
-  {
-    ACE_DEBUG ((LM_DEBUG, "Suppliers activation failed!...\n"));
-  }
+    {
+      ACE_DEBUG ((LM_DEBUG, "Suppliers activation failed!...\n"));
+    }
 }
 
 void

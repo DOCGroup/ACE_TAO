@@ -250,7 +250,7 @@ void
 TAO_EC_Gateway_IIOP::open_i (
     RtecEventChannelAdmin::ConsumerQOS const &c_qos)
 {
-  // = Connect as a supplier to the consumer EC
+  // Connect as a supplier to the consumer event channel.
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
     this->consumer_ec_->for_suppliers ();
 

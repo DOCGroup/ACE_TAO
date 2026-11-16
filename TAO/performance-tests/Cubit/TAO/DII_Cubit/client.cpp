@@ -78,7 +78,8 @@ private:
   void print_stats (char const *call_name,
                     ACE_Profile_Timer::ACE_Elapsed_Time const &elapsed_time);
 
-  // = DII versions of Cubit operations:
+  /// @name DII versions of Cubit operations
+  /// @{
 
   void cube_short_dii ();
   void cube_long_dii ();
@@ -88,7 +89,10 @@ private:
   void cube_octet_seq_dii (int length);
   void cube_long_seq_dii (int length);
 
-  // = Wrappers for cubing small and large sequences w/o args:
+  /// @}
+
+  /// @name Wrappers for cubing small and large sequences without arguments
+  /// @{
 
   /// Wrapper for the mixin call, just to be neat.
   void cube_small_long_seq ();
@@ -96,6 +100,7 @@ private:
   void cube_small_octet_seq ();
   void cube_large_octet_seq ();
   void cube_mixin ();
+  /// @}
 
   /// Array of pointers to the operation functions.
   std::array<void (DII_Cubit_Client::*)(), NUMBER_OF_TESTS> const op_array_
