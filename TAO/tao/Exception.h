@@ -96,7 +96,6 @@ namespace CORBA
   class TAO_Export Exception
   {
   public:
-    /// Copy constructor.
     /**
      * @note This constructor should be protected, but VC7.1 at
      *       warning level 4 complains about the inaccessible copy

@@ -80,7 +80,6 @@ namespace CORBA
   class TAO_Export SystemException : public Exception
   {
   public:
-    /// Copy constructor.
     /**
      * @note This constructor should be protected, but VC7.1 at
      *       warning level 4 complains about the inaccessible copy
@@ -138,7 +137,6 @@ namespace CORBA
   protected:
     SystemException ();
 
-    /// Assignment operator.
     SystemException & operator= (const SystemException &src);
 
     /// Constructor using a repository id.

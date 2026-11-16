@@ -43,7 +43,6 @@ public:
    */
   explicit TAO_Policy_Set (TAO_Policy_Scope scope);
 
-  /// Copy constructor.
   TAO_Policy_Set (TAO_Policy_Set const &rhs);
 
   ~TAO_Policy_Set ();

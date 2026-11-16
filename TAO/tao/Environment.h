@@ -77,7 +77,6 @@ namespace CORBA
     /// exceptions.
     Environment () = default;
 
-    /// Copy constructor.
     Environment (Environment const &rhs);
 
     Environment (Environment &&) = delete;

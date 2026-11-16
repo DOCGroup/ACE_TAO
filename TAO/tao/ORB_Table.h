@@ -158,10 +158,8 @@ namespace TAO
 
     ~ORB_Core_Ref_Counter ();
 
-    /// Copy constructor.
     ORB_Core_Ref_Counter (ORB_Core_Ref_Counter const & rhs);
 
-    /// Assignment operator.
     ORB_Core_Ref_Counter &operator= (ORB_Core_Ref_Counter const &rhs);
 
     /// ORB_Core pointer accessor.

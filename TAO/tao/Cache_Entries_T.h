@@ -68,7 +68,6 @@ namespace TAO
 
     explicit Cache_IntId_T (transport_type *transport);
 
-    /// Copy constructor.
     Cache_IntId_T (const Cache_IntId_T & rhs);
 
     ~Cache_IntId_T ();
@@ -143,7 +142,6 @@ namespace TAO
 
     explicit Cache_ExtId_T (transport_descriptor_type *prop);
 
-    /// Copy constructor.
     Cache_ExtId_T (const Cache_ExtId_T & rhs);
 
     ~Cache_ExtId_T ();

@@ -39,12 +39,10 @@ namespace CORBA
   class TAO_Export UserException : public Exception
   {
   public:
-    /// Copy constructor.
     UserException (UserException const &rhs);
 
     ~UserException () override = default;
 
-    /// Assignment operator.
     UserException &operator= (UserException const &rhs);
 
     /// The narrow operation.
