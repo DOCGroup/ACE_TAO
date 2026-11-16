@@ -1,14 +1,13 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/ORB_Constants.h"
 #include "tao/Policy_CurrentC.h"
 #include "tao/debug.h"
 #include "testS.h"
-#include <memory>
 #include <cstring>
+#include <memory>
 
 struct Options
 {
@@ -385,7 +384,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_OS::fprintf (output_file.get (),
                            "%s",
                            ior.in ());
-        ACE_ASSERT (result == ACE_OS::strlen (ior.in ()));
+        ACE_ASSERT (result == std::strlen (ior.in ()));
         ACE_UNUSED_ARG (result);
       }
 

@@ -8,6 +8,7 @@
 #include "ace/Throughput_Stats.h"
 #include "tao/debug.h"
 #include "testS.h"
+#include <cstring>
 #include <memory>
 
 struct Options
@@ -377,7 +378,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_OS::fprintf (output_file.get (),
                            "%s",
                            ior.in ());
-        ACE_ASSERT (result == ACE_OS::strlen (ior.in ()));
+        ACE_ASSERT (result == std::strlen (ior.in ()));
         ACE_UNUSED_ARG (result);
       }
 
