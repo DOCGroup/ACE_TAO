@@ -59,8 +59,6 @@ TAO::In_BD_String_Clonable_Argument_T<S_var,BOUND,Insert_Policy>::clone ()
   return clone_arg.release ();
 }
 
-// ===========================================================
-
 template<typename S_var,
          size_t BOUND,
          template <typename> class Insert_Policy>
@@ -110,8 +108,6 @@ TAO::Inout_BD_String_Argument_T<S_var,BOUND,Insert_Policy>::interceptor_value (
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
-// ==============================================================
-
 template<typename S_var,
          size_t BOUND,
          template <typename> class Insert_Policy>
@@ -143,8 +139,6 @@ TAO::Out_BD_String_Argument_T<S_var,BOUND,Insert_Policy>::interceptor_value (
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
-
-// ============================================================
 
 template<typename S_var,
          size_t BOUND,
