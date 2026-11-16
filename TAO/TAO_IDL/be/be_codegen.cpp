@@ -38,6 +38,13 @@ TAO_CodeGen::TAO_CodeGen ()
 
 TAO_CodeGen::~TAO_CodeGen () = default;
 
+int
+TAO_CodeGen::reset_out_stream (std::unique_ptr<TAO_OutStream> &stream)
+{
+  stream = std::make_unique<TAO_OutStream> ();
+  return 0;
+}
+
 // Change the string to all upper case.
 std::string
 TAO_CodeGen::upcase (std::string const& str)
