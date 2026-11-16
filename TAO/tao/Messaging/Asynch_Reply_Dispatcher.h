@@ -63,7 +63,9 @@ private:
   /// Reply Handler passed in the Asynchronous Invocation.
   Messaging::ReplyHandler_var reply_handler_;
 
-  /// The reference to the timeout handler retained by this dispatcher.
+  /// Explicit ACE_Event_Handler reference owned by this dispatcher; the
+  /// reactor maintains a separate reference while the timer is scheduled.
+  /// Keep the raw pointer to follow the handler's reference-count lifecycle.
   TAO_Asynch_Timeout_Handler *timeout_handler_ {};
 };
 

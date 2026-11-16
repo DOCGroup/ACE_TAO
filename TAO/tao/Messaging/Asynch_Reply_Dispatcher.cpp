@@ -2,7 +2,6 @@
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
-#include "tao/ORB_Core.h"
 #include "tao/Transport.h"
 #include "tao/Transport_Mux_Strategy.h"
 
@@ -24,7 +23,7 @@ TAO_Asynch_Reply_Dispatcher::TAO_Asynch_Reply_Dispatcher (
 int
 TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
 {
-  if (this->timeout_handler_)
+  if (this->timeout_handler_ != nullptr)
     {
       // If we had registered timeout handlers just cancel them and
       // loose ownership of the handlers
@@ -39,25 +38,25 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
   // So we have to do that here in case f.i. the Exclusive TMS left the transport
   // busy after the send
   if (this->transport_ != nullptr)
-  {
-    this->transport_->tms ()->idle_after_reply ();
-  }
+    {
+      this->transport_->tms ()->idle_after_reply ();
+    }
 
-  if (!params.input_cdr_)
-  {
-    return -1;
-  }
+  if (params.input_cdr_ == nullptr)
+    {
+      return -1;
+    }
 
   if (!this->try_dispatch_reply ())
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
 
   this->reply_status_ = params.reply_status ();
   this->locate_reply_status_ = params.locate_reply_status ();
 
   // Transfer the <params.input_cdr_>'s content to this->reply_cdr_
-  ACE_Data_Block *db = this->reply_cdr_.clone_from (*params.input_cdr_);
+  ACE_Data_Block * const db = this->reply_cdr_.clone_from (*params.input_cdr_);
 
   if (db == nullptr)
     {
@@ -87,7 +86,7 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
       // this data.
       CORBA::ULong const max = params.svc_ctx_.maximum ();
       CORBA::ULong const len = params.svc_ctx_.length ();
-      IOP::ServiceContext *context_list = params.svc_ctx_.get_buffer (true);
+      IOP::ServiceContext * const context_list = params.svc_ctx_.get_buffer (true);
       this->reply_service_info_.replace (max, len, context_list, true);
 
       if (TAO_debug_level >= 4)
@@ -152,7 +151,7 @@ TAO_Asynch_Reply_Dispatcher::connection_closed ()
 {
   try
     {
-      if (this->timeout_handler_)
+      if (this->timeout_handler_ != nullptr)
         {
           // If we had registered timeout handlers just cancel them and
           // loose ownership of the handlers
@@ -162,9 +161,9 @@ TAO_Asynch_Reply_Dispatcher::connection_closed ()
         }
 
       if (!this->try_dispatch_reply ())
-      {
-        return;
-      }
+        {
+          return;
+        }
 
       if (!CORBA::is_nil (this->reply_handler_.in ()))
         {
@@ -204,7 +203,7 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out ()
   try
     {
       // @@ This check probably is unnecessary..
-      if (this->timeout_handler_)
+      if (this->timeout_handler_ != nullptr)
         {
           // If we had registered timeout handlers just cancel them and
           // loose ownership of the handlers
@@ -217,9 +216,9 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out ()
       // So we have to do that here in case f.i. the Exclusive TMS left the transport
       // busy after the send
       if (this->transport_ != nullptr)
-      {
-        this->transport_->tms ()->idle_after_reply ();
-      }
+        {
+          this->transport_->tms ()->idle_after_reply ();
+        }
 
       // This is okay here... Everything relies on our refcount being
       // held by the timeout handler, whose refcount in turn is held
