@@ -501,19 +501,17 @@ TAO_Stub::set_policy_overrides (CORBA::PolicyList const &policies,
 CORBA::PolicyList *
 TAO_Stub::get_policy_overrides (CORBA::PolicyTypeSeq const &types)
 {
-  if (this->policies_ == nullptr)
-    {
-      CORBA::PolicyList *policy_list_ptr {};
-      ACE_NEW_THROW_EX (policy_list_ptr,
-                        CORBA::PolicyList (),
-                        CORBA::NO_MEMORY ());
-
-      return policy_list_ptr;
-    }
-  else
+  if (this->policies_ != nullptr)
     {
       return this->policies_->get_policy_overrides (types);
     }
+
+  CORBA::PolicyList_var policy_list;
+  ACE_NEW_THROW_EX (policy_list.out (),
+                    CORBA::PolicyList (),
+                    CORBA::NO_MEMORY ());
+
+  return policy_list._retn ();
 }
 #endif
 
