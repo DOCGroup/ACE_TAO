@@ -1,6 +1,9 @@
 // QoS_Decorator.cpp
 #include "QoS_Decorator.h"
 
+#include <cerrno>
+#include <new>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_QOS_DECORATOR)
@@ -40,15 +43,20 @@ ACE_QoS_Decorator::ACE_QoS_Decorator (ACE_Event_Handler *event_handler,
   : qos_session_ (qos_session),
     reactor_ (reactor)
 {
-  ACE_QoS_Decorator_Base *decorator_base {};
-  ACE_NEW (decorator_base,
-           ACE_QoS_Decorator_Base (event_handler));
-  this->decorator_base_.reset (decorator_base);
+  this->decorator_base_.reset (
+    new (std::nothrow) ACE_QoS_Decorator_Base (event_handler));
+  if (this->decorator_base_ == nullptr)
+    {
+      errno = ENOMEM;
+      return;
+    }
 
-  ACE_QoS_Event_Handler *qos_event_handler {};
-  ACE_NEW (qos_event_handler,
-           ACE_QoS_Event_Handler (this->decorator_base_.get ()));
-  this->qos_event_handler_.reset (qos_event_handler);
+  this->qos_event_handler_.reset (
+    new (std::nothrow) ACE_QoS_Event_Handler (this->decorator_base_.get ()));
+  if (this->qos_event_handler_ == nullptr)
+    {
+      errno = ENOMEM;
+    }
 }
 
 ACE_QoS_Decorator::~ACE_QoS_Decorator () = default;
