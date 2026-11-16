@@ -745,7 +745,7 @@ namespace TAO
       ACE_MT (ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->cache_lock_, 0));
 
       DESCRIPTOR_SET sorted_set {};
-      int const sorted_size = this->fill_set_i (sorted_set);
+      size_t const sorted_size = this->fill_set_i (sorted_set);
 
       if (sorted_set != nullptr)
         {
@@ -753,20 +753,24 @@ namespace TAO
           // Calculate the number of entries to purge, when we have
           // to purge try to at least to purge minimal of 1 entry
           // which is needed if we have a very small cache maximum
-          int const amount = (sorted_size * this->percent_) / 100;
+          size_t amount {};
+          if (this->percent_ > 0)
+            {
+              amount = (sorted_size * static_cast<size_t> (this->percent_)) / 100;
+            }
 
           if (TAO_debug_level > 4)
             {
               TAOLIB_DEBUG ((LM_INFO,
                 ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::purge, ")
-                ACE_TEXT ("Trying to purge %d of %d cache entries\n"),
+                ACE_TEXT ("Trying to purge %B of %B cache entries\n"),
                 amount,
                 sorted_size));
             }
 
-          int count {};
+          size_t count {};
 
-          for (int i {}; count < amount && i < sorted_size; ++i)
+          for (size_t i {}; count < amount && i < sorted_size; ++i)
             {
               if (this->is_entry_purgable_i (*sorted_set[i]))
                 {
@@ -846,18 +850,18 @@ namespace TAO
   template <typename TT, typename TRDT, typename PSTRAT>
   void
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::
-    sort_set (DESCRIPTOR_SET& entries, int current_size)
+    sort_set (DESCRIPTOR_SET& entries, size_t current_size)
   {
 #if defined (ACE_LACKS_QSORT)
     // Use insertion sort if we don't have qsort
-    for(int i = 1; i < current_size; ++i)
+    for (size_t i {1}; i < current_size; ++i)
       {
         if (entries[i]->int_id_.transport ()->purging_order () <
             entries[i - 1]->int_id_.transport ()->purging_order ())
           {
             HASH_MAP_ENTRY * const entry = entries[i];
 
-            for(int j = i; j > 0 &&
+            for (size_t j = i; j > 0 &&
                   entries[j - 1]->int_id_.transport ()->purging_order () >
                   entry->item ().transport ()->purging_order (); --j)
               {
@@ -874,11 +878,11 @@ namespace TAO
   }
 
   template <typename TT, typename TRDT, typename PSTRAT>
-  int
+  size_t
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::
     fill_set_i (DESCRIPTOR_SET& sorted_set)
   {
-    int current_size {};
+    size_t current_size {};
     int const cache_maximum = this->purging_strategy_->cache_maximum ();
 
     // Set sorted_set to nullptr. This signifies nothing to purge.
@@ -887,17 +891,17 @@ namespace TAO
     // Do we need to worry about cache purging?
     if (cache_maximum >= 0)
       {
-        current_size = static_cast<int> (this->current_size ());
+        current_size = this->current_size ();
 
         if (TAO_debug_level > 6)
           {
             TAOLIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::fill_set_i, ")
-              ACE_TEXT ("current_size [%d], cache_maximum [%d]\n"),
+              ACE_TEXT ("current_size [%B], cache_maximum [%d]\n"),
               current_size, cache_maximum));
           }
 
-        if (current_size >= cache_maximum)
+        if (current_size >= static_cast<size_t> (cache_maximum))
           {
             HASH_MAP_ENTRY **buffer {};
             ACE_NEW_RETURN (buffer, HASH_MAP_ENTRY*[current_size], 0);
@@ -905,7 +909,7 @@ namespace TAO
 
             HASH_MAP_ITER iter = this->cache_map_.begin ();
 
-            for (int i {}; i < current_size; ++i)
+            for (size_t i {}; i < current_size; ++i)
               {
                 sorted_set[i] = std::addressof (*iter);
                 ++iter;

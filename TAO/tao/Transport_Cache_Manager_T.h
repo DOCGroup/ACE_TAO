@@ -273,11 +273,11 @@ namespace TAO
     using DESCRIPTOR_SET = std::unique_ptr<HASH_MAP_ENTRY*[]>;
 
     /// Sort the list of entries
-    void sort_set (DESCRIPTOR_SET& entries, int size);
+    void sort_set (DESCRIPTOR_SET& entries, size_t size);
 
     /// Fill sorted_set in with the transport_descriptor_type's in
     /// a sorted order.
-    int fill_set_i (DESCRIPTOR_SET& sorted_set);
+    size_t fill_set_i (DESCRIPTOR_SET& sorted_set);
 
     /// Non-locking version of blockable_client_transports ().
     bool blockable_client_transports_i (Connection_Handler_Set &handlers);
