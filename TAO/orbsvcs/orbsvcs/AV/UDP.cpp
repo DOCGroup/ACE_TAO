@@ -457,10 +457,14 @@ TAO_AV_UDP_Acceptor::open_i (ACE_INET_Addr *inet_addr,
              ORBSVCS_DEBUG((LM_DEBUG,"(%N,%l) Error during connection setup: %d\n", result));
           }
 
-          local_addr->set (local_addr->get_port_number (),
-                           local_addr->get_host_name (),
-                           1,
-                           local_addr->get_type ());
+          ACE_INET_Addr const bound_addr (*local_addr);
+          if (local_addr->set (bound_addr.get_port_number (),
+                               bound_addr.get_host_name (),
+                               1,
+                               bound_addr.get_type ()) != 0)
+            {
+              local_addr->set (bound_addr);
+            }
 
           if (is_default_addr)
             {
@@ -845,19 +849,36 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
           if (result < 0)
             ORBSVCS_ERROR_RETURN ((LM_ERROR,"TAO_AV_Dgram_Connector::open: get_local_addr failed\n"),result);
 
-          local_addr->set (local_addr->get_port_number (),
-                           local_addr->get_host_name (),
-                           1,
-                           local_addr->get_type ());
+          ACE_INET_Addr const bound_addr (*local_addr);
+          if (local_addr->set (bound_addr.get_port_number (),
+                               bound_addr.get_host_name (),
+                               1,
+                               bound_addr.get_type ()) != 0)
+            {
+              local_addr->set (bound_addr);
+            }
           handler->set_peer_addr (local_addr);
         }
     }
   else
     {
       if (local_addr == nullptr)
-        ACE_NEW_RETURN (local_addr,
-                        ACE_INET_Addr ("0"),
-                        -1);
+        {
+#if defined (ACE_HAS_IPV6)
+          if (inet_addr->get_type () == AF_INET6)
+            {
+              ACE_NEW_RETURN (local_addr,
+                              ACE_INET_Addr (0, "::", AF_INET6),
+                              -1);
+            }
+          else
+#endif /* ACE_HAS_IPV6 */
+            {
+              ACE_NEW_RETURN (local_addr,
+                              ACE_INET_Addr (0, "0.0.0.0", AF_INET),
+                              -1);
+            }
+        }
 
       TAO_AV_UDP_Flow_Handler *handler;
       ACE_NEW_RETURN (handler,
@@ -895,10 +916,14 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
 
       result = handler->get_socket ()->get_local_addr (*local_addr);
 
-      local_addr->set (local_addr->get_port_number (),
-                       local_addr->get_host_name (),
-                       1,
-                       local_addr->get_type ());
+      ACE_INET_Addr const bound_addr (*local_addr);
+      if (local_addr->set (bound_addr.get_port_number (),
+                           bound_addr.get_host_name (),
+                           1,
+                           bound_addr.get_type ()) != 0)
+        {
+          local_addr->set (bound_addr);
+        }
 
       ACE_TCHAR buf [BUFSIZ];
       local_addr->addr_to_string (buf, BUFSIZ);
