@@ -491,7 +491,7 @@ client (void *arg)
                            ACE_TEXT ("open")),
                           0);
       command = "inc";
-      command_len = ACE_OS::strlen (command);
+      command_len = std::strlen (command);
 
 #ifndef ACE_LACKS_VA_FUNCTIONS
       if (stream.send (4,
@@ -502,7 +502,7 @@ client (void *arg)
                            ACE_TEXT ("send")),
                           0);
       command = "read";
-      command_len = ACE_OS::strlen (command);
+      command_len = std::strlen (command);
 
       if (stream.send (4,
                        &command_len, sizeof command_len,
@@ -531,7 +531,7 @@ client (void *arg)
     }
 
   command = "read";
-  command_len = ACE_OS::strlen (command);
+  command_len = std::strlen (command);
   ssize_t bytes_read = 0;
 
   if (connector.connect (stream, server_addr) == -1)
