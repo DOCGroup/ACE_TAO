@@ -58,12 +58,14 @@ public:
   Simple_Server_i &operator= (Simple_Server_i const &) = delete;
   Simple_Server_i &operator= (Simple_Server_i &&) = delete;
 
-  // = The Simple_Server methods.
+  /// @name Simple_Server operations
+  //@{
   CORBA::Long test_method (CORBA::Boolean do_callback) override;
 
   void callback_object (Callback_ptr callback) override;
 
   void shutdown () override;
+  //@}
 
   int call_client ();
 
