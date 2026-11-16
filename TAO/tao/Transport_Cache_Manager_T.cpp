@@ -719,8 +719,10 @@ namespace TAO
   int
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::cpscmp(const void* a, const void* b)
   {
-    const HASH_MAP_ENTRY** const left = (const HASH_MAP_ENTRY**) const_cast<void *> (a);
-    const HASH_MAP_ENTRY** const right = (const HASH_MAP_ENTRY**) const_cast<void *> (b);
+    HASH_MAP_ENTRY * const * const left =
+      static_cast<HASH_MAP_ENTRY * const *> (a);
+    HASH_MAP_ENTRY * const * const right =
+      static_cast<HASH_MAP_ENTRY * const *> (b);
 
     if ((*left)->int_id_.transport ()->purging_order () <
         (*right)->int_id_.transport ()->purging_order ())
@@ -873,7 +875,8 @@ namespace TAO
       }
 #else
     ACE_OS::qsort (entries.get (), current_size,
-                   sizeof (HASH_MAP_ENTRY*), (ACE_COMPARE_FUNC)cpscmp);
+                   sizeof (HASH_MAP_ENTRY*),
+                   static_cast<ACE_COMPARE_FUNC> (cpscmp));
 #endif /* ACE_LACKS_QSORT */
   }
 
