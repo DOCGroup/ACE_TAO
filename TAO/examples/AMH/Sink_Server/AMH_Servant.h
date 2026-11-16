@@ -33,13 +33,15 @@ public:
   /// parse arguments from command line for sleep time
   int parse_args (int &argc, ACE_TCHAR **argv);
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   void start_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh) override;
 
   void end_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh) override;
 
   void test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
                     Test::Timestamp send_time) override;
+  /// @}
 
 protected:
   /// Borrowed from the ORB; the ORB owns the reactor.

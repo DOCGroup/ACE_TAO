@@ -27,11 +27,13 @@ public:
   test_i& operator= (test_i const&) = delete;
   test_i& operator= (test_i&&) = delete;
 
-  // = The test interface methods.
+  /// @name Test interface methods
+  /// @{
   void method (CORBA::ULong request_number,
                CORBA::ULong_out reply_number) override;
 
   void shutdown () override;
+  /// @}
 
 private:
   /// The ORB.
