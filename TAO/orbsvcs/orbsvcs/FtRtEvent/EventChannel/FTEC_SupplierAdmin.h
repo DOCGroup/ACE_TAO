@@ -61,11 +61,13 @@ public:
   /// destructor...
   ~TAO_FTEC_SupplierAdmin () override = default;
 
-  // = The RtecEventChannelAdmin::SupplierAdmin methods...
+  /// @name RtecEventChannelAdmin::SupplierAdmin methods
+  /// @{
   RtecEventChannelAdmin::ProxyPushConsumer_ptr
       obtain_push_consumer () override;
 
   void disconnect(RtecEventChannelAdmin::ProxyPushConsumer_ptr obj);
+  /// @}
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

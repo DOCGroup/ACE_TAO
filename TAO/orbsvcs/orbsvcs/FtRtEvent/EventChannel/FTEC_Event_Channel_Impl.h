@@ -48,7 +48,8 @@ public:
     const FtRtecEventComm::ObjectId& supplier_admin_oid,
     const FtRtecEventComm::ObjectId& consumer_admin_oid);
 
-  // = The RtecEventChannelAdmin::EventChannel methods...
+  /// @name RtecEventChannelAdmin::EventChannel methods
+  /// @{
   RtecEventChannelAdmin::ConsumerAdmin_ptr
       for_consumers () override;
 
@@ -56,6 +57,7 @@ public:
       for_suppliers () override;
 
   void get_state (FtRtecEventChannelAdmin::EventChannelState &s) override;
+  /// @}
 
   void set_state (const FTRT::State & stat);
 
