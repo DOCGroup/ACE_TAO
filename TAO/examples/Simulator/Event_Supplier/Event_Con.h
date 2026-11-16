@@ -53,11 +53,11 @@ public:
   /// The channel is disconnecting.
   void disconnect_push_consumer () override;
 
-  // = (not protected to allow short-circuiting) protected:
   /**
    * If the <events>[0] is a notification, prints out the data from
    * the supplier.  If its a shutdown message, the consumer
-   * disconnects from the channel.
+   * disconnects from the channel.  This operation remains public to
+   * allow short-circuiting.
    */
   void push (RtecEventComm::EventSet const &events) override;
 
@@ -65,10 +65,12 @@ protected:
   /// Disconnect from the Event Service.
   void shutdown ();
 
-  // = Event channel adminstration references.
+  /// @name Event channel administration references
+  /// @{
   RtecEventChannelAdmin::EventChannel_var channel_admin_;
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin_;
   RtecEventChannelAdmin::ProxyPushSupplier_var suppliers_;
+  /// @}
 
 private:
   RtecScheduler::handle_t rt_info_;

@@ -29,7 +29,8 @@ public:
   Simple_Server_i (Simple_Server_i &&) = delete;
   Simple_Server_i &operator= (Simple_Server_i &&) = delete;
 
-  // = The Simple_Server methods.
+  /// @name Simple_Server methods
+  /// @{
   void sendCharSeq (Char_Seq const &charSeq) override;
 
   void sendOctetSeq (Octet_Seq const &octetSeq) override;
@@ -37,6 +38,7 @@ public:
   CORBA::Long get_number (CORBA::Long num) override;
 
   void shutdown () override;
+  /// @}
 
 private:
   CORBA::ORB_var orb_ {};

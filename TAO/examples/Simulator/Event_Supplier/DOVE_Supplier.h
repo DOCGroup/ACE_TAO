@@ -119,10 +119,12 @@ private:
   Connection_Params *current_connection_params_ {};
   size_t current_connection_index_ {};
 
-  // = ORB, ORB Services adminstration references.
+  /// @name ORB and ORB Services references
+  /// @{
   CosNaming::NamingContext_var namingContext_var_;
   PortableServer::POA_var root_POA_var_;
   PortableServer::POAManager_var poa_manager_;
+  /// @}
 
   std::unique_ptr<Internal_DOVE_Supplier> internal_DOVE_Supplier_ptr_;
 

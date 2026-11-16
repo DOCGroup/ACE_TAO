@@ -361,7 +361,7 @@ DOVE_Supplier::connect_Supplier ()
     qos.publications[0].dependency_info.rt_info =
       this->current_connection_params_->rt_info_;
 
-    // = Connect as a supplier.
+    // Connect as a supplier.
     this->current_connection_params_->supplierAdmin_var_ =
       this->current_connection_params_->eventChannel_var_->for_suppliers ();
 

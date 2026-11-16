@@ -80,7 +80,7 @@ Demo_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
 
       this->channel_admin_ = ec;
 
-      // = Connect as a consumer.
+      // Connect as a consumer.
 
       this->consumer_admin_ =
         channel_admin_->for_consumers ();
