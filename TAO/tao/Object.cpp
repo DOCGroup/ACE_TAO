@@ -24,6 +24,8 @@
 #include "ace/CORBA_macros.h"
 
 #include <cstring>
+#include <memory>
+#include <new>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Object.inl"
@@ -977,29 +979,25 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
   else
     {
       // Lazy strategy!
-      IOP::IOR *ior {};
-
-      ACE_NEW_RETURN (ior,
-                      IOP::IOR (),
-                      false);
+      std::unique_ptr<IOP::IOR> ior {new (std::nothrow) IOP::IOR};
+      if (!ior)
+        {
+          return false;
+        }
 
       if (!(cdr >> *ior))
         {
-          // Can't extract the IOR, so delete the already allocated
-          // ior to not have a memory leak
-          delete ior;
           return false;
         }
 
-      x = new (std::nothrow) CORBA::Object (ior, orb_core);
+      x = new (std::nothrow) CORBA::Object (ior.get (), orb_core);
 
       if (!x)
         {
-          // Can't allocate a CORBA Object so delete first the
-          // memory we already allocated before we return
-          delete ior;
           return false;
         }
+
+      (void) ior.release ();
     }
 
   return cdr.good_bit ();
