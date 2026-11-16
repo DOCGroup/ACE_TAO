@@ -122,7 +122,7 @@ TAO_Messaging_ORBInitializer::register_policy_factories (
   // types since a single policy factory is used to create each of
   // the different types of Messaging policies.
 
-  CORBA::PolicyType type[] = {
+  CORBA::PolicyType const type[] = {
 #if (TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1)
     Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
 #endif  /* TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1 */
@@ -166,12 +166,11 @@ TAO_Messaging_ORBInitializer::register_policy_factories (
 #endif  /* TAO_HAS_CONNECTION_TIMEOUT_POLICY == 1 */
   };
 
-  CORBA::PolicyType const * const end = type + sizeof (type) / sizeof (type[0]);
-  for (CORBA::PolicyType const *i = type; i != end; ++i)
+  for (CORBA::PolicyType const policy_type : type)
     {
       try
         {
-          info->register_policy_factory (*i, policy_factory.in ());
+          info->register_policy_factory (policy_type, policy_factory.in ());
         }
       catch (::CORBA::BAD_INV_ORDER const &ex)
         {
