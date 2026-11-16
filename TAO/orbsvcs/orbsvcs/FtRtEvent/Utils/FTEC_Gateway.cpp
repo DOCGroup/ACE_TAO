@@ -227,12 +227,12 @@ FTEC_Gateway::activate(PortableServer::POA_ptr root_poa)
   ++oid[9];
   activate_object_with_id(impl_->consumer_admin.out(),
     impl_->poa.in(),
-    &impl_->consumer_admin_servant,
+    std::addressof (impl_->consumer_admin_servant),
     oid);
   ++oid[9];
   activate_object_with_id(impl_->supplier_admin.out(),
     impl_->poa.in(),
-    &impl_->supplier_admin_servant,
+    std::addressof (impl_->supplier_admin_servant),
     oid);
 
   return gateway._retn();
@@ -299,7 +299,7 @@ FTEC_Gateway_ConsumerAdmin::obtain_push_supplier ()
 
   RtecEventChannelAdmin::ProxyPushSupplier_ptr result;
   activate_object_with_id(result, impl_->poa.in(),
-                         &impl_->proxy_supplier_servant,
+                         std::addressof (impl_->proxy_supplier_servant),
                          local_oid);
   return result;
 }
@@ -325,7 +325,7 @@ FTEC_Gateway_SupplierAdmin::obtain_push_consumer ()
 
   RtecEventChannelAdmin::ProxyPushConsumer_ptr result;
   activate_object_with_id(result, impl_->poa.in(),
-                          &impl_->proxy_consumer_servant,
+                          std::addressof (impl_->proxy_consumer_servant),
                           local_oid);
   return result;
 }

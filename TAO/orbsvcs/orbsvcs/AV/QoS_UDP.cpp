@@ -579,7 +579,7 @@ TAO_AV_UDP_QoS_Transport::mtu ()
 ACE_Addr*
 TAO_AV_UDP_QoS_Transport::get_peer_addr ()
 {
-  return &this->peer_addr_;
+  return std::addressof (this->peer_addr_);
 }
 
 ssize_t
