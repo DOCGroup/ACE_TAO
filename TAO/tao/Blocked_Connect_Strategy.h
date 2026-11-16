@@ -29,6 +29,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Export TAO_Blocked_Connect_Strategy : public TAO_Connect_Strategy
 {
 public:
+  TAO_Blocked_Connect_Strategy () = delete;
+
   explicit TAO_Blocked_Connect_Strategy (TAO_ORB_Core *orb);
 
   /*

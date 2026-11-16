@@ -33,6 +33,8 @@ namespace TAO
   class Transport_Timer : public ACE_Event_Handler
   {
   public:
+    Transport_Timer () = delete;
+
     /**
     * @param transport The adaptee
     */

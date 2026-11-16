@@ -68,6 +68,8 @@ public:
   /// clone the TAO_Operation_Details data member in TAO_ServerRequest.
   friend class TAO::CSD::FW_Server_Request_Wrapper;
 
+  TAO_Operation_Details () = delete;
+
   TAO_Operation_Details (char const *name,
                          CORBA::ULong len,
                          TAO::Argument **args = nullptr,

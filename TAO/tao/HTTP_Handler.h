@@ -76,6 +76,8 @@ protected:
 class TAO_HTTP_Reader : public TAO_HTTP_Handler
 {
 public:
+  TAO_HTTP_Reader () = delete;
+
   TAO_HTTP_Reader (ACE_Message_Block *mb,
                    const ACE_TCHAR *filename,
                    const char *request_prefix = "GET",
