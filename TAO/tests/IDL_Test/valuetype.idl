@@ -54,6 +54,17 @@ interface Empty_Valuetype_Interface
 {
 };
 
+/// The interface is supported by the abstract base, not directly by D.
+abstract valuetype Supported_Interface_Base supports Empty_Valuetype_Interface
+{
+};
+
+valuetype Supported_Interface_Derived : Supported_Interface_Base
+{
+  public long value;
+  factory create_supported_interface_derived ();
+};
+
 /// Factory initializers must not make the generated OBV class abstract.
 valuetype Factory_Initialized_Value supports Empty_Valuetype_Interface
 {
@@ -72,6 +83,12 @@ valuetype Copy_Derived : Copy_Base
   public long derived_value;
 };
 
+/// An operation-bearing derived class must not inherit a slicing copy method.
+valuetype Copy_Operation_Derived : Copy_Base
+{
+  void operation ();
+};
+
 valuetype Copy_Leaf
 {
   public long leaf_value;
@@ -86,6 +103,8 @@ struct Copy_Leaf_Struct
   Copy_Leaf_Alias leaf;
 };
 
+typedef Copy_Leaf_Struct Copy_Leaf_Struct_Alias;
+
 valuetype Copy_Alias_Holder
 {
   public Copy_Leaf_Alias leaf;
@@ -98,7 +117,7 @@ valuetype Copy_Sequence_Holder
 
 valuetype Copy_Struct_Holder
 {
-  public Copy_Leaf_Struct value;
+  public Copy_Leaf_Struct_Alias value;
 };
 
 enum ValueSort2 {

@@ -128,6 +128,9 @@ public:
   /// if valuetype has at least one operation/attribute.
   bool have_operation ();
 
+  /// Check whether this valuetype or a base supports an interface.
+  bool has_supported_interface () const;
+
   /// Check if VT supports an interface with at least 1 operation.
   static bool have_supported_op (be_interface *node);
 
@@ -154,6 +157,10 @@ private:
 
   /// Flag used by default constructor generator.
   bool is_amh_excep_holder_ {};
+
+  /// Cache operation lookup after the IDL scope is complete.
+  mutable bool have_operation_computed_ {};
+  mutable bool have_operation_cache_ {};
 };
 
 #endif  // if !defined

@@ -137,7 +137,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
       // If we inherit from CORBA::Object and/or CORBA::AbstractBase
       // (in addition to CORBA::ValueBase) we have to add these
       // to avoid ambiguity.
-      if (node->n_supports () > 0)
+      if (node->has_supported_interface ())
         {
           *os << be_nl_2 << "void" << be_nl
               << node->full_obv_skel_name ()

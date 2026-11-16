@@ -832,11 +832,19 @@ be_visitor_valuetype::obv_need_ref_counter (be_valuetype* node)
         }
     }
 
+  be_valuetype * const concrete =
+    dynamic_cast<be_valuetype *> (node->inherits_concrete ());
+  if (concrete != nullptr
+      && be_visitor_valuetype::obv_have_ref_counter (concrete))
+    {
+      return false;
+    }
+
   // If we inherit from CORBA::Object and/or CORBA::AbstractBase
   // (in addition to CORBA::ValueBase) we have to override _add_ref()
   // and _remove_ref() by calling the one in DefaultValueRefCountBase
   // to avoid ambiguity.
-  if (node->n_supports () > 0)
+  if (node->has_supported_interface ())
     {
       return true;
     }
@@ -844,12 +852,6 @@ be_visitor_valuetype::obv_need_ref_counter (be_valuetype* node)
   // An operation-free OBV class gets a generated _copy_value() and can be
   // instantiated directly, so it needs a reference-count implementation.
   if (!node->have_operation ())
-    {
-      return true;
-    }
-
-  // VT needs RefCounter if it has concrete factory.
-  if (be_valuetype::FS_CONCRETE_FACTORY == node->determine_factory_style ())
     {
       return true;
     }
@@ -866,7 +868,8 @@ be_visitor_valuetype::obv_have_ref_counter (be_valuetype* node)
       return false;
     }
 
-  if (be_visitor_valuetype::obv_need_ref_counter (node))
+  if (!node->is_abstract ()
+      && be_visitor_valuetype::obv_need_ref_counter (node))
     {
       return true;
     }
@@ -884,6 +887,15 @@ be_visitor_valuetype::obv_have_ref_counter (be_valuetype* node)
               return true;
             }
         }
+    }
+
+  be_valuetype * const concrete =
+    dynamic_cast<be_valuetype *> (node->inherits_concrete ());
+  if (concrete != nullptr
+      && (be_visitor_valuetype::obv_need_ref_counter (concrete)
+          || be_visitor_valuetype::obv_have_ref_counter (concrete)))
+    {
+      return true;
     }
 
   return false;

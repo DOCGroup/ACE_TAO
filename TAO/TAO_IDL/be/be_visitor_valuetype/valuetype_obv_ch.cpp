@@ -136,7 +136,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
       // If we inherit from CORBA::Object and/or CORBA::AbstractBase
       // (in addition to CORBA::ValueBase) we have to add these
       // to avoid ambiguity.
-      if (node->n_supports () > 0)
+      if (node->has_supported_interface ())
         {
           TAO_INSERT_COMMENT (os);
 
@@ -194,6 +194,17 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
         {
           *os << be_uidt_nl << be_nl << "public:" << be_idt_nl
               << "::CORBA::ValueBase *_copy_value () override;";
+        }
+      else if (node->have_operation () && !node->opt_accessor ())
+        {
+          be_valuetype * const vt =
+            dynamic_cast<be_valuetype *> (node->inherits_concrete ());
+          if (vt != nullptr && !vt->have_operation ()
+              && !vt->opt_accessor ())
+            {
+              *os << be_uidt_nl << be_nl << "public:" << be_idt_nl
+                  << "::CORBA::ValueBase *_copy_value () override = 0;";
+            }
         }
 
       // Map fields to private data.

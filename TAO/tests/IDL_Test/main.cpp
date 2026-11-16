@@ -32,6 +32,10 @@ static_assert (std::is_nothrow_move_constructible<testdata::ArraycharList>::valu
 static_assert (std::is_nothrow_move_constructible<testdata::BdArraycharList>::value);
 static_assert (std::is_abstract<OBV_Supports_Inherited_Operation>::value,
                "A valuetype that supports an inherited operation is abstract");
+static_assert (!std::is_abstract<OBV_Supported_Interface_Derived>::value,
+               "An inherited supported interface needs refcount overrides");
+static_assert (std::is_abstract<OBV_Copy_Operation_Derived>::value,
+               "Operation-bearing derived OBV classes must redeclare copy");
 
 class hello_i : public virtual POA_hello
 {
@@ -289,6 +293,30 @@ test_valuetype_copy (int &error_count)
             error_count, "Copy_Alias_Holder original leaf unchanged",
             leaf->leaf_value (), 51);
         }
+    }
+
+  Copy_Leaf_var retained_copy;
+  {
+    CORBA::ValueBase_var holder_copy (alias_holder._copy_value ());
+    Copy_Alias_Holder * const holder_downcast =
+      Copy_Alias_Holder::_downcast (holder_copy.in ());
+    if (holder_downcast == nullptr)
+      {
+        ++error_count;
+        ACE_ERROR ((LM_ERROR, "Copy_Alias_Holder copy has wrong type\n"));
+      }
+    else
+      {
+        Copy_Leaf * const nested_copy = holder_downcast->leaf ();
+        nested_copy->_add_ref ();
+        retained_copy = nested_copy;
+      }
+  }
+  if (retained_copy.in () != nullptr
+      && retained_copy->_refcount_value () != 1)
+    {
+      ++error_count;
+      ACE_ERROR ((LM_ERROR, "Copy_Alias_Holder leaked its nested copy\n"));
     }
 
   Copy_Leaf_Sequence leaves;

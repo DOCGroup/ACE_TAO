@@ -142,6 +142,7 @@ be_valuetype::redefine (AST_Interface *from)
     }
 
   this->AST_ValueType::redefine (from);
+  this->have_operation_computed_ = false;
 }
 
 // Is true if non-virtual accessor and modifier should be generated
@@ -242,6 +243,11 @@ be_valuetype::determine_factory_style ()
 bool
 be_valuetype::have_operation ()
 {
+  if (this->have_operation_computed_)
+    {
+      return this->have_operation_cache_;
+    }
+
   // Check whatever scope we get for operations/attributes.
 
   bool have_operation {};
@@ -285,6 +291,13 @@ be_valuetype::have_operation ()
   if (! have_operation)
     {
       // Now traverse inheritance tree.
+      be_valuetype * const concrete =
+        dynamic_cast<be_valuetype *> (this->inherits_concrete ());
+      if (concrete != nullptr && concrete->have_operation ())
+        {
+          have_operation = true;
+        }
+
       AST_Type_List const& inherits = this->inherits ();
 
       for (size_t i = 0; i < inherits.size (); ++i)
@@ -316,7 +329,37 @@ be_valuetype::have_operation ()
         }
     }
 
+  this->have_operation_cache_ = have_operation;
+  this->have_operation_computed_ = true;
   return have_operation;
+}
+
+bool
+be_valuetype::has_supported_interface () const
+{
+  if (this->n_supports () != 0)
+    {
+      return true;
+    }
+
+  be_valuetype const * const concrete =
+    dynamic_cast<be_valuetype const *> (this->inherits_concrete ());
+  if (concrete != nullptr && concrete->has_supported_interface ())
+    {
+      return true;
+    }
+
+  AST_Type_List const& inherits = this->inherits ();
+  for (size_t i = 0; i < inherits.size (); ++i)
+    {
+      be_valuetype const * const vt =
+        dynamic_cast<be_valuetype const *> (inherits[i]);
+      if (vt != nullptr && vt->has_supported_interface ())
+        {
+          return true;
+        }
+    }
+  return false;
 }
 
 bool
