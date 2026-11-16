@@ -854,6 +854,46 @@ Config_Test::testEquality ()
                         -1);
     }
 
+  ACE_Configuration_Section_Key binarySection;
+  if (heap1.open_section (heap1.root_section (),
+                          ACE_TEXT ("binary"),
+                          false,
+                          binarySection))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Cannot open binary section\n")),
+                      -1);
+
+  u_char binaryData[80];
+  for (size_t i = 0; i < sizeof binaryData; ++i)
+    {
+      binaryData[i] = static_cast<u_char> (i + 128);
+    }
+  ++binaryData[0];
+  if (heap1.set_binary_value (binarySection,
+                              ACE_TEXT ("data"),
+                              binaryData,
+                              sizeof binaryData))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Cannot change binary value\n")),
+                      -1);
+  if (heap1 == heap2)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Different binary values compared equal\n")),
+                      -1);
+
+  --binaryData[0];
+  if (heap1.set_binary_value (binarySection,
+                              ACE_TEXT ("data"),
+                              binaryData,
+                              sizeof binaryData))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Cannot restore binary value\n")),
+                      -1);
+  if (heap1 != heap2)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Restored binary values did not compare equal\n")),
+                      -1);
+
   // add a section and value to heap1
   ACE_Configuration_Section_Key root1 = heap1.root_section ();
   ACE_Configuration_Section_Key NewSection;

@@ -273,12 +273,15 @@ ACE_Configuration::operator== (const ACE_Configuration& rhs) const
                           // we're not equal if we cannot get rhs string
                           rc = false;
                         }
-                      rc = (thisString == rhsString);
+                      else
+                        {
+                          rc = thisString == rhsString;
+                        }
                     }
                   else if (valueType == INTEGER)
                     {
-                      u_int thisInt = 0;
-                      u_int rhsInt = 0;
+                      u_int thisInt {};
+                      u_int rhsInt {};
                       if (nonconst_this->get_integer_value (
                             thisSection,
                             valueName.c_str (),
@@ -295,56 +298,50 @@ ACE_Configuration::operator== (const ACE_Configuration& rhs) const
                           // we're not equal if we cannot get rhs int
                           rc = false;
                         }
-                      rc = (thisInt == rhsInt);
+                      else
+                        {
+                          rc = thisInt == rhsInt;
+                        }
                     }
                   else if (valueType == BINARY)
                     {
                       void* thisData {};
-                      void* rhsData {};
-                      size_t thisLength = 0;
-                      size_t rhsLength = 0;
-                      if (nonconst_this->get_binary_value (thisSection,
-                                                           valueName.c_str (),
-                                                           thisData,
-                                                           thisLength) != 0)
+                      size_t thisLength {};
+                      int const this_result = nonconst_this->get_binary_value (
+                        thisSection,
+                        valueName.c_str (),
+                        thisData,
+                        thisLength);
+                      std::unique_ptr<char[], ACE_Array_Deleter<char>> thisDataOwner (
+                        static_cast<char *> (thisData));
+                      if (this_result != 0)
                         {
                           // we're not equal if we cannot get this data
                           rc = false;
                         }
-                      else if (nonconst_rhs.get_binary_value (
-                                 rhsSection,
-                                 valueName.c_str (),
-                                 rhsData,
-                                 rhsLength) != 0)
+                      else
                         {
-                          // we're not equal if we cannot get this data
-                          rc = false;
-                        }
-
-                      rc = (thisLength == rhsLength);
-                      // are the length's the same?
-
-                      if (rc)
-                        {
-                          unsigned char* thisCharData =
-                            (unsigned char*)thisData;
-                          unsigned char* rhsCharData = (unsigned char*)rhsData;
-                          // yes, then check each element
-                          for (size_t count = 0;
-                               (rc) && (count < thisLength);
-                               ++count)
+                          void* rhsData {};
+                          size_t rhsLength {};
+                          int const rhs_result = nonconst_rhs.get_binary_value (
+                            rhsSection,
+                            valueName.c_str (),
+                            rhsData,
+                            rhsLength);
+                          std::unique_ptr<char[], ACE_Array_Deleter<char>> rhsDataOwner (
+                            static_cast<char *> (rhsData));
+                          if (rhs_result != 0)
                             {
-                              rc = (* (thisCharData + count) == * (rhsCharData + count));
+                              // we're not equal if we cannot get rhs data
+                              rc = false;
                             }
-
-#if defined (ACE_HAS_ALLOC_HOOKS)
-                          ACE_Allocator::instance()->free(thisCharData);
-                          ACE_Allocator::instance()->free(rhsCharData);
-#else
-                          delete [] thisCharData;
-                          delete [] rhsCharData;
-#endif /* ACE_HAS_ALLOC_HOOKS */
-                        }// end if the length's match
+                          else
+                            {
+                              rc = thisLength == rhsLength &&
+                                (thisLength == 0 ||
+                                 std::memcmp (thisData, rhsData, thisLength) == 0);
+                            }
+                        }
                     }
                   // We should never have valueTypes of INVALID, therefore
                   // we're not comparing them.  How would we since we have
