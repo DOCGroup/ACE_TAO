@@ -21,8 +21,7 @@ namespace TAO
         return;
       }
 
-    TAO_ORB_Core::set_gui_resource_factory (factory.get ());
-    factory.release ();
+    TAO_ORB_Core::set_gui_resource_factory (factory.release ());
   }
 
   FoxResource_Loader::~FoxResource_Loader () = default;
