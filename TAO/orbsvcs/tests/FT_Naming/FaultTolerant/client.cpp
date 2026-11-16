@@ -154,11 +154,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   int c_depth   = 4;
   int o_breadth = 4;
 
-  ACE_TCHAR *ns1ref = 0;
-  ACE_TCHAR *ns2ref = 0;
+  // These IOR arguments borrow their storage from argv.
+  ACE_TCHAR *ns1ref {};
+  ACE_TCHAR *ns2ref {};
 
-  ACE_TCHAR *nm1ref = 0;
-  ACE_TCHAR *nm2ref = 0;
+  ACE_TCHAR *nm1ref {};
+  ACE_TCHAR *nm2ref {};
 
   typedef enum {
     TT_FAILOVER,
