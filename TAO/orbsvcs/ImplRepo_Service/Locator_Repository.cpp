@@ -99,13 +99,13 @@ Locator_Repository::report_ior (PortableServer::POA_ptr )
         {
           ACE_Read_Buffer reader (orig_fp, false);
 
-          char* string = reader.read ();
+          ACE_Read_Buffer_Unique_Ptr const string (
+            reader.read (), {reader.alloc ()});
 
           if (string != nullptr)
             {
               write_data =
-                (ACE_OS::strcasecmp (string, this->imr_ior_.in ()) != 0);
-              reader.alloc ()->free (string);
+                (ACE_OS::strcasecmp (string.get (), this->imr_ior_.in ()) != 0);
             }
           ACE_OS::fclose (orig_fp);
         }

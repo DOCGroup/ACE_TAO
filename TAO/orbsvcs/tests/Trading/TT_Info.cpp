@@ -260,8 +260,7 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
 
 TT_Parse_Args::TT_Parse_Args (int& argc, ACE_TCHAR** argv)
   : federated_ (false),
-    quiet_ (false),
-    ior_ (nullptr)
+    quiet_ (false)
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
@@ -309,7 +308,8 @@ TT_Parse_Args::TT_Parse_Args (int& argc, ACE_TCHAR** argv)
           if (ior_file != nullptr)
             {
               ACE_Read_Buffer read_buffer (ior_file, close_ior_file);
-              this->ior_ = read_buffer.read ();
+              this->ior_ = ACE_Read_Buffer_Unique_Ptr (
+                read_buffer.read (), {read_buffer.alloc ()});
             }
           else
           {
@@ -325,12 +325,7 @@ TT_Parse_Args::TT_Parse_Args (int& argc, ACE_TCHAR** argv)
     }
 }
 
-TT_Parse_Args::~TT_Parse_Args ()
-{
-  // Reclaim the ior string's memory.
-  ACE_Allocator* alloc = ACE_Allocator::instance ();
-  alloc->free (this->ior_);
-}
+TT_Parse_Args::~TT_Parse_Args () = default;
 
 bool
 TT_Parse_Args::federated () const
@@ -347,5 +342,5 @@ TT_Parse_Args::quiet () const
 char*
 TT_Parse_Args::ior () const
 {
-  return this->ior_;
+  return this->ior_.get ();
 }

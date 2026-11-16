@@ -201,7 +201,7 @@ class TAO_TTest_Export TT_Parse_Args
 
   private:
   bool federated_, quiet_;
-  char* ior_;
+  ACE_Read_Buffer_Unique_Ptr ior_ {};
 };
 
 #endif /* TAO_TRADER_TEST_UTILS_H */

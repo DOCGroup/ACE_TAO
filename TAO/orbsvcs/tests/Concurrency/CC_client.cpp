@@ -31,10 +31,6 @@ CC_Client::~CC_Client ()
     ACE_OS::close (this->f_handle_);
   }
 
-  if (this->cc_factory_key_ != 0)
-  {
-    ACE_OS::free (this->cc_factory_key_);
-  }
 }
 
 // Reads the lock set factory ior from a file
@@ -51,9 +47,10 @@ CC_Client::read_ior (ACE_TCHAR *filename)
                        filename),
                       -1);
   ACE_Read_Buffer ior_buffer (this->f_handle_);
-  this->cc_factory_key_ = ior_buffer.read ();
+  this->cc_factory_key_ = ACE_Read_Buffer_Unique_Ptr (
+    ior_buffer.read (), {ior_buffer.alloc ()});
 
-  if (this->cc_factory_key_ == 0)
+  if (this->cc_factory_key_ == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to allocate memory to read ior: %p\n"),
                       -1);
@@ -101,8 +98,8 @@ CC_Client::parse_args ()
                             -1);
             break;
       case 'k': // read the cubit IOR from the command-line.
-        this->cc_factory_key_ =
-          ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()));
+        this->cc_factory_key_.reset (
+          ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ())));
         break;
       case 'x':
         this->shutdown_ = true;
@@ -397,14 +394,14 @@ CC_Client::init (int argc, ACE_TCHAR **argv)
         }
       else
         {
-          if (this->cc_factory_key_ == 0)
+          if (this->cc_factory_key_ == nullptr)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%s: no lock set factory key specified\n",
                                this->argv_[0]),
                               -1);
 
           CORBA::Object_var factory_object =
-            this->orb_->string_to_object (this->cc_factory_key_);
+            this->orb_->string_to_object (this->cc_factory_key_.get ());
 
 #if 0
           // The test cannot currently run without the naming service.
@@ -415,7 +412,7 @@ CC_Client::init (int argc, ACE_TCHAR **argv)
           if (CORBA::is_nil (this->factory_.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
                                "invalid factory key <%s>\n",
-                               this->cc_factory_key_),
+                               this->cc_factory_key_.get ()),
                               -1);
 #endif /* 0 */
         }
