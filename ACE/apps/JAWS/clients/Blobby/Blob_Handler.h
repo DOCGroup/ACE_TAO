@@ -32,10 +32,10 @@
  * @brief Blob is intended to provide application API to
  * classes that wish to do network i/o at a very
  * high level of abstraction.
- * = This class provides the ability to retrieve data from
- * the network, of specified length and offset, and potentially
- * use any protocol "under the hood" to do so. It currently
- * uses HTTP. See Blob_Handler also.
+ *
+ * This class retrieves data of a specified length and offset over the
+ * network. It can use any protocol internally; currently it uses HTTP.
+ * See also ACE_Blob.
  */
 class ACE_Blob_Handler : public ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {

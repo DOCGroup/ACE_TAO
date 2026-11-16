@@ -1,5 +1,7 @@
 #include "Blob.h"
 
+#include <memory>
+
 // initialize address and filename. No network i/o in open
 
 int
@@ -17,13 +19,13 @@ ACE_Blob::read (ACE_Message_Block *mb, size_t length, size_t offset)
 {
   // Create a Blob Reader
   ACE_Blob_Reader blob_reader (mb, length, offset, this->filename_.c_str ());
-  ACE_Blob_Handler *brp = &blob_reader;
+  ACE_Blob_Handler *brp = std::addressof (blob_reader);
 
   // Connect to the server
   if (this->connector_.connect (brp, this->inet_addr_) == -1)
-  {
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Blob::read():Connector error"), -1);
-  }
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Blob::read():Connector error"), -1);
+    }
 
   return blob_reader.byte_count ();
 }
@@ -35,13 +37,13 @@ ACE_Blob::write (ACE_Message_Block *mb, size_t length, size_t offset)
 {
   // Create a Blob Writer
   ACE_Blob_Writer blob_writer (mb, length, offset, this->filename_.c_str ());
-  ACE_Blob_Handler *bwp = &blob_writer;
+  ACE_Blob_Handler *bwp = std::addressof (blob_writer);
 
   // Connect to the server
   if (this->connector_.connect (bwp, this->inet_addr_) == -1)
-  {
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Blob::write():Connector error"), -1);
-  }
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Blob::write():Connector error"), -1);
+    }
 
   return blob_writer.byte_count ();
 }

@@ -2,12 +2,13 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdlib.h"
+#include <memory>
 
 Options *
 Options::instance ()
 {
   static Options instance;
-  return &instance;
+  return std::addressof (instance);
 }
 
 void
@@ -15,9 +16,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("rwh:p:f:l:o:d"));
 
-  int c;
-
-  while ((c = get_opt ()) != -1)
+  for (int c; (c = get_opt ()) != -1;)
     switch (c)
       {
       case 'd':
@@ -53,8 +52,6 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "%s -h hostname -f filename -[r/w] [-p port] [-l length] [-o offset] [-d]\n",
                   argv[0]));
-
       ACE_OS::exit (1);
     }
-
 }
