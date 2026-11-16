@@ -210,7 +210,7 @@ sigpipe ()
 {
 }
 
-char *title = 0;
+char *title {};
 int new_line = 0;
 
 int

@@ -235,7 +235,7 @@ Peer::command ()
           return -1;
         }
       struct _stat info;
-      const char *msg = 0;
+      const char *msg {};
       bool found = false;
       while (secs > 0)
         {
@@ -360,7 +360,7 @@ Test::start (const char *name)
   if (this->running_)
     return "Already running\n";
 
-  const char *msg = 0;
+  const char *msg {};
 
   // Reset test status to not inadvertantly report a previous test.
   this->status_ = -1;
