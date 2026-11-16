@@ -203,7 +203,7 @@ get_statistics (ACE_TCHAR *f_name)
                   ACE_TEXT ("      File name     : %s\n"),
                   f_name));
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("      File size (B): %d\n"),
+                  ACE_TEXT ("      File size (B): %q\n"),
                   buf.st_size));
 
       ACE_DEBUG ((LM_DEBUG,
