@@ -244,7 +244,9 @@ public:
     for (ACE_Message_Block *mb {}; !stop && getq (mb) != -1; ) {
       ACE_Message_Block_Unique_Ptr mb_owner {mb};
       if (mb->msg_type () == ACE_Message_Block::MB_STOP)
-        stop = true;
+        {
+          stop = true;
+        }
       else
       {
         ACE::write_n (ACE_STDOUT, mb);
@@ -270,12 +272,14 @@ private:
 public:
   int put (ACE_Message_Block *mblk, ACE_Time_Value *) override {
     if (mblk->msg_type () == Logrec_Reader::MB_CLIENT)
-      for (ACE_Message_Block *temp = mblk;
-           temp != nullptr;
-           temp = temp->cont ()) {
-        int const mb_type =
-          temp->msg_type () - ACE_Message_Block::MB_USER;
-        (*format_[mb_type])(temp);
+      {
+        for (ACE_Message_Block *temp = mblk;
+             temp != nullptr;
+             temp = temp->cont ()) {
+          int const mb_type =
+            temp->msg_type () - ACE_Message_Block::MB_USER;
+          (*format_[mb_type])(temp);
+        }
       }
     return put_next (mblk);
   }
@@ -385,9 +389,11 @@ LOGREC_MODULE (Logrec_Separator);
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (argc != 2)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "usage: %s logfile\n", argv[0]),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "usage: %s logfile\n", argv[0]),
+                        1);
+    }
   ACE_TString logfile (argv[1]);
   ACE_Stream<ACE_SYNCH> stream;
 

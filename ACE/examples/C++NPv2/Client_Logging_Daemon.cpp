@@ -174,8 +174,14 @@ ACE_THR_FUNC_RETURN CLD_Handler::forward () {
     }
     ACE_Message_Block *mblk {};
     if (msg_queue_.dequeue_head (mblk, &timeout) == -1) {
-      if (errno != EWOULDBLOCK) break;
-      else if (message_index == 0) continue;
+      if (errno != EWOULDBLOCK)
+        {
+          break;
+        }
+      else if (message_index == 0)
+        {
+          continue;
+        }
     } else {
       ACE_Message_Block_Unique_Ptr mblk_owner {mblk};
       if (mblk->size () == 0
@@ -266,12 +272,17 @@ ACE_HANDLE CLD_Acceptor::get_handle () const
 
 int CLD_Acceptor::handle_input (ACE_HANDLE) {
   ACE_SOCK_Stream peer_stream;
-  if (acceptor_.accept (peer_stream) == -1) return -1;
+  if (acceptor_.accept (peer_stream) == -1)
+    {
+      return -1;
+    }
   else if (reactor ()->register_handler
              (peer_stream.get_handle (),
               handler_,
               ACE_Event_Handler::READ_MASK) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
   {
     return 0;
@@ -292,9 +303,14 @@ int CLD_Connector::connect
   ACE_SOCK_Connector connector;
 
   if (connector.connect (handler->peer (), remote_addr) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else if (handler->open (this) == -1)
-  { handler->handle_close (); return -1; }
+    {
+      handler->handle_close ();
+      return -1;
+    }
   handler_ = handler;
   remote_addr_ = remote_addr;
   return 0;
@@ -384,9 +400,14 @@ int Client_Logging_Daemon::init (int argc, ACE_TCHAR *argv[]) {
   ACE_INET_Addr sld_addr (sld_port, sld_host);
 
   if (acceptor_.open (&handler_, cld_addr) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else if (connector_.connect (&handler_, sld_addr) == -1)
-  { acceptor_.handle_close (); return -1; }
+    {
+      acceptor_.handle_close ();
+      return -1;
+    }
   return 0;
 }
 

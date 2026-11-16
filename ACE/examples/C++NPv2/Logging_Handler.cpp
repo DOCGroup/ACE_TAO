@@ -110,7 +110,9 @@ int Logging_Handler::log_record ()
 {
   ACE_Message_Block_Unique_Ptr mblk;
   if (recv_log_record (mblk) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else {
     int const result = write_log_record (*mblk);
     return result == -1 ? -1 : 0;

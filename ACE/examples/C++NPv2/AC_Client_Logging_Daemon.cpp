@@ -198,8 +198,15 @@ int AC_Output_Handler::svc () {
           break;
         }
         continue;
-      } else if (errno != EWOULDBLOCK) break;
-      else if (message_index == 0) continue;
+      }
+      else if (errno != EWOULDBLOCK)
+        {
+          break;
+        }
+      else if (message_index == 0)
+        {
+          continue;
+        }
     } else {
       ACE_Message_Block_Unique_Ptr mblk_owner {mblk};
       if (mblk->size () == 0

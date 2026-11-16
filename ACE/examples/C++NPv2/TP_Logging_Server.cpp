@@ -24,7 +24,11 @@ int TP_Logging_Handler::handle_input (ACE_HANDLE) {
     log_blk_owner.release ();
     ++queued_count_;
     return 0;
-  } else return -1;
+  }
+  else
+    {
+      return -1;
+    }
 }
 
 int
@@ -34,7 +38,9 @@ TP_Logging_Handler::handle_close (ACE_HANDLE handle,
   if (handle != ACE_INVALID_HANDLE) {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, -1);
     if (queued_count_ == 0)
-      close_now = true;
+      {
+        close_now = true;
+      }
     else
     {
       deferred_close_ = true;

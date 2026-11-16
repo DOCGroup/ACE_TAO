@@ -42,11 +42,15 @@ public:
     CHAR user_input[BUFSIZ];
     DWORD count;
     if (!ReadFile (h, user_input, BUFSIZ, &count, nullptr))
-      return -1;
+      {
+        return -1;
+      }
 
     user_input[count] = '\0';
     if (std::strncmp (user_input, "quit", 4) == 0)
-      return -1;
+      {
+        return -1;
+      }
     return 0;
   }
 

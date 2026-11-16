@@ -19,8 +19,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   1);
 
   if (reactor.run_reactor_event_loop () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
-                       "run_reactor_event_loop()"), 1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
+                         "run_reactor_event_loop()"), 1);
+    }
   return 0;
 }
 

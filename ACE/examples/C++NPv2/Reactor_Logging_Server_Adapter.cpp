@@ -41,9 +41,13 @@ Reactor_Logging_Server_Adapter<ACCEPTOR>::info
   ACE_OS::strcat
     (buf, ACE_TEXT ("/tcp  # Reactor-based logging server\n"));
   if (*bufferp == nullptr)
-    *bufferp = ACE::strnew (buf);
+    {
+      *bufferp = ACE::strnew (buf);
+    }
   else
-    ACE_OS::strncpy (*bufferp, buf, length);
+    {
+      ACE_OS::strncpy (*bufferp, buf, length);
+    }
 
   return ACE_Utils::truncate_cast<int> (ACE_OS::strlen (*bufferp));
 }

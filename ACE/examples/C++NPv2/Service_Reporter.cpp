@@ -86,7 +86,9 @@ int Service_Reporter::info (ACE_TCHAR **bufferp,
   ACE_OS::strcat
     (buf, ACE_TEXT ("/tcp # lists services in daemon\n"));
   if (*bufferp == nullptr)
-    *bufferp = ACE::strnew (buf);
+    {
+      *bufferp = ACE::strnew (buf);
+    }
   else
   {
     ACE_OS::strncpy (*bufferp, buf, length);

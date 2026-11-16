@@ -112,8 +112,14 @@ public:
        TP_Logging_Server::LOGGING_DISPATCHER
        (argc, argv, ACE_Reactor::instance ()));
     logging_dispatcher_.reset (dispatcher);
-    if (!logging_dispatcher_) return -1;
-    else return TP_LOGGING_TASK::instance ()->open ();
+    if (!logging_dispatcher_)
+      {
+        return -1;
+      }
+    else
+      {
+        return TP_LOGGING_TASK::instance ()->open ();
+      }
   }
 
   int fini () override {
