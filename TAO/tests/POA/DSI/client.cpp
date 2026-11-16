@@ -74,18 +74,15 @@ read_IOR_from_file (ACE_TCHAR const *ior_file, std::string &ior)
                        ior_file),
                       -1);
 
-  ACE_Read_Buffer ior_buffer (f_handle);
-  char *data = ior_buffer.read ();
-  if (data == nullptr)
+  ACE_Read_Buffer ior_buffer (f_handle, true);
+  ACE_Read_Buffer_Unique_Ptr const data (
+    ior_buffer.read (), {ior_buffer.alloc ()});
+  if (!data)
     {
-      ACE_OS::close (f_handle);
       ACE_ERROR_RETURN ((LM_ERROR, "Unable to read ior\n"), -1);
     }
 
-  ACE_Read_Buffer_Unique_Ptr const owned_data (
-    data, {ior_buffer.alloc ()});
-  ACE_OS::close (f_handle);
-  ior = owned_data.get ();
+  ior = data.get ();
   return 0;
 }
 
