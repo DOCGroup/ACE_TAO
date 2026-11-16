@@ -9,10 +9,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   ObjectReferenceTemplate::ObjectReferenceTemplate (
-  std::string const &server_id,
-  std::string const &orb_id,
-  PortableInterceptor::AdapterName *adapter_name,
-  PortableServer::POA_ptr poa)
+    std::string const &server_id,
+    std::string const &orb_id,
+    PortableInterceptor::AdapterName *adapter_name,
+    PortableServer::POA_ptr poa)
   : server_id_ (server_id),
     orb_id_ (orb_id),
     adapter_name_ (adapter_name),
@@ -54,35 +54,33 @@ namespace TAO
   {
     PortableInterceptor::AdapterName *adapter_name {};
 
-    ACE_NEW_THROW_EX (adapter_name,
-                      PortableInterceptor::AdapterName (
-                                                        *(this->adapter_name_)),
-                      CORBA::NO_MEMORY (
-                          CORBA::SystemException::_tao_minor_code (
-                              TAO::VMCID,
-                              ENOMEM),
-                          CORBA::COMPLETED_NO));
+    ACE_NEW_THROW_EX (
+      adapter_name,
+      PortableInterceptor::AdapterName (*this->adapter_name_),
+      CORBA::NO_MEMORY (
+        CORBA::SystemException::_tao_minor_code (TAO::VMCID, ENOMEM),
+        CORBA::COMPLETED_NO));
 
     return adapter_name;
   }
 
   CORBA::Object_ptr
   ObjectReferenceTemplate::make_object (
-      char const *,
-      PortableInterceptor::ObjectId const &)
+    char const *,
+    PortableInterceptor::ObjectId const &)
   {
     if (CORBA::is_nil (this->poa_.in ()))
-    {
-      throw ::CORBA::BAD_INV_ORDER ();
-    }
+      {
+        throw ::CORBA::BAD_INV_ORDER ();
+      }
 
     TAO_Root_POA * const tao_poa =
-      dynamic_cast<TAO_Root_POA *> (this->poa_.in());
+      dynamic_cast<TAO_Root_POA *> (this->poa_.in ());
 
     if (tao_poa == nullptr)
-    {
-      throw ::CORBA::INTERNAL ();
-    }
+      {
+        throw ::CORBA::INTERNAL ();
+      }
 
     return tao_poa->invoke_key_to_object ();
   }
