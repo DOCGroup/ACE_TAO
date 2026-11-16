@@ -60,7 +60,7 @@ class Thread_Bounded_Packet_Relay_Driver;
 class Text_Input_Device_Wrapper : public Input_Device_Wrapper_Base
 {
 public:
-  // = Enumerated logging level flags
+  /// Enumerated logging level flags.
   enum Logging_Flags {NO_LOGGING = 0,
                       LOG_MSGS_CREATED = 1};
 
@@ -112,7 +112,7 @@ private:
 class Text_Output_Device_Wrapper : public Output_Device_Wrapper_Base
 {
 public:
-  // = Enumerated logging level flags
+  /// Enumerated logging level flags.
   enum Logging_Flags {NO_LOGGING = 0,
                       LOG_MSGS_RCVD = 2,
                       PRINT_MSGS_RCVD = 4};
@@ -124,8 +124,8 @@ public:
   Text_Output_Device_Wrapper &operator= (Text_Output_Device_Wrapper const &) = delete;
   Text_Output_Device_Wrapper &operator= (Text_Output_Device_Wrapper &&) = delete;
 
-  // = Command Accessible Entry Points
-
+  /// @name Command-accessible entry points
+  /// @{
   /// Consumes and possibly prints out the passed message.
   int write_output_message (ACE_Message_Block *message) override;
 
@@ -135,6 +135,7 @@ public:
    * and does nothing if the pointer is null.
    */
   int modify_device_settings (void *logging) override;
+  /// @}
 
 private:
   /// This value holds the logging level.
@@ -156,8 +157,6 @@ private:
 class User_Input_Task : public ACE_Task_Base
 {
 public:
-  // = Trait for command accessible entry points.
-
   using ACTION = int (User_Input_Task::*) (void *);
 
   User_Input_Task (Bounded_Packet_Relay *relay,
@@ -174,8 +173,8 @@ public:
   /// This method runs the event loop in the new thread.
   int svc () override;
 
-  // = Some helper methods.
-
+  /// @name Helper methods
+  /// @{
   /// Sets the number of packets for the next transmission.
   int set_packet_count (void *);
 
@@ -203,6 +202,7 @@ public:
   /// Reports statistics for the previous transmission (if one is not
   /// in progress).
   int report_stats (void *);
+  /// @}
 
   /// Shuts down the task.
   int shutdown (void *);
@@ -238,8 +238,6 @@ private:
 class BPR_Handler_Base : public ACE_Event_Handler
 {
 public:
-  // = Trait for command accessible entry points.
-
   using ACTION = int (BPR_Handler_Base::*) (void *);
 
   BPR_Handler_Base (Bounded_Packet_Relay &relay,
@@ -251,8 +249,6 @@ public:
   BPR_Handler_Base &operator= (BPR_Handler_Base &&) = delete;
 
   ~BPR_Handler_Base () override = default;
-
-  // = Command accessible entry points.
 
   /// Helper method: clears all timers.
   virtual int clear_all_timers (void *);
@@ -284,8 +280,6 @@ class Send_Handler;
 class Send_Handler : public BPR_Handler_Base
 {
 public:
-  // = Trait for command accessible entry points.
-
   using ACTION = int (Send_Handler::*) (void *);
 
   Send_Handler (u_long send_count,
@@ -307,8 +301,6 @@ public:
 
   /// Cancellation hook.
   virtual int cancelled ();
-
-  // = Command accessible entry points.
 
   /// Helper method: re-registers this handler.
   virtual int reregister (void *timeout);
@@ -375,7 +367,6 @@ private:
 class Thread_Bounded_Packet_Relay_Driver : public Bounded_Packet_Relay_Driver <Thread_Timer_Queue>
 {
 public:
-  // = Trait for commands issued from this driver
   using MYCOMMAND = ACE_Command_Callback<User_Input_Task, User_Input_Task::ACTION>;
 
   explicit Thread_Bounded_Packet_Relay_Driver (Bounded_Packet_Relay *relay);

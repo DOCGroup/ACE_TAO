@@ -115,12 +115,10 @@ public:
   void logging_level (int ll);
 
 protected:
-  // = Major Driver Mechanisms
-
+  /// @name Driver mechanisms
+  /// @{
   /// Timer queue for transmission timeouts.
   TQ timer_queue_;
-
-  // = Set of commands to be executed.
 
   /// Set packet count command.
   std::unique_ptr<ACE_Command_Base> packet_count_cmd_ {};
@@ -142,6 +140,7 @@ protected:
 
   /// Cancel transmission command.
   std::unique_ptr<ACE_Command_Base> cancel_transmission_cmd_ {};
+  /// @}
 
   /// Report statistics command.
   std::unique_ptr<ACE_Command_Base> report_stats_cmd_ {};

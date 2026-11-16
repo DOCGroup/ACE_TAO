@@ -53,7 +53,8 @@ public:
   Bounded_Packet_Relay &operator= (Bounded_Packet_Relay const &) = delete;
   Bounded_Packet_Relay &operator= (Bounded_Packet_Relay &&) = delete;
 
-  // = Enumerates possible status values for a transmission.
+  /// @name Transmission status
+  /// @{
   enum Transmission_Status
   {
     UN_INITIALIZED,
@@ -63,6 +64,7 @@ public:
     CANCELLED,
     ERROR_DETECTED
   };
+  /// @}
 
   enum Queue_Defaults
   {
@@ -93,12 +95,11 @@ public:
   /// Requests a report of statistics from the last transmission.
   int report_statistics ();
 
-  // = Command accessible entry points.
-
   /// Public entry point to which to push input.
   int receive_input (void *);
 
-  // = Accessors and mutators for relay settings
+  /// @name Accessors and mutators for relay settings
+  /// @{
 
   /// Get high water mark for relay queue.
   ACE_UINT32 queue_hwm () const;
@@ -111,9 +112,11 @@ public:
 
   /// Set low water mark for relay queue.
   void queue_lwm (ACE_UINT32 lwm);
+  /// @}
 
 private:
-  // = Concurrency Management.
+  /// @name Concurrency state
+  /// @{
 
   /// flag for whether or not a transmission is active
   bool is_active_ {};
@@ -139,9 +142,10 @@ private:
   /// Lock for thread-safe synchronization of transmission startup and
   /// termination.
   ACE_SYNCH_MUTEX transmission_lock_;
+  /// @}
 
-  // = Transmission Statistics
-
+  /// @name Transmission statistics
+  /// @{
   /// Returns string corresponding to current status.
   char const *status_msg () const;
 
@@ -159,6 +163,7 @@ private:
 
   /// Ending time of the most recent transmission.
   ACE_Time_Value transmission_end_ {};
+  /// @}
 };
 
 /**
