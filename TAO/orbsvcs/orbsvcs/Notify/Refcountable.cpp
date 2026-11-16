@@ -171,7 +171,10 @@ TAO_Notify_Tracker::get_instance ()
 void
 TAO_Notify_Tracker::add (TAO_Notify_Refcountable *p)
 {
-  if ( p == nullptr ) return;
+  if ( p == nullptr )
+    {
+      return;
+    }
 
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   int id = ++id_counter_;
@@ -194,7 +197,10 @@ TAO_Notify_Tracker::add (TAO_Notify_Refcountable *p)
 void
 TAO_Notify_Tracker::remove (TAO_Notify_Refcountable const *p)
 {
-  if ( p == nullptr ) return;
+  if ( p == nullptr )
+    {
+      return;
+    }
 
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   int ref_id = p->ref_id_;
@@ -215,7 +221,10 @@ TAO_Notify_Tracker::Entry
 TAO_Notify_Tracker::find (TAO_Notify_Refcountable const *p) const
 {
   Entry e { nullptr, {} };
-  if ( p == nullptr ) return e;
+  if ( p == nullptr )
+    {
+      return e;
+    }
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, e);
   int ref_id = p->ref_id_;

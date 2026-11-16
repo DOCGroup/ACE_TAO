@@ -7,20 +7,29 @@ template <class T> ACE_INLINE
 TAO_Notify_Refcountable_Guard_T<T>::TAO_Notify_Refcountable_Guard_T (T *t)
   : t_ (t)
 {
-  if (this->t_ != nullptr) this->t_->_incr_refcnt ();
+  if (this->t_ != nullptr)
+    {
+      this->t_->_incr_refcnt ();
+    }
 }
 
 template <class T> ACE_INLINE
 TAO_Notify_Refcountable_Guard_T<T>::TAO_Notify_Refcountable_Guard_T (const TAO_Notify_Refcountable_Guard_T<T> &rhs)
   : t_ (rhs.t_)
 {
-  if (this->t_ != nullptr) this->t_->_incr_refcnt ();
+  if (this->t_ != nullptr)
+    {
+      this->t_->_incr_refcnt ();
+    }
 }
 
 template <class T> ACE_INLINE
 TAO_Notify_Refcountable_Guard_T<T>::~TAO_Notify_Refcountable_Guard_T ()
 {
-  if (this->t_ != nullptr) this->t_->_decr_refcnt ();
+  if (this->t_ != nullptr)
+    {
+      this->t_->_decr_refcnt ();
+    }
 }
 
 template <class T> ACE_INLINE
