@@ -288,7 +288,7 @@ TAO_SFP_Base::read_frame (TAO_AV_Transport *transport,
         }
       if (TAO_debug_level > 0)
       {
-        ORBSVCS_DEBUG ((LM_DEBUG,"Length of 0th fragment= %d\n",data->length ()));
+        ORBSVCS_DEBUG ((LM_DEBUG,"Length of 0th fragment= %B\n",data->length ()));
       }
       TAO_SFP_Fragment_Table *fragment_table {};
       result = state.fragment_table_map_.find (ssrc,fragment_table);
