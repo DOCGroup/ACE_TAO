@@ -18,7 +18,7 @@ Bzip2Compressor::compress (
     ::Compression::Buffer & target)
 {
   // Ensure maximum is at least a bit bigger than input length.
-  target.length (static_cast <CORBA::ULong> ((source.length () * 1.01) + 600));
+  target.length (static_cast<CORBA::ULong> ((source.length () * 1.01) + 600));
 
   unsigned int max_length = static_cast<unsigned int> (target.maximum ());
 
@@ -32,11 +32,11 @@ Bzip2Compressor::compress (
     this->compression_level () * 25);
 
   if (retval != BZ_OK)
-  {
-    throw ::Compression::CompressionException (retval, "");
-  }
+    {
+      throw ::Compression::CompressionException (retval, "");
+    }
 
-  target.length (static_cast <CORBA::ULong> (max_length));
+  target.length (static_cast<CORBA::ULong> (max_length));
 
   // Update statistics for this compressor
   this->update_stats (source.length (), target.length ());
@@ -57,11 +57,11 @@ Bzip2Compressor::decompress (
     1);
 
   if (retval != BZ_OK)
-  {
-    throw ::Compression::CompressionException (retval, "");
-  }
+    {
+      throw ::Compression::CompressionException (retval, "");
+    }
 
-  target.length (static_cast <CORBA::ULong> (max_length));
+  target.length (static_cast<CORBA::ULong> (max_length));
 }
 }
 
