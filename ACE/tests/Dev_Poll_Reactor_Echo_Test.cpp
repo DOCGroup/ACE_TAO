@@ -225,8 +225,9 @@ Client::handle_close (ACE_HANDLE handle,
                       ACE_Reactor_Mask mask)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Client::handle_close handle = %@ mask = %xd\n"),
-              reinterpret_cast<void *> (handle), mask));
+              ACE_TEXT ("(%t) Client::handle_close handle = %@ mask = %Q\n"),
+              reinterpret_cast<void *> (handle),
+              static_cast<ACE_UINT64> (mask)));
   return 0;
   //return SVC_HANDLER::handle_close (handle, mask);
 }
@@ -356,8 +357,9 @@ Server::handle_close (ACE_HANDLE handle,
                       ACE_Reactor_Mask mask)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Server::handle_close handle = %@ mask = %xd\n"),
-              reinterpret_cast<void *> (handle), mask));
+              ACE_TEXT ("(%t) Server::handle_close handle = %@ mask = %Q\n"),
+              reinterpret_cast<void *> (handle),
+              static_cast<ACE_UINT64> (mask)));
   return 0;
   //return SVC_HANDLER::handle_close (handle, mask);
 }

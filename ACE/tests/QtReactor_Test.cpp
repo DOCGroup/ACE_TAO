@@ -316,9 +316,9 @@ int DgramHandler::handle_close (ACE_HANDLE handle, ACE_Reactor_Mask close_mask)
   if (peer_.get_handle () != handle )
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("Unknown handle %@ DgramHandler::handle_close "
-                          "with mask %x. My handle is %@\n"),
+                          "with mask %Q. My handle is %@\n"),
                 reinterpret_cast<void *> (handle),
-                close_mask,
+                static_cast<ACE_UINT64> (close_mask),
                 reinterpret_cast<void *> (peer_.get_handle ())));
   else
     peer_.close ();
@@ -504,9 +504,9 @@ int TCPConnectionHandler::handle_close (ACE_HANDLE handle,ACE_Reactor_Mask close
   if (peer_.get_handle () != handle )
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("Unknown handle %@ TCPConnectionHandler::handle_close "
-                          "with mask %x. My handle is %@\n"),
+                          "with mask %Q. My handle is %@\n"),
                 reinterpret_cast<void *> (handle),
-                close_mask,
+                static_cast<ACE_UINT64> (close_mask),
                 reinterpret_cast<void *> (peer_.get_handle ()));
   else
     peer_.close ();

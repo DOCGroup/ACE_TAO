@@ -169,8 +169,8 @@ int
 ThrMgr_Task::svc ()
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Task 0x%x, thread %t waiting to be cancelled\n"),
-              this));
+              ACE_TEXT ("Task %@, thread %t waiting to be cancelled\n"),
+              static_cast<void *> (this)));
   ACE_thread_t me = ACE_Thread::self ();
   for (int i = 0; i < 30 && !this->thr_mgr ()->testcancel (me); ++i)
     ACE_OS::sleep (1);
@@ -178,14 +178,14 @@ ThrMgr_Task::svc ()
   if (this->thr_mgr ()->testcancel (me))
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Task 0x%x, thread %t cancelled; exiting\n"),
-                  this));
+                  ACE_TEXT ("Task %@, thread %t cancelled; exiting\n"),
+                  static_cast<void *> (this)));
     }
   else
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Task 0x%x, thread %t was not cancelled\n"),
-                  this));
+                  ACE_TEXT ("Task %@, thread %t was not cancelled\n"),
+                  static_cast<void *> (this)));
       ++ThrMgr_Task::errors;
     }
   return 0;

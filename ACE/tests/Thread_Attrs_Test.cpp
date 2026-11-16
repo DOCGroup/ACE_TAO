@@ -105,10 +105,12 @@ int
 Cancel_Check::open (void *)
 {
   long flags = THR_NEW_LWP | THR_JOINABLE;
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Flags before cancels: 0x%x\n"), flags));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Flags before cancels: %Q\n"),
+              static_cast<ACE_UINT64> (flags)));
   flags |= (this->enable_req_ ? THR_CANCEL_ENABLE : THR_CANCEL_DISABLE);
   flags |= (this->async_req_ ? THR_CANCEL_ASYNCHRONOUS : THR_CANCEL_DEFERRED);
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Flags after cancels: 0x%x\n"), flags));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Flags after cancels: %Q\n"),
+              static_cast<ACE_UINT64> (flags)));
   if (this->activate (flags) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),

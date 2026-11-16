@@ -113,8 +113,8 @@ worker (void *c)
       ACE_NEW_RETURN (ip, int, nullptr);
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) in worker at location 1, ")
-                            ACE_TEXT ("key = %d, ip = %x\n"),
-                  key, ip));
+                            ACE_TEXT ("key = %d, ip = %@\n"),
+                  key, static_cast<void *> (ip)));
 
       // Needed to work around (possibly broken?) strict aliasing warning in GCC.
       void *v_ip (reinterpret_cast <void *> (ip));
@@ -191,8 +191,8 @@ worker (void *c)
       ACE_NEW_RETURN (ip, int, 0);
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) in worker at location 2, ")
-                            ACE_TEXT ("key = %d, ip = %x\n"),
-                  key, ip));
+                            ACE_TEXT ("key = %d, ip = %@\n"),
+                  key, static_cast<void *> (ip)));
 
       // Needed to work around (possibly broken?) strict aliasing warning in GCC.
       void *v_ip2 (reinterpret_cast <void *> (ip));
