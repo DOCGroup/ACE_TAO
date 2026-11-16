@@ -20,6 +20,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
+#include <utility>
 
 static int
 test (ACE_Configuration *config,
@@ -910,6 +911,19 @@ Config_Test::testEquality ()
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Error adding value to heap1\n")),
                       -2);
+
+  ACE_Configuration_Section_Key moveSource {heap1.root_section ()};
+  ACE_Configuration_Section_Key movedRoot {std::move (moveSource)};
+  ACE_Configuration_Section_Key assignedRoot;
+  assignedRoot = std::move (movedRoot);
+  ACE_Configuration_Section_Key movedSection;
+  if (heap1.open_section (assignedRoot,
+                          ACE_TEXT ("NewSection"),
+                          false,
+                          movedSection))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Move operations lost the section key\n")),
+                      -1);
 
   // test equality
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("The objects should NOT equal...\n")));

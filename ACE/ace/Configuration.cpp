@@ -65,6 +65,12 @@ ACE_Configuration_Section_Key::ACE_Configuration_Section_Key (const ACE_Configur
   }
 }
 
+ACE_Configuration_Section_Key::ACE_Configuration_Section_Key (ACE_Configuration_Section_Key&& rhs) noexcept
+  : key_ (rhs.key_)
+{
+  rhs.key_ = nullptr;
+}
+
 ACE_Configuration_Section_Key&
 ACE_Configuration_Section_Key::operator= (const ACE_Configuration_Section_Key& rhs)
 {
@@ -81,6 +87,22 @@ ACE_Configuration_Section_Key::operator= (const ACE_Configuration_Section_Key& r
       {
         key_->add_ref ();
       }
+    }
+  return *this;
+}
+
+ACE_Configuration_Section_Key&
+ACE_Configuration_Section_Key::operator= (ACE_Configuration_Section_Key&& rhs) noexcept
+{
+  if (this != std::addressof (rhs))
+    {
+      if (key_)
+        {
+          key_->dec_ref ();
+        }
+
+      key_ = rhs.key_;
+      rhs.key_ = nullptr;
     }
   return *this;
 }

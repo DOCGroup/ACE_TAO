@@ -105,12 +105,18 @@ public:
   /// Copy constructor, increments the reference count on the key.
   ACE_Configuration_Section_Key (const ACE_Configuration_Section_Key &rhs);
 
+  /// Move constructor, transferring the referenced key.
+  ACE_Configuration_Section_Key (ACE_Configuration_Section_Key &&rhs) noexcept;
+
   /// Destructor, decrements reference count on the referenced key.
   ~ACE_Configuration_Section_Key ();
 
   /// Assignment operator, increments reference count for this object
   /// and decrements it on @a rhs.
   ACE_Configuration_Section_Key &operator= (const ACE_Configuration_Section_Key &rhs);
+
+  /// Move assignment operator, transferring the referenced key.
+  ACE_Configuration_Section_Key &operator= (ACE_Configuration_Section_Key &&rhs) noexcept;
 private:
   ACE_Section_Key_Internal *key_ {};
 };
