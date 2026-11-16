@@ -4,6 +4,7 @@
 
 #include <cerrno>
 #include <cstring>
+#include <memory>
 #include <new>
 #include <utility>
 
@@ -308,7 +309,7 @@ RTCP_RR_Packet::RTCP_RR_Packet (char* buffer,
   :RTCP_Packet (buffer)
 {
   unsigned int i = 0;
-  std::unique_ptr<RR_Block> *next_block = &this->rr_;
+  std::unique_ptr<RR_Block> *next_block = std::addressof (this->rr_);
 
   // The common part of the header is initialized in the parent.
   i=4;
@@ -325,7 +326,7 @@ RTCP_RR_Packet::RTCP_RR_Packet (char* buffer,
         }
 
       RR_Block * const local_block_ptr = next_block->get ();
-      next_block = &local_block_ptr->next_;
+      next_block = std::addressof (local_block_ptr->next_);
       local_block_ptr->ssrc_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
       i+=4;
       ACE_UINT32 temp = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
@@ -450,7 +451,7 @@ RTCP_SDES_Packet::RTCP_SDES_Packet(char* buffer, int *len):
                    RTCP_Packet (buffer)
 {
   unsigned int i;
-  std::unique_ptr<sdesChunk_t> *next_chunk = &this->chunk_;
+  std::unique_ptr<sdesChunk_t> *next_chunk = std::addressof (this->chunk_);
 
   // The common part of the control packet header is processed
   // in the parent. It is 4 bytes long.
@@ -467,12 +468,12 @@ RTCP_SDES_Packet::RTCP_SDES_Packet(char* buffer, int *len):
         }
 
       sdesChunk_t * const cp = next_chunk->get ();
-      next_chunk = &cp->next_;
+      next_chunk = std::addressof (cp->next_);
       ++this->num_chunks_;
       cp->ssrc_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
       i+=4;
 
-      std::unique_ptr<sdesItem_t> *next_item = &cp->item_;
+      std::unique_ptr<sdesItem_t> *next_item = std::addressof (cp->item_);
       while (buffer[i]!=RTCP_SDES_END)
         {
           *next_item = std::unique_ptr<sdesItem_t> (
@@ -484,7 +485,7 @@ RTCP_SDES_Packet::RTCP_SDES_Packet(char* buffer, int *len):
             }
 
           sdesItem_t * const ip = next_item->get ();
-          next_item = &ip->next_;
+          next_item = std::addressof (ip->next_);
           ip->type_ = buffer[i];
           ++i;
           if (ip->type_ != RTCP_SDES_PRIV)
@@ -587,10 +588,10 @@ RTCP_SDES_Packet::add_item_node (sdesChunk_t *chunk)
     }
 
   sdesItem_t * const item_ptr = item.get ();
-  std::unique_ptr<sdesItem_t> *next_item = &chunk->item_;
+  std::unique_ptr<sdesItem_t> *next_item = std::addressof (chunk->item_);
   while (*next_item != nullptr)
     {
-      next_item = &(*next_item)->next_;
+      next_item = std::addressof ((*next_item)->next_);
     }
   *next_item = std::move (item);
   return item_ptr;
@@ -962,7 +963,7 @@ RTCP_SR_Packet::RTCP_SR_Packet (char* buffer,
                 : RTCP_Packet (buffer)
 {
   unsigned int i = 0;
-  std::unique_ptr<RR_Block> *next_block = &this->rr_;
+  std::unique_ptr<RR_Block> *next_block = std::addressof (this->rr_);
 
   // The common part of the header is initialized in the parent.
   i=4;
@@ -989,7 +990,7 @@ RTCP_SR_Packet::RTCP_SR_Packet (char* buffer,
         }
 
       RR_Block * const local_block_ptr = next_block->get ();
-      next_block = &local_block_ptr->next_;
+      next_block = std::addressof (local_block_ptr->next_);
       local_block_ptr->ssrc_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
       i+=4;
       ACE_UINT32 temp = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
