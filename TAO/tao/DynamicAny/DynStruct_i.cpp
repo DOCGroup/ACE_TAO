@@ -147,11 +147,9 @@ TAO_DynStruct_i::init (CORBA::TypeCode_ptr tc)
 
   this->init_common ();
 
-  CORBA::TypeCode_var mtype;
-
   for (CORBA::ULong i {}; i < this->component_count_; ++i)
     {
-      mtype = unaliased_tc->member_type (i);
+      CORBA::TypeCode_var const mtype = unaliased_tc->member_type (i);
 
       // Recursively initialize each member.
       this->da_members_[i] =
@@ -292,10 +290,6 @@ TAO_DynStruct_i::set_members (DynamicAny::NameValuePairSeq const& values)
       throw DynamicAny::DynAny::InvalidValue ();
     }
 
-  CORBA::TypeCode_var value_tc;
-  CORBA::TypeCode_var my_tc;
-  CORBA::Boolean equivalent;
-
   // member_type() does not work with aliased type codes.
   CORBA::TypeCode_var const unaliased_tc =
     TAO_DynAnyFactory::strip_alias (this->type_.in ());
@@ -303,11 +297,9 @@ TAO_DynStruct_i::set_members (DynamicAny::NameValuePairSeq const& values)
   for (CORBA::ULong i {}; i < length; ++i)
     {
       // Check for type and name match.
-      my_tc = unaliased_tc->member_type (i);
-
-      value_tc = values[i].value.type ();
-
-      equivalent = my_tc->equivalent (value_tc.in ());
+      CORBA::TypeCode_var const my_tc = unaliased_tc->member_type (i);
+      CORBA::TypeCode_var const value_tc = values[i].value.type ();
+      CORBA::Boolean const equivalent = my_tc->equivalent (value_tc.in ());
 
       if (!equivalent)
         {
@@ -381,10 +373,6 @@ TAO_DynStruct_i::set_members_as_dyn_any (
       throw DynamicAny::DynAny::InvalidValue ();
     }
 
-  CORBA::TypeCode_var value_tc;
-  CORBA::TypeCode_var my_tc;
-  CORBA::Boolean equivalent;
-
   // member_type() does not work with aliased type codes.
   CORBA::TypeCode_var const unaliased_tc =
     TAO_DynAnyFactory::strip_alias (this->type_.in ());
@@ -392,11 +380,9 @@ TAO_DynStruct_i::set_members_as_dyn_any (
   for (CORBA::ULong i {}; i < length; ++i)
     {
       // Check for type and name match.
-      my_tc = unaliased_tc->member_type (i);
-
-      value_tc = values[i].value->type ();
-
-      equivalent = my_tc->equivalent (value_tc.in ());
+      CORBA::TypeCode_var const my_tc = unaliased_tc->member_type (i);
+      CORBA::TypeCode_var const value_tc = values[i].value->type ();
+      CORBA::Boolean const equivalent = my_tc->equivalent (value_tc.in ());
 
       if (!equivalent)
         {
@@ -459,13 +445,12 @@ TAO_DynStruct_i::from_any (CORBA::Any const& any)
           in >> str.out ();
         }
 
-      CORBA::TypeCode_var field_tc;
       CORBA::TypeCode_var const unaliased =
         TAO::unaliased_typecode (this->type_.in ());
 
       for (CORBA::ULong i {}; i < this->component_count_; ++i)
         {
-          field_tc = unaliased->member_type (i);
+          CORBA::TypeCode_var const field_tc = unaliased->member_type (i);
 
           CORBA::Any field_any;
           TAO_InputCDR unk_in (in);

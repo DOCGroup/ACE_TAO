@@ -305,12 +305,10 @@ TAO_DynSequence_i::set_elements (DynamicAny::AnySeq const& value)
 
   CORBA::TypeCode_var const element_type = this->get_element_type ();
 
-  CORBA::TypeCode_var value_tc;
-
   for (CORBA::ULong i {}; i < length; ++i)
     {
       // Check each arg element for type match.
-      value_tc = value[i].type ();
+      CORBA::TypeCode_var const value_tc = value[i].type ();
       CORBA::Boolean const equivalent =
         value_tc->equivalent (element_type.in ());
 
@@ -408,14 +406,11 @@ TAO_DynSequence_i::set_elements_as_dyn_any (
   CORBA::TypeCode_var const element_type =
     this->get_element_type ();
 
-  CORBA::TypeCode_var val_type;
-  CORBA::Boolean equivalent;
-
   for (CORBA::ULong i {}; i < length; ++i)
     {
-      val_type = values[i]->type ();
-
-      equivalent = val_type->equivalent (element_type.in ());
+      CORBA::TypeCode_var const val_type = values[i]->type ();
+      CORBA::Boolean const equivalent =
+        val_type->equivalent (element_type.in ());
 
       if (equivalent)
         {
