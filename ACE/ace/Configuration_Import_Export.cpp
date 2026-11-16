@@ -279,19 +279,14 @@ ACE_Registry_ImpExp::export_section (const ACE_Configuration_Section_Key& sectio
       // Write out each value
       ACE_TString name;
       ACE_Configuration::VALUETYPE type;
-      ACE_TString line;
-      ACE_TCHAR int_value[32];
-      ACE_TCHAR bin_value[3];
-      void* binary_data;
-      size_t binary_length;
-      ACE_TString string_value;
       for (int index {}; !config_.enumerate_values (section, index, name, type); ++index)
         {
-          line = ACE_TEXT ("\"") + name + ACE_TEXT ("\"=");
+          ACE_TString line = ACE_TEXT ("\"") + name + ACE_TEXT ("\"=");
           switch (type)
             {
             case ACE_Configuration::INTEGER:
               {
+                ACE_TCHAR int_value[32];
                 u_int value;
                 if (config_.get_integer_value (section, name.fast_rep (), value))
                 {
@@ -304,6 +299,7 @@ ACE_Registry_ImpExp::export_section (const ACE_Configuration_Section_Key& sectio
               }
             case ACE_Configuration::STRING:
               {
+                ACE_TString string_value;
                 if (config_.get_string_value (section,
                                               name.fast_rep (),
                                               string_value))
@@ -321,6 +317,9 @@ ACE_Registry_ImpExp::export_section (const ACE_Configuration_Section_Key& sectio
             case ACE_Configuration::BINARY:
               {
                 // not supported yet - maybe use BASE64 codeing?
+                ACE_TCHAR bin_value[3];
+                void* binary_data {};
+                size_t binary_length {};
                 if (config_.get_binary_value (section,
                                               name.fast_rep (),
                                               binary_data,
