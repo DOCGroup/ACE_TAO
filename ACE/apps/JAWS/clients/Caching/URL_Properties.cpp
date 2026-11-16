@@ -176,9 +176,11 @@ ACE_URL_Offer::decode (void *buf)
   size_t len = sizeof (ACE_UINT32);
   ACE_UINT32 encoded_size {};
   std::memcpy (&encoded_size, buf, sizeof (encoded_size));
-  size_t a_size = static_cast<size_t> (ntohl (encoded_size));
-  len += ACE_WString_Helper::decode (static_cast<char *> (buf) + len);
-  this->url_ = ace_url_wstring_from_buffer (static_cast<char *> (buf) + len);
+  size_t const a_size = static_cast<size_t> (ntohl (encoded_size));
+  char * const bytes = static_cast<char *> (buf);
+  char * const encoded_url = bytes + len;
+  len += ACE_WString_Helper::decode (encoded_url);
+  this->url_ = ace_url_wstring_from_buffer (encoded_url);
 
   ACE_URL_Property_Seq prop_seq (a_size);
   this->url_properties (prop_seq);

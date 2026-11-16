@@ -11,7 +11,6 @@
 #include "http_handler.h"
 
 #include <charconv>
-#include <cstdio>
 #include <cstring>
 #include <limits>
 
@@ -38,13 +37,6 @@ HTTP_Handler::HTTP_Handler (std::string const &path)
 int
 HTTP_Handler::open (void *)
 {
-  if (this->request_.size () >= BUFSIZ || this->filename_.size () >= BUFSIZ)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("HTTP request or filename exceeds buffer size\n")),
-                        -1);
-    }
-
   // If you want threads, use the activate stuff.
 #if 0
   if (this->activate () != 0)
@@ -87,35 +79,35 @@ HTTP_Handler::svc ()
           buf[count] = '\0';
 
           if (count >= 2)
-          {
-            done = std::strcmp (buf + count - 2, "\n\n") == 0;
-          }
+            {
+              done = std::strcmp (buf + count - 2, "\n\n") == 0;
+            }
 
           if (done)
-          {
-            break;
-          }
+            {
+              break;
+            }
 
           if (count < 4)
-          {
-            continue;
-          }
+            {
+              continue;
+            }
 
           done = std::strcmp (buf + count - 4, "\r\n\r\n") == 0;
 
           if (done)
-          {
-            break;
-          }
+            {
+              break;
+            }
         }
 
       if (!done)
         {
           char *last = std::strrchr (buf, '\n');
           if (last == nullptr)
-          {
-            ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Malformed HTTP response header\n")), -1);
-          }
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Malformed HTTP response header\n")), -1);
+            }
           last[0] = '\0';
 
           contentlength = std::strstr (buf, "\nContent-length:");
@@ -147,14 +139,48 @@ HTTP_Handler::svc ()
     }
   while (!done);
 
-  // ASSERT (contentlength != 0)
-  int size {};
-  if (contentlength
-      && (std::sscanf (contentlength, "\nContent-%*[lL]ength: %d ",
-                       &size) == 1)
-      && size >= 0)
+  size_t response_size {};
+  bool has_content_length {};
+  if (contentlength != nullptr)
     {
-      this->response_size_ = static_cast<size_t> (size);
+      char const *value = std::strchr (contentlength, ':');
+      if (value != nullptr)
+        {
+          ++value;
+          while (*value == ' ' || *value == '\t')
+            ++value;
+
+          char const *value_end = std::strpbrk (value, "\r\n");
+          if (value_end == nullptr)
+            value_end = value + std::strlen (value);
+
+          std::from_chars_result const parsed =
+            std::from_chars (value, value_end, response_size);
+          if (parsed.ec == std::errc {} && parsed.ptr != value)
+            {
+              char const *trailing = parsed.ptr;
+              while (trailing != value_end &&
+                     (*trailing == ' ' || *trailing == '\t'))
+                ++trailing;
+              has_content_length = trailing == value_end;
+            }
+        }
+
+      if (!has_content_length)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Invalid HTTP Content-Length header\n")),
+                            -1);
+        }
+
+      if (response_size > static_cast<size_t> ((std::numeric_limits<ssize_t>::max) ()))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("HTTP response body is too large\n")),
+                            -1);
+        }
+
+      this->response_size_ = response_size;
       ACE_Filecache_Handle afh (ACE_TEXT_CHAR_TO_TCHAR (this->filename_.c_str ()),
                                 this->response_size_);
 

@@ -9,3 +9,13 @@ project(http_client) : aceexe {
     http_client.cpp
   }
 }
+
+project(test_URL) : aceexe {
+  exename = test_URL
+  Source_Files {
+    test_URL.cpp
+    Locator_Request_Reply.cpp
+    URL_Properties.cpp
+    URL_Locator.cpp
+  }
+}

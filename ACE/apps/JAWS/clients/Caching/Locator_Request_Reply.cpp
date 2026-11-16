@@ -170,7 +170,8 @@ ACE_URL_Locator_Request::encode ()
   total_length += ACE_WString_Helper::encode (this->buffer_.get () + total_length,
                                               this->url_);
 
-  ACE_ASSERT (total_length == buf_size);
+  if (total_length != buf_size)
+    return 0;
   return total_length;
 }
 
@@ -236,7 +237,8 @@ ACE_URL_Locator_Request::decode (void *buffer)
   this->url_ = ace_url_wstring_from_buffer (cbuffer + total_length);
   total_length += url_length;
 
-  ACE_ASSERT (total_length == buf_size);
+  if (total_length != buf_size)
+    return 0;
   return total_length;
 }
 
@@ -403,8 +405,9 @@ ACE_URL_Locator_Reply::encode ()
       total_length += ace_array_encode (this->buffer_.get () + total_length, *this->offers_);
     }
 
-  ACE_ASSERT (total_length == buf_size);
-  return 0;
+  if (total_length != buf_size)
+    return 0;
+  return total_length;
 }
 
 size_t
@@ -454,8 +457,9 @@ ACE_URL_Locator_Reply::decode (void *buffer)
       total_length += ace_array_decode (cbuffer + total_length, *this->offers_);
     }
 
-  ACE_ASSERT (total_length == buf_size);
-  return 0;
+  if (total_length != buf_size)
+    return 0;
+  return total_length;
 }
 
 size_t
