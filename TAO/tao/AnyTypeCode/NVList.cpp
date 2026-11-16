@@ -94,7 +94,7 @@ CORBA::NamedValue_ptr
 CORBA::NVList::add_item (char const *name, CORBA::Flags flags)
 {
   // call the helper to allocate a NamedValue element
-  CORBA::NamedValue_ptr nv = this->add_element (flags);
+  CORBA::NamedValue_ptr const nv = this->add_element (flags);
 
   if (nv)
     {
@@ -115,7 +115,7 @@ CORBA::NVList::add_value (char const *name,
                           CORBA::Flags flags)
 {
   // Call the helper to allocate a NamedValue element.
-  CORBA::NamedValue_ptr nv = this->add_element (flags);
+  CORBA::NamedValue_ptr const nv = this->add_element (flags);
 
   if (nv)
     {
@@ -141,7 +141,7 @@ CORBA::NamedValue_ptr
 CORBA::NVList::add_item_consume (char *name, CORBA::Flags flags)
 {
   // call the helper to allocate a NamedValue element
-  CORBA::NamedValue_ptr nv = this->add_element (flags);
+  CORBA::NamedValue_ptr const nv = this->add_element (flags);
 
   if (nv)
     {
@@ -164,7 +164,7 @@ CORBA::NVList::add_value_consume (char * name,
                                   CORBA::Flags flags)
 {
   // call the helper to allocate a NamedValue element
-  CORBA::NamedValue_ptr nv = this->add_element (flags);
+  CORBA::NamedValue_ptr const nv = this->add_element (flags);
 
   if (nv)
     {

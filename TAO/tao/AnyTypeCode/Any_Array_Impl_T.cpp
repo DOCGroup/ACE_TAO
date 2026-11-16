@@ -56,7 +56,7 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (CORBA::Any const & any,
 
   try
     {
-      CORBA::TypeCode_ptr any_tc = any._tao_get_typecode ();
+      CORBA::TypeCode_ptr const any_tc = any._tao_get_typecode ();
       CORBA::Boolean const _tao_equiv = any_tc->equivalent (tc);
 
       if (!_tao_equiv)
@@ -64,11 +64,11 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (CORBA::Any const & any,
           return false;
         }
 
-      TAO::Any_Impl *impl = any.impl ();
+      TAO::Any_Impl * const impl = any.impl ();
 
       if (!impl->encoded ())
         {
-          TAO::Any_Array_Impl_T<T_slice, T_forany> *narrow_impl =
+          TAO::Any_Array_Impl_T<T_slice, T_forany> * const narrow_impl =
             dynamic_cast <TAO::Any_Array_Impl_T <T_slice, T_forany> *> (impl);
 
           if (narrow_impl == nullptr)
