@@ -7,6 +7,8 @@
 #include "tao/PI/ORBInitInfo.h"
 #include "tao/ORB_Core.h"
 
+#include <array>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
@@ -28,7 +30,7 @@ TAO_PortableServer_ORBInitializer::register_policy_factories (
 {
 #if !defined (CORBA_E_MICRO)
   // Register the PortableServer policy factories.
-  PortableInterceptor::PolicyFactory_ptr tmp;
+  PortableInterceptor::PolicyFactory_ptr tmp {};
   ACE_NEW_THROW_EX (tmp,
                     TAO_PortableServer_PolicyFactory,
                     CORBA::NO_MEMORY (
@@ -42,7 +44,7 @@ TAO_PortableServer_ORBInitializer::register_policy_factories (
   // Bind the same policy factory to all PortableServer related policy
   // types since a single policy factory is used to create each of the
   // different types of PortableServer policies.
-  static CORBA::PolicyType const type[] = {
+  static constexpr std::array policy_types {
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
     PortableServer::THREAD_POLICY_ID,
     PortableServer::IMPLICIT_ACTIVATION_POLICY_ID,
@@ -54,16 +56,11 @@ TAO_PortableServer_ORBInitializer::register_policy_factories (
     PortableServer::ID_ASSIGNMENT_POLICY_ID
   };
 
-  CORBA::PolicyType const * end =
-    type + sizeof (type) / sizeof (type[0]);
-
-  for (CORBA::PolicyType const *i = type;
-       i != end;
-       ++i)
+  for (CORBA::PolicyType const policy_type : policy_types)
     {
       try
         {
-          info->register_policy_factory (*i, policy_factory.in ());
+          info->register_policy_factory (policy_type, policy_factory.in ());
         }
       catch (::CORBA::BAD_INV_ORDER const &ex)
         {

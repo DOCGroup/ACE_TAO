@@ -284,7 +284,6 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request (
                         exceptions,
                         nexceptions);
     }
-
 }
 
 void
@@ -523,7 +522,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::allocate_pi_current ()
 
 void
 TAO::ServerRequestInterceptor_Adapter_Impl::deallocate_pi_current (
-        TAO::PICurrent_Impl *picurrent)
+  TAO::PICurrent_Impl *picurrent)
 {
   delete picurrent;
 }
@@ -534,7 +533,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::execute_command (
   TAO::Upcall_Command & command)
 {
   TAO::PICurrent_Guard const pi_guard (server_request,
-                                       true  /* Copy TSC to RSC */);
+                                       true /* Copy TSC to RSC */);
 
   // The actual upcall.
   command.execute ();

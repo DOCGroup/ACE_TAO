@@ -48,8 +48,8 @@ namespace TAO
 
             // Narrow the Policy to the ProcessingModePolicy interface.
             PortableInterceptor::ProcessingModePolicy_var const pm_policy =
-                    PortableInterceptor::ProcessingModePolicy::_narrow (
-                                                 policy.in ());
+              PortableInterceptor::ProcessingModePolicy::_narrow (
+                policy.in ());
 
             // Save the value of the ProcessingModePolicy in our data member.
             this->processing_mode_ = pm_policy->processing_mode ();

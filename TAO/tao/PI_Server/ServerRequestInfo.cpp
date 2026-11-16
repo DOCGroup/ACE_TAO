@@ -190,9 +190,9 @@ Messaging::SyncScope
 TAO::ServerRequestInfo::sync_scope ()
 {
   if (this->server_request_.sync_with_server ())
-  {
-    return Messaging::SYNC_WITH_SERVER;
-  }
+    {
+      return Messaging::SYNC_WITH_SERVER;
+    }
 
   throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 }
@@ -201,10 +201,10 @@ PortableInterceptor::ReplyStatus
 TAO::ServerRequestInfo::reply_status ()
 {
   if (this->server_request_.pi_reply_status () == -1)
-  {
-    // A reply hasn't been received yet.
-    throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
-  }
+    {
+      // A reply hasn't been received yet.
+      throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
+    }
 
   return this->server_request_.pi_reply_status ();
 }
@@ -213,9 +213,9 @@ CORBA::Object_ptr
 TAO::ServerRequestInfo::forward_reference ()
 {
   if (this->server_request_.pi_reply_status () != PortableInterceptor::LOCATION_FORWARD)
-  {
-    throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
-  }
+    {
+      throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
+    }
 
   // TAO_ServerRequest::forward_location() already duplicates the
   // object reference.  There is no need to duplicate it here.
@@ -231,12 +231,12 @@ TAO::ServerRequestInfo::get_slot (PortableInterceptor::SlotId id)
     this->server_request_.orb_core ()->pi_current ();
 
   TAO::PICurrent * const pi_current =
-    dynamic_cast <TAO::PICurrent*> (pi_current_obj);
+    dynamic_cast<TAO::PICurrent *> (pi_current_obj);
 
   if (pi_current == nullptr)
-  {
-    throw ::CORBA::INTERNAL ();
-  }
+    {
+      throw ::CORBA::INTERNAL ();
+    }
 
   pi_current->check_validity (id);
 
@@ -273,14 +273,10 @@ TAO::ServerRequestInfo::get_service_context_i (
 
   if (service_context_list.get_context (id, service_context.out ()) != 0)
     {
-      // Found.
       return service_context._retn ();
     }
-  else
-    {
-      // Not found.
-      throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 26, CORBA::COMPLETED_NO);
-    }
+
+  throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 26, CORBA::COMPLETED_NO);
 }
 
 // Use at own risk. There is no way currently of extracting an
@@ -311,9 +307,9 @@ TAO::ServerRequestInfo::sending_exception ()
   CORBA::Any_var caught_exception_var = temp;
 
   if (this->server_request_.caught_exception ())
-  {
-    (*temp) <<= *(this->server_request_.caught_exception ());
-  }
+    {
+      (*temp) <<= *(this->server_request_.caught_exception ());
+    }
 
   return caught_exception_var._retn ();
 }
@@ -322,9 +318,9 @@ char *
 TAO::ServerRequestInfo::server_id ()
 {
   if (this->servant_upcall_ != nullptr)
-  {
-    return CORBA::string_dup (this->server_request_.orb_core ()->server_id ());
-  }
+    {
+      return CORBA::string_dup (this->server_request_.orb_core ()->server_id ());
+    }
 
   throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 }
@@ -333,9 +329,9 @@ char *
 TAO::ServerRequestInfo::orb_id ()
 {
   if (this->servant_upcall_ != nullptr)
-  {
-    return CORBA::string_dup (this->server_request_.orb_core ()->orbid ());
-  }
+    {
+      return CORBA::string_dup (this->server_request_.orb_core ()->orbid ());
+    }
 
   throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 }
@@ -349,9 +345,9 @@ TAO::ServerRequestInfo::adapter_name ()
   // to the POA that services the request. The root POA is not named
   // in this sequence.
   if (this->servant_upcall_ != nullptr)
-  {
-    return this->servant_upcall_->poa ().adapter_name ();
-  }
+    {
+      return this->servant_upcall_->poa ().adapter_name ();
+    }
 
   throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 }
@@ -399,9 +395,9 @@ CORBA::OctetSeq *
 TAO::ServerRequestInfo::adapter_id ()
 {
   if (this->servant_upcall_ != nullptr)
-  {
-    return this->servant_upcall_->poa ().id ();
-  }
+    {
+      return this->servant_upcall_->poa ().id ();
+    }
 
   throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 }
@@ -410,9 +406,9 @@ char *
 TAO::ServerRequestInfo::target_most_derived_interface ()
 {
   if (this->servant_upcall_ == nullptr)
-  {
-    throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
-  }
+    {
+      throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
+    }
 
   PortableServer::Servant const servant = this->servant_upcall_->servant ();
 
@@ -459,12 +455,12 @@ TAO::ServerRequestInfo::set_slot (PortableInterceptor::SlotId id,
     this->server_request_.orb_core ()->pi_current ();
 
   TAO::PICurrent * const pi_current =
-    dynamic_cast <TAO::PICurrent*> (pi_current_obj);
+    dynamic_cast<TAO::PICurrent *> (pi_current_obj);
 
   if (pi_current == nullptr)
-  {
-    throw ::CORBA::INTERNAL ();
-  }
+    {
+      throw ::CORBA::INTERNAL ();
+    }
 
   pi_current->check_validity (id);
 
@@ -478,9 +474,9 @@ CORBA::Boolean
 TAO::ServerRequestInfo::target_is_a (char const *id)
 {
   if (this->servant_upcall_ == nullptr)
-  {
-    throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
-  }
+    {
+      throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
+    }
 
   // Implemented in the generated skeleton.
   PortableServer::Servant const servant = this->servant_upcall_->servant ();
