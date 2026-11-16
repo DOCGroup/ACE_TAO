@@ -146,7 +146,7 @@ public:
     , buffer_ (rhs.buffer_)
     , release_ (rhs.release_)
   {
-    rhs.maximum_ = 0;
+    rhs.maximum_ = allocation_traits::default_maximum ();
     rhs.length_ = 0;
     rhs.buffer_ = nullptr;
     rhs.release_ = false;

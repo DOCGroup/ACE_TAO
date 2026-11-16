@@ -73,6 +73,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       if (idl_moved.get_buffer () != idl_buffer
           || idl_moved[0] != 3
           || idl_moved[1] != 7
+          || idl_moved.maximum () != 4
           || idl_source.maximum () != 0
           || idl_source.length () != 0
           || idl_source.release ())
@@ -88,6 +89,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       if (idl_move_assigned.get_buffer () != idl_move_buffer
           || idl_move_assigned[0] != 3
           || idl_move_assigned[1] != 7
+          || idl_move_assigned.maximum () != 4
           || idl_moved.maximum () != 0
           || idl_moved.length () != 0
           || idl_moved.release ())

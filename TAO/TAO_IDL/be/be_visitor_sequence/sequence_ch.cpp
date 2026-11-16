@@ -62,27 +62,6 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
                         -1);
     }
 
-  // The octet sequence base has specialized move operations.
-  be_predefined_type *sequence_element_predef {};
-  if (bt->base_node_type () == AST_Type::NT_pre_defined)
-    {
-      be_typedef * const alias = dynamic_cast<be_typedef*> (bt);
-      if (alias == nullptr)
-        {
-          sequence_element_predef = dynamic_cast<be_predefined_type*> (bt);
-        }
-      else
-        {
-          sequence_element_predef =
-            dynamic_cast<be_predefined_type*> (alias->primitive_base_type ());
-        }
-    }
-  bool const is_unbounded_octet_sequence =
-    sequence_element_predef != nullptr
-    && sequence_element_predef->pt () == AST_PredefinedType::PT_octet
-    && node->unbounded ()
-    && !be_global->alt_mapping ();
-
   bt->seen_in_sequence (true);
   AST_Decl::NodeType const nt = bt->node_type ();
 
@@ -240,13 +219,12 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       // Default copy/move constructor and assignment operators
       *os << be_nl
           << node->local_name () << " (" << node->local_name ()
-          << " const &) = default;" << be_nl;
-      *os << node->local_name () << " (" << node->local_name () << " &&) = default;" << be_nl;
-      *os
+          << " const &) = default;" << be_nl
+          << node->local_name () << " (" << node->local_name () << " &&) = default;" << be_nl
           << node->local_name () << "& operator= (" << node->local_name ()
-          << " const &) = default;" << be_nl;
-      *os << node->local_name () << "& operator= (" << node->local_name () << " &&) = default;";
-      *os << be_nl;
+          << " const &) = default;" << be_nl
+          << node->local_name () << "& operator= (" << node->local_name () << " &&) = default;"
+          << be_nl;
 
       *os << "virtual ~" << node->local_name () << " () = default;";
 
@@ -264,9 +242,27 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 
       node->gen_stub_decls (os);
 
-      // TAO provides extensions for octet sequences, first find out if
-      // the base type is an octet (or an alias for octet).
-      // Now generate the extension...
+      // Generate the no-copy extension for unbounded octet sequences.
+      be_predefined_type *sequence_element_predef {};
+      if (bt->base_node_type () == AST_Type::NT_pre_defined)
+        {
+          be_typedef * const alias = dynamic_cast<be_typedef*> (bt);
+          if (alias == nullptr)
+            {
+              sequence_element_predef = dynamic_cast<be_predefined_type*> (bt);
+            }
+          else
+            {
+              sequence_element_predef =
+                dynamic_cast<be_predefined_type*> (alias->primitive_base_type ());
+            }
+        }
+      bool const is_unbounded_octet_sequence =
+        sequence_element_predef != nullptr
+        && sequence_element_predef->pt () == AST_PredefinedType::PT_octet
+        && node->unbounded ()
+        && !be_global->alt_mapping ();
+
       if (is_unbounded_octet_sequence)
         {
           *os << be_nl_2

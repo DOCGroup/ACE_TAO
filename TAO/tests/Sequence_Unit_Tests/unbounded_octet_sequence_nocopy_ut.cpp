@@ -396,7 +396,9 @@ struct Tester
     ACE_Message_Block * const retained_mb = a.mb ();
     tested_sequence moved (std::move (a));
     CHECK_EQUAL (retained_mb, moved.mb ());
+    CHECK_EQUAL (CORBA::ULong (8), moved.maximum ());
     CHECK_EQUAL (CORBA::Octet ('t'), moved[0]);
+    CHECK_EQUAL (CORBA::ULong (0), a.maximum ());
     CHECK_EQUAL (CORBA::ULong (0), a.length ());
 
     char upperbuf[256];
@@ -416,7 +418,9 @@ struct Tester
     tested_sequence move_assigned;
     move_assigned = std::move (moved);
     CHECK_EQUAL (replacement_mb, move_assigned.mb ());
+    CHECK_EQUAL (CORBA::ULong (n), move_assigned.maximum ());
     CHECK_EQUAL (CORBA::Octet ('T'), move_assigned[0]);
+    CHECK_EQUAL (CORBA::ULong (0), moved.maximum ());
     CHECK_EQUAL (CORBA::ULong (0), moved.length ());
     CHECK_EQUAL (nullptr, moved.mb ());
     delete mb;

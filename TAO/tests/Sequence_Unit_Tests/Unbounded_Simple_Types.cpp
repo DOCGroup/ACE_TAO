@@ -86,7 +86,9 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       CORBA::LongSeq idl_moved (std::move (idl_source));
       if (idl_moved.get_buffer () != idl_buffer
           || idl_moved[0] != 3
-          || idl_moved[1] != 7)
+          || idl_moved[1] != 7
+          || idl_moved.maximum () != 4
+          || idl_source.maximum () != 0)
         {
           return 1;
         }
@@ -96,7 +98,9 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       idl_move_assigned = std::move (idl_moved);
       if (idl_move_assigned.get_buffer () != idl_move_buffer
           || idl_move_assigned[0] != 3
-          || idl_move_assigned[1] != 7)
+          || idl_move_assigned[1] != 7
+          || idl_move_assigned.maximum () != 4
+          || idl_moved.maximum () != 0)
         {
           return 1;
         }

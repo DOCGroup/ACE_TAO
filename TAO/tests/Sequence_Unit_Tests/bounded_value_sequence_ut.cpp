@@ -63,16 +63,22 @@ struct Tester
 
     tested_sequence destination (std::move (source));
 
+    CHECK_EQUAL (MAXIMUM, source.maximum ());
     CHECK_EQUAL (0UL, source.length ());
     CHECK_EQUAL (false, source.release ());
     CHECK_EQUAL (buffer, destination.get_buffer ());
     CHECK_EQUAL (4UL, destination.length ());
     CHECK_EQUAL (value_type (1), destination[0]);
 
+    source.length (1);
+    CHECK_EQUAL (MAXIMUM, source.maximum ());
+    CHECK_EQUAL (1UL, source.length ());
+
     tested_sequence replacement (2, alloc_and_init_buffer (), true);
     value_type * const replacement_buffer = replacement.get_buffer ();
     replacement = std::move (destination);
 
+    CHECK_EQUAL (MAXIMUM, destination.maximum ());
     CHECK_EQUAL (0UL, destination.length ());
     CHECK_EQUAL (false, destination.release ());
     CHECK_EQUAL (buffer, replacement.get_buffer ());
