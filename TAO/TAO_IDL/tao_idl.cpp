@@ -410,7 +410,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             }
         }
 
-      auto remove_big_file = [&]()
+      auto const remove_big_file = [&]()
         {
           (void) ACE_OS::unlink (big_file_name.c_str ());
         };

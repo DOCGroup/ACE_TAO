@@ -25,6 +25,10 @@
 #include "tao/AnyTypeCode/Any.h"
 
 #include <cstring>
+#include <type_traits>
+
+static_assert (std::is_abstract<OBV_Supports_Inherited_Operation>::value,
+               "A valuetype that supports an inherited operation is abstract");
 
 class hello_i : public virtual POA_hello
 {
