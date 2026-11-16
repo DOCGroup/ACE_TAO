@@ -131,6 +131,10 @@ public:
   /// Check whether this valuetype or a base supports an interface.
   bool has_supported_interface () const;
 
+  /// Check whether the generated OBV class needs or inherits a ref counter.
+  bool obv_need_ref_counter ();
+  bool obv_have_ref_counter ();
+
   /// Check if VT supports an interface with at least 1 operation.
   static bool have_supported_op (be_interface *node);
 
@@ -146,8 +150,6 @@ public:
   void is_amh_excep_holder (bool val);
 
 private:
-  friend class be_visitor_valuetype;
-
   /// Do we support at least one abstract interface?
   bool supports_abstract_ {};
 
@@ -163,10 +165,12 @@ private:
   /// Cache operation lookup after the IDL scope is complete.
   mutable bool have_operation_computed_ {};
   mutable bool have_operation_cache_ {};
-  mutable bool obv_need_ref_counter_computed_ {};
-  mutable bool obv_need_ref_counter_cache_ {};
-  mutable bool obv_have_ref_counter_computed_ {};
-  mutable bool obv_have_ref_counter_cache_ {};
+  mutable bool has_supported_interface_computed_ {};
+  mutable bool has_supported_interface_cache_ {};
+  bool obv_need_ref_counter_computed_ {};
+  bool obv_need_ref_counter_cache_ {};
+  bool obv_have_ref_counter_computed_ {};
+  bool obv_have_ref_counter_cache_ {};
 };
 
 #endif  // if !defined

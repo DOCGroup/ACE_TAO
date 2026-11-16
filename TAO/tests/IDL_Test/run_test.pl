@@ -44,6 +44,7 @@ if ($status == 0) {
     my @checks = (
         ["valuetype_opt_accessorC.h", qr/ValueBase\s*\*\s*_copy_value\s*\(/],
         ["valuetype_opt_accessorC.cpp", qr/Accessor_Optimized_Value::_copy_value\s*\(/],
+        ["valuetype_opt_accessorC.h", qr/Accessor_Optimized_Value_init/],
     );
 
     foreach my $check (@checks) {

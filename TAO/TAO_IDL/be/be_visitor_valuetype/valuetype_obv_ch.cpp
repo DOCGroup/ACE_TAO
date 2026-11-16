@@ -107,7 +107,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
           *os << inherited->full_name();
         }  // end of for loop
 
-      if (this->obv_need_ref_counter (node))
+      if (node->obv_need_ref_counter ())
         {
           *os << "," << be_nl;
 
@@ -136,7 +136,9 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
       // If we inherit from CORBA::Object and/or CORBA::AbstractBase
       // (in addition to CORBA::ValueBase) we have to add these
       // to avoid ambiguity.
-      if (node->has_supported_interface ())
+      if (node->n_supports () > 0
+          || (node->has_supported_interface ()
+              && node->obv_need_ref_counter ()))
         {
           TAO_INSERT_COMMENT (os);
 

@@ -37,8 +37,18 @@ static_assert (!std::is_abstract<OBV_Supported_Interface_Derived>::value,
                "An inherited supported interface needs refcount overrides");
 static_assert (!std::is_abstract<OBV_Concrete_From_Abstract>::value,
                "Abstract valuetype bases must not claim an OBV refcount base");
-static_assert (!std::is_abstract<OBV_Accessor_Optimized_Value>::value,
-               "Operation-free optimized valuetypes need a concrete OBV class");
+static_assert (std::is_same<OBV_Accessor_Optimized_Value,
+                            Accessor_Optimized_Value>::value,
+               "Optimized accessors map OBV_ to the valuetype");
+static_assert (std::is_same<OBV_Accessor_Optimized_Base,
+                            Accessor_Optimized_Base>::value,
+               "The accessor option applies to every valuetype");
+static_assert (std::is_same<OBV_Accessor_Optimized_Derived,
+                            Accessor_Optimized_Derived>::value,
+               "Derived optimized valuetypes retain their base class");
+static_assert (std::is_base_of<Accessor_Optimized_Base,
+                               Accessor_Optimized_Derived>::value,
+               "The optimized derived valuetype retains its IDL base");
 static_assert (std::is_abstract<OBV_Copy_Operation_Derived>::value,
                "Operation-bearing derived OBV classes must redeclare copy");
 

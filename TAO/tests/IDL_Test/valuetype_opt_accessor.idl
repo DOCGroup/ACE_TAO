@@ -2,3 +2,14 @@ valuetype Accessor_Optimized_Value
 {
   public long value;
 };
+
+valuetype Accessor_Optimized_Base
+{
+  public long value;
+  factory create ();
+};
+
+valuetype Accessor_Optimized_Derived : Accessor_Optimized_Base
+{
+  void op ();
+};
