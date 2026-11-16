@@ -1017,7 +1017,10 @@ ip_check (int &ipvn_enabled, int pf)
     {
 #if defined (ACE_WIN32)
       static bool recursing = false;
-      if (recursing) return 1;
+      if (recursing)
+        {
+          return 1;
+        }
 
       // as of the release of Windows 2008, even hosts that have IPv6 interfaces disabled
       // will still permit the creation of a PF_INET6 socket, thus rendering the socket
@@ -1039,7 +1042,10 @@ ip_check (int &ipvn_enabled, int pf)
       delete [] if_addrs;
 
       // If the list of interfaces is empty, we've tried too quickly. Assume enabled, but don't cache the result
-      if (!if_cnt) return 1;
+      if (!if_cnt)
+        {
+          return 1;
+        }
 
       ipvn_enabled = found ? 1 : 0;
 #else
