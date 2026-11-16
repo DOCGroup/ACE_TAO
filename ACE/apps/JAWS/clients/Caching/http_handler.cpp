@@ -13,6 +13,7 @@
 #include <charconv>
 #include <cstring>
 #include <limits>
+#include <memory>
 
 HTTP_Handler::HTTP_Handler (std::string const &path)
 {
@@ -234,7 +235,7 @@ HTTP_Connector::connect (std::string const &url)
     }
 
   HTTP_Handler hh (path);
-  HTTP_Handler *hhptr = &hh;
+  HTTP_Handler *hhptr = std::addressof (hh);
 
   // First check the cache.
   if (ACE_Filecache::instance ()->find (ACE_TEXT_CHAR_TO_TCHAR (hh.filename ().c_str ())) == 0)

@@ -32,7 +32,7 @@ ace_url_wstring_from_buffer (char const *buffer)
   size_t offset {};
   do
     {
-      std::memcpy (&value, buffer + offset, sizeof (value));
+      std::memcpy (std::addressof (value), buffer + offset, sizeof (value));
       if (value != 0)
         result += static_cast<ACE_WSTRING_TYPE> (value);
       offset += sizeof (value);
@@ -74,7 +74,9 @@ ACE_WString_Helper::encode (void *buf, const ACE_WString &wstr)
   for (size_t i = 0; i < count; ++i)
     {
       ACE_UINT16 const encoded_value = htons (wstr[i]);
-      std::memcpy (bytes + i * sizeof (encoded_value), &encoded_value, sizeof (encoded_value));
+      std::memcpy (bytes + i * sizeof (encoded_value),
+                   std::addressof (encoded_value),
+                   sizeof (encoded_value));
     }
   return count * sizeof (ACE_UINT16);
 }
@@ -87,11 +89,15 @@ ACE_WString_Helper::decode (void *buf)
   ACE_UINT16 encoded_value {};
   do
     {
-      std::memcpy (&encoded_value, bytes + count * sizeof (encoded_value), sizeof (encoded_value));
+      std::memcpy (std::addressof (encoded_value),
+                   bytes + count * sizeof (encoded_value),
+                   sizeof (encoded_value));
       if (encoded_value != 0)
         {
           ACE_UINT16 const decoded_value = ntohs (encoded_value);
-          std::memcpy (bytes + count * sizeof (decoded_value), &decoded_value, sizeof (decoded_value));
+          std::memcpy (bytes + count * sizeof (decoded_value),
+                       std::addressof (decoded_value),
+                       sizeof (decoded_value));
         }
       ++count;
     }
@@ -112,7 +118,7 @@ size_t
 ACE_URL_Property::decode (void *buf)
 {
   char *cbuf = static_cast<char *> (buf);
-  size_t len = ACE_WString_Helper::decode(buf);
+  size_t len = ACE_WString_Helper::decode (buf);
   this->name_ = ace_url_wstring_from_buffer (cbuf);
 
   cbuf += len;
@@ -159,7 +165,7 @@ size_t
 ACE_URL_Offer::encode (void *buf) const
 {
   ACE_UINT32 const encoded_size = htonl (this->prop_.size ());
-  std::memcpy (buf, &encoded_size, sizeof (encoded_size));
+  std::memcpy (buf, std::addressof (encoded_size), sizeof (encoded_size));
 
   size_t len = sizeof (ACE_UINT32);
   len += ACE_WString_Helper::encode (static_cast<char *> (buf) + len,
@@ -175,7 +181,7 @@ ACE_URL_Offer::decode (void *buf)
 {
   size_t len = sizeof (ACE_UINT32);
   ACE_UINT32 encoded_size {};
-  std::memcpy (&encoded_size, buf, sizeof (encoded_size));
+  std::memcpy (std::addressof (encoded_size), buf, sizeof (encoded_size));
   size_t const a_size = static_cast<size_t> (ntohl (encoded_size));
   char * const bytes = static_cast<char *> (buf);
   char * const encoded_url = bytes + len;

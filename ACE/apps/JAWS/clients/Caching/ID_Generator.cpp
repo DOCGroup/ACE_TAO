@@ -40,7 +40,7 @@ void
 ACE_ID_Generator::get_serial_id (time_t &t, size_t &s)
 {
   ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, ACE_ID_Generator::get_lock ()));
-  ACE_OS::time (&t);
+  ACE_OS::time (std::addressof (t));
 
   if (t != ACE_ID_Generator::last_time_)
     {

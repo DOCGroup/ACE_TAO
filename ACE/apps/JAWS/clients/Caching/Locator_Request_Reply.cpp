@@ -22,7 +22,7 @@ ace_url_wstring_from_buffer (char const *buffer)
   size_t offset {};
   do
     {
-      std::memcpy (&value, buffer + offset, sizeof (value));
+      std::memcpy (std::addressof (value), buffer + offset, sizeof (value));
       if (value != 0)
         result += static_cast<ACE_WSTRING_TYPE> (value);
       offset += sizeof (value);
@@ -110,7 +110,7 @@ ACE_URL_Locator_Request::modify_offer (const ACE_WString &offer_id,
   do \
     { \
       ACE_UINT32 const encoded_value = htonl (static_cast<ACE_UINT32> (V)); \
-      std::memcpy ((ADDR) + (LEN), &encoded_value, sizeof (encoded_value)); \
+      std::memcpy ((ADDR) + (LEN), std::addressof (encoded_value), sizeof (encoded_value)); \
       LEN += sizeof (encoded_value); \
     } \
   while (false)
@@ -119,7 +119,7 @@ ACE_URL_Locator_Request::modify_offer (const ACE_WString &offer_id,
   do \
     { \
       ACE_UINT32 encoded_value {}; \
-      std::memcpy (&encoded_value, (ADDR) + (LEN), sizeof (encoded_value)); \
+      std::memcpy (std::addressof (encoded_value), (ADDR) + (LEN), sizeof (encoded_value)); \
       V = ntohl (encoded_value); \
       LEN += sizeof (encoded_value); \
     } \
@@ -230,10 +230,10 @@ ACE_URL_Locator_Request::decode (void *buffer)
       total_length += this->offer_->decode (cbuffer + total_length);
     }
 
-  size_t id_length = ACE_WString_Helper::decode (cbuffer + total_length);
+  size_t const id_length = ACE_WString_Helper::decode (cbuffer + total_length);
   this->id_ = ace_url_wstring_from_buffer (cbuffer + total_length);
   total_length += id_length;
-  size_t url_length = ACE_WString_Helper::decode (cbuffer + total_length);
+  size_t const url_length = ACE_WString_Helper::decode (cbuffer + total_length);
   this->url_ = ace_url_wstring_from_buffer (cbuffer + total_length);
   total_length += url_length;
 
