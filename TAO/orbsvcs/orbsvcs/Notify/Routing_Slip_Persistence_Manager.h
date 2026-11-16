@@ -56,7 +56,6 @@ public:
   /// A code to indicate the type of block in persistent storage.
   using Block_Type = ACE_UINT16;
 
-  /// The constructor.
   explicit Routing_Slip_Persistence_Manager(Standard_Event_Persistence_Factory* factory);
 
   Routing_Slip_Persistence_Manager (Routing_Slip_Persistence_Manager const &) = delete;
@@ -64,7 +63,6 @@ public:
   Routing_Slip_Persistence_Manager &operator= (Routing_Slip_Persistence_Manager const &) = delete;
   Routing_Slip_Persistence_Manager &operator= (Routing_Slip_Persistence_Manager &&) = delete;
 
-  /// The destructor.
   ~Routing_Slip_Persistence_Manager();
 
   /// Set up callbacks

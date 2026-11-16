@@ -41,9 +41,7 @@ class TAO_Notify_Serv_Export Bit_Vector
   static constexpr int BITS_PER_WORD = 32;
   static constexpr int BPW_LOG_2 = 5;
 public:
-  /// The constructor.
   Bit_Vector();
-  /// The destructor.
   ~Bit_Vector() = default;
 
   /// \brief Determine if a bit at location is set.

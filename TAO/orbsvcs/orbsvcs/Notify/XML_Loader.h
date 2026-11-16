@@ -37,7 +37,6 @@ namespace TAO_Notify
 class XML_Loader : public ACEXML_DefaultHandler , public Topology_Loader
 {
 public:
-  /// The constructor.
   XML_Loader ();
 
   ~XML_Loader () override;

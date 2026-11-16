@@ -143,7 +143,6 @@ public:
 
   ACE_Unbounded_List (ACE_Unbounded_List<T> const &);
 
-  /// Assignment operator.
   void operator= (ACE_Unbounded_List<T> const &);
 
   ~ACE_Unbounded_List ();

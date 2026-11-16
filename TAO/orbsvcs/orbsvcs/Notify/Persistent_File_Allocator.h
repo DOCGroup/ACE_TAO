@@ -63,7 +63,6 @@ public:
   Persistent_Storage_Block& operator= (Persistent_Storage_Block const &psb);
   Persistent_Storage_Block (Persistent_Storage_Block &&) = delete;
   Persistent_Storage_Block& operator= (Persistent_Storage_Block &&) = delete;
-  /// The destructor.
   ~Persistent_Storage_Block();
 
   /// Set our block to not have any data at all - a no-op.  This can be
@@ -128,9 +127,7 @@ private:
 class TAO_Notify_Serv_Export Persistent_File_Allocator
 {
 public:
-  /// The constructor.
   Persistent_File_Allocator();
-  /// The destructor.
   ~Persistent_File_Allocator();
 
   Persistent_File_Allocator (const Persistent_File_Allocator&) = delete;

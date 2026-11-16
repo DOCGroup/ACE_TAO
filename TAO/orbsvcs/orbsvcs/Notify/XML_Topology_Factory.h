@@ -49,7 +49,6 @@ namespace TAO_Notify
   class TAO_Notify_Persist_Export XML_Topology_Factory : public Topology_Factory
   {
   public:
-    /// The constructor.
     XML_Topology_Factory ();
     ~XML_Topology_Factory () override;
 

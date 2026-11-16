@@ -48,7 +48,6 @@ public:
 
   ~TAO_Persistent_IntId ();
 
-  /// Assignment operator.
   void operator= (TAO_Persistent_IntId const &rhs);
 
   /// Stringified IOR to be stored in a Persistent Naming Context.

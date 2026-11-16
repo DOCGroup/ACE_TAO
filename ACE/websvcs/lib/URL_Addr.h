@@ -38,7 +38,6 @@ public:
 
   ACE_URL_Addr (const ACE_URL_Addr& address);
 
-  /// The assignment operator
   ACE_URL_Addr& operator= (const ACE_URL_Addr& address);
 
   virtual ~ACE_URL_Addr ();

@@ -40,7 +40,6 @@ namespace TAO_Notify
 class TAO_Notify_Serv_Export Random_File : public ACE_FILE
 {
 public:
-  /// The constructor.
   Random_File ();
 
   Random_File (Random_File const &) = delete;

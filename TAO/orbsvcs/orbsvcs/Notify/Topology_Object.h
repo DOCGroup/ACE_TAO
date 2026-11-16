@@ -106,7 +106,6 @@ namespace TAO_Notify
     public virtual Topology_Savable
   {
   public:
-    /// The constructor.
     Topology_Object ();
 
     Topology_Object (Topology_Object const &) = delete;
@@ -114,7 +113,6 @@ namespace TAO_Notify
     Topology_Object &operator= (Topology_Object const &) = delete;
     Topology_Object &operator= (Topology_Object &&) = delete;
 
-    /// The destructor.
     ~Topology_Object () override;
 
     /// Init this object with data from <rhs>.

@@ -41,7 +41,6 @@ namespace TAO_Notify
     Topology_Saver &operator= (Topology_Saver const &) = delete;
     Topology_Saver &operator= (Topology_Saver &&) = delete;
 
-    /// The destructor.
     virtual ~Topology_Saver ();
 
     /** \brief Begin the storage of an object.
