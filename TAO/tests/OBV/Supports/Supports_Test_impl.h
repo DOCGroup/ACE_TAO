@@ -23,6 +23,8 @@ public:
   void change_weight (CORBA::Long new_weight);
 
   void print ();
+
+  CORBA::ValueBase *_copy_value () override;
 };
 
 class node_init_impl : public Supports_Test::Node_init
@@ -49,6 +51,8 @@ class vt_graph_impl :
   virtual void add_node (const char * name);
 
   virtual void print ();
+
+  CORBA::ValueBase *_copy_value () override;
 };
 
 class vt_graph_init_impl :
