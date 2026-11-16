@@ -625,7 +625,7 @@ run_main (int argc, ACE_TCHAR *argv[])
     max_iterations = ACE_OS::atoi (argv[1]);
   }
 
-  // = Perform initializations.
+  // Perform initializations.
 
   Timer_Queue_Stack *tq_stack {};
 

@@ -140,7 +140,7 @@ run_main (int, ACE_TCHAR *[])
                  ACE_TEXT ("mmap on QNX Neutrino/VxWorks can map only shared memory files\n")));
 #endif
 
-  // = Initialize the temporary variable names
+  // Initialize the temporary variable names.
 
   ACE_TCHAR test_file[MAXPATHLEN + 1];
   ACE_TCHAR temp_file1[MAXPATHLEN + 1];

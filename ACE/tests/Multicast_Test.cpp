@@ -443,9 +443,11 @@ public:
   int leave (const ACE_INET_Addr &mcast_addr,
              const ACE_TCHAR *net_if = nullptr);
 
-  // = Event Handler hooks.
+  /// @name Event Handler hooks
+  /// @{
   int handle_input (ACE_HANDLE handle) override;
   int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask close_mask) override;
+  /// @}
 
   ACE_HANDLE get_handle () const override;
 
@@ -639,11 +641,13 @@ public:
   ~MCT_Task () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  // = Task hooks.
+  /// @name Task hooks
+  /// @{
   int open (void *args = nullptr) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
   int svc () override;
+  /// @}
 
 private:
   const MCT_Config &config_;
