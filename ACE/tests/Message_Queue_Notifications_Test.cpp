@@ -36,8 +36,9 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Null_Condition.h"
 #include "ace/Null_Mutex.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
+
+#include <cstring>
 
 static int iterations = 10;
 
@@ -188,7 +189,7 @@ Message_Handler::make_message ()
 }
 
 Watermark_Test::Watermark_Test ()
-  : len_ (ACE_OS::strlen (default_message) + 1),
+  : len_ (std::strlen (default_message) + 1),
     hwm_ (this->len_ * default_high_water_mark),
     lwm_ (this->len_ * default_low_water_mark),
     role_ (0)
