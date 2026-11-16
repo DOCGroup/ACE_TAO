@@ -26,8 +26,10 @@ public:
   FTEC_Gateway_ConsumerAdmin (FTEC_Gateway_ConsumerAdmin &&) = delete;
   FTEC_Gateway_ConsumerAdmin &operator= (FTEC_Gateway_ConsumerAdmin const &) = delete;
   FTEC_Gateway_ConsumerAdmin &operator= (FTEC_Gateway_ConsumerAdmin &&) = delete;
-  // = The RtecEventChannelAdmin::ConsumerAdmin methods...
+  /// @name RtecEventChannelAdmin::ConsumerAdmin methods
+  /// @{
   RtecEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier () override;
+  /// @}
   FTEC_Gateway_Impl* impl_;
 };
 
@@ -41,8 +43,10 @@ public:
   FTEC_Gateway_SupplierAdmin (FTEC_Gateway_SupplierAdmin &&) = delete;
   FTEC_Gateway_SupplierAdmin &operator= (FTEC_Gateway_SupplierAdmin const &) = delete;
   FTEC_Gateway_SupplierAdmin &operator= (FTEC_Gateway_SupplierAdmin &&) = delete;
-  // = The RtecEventChannelAdmin::SupplierAdmin methods...
+  /// @name RtecEventChannelAdmin::SupplierAdmin methods
+  /// @{
   RtecEventChannelAdmin::ProxyPushConsumer_ptr obtain_push_consumer () override;
+  /// @}
   FTEC_Gateway_Impl* impl_;
 };
 
@@ -56,13 +60,15 @@ public:
   FTEC_Gateway_ProxyPushSupplier (FTEC_Gateway_ProxyPushSupplier &&) = delete;
   FTEC_Gateway_ProxyPushSupplier &operator= (FTEC_Gateway_ProxyPushSupplier const &) = delete;
   FTEC_Gateway_ProxyPushSupplier &operator= (FTEC_Gateway_ProxyPushSupplier &&) = delete;
-  // = The RtecEventChannelAdmin::ProxyPushSupplier methods...
+  /// @name RtecEventChannelAdmin::ProxyPushSupplier methods
+  /// @{
   void connect_push_consumer (
                 RtecEventComm::PushConsumer_ptr push_consumer,
                 RtecEventChannelAdmin::ConsumerQOS const &qos) override;
   void disconnect_push_supplier () override;
   void suspend_connection () override;
   void resume_connection () override;
+  /// @}
   FTEC_Gateway_Impl* impl_;
 };
 
@@ -77,12 +83,14 @@ public:
   FTEC_Gateway_ProxyPushConsumer &operator= (FTEC_Gateway_ProxyPushConsumer const &) = delete;
   FTEC_Gateway_ProxyPushConsumer &operator= (FTEC_Gateway_ProxyPushConsumer &&) = delete;
 
+  /// @name RtecEventChannelAdmin::ProxyPushConsumer methods
+  /// @{
   void push (RtecEventComm::EventSet const &data) override;
-      // = The RtecEventChannelAdmin::ProxyPushConsumer methods...
   void connect_push_supplier (
                 RtecEventComm::PushSupplier_ptr push_supplier,
                 RtecEventChannelAdmin::SupplierQOS const &qos) override;
   void disconnect_push_consumer () override;
+  /// @}
 
   FTEC_Gateway_Impl* impl_;
 };
@@ -238,7 +246,6 @@ FTEC_Gateway::activate(PortableServer::POA_ptr root_poa)
   return gateway._retn();
 }
 
-//= The RtecEventChannelAdmin::EventChannel methods
 RtecEventChannelAdmin::ConsumerAdmin_ptr
 FTEC_Gateway::for_consumers ()
 {
@@ -279,8 +286,6 @@ void FTEC_Gateway::push(RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy_consu
   impl_->ftec->push(**result, data);
 }
 
-/// FTEC_Gateway_ConsumerAdmin
-
 FTEC_Gateway_ConsumerAdmin::FTEC_Gateway_ConsumerAdmin (FTEC_Gateway_Impl *impl)
   : impl_ (impl)
 {
@@ -304,14 +309,11 @@ FTEC_Gateway_ConsumerAdmin::obtain_push_supplier ()
   return result;
 }
 
-/// FTEC_Gateway_SupplierAdmin
-
 FTEC_Gateway_SupplierAdmin::FTEC_Gateway_SupplierAdmin (FTEC_Gateway_Impl *impl)
   : impl_ (impl)
 {
 }
 
-// = The RtecEventChannelAdmin::SupplierAdmin methods...
 RtecEventChannelAdmin::ProxyPushConsumer_ptr
 FTEC_Gateway_SupplierAdmin::obtain_push_consumer ()
 {
@@ -345,14 +347,11 @@ get_remote_oid_ptr(CORBA::ORB_ptr orb)
   return result;
 }
 
-/// FTEC_Gateway_ProxyPushSupplier
-
 FTEC_Gateway_ProxyPushSupplier::FTEC_Gateway_ProxyPushSupplier (FTEC_Gateway_Impl *impl)
   : impl_ (impl)
 {
 }
 
-// = The RtecEventChannelAdmin::ProxyPushSupplier methods...
 void FTEC_Gateway_ProxyPushSupplier::connect_push_consumer (
   RtecEventComm::PushConsumer_ptr push_consumer,
   RtecEventChannelAdmin::ConsumerQOS const &qos)
@@ -382,14 +381,10 @@ void FTEC_Gateway_ProxyPushSupplier::resume_connection ()
   impl_->ftec->resume_push_supplier(**oid_ptr);
 }
 
-/// FTEC_Gateway_ProxyPushConsumer
-
 FTEC_Gateway_ProxyPushConsumer::FTEC_Gateway_ProxyPushConsumer (FTEC_Gateway_Impl *impl)
   : impl_ (impl)
 {
 }
-
-// = The RtecEventChannelAdmin::ProxyPushConsumer methods...
 
 void FTEC_Gateway_ProxyPushConsumer::push (RtecEventComm::EventSet const &data)
 {

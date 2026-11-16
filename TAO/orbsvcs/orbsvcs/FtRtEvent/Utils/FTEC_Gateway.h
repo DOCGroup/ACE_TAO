@@ -36,7 +36,8 @@ namespace TAO_FTRTEC
       RtecEventChannelAdmin::EventChannel_ptr
         _this();
 
-      //= The RtecEventChannelAdmin::EventChannel methods
+      /// @name RtecEventChannelAdmin::EventChannel methods
+      /// @{
       RtecEventChannelAdmin::ConsumerAdmin_ptr for_consumers () override;
 
       RtecEventChannelAdmin::SupplierAdmin_ptr for_suppliers () override;
@@ -47,6 +48,7 @@ namespace TAO_FTRTEC
         append_observer (RtecEventChannelAdmin::Observer_ptr observer) override;
 
       void remove_observer (RtecEventChannelAdmin::Observer_Handle) override;
+      /// @}
 
       void push(RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy_consumer,
                 RtecEventComm::EventSet const &data);
