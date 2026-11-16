@@ -1347,7 +1347,7 @@ Client::initiate_write_stream ()
     return -1;
   }
 
-  static const size_t complete_message_length = ACE_OS::strlen (complete_message);
+  static const size_t complete_message_length = std::strlen (complete_message);
 
 #if defined (ACE_WIN32)
   ACE_Message_Block *mb1 {},
@@ -1429,7 +1429,7 @@ Client::initiate_read_stream ()
   }
 
   static const size_t complete_message_length =
-    ACE_OS::strlen (complete_message);
+    std::strlen (complete_message);
 
 #if defined (ACE_WIN32)
   ACE_Message_Block *mb1 {},
@@ -1870,7 +1870,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
   clients = 10;                   // number of clients
   loglevel = 0;                   // log level : only errors and highlights
   // Default transfer limit 50 messages per Sender
-  xfer_limit = 50 * ACE_OS::strlen (complete_message);
+  xfer_limit = 50 * std::strlen (complete_message);
 
   // Linux kernels up to at least 2.6.9 (RHEL 4) can't do full duplex aio.
 # if defined (ACE_LINUX)
