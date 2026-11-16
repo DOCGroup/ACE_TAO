@@ -59,13 +59,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       while (!feof (stdin))
         {
           ACE_Read_Buffer buf (stdin, 0);
-          char *line = buf.read ('\n');
-          if (line == nullptr)
+          ACE_Read_Buffer_Unique_Ptr line (
+            buf.read ('\n'), {buf.alloc ()});
+          if (!line)
           {
             break;
           }
-          server->send_line (line);
-          buf.alloc ()->free (line);
+          server->send_line (line.get ());
         }
 
       server->shutdown ();
