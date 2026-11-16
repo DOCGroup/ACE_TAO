@@ -189,7 +189,6 @@ namespace CORBA
   protected:
     Exception () = default;
 
-    /// Assignment operator.
     Exception & operator = (const Exception & src);
 
     /// Construct from a repository id.
