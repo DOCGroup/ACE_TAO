@@ -58,14 +58,13 @@ TAO_UIOP_Endpoint::duplicate ()
 CORBA::Boolean
 TAO_UIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 {
-  TAO_Endpoint *endpt = const_cast<TAO_Endpoint *> (other_endpoint);
-
-  TAO_UIOP_Endpoint *endpoint = dynamic_cast<TAO_UIOP_Endpoint *> (endpt);
+  TAO_UIOP_Endpoint const * const endpoint =
+    dynamic_cast<TAO_UIOP_Endpoint const *> (other_endpoint);
 
   if (endpoint == nullptr)
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 
   return std::strcmp (this->rendezvous_point (),
                       endpoint->rendezvous_point ()) == 0;

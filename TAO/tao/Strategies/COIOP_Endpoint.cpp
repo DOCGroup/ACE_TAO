@@ -8,7 +8,7 @@
 
 #include "ace/OS_NS_string.h"
 
-#include <cstdio>
+#include <cstring>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Strategies/COIOP_Endpoint.inl"
@@ -37,11 +37,12 @@ TAO_COIOP_Endpoint::addr_to_string (char *buffer, size_t length)
   size_t const actual_len =
     str->length ();
 
-  if (length < actual_len)
-    return -1;
+  if (length <= actual_len)
+    {
+      return -1;
+    }
 
-  std::sprintf (buffer, "%s",
-                   str->c_str());
+  std::memcpy (buffer, str->c_str (), actual_len + 1);
 
   return 0;
 }
@@ -49,7 +50,7 @@ TAO_COIOP_Endpoint::addr_to_string (char *buffer, size_t length)
 TAO_Endpoint *
 TAO_COIOP_Endpoint::next ()
 {
-  return 0;
+  return nullptr;
 }
 
 TAO_Endpoint *
@@ -67,11 +68,12 @@ TAO_COIOP_Endpoint::duplicate ()
 CORBA::Boolean
 TAO_COIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 {
-  TAO_Endpoint *endpt = const_cast<TAO_Endpoint *> (other_endpoint);
-
-  TAO_COIOP_Endpoint *endpoint = dynamic_cast<TAO_COIOP_Endpoint *> (endpt);
+  TAO_COIOP_Endpoint const * const endpoint =
+    dynamic_cast<TAO_COIOP_Endpoint const *> (other_endpoint);
   if (endpoint == nullptr)
-    return false;
+    {
+      return false;
+    }
 
   return (this->uuid_ == endpoint->uuid_);
 }
