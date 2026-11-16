@@ -351,7 +351,7 @@ run_big_reply_test (Test::Hello_ptr hello)
   if (dummy->length () > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("get_big_reply, received = %d bytes\n"),
+                  ACE_TEXT("get_big_reply, received = %u bytes\n"),
                       dummy->length ()));
     }
   else
