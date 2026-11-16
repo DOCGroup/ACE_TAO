@@ -1527,7 +1527,7 @@ value_element
         | export
         {
           AST_Decl *&node = $1;
-          AST_Decls *value = nullptr;
+          AST_Decls *value {};
           if (node)
             {
               value = new AST_Decls;
@@ -1538,7 +1538,7 @@ value_element
         | init_decl
         {
           AST_Decl *&node = $1;
-          AST_Decls *value = nullptr;
+          AST_Decls *value {};
           if (node)
             {
               value = new AST_Decls;
@@ -3243,7 +3243,7 @@ member_i :
           FE_Declarator *d {};
           AST_Field *f {};
           idl_global->set_parse_state (IDL_GlobalData::PS_MemberDeclsCompleted);
-          AST_Decls *members = nullptr;
+          AST_Decls *members {};
 
           /*
            * Check for illegal recursive use of type.
@@ -3915,7 +3915,7 @@ enumerator :
 map_type_spec
         : map_head ',' positive_int_expr '>'
         {
-          AST_Map *map = nullptr;
+          AST_Map *map {};
           Decl_Annotations_Pair_Pair *type_pair = $1;
           Decl_Annotations_Pair *key_type = type_pair->first;
           Decl_Annotations_Pair *val_type = type_pair->second;
@@ -3933,8 +3933,8 @@ map_type_spec
 
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
 
-          AST_Expression::AST_ExprValue *ev = nullptr;
-          AST_Param_Holder *param_holder = nullptr;
+          AST_Expression::AST_ExprValue *ev {};
+          AST_Param_Holder *param_holder {};
           if (max_size)
             {
               param_holder = max_size->param_holder ();
@@ -3986,7 +3986,7 @@ map_type_spec
         }
         | map_head '>'
         {
-          AST_Map *map = nullptr;
+          AST_Map *map {};
           Decl_Annotations_Pair_Pair *type_pair = $1;
           Decl_Annotations_Pair *key_type = type_pair->first;
           Decl_Annotations_Pair *val_type = type_pair->second;

@@ -2058,7 +2058,7 @@ namespace tao_yy {
 #line 1528 "fe/idl.ypp"
         {
           AST_Decl *&node = (yystack_[0].value.dcval);
-          AST_Decls *value = nullptr;
+          AST_Decls *value {};
           if (node)
             {
               value = new AST_Decls;
@@ -2073,7 +2073,7 @@ namespace tao_yy {
 #line 1539 "fe/idl.ypp"
         {
           AST_Decl *&node = (yystack_[0].value.dcval);
-          AST_Decls *value = nullptr;
+          AST_Decls *value {};
           if (node)
             {
               value = new AST_Decls;
@@ -4341,7 +4341,7 @@ namespace tao_yy {
           FE_Declarator *d {};
           AST_Field *f {};
           idl_global->set_parse_state (IDL_GlobalData::PS_MemberDeclsCompleted);
-          AST_Decls *members = nullptr;
+          AST_Decls *members {};
 
           /*
            * Check for illegal recursive use of type.
@@ -5128,7 +5128,7 @@ namespace tao_yy {
   case 357: // map_type_spec: map_head ',' positive_int_expr '>'
 #line 3917 "fe/idl.ypp"
         {
-          AST_Map *map = nullptr;
+          AST_Map *map {};
           Decl_Annotations_Pair_Pair *type_pair = (yystack_[3].value.decl_annotations_pair_val_pair);
           Decl_Annotations_Pair *key_type = type_pair->first;
           Decl_Annotations_Pair *val_type = type_pair->second;
@@ -5146,8 +5146,8 @@ namespace tao_yy {
 
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
 
-          AST_Expression::AST_ExprValue *ev = nullptr;
-          AST_Param_Holder *param_holder = nullptr;
+          AST_Expression::AST_ExprValue *ev {};
+          AST_Param_Holder *param_holder {};
           if (max_size)
             {
               param_holder = max_size->param_holder ();
@@ -5203,7 +5203,7 @@ namespace tao_yy {
   case 358: // map_type_spec: map_head '>'
 #line 3988 "fe/idl.ypp"
         {
-          AST_Map *map = nullptr;
+          AST_Map *map {};
           Decl_Annotations_Pair_Pair *type_pair = (yystack_[1].value.decl_annotations_pair_val_pair);
           Decl_Annotations_Pair *key_type = type_pair->first;
           Decl_Annotations_Pair *val_type = type_pair->second;
