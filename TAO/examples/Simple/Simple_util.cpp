@@ -5,7 +5,6 @@
 #include "tao/IORTable/IORTable.h"
 #include "tao/debug.h"
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_fcntl.h"
 
@@ -252,18 +251,16 @@ Client<ServerInterface>::read_ior (ACE_TCHAR *filename)
                       -1);
 
   ACE_Read_Buffer ior_buffer (f_handle, true);
-  char *data = ior_buffer.read ();
+  ACE_Read_Buffer_Unique_Ptr data (
+    ior_buffer.read (), {ior_buffer.alloc ()});
 
-  if (data == 0)
+  if (!data)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Unable to read ior (%p)\n"),
                        ACE_TEXT ("read")),
                       -1);
 
-  this->ior_ = data;
-  ior_buffer.alloc ()->free (data);
-
-  ACE_OS::close (f_handle);
+  this->ior_ = data.get ();
 
   return 0;
 }
