@@ -3,7 +3,6 @@
 // illustrates how priorities can be used for ACE Message_Queues.
 
 #include "ace/OS_NS_stdio.h"
-#include "ace/Malloc_Base.h"    // To get ACE_Allocator
 #include "ace/Message_Queue.h"
 #include "ace/Read_Buffer.h"
 #include "ace/Thread_Manager.h"
@@ -48,9 +47,6 @@ consumer (void *arg)
 
       if (length > 0)
         {
-          ACE_Read_Buffer_Unique_Ptr buffer {
-            mb->rd_ptr (), {ACE_Allocator::instance ()}
-          };
           ACE_OS::puts (mb->rd_ptr ());
         }
 
