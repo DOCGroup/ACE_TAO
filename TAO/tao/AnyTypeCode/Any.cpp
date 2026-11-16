@@ -126,14 +126,7 @@ CORBA::Any::_tao_byte_order () const
 void
 CORBA::Any::type (CORBA::TypeCode_ptr tc)
 {
-  CORBA::Boolean equiv {false};
-
-  if (this->impl_)
-    {
-      equiv = this->impl_->_tao_get_typecode ()->equivalent (tc);
-    }
-
-  if (equiv)
+  if (this->impl_ && this->impl_->_tao_get_typecode ()->equivalent (tc))
     {
       this->impl_->type (tc);
     }
