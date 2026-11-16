@@ -77,7 +77,8 @@ public:
   /// Activate the RTEventLog.
   void activate ();
 
-  // = The RtecEventChannelAdmin::EventChannel interface methods.
+  /// @name RtecEventChannelAdmin::EventChannel operations
+  //@{
   RtecEventChannelAdmin::ConsumerAdmin_ptr for_consumers () override;
 
   RtecEventChannelAdmin::SupplierAdmin_ptr for_suppliers () override;
@@ -85,6 +86,7 @@ public:
   RtecEventChannelAdmin::Observer_Handle append_observer (
     RtecEventChannelAdmin::Observer_ptr) override;
   void remove_observer (RtecEventChannelAdmin::Observer_Handle) override;
+  //@}
 
  private:
   /// The EventChannel used.

@@ -80,8 +80,10 @@ public:
         CORBA::ULongLong max_size,
         DsLogAdmin::CapacityAlarmThresholdList const & thresholds) override;
 
-   // = Implementation of the RtecEventChannelAdmin::ConsumerAdmin methods.
+  /// @name RtecEventChannelAdmin::ConsumerAdmin operations
+  //@{
   RtecEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier () override;
+  //@}
 
 protected:
   CORBA::RepositoryId create_repositoryid () override;

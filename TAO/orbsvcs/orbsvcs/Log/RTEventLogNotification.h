@@ -55,14 +55,15 @@ public:
   void disconnect_push_supplier () override;
 
 protected:
-  // = Helper methods
-
+  /// @name Helper methods
+  //@{
   /// Used to connect this PushSupplier to the EventChannel
   /// that will log these events.
   void obtainProxyConsumer ();
 
   // Send the event on the event channel.
   void send_notification (CORBA::Any const & any) override;
+  //@}
 
 private:
   TAO_RTEventLogNotification (TAO_RTEventLogNotification const &) = delete;

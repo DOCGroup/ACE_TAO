@@ -61,13 +61,16 @@
 
 enum Cubit_Datatypes
 {
-  // = The various datatypes the client and the server can exchange.
+  /// @name Client/server exchange datatypes
+  //@{
   CB_OCTET,
   CB_SHORT,
   CB_LONG,
   CB_STRUCT,
+  //@}
 
-  // = Rate constants.
+  /// @name Rate constants
+  //@{
   CB_20HZ_CONSUMER = 0,
   CB_10HZ_CONSUMER = 1,
   CB_5HZ_CONSUMER = 2,
@@ -80,6 +83,7 @@ enum Cubit_Datatypes
 
   CB_HIGH_PRIORITY_RATE = 20,
   CB_LOW_PRIORITY_RATE = 10
+  //@}
 };
 
 using JITTER_ARRAY = ACE_Unbounded_Queue<ACE_timer_t>;
