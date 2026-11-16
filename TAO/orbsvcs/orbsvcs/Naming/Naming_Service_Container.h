@@ -68,7 +68,8 @@ class ACE_Unbounded_List_Iterator
 {
 public:
   ACE_Unbounded_List_Iterator (ACE_Unbounded_List<T> &s, int end = 0);
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
 
   /// Pass back the <next_item> that hasn't been seen in the List.
   /// Returns 0 when all items have been seen, else 1.
@@ -88,7 +89,9 @@ public:
   /// Dump the state of an object.
   void dump () const;
 
-  // = STL styled iteration, compare, and reference functions.
+  /// @}
+  /// @name STL styled iteration, compare, and reference functions
+  /// @{
 
   /// Postfix advance.
   ACE_Unbounded_List_Iterator<T> operator++ (int);
@@ -106,6 +109,7 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+  /// @}
 private:
   /// Pointer to the current node in the iteration.
   ACE_NS_Node<T> *current_;
@@ -144,7 +148,8 @@ public:
 
   ~ACE_Unbounded_List ();
 
-  // = Check boundary conditions.
+  /// @name Check boundary conditions
+  /// @{
 
   /// Returns true if the container is empty, otherwise returns false.
   bool is_empty () const;
@@ -152,7 +157,9 @@ public:
   /// Returns true if the container is full, otherwise returns false.
   bool is_full () const;
 
-  // = Classic unordered set operations.
+  /// @}
+  /// @name Classic unordered set operations
+  /// @{
 
   /**
    * Insert <new_item> into the set (doesn't allow duplicates).
@@ -177,13 +184,16 @@ public:
   /// Reset the <ACE_Unbounded_List> to be empty.
   void reset ();
 
-  // = STL-styled unidirectional iterator factory.
+  /// @}
+  /// @name STL-styled unidirectional iterator factory
+  /// @{
   ACE_Unbounded_List_Iterator<T> begin ();
   ACE_Unbounded_List_Iterator<T> end ();
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+  /// @}
 private:
   /// Insert <item> at the tail of the set (doesn't check for
   /// duplicates).

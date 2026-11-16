@@ -51,8 +51,6 @@ public:
   /// Assignment operator.
   void operator= (TAO_Persistent_IntId const &rhs);
 
-  // = Data members.
-
   /// Stringified IOR to be stored in a Persistent Naming Context.
   char const *ref_;
 
@@ -86,7 +84,8 @@ public:
 
   ~TAO_Persistent_ExtId ();
 
-  // = Assignment and comparison methods.
+  /// @name Assignment and comparison methods
+  /// @{
 
   /// Assignment operator (does copy memory).
   void operator= (TAO_Persistent_ExtId const &rhs);
@@ -101,7 +100,7 @@ public:
   /// ACE_Hash_Map_Manager.
   u_long hash () const;
 
-  // = Data members.
+  /// @}
 
   /// id portion of the name to be associated with some object
   /// reference in a Persistent Naming Context.
@@ -146,8 +145,6 @@ public:
   /// Assignment operator (does copy memory).
   void operator= (TAO_Persistent_Index_IntId const &rhs);
 
-  // = Data members.
-
   /// Pointer to a Persistent Naming Context's counter.
   ACE_UINT32 *counter_;
 
@@ -180,7 +177,8 @@ public:
 
   ~TAO_Persistent_Index_ExtId ();
 
-  // = Assignment and comparison methods.
+  /// @name Assignment and comparison methods
+  /// @{
 
   /// Assignment operator (does copy memory).
   void operator= (TAO_Persistent_Index_ExtId const &rhs);
@@ -195,7 +193,7 @@ public:
   /// ACE_Hash_Map_Manager.
   u_long hash () const;
 
-  // = Data member.
+  /// @}
 
   /// POA id to be associated with the rest of the info for some
   /// Persistent Naming Context in the Persistent Context Index.

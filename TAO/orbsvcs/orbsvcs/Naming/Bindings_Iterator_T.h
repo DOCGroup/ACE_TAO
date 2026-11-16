@@ -49,7 +49,8 @@ template <class ITERATOR, class TABLE_ENTRY>
 class TAO_Bindings_Iterator : public virtual POA_CosNaming::BindingIterator
 {
 public:
-  // = Intialization and termination methods.
+  /// @name Initialization and termination methods
+  /// @{
   /**
    * Constructor takes ownership of a dynamically allocated hash map iterator.
    */
@@ -67,7 +68,9 @@ public:
   /// Returns the Default POA of this Servant object
   PortableServer::POA_ptr _default_POA () override;
 
-  // = Idl methods.
+  /// @}
+  /// @name Idl methods
+  /// @{
 
   /// This operation passes back the next unseen binding.  True is
   /// returned if a binding is passed back, and false is returned otherwise.
@@ -84,7 +87,9 @@ public:
   /// This operation destroys the iterator.
   void destroy () override;
 
-  // = Helper method.
+  /// @}
+  /// @name Helper method
+  /// @{
 
   /**
    * Helper function used by TAO_*_Naming_Context and
@@ -94,6 +99,7 @@ public:
    */
   static int populate_binding (TABLE_ENTRY *hash_entry, CosNaming::Binding &b);
 
+  /// @}
 private:
   /**
    * Flag indicating whether this iterator is still valid.  (The

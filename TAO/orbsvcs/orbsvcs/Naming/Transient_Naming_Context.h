@@ -41,7 +41,8 @@ public:
 
   ~TAO_Transient_Bindings_Map () override;
 
-  // = Accessors.
+  /// @name Accessors
+  /// @{
 
   /// Get a reference to the underlying hash map.
   HASH_MAP &map ();
@@ -53,7 +54,9 @@ public:
   /// underlying hash map.
   size_t current_size () override;
 
-  // = Name bindings manipulation methods.
+  /// @}
+  /// @name Name bindings manipulation methods
+  /// @{
 
   /**
    * Add a binding with the specified parameters to the table.
@@ -95,6 +98,7 @@ public:
                     CORBA::Object_ptr & obj,
                     CosNaming::BindingType &type) override;
 
+  /// @}
 private:
   /// Helper: factors common code from <bind> and <rebind>.
   int shared_bind (char const *id,
@@ -133,7 +137,8 @@ public:
 
   ~TAO_Transient_Naming_Context () override;
 
-  // = Utility methods.
+  /// @name Utility methods
+  /// @{
   /**
    * This utility method factors out the code needed to create a new
    * Transient Naming Context servant and activate it under the
@@ -145,7 +150,9 @@ public:
                                                         char const *poa_id,
                                                         size_t context_size);
 
-  // = Methods not implemented in TAO_Hash_Naming_Context.
+  /// @}
+  /// @name Methods not implemented in TAO_Hash_Naming_Context
+  /// @{
 
   /**
    * This operation returns a new naming context implemented by the
@@ -164,6 +171,7 @@ public:
              CosNaming::BindingList_out &bl,
              CosNaming::BindingIterator_out &bi) override;
 
+  /// @}
 protected:
   /// Counter used for generation of POA ids for children Naming
   /// Contexts.

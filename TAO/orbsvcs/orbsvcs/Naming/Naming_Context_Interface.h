@@ -57,7 +57,8 @@ public:
   TAO_Naming_Context (TAO_Naming_Context &&) = delete;
   TAO_Naming_Context &operator= (TAO_Naming_Context &&) = delete;
 
-  // = CosNaming::NamingContext idl interface methods.
+  /// @name CosNaming::NamingContext idl interface methods
+  /// @{
 
   /**
    * Create a binding for name <n> and object <obj> in the naming
@@ -187,6 +188,7 @@ public:
   /// Returns the Default POA of this Servant object
   PortableServer::POA_ptr _default_POA () override;
 
+  /// @}
 private:
   enum Hint
     {
@@ -249,7 +251,8 @@ class TAO_Naming_Serv_Export TAO_Naming_Context_Impl
 public:
   virtual ~TAO_Naming_Context_Impl ();
 
-  // = CosNaming::NamingContext idl interface methods.
+  /// @name CosNaming::NamingContext idl interface methods
+  /// @{
 
   /**
    * Create a binding for name <n> and object <obj> in the naming
@@ -352,6 +355,7 @@ public:
    * persistence support.
    */
   virtual bool stale ();
+  /// @}
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

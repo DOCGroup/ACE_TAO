@@ -48,8 +48,6 @@ public:
   /// Assignment operator.
   void operator= (TAO_Storable_IntId const &rhs);
 
-  // = Data members.
-
   /// Stringified IOR to be stored in a Persistent Naming Context.
   CORBA::String_var  ref_;
 
@@ -69,7 +67,8 @@ public:
 
   ~TAO_Storable_ExtId ();
 
-  // = Assignment and comparison methods.
+  /// @name Assignment and comparison methods
+  /// @{
 
   /// Assignment operator (does copy memory).
   void operator= (TAO_Storable_ExtId const &rhs);
@@ -84,7 +83,7 @@ public:
   /// ACE_Hash_Map_Manager.
   u_long hash () const;
 
-  // = Data members.
+  /// @}
 
   /// <id> portion of the name to be associated with some object
   /// reference in a Storable Naming Context.
@@ -122,7 +121,8 @@ public:
 
   ~TAO_Storable_Bindings_Map () override;
 
-  // = Accessors.
+  /// @name Accessors
+  /// @{
 
   /// Get a reference to the underlying hash map.
   HASH_MAP &map ();
@@ -134,7 +134,9 @@ public:
   /// underlying hash map.
   size_t current_size () override;
 
-  // = Name bindings manipulation methods.
+  /// @}
+  /// @name Name bindings manipulation methods
+  /// @{
 
   /**
    * Add a binding with the specified parameters to the table.
@@ -175,6 +177,7 @@ public:
                     CORBA::Object_ptr & obj,
                     CosNaming::BindingType &type) override;
 
+  /// @}
 private:
   /// Helper: factors common code from <bind> and <rebind>.
   int shared_bind (char const *id,
@@ -217,7 +220,8 @@ public:
 
   ~TAO_Storable_Naming_Context () override;
 
-  // = Utility methods.
+  /// @name Utility methods
+  /// @{
   /**
    * This utility method factors out the code needed to create a new
    * Storable Naming Context servant and activate it under the
@@ -233,7 +237,9 @@ public:
                                TAO::Storable_Factory *pers_factory,
                                TAO_Storable_Naming_Context **new_context);
 
-  // = Methods not implemented in TAO_Hash_Naming_Context.
+  /// @}
+  /// @name Methods not implemented in TAO_Hash_Naming_Context
+  /// @{
 
   static CosNaming::NamingContext_ptr recreate_all (
                               CORBA::ORB_ptr orb,
@@ -328,6 +334,7 @@ public:
    */
   void destroy () override;
 
+  /// @}
 protected:
   /**
    * A helper function to ensure the current object was not destroyed by raising

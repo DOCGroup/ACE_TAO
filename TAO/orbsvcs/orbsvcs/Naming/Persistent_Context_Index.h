@@ -49,7 +49,8 @@ class TAO_Persistent_Naming_Context_Factory;
 class TAO_Naming_Serv_Export TAO_Persistent_Context_Index
 {
 public:
-  // = Some aliases for convenience.
+  /// @name Some aliases for convenience
+  /// @{
 
   /// Hash map in which we will store info about each Persistent Naming Context.
   using CONTEXT_INDEX = ACE_Hash_Map_With_Allocator<TAO_Persistent_Index_ExtId,
@@ -106,7 +107,9 @@ public:
   TAO_Persistent_Context_Index &operator= (TAO_Persistent_Context_Index const &) = delete;
   TAO_Persistent_Context_Index &operator= (TAO_Persistent_Context_Index &&) = delete;
 
-  // = Methods for adding/removing entries.
+  /// @}
+  /// @name Methods for adding/removing entries
+  /// @{
 
   /**
    * Create an entry for a Persistent Naming Context in <index_>,
@@ -119,7 +122,9 @@ public:
   /// from <index_> (i.e., this context has just been destroyed).
   int unbind (char const *poa_id);
 
-  // = Accessors.
+  /// @}
+  /// @name Accessors
+  /// @{
 
   /// Return a borrowed pointer to this index's owned allocator.
   ACE_Allocator *allocator ();
@@ -131,6 +136,7 @@ public:
   /// deallocated by the user).
   CosNaming::NamingContext_ptr root_context ();
 
+  /// @}
 private:
   /// Helper for the <init> method.  Iterates over <index_>, and
   /// creates a servant for each entry.

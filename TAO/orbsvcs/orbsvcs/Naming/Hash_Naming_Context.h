@@ -118,7 +118,8 @@ public:
   TAO_Hash_Naming_Context &operator= (TAO_Hash_Naming_Context const &) = delete;
   TAO_Hash_Naming_Context &operator= (TAO_Hash_Naming_Context &&) = delete;
 
-  // = Accessors.
+  /// @name Accessors
+  /// @{
 
   /// Get the pointer to our interface.
   TAO_Naming_Context *interface ();
@@ -131,7 +132,9 @@ public:
   /// it, and false otherwise.
   int destroyed ();
 
-  // = CosNaming::NamingContext idl interface methods.
+  /// @}
+  /// @name CosNaming::NamingContext idl interface methods
+  /// @{
 
   /**
    * Create a binding for name @a n and object @a obj in the naming
@@ -209,8 +212,10 @@ public:
 
   TAO_SYNCH_RW_MUTEX &lock ();
 
+  /// @}
 protected:
-  // = Helper method used by other methods.
+  /// @name Helper method used by other methods
+  /// @{
 
   /**
    * <get_context> is used by methods that need to resolve a compound
@@ -220,6 +225,7 @@ protected:
    * pointer to the target context.
    */
   CosNaming::NamingContext_ptr get_context (CosNaming::Name const &name);
+  /// @}
 
   /**
    * Pointer to the data structure used to store this Naming Context's

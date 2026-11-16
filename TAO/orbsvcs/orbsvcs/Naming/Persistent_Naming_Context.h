@@ -60,7 +60,8 @@ public:
    */
   void destroy ();
 
-  // = Accessor methods.
+  /// @name Accessor methods
+  /// @{
 
   /// Get a pointer to the underlying hash map.
   HASH_MAP *map ();
@@ -71,7 +72,9 @@ public:
   /// Return the size of the underlying hash table.
   size_t current_size () override;
 
-  // = Name bindings manipulation methods.
+  /// @}
+  /// @name Name bindings manipulation methods
+  /// @{
 
   /**
    * Add a binding with the specified parameters to the table.
@@ -113,6 +116,7 @@ public:
                     CORBA::Object_ptr & obj,
                     CosNaming::BindingType &type) override;
 
+  /// @}
 protected:
   /**
    * Helper to the <open> method.  By isolating placement new into a
@@ -178,7 +182,8 @@ public:
 
   ~TAO_Persistent_Naming_Context () override;
 
-  // = Utility methods.
+  /// @name Utility methods
+  /// @{
   /**
    * This utility method factors out the code needed to create a new
    * Persistent Naming Context servant and activate it under the
@@ -191,7 +196,9 @@ public:
                                                         size_t context_size,
                                                         TAO_Persistent_Context_Index *ind);
 
-  // = Methods not implemented in TAO_Hash_Naming_Context.
+  /// @}
+  /// @name Methods not implemented in TAO_Hash_Naming_Context
+  /// @{
 
   /**
    * This operation returns a new naming context implemented by the
@@ -210,6 +217,7 @@ public:
              CosNaming::BindingList_out &bl,
              CosNaming::BindingIterator_out &bi) override;
 
+  /// @}
 protected:
   /**
    * Set <destroyed_> flag (inherited from TAO_Hash_Naming_Context) to

@@ -52,8 +52,6 @@ public:
   /// Assignment operator (does copy memory).
   void operator= (TAO_IntId const &rhs);
 
-  // = Data members.
-
   /// Object reference to be stored in a Transient Naming Context.
   CORBA::Object_ptr ref_;
 
@@ -85,7 +83,8 @@ public:
 
   ~TAO_ExtId ();
 
-  // = Assignment and comparison operators.
+  /// @name Assignment and comparison operators
+  /// @{
 
   /// Assignment operator (does copy memory).
   void operator= (TAO_ExtId const &rhs);
@@ -100,7 +99,7 @@ public:
   /// ACE_Hash_Map_Manager.
   u_long hash () const;
 
-  // = Data members.
+  /// @}
 
   /// <kind> portion of the name to be associated with some object
   /// reference in a Transient Naming Context.
@@ -110,13 +109,15 @@ public:
   /// reference in a Transient Naming Context.
   ACE_CString id_;
 
-  // = Accessors
+  /// @name Accessors
+  /// @{
 
   /// Return id_ in a char const * format.
   char const * id ();
 
   /// Return kind_ in a char const * format.
   char const * kind ();
+  /// @}
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
