@@ -84,11 +84,13 @@ TAO_IORManip_IIOP_Filter::filter_and_add (TAO_Profile *profile,
       // Add each endpoint if it matches.  Begin from the end
       // of the sequence to preserve endpoint order, since <add_endpoint>
       // method reverses the order of endpoints in the list.
-      for (CORBA::Long i = endpoints.length () - 1; i >= 0; --i)
+      for (CORBA::ULong i {endpoints.length ()}; i > 0; --i)
         {
+          CORBA::ULong const endpoint_index = i - 1;
+
           // Set pinfo host name to the current endpoint host name
-          pinfo.host_name_ = endpoints[i].host.in ();
-          pinfo.port_ = endpoints[i].port;
+          pinfo.host_name_ = endpoints[endpoint_index].host.in ();
+          pinfo.port_ = endpoints[endpoint_index].port;
 
           CORBA::Boolean const matches = guideline == nullptr
             ? this->profile_info_matches (pinfo)
@@ -97,7 +99,7 @@ TAO_IORManip_IIOP_Filter::filter_and_add (TAO_Profile *profile,
           if (matches)
             {
               // Set the main endpoint on the profile
-              if (i == 0)
+              if (endpoint_index == 0)
                 {
                   TAO_IIOP_Endpoint * const ep = dynamic_cast<TAO_IIOP_Endpoint *> (
                     new_profile->endpoint ());
@@ -105,16 +107,17 @@ TAO_IORManip_IIOP_Filter::filter_and_add (TAO_Profile *profile,
                     {
                       return;
                     }
-                  ep->host (endpoints[i].host);
-                  ep->port (endpoints[i].port);
-                  ep->priority (endpoints[i].priority);
+                  ep->host (endpoints[endpoint_index].host);
+                  ep->port (endpoints[endpoint_index].port);
+                  ep->priority (endpoints[endpoint_index].priority);
                 }
               else
                 {
                   std::unique_ptr<TAO_IIOP_Endpoint> endpoint {
-                    new (std::nothrow) TAO_IIOP_Endpoint (endpoints[i].host,
-                                                          endpoints[i].port,
-                                                          endpoints[i].priority)
+                    new (std::nothrow) TAO_IIOP_Endpoint (
+                      endpoints[endpoint_index].host,
+                      endpoints[endpoint_index].port,
+                      endpoints[endpoint_index].priority)
                   };
                   if (!endpoint)
                     {

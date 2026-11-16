@@ -6,6 +6,7 @@
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
 
+#include <array>
 #include <cstring>
 #include <memory>
 
@@ -32,9 +33,9 @@ TAO_IOR_Manipulation_impl::merge_iors (
 
   // make sure we have some profiles
   if (count == 0)
-  {
-    throw TAO_IOP::EmptyProfileList ();
-  }
+    {
+      throw TAO_IOP::EmptyProfileList ();
+    }
 
   // initialize with estimated pfile count.
   TAO_MProfile Merged_Profiles (count);
@@ -44,9 +45,9 @@ TAO_IOR_Manipulation_impl::merge_iors (
   // they are the same type and they do not have duplicate profiles.
   std::unique_ptr<TAO_MProfile> tmp_pfiles (iors[0]->_stubobj ()->make_profiles ());
   if (Merged_Profiles.add_profiles (tmp_pfiles.get ())< 0)
-  {
-    throw TAO_IOP::Invalid_IOR ();
-  }
+    {
+      throw TAO_IOP::Invalid_IOR ();
+    }
   CORBA::String_var const id =
     CORBA::string_dup (iors[0]->_stubobj ()->type_id.in ());
 
@@ -106,8 +107,8 @@ TAO_IOR_Manipulation_impl::add_profiles (
     CORBA::Object_ptr ior2)
 {
   // Get an estimate of the number of profiles
-  CORBA::Object_ptr buffer [2] {ior1, ior2};
-  TAO_IOP::TAO_IOR_Manipulation::IORList iors (2, 2, buffer, false);
+  std::array<CORBA::Object_ptr, 2> buffer {ior1, ior2};
+  TAO_IOP::TAO_IOR_Manipulation::IORList iors (2, 2, buffer.data (), false);
   return this->merge_iors (iors);
 }
 
@@ -140,9 +141,9 @@ TAO_IOR_Manipulation_impl::remove_profiles (
 
   std::unique_ptr<TAO_MProfile> tmp_pfiles (group->_stubobj ()->make_profiles ());
   if (Diff_Profiles.add_profiles (tmp_pfiles.get ()) < 0)
-  {
-    throw TAO_IOP::Invalid_IOR ();
-  }
+    {
+      throw TAO_IOP::Invalid_IOR ();
+    }
 
   // We are done with add_profiles.
   // At this point, we don't do remove_profiles()
@@ -181,9 +182,9 @@ TAO_IOR_Manipulation_impl::remove_profiles (
 
   TAO_MProfile &mp = stub->base_profiles ();
   if (mp.remove_profiles (tmp_pfiles.get ()) < 0)
-  {
-    throw TAO_IOP::NotFound ();
-  }
+    {
+      throw TAO_IOP::NotFound ();
+    }
 
   return new_obj._retn ();
 }
@@ -195,9 +196,9 @@ TAO_IOR_Manipulation_impl::set_property (
 {
   // make sure we have some profiles
   if (group->_stubobj ()->base_profiles ().profile_count () == 0)
-  {
-    throw TAO_IOP::Invalid_IOR ();
-  }
+    {
+      throw TAO_IOP::Invalid_IOR ();
+    }
 
   // Call the implementation object to
   return prop->set_property (group);
@@ -212,9 +213,9 @@ TAO_IOR_Manipulation_impl::set_primary (
 {
   // make sure we have some profiles in GROUP
   if (group->_stubobj ()->base_profiles ().profile_count () == 0)
-  {
-    throw TAO_IOP::Invalid_IOR ();
-  }
+    {
+      throw TAO_IOP::Invalid_IOR ();
+    }
 
   // Make sure we have only one profile in new_primary
   // @@ Will fail if the object has been
@@ -232,9 +233,9 @@ TAO_IOR_Manipulation_impl::get_primary (
 {
   // make sure we have some profiles in IOR
   if (group->_stubobj ()->base_profiles ().profile_count () == 0)
-  {
-    throw TAO_IOP::NotFound ();
-  }
+    {
+      throw TAO_IOP::NotFound ();
+    }
   // @@ Bala: this was throwing TAO_IOP::Invalid_IOR, but it was not
   // in the throw spec, that will result in a CORBA::UNKNOWN at
   // run-time (if it does not crash).  Any idea about what is going on
@@ -277,16 +278,16 @@ TAO_IOR_Manipulation_impl::is_in_ior (
       while ((pfile2 = tmp_pfiles2->get_next ()) != nullptr)
         {
           if (pfile1->is_equivalent (pfile2))
-          {
-            ++count;
-          }
+            {
+              ++count;
+            }
         }
     }
 
   if (count == 0)
-  {
-    throw TAO_IOP::NotFound ();
-  }
+    {
+      throw TAO_IOP::NotFound ();
+    }
 
   return count;
 }
@@ -297,9 +298,9 @@ TAO_IOR_Manipulation_impl::get_profile_count (CORBA::Object_ptr group)
   CORBA::ULong const count = group->_stubobj ()->base_profiles ().profile_count ();
 
   if (count == 0)
-  {
-    throw TAO_IOP::EmptyProfileList ();
-  }
+    {
+      throw TAO_IOP::EmptyProfileList ();
+    }
 
   return count;
 }
