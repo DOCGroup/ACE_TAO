@@ -860,13 +860,13 @@ be_visitor_valuetype::obv_need_ref_counter (be_valuetype* node)
 bool
 be_visitor_valuetype::obv_have_ref_counter (be_valuetype* node)
 {
-  // Just try to find a VT with concrete factory in inheritance tree.
+  // Find a VT in the inheritance tree that needs the reference-count mix-in.
   if (node == nullptr)
     {
       return false;
     }
 
-  if (node->determine_factory_style () == be_valuetype::FS_CONCRETE_FACTORY)
+  if (be_visitor_valuetype::obv_need_ref_counter (node))
     {
       return true;
     }
@@ -878,7 +878,8 @@ be_visitor_valuetype::obv_have_ref_counter (be_valuetype* node)
 
       if (vt != nullptr)
         {
-          if (be_visitor_valuetype::obv_have_ref_counter (vt))
+          if (be_visitor_valuetype::obv_need_ref_counter (vt)
+              || be_visitor_valuetype::obv_have_ref_counter (vt))
             {
               return true;
             }

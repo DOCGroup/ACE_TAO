@@ -1120,7 +1120,9 @@ Key_List::output_binary_search_function ()
 
   if (option[DUP] && total_duplicates > 0)
     {
-      ACE_OS::printf ("%s*base = nullptr;\n", this->struct_tag.c_str ());
+      ACE_OS::printf ("%s*base = %s;\n",
+                      this->struct_tag.c_str (),
+                      generated_null_pointer ());
     }
 
   ACE_OS::printf ("\nlast = %d;\n",total_keys - 1);

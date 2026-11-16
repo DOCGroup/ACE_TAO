@@ -66,6 +66,11 @@ project(*IDL): taoserver, messaging, gen_ostream {
   }
 
   IDL_Files {
+    idlflags += -Wb,obv_opt_accessor
+    valuetype_opt_accessor.idl
+  }
+
+  IDL_Files {
     idlflags += -GA -as
     anonymous.idl
     dif2.idl

@@ -60,6 +60,7 @@ valuetype Factory_Initialized_Value supports Empty_Valuetype_Interface
 valuetype Copy_Base
 {
   public long base_value;
+  factory create_copy_base ();
 };
 
 valuetype Copy_Derived : Copy_Base

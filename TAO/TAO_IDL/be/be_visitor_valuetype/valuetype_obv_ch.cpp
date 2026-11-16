@@ -190,7 +190,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
 
       // A generated _copy_value() is needed for every valuetype without
       // operations, including derived valuetypes and factory-based values.
-      if (!node->have_operation ())
+      if (!node->have_operation () && !node->opt_accessor ())
         {
           *os << be_uidt_nl << be_nl << "public:" << be_idt_nl
               << "::CORBA::ValueBase *_copy_value () override;";
