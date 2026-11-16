@@ -5,12 +5,6 @@
 
 #include <memory>
 
-static void
-free_read_buffer (char *buffer)
-{
-  ACE_Allocator::instance ()->free (buffer);
-}
-
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
@@ -34,8 +28,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   for (char *line {};
        (line = read_buffer.read ('\n')) != nullptr;)
     {
-      std::unique_ptr<char, decltype (&free_read_buffer)> line_owner {
-        line, free_read_buffer
+      ACE_Read_Buffer_Unique_Ptr line_owner {
+        line, {read_buffer.alloc ()}
       };
       ACE_OS::fputs (line_owner.get (), outfile.get ());
       if (count % 2 == 0)
