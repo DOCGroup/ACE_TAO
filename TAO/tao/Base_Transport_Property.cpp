@@ -1,6 +1,8 @@
 #include "tao/Base_Transport_Property.h"
 #include "ace/OS_Memory.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 # include "tao/Base_Transport_Property.inl"
 #endif /* __ACE_INLINE__ */
@@ -11,7 +13,7 @@ TAO_Transport_Descriptor_Interface *
 TAO_Base_Transport_Property::duplicate ()
 {
   // Get a copy of the underlying endpoint
-  TAO_Endpoint *const endpt = this->endpoint_->duplicate ();
+  std::unique_ptr<TAO_Endpoint> endpt (this->endpoint_->duplicate ());
   if (endpt == nullptr)
   {
     return nullptr;
@@ -19,7 +21,10 @@ TAO_Base_Transport_Property::duplicate ()
 
   // Construct a copy of our class
   TAO_Base_Transport_Property *prop {};
-  ACE_NEW_RETURN (prop, TAO_Base_Transport_Property (endpt, true), nullptr);
+  ACE_NEW_RETURN (prop,
+                  TAO_Base_Transport_Property (endpt.get (), true),
+                  nullptr);
+  endpt.release ();
   return prop;
 }
 
