@@ -46,7 +46,7 @@ ACE_FlReactor::wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_s
     {
       max_wait_time = this->timer_queue_->calculate_timeout (max_wait_time);
 
-      size_t width = this->handler_rep_.max_handlep1 ();
+      size_t const width = this->handler_rep_.max_handlep1 ();
       handle_set.rd_mask_ = this->wait_set_.rd_mask_;
       handle_set.wr_mask_ = this->wait_set_.wr_mask_;
       handle_set.ex_mask_ = this->wait_set_.ex_mask_;
@@ -78,11 +78,11 @@ ACE_FlReactor::wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_s
         t = Fl::wait (t);
 
       // Reset the width, in case it changed during the upcalls.
-      width = this->handler_rep_.max_handlep1 ();
+      size_t const updated_width = this->handler_rep_.max_handlep1 ();
 
       // Now actually read the result needed by the <Select_Reactor>
       // using <select>.
-      nfound = ACE_OS::select (width,
+      nfound = ACE_OS::select (updated_width,
                                handle_set.rd_mask_,
                                handle_set.wr_mask_,
                                handle_set.ex_mask_,
@@ -204,6 +204,7 @@ ACE_FlReactor::register_handler_i (ACE_HANDLE handle,
   if (condition != 0)
     {
       Fl::add_fd (static_cast<int> (handle),
+                  condition,
                   ACE_FlReactor::fl_io_proc,
                   this);
     }
