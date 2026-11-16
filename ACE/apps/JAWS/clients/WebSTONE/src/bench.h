@@ -223,7 +223,13 @@ extern void rqstat_times(rqst_stats_t *rs, rqst_timer_t *rt);
 
 /* routines in errexit.c */
 
+#if defined (_MSC_VER)
+__declspec (noreturn) void errexit(const char *, ...);
+#elif defined (__GNUC__) || defined (__clang__)
+void errexit(const char *, ...) __attribute__ ((__noreturn__));
+#else
 void errexit(const char *, ...);
+#endif
 extern int returnerr(const char *, ...);
 extern int d_printf(const char *, ...);
 extern char *neterrstr();
