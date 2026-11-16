@@ -46,8 +46,9 @@
 
 #include "asnmp/asn1.h"
 #include "asnmp/snmp.h"
-#include "ace/OS_NS_string.h"
 #include "ace/Global_Macros.h"
+
+#include <cstring>
 
 /*
  * parse_int - pulls a long out of an ASN int type.
@@ -330,7 +331,7 @@ u_char * asn1::parse_string( u_char     *data,
     return 0;
   }
   // fixed
-  ACE_OS::memcpy((char *)string, (char *)bufp,  (int)asn_length);
+  std::memcpy (string, bufp, static_cast<int> (asn_length));
   *strlength = (int)asn_length;
   *datalength -= (int)asn_length + (bufp - data);
   return bufp + asn_length;
@@ -369,7 +370,7 @@ u_char * asn1::build_string( u_char *data,
     return 0;
   }
   // fixed
-  ACE_OS::memcpy((u_char *)data,(u_char *)string, strlength);
+  std::memcpy (data, string, strlength);
   *datalength -= strlength;
   return data + strlength;
 }
@@ -496,7 +497,7 @@ u_char * asn1::parse_length( u_char *data,
       return 0;
     }
     // fixed
-    ACE_OS::memcpy((char *)length, (char *)data + 1, (int)lengthbyte);
+    std::memcpy (length, data + 1, lengthbyte);
     *length = ACE_NTOHL(*length);
     *length >>= (8 * ((sizeof *length) - lengthbyte));
     return data + lengthbyte + 1;
@@ -701,7 +702,7 @@ u_char *asn1::build_objid( u_char *data,
     return 0;
   }
   // fixed
-  ACE_OS::memcpy((char *)data, (char *)buf,  asnlength);
+  std::memcpy (data, buf, asnlength);
   *datalength -= asnlength;
   return data + asnlength;
 }
@@ -810,7 +811,7 @@ u_char *asn1::parse_bitstring( u_char *data,
     return 0;
   }
   // fixed
-  ACE_OS::memcpy((char *)string,(char *)bufp,  (int)asn_length);
+  std::memcpy (string, bufp, static_cast<int> (asn_length));
   *strlength = (int)asn_length;
   *datalength -= (int)asn_length + (bufp - data);
   return bufp + asn_length;
@@ -851,7 +852,7 @@ u_char *asn1::build_bitstring( u_char *data,
     return 0;
   }
   // fixed
-  ACE_OS::memcpy((char *)data,(char *)string, strlength);
+  std::memcpy (data, string, strlength);
   *datalength -= strlength;
   return data + strlength;
 }
@@ -1000,7 +1001,7 @@ struct snmp_pdu * cmu_snmp::pdu_create( int command)
   struct snmp_pdu *pdu;
 
   ACE_NEW_RETURN(pdu, snmp_pdu, 0);
-  ACE_OS::memset((char *)pdu, 0,sizeof(struct snmp_pdu));
+  std::memset (pdu, 0, sizeof (struct snmp_pdu));
   pdu->command = command;
   pdu->errstat = 0;
   pdu->errindex = 0;
@@ -1079,7 +1080,7 @@ void cmu_snmp::add_var(struct snmp_pdu *pdu,
   ACE_NEW(vars->name, oid[(name_length)]);
 
   // fixed
-  ACE_OS::memcpy((char *)vars->name,(char *)name, name_length * sizeof(oid));
+  std::memcpy (vars->name, name, name_length * sizeof (oid));
   vars->name_length = name_length;
 
   // hook in the SMI value
@@ -1106,9 +1107,9 @@ void cmu_snmp::add_var(struct snmp_pdu *pdu,
         ACE_NEW(vars->val.string,
                 u_char[(unsigned)smival->value.string.len]);
         vars->val_len = (int) smival->value.string.len;
-        ACE_OS::memcpy( (u_char *) vars->val.string,
-                       (u_char *) smival->value.string.ptr,
-                       (unsigned) smival->value.string.len);
+        std::memcpy (vars->val.string,
+                     smival->value.string.ptr,
+                     static_cast<unsigned> (smival->value.string.len));
       }
       break;
 
@@ -1118,7 +1119,7 @@ void cmu_snmp::add_var(struct snmp_pdu *pdu,
         vars->type = (u_char) smival->syntax;
         vars->val_len = (int) smival->value.oid.len * sizeof(oid);
         ACE_NEW(vars->val.objid, oid[(unsigned)vars->val_len]);
-        ACE_OS::memcpy((u_long *)vars->val.objid, (u_long *)smival->value.oid.ptr, (unsigned) vars->val_len);
+        std::memcpy (vars->val.objid, smival->value.oid.ptr, static_cast<unsigned> (vars->val_len));
       }
       break;
 
@@ -1132,7 +1133,7 @@ void cmu_snmp::add_var(struct snmp_pdu *pdu,
         ACE_NEW(vars->val.integer, long);
         vars->val_len = sizeof(long);
         templong = (long) smival->value.uNumber;
-        ACE_OS::memcpy( (long*) vars->val.integer, (long*) &templong, sizeof(long));
+        std::memcpy (vars->val.integer, &templong, sizeof (long));
       }
       break;
 
@@ -1143,7 +1144,7 @@ void cmu_snmp::add_var(struct snmp_pdu *pdu,
         ACE_NEW(vars->val.integer, long);
         vars->val_len = sizeof(long);
         templong = (long) smival->value.sNumber;
-        ACE_OS::memcpy( (long*) vars->val.integer, (long*) &templong, sizeof(long));
+        std::memcpy (vars->val.integer, &templong, sizeof (long));
       }
       break;
 
@@ -1153,9 +1154,9 @@ void cmu_snmp::add_var(struct snmp_pdu *pdu,
         vars->type = ( u_char) smival->syntax;
         ACE_NEW(vars->val.counter64, counter64);
         vars->val_len = sizeof(struct counter64);
-        ACE_OS::memcpy( (struct counter64*) vars->val.counter64,
-                       (SmiLPCNTR64) &(smival->value.hNumber),
-                       sizeof( SmiCNTR64));
+        std::memcpy (vars->val.counter64,
+                     &smival->value.hNumber,
+                     sizeof (SmiCNTR64));
       }
       break;
     } // end switch
@@ -1347,7 +1348,7 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
   {
     return -1;
   }
-  ACE_OS::memcpy( (char *)cp, (char *)packet,totallength);
+  std::memcpy (cp, packet, totallength);
   totallength += cp - buf;
 
   length = *out_length;
@@ -1452,7 +1453,7 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
     return -1;
   }
   // fixed
-  ACE_OS::memcpy((char *)cp, (char *)buf, totallength);
+  std::memcpy (cp, buf, totallength);
   totallength += cp - packet;
 
   length = SNMP_MSG_LENGTH;
@@ -1469,7 +1470,7 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
     return -1;
   }
   // fixed
-  ACE_OS::memcpy((char *)cp, (char *)packet, totallength);
+  std::memcpy (cp, packet, totallength);
   totallength += cp - buf;
 
   length = *out_length;
@@ -1489,7 +1490,7 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
     return -1;
   }
   // fixed
-  ACE_OS::memcpy((char *)cp, (char *)buf, totallength);
+  std::memcpy (cp, buf, totallength);
   totallength += cp - packet;
   *out_length = totallength;
 
@@ -1616,7 +1617,7 @@ int cmu_snmp::parse( struct snmp_pdu *pdu,
   }
 
   // copy the returned community name
-  ACE_OS::memcpy( (u_char *) community_name, (u_char *) community, community_length);
+  std::memcpy (community_name, community, community_length);
   community_len = (long) community_length;
 
   if( version != SNMP_VERSION_1 && version != SNMP_VERSION_2C ) {
@@ -1684,7 +1685,7 @@ int cmu_snmp::parse( struct snmp_pdu *pdu,
                    oid[pdu->enterprise_length*sizeof(oid)],-1);
 
     // fixed
-    ACE_OS::memcpy((char *)pdu->enterprise,(char *)objid, pdu->enterprise_length * sizeof(oid));
+    std::memcpy (pdu->enterprise, objid, pdu->enterprise_length * sizeof (oid));
 
     // get source address
     four = 4;
@@ -1760,7 +1761,7 @@ int cmu_snmp::parse( struct snmp_pdu *pdu,
     ACE_NEW_RETURN(op, oid[(unsigned)vp->name_length * sizeof(oid)], -1);
 
     // fixed
-    ACE_OS::memcpy((char *)op, (char *)objid, vp->name_length * sizeof(oid));
+    std::memcpy (op, objid, vp->name_length * sizeof (oid));
     vp->name = op;
 
     len = SNMP_MSG_LENGTH;
@@ -1799,7 +1800,7 @@ int cmu_snmp::parse( struct snmp_pdu *pdu,
       ACE_NEW_RETURN(vp->val.objid, oid[(unsigned)vp->val_len*sizeof(oid)], -1);
 
       // fixed
-      ACE_OS::memcpy((char *)vp->val.objid, (char *)objid, vp->val_len * sizeof(oid));
+      std::memcpy (vp->val.objid, objid, vp->val_len * sizeof (oid));
       break;
 
     case SNMP_NOSUCHOBJECT:
