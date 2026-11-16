@@ -19,9 +19,7 @@
 
 #include "ace/Dynamic_Service.h"
 
-#include <algorithm>
 #include <memory>
-#include <new>
 
 #include "tao/debug.h"
 //#define DEBUG_LEVEL 9
@@ -30,31 +28,6 @@
 #endif //DEBUG_LEVEL
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-namespace
-{
-  int
-  insert_routing_slip (std::vector<TAO_Notify::Routing_Slip_Ptr> & routing_slips,
-                       TAO_Notify::Routing_Slip_Ptr const & routing_slip)
-  {
-    if (std::find (routing_slips.begin (), routing_slips.end (), routing_slip)
-        != routing_slips.end ())
-    {
-      return 1;
-    }
-
-    try
-      {
-        routing_slips.push_back (routing_slip);
-      }
-    catch (std::bad_alloc const &)
-      {
-        return -1;
-      }
-
-    return 0;
-  }
-}
 
 // Include this here since this is the only file that
 // requires Topology_Factory.
@@ -335,7 +308,7 @@ TAO_Notify_EventChannelFactory::load_event_persistence ()
           TAO_Notify::Routing_Slip_Ptr routing_slip = TAO_Notify::Routing_Slip::create (*this, rspm);
           if (!routing_slip.null ())
           {
-            insert_routing_slip (this->routing_slip_restart_set_, routing_slip);
+            this->routing_slip_restart_set_.insert (routing_slip);
           }
           else
           {
@@ -431,9 +404,11 @@ TAO_Notify_EventChannelFactory::reconnect ()
   this->reconnect_registry_.send_reconnect (this->channel_factory_.in ());
 
   // reactivate events in-progress
-  for (TAO_Notify::Routing_Slip_Ptr const & routing_slip : this->routing_slip_restart_set_)
-    routing_slip->reconnect ();
-  this->routing_slip_restart_set_.clear ();
+  Routing_Slip_Set::CONST_ITERATOR iter (this->routing_slip_restart_set_);
+  TAO_Notify::Routing_Slip_Ptr * routing_slip;
+  for (iter.first (); iter.next (routing_slip); iter.advance ())
+    (*routing_slip)->reconnect ();
+  this->routing_slip_restart_set_.reset ();
 }
 
 NotifyExt::ReconnectionRegistry::ReconnectionID
