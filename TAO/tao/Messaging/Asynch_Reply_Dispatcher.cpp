@@ -23,13 +23,12 @@ TAO_Asynch_Reply_Dispatcher::TAO_Asynch_Reply_Dispatcher (
 int
 TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
 {
-  if (this->timeout_handler_ != nullptr)
+  if (this->timeout_handler_)
     {
       // If we had registered timeout handlers just cancel them and
       // loose ownership of the handlers
       this->timeout_handler_->cancel ();
-      this->timeout_handler_->remove_reference ();
-      this->timeout_handler_ = nullptr;
+      this->timeout_handler_.reset ();
       // AMI Timeout Handling End
     }
 
@@ -151,13 +150,12 @@ TAO_Asynch_Reply_Dispatcher::connection_closed ()
 {
   try
     {
-      if (this->timeout_handler_ != nullptr)
+      if (this->timeout_handler_)
         {
           // If we had registered timeout handlers just cancel them and
           // loose ownership of the handlers
           this->timeout_handler_->cancel ();
-          this->timeout_handler_->remove_reference ();
-          this->timeout_handler_ = nullptr;
+          this->timeout_handler_.reset ();
         }
 
       if (!this->try_dispatch_reply ())
@@ -202,14 +200,7 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out ()
 {
   try
     {
-      // @@ This check probably is unnecessary..
-      if (this->timeout_handler_ != nullptr)
-        {
-          // If we had registered timeout handlers just cancel them and
-          // loose ownership of the handlers
-          this->timeout_handler_->remove_reference ();
-          this->timeout_handler_ = nullptr;
-        }
+      this->timeout_handler_.reset ();
 
       // With Asynch requests the invocation handler can't call idle_after_reply ()
       // since it does not handle the reply.
@@ -264,13 +255,15 @@ long
 TAO_Asynch_Reply_Dispatcher::schedule_timer (CORBA::ULong request_id,
                                              ACE_Time_Value const &max_wait_time)
 {
-  if (this->timeout_handler_ == nullptr)
+  if (!this->timeout_handler_)
     {
       // @@ Need to use the pool for this..
-      ACE_NEW_THROW_EX (this->timeout_handler_,
+      TAO_Asynch_Timeout_Handler *timeout_handler {};
+      ACE_NEW_THROW_EX (timeout_handler,
                         TAO_Asynch_Timeout_Handler (
                           this->transport_->orb_core ()->reactor ()),
                         CORBA::NO_MEMORY ());
+      this->timeout_handler_.reset (timeout_handler);
     }
 
   return this->timeout_handler_->schedule_timer (

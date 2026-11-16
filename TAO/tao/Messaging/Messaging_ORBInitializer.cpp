@@ -36,6 +36,7 @@ TAO_Messaging_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr inf
 #endif
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
+  // ORB_Core takes ownership of both queueing strategies and deletes them.
   TAO::Transport_Queueing_Strategy* queuing_strategy {};
   ACE_NEW (queuing_strategy,
            TAO::Eager_Transport_Queueing_Strategy);

@@ -116,7 +116,7 @@ protected:
   GIOP::ReplyStatusType reply_status_ {GIOP::NO_EXCEPTION};
 
 private:
-  /// Pointer to the original message-base
+  /// Non-owning message-base pointer borrowed from the server request.
   TAO_GIOP_Message_Base *mesg_base_ {};
 
   /// Copy of the request-id of the original Server-Request
@@ -124,12 +124,10 @@ private:
 
   CORBA::Boolean response_expected_ {};
 
-  /// Handle to transport through which the reply will be sent
-  /// Copy of transport in original Server_Request
+  /// Holds a transport reference acquired in init and released on destruction.
   TAO_Transport *transport_ {};
 
-  /// A pointer to the ORB Core for the context where the request was
-  /// created.
+  /// Non-owning ORB Core pointer borrowed from the server request.
   TAO_ORB_Core * orb_core_ {};
 
   /// The reply service context
@@ -170,7 +168,7 @@ private:
   /// Mutex to ensure the AMH-RH method call is thread-safe.
   TAO_SYNCH_MUTEX mutex_;
 
-  /// Allocator used to release this object; nullptr means heap allocation.
+  /// Non-owning allocator used to release this object; nullptr means heap allocation.
   TAO_AMH_BUFFER_ALLOCATOR* allocator_ {};
 };
 
