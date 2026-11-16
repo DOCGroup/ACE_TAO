@@ -2,7 +2,9 @@
 
 #include "SimpleAddressServer.h"
 #include "ace/INET_Addr.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
+#include <memory>
 
 SimpleAddressServer::SimpleAddressServer (ACE_INET_Addr const &address)
 {
@@ -12,7 +14,7 @@ SimpleAddressServer::SimpleAddressServer (ACE_INET_Addr const &address)
       RtecUDPAdmin::UDP_Addr_v6 v6;
       sockaddr_in6 const *in6 =
         reinterpret_cast<sockaddr_in6 const *> (address.get_addr ());
-      ACE_OS::memcpy (v6.ipaddr, &in6->sin6_addr, 16);
+      std::memcpy (v6.ipaddr, std::addressof (in6->sin6_addr), sizeof (v6.ipaddr));
       v6.port = address.get_port_number ();
       this->address_.v6_addr (v6);
       return;
