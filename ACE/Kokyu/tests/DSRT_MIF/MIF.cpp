@@ -9,7 +9,7 @@
 
 #include "Kokyu_dsrt.h"
 
-std::atomic<long> guid {0};
+std::atomic<int> guid {};
 
 struct mif_scheduler_traits
 {
@@ -19,16 +19,8 @@ struct mif_scheduler_traits
   {
     using Importance_t = long;
 
-    long importance_;
+    long importance_ {};
   };
-
-  /*
-  static Time_t now()
-  {
-    ACE_Time_Value now = ACE_OS::gettimeofday ();
-    return now.sec () * 10000000 + now.usec () * 10;
-  }
-  */
 
   using QoSComparator_t = Kokyu::MIF_Comparator<QoSDescriptor_t>;
 
@@ -49,10 +41,10 @@ public:
           mif_scheduler_traits::QoSDescriptor_t const &qos,
           int exec_duration)
     : barrier_ (bar),
-     dispatcher_ (dispatcher),
-     qos_ (qos),
-     guid_ (++guid),
-     exec_duration_ (exec_duration)
+      dispatcher_ (dispatcher),
+      qos_ (qos),
+      guid_ (++guid),
+      exec_duration_ (exec_duration)
   {}
 
   MyTask (MyTask const &) = delete;
@@ -85,11 +77,11 @@ int MyTask::svc ()
   long const prime_number = 9619899;
 
   ACE_High_Res_Timer timer;
-  ACE_Time_Value elapsed_time;
-  ACE_Time_Value seconds_tracker(0,0);
+  ACE_Time_Value elapsed_time {};
+  ACE_Time_Value seconds_tracker {0, 0};
 
-  ACE_Time_Value const one_second (1,0);
-  ACE_Time_Value compute_count_down_time (exec_duration_, 0);
+  ACE_Time_Value const one_second {1, 0};
+  ACE_Time_Value compute_count_down_time {exec_duration_, 0};
   ACE_Countdown_Time compute_count_down (&compute_count_down_time);
 
   timer.start ();
@@ -104,13 +96,13 @@ int MyTask::svc ()
       timer.elapsed_time (elapsed_time);
       seconds_tracker += elapsed_time;
       if (seconds_tracker >= one_second)
-      {
-        seconds_tracker.set (0,0);
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%t) Currently running guid=%d")
-                    ACE_TEXT (", qos_.importance=%q\n"),
-                    guid_, static_cast<ACE_INT64> (qos_.importance_)));
-      }
+        {
+          seconds_tracker.set (0, 0);
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%t) Currently running guid=%d")
+                      ACE_TEXT (", qos_.importance=%q\n"),
+                      guid_, static_cast<ACE_INT64> (qos_.importance_)));
+        }
       timer.reset ();
       timer.start ();
     }
@@ -126,7 +118,7 @@ int ACE_TMAIN (int, ACE_TCHAR **)
   //  config_info.scheduler_type_ = Kokyu::SCHED_MIF;
   config_info.impl_type_ = Kokyu::DSRT_OS_BASED;
 
-  ACE_Barrier bar (3);
+  ACE_Barrier bar {3};
 
   ACE_DEBUG ((LM_DEBUG, "before create_dispatcher\n" ));
 
