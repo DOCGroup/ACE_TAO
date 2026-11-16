@@ -5,7 +5,6 @@
 #include "tao/IORTable/IORTable.h"
 #include "tao/debug.h"
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_fcntl.h"
 
@@ -179,8 +178,9 @@ Client<ServerInterface>::read_ior (ACE_TCHAR const *filename)
                        ACE_TEXT ("open")),
                       -1);
 
-  ACE_Read_Buffer ior_buffer (f_handle);
-  char * const data = ior_buffer.read ();
+  ACE_Read_Buffer ior_buffer (f_handle, true);
+  ACE_Read_Buffer_Unique_Ptr const data (
+    ior_buffer.read (), {ior_buffer.alloc ()});
 
   if (data == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -188,10 +188,7 @@ Client<ServerInterface>::read_ior (ACE_TCHAR const *filename)
                        ACE_TEXT ("read")),
                       -1);
 
-  this->ior_ = data;
-  ior_buffer.alloc ()->free (data);
-
-  ACE_OS::close (f_handle);
+  this->ior_ = data.get ();
 
   return 0;
 }

@@ -33,15 +33,6 @@ namespace Persistent_Grid_Detail
     ACE_HANDLE handle_;
   };
 
-  struct Read_Buffer_Deleter
-  {
-    ACE_Allocator *allocator;
-
-    void operator() (char *buffer) const
-    {
-      this->allocator->free (buffer);
-    }
-  };
 }
 
 // Parse the command-line arguments and set options.
@@ -182,8 +173,8 @@ Client<InterfaceObj, Var>::read_ior (ACE_TCHAR const *filename)
 
   Persistent_Grid_Detail::Handle_Guard const f_handle_guard (f_handle);
   ACE_Read_Buffer ior_buffer (f_handle);
-  std::unique_ptr<char, Persistent_Grid_Detail::Read_Buffer_Deleter> const data (
-    ior_buffer.read (), Persistent_Grid_Detail::Read_Buffer_Deleter {ior_buffer.alloc ()});
+  ACE_Read_Buffer_Unique_Ptr const data (
+    ior_buffer.read (), {ior_buffer.alloc ()});
 
   if (!data)
     ACE_ERROR_RETURN ((LM_ERROR,

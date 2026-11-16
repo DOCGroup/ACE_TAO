@@ -16,7 +16,6 @@
 #include "ace/Read_Buffer.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_fcntl.h"
-#include "ace/OS_NS_unistd.h"
 
 #include <cstring>
 
@@ -90,16 +89,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                            "Cannot open input file %s for reading IOR\n",
                            options.ior_file),
                           -1);
-      ACE_Read_Buffer ior_buffer (input_file);
-      char *data = ior_buffer.read ();
+      ACE_Read_Buffer ior_buffer (input_file, true);
+      ACE_Read_Buffer_Unique_Ptr const data (
+        ior_buffer.read (), {ior_buffer.alloc ()});
       if (data == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Unable to read ior\n"),
                           -1);
 
-      ACE_CString const ior = data;
-      ior_buffer.alloc ()->free (data);
-      ACE_OS::close (input_file);
+      ACE_CString const ior = data.get ();
 
       CORBA::Object_var object = orb->string_to_object (ior.c_str ());
 

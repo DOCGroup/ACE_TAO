@@ -3,7 +3,6 @@
 #include "testC.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
-#include "ace/Malloc_Base.h"
 #include "tao/IORManipulation/IORManip_Loader.h"
 #include "tao/PortableServer/PortableServer.h"
 // Ensure that the PI library is linked in when building statically
@@ -13,16 +12,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 #include <memory>
-
-struct IOGR_IOR_Buffer_Deleter
-{
-  ACE_Allocator *allocator;
-
-  void operator() (char *data) const
-  {
-    this->allocator->free (data);
-  }
-};
 
 static int
 parse_args (int argc, ACE_TCHAR *argv[], IOGR_Options& options)
@@ -247,8 +236,8 @@ Client_i::init (ACE_TCHAR const* ior_file)
                       -1);
 
   ACE_Read_Buffer ior_buffer (input_file, true);
-  std::unique_ptr<char, IOGR_IOR_Buffer_Deleter> const data (
-    ior_buffer.read (), IOGR_IOR_Buffer_Deleter {ior_buffer.alloc ()});
+  ACE_Read_Buffer_Unique_Ptr const data (
+    ior_buffer.read (), {ior_buffer.alloc ()});
   if (!data)
   {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Unable to read IOR from %s\n"), ior_file), -1);

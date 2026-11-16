@@ -29,8 +29,8 @@ get_priority_bands (const char *test_type,
 
   ACE_Read_Buffer reader (file, 1);
 
-  char *string =
-    reader.read (EOF, ' ', '\0');
+  ACE_Read_Buffer_Unique_Ptr string (
+    reader.read (EOF, ' ', '\0'), {reader.alloc ()});
 
   // Check for empty bands file.
   if (string == nullptr)
@@ -55,7 +55,7 @@ get_priority_bands (const char *test_type,
                 bands_length));
 
   int result = 1;
-  char* working_string = string;
+  char* working_string = string.get ();
   for (CORBA::ULong i = 0; i < bands_length; ++i)
     {
       result = ::sscanf (working_string,
@@ -82,8 +82,6 @@ get_priority_bands (const char *test_type,
                     bands[i].low,
                     bands[i].high));
     }
-
-  reader.alloc ()->free (string);
 
   if (result == 0 || result == EOF)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -126,8 +124,8 @@ get_values (const char *test_type,
 
   ACE_Read_Buffer reader (file, 1);
 
-  char *string =
-    reader.read (EOF, ' ', '\0');
+  ACE_Read_Buffer_Unique_Ptr string (
+    reader.read (EOF, ' ', '\0'), {reader.alloc ()});
 
   // Check for empty lanes file.
   if (string == nullptr)
@@ -153,7 +151,7 @@ get_values (const char *test_type,
                 name));
 
   int result = 1;
-  char* working_string = string;
+  char* working_string = string.get ();
   for (CORBA::ULong i = 0; i < length; ++i)
     {
       // sscanf with "%ul" doesn't seem to work properly on HP-UX.  So,
@@ -175,8 +173,6 @@ get_values (const char *test_type,
                     "[%u] ",
                     values[i]));
     }
-
-  reader.alloc ()->free (string);
 
   if (result == 0 || result == EOF)
     ACE_ERROR_RETURN ((LM_ERROR,

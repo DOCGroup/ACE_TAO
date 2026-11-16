@@ -177,12 +177,19 @@ Options::read_ior (ACE_TCHAR *filename)
                        filename),
                       -1);
   ACE_Read_Buffer ior_buffer (f_handle, true);
-  this->ior_ = ior_buffer.read ();
+  ACE_Read_Buffer_Unique_Ptr const ior (
+    ior_buffer.read (), {ior_buffer.alloc ()});
 
-  if (this->ior_.in () == nullptr)
+  if (!ior)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to allocate memory to read ior: %p\n"),
                       -1);
+  char * const copy = CORBA::string_dup (ior.get ());
+  if (copy == nullptr)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Unable to duplicate IOR string: %p\n"),
+                      -1);
+  this->ior_ = copy;
   return 0;
 }
 

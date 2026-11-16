@@ -172,11 +172,11 @@ TAO::SSLIOP::Protocol_Factory::pem_passwd_cb (char *buf, int size, int , void *t
           else
             {
               ACE_Read_Buffer reader (file, true);
-              char* string = reader.read ();
+              ACE_Read_Buffer_Unique_Ptr const string (
+                reader.read (), {reader.alloc ()});
               if (string != nullptr)
                 {
-                  pem_passwd_ = string;
-                  reader.alloc ()->free (string);
+                  pem_passwd_ = string.get ();
                 }
               else
                 {

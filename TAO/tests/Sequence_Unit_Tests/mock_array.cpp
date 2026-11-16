@@ -3,21 +3,23 @@
  */
 #include "mock_array.hpp"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 my_array_slice *
-TAO::Array_Traits<my_array,my_array_slice,my_array_tag>::alloc()
+TAO::Array_Traits<TAO::my_array_forany>::alloc()
 {
   return new my_array;
 }
 
 void
-TAO::Array_Traits<my_array,my_array_slice,my_array_tag>::free(
+TAO::Array_Traits<TAO::my_array_forany>::free(
     my_array_slice * _tao_slice)
 {
   delete[] _tao_slice;
 }
 
 my_array_slice *
-TAO::Array_Traits<my_array,my_array_slice,my_array_tag>::dup(
+TAO::Array_Traits<TAO::my_array_forany>::dup(
     my_array_slice const * _tao_source)
 {
   // TODO exception safety
@@ -27,7 +29,7 @@ TAO::Array_Traits<my_array,my_array_slice,my_array_tag>::dup(
 }
 
 void
-TAO::Array_Traits<my_array,my_array_slice,my_array_tag>::copy(
+TAO::Array_Traits<TAO::my_array_forany>::copy(
     my_array_slice * _tao_destination,
     my_array_slice const * _tao_source)
 {
@@ -37,7 +39,7 @@ TAO::Array_Traits<my_array,my_array_slice,my_array_tag>::copy(
 }
 
 void
-TAO::Array_Traits<my_array,my_array_slice,my_array_tag>::
+TAO::Array_Traits<TAO::my_array_forany>::
 zero(
     my_array_slice * _tao_slice)
 {
@@ -45,3 +47,5 @@ zero(
       _tao_slice, _tao_slice + sizeof(my_array)/sizeof(my_array_slice),
       0);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

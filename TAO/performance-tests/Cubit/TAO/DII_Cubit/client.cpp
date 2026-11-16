@@ -12,7 +12,6 @@
 
 #include <array>
 #include <cstddef>
-#include <memory>
 #include <string>
 
 #include "tao/DynamicInterface/Request.h"
@@ -282,17 +281,8 @@ DII_Cubit_Client::read_ior (ACE_TCHAR const *filename)
                       -1);
 
   ACE_Read_Buffer ior_buffer (file_handle, true);
-  struct IOR_Buffer_Deleter
-  {
-    ACE_Allocator *allocator;
-
-    void operator() (char *buffer) const
-    {
-      this->allocator->free (buffer);
-    }
-  };
-  std::unique_ptr<char, IOR_Buffer_Deleter> ior_data (
-    ior_buffer.read (), IOR_Buffer_Deleter {ior_buffer.alloc ()});
+  ACE_Read_Buffer_Unique_Ptr ior_data (
+    ior_buffer.read (), {ior_buffer.alloc ()});
 
   if (!ior_data)
     ACE_ERROR_RETURN ((LM_ERROR,

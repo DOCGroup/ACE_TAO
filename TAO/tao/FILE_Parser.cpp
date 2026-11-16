@@ -6,7 +6,6 @@
 #include "tao/Object.h"
 
 #include "ace/Read_Buffer.h"
-#include "ace/Malloc_Base.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
 #include <cstring>
@@ -41,27 +40,15 @@ TAO_FILE_Parser::parse_string (const char *ior, CORBA::ORB_ptr orb)
 
   ACE_Read_Buffer reader (file, true);
 
-  char* string = reader.read ();
+  ACE_Read_Buffer_Unique_Ptr string (
+    reader.read (), {reader.alloc ()});
 
   if (string == nullptr)
   {
     return CORBA::Object::_nil ();
   }
 
-  CORBA::Object_ptr object = CORBA::Object::_nil ();
-  try
-    {
-      object = orb->string_to_object (string);
-
-      reader.alloc ()->free (string);
-    }
-  catch (const ::CORBA::Exception&)
-    {
-      reader.alloc ()->free (string);
-      throw;
-    }
-
-  return object;
+  return orb->string_to_object (string.get ());
 }
 
 ACE_STATIC_SVC_DEFINE (TAO_FILE_Parser,

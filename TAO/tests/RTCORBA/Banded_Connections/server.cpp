@@ -183,18 +183,8 @@ get_priority_bands (RTCORBA::PriorityBands &bands,
 
   ACE_Read_Buffer reader (file, 1);
 
-  struct Read_Buffer_Deleter
-  {
-    ACE_Allocator *allocator;
-
-    void operator() (char *buffer) const
-    {
-      this->allocator->free (buffer);
-    }
-  };
-
-  std::unique_ptr<char, Read_Buffer_Deleter> string (
-    reader.read (EOF, ' ', '\0'), Read_Buffer_Deleter {reader.alloc ()});
+  ACE_Read_Buffer_Unique_Ptr string (
+    reader.read (EOF, ' ', '\0'), {reader.alloc ()});
 
   if (!string)
   {

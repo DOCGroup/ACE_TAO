@@ -8,20 +8,10 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_netdb.h"
-#include "ace/Malloc_Base.h"
 
 #include <cstring>
+#include <memory>
 #include <string>
-
-struct Read_Buffer_Deleter
-{
-  ACE_Allocator *allocator;
-
-  void operator() (char *data) const
-  {
-    this->allocator->free (data);
-  }
-};
 
 // Reads the Time Service Server iors from a file instead of using a
 // naming service.
@@ -41,8 +31,8 @@ Clerk_i::read_ior (ACE_TCHAR const * filename)
 
   ACE_Read_Buffer ior_buffer (ior_file.get ());
 
-  std::unique_ptr<char, Read_Buffer_Deleter> data (
-    ior_buffer.read (EOF, '\n', '\n'), Read_Buffer_Deleter {ior_buffer.alloc ()});
+  ACE_Read_Buffer_Unique_Ptr data (
+    ior_buffer.read (EOF, '\n', '\n'), {ior_buffer.alloc ()});
   if (!data)
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("[CLIENT] Process/Thread Id : (%P/%t) Unable to read ior: %p\n")),

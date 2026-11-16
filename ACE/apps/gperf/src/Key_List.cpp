@@ -26,7 +26,6 @@
 #include "ace/Read_Buffer.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_stdio.h"
-#include "ace/Malloc_Base.h"
 #include <array>
 #include <cctype>
 #include <cstdio>
@@ -36,16 +35,6 @@
 /// Default type for generated code.
 namespace
 {
-struct Read_Buffer_Deleter
-{
-  ACE_Allocator *allocator;
-
-  void operator() (char *buffer) const
-  {
-    this->allocator->free (buffer);
-  }
-};
-
 char const *
 string_compare_prefix (bool const case_insensitive)
 {
@@ -295,8 +284,8 @@ Key_List::read_keys ()
     {
       ACE_Read_Buffer input (stdin);
 
-      std::unique_ptr<char, Read_Buffer_Deleter> buffer (
-        input.read ('\n'), Read_Buffer_Deleter {input.alloc ()});
+      ACE_Read_Buffer_Unique_Ptr buffer (
+        input.read ('\n'), {input.alloc ()});
 
       if (buffer == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,

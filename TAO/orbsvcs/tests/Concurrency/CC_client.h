@@ -11,6 +11,7 @@
 //=============================================================================
 
 #include "ace/Get_Opt.h"
+#include "ace/Read_Buffer.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -87,7 +88,7 @@ private:
   std::unique_ptr<CC_naming_service> naming_service_;
 
   /// The factory key for the lock set factory.
-  char *cc_factory_key_ {};
+  ACE_Read_Buffer_Unique_Ptr cc_factory_key_ {};
 
   /// File handle to read the IOR.
   ACE_HANDLE f_handle_ {ACE_INVALID_HANDLE};

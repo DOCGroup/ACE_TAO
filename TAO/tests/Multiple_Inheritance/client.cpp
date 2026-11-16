@@ -92,13 +92,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                options.ior_input_file),
                               -1);
           ACE_Read_Buffer ior_buffer (input_file.get ());
-          char * const data = ior_buffer.read ();
+          ACE_Read_Buffer_Unique_Ptr const data (
+            ior_buffer.read (), {ior_buffer.alloc ()});
           if (data == nullptr)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("Unable to read ior\n")),
                               -1);
-          ior = ACE_TEXT_CHAR_TO_TCHAR (data);
-          ior_buffer.alloc ()->free (data);
+          ior = ACE_TEXT_CHAR_TO_TCHAR (data.get ());
         }
 
       // Get the object reference with the IOR

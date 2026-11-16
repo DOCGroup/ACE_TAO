@@ -14,21 +14,6 @@
 
 using Message_Block_Owner = ACE_Message_Block_Unique_Ptr;
 
-struct Allocated_Buffer_Release
-{
-  ACE_Allocator *allocator {};
-
-  void operator() (char *buffer) const
-  {
-    if (buffer != nullptr)
-    {
-      this->allocator->free (buffer);
-    }
-  }
-};
-
-using Allocated_Buffer_Owner = std::unique_ptr<char, Allocated_Buffer_Release>;
-
 // Global thread manager.
 static ACE_Thread_Manager thr_mgr;
 
@@ -63,8 +48,9 @@ consumer (void *arg)
 
       if (length > 0)
         {
-          Allocated_Buffer_Owner buffer {mb->rd_ptr (),
-                                         {ACE_Allocator::instance ()}};
+          ACE_Read_Buffer_Unique_Ptr buffer {
+            mb->rd_ptr (), {ACE_Allocator::instance ()}
+          };
           ACE_OS::puts (mb->rd_ptr ());
         }
 
@@ -95,7 +81,7 @@ producer (void *arg)
   for (;;)
     {
       // Allocate a new buffer.
-      Allocated_Buffer_Owner buffer {rb.read ('\n'), {rb.alloc ()}};
+      ACE_Read_Buffer_Unique_Ptr buffer {rb.read ('\n'), {rb.alloc ()}};
 
       ACE_Message_Block *mb {};
 

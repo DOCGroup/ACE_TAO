@@ -15,7 +15,6 @@
 #include "ace/Read_Buffer.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_fcntl.h"
-#include "ace/OS_NS_unistd.h"
 
 #include <cstring>
 
@@ -219,19 +218,17 @@ Client_i::read_ior (ACE_TCHAR const *filename)
                        ACE_TEXT ("open")),
                       -1);
 
-  ACE_Read_Buffer ior_buffer (f_handle);
-  char *data = ior_buffer.read ();
+  ACE_Read_Buffer ior_buffer (f_handle, true);
+  ACE_Read_Buffer_Unique_Ptr data (
+    ior_buffer.read (), {ior_buffer.alloc ()});
 
-  if (data == nullptr)
+  if (!data)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Unable to read ior (%p)\n"),
                        ACE_TEXT ("read")),
                       -1);
 
-  this->ior_ = data;
-  ior_buffer.alloc ()->free (data);
-
-  ACE_OS::close (f_handle);
+  this->ior_ = data.get ();
 
   if (this->ior_.length () == 0)
     ACE_ERROR_RETURN ((LM_ERROR,

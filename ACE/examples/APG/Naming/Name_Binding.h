@@ -10,20 +10,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdlib.h"
 
-// ACE_NS_WString::char_rep() allocates through ACE_Allocator with hooks and
-// uses new[] otherwise.
-struct Name_Binding_String_Deleter
-{
-  void operator () (char *string) const
-  {
-#if defined (ACE_HAS_ALLOC_HOOKS)
-    ACE_Allocator::instance ()->free (string);
-#else
-    delete [] string;
-#endif
-  }
-};
-
 // ACE_OS::strdup() allocations are released with ACE_OS::free().
 struct Name_Binding_Type_Deleter
 {
@@ -69,8 +55,8 @@ public:
   { return std::atoi (this->value ()); }
 
 private:
-  std::unique_ptr<char, Name_Binding_String_Deleter> name_;
-  std::unique_ptr<char, Name_Binding_String_Deleter> value_;
+  std::unique_ptr<char, ACE_Array_Deleter<char>> name_;
+  std::unique_ptr<char, ACE_Array_Deleter<char>> value_;
   std::unique_ptr<char, Name_Binding_Type_Deleter> type_;
 };
 

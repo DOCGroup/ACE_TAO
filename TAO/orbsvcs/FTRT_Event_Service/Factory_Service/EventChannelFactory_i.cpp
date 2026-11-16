@@ -35,14 +35,8 @@ CORBA::Object_ptr EventChannelFactory_i::create_object (
   }
 
   ACE_Read_Buffer read_buf (file.get ());
-  std::unique_ptr<char, void (*) (char *)> id_str {
-    nullptr,
-    [] (char *buffer) { ACE_Allocator::instance ()->free (buffer); }
-  };
-  std::unique_ptr<char, void (*) (char *)> prog {
-    nullptr,
-    [] (char *buffer) { ACE_Allocator::instance ()->free (buffer); }
-  };
+  ACE_Read_Buffer_Unique_Ptr id_str {nullptr, {read_buf.alloc ()}};
+  ACE_Read_Buffer_Unique_Ptr prog {nullptr, {read_buf.alloc ()}};
 
   for (;;)
     {

@@ -141,16 +141,15 @@ Client<InterfaceObj, Var>::read_ior (ACE_TCHAR const *filename)
                       -1);
 
   ACE_Read_Buffer ior_buffer (f_handle, true);
-  char * const data = ior_buffer.read ();
+  ACE_Read_Buffer_Unique_Ptr const data (
+    ior_buffer.read (), {ior_buffer.alloc ()});
 
   if (data == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to read ior: %p\n"),
                       -1);
 
-  // ACE_Read_Buffer allocates this buffer; release it with its allocator.
-  this->ior_ = ACE_TEXT_CHAR_TO_TCHAR (data);
-  ior_buffer.alloc ()->free (data);
+  this->ior_ = ACE_TEXT_CHAR_TO_TCHAR (data.get ());
 
   return 0;
 }

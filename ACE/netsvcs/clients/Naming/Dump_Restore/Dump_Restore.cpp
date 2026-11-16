@@ -16,14 +16,6 @@
 #include <limits>
 #include <sstream>
 
-static void
-free_read_buffer (char *buffer)
-{
-  ACE_Allocator::instance ()->free (buffer);
-}
-
-using Read_Buffer_String = std::unique_ptr<char, decltype (&free_read_buffer)>;
-
 Dump_Restore::Dump_Restore (int argc, ACE_TCHAR *argv[])
   : ns_context_ (std::make_unique<ACE_Naming_Context> ())
 {
@@ -314,7 +306,9 @@ Dump_Restore::populate (Dump_Restore::Operation_Type op)
       for (char *line {};
            (line = read_buffer.read ('\n')) != nullptr;)
         {
-          Read_Buffer_String line_owner {line, free_read_buffer};
+          ACE_Read_Buffer_Unique_Ptr line_owner {
+            line, {read_buffer.alloc ()}
+          };
           std::string line_text {line_owner.get ()};
           if (!line_text.empty () && line_text.back () == '\r')
             line_text.pop_back ();

@@ -106,12 +106,14 @@ Options::read_ior (ACE_TCHAR const* filename)
                        filename),
                       -1);
   ACE_Read_Buffer ior_buffer (f_handle, true);
-  this->ior_ = ior_buffer.read ();
+  ACE_Read_Buffer_Unique_Ptr const data (
+    ior_buffer.read (), {ior_buffer.alloc ()});
 
-  if (this->ior_.in () == nullptr)
+  if (data == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to allocate memory to read ior: %p\n"),
                       -1);
+  this->ior_ = CORBA::string_dup (data.get ());
   return 0;
 }
 

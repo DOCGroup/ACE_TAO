@@ -17,8 +17,6 @@
 #include "ace/Thread_Manager.h"
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/Malloc_Base.h"
-#include <memory>
 #include <string>
 
 struct Client_Options
@@ -35,16 +33,6 @@ struct Client_Context
   std::string ior;
   ACE_TString file_name;
   int iterations {};
-};
-
-struct Read_Buffer_Deleter
-{
-  ACE_Allocator *allocator;
-
-  void operator() (char *data) const
-  {
-    this->allocator->free (data);
-  }
 };
 
 static int
@@ -171,8 +159,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                            options.ior_file.c_str ()),
                           -1);
       ACE_Read_Buffer ior_buffer (input_file, true);
-      std::unique_ptr<char, Read_Buffer_Deleter> data (
-        ior_buffer.read (), Read_Buffer_Deleter {ior_buffer.alloc ()});
+      ACE_Read_Buffer_Unique_Ptr data (
+        ior_buffer.read (), {ior_buffer.alloc ()});
       if (!data)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Unable to read ior\n"),
