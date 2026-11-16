@@ -44,8 +44,8 @@ public:
   /// Close the record store.
   virtual int close () = 0;
 
-  // = Log Parameters
-
+  /// @name Log parameters
+  /// @{
   /// Gets the administrative state of the log
   virtual DsLogAdmin::AdministrativeState
     get_administrative_state () const = 0;
@@ -116,9 +116,10 @@ public:
   /// Set the weekly scheduling parameters.
   virtual void
     set_week_mask (DsLogAdmin::WeekMask const &masks) = 0;
+  /// @}
 
-  // = LogRecordStore status methods
-
+  /// @name LogRecordStore status methods
+  /// @{
   /// Gets the current size of the log data.
   virtual CORBA::ULongLong
     get_current_size () = 0;
@@ -126,9 +127,10 @@ public:
   /// Get the number of records in the log right now.
   virtual CORBA::ULongLong
     get_n_records () = 0;
+  /// @}
 
-  // = LogRecordStore gauge
-
+  /// @name LogRecordStore gauge
+  /// @{
   /// Gets the current value of the "gauge" that measures the total
   /// size of the records written to the log.
   virtual CORBA::ULongLong
@@ -137,9 +139,10 @@ public:
   /// Resets the "gauge" to 0
   virtual void
     reset_gauge() = 0;
+  /// @}
 
-  // = Record logging, retrieval, update and removal methods.
-
+  /// @name Record logging, retrieval, update and removal methods
+  /// @{
   /// Insert rec into storage.
   /// Returns 0 on success -1 on failure and 1 if the log is full.
   virtual int
@@ -204,6 +207,7 @@ public:
 
   /// Read-Write Lock
   virtual ACE_SYNCH_RW_MUTEX &lock () = 0;
+  /// @}
 
 protected:
   TAO_LogRecordStore ();
