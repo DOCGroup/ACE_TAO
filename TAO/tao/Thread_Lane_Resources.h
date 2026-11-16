@@ -49,6 +49,7 @@ class TAO_Resource_Factory;
 class TAO_Export TAO_Thread_Lane_Resources
 {
 public:
+  TAO_Thread_Lane_Resources () = delete;
   TAO_Thread_Lane_Resources (
       TAO_ORB_Core &orb_core,
       TAO_New_Leader_Generator *new_leader_generator = nullptr);

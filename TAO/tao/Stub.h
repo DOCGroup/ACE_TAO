@@ -100,6 +100,7 @@ public:
   // Our Constructors ...
 
   /// Construct from a repository ID and a list of profiles.
+  TAO_Stub () = delete;
   TAO_Stub (char const *repository_id,
             TAO_MProfile const &profiles,
             TAO_ORB_Core *orb_core);

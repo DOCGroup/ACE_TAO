@@ -41,6 +41,7 @@ class TAO_Synch_Reply_Dispatcher;
 class TAO_Export TAO_Wait_Strategy
 {
 public:
+  TAO_Wait_Strategy () = delete;
   explicit TAO_Wait_Strategy (TAO_Transport *transport);
 
   virtual ~TAO_Wait_Strategy () = default;
