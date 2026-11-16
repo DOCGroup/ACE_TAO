@@ -57,10 +57,12 @@ class Message_Handler : public ACE_Task<ACE_NULL_SYNCH>
 public:
   Message_Handler (ACE_Reactor &reactor);
 
-  // = Demuxing hooks.
+  /// @name Demultiplexing hooks
+  /// @{
   int handle_input (ACE_HANDLE) override;
   int handle_output (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
   int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
+  /// @}
 
 private:
   int process_message ();

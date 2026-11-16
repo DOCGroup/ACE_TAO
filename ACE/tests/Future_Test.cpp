@@ -72,25 +72,31 @@ public:
 
   ~Prime_Scheduler () override;
 
-  // = These methods are part of the Active Object Proxy interface.
+  /// @name Active Object proxy methods
+  /// @{
   ACE_Future<u_long> work (u_long param, int count = 1);
   ACE_Future<const ACE_TCHAR*> name ();
   void end ();
+  /// @}
 
 protected:
   /// Runs the Prime_Scheduler's event loop, which dequeues
   /// <Method_Requests> and dispatches them.
   int svc () override;
 
-  // = These are the Servant methods that do the actual work.
+  /// @name Servant methods
+  /// @{
   u_long work_i (u_long, int);
   const ACE_TCHAR *name_i ();
+  /// @}
 
 private:
-  // = These are the <Prime_Scheduler> implementation details.
+  /// @name Prime_Scheduler implementation details
+  /// @{
   ACE_TCHAR *name_;
   ACE_Activation_Queue activation_queue_;
   Prime_Scheduler *scheduler_;
+  /// @}
 };
 
 /**

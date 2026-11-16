@@ -36,16 +36,20 @@ public:
   ~Test_Task () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  // = Task hooks.
+  /// @name Task hooks
+  /// @{
   ///FUZZ: enable check_for_lack_ACE_OS
   int open (void *args = nullptr) override;
   int close (u_long flags = 0) override;
   int svc () override;
+  /// @}
 
-  // = Event Handler hooks.
+  /// @name Event Handler hooks
+  /// @{
   int handle_input (ACE_HANDLE handle) override;
   int handle_close (ACE_HANDLE fd,
                             ACE_Reactor_Mask close_mask) override;
+  /// @}
 private:
   /// Number of iterations handled.
   size_t handled_;

@@ -82,9 +82,11 @@ public:
 
   ~Scheduler () override;
 
-  // = These methods are part of the Active Object Proxy interface.
+  /// @name Active Object proxy methods
+  /// @{
   void print (Printer_var &printer);
   void end ();
+  /// @}
 
 protected:
   /// Runs the Scheduler's event loop, which dequeues <Method_Requests>
@@ -92,8 +94,10 @@ protected:
   int svc () override;
 
 private:
-  // = These are the <Scheduler> implementation details.
+  /// @name Scheduler implementation details
+  /// @{
   ACE_Activation_Queue activation_queue_;
+  /// @}
 };
 
 /**

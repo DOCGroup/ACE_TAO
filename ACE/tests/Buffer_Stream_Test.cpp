@@ -40,10 +40,12 @@ public:
   Common_Task () {}
 
   //FUZZ: disable check_for_lack_ACE_OS
-  // = ACE_Task hooks.
+  /// @name ACE_Task hooks
+  /// @{
   ///FUZZ: enable check_for_lack_ACE_OS
   int open (void * = nullptr) override;
   int close (u_long = 0) override;
+  /// @}
 };
 
 /**
