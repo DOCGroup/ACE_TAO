@@ -1571,7 +1571,7 @@ Client::initiate_write ()
                   ACE_TEXT ("(%t) Client %d requesting close\n"),
                   this->id_));
       ACE_Message_Block *mb =
-        new ACE_Message_Block (ACE_OS::strlen (close_req_msg) + 1);
+        new ACE_Message_Block (std::strlen (close_req_msg) + 1);
       mb->copy (close_req_msg);
       size_t unused;   // Number of bytes sent
       if (this->ws_.send (mb, unused, 0, this->server_addr_) == -1)
@@ -1590,7 +1590,7 @@ Client::initiate_write ()
     }
 
   static const size_t complete_message_length =
-    ACE_OS::strlen (complete_message);
+    std::strlen (complete_message);
 
 #if defined (ACE_WIN32)
 
@@ -1668,7 +1668,7 @@ Client::initiate_read ()
   }
 
   static const size_t complete_message_length =
-    ACE_OS::strlen (complete_message);
+    std::strlen (complete_message);
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
   ACE_Message_Block *mb1 {},
@@ -2109,7 +2109,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
   clients = 10;                   // number of clients
   loglevel = 0;                   // log level : only errors and highlights
   // Default transfer limit 50 messages per Sender
-  xfer_limit = 50 * ACE_OS::strlen (complete_message);
+  xfer_limit = 50 * std::strlen (complete_message);
 
   // Linux kernels up to at least 2.6.9 (RHEL 4) can't do full duplex aio.
 # if defined (ACE_LINUX)
