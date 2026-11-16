@@ -475,8 +475,7 @@ FILE *
 FE_Utils::open_included_file (std::string const& filename,
                               std::string &directory)
 {
-  std::unique_ptr<FILE, int (*) (FILE *)> file (
-    nullptr, ACE_OS::fclose);
+  FE_Utils::File_Handle file (nullptr, ACE_OS::fclose);
   std::string the_file ("/");
   the_file += filename;
 
@@ -517,7 +516,7 @@ FE_Utils::is_include_file_found (std::string &inc_file,
   inc_file += idl_file_name;
   if (ACE_OS::realpath (inc_file.c_str (), abspath) != nullptr)
     {
-      std::unique_ptr<FILE, int (*) (FILE *)> test (
+      FE_Utils::File_Handle test (
         ACE_OS::fopen (abspath, "r"), ACE_OS::fclose);
 
       if (!test)

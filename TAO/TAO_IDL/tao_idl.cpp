@@ -69,6 +69,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "global_extern.h"
 
 #include "fe_extern.h"
+#include "fe_utils.h"
 
 #include "ast_root.h"
 #include "ast_generator.h"
@@ -393,8 +394,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           throw Bailout ();
         }
 
-      std::unique_ptr<FILE, int (*) (FILE *)> output_file (
-        nullptr, ACE_OS::fclose);
+      FE_Utils::File_Handle output_file (nullptr, ACE_OS::fclose);
 
       if (idl_global->multi_file_input ())
         {

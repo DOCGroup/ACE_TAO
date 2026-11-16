@@ -325,11 +325,6 @@ be_valuetype::have_supported_op (be_interface * node)
 {
   bool have_supported_op {};
 
-  if (node->nmembers () == 0)
-    {
-      return false;
-    }
-
   // Initialize an iterator for supported interface elements
   for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
        !si.is_done ();
