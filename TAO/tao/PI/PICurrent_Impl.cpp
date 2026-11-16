@@ -23,15 +23,16 @@ TAO::PICurrent_Impl::get_slot (PortableInterceptor::SlotId identifier)
   // method is invoked.
 
   // The active slot table should never be a lazy copy of itself!
-  if ( (nullptr != this->lazy_copy_)
-      && (std::addressof (this->lazy_copy_->current_slot_table ()) == std::addressof (this->slot_table_)))
-  {
-    if (TAO_debug_level > 0)
+  if (this->lazy_copy_ != nullptr
+      && std::addressof (this->lazy_copy_->current_slot_table ())
+         == std::addressof (this->slot_table_))
     {
-      TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) Lazy copy of self detected at %N,%l\n")));
+      if (TAO_debug_level > 0)
+        {
+          TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) Lazy copy of self detected at %N,%l\n")));
+        }
+      throw ::CORBA::INTERNAL ();
     }
-    throw ::CORBA::INTERNAL ();
-  }
 
   // Get the slot table that is currently active
   PICurrent_Impl::Table & table = this->current_slot_table ();
@@ -73,10 +74,10 @@ TAO::PICurrent_Impl::set_slot (PortableInterceptor::SlotId identifier,
 
   // Break any existing ties that another PICurrent has with our table
   // since our table is changing.
-  if (nullptr != this->impending_change_callback_)
-  {
-    this->impending_change_callback_->convert_from_lazy_to_real_copy ();
-  }
+  if (this->impending_change_callback_ != nullptr)
+    {
+      this->impending_change_callback_->convert_from_lazy_to_real_copy ();
+    }
 
   // Ensure that we have a real physical copy of the table before
   // making any changes to it.
@@ -87,9 +88,9 @@ TAO::PICurrent_Impl::set_slot (PortableInterceptor::SlotId identifier,
   // slots for the reason stated above.
   if (identifier >= this->slot_table_.size ()
       && this->slot_table_.size (identifier + 1) != 0)
-  {
-    throw ::CORBA::INTERNAL ();
-  }
+    {
+      throw ::CORBA::NO_MEMORY ();
+    }
 
   this->slot_table_[identifier] = data;
 }
@@ -101,27 +102,28 @@ TAO::PICurrent_Impl::take_lazy_copy (
   // Check that we are being told to actually change which table we are
   // copying from. (If it is the same as before OR it would ultimately be
   // the same table, we are already correctly setup and we do nothing.)
-  if ( (p != this->lazy_copy_)
-      && ((nullptr == p) || (std::addressof (p->current_slot_table ()) != std::addressof (this->current_slot_table ())))
-      )
+  if (p != this->lazy_copy_
+      && (p == nullptr
+          || std::addressof (p->current_slot_table ())
+             != std::addressof (this->current_slot_table ())))
     {
       // Break any existing ties that another PICurrent has with our table
       // since our table is changing.
-      if (nullptr != this->impending_change_callback_)
-      {
-        this->impending_change_callback_->convert_from_lazy_to_real_copy ();
-      }
+      if (this->impending_change_callback_ != nullptr)
+        {
+          this->impending_change_callback_->convert_from_lazy_to_real_copy ();
+        }
 
       // If we have previously logically copied another table, ensure it is
       // told that we are no longer interested in it so that it will not
       // call our conver_from_lazy_to_real_copy() when it changes/destructs.
-      if (nullptr != this->lazy_copy_)
-      {
-        this->lazy_copy_->set_callback_for_impending_change (nullptr);
-      }
+      if (this->lazy_copy_ != nullptr)
+        {
+          this->lazy_copy_->set_callback_for_impending_change (nullptr);
+        }
 
       // Are we being asked to copy ourself (or nothing)
-      if ((nullptr == p) || (this == p))
+      if (p == nullptr || this == p)
         {
           this->lazy_copy_ = nullptr; // Use our own physical slot_table_
         }
@@ -138,16 +140,16 @@ TAO::PICurrent_Impl::take_lazy_copy (
 
 TAO::PICurrent_Impl::~PICurrent_Impl ()
 {
-  if (this->push_)
+  if (this->push_ != nullptr)
     {
       // We have YOUNGER stack members to REMOVE as well. HOWEVER we
       // don't want the entry above us coming back down and trying
       // to delete us again. (As we are currently doing just that.)
-      this->push_->pop_= nullptr;
+      this->push_->pop_ = nullptr;
 
       delete this->push_;
     }
-  else if (this->orb_core_)
+  else if (this->orb_core_ != nullptr)
     {
       // Since there are no entries above us, we must be the top of
       // the stack and since all are being deleted, the stack will
@@ -157,30 +159,30 @@ TAO::PICurrent_Impl::~PICurrent_Impl ()
 
   // Break any existing ties that another PICurrent has with our table
   // since our table will no longer exists once this destructor completes.
-  if (nullptr != this->impending_change_callback_)
-  {
-    this->impending_change_callback_->convert_from_lazy_to_real_copy ();
-  }
+  if (this->impending_change_callback_ != nullptr)
+    {
+      this->impending_change_callback_->convert_from_lazy_to_real_copy ();
+    }
 
   // If we have logically copied another table, ensure it is told about our
   // demise so that it will not call our non-existent
   // convert_from_lazy_to_real_copy() when it changes/destructs.
-  if (nullptr != this->lazy_copy_)
-  {
-    this->lazy_copy_->set_callback_for_impending_change (nullptr);
-  }
+  if (this->lazy_copy_ != nullptr)
+    {
+      this->lazy_copy_->set_callback_for_impending_change (nullptr);
+    }
 
-  if (this->pop_)
+  if (this->pop_ != nullptr)
     {
       // We have OLDER stack members to REMOVE as well. HOWEVER we
       // don't want multiple adjustments of the stack head pointer from
       // every older entry as they delete, as this requires multiple
       // set_tss_resource updates which would be slow and unnecessary.
-      this->pop_->orb_core_= nullptr;
+      this->pop_->orb_core_ = nullptr;
 
       // We also don't want double deletions of what used to be above these
       // since we have just completed the deletion of these ourselves.
-      this->pop_->push_= nullptr;
+      this->pop_->push_ = nullptr;
       delete this->pop_;
     }
 }
@@ -188,50 +190,52 @@ TAO::PICurrent_Impl::~PICurrent_Impl ()
 void
 TAO::PICurrent_Impl::push ()
 {
-  if (this->orb_core_) // We have a stack to adjust
+  if (this->orb_core_ != nullptr) // We have a stack to adjust
     {
-      TAO::PICurrent_Impl * const currentHead =
+      TAO::PICurrent_Impl * const current_head =
         static_cast<TAO::PICurrent_Impl *> (
           this->orb_core_->get_tss_resource (this->tss_slot_));
-      if (!currentHead->push_)
+      if (current_head->push_ == nullptr)
         {
           // Since there is nothing younger above us, we need to create
           // a new entry.
-          ACE_NEW_THROW_EX (currentHead->push_,
-                            PICurrent_Impl (this->orb_core_, this->tss_slot_, currentHead),
+          ACE_NEW_THROW_EX (current_head->push_,
+                            PICurrent_Impl (this->orb_core_, this->tss_slot_, current_head),
                             CORBA::NO_MEMORY (
                               CORBA::SystemException::_tao_minor_code (
                                 0,
                                 ENOMEM),
                               CORBA::COMPLETED_NO));
         }
-      this->orb_core_->set_tss_resource (this->tss_slot_, currentHead->push_);
+      this->orb_core_->set_tss_resource (this->tss_slot_, current_head->push_);
     }
   else
-  {
-    throw ::CORBA::INTERNAL (); // Should only call push if we have a stack
-  }
+    {
+      throw ::CORBA::INTERNAL (); // Should only call push if we have a stack
+    }
 }
 
 void
 TAO::PICurrent_Impl::pop ()
 {
-  if (this->orb_core_) // We have a stack to adjust
+  if (this->orb_core_ != nullptr) // We have a stack to adjust
     {
-      TAO::PICurrent_Impl * const currentHead =
+      TAO::PICurrent_Impl * const current_head =
         static_cast<TAO::PICurrent_Impl *> (
           this->orb_core_->get_tss_resource (this->tss_slot_));
-      if (currentHead->pop_)
-        orb_core_->set_tss_resource (tss_slot_, currentHead->pop_);
+      if (current_head->pop_ != nullptr)
+        {
+          this->orb_core_->set_tss_resource (this->tss_slot_, current_head->pop_);
+        }
       else
-      {
-        throw ::CORBA::INTERNAL (); // Too many pop's
-      }
+        {
+          throw ::CORBA::INTERNAL (); // Too many pop's
+        }
     }
   else
-  {
-    throw ::CORBA::INTERNAL (); // Should only call push if we have a stack
-  }
+    {
+      throw ::CORBA::INTERNAL (); // Should only call pop if we have a stack
+    }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -81,7 +81,10 @@ namespace TAO
           }
 
         size_t const new_len = old_len + 1;
-        this->interceptors_.size (new_len);
+        if (this->interceptors_.size (new_len) != 0)
+          {
+            throw CORBA::NO_MEMORY ();
+          }
 
         // Add the interceptor
         this->interceptors_[old_len].interceptor_ =
@@ -154,7 +157,10 @@ namespace TAO
         details.apply_policies(policies);
 
         size_t const new_len = old_len + 1;
-        this->interceptors_.size (new_len);
+        if (this->interceptors_.size (new_len) != 0)
+          {
+            throw CORBA::NO_MEMORY ();
+          }
 
         // Add the interceptor
         this->interceptors_[old_len].interceptor_ =

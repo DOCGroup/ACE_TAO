@@ -104,9 +104,14 @@ namespace TAO
       TAO::Invocation_Base const &invocation_base) override;
 
     void popTSC (TAO_ORB_Core *orb_core) override
-      {TAO_RequestInterceptor_Adapter_Impl::popTSC (orb_core);}
+    {
+      TAO_RequestInterceptor_Adapter_Impl::popTSC (orb_core);
+    }
+
     void pushTSC (TAO_ORB_Core *orb_core) override
-      {TAO_RequestInterceptor_Adapter_Impl::pushTSC (orb_core);}
+    {
+      TAO_RequestInterceptor_Adapter_Impl::pushTSC (orb_core);
+    }
 
   protected:
     /// Process the given PortableInterceptor::ForwardRequest exception,

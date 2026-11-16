@@ -3,9 +3,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO::PICurrent_Impl::PICurrent_Impl (
-    TAO_ORB_Core   *orb_core,
-    size_t    tss_slot,
-    PICurrent_Impl *pop)
+  TAO_ORB_Core *orb_core,
+  size_t tss_slot,
+  PICurrent_Impl *pop)
   : orb_core_ (orb_core),
     tss_slot_ (tss_slot),
     pop_ (pop)
@@ -38,9 +38,9 @@ TAO::PICurrent_Impl::set_callback_for_impending_change (TAO::PICurrent_Impl *p)
 ACE_INLINE TAO::PICurrent_Impl::Table &
 TAO::PICurrent_Impl::current_slot_table ()
 {
-  return (nullptr == this->lazy_copy_) ?
-         this->slot_table_ :
-         this->lazy_copy_->current_slot_table ();
+  return this->lazy_copy_ == nullptr
+    ? this->slot_table_
+    : this->lazy_copy_->current_slot_table ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -28,8 +28,7 @@ TAO::ORBInitializer_Registry::init (int, ACE_TCHAR *[])
   ACE_Service_Config::process_directive
     (ace_svc_desc_TAO_PICurrent_Loader);
 
-  PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
-    PortableInterceptor::ORBInitializer::_nil ();
+  PortableInterceptor::ORBInitializer_ptr temp_orb_initializer {};
 
   PortableInterceptor::ORBInitializer_var orb_initializer;
 
@@ -76,9 +75,10 @@ TAO::ORBInitializer_Registry::fini ()
       --i;
       if (TAO_debug_level > 8)
         {
-          TAOLIB_DEBUG((LM_DEBUG, ACE_TEXT("TAO (%P|%t) - ORBInitializer_Registry::fini clearing %B @%@\n"),
-            i, this->initializers_[i].operator->()
-            ));
+          TAOLIB_DEBUG ((LM_DEBUG,
+                         ACE_TEXT ("TAO (%P|%t) - ORBInitializer_Registry::fini clearing %B @%@\n"),
+                         i,
+                         this->initializers_[i].operator->()));
         }
       this->initializers_[i] = PortableInterceptor::ORBInitializer::_nil();
     }
@@ -99,27 +99,28 @@ TAO::ORBInitializer_Registry::register_orb_initializer (
       size_t const cur_len = this->initializers_.size ();
       size_t const new_len = cur_len + 1;
       if (this->initializers_.size (new_len) != 0)
-      {
-        throw ::CORBA::INTERNAL ();
-      }
+        {
+          throw ::CORBA::NO_MEMORY ();
+        }
 
       // Add the given ORBInitializer to the sequence.
       if (TAO_debug_level > 8)
         {
-          TAOLIB_DEBUG((LM_DEBUG, ACE_TEXT("TAO (%P|%t) - ORBInitializer_Registry::register_orb_initializer %B @%@\n"),
-            cur_len, init
-            ));
+          TAOLIB_DEBUG ((LM_DEBUG,
+                         ACE_TEXT ("TAO (%P|%t) - ORBInitializer_Registry::register_orb_initializer %B @%@\n"),
+                         cur_len,
+                         init));
         }
 
       this->initializers_[cur_len] =
         PortableInterceptor::ORBInitializer::_duplicate (init);
     }
   else
-    throw ::CORBA::INV_OBJREF (
-                 CORBA::SystemException::_tao_minor_code (
-                   0,
-                   EINVAL),
-                 CORBA::COMPLETED_NO);
+    {
+      throw ::CORBA::INV_OBJREF (
+        CORBA::SystemException::_tao_minor_code (0, EINVAL),
+        CORBA::COMPLETED_NO);
+    }
 }
 
 size_t

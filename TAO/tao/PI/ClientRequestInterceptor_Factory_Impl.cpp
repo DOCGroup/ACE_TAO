@@ -17,12 +17,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::ClientRequestInterceptor_Adapter*
+TAO::ClientRequestInterceptor_Adapter *
 TAO_ClientRequestInterceptor_Adapter_Factory_Impl::create ()
 {
-  TAO::ClientRequestInterceptor_Adapter_Impl* obj {};
+  TAO::ClientRequestInterceptor_Adapter_Impl *obj {};
   ACE_NEW_RETURN (obj,
-                  TAO::ClientRequestInterceptor_Adapter_Impl ,//(interceptors, invocation),
+                  TAO::ClientRequestInterceptor_Adapter_Impl,
                   nullptr);
   return obj;
 }

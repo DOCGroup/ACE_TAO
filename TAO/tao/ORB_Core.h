@@ -1222,10 +1222,10 @@ protected:
    */
   CORBA::Object_ptr pi_current_;
 
-  /// The adapter for handling client request interceptors
+  /// Owned client interceptor adapter created by its configured factory.
   TAO::ClientRequestInterceptor_Adapter *client_request_interceptor_adapter_;
 
-  /// The adapter for handling server request interceptors
+  /// Owned server interceptor adapter created by its configured factory.
   TAO::ServerRequestInterceptor_Adapter *server_request_interceptor_adapter_;
 
 #endif /* TAO_HAS_INTERCEPTORS */

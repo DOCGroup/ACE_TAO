@@ -21,12 +21,12 @@ namespace TAO
 {
   void
   ClientRequestInterceptor_Adapter_Impl::send_request (
-      Invocation_Base &invocation)
+    Invocation_Base &invocation)
   {
     // This method implements one of the "starting" client side
     // interception point.
 
-    bool const is_remote_request = invocation.is_remote_request();
+    bool const is_remote_request = invocation.is_remote_request ();
 
     try
       {
@@ -34,7 +34,7 @@ namespace TAO
 
         for (size_t i {}; i < this->interceptor_list_.size (); ++i)
           {
-            ClientRequestInterceptor_List::RegisteredInterceptor const& registered =
+            ClientRequestInterceptor_List::RegisteredInterceptor const &registered =
               this->interceptor_list_.registered_interceptor (i);
 
             if (registered.details_.should_be_processed (is_remote_request))
@@ -60,7 +60,7 @@ namespace TAO
     // This is an "ending" interception point so we only process the
     // interceptors pushed on to the flow stack.
 
-    bool const is_remote_request = invocation.is_remote_request();
+    bool const is_remote_request = invocation.is_remote_request ();
 
     // Notice that the interceptors are processed in the opposite order
     // they were pushed onto the stack since this is an "ending"
@@ -78,7 +78,7 @@ namespace TAO
         // invoked in another "ending" interception point.
         --invocation.stack_size ();
 
-        ClientRequestInterceptor_List::RegisteredInterceptor const& registered =
+        ClientRequestInterceptor_List::RegisteredInterceptor const &registered =
           this->interceptor_list_.registered_interceptor (
             invocation.stack_size ());
 
@@ -95,12 +95,12 @@ namespace TAO
 
   void
   ClientRequestInterceptor_Adapter_Impl::receive_exception (
-      Invocation_Base &invocation)
+    Invocation_Base &invocation)
   {
     // This is an "ending" interception point so we only process the
     // interceptors pushed on to the flow stack.
 
-    bool const is_remote_request = invocation.is_remote_request();
+    bool const is_remote_request = invocation.is_remote_request ();
 
     // Notice that the interceptors are processed in the opposite order
     // they were pushed onto the stack since this is an "ending"
@@ -119,7 +119,7 @@ namespace TAO
             // being invoked in another "ending" interception point.
             --invocation.stack_size ();
 
-            ClientRequestInterceptor_List::RegisteredInterceptor const& registered =
+            ClientRequestInterceptor_List::RegisteredInterceptor const &registered =
               this->interceptor_list_.registered_interceptor (
                 invocation.stack_size ());
 
@@ -133,7 +133,7 @@ namespace TAO
       {
         this->process_forward_request (invocation, exc);
       }
-    catch ( ::CORBA::Exception& ex)
+    catch (::CORBA::Exception &ex)
       {
         // The receive_exception() interception point in the remaining
         // interceptors must be called so call this method (not the
@@ -157,20 +157,20 @@ namespace TAO
         // LOCATION_FORWARD).
         if (status == PortableInterceptor::SYSTEM_EXCEPTION
             || status == PortableInterceptor::USER_EXCEPTION)
-        {
-          throw;
-        }
+          {
+            throw;
+          }
       }
   }
 
   void
   ClientRequestInterceptor_Adapter_Impl::receive_other (
-      Invocation_Base &invocation)
+    Invocation_Base &invocation)
   {
     // This is an "ending" interception point so we only process the
     // interceptors pushed on to the flow stack.
 
-    bool const is_remote_request = invocation.is_remote_request();
+    bool const is_remote_request = invocation.is_remote_request ();
 
     // Notice that the interceptors are processed in the opposite order
     // they were pushed onto the stack since this is an "ending"
@@ -183,28 +183,28 @@ namespace TAO
         // Unwind the stack.
         size_t const len = invocation.stack_size ();
         for (size_t i {}; i < len; ++i)
-        {
-          // Pop the interceptor off of the flow stack before it is
-          // invoked.  This is necessary to prevent an interceptor
-          // already invoked in this "ending" interception point from
-          // being invoked in another "ending" interception point.
-          --invocation.stack_size ();
+          {
+            // Pop the interceptor off of the flow stack before it is
+            // invoked.  This is necessary to prevent an interceptor
+            // already invoked in this "ending" interception point from
+            // being invoked in another "ending" interception point.
+            --invocation.stack_size ();
 
-          ClientRequestInterceptor_List::RegisteredInterceptor const& registered =
-            this->interceptor_list_.registered_interceptor (
-              invocation.stack_size ());
+            ClientRequestInterceptor_List::RegisteredInterceptor const &registered =
+              this->interceptor_list_.registered_interceptor (
+                invocation.stack_size ());
 
-          if (registered.details_.should_be_processed (is_remote_request))
-            {
-              registered.interceptor_->receive_other (std::addressof (ri));
-            }
-        }
+            if (registered.details_.should_be_processed (is_remote_request))
+              {
+                registered.interceptor_->receive_other (std::addressof (ri));
+              }
+          }
       }
     catch (::PortableInterceptor::ForwardRequest const &exc)
       {
         this->process_forward_request (invocation, exc);
       }
-    catch ( ::CORBA::Exception& ex)
+    catch (::CORBA::Exception &ex)
       {
         // The receive_exception() interception point in the remaining
         // interceptors must be called so call this method (not the
@@ -228,16 +228,16 @@ namespace TAO
         // LOCATION_FORWARD).
         if (status == PortableInterceptor::SYSTEM_EXCEPTION
             || status == PortableInterceptor::USER_EXCEPTION)
-        {
-          throw;
-        }
+          {
+            throw;
+          }
       }
   }
 
   void
   ClientRequestInterceptor_Adapter_Impl::process_forward_request (
-      Invocation_Base &invocation,
-      PortableInterceptor::ForwardRequest const &exc)
+    Invocation_Base &invocation,
+    PortableInterceptor::ForwardRequest const &exc)
   {
     invocation.forwarded_reference (exc.forward.in ());
 
@@ -280,11 +280,13 @@ namespace TAO
       case TAO::TAO_INVOKE_RESTART:
         if (invocation_base.reply_status () == GIOP::LOCATION_FORWARD ||
             invocation_base.reply_status () == GIOP::LOCATION_FORWARD_PERM)
-          reply_status = PortableInterceptor::LOCATION_FORWARD;
+          {
+            reply_status = PortableInterceptor::LOCATION_FORWARD;
+          }
         else
-        {
-          reply_status = PortableInterceptor::TRANSPORT_RETRY;
-        }
+          {
+            reply_status = PortableInterceptor::TRANSPORT_RETRY;
+          }
         break;
       case TAO::TAO_INVOKE_USER_EXCEPTION:
         reply_status = PortableInterceptor::USER_EXCEPTION;

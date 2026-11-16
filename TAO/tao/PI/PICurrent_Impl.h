@@ -45,9 +45,9 @@ namespace TAO
   class TAO_PI_Export PICurrent_Impl
   {
   public:
-    explicit PICurrent_Impl (TAO_ORB_Core *orb_core= nullptr,
-                    size_t tss_slot = 0,
-                    PICurrent_Impl *pop= nullptr);
+    explicit PICurrent_Impl (TAO_ORB_Core *orb_core = nullptr,
+                             size_t tss_slot = 0,
+                             PICurrent_Impl *pop = nullptr);
     ~PICurrent_Impl ();
 
     /// Retrieve information stored in the slot table at the given
@@ -97,12 +97,14 @@ namespace TAO
 
   private:
     /// Borrowed ORB core used to integrate this entry with the TSS stack.
-    TAO_ORB_Core   *orb_core_;
-    size_t    tss_slot_;
+    TAO_ORB_Core *orb_core_;
+    size_t tss_slot_;
 
-    /// The push_ and pop_ links own the adjacent request-scope stack entries;
-    /// destruction recursively deletes the linked entries.
+    /// Back-link to the previous stack entry. Normally non-owning; teardown
+    /// severs the previous entry's forward link before deleting that entry.
     PICurrent_Impl *pop_;
+
+    /// Owns the next request-scope stack entry, which destruction deletes.
     PICurrent_Impl *push_ {};
 
     /// CORBA::Any values in the underlying "slot table."
