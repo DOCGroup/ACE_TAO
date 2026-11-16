@@ -78,19 +78,17 @@ PP_Test_Client::read_ior (ACE_TCHAR const *filename)
     }
 
   ACE_Read_Buffer ior_buffer (this->f_handle_);
+  ACE_Read_Buffer_Unique_Ptr data (
+    ior_buffer.read (), {ior_buffer.alloc ()});
 
-  char *data = ior_buffer.read ();
-
-  if (data == nullptr)
+  if (!data)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Unable to allocate memory to read ior: %p\n"),
                         -1);
     }
 
-  this->factory_key_ = ACE_TEXT_CHAR_TO_TCHAR (data);
-
-  ior_buffer.alloc ()->free (data);
+  this->factory_key_ = ACE_TEXT_CHAR_TO_TCHAR (data.get ());
 
   return 0;
 }
