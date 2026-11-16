@@ -58,7 +58,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_SupplierControl_Adapter : public ACE_Event_
 public:
   explicit TAO_EC_SupplierControl_Adapter (TAO_EC_Reactive_SupplierControl *adaptee);
 
-  // = Documented in ACE_Event_Handler.
+  /// Documented in ACE_Event_Handler.
   int handle_timeout (const ACE_Time_Value &tv,
                       void const *arg = nullptr) override;
 
@@ -91,7 +91,7 @@ public:
   void handle_timeout (const ACE_Time_Value &tv,
                        const void* arg);
 
-  // = Documented in TAO_EC_SupplierControl
+  /// Documented in TAO_EC_SupplierControl
   int activate () override;
   int shutdown () override;
   void supplier_not_exist (TAO_EC_ProxyPushConsumer *proxy) override;

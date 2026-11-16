@@ -153,7 +153,8 @@ public:
   TAO_EC_ConsumerControl *consumer_control () const;
   TAO_EC_SupplierControl *supplier_control () const;
 
-  // = The factory methods, they delegate on the EC_Factory.
+  /// @name The factory methods, they delegate on the EC_Factory
+  /// @{
   /// Create and destroy a ProxyPushSupplier
   void create_proxy (TAO_EC_ProxyPushSupplier*&);
   void destroy_proxy (TAO_EC_ProxyPushSupplier*);
@@ -211,7 +212,9 @@ public:
   /// Obtain the scheduler, the user must release
   CORBA::Object_ptr scheduler () const;
 
-  // = The RtecEventChannelAdmin::EventChannel methods...
+  /// @}
+  /// @name The RtecEventChannelAdmin::EventChannel methods
+  /// @{
   /// The default implementation is:
   ///    this->consumer_admin ()->_this ();
   RtecEventChannelAdmin::ConsumerAdmin_ptr
@@ -233,6 +236,7 @@ public:
   /// Return true if the event channel is already destroyed.
   bool destroyed () const;
 
+  /// @}
 protected:
   /**
    * Constructor

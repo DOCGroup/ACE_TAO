@@ -66,9 +66,11 @@ public:
 
   ~TAO_EC_Null_Filter_Builder () override = default;
 
-  // = The TAO_EC_Filter_Builder methods...
+  /// @name The TAO_EC_Filter_Builder methods
+  /// @{
   TAO_EC_Filter* build (TAO_EC_ProxyPushSupplier *supplier,
                         RtecEventChannelAdmin::ConsumerQOS& qos) const override;
+  /// @}
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

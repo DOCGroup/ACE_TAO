@@ -46,7 +46,8 @@ public:
   TAO_EC_Null_Factory &operator= (TAO_EC_Null_Factory const &) = delete;
   TAO_EC_Null_Factory &operator= (TAO_EC_Null_Factory &&) = delete;
 
-  // = The EC_Factory methods
+  /// @name The EC_Factory methods
+  /// @{
   TAO_EC_Dispatching*
       create_dispatching (TAO_EC_Event_Channel_Base*) override;
   void
@@ -109,6 +110,7 @@ public:
       create_supplier_control (TAO_EC_Event_Channel_Base*) override;
   void
       destroy_supplier_control (TAO_EC_SupplierControl*) override;
+  /// @}
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -31,13 +31,15 @@ public:
   /*! These are overridden from the base class in order to maintain the
        map in the dispatcher class. */
 
-  // = The RtecEventChannelAdmin::ProxyPushSupplier methods...
+  /// @name The RtecEventChannelAdmin::ProxyPushSupplier methods
+  /// @{
   void connect_push_consumer (
     RtecEventComm::PushConsumer_ptr push_consumer,
     const RtecEventChannelAdmin::ConsumerQOS &qos) override;
 
   void disconnect_push_supplier () override;
 
+  /// @}
 private:
   using BASECLASS = TAO_EC_Default_ProxyPushSupplier;
   TAO_EC_TPC_Dispatching* tpc_dispatching ();

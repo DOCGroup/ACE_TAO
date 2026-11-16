@@ -49,11 +49,13 @@ public:
   void suspend_connection () override;
   void resume_connection () override;
 
-  // = The Servant methods
+  /// @name The Servant methods
+  /// @{
   PortableServer::POA_ptr _default_POA () override;
   void _add_ref () override;
   void _remove_ref () override;
 
+  /// @}
 private:
   PortableServer::ObjectId object_id () override;
 };

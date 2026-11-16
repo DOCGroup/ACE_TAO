@@ -48,8 +48,8 @@ public:
 
   ~TAO_EC_Conjunction_Filter () override;
 
-  // = The TAO_EC_Filter methods, please check the documentation in
-  // TAO_EC_Filter.
+  /// @name The TAO_EC_Filter methods
+  /// @{
   ChildrenIterator begin () const override;
   ChildrenIterator end () const override;
   int size () const override;
@@ -69,6 +69,7 @@ public:
 
   using Word = unsigned int;
 
+  /// @}
 private:
   TAO_EC_Conjunction_Filter (TAO_EC_Conjunction_Filter const &) = delete;
   TAO_EC_Conjunction_Filter (TAO_EC_Conjunction_Filter &&) = delete;

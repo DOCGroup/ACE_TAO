@@ -43,7 +43,7 @@ public:
   explicit TAO_ECG_Reactive_ConsumerEC_Control_Adapter (
     TAO_ECG_Reactive_ConsumerEC_Control *adaptee);
 
-  // = Documented in ACE_Event_Handler.
+  /// Documented in ACE_Event_Handler.
   int handle_timeout (ACE_Time_Value const &tv,
                       void const *arg = nullptr) override;
 
@@ -77,7 +77,7 @@ public:
   void handle_timeout (ACE_Time_Value const &tv,
                        void const *arg);
 
-  // = Documented in TAO_EC_ConsumerControl
+  /// Documented in TAO_EC_ConsumerControl
   int activate () override;
   int shutdown () override;
   void event_channel_not_exist (TAO_EC_Gateway_IIOP *gateway) override;

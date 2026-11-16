@@ -48,7 +48,8 @@ public:
   TAO_EC_TPC_Dispatching &operator= (TAO_EC_TPC_Dispatching const &) = delete;
   TAO_EC_TPC_Dispatching &operator= (TAO_EC_TPC_Dispatching &&) = delete;
 
-  // = The EC_Dispatching methods.
+  /// @name The EC_Dispatching methods
+  /// @{
   void activate () override;
   void shutdown () override;
   void push (TAO_EC_ProxyPushSupplier* proxy,
@@ -63,6 +64,7 @@ public:
   int add_consumer (RtecEventComm::PushConsumer_ptr consumer);
   int remove_consumer (RtecEventComm::PushConsumer_ptr consumer);
 
+  /// @}
 private:
   // Use our own thread manager
   ACE_Thread_Manager thread_manager_;

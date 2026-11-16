@@ -46,7 +46,8 @@ public:
 
   ~TAO_EC_Per_Supplier_Filter () override;
 
-  // = The TAO_EC_Supplier_Filter methods.
+  /// @name The TAO_EC_Supplier_Filter methods
+  /// @{
   void bind (TAO_EC_ProxyPushConsumer* consumer) override;
   void unbind (TAO_EC_ProxyPushConsumer* consumer) override;
   void connected (TAO_EC_ProxyPushSupplier* supplier) override;
@@ -60,6 +61,7 @@ public:
   CORBA::ULong _decr_refcnt () override;
   CORBA::ULong _incr_refcnt () override;
 
+  /// @}
 private:
   /// The event channel, used to locate the set of consumers.
   TAO_EC_Event_Channel_Base *event_channel_;
@@ -90,12 +92,14 @@ class TAO_RTEvent_Serv_Export TAO_EC_Per_Supplier_Filter_Builder : public TAO_EC
 public:
   explicit TAO_EC_Per_Supplier_Filter_Builder (TAO_EC_Event_Channel_Base* ec);
 
-  // = The TAO_EC_Supplier_Filter_Builder methods...
+  /// @name The TAO_EC_Supplier_Filter_Builder methods
+  /// @{
   TAO_EC_Supplier_Filter*
       create (RtecEventChannelAdmin::SupplierQOS& qos) override;
   void
       destroy (TAO_EC_Supplier_Filter *filter) override;
 
+  /// @}
 private:
   /// The event channel
   TAO_EC_Event_Channel_Base* event_channel_;

@@ -37,8 +37,8 @@ class TAO_RTEvent_Serv_Export TAO_EC_Type_Filter : public TAO_EC_Filter
 public:
   explicit TAO_EC_Type_Filter (RtecEventComm::EventHeader const &header);
 
-  // = The TAO_EC_Filter methods, please check the documentation in
-  // TAO_EC_Filter.
+  /// @name The TAO_EC_Filter methods
+  /// @{
   int filter (RtecEventComm::EventSet const &event,
               TAO_EC_QOS_Info& qos_info) override;
   int filter_nocopy (RtecEventComm::EventSet& event,
@@ -53,6 +53,7 @@ public:
   int add_dependencies (RtecEventComm::EventHeader const &header,
                         TAO_EC_QOS_Info const &qos_info) override;
 
+  /// @}
 private:
   TAO_EC_Type_Filter (TAO_EC_Type_Filter const &) = delete;
   TAO_EC_Type_Filter (TAO_EC_Type_Filter &&) = delete;

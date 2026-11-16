@@ -45,10 +45,12 @@ public:
 
   ~TAO_EC_Basic_Filter_Builder () override = default;
 
-  // = The TAO_EC_Filter_Builder methods...
+  /// @name The TAO_EC_Filter_Builder methods
+  /// @{
   TAO_EC_Filter* build (TAO_EC_ProxyPushSupplier *supplier,
                         RtecEventChannelAdmin::ConsumerQOS& qos) const override;
 
+  /// @}
 private:
   /// Recursively build the filter tree.
   TAO_EC_Filter* recursive_build (TAO_EC_ProxyPushSupplier *supplier,

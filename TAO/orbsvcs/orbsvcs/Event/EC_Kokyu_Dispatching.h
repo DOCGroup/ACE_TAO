@@ -64,7 +64,8 @@ public:
   TAO_EC_Kokyu_Dispatching &operator= (TAO_EC_Kokyu_Dispatching const &) = delete;
   TAO_EC_Kokyu_Dispatching &operator= (TAO_EC_Kokyu_Dispatching &&) = delete;
 
-  // = The EC_Dispatching methods.
+  /// @name The EC_Dispatching methods
+  /// @{
   void activate () override;
   void shutdown () override;
   void push (TAO_EC_ProxyPushSupplier* proxy,
@@ -76,6 +77,7 @@ public:
                             RtecEventComm::EventSet& event,
                             TAO_EC_QOS_Info& qos_info) override;
 
+  /// @}
 private:
   ACE_Allocator *allocator_;
 

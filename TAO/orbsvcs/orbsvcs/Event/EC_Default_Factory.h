@@ -58,11 +58,14 @@ public:
   /// configurator.
   static int init_svcs ();
 
-  // = The Service_Object entry points
+  /// @name The Service_Object entry points
+  /// @{
   int init (int argc, ACE_TCHAR* argv[]) override;
   int fini () override;
 
-  // = The EC_Factory methods
+  /// @}
+  /// @name The EC_Factory methods
+  /// @{
   TAO_EC_Dispatching*
       create_dispatching (TAO_EC_Event_Channel_Base*) override;
   void
@@ -138,6 +141,7 @@ public:
   /// Accessor to ORBid
   ACE_CString const &orb_id () const;
 
+  /// @}
 protected:
   /// Helper for agrument parsing.  Prints out an error message about
   /// unsupported option value.

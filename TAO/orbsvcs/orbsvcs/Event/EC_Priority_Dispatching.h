@@ -63,7 +63,8 @@ public:
   TAO_EC_Priority_Dispatching &operator= (TAO_EC_Priority_Dispatching const &) = delete;
   TAO_EC_Priority_Dispatching &operator= (TAO_EC_Priority_Dispatching &&) = delete;
 
-  // = The EC_Dispatching methods.
+  /// @name The EC_Dispatching methods
+  /// @{
   void activate () override;
   void shutdown () override;
   void push (TAO_EC_ProxyPushSupplier* proxy,
@@ -75,6 +76,7 @@ public:
                             RtecEventComm::EventSet& event,
                             TAO_EC_QOS_Info& qos_info) override;
 
+  /// @}
 private:
   /// Use our own thread manager.
   ACE_Thread_Manager thread_manager_;

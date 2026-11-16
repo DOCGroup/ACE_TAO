@@ -63,13 +63,17 @@ public:
   TAO_EC_ConsumerAdmin &operator= (TAO_EC_ConsumerAdmin const &) = delete;
   TAO_EC_ConsumerAdmin &operator= (TAO_EC_ConsumerAdmin &&) = delete;
 
-  // = The RtecEventChannelAdmin::ConsumerAdmin methods...
+  /// @name The RtecEventChannelAdmin::ConsumerAdmin methods
+  /// @{
   RtecEventChannelAdmin::ProxyPushSupplier_ptr
       obtain_push_supplier () override;
 
-  // = The PortableServer::ServantBase methods
+  /// @}
+  /// @name The PortableServer::ServantBase methods
+  /// @{
   PortableServer::POA_ptr _default_POA () override;
 
+  /// @}
 private:
   /// Store the default POA.
   PortableServer::POA_var default_POA_;

@@ -44,18 +44,22 @@ public:
   void activate (
     RtecEventChannelAdmin::ProxyPushConsumer_ptr &proxy) override;
 
-  // = The RtecEventChannelAdmin::ProxyPushConsumer methods...
+  /// @name The RtecEventChannelAdmin::ProxyPushConsumer methods
+  /// @{
   void connect_push_supplier (
     RtecEventComm::PushSupplier_ptr push_supplier,
     const RtecEventChannelAdmin::SupplierQOS& qos) override;
   void push (const RtecEventComm::EventSet& event) override;
   void disconnect_push_consumer () override;
 
-  // = The Servant methods
+  /// @}
+  /// @name The Servant methods
+  /// @{
   PortableServer::POA_ptr _default_POA () override;
   void _add_ref () override;
   void _remove_ref () override;
 
+  /// @}
 private:
   PortableServer::ObjectId object_id () override;
 };

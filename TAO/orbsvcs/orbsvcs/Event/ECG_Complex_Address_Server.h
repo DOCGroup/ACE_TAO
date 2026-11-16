@@ -62,7 +62,8 @@ public:
   /// for the expected format.
   int init (char const *arg);
 
-  // = The RtecUDPAdmin::AddrServer methods
+  /// @name The RtecUDPAdmin::AddrServer methods
+  /// @{
   void get_addr (RtecEventComm::EventHeader const &header,
                  RtecUDPAdmin::UDP_Addr_out addr) override;
   void get_address (RtecEventComm::EventHeader const &header,
@@ -72,6 +73,7 @@ public:
   /// debugging.
   void dump_content ();
 
+  /// @}
 protected:
   /// Constructor (protected).  Clients can create new
   /// TAO_ECG_Complex_Address_Server objects using the static create()

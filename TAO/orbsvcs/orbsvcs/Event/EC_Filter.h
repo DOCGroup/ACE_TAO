@@ -170,8 +170,8 @@ class TAO_RTEvent_Serv_Export TAO_EC_Null_Filter : public TAO_EC_Filter
 public:
   TAO_EC_Null_Filter ();
 
-  // = The TAO_EC_Filter methods, please check the documentation in
-  // TAO_EC_Filter.
+  /// @name The TAO_EC_Filter methods
+  /// @{
   int filter (RtecEventComm::EventSet const &event,
               TAO_EC_QOS_Info& qos_info) override;
   int filter_nocopy (RtecEventComm::EventSet& event,
@@ -185,6 +185,7 @@ public:
   int can_match (RtecEventComm::EventHeader const &header) const override;
   int add_dependencies (RtecEventComm::EventHeader const &header,
                         TAO_EC_QOS_Info const &qos_info) override;
+  /// @}
 };
 
 // ****************************************************************

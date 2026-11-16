@@ -42,7 +42,8 @@ public:
 
   ~TAO_EC_Reactive_Timeout_Generator () override = default;
 
-  // = The TAO_EC_Timeout_Generator methods.
+  /// @name The TAO_EC_Timeout_Generator methods
+  /// @{
   void activate () override;
   void shutdown () override;
   int schedule_timer (TAO_EC_Timeout_Filter* filter,
@@ -51,6 +52,7 @@ public:
   int cancel_timer (const TAO_EC_QOS_Info& info,
                     int id) override;
 
+  /// @}
 private:
   /// The reactor
   ACE_Reactor *reactor_;

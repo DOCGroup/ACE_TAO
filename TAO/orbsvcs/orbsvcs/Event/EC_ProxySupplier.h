@@ -126,7 +126,8 @@ public:
   CORBA::ULong _incr_refcnt ();
   CORBA::ULong _decr_refcnt ();
 
-  // = The TAO_EC_Filter methods, only push() is implemented...
+  /// @name The TAO_EC_Filter methods, only push() is implemented
+  /// @{
   int filter (const RtecEventComm::EventSet &event,
                       TAO_EC_QOS_Info& qos_info) override;
   int filter_nocopy (RtecEventComm::EventSet &event,
@@ -141,6 +142,7 @@ public:
   int add_dependencies (const RtecEventComm::EventHeader &header,
                                 const TAO_EC_QOS_Info &qos_info) override;
 
+  /// @}
 protected:
   /// Set the consumer, used by some implementations to change the
   /// policies used when invoking operations on the consumer.

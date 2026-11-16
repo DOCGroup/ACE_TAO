@@ -40,13 +40,15 @@ public:
 
   ~TAO_EC_Simple_AddrServer () override = default;
 
-  // = The RtecUDPAdmin::AddrServer methods
+  /// @name The RtecUDPAdmin::AddrServer methods
+  /// @{
   void get_addr (RtecEventComm::EventHeader const &header,
                  RtecUDPAdmin::UDP_Addr_out addr) override;
 
   void get_address (RtecEventComm::EventHeader const &header,
                     RtecUDPAdmin::UDP_Address_out addr) override;
 
+  /// @}
 private:
   CORBA::UShort port_;
 };

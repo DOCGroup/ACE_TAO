@@ -43,8 +43,8 @@ public:
 
   ~TAO_EC_Negation_Filter () override;
 
-  // = The TAO_EC_Filter methods, please check the documentation in
-  // TAO_EC_Filter.
+  /// @name The TAO_EC_Filter methods
+  /// @{
   ChildrenIterator begin () const override;
   ChildrenIterator end () const override;
   int size () const override;
@@ -62,6 +62,7 @@ public:
   int add_dependencies (RtecEventComm::EventHeader const &header,
                         TAO_EC_QOS_Info const &qos_info) override;
 
+  /// @}
 private:
   TAO_EC_Negation_Filter (TAO_EC_Negation_Filter const &) = delete;
   TAO_EC_Negation_Filter (TAO_EC_Negation_Filter &&) = delete;

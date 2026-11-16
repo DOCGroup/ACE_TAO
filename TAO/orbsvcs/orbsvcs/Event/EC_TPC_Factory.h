@@ -42,10 +42,13 @@ public:
   /// configurator.
   static int init_svcs ();
 
-  // = The Service_Object entry points
+  /// @name The Service_Object entry points
+  /// @{
   int init (int argc, ACE_TCHAR* argv[]) override;
 
-  // = The EC_Factory methods
+  /// @}
+  /// @name The EC_Factory methods
+  /// @{
   TAO_EC_Dispatching*
       create_dispatching (TAO_EC_Event_Channel_Base*) override;
 
@@ -54,6 +57,7 @@ public:
 
   TAO_EC_ProxyPushConsumer*
       create_proxy_push_consumer (TAO_EC_Event_Channel_Base*) override;
+  /// @}
 };
 
 extern unsigned long TAO_EC_TPC_debug_level;

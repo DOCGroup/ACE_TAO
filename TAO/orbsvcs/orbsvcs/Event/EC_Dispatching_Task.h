@@ -71,7 +71,8 @@ public:
   /// configurator.
   static int init_svcs ();
 
-  // = The Service_Object entry points
+  /// @name The Service_Object entry points
+  /// @{
   int init (int argc, ACE_TCHAR* argv[]) override;
   int fini () override;
 
@@ -80,6 +81,7 @@ public:
                                  RtecEventComm::PushConsumer_ptr consumer,
                                  RtecEventComm::EventSet& event) override;
 
+  /// @}
 protected:
   int queue_full_action_return_value_;
 };
@@ -96,8 +98,8 @@ public:
   TAO_EC_Queue& operator= (TAO_EC_Queue&&) = delete;
 
 protected:
-  // = Override the default definition in the Message_Queue, to count
-  // the number of messages (and not their size).
+  /// Override the default definition in the Message_Queue, to count
+  /// the number of messages (and not their size).
   bool is_full_i () override;
 };
 

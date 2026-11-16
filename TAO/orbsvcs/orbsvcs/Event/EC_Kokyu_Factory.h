@@ -41,11 +41,14 @@ public:
 
   ~TAO_EC_Kokyu_Factory () override = default;
 
-  // = The Service_Object entry points
+  /// @name The Service_Object entry points
+  /// @{
   int init (int argc, ACE_TCHAR* argv[]) override;
   int fini () override;
 
-  // = The EC_Factory methods
+  /// @}
+  /// @name The EC_Factory methods
+  /// @{
   TAO_EC_Dispatching*
       create_dispatching (TAO_EC_Event_Channel_Base*) override;
   TAO_EC_Filter_Builder*
@@ -55,6 +58,7 @@ public:
   TAO_EC_Scheduling_Strategy*
       create_scheduling_strategy (TAO_EC_Event_Channel_Base*) override;
 
+  /// @}
 private:
   int disp_sched_policy_;
   int disp_sched_scope_;

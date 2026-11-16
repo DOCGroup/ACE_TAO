@@ -46,7 +46,8 @@ public:
   TAO_EC_Reactive_Dispatching &operator= (TAO_EC_Reactive_Dispatching const &) = delete;
   TAO_EC_Reactive_Dispatching &operator= (TAO_EC_Reactive_Dispatching &&) = delete;
 
-  // = The EC_Dispatching methods.
+  /// @name The EC_Dispatching methods
+  /// @{
   void activate () override;
   void shutdown () override;
   void push (TAO_EC_ProxyPushSupplier *proxy,
@@ -57,6 +58,7 @@ public:
                             RtecEventComm::PushConsumer_ptr consumer,
                             RtecEventComm::EventSet &event,
                             TAO_EC_QOS_Info &qos_info) override;
+  /// @}
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

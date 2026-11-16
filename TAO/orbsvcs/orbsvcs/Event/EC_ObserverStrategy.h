@@ -92,7 +92,8 @@ class TAO_RTEvent_Serv_Export TAO_EC_Null_ObserverStrategy : public TAO_EC_Obser
 public:
   TAO_EC_Null_ObserverStrategy ();
 
-  // = The TAO_EC_ObserverStrategy methods.
+  /// @name The TAO_EC_ObserverStrategy methods
+  /// @{
   RtecEventChannelAdmin::Observer_Handle
       append_observer (RtecEventChannelAdmin::Observer_ptr) override;
   void remove_observer (
@@ -101,6 +102,7 @@ public:
   void disconnected (TAO_EC_ProxyPushConsumer*) override;
   void connected (TAO_EC_ProxyPushSupplier*) override;
   void disconnected (TAO_EC_ProxyPushSupplier*) override;
+  /// @}
 };
 
 // ****************************************************************
@@ -129,7 +131,8 @@ public:
 
   ~TAO_EC_Basic_ObserverStrategy () override;
 
-  // = The TAO_EC_ObserverStrategy methods.
+  /// @name The TAO_EC_ObserverStrategy methods
+  /// @{
   RtecEventChannelAdmin::Observer_Handle
       append_observer (RtecEventChannelAdmin::Observer_ptr) override;
   void remove_observer (
@@ -162,6 +165,7 @@ public:
 
     /// The observer
     RtecEventChannelAdmin::Observer_var observer;
+  /// @}
   };
 
   struct Header_Compare
