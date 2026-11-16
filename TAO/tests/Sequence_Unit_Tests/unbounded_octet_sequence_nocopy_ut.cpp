@@ -20,6 +20,8 @@
 
 #include "ace/OS_NS_stdio.h"
 
+#include <utility>
+
 
 using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO;
 
@@ -391,6 +393,11 @@ struct Tester
     tested_sequence a (8, mb);
     CHECK_EQUAL(CORBA::Octet( 't'), a[0]);
     CHECK_EQUAL(CORBA::Octet( 'g'), a[6]);
+    ACE_Message_Block * const retained_mb = a.mb ();
+    tested_sequence moved (std::move (a));
+    CHECK_EQUAL (retained_mb, moved.mb ());
+    CHECK_EQUAL (CORBA::Octet ('t'), moved[0]);
+    CHECK_EQUAL (CORBA::ULong (0), a.length ());
 
     char upperbuf[256];
     ACE_OS::sprintf (upperbuf, "%s", "THIS IS A TEST");
@@ -400,10 +407,18 @@ struct Tester
         ACE_Message_Block (n), 1);
     // Copy buf into the Message_Block and update the wr_ptr ().
     upper_mb->copy ((char *) upperbuf, n);
-    a.replace (n, upper_mb);
-    CHECK_EQUAL(CORBA::Octet( 'T'), a[0]);
-    CHECK_EQUAL(CORBA::Octet( 'S'), a[6]);
+    moved.replace (n, upper_mb);
+    CHECK_EQUAL(CORBA::Octet( 'T'), moved[0]);
+    CHECK_EQUAL(CORBA::Octet( 'S'), moved[6]);
+    ACE_Message_Block * const replacement_mb = moved.mb ();
     delete upper_mb;
+
+    tested_sequence move_assigned;
+    move_assigned = std::move (moved);
+    CHECK_EQUAL (replacement_mb, move_assigned.mb ());
+    CHECK_EQUAL (CORBA::Octet ('T'), move_assigned[0]);
+    CHECK_EQUAL (CORBA::ULong (0), moved.length ());
+    CHECK_EQUAL (nullptr, moved.mb ());
     delete mb;
 #endif
     return 0;
