@@ -36,7 +36,8 @@ public:
   CEC_Counting_Supplier &operator= (CEC_Counting_Supplier const &) = delete;
   CEC_Counting_Supplier &operator= (CEC_Counting_Supplier &&) = delete;
 
-  // = The CosEventComm::PushSupplier methods
+  /// @name CosEventComm::PushSupplier operations
+  //@{
 
   /// Simple connect/disconnect methods..
   void connect (CosEventChannelAdmin::SupplierAdmin_ptr supplier_admin);
@@ -47,6 +48,7 @@ public:
 
   /// The skeleton methods.
   void disconnect_push_supplier () override;
+  //@}
 
   /// Count the number of events sent
   CORBA::ULong event_count {};
@@ -70,7 +72,6 @@ public:
   CEC_Counting_Supplier_Task &operator= (CEC_Counting_Supplier_Task const &) = delete;
   CEC_Counting_Supplier_Task &operator= (CEC_Counting_Supplier_Task &&) = delete;
 
-  // = Check the ACE_Task_Base documentation.
   int svc () override;
 
   void stop ();
@@ -114,16 +115,17 @@ public:
   CEC_Pull_Counting_Supplier &operator= (CEC_Pull_Counting_Supplier const &) = delete;
   CEC_Pull_Counting_Supplier &operator= (CEC_Pull_Counting_Supplier &&) = delete;
 
-  // = The CosEventComm::PullSupplier methods
+  /// @name CosEventComm::PullSupplier operations
+  //@{
 
   /// Simple connect/disconnect methods..
   void connect (CosEventChannelAdmin::SupplierAdmin_ptr supplier_admin);
   void disconnect ();
 
-  // The PullSupplier methods.
   CORBA::Any* pull () override;
   CORBA::Any* try_pull (CORBA::Boolean_out has_event) override;
   void disconnect_pull_supplier () override;
+  //@}
 
   /// Count the number of events sent
   CORBA::ULong event_count {};

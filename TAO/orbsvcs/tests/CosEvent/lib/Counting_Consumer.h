@@ -45,11 +45,13 @@ public:
   /// expected count.
   void dump_results (int expected_count, int tolerance);
 
-  // = The CosEventComm::PushConsumer methods
+  /// @name CosEventComm::PushConsumer operations
+  //@{
 
   /// The skeleton methods.
   void push (CORBA::Any const &events) override;
   void disconnect_push_consumer () override;
+  //@}
 
   /// Keep track of the number of events received.
   CORBA::ULong event_count {};
@@ -94,9 +96,11 @@ public:
   CORBA::Any *pull ();
   CORBA::Any *try_pull (CORBA::Boolean_out has_event);
 
-  // = The CosEventComm::PullConsumer methods
+  /// @name CosEventComm::PullConsumer operations
+  //@{
   /// The skeleton methods.
   void disconnect_pull_consumer () override;
+  //@}
 
   /// Keep track of the number of events received.
   CORBA::ULong event_count {};
@@ -125,7 +129,6 @@ public:
   CEC_Counting_Consumer_Task &operator= (CEC_Counting_Consumer_Task const &) = delete;
   CEC_Counting_Consumer_Task &operator= (CEC_Counting_Consumer_Task &&) = delete;
 
-  // = Check the ACE_Task_Base documentation.
   int svc () override;
 
   void stop ();

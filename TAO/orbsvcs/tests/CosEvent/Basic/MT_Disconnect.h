@@ -28,7 +28,6 @@ public:
   MTD_Task& operator= (MTD_Task const &) = delete;
   MTD_Task& operator= (MTD_Task&&) = delete;
 
-  // = Check the ACE_Task_Base documentation.
   int svc () override;
 
   /// Run a single iteration of the test
