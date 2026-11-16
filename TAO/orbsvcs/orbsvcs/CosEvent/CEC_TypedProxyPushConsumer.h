@@ -71,7 +71,8 @@ public:
   CORBA::ULong _incr_refcnt ();
   CORBA::ULong _decr_refcnt ();
 
-  // = The CosEventChannelAdmin::ProxyPushConsumer methods (abstract overloads)...
+  /// @name The CosEventChannelAdmin::ProxyPushConsumer methods (abstract overloads)
+  /// @{
   void connect_push_supplier (CosEventComm::PushSupplier_ptr push_supplier) override;
 
   void push (CORBA::Any const &event) override;
@@ -80,14 +81,19 @@ public:
 
   void disconnect_push_consumer () override;
 
-  // = The CosTypedEventComm::TypedPushConsumer methods (abstract overloads)...
+  /// @}
+  /// @name The CosTypedEventComm::TypedPushConsumer methods (abstract overloads)
+  /// @{
   CORBA::Object_ptr get_typed_consumer () override;
 
-  // = The Servant methods
+  /// @}
+  /// @name The Servant methods
+  /// @{
   PortableServer::POA_ptr _default_POA () override;
   void _add_ref () override;
   void _remove_ref () override;
 
+  /// @}
 protected:
   /// The guard needs access to the following protected methods.
   friend class TAO_CEC_TypedProxyPushConsumer_Guard;

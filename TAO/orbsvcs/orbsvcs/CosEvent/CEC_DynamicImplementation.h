@@ -38,7 +38,8 @@ public:
   TAO_CEC_DynamicImplementationServer &operator= (TAO_CEC_DynamicImplementationServer const &) = delete;
   TAO_CEC_DynamicImplementationServer &operator= (TAO_CEC_DynamicImplementationServer &&) = delete;
 
-  // = The DynamicImplementation methods.
+  /// @name The DynamicImplementation methods
+  /// @{
   void invoke (CORBA::ServerRequest_ptr request) override;
 
   CORBA::RepositoryId _primary_interface (
@@ -50,6 +51,7 @@ public:
   /// Handles the _is_a call
   virtual void is_a (CORBA::ServerRequest_ptr request);
 
+  /// @}
 private:
   /// The POA
   PortableServer::POA_var poa_;

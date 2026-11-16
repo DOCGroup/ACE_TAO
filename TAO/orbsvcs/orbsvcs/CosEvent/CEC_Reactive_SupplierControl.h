@@ -58,7 +58,7 @@ public:
   TAO_CEC_SupplierControl_Adapter &operator= (TAO_CEC_SupplierControl_Adapter const &) = delete;
   TAO_CEC_SupplierControl_Adapter &operator= (TAO_CEC_SupplierControl_Adapter &&) = delete;
 
-  // = Documented in ACE_Event_Handler.
+  /// Documented in ACE_Event_Handler.
   int handle_timeout (ACE_Time_Value const &tv,
                       void const *arg = nullptr) override;
 
@@ -111,7 +111,7 @@ public:
   void handle_timeout (ACE_Time_Value const &tv,
                        void const *arg);
 
-  // = Documented in TAO_CEC_SupplierControl
+  /// Documented in TAO_CEC_SupplierControl
   int activate () override;
   int shutdown () override;
   void supplier_not_exist (TAO_CEC_ProxyPushConsumer *proxy) override;

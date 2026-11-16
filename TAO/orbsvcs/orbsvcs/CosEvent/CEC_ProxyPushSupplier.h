@@ -118,7 +118,8 @@ public:
    */
   CORBA::Boolean consumer_non_existent (CORBA::Boolean_out disconnected);
 
-  // = The CosEventChannelAdmin::ProxyPushSupplier methods...
+  /// @name The CosEventChannelAdmin::ProxyPushSupplier methods
+  /// @{
   void connect_push_consumer (CosEventComm::PushConsumer_ptr push_consumer) override;
   void disconnect_push_supplier () override;
 
@@ -126,11 +127,14 @@ public:
   CORBA::ULong _incr_refcnt ();
   CORBA::ULong _decr_refcnt ();
 
-  // = The Servant methods
+  /// @}
+  /// @name The Servant methods
+  /// @{
   PortableServer::POA_ptr _default_POA () override;
   void _add_ref () override;
   void _remove_ref () override;
 
+  /// @}
 protected:
   /// Set the consumer, used by some implementations to change the
   /// policies used when invoking operations on the consumer.

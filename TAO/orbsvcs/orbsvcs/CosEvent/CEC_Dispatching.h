@@ -97,7 +97,8 @@ public:
   TAO_CEC_Reactive_Dispatching &operator= (TAO_CEC_Reactive_Dispatching const &) = delete;
   TAO_CEC_Reactive_Dispatching &operator= (TAO_CEC_Reactive_Dispatching &&) = delete;
 
-  // = The CEC_Dispatching methods.
+  /// @name The CEC_Dispatching methods
+  /// @{
   void activate () override;
   void shutdown () override;
   void push (TAO_CEC_ProxyPushSupplier *proxy,
@@ -110,6 +111,7 @@ public:
   void invoke_nocopy (TAO_CEC_ProxyPushSupplier *proxy,
                       TAO_CEC_TypedEvent &typed_event) override;
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
+  /// @}
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

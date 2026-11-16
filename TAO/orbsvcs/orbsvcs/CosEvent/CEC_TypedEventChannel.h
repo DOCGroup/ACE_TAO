@@ -165,7 +165,8 @@ public:
   /// Access the supplier control strategy.
   TAO_CEC_SupplierControl* supplier_control () const;
 
-  // = The factory methods, they delegate on the CEC_Factory.
+  /// @name The factory methods, they delegate on the CEC_Factory
+  /// @{
   /// Create and destroy a ProxyPushSupplier
   void create_proxy (TAO_CEC_ProxyPushSupplier*&);
   void destroy_proxy (TAO_CEC_ProxyPushSupplier*);
@@ -251,7 +252,9 @@ public:
   virtual void create_list (CORBA::Long count,
                             CORBA::NVList_out new_list);
 
-  // = The CosTypedEventChannelAdmin::TypedEventChannel methods...
+  /// @}
+  /// @name The CosTypedEventChannelAdmin::TypedEventChannel methods
+  /// @{
   ::CosTypedEventChannelAdmin::TypedConsumerAdmin_ptr for_consumers () override;
 
   ::CosTypedEventChannelAdmin::TypedSupplierAdmin_ptr for_suppliers () override;
@@ -264,6 +267,7 @@ public:
   CORBA::Policy_ptr
   create_roundtrip_timeout_policy (ACE_Time_Value const &timeout);
 
+  /// @}
 protected:
   /// Function caches the full interface description from the IFR
   int cache_interface_description (char const *interface_);

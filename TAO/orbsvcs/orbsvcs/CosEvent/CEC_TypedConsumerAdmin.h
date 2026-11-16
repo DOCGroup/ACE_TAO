@@ -60,20 +60,26 @@ public:
   /// this
   virtual void shutdown ();
 
-  // = The CosTypedEventChannelAdmin::TypedConsumerAdmin methods...
+  /// @name The CosTypedEventChannelAdmin::TypedConsumerAdmin methods
+  /// @{
   CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_typed_push_supplier (
       char const *uses_interface) override;
   CosTypedEventChannelAdmin::TypedProxyPullSupplier_ptr obtain_typed_pull_supplier (
       char const *supported_interface) override;
 
-  // = The CosEventChannelAdmin::ConsumerAdmin methods...
+  /// @}
+  /// @name The CosEventChannelAdmin::ConsumerAdmin methods
+  /// @{
   CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier () override;
 
   CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier () override;
 
-  // = The PortableServer::ServantBase methods
+  /// @}
+  /// @name The PortableServer::ServantBase methods
+  /// @{
   PortableServer::POA_ptr _default_POA () override;
 
+  /// @}
 private:
   /// The Event Channel we belong to
   TAO_CEC_TypedEventChannel *typed_event_channel_;

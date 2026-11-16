@@ -82,13 +82,17 @@ public:
   /// this
   virtual void shutdown ();
 
-  // = The CosEventChannelAdmin::ConsumerAdmin methods...
+  /// @name The CosEventChannelAdmin::ConsumerAdmin methods
+  /// @{
   CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier () override;
   CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier () override;
 
-  // = The PortableServer::ServantBase methods
+  /// @}
+  /// @name The PortableServer::ServantBase methods
+  /// @{
   PortableServer::POA_ptr _default_POA () override;
 
+  /// @}
 private:
   /// The Event Channel we belong to
   TAO_CEC_EventChannel *event_channel_;

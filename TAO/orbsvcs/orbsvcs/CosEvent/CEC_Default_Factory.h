@@ -56,11 +56,14 @@ public:
   /// configurator.
   static int init_svcs ();
 
-  // = The Service_Object entry points
+  /// @name The Service_Object entry points
+  /// @{
   int init (int argc, ACE_TCHAR *argv[]) override;
   int fini () override;
 
-  // = The CEC_Factory methods
+  /// @}
+  /// @name The CEC_Factory methods
+  /// @{
   TAO_CEC_Dispatching *create_dispatching (TAO_CEC_EventChannel *) override;
   void destroy_dispatching (TAO_CEC_Dispatching *) override;
   TAO_CEC_Pulling_Strategy *create_pulling_strategy (TAO_CEC_EventChannel *) override;
@@ -134,6 +137,7 @@ public:
 
   CORBA::Policy_ptr create_roundtrip_timeout_policy (ACE_Time_Value const &timeout) override;
 
+  /// @}
 private:
   /// Parse an argument to set the type of collections used.
   int parse_collection_arg (ACE_TCHAR const *opt);

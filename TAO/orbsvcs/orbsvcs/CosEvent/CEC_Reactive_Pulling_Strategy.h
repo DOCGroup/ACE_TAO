@@ -53,7 +53,7 @@ public:
   TAO_CEC_Pulling_Strategy_Adapter &operator= (TAO_CEC_Pulling_Strategy_Adapter const &) = delete;
   TAO_CEC_Pulling_Strategy_Adapter &operator= (TAO_CEC_Pulling_Strategy_Adapter &&) = delete;
 
-  // = Documented in ACE_Event_Handler.
+  /// Documented in ACE_Event_Handler.
   int handle_timeout (ACE_Time_Value const &tv,
                       void const *arg = nullptr) override;
 
@@ -92,10 +92,12 @@ public:
   void handle_timeout (ACE_Time_Value const &tv,
                        void const *arg);
 
-  // = The CEC_Pulling_Strategy methods.
+  /// @name The CEC_Pulling_Strategy methods
+  /// @{
   void activate () override;
   void shutdown () override;
 
+  /// @}
 private:
   /// The Adapter for the reactor events
   TAO_CEC_Pulling_Strategy_Adapter adapter_;

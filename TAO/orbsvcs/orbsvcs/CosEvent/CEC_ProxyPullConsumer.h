@@ -89,15 +89,19 @@ public:
   CORBA::ULong _incr_refcnt ();
   CORBA::ULong _decr_refcnt ();
 
-  // = The CosEventChannelAdmin::ProxyPullConsumer methods...
+  /// @name The CosEventChannelAdmin::ProxyPullConsumer methods
+  /// @{
   void connect_pull_supplier (CosEventComm::PullSupplier_ptr pull_supplier) override;
   void disconnect_pull_consumer () override;
 
-  // = The Servant methods
+  /// @}
+  /// @name The Servant methods
+  /// @{
   PortableServer::POA_ptr _default_POA () override;
   void _add_ref () override;
   void _remove_ref () override;
 
+  /// @}
 protected:
   /// Set the supplier, used by some implementations to change the
   /// policies used when invoking operations on the supplier.

@@ -49,7 +49,8 @@ public:
   TAO_CEC_MT_Dispatching &operator= (TAO_CEC_MT_Dispatching const &) = delete;
   TAO_CEC_MT_Dispatching &operator= (TAO_CEC_MT_Dispatching &&) = delete;
 
-  // = The EC_Dispatching methods.
+  /// @name The EC_Dispatching methods
+  /// @{
   void activate () override;
   void shutdown () override;
   void push (TAO_CEC_ProxyPushSupplier *proxy,
@@ -63,6 +64,7 @@ public:
                       TAO_CEC_TypedEvent &typed_event) override;
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
+  /// @}
 private:
   /// Use our own thread manager.
   ACE_Thread_Manager thread_manager_;

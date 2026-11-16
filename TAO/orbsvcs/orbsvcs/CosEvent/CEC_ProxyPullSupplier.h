@@ -93,7 +93,8 @@ public:
   /// Push an event into the queue.
   void push (CORBA::Any const &event);
 
-  // = The CosEventChannelAdmin::ProxyPullSupplier methods...
+  /// @name The CosEventChannelAdmin::ProxyPullSupplier methods
+  /// @{
   void connect_pull_consumer (CosEventComm::PullConsumer_ptr pull_consumer) override;
   CORBA::Any *pull () override;
   CORBA::Any *try_pull (CORBA::Boolean_out has_event) override;
@@ -103,11 +104,14 @@ public:
   CORBA::ULong _incr_refcnt ();
   CORBA::ULong _decr_refcnt ();
 
-  // = The Servant methods
+  /// @}
+  /// @name The Servant methods
+  /// @{
   PortableServer::POA_ptr _default_POA () override;
   void _add_ref () override;
   void _remove_ref () override;
 
+  /// @}
 protected:
   /// Set the consumer, used by some implementations to change the
   /// policies used when invoking operations on the consumer.

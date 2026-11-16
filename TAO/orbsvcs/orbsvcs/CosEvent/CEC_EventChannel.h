@@ -154,7 +154,8 @@ public:
   /// Access the supplier control strategy.
   TAO_CEC_SupplierControl* supplier_control () const;
 
-  // = The factory methods, they delegate on the CEC_Factory.
+  /// @name The factory methods, they delegate on the CEC_Factory
+  /// @{
   /// Create and destroy a ProxyPushSupplier
   void create_proxy (TAO_CEC_ProxyPushSupplier*&);
   void destroy_proxy (TAO_CEC_ProxyPushSupplier*);
@@ -227,7 +228,9 @@ public:
   /// disconnected by the client
   bool disconnect_callbacks () const;
 
-  // = The CosEventChannelAdmin::EventChannel methods...
+  /// @}
+  /// @name The CosEventChannelAdmin::EventChannel methods
+  /// @{
   /// The default implementation is:
   ///    this->consumer_admin ()->_this (env);
   CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers () override;
@@ -245,6 +248,7 @@ public:
   CORBA::Policy_ptr
   create_roundtrip_timeout_policy (ACE_Time_Value const &timeout);
 
+  /// @}
 private:
   /// The POAs used to activate "supplier-side" and "consumer-side"
   /// objects.
