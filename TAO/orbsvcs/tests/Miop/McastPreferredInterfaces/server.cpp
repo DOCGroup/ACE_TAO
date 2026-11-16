@@ -50,7 +50,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");
 
-      Server_impl* server_obj = 0;
+      Server_impl* server_obj {};
       ACE_NEW_RETURN (server_obj,
                       Server_impl(orb.in()),
                       -1);
