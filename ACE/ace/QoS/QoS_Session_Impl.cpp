@@ -5,6 +5,9 @@
 #include "QoS_Session_Impl.h"
 #include "ace/Log_Category.h"
 
+#include <cerrno>
+#include <new>
+
 #if !defined (__ACE_INLINE__)
 #include "QoS_Session_Impl.inl"
 #endif /* __ACE_INLINE__ */
@@ -225,10 +228,12 @@ ACE_RAPI_Session::ACE_RAPI_Session ()
 {
   ACE_TRACE ("ACE_RAPI_Session::ACE_RAPI_Session");
   //this->source_port (DEFAULT_SOURCE_SENDER_PORT);
-  ACE_INET_Addr *source_addr {};
-  ACE_NEW (source_addr,
-           ACE_INET_Addr ("0"));
-  this->src_addr_.reset (source_addr);
+  this->src_addr_.reset (new (std::nothrow) ACE_INET_Addr ("0"));
+  if (this->src_addr_ == nullptr)
+    {
+      errno = ENOMEM;
+      return;
+    }
 }
 
 /// Open a RAPI QoS session [dest IP, dest port, Protocol ID].
