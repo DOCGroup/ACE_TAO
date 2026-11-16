@@ -285,7 +285,9 @@ XML_Backing_Store::load_server (Server_Info *info,
                                 bool server_started,
                                 const NameValues& )
 {
-  Server_Info_Ptr si (info);
+  std::unique_ptr<Server_Info> info_owner (info);
+  Server_Info_Ptr si (info_owner.get ());
+  info_owner.release ();
 
   this->servers ().rebind (info->key_name_, si);
 
@@ -320,6 +322,8 @@ XML_Backing_Store::load_activator (const ACE_CString& activator_name,
   ACE_NEW (ai,
            Activator_Info (activator_name, token, ior));
 
-  Activator_Info_Ptr info (ai);
+  std::unique_ptr<Activator_Info> ai_owner (ai);
+  Activator_Info_Ptr info (ai_owner.get ());
+  ai_owner.release ();
   this->activators().rebind(Locator_Repository::lcase (activator_name), info);
 }

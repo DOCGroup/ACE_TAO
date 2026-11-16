@@ -703,7 +703,9 @@ Shared_Backing_Store::get_listings (Lockable_File& listing_lf,
                       XMLHandler_Ptr());
     }
 
-  XMLHandler_Ptr listings_handler (raw_xml);
+  std::unique_ptr<LocatorListings_XMLHandler> raw_xml_owner (raw_xml);
+  XMLHandler_Ptr listings_handler (raw_xml_owner.get ());
+  raw_xml_owner.release ();
 
   if (this->load_file (this->listing_file_,
                        *listings_handler,

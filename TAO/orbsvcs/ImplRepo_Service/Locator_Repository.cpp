@@ -13,6 +13,7 @@
 #include "ace/Vector_T.h"
 
 #include <cstdlib>
+#include <memory>
 
 Locator_Repository::Locator_Repository (const Options& opts,
                                         CORBA::ORB_ptr orb)
@@ -396,7 +397,9 @@ Locator_Repository::add_server
 int
 Locator_Repository::add_server_i (Server_Info *si)
 {
-  Server_Info_Ptr info(si);
+  std::unique_ptr<Server_Info> si_owner (si);
+  Server_Info_Ptr info (si_owner.get ());
+  si_owner.release ();
 
   int err = sync_load ();
   if (err != 0)
@@ -425,7 +428,10 @@ Locator_Repository::add_activator (const ACE_CString& name,
       return err;
     }
 
-  Activator_Info_Ptr info (new Activator_Info (name, token, ior, act));
+  std::unique_ptr<Activator_Info> info_owner (
+    new Activator_Info (name, token, ior, act));
+  Activator_Info_Ptr info (info_owner.get ());
+  info_owner.release ();
 
   err = activators ().bind (lcase (name), info);
   if (err != 0)
@@ -598,7 +604,9 @@ Locator_Repository::link_peers (Server_Info_Ptr base,
       ACE_NEW_RETURN (si,
                       Server_Info (base->server_id, peer, base->is_jacorb, base),
                       -1);
-      Server_Info_Ptr sip(si);
+      std::unique_ptr<Server_Info> si_owner (si);
+      Server_Info_Ptr sip (si_owner.get ());
+      si_owner.release ();
       servers ().bind (si->key_name_, sip);
       this->persistent_update (sip, true);
     }
