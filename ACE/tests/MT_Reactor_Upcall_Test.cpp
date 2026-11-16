@@ -12,7 +12,6 @@
 //=============================================================================
 
 #include "test_config.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Reactor.h"
 #include "ace/TP_Reactor.h"
@@ -22,6 +21,8 @@
 #include "ace/Task.h"
 #include "ace/Get_Opt.h"
 #include "ace/ACE.h"
+
+#include <cstring>
 
 int number_of_event_loop_threads = 3;
 int number_of_messages = 10;
@@ -226,8 +227,8 @@ test_reactor_upcall (ACE_Reactor &reactor)
   data_message.type_ =
     Message::DATA;
   data_message.size_ =
-    ACE_OS::strlen (message);
-  ACE_OS::strcpy (data_message.data_, message);
+    std::strlen (message);
+  std::strcpy (data_message.data_, message);
 
   // Send in three pieces because the struct members may not be adjacent
   // in memory.
