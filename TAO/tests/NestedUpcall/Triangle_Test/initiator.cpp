@@ -12,9 +12,7 @@
 #include "tao/debug.h"
 #include "ace/Read_Buffer.h"
 #include "ace/OS_NS_fcntl.h"
-#include "ace/Malloc_Base.h"
 
-#include <memory>
 #include <new>
 
 // Read one object's IOR from a file.
@@ -31,15 +29,8 @@ Initiator_Server::read_ior (ACE_TCHAR const *filename, std::string &ior_key)
                        filename),
                       -1);
   ACE_Read_Buffer ior_buffer (f_handle, true);
-  std::unique_ptr<char, void (*) (char *)> const buffer (
-    ior_buffer.read (),
-    [] (char *memory)
-    {
-      if (memory != nullptr)
-      {
-        ACE_Allocator::instance ()->free (memory);
-      }
-    });
+  ACE_Read_Buffer_Unique_Ptr const buffer (
+    ior_buffer.read (), {ior_buffer.alloc ()});
 
   if (!buffer)
     ACE_ERROR_RETURN ((LM_ERROR,
