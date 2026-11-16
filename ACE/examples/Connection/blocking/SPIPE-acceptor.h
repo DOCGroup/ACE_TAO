@@ -34,9 +34,9 @@ public:
 
   int open (void *) override;
 
+  /// This is called when asynchronous read from the socket complete
+  /// Handle data from the client.
   void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
-  // This is called when asynchronous read from the socket complete
-  // Handle data from the client.
 
 private:
   ACE_Asynch_Read_Stream ar_;
@@ -53,32 +53,34 @@ public:
   IPC_Server &operator= (IPC_Server const &) = delete;
   IPC_Server &operator= (IPC_Server &&) = delete;
 
-  // = Dynamic linking hooks.
+  /// @name Dynamic linking hooks
+  /// @{
+  /// Initialize the network server.
   int init (int argc, ACE_TCHAR *argv[]) override;
-  // Initialize the network server.
 
+  /// Close down the server.
   int fini () override;
-  // Close down the server.
+  /// @}
 
+  /// Run the interative service.
   virtual int svc ();
-  // Run the interative service.
 
 private:
+  /// Parse command-line arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
-  // Parse command-line arguments.
 
+  /// Size of thread pool to use.
   int n_threads_ {1};
-  // Size of thread pool to use.
 
+  /// Meeting place for pipe.
   std::basic_string<ACE_TCHAR> rendezvous_ {ACE_TEXT ("acepipe")};
-  // Meeting place for pipe.
 
+  /// Keeps track of when we shut down due to receipt of the SIGINT
+  /// signal.
   int shutdown_ {};
-  // Keeps track of when we shut down due to receipt of the SIGINT
-  // signal.
 
+  /// Signal handler method.
   int handle_signal (int signum, siginfo_t *, ucontext_t *) override;
-  // Signal handler method.
 };
 
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */

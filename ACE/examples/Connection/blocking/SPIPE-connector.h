@@ -18,11 +18,12 @@
 class Peer_Handler : public ACE_Svc_Handler<ACE_SPIPE_STREAM, ACE_NULL_SYNCH>
 {
 public:
-  // = Initialization
+  /// @name Initialization
+  /// @{
 
+  /// <iterations> is the number of buffers to send.  If <iterations>
+  /// == 0, then read from stdin.
   explicit Peer_Handler (int iterations = 0);
-  // <iterations> is the number of buffers to send.  If <iterations>
-  // == 0, then read from stdin.
 
   ~Peer_Handler () override = default;
   Peer_Handler (Peer_Handler const &) = delete;
@@ -30,27 +31,31 @@ public:
   Peer_Handler &operator= (Peer_Handler const &) = delete;
   Peer_Handler &operator= (Peer_Handler &&) = delete;
 
+  /// Activate the handler when connection is established.
   int open (void * = nullptr) override;
-  // Activate the handler when connection is established.
+  /// @}
 
-  // = Demultiplexing hooks.
+  /// @name Demultiplexing hooks
+  /// @{
   int handle_input (ACE_HANDLE) override;
   int handle_close (ACE_HANDLE handle = ACE_INVALID_HANDLE,
                     ACE_Reactor_Mask mask = ACE_Event_Handler::ALL_EVENTS_MASK) override;
+  /// @}
 
   ACE_HANDLE get_handle () const override;
 
 private:
   void display_menu ();
 
+  /// No. of buffers to send.
   int iterations_ {};
-  // No. of buffers to send.
 };
 
 class IPC_Client : public ACE_Connector<Peer_Handler, ACE_SPIPE_CONNECTOR>
 {
 public:
-  // Initialization
+  /// @name Initialization
+  /// @{
   IPC_Client ();
   ~IPC_Client () override = default;
   IPC_Client (IPC_Client const &) = delete;
@@ -58,32 +63,35 @@ public:
   IPC_Client &operator= (IPC_Client const &) = delete;
   IPC_Client &operator= (IPC_Client &&) = delete;
 
-  // = Dynamic linking hooks.
+  /// @}
+  /// @name Dynamic linking hooks
+  /// @{
+  /// Initialize the IPC client.
   int init (int argc, ACE_TCHAR *argv[]) override;
-  // Initialize the IPC client.
 
+  /// Destroy the IPC client.
   int fini () override;
-  // Destroy the IPC client.
+  /// @}
 
+  /// Run the svc.
   virtual int svc ();
-  // Run the svc.
 
+  /// Report connection errors.
   int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
-  // Report connection errors.
 
 private:
+  /// Parse command-line arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
-  // Parse command-line arguments.
 
+  /// Number of times to send a buffer.
   int iterations_ {};
-  // Number of times to send a buffer.
 
+  /// Meeting place for pipe.
   std::basic_string<ACE_TCHAR> rendezvous_ {ACE_TEXT ("acepipe")};
-  // Meeting place for pipe.
 
+  /// Keeps track of when we shut down due to receipt of the SIGINT
+  /// signal.
   ACE_Sig_Adapter done_handler_;
-  // Keeps track of when we shut down due to receipt of the SIGINT
-  // signal.
 };
 
 #endif /* SP_CONNECTOR_H */
