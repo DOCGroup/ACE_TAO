@@ -34,7 +34,8 @@ public:
   EC_Shutdown (EC_Shutdown &&) = delete;
   EC_Shutdown &operator= (EC_Shutdown &&) = delete;
 
-  // = The EC_Driver methods
+  /// @name EC_Driver operations
+  //@{
   /// Don't run the suppliers just create the EC and then destroy it.
   void execute_test () override;
 
@@ -46,6 +47,7 @@ public:
 
   /// One of the suppliers in the test has been disconnected from the EC
   void supplier_disconnect (void* supplier_cookie) override;
+  //@}
 
 private:
   /// Number of consumer and supplier disconnect messages.

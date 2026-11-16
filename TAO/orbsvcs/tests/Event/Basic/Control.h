@@ -31,9 +31,10 @@ public:
   Consumer (Consumer &&) = delete;
   Consumer &operator= (Consumer &&) = delete;
 
-  // = The RtecEventComm::PushConsumer methods
-
+  /// @name RtecEventComm::PushConsumer operations
+  //@{
   void push (const RtecEventComm::EventSet& events) override;
+  //@}
 
 private:
   /// After this number of events the consumer disconnects from the

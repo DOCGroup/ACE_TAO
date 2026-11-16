@@ -30,7 +30,8 @@ public:
   EC_Throughput& operator= (EC_Throughput const &) = delete;
   EC_Throughput& operator= (EC_Throughput&&) = delete;
 
-  // = The EC_Driver methods
+  /// @name EC_Driver operations
+  //@{
   /// add some command line args to enable/disable throughputions
   int parse_args (int& argc, ACE_TCHAR* argv[]) override;
   void print_args () const override;
@@ -44,6 +45,7 @@ public:
 
   /// Don't dump the EC_Driver results, they are meaningless.
   void dump_results () override;
+  //@}
 };
 
 #endif /* EC_THROUGHPUT_H */
