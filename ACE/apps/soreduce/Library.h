@@ -101,7 +101,7 @@ protected:
 class Library
 {
 public:
-  explicit Library (ACE_TCHAR const *name = {});
+  explicit Library (ACE_TCHAR const *name = nullptr);
   ~Library () = default;
   Library (Library const &) = delete;
   Library (Library &&) = delete;
