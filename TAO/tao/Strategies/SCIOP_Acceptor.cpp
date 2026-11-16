@@ -331,7 +331,7 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   // Allocate an array of secondary ip addresses.
   ACE_UINT32 *secondary_ip_addrs {};
   std::unique_ptr<ACE_UINT32[]> secondary_ip_addrs_auto;
-  size_t num_secondary_ip_addrs = hostnames.size() - 1;
+  size_t const num_secondary_ip_addrs = hostnames.size() - 1;
   if (num_secondary_ip_addrs > 0) {
     ACE_NEW_RETURN(secondary_ip_addrs,
                    ACE_UINT32[num_secondary_ip_addrs],
@@ -923,9 +923,9 @@ TAO_SCIOP_Acceptor::parse_options (const char *str)
   // Use an option format similar to the one used for CGI scripts in
   // HTTP URLs.
   // e.g.:  option1=foo&option2=bar
-  ACE_CString options (str);
+  ACE_CString const options (str);
 
-  size_t len = options.length ();
+  size_t const len = options.length ();
 
   const char option_delimiter = '&';
 

@@ -46,8 +46,8 @@ TAO_SCIOP_Transport::send (iovec *iov, int iovcnt,
                            size_t &bytes_transferred,
                            const ACE_Time_Value *max_wait_time)
 {
-  ssize_t retval = this->connection_handler_->peer ().sendv (iov, iovcnt,
-                                                             max_wait_time);
+  ssize_t const retval = this->connection_handler_->peer ().sendv (iov, iovcnt,
+                                                                   max_wait_time);
   if (retval > 0)
     bytes_transferred = retval;
 
@@ -59,9 +59,9 @@ TAO_SCIOP_Transport::recv (char *buf,
                            size_t len,
                            const ACE_Time_Value *max_wait_time)
 {
-  ssize_t n = this->connection_handler_->peer ().recv (buf,
-                                                       len,
-                                                       max_wait_time);
+  ssize_t const n = this->connection_handler_->peer ().recv (buf,
+                                                             len,
+                                                             max_wait_time);
 
   // Do not print the error message if it is a timeout, which could
   // occur in thread-per-connection.
@@ -134,10 +134,10 @@ TAO_SCIOP_Transport::send_message (TAO_OutputCDR &stream,
     }
 
   // This guarantees to send all data (bytes) or return an error.
-  ssize_t n = this->send_message_shared (stub,
-                                         message_semantics,
-                                         stream.begin (),
-                                         max_wait_time);
+  ssize_t const n = this->send_message_shared (stub,
+                                               message_semantics,
+                                               stream.begin (),
+                                               max_wait_time);
 
   if (n == -1)
     {
@@ -216,15 +216,15 @@ TAO_SCIOP_Transport::get_listen_point (
     IIOP::ListenPointList &listen_point_list,
     TAO_Acceptor *acceptor)
 {
-  TAO_SCIOP_Acceptor *sciop_acceptor =
+  TAO_SCIOP_Acceptor * const sciop_acceptor =
     dynamic_cast<TAO_SCIOP_Acceptor *> (acceptor );
 
   // Get the array of endpoints serviced by TAO_SCIOP_Acceptor
-  ACE_INET_Addr const *endpoint_addr =
+  ACE_INET_Addr const * const endpoint_addr =
     sciop_acceptor->endpoints ();
 
   // Get the endpoint count
-  size_t count =
+  size_t const count =
     sciop_acceptor->endpoint_count ();
 
   // Get the local address of the connection

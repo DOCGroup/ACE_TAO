@@ -430,7 +430,7 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
   // HTTP URLs.
   // e.g.:  option1=foo&option2=bar
 
-  ACE_CString options (str);
+  ACE_CString const options (str);
 
   const size_t len = options.length ();
 

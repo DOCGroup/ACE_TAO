@@ -311,19 +311,19 @@ TAO_SCIOP_Profile::to_string () const
   TAO::ObjectKey::encode_sequence_to_string (key.inout(),
                                              this->ref_object_key_->object_key());
 
-  size_t buflen = (8 /* "corbaloc" */ +
-                   1 /* colon separator */ +
-                   std::strlen (::prefix_) +
-                   1 /* colon separator */ +
-                   1 /* major version */ +
-                   1 /* decimal point */ +
-                   1 /* minor version */ +
-                   1 /* `@' character */ +
-                   std::strlen (this->endpoint_.host ()) +
-                   1 /* colon separator */ +
-                   5 /* port number */ +
-                   1 /* object key separator */ +
-                   std::strlen (key.in ()));
+  size_t const buflen = (8 /* "corbaloc" */ +
+                         1 /* colon separator */ +
+                         std::strlen (::prefix_) +
+                         1 /* colon separator */ +
+                         1 /* major version */ +
+                         1 /* decimal point */ +
+                         1 /* minor version */ +
+                         1 /* `@' character */ +
+                         std::strlen (this->endpoint_.host ()) +
+                         1 /* colon separator */ +
+                         5 /* port number */ +
+                         1 /* object key separator */ +
+                         std::strlen (key.in ()));
 
   char * buf = CORBA::string_alloc (static_cast<CORBA::ULong> (buflen));
 
