@@ -14,7 +14,7 @@ ACE_URL_Local_Locator::url_query (const ACE_URL_Locator::ACE_Selection_Criteria 
                                   size_t &num_query,
                                   ACE_URL_Offer_Seq *offer)
 {
-  ACE_URL_Record *item = 0;
+  ACE_URL_Record *item {};
 
   ACE_NEW_RETURN (offer, ACE_URL_Offer_Seq (how_many), -1);
 
@@ -67,7 +67,7 @@ int
 ACE_URL_Local_Locator::export_offer (ACE_URL_Offer *offer,
                                      ACE_WString &offer_id)
 {
-  ACE_URL_Record *item = 0;
+  ACE_URL_Record *item {};
 
   // First check if we have registered this URL already.
   for (ACE_Unbounded_Set_Iterator<ACE_URL_Record> iter (this->repository_);
@@ -79,7 +79,7 @@ ACE_URL_Local_Locator::export_offer (ACE_URL_Offer *offer,
         return -1;
       }
 
-  ACE_URL_Record *new_offer;
+  ACE_URL_Record *new_offer {};
 
   // Offer is not in repository, we can add new one in safely.
   ACE_NEW_RETURN (new_offer, ACE_URL_Record (offer),
@@ -94,7 +94,7 @@ ACE_URL_Local_Locator::export_offer (ACE_URL_Offer *offer,
 int
 ACE_URL_Local_Locator::withdraw_offer (const ACE_WString &offer_id)
 {
-  ACE_URL_Record *item = 0;
+  ACE_URL_Record *item {};
 
   // Iterate thru repository and remove offer with <offer_id>.
   for (ACE_Unbounded_Set_Iterator<ACE_URL_Record> iter (this->repository_);
@@ -119,7 +119,7 @@ int
 ACE_URL_Local_Locator::describe_offer (const ACE_WString &offer_id,
                                        ACE_URL_Offer *offer)
 {
-  ACE_URL_Record *item = 0;
+  ACE_URL_Record *item {};
 
   // Iterate thru the repository and produce a copy of offer's
   // description.
@@ -143,8 +143,8 @@ ACE_URL_Local_Locator::modify_offer (const ACE_WString &offer_id,
                                      const ACE_URL_Property_Seq *modify)
 {
   ACE_Unbounded_Set_Iterator<ACE_URL_Record> iter (this->repository_);
-  ACE_URL_Record *item = 0;
-  ACE_URL_Record *target = 0;
+  ACE_URL_Record *item {};
+  ACE_URL_Record *target {};
 
   // Errno Checking
 
