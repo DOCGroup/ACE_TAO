@@ -17,16 +17,11 @@ TAO_DTP_Thread_Lane_Resources_Manager::TAO_DTP_Thread_Lane_Resources_Manager
     : TAO_Thread_Lane_Resources_Manager (orb_core)
 {
   // Create the default resources.
-  TAO_Thread_Lane_Resources *default_lane_resources {};
-  ACE_NEW (default_lane_resources,
-           TAO_Thread_Lane_Resources (orb_core));
-  this->default_lane_resources_.reset (default_lane_resources);
+  this->default_lane_resources_ =
+    std::make_unique<TAO_Thread_Lane_Resources> (orb_core);
 
   // Create the thread-pool manager.
-  TAO_DTP_Thread_Pool_Manager *tp_manager {};
-  ACE_NEW (tp_manager,
-           TAO_DTP_Thread_Pool_Manager (orb_core));
-  this->tp_manager_.reset (tp_manager);
+  this->tp_manager_ = std::make_unique<TAO_DTP_Thread_Pool_Manager> (orb_core);
 }
 
 TAO_DTP_Thread_Lane_Resources_Manager::~TAO_DTP_Thread_Lane_Resources_Manager () = default;

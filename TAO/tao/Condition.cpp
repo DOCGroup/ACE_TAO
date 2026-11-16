@@ -16,9 +16,7 @@ TAO_Condition<MUTEX>::TAO_Condition (MUTEX &m)
   : mutex_ (std::addressof (m))
 {
   // @todo: Need to add the allocatore here..
-  TAO_SYNCH_CONDITION *cond {};
-  ACE_NEW (cond, TAO_SYNCH_CONDITION (*this->mutex_));
-  this->cond_.reset (cond);
+  this->cond_ = std::make_unique<TAO_SYNCH_CONDITION> (*this->mutex_);
 }
 
 template <class MUTEX>
@@ -26,14 +24,10 @@ TAO_Condition<MUTEX>::TAO_Condition ()
     : mutex_ (nullptr)
 {
   // @todo: Need to add the allocatore here..
-  MUTEX *mutex {};
-  ACE_NEW (mutex, MUTEX);
-  this->owned_mutex_.reset (mutex);
+  this->owned_mutex_ = std::make_unique<MUTEX> ();
   this->mutex_ = this->owned_mutex_.get ();
 
-  TAO_SYNCH_CONDITION *cond {};
-  ACE_NEW (cond, TAO_SYNCH_CONDITION (*this->mutex_));
-  this->cond_.reset (cond);
+  this->cond_ = std::make_unique<TAO_SYNCH_CONDITION> (*this->mutex_);
 }
 
 template <class MUTEX>
