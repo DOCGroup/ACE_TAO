@@ -53,7 +53,10 @@ void twoway_set_update(FtRtecEventChannelAdmin::EventChannel_var successor,
       successor->set_update(state);
     }
     catch (const CORBA::COMM_FAILURE& ex){
-      if (ex.minor() == 6)   finished = false;
+      if (ex.minor() == 6)
+        {
+          finished = false;
+        }
       else
       {
         throw;
@@ -115,7 +118,10 @@ Basic_Replication_Strategy::add_member(const FTRT::ManagerInfo & info,
       successor->add_member(info, object_group_ref_version);
     }
     catch (const CORBA::COMM_FAILURE& ex){
-      if (ex.minor() == 6) finished = false;
+      if (ex.minor() == 6)
+        {
+          finished = false;
+        }
       else
       {
         throw;

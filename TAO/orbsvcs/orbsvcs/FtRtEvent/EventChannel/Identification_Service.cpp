@@ -30,7 +30,10 @@ namespace FTRTEC {
     while (argc > 1) {
       if ( ACE_OS::strcasecmp (argv[0], ACE_TEXT("-Object_ID")) == 0) {
         --argc; ++argv;
-        if (argv[0][0] == '-') continue;
+        if (argv[0][0] == '-')
+          {
+            continue;
+          }
         else if (argv[0][0] != '$') {
           TAO_FtRt::UUID uuid(argv[0]);
           if (!uuid.is_valid())
@@ -44,7 +47,10 @@ namespace FTRTEC {
       }
       else if (ACE_OS::strcasecmp (argv[0], ACE_TEXT("-Name")) ==0) {
         --argc; ++argv;
-        if (argv[0][0] == '-') continue;
+        if (argv[0][0] == '-')
+          {
+            continue;
+          }
         else if (argv[0][0] != '$') {
           name_[0].id = CORBA::string_dup(ACE_TEXT_ALWAYS_CHAR(argv[0]));
         }
