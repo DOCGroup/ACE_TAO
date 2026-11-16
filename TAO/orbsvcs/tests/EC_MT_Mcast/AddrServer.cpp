@@ -3,6 +3,9 @@
 #include "AddrServer.h"
 #include "ace/INET_Addr.h"
 
+#include <cstring>
+#include <memory>
+
 AddrServer::AddrServer (ACE_INET_Addr const& addr)
 {
 #if defined (ACE_HAS_IPV6)
@@ -11,7 +14,7 @@ AddrServer::AddrServer (ACE_INET_Addr const& addr)
       RtecUDPAdmin::UDP_Addr_v6 v6;
       sockaddr_in6 *in6 =
         reinterpret_cast<sockaddr_in6 *>(addr.get_addr());
-      ACE_OS::memcpy (v6.ipaddr, &in6->sin6_addr, 16);
+      std::memcpy (v6.ipaddr, std::addressof (in6->sin6_addr), sizeof (v6.ipaddr));
       v6.port = addr.get_port_number();
       this->addr_.v6_addr (v6);
       return;
