@@ -104,11 +104,14 @@ ACE_IOStream<STREAM>::ACE_IOStream (STREAM &stream,
   : iostream (nullptr),
     STREAM (stream)
 {
-  ACE_Streambuf_T<STREAM> *streambuf {};
-  ACE_NEW (streambuf,
-           ACE_Streambuf_T<STREAM> (static_cast<STREAM *> (this),
-                                    streambuf_size));
-  this->streambuf_.reset (streambuf);
+  this->streambuf_.reset (
+    new (ACE_nothrow) ACE_Streambuf_T<STREAM> (static_cast<STREAM *> (this),
+                                               streambuf_size));
+  if (this->streambuf_ == nullptr)
+    {
+      errno = ENOMEM;
+      return;
+    }
   iostream::init (this->streambuf_.get ());
 }
 
@@ -116,11 +119,14 @@ template <class STREAM>
 ACE_IOStream<STREAM>::ACE_IOStream (u_int streambuf_size)
   : iostream (nullptr)
 {
-  ACE_Streambuf_T<STREAM> *streambuf {};
-  ACE_NEW (streambuf,
-           ACE_Streambuf_T<STREAM> (static_cast<STREAM *> (this),
-                                    streambuf_size));
-  this->streambuf_.reset (streambuf);
+  this->streambuf_.reset (
+    new (ACE_nothrow) ACE_Streambuf_T<STREAM> (static_cast<STREAM *> (this),
+                                               streambuf_size));
+  if (this->streambuf_ == nullptr)
+    {
+      errno = ENOMEM;
+      return;
+    }
   iostream::init (this->streambuf_.get ());
 }
 
