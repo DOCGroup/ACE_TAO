@@ -38,13 +38,15 @@ public:
   /// Run the event service.
   int run (int argc, ACE_TCHAR *argv[]);
 
-  // = The RtecEventChannelAdmin::Event_Channel methods
+  /// @name RtecEventChannelAdmin::Event_Channel operations
+  //@{
   RtecEventChannelAdmin::ConsumerAdmin_ptr for_consumers () override;
   RtecEventChannelAdmin::SupplierAdmin_ptr for_suppliers () override;
   void destroy () override;
   RtecEventChannelAdmin::Observer_Handle
     append_observer (RtecEventChannelAdmin::Observer_ptr observer) override;
   void remove_observer (RtecEventChannelAdmin::Observer_Handle) override;
+  //@}
 
 private:
   Event_Service (Event_Service const &) = delete;

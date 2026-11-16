@@ -207,7 +207,6 @@ WUCS4_UTF16::WUCS4_UTF16 () = default;
 
 WUCS4_UTF16::~WUCS4_UTF16 () = default;
 
-// = Documented in $ACE_ROOT/ace/CDR_Stream.h
 ACE_CDR::Boolean
 WUCS4_UTF16::read_wchar (ACE_InputCDR &cdr, ACE_CDR::WChar &x)
 {

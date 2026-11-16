@@ -17,7 +17,6 @@
 
 WIBM1047_ISO8859::~WIBM1047_ISO8859 () = default;
 
-// = Documented in $ACE_ROOT/ace/CDR_Stream.h
 ACE_CDR::Boolean WIBM1047_ISO8859::read_wchar (ACE_InputCDR &,
                                                ACE_CDR::WChar &)
 {

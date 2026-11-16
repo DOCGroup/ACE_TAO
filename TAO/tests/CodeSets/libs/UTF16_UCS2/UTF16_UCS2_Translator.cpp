@@ -47,7 +47,6 @@ UTF16_UCS2_Translator::UTF16_UCS2_Translator (CONV_FRAME::CodeSetId tcs)
 
 UTF16_UCS2_Translator::~UTF16_UCS2_Translator () = default;
 
-// = Documented in $ACE_ROOT/ace/CDR_Stream.h
 ACE_CDR::Boolean
 UTF16_UCS2_Translator::read_wchar (ACE_InputCDR &cdr, ACE_CDR::WChar &x)
 {
