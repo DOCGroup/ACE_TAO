@@ -812,8 +812,6 @@ TAO_Marshal_Alias::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *stream)
 {
   // Typecode of the aliased type.
   CORBA::TypeCode_var tc2;
-  CORBA::Boolean const continue_skipping {true};
-
   // Status of decode operation.
   TAO::traverse_status retval =
     TAO::TRAVERSE_CONTINUE;
@@ -823,8 +821,7 @@ TAO_Marshal_Alias::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *stream)
   retval = TAO_Marshal_Object::perform_skip (tc2.in (), stream);
 
   //  tc2->_decr_refcnt ();
-  if (retval == TAO::TRAVERSE_CONTINUE
-      && continue_skipping)
+  if (retval == TAO::TRAVERSE_CONTINUE)
   {
     return TAO::TRAVERSE_CONTINUE;
   }

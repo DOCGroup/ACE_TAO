@@ -132,7 +132,7 @@ TAO::TypeCode::Union<StringType,
   CORBA::ULong const tc_count =
     tc->member_count ();
 
-  CORBA::Long tc_def = tc->default_index ();
+  CORBA::Long const tc_def = tc->default_index ();
 
   if (tc_count != this->ncases_
       || tc_def != this->default_index_)
@@ -187,7 +187,7 @@ TAO::TypeCode::Union<StringType,
   CORBA::ULong const tc_count =
     tc->member_count ();
 
-  CORBA::Long tc_def = tc->default_index ();
+  CORBA::Long const tc_def = tc->default_index ();
 
   if (tc_count != this->ncases_
       || tc_def != this->default_index_)
