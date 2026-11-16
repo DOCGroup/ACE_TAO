@@ -43,13 +43,15 @@ public:
   TAO_ESF_Copy_On_Read &operator= (TAO_ESF_Copy_On_Read const &) = delete;
   TAO_ESF_Copy_On_Read &operator= (TAO_ESF_Copy_On_Read &&) = delete;
 
-  // = The TAO_ESF_Proxy_Collection methods
+  /// @name The TAO_ESF_Proxy_Collection methods
+  /// @{
   void for_each (TAO_ESF_Worker<PROXY> *worker) override;
   void connected (PROXY *proxy) override;
   void reconnected (PROXY *proxy) override;
   void disconnected (PROXY *proxy) override;
   void shutdown () override;
 
+  /// @}
 private:
   COLLECTION collection_;
 

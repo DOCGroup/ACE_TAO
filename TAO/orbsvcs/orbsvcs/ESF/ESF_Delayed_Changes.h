@@ -113,13 +113,15 @@ public:
   using Shutdown_Command =
     TAO_ESF_Shutdown_Command<TAO_ESF_Delayed_Changes<PROXY, COLLECTION, ITERATOR, ACE_SYNCH_USE>>;
 
-  // = The TAO_ESF_Proxy methods
+  /// @name The TAO_ESF_Proxy methods
+  /// @{
   void for_each (TAO_ESF_Worker<PROXY> *worker) override;
   void connected (PROXY *proxy) override;
   void reconnected (PROXY *proxy) override;
   void disconnected (PROXY *proxy) override;
   void shutdown () override;
 
+  /// @}
 private:
   COLLECTION collection_;
 

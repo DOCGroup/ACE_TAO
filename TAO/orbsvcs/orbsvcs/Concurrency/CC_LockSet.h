@@ -83,7 +83,8 @@ public:
   CC_LockSet (CC_LockSet &&) = delete;
   CC_LockSet &operator = (CC_LockSet &&) = delete;
 
-  // = CosConcurrencyControl methods
+  /// @name CosConcurrencyControl methods
+  /// @{
   /// Acquires this lock. Blocks until lock is obtained
   void lock (CosConcurrencyControl::lock_mode mode) override;
 
@@ -98,10 +99,13 @@ public:
   void change_mode (CosConcurrencyControl::lock_mode held_mode,
                     CosConcurrencyControl::lock_mode new_mode) override;
 
-  // = Debugging methods
+  /// @}
+  /// @name Debugging methods
+  /// @{
   /// Dump the state of the object to stdout
   void dump () const;
 
+  /// @}
 private:
   /// Converts the CORBA specification's lock mode to the internal
   /// representation
