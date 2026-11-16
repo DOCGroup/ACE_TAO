@@ -111,19 +111,22 @@ public:
    */
   virtual ssize_t read_input (char *buf, size_t bufsiz);
 
-  // = Template Methods.
+  /// @name Template methods
+  /// @{
 
   /// Prints the user interface for the driver to STDOUT.
   virtual int display_menu () = 0;
 
   /// Initializes values and operations for the driver.
   virtual int init () = 0;
+  /// @}
 
 protected:
   /// timer queue
   TQ timer_queue_;
 
-  // = Set of <Command>s to be executed.
+  /// @name Commands to be executed
+  /// @{
 
   /// schedule timer command
   std::unique_ptr<Command<RECEIVER, ACTION>> schedule_cmd_ {};
@@ -136,6 +139,7 @@ protected:
 
   /// shutdown the driver.
   std::unique_ptr<Command<RECEIVER, ACTION>> shutdown_cmd_ {};
+  /// @}
 };
 
 #include "Driver.cpp"

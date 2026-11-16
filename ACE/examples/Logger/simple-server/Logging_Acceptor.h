@@ -43,10 +43,12 @@ public:
   int open (ACE_INET_Addr const &a);
 
 private:
-  // = Demuxing hooks.
+  /// @name Demuxing hooks
+  /// @{
   int handle_input (ACE_HANDLE) override;
   int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
   ACE_HANDLE get_handle () const override;
+  /// @}
 
   /// By making this private we ensure that the <Logging_Acceptor> is
   /// allocated dynamically.

@@ -66,7 +66,8 @@ public:
    */
   bool done () const;
 
-  // = Hook methods to be called from <Reactor_Timer_Queue_Test_Driver>
+  /// @name Hook methods called from Reactor_Timer_Queue_Test_Driver
+  /// @{
 
   /// Schedule a timer.  The (void *) will be mapped to the delay
   /// parameter for the timer queue schedule method.
@@ -82,6 +83,7 @@ public:
   /// Processes the request to exit the timer queue application.
   /// argument is ignored.
   int shutdown_timer (void *argument);
+  /// @}
 
 private:
   /// Observes the timer queue so this handler can traverse it.

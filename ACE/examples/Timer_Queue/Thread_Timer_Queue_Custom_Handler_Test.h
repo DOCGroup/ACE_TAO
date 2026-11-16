@@ -64,7 +64,8 @@ public:
   /// This method runs the event loop in the new thread.
   int svc () override;
 
-  // = Some helper methods.
+  /// @name Helper methods
+  /// @{
 
   /// Add a new timer to expire in <seconds> more.
   int add_timer (void *);
@@ -80,6 +81,7 @@ public:
 
   /// Dump the state of the timer queue.
   void dump ();
+  /// @}
 
 private:
   /// The timer queue implementation.
