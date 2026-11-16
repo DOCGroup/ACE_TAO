@@ -24,6 +24,7 @@
 
 #include <cstring>
 #include <cstdio>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -56,7 +57,7 @@ TAO_LB_LoadManager::TAO_LB_LoadManager (int ping_timeout,
     ping_timeout_ (ping_timeout * 10000),
     ping_interval_ (ping_interval)
 {
-  this->pull_handler_.initialize (&this->monitor_map_, this);
+  this->pull_handler_.initialize (std::addressof (this->monitor_map_), this);
 
   // @note "this->initialize()" is not called here (in the constructor)
   //       since it may thrown an exception.  Throwing an exception in
@@ -381,7 +382,7 @@ TAO_LB_LoadManager::register_load_monitor (
       // handler.
       ACE_Time_Value interval (TAO_LB_PULL_HANDLER_INTERVAL, 0);
       ACE_Time_Value restart (TAO_LB_PULL_HANDLER_RESTART, 0);
-      this->timer_id_ = this->reactor_->schedule_timer (&this->pull_handler_,
+      this->timer_id_ = this->reactor_->schedule_timer (std::addressof (this->pull_handler_),
                                                         0,
                                                         interval,
                                                         restart);
