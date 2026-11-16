@@ -64,11 +64,12 @@ public:
   ///FUZZ: enable check_for_lack_ACE_OS
   int open (void *args = nullptr) override;
 
-  // = Here are the methods exported by the class. They return an
-  // <ACE_Future>.
+  /// @name Future-returning methods
+  /// @{
   ACE_Future<u_long> work (u_long param, int count = 1);
   ACE_Future<std::string> name ();
   void end ();
+  /// @}
 
 private:
   //FUZZ: disable check_for_lack_ACE_OS
@@ -79,10 +80,12 @@ private:
   /// Here the actual servicing of all requests is happening..
   int svc () override;
 
-  // = Implementation methods.
+  /// @name Implementation methods
+  /// @{
   u_long work_i (u_long, int) const;
   std::string name_i () const;
   int enqueue (std::unique_ptr<ACE_Method_Request> request);
+  /// @}
 
   std::string const name_;
   ACE_Activation_Queue activation_queue_;

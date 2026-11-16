@@ -34,7 +34,7 @@ public:
   void data (void *v) { this->data_ = v; }
 
 private:
-  // = data_ will be thread-specific data so it doesn't need a lock.
+  /// Thread-specific data that does not need a lock.
   void *data_ {};
 };
 

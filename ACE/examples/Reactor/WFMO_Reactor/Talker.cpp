@@ -207,12 +207,14 @@ private:
   /// something is added to the queue.
   ACE_Reactor_Notification_Strategy strategy_;
 
-  // = Remote peer info.
+  /// @name Remote peer information
+  /// @{
   /// Name of remote host.
   ACE_TCHAR const *host_ {};
 
   /// Port number for remote host.
   u_short port_ {};
+  /// @}
 
   /// Read stream
   ACE_Asynch_Read_Stream rd_stream_;

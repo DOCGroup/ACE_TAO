@@ -36,14 +36,13 @@ public:
   }
 
 private:
-  // = errno_ and lineno_ will be thread-specific data so they don't
-  // need a lock.
+  /// Thread-specific values that do not need a lock.
   int errno_ {};
   int lineno_ {};
 
   static int flags_;
 #if defined (ACE_HAS_THREADS)
-  // flags_ needs a lock.
+  /// Protects the shared flags_ value.
   static ACE_Thread_Mutex lock_;
 #endif /* ACE_HAS_THREADS */
 };

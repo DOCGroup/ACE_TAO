@@ -33,29 +33,27 @@ public:
   Worker_Task &operator= (Worker_Task const &) = delete;
   Worker_Task &operator= (Worker_Task &&) = delete;
 
+  /// Produces input for workers.
   virtual int producer ();
-  // produce input for workers
 
+  /// Fills one message block via the selected input strategy.
   virtual int input (ACE_Message_Block_Unique_Ptr &mb);
-  // Fill one message block via a certain input strategy.
 
+  /// Forwards one message block via the selected output strategy.
   virtual int output (ACE_Message_Block *mb);
-  // Forward one message block via a certain output strategy to the
-  // next task if any.
 
+  /// Performs one message block-dependent service.
   virtual int service (ACE_Message_Block *mb, int iter);
-  // Perform one message block dependant service.
 
 private:
   int put (ACE_Message_Block *mb, ACE_Time_Value *tv=nullptr) override;
   int put_owned (ACE_Message_Block_Unique_Ptr &mb);
 
+  /// Prints a message and waits for all other threads on each iteration.
   int svc () override;
-  // Iterate <n_iterations> time printing off a message and "waiting"
-  // for all other threads to complete this iteration.
 
   //FUZZ: disable check_for_lack_ACE_OS
-  // = Not needed for this test.
+  /// These lifecycle hooks are not needed for this test.
   int open (void *) override { return 0; }
   int close (u_long) override
   {
@@ -66,8 +64,8 @@ private:
     return 0;
   }
 
+  /// Number of worker threads to run.
   int nt_;
-  // Number of worker threads to run.
 
   int inp_serialize_;
 
