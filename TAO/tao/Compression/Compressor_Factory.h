@@ -29,6 +29,8 @@ namespace TAO
     public virtual ::CORBA::LocalObject
   {
   public:
+    CompressorFactory () = delete;
+
     explicit CompressorFactory (::Compression::CompressorId compressor_id);
 
     ::Compression::CompressorId compressor_id () override;

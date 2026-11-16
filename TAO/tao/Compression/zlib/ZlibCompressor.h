@@ -29,6 +29,8 @@ namespace TAO
   class TAO_ZLIBCOMPRESSOR_Export ZlibCompressor : public BaseCompressor
   {
     public:
+      ZlibCompressor () = delete;
+
       ZlibCompressor (::Compression::CompressorFactory_ptr compressor_factory,
                       ::Compression::CompressionLevel compression_level);
 

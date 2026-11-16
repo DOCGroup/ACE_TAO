@@ -32,6 +32,8 @@ namespace TAO
     public virtual ::CORBA::LocalObject
   {
   public:
+    BaseCompressor () = delete;
+
     BaseCompressor (::Compression::CompressorFactory_ptr compressor_factory,
                     ::Compression::CompressionLevel compression_level);
 
