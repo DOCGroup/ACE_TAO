@@ -625,8 +625,27 @@ TAO::Storable_FlatFileStream::create_backup ()
             }
           break;
         }
-      FILE * backup = ACE_OS::fopen (this->backup_file_name ().c_str (), "w");
-      result = file_copy(this->fl_, backup);
+      std::unique_ptr<FILE, int (*) (FILE *)> backup (
+        ACE_OS::fopen (this->backup_file_name ().c_str (), "w"),
+        ACE_OS::fclose);
+      if (!backup)
+        {
+          result = -1;
+          if (TAO_debug_level > 0)
+            {
+              TAOLIB_ERROR ((LM_ERROR,
+                             ACE_TEXT ("TAO: (%P|%t) Storable_FlatFileStream::")
+                             ACE_TEXT ("create_backup Unable to create backup ")
+                             ACE_TEXT ("of file %s\n"), file_.c_str ()));
+            }
+          if (errno != EBADF)
+            {
+              break;
+            }
+          continue;
+        }
+
+      result = file_copy (this->fl_, backup.get ());
       if (result != 0)
         {
           if (TAO_debug_level > 0)
@@ -638,11 +657,9 @@ TAO::Storable_FlatFileStream::create_backup ()
             }
           if (errno != EBADF)
             {
-              ACE_OS::fclose (backup);
               break;
             }
         }
-      ACE_OS::fclose (backup);
     }
   return result;
 }
@@ -668,17 +685,27 @@ TAO::Storable_FlatFileStream::restore_backup ()
     return -1;
   }
 
-  if (std::strchr (this->mode_.c_str(),'w') == nullptr)
+  std::unique_ptr<FILE, int (*) (FILE *)> backup (
+    ACE_OS::fopen (backup_name.c_str (), "r"),
+    ACE_OS::fclose);
+  if (!backup)
+    {
+      return -1;
+    }
+
+  if (std::strchr (this->mode_.c_str (), 'w') == nullptr)
     {
       this->mode_ += 'w';
     }
-  this->reopen ();
 
-  FILE * backup = ACE_OS::fopen (backup_name.c_str (),
-                                 "r");
-  this->rewind();
-  int result = file_copy(backup, this->fl_);
-  ACE_OS::fclose (backup);
+  if (this->reopen () != 0)
+    {
+      return -1;
+    }
+
+  this->rewind ();
+  int const result = file_copy (backup.get (), this->fl_);
+  backup.reset ();
   this->flush ();
   this->clear ();
   return result;
