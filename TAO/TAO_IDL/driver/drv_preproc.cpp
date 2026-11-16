@@ -958,6 +958,19 @@ DRV_get_orb_idl_includes ()
 
 }
 
+static void
+DRV_check_temp_file_write (int result, std::string const& filename)
+{
+  if (result < 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%C: cannot write temp file \"%C\": %m\n",
+                  idl_global->prog_name ().c_str (),
+                  filename.c_str ()));
+      throw Bailout ();
+    }
+}
+
 // Copy to a file.
 static void
 DRV_copy_input (FILE *fin,
@@ -986,16 +999,10 @@ DRV_copy_input (FILE *fin,
     }
 
 #if !defined (ACE_WIN32)
-  if (std::fprintf (f,
-                    "#line 1 \"%s\"\n",
-                    orig_filename.c_str ()) < 0)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "%C: cannot write temp file \"%C\": %m\n",
-                  idl_global->prog_name ().c_str (),
-                  fn.c_str ()));
-      throw Bailout ();
-    }
+  DRV_check_temp_file_write (std::fprintf (f,
+                                           "#line 1 \"%s\"\n",
+                                           orig_filename.c_str ()),
+                             fn);
 #else
   // Convert single \ into double \ otherwise MSVC++ pre-processor
   // gets awfully confused.
@@ -1013,16 +1020,10 @@ DRV_copy_input (FILE *fin,
       escaped_filename.push_back (current_character);
     }
 
-  if (std::fprintf (f,
-                    "#line 1 \"%s\"\n",
-                    escaped_filename.c_str ()) < 0)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "%C: cannot write temp file \"%C\": %m\n",
-                  idl_global->prog_name ().c_str (),
-                  fn.c_str ()));
-      throw Bailout ();
-    }
+  DRV_check_temp_file_write (std::fprintf (f,
+                                           "#line 1 \"%s\"\n",
+                                           escaped_filename.c_str ()),
+                             fn);
 #endif /* ! ACE_WIN32 */
 
   while (DRV_get_line (fin))
@@ -1030,14 +1031,8 @@ DRV_copy_input (FILE *fin,
       DRV_convert_includes (drv_line);
 
       // Print the line to the temporary file.
-      if (std::fprintf (f, "%s\n", drv_line.c_str ()) < 0)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "%C: cannot write temp file \"%C\": %m\n",
-                      idl_global->prog_name ().c_str (),
-                      fn.c_str ()));
-          throw Bailout ();
-        }
+      DRV_check_temp_file_write (std::fprintf (f, "%s\n", drv_line.c_str ()),
+                                 fn);
 
       // We really need to know whether this line is a "#include
       // ...". If so, we would like to separate the "file name" and
