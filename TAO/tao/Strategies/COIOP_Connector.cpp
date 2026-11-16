@@ -54,7 +54,7 @@ TAO_COIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                                       ACE_Time_Value * /*max_wait_time*/)
 {
   // No remote connection possible with COIOP
-  return 0;
+  return nullptr;
 }
 
 TAO_Profile *
