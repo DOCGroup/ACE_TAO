@@ -12,6 +12,8 @@
 #include "tao/debug.h"
 #include "orbsvcs/Concurrency/Concurrency_Utils.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Constructor which takes an ORB and POA.
@@ -41,7 +43,7 @@ TAO_Concurrency_Server::init (CORBA::ORB_ptr orb,
         PortableServer::string_to_ObjectId ("ConcurrencyService");
 
       poa->activate_object_with_id (id.in (),
-                                    &this->lock_set_factory_);
+                                    std::addressof (this->lock_set_factory_));
 
       // Stringify the objref we'll be implementing, and print it to
       // stdout.  Someone will take that string and give it to a
@@ -71,7 +73,7 @@ TAO_Concurrency_Server::fini ()
   try
     {
       PortableServer::ObjectId_var id =
-        this->poa_->servant_to_id (&this->lock_set_factory_);
+        this->poa_->servant_to_id (std::addressof (this->lock_set_factory_));
 
       this->poa_->deactivate_object (id.in ());
     }
@@ -91,7 +93,7 @@ TAO_Concurrency_Server::fini ()
 CC_LockSetFactory *
 TAO_Concurrency_Server::GetLockSetFactory ()
 {
-  return &this->lock_set_factory_;
+  return std::addressof (this->lock_set_factory_);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
