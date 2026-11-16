@@ -77,9 +77,9 @@ ACE_RLECompressor::compress (void const *in_ptr,
           out_p[out_base] = static_cast<ACE_Byte> (run_count++ | (run_code ? 0x80 : 0));
 
           if (out_index >= max_out_len)
-          {
-            return (std::numeric_limits<ACE_UINT64>::max) ();
-          }
+            {
+              return (std::numeric_limits<ACE_UINT64>::max) ();
+            }
           out_p[out_index++] = cur_byte;
         }
       this->update_stats (src_len, out_index);
@@ -109,13 +109,15 @@ ACE_RLECompressor::decompress (void const *in_ptr,
           size_t const cpy_len {static_cast<size_t> ((cur_byte & ACE_CHAR_MAX) + 1)};
 
           if (cpy_len > max_out_len)
-            return (std::numeric_limits<ACE_UINT64>::max) ();
+            {
+              return (std::numeric_limits<ACE_UINT64>::max) ();
+            }
           else if ((cur_byte & 0x80) != 0)
             {
               if (in_len == 0)
-              {
-                return (std::numeric_limits<ACE_UINT64>::max) ();
-              }
+                {
+                  return (std::numeric_limits<ACE_UINT64>::max) ();
+                }
               --in_len;
               std::memset (out_p, *in_p++, cpy_len);
             }
@@ -126,9 +128,9 @@ ACE_RLECompressor::decompress (void const *in_ptr,
               in_len -= cpy_len;
             }
           else
-          {
-            return (std::numeric_limits<ACE_UINT64>::max) ();
-          }
+            {
+              return (std::numeric_limits<ACE_UINT64>::max) ();
+            }
 
           out_p += cpy_len;
           max_out_len -= cpy_len;
