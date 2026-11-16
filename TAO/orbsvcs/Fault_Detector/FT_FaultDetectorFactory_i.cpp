@@ -403,16 +403,16 @@ void TAO::FT_FaultDetectorFactory_i::remove_detector (
     else
     {
       ORBSVCS_ERROR (( LM_ERROR,
-        "Remove detector %d mismatch.\n",
-        static_cast<int> (id)
+        "Remove detector %u mismatch.\n",
+        id
         ));
     }
   }
   else
   {
     ORBSVCS_ERROR (( LM_ERROR,
-      "Attempt to remove invalid detector %d. Limit %B.\n",
-      static_cast<int> (id),
+      "Attempt to remove invalid detector %u. Limit %B.\n",
+      id,
       this->detectors_.size ()
       ));
   }
