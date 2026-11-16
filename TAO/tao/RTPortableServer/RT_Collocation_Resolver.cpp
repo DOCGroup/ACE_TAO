@@ -21,7 +21,7 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object) const
   // Make sure that the servant is in the same ORB that created this
   // object.
   if (!object->_is_collocated ())
-  {
+    {
     return false;
   }
 
@@ -41,7 +41,7 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object) const
   // If the target POA does not have a dedicated thread pool, then all
   // calls to it are collocated.
   if (target_thread_pool == nullptr)
-  {
+    {
     return true;
   }
 
@@ -64,21 +64,21 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object) const
   // different pool than POA.  Therefore, this object is not
   // collocated.
   if (current_thread_pool != target_thread_pool)
-  {
+    {
     return false;
   }
 
   // If the current thread and the POA are in the default thread pool,
   // then the object is collocated.
   if (current_thread_pool == nullptr)
-  {
+    {
     return true;
   }
 
   // If the current thread and the POA are in a thread pool without
   // lanes, then the object is collocated.
   if (!current_thread_pool->with_lanes ())
-  {
+    {
     return true;
   }
 
@@ -92,7 +92,7 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object) const
   // because the current thread is of the correct priority :-) and
   // we'll simple use the current thread to run the upcall.
   if (priority_model == TAO::Portable_Server::Cached_Policies::CLIENT_PROPAGATED)
-  {
+    {
     return true;
   }
 
@@ -102,7 +102,7 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object) const
 
   if (-1 == poa->find_servant_priority (servant_upcall.system_id_,
                                         target_priority))
-  {
+    {
     return false;
   }
 
@@ -111,7 +111,7 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object) const
   if (target_priority == current_thread_lane->lane_priority ())
     return true;
   else
-  {
+    {
     return false;
   }
 }

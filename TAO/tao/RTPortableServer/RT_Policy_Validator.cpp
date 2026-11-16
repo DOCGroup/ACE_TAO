@@ -126,7 +126,7 @@ TAO_POA_RT_Policy_Validator::validate_server_protocol (TAO_Policy_Set &policies)
         }
 
       if (!found)
-      {
+        {
         throw PortableServer::POA::InvalidPolicy ();
       }
     }
@@ -172,7 +172,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies)
     {
       if (this->thread_pool_ != nullptr &&
           this->thread_pool_->with_lanes ())
-      {
+        {
         throw PortableServer::POA::InvalidPolicy ();
       }
     }
@@ -201,7 +201,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies)
     {
       // Checks 0.
       if (rt_priority_model == TAO::Portable_Server::Cached_Policies::NOT_SPECIFIED)
-      {
+        {
         throw PortableServer::POA::InvalidPolicy ();
       }
 
@@ -210,7 +210,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies)
 
       // Checks 1.
       if (bands.length () == 0)
-      {
+        {
         throw PortableServer::POA::InvalidPolicy ();
       }
 
@@ -247,7 +247,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies)
             }
 
           if (!match)
-          {
+            {
             throw PortableServer::POA::InvalidPolicy ();
           }
         }
@@ -261,7 +261,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies)
       // the checks.
       if (this->thread_pool_ == nullptr ||
           !this->thread_pool_->with_lanes ())
-      {
+        {
         return;
       }
 
@@ -286,7 +286,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies)
                 }
             }
           if (!match)
-          {
+            {
             throw PortableServer::POA::InvalidPolicy ();
           }
         }
@@ -306,7 +306,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies)
       // the checks.
       if (this->thread_pool_ == nullptr ||
           !this->thread_pool_->with_lanes ())
-      {
+        {
         return;
       }
 
@@ -326,7 +326,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies)
             }
         }
       if (!match)
-      {
+        {
         throw PortableServer::POA::InvalidPolicy ();
       }
 
@@ -457,7 +457,7 @@ TAO_POA_RT_Policy_Validator::server_protocol_policy_from_acceptor_registry (RTCO
   for (std::unique_ptr<TAO_Acceptor> const &acceptor : acceptor_registry.acceptors ())
     {
       if (acceptor == nullptr)
-      {
+        {
         continue;
       }
 
@@ -471,13 +471,13 @@ TAO_POA_RT_Policy_Validator::server_protocol_policy_from_acceptor_registry (RTCO
            ++i)
         {
           if (protocols[i].protocol_type == acceptor->tag ())
-          {
+            {
             protocol_already_present = true;
           }
         }
 
       if (protocol_already_present)
-      {
+        {
         continue;
       }
 
@@ -507,7 +507,7 @@ TAO_POA_RT_Policy_Validator::extract_thread_pool (TAO_ORB_Core &orb_core,
     RTCORBA::ThreadpoolPolicy::_narrow (policy.in ());
 
   if (CORBA::is_nil (thread_pool_policy.in ()))
-  {
+    {
     return nullptr;
   }
 
@@ -522,7 +522,7 @@ TAO_POA_RT_Policy_Validator::extract_thread_pool (TAO_ORB_Core &orb_core,
     dynamic_cast <TAO_RT_ORB *> (rt_orb.in ());
 
   if (tao_rt_orb == nullptr)
-  {
+    {
     throw CORBA::INTERNAL ();
   }
 
@@ -532,7 +532,7 @@ TAO_POA_RT_Policy_Validator::extract_thread_pool (TAO_ORB_Core &orb_core,
     tp_manager.get_threadpool (thread_pool_id);
 
   if (thread_pool == nullptr)
-  {
+    {
     throw PortableServer::POA::InvalidPolicy ();
   }
 

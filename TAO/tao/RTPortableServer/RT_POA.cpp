@@ -130,7 +130,7 @@ TAO_RT_POA::validate_priority (RTCORBA::Priority priority)
       for (std::unique_ptr<TAO_Thread_Lane> const &lane : this->thread_pool_->lanes ())
         {
           if (lane->lane_priority () == priority)
-          {
+            {
             return;
           }
         }
@@ -165,7 +165,7 @@ TAO_RT_POA::validate_priority (RTCORBA::Priority priority)
             {
               if (bands[i].low <= priority &&
                   bands[i].high >= priority)
-              {
+                {
                 return;
               }
             }
@@ -322,7 +322,7 @@ TAO_RT_POA::create_stub_object (TAO::ObjectKey const &object_key,
   int result =
     mprofile.set (static_cast <CORBA::ULong> (profile_count));
   if (result == -1)
-  {
+    {
     error = true;
   }
 
@@ -331,7 +331,7 @@ TAO_RT_POA::create_stub_object (TAO::ObjectKey const &object_key,
   for (std::unique_ptr<TAO_Thread_Lane> const &lane : this->thread_pool_->lanes ())
     {
       if (error)
-      {
+        {
         break;
       }
 
@@ -346,18 +346,18 @@ TAO_RT_POA::create_stub_object (TAO::ObjectKey const &object_key,
                                   acceptor_registry.acceptors (),
                                   lane->lane_priority ());
           if (result == -1)
-          {
+            {
             error = true;
           }
         }
     }
 
   if (!error)
-  {
+    {
     result = filter->encode_endpoints (mprofile);
   }
   if (result == -1)
-  {
+    {
     error = true;
   }
 
@@ -399,7 +399,7 @@ TAO_RT_POA::lane_required (TAO_Thread_Lane *lane,
                            TAO_PriorityBandedConnectionPolicy *priority_bands)
 {
   if (priority_bands == nullptr)
-  {
+    {
     return true;
   }
 
@@ -412,7 +412,7 @@ TAO_RT_POA::lane_required (TAO_Thread_Lane *lane,
     {
       if (bands[i].low <= lane->lane_priority () &&
           bands[i].high >= lane->lane_priority ())
-      {
+        {
         return true;
       }
     }
@@ -452,7 +452,7 @@ TAO_RT_POA::client_exposed_policies (CORBA::Short object_priority)
       if (priority_model == TAO::Portable_Server::Cached_Policies::CLIENT_PROPAGATED)
         priority = poa_priority;
       else
-      {
+        {
         priority = object_priority;
       }
 
