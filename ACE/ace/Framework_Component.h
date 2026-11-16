@@ -44,6 +44,7 @@
 #include "ace/os_include/os_signal.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/Synch_Traits.h"
+#include <memory>
 
 #define ACE_DEFAULT_FRAMEWORK_REPOSITORY_SIZE 1024
 
@@ -161,6 +162,11 @@ protected:
   ACE_Framework_Repository (int size = ACE_Framework_Repository::DEFAULT_SIZE);
 
 private:
+  struct Component_Array_Deleter
+  {
+    void operator() (ACE_Framework_Component **components) const;
+  };
+
   /// Actually removes the dll components, must be called with locks held.
   int remove_dll_components_i (const ACE_TCHAR *dll_name);
 
@@ -172,7 +178,7 @@ private:
   /// otherwise it uses new[]. The repository manually owns its entries
   /// because ACE_Framework_Component's destructor is protected and this
   /// class is its friend.
-  ACE_Framework_Component **component_vector_ {};
+  std::unique_ptr<ACE_Framework_Component *[], Component_Array_Deleter> component_vector_ {};
 
   /// Current number of components.
   int current_size_ {};

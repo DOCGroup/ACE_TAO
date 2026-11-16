@@ -24,6 +24,17 @@ ACE_Framework_Component::~ACE_Framework_Component ()
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Framework_Repository)
 
+void
+ACE_Framework_Repository::Component_Array_Deleter::operator() (
+  ACE_Framework_Component **components) const
+{
+#if defined (ACE_HAS_ALLOC_HOOKS)
+  ACE_Allocator::instance ()->free (components);
+#else
+  delete [] components;
+#endif /* ACE_HAS_ALLOC_HOOKS */
+}
+
 sig_atomic_t ACE_Framework_Repository::shutting_down_ {};
 
 // Pointer to the Singleton instance.
@@ -52,7 +63,7 @@ ACE_Framework_Repository::open (int size)
                   -1);
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
-  this->component_vector_ = temp;
+  this->component_vector_.reset (temp);
   this->total_size_ = size;
   return 0;
 }
@@ -78,12 +89,7 @@ ACE_Framework_Repository::close ()
             delete component;
           }
 
-#if defined (ACE_HAS_ALLOC_HOOKS)
-      ACE_Allocator::instance()->free(this->component_vector_);
-#else
-      delete [] this->component_vector_;
-#endif /* ACE_HAS_ALLOC_HOOKS */
-      this->component_vector_ = nullptr;
+      this->component_vector_.reset ();
       this->current_size_ = 0;
     }
 
