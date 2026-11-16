@@ -295,10 +295,9 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << "return true;" << be_uidt_nl
       << "}";
 
-  // If we inherit from CORBA::Object and/or CORBA::AbstractBase
-  // (in addition to CORBA::ValueBase) we have to add these
-  // to avoid ambiguity.
-  if (node->n_supports () > 0)
+  // AbstractBase requires _tao_to_value () for valuetypes that support
+  // abstract interfaces.
+  if (node->supports_abstract ())
     {
       *os << be_nl_2
           << "::CORBA::ValueBase *" << be_nl

@@ -243,7 +243,11 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       *os << be_uidt_nl << be_nl << "public:" << be_idt_nl;
       *os << be_nl << "void _add_ref () override = 0;" << be_nl;
       *os << "void _remove_ref () override = 0;" << be_nl;
-      *os << "::CORBA::ValueBase *_tao_to_value () override;";
+      // Only AbstractBase declares _tao_to_value ().
+      if (node->supports_abstract ())
+        {
+          *os << "::CORBA::ValueBase *_tao_to_value () override;";
+        }
     }
 
   // Generate the "protected" constructor so that users cannot

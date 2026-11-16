@@ -1215,6 +1215,17 @@ DRV_pre_proc (std::string const& myfile)
                       copy_output_file.get (),
                       tmp_ifile,
                       myfile);
+      if (ACE_OS::fclose (copy_output_file.release ()) == EOF)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%C: cannot close temp file \"%C\" after copying from \"%C\": %m\n",
+                      idl_global->prog_name ().c_str (),
+                      tmp_ifile.c_str (),
+                      myfile.c_str ()));
+          (void) ACE_OS::unlink (tmp_ifile.c_str ());
+          (void) ACE_OS::unlink (tmp_file.c_str ());
+          throw Bailout ();
+        }
     }
   else
     {
