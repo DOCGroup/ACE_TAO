@@ -305,7 +305,10 @@ TAO_SCIOP_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
 
           latest->next_ = dynamic_cast<TAO_SCIOP_Endpoint *> (tmp_ep);
 
-          if (latest->next_ == nullptr) return count;
+          if (latest->next_ == nullptr)
+            {
+              return count;
+            }
 
           latest = latest->next_;
           ++count;
@@ -320,7 +323,10 @@ TAO_SCIOP_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
       latest->next_ =
         dynamic_cast<TAO_SCIOP_Endpoint *> (tmp_ep);
 
-      if (latest->next_ == nullptr) return count;
+      if (latest->next_ == nullptr)
+        {
+          return count;
+        }
 
       latest->next_->preferred_path_.host = (const char *) 0;
       ++count;
