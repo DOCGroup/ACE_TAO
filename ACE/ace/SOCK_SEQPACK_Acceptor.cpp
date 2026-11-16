@@ -379,9 +379,7 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
                 // copy only the sockaddrs that we need to bindx
                 for (size_t i = 0; i < num_addresses - 1; ++i)
                 {
-                  ACE_OS::memcpy(&(local_sockaddr[i]),
-                                 &(local_inet_addrs[i + 1]),
-                                 sizeof(sockaddr_in));
+                  ACE_OS::memcpy(&(local_sockaddr[i]), &(local_inet_addrs[i + 1]), sizeof(sockaddr_in));
                 }
 
                 // now call bindx

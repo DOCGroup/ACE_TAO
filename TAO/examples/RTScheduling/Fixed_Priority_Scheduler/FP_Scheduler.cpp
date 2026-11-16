@@ -143,9 +143,7 @@ Fixed_Priority_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_p
   IOP::ServiceContext* srv_con = new IOP::ServiceContext;
   srv_con->context_id = Client_Interceptor::SchedulingInfo;
   srv_con->context_data.length (sizeof (size_t));
-  ACE_OS::memcpy (srv_con->context_data.get_buffer (),
-                  guid->get_buffer (),
-                  sizeof (size_t));
+  ACE_OS::memcpy (srv_con->context_data.get_buffer (), guid->get_buffer (), sizeof (size_t));
   request_info->add_request_service_context (*srv_con,
                                              0);
 }
@@ -163,9 +161,7 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
   if (serv_cxt != 0)
     {
       size_t gu_id;
-      ACE_OS::memcpy (&gu_id,
-                      serv_cxt->context_data.get_buffer (),
-                      serv_cxt->context_data.length ());
+      ACE_OS::memcpy (&gu_id, serv_cxt->context_data.get_buffer (), serv_cxt->context_data.length ());
 
       ACE_TCHAR msg [BUFSIZ];
       ACE_OS::sprintf (msg,
@@ -182,9 +178,7 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
       // Generate GUID.
       guid->length (sizeof(size_t));
 
-      ACE_OS::memcpy (guid->get_buffer (),
-                      &gu_id,
-                      sizeof(size_t));
+      ACE_OS::memcpy (guid->get_buffer (), &gu_id, sizeof(size_t));
 
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,

@@ -190,9 +190,7 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
         // copy all of the secondary addrs into a sockaddr structure
         for (size_t i = 0; i < num_addresses - 1; ++i)
         {
-          ACE_OS::memcpy(&(local_sockaddr[i]),
-                         &(local_inet_addrs[i + 1]),
-                         sizeof(sockaddr_in));
+          ACE_OS::memcpy(&(local_sockaddr[i]), &(local_inet_addrs[i + 1]), sizeof(sockaddr_in));
         }
 
         // bind other ifaces

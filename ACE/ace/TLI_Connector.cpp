@@ -87,9 +87,7 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
             {
               void *addr_buf = local_sap.get_addr ();
               localaddr->addr.len = local_sap.get_size ();
-              ACE_OS::memcpy(localaddr->addr.buf,
-                             addr_buf,
-                             localaddr->addr.len);
+              ACE_OS::memcpy(localaddr->addr.buf, addr_buf, localaddr->addr.len);
 
               if (ACE_OS::t_bind (new_stream.get_handle (),
                                   localaddr,
@@ -124,9 +122,7 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
 
   void *addr_buf = remote_sap.get_addr ();
   callptr->addr.len = remote_sap.get_size ();
-  ACE_OS::memcpy (callptr->addr.buf,
-                  addr_buf,
-                  callptr->addr.len);
+  ACE_OS::memcpy (callptr->addr.buf, addr_buf, callptr->addr.len);
   //callptr->addr.buf = (char *) remote_sap.get_addr ();
 
   if (udata != 0)

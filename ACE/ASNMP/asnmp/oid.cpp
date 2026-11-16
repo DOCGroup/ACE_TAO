@@ -509,8 +509,7 @@ Oid& Oid::operator+=( const Oid &o)
     }
 
   if (old_length != 0)
-    ACE_OS::memcpy (new_oid.get (), smival.value.oid.ptr,
-                    old_length * sizeof (SmiUINT32));
+    ACE_OS::memcpy (new_oid.get (), smival.value.oid.ptr, old_length * sizeof (SmiUINT32));
 
   ACE_OS::memcpy (new_oid.get () + old_length, o.smival.value.oid.ptr,
                   o.smival.value.oid.len * sizeof (SmiUINT32));

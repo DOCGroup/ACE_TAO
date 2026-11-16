@@ -206,9 +206,7 @@ ACE_ATM_Stream::get_vpi_vci (ACE_UINT16 &vpi,
     return -1;
   }
 
-  ACE_OS::memcpy (connect_opts,
- (char *) popt_ret + sizeof (struct t_opthdr),
-                 opt_size);
+  ACE_OS::memcpy (connect_opts, (char *) popt_ret + sizeof (struct t_opthdr), opt_size);
 
   ACE_OS::free (buf_ret);
   ACE_OS::free (buf_req);

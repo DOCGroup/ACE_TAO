@@ -140,9 +140,7 @@ ACE_ATM_QoS::ACE_ATM_QoS(int rate,
   ie_ptr->IELength = sizeof( Q2931_IE_TYPE )
     + sizeof( ULONG )
     + sizeof( ATM_BROADBAND_BEARER_CAPABILITY_IE );
-  ACE_OS::memcpy(ie_ptr->IE,
-                 &ie_bbc,
-                 sizeof(ATM_BROADBAND_BEARER_CAPABILITY_IE));
+  ACE_OS::memcpy(ie_ptr->IE, &ie_bbc, sizeof(ATM_BROADBAND_BEARER_CAPABILITY_IE));
 
   ie_ptr = (Q2931_IE *) ((char *)ie_ptr + ie_ptr->IELength);
   ie_ptr->IEType = IE_QOSClass;
@@ -320,9 +318,7 @@ ACE_ATM_QoS::set_cbr_rate (int rate,
   ie_ptr->IELength = sizeof( Q2931_IE_TYPE ) +
                      sizeof( ULONG ) +
                      sizeof( ATM_BROADBAND_BEARER_CAPABILITY_IE );
-  ACE_OS::memcpy( ie_ptr->IE,
-                  &ie_bbc,
-                  sizeof( ATM_BROADBAND_BEARER_CAPABILITY_IE ));
+  ACE_OS::memcpy( ie_ptr->IE, &ie_bbc, sizeof( ATM_BROADBAND_BEARER_CAPABILITY_IE ));
 
   ie_ptr = (Q2931_IE *) ((char *)ie_ptr + ie_ptr->IELength);
   ie_ptr->IEType = IE_QOSClass;
@@ -505,9 +501,7 @@ ACE_ATM_QoS::construct_options (ACE_HANDLE fd,
           return 0;
         }
 
-      ACE_OS::memcpy(source_addr->address,
-                     local_addr.sap.t_atm_sap_addr.address,
-                     ATMNSAP_ADDR_LEN);
+      ACE_OS::memcpy(source_addr->address, local_addr.sap.t_atm_sap_addr.address, ATMNSAP_ADDR_LEN);
 
       popt = T_OPT_NEXTHDR (buf, info.options , popt);
     }

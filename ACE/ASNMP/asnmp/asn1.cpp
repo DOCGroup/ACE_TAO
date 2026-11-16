@@ -1118,9 +1118,7 @@ void cmu_snmp::add_var(struct snmp_pdu *pdu,
         vars->type = (u_char) smival->syntax;
         vars->val_len = (int) smival->value.oid.len * sizeof(oid);
         ACE_NEW(vars->val.objid, oid[(unsigned)vars->val_len]);
-        ACE_OS::memcpy((u_long *)vars->val.objid,
-                       (u_long *)smival->value.oid.ptr,
-                       (unsigned) vars->val_len);
+        ACE_OS::memcpy((u_long *)vars->val.objid, (u_long *)smival->value.oid.ptr, (unsigned) vars->val_len);
       }
       break;
 
@@ -1134,9 +1132,7 @@ void cmu_snmp::add_var(struct snmp_pdu *pdu,
         ACE_NEW(vars->val.integer, long);
         vars->val_len = sizeof(long);
         templong = (long) smival->value.uNumber;
-        ACE_OS::memcpy( (long*) vars->val.integer,
-                       (long*) &templong,
-                       sizeof(long));
+        ACE_OS::memcpy( (long*) vars->val.integer, (long*) &templong, sizeof(long));
       }
       break;
 
@@ -1147,9 +1143,7 @@ void cmu_snmp::add_var(struct snmp_pdu *pdu,
         ACE_NEW(vars->val.integer, long);
         vars->val_len = sizeof(long);
         templong = (long) smival->value.sNumber;
-        ACE_OS::memcpy( (long*) vars->val.integer,
-                       (long*) &templong,
-                       sizeof(long));
+        ACE_OS::memcpy( (long*) vars->val.integer, (long*) &templong, sizeof(long));
       }
       break;
 
@@ -1622,9 +1616,7 @@ int cmu_snmp::parse( struct snmp_pdu *pdu,
   }
 
   // copy the returned community name
-  ACE_OS::memcpy( (u_char *) community_name,
-                 (u_char *) community,
-                 community_length);
+  ACE_OS::memcpy( (u_char *) community_name, (u_char *) community, community_length);
   community_len = (long) community_length;
 
   if( version != SNMP_VERSION_1 && version != SNMP_VERSION_2C ) {
@@ -1692,8 +1684,7 @@ int cmu_snmp::parse( struct snmp_pdu *pdu,
                    oid[pdu->enterprise_length*sizeof(oid)],-1);
 
     // fixed
-    ACE_OS::memcpy((char *)pdu->enterprise,(char *)objid,
-                   pdu->enterprise_length * sizeof(oid));
+    ACE_OS::memcpy((char *)pdu->enterprise,(char *)objid, pdu->enterprise_length * sizeof(oid));
 
     // get source address
     four = 4;
@@ -1808,9 +1799,7 @@ int cmu_snmp::parse( struct snmp_pdu *pdu,
       ACE_NEW_RETURN(vp->val.objid, oid[(unsigned)vp->val_len*sizeof(oid)], -1);
 
       // fixed
-      ACE_OS::memcpy((char *)vp->val.objid,
-                     (char *)objid,
-                     vp->val_len * sizeof(oid));
+      ACE_OS::memcpy((char *)vp->val.objid, (char *)objid, vp->val_len * sizeof(oid));
       break;
 
     case SNMP_NOSUCHOBJECT:

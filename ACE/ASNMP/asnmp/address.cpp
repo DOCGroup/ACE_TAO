@@ -366,8 +366,7 @@ SnmpSyntax& IpAddress::operator=( SnmpSyntax &val)
     case sNMP_SYNTAX_IPADDR:
     case sNMP_SYNTAX_OCTETS:
       if (((IpAddress &)val).smival.value.string.len ==IPV4LEN) {
-        ACE_OS::memcpy(address_buffer,
-                       ((IpAddress &)val).smival.value.string.ptr,IPV4LEN);
+        ACE_OS::memcpy(address_buffer, ((IpAddress &)val).smival.value.string.ptr,IPV4LEN);
         valid_flag = 1;
       }
       break;
@@ -584,8 +583,7 @@ int IpAddress::resolve_to_address(const char *hostname, in_addr& quad_addr)
    if (ACE_OS::gethostbyname_r( hostname, &lookupResult, buffer, &loc_errno)) {
      if (lookupResult.h_length == (int) sizeof(in_addr) &&
          lookupResult.h_addrtype == AF_INET) {
-        ACE_OS::memcpy((void *) &quad_addr,
-                       (void *) lookupResult.h_addr_list[0], sizeof(in_addr));
+        ACE_OS::memcpy((void *) &quad_addr, (void *) lookupResult.h_addr_list[0], sizeof(in_addr));
         return 0;
      }
     else
@@ -854,8 +852,7 @@ SnmpSyntax& UdpAddress::operator=( SnmpSyntax &val)
 
     case sNMP_SYNTAX_OCTETS:
       if (((UdpAddress &)val).smival.value.string.len == UDPIPV4LEN){
-         ACE_OS::memcpy(address_buffer,
-                 ((UdpAddress &)val).smival.value.string.ptr, UDPIPV4LEN);
+         ACE_OS::memcpy(address_buffer, ((UdpAddress &)val).smival.value.string.ptr, UDPIPV4LEN);
          iv_friendly_name_[0] = 0;
          valid_flag = 1;
       }
@@ -1118,8 +1115,7 @@ NetbiosAddress& NetbiosAddress::operator=( const NetbiosAddress &val)
   if (val.valid()) {
     switch (((NetbiosAddress *) &val)->get_syntax()) {
     case sNMP_SYNTAX_OCTETS:
-        ACE_OS::memcpy(address_buffer,
-               ((NetbiosAddress &)val).smival.value.string.ptr, NETBIOSLEN);
+        ACE_OS::memcpy(address_buffer, ((NetbiosAddress &)val).smival.value.string.ptr, NETBIOSLEN);
         valid_flag = 1;
     break;
     }
@@ -1157,8 +1153,7 @@ SnmpSyntax& NetbiosAddress::operator=( SnmpSyntax &val)
     switch (val.get_syntax()) {
     case sNMP_SYNTAX_OCTETS:
       if (((NetbiosAddress &)val).smival.value.string.len == NETBIOSLEN) {
-        ACE_OS::memcpy(address_buffer,
-             ((NetbiosAddress &)val).smival.value.string.ptr, NETBIOSLEN);
+        ACE_OS::memcpy(address_buffer, ((NetbiosAddress &)val).smival.value.string.ptr, NETBIOSLEN);
         valid_flag=1;
       }
     break;
@@ -1674,9 +1669,7 @@ SnmpSyntax& IpxSockAddress::operator=( SnmpSyntax &val)
         }
         // See if it is an OctetStr of appropriate length
         else if (((IpxSockAddress &)val).smival.value.string.len == IPXSOCKLEN){
-          ACE_OS::memcpy(address_buffer,
-                 ((IpxSockAddress &)val).smival.value.string.ptr,
-                 IPXSOCKLEN);
+          ACE_OS::memcpy(address_buffer, ((IpxSockAddress &)val).smival.value.string.ptr, IPXSOCKLEN);
           valid_flag=1;
         }
       }
@@ -1911,8 +1904,7 @@ SnmpSyntax& MacAddress::operator=( SnmpSyntax &val)
     switch (val.get_syntax()){
     case sNMP_SYNTAX_OCTETS:
       if (((MacAddress &)val).smival.value.string.len == MACLEN){
-        ACE_OS::memcpy(address_buffer,
-        ((MacAddress &)val).smival.value.string.ptr, MACLEN);
+        ACE_OS::memcpy(address_buffer, ((MacAddress &)val).smival.value.string.ptr, MACLEN);
         valid_flag=1;
       }
     break;
@@ -2623,8 +2615,7 @@ SnmpSyntax& DecNetAddress::operator=( SnmpSyntax &val)
 
   if (val.valid()) {
       if (((DecNetAddress &)val).smival.value.string.len ==DECNETLEN) {
-        ACE_OS::memcpy(address_buffer,
-                   ((DecNetAddress &)val).smival.value.string.ptr, DECNETLEN);
+        ACE_OS::memcpy(address_buffer, ((DecNetAddress &)val).smival.value.string.ptr, DECNETLEN);
         valid_flag = 1;
       }
   }
@@ -2768,8 +2759,7 @@ SnmpSyntax& AppleTalkAddress::operator=( SnmpSyntax &val)
 
   if (val.valid()) {
       if (((AppleTalkAddress &)val).smival.value.string.len ==APPLETKLEN) {
-        ACE_OS::memcpy(address_buffer,
-                   ((AppleTalkAddress &)val).smival.value.string.ptr,APPLETKLEN);
+        ACE_OS::memcpy(address_buffer, ((AppleTalkAddress &)val).smival.value.string.ptr,APPLETKLEN);
         valid_flag = 1;
       }
   }

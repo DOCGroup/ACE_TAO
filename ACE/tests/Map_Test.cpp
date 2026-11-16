@@ -54,9 +54,7 @@ functionality_test (TEST_MAP &map,
        ++i)
     {
       original_keys[i].size (sizeof i / sizeof (KEY::TYPE));
-      ACE_OS::memcpy (std::addressof (original_keys[i][0]),
-                      &i,
-                      sizeof i);
+      ACE_OS::memcpy (std::addressof (original_keys[i][0]), &i, sizeof i);
     }
 
   // Make a copy of the keys so that we can compare with the original
@@ -96,9 +94,7 @@ functionality_test (TEST_MAP &map,
 
         // Obtain value from key.
         VALUE original_value;
-        ACE_OS::memcpy (&original_value,
-                        std::addressof (original_key[0]),
-                        sizeof original_value);
+        ACE_OS::memcpy (&original_value, std::addressof (original_key[0]), sizeof original_value);
 
         // Debugging info.
         ACE_DEBUG ((LM_DEBUG,
@@ -135,9 +131,7 @@ functionality_test (TEST_MAP &map,
 
         // Obtain value from key.
         VALUE original_value;
-        ACE_OS::memcpy (&original_value,
-                        std::addressof (original_key[0]),
-                        sizeof original_value);
+        ACE_OS::memcpy (&original_value, std::addressof (original_key[0]), sizeof original_value);
 
         // Debugging info.
         ACE_DEBUG ((LM_DEBUG,

@@ -40,9 +40,7 @@ Thread_Task::svc ()
                                                 implicit_sched_param.in ());
 
       RTScheduling::Current::IdType_var guid = this->current_->id ();
-      ACE_OS::memcpy (&count_,
-                      guid->get_buffer (),
-                      guid->length ());
+      ACE_OS::memcpy (&count_, guid->get_buffer (), guid->length ());
 
       ACE_TCHAR msg [BUFSIZ];
       ACE_OS::sprintf (msg,

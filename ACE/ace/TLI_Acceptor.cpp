@@ -499,13 +499,9 @@ ACE_TLI_Acceptor::accept (ACE_TLI_Stream &new_tli_sap,
     res = this->queue_->dequeue (req);
 
   if (udata != 0)
-    ACE_OS::memcpy ((void *) &req->callp_->udata,
-                    (void *) udata,
-                    sizeof *udata);
+    ACE_OS::memcpy ((void *) &req->callp_->udata, (void *) udata, sizeof *udata);
   if (opt != 0)
-    ACE_OS::memcpy ((void *) &req->callp_->opt,
-                    (void *) opt,
-                    sizeof *opt);
+    ACE_OS::memcpy ((void *) &req->callp_->opt, (void *) opt, sizeof *opt);
 
   while (res != -1)
     {

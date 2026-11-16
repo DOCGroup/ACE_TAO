@@ -149,9 +149,7 @@ Fixed_Priority_Scheduler::begin_new_scheduling_segment (const RTScheduling::Curr
 
 #ifdef KOKYU_DSRT_LOGGING
   int int_guid;
-  ACE_OS::memcpy (&int_guid,
-                  guid.get_buffer (),
-                  guid.length ());
+  ACE_OS::memcpy (&int_guid, guid.get_buffer (), guid.length ());
   ACE_DEBUG ((LM_DEBUG, "(%t|%T): guid is %d\n", int_guid));
 #endif
 
@@ -193,9 +191,7 @@ Fixed_Priority_Scheduler::update_scheduling_segment (const RTScheduling::Current
 
 #ifdef KOKYU_DSRT_LOGGING
   int int_guid ;
-  ACE_OS::memcpy (&int_guid,
-                  guid.get_buffer (),
-                  guid.length ());
+  ACE_OS::memcpy (&int_guid, guid.get_buffer (), guid.length ());
   ACE_DEBUG ((LM_DEBUG, "(%t|%T): update_sched_seg::guid is %d\n", int_guid));
 #endif
 
@@ -219,9 +215,7 @@ Fixed_Priority_Scheduler::end_scheduling_segment (const RTScheduling::Current::I
 {
 #ifdef KOKYU_DSRT_LOGGING
   int int_guid;
-  ACE_OS::memcpy (&int_guid,
-                  guid.get_buffer (),
-                  guid.length ());
+  ACE_OS::memcpy (&int_guid, guid.get_buffer (), guid.length ());
   ACE_DEBUG ((LM_DEBUG, "(%t|%T) call to end_sched_segment for guid %d\n", int_guid));
 #endif
 
@@ -278,9 +272,7 @@ Fixed_Priority_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_p
 
 #ifdef KOKYU_DSRT_LOGGING
       int int_guid;
-      ACE_OS::memcpy (&int_guid,
-                      guid->get_buffer (),
-                      guid->length ());
+      ACE_OS::memcpy (&int_guid, guid->get_buffer (), guid->length ());
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t): send_request desired_priority from current = %d, guid = %d\n"),
                   desired_priority, int_guid));
@@ -380,9 +372,7 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
 
 #ifdef KOKYU_DSRT_LOGGING
       int int_guid;
-      ACE_OS::memcpy (&int_guid,
-                      guid.get_buffer (),
-                      guid.length ());
+      ACE_OS::memcpy (&int_guid, guid.get_buffer (), guid.length ());
       ACE_DEBUG ((LM_DEBUG,
                   "(%t|%T): Desired_Priority = %d, guid = %d in recvd service context\n",
                   desired_priority,

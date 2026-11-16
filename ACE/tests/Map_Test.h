@@ -55,9 +55,7 @@ public:
       key.size (counter_key_size + original_size);
 
       // Add new key data.
-      ACE_OS::memcpy (std::addressof (key[original_size]),
-                      &++this->counter_,
-                      counter_key_size);
+      ACE_OS::memcpy (std::addressof (key[original_size]), &++this->counter_, counter_key_size);
 
       // Success.
       return 0;
@@ -77,9 +75,7 @@ public:
       size_t counter_key_size = sizeof (u_long);
 
       // Copy system key from user key.
-      ACE_OS::memcpy (&value,
-                      std::addressof (key[key.size () - counter_key_size]),
-                      sizeof value);
+      ACE_OS::memcpy (&value, std::addressof (key[key.size () - counter_key_size]), sizeof value);
 
       // Return the system key value as the hash value.
       return value;

@@ -68,9 +68,7 @@ ACE_SPIPE_Addr::set (const ACE_SPIPE_Addr &sa)
                            0,
                            sizeof this->SPIPE_addr_);
   else
-    (void) ACE_OS::memcpy ((void *) &this->SPIPE_addr_, (void *)
-                           &sa.SPIPE_addr_,
-                           sa.get_size ());
+    (void) ACE_OS::memcpy ((void *) &this->SPIPE_addr_, (void *) &sa.SPIPE_addr_, sa.get_size ());
   return 0;
 }
 

@@ -413,9 +413,7 @@ win32_spawn_environment_process ()
       ACE_Utils::truncate_cast<int> (
         ACE_OS::strlen (existing_environment.get () + size) + 1);
 
-  ACE_OS::memcpy (environment + (ACE_OS::strlen (environment) + 1),
-                  existing_environment.get (),
-                  size);
+  ACE_OS::memcpy (environment + (ACE_OS::strlen (environment) + 1), existing_environment.get (), size);
 
   ACE_TCHAR cmd_line[16] {};
   ACE_OS::strcpy (cmd_line, ACE_TEXT ("process -g"));
