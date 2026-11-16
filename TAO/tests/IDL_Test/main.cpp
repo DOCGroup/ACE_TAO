@@ -30,6 +30,8 @@
 
 static_assert (std::is_nothrow_move_constructible<testdata::ArraycharList>::value);
 static_assert (std::is_nothrow_move_constructible<testdata::BdArraycharList>::value);
+static_assert (std::is_abstract<OBV_Supports_Inherited_Operation>::value,
+               "A valuetype that supports an inherited operation is abstract");
 
 class hello_i : public virtual POA_hello
 {

@@ -64,6 +64,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // Pass an IDL file through the C preprocessor
 
+#include <array>
 #include <cstddef>
 #include <cstdio>
 #include <memory>
@@ -98,6 +99,44 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // Storage for preprocessor args.
 constexpr unsigned long DRV_MAX_ARGCOUNT = 1024;
 std::vector<std::basic_string<ACE_TCHAR>> DRV_arglist;
+
+class DRV_Temp_File_Guard
+{
+public:
+  explicit DRV_Temp_File_Guard (
+    std::array<std::string const *, 4> const& filenames)
+    : filenames_ (filenames)
+  {
+  }
+
+  ~DRV_Temp_File_Guard ()
+  {
+    if (this->active_)
+      {
+        for (std::string const *filename : this->filenames_)
+          {
+            if (!filename->empty ())
+              {
+                (void) ACE_OS::unlink (filename->c_str ());
+              }
+          }
+      }
+  }
+
+  void release ()
+  {
+    this->active_ = false;
+  }
+
+private:
+  DRV_Temp_File_Guard (DRV_Temp_File_Guard const &) = delete;
+  DRV_Temp_File_Guard &operator= (DRV_Temp_File_Guard const &) = delete;
+  DRV_Temp_File_Guard (DRV_Temp_File_Guard &&) = delete;
+  DRV_Temp_File_Guard &operator= (DRV_Temp_File_Guard &&) = delete;
+
+  std::array<std::string const *, 4> const filenames_;
+  bool active_ {true};
+};
 
 static std::basic_string<ACE_TCHAR> output_arg_format;
 static size_t output_arg_index {};
@@ -959,7 +998,7 @@ DRV_get_orb_idl_includes ()
 }
 
 static void
-DRV_check_temp_file_write (int result, std::string const& filename)
+DRV_check_temp_file_write (int const result, std::string const& filename)
 {
   if (result < 0)
     {
@@ -1113,13 +1152,14 @@ DRV_pre_proc (std::string const& myfile)
       tmp_ifile += tao_idli_template;
     }
 
-  FE_Utils::File_Handle ti_file (nullptr, ACE_OS::fclose);
-  auto unlink_input_file = [&]()
-    {
-      ti_file.reset ();
-      (void) ACE_OS::unlink (tmp_ifile.c_str ());
-    };
+  std::string tmp_cpp_file;
+  std::string tmp_cpp_ifile;
+  std::array<std::string const *, 4> const temp_file_names {{
+    &tmp_file, &tmp_ifile, &tmp_cpp_file, &tmp_cpp_ifile
+  }};
+  DRV_Temp_File_Guard temp_files (temp_file_names);
 
+  FE_Utils::File_Handle ti_file (nullptr, ACE_OS::fclose);
   if (copy_input_file)
     {
       ACE_HANDLE const ti_fd = ACE_OS::mkstemp (tmp_ifile.data ());
@@ -1141,9 +1181,11 @@ DRV_pre_proc (std::string const& myfile)
                       "%C: cannot open temp file \"%C\" for writing: %m\n",
                       idl_global->prog_name ().c_str (),
                       tmp_ifile.c_str ()));
-          unlink_input_file ();
           throw Bailout ();
         }
+
+      tmp_cpp_ifile = tmp_ifile;
+      tmp_cpp_ifile += temp_file_extension;
     }
 
   ACE_HANDLE const tf_fd = ACE_OS::mkstemp (tmp_file.data ());
@@ -1153,11 +1195,6 @@ DRV_pre_proc (std::string const& myfile)
                   "%C: Unable to create temporary file \"%C\": %m\n",
                   idl_global->prog_name ().c_str (),
                   tmp_file.c_str ()));
-
-      if (copy_input_file)
-        {
-          unlink_input_file ();
-        }
       throw Bailout ();
     }
 
@@ -1170,25 +1207,14 @@ DRV_pre_proc (std::string const& myfile)
                   "%C: cannot open temp file \"%C\" for writing: %m\n",
                   idl_global->prog_name ().c_str (),
                   tmp_file.c_str ()));
-      if (copy_input_file)
-        {
-          unlink_input_file ();
-        }
-      (void) ACE_OS::unlink (tmp_file.c_str ());
       throw Bailout ();
     }
 
-  // Append C++ source file extension. Temporary files will be renamed to
-  // these filenames when the preprocessor requires an input extension.
-  std::string tmp_cpp_file (tmp_file);
+  tmp_cpp_file = tmp_file;
   tmp_cpp_file += temp_file_extension;
 
-  std::string tmp_cpp_ifile;
-  if (copy_input_file)
-    {
-      tmp_cpp_ifile = tmp_ifile;
-      tmp_cpp_ifile += temp_file_extension;
-    }
+  // Append C++ source file extensions. Temporary files will be renamed to
+  // these filenames when the preprocessor requires an input extension.
 
   std::string const &t_file = copy_input_file ? tmp_cpp_file : tmp_file;
   std::string const &t_ifile = tmp_cpp_ifile;
@@ -1205,11 +1231,6 @@ DRV_pre_proc (std::string const& myfile)
                   "%C: ERROR: Unable to open file (fopen) \"%C\": %m\n",
                   idl_global->prog_name ().c_str (),
                   myfile.c_str ()));
-      if (copy_input_file)
-        {
-          unlink_input_file ();
-        }
-      (void) ACE_OS::unlink (tmp_file.c_str ());
       throw Bailout ();
     }
 
@@ -1224,8 +1245,6 @@ DRV_pre_proc (std::string const& myfile)
         }
       catch (...)
         {
-          unlink_input_file ();
-          (void) ACE_OS::unlink (tmp_file.c_str ());
           throw;
         }
       if (ACE_OS::fclose (ti_file.release ()) == EOF)
@@ -1235,8 +1254,6 @@ DRV_pre_proc (std::string const& myfile)
                       idl_global->prog_name ().c_str (),
                       tmp_ifile.c_str (),
                       myfile.c_str ()));
-          unlink_input_file ();
-          (void) ACE_OS::unlink (tmp_file.c_str ());
           throw Bailout ();
         }
     }
@@ -1288,11 +1305,6 @@ DRV_pre_proc (std::string const& myfile)
                   idl_global->prog_name ().c_str (),
                   DRV_arglist[0].c_str ()));
 
-      if (copy_input_file)
-        {
-          (void) ACE_OS::unlink (tmp_ifile.c_str ());
-        }
-      (void) ACE_OS::unlink (tmp_file.c_str ());
       throw Bailout ();
     }
 
@@ -1309,8 +1321,6 @@ DRV_pre_proc (std::string const& myfile)
                   tmp_file.c_str (),
                   t_file.c_str ()));
 
-      (void) ACE_OS::unlink (tmp_ifile.c_str ());
-      (void) ACE_OS::unlink (tmp_file.c_str ());
       throw Bailout ();
     }
 
@@ -1324,8 +1334,6 @@ DRV_pre_proc (std::string const& myfile)
                   tmp_ifile.c_str (),
                   t_ifile.c_str ()));
 
-      (void) ACE_OS::unlink (tmp_ifile.c_str ());
-      (void) ACE_OS::unlink (t_file.c_str ());
       throw Bailout ();
     }
 
@@ -1351,8 +1359,6 @@ DRV_pre_proc (std::string const& myfile)
                       idl_global->prog_name ().c_str (),
                       t_file.c_str ()));
 
-          (void) ACE_OS::unlink (t_file.c_str ());
-          (void) ACE_OS::unlink (t_ifile.c_str ());
           throw Bailout ();
         }
 
@@ -1379,8 +1385,6 @@ DRV_pre_proc (std::string const& myfile)
                   idl_global->prog_name ().c_str (),
                   DRV_arglist[0].c_str ()));
 
-      (void) ACE_OS::unlink (t_file.c_str ());
-      (void) ACE_OS::unlink (t_ifile.c_str ());
       throw Bailout ();
     }
 
@@ -1394,8 +1398,6 @@ DRV_pre_proc (std::string const& myfile)
                       idl_global->prog_name ().c_str (),
                       t_file.c_str ()));
 
-          (void) ACE_OS::unlink (t_file.c_str ());
-          (void) ACE_OS::unlink (t_ifile.c_str ());
           throw Bailout ();
         }
     }
@@ -1411,8 +1413,6 @@ DRV_pre_proc (std::string const& myfile)
                   "%C: wait for child process failed\n",
                   idl_global->prog_name ().c_str ()));
 
-      (void) ACE_OS::unlink (t_file.c_str ());
-      (void) ACE_OS::unlink (t_ifile.c_str ());
       throw Bailout ();
     }
 
@@ -1429,8 +1429,6 @@ DRV_pre_proc (std::string const& myfile)
                       idl_global->prog_name ().c_str (),
                       DRV_arglist[0].c_str ()));
 
-          (void) ACE_OS::unlink (t_file.c_str ());
-          (void) ACE_OS::unlink (t_ifile.c_str ());
           throw Bailout ();
         }
     }
@@ -1445,8 +1443,6 @@ DRV_pre_proc (std::string const& myfile)
                   idl_global->prog_name ().c_str (),
                   DRV_arglist[0].c_str ()));
 
-      (void) ACE_OS::unlink (t_file.c_str ());
-      (void) ACE_OS::unlink (t_ifile.c_str ());
       throw Bailout ();
     }
   // TODO: Manage problems in the
@@ -1464,8 +1460,6 @@ DRV_pre_proc (std::string const& myfile)
                   idl_global->prog_name ().c_str (),
                   t_file.c_str ()));
 
-      (void) ACE_OS::unlink (t_file.c_str ());
-      (void) ACE_OS::unlink (t_ifile.c_str ());
       throw Bailout ();
     }
 
@@ -1486,8 +1480,6 @@ DRV_pre_proc (std::string const& myfile)
                       idl_global->prog_name ().c_str (),
                       t_file.c_str ()));
 
-          (void) ACE_OS::unlink (t_file.c_str ());
-          (void) ACE_OS::unlink (t_ifile.c_str ());
           throw Bailout ();
         }
 
@@ -1534,4 +1526,6 @@ DRV_pre_proc (std::string const& myfile)
 
       throw Bailout ();
     }
+
+  temp_files.release ();
 }
