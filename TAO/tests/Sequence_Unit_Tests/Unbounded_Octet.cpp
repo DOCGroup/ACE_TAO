@@ -113,6 +113,25 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       {
         return 1;
       }
+
+      CORBA::Octet external_buffer[] {5, 9};
+      {
+        CORBA::OctetSeq borrowed_source (2, 2, external_buffer, false);
+        CORBA::OctetSeq borrowed_moved (std::move (borrowed_source));
+        if (borrowed_moved.get_buffer () != external_buffer
+            || borrowed_moved.release ()
+            || borrowed_moved[0] != 5
+            || borrowed_moved[1] != 9
+            || borrowed_source.length () != 0
+            || borrowed_source.release ())
+        {
+          return 1;
+        }
+      }
+      if (external_buffer[0] != 5 || external_buffer[1] != 9)
+      {
+        return 1;
+      }
     }
   catch (const ::CORBA::Exception &)
     {
