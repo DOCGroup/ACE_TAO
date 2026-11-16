@@ -101,6 +101,8 @@ namespace TAO
       /// Clone the TAO_Service_Context object.
       void clone (TAO_Service_Context& from, TAO_Service_Context& to);
 
+      static void destroy_clone (TAO_ServerRequest *request) noexcept;
+
       /// Create a TAO_OutputCDR stream initialized with a heap allocated
       /// buffer.
       TAO_OutputCDR* create_new_output_cdr ();
@@ -109,7 +111,7 @@ namespace TAO
       /// is already cloned.
       bool is_clone_ {};
 
-      /// Pointer to the underlying TAO_ServerRequest object.
+      /// Borrowed until clone(); then owns the cloned TAO_ServerRequest.
       TAO_ServerRequest* request_ {};
     };
   }

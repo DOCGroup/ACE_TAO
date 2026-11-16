@@ -21,7 +21,12 @@ TAO::CSD::FW_Server_Request_Wrapper::clone()
   // makes sure that we do not introduce a leak.
   if (!this->is_clone_)
     {
-      this->request_ = this->clone (this->request_);
+      TAO_ServerRequest * const cloned_request =
+        this->clone (this->request_);
+      if (cloned_request == nullptr)
+        throw CORBA::UNKNOWN ();
+
+      this->request_ = cloned_request;
       this->is_clone_ = true;
     }
 }
