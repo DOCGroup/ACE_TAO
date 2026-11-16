@@ -54,14 +54,14 @@ ACE_Basic_Stats::dump_results (
       return;
     }
 
-  ACE_UINT64 avg = this->sum_ / this->samples_count_;
+  ACE_UINT64 const avg = this->sum_ / this->samples_count_;
 
-  ACE_UINT64 l_min = this->min_ / sf;
-  ACE_UINT64 l_max = this->max_ / sf;
-  ACE_UINT64 l_avg = avg / sf;
+  ACE_UINT64 const l_min = this->min_ / sf;
+  ACE_UINT64 const l_max = this->max_ / sf;
+  ACE_UINT64 const l_avg = avg / sf;
 
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("%s latency   : %Q[%d]/%Q/%Q[%d] (min/avg/max)\n"),
+              ACE_TEXT ("%s latency   : %Q[%u]/%Q/%Q[%u] (min/avg/max)\n"),
               msg,
               l_min, this->min_at_,
               l_avg,
