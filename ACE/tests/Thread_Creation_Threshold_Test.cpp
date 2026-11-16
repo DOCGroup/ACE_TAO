@@ -50,7 +50,6 @@ public:
   /// Create the thread pool containing <n_threads>.
   Thread_Pool (int n_threads);
 
-  /// Destructor...
   ~Thread_Pool () override;
 
   /// Iterate <n_iterations> time printing off a message and "waiting"

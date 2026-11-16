@@ -43,7 +43,6 @@ public:
   /// Create the thread pool containing <n_threads>.
   Thread_Pool (int n_threads);
 
-  /// Destructor...
   ~Thread_Pool () override;
 
   /**
