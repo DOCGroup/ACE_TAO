@@ -48,9 +48,9 @@ TAO::be_visitor_alias_typecode::common (be_type * node,
       be_fixed * const fixed = dynamic_cast<be_fixed *> (base);
 
       if (fixed == nullptr)
-      {
-        return -1;
-      }
+        {
+          return -1;
+        }
 
       ACE_CDR::ULong const digits = fixed->digits ()->ev ()->u.ulval;
       ACE_CDR::ULong const scale = fixed->scale ()->ev ()->u.ulval;
@@ -105,9 +105,9 @@ TAO::be_visitor_alias_typecode::common (be_type * node,
      << be_uidt_nl;
 
   if (this->gen_typecode_ptr (node) != 0)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   return 0;
 }

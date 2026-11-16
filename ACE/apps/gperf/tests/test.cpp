@@ -28,7 +28,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       size_t len = ACE_OS::strlen (buf) - 1;
       buf[len] = '\0';
       if (Perfect_Hash::in_word_set (buf, len) && verbose)
-        ACE_OS::printf ("in word set %s\n", buf);
+        {
+          ACE_OS::printf ("in word set %s\n", buf);
+        }
       else if (verbose)
         ACE_OS::printf ("NOT in word set %s\n", buf);
     }

@@ -611,9 +611,9 @@ be_valuetype::data_members_count (AST_Field::Visibility vis)
       if (vis != AST_Field::vis_NA)
         {
           if (vis == field->visibility ())
-          {
-            ++count;
-          }
+            {
+              ++count;
+            }
         }
       else
         {

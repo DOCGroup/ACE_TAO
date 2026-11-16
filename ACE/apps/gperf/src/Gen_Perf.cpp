@@ -56,32 +56,34 @@ Gen_Perf::compute_disjoint_union (char *set1, char *set2, char *set3)
 
   while (*set1 && *set2)
     if (*set1 == *set2)
-      ++set1, ++set2;
+      {
+        ++set1, ++set2;
+      }
     else
       {
         *set3 = *set1 < *set2 ? *set1++ : *set2++;
         if (set3 == base || *set3 != *(set3 - 1))
-        {
-          ++set3;
-        }
+          {
+            ++set3;
+          }
       }
 
   while (*set1)
     {
       *set3 = *set1++;
       if (set3 == base || *set3 != *(set3 - 1))
-      {
-        ++set3;
-      }
+        {
+          ++set3;
+        }
     }
 
   while (*set2)
     {
       *set3 = *set2++;
       if (set3 == base || *set3 != *(set3 - 1))
-      {
-        ++set3;
-      }
+        {
+          ++set3;
+        }
     }
   *set3 = '\0';
   return ACE_Utils::truncate_cast<int> (set3 - base);
@@ -145,9 +147,9 @@ Gen_Perf::affects_prev (char c, List_Node *curr)
       total_iterations = option.iterations ();
 
       if (total_iterations == 0)
-      {
-        total_iterations = this->key_list.keyword_list_length ();
-      }
+        {
+          total_iterations = this->key_list.keyword_list_length ();
+        }
     }
 
   // Try all legal associated values.
@@ -246,22 +248,26 @@ int
 Gen_Perf::open ()
 {
   if (this->key_list.read_keys () == -1)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   if (option[ORDER])
-  {
-    this->key_list.reorder ();
-  }
+    {
+      this->key_list.reorder ();
+    }
 
   int asso_value_max = option.asso_max ();
   int const non_linked_length = this->key_list.keyword_list_length ();
 
   if (asso_value_max == 0)
-    asso_value_max = non_linked_length;
+    {
+      asso_value_max = non_linked_length;
+    }
   else if (asso_value_max > 0)
-    asso_value_max *= non_linked_length;
+    {
+      asso_value_max *= non_linked_length;
+    }
   else // if (asso_value_max < 0)
     asso_value_max = non_linked_length / -asso_value_max;
 
@@ -317,9 +323,9 @@ Gen_Perf::open ()
                 asso_value_max,
                 max_hash_value));
   if (this->char_search.open (max_hash_value + 1) == -1)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
   return 0;
 }
 
@@ -381,9 +387,9 @@ Gen_Perf::compute_perfect_hash ()
         if (ptr->hash_value == curr->hash_value)
           {
             if (this->change (ptr, curr) == -1)
-            {
-              return -1;
-            }
+              {
+                return -1;
+              }
             break;
           }
       ++num_done;
@@ -434,30 +440,30 @@ int
 Gen_Perf::run ()
 {
   if (this->open () == -1)
-  {
-    return 1;
-  }
+    {
+      return 1;
+    }
 
   if (option[BINARYSEARCH])
     {
       if (this->compute_binary_search () == -1)
-      {
-        return 1;
-      }
+        {
+          return 1;
+        }
     }
   else if (option[LINEARSEARCH])
     {
       if (this->compute_linear_search () == -1)
-      {
-        return 1;
-      }
+        {
+          return 1;
+        }
     }
   else
     {
       if (this->compute_perfect_hash () == -1)
-      {
-        return 1;
-      }
+        {
+          return 1;
+        }
 
       // Sorts the key word list by hash value, and then outputs the
       // list.  The generated hash table code is only output if the

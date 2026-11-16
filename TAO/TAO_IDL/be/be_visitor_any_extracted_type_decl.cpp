@@ -179,11 +179,13 @@ be_visitor_any_extracted_type_decl::visit_string (be_string *node)
   ACE_CDR::ULong const bound = node->max_size ()->ev ()->u.ulval;
   os_ << "const " << node->full_name () << " " << tmp_name_ << " {};" << be_nl;
   if (node->width () == sizeof (char))
-    os_ << "::CORBA::Any::to_string " << var_name_;
+    {
+      os_ << "::CORBA::Any::to_string " << var_name_;
+    }
   else
-  {
-    os_ << "::CORBA::Any::to_wstring " << var_name_;
-  }
+    {
+      os_ << "::CORBA::Any::to_wstring " << var_name_;
+    }
   os_ << " (" << tmp_name_ << ", " << bound << ");";
   return 0;
 }

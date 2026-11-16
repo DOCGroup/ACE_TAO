@@ -19,9 +19,9 @@ Admin_Client::init (int argc, ACE_TCHAR *argv[])
       int const retval = this->parse_args (argc, argv);
 
       if (retval != 0)
-      {
-        return retval;
-      }
+        {
+          return retval;
+        }
 
       CORBA::Object_var object =
         this->orb_->resolve_initial_references ("InterfaceRepository");
@@ -104,9 +104,9 @@ Admin_Client::parse_args (int argc, ACE_TCHAR *argv[])
         {
           int const iterations = ACE_OS::atoi (opts.opt_arg ());
           if (iterations > 0)
-          {
-            this->iterations_ = iterations;
-          }
+            {
+              this->iterations_ = iterations;
+            }
         }
         break;
       case 't':   // test selection

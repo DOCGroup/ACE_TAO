@@ -838,9 +838,9 @@ void
 UTL_Error::lookup_error (UTL_ScopedName *n)
 {
   if (idl_global->ignore_lookup_errors_)
-  {
-    return;
-  }
+    {
+      return;
+    }
   idl_error_header (EIDL_LOOKUP_ERROR);
   n->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,

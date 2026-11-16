@@ -90,9 +90,9 @@ int be_visitor_operation_smart_proxy_cs::visit_operation (be_operation *node)
 
       // Only if there exists any nesting "::" is needed!
       if (intf->is_nested ())
-      {
-        *os << "::";
-      }
+        {
+          *os << "::";
+        }
 
       *os << "TAO_" << intf->flat_name () <<"_Smart_Proxy_Base::";
       *os << this->ctx_->port_prefix ()
@@ -125,9 +125,9 @@ int be_visitor_operation_smart_proxy_cs::visit_operation (be_operation *node)
       *os << "this->get_proxy ()";
 
       if (this->gen_invoke (ctx, node) == -1)
-      {
-        return -1;
-      }
+        {
+          return -1;
+        }
 
       *os << ";" << be_uidt_nl
           << "}" << be_nl_2;

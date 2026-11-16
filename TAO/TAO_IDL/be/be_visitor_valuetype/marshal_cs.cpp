@@ -174,9 +174,9 @@ be_visitor_valuetype_marshal_cs::unmarshal_state (be_valuetype *node)
       *os << "return ci.handle_chunking (strm);" << be_uidt << be_nl_2;
     }
     else
-    {
-      *os << "return true;";
-    }
+      {
+        *os << "return true;";
+      }
   return 0;
 }
 

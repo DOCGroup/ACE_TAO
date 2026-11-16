@@ -15,6 +15,8 @@
 
 #include "test_macros.h"
 
+#include <utility>
+
 
 using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO;
 
@@ -73,6 +75,45 @@ struct Tester
       CHECK_EQUAL(true, y.release());
     }
     FAIL_RETURN_IF_NOT(f.expect(2), f);
+    return 0;
+  }
+
+  int test_move_constructor()
+  {
+    tested_sequence source (8, 4, alloc_and_init_buffer (), true);
+    source[0] = 42;
+    value_type * const buffer = source.get_buffer ();
+
+    tested_sequence destination (std::move (source));
+
+    CHECK_EQUAL (0UL, source.maximum ());
+    CHECK_EQUAL (0UL, source.length ());
+    CHECK_EQUAL (false, source.release ());
+    CHECK_EQUAL (buffer, destination.get_buffer ());
+    CHECK_EQUAL (8UL, destination.maximum ());
+    CHECK_EQUAL (4UL, destination.length ());
+    CHECK_EQUAL (true, destination.release ());
+    CHECK_EQUAL (value_type (42), destination[0]);
+    return 0;
+  }
+
+  int test_move_assignment()
+  {
+    tested_sequence source (8, 4, alloc_and_init_buffer (), true);
+    source[0] = 42;
+    value_type * const buffer = source.get_buffer ();
+    tested_sequence destination (2, 1, alloc_and_init_buffer (), true);
+
+    destination = std::move (source);
+
+    CHECK_EQUAL (0UL, source.maximum ());
+    CHECK_EQUAL (0UL, source.length ());
+    CHECK_EQUAL (false, source.release ());
+    CHECK_EQUAL (buffer, destination.get_buffer ());
+    CHECK_EQUAL (8UL, destination.maximum ());
+    CHECK_EQUAL (4UL, destination.length ());
+    CHECK_EQUAL (true, destination.release ());
+    CHECK_EQUAL (value_type (42), destination[0]);
     return 0;
   }
 
@@ -394,6 +435,8 @@ struct Tester
     status += this->test_ulong_constructor();
     status += this->test_copy_constructor_from_ulong();
     status += this->test_assignment_from_ulong();
+    status += this->test_move_constructor();
+    status += this->test_move_assignment();
     status += this->test_exception_in_ulong_constructor();
     status += this->test_set_length_less_than_maximum();
     status += this->test_set_length_more_than_maximum();

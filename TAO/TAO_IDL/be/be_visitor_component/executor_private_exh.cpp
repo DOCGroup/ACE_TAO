@@ -26,9 +26,9 @@ int
 be_visitor_executor_private_exh::visit_provides (be_provides *node)
 {
   if (!this->do_provides_)
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
 
   be_type *impl = node->provides_type ();
   AST_Decl *i_scope = ScopeAsDecl (impl->defined_in ());
@@ -54,9 +54,9 @@ int
 be_visitor_executor_private_exh::visit_attribute (be_attribute *node)
 {
   if (!this->do_attribute_)
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
 
   AST_Decl::NodeType const nt = this->node_->node_type ();
 

@@ -53,16 +53,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, options) == -1)
-      {
-        return -1;
-      }
+        {
+          return -1;
+        }
 
       CORBA::Object_var objref =
         orb->string_to_object (options.ifr_ior_file);
       if (CORBA::is_nil (objref.in ()))
-      {
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("The received objref is nil\n")), -1);
-      }
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("The received objref is nil\n")), -1);
+        }
 
       CORBA::ComponentIR::Repository_var the_repo_ref;
       try
@@ -78,9 +78,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Contained_var current_contained =
         the_repo_ref->lookup_id (ACE_TEXT_ALWAYS_CHAR (options.idl_value));
       if (CORBA::is_nil (current_contained.in ()))
-      {
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Can't look up the valuetype\n")), -1);
-      }
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Can't look up the valuetype\n")), -1);
+        }
 
       CORBA::ExtValueDef_var value_def =
         CORBA::ExtValueDef::_narrow (current_contained.in ());

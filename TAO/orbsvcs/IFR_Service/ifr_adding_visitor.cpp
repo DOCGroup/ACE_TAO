@@ -61,16 +61,16 @@ append_wide_codepoint (std::uint32_t codepoint,
                        size_t &target_index)
 {
   if (codepoint > 0x10ffff || (codepoint >= 0xd800 && codepoint <= 0xdfff))
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 
   if (sizeof (CORBA::WChar) == 2 && codepoint > 0xffff)
     {
       if (target_index + 2 > target_size)
-      {
-        return false;
-      }
+        {
+          return false;
+        }
 
       codepoint -= 0x10000;
       target[target_index++] = static_cast<CORBA::WChar> (0xd800 + (codepoint >> 10));
@@ -79,9 +79,9 @@ append_wide_codepoint (std::uint32_t codepoint,
   else
     {
       if (target_index >= target_size)
-      {
-        return false;
-      }
+        {
+          return false;
+        }
 
       target[target_index++] = static_cast<CORBA::WChar> (codepoint);
     }
@@ -101,19 +101,25 @@ read_hex_escape (std::string const &source,
       unsigned char const ch = static_cast<unsigned char> (source[source_index]);
       std::uint32_t value = 0;
       if (ch >= '0' && ch <= '9')
-        value = ch - '0';
+        {
+          value = ch - '0';
+        }
       else if (ch >= 'a' && ch <= 'f')
-        value = ch - 'a' + 10;
+        {
+          value = ch - 'a' + 10;
+        }
       else if (ch >= 'A' && ch <= 'F')
-        value = ch - 'A' + 10;
+        {
+          value = ch - 'A' + 10;
+        }
       else
-      {
-        break;
-      }
+        {
+          break;
+        }
       if (codepoint > (0x10ffff - value) / 16)
-      {
-        return false;
-      }
+        {
+          return false;
+        }
       codepoint = codepoint * 16 + value;
       ++source_index;
       ++digits;
@@ -173,16 +179,16 @@ decode_wide_literal (std::string const &source,
             case 'x':
               {
                 if (!read_hex_escape (source, source_index, source.size (), codepoint))
-                {
-                  codepoint = 'x';
-                }
+                  {
+                    codepoint = 'x';
+                  }
                 break;
               }
             case 'u':
               if (!read_hex_escape (source, source_index, 4, codepoint))
-              {
-                return false;
-              }
+                {
+                  return false;
+                }
               if (codepoint >= 0xd800 && codepoint <= 0xdbff)
                 {
                   if (source_index + 2 >= source.size ()
@@ -199,9 +205,9 @@ decode_wide_literal (std::string const &source,
                       source_index = next_index;
                     }
                   else
-                  {
-                    return false;
-                  }
+                    {
+                      return false;
+                    }
                 }
               else if (codepoint >= 0xdc00 && codepoint <= 0xdfff)
                 return false;
@@ -219,14 +225,16 @@ decode_wide_literal (std::string const &source,
                     }
                 }
               else
-              {
-                codepoint = static_cast<unsigned char> (escape);
-              }
+                {
+                  codepoint = static_cast<unsigned char> (escape);
+                }
               break;
             }
         }
       else if (first < 0x80)
-        codepoint = first;
+        {
+          codepoint = first;
+        }
       else
         {
           unsigned int continuation_count = 0;
@@ -246,22 +254,22 @@ decode_wide_literal (std::string const &source,
               continuation_count = 3;
             }
           else
-          {
-            return false;
-          }
+            {
+              return false;
+            }
 
           for (unsigned int i = 0; i < continuation_count; ++i)
             {
               if (source_index >= source.size ())
-              {
-                return false;
-              }
+                {
+                  return false;
+                }
 
               unsigned char const next = static_cast<unsigned char> (source[source_index++]);
               if ((next & 0xc0) != 0x80)
-              {
-                return false;
-              }
+                {
+                  return false;
+                }
               codepoint = (codepoint << 6) | (next & 0x3f);
             }
 
@@ -274,9 +282,9 @@ decode_wide_literal (std::string const &source,
         }
 
       if (!append_wide_codepoint (codepoint, target, target_size, target_length))
-      {
-        return false;
-      }
+        {
+          return false;
+        }
     }
 
   return true;

@@ -8,6 +8,8 @@
  * @author Johnny Willemsen
  */
 #include "tao/orbconf.h"
+#include <memory>
+#include <utility>
 
 #include "tao/Unbounded_Value_Sequence_T.h"
 #include "ace/OS_NS_string.h"
@@ -292,6 +294,30 @@ public:
     unbounded_value_sequence tmp(rhs);
     swap(tmp);
     return * this;
+  }
+
+  unbounded_value_sequence (unbounded_value_sequence &&rhs) noexcept
+    : maximum_ (rhs.maximum_)
+    , length_ (rhs.length_)
+    , buffer_ (rhs.buffer_)
+    , release_ (rhs.release_)
+    , mb_ (rhs.mb_)
+  {
+    rhs.maximum_ = 0;
+    rhs.length_ = 0;
+    rhs.buffer_ = nullptr;
+    rhs.release_ = false;
+    rhs.mb_ = nullptr;
+  }
+
+  unbounded_value_sequence &operator= (unbounded_value_sequence &&rhs) noexcept
+  {
+    if (this != std::addressof (rhs))
+      {
+        unbounded_value_sequence tmp (std::move (rhs));
+        this->swap (tmp);
+      }
+    return *this;
   }
 
 private:
