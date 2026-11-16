@@ -41,12 +41,7 @@ TAO_CodeGen::~TAO_CodeGen () = default;
 int
 TAO_CodeGen::reset_out_stream (std::unique_ptr<TAO_OutStream> &stream)
 {
-  stream.reset ();
-
-  TAO_OutStream *new_stream {};
-  ACE_NEW_RETURN (new_stream, TAO_OutStream, -1);
-
-  stream.reset (new_stream);
+  stream = std::make_unique<TAO_OutStream> ();
   return 0;
 }
 
