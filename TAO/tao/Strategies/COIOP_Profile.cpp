@@ -204,20 +204,20 @@ TAO_COIOP_Profile::to_string () const
   TAO::ObjectKey::encode_sequence_to_string (key.inout(),
                                             this->ref_object_key_->object_key ());
 
-  const ACE_CString * uuidstr = this->endpoint_.uuid_.to_string ();
-  size_t buflen = (8 /* "corbaloc" */ +
-                   1 /* colon separator */ +
-                   std::strlen (::the_prefix) +
-                   1 /* colon separator */ +
-                   1 /* major version */ +
-                   1 /* decimal point */ +
-                   1 /* minor version */ +
-                   1 /* `@' character */ +
-                   uuidstr->length() +
-                   1 /* colon separator */ +
-                   5 /* port number */ +
-                   1 /* object key separator */ +
-                   std::strlen (key.in ()));
+  ACE_CString const * const uuidstr = this->endpoint_.uuid_.to_string ();
+  size_t const buflen = (8 /* "corbaloc" */ +
+                         1 /* colon separator */ +
+                         std::strlen (::the_prefix) +
+                         1 /* colon separator */ +
+                         1 /* major version */ +
+                         1 /* decimal point */ +
+                         1 /* minor version */ +
+                         1 /* `@' character */ +
+                         uuidstr->length() +
+                         1 /* colon separator */ +
+                         5 /* port number */ +
+                         1 /* object key separator */ +
+                         std::strlen (key.in ()));
 
   char * buf = CORBA::string_alloc (static_cast<CORBA::ULong> (buflen));
 
@@ -313,7 +313,7 @@ TAO_COIOP_Profile::encode_endpoints ()
        iterator != nullptr;
        iterator = iterator->cont ())
     {
-      size_t i_length = iterator->length ();
+      size_t const i_length = iterator->length ();
       std::memcpy (buf, iterator->rd_ptr (), i_length);
 
       buf += i_length;
