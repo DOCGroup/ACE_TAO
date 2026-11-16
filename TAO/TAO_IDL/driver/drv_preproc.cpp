@@ -1026,9 +1026,16 @@ DRV_copy_input (FILE *fin,
     }
 
 #if !defined (ACE_WIN32)
-  std::fprintf (f,
-                "#line 1 \"%s\"\n",
-                orig_filename.c_str ());
+  if (std::fprintf (f,
+                    "#line 1 \"%s\"\n",
+                    orig_filename.c_str ()) < 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%C: cannot write temp file \"%C\": %m\n",
+                  idl_global->prog_name ().c_str (),
+                  fn.c_str ()));
+      throw Bailout ();
+    }
 #else
   // Convert single \ into double \ otherwise MSVC++ pre-processor
   // gets awfully confused.
@@ -1046,9 +1053,16 @@ DRV_copy_input (FILE *fin,
       escaped_filename.push_back (current_character);
     }
 
-  std::fprintf (f,
-                "#line 1 \"%s\"\n",
-                escaped_filename.c_str ());
+  if (std::fprintf (f,
+                    "#line 1 \"%s\"\n",
+                    escaped_filename.c_str ()) < 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%C: cannot write temp file \"%C\": %m\n",
+                  idl_global->prog_name ().c_str (),
+                  fn.c_str ()));
+      throw Bailout ();
+    }
 #endif /* ! ACE_WIN32 */
 
   while (DRV_get_line (fin))
@@ -1056,15 +1070,29 @@ DRV_copy_input (FILE *fin,
       DRV_convert_includes (drv_line);
 
       // Print the line to the temporary file.
-      std::fprintf (f,
-                    "%s\n",
-                    drv_line.c_str ());
+      if (std::fprintf (f, "%s\n", drv_line.c_str ()) < 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%C: cannot write temp file \"%C\": %m\n",
+                      idl_global->prog_name ().c_str (),
+                      fn.c_str ()));
+          throw Bailout ();
+        }
 
       // We really need to know whether this line is a "#include
       // ...". If so, we would like to separate the "file name" and
       // keep that in the idl_global. We need them to produce
       // "#include's in the stubs and skeletons.
       DRV_check_for_include (drv_line);
+    }
+
+  if (std::ferror (fin) != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%C: error reading input file \"%C\"\n",
+                  idl_global->prog_name ().c_str (),
+                  orig_filename.c_str ()));
+      throw Bailout ();
     }
 
 }
@@ -1211,10 +1239,30 @@ DRV_pre_proc (std::string const& myfile)
         }
       ti_fd.release ();
       File_Handle copy_output_file (copy_output, ACE_OS::fclose);
-      DRV_copy_input (file.get (),
-                      copy_output_file.get (),
-                      tmp_ifile,
-                      myfile);
+      try
+        {
+          DRV_copy_input (file.get (),
+                          copy_output_file.get (),
+                          tmp_ifile,
+                          myfile);
+        }
+      catch (...)
+        {
+          (void) ACE_OS::unlink (tmp_ifile.c_str ());
+          (void) ACE_OS::unlink (tmp_file.c_str ());
+          throw;
+        }
+
+      if (ACE_OS::fclose (copy_output_file.release ()) != 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%C: cannot close temp file \"%C\": %m\n",
+                      idl_global->prog_name ().c_str (),
+                      tmp_ifile.c_str ()));
+          (void) ACE_OS::unlink (tmp_ifile.c_str ());
+          (void) ACE_OS::unlink (tmp_file.c_str ());
+          throw Bailout ();
+        }
     }
   else
     {
