@@ -141,7 +141,10 @@ namespace ACE_RMCast
       {
         int r (Base::bind (sn, d));
 
-        if (r == 0 && sn > max_sn_) max_sn_ = sn;
+        if (r == 0 && sn > max_sn_)
+          {
+            max_sn_ = sn;
+          }
 
         return r;
       }
@@ -151,7 +154,10 @@ namespace ACE_RMCast
       {
         int r (Base::rebind (sn, d));
 
-        if (r == 0 && sn > max_sn_) max_sn_ = sn;
+        if (r == 0 && sn > max_sn_)
+          {
+            max_sn_ = sn;
+          }
 
         return r;
       }
@@ -165,7 +171,10 @@ namespace ACE_RMCast
         {
           for (--max_sn_; max_sn_ >= sn_; --max_sn_)
           {
-            if (find (max_sn_) == 0) break;
+            if (find (max_sn_) == 0)
+              {
+                break;
+              }
           }
         }
 
@@ -188,7 +197,10 @@ namespace ACE_RMCast
       u64
       max_sn () const
       {
-        if (current_size () == 0) return sn_;
+        if (current_size () == 0)
+          {
+            return sn_;
+          }
 
         return max_sn_;
       }

@@ -302,7 +302,10 @@ namespace ACE_RMCast
     {
       Profiles::ENTRY* e {};
 
-      if (profiles_.find (id, e) == -1) return nullptr;
+      if (profiles_.find (id, e) == -1)
+        {
+          return nullptr;
+        }
 
       return e->int_id_.get ();
     }
@@ -620,7 +623,9 @@ namespace ACE_RMCast
     size (size_t s)
     {
       if (s > capacity_)
-        ACE_OS::abort ();
+        {
+          ACE_OS::abort ();
+        }
 
       size_ = s;
 
@@ -849,10 +854,14 @@ namespace ACE_RMCast
         ss << sn;
 
         if (ss.total_length () <= max_size)
-          ++n;
+          {
+            ++n;
+          }
 
         if (ss.total_length () >= max_size)
-          break;
+          {
+            break;
+          }
       }
 
       return n;
@@ -984,7 +993,10 @@ namespace ACE_RMCast
     {
       u64 sn = 0;
 
-      if (map_.find (addr, sn) == -1) return 0;
+      if (map_.find (addr, sn) == -1)
+        {
+          return 0;
+        }
 
       return sn;
     }
@@ -1020,10 +1032,14 @@ namespace ACE_RMCast
         ss << port;
 
         if (ss.total_length () <= max_size)
-          ++n;
+          {
+            ++n;
+          }
 
         if (ss.total_length () >= max_size)
-          break;
+          {
+            break;
+          }
       }
 
       return n;
