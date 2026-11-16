@@ -348,7 +348,7 @@ TAO_UIOP_Acceptor::rendezvous_point (ACE_UNIX_Addr &addr,
 
   addr.set (rendezvous);
 
-  const size_t length = std::strlen (addr.get_path_name ());
+  size_t const length = std::strlen (addr.get_path_name ());
 
   // Check if rendezvous point was truncated by ACE_UNIX_Addr since
   // most UNIX domain socket rendezvous points can only be less than
@@ -432,7 +432,7 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
 
   ACE_CString const options (str);
 
-  const size_t len = options.length ();
+  size_t const len = options.length ();
 
   static constexpr char option_delimiter = '&';
 

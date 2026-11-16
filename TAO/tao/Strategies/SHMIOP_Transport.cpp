@@ -143,7 +143,7 @@ TAO_SHMIOP_Transport::handle_input (TAO_Resume_Handle &rh,
   // Align the message block
   ACE_CDR::mb_align (&message_block);
 
-  const size_t missing_header_data = this->messaging_object ()->header_length ();
+  size_t const missing_header_data = this->messaging_object ()->header_length ();
 
   if (missing_header_data == 0)
     {

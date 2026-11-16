@@ -110,7 +110,7 @@ TAO_SCIOP_Endpoint::set (const ACE_INET_Addr &addr,
 int
 TAO_SCIOP_Endpoint::addr_to_string (char *buffer, size_t length)
 {
-  size_t actual_len =
+  size_t const actual_len =
     std::strlen (this->host_.in ()) // chars in host name
     + sizeof (':')                     // delimiter
     + std::strlen ("65536")         // max port

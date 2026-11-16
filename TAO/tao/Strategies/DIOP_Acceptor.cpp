@@ -1063,9 +1063,9 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
   // HTTP URLs.
   // e.g.:  option1=foo&option2=bar
 
-  const ACE_CString options (str);
+  ACE_CString const options (str);
 
-  const size_t len = options.length ();
+  size_t const len = options.length ();
 
   static constexpr char option_delimiter = '&';
 

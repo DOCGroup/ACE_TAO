@@ -33,7 +33,7 @@ TAO_COIOP_Endpoint::TAO_COIOP_Endpoint ()
 int
 TAO_COIOP_Endpoint::addr_to_string (char *buffer, size_t length)
 {
-  const ACE_CString *str = uuid_.to_string ();
+  ACE_CString const * const str = uuid_.to_string ();
   size_t const actual_len =
     str->length ();
 

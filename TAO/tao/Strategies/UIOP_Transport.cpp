@@ -56,7 +56,7 @@ TAO_UIOP_Transport::recv (char *buf,
                           size_t len,
                           const ACE_Time_Value *max_wait_time)
 {
-  const ssize_t n = this->connection_handler_->peer ().recv (buf,
+  ssize_t const n = this->connection_handler_->peer ().recv (buf,
                                                              len,
                                                              max_wait_time);
 
@@ -131,7 +131,7 @@ TAO_UIOP_Transport::send_message (TAO_OutputCDR &stream,
   // versions seem to need it though.  Leaving it costs little.
 
   // This guarantees to send all data (bytes) or return an error.
-  const ssize_t n = this->send_message_shared (stub,
+  ssize_t const n = this->send_message_shared (stub,
                                                message_semantics,
                                                stream.begin (),
                                                max_wait_time);
