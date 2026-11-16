@@ -10,6 +10,7 @@
 #include "ace/Lock_Adapter_T.h"
 
 #include <cerrno>
+#include <cstdlib>
 #include <memory>
 #include <new>
 #include <string>
@@ -874,9 +875,8 @@ namespace TAO
           }
       }
 #else
-    ACE_OS::qsort (entries.get (), current_size,
-                   sizeof (HASH_MAP_ENTRY*),
-                   static_cast<ACE_COMPARE_FUNC> (cpscmp));
+    std::qsort (entries.get (), current_size,
+                sizeof (HASH_MAP_ENTRY*), cpscmp);
 #endif /* ACE_LACKS_QSORT */
   }
 
