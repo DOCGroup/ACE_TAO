@@ -3,7 +3,9 @@
 #include "QoS_Session_Impl.h"
 #include "ace/Log_Category.h"
 
+#include <cerrno>
 #include <memory>
+#include <new>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -33,32 +35,36 @@ ACE_QoS_Session_Factory::~ACE_QoS_Session_Factory ()
 ACE_QoS_Session *
 ACE_QoS_Session_Factory::create_session (ACE_QoS_Session_Type qos_session_type)
 {
-  ACE_QoS_Session *qos_session {};
+  std::unique_ptr<ACE_QoS_Session> qos_session_owner;
+  bool allocation_attempted {};
 
 #if defined (ACE_HAS_RAPI)
   if (qos_session_type == ACE_RAPI_SESSION)
     {
-      ACE_NEW_RETURN (qos_session,
-                      ACE_RAPI_Session,
-                      nullptr);
+      allocation_attempted = true;
+      qos_session_owner.reset (new (std::nothrow) ACE_RAPI_Session);
     }
 #endif /* ACE_HAS_RAPI */
 
   if (qos_session_type == ACE_GQOS_SESSION)
     {
-      ACE_NEW_RETURN (qos_session,
-                      ACE_GQoS_Session,
-                      nullptr);
+      allocation_attempted = true;
+      qos_session_owner.reset (new (std::nothrow) ACE_GQoS_Session);
     }
 
-  if (qos_session == nullptr)
+  if (qos_session_owner == nullptr)
     {
+      if (allocation_attempted)
+        {
+          errno = ENOMEM;
+          return nullptr;
+        }
+
       ACELIB_ERROR ((LM_ERROR,
                      ACE_TEXT ("Unsupported QoS session type\n")));
       return nullptr;
     }
 
-  std::unique_ptr<ACE_QoS_Session> qos_session_owner (qos_session);
   if (this->add_session (qos_session_owner.get ()) == -1)
     {
       ACELIB_ERROR_RETURN ((LM_ERROR,
