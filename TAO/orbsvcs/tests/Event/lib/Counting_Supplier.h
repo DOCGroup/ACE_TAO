@@ -90,7 +90,6 @@ public:
   /// Create the task...
   EC_Counting_Supplier_Task (EC_Counting_Supplier *supplier);
 
-  // = Check the ACE_Task_Base documentation.
   int svc () override;
 
   void stop ();

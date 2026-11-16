@@ -92,8 +92,10 @@ public:
   void event_type (int event_number,
                    RtecEventComm::Event& event);
 
-  // = The PushSupplier methods
+  /// @name PushSupplier operations
+  //@{
   void disconnect_push_supplier () override;
+  //@}
 
 private:
   /// Class we forward to.

@@ -28,7 +28,6 @@ public:
   Task (Task &&) = delete;
   Task &operator= (Task &&) = delete;
 
-  // = Check the ACE_Task_Base documentation.
   int svc () override;
 
   /// Run a single iteration of the test

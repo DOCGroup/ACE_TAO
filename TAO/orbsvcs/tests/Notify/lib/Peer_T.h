@@ -70,8 +70,10 @@ public:
   /// Deactivate the object.
   void deactivate ();
 
-  // = ServantBase operations
+  /// @name ServantBase operations
+  //@{
   PortableServer::POA_ptr _default_POA () override;
+  //@}
 
 protected:
   /// Activate this object in the default POA.

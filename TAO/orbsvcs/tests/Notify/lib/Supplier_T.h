@@ -67,10 +67,12 @@ protected:
   Proxy_Traits_PTR obtain_proxy (Admin_Ext_Traits_PTR admin_ptr,
                                  CosNotification::QoSProperties &qos) override;
 
-  // = NotifySubscribe
+  /// @name NotifySubscribe operations
+  //@{
   void subscription_change (
       CosNotification::EventTypeSeq const &added,
       CosNotification::EventTypeSeq const &removed) override;
+  //@}
 };
 
 #include "Supplier_T.cpp"

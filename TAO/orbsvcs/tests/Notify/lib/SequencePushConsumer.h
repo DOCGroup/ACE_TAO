@@ -73,12 +73,14 @@ protected:
   /// Disconnect from proxy.
   void disconnect_from_proxy () override;
 
-  // = SequencePushConsumer methods
+  /// @name SequencePushConsumer operations
+  //@{
   void disconnect_sequence_push_consumer () override;
 
  /// Default does nothing.
   void push_structured_events (
         CosNotification::EventBatch const &notifications) override;
+  //@}
 };
 
 #if defined (__ACE_INLINE__)

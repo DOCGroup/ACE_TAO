@@ -41,11 +41,12 @@ public:
   /// expected count.
   void dump_results (int expected_count, int tolerance);
 
-  // = The RtecEventComm::PushConsumer methods
-
+  /// @name RtecEventComm::PushConsumer operations
+  //@{
   /// The skeleton methods.
   void push (const RtecEventComm::EventSet& events) override;
   void disconnect_push_consumer () override;
+  //@}
 
   /// Keep track of the number of events received.
   CORBA::ULong event_count;
