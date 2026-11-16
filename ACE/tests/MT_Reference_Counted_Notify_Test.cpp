@@ -56,8 +56,8 @@ Reference_Counted_Event_Handler::Reference_Counted_Event_Handler ()
     ACE_DEBUG
       ((LM_DEBUG,
         ACE_TEXT ("Reference count in Reference_Counted_Event_Handler() ")
-        ACE_TEXT ("is %ld\n"),
-        this->reference_count_.load ()));
+        ACE_TEXT ("is %q\n"),
+        static_cast<ACE_INT64> (this->reference_count_.load ())));
 }
 
 Reference_Counted_Event_Handler::~Reference_Counted_Event_Handler ()
@@ -66,15 +66,15 @@ Reference_Counted_Event_Handler::~Reference_Counted_Event_Handler ()
     ACE_DEBUG
       ((LM_DEBUG,
         ACE_TEXT ("Reference count in ~Reference_Counted_Event_Handler() ")
-        ACE_TEXT ("is %ld\n"),
-        this->reference_count_.load ()));
+        ACE_TEXT ("is %q\n"),
+        static_cast<ACE_INT64> (this->reference_count_.load ())));
 
   if (0 != this->reference_count_.load ())
     ACE_ERROR
       ((LM_ERROR,
         ACE_TEXT ("Reference count in ~Reference_Counted_Event_Handler() ")
-        ACE_TEXT ("should be 0 but is %ld\n"),
-        this->reference_count_.load ()));
+        ACE_TEXT ("should be 0 but is %q\n"),
+        static_cast<ACE_INT64> (this->reference_count_.load ())));
 }
 
 int
@@ -84,15 +84,15 @@ Reference_Counted_Event_Handler::handle_input (ACE_HANDLE)
     ACE_DEBUG
       ((LM_DEBUG,
         ACE_TEXT ("Reference count in Reference_Counted_Event_Handler::")
-        ACE_TEXT ("handle_input() is %ld\n"),
-        this->reference_count_.load ()));
+        ACE_TEXT ("handle_input() is %q\n"),
+        static_cast<ACE_INT64> (this->reference_count_.load ())));
 
   if (2 != this->reference_count_.load ())
     ACE_ERROR
       ((LM_ERROR,
         ACE_TEXT ("Reference count in Reference_Counted_Event_Handler::")
-        ACE_TEXT ("handle_input() should be 2 but is %ld\n"),
-        this->reference_count_.load ()));
+        ACE_TEXT ("handle_input() should be 2 but is %q\n"),
+        static_cast<ACE_INT64> (this->reference_count_.load ())));
 
   return 0;
 }
@@ -105,8 +105,8 @@ Reference_Counted_Event_Handler::add_reference ()
 
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Reference count after add_reference() is %ld\n"),
-                this->reference_count_.load ()));
+                ACE_TEXT ("Reference count after add_reference() is %q\n"),
+                static_cast<ACE_INT64> (this->reference_count_.load ())));
 
   return reference_count;
 }
@@ -119,8 +119,8 @@ Reference_Counted_Event_Handler::remove_reference ()
 
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Reference count after remove_reference() is %ld\n"),
-                reference_count));
+                ACE_TEXT ("Reference count after remove_reference() is %q\n"),
+                static_cast<ACE_INT64> (reference_count)));
 
   return reference_count;
 }

@@ -65,16 +65,16 @@ Reference_Counted_Event_Handler::Reference_Counted_Event_Handler (int expected_n
 
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                "Reference count in Reference_Counted_Event_Handler() is %ld\n",
-                this->reference_count_.load ()));
+                "Reference count in Reference_Counted_Event_Handler() is %q\n",
+                static_cast<ACE_INT64> (this->reference_count_.load ())));
 }
 
 Reference_Counted_Event_Handler::~Reference_Counted_Event_Handler ()
 {
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                "Reference count in ~Reference_Counted_Event_Handler() is %ld\n",
-                this->reference_count_.load ()));
+                "Reference count in ~Reference_Counted_Event_Handler() is %q\n",
+                static_cast<ACE_INT64> (this->reference_count_.load ())));
 
   if (this->expected_number_of_handle_close_calls_ != -1)
     ACE_TEST_ASSERT (this->number_of_handle_close_calls_ ==
@@ -87,9 +87,9 @@ Reference_Counted_Event_Handler::handle_timeout (const ACE_Time_Value &,
 {
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                "Reference count in Reference_Counted_Event_Handler::handle_timeout() for arg = %C is %ld\n",
+                "Reference count in Reference_Counted_Event_Handler::handle_timeout() for arg = %C is %q\n",
                 (const char *) arg,
-                this->reference_count_.load ()));
+                static_cast<ACE_INT64> (this->reference_count_.load ())));
 
   return 0;
 }
@@ -100,11 +100,11 @@ Reference_Counted_Event_Handler::handle_close (ACE_HANDLE handle,
 {
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                "Reference_Counted_Event_Handler::handle_close() called with handle = %@ and masks = %d. "
-                "Reference count is %ld\n",
+                "Reference_Counted_Event_Handler::handle_close() called with handle = %@ and masks = %Q. "
+                "Reference count is %q\n",
                 reinterpret_cast<void *> (handle),
-                masks,
-                this->reference_count_.load ()));
+                static_cast<ACE_UINT64> (masks),
+                static_cast<ACE_INT64> (this->reference_count_.load ())));
 
   ++this->number_of_handle_close_calls_;
 
@@ -391,9 +391,9 @@ Simple_Event_Handler::handle_close (ACE_HANDLE handle,
 {
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                "Simple_Event_Handler::handle_close() called with handle = %@ and masks = %d.\n",
+                "Simple_Event_Handler::handle_close() called with handle = %@ and masks = %Q.\n",
                 reinterpret_cast<void *> (handle),
-                masks));
+                static_cast<ACE_UINT64> (masks)));
 
   delete this;
 

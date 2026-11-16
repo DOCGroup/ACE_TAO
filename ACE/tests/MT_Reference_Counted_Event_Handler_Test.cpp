@@ -295,16 +295,16 @@ Sender::Sender (ACE_HANDLE handle,
 
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) Reference count in Sender::Sender() is %ld\n"),
-                this->reference_count_.load ()));
+                ACE_TEXT ("(%t) Reference count in Sender::Sender() is %q\n"),
+                static_cast<ACE_INT64> (this->reference_count_.load ())));
 }
 
 Sender::~Sender ()
 {
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) Reference count in ~Sender::Sender() is %ld\n"),
-                this->reference_count_.load ()));
+                ACE_TEXT ("(%t) Reference count in ~Sender::Sender() is %q\n"),
+                static_cast<ACE_INT64> (this->reference_count_.load ())));
 
   // Close the socket that we are responsible for.
   ACE_OS::closesocket (this->handle_);
@@ -315,8 +315,8 @@ Sender::handle_input (ACE_HANDLE)
 {
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) Reference count in Sender::handle_input() is %ld\n"),
-                this->reference_count_.load ()));
+                ACE_TEXT ("(%t) Reference count in Sender::handle_input() is %q\n"),
+                static_cast<ACE_INT64> (this->reference_count_.load ())));
 
   //
   // In this test, this method is only called when the connection has
@@ -412,16 +412,16 @@ Receiver::Receiver (ACE_Thread_Manager &thread_manager,
 
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) Reference count in Receiver::Receiver() is %ld\n"),
-                this->reference_count_.load ()));
+                ACE_TEXT ("(%t) Reference count in Receiver::Receiver() is %q\n"),
+                static_cast<ACE_INT64> (this->reference_count_.load ())));
 }
 
 Receiver::~Receiver ()
 {
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) Reference count in ~Receiver::Receiver() is %ld\n"),
-                this->reference_count_.load ()));
+                ACE_TEXT ("(%t) Reference count in ~Receiver::Receiver() is %q\n"),
+                static_cast<ACE_INT64> (this->reference_count_.load ())));
 
   // Close the socket that we are responsible for.
   ACE_OS::closesocket (this->handle_);
@@ -869,8 +869,8 @@ Invocation_Thread::create_connection ()
   ACE_UNUSED_ARG (result);
 #else
   if (result != 0)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) create_connection h %d, %p\n"),
-                client_handle,
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) create_connection h %@, %p\n"),
+                reinterpret_cast<void *> (client_handle),
                 ACE_TEXT ("register_handler")));
 #endif
   return sender;

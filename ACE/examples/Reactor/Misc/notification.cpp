@@ -298,9 +298,9 @@ int
 Thread_Handler::handle_timeout (ACE_Time_Value const &time, void const *)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) received timeout at (%:, %ld), iterations = %B\n",
+              "(%t) received timeout at (%:, %q), iterations = %B\n",
               time.sec (),
-              static_cast<long> (time.usec ()),
+              static_cast<ACE_INT64> (time.usec ()),
               this->iterations_));
 
   if (--this->iterations_ <= 0

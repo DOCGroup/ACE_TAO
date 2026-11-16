@@ -218,9 +218,9 @@ int
 STDIN_Handler::handle_timeout (ACE_Time_Value const &tv, void const *)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) timeout occurred at %: sec, %ld usec\n",
+              "(%t) timeout occurred at %: sec, %q usec\n",
               tv.sec (),
-              static_cast<long> (tv.usec ())));
+              static_cast<ACE_INT64> (tv.usec ())));
   return 0;
 }
 
