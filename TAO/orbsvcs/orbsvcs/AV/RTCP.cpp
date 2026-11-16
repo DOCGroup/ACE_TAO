@@ -807,7 +807,7 @@ TAO_AV_RTCP_Callback::get_timeout (ACE_Time_Value *&tv,
                                          rtcp_bw,                  // rtcp_bw
                                          this->output_.active (),  // we_sent
                                          this->packet_size_,       // packet_size
-                                         &this->avg_rtcp_size_,    // avg_rtcp_size
+                                         std::addressof (this->avg_rtcp_size_), // avg_rtcp_size
                                          this->is_initial_timeout_);  // initial)
 
   this->is_initial_timeout_ = false;

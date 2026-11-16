@@ -613,7 +613,7 @@ TAO_AV_SCTP_SEQ_Object::handle_input ()
     ORBSVCS_ERROR_RETURN ((LM_ERROR,"TAO_AV_SCTP_SEQ_Flow_Handler::handle_input connection closed\n"),-1);
   this->frame_.wr_ptr (this->frame_.rd_ptr () + n);
 
-  return this->callback_->receive_frame (&this->frame_);
+  return this->callback_->receive_frame (std::addressof (this->frame_));
 }
 
 int

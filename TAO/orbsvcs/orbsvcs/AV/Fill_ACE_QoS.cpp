@@ -1,5 +1,7 @@
 #include "orbsvcs/AV/Fill_ACE_QoS.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -27,7 +29,7 @@ Fill_ACE_QoS::fill_simplex_receiver_qos (ACE_QoS &ace_qos,
                                          ACE_Flow_Spec *ace_flow_spec)
 {
   ace_qos.receiving_flowspec (ace_flow_spec);
-  ace_qos.sending_flowspec (&this->default_traffic_);
+  ace_qos.sending_flowspec (std::addressof (this->default_traffic_));
   ace_qos.provider_specific (Fill_ACE_QoS::iov_);
 
   return 0;
@@ -37,7 +39,7 @@ int
 Fill_ACE_QoS::fill_simplex_sender_qos (ACE_QoS &ace_qos,
                                        ACE_Flow_Spec *sender_flow_spec)
 {
-  ace_qos.receiving_flowspec (&this->default_traffic_);
+  ace_qos.receiving_flowspec (std::addressof (this->default_traffic_));
   ace_qos.sending_flowspec (sender_flow_spec);
   ace_qos.provider_specific (Fill_ACE_QoS::iov_);
 

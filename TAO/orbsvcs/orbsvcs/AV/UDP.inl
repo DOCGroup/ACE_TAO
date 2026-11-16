@@ -9,7 +9,7 @@ ACE_INLINE
 ACE_SOCK_Dgram const *
 TAO_AV_UDP_Flow_Handler::get_socket () const
 {
-  return &this->sock_dgram_;
+  return std::addressof (this->sock_dgram_);
 }
 
 ACE_INLINE

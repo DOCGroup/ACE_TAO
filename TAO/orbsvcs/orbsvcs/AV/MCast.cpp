@@ -4,6 +4,8 @@
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "tao/debug.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 #include "orbsvcs/AV/MCast.inl"
 #endif /* __ACE_INLINE__ */
@@ -80,14 +82,14 @@ TAO_AV_UDP_MCast_Transport::close ()
 ACE_Addr*
 TAO_AV_UDP_MCast_Transport::get_peer_addr ()
 {
-  return &this->peer_addr_;
+  return std::addressof (this->peer_addr_);
 }
 
 ACE_Addr*
 TAO_AV_UDP_MCast_Transport::get_local_addr ()
 {
   this->handler_->get_mcast_socket ()->get_local_addr (this->local_addr_);
-  return &this->local_addr_;
+  return std::addressof (this->local_addr_);
 }
 
 ssize_t

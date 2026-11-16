@@ -8,6 +8,7 @@
 #include "ace/OS_NS_strings.h"
 
 #include <cstring>
+#include <memory>
 #include <string>
 
 #if !defined (__ACE_INLINE__)
@@ -199,7 +200,7 @@ TAO_AV_UDP_Transport::mtu ()
 ACE_Addr*
 TAO_AV_UDP_Transport::get_peer_addr ()
 {
-  return &this->peer_addr_;
+  return std::addressof (this->peer_addr_);
 }
 
 ssize_t
@@ -1027,7 +1028,7 @@ TAO_AV_UDP_Object::handle_input ()
 
   this->frame_.wr_ptr (this->frame_.rd_ptr () + n);
 
-  return this->callback_->receive_frame (&this->frame_);
+  return this->callback_->receive_frame (std::addressof (this->frame_));
 }
 
 int

@@ -6,6 +6,8 @@
 #include "tao/debug.h"
 #include "ace/OS_NS_strings.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //------------------------------------------------------------
@@ -220,7 +222,7 @@ TAO_AV_TCP_Object::handle_input ()
   }
   this->frame_.wr_ptr (this->frame_.rd_ptr () + n);
 
-  return this->callback_->receive_frame (&this->frame_);
+  return this->callback_->receive_frame (std::addressof (this->frame_));
 }
 
 int

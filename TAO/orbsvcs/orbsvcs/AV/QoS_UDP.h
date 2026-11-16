@@ -16,6 +16,8 @@
 
 #if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
 
+#include <memory>
+
 #include "orbsvcs/AV/Protocol_Factory.h"
 
 #include "ace/Service_Config.h"

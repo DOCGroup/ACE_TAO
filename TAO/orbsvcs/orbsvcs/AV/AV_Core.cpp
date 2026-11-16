@@ -12,6 +12,7 @@
 
 #include <algorithm>
 #include <cstring>
+#include <memory>
 
 #if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
 #include "orbsvcs/AV/QoS_UDP.h"
@@ -156,13 +157,13 @@ TAO_AV_Core::acceptor_registry ()
 TAO_AV_TransportFactorySet *
 TAO_AV_Core::transport_factories ()
 {
-  return &this->transport_factories_;
+  return std::addressof (this->transport_factories_);
 }
 
 TAO_AV_Flow_ProtocolFactorySet*
 TAO_AV_Core::flow_protocol_factories ()
 {
-  return &this->flow_protocol_factories_;
+  return std::addressof (this->flow_protocol_factories_);
 }
 
 int
