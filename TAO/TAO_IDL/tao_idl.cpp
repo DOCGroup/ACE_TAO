@@ -393,19 +393,27 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           throw Bailout ();
         }
 
-      FILE *output_file {};
+      std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+        nullptr, ACE_OS::fclose);
 
       if (idl_global->multi_file_input ())
         {
-          output_file =
-            ACE_OS::fopen (idl_global->big_file_name ().c_str (), "w");
+          output_file.reset (
+            ACE_OS::fopen (idl_global->big_file_name ().c_str (), "w"));
+          if (!output_file)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "TAO_IDL: cannot open temporary input file \"%C\": %m\n",
+                          idl_global->big_file_name ().c_str ()));
+              throw Bailout ();
+            }
         }
 
       for (size_t i = 0; i < DRV_files.size (); ++i)
         {
           if (idl_global->multi_file_input ())
             {
-              std::fprintf (output_file,
+              std::fprintf (output_file.get (),
                             "#include \"%s\"\n",
                             DRV_files[i].c_str ());
             }
@@ -417,7 +425,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (idl_global->multi_file_input ())
         {
-          ACE_OS::fclose (output_file);
+          output_file.reset ();
           DRV_drive (idl_global->big_file_name ());
           ACE_OS::unlink (idl_global->big_file_name ().c_str ());
         }
