@@ -1,5 +1,6 @@
 #include "MIF_Task.h"
 #include "test.h"
+#include "../Task_Stats.h"
 
 #include "ace/OS_NS_errno.h"
 #include "ace/Countdown_Time.h"
@@ -20,14 +21,8 @@ MIF_Task::MIF_Task (int importance,
   this->dist_ = dist;
   this->job_name_ = CORBA::string_dup (job_name);
 
-  // create the stat object.
-  ACE_NEW (task_stats_, Task_Stats);
+  task_stats_ = std::make_unique<Task_Stats> ();
   task_stats_->init (iter_);
-}
-
-MIF_Task::~MIF_Task ()
-{
-  delete task_stats_;
 }
 
 void

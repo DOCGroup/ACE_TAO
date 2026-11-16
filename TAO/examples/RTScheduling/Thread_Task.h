@@ -7,6 +7,8 @@
 #include "tao/RTScheduling/RTScheduler.h"
 #include "ace/Task.h"
 
+#include <memory>
+
 class Task_Stats;
 class DT_Creator;
 
@@ -14,6 +16,7 @@ class RTSCHEDTESTLIB_Export Thread_Task : public ACE_Task <ACE_SYNCH>
 {
  public:
   Thread_Task ();
+  ~Thread_Task () override;
 
   virtual int activate_task (RTScheduling::Current_ptr current,
                              CORBA::Policy_ptr sched_param,
@@ -53,7 +56,7 @@ class RTSCHEDTESTLIB_Export Thread_Task : public ACE_Task <ACE_SYNCH>
   int dist_;
   CORBA::String_var job_name_;
   Job_var job_;
-  Task_Stats *task_stats_;
+  std::unique_ptr<Task_Stats> task_stats_ {};
 };
 
 #endif /* THREAD_TASK_H */
