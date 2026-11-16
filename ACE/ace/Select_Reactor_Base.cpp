@@ -537,8 +537,8 @@ ACE_Select_Reactor_Handler_Repository::dump () const
               this->max_handlep1 ()));
 # else
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("max_handlep1_ = %d\n"),
-              this->max_handlep1 ()));
+              ACE_TEXT ("max_handlep1_ = %Q\n"),
+              static_cast<ACE_UINT64> (this->max_handlep1 ())));
 # endif /* ACE_SELECT_REACTOR_BASE_USES_HASH_MAP */
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("[")));
 
@@ -556,9 +556,9 @@ ACE_Select_Reactor_Handler_Repository::dump () const
 # else
     ACELIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT (" (event_handler = %@,")
-                ACE_TEXT (" event_handler->handle_ = %d\n"),
+                ACE_TEXT (" event_handler->handle_ = %@\n"),
                 event_handler,
-                event_handler->get_handle ()));
+                reinterpret_cast<void *> (event_handler->get_handle ())));
 # endif /* ACE_SELECT_REACTOR_BASE_USES_HASH_MAP */
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT (" ]\n")));
@@ -622,7 +622,7 @@ ACE_Select_Reactor_Notify::dump () const
   ACE_TRACE ("ACE_Select_Reactor_Notify::dump");
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("select_reactor_ = %x"), this->select_reactor_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("select_reactor_ = %@"), this->select_reactor_));
   this->notification_pipe_.dump ();
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
@@ -900,8 +900,8 @@ ACE_Select_Reactor_Notify::dispatch_notify (ACE_Notification_Buffer &buffer)
         default:
           // Should we bail out if we get an invalid mask?
           ACELIB_ERROR ((LM_ERROR,
-                      ACE_TEXT ("invalid mask = %d\n"),
-                      buffer.mask_));
+                      ACE_TEXT ("invalid mask = %Q\n"),
+                      static_cast<ACE_UINT64> (buffer.mask_)));
         }
 
       if (result == -1)

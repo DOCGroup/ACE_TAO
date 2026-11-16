@@ -405,7 +405,7 @@ ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>:
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("index_ = %d "), this->index_));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("next_ = %x"), this->next_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("next_ = %@"), this->next_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -477,7 +477,7 @@ ACE_Hash_Map_Const_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("index_ = %d "), this->index_));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("next_ = %x"), this->next_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("next_ = %@"), this->next_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 

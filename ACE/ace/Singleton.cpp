@@ -33,7 +33,7 @@ ACE_Singleton<TYPE, ACE_LOCK>::dump ()
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Singleton<TYPE, ACE_LOCK>::dump");
 
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("instance_ = %x"),
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("instance_ = %@"),
               ACE_Singleton<TYPE, ACE_LOCK>::instance_i ()));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
@@ -148,7 +148,7 @@ ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::dump ()
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::dump");
 
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("instance_ = %x"),
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("instance_ = %@"),
               ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::instance_i ()));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
@@ -232,7 +232,7 @@ ACE_TSS_Singleton<TYPE, ACE_LOCK>::dump ()
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_TSS_Singleton<TYPE, ACE_LOCK>::dump");
 
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("instance_ = %x"),
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("instance_ = %@"),
               ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance_i ()));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
@@ -314,7 +314,7 @@ ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::dump ()
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::dump");
 
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("instance_ = %x"),
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("instance_ = %@"),
               ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::instance_i ()));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
@@ -410,7 +410,7 @@ ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::dump ()
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::dump");
 
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("instance_ = %x"),
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("instance_ = %@"),
               ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::instance_i ()));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */

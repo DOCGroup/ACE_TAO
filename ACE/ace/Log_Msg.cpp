@@ -3077,15 +3077,16 @@ ACE_Log_Msg::dump () const
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nlocal_host_ = %s\n"),
               this->local_host_ ? this->local_host_
                                 : ACE_TEXT ("<unknown>")));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nflags_ = 0x%x\n"), this->flags_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nflags_ = 0x%Q\n"),
+                 static_cast<ACE_UINT64> (this->flags_)));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntrace_depth_ = %d\n"),
               this->trace_depth_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntrace_active_ = %d\n"),
               this->trace_active_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntracing_enabled_ = %d\n"),
               this->tracing_enabled_));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\npriority_mask_ = 0x%x\n"),
-              this->priority_mask_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\npriority_mask_ = 0x%Q\n"),
+              static_cast<ACE_UINT64> (this->priority_mask_)));
   if (this->thr_desc_ != 0 && this->thr_desc_->state () != 0)
     ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nthr_state_ = %d\n"),
                 this->thr_desc_->state ()));

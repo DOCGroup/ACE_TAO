@@ -78,7 +78,7 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::dump () const
   ACE_TRACE ("ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::dump");
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("svc_handler_ = %x"), this->svc_handler_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("svc_handler_ = %@"), this->svc_handler_));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ntimer_id_ = %d"), this->timer_id_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
@@ -698,8 +698,8 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::close ()
       if (handler == nullptr)
         {
           ACELIB_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%t: Connector::close h %d, no handler\n"),
-                      *handle));
+                      ACE_TEXT ("%t: Connector::close h %@, no handler\n"),
+                      reinterpret_cast<void *> (*handle)));
           // Remove handle from the set of non-blocking handles.
           this->non_blocking_handles ().remove (*handle);
           continue;
@@ -711,9 +711,9 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::close ()
       if (nbch == nullptr)
         {
           ACELIB_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%t: Connector::close h %d handler %@ ")
+                      ACE_TEXT ("%t: Connector::close h %@ handler %@ ")
                       ACE_TEXT ("not a legit handler\n"),
-                      *handle,
+                      reinterpret_cast<void *> (*handle),
                       handler));
           // Remove handle from the set of non-blocking handles.
           this->non_blocking_handles ().remove (*handle);

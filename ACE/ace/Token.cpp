@@ -27,10 +27,11 @@ ACE_Token::dump () const
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nthread = %d"), ACE_Thread::self ()));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nthread = %@"),
+                 reinterpret_cast<void *> (ACE_Thread::self ())));
   // @@ Is there a portable way to do this?
   // ACELIB_DEBUG ((LM_DEBUG, "\nowner_ = %d", (long) this->owner_));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nowner_ addr = %x"), &this->owner_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nowner_ addr = %@"), std::addressof (this->owner_)));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nwaiters_ = %d"), this->waiters_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nin_use_ = %d"), this->in_use_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nnesting level = %d"), this->nesting_level_));

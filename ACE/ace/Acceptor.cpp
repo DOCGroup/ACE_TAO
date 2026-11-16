@@ -881,7 +881,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::dump () const
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::dump");
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nsvc_handler_ = %x"), this->svc_handler_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nsvc_handler_ = %@"), this->svc_handler_));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nrestart_ = %d"), this->restart_));
   this->peer_acceptor_.dump ();
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("delete_concurrency_strategy_ = %d"),

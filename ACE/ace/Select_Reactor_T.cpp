@@ -1563,39 +1563,39 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dump () const
 
   for (ACE_Handle_Set_Iterator handle_iter_wr (this->wait_set_.wr_mask_);
        (h = handle_iter_wr ()) != ACE_INVALID_HANDLE;)
-    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("write_handle = %d\n"), h));
+    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("write_handle = %@\n"), reinterpret_cast<void *> (h)));
 
   for (ACE_Handle_Set_Iterator handle_iter_rd (this->wait_set_.rd_mask_);
        (h = handle_iter_rd ()) != ACE_INVALID_HANDLE;)
-    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("read_handle = %d\n"), h));
+    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("read_handle = %@\n"), reinterpret_cast<void *> (h)));
 
   for (ACE_Handle_Set_Iterator handle_iter_ex (this->wait_set_.ex_mask_);
        (h = handle_iter_ex ()) != ACE_INVALID_HANDLE;)
-    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("except_handle = %d\n"), h));
+    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("except_handle = %@\n"), reinterpret_cast<void *> (h)));
 
   for (ACE_Handle_Set_Iterator handle_iter_wr_ready (this->ready_set_.wr_mask_);
        (h = handle_iter_wr_ready ()) != ACE_INVALID_HANDLE;)
-    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("write_handle_ready = %d\n"), h));
+    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("write_handle_ready = %@\n"), reinterpret_cast<void *> (h)));
 
   for (ACE_Handle_Set_Iterator handle_iter_rd_ready (this->ready_set_.rd_mask_);
        (h = handle_iter_rd_ready ()) != ACE_INVALID_HANDLE;)
-    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("read_handle_ready = %d\n"), h));
+    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("read_handle_ready = %@\n"), reinterpret_cast<void *> (h)));
 
   for (ACE_Handle_Set_Iterator handle_iter_ex_ready (this->ready_set_.ex_mask_);
        (h = handle_iter_ex_ready ()) != ACE_INVALID_HANDLE;)
-    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("except_handle_ready = %d\n"), h));
+    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("except_handle_ready = %@\n"), reinterpret_cast<void *> (h)));
 
   for (ACE_Handle_Set_Iterator handle_iter_su_ready (this->suspend_set_.wr_mask_);
        (h = handle_iter_su_ready ()) != ACE_INVALID_HANDLE;)
-    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("write_handle_suspend = %d\n"), h));
+    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("write_handle_suspend = %@\n"), reinterpret_cast<void *> (h)));
 
   for (ACE_Handle_Set_Iterator handle_iter_su_ready (this->suspend_set_.rd_mask_);
        (h = handle_iter_su_ready ()) != ACE_INVALID_HANDLE;)
-    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("read_handle_suspend = %d\n"), h));
+    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("read_handle_suspend = %@\n"), reinterpret_cast<void *> (h)));
 
   for (ACE_Handle_Set_Iterator handle_iter_su_ready (this->suspend_set_.ex_mask_);
        (h = handle_iter_su_ready ()) != ACE_INVALID_HANDLE;)
-    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("except_handle_suspend = %d\n"), h));
+    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("except_handle_suspend = %@\n"), reinterpret_cast<void *> (h)));
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("restart_ = %d\n"), this->restart_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("requeue_position_ = %d\n"), this->requeue_position_));

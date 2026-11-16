@@ -29,11 +29,13 @@ ACE_Mem_Map::dump () const
   ACE_TRACE ("ACE_Mem_Map::dump");
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("base_addr_ = %x"), this->base_addr_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("base_addr_ = %@"), this->base_addr_));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nfilename_ = %s"), this->filename_));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nlength_ = %B"), this->length_));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nhandle_ = %d"), this->handle_));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nfile_mapping_ = %d"), this->file_mapping_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nhandle_ = %@"),
+                 reinterpret_cast<void *> (this->handle_)));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nfile_mapping_ = %@"),
+                 reinterpret_cast<void *> (this->file_mapping_)));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nclose_handle_ = %d"), this->close_handle_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */

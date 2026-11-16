@@ -32,8 +32,10 @@ ACE_Pipe::dump () const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Pipe::dump");
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("handles_[0] = %d"), this->handles_[0]));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nhandles_[1] = %d\n"), this->handles_[1]));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("handles_[0] = %@"),
+                 reinterpret_cast<void *> (this->handles_[0])));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nhandles_[1] = %@\n"),
+                 reinterpret_cast<void *> (this->handles_[1])));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }

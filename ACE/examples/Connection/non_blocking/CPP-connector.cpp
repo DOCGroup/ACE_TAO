@@ -165,9 +165,9 @@ Peer_Handler<PEER_STREAM>::handle_close (ACE_HANDLE h,
                                      ACE_Reactor_Mask mask)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("closing down handle %d with mask %d\n"),
-              h,
-              mask));
+              ACE_TEXT ("closing down handle %@ with mask %Q\n"),
+              reinterpret_cast<void *> (h),
+              static_cast<ACE_UINT64> (mask)));
 
   if (this->action_ == &Peer_Handler<PEER_STREAM>::stdio)
     {

@@ -20,7 +20,8 @@ ACE_FIFO_Recv::dump () const
   ACE_TRACE ("ACE_FIFO_Recv::dump");
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_FIFO::dump ();
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("aux_handle_ = %d"), this->aux_handle_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("aux_handle_ = %@"),
+                 reinterpret_cast<void *> (this->aux_handle_)));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }

@@ -14,8 +14,8 @@ ACE_Obchunk::dump () const
   ACE_TRACE ("ACE_Obchunk::dump");
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("end_ = %x\n"), this->end_));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("cur_ = %x\n"), this->cur_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("end_ = %@\n"), this->end_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("cur_ = %@\n"), this->cur_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }

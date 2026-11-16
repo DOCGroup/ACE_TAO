@@ -25,7 +25,7 @@ ACE_Mutex::dump () const
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 # ifdef ACE_MUTEX_USE_PROCESS_LOCK
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("lockname_ = %s\n"), this->lockname_));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("process_lock_ = %x\n"), this->process_lock_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("process_lock_ = %@\n"), this->process_lock_));
 # endif /* ACE_MUTEX_USE_PROCESS_LOCK */
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));

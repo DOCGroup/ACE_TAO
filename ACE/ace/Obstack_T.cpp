@@ -26,8 +26,8 @@ ACE_Obstack_T<ACE_CHAR_T>::dump () const
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("size_ = %B\n"), this->size_));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("head_ = %x\n"), this->head_));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("curr_ = %x\n"), this->curr_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("head_ = %@\n"), this->head_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("curr_ = %@\n"), this->curr_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }

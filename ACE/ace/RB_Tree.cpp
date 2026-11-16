@@ -1160,7 +1160,7 @@ ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::dump_i () con
   ACE_TRACE ("ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::dump_i");
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nnode_ = %x\n"), this->node_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nnode_ = %@\n"), this->node_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 

@@ -254,11 +254,14 @@ ACE_Thread_Descriptor::dump () const
   ACE_TRACE ("ACE_Thread_Descriptor::dump");
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nthr_id_ = %d"), this->thr_id_));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nthr_handle_ = %d"), this->thr_handle_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nthr_id_ = %@"),
+                 reinterpret_cast<void *> (this->thr_id_)));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nthr_handle_ = %@"),
+                 reinterpret_cast<void *> (this->thr_handle_)));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\ngrp_id_ = %d"), this->grp_id_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nthr_state_ = %d"), this->thr_state_));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nflags_ = %x\n"), this->flags_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nflags_ = %Q\n"),
+                 static_cast<ACE_UINT64> (this->flags_)));
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */

@@ -24,12 +24,13 @@ ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::dump () const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::dump");
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nthr_mgr_ = %x"), this->thr_mgr_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nthr_mgr_ = %@"), this->thr_mgr_));
   this->msg_queue_->dump ();
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("delete_msg_queue_ = %d\n"), this->delete_msg_queue_));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nflags = %x"), this->flags_));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nmod_ = %x"), this->mod_));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nnext_ = %x"), this->next_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nflags = %Q"),
+                 static_cast<ACE_UINT64> (this->flags_)));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nmod_ = %@"), this->mod_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nnext_ = %@"), this->next_));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ngrp_id_ = %d"), this->grp_id_));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nthr_count_ = %d"), this->thr_count_));
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)

@@ -436,7 +436,7 @@ template <class T> void
 ACE_Double_Linked_List_Iterator_Base<T>::dump_i () const
 {
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("current_ = %x"), this->current_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("current_ = %@"), this->current_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 

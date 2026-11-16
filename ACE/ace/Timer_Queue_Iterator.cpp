@@ -24,11 +24,11 @@ ACE_Timer_Node_T<TYPE>::dump () const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Timer_Node_T::dump");
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nact_ = %x"), this->act_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nact_ = %@"), this->act_));
   this->timer_value_.dump ();
   this->interval_.dump ();
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nprev_ = %x"), this->prev_));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nnext_ = %x"), this->next_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nprev_ = %@"), this->prev_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nnext_ = %@"), this->next_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntimer_id_ = %d\n"), this->timer_id_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */

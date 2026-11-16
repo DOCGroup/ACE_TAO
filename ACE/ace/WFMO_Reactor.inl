@@ -71,12 +71,12 @@ ACE_WFMO_Reactor_Handler_Repository::Common_Info::dump () const
               this->io_entry_));
 
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Event Handler = %d\n"),
+              ACE_TEXT ("Event Handler = %@\n"),
               this->event_handler_));
 
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("I/O Handle = %d\n"),
-              this->io_handle_));
+              ACE_TEXT ("I/O Handle = %@\n"),
+              reinterpret_cast<void *> (this->io_handle_)));
 
   ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Network Events = %d\n"),
@@ -91,8 +91,8 @@ ACE_WFMO_Reactor_Handler_Repository::Common_Info::dump () const
               this->delete_entry_));
 
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Close Masks = %d\n"),
-              this->close_masks_));
+              ACE_TEXT ("Close Masks = %Q\n"),
+              static_cast<ACE_UINT64> (this->close_masks_)));
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
@@ -146,8 +146,8 @@ ACE_WFMO_Reactor_Handler_Repository::Current_Info::dump (ACE_HANDLE event_handle
   Common_Info::dump ();
 
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Event Handle = %d\n"),
-              event_handle));
+              ACE_TEXT ("Event Handle = %@\n"),
+              reinterpret_cast<void *> (event_handle)));
 
   ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Suspend Entry = %d\n"),
@@ -212,8 +212,8 @@ ACE_WFMO_Reactor_Handler_Repository::To_Be_Added_Info::dump () const
   Common_Info::dump ();
 
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Event Handle = %d\n"),
-              this->event_handle_));
+              ACE_TEXT ("Event Handle = %@\n"),
+              reinterpret_cast<void *> (this->event_handle_)));
 
   ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Suspend Entry = %d\n"),
@@ -276,8 +276,8 @@ ACE_WFMO_Reactor_Handler_Repository::Suspended_Info::dump () const
   Common_Info::dump ();
 
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Event Handle = %d\n"),
-              this->event_handle_));
+              ACE_TEXT ("Event Handle = %@\n"),
+              reinterpret_cast<void *> (this->event_handle_)));
 
   ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Resume Entry = %d\n"),

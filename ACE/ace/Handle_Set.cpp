@@ -41,16 +41,18 @@ ACE_Handle_Set::dump () const
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nsize_ = %d"), this->size_));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nmax_handle_ = %d"), this->max_handle_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nmax_handle_ = %@"),
+                 reinterpret_cast<void *> (this->max_handle_)));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\n[ ")));
 
 #if defined (ACE_HANDLE_SET_USES_FD_ARRAY)
   for (size_t i {}; i < (size_t) this->mask_.fd_count + 1; ++i)
-    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT (" %x "), this->mask_.fd_array[i]));
+    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT (" %@ "),
+                   reinterpret_cast<void *> (this->mask_.fd_array[i])));
 #else /* !ACE_HANDLE_SET_USES_FD_ARRAY */
   for (ACE_HANDLE i {}; i < this->max_handle_ + 1; ++i)
     if (this->is_set (i))
-      ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT (" %d "), i));
+      ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT (" %@ "), reinterpret_cast<void *> (i)));
 #endif /* ACE_HANDLE_SET_USES_FD_ARRAY */
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT (" ]\n")));

@@ -74,8 +74,8 @@ public:
                     ACE_Reactor_Mask close_mask) override
   {
     ACE_DEBUG ((LM_DEBUG,
-                "Handler::handle_close called with mask = %d\n",
-                close_mask));
+                "Handler::handle_close called with mask = %Q\n",
+                static_cast<ACE_UINT64> (close_mask)));
     return 0;
   }
 
@@ -140,8 +140,8 @@ public:
   {
     ACE_UNUSED_ARG (handle);
     ACE_DEBUG ((LM_DEBUG,
-                "Different_Handler::handle_close called with mask = %d\n",
-                close_mask));
+                "Different_Handler::handle_close called with mask = %Q\n",
+                static_cast<ACE_UINT64> (close_mask)));
     return 0;
   }
 

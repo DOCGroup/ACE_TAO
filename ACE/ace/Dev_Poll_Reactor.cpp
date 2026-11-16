@@ -353,8 +353,8 @@ ACE_Dev_Poll_Reactor_Notify::dispatch_notify (ACE_Notification_Buffer &buffer)
         default:
           // Should we bail out if we get an invalid mask?
           ACELIB_ERROR ((LM_ERROR,
-                      ACE_TEXT ("dispatch_notify invalid mask = %d\n"),
-                      buffer.mask_));
+                      ACE_TEXT ("dispatch_notify invalid mask = %Q\n"),
+                      static_cast<ACE_UINT64> (buffer.mask_)));
         }
       if (result == -1)
       {
@@ -1287,8 +1287,8 @@ ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
         else
           {
             ACELIB_ERROR ((LM_ERROR,
-                           ACE_TEXT ("(%t) dispatch_io h %d unknown events 0x%x\n"),
-                           handle, revents));
+                           ACE_TEXT ("(%t) dispatch_io h %@ unknown events 0x%x\n"),
+                           reinterpret_cast<void *> (handle), revents));
           }
 
 #ifdef ACE_HAS_DEV_POLL

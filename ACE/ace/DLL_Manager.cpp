@@ -152,9 +152,9 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
 
   if (ACE::debug ())
     ACELIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE (%P|%t) DLL_Handle::open - <%s> (%d), refcount=%d\n"),
+                ACE_TEXT ("ACE (%P|%t) DLL_Handle::open - <%s> (%@), refcount=%d\n"),
                 this->dll_name_,
-                this->handle_,
+                reinterpret_cast<void *> (this->handle_),
                 this->refcount_));
   return 0;
 }
@@ -186,9 +186,9 @@ ACE_DLL_Handle::close (int unload)
     if (ACE::debug ())
       ACELIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("ACE (%P|%t) DLL_Handle::close - ")
-                  ACE_TEXT ("<%s> (handle=%d, refcount=%d)\n"),
+                  ACE_TEXT ("<%s> (handle=%@, refcount=%d)\n"),
                   this->dll_name_,
-                  this->handle_,
+                  reinterpret_cast<void *> (this->handle_),
                   this->refcount_));
 
     if (this->refcount_ == 0 &&
@@ -198,9 +198,9 @@ ACE_DLL_Handle::close (int unload)
         if (ACE::debug ())
           ACELIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("ACE (%P|%t) DLL_Handle::close: ")
-                      ACE_TEXT ("Unloading <%s> (handle=%d)\n"),
+                      ACE_TEXT ("Unloading <%s> (handle=%@)\n"),
                       this->dll_name_,
-                      this->handle_));
+                      reinterpret_cast<void *> (this->handle_)));
 
         // First remove any associated Framework Components.
         ACE_Framework_Repository *frPtr= ACE_Framework_Repository::instance ();

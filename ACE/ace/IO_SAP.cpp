@@ -33,7 +33,8 @@ ACE_IO_SAP::dump () const
   ACE_TRACE ("ACE_IO_SAP::dump");
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("handle_ = %d"), this->handle_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("handle_ = %@"),
+                 reinterpret_cast<void *> (this->handle_)));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }

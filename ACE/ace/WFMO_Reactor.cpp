@@ -999,7 +999,7 @@ ACE_WFMO_Reactor_Handler_Repository::dump () const
               ACE_TEXT ("\tSize = %d\n"),
               this->max_handlep1_));
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("\tHandles to be suspended = %d\n"),
+              ACE_TEXT ("\tHandles to be suspended = %B\n"),
               this->handles_to_be_suspended_));
 
   for (i = 0; i < this->max_handlep1_; ++i)
@@ -1026,7 +1026,7 @@ ACE_WFMO_Reactor_Handler_Repository::dump () const
               ACE_TEXT ("\tSize = %d\n"),
               this->suspended_handles_));
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("\tHandles to be resumed = %d\n"),
+              ACE_TEXT ("\tHandles to be resumed = %B\n"),
               this->handles_to_be_resumed_));
 
   for (i = 0; i < this->suspended_handles_; ++i)
@@ -1036,7 +1036,7 @@ ACE_WFMO_Reactor_Handler_Repository::dump () const
               ACE_TEXT ("\n")));
 
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Total handles to be deleted = %d\n"),
+              ACE_TEXT ("Total handles to be deleted = %B\n"),
               this->handles_to_be_deleted_));
 
   ACELIB_DEBUG ((LM_DEBUG,
@@ -2397,8 +2397,8 @@ ACE_WFMO_Reactor_Notify::handle_signal (int signum, siginfo_t *siginfo, ucontext
                   break;
                 default:
                   ACELIB_ERROR ((LM_ERROR,
-                              ACE_TEXT ("invalid mask = %d\n"),
-                              buffer->mask_));
+                              ACE_TEXT ("invalid mask = %Q\n"),
+                              static_cast<ACE_UINT64> (buffer->mask_)));
                   break;
                 }
 

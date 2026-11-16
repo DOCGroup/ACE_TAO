@@ -350,12 +350,12 @@ ACE_Service_Repository::relocate_i (size_t begin,
           else
             ACELIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("ACE (%P|%t) SR::relocate_i - repo=%@ [%d]")
-                        ACE_TEXT (": trying name=%s, handle: %d -> %d\n"),
+                        ACE_TEXT (": trying name=%s, handle: %@ -> %@\n"),
                         this,
                         i,
                         type->name (),
-                        old_handle,
-                        new_handle));
+                        reinterpret_cast<void *> (old_handle),
+                        reinterpret_cast<void *> (new_handle)));
         }
 #endif
 
@@ -367,12 +367,12 @@ ACE_Service_Repository::relocate_i (size_t begin,
           if (ACE::debug ())
             ACELIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("ACE (%P|%t) SR::relocate_i - repo=%@ [%d]")
-                        ACE_TEXT (": relocating name=%s, handle: %d -> %d\n"),
+                        ACE_TEXT (": relocating name=%s, handle: %@ -> %@\n"),
                         this,
                         i,
                         type->name (),
-                        old_handle,
-                        new_handle));
+                        reinterpret_cast<void *> (old_handle),
+                        reinterpret_cast<void *> (new_handle)));
 #endif
           type->dll (adll); // ups the refcount on adll
         }

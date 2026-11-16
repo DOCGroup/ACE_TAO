@@ -29,7 +29,7 @@ ACE_Guard<ACE_LOCK>::dump () const
 // ACE_TRACE ("ACE_Guard<ACE_LOCK>::dump");
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("mutex_ = %x\n"), this->lock_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("mutex_ = %@\n"), this->lock_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("owner_ = %d\n"), this->owner_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
