@@ -32,9 +32,9 @@ namespace TAO
   namespace ImR_Client
   {
     /**
-     * @class IFR_Client_Adapter_Impl
+     * @class ImR_Client_Adapter_Impl
      *
-     * @brief IFR_Client_Adapter_Impl.
+     * @brief ImR_Client_Adapter_Impl.
      *
      * Class that adapts various functions in the PortableServer library
      * which use the Implementation Repository. This is the derived class

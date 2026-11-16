@@ -248,16 +248,13 @@ namespace TAO
               CORBA::COMPLETED_NO);
         }
 
-      if (TAO_debug_level > 0)
+      if (TAO_debug_level > 1)
         {
-          if (TAO_debug_level > 1)
-            {
-              CORBA::ORB_ptr const orb = poa->orb_core ().orb ();
-              CORBA::String_var const ior = orb->object_to_string (imr.in ());
-              TAOLIB_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("TAO_ImR_Client (%P|%t) - Notifying ImR of startup IMR IOR <%C>\n"),
-                            ior.in ()));
-            }
+          CORBA::ORB_ptr const orb = poa->orb_core ().orb ();
+          CORBA::String_var const ior = orb->object_to_string (imr.in ());
+          TAOLIB_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("TAO_ImR_Client (%P|%t) - Notifying ImR of startup IMR IOR <%C>\n"),
+                        ior.in ()));
         }
 
       ImplementationRepository::Administration_var imr_locator;
