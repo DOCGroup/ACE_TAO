@@ -1193,8 +1193,6 @@ ACE_Configuration_Section_Key_Heap::ACE_Configuration_Section_Key_Heap (const AC
 
 ACE_Configuration_Section_Key_Heap::~ACE_Configuration_Section_Key_Heap ()
 {
-  delete value_iter_;
-  delete section_iter_;
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_Allocator::instance()->free (path_);
 #else
@@ -1731,11 +1729,13 @@ ACE_Configuration_Heap::enumerate_values (const ACE_Configuration_Section_Key& k
                               ACE_Hash<ACE_Configuration_ExtId>,
                               ACE_Equal_To<ACE_Configuration_ExtId>,
                               ACE_Null_Mutex>* hash_map = IntId.value_hash_map_;
-      delete pKey->value_iter_;
+      pKey->value_iter_.reset ();
 
-      ACE_NEW_RETURN (pKey->value_iter_,
+      VALUE_HASH::ITERATOR* iterator {};
+      ACE_NEW_RETURN (iterator,
                       VALUE_HASH::ITERATOR (hash_map->begin ()),
                       -1);
+      pKey->value_iter_.reset (iterator);
     }
 
   // Get the next entry
@@ -1779,14 +1779,13 @@ ACE_Configuration_Heap::enumerate_sections (const ACE_Configuration_Section_Key&
   // Handle iterator resets
   if (index == 0)
     {
-      if (pKey->section_iter_)
-      {
-        delete pKey->section_iter_;
-      }
+      pKey->section_iter_.reset ();
 
-      ACE_NEW_RETURN (pKey->section_iter_,
+      SUBSECTION_HASH::ITERATOR* iterator {};
+      ACE_NEW_RETURN (iterator,
                       SUBSECTION_HASH::ITERATOR (IntId.section_hash_map_->begin ()),
                       -1);
+      pKey->section_iter_.reset (iterator);
     }
 
   // Get the next entry

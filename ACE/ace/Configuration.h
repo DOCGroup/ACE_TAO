@@ -34,6 +34,7 @@
 #include "ace/MMAP_Memory_Pool.h"
 #include "ace/Local_Memory_Pool.h"
 #include "ace/Synch_Traits.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -707,15 +708,15 @@ public:
   ACE_TCHAR* path_;
 
   /// The value iterator
-  VALUE_HASH::ITERATOR* value_iter_;
+  std::unique_ptr<VALUE_HASH::ITERATOR> value_iter_;
 
   /// The sub section iterator
-  SUBSECTION_HASH::ITERATOR* section_iter_;
+  std::unique_ptr<SUBSECTION_HASH::ITERATOR> section_iter_;
 
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// Destructor - will delete the iterators
+  /// Destructor, releases the stored path.
   ~ACE_Configuration_Section_Key_Heap () override;
 
   // Not used
