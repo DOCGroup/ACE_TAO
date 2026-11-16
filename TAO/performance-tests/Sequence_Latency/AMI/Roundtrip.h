@@ -21,7 +21,7 @@ public:
   Roundtrip &operator= (Roundtrip const &) = delete;
   Roundtrip &operator= (Roundtrip &&) = delete;
 
-  // = The skeleton methods
+  /// The skeleton methods
   Test::Timestamp test_octet_method (Test::octet_load const &ol,
                                      Test::Timestamp send_time) override;
 

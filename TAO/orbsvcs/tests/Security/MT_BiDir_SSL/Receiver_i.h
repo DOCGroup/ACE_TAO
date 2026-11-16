@@ -21,7 +21,7 @@ public:
   /// Get the number of events that have been received, local method
   CORBA::Long get_event_count ();
 
-  // = The skeleton methods
+  /// The skeleton methods
   void receive_payload (Receiver::Payload const &payload) override;
 
 private:

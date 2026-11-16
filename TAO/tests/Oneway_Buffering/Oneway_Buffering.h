@@ -18,7 +18,7 @@ public:
   Oneway_Buffering (Oneway_Buffering &&) = delete;
   Oneway_Buffering &operator= (Oneway_Buffering &&) = delete;
 
-  // = The skeleton methods
+  /// The skeleton methods
   void receive_data (Test::Payload const &the_payload) override;
 
   void flush () override;

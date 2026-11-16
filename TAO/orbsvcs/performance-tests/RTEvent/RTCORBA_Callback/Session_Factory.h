@@ -17,7 +17,7 @@ public:
   Session_Factory &operator= (Session_Factory const &) = delete;
   Session_Factory &operator= (Session_Factory &&) = delete;
 
-  // = The skeleton methods
+  /// The skeleton methods
   Test::Session_ptr create_new_session (Test::Callback_ptr cb) override;
 
   void shutdown () override;

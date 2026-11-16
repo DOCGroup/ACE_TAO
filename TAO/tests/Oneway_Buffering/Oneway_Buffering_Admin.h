@@ -17,7 +17,7 @@ public:
   Oneway_Buffering_Admin (Oneway_Buffering_Admin &&) = delete;
   Oneway_Buffering_Admin &operator= (Oneway_Buffering_Admin &&) = delete;
 
-  // = The skeleton methods
+  /// The skeleton methods
   CORBA::ULong request_count (CORBA::ULong expected_request_count) override;
 
   CORBA::ULong bytes_received_count (CORBA::ULong expected_bytes_received_count) override;

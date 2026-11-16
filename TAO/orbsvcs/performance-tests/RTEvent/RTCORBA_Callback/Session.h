@@ -17,7 +17,7 @@ public:
   Session &operator= (Session const &) = delete;
   Session &operator= (Session &&) = delete;
 
-  // = The skeleton methods
+  /// The skeleton methods
   void sample (Test::Timestamp the_timestamp) override;
 
   void shutdown () override;

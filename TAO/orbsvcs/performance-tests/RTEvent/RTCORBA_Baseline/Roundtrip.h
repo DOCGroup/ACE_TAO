@@ -12,7 +12,7 @@ class Roundtrip
 public:
   Roundtrip (CORBA::ORB_ptr orb);
 
-  // = The skeleton methods
+  /// The skeleton methods
   Test::Timestamp test_method (Test::Timestamp send_time,
                                CORBA::Long workload_in_usecs) override;
 

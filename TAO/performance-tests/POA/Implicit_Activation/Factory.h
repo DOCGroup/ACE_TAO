@@ -17,7 +17,7 @@ class Factory
 public:
   explicit Factory (CORBA::ORB_ptr orb);
 
-  // = The skeleton methods
+  /// The skeleton methods
 
   Test::Simple_ptr create_simple_object () override;
 

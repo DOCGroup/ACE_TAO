@@ -17,7 +17,7 @@ class Simple
 public:
   Simple () = default;
 
-  // = The skeleton methods
+  /// The skeleton methods
 
   void destroy () override;
 };

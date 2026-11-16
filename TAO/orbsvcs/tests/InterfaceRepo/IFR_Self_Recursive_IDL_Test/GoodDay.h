@@ -21,7 +21,7 @@ public:
   GoodDay& operator= (GoodDay const&) = delete;
   GoodDay& operator= (GoodDay&&) = delete;
 
-  // = The skeleton methods
+  /// The skeleton methods
   char* get_string () override;
 
   void shutdown () override;

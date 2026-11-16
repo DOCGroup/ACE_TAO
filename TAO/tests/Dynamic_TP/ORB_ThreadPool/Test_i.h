@@ -17,7 +17,7 @@ public:
   Sleeper_i &operator= (Sleeper_i const &) = delete;
   Sleeper_i &operator= (Sleeper_i &&) = delete;
 
-  // = The skeleton methods
+  /// The skeleton methods
   void delay (CORBA::Short sec) override;
 
   void shutdown () override;
@@ -36,7 +36,7 @@ public:
   Middle_i &operator= (Middle_i const &) = delete;
   Middle_i &operator= (Middle_i &&) = delete;
 
-  // = The skeleton methods
+  /// The skeleton methods
   void call_delay (CORBA::Short sec) override;
 
   void shutdown () override;

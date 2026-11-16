@@ -17,7 +17,7 @@ class Hello
 public:
   Hello (CORBA::ORB_ptr orb);
 
-  // = The skeleton methods
+  /// The skeleton methods
   char* get_string () override;
 
   void shutdown () override;

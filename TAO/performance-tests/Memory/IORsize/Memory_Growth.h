@@ -16,7 +16,7 @@ class Memory_Growth
 public:
   Memory_Growth (CORBA::ORB_ptr orb);
 
-  // = The skeleton methods
+  /// The skeleton methods
   virtual void send_objref (const Test::PayLoad &p);
 
   virtual void shutdown ();

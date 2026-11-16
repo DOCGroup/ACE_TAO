@@ -22,7 +22,7 @@ public:
   Hello &operator= (Hello const &) = delete;
   Hello &operator= (Hello &&) = delete;
 
-  // = The skeleton methods
+  /// The skeleton methods
   void shutdown () override;
 
   void ping () override;

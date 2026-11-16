@@ -26,7 +26,7 @@ public:
 
   ~Sender_i () override = default;
 
-  // = The skeleton methods
+  /// The skeleton methods
   CORBA::Long receiver_object (Receiver *recv) override;
 
   /// Public method defined locally

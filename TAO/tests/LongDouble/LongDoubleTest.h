@@ -16,7 +16,7 @@ public:
   LongDoubleTest &operator= (LongDoubleTest const &) = delete;
   LongDoubleTest &operator= (LongDoubleTest &&) = delete;
 
-  // = The skeleton methods
+  /// The skeleton methods
   CORBA::LongDouble get_long_double () override;
 
   void shutdown () override;

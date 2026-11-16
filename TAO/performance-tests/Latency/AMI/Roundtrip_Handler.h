@@ -23,7 +23,7 @@ public:
   /// Dump the results
   void dump_results (ACE_High_Res_Timer::global_scale_factor_type gsf);
 
-  // = The skeleton methods
+  /// The skeleton methods
   void test_method (Test::Timestamp send_time) override;
   void test_method_excep (::Messaging::ExceptionHolder *holder) override;
 

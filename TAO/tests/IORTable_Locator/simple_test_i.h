@@ -14,7 +14,7 @@ public:
   Simple_Test_i &operator= (Simple_Test_i const &) = delete;
   Simple_Test_i &operator= (Simple_Test_i &&) = delete;
 
-  // = The skeleton methods
+  /// The skeleton methods
   void shutdown () override;
 
 private:

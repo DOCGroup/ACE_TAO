@@ -16,7 +16,7 @@ public:
   Receiver_Factory &operator= (Receiver_Factory const &) = delete;
   Receiver_Factory &operator= (Receiver_Factory &&) = delete;
 
-  // = The skeleton methods
+  /// The skeleton methods
   Test::Receiver_ptr create_receiver () override;
 
   void shutdown () override;

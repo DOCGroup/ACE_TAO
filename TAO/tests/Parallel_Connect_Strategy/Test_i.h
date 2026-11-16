@@ -18,7 +18,7 @@ public:
   Hello (Hello &&) = delete;
   Hello &operator= (Hello &&) = delete;
 
-  // = The skeleton methods
+  /// The skeleton methods
   char *get_string () override;
 
   void shutdown () override;

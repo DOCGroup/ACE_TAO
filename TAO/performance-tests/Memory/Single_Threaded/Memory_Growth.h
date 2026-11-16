@@ -17,7 +17,7 @@ class Memory_Growth
 public:
   Memory_Growth (CORBA::ORB_ptr orb);
 
-  // = The skeleton methods
+  /// The skeleton methods
   virtual void ping ();
 
   virtual void shutdown ();

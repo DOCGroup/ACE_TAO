@@ -13,7 +13,7 @@ public:
   explicit Sleep_Service (CORBA::ORB_ptr orb);
   ~Sleep_Service () override = default;
 
-  // = The skeleton methods
+  /// The skeleton methods
   void go_to_sleep (CORBA::ULong microseconds) override;
 
   void shutdown () override;

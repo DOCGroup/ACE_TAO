@@ -17,7 +17,7 @@ class Roundtrip
  public:
     Roundtrip (CORBA::ORB_ptr orb);
 
-    // = The skeleton methods
+    /// The skeleton methods
     void test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
                       Test::Timestamp send_time);
 

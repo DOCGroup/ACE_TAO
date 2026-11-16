@@ -27,7 +27,7 @@ public:
   /// Print out the results
   void dump_results ();
 
-  // = The skeleton methods
+  /// The skeleton methods
   void receive_data (Test::Payload const &payload) override;
   CORBA::Long get_event_count () override;
 

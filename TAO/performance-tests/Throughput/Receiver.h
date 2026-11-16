@@ -22,7 +22,7 @@ public:
   Receiver &operator= (Receiver const &) = delete;
   Receiver &operator= (Receiver &&) = delete;
 
-  // = The skeleton methods
+  /// The skeleton methods
   void receive_data (Test::Message const &message) override;
 
   void done () override;
