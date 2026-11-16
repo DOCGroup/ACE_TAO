@@ -177,10 +177,8 @@ public:
            const ACE_TCHAR *query = nullptr,
            u_short port = ACE_DEFAULT_HTTP_PORT);
 
-  /// Copy constructor.
   ACE_HTTP_Addr (const ACE_HTTP_Addr &addr);
 
-  /// Assignment operator.
   ACE_HTTP_Addr& operator= (const ACE_HTTP_Addr &addr);
 
   /// Essentially the copy constructor.
@@ -281,10 +279,8 @@ public:
            const ACE_TCHAR *user = nullptr,
            const ACE_TCHAR *password = nullptr);
 
-  /// Copy constructor.
   ACE_FTP_Addr (const ACE_FTP_Addr &addr);
 
-  /// Assignment operator
   ACE_FTP_Addr& operator= (const ACE_FTP_Addr &addr);
 
   /// Essentially the copy constructor.
@@ -361,10 +357,8 @@ public:
            const ACE_TCHAR *hostname,
            const ACE_TCHAR *headers = nullptr);
 
-  /// Copy constructor.
   ACE_Mailto_Addr (const ACE_Mailto_Addr &addr);
 
-  /// Assignment operator
   ACE_Mailto_Addr& operator= (const ACE_Mailto_Addr &addr);
 
   /// Essentially the copy constructor.
