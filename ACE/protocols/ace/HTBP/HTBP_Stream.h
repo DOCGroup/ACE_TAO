@@ -90,7 +90,8 @@ namespace ACE
 
       ~Stream ();
 
-      // = I/O functions.
+      /// @name I/O functions
+      /// @{
 
       /// The Stream is a sibling of the ACE_SOCK_IO class, rather
       /// than a decendant. This is due to the requirement to wrap all
@@ -207,7 +208,9 @@ namespace ACE
                        ACE_Time_Value const* timeout = nullptr,
                        size_t *bytes_transferred = nullptr) const;
 
-      // = Selectively close endpoints.  / Close down the reader.
+      /// @}
+      /// @name Selectively close endpoints.
+      /// @{
       int close_reader ();
 
       /// Close down the writer.
@@ -220,7 +223,9 @@ namespace ACE
        */
       int close ();
 
-      // = Meta-type info
+      /// @}
+      /// @name Meta-type info
+      /// @{
       using PEER_ADDR = Addr;
 
       /// Dump the state of an object.
@@ -229,6 +234,7 @@ namespace ACE
       /// Declare the dynamic allocation hooks.
       ACE_ALLOC_HOOK_DECLARE;
 
+      /// @}
     public:
       ///@notes Added the following methods to continue with
       /// current compilation of HTIOP. Might not be needed in
