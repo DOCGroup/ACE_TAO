@@ -296,42 +296,113 @@ be_visitor_valuetype_obv_cs::gen_obv_call_base_constructor_args (
               t = td->primitive_base_type ();
             }
 
-          be_sequence *sequence = dynamic_cast<be_sequence*> (t);
-          be_type *sequence_element =
-            sequence != nullptr ? sequence->primitive_base_type () : nullptr;
-          if (sequence != nullptr
-              && (dynamic_cast<be_valuetype_fwd*> (sequence_element)
-                  || dynamic_cast<be_valuetype*> (sequence_element)
-                  || dynamic_cast<be_valuebox*> (sequence_element)))
+          be_structure *structure = dynamic_cast<be_structure*> (t);
+          bool has_valuetype_member {};
+          if (structure != nullptr)
+            {
+              for (UTL_ScopeActiveIterator si (structure, UTL_Scope::IK_decls);
+                   !si.is_done ();
+                   si.next ())
+                {
+                  be_field *member = dynamic_cast<be_field*> (si.item ());
+                  be_type *member_type =
+                    member != nullptr
+                      ? dynamic_cast<be_type*> (member->field_type ())
+                      : nullptr;
+                  be_typedef *member_typedef =
+                    dynamic_cast<be_typedef*> (member_type);
+                  if (member_typedef != nullptr)
+                    {
+                      member_type = member_typedef->primitive_base_type ();
+                    }
+
+                  if (dynamic_cast<be_valuetype_fwd*> (member_type) != nullptr
+                      || dynamic_cast<be_valuetype*> (member_type) != nullptr
+                      || dynamic_cast<be_valuebox*> (member_type) != nullptr)
+                    {
+                      has_valuetype_member = true;
+                      break;
+                    }
+                }
+            }
+
+          if (has_valuetype_member)
             {
               *os << "[&] ()" << be_nl << "{" << be_idt_nl
-                  << "auto _tao_copy = " << f->local_name () << " ();"
-                  << be_nl
-                  << "for (::CORBA::ULong i {}; i < _tao_copy.length (); ++i)"
-                  << be_idt_nl << "{" << be_idt_nl
-                  << "if (_tao_copy[i] != nullptr)" << be_idt_nl
-                  << "{" << be_idt_nl
-                  << "::CORBA::ValueBase_var _tao_value ("
-                  << "_tao_copy[i]->_copy_value ());" << be_nl
-                  << "_tao_copy[i] = " << sequence_element->full_name ()
-                  << "::_downcast (_tao_value._retn ());" << be_uidt_nl
-                  << "}" << be_uidt_nl << "}" << be_nl
-                  << "return _tao_copy;" << be_uidt_nl
-                  << "} ()";
+                  << "auto _tao_copy = " << f->local_name () << " ();";
+              for (UTL_ScopeActiveIterator si (structure, UTL_Scope::IK_decls);
+                   !si.is_done ();
+                   si.next ())
+                {
+                  be_field *member = dynamic_cast<be_field*> (si.item ());
+                  be_type *member_type =
+                    member != nullptr
+                      ? dynamic_cast<be_type*> (member->field_type ())
+                      : nullptr;
+                  be_typedef *member_typedef =
+                    dynamic_cast<be_typedef*> (member_type);
+                  if (member_typedef != nullptr)
+                    {
+                      member_type = member_typedef->primitive_base_type ();
+                    }
+
+                  if (dynamic_cast<be_valuetype_fwd*> (member_type) != nullptr
+                      || dynamic_cast<be_valuetype*> (member_type) != nullptr
+                      || dynamic_cast<be_valuebox*> (member_type) != nullptr)
+                    {
+                      *os << be_nl
+                          << "if (_tao_copy." << member->local_name ()
+                          << " != nullptr)" << be_idt_nl << "{" << be_idt_nl
+                          << "::CORBA::ValueBase_var _tao_value (_tao_copy."
+                          << member->local_name () << "->_copy_value ());"
+                          << be_nl << "_tao_copy." << member->local_name ()
+                          << " = " << member_type->full_name ()
+                          << "::_downcast (_tao_value._retn ());"
+                          << be_uidt_nl << "}" << be_uidt;
+                    }
+                }
+              *os << be_nl << "return _tao_copy;" << be_uidt_nl << "} ()";
             }
-          else if (dynamic_cast<be_valuetype_fwd*> (t) ||
-                   dynamic_cast<be_valuetype*> (t) ||
-                   dynamic_cast<be_valuebox*> (t))
+          else
             {
-              // Nested valuetypes/boxes need to be deep copied also
-              *os << "(" << f->local_name () << " () ?" << be_idt_nl
-                  << t->full_name () << "::_downcast ("
-                  << "::CORBA::ValueBase_var (" << f->local_name ()
-                  << " ()->_copy_value ()).in ())" << be_nl
-                  << ": 0)" << be_uidt;
+              be_sequence *sequence = dynamic_cast<be_sequence*> (t);
+              be_type *sequence_element =
+                sequence != nullptr ? sequence->primitive_base_type () : nullptr;
+              if (sequence != nullptr
+                  && (dynamic_cast<be_valuetype_fwd*> (sequence_element)
+                      || dynamic_cast<be_valuetype*> (sequence_element)
+                      || dynamic_cast<be_valuebox*> (sequence_element)))
+                {
+                  *os << "[&] ()" << be_nl << "{" << be_idt_nl
+                      << "auto _tao_copy = " << f->local_name () << " ();"
+                      << be_nl
+                      << "for (::CORBA::ULong i {}; i < _tao_copy.length (); ++i)"
+                      << be_idt_nl << "{" << be_idt_nl
+                      << "if (_tao_copy[i] != nullptr)" << be_idt_nl
+                      << "{" << be_idt_nl
+                      << "::CORBA::ValueBase_var _tao_value ("
+                      << "_tao_copy[i]->_copy_value ());" << be_nl
+                      << "_tao_copy[i] = " << sequence_element->full_name ()
+                      << "::_downcast (_tao_value._retn ());" << be_uidt_nl
+                      << "}" << be_uidt << be_uidt_nl << "}"
+                      << be_uidt_nl
+                      << "return _tao_copy;" << be_uidt_nl
+                      << "} ()";
+                }
+              else if (dynamic_cast<be_valuetype_fwd*> (t) ||
+                       dynamic_cast<be_valuetype*> (t) ||
+                       dynamic_cast<be_valuebox*> (t))
+                {
+                  // Nested valuetypes/boxes need to be deep copied also
+                  *os << "(" << f->local_name () << " () ?" << be_idt_nl
+                      << t->full_name () << "::_downcast ("
+                      << "::CORBA::ValueBase_var (" << f->local_name ()
+                      << " ()->_copy_value ()).in ())" << be_nl
+                      << ": 0)" << be_uidt;
+                }
+              else // Simple non-nested type
+                *os << f->local_name () << " ()";
             }
-          else // Simple non-nested type
-            *os << f->local_name () << " ()";
         }
     }
 }
