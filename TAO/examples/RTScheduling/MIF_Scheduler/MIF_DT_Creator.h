@@ -12,7 +12,7 @@ public:
   CORBA::Policy_ptr sched_param (int importance) override;
 
   //virtual Task* task ();
-  Thread_Task* create_thr_task (int importance,
+  std::unique_ptr<Thread_Task> create_thr_task (int importance,
                                         time_t start_time,
                                         int load,
                                         int iter,

@@ -13,15 +13,11 @@ Job_i::Job_i (DT_Creator* dt_creator)
   : dt_creator_ (dt_creator),
     guid_ (0)
 {
-  // create the stat object.
-  ACE_NEW (task_stats_, Task_Stats);
+  task_stats_ = std::make_unique<Task_Stats> ();
   task_stats_->init (100);
 }
 
-Job_i::~Job_i ()
-{
-  delete task_stats_;
-}
+Job_i::~Job_i () = default;
 
 const ACE_CString&
 Job_i::name ()

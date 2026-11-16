@@ -46,7 +46,7 @@ class RTSCHEDTESTLIB_Export DT_Creator : public ACE_Service_Object
 
   virtual CORBA::Policy_ptr sched_param (int importance) = 0;
 
-  virtual Thread_Task* create_thr_task (int importance,
+  virtual std::unique_ptr<Thread_Task> create_thr_task (int importance,
           time_t start_time,
           int load,
           int iter,

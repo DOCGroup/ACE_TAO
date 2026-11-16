@@ -18,6 +18,8 @@
 #include "ace/SString.h"
 #include "ace/Arg_Shifter.h"
 
+#include <memory>
+
 class DT_Creator;
 
 /**
@@ -30,7 +32,7 @@ class RTSCHEDTESTLIB_Export Job_i : public POA_Job
  public:
   Job_i (DT_Creator* dt_creator);
 
-  ~Job_i ();
+  ~Job_i () override;
 
   /// Init the state of this object.
   int init (ACE_Arg_Shifter& arg_shifter);
@@ -61,7 +63,7 @@ class RTSCHEDTESTLIB_Export Job_i : public POA_Job
 
   DT_Creator* dt_creator_;
 
-  Task_Stats *task_stats_;
+  std::unique_ptr<Task_Stats> task_stats_ {};
 
   size_t guid_;
 };

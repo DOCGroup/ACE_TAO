@@ -14,8 +14,6 @@ class MIF_Task : public Thread_Task
             char *job_name,
             DT_Creator *dt_creator);
 
-  ~MIF_Task ();
-
   int activate_task (RTScheduling::Current_ptr current,
                              CORBA::Policy_ptr sched_param,
                              long flags,

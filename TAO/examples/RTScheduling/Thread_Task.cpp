@@ -16,10 +16,11 @@ Thread_Task::Thread_Task ()
    dt_creator_ (0),
    base_time_ (0),
    dist_ (0),
-   job_name_ (),
-   task_stats_ (0)
+   job_name_ ()
 {
 }
+
+Thread_Task::~Thread_Task () = default;
 
 int
 Thread_Task::svc ()
