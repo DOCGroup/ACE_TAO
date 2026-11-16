@@ -12,14 +12,16 @@
 class Logging_Handler
 {
 protected:
-  ACE_FILE_IO *log_file_; // Pointer to a log file.
+  /// Non-owning pointer to the log file supplied by the caller.
+  ACE_FILE_IO *log_file_;
 
-  ACE_SOCK_Stream logging_peer_; // Connected to the client.
+  /// Connection to the client.
+  ACE_SOCK_Stream logging_peer_;
 
 public:
   // Initialization and termination methods.
   explicit Logging_Handler (ACE_HANDLE handle)
-    : log_file_ (nullptr)
+    : log_file_ {}
   {
     logging_peer_.set_handle (handle);
   }
@@ -35,7 +37,7 @@ public:
                    ACE_SOCK_Stream const &logging_peer)
     : log_file_ (&log_file), logging_peer_ (logging_peer) {}
   explicit Logging_Handler (ACE_SOCK_Stream const &logging_peer)
-    : log_file_ (nullptr), logging_peer_ (logging_peer) {}
+    : log_file_ {}, logging_peer_ (logging_peer) {}
 
   Logging_Handler (Logging_Handler const &) = delete;
   Logging_Handler (Logging_Handler &&) = delete;
