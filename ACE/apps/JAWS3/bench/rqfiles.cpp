@@ -1,5 +1,6 @@
 #include <cmath>
 #include <cstdio>
+#include <cstdlib>
 #include <memory>
 #include <string>
 #include <vector>
@@ -16,6 +17,14 @@
 static std::vector<std::string> requests;
 static int number_of_outstanding_requests {};
 
+struct HTTP_Request_Options
+{
+  char const *filelist_name {};
+  double request_rate {1.0};
+  int number_of_requests {};
+  char const *website {};
+};
+
 class HTTP_Sink_Svc_Handler
   : public ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
@@ -26,22 +35,22 @@ public:
   int open (void *) override
   {
   //FUZZ: enable check_for_lack_ACE_OS
-    ACE_Reactor::instance ()
-    ->register_handler (this, ACE_Event_Handler::WRITE_MASK);
+    ACE_Reactor::instance ()->register_handler (this, ACE_Event_Handler::WRITE_MASK);
     return 0;
   }
 
   int handle_input (ACE_HANDLE handle) override
   {
     char buf[8 * 1024];
-    int result = this->peer ().recv (buf, sizeof (buf));
+    int const result = this->peer ().recv (buf, sizeof (buf));
     if (result <= 0)
       {
-        ACE_Reactor::instance ()
-        ->cancel_wakeup (handle, ACE_Event_Handler::READ_MASK);
+        ACE_Reactor::instance ()->cancel_wakeup (handle, ACE_Event_Handler::READ_MASK);
 
         if (--number_of_outstanding_requests == 0)
-          ACE_Reactor::instance ()->end_event_loop ();
+          {
+            ACE_Reactor::instance ()->end_event_loop ();
+          }
 
         return -1;
       }
@@ -50,16 +59,16 @@ public:
 
   int handle_output (ACE_HANDLE handle) override
   {
-    int const random_number = static_cast<int> (
+    size_t const random_index = static_cast<size_t> (
       (ACE_OS::rand () / (1.0 + RAND_MAX)) * requests.size ());
-    std::string const &random_request = requests[random_number];
+    std::string const &random_request = requests[random_index];
     ssize_t const result = this->peer ().send_n (random_request.c_str (), random_request.size ());
-    ACE_Reactor::instance ()
-    ->cancel_wakeup (handle, ACE_Event_Handler::WRITE_MASK);
+    ACE_Reactor::instance ()->cancel_wakeup (handle, ACE_Event_Handler::WRITE_MASK);
     if (result < 0)
-      return -1;
-    ACE_Reactor::instance ()
-    ->schedule_wakeup (handle, ACE_Event_Handler::READ_MASK);
+      {
+        return -1;
+      }
+    ACE_Reactor::instance ()->schedule_wakeup (handle, ACE_Event_Handler::READ_MASK);
     return 0;
   }
 
@@ -79,7 +88,7 @@ public:
                                             int number_of_requests = -1,
                                             char const *website = nullptr)
     : number_of_requests_ (number_of_requests)
-    , addr_ (website ? website : "localhost:5432")
+    , addr_ (website != nullptr ? website : "localhost:5432")
     , timer_id_ (ACE_Reactor::instance ()->schedule_timer (
                    this, nullptr, ACE_Time_Value::zero, request_rate))
   {
@@ -89,31 +98,39 @@ public:
   ~HTTP_Make_Request_Event_Handler () override
   {
     if (this->timer_id_ != -1)
-      ACE_Reactor::instance ()->cancel_timer (this->timer_id_);
+      {
+        ACE_Reactor::instance ()->cancel_timer (this->timer_id_);
+      }
   }
 
   int handle_timeout (ACE_Time_Value const &, void const *) override
   {
     if (this->number_of_requests_ > 0)
-      --this->number_of_requests_;
+      {
+        --this->number_of_requests_;
+      }
 
-    int tries = 0;
-    int result = 0;
+    int tries {};
+    int result {};
 
     do
       {
         HTTP_Sink_Svc_Handler *handler {};
         result = this->connector_.connect (handler, this->addr_,
                                            ACE_Synch_Options::asynch);
-    ++tries;
+        ++tries;
       }
     while (result < 0 && tries < 100);
 
     if (ACE_Reactor::instance ()->event_loop_done ())
-      this->number_of_requests_ = 0;
+      {
+        this->number_of_requests_ = 0;
+      }
 
     if (this->number_of_requests_ == 0 || result < 0)
-      ACE_Reactor::instance ()->cancel_timer (this->timer_id_);
+      {
+        ACE_Reactor::instance ()->cancel_timer (this->timer_id_);
+      }
 
     if (result < 0)
       {
@@ -183,77 +200,95 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Install signal handlers
   Signal_Handler signal_handler;
 
-  ACE_Reactor::instance ()->register_handler (SIGINT, &signal_handler);
+  ACE_Reactor::instance ()->register_handler (SIGINT, std::addressof (signal_handler));
   ACE_OS::signal (SIGPIPE, SIG_IGN);
 
-  ACE_Get_Opt options (argc, argv, ACE_TEXT("f:r:n:w:"));
+  ACE_Get_Opt get_options (argc, argv, ACE_TEXT("f:r:n:w:"));
+
+  HTTP_Request_Options request_options;
 
   // f -- file list
   // r -- request rate in requests per second
   // n -- number of requests to generate
   // w -- website in form of hostname:port (e.g., www.yahoo.com:80)
 
-  char const *filelist_name {};
-  double request_rate {1.0};
-  char const *website {};
-  int number_of_requests {};
-
   int c {};
-  while ((c = options ()) != -1)
+  while ((c = get_options ()) != -1)
     {
       switch (c)
         {
         case 'f':
-          filelist_name = options.optarg;
+          request_options.filelist_name = get_options.optarg;
           break;
         case 'r':
-          request_rate = ACE_OS::atof (options.optarg);
-          if (request_rate == 0.0)
-            request_rate = 1.0;
+          request_options.request_rate = ACE_OS::atof (get_options.optarg);
+          if (request_options.request_rate == 0.0)
+            {
+              request_options.request_rate = 1.0;
+            }
           break;
         case 'n':
-          number_of_requests = ACE_OS::atoi (options.optarg);
+          request_options.number_of_requests = ACE_OS::atoi (get_options.optarg);
           break;
         case 'w':
-          website = options.optarg;
+          request_options.website = get_options.optarg;
           break;
         default:
           break;
         }
     }
 
-  if (filelist_name == nullptr)
-    ACE_OS::abort ();
+  if (request_options.filelist_name == nullptr)
+    {
+      std::abort ();
+    }
 
   double rq_interval_sec {};
-  double const rq_interval_usec = 1000000 * std::modf (1 / request_rate, &rq_interval_sec);
+  double const rq_interval_usec = 1000000 * std::modf (
+    1 / request_options.request_rate,
+    std::addressof (rq_interval_sec));
   ACE_Time_Value const tv (static_cast<long> (rq_interval_sec), static_cast<long> (rq_interval_usec));
 
   // Read in the file list and create requests
 
-  char buf[BUFSIZ] {};
-    {
-      std::unique_ptr<FILE, int (*) (FILE *)> fp (
-        std::fopen (filelist_name, "r"), std::fclose);
-      if (!fp)
-        ACE_ERROR_RETURN ((LM_ERROR, "Cannot open request file %s\n", filelist_name), 1);
-      while (std::fgets (buf, sizeof (buf), fp.get ()) != nullptr)
-        {
-          requests.emplace_back ("GET /");
-          requests.back () += buf;
-          requests.back () += "\r\n";
-        }
-    }
+  {
+    char buf[BUFSIZ] {};
+    std::unique_ptr<FILE, int (*) (FILE *)> fp (
+      std::fopen (request_options.filelist_name, "r"), std::fclose);
+    if (!fp)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Cannot open request file %s\n",
+                           request_options.filelist_name),
+                          1);
+      }
+    while (std::fgets (buf, sizeof (buf), fp.get ()) != nullptr)
+      {
+        requests.emplace_back ("GET /");
+        requests.back () += buf;
+        requests.back () += "\r\n";
+      }
+  }
   if (requests.empty ())
-    ACE_ERROR_RETURN ((LM_ERROR, "Request file %s contains no requests\n", filelist_name), 1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Request file %s contains no requests\n",
+                         request_options.filelist_name),
+                        1);
+    }
 
   // Create a series of requests
 
-  std::unique_ptr<HTTP_Make_Request_Event_Handler> request_handler =
-    std::make_unique<HTTP_Make_Request_Event_Handler> (tv, number_of_requests, website);
+  std::unique_ptr<HTTP_Make_Request_Event_Handler> const request_handler =
+    std::make_unique<HTTP_Make_Request_Event_Handler> (
+      tv,
+      request_options.number_of_requests,
+      request_options.website);
 
   while (!ACE_Reactor::instance ()->event_loop_done ())
-    ACE_Reactor::instance ()->handle_events ();
+    {
+      ACE_Reactor::instance ()->handle_events ();
+    }
   ACE_Reactor::instance ()->remove_handler (SIGINT, ACE_Event_Handler::SIGNAL_MASK);
 
   return 0;

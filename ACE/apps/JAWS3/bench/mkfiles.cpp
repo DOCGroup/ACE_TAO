@@ -140,7 +140,7 @@ poidev (float xm)
       do
         {
           ++em;
-          t *= (1.0 + ACE_OS::rand ())/RAND_MAX;
+          t *= (1.0 + std::rand ())/RAND_MAX;
         }
       while (t > g);
     }
@@ -157,14 +157,14 @@ poidev (float xm)
         {
           do
             {
-              y = std::tan (PI * (1.0 + ::rand ())/RAND_MAX);
+              y = std::tan (PI * (1.0 + std::rand ())/RAND_MAX);
               em = sq * y + xm;
             }
           while (em < 0.0);
           fem = std::floor (em);
           t = 0.9 * (1.0 + y * y) * std::exp (fem * alxm - gammln (fem + 1.0) - g);
         }
-      while ((1.0 + ACE_OS::rand ())/RAND_MAX > t);
+      while ((1.0 + std::rand ())/RAND_MAX > t);
     }
 
   return em;

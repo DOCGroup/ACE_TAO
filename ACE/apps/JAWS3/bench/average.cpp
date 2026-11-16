@@ -7,7 +7,7 @@ int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
   double sum {};
-  double count {};
+  size_t count {};
   char buf[BUFSIZ] {};
 
   while (std::fgets (buf, sizeof (buf), stdin) != nullptr)
@@ -18,7 +18,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     }
 
   std::printf ("sum of input is: %f\n", sum);
-  std::printf ("number of inputs is: %f\n", count);
+  std::printf ("number of inputs is: %zu\n", count);
   std::printf ("average of input is: %f\n", sum / count);
 
   return 0;
