@@ -4,6 +4,8 @@
 
 #include "jaws3/Jaws_IO.h"
 
+#include <memory>
+
 #include "SS_State_WRITE.h"
 #include "SS_State_ERROR.h"
 #include "SS_State_DONE.h"
@@ -27,21 +29,21 @@ TeraSS_State_WRITE::service (JAWS_Event_Completer *ec, void *data)
                               0,
                               O_RDONLY) < 0)
     {
-      ec->output_complete (fake_bad_result, &tdata->file_io ());
+      ec->output_complete (fake_bad_result, std::addressof (tdata->file_io ()));
       return 0;
     }
 
   JAWS_IO::instance ()->transmit (tdata->peer ().get_handle (),
                                   tdata->file_io ().get_handle (),
                                   ec,
-                                  &tdata->file_io ());
+                                  std::addressof (tdata->file_io ()));
 
   return 0;
 }
 
 JAWS_Protocol_State *
 TeraSS_State_WRITE::transition (JAWS_Event_Result const &result,
-                                void *data,
+                                void *,
                                 void *act)
 {
   // Clean up FILE.

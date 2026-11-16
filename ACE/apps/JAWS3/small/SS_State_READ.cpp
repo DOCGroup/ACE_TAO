@@ -1,6 +1,8 @@
 #include "jaws3/Jaws_IO.h"
 #include "jaws3/Event_Completer.h"
 
+#include <memory>
+
 #include "SS_State_READ.h"
 #include "SS_State_PARSE.h"
 #include "SS_State_ERROR.h"
@@ -14,7 +16,7 @@ TeraSS_State_READ::service (JAWS_Event_Completer *ec, void *data)
   TeraSS_Data * const tdata = static_cast<TeraSS_Data *> (data);
 
   // Read until we see a newline.
-  JAWS_IO::instance ()->recv (tdata->peer ().get_handle (), &tdata->mb (), ec);
+  JAWS_IO::instance ()->recv (tdata->peer ().get_handle (), std::addressof (tdata->mb ()), ec);
 
   return 0;
 }

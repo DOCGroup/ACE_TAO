@@ -1,5 +1,7 @@
 #include "jaws3/Jaws_IO.h"
 
+#include <memory>
+
 #include "SS_State_ERROR.h"
 #include "SS_State_DONE.h"
 #include "SS_Data.h"
@@ -13,7 +15,7 @@ TeraSS_State_ERROR::service (JAWS_Event_Completer *ec, void *data)
   tdata->mb ().reset ();
   tdata->mb ().copy ("FAIL\r\n", 6);
 
-  JAWS_IO::instance ()->send (tdata->peer ().get_handle (), &tdata->mb (), ec);
+  JAWS_IO::instance ()->send (tdata->peer ().get_handle (), std::addressof (tdata->mb ()), ec);
 
   return 0;
 }

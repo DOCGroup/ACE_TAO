@@ -9,11 +9,11 @@
 class TeraSS_State_PARSE : public JAWS_Protocol_State
 {
 public:
-  int service (JAWS_Event_Completer *, void *data);
+  int service (JAWS_Event_Completer *, void *data) override;
 
   JAWS_Protocol_State * transition (JAWS_Event_Result const &result,
                                     void *data,
-                                    void *act);
+                                    void *act) override;
 
   static JAWS_Protocol_State * instance ()
   {

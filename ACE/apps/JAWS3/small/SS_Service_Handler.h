@@ -30,9 +30,9 @@ public:
   TeraSS_Service_Handler &operator= (TeraSS_Service_Handler const &) = delete;
   TeraSS_Service_Handler &operator= (TeraSS_Service_Handler &&) = delete;
 
-  int open (void *);
+  int open (void *) override;
 
-  int close (unsigned long);
+  int close (unsigned long) override;
 
 private:
   TeraSS_Data data_;
@@ -43,7 +43,7 @@ class ACE_Svc_Export TeraSS_Acceptor
   : public ACE_Acceptor<TeraSS_Service_Handler, ACE_SOCK_ACCEPTOR>
 {
 public:
-  int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 };
 
 ACE_SVC_FACTORY_DECLARE (TeraSS_Acceptor)

@@ -4,12 +4,14 @@
 
 #include "jaws3/Concurrency.h"
 
+#include <memory>
+
 #include "SS_Service_Handler.h"
 #include "SS_State_READ.h"
 #include "SS_Data.h"
 
 TeraSS_Service_Handler::TeraSS_Service_Handler ()
-  : JAWS_Protocol_Handler (TeraSS_State_READ::instance (), & this->data_)
+  : JAWS_Protocol_Handler (TeraSS_State_READ::instance (), std::addressof (this->data_))
   , data_ (*this)
 {
 }
@@ -17,9 +19,11 @@ TeraSS_Service_Handler::TeraSS_Service_Handler ()
 int
 TeraSS_Service_Handler::open (void *)
 {
-  int result = JAWS_Concurrency::instance ()->putq (this);
+  int const result = JAWS_Concurrency::instance ()->putq (this);
   if (result < 0)
-    return -1;
+    {
+      return -1;
+    }
 
   return 0;
 }
@@ -36,21 +40,23 @@ TeraSS_Acceptor::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt opt (argc, argv, ACE_TEXT("p:"));
 
-  unsigned short p {};
+  u_short p {};
 
   int c;
   while ((c = opt ()) != -1)
     switch (c)
       {
       case 'p':
-        p = (unsigned short) ACE_OS::atoi (opt.optarg);
+        p = static_cast<u_short> (ACE_OS::atoi (opt.optarg));
         break;
       default:
         break;
       }
 
   if (p == 0)
-    p = 5555;
+    {
+      p = 5555;
+    }
 
   if (this->open (ACE_INET_Addr (p)) == -1)
     {
