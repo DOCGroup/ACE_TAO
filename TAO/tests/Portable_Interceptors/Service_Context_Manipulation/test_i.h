@@ -23,15 +23,15 @@ class Visual_i : public POA_Test_Interceptors::Visual
 public:
   Visual_i (CORBA::ORB_ptr orb);
 
-  void normal (CORBA::Long arg);
+  void normal (CORBA::Long arg) override;
 
-  void nothing ();
+  void nothing () override;
 
-  void user ();
+  void user () override;
 
-  void system ();
+  void system () override;
 
-  void shutdown ();
+  void shutdown () override;
 
 private:
   /// The ORB pseudo-reference (for shutdown).
