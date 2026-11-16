@@ -42,7 +42,7 @@ public:
   /// Human Readable operation name.
   static const char * const opname[];
 
-  // = Specify how to select offers.
+  /// Specifies how offers are selected.
   enum ACE_Selection_Criteria
   {
     NONE = 0,                   // URL that contains none of the properties.

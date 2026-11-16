@@ -81,23 +81,32 @@ public:
   /// Inequality operator.
   bool operator!= (ACE_URL_Property const &rhs) const;
 
-  // = Query property name.
+  /// @name Query property name
+  /// @{
   ACE_WString &name_rep ();
   ACE_WString const &name () const;
+  /// @}
 
-  // = Set property name.
+  /// @name Set property name
+  /// @{
   void name (ACE_UINT16 const *n);
   void name (char const *n);
+  /// @}
 
-  // = Query property value.
+  /// @name Query property value
+  /// @{
   ACE_WString &value_rep ();
   ACE_WString const &value () const;
+  /// @}
 
-  // = Set property value.
+  /// @name Set property value
+  /// @{
   void value (ACE_UINT16 const *v);
   void value (char const *v);
+  /// @}
 
-  // = Helper functions for encoding and decoding.
+  /// @name Encoding and decoding helpers
+  /// @{
   /// Returns memory size (in bytes) required to encode this object.
   size_t size () const;
 
@@ -110,6 +119,7 @@ public:
 
   /// Dump out this object for debug.
   void dump () const;
+  /// @}
 
 protected:
   /// Property name pointer.
@@ -150,13 +160,17 @@ public:
   /// Inequality operator.
   bool operator!= (ACE_URL_Offer const &rhs) const;
 
-  // = Get URL string.
+  /// @name Get URL string
+  /// @{
   ACE_WString &url_rep ();
   ACE_WString const &url () const;
+  /// @}
 
-  // = Set URL.
+  /// @name Set URL
+  /// @{
   void url (char const *url);
   void url (ACE_UINT16 const *url);
+  /// @}
 
   /// Get properties of this offer.
   ACE_URL_Property_Seq &url_properties ();
@@ -165,7 +179,8 @@ public:
   /// copy of the passed in prop.
   void url_properties (ACE_URL_Property_Seq const &prop);
 
-  // = Helper functions for encoding and decoding.
+  /// @name Encoding and decoding helpers
+  /// @{
   /// Returns memory size (in bytes) required to encode this object.
   size_t size () const;
 
@@ -178,6 +193,7 @@ public:
 
   /// Dump this object for debug.
   void dump () const;
+  /// @}
 
 protected:
   /// URL of this offer.
