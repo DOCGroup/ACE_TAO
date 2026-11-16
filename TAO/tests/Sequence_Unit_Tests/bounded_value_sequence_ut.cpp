@@ -15,6 +15,7 @@
 
 #include "test_macros.h"
 
+#include <utility>
 
 using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO;
 
@@ -52,6 +53,32 @@ struct Tester
     tested_sequence x;
 
     CHECK_THROW(x.length(64), std::runtime_error);
+    return 0;
+  }
+
+  int test_move_constructor_and_assignment()
+  {
+    tested_sequence source (4, alloc_and_init_buffer (), true);
+    value_type * const buffer = source.get_buffer ();
+
+    tested_sequence destination (std::move (source));
+
+    CHECK_EQUAL (0UL, source.length ());
+    CHECK_EQUAL (false, source.release ());
+    CHECK_EQUAL (buffer, destination.get_buffer ());
+    CHECK_EQUAL (4UL, destination.length ());
+    CHECK_EQUAL (value_type (1), destination[0]);
+
+    tested_sequence replacement (2, alloc_and_init_buffer (), true);
+    value_type * const replacement_buffer = replacement.get_buffer ();
+    replacement = std::move (destination);
+
+    CHECK_EQUAL (0UL, destination.length ());
+    CHECK_EQUAL (false, destination.release ());
+    CHECK_EQUAL (buffer, replacement.get_buffer ());
+    CHECK_EQUAL (4UL, replacement.length ());
+    CHECK_EQUAL (value_type (1), replacement[0]);
+    CHECK (replacement_buffer != replacement.get_buffer ());
     return 0;
   }
 
@@ -296,6 +323,7 @@ struct Tester
     int status = 0;
     status += this->test_set_length_less_than_maximum();
     status += this->test_set_length_more_than_maximum();
+    status += this->test_move_constructor_and_assignment ();
     status += this->test_regression_2201();
     status += this->test_buffer_constructor_default();
     status += this->test_buffer_constructor_false();
