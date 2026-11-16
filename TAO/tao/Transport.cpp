@@ -159,12 +159,10 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
 #endif  /* TAO_HAS_SENDFILE==1 */
   , flush_in_post_open_ (false)
 {
-  TAO_GIOP_Message_Base *messaging_object {};
-  ACE_NEW (messaging_object,
-            TAO_GIOP_Message_Base (orb_core,
-                                   this,
-                                   input_cdr_size));
-  this->messaging_object_.reset (messaging_object);
+  this->messaging_object_ = std::make_unique<TAO_GIOP_Message_Base> (
+    orb_core,
+    this,
+    input_cdr_size);
 
   TAO_Client_Strategy_Factory *cf =
     this->orb_core_->client_factory ();
@@ -2938,10 +2936,9 @@ TAO_Transport::allocate_partial_message_block ()
        // + this->messaging_object ()->fragment_header_length ();
        // deprecated, conflicts with not-single_read_opt.
 
-      ACE_Message_Block *partial_message {};
-      ACE_NEW (partial_message,
-               ACE_Message_Block (partial_message_size));
-      this->partial_message_.reset (partial_message);
+      this->partial_message_ = ACE_Message_Block_Unique_Ptr {
+        new ACE_Message_Block (partial_message_size)
+      };
     }
 }
 
