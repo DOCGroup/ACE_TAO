@@ -1183,21 +1183,25 @@ ACE_Configuration_Section_IntId::free (ACE_Allocator *alloc)
   alloc->free ((void *) (section_hash_map_));
 }
 
+void
+ACE_Configuration_Path_Deleter::operator() (ACE_TCHAR* path) const
+{
+#if defined (ACE_HAS_ALLOC_HOOKS)
+  ACE_Allocator::instance ()->free (path);
+#else
+  ACE_OS::free (path);
+#endif /* ACE_HAS_ALLOC_HOOKS */
+}
+
 ACE_Configuration_Section_Key_Heap::ACE_Configuration_Section_Key_Heap (const ACE_TCHAR* path)
-  : path_ (nullptr),
+  : path_ (ACE_OS::strdup (path)),
     value_iter_ (nullptr),
     section_iter_ (nullptr)
 {
-  path_ = ACE_OS::strdup (path);
 }
 
 ACE_Configuration_Section_Key_Heap::~ACE_Configuration_Section_Key_Heap ()
 {
-#if defined (ACE_HAS_ALLOC_HOOKS)
-  ACE_Allocator::instance()->free (path_);
-#else
-  ACE_OS::free (path_);
-#endif /* ACE_HAS_ALLOC_HOOKS */
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Configuration_Section_Key_Heap)
@@ -1340,7 +1344,7 @@ ACE_Configuration_Heap::load_key (const ACE_Configuration_Section_Key& key,
       return -1;
     }
 
-  ACE_TString temp (pKey->path_, nullptr, false);
+  ACE_TString temp (pKey->path_.get (), nullptr, false);
   name.assign_nocopy (temp);
   return 0;
 }
@@ -1711,10 +1715,10 @@ ACE_Configuration_Heap::enumerate_values (const ACE_Configuration_Section_Key& k
     return -1;
   }
 
-  name = pKey->path_;
+  name = pKey->path_.get ();
 
   // resolve the section
-  ACE_Configuration_ExtId ExtId (pKey->path_);
+  ACE_Configuration_ExtId ExtId (pKey->path_.get ());
   ACE_Configuration_Section_IntId IntId;
   if (index_->find (ExtId, IntId, allocator_))
   {
@@ -1769,7 +1773,7 @@ ACE_Configuration_Heap::enumerate_sections (const ACE_Configuration_Section_Key&
   }
 
   // resolve the section
-  ACE_Configuration_ExtId ExtId (pKey->path_);
+  ACE_Configuration_ExtId ExtId (pKey->path_.get ());
   ACE_Configuration_Section_IntId IntId;
   if (index_->find (ExtId, IntId, allocator_))
   {

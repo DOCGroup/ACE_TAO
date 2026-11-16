@@ -689,6 +689,11 @@ using SECTION_HASH = ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId, ACE_Config
 // Deprecated typedef.  Use the SECTION_HASH::ENTRY trait instead.
 using SECTION_ENTRY = SECTION_HASH::ENTRY;
 
+struct ACE_Configuration_Path_Deleter
+{
+  void operator() (ACE_TCHAR* path) const;
+};
+
 /**
  * @class ACE_Configuration_Section_Key_Heap
  *
@@ -705,7 +710,7 @@ public:
   explicit ACE_Configuration_Section_Key_Heap (const ACE_TCHAR* path);
 
   /// The path itself
-  ACE_TCHAR* path_;
+  std::unique_ptr<ACE_TCHAR, ACE_Configuration_Path_Deleter> path_;
 
   /// The value iterator
   std::unique_ptr<VALUE_HASH::ITERATOR> value_iter_;
