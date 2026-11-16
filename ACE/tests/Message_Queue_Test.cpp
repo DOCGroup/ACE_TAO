@@ -458,9 +458,9 @@ chained_block_test ()
   if (msgs != 10 || bytes != 100)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Chained enqueue totals: %d msgs, %d bytes; ")
+                  ACE_TEXT ("Chained enqueue totals: %B msgs, %B bytes; ")
                   ACE_TEXT ("should be 10 msgs, 100 bytes\n"),
-                  (int)msgs, (int)bytes));
+                  msgs, bytes));
       status = -1;
     }
 

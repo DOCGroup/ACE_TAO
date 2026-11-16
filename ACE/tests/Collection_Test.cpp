@@ -47,12 +47,12 @@ void iterate_const (UNBOUNDED_SET const& set)
       DATA *data {};
       iterator.next (data);
 
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%x,%x\n"),
-                  data->alloc_, (void *) data->dfunc_));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%@, deletion function set=%d\n"),
+                  data->alloc_, data->dfunc_ != nullptr));
 
       DATA const data_second = *iterator;
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%x,%x\n"),
-                  data_second.alloc_, (void *) data_second.dfunc_));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%@, deletion function set=%d\n"),
+                  data_second.alloc_, data_second.dfunc_ != nullptr));
 
       iterator.advance ();
     }
@@ -83,8 +83,8 @@ run_main (int, ACE_TCHAR *[])
            iterator != unbounded_set.end ();
            ++iterator)
         {
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%x,%x\n"),
-                      (*iterator).alloc_, (void *) (*iterator).dfunc_));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%@, deletion function set=%d\n"),
+                      (*iterator).alloc_, (*iterator).dfunc_ != nullptr));
         }
     }
 
@@ -97,8 +97,8 @@ run_main (int, ACE_TCHAR *[])
         {
           DATA *data {};
           iterator.next (data);
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%x,%x\n"),
-                      data->alloc_, (void *) data->dfunc_));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%@, deletion function set=%d\n"),
+                      data->alloc_, data->dfunc_ != nullptr));
           iterator.advance ();
         }
     }
@@ -112,7 +112,9 @@ run_main (int, ACE_TCHAR *[])
 
       while (i.next (data) != 0)
         {
-          ACE_DEBUG ((LM_DEBUG, "%x,%x\n", data->alloc_, (void *) data->dfunc_));
+          ACE_DEBUG ((LM_DEBUG,
+                      "%@, deletion function set=%d\n",
+                      data->alloc_, data->dfunc_ != nullptr));
           i.advance ();
         }
     }
