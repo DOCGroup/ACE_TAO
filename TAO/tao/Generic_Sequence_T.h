@@ -137,19 +137,33 @@ public:
     return * this;
   }
 
-  generic_sequence (generic_sequence &&rhs) noexcept
-    : maximum_ (rhs.maximum_)
-    , length_ (rhs.length_)
-    , buffer_ (rhs.buffer_)
-    , release_ (rhs.release_)
+  generic_sequence (generic_sequence &&rhs)
+    : maximum_ (allocation_traits::default_maximum ())
+    , length_ (0)
+    , buffer_ (nullptr)
+    , release_ (false)
   {
-    rhs.maximum_ = allocation_traits::default_maximum ();
-    rhs.length_ = 0;
-    rhs.buffer_ = nullptr;
-    rhs.release_ = false;
+    if (rhs.release_)
+      {
+        this->maximum_ = rhs.maximum_;
+        this->length_ = rhs.length_;
+        this->buffer_ = rhs.buffer_;
+        this->release_ = true;
+        rhs.maximum_ = allocation_traits::default_maximum ();
+        rhs.length_ = 0;
+        rhs.buffer_ = nullptr;
+        rhs.release_ = false;
+      }
+    else
+      {
+        // A borrowed buffer has no ownership to transfer, so keep the source
+        // intact and copy its contents.
+        generic_sequence copy (rhs);
+        this->swap (copy);
+      }
   }
 
-  generic_sequence &operator= (generic_sequence &&rhs) noexcept
+  generic_sequence &operator= (generic_sequence &&rhs)
   {
     if (this != std::addressof (rhs))
       {

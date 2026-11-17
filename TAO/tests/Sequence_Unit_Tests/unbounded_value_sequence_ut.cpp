@@ -28,6 +28,44 @@ struct Tester
 {
   using value_type = tested_sequence::value_type;
 
+  int test_move_borrowed_buffer ()
+  {
+    value_type const initial[] {1, 4, 9, 16};
+    value_type buffer[8] {1, 4, 9, 16};
+    tested_sequence source;
+    source.replace (8, 4, buffer, false);
+
+    tested_sequence destination (std::move (source));
+
+    CHECK (destination.get_buffer () != buffer);
+    CHECK_EQUAL (true, destination.release ());
+    CHECK_EQUAL (CORBA::ULong (8), destination.maximum ());
+    CHECK_EQUAL (CORBA::ULong (4), destination.length ());
+    CHECK_EQUAL (initial[0], destination[0]);
+    CHECK_EQUAL (initial[3], destination[3]);
+    CHECK_EQUAL (buffer, source.get_buffer ());
+    CHECK_EQUAL (false, source.release ());
+
+    buffer[0] = 25;
+    CHECK_EQUAL (initial[0], destination[0]);
+
+    value_type assignment_buffer[8] {1, 4, 9, 16};
+    tested_sequence assignment_source;
+    assignment_source.replace (8, 4, assignment_buffer, false);
+    tested_sequence assignment_destination (2);
+
+    assignment_destination = std::move (assignment_source);
+
+    CHECK (assignment_destination.get_buffer () != assignment_buffer);
+    CHECK_EQUAL (true, assignment_destination.release ());
+    CHECK_EQUAL (CORBA::ULong (8), assignment_destination.maximum ());
+    CHECK_EQUAL (CORBA::ULong (4), assignment_destination.length ());
+    CHECK_EQUAL (assignment_buffer, assignment_source.get_buffer ());
+    assignment_buffer[0] = 25;
+    CHECK_EQUAL (initial[0], assignment_destination[0]);
+    return 0;
+  }
+
   int test_copy_constructor_from_ulong()
   {
     expected_calls a(tested_allocation_traits::allocbuf_calls);
@@ -447,6 +485,7 @@ struct Tester
   int test_all()
   {
     int status {};
+    status += this->test_move_borrowed_buffer ();
     status += this->test_ulong_constructor();
     status += this->test_copy_constructor_from_ulong();
     status += this->test_assignment_from_ulong();
