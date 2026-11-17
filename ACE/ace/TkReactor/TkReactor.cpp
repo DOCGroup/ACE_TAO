@@ -50,8 +50,8 @@ ACE_TkReactor::~ACE_TkReactor ()
     }
 }
 
-// This is just the <wait_for_multiple_events> from ace/Reactor.cpp
-// but we use the Tk functions to wait for an event, not <select>
+/// This is just the <wait_for_multiple_events> from ace/Reactor.cpp
+/// but we use the Tk functions to wait for an event, not <select>.
 
 int
 ACE_TkReactor::wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_set,
@@ -121,11 +121,17 @@ ACE_TkReactor::InputCallbackProc (ClientData cd,
 
   // - read which kind of event
   if (self->wait_set_.rd_mask_.is_set (handle))
-    wait_set.rd_mask_.set_bit (handle);
+    {
+      wait_set.rd_mask_.set_bit (handle);
+    }
   if (self->wait_set_.wr_mask_.is_set (handle))
-    wait_set.wr_mask_.set_bit (handle);
+    {
+      wait_set.wr_mask_.set_bit (handle);
+    }
   if (self->wait_set_.ex_mask_.is_set (handle))
-    wait_set.ex_mask_.set_bit (handle);
+    {
+      wait_set.ex_mask_.set_bit (handle);
+    }
 
   int const result = ACE_OS::select (handle + 1,
                                      wait_set.rd_mask_,
@@ -139,11 +145,17 @@ ACE_TkReactor::InputCallbackProc (ClientData cd,
   if (result > 0)
     {
       if (wait_set.rd_mask_.is_set (handle))
-        dispatch_set.rd_mask_.set_bit (handle);
+        {
+          dispatch_set.rd_mask_.set_bit (handle);
+        }
       if (wait_set.wr_mask_.is_set (handle))
-        dispatch_set.wr_mask_.set_bit (handle);
+        {
+          dispatch_set.wr_mask_.set_bit (handle);
+        }
       if (wait_set.ex_mask_.is_set (handle))
-        dispatch_set.ex_mask_.set_bit (handle);
+        {
+          dispatch_set.ex_mask_.set_bit (handle);
+        }
 
       self->dispatch (1, dispatch_set);
     }
@@ -162,7 +174,9 @@ ACE_TkReactor::TkWaitForMultipleEvents (int width,
                       temp_set.wr_mask_,
                       temp_set.ex_mask_,
                       &ACE_Time_Value::zero) == -1)
-    return -1; // Bad file arguments...
+    {
+      return -1; // Bad file arguments...
+    }
 
   // Instead of waiting using <select>, just use the Tk mechanism to
   // wait for a single event.
@@ -193,19 +207,29 @@ ACE_TkReactor::register_handler_i (ACE_HANDLE handle,
                                                              handler,
                                                              mask);
   if (result == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   int condition {};
 
 #if !defined (ACE_WIN32)
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::READ_MASK))
-    ACE_SET_BITS (condition, TK_READABLE);
+    {
+      ACE_SET_BITS (condition, TK_READABLE);
+    }
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::WRITE_MASK))
-    ACE_SET_BITS (condition, TK_WRITABLE);
+    {
+      ACE_SET_BITS (condition, TK_WRITABLE);
+    }
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::EXCEPT_MASK))
-    ACE_SET_BITS (condition, TK_EXCEPTION);
+    {
+      ACE_SET_BITS (condition, TK_EXCEPTION);
+    }
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::ACCEPT_MASK))
-    ACE_SET_BITS (condition, TK_READABLE);
+    {
+      ACE_SET_BITS (condition, TK_READABLE);
+    }
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::CONNECT_MASK))
     {
       ACE_SET_BITS (condition, TK_READABLE); // connected, you may write
@@ -213,13 +237,21 @@ ACE_TkReactor::register_handler_i (ACE_HANDLE handle,
     }
 #else
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::READ_MASK))
-    ACE_SET_BITS (condition, TK_READABLE);
+    {
+      ACE_SET_BITS (condition, TK_READABLE);
+    }
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::WRITE_MASK))
-    ACE_SET_BITS (condition, TK_WRITABLE);
+    {
+      ACE_SET_BITS (condition, TK_WRITABLE);
+    }
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::EXCEPT_MASK))
-    ACE_NOTSUP_RETURN (-1);
+    {
+      ACE_NOTSUP_RETURN (-1);
+    }
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::ACCEPT_MASK))
-    ACE_SET_BITS (condition, TK_READABLE);
+    {
+      ACE_SET_BITS (condition, TK_READABLE);
+    }
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::CONNECT_MASK))
     {
       ACE_SET_BITS (condition, TK_READABLE); // connected, you may write
@@ -250,8 +282,7 @@ ACE_TkReactor::register_handler_i (ACE_HANDLE handle,
                                       tk_id->callback_.get ());
               return 0;
             }
-          else
-            tk_id = tk_id->next_;
+          tk_id = tk_id->next_;
         }
 
       ACE_TkReactorID *new_tk_id {};
@@ -334,11 +365,8 @@ ACE_TkReactor::remove_TkFileHandler (ACE_HANDLE handle)
               delete next_id;
               return;
             }
-          else
-            {
-              tk_id = next_id;
-              next_id = next_id->next_;
-            }
+          tk_id = next_id;
+          next_id = next_id->next_;
         }
     }
 }
@@ -351,23 +379,27 @@ ACE_TkReactor::remove_handler_i (ACE_Handle_Set const &handles,
                                                mask);
 }
 
-// The following functions ensure that there is an Tk timeout for the
-// first timeout in the Reactor's Timer_Queue.
+/// These functions ensure that there is a Tk timeout for the first
+/// timeout in the reactor's Timer_Queue.
 
 void
 ACE_TkReactor::reset_timeout ()
 {
   if (this->timeout_ != nullptr)
-    ::Tk_DeleteTimerHandler (this->timeout_);
+    {
+      ::Tk_DeleteTimerHandler (this->timeout_);
+    }
   this->timeout_ = nullptr;
 
   ACE_Time_Value const *max_wait_time =
     this->timer_queue_->calculate_timeout (0);
 
   if (max_wait_time != nullptr)
-    this->timeout_ = ::Tk_CreateTimerHandler (max_wait_time->msec (),
-                                              TimerCallbackProc,
-                                              this);
+    {
+      this->timeout_ = ::Tk_CreateTimerHandler (max_wait_time->msec (),
+                                                TimerCallbackProc,
+                                                this);
+    }
 }
 
 int
@@ -383,12 +415,11 @@ ACE_TkReactor::reset_timer_interval
      interval);
 
   if (result == -1)
-    return -1;
-  else
     {
-      this->reset_timeout ();
-      return result;
+      return -1;
     }
+  this->reset_timeout ();
+  return result;
 }
 
 long
@@ -405,12 +436,11 @@ ACE_TkReactor::schedule_timer (ACE_Event_Handler *event_handler,
                                                           delay,
                                                           interval);
   if (result == -1)
-    return -1;
-  else
     {
-      this->reset_timeout ();
-      return result;
+      return -1;
     }
+  this->reset_timeout ();
+  return result;
 }
 
 int
@@ -421,12 +451,11 @@ ACE_TkReactor::cancel_timer (ACE_Event_Handler *handler,
 
   if (ACE_Select_Reactor::cancel_timer (handler,
                                         dont_call_handle_close) == -1)
-    return -1;
-  else
     {
-      this->reset_timeout ();
-      return 0;
+      return -1;
     }
+  this->reset_timeout ();
+  return 0;
 }
 
 int
@@ -439,12 +468,11 @@ ACE_TkReactor::cancel_timer (long timer_id,
   if (ACE_Select_Reactor::cancel_timer (timer_id,
                                         arg,
                                         dont_call_handle_close) == -1)
-    return -1;
-  else
     {
-      this->reset_timeout ();
-      return 0;
+      return -1;
     }
+  this->reset_timeout ();
+  return 0;
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
