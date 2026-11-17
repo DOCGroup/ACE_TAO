@@ -43,12 +43,16 @@ if ($status == 0) {
     }
 
     my @checks = (
-        ["valuetype_opt_accessorC.h", qr/ValueBase\s*\*\s*_copy_value\s*\(/],
-        ["valuetype_opt_accessorC.cpp", qr/Accessor_Optimized_Value::_copy_value\s*\(/],
+        ["valuetype_opt_accessorC.h", qr/ValueBase\s*\*\s*_copy_value\s*\(/,
+         "unexpected _copy_value"],
+        ["valuetype_opt_accessorC.cpp", qr/Accessor_Optimized_Value::_copy_value\s*\(/,
+         "unexpected _copy_value"],
+        ["valuetype_opt_accessorC.h", qr/Accessor_Optimized_Value_init/,
+         "unexpected _init factory class"],
     );
 
     foreach my $check (@checks) {
-        my ($file, $unexpected_pattern) = @{$check};
+        my ($file, $unexpected_pattern, $diagnostic) = @{$check};
         $server->GetFile ($file);
         open my $generated, "<", $file
           or die "ERROR: cannot open generated file <$file>: $!\n";
@@ -57,7 +61,7 @@ if ($status == 0) {
         close $generated;
 
         if ($contents =~ $unexpected_pattern) {
-            print STDERR "ERROR: unexpected _copy_value in <$file>\n";
+            print STDERR "ERROR: $diagnostic in <$file>\n";
             $status = 1;
         }
     }

@@ -123,7 +123,7 @@ TAO_Notify_Tests_RT_Test_Filter::match_structured (
 
   if (TAO_debug_level > 0)
   {
-    ACE_DEBUG ((LM_DEBUG, "TAO_Notify_Tests_RT_Test_Filter (%@) ::match_structured (%t)\n", this));
+    ACE_DEBUG ((LM_DEBUG, "TAO_Notify_Tests_RT_Test_Filter (%x) ::match_structured (%t)\n", this));
   }
 
   TAO_Root_POA* const poa = dynamic_cast<TAO_Root_POA*> (this->_default_POA ());

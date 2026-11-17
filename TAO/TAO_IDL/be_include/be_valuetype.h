@@ -128,6 +128,13 @@ public:
   /// if valuetype has at least one operation/attribute.
   bool have_operation ();
 
+  /// Check whether this valuetype or a base supports an interface.
+  bool has_supported_interface () const;
+
+  /// Check whether the generated OBV class needs or inherits a ref counter.
+  bool obv_need_ref_counter ();
+  bool obv_have_ref_counter ();
+
   /// Check if VT supports an interface with at least 1 operation.
   static bool have_supported_op (be_interface *node);
 
@@ -154,6 +161,16 @@ private:
 
   /// Flag used by default constructor generator.
   bool is_amh_excep_holder_ {};
+
+  /// Cache operation lookup after the IDL scope is complete.
+  bool have_operation_computed_ {};
+  bool have_operation_cache_ {};
+  mutable bool has_supported_interface_computed_ {};
+  mutable bool has_supported_interface_cache_ {};
+  bool obv_need_ref_counter_computed_ {};
+  bool obv_need_ref_counter_cache_ {};
+  bool obv_have_ref_counter_computed_ {};
+  bool obv_have_ref_counter_cache_ {};
 };
 
 #endif  // if !defined
