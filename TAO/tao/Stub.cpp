@@ -113,7 +113,7 @@ TAO_Stub::add_forward_profiles (TAO_MProfile const &mprofiles,
     {
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Stub::add_forward_profiles, ")
-                  ACE_TEXT ("acquired profile lock this = 0x%x\n"),
+                  ACE_TEXT ("acquired profile lock this = %@\n"),
                   this));
     }
 
@@ -176,7 +176,7 @@ TAO_Stub::create_ior_info (IOP::IOR *&ior_info, CORBA::ULong &index)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Stub::create_ior_info, acquired ")
-                  ACE_TEXT ("profile lock this = 0x%x\n"),
+                  ACE_TEXT ("profile lock this = %@\n"),
                   this));
     }
 
@@ -557,7 +557,7 @@ TAO_Stub::marshal (TAO_OutputCDR &cdr)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Stub::marshal, acquired ")
-                  ACE_TEXT ("profile lock this = 0x%x\n"),
+                  ACE_TEXT ("profile lock this = %@\n"),
                   this));
     }
 

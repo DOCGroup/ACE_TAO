@@ -434,7 +434,7 @@ CORBA::ValueBase::_tao_unmarshal_find_factory (
         {
           TAOLIB_ERROR ((LM_ERROR,
             ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_unmarshal_find_factory, ")
-            ACE_TEXT ("Failed to bound value %x=%@, id=%C\n"),
+            ACE_TEXT ("Failed to bound value %@=%@, id=%C\n"),
             start_of_valuetype, valuetype, id ));
         }
     }
@@ -442,7 +442,7 @@ CORBA::ValueBase::_tao_unmarshal_find_factory (
     {
       TAOLIB_DEBUG ((LM_DEBUG,
         ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_unmarshal_find_factory, ")
-        ACE_TEXT ("bound value %x=%@, id=%C\n"),
+        ACE_TEXT ("bound value %@=%@, id=%C\n"),
         start_of_valuetype, valuetype, id ));
     }
 }
@@ -594,7 +594,7 @@ CORBA::ValueBase::_tao_unmarshal_value_indirection (TAO_InputCDR &strm,
   if (9 < TAO_debug_level)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-        ACE_TEXT ("TAO (%P|%t) ValueBase::_tao_unmarshal_value_indirection, pos %x\n"), pos));
+        ACE_TEXT ("TAO (%P|%t) ValueBase::_tao_unmarshal_value_indirection, pos %@\n"), pos));
       TAO_InputCDR::Value_Map* map = strm.get_value_map()->get ();
       for (TAO_InputCDR::Value_Map::ITERATOR it = map->begin (); it != map->end (); ++ it)
         {
@@ -621,7 +621,7 @@ CORBA::ValueBase::_tao_unmarshal_value_indirection (TAO_InputCDR &strm,
   else if (TAO_debug_level)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-        ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_unmarshal_value_indirection, found %x=%x\n"),
+        ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_unmarshal_value_indirection, found %@=%@\n"),
         pos, v));
     }
 

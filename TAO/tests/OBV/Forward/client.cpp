@@ -45,14 +45,14 @@ dump_node (BaseNode *const bn, int const indent)
   StringNode *sn = StringNode::_downcast (bn);
   if (sn != nullptr)
     {
-      ACE_DEBUG ((LM_DEBUG, "%x <StringNode> %C\n",
+      ACE_DEBUG ((LM_DEBUG, "%@ <StringNode> %C\n",
                   bn,
                   sn->name ()));
     }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%x <BaseNode>\n",
+                  "%@ <BaseNode>\n",
                   bn));
     }
 
@@ -64,13 +64,13 @@ void
 dump_tree (TreeController *const tc)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) start tree dump <%x>\n",
+              "(%P|%t) start tree dump <%@>\n",
               tc));
 
   dump_node (tc->root (), 1);
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) end tree dump <%x>\n",
+              "(%P|%t) end tree dump <%@>\n",
               tc));
 }
 
