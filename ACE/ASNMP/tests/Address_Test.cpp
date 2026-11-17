@@ -163,7 +163,6 @@ static void TestIpAddress()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) IpAddress: Tests\n"));
 
-  // constructors
   GenAddress ga("255.255.255.255");
   IpAddress ia1;
   ACE_TEST_ASSERT(ia1.valid() == 0);
