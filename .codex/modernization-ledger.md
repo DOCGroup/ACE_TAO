@@ -12742,6 +12742,19 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - No moved-from-use defect or code change was found. The `TAO/tao` move audit
   remains open for its other core ownership and sequence call sites.
 
+## 2026-11-17 TAO core ownership move audit
+
+- Reviewed 20 additional moves across `Asynch_Queued_Message`, `Codeset`,
+  `Connector_Registry`, `Adapter_Registry`, `Thread_Lane_Resources`,
+  `RTScheduling/Current`, `Stub`, `CSD_Framework`, `LF_Multi_Event`, `ETCL`,
+  `Dynamic_TP`, and `CSD_ThreadPool`. Buffer, connector, adapter, scheduler,
+  event, strategy, and exception owners transfer to their intended destination
+  or local cleanup owner. The linked-list destructors move each successor out
+  before the current node is destroyed. No moved-from value is read afterward.
+- No moved-from-use defect or code change was found. This brings the reviewed
+  TAO core slice to 29 sites including the clonable argument wrappers; other
+  core moves and the repository-wide audit remain open.
+
 ## 2026-11-17 Const guard macro follow-up
 
 - Replaced direct `ACE_Guard` spellings in `AnyTypeCode` with new
