@@ -220,7 +220,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 
                 while (!feof (ifstr.get ()))
                   {
-                    char ch;
+                    int ch {};
                     ACE_CString aString;
 
                     have_some_input = false;
@@ -230,7 +230,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                         ch = ACE_OS::fgetc (ifstr.get ());
                         if (ch == EOF || ch == '\n' || ch == '\r')
                           break;
-                        aString += ch;
+                        aString += static_cast<char> (ch);
                         have_some_input = true;
                       }
 #endif /* !defined (ACE_LACKS_IOSTREAM_TOTALLY) */
@@ -337,7 +337,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 
                 while (!feof (ifstr))
                   {
-                    char ch;
+                    int ch {};
                     ACE_CString aString;
 
                     have_some_input = false;
@@ -347,7 +347,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                         ch = ACE_OS::fgetc (ifstr);
                         if (ch == EOF || ch == '\n' || ch == '\r')
                           break;
-                        aString += ch;
+                        aString += static_cast<char> (ch);
                         have_some_input = true;
                       }
 #endif /* !defined (ACE_LACKS_IOSTREAM_TOTALLY) */

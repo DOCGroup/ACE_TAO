@@ -49,9 +49,9 @@ Catior_i::decode (const ACE_CString& aString, ACE_CString& output)
   buffer_.clear ();
   this->trace_depth_ = 0;
 
-  const ACE_CString iorPrefix = "IOR:";
-  const ACE_CString iiopPrefix = "iiop:";
-  const ACE_CString poopPrefix = ":IR:";
+  ACE_CString const iorPrefix = "IOR:";
+  ACE_CString const iiopPrefix = "iiop:";
+  ACE_CString const poopPrefix = ":IR:";
 
   std::unique_ptr<char[]> str;
   CORBA::Boolean b {};
@@ -96,7 +96,7 @@ Catior_i::decode (const ACE_CString& aString, ACE_CString& output)
 }
 
 CORBA::Boolean
-Catior_i::catiiop (char* string)
+Catior_i::catiiop (char const *string)
 {
   // NIL objref encodes as just "iiop:" ... which has already been
   // removed, so we see it as an empty string.
@@ -153,7 +153,7 @@ Catior_i::catiiop (char* string)
   // Pull off the "hostname:port/" part of the objref Get host and
   // port.
   CORBA::UShort port_number;
-  char *cp = std::strchr (string, ':');
+  char const *cp = std::strchr (string, ':');
 
   if (cp == nullptr)
     {
@@ -163,12 +163,13 @@ Catior_i::catiiop (char* string)
   CORBA::String_var hostname = CORBA::string_alloc (1 +
     ACE_Utils::truncate_cast<CORBA::ULong> (cp - string));
 
-  for (cp = hostname.inout ();
-       *string != ':';
-       *cp++ = *string++)
-    continue;
+  char *hostname_part = hostname.inout ();
+  while (*string != ':')
+    {
+      *hostname_part++ = *string++;
+    }
 
-  *cp = 0;
+  *hostname_part = '\0';
   ++string;
 
   cp = std::strchr (string, '/');
@@ -391,7 +392,7 @@ Catior_i::catior (char const * str)
 // : interface_marker
 
 CORBA::Boolean
-Catior_i::catpoop (char* string)
+Catior_i::catpoop (char const *string)
 {
   if (!string || !*string)
   {
@@ -405,7 +406,7 @@ Catior_i::catpoop (char* string)
 
   auto read_field = [&string] ()
     {
-      char *delimiter = std::strchr (string, ':');
+      char const *delimiter = std::strchr (string, ':');
       if (delimiter == nullptr)
       {
         throw CORBA::DATA_CONVERSION ();

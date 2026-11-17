@@ -32,11 +32,11 @@ public:
 
 private:
   // These methods used to be functions in catior.cpp
-  CORBA::Boolean catiiop (char* string);
+  CORBA::Boolean catiiop (char const *string);
 
-  CORBA::Boolean catior (char const* str);
+  CORBA::Boolean catior (char const *str);
 
-  CORBA::Boolean catpoop (char* string);
+  CORBA::Boolean catpoop (char const *string);
 
   CORBA::Boolean cat_tag_orb_type (TAO_InputCDR& stream);
 
