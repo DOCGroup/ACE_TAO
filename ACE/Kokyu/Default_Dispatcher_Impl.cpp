@@ -1,6 +1,7 @@
 #include "Default_Dispatcher_Impl.h"
 
 #include "ace/Sched_Params.h"
+#include <new>
 #if ! defined (__ACE_INLINE__)
 #include "Default_Dispatcher_Impl.inl"
 #endif /* __ACE_INLINE__ */
@@ -19,24 +20,29 @@ Default_Dispatcher_Impl::init_i (Dispatcher_Attributes const &attrs)
       return -1;
     }
 
-  this->ntasks_ = size;
-
-  Dispatcher_Task_Auto_Ptr *tasks_array {};
-  ACE_NEW_RETURN (tasks_array, Dispatcher_Task_Auto_Ptr[ntasks_], -1);
-
-  this->tasks_.reset (tasks_array);
+  std::vector<Dispatcher_Task_Auto_Ptr> tasks;
+  try
+    {
+      tasks.reserve (size);
+    }
+  catch (std::bad_alloc const &)
+    {
+      return -1;
+    }
 
   ConfigInfoSet::const_iterator iter = attrs.config_info_set_.begin ();
-  size_t i {};
-  for (; i < size; ++i, ++iter)
+  for (size_t i {}; i < size; ++i, ++iter)
     {
       Dispatcher_Task *task {};
       ACE_NEW_RETURN (task,
                       Dispatcher_Task (*iter,
                                        ACE_Thread_Manager::instance()),
                       -1);
-      this->tasks_[i].reset (task);
+      tasks.emplace_back (task);
     }
+
+  this->tasks_.swap (tasks);
+  tasks.clear ();
 
   this->thr_creation_flags_ = attrs.thread_creation_flags ();
 
@@ -57,13 +63,13 @@ Default_Dispatcher_Impl::activate_i ()
       return 0;
     }
 
-  for (size_t i {}; i < this->ntasks_; ++i)
+  for (Dispatcher_Task_Auto_Ptr const &task : this->tasks_)
     {
       Priority_t const priority =
-        this->tasks_[i]->get_curr_config_info ().thread_priority_;
+        task->get_curr_config_info ().thread_priority_;
 
-      if (this->tasks_[i]->activate (this->thr_creation_flags_,
-                                     1, 1, priority) == -1)
+      if (task->activate (this->thr_creation_flags_,
+                          1, 1, priority) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
              ACE_TEXT ("EC (%P|%t) cannot activate queue.")
@@ -81,11 +87,11 @@ Default_Dispatcher_Impl::find_task_with_preemption_prio (Priority_t prio)
 {
   if (prio >= 0)
     {
-      for (size_t i {}; i < this->ntasks_; ++i)
+      for (Dispatcher_Task_Auto_Ptr const &task : this->tasks_)
         {
-          if (this->tasks_[i]->preemption_priority () == prio)
+          if (task->preemption_priority () == prio)
             {
-              return this->tasks_[i].get ();
+              return task.get ();
             }
         }
     }
@@ -110,7 +116,7 @@ Default_Dispatcher_Impl::dispatch_i (Dispatch_Command const *cmd,
   //How do we know that the last queue is the lowest prio queue.
   if (task == nullptr)
     {
-      task = this->tasks_[this->ntasks_ - 1].get ();
+      task = this->tasks_.back ().get ();
     }
 
   return task->enqueue (cmd, qos_info);
@@ -123,22 +129,22 @@ Default_Dispatcher_Impl::shutdown_i ()
   //consistent cut through the queues
 
   //post shutdown command to all tasks
-  for (size_t i {}; i < this->ntasks_; ++i)
+  for (Dispatcher_Task_Auto_Ptr const &task : this->tasks_)
     {
       QoSDescriptor const qos_info {};
       Shutdown_Task_Command *raw_shutdown_cmd {};
       ACE_NEW_RETURN (raw_shutdown_cmd, Shutdown_Task_Command, -1);
       std::unique_ptr<Shutdown_Task_Command> shutdown_cmd (raw_shutdown_cmd);
-      if (this->tasks_[i]->enqueue (shutdown_cmd.get (), qos_info) == 0)
+      if (task->enqueue (shutdown_cmd.get (), qos_info) == 0)
         {
           shutdown_cmd.release ();
         }
     }
 
   //wait for all tasks to exit
-  for (size_t i {}; i < this->ntasks_; ++i)
+  for (Dispatcher_Task_Auto_Ptr const &task : this->tasks_)
     {
-      this->tasks_[i]->wait ();
+      task->wait ();
     }
 
   return 0;

@@ -23,6 +23,7 @@
 #include "Dispatcher_Impl.h"
 #include "Dispatcher_Task.h"
 #include <memory>
+#include <vector>
 
 namespace Kokyu
 {
@@ -52,8 +53,7 @@ namespace Kokyu
 
   private:
     using Dispatcher_Task_Auto_Ptr = std::unique_ptr<Dispatcher_Task>;
-    std::unique_ptr<Dispatcher_Task_Auto_Ptr[]> tasks_;
-    size_t ntasks_ {};
+    std::vector<Dispatcher_Task_Auto_Ptr> tasks_;
     ConfigInfoSet curr_config_info_;
     bool activated_ {};
   };
