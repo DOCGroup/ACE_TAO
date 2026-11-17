@@ -171,7 +171,7 @@ public:
   bool above_minimum ();
 
   /// @name Accessors
-  // @{
+  /// @{
   bool use_timeouts () const;
   ACE_Time_Value const &dynamic_thread_time () const;
 
@@ -181,7 +181,7 @@ public:
   void add_active ();
   bool remove_active (bool force);
 
-  // @}
+  /// @}
 
   TAO_DTP_Thread_Pool (TAO_DTP_Thread_Pool const &) = delete;
   TAO_DTP_Thread_Pool &operator= (TAO_DTP_Thread_Pool const &) = delete;
@@ -248,9 +248,9 @@ public:
                                              ACE_Null_Mutex>;
 
   /// @name Accessors
-  // @{
+  /// @{
   TAO_ORB_Core &orb_core () const;
-  // @}
+  /// @}
 
   TAO_DTP_Thread_Pool_Manager (TAO_DTP_Thread_Pool_Manager const &) = delete;
   TAO_DTP_Thread_Pool_Manager &operator= (
@@ -260,13 +260,13 @@ public:
 
 private:
   /// @name Helpers
-  // @{
+  /// @{
   CORBA::ULong
   create_threadpool_i (TAO_DTP_Definition &def);
 
   CORBA::ULong
   create_threadpool_helper (TAO_DTP_Thread_Pool *thread_pool);
-  // @}
+  /// @}
 
 private:
   TAO_ORB_Core &orb_core_;
