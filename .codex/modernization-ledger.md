@@ -12644,3 +12644,15 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   afterward.
 - No defect or code change was justified. This extends the partial
   `TAO/tao` move review; the repository-wide audit remains open.
+
+## 2026-11-17 TAO Object_Adapter ownership move audit
+
+- Reviewed all five `std::move` sites in `TAO/tao/PortableServer/Object_Adapter.cpp`.
+  Newly created strategy/map owners transfer into members. During shutdown,
+  the root POA and manager factory transfer into local owners and are destroyed
+  after the lock is released; the members are not read afterward. Initialization
+  creates the manager factory before the root POA on configurations that use
+  it, so the factory-null return after root transfer is unreachable in normal
+  initialized state.
+- No defect or code change was justified. This extends the partial
+  `TAO/tao` move review; the repository-wide audit remains open.

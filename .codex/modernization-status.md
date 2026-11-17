@@ -69,11 +69,11 @@ task has been reviewed and no follow-up remains.
   nearby sequence copies for cases where the source is dead and moving would
   avoid an allocation/copy. Do not infer safety solely from a successful build.
   The current TAO sequence move call sites were reviewed on 2026-11-16; no
-  moved-from misuse was found. On 2026-11-17, a further 77 non-sequence
+  moved-from misuse was found. On 2026-11-17, a further 82 non-sequence
   ownership moves in TAO AV, `TAO_Acceptor_Registry`, logWalker, ASNMP,
-  `ACE/websvcs/lib/URL_Addr.cpp`, TAO Naming, and `Active_Object_Map.cpp`
-  were reviewed without finding moved-from use. A repository-wide audit
-  remains open.
+  `ACE/websvcs/lib/URL_Addr.cpp`, TAO Naming, `Active_Object_Map.cpp`, and
+  `Object_Adapter.cpp` were reviewed without finding moved-from use. A
+  repository-wide audit remains open.
 
 ## Inventory columns
 
