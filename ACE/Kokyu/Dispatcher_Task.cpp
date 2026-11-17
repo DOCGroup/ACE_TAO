@@ -88,6 +88,7 @@ Dispatcher_Task::initialize ()
       this->allocator_ = allocator;
     }
 
+  this->initialized_ = true;
   return 0;
 }
 

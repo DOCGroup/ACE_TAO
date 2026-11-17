@@ -8,7 +8,14 @@ Dispatcher_Task::Dispatcher_Task (ConfigInfo const &config_info,
      owned_allocator_ {},
      allocator_ (config_info.allocator_)
 {
-   this->initialize();
+  this->initialize ();
+}
+
+ACE_INLINE
+bool
+Dispatcher_Task::initialized () const
+{
+  return this->initialized_;
 }
 
 ACE_INLINE

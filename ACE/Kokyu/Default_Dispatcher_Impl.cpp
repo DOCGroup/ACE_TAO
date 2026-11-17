@@ -40,7 +40,7 @@ Default_Dispatcher_Impl::init_i (Dispatcher_Attributes const &attrs)
                                        ACE_Thread_Manager::instance()),
                       -1);
       std::unique_ptr<Dispatcher_Task> task_owner (task);
-      if (task_owner->msg_queue () == nullptr)
+      if (!task_owner->initialized ())
         {
           return -1;
         }

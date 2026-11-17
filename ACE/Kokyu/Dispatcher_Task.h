@@ -74,6 +74,7 @@ public:
   Dispatcher_Task &operator= (Dispatcher_Task &&) = delete;
 
   int initialize ();
+  bool initialized () const;
 
   int enqueue (Dispatch_Command const *cmd,
                QoSDescriptor const &qos_info);
@@ -92,6 +93,7 @@ private:
   std::unique_ptr<ACE_Allocator> owned_allocator_;
   /// Borrowed unless owned_allocator_ owns it.
   ACE_Allocator *allocator_;
+  bool initialized_ {};
 
   /// Helper data structure to minimize memory allocations...
   ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> > data_block_;
