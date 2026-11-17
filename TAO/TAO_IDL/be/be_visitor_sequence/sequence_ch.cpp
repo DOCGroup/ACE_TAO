@@ -62,9 +62,6 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
                         -1);
     }
 
-  // The octet sequence base explicitly disables moving. Keep generated
-  // special members consistent with that base to avoid declaring moves that
-  // are implicitly deleted.
   be_predefined_type *sequence_element_predef {};
   if (bt->base_node_type () == AST_Type::NT_pre_defined)
     {
