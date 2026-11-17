@@ -12712,6 +12712,16 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - No moved-from-use defect or code change was found. The repository-wide move
   audit remains open; TAO_IDL utilities and AST directories remain unreviewed.
 
+## 2026-11-17 TAO_IDL AST ownership move audit
+
+- Reviewed all 11 `std::move` sites in `TAO/TAO_IDL/ast`. Expression strings
+  and template parameters transfer into AST owners; annotation values replace
+  the previously owned expression; template visitors restore saved optional
+  alias state through the by-value setter. No moved-from value is read
+  afterward.
+- No moved-from-use defect or code change was found. The repository-wide move
+  audit remains open; TAO_IDL utilities remain unreviewed.
+
 ## 2026-11-17 TAO Object_Adapter ownership move audit
 
 - Reviewed all five `std::move` sites in `TAO/tao/PortableServer/Object_Adapter.cpp`.
