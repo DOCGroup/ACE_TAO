@@ -1,6 +1,6 @@
-#include "ace/Functor.h"
 #include "ace/Task.h"
 #include "fooS.h"
+#include <cstring>
 
 /*
   This isn't too complicated, but it is a little convoluted.  So, here's the
@@ -32,17 +32,16 @@ public:
   CORBA::Boolean match_references () override;
 
   CORBA::String_var ior_from_main_ {};
-  ACE_Equal_To<char const *> equal_func {};
 };
 
 CORBA::Boolean
 Foo_Impl::match_references ()
 {
-  CORBA::Object_var o (_this ());
-  CORBA::ORB_var orb (o->_get_orb ());
-  CORBA::String_var ior_from_upcall (orb->object_to_string (o.in ()));
+  CORBA::Object_var const o (_this ());
+  CORBA::ORB_var const orb (o->_get_orb ());
+  CORBA::String_var const ior_from_upcall (orb->object_to_string (o.in ()));
 
-  return this->equal_func (this->ior_from_main_.in (), ior_from_upcall.in ());
+  return std::strcmp (this->ior_from_main_.in (), ior_from_upcall.in ()) == 0;
 }
 
 class Server_Task : public ACE_Task_Base
@@ -79,24 +78,24 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       s_orb = CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var o (s_orb->resolve_initial_references ("RootPOA"));
-      PortableServer::POA_var rootpoa (PortableServer::POA::_narrow (o.in ()));
+      PortableServer::POA_var const rootpoa (PortableServer::POA::_narrow (o.in ()));
       if (CORBA::is_nil (rootpoa.in ()))
       {
         ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t): failed to get root poa\n"), 1);
       }
 
-      PortableServer::POAManager_var poamgr (rootpoa->the_POAManager ());
+      PortableServer::POAManager_var const poamgr (rootpoa->the_POAManager ());
 
       Foo_Impl *foo {};
       ACE_NEW_RETURN (foo, Foo_Impl, 1);
       PortableServer::ServantBase_var owner_transfer (foo);
-      PortableServer::ObjectId_var id (rootpoa->activate_object (foo));
+      PortableServer::ObjectId_var const id (rootpoa->activate_object (foo));
       o = rootpoa->id_to_reference (id.in ());
 
       Foo_Impl *foo2 {};
       ACE_NEW_RETURN (foo2, Foo_Impl, 1);
       PortableServer::ServantBase_var foo_owner (foo2);
-      foo_var f2 (foo2->_this ()); // implicit activation
+      foo_var const f2 (foo2->_this ()); // implicit activation
 
       poamgr->activate ();
 
@@ -106,7 +105,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Server_Task server (s_orb.in ());
       server.activate (1); // activate one thread running the task
 
-      foo_var f (foo::_narrow (o.in ()));
+      foo_var const f (foo::_narrow (o.in ()));
 
       constexpr int iterations {10};
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client: next %d iterations should match\n",
