@@ -1240,11 +1240,10 @@ DRV_pre_proc (std::string const& myfile)
       throw Bailout ();
     }
 
-  tmp_cpp_file = tmp_file;
-  tmp_cpp_file += temp_file_extension;
-
   // Append C++ source file extensions. Temporary files will be renamed to
   // these filenames when the preprocessor requires an input extension.
+  tmp_cpp_file = tmp_file;
+  tmp_cpp_file += temp_file_extension;
 
   std::string const &t_file = copy_input_file ? tmp_cpp_file : tmp_file;
   std::string const &t_ifile = tmp_cpp_ifile;
@@ -1361,7 +1360,6 @@ DRV_pre_proc (std::string const& myfile)
                   idl_global->prog_name ().c_str (),
                   tmp_ifile.c_str (),
                   t_ifile.c_str ()));
-
       throw Bailout ();
     }
   if (copy_input_file)
@@ -1402,7 +1400,7 @@ DRV_pre_proc (std::string const& myfile)
         {
           ACE_ERROR ((LM_ERROR, "%C: cannot set stdout for child process: %m\n",
                       idl_global->prog_name ().c_str ()));
-
+          ACE_OS::close (fd);
           throw Bailout ();
         }
     }
@@ -1420,7 +1418,10 @@ DRV_pre_proc (std::string const& myfile)
                   "%C: spawn of \"%s\" failed\n",
                   idl_global->prog_name ().c_str (),
                   DRV_arglist[0].c_str ()));
-
+      if (fd != ACE_INVALID_HANDLE)
+        {
+          ACE_OS::close (fd);
+        }
       throw Bailout ();
     }
   if (!output_arg_format.empty ())
@@ -1490,9 +1491,10 @@ DRV_pre_proc (std::string const& myfile)
   // version the current process
   // would exit if the pre-processor
   // returned with error.
-  FILE * const yyin = ACE_OS::fopen (t_file.c_str (), "r");
+  FE_Utils::File_Handle yyin (
+    ACE_OS::fopen (t_file.c_str (), "r"), ACE_OS::fclose);
 
-  if (yyin == nullptr)
+  if (!yyin)
     {
       ACE_ERROR ((LM_ERROR,
                   "%C: Could not open cpp "
@@ -1503,7 +1505,7 @@ DRV_pre_proc (std::string const& myfile)
       throw Bailout ();
     }
 
-  FE_set_yyin (yyin);
+  FE_set_yyin (yyin.get ());
 
   if (idl_global->compile_flags () & IDL_CF_ONLY_PREPROC)
     {
@@ -1520,6 +1522,7 @@ DRV_pre_proc (std::string const& myfile)
                       idl_global->prog_name ().c_str (),
                       t_file.c_str ()));
 
+          FE_set_yyin (static_cast<FILE *> (nullptr));
           throw Bailout ();
         }
 
@@ -1543,6 +1546,9 @@ DRV_pre_proc (std::string const& myfile)
           ACE_DEBUG ((LM_DEBUG, buffer));
         }
 
+      // No parser will take ownership in preprocess-only mode.
+      FE_set_yyin (static_cast<FILE *> (nullptr));
+      yyin.reset ();
     }
 
   if (copy_input_file && ACE_OS::unlink (t_ifile.c_str ()) == -1)
@@ -1552,7 +1558,7 @@ DRV_pre_proc (std::string const& myfile)
                   "input file \"%C\": %m\n",
                   idl_global->prog_name ().c_str (),
                   t_ifile.c_str ()));
-
+      FE_set_yyin (static_cast<FILE *> (nullptr));
       throw Bailout ();
     }
   if (copy_input_file)
@@ -1567,9 +1573,11 @@ DRV_pre_proc (std::string const& myfile)
                   "output file \"%C\": %m\n",
                   idl_global->prog_name ().c_str (),
                   t_file.c_str ()));
-
+      FE_set_yyin (static_cast<FILE *> (nullptr));
       throw Bailout ();
     }
 
+  // The parser owns the stream from this point and closes it after parsing.
+  yyin.release ();
   temp_files.release ();
 }
