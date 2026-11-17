@@ -21,7 +21,8 @@ constexpr char const* const EVENTTYPE_ID = "IDL:mod/test_eventtype:1.0";
 
 constexpr CORBA::ULong ATTRS_LEN = 1;
 constexpr CORBA::ULong OPS_LEN = 1;
-constexpr CORBA::ULong FACTORY_LEN = 2;
+constexpr CORBA::ULong VALUETYPE_FACTORY_LEN = 3;
+constexpr CORBA::ULong EVENTTYPE_FACTORY_LEN = 2;
 
 constexpr char const* const ATTR_LOCAL_NAMES[] =
   {
@@ -167,25 +168,29 @@ constexpr char const* const MEM_NAMES[] =
 constexpr CORBA::ULong VT_FACTORY_PARAM_LENS[] =
   {
     1,
-    2
+    2,
+    1
   };
 
 constexpr CORBA::ULong VT_FACTORY_EXCEP_LENS[] =
   {
     0,
-    2
+    2,
+    0
   };
 
 constexpr char const* const VT_FACTORY_PARAM_NAMES[][2] =
   {
     {"set_tm1", nullptr},
-    {"set_tm1a", "set_tm2"}
+    {"set_tm1a", "set_tm2"},
+    {"value", nullptr}
   };
 
 constexpr char const* const VT_FACTORY_EXCEP_NAMES[][2] =
   {
     {nullptr, nullptr},
-    {"whups", "doh"}
+    {"whups", "doh"},
+    {nullptr, nullptr}
   };
 
 constexpr CORBA::ULong HOME_SUPPORTED_LEN = 2;
@@ -284,7 +289,8 @@ IDL3_Client::run ()
     }
 
   status = this->valuetype_test (VALUETYPE_ID,
-                                 "value");
+                                 "value",
+                                 VALUETYPE_FACTORY_LEN);
 
   if (status != 0)
     {
@@ -299,7 +305,8 @@ IDL3_Client::run ()
     }
 
   status = this->valuetype_test (EVENTTYPE_ID,
-                                 "event");
+                                 "event",
+                                 EVENTTYPE_FACTORY_LEN);
 
   if (status != 0)
     {
@@ -576,7 +583,8 @@ IDL3_Client::home_test ()
 
 int
 IDL3_Client::valuetype_test (char const* repo_id,
-                             char const* prefix)
+                             char const* prefix,
+                             CORBA::ULong factory_count)
 {
   CORBA::Contained_var const result =
     this->repo_->lookup_id (repo_id);
@@ -643,7 +651,7 @@ IDL3_Client::valuetype_test (char const* repo_id,
       return -1;
     }
 
-  status = this->valuetype_factory_test (desc, prefix);
+  status = this->valuetype_factory_test (desc, prefix, factory_count);
 
   if (status != 0)
     {
@@ -1399,11 +1407,12 @@ IDL3_Client::valuetype_member_test (
 int
 IDL3_Client::valuetype_factory_test (
     CORBA::ExtValueDef::ExtFullValueDescription_var const& desc,
-    char const* prefix)
+    char const* prefix,
+    CORBA::ULong factory_count)
 {
   CORBA::ULong const length = desc->initializers.length ();
 
-  if (length != FACTORY_LEN)
+  if (length != factory_count)
     {
       if (this->debug_)
         {
@@ -1419,7 +1428,7 @@ IDL3_Client::valuetype_factory_test (
   CORBA::ULong inside_len {};
   char const* tmp {};
 
-  for (CORBA::ULong i = 0; i < FACTORY_LEN; ++i)
+  for (CORBA::ULong i = 0; i < factory_count; ++i)
     {
       inside_len = desc->initializers[i].members.length ();
 
