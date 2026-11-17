@@ -1,9 +1,7 @@
 #include "orbsvcs/Log_Macros.h"
 #include "ace/Sched_Params.h"
-#include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
 #include "ace/OS_main.h"
-#include <string>
 
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Scheduler_Factory.h"
@@ -25,17 +23,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (naming_obj.in ()))
-        ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to find the Naming Service\n"),
-                          1);
+        {
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                 " (%P|%t) Unable to find the Naming Service\n"),
+                                1);
+        }
 
       CosNaming::NamingContext_var const naming_context =
         CosNaming::NamingContext::_narrow (naming_obj.in ());
 
-      std::string const name = command_line.get_argc () > 1
+      char const * const name = command_line.get_argc () > 1
         ? command_line.get_ASCII_argv ()[1]
         : "ScheduleService";
-      ACE_Scheduler_Factory::use_config (naming_context.in (), name.c_str ());
+      ACE_Scheduler_Factory::use_config (naming_context.in (), name);
 
       RtecScheduler::RT_Info_Set_var infos {};
       RtecScheduler::Dependency_Set_var deps {};
@@ -53,7 +53,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                             deps.in (),
                                             configs.in (),
                                             anomalies.in (),
-                                            ACE_TEXT("Scheduler_Runtime.cpp"));
+                                            ACE_TEXT ("Scheduler_Runtime.cpp"));
     }
   catch (CORBA::Exception const &ex)
     {
