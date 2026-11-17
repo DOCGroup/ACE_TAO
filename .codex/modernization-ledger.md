@@ -12764,6 +12764,18 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   destroyed, not read. No moved-from-use defect or code change was found.
 - This is a partial repository audit; other `std::move` sites remain open.
 
+## 2026-11-17 ACE core move audit
+
+- Reviewed all seven `std::move` sites in `ACE/ace`: four argument and
+  environment string owners plus one environment-buffer owner in `Process.cpp`,
+  the Monitor_Control constraint root transfer, and the Windows reactor event
+  owner transfer. The process
+  buffers remain owned through the OS process call/copy; the constraint root
+  transfers into its member; the event owner remains alive while its handle is
+  used. No moved-from owner is read afterward.
+- No defect or code change was needed. The repository-wide move audit remains
+  open.
+
 ## 2026-11-17 Const guard macro follow-up
 
 - Replaced direct `ACE_Guard` spellings in `AnyTypeCode` with new

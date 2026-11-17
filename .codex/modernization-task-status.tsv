@@ -2662,5 +2662,6 @@ TAO/TAO_IDL/ast	COPY_MOVE	done	-	Reviewed all 11 std::move sites in the AST; str
 TAO/TAO_IDL/util	COPY_MOVE	done	-	Reviewed all 10 std::move sites in utl_global.cpp; owned AST/configuration objects and optional state transfer into members, path strings transfer into gperf_path_, and DCPS map entries take ownership
 TAO/tao	COPY_MOVE	needs-work	-	Reviewed 29 moves across clonable argument wrappers, queued messages, codeset/connector/adapter registries, thread resources, RTScheduling, Stub, CSD_Framework, LF_Multi_Event, ETCL, Dynamic_TP, and CSD_ThreadPool; remaining core sites are still open
 TAO/examples/Kokyu_dsrt_schedulers	MOVE_SITES	done	-	Reviewed all 15 std::move sites across MIF, FP, MUF, and EDF schedulers; dispatcher, service-context sequence, and GUID transfers have no moved-from reads
+ACE/ace	MOVE_SITES	done	-	Reviewed all 7 std::move sites in Process.cpp, Monitor_Control/Constraint_Interpreter.cpp, and WFMO_Reactor.cpp; transferred owners remain valid at their destinations and moved-from locals are not read
 ACE/ace	CONST_GUARD_MACROS	done	3b46834200d	Added const guard macro variants without changing existing ACE_GUARD behavior; targeted fuzz check passed
 TAO/tao/AnyTypeCode	CONST_GUARD_MACROS	done	3b46834200d	Replaced direct ACE_Guard spellings with const guard macros; targeted fuzz check passed and AnyTypeCode realclean build/link passed
