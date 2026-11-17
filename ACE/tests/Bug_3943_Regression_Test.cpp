@@ -358,9 +358,9 @@ Svc_Handler::send_data ()
       buffer_len overThreshold = tryThreshold;
       if (ACE::debug())
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) identified a buffer with %d bytes ")
+                    ACE_TEXT ("(%P|%t) identified a buffer with %B bytes ")
                     ACE_TEXT ("hits the ENOBUFS condition.\n"),
-                    overThreshold));
+                    static_cast<size_t> (overThreshold)));
 
 #if !defined (ACE_WIN32) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
 
@@ -376,8 +376,10 @@ Svc_Handler::send_data ()
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) logic should have sent the ")
                         ACE_TEXT ("complete first iovec, ")
-                        ACE_TEXT ("expected %d got %d out of %d\n"),
-                        underThreshold, result,all.totalBytes_ ));
+                        ACE_TEXT ("expected %B got %b out of %B\n"),
+                        static_cast<size_t> (underThreshold),
+                        result,
+                        static_cast<size_t> (all.totalBytes_)));
           }
       }
 
@@ -388,7 +390,7 @@ Svc_Handler::send_data ()
         if (!(result > 0))
           {
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) %s: expected > 0, got %d\n"),
+                        ACE_TEXT ("(%P|%t) %s: expected > 0, got %b\n"),
                         send_desc, result));
             successful = false;
           }
@@ -401,7 +403,7 @@ Svc_Handler::send_data ()
         if (!(result > 0))
           {
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) %s: expected > 0, got %d\n"),
+                        ACE_TEXT ("(%P|%t) %s: expected > 0, got %b\n"),
                         send_desc, result));
             successful = false;
           }
@@ -414,7 +416,7 @@ Svc_Handler::send_data ()
         if (!(result > 0))
           {
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) %s: expected > 0, got %d\n"),
+                        ACE_TEXT ("(%P|%t) %s: expected > 0, got %b\n"),
                         send_desc, result));
             successful = false;
           }
@@ -428,7 +430,7 @@ Svc_Handler::send_data ()
         if (!(result > 0))
           {
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) %s: expected > 0, got %d\n"),
+                        ACE_TEXT ("(%P|%t) %s: expected > 0, got %b\n"),
                         send_desc, result));
             successful = false;
           }
@@ -442,7 +444,7 @@ Svc_Handler::send_data ()
         if (!(result > 0))
           {
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) %s: expected > 0, got %d\n"),
+                        ACE_TEXT ("(%P|%t) %s: expected > 0, got %b\n"),
                         send_desc, result));
             successful = false;
           }
@@ -455,7 +457,7 @@ Svc_Handler::send_data ()
         if (!(result > 0))
           {
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) %s: expected > 0, got %d\n"),
+                        ACE_TEXT ("(%P|%t) %s: expected > 0, got %b\n"),
                         send_desc, result));
             successful = false;
           }
@@ -471,7 +473,7 @@ Svc_Handler::send_data ()
         if (!(result > 0))
           {
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) %s: expected > 0, got %d\n"),
+                        ACE_TEXT ("(%P|%t) %s: expected > 0, got %b\n"),
                         send_desc, result));
             successful = false;
           }
@@ -484,7 +486,7 @@ Svc_Handler::send_data ()
         if (!(result > 0))
           {
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) %s: expected > 0, got %d\n"),
+                        ACE_TEXT ("(%P|%t) %s: expected > 0, got %b\n"),
                         send_desc, result));
             successful = false;
           }
@@ -506,8 +508,10 @@ Svc_Handler::send_data ()
         if (result < 0 || static_cast<u_long>(result) != small_iov.totalBytes_)
           {
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) %s: expected %d, got %d\n"),
-                        send_desc, small_iov.totalBytes_, result));
+                        ACE_TEXT ("(%P|%t) %s: expected %B, got %b\n"),
+                        send_desc,
+                        static_cast<size_t> (small_iov.totalBytes_),
+                        result));
             successful = false;
           }
       }
@@ -519,8 +523,10 @@ Svc_Handler::send_data ()
         if (result < 0 || (static_cast<u_long>(result) != array.totalBytes_))
           {
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) %s: expected %d, got %d\n"),
-                        send_desc, array.totalBytes_, result));
+                        ACE_TEXT ("(%P|%t) %s: expected %B, got %b\n"),
+                        send_desc,
+                        static_cast<size_t> (array.totalBytes_),
+                        result));
             successful = false;
           }
       }
@@ -535,8 +541,10 @@ Svc_Handler::send_data ()
         if (result < 0 || static_cast<u_long>(result) != one.totalBytes_)
           {
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) %s: expected %d, got %d\n"),
-                        send_desc, one.totalBytes_, result));
+                        ACE_TEXT ("(%P|%t) %s: expected %B, got %b\n"),
+                        send_desc,
+                        static_cast<size_t> (one.totalBytes_),
+                        result));
             successful = false;
           }
       }
@@ -575,8 +583,10 @@ Svc_Handler::send (IovecGuard& iovec_array,
     (use_sendv) ? ACE_TEXT ("ACE_OS::sendv") : ACE_TEXT ("ACE_OS::send");
   if (ACE::debug())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P|%t) send, using %s for %s (%d bytes)\n"),
-                send_func_name, send_desc, iovec_array.totalBytes_));
+                ACE_TEXT ("(%P|%t) send, using %s for %s (%B bytes)\n"),
+                send_func_name,
+                send_desc,
+                static_cast<size_t> (iovec_array.totalBytes_)));
 
   if (!use_sendv && (iovec_array.iovcnt_ != 1))
     {
@@ -675,8 +685,10 @@ Svc_Handler::send (IovecGuard& iovec_array,
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) %p, bytes sent are not consistent ")
-                  ACE_TEXT ("with the sendv logic, expected %d, got %d\n"),
-                  send_func_name, expectedBytes, sent_bytes));
+                  ACE_TEXT ("with the sendv logic, expected %B, got %B\n"),
+                  send_func_name,
+                  static_cast<size_t> (expectedBytes),
+                  static_cast<size_t> (sent_bytes)));
       return -1;
     }
 #endif /* ACE_WIN32 */
