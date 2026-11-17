@@ -60,7 +60,6 @@ TAO_Persistent_ExtId::TAO_Persistent_ExtId (char const *id,
                                             char const *kind)
   : id_ (id),
     kind_ (kind)
-
 {
 }
 

@@ -20,7 +20,6 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::TAO_Bindings_Iterator (
     context_ (context),
     hash_iter_ (std::move (hash_iter)),
     poa_ (PortableServer::POA::_duplicate (poa))
-
 {
 }
 

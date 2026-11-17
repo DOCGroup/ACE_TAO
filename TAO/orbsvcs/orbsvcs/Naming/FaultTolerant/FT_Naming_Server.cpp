@@ -87,7 +87,6 @@ TAO_FT_Naming_Server::TAO_FT_Naming_Server ()
     u_infos_(),
     ior_lock_(),
     info_lock_()
-
 {
 }
 
