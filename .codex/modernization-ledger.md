@@ -12615,3 +12615,13 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   resets the final moved-from slot. No moved-from value is read afterward.
 - No defect or code change was justified. The repository-wide move audit
   remains open.
+
+## 2026-11-17 web services URL ownership move audit
+
+- Reviewed all 14 `std::move` sites in `ACE/websvcs/lib/URL_Addr.cpp`. Local
+  URL buffers transfer into component owners, and parsed local strings move
+  only on the success path after parsing. No moved-from local is read
+  afterward. The existing tests include URL self-set and component-aliasing
+  cases; they were not rerun for this read-only audit.
+- No defect or code change was justified. The repository-wide move audit
+  remains open.

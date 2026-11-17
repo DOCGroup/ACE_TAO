@@ -851,6 +851,7 @@ ACE/tests/SSL	BUILD_TEST	done	265806ac764	Realclean-built and linked SSL_Asynch_
 ACE/tests/SSL	C_STRING	done	265806ac764	Changed the narrow byte-buffer comparison to std::strncmp
 ACE/tests/SSL	LOG_FORMAT	needs-work	3473e14ac25	Fixed %@ object-pointer arguments in SSL asynchronous stream and thread-pool reactor tests; both targets built and linked. Continue auditing ACE/TAO logging formats.
 ACE/websvcs/lib	SPECIAL_MEMBER_COMMENTS	done	833e21b75f0	Removed nine standalone constructor/destructor labels; realclean-built and linked websvcs without warnings
+ACE/websvcs/lib	MOVE_SEMANTICS	needs-work	-	Reviewed 14 std::move sites in URL_Addr.cpp. Local URL buffers transfer into component owners; parsed local strings are moved only on the terminating success path. No moved-from local is read afterward; other web services move sites remain.
 TAO/DevGuideExamples/AMH	BUILD_TEST	done	7588f0489d4	MPC regenerated; IDL/server/client realclean builds and runtime test passed
 TAO/DevGuideExamples/AMH	CLEANUP	done	7588f0489d4	Removed redundant class/constructor/destructor label comments from handwritten files
 TAO/DevGuideExamples/AMH_AMI	BUILD_TEST	done	12a77acdeb2	MPC regenerated; IDL/client/inner-server/middle-server realclean builds and runtime test passed
