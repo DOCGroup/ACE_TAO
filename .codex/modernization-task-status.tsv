@@ -2668,3 +2668,4 @@ ACE/ace	CONST_GUARD_MACROS	done	3b46834200d	Added const guard macro variants wit
 TAO/tao/AnyTypeCode	CONST_GUARD_MACROS	done	3b46834200d	Replaced direct ACE_Guard spellings with const guard macros; targeted fuzz check passed and AnyTypeCode realclean build/link passed
 ACE/tests	COPY_MOVE	done	-	Reviewed all 10 std::move sites in tests; move-only feature probes are intentional and owner/value transfers do not read moved-from sources
 TAO/orbsvcs/orbsvcs	COPY_MOVE	done	-	Reviewed all 35 std::move sites in orbsvcs implementations; ownership transfers, linked-list construction/destruction, iterator handoff, and queue drains do not reuse moved-from owners
+TAO/orbsvcs/tests	COPY_MOVE	done	-	Reviewed all 22 std::move sites in orbsvcs tests; sequence values, file handles, event handlers, command owners, and event-channel implementations transfer into their intended owners

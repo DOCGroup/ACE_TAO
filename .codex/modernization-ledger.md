@@ -12842,3 +12842,16 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   used after transfer; moved-from owners are not read. No code change was
   justified.
 - The repository-wide move audit remains open.
+
+## 2026-11-17 TAO orbsvcs test move audit
+
+- Reviewed all 22 `std::move` sites under `TAO/orbsvcs/tests`. Trading tests
+  move generated string and integer sequences into dynamic-property objects;
+  generated sequence types provide move constructors, and the local sequences
+  are not read afterward. Simple Naming and SSLIOP tests transfer file handles
+  into the object that writes and closes them. Event-channel tests transfer
+  implementation and handler owners only after successful setup. Other sites
+  transfer names/sequences into federation objects, command owners into their
+  containers, and sample arrays into `Task_Stats` after both allocations
+  succeed. No moved-from object is read afterward and no change was needed.
+- The repository-wide move audit remains open.
