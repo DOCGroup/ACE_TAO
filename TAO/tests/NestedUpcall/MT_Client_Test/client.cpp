@@ -220,8 +220,6 @@ MT_Client::init (int argc, ACE_TCHAR **argv,
   return 0;
 }
 
-// This function runs the test.
-
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {

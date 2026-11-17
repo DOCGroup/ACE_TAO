@@ -37,7 +37,6 @@
 class MT_Client
 {
 public:
-  /// = Constructor and destructor.
   MT_Client () = default;
   ~MT_Client () = default;
 
@@ -105,7 +104,7 @@ public:
 private:
   MT_Client mT_Client_;
   int argc_ {};
-  // The main thread keeps argv alive until the task manager joins this task.
+  /// The main thread keeps argv alive until the task manager joins this task.
   ACE_TCHAR **argv_;
 
   /// To determine if we use the first or the second server.
