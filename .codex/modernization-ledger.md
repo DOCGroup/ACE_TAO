@@ -12690,6 +12690,18 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - No moved-from-use defect or code change was found. The repository-wide move
   audit remains open.
 
+## 2026-11-17 TAO_IDL front-end ownership move audit
+
+- Reviewed all 14 C++ `std::move` sites in `TAO/TAO_IDL/fe`: the three
+  handwritten transfers in `fe_utils.cpp`, plus the generated parser moves in
+  `idl.tab.cpp`/`idl.tab.hpp`. Checked the source grammar `idl.ypp` for its
+  semantic actions: moved strings and lists are consumed by the receiving
+  generator/AST/list, and parser-owned pointers are deleted or nulled after
+  ownership transfer. No moved-from value is read afterward.
+- No moved-from-use defect or code change was found. The repository-wide move
+  audit remains open; TAO_IDL backend and utility directories are still
+  unreviewed.
+
 ## 2026-11-17 TAO Object_Adapter ownership move audit
 
 - Reviewed all five `std::move` sites in `TAO/tao/PortableServer/Object_Adapter.cpp`.
