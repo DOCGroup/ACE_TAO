@@ -13,6 +13,8 @@
 
 #include "valuetype.h"
 
+#include <vector>
+
 // ******************************************************
 // Valuetype visitor for OBV_ class implementation
 // ******************************************************
@@ -258,6 +260,12 @@ be_visitor_valuetype_obv_cs::gen_obv_call_base_constructor_args (
   be_valuetype *node,
   unsigned long &index)
 {
+  struct Nested_Valuetype_Member
+  {
+    be_field *field;
+    be_type *type;
+  };
+
   TAO_OutStream *os = this->ctx_->stream ();
   auto const is_valuetype_or_valuebox = [] (be_type *type)
     {
@@ -300,7 +308,7 @@ be_visitor_valuetype_obv_cs::gen_obv_call_base_constructor_args (
             }
 
           be_structure *structure = dynamic_cast<be_structure*> (t);
-          bool has_valuetype_member {};
+          std::vector<Nested_Valuetype_Member> nested_valuetype_members;
           if (structure != nullptr)
             {
               for (UTL_ScopeActiveIterator si (structure, UTL_Scope::IK_decls);
@@ -308,10 +316,13 @@ be_visitor_valuetype_obv_cs::gen_obv_call_base_constructor_args (
                    si.next ())
                 {
                   be_field *member = dynamic_cast<be_field*> (si.item ());
+                  if (member == nullptr)
+                    {
+                      continue;
+                    }
+
                   be_type *member_type =
-                    member != nullptr
-                      ? dynamic_cast<be_type*> (member->field_type ())
-                      : nullptr;
+                    dynamic_cast<be_type*> (member->field_type ());
                   be_typedef *member_typedef =
                     dynamic_cast<be_typedef*> (member_type);
                   if (member_typedef != nullptr)
@@ -321,51 +332,37 @@ be_visitor_valuetype_obv_cs::gen_obv_call_base_constructor_args (
 
                   if (is_valuetype_or_valuebox (member_type))
                     {
-                      has_valuetype_member = true;
-                      break;
+                      nested_valuetype_members.push_back (
+                        {member, member_type});
                     }
                 }
             }
 
-          if (has_valuetype_member)
+          if (!nested_valuetype_members.empty ())
             {
               *os << "[&] ()" << be_nl << "{" << be_idt_nl
                   << "auto _tao_copy = " << f->local_name () << " ();";
-              for (UTL_ScopeActiveIterator si (structure, UTL_Scope::IK_decls);
-                   !si.is_done ();
-                   si.next ())
+              for (Nested_Valuetype_Member const& nested_member :
+                     nested_valuetype_members)
                 {
-                  be_field *member = dynamic_cast<be_field*> (si.item ());
-                  be_type *member_type =
-                    member != nullptr
-                      ? dynamic_cast<be_type*> (member->field_type ())
-                      : nullptr;
-                  be_typedef *member_typedef =
-                    dynamic_cast<be_typedef*> (member_type);
-                  if (member_typedef != nullptr)
-                    {
-                      member_type = member_typedef->primitive_base_type ();
-                    }
-
-                  if (is_valuetype_or_valuebox (member_type))
-                    {
-                      *os << be_nl
-                          << "if (_tao_copy." << member->local_name ()
-                          << " != nullptr)" << be_idt_nl << "{" << be_idt_nl
-                          << "::CORBA::ValueBase_var _tao_value (_tao_copy."
-                          << member->local_name () << "->_copy_value ());"
-                          << be_nl << member_type->full_name ()
-                          << " * const _tao_typed = "
-                          << member_type->full_name ()
-                          << "::_downcast (_tao_value.in ());" << be_nl
-                          << "if (_tao_typed != nullptr)" << be_idt_nl
-                          << "{" << be_idt_nl
-                          << "_tao_value._retn ();" << be_uidt_nl << "}"
-                          << be_uidt << be_nl
-                          << "_tao_copy." << member->local_name ()
-                          << " = _tao_typed;"
-                          << be_uidt_nl << "}" << be_uidt;
-                    }
+                  be_field * const member = nested_member.field;
+                  be_type * const member_type = nested_member.type;
+                  *os << be_nl
+                      << "if (_tao_copy." << member->local_name ()
+                      << " != nullptr)" << be_idt_nl << "{" << be_idt_nl
+                      << "::CORBA::ValueBase_var _tao_value (_tao_copy."
+                      << member->local_name () << "->_copy_value ());"
+                      << be_nl << member_type->full_name ()
+                      << " * const _tao_typed = "
+                      << member_type->full_name ()
+                      << "::_downcast (_tao_value.in ());" << be_nl
+                      << "if (_tao_typed != nullptr)" << be_idt_nl
+                      << "{" << be_idt_nl
+                      << "_tao_value._retn ();" << be_uidt_nl << "}"
+                      << be_uidt << be_nl
+                      << "_tao_copy." << member->local_name ()
+                      << " = _tao_typed;"
+                      << be_uidt_nl << "}" << be_uidt;
                 }
               *os << be_nl << "return _tao_copy;" << be_uidt_nl << "} ()";
             }

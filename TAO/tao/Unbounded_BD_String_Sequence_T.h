@@ -33,9 +33,9 @@ public:
     : unbounded_basic_string_sequence<charT>(maximum, length, data, release)
   {}
   unbounded_bd_string_sequence (unbounded_bd_string_sequence const &) = default;
-  unbounded_bd_string_sequence (unbounded_bd_string_sequence &&) noexcept = default;
+  unbounded_bd_string_sequence (unbounded_bd_string_sequence &&) = default;
   unbounded_bd_string_sequence &operator= (unbounded_bd_string_sequence const &) = default;
-  unbounded_bd_string_sequence &operator= (unbounded_bd_string_sequence &&) noexcept = default;
+  unbounded_bd_string_sequence &operator= (unbounded_bd_string_sequence &&) = default;
 
   inline CORBA::ULong bd_string_maximum() const
   {

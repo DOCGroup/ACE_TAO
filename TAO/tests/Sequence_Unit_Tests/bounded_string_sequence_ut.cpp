@@ -13,6 +13,7 @@
 #include "testing_allocation_traits.hpp"
 
 #include "tao/Bounded_Basic_String_Sequence_T.h"
+#include "tao/Bounded_BD_String_Sequence_T.h"
 #include "tao/CORBA_String.h"
 
 #include "string_sequence_tester.hpp"
@@ -26,6 +27,12 @@
 using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO;
 
 CORBA::ULong const MAXIMUM = 32;
+
+using bounded_bd_sequence = TAO::bounded_bd_string_sequence<char, MAXIMUM, 16>;
+static_assert (std::is_move_constructible<bounded_bd_sequence>::value);
+static_assert (!std::is_nothrow_move_constructible<bounded_bd_sequence>::value);
+static_assert (std::is_move_assignable<bounded_bd_sequence>::value);
+static_assert (!std::is_nothrow_move_assignable<bounded_bd_sequence>::value);
 
 template<class tested_sequence>
 struct Tester

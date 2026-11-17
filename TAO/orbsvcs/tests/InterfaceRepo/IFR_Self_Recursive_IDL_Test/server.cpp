@@ -67,13 +67,22 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Output the IOR to the <ior_output_file>
       {
         std::unique_ptr<FILE, int (*) (FILE *)> output_file (
-          ACE_OS::fopen (ior_output_file, "w"), std::fclose);
+          ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
         if (output_file == nullptr)
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT("Cannot open output file for writing IOR: %s\n"),
                              ior_output_file),
                             1);
-        std::fprintf (output_file.get (), "%s", ior.in ());
+        if (ACE_OS::fprintf (output_file.get (), "%s", ior.in ()) < 0)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot write IOR to output file: %s\n"),
+                             ior_output_file),
+                            1);
+        if (ACE_OS::fclose (output_file.release ()) == EOF)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot close IOR output file: %s\n"),
+                             ior_output_file),
+                            1);
       }
 
       orb->run ();

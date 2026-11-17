@@ -163,8 +163,8 @@ private:
   bool is_amh_excep_holder_ {};
 
   /// Cache operation lookup after the IDL scope is complete.
-  mutable bool have_operation_computed_ {};
-  mutable bool have_operation_cache_ {};
+  bool have_operation_computed_ {};
+  bool have_operation_cache_ {};
   mutable bool has_supported_interface_computed_ {};
   mutable bool has_supported_interface_cache_ {};
   bool obv_need_ref_counter_computed_ {};

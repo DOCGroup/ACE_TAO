@@ -11,6 +11,7 @@
 #include "testing_range_checking.hpp"
 
 #include "tao/Unbounded_Basic_String_Sequence_T.h"
+#include "tao/Unbounded_BD_String_Sequence_T.h"
 #include "tao/CORBA_String.h"
 
 #include "string_sequence_tester.hpp"
@@ -20,6 +21,12 @@
 #include <type_traits>
 
 using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO;
+
+using unbounded_bd_sequence = TAO::unbounded_bd_string_sequence<char, 16>;
+static_assert (std::is_move_constructible<unbounded_bd_sequence>::value);
+static_assert (!std::is_nothrow_move_constructible<unbounded_bd_sequence>::value);
+static_assert (std::is_move_assignable<unbounded_bd_sequence>::value);
+static_assert (!std::is_nothrow_move_assignable<unbounded_bd_sequence>::value);
 
 template<class tested_sequence>
 struct Tester

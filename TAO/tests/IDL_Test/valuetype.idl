@@ -59,7 +59,8 @@ abstract interface Abstract_Operation_Interface
   void abstract_operation ();
 };
 
-/// A supported abstract interface operation keeps the valuetype abstract.
+/// Abstract-interface operations do not make the generated OBV class
+/// abstract.
 valuetype Supports_Abstract_Operation supports Abstract_Operation_Interface
 {
   public long value;
