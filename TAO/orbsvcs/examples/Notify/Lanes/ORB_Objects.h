@@ -36,7 +36,8 @@ public:
   /// Resolve Notification
   CosNotifyChannelAdmin::EventChannelFactory_ptr notify_factory () const;
 
-  ///= Public Data
+  /// @name Public data
+  /// @{
   CORBA::ORB_var orb_ {};
 
   PortableServer::POA_var root_poa_ {};
@@ -46,6 +47,7 @@ public:
   RTCORBA::Current_var current_ {};
 
   CosNaming::NamingContextExt_var naming_ {};
+  /// @}
 };
 
 #include /**/ "ace/post.h"

@@ -55,7 +55,7 @@ protected:
   RTCORBA::Priority lane_priority_ {};
 
   /// The Consumer.
-  // The POA retains the activated servant; this pointer is non-owning.
+  /// The POA retains the activated servant; this pointer is non-owning.
   TAO_Notify_Lanes_Consumer* consumer_ {};
 
   /// The Type the Consumer should subscribe to.
