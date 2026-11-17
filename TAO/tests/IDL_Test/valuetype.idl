@@ -54,6 +54,17 @@ interface Empty_Valuetype_Interface
 {
 };
 
+abstract interface Abstract_Operation_Interface
+{
+  void abstract_operation ();
+};
+
+/// A supported abstract interface operation keeps the valuetype abstract.
+valuetype Supports_Abstract_Operation supports Abstract_Operation_Interface
+{
+  public long value;
+};
+
 abstract valuetype Abstract_Refcount_Base
 {
 };
@@ -67,8 +78,8 @@ valuetype Concrete_From_Abstract : Abstract_Refcount_Derived
   public long value;
 };
 
-/// The interface is supported by the abstract base, not directly by D.
-abstract valuetype Supported_Interface_Base supports Empty_Valuetype_Interface
+/// The interface is supported by the base, not directly by the derived value.
+valuetype Supported_Interface_Base supports Empty_Valuetype_Interface
 {
 };
 

@@ -312,15 +312,14 @@ be_valuetype::have_operation ()
 
   if (! have_operation)
     {
-      // Concrete supported interfaces contribute abstract operations to the
-      // valuetype. Abstract interfaces provide callable default operations.
+      // Operations from every supported interface contribute to the
+      // valuetype's abstractness, including abstract interfaces.
       AST_Type_List const& supports = this->supports ();
       for (size_t i = 0; i < supports.size (); ++i)
         {
           be_interface *intf = dynamic_cast<be_interface*> (supports[i]);
 
-          if (intf != nullptr && !intf->is_abstract ()
-              && be_valuetype::have_supported_op (intf))
+          if (intf != nullptr && be_valuetype::have_supported_op (intf))
             {
               have_operation = true;
               break;

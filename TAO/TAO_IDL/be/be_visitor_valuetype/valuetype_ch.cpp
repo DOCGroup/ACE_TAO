@@ -308,9 +308,9 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       if (be_global->cdr_support ())
        {
         *os << "::CORBA::Boolean "
-            << "_tao_marshal_state (TAO_OutputCDR &) const;" << be_nl
+            << "_tao_marshal_state (TAO_OutputCDR &, TAO_ChunkInfo &) const;" << be_nl
             << "::CORBA::Boolean "
-            << "_tao_unmarshal_state (TAO_InputCDR &);" << be_nl
+            << "_tao_unmarshal_state (TAO_InputCDR &, TAO_ChunkInfo &);" << be_nl
             << "void truncation_hook () override;" << be_nl;
        }
 
@@ -318,6 +318,11 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
           << "private:" << be_idt_nl;
 
       this->gen_pd (node);
+
+      if (be_global->cdr_support ())
+        {
+          *os << be_nl << "::CORBA::Boolean require_truncation_ {false};";
+        }
     }
   else // Need a way to access the state of derived OBV_ classes.
     {

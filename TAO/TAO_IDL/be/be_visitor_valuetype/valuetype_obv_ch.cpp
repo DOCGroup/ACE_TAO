@@ -192,17 +192,16 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
 
       // A generated _copy_value() is needed for every valuetype without
       // operations, including derived valuetypes and factory-based values.
-      if (!node->have_operation () && !node->opt_accessor ())
+      if (!node->have_operation ())
         {
           *os << be_uidt_nl << be_nl << "public:" << be_idt_nl
               << "::CORBA::ValueBase *_copy_value () override;";
         }
-      else if (node->have_operation () && !node->opt_accessor ())
+      else
         {
           be_valuetype * const vt =
             dynamic_cast<be_valuetype *> (node->inherits_concrete ());
-          if (vt != nullptr && !vt->have_operation ()
-              && !vt->opt_accessor ())
+          if (vt != nullptr && !vt->have_operation ())
             {
               *os << be_uidt_nl << be_nl << "public:" << be_idt_nl
                   << "::CORBA::ValueBase *_copy_value () override = 0;";
@@ -210,32 +209,29 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
         }
 
       // Map fields to private data.
-      if (!node->opt_accessor ())
+      if (be_global->cdr_support ())
         {
-          if (be_global->cdr_support ())
-            {
-              *os << be_nl << be_uidt_nl << "protected:" << be_idt_nl;
+          *os << be_nl << be_uidt_nl << "protected:" << be_idt_nl;
 
-              *os << "::CORBA::Boolean _tao_marshal__" << node->flat_name ()
-                  << " (TAO_OutputCDR &, TAO_ChunkInfo &) const override;" << be_nl_2;
+          *os << "::CORBA::Boolean _tao_marshal__" << node->flat_name ()
+              << " (TAO_OutputCDR &, TAO_ChunkInfo &) const override;" << be_nl_2;
 
-              *os << "::CORBA::Boolean _tao_unmarshal__" << node->flat_name ()
-                  << " (TAO_InputCDR &, TAO_ChunkInfo &) override;" << be_nl_2;
+          *os << "::CORBA::Boolean _tao_unmarshal__" << node->flat_name ()
+              << " (TAO_InputCDR &, TAO_ChunkInfo &) override;" << be_nl_2;
 
-              *os << "::CORBA::Boolean "
-                  << "_tao_marshal_state (TAO_OutputCDR &, TAO_ChunkInfo &) const;"
-                  << be_nl
-                  << "::CORBA::Boolean "
-                  << "_tao_unmarshal_state (TAO_InputCDR &, TAO_ChunkInfo &);"
-                  << be_nl
-                  << "void truncation_hook () override;"
-                  << be_uidt_nl << be_nl;
-            }
-
-          *os << "private:" << be_idt;
-
-          this->gen_pd (node);
+          *os << "::CORBA::Boolean "
+              << "_tao_marshal_state (TAO_OutputCDR &, TAO_ChunkInfo &) const;"
+              << be_nl
+              << "::CORBA::Boolean "
+              << "_tao_unmarshal_state (TAO_InputCDR &, TAO_ChunkInfo &);"
+              << be_nl
+              << "void truncation_hook () override;"
+              << be_uidt_nl << be_nl;
         }
+
+      *os << "private:" << be_idt;
+
+      this->gen_pd (node);
 
       if (be_global->cdr_support ())
         {
