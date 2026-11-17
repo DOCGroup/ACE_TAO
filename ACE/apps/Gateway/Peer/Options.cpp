@@ -14,24 +14,24 @@ Options::print_usage_and_die ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("%n [-a {C|S}:acceptor-port] [-c {C|S}:connector-port] [-C connection-id] "
-                        "[-h gateway-host] [-q max-queue-size] [-t timeout] [-v]\n")));
+                        "[-h gateway-host] [-m max-queue-size] [-t timeout] [-v]\n")));
   ACE_OS::exit (1);
 }
 
 Options::Options ()
 {
-  char * const timeout = std::getenv ("TIMEOUT");
+  char const * const timeout = std::getenv ("TIMEOUT");
 
   if (timeout != nullptr)
-  {
-    this->timeout_ = std::atoi (timeout);
-  }
+    {
+      this->timeout_ = std::atoi (timeout);
+    }
 }
 
 Options *
 Options::instance ()
 {
-  static Options options;
+  static Options options {};
   return &options;
 }
 
@@ -41,8 +41,8 @@ Options::timeout () const
   return this->timeout_;
 }
 
-CONNECTION_ID &
-Options::connection_id ()
+CONNECTION_ID
+Options::connection_id () const
 {
   return this->connection_id_;
 }
@@ -83,7 +83,7 @@ Options::connector_host () const
   return this->connector_host_;
 }
 
-int
+bool
 Options::enabled (int option) const
 {
   return ACE_BIT_ENABLED (this->options_, option);
@@ -106,25 +106,30 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                                                    ACE_TEXT ("|"));
                  flag != nullptr;
                  flag = ACE_OS::strtok (nullptr, ACE_TEXT ("|")))
-              if (ACE_OS::strncasecmp (flag, ACE_TEXT ("C"), 1) == 0)
-                {
-                  ACE_SET_BITS (this->options_,
-                                Options::CONSUMER_ACCEPTOR);
-                  if (ACE_OS::strlen (flag) > 1)
-                    // Set the Consumer Acceptor port number.
-                    this->consumer_acceptor_port_ = ACE_OS::atoi (flag + 2);
-                }
-              else if (ACE_OS::strncasecmp (flag, ACE_TEXT ("S"), 1) == 0)
-                {
-                  ACE_SET_BITS (this->options_,
-                                Options::SUPPLIER_ACCEPTOR);
-                  if (ACE_OS::strlen (flag) > 1)
-                    // Set the Supplier Acceptor port number.
-                    this->supplier_acceptor_port_ = ACE_OS::atoi (flag + 2);
-                }
+              {
+                if (ACE_OS::strncasecmp (flag, ACE_TEXT ("C"), 1) == 0)
+                  {
+                    ACE_SET_BITS (this->options_,
+                                  Options::CONSUMER_ACCEPTOR);
+                    if (ACE_OS::strlen (flag) > 1)
+                      {
+                        // Set the Consumer Acceptor port number.
+                        this->consumer_acceptor_port_ = ACE_OS::atoi (flag + 2);
+                      }
+                  }
+                else if (ACE_OS::strncasecmp (flag, ACE_TEXT ("S"), 1) == 0)
+                  {
+                    ACE_SET_BITS (this->options_,
+                                  Options::SUPPLIER_ACCEPTOR);
+                    if (ACE_OS::strlen (flag) > 1)
+                      {
+                        // Set the Supplier Acceptor port number.
+                        this->supplier_acceptor_port_ = ACE_OS::atoi (flag + 2);
+                      }
+                  }
+              }
           }
           break;
-          /* NOTREACHED */
         case 'c':
           {
             // Become a Connector.
@@ -133,52 +138,52 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                                                    ACE_TEXT ("|"));
                  flag != nullptr;
                  flag = ACE_OS::strtok (nullptr, ACE_TEXT ("|")))
-              if (ACE_OS::strncasecmp (flag, ACE_TEXT ("C"), 1) == 0)
-                {
-                  ACE_SET_BITS (this->options_,
-                                Options::CONSUMER_CONNECTOR);
-                  if (ACE_OS::strlen (flag) > 1)
-                    // Set the Consumer Connector port number.
-                    this->consumer_connector_port_ = ACE_OS::atoi (flag + 2);
-                }
-              else if (ACE_OS::strncasecmp (flag, ACE_TEXT ("S"), 1) == 0)
-                {
-                  ACE_SET_BITS (this->options_,
-                                Options::SUPPLIER_CONNECTOR);
-                  if (ACE_OS::strlen (flag) > 1)
-                    // Set the Supplier Connector port number.
-                    this->supplier_connector_port_ = ACE_OS::atoi (flag + 2);
-                }
+              {
+                if (ACE_OS::strncasecmp (flag, ACE_TEXT ("C"), 1) == 0)
+                  {
+                    ACE_SET_BITS (this->options_,
+                                  Options::CONSUMER_CONNECTOR);
+                    if (ACE_OS::strlen (flag) > 1)
+                      {
+                        // Set the Consumer Connector port number.
+                        this->consumer_connector_port_ = ACE_OS::atoi (flag + 2);
+                      }
+                  }
+                else if (ACE_OS::strncasecmp (flag, ACE_TEXT ("S"), 1) == 0)
+                  {
+                    ACE_SET_BITS (this->options_,
+                                  Options::SUPPLIER_CONNECTOR);
+                    if (ACE_OS::strlen (flag) > 1)
+                      {
+                        // Set the Supplier Connector port number.
+                        this->supplier_connector_port_ = ACE_OS::atoi (flag + 2);
+                      }
+                  }
+              }
           }
           break;
-          /* NOTREACHED */
         case 'C':
           this->connection_id_ = ACE_OS::atoi (get_opt.opt_arg ());
           break;
-          /* NOTREACHED */
         case 'h':
           // connector host
           this->connector_host_ = get_opt.opt_arg ();
           break;
-          /* NOTREACHED */
         case 'm':
           // max queue size.
           this->max_queue_size_ = ACE_OS::atoi (get_opt.opt_arg ());
           break;
-          /* NOTREACHED */
         case 't':
           // Timeout
           this->timeout_ = ACE_OS::atoi (get_opt.opt_arg ());
           break;
-          /* NOTREACHED */
         case 'v':
           // Verbose mode.
           ACE_SET_BITS (this->options_, Options::VERBOSE);
           break;
-          /* NOTREACHED */
         default:
           this->print_usage_and_die ();
-          /* NOTREACHED */
+          break;
         }
     }
 }

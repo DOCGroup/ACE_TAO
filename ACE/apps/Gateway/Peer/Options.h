@@ -44,7 +44,7 @@ public:
   void parse_args (int argc, ACE_TCHAR *argv[]);
 
   /// Determine if an option is enabled.
-  int enabled (int option) const;
+  bool enabled (int option) const;
 
   /**
    * Our acceptor port number, i.e., the one that we passively listen
@@ -78,8 +78,8 @@ public:
   /// The maximum size of the queue.
   long max_queue_size () const;
 
-  /// Returns a reference to the connection id.
-  CONNECTION_ID &connection_id ();
+  /// Return the connection id.
+  CONNECTION_ID connection_id () const;
 
 private:
   enum

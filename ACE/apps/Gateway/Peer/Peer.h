@@ -106,12 +106,12 @@ public:
 protected:
   using inherited = ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 
-  /// Transmit <mb> to the gatewayd.
+  /// Take ownership of <mb> and transmit it to the gatewayd.
   int transmit (ACE_Message_Block *mb,
                 size_t n,
                 int event_type);
 
-  /// Receive an Peer event from gatewayd.
+  /// Transfer a complete Peer event from the gatewayd to <mb>.
   virtual int recv (ACE_Message_Block *&mb);
 
   /// Send an Peer event to gatewayd, using <nonblk_put>.
@@ -175,7 +175,7 @@ public:
   Peer_Acceptor &operator= (Peer_Acceptor const &) = delete;
   Peer_Acceptor &operator= (Peer_Acceptor &&) = delete;
 
-  ///  the <Peer_Acceptor>.
+  /// Start the acceptor on the specified port.
   int start (u_short);
 
   /// Terminate the <Peer_Acceptor>.
@@ -188,7 +188,7 @@ private:
   /// Factor out common code for initializing the <Peer_Acceptor>.
   int open_acceptor (u_short port);
 
-  /// Manually allocated once; destroyed by Peer_Acceptor::close().
+  /// Manually allocated; destroyed and cleared by Peer_Acceptor::close().
   Peer_Handler *peer_handler_ {};
 
   /// Our acceptor addr.
@@ -229,10 +229,10 @@ private:
   /// Factor out common code for initializing the <Peer_Connector>.
   int open_connector (Peer_Handler *&ph, u_short port);
 
-  /// Raw observer to the handler allocated once and handed to ACE_Connector.
+  /// Manually allocated handler; ACE_Connector and the reactor use it while connected.
   Peer_Handler *consumer_peer_handler_ {};
 
-  /// Raw observer to the handler allocated once and handed to ACE_Connector.
+  /// Manually allocated handler; ACE_Connector and the reactor use it while connected.
   Peer_Handler *supplier_peer_handler_ {};
 };
 
