@@ -34,7 +34,14 @@ static_assert (std::is_move_constructible<testdata::BdArraycharList>::value);
 static_assert (!std::is_nothrow_move_constructible<testdata::ArraycharList>::value);
 static_assert (!std::is_nothrow_move_constructible<testdata::BdArraycharList>::value);
 static_assert (std::is_abstract<OBV_Supports_Inherited_Operation>::value,
-               "A valuetype that supports an inherited operation is abstract");
+               "A concrete supported interface with inherited operations is abstract");
+static_assert (!std::is_abstract<OBV_Supports_Abstract_Operation>::value,
+               "A supported abstract interface has default operations");
+static_assert (!std::is_abstract<OBV_Inherited_Supported_Interface_Derived>::value,
+               "A supported interface inherited through an abstract base needs refcount overrides");
+static_assert (std::is_base_of<CORBA::ValueFactoryBase,
+                               Supports_Abstract_Operation_init>::value,
+               "A supported abstract interface must retain the generated init factory");
 static_assert (!std::is_abstract<OBV_Supported_Interface_Derived>::value,
                "An inherited supported interface needs refcount overrides");
 static_assert (!std::is_abstract<OBV_Concrete_From_Abstract>::value,
@@ -240,6 +247,24 @@ test_default_initialized_valuetype (int &error_count)
 void
 test_valuetype_copy (int &error_count)
 {
+  OBV_Supports_Abstract_Operation abstract_interface_value;
+  abstract_interface_value.value (19);
+  CORBA::ValueBase_var abstract_interface_copy (
+    abstract_interface_value._copy_value ());
+  Supports_Abstract_Operation * const abstract_interface_downcast =
+    Supports_Abstract_Operation::_downcast (abstract_interface_copy.in ());
+  if (abstract_interface_downcast == nullptr)
+    {
+      ++error_count;
+      ACE_ERROR ((LM_ERROR, "Supports_Abstract_Operation copy has wrong type\n"));
+    }
+  else
+    {
+      expect_equals<CORBA::Long> (
+        error_count, "Supports_Abstract_Operation copied value",
+        abstract_interface_downcast->value (), 19);
+    }
+
   OBV_Concrete_From_Abstract abstract_base_value;
   abstract_base_value.value (61);
   CORBA::ValueBase_var abstract_base_copy_value (
