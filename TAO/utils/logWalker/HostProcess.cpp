@@ -204,8 +204,8 @@ HostProcess::add_peer(long handle, PeerProcess *peer)
   if (existing != nullptr)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "add_peer, found existing for %d\n",
-                  handle));
+                  "add_peer, found existing for %q\n",
+                  static_cast<ACE_INT64> (handle)));
     }
   const Endpoint &addr = peer->is_server() ?
     peer->server_addr() : peer->last_client_addr();

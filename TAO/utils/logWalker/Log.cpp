@@ -213,7 +213,7 @@ Log::handle_msg_octets ()
         {
           if (this->dump_target_ == std::addressof (this->unknown_msg_))
           {
-            ACE_ERROR ((LM_ERROR, "%d dump ended with no target owner\n", this->offset_));
+            ACE_ERROR ((LM_ERROR, "%B dump ended with no target owner\n", this->offset_));
           }
         }
       this->dump_target_ = nullptr;
@@ -230,7 +230,7 @@ Log::parse_HEXDUMP_i ()
   if (this->dump_target_ != nullptr)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%d: Parse HEXDUMP in the middle of an existing dump\n",
+                  "%B: Parse HEXDUMP in the middle of an existing dump\n",
                   this->offset_));
     }
   else
@@ -253,7 +253,7 @@ Log::parse_dump_giop_msg_i ()
   if (pp == nullptr)
     {
       ACE_ERROR((LM_ERROR,
-                 "%d: dump_msg, could not find pp for incoming, text = %s\n",
+                 "%B: dump_msg, could not find pp for incoming, text = %s\n",
                  this->offset_, this->info_));
       return;
     }
@@ -267,8 +267,8 @@ Log::parse_dump_giop_msg_i ()
       if (inv == nullptr)
         {
           ACE_ERROR ((LM_ERROR,
-                      "%d: process %s already has invocation %d\n",
-                      this->offset_, pp->id(), rid));
+                      "%B: process %s already has invocation %q\n",
+                      this->offset_, pp->id(), static_cast<ACE_INT64> (rid)));
           break;
         }
       inv->init (this->line_, this->offset_, this->thr_);
@@ -276,8 +276,8 @@ Log::parse_dump_giop_msg_i ()
       target = inv->octets(true);
       if (target == nullptr)
         {
-          ACE_ERROR ((LM_ERROR, "%d: no target octets for new recv reqeust, id = %d\n",
-                      this->offset_, rid));
+          ACE_ERROR ((LM_ERROR, "%B: no target octets for new recv reqeust, id = %q\n",
+                      this->offset_, static_cast<ACE_INT64> (rid)));
           return;
         }
       target->time (this->time_);
@@ -292,8 +292,8 @@ Log::parse_dump_giop_msg_i ()
       if (inv == nullptr)
         {
           ACE_ERROR ((LM_ERROR,
-                      "%d: could not find existing invocation for req_id %d\n",
-                      this->offset_, rid));
+                      "%B: could not find existing invocation for req_id %q\n",
+                      this->offset_, static_cast<ACE_INT64> (rid)));
           inv = pp->new_invocation (rid,this->thr_);
         }
       inv->init (this->line_, this->offset_, this->thr_);
@@ -303,8 +303,8 @@ Log::parse_dump_giop_msg_i ()
           if (mode == 3)
             {
               ACE_ERROR ((LM_ERROR,
-                          "%d: could not map invocation to target for req_id %d\n",
-                          this->offset_, rid));
+                          "%B: could not map invocation to target for req_id %q\n",
+                          this->offset_, static_cast<ACE_INT64> (rid)));
               return;
             }
         }
@@ -337,8 +337,8 @@ Log::parse_dump_giop_msg_i ()
           GIOP_Buffer *tgt = other_thr->giop_target();
           if (target == nullptr)
             {
-              ACE_ERROR ((LM_ERROR, "%d: dump_giop_msg_i, target is null, mode = %d, reqid = %d\n",
-                          this->offset_, mode, rid));
+              ACE_ERROR ((LM_ERROR, "%B: dump_giop_msg_i, target is null, mode = %d, reqid = %q\n",
+                          this->offset_, mode, static_cast<ACE_INT64> (rid)));
               return;
             }
           if (tgt != nullptr && this->thr_ != other_thr && target->matches (tgt))
@@ -370,9 +370,9 @@ Log::parse_got_existing_i ()
   if (pp == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%d: Error parsing %C, can't find peer "
-                  "for handle %d, text = %s\n",
-                  this->offset_, this->origin_.c_str(), handle, this->info_));
+                  "%B: Error parsing %C, can't find peer "
+                  "for handle %q, text = %s\n",
+                  this->offset_, this->origin_.c_str(), static_cast<ACE_INT64> (handle), this->info_));
       return;
     }
   this->thr_->active_handle (handle);
@@ -389,17 +389,17 @@ Log::parse_muxed_tms_i ()
   if (pp == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%d: Error parsing %C, can't find peer "
-                  "for handle %d, text = %s\n",
-                  this->offset_, this->origin_.c_str(), handle, this->info_));
+                  "%B: Error parsing %C, can't find peer "
+                  "for handle %q, text = %s\n",
+                  this->offset_, this->origin_.c_str(), static_cast<ACE_INT64> (handle), this->info_));
       return;
     }
   this->thr_->active_handle (handle);
 
   Invocation *inv = pp->new_invocation(req_id, this->thr_);
   if (inv == nullptr)
-    ACE_ERROR ((LM_ERROR,"%d: peer %s already has invocation id %d\n",
-                this->offset_, pp->id(), req_id));
+    ACE_ERROR ((LM_ERROR,"%B: peer %s already has invocation id %q\n",
+                this->offset_, pp->id(), static_cast<ACE_INT64> (req_id)));
   this->thr_->incoming_from (pp);
 }
 
@@ -411,9 +411,9 @@ Log::parse_exclusive_tms_i ()
   if (pp == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%d: Error parsing %C, can't find peer "
-                  "for handle %d, text = %s\n",
-                  this->offset_, this->origin_.c_str(), handle, this->info_));
+                  "%B: Error parsing %C, can't find peer "
+                  "for handle %q, text = %s\n",
+                  this->offset_, this->origin_.c_str(), static_cast<ACE_INT64> (handle), this->info_));
       return;
     }
   char *rpos = std::strchr (this->info_, '<');
@@ -421,8 +421,8 @@ Log::parse_exclusive_tms_i ()
 
   Invocation *inv = pp->new_invocation(req_id, this->thr_);
   if (inv == nullptr)
-    ACE_ERROR ((LM_ERROR,"%d: peer %s already has invocation id %d\n",
-                this->offset_, pp->id(), req_id));
+    ACE_ERROR ((LM_ERROR,"%B: peer %s already has invocation id %q\n",
+                this->offset_, pp->id(), static_cast<ACE_INT64> (req_id)));
   this->thr_->incoming_from (pp);
 }
 
@@ -436,9 +436,9 @@ Log::parse_process_parsed_msgs_i ()
   if (pp == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%d: Error parsing %C, can't find peer "
-                  "for handle %d, text = %s\n",
-                  this->offset_, this->origin_.c_str(), handle, this->info_));
+                  "%B: Error parsing %C, can't find peer "
+                  "for handle %q, text = %s\n",
+                  this->offset_, this->origin_.c_str(), static_cast<ACE_INT64> (handle), this->info_));
       pp = new PeerProcess (this->offset_, this->timestamp_, true);
       Transport *t = new Transport ("<unknown>", false, this->offset_, this->timestamp_);
       t->handle_ = handle;
@@ -486,9 +486,9 @@ Log::parse_make_idle_i ()
   if (pp == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%d: make idle, error parsing %C, can't find peer "
-                  "for handle %d, text = %s\n",
-                  this->offset_, this->origin_.c_str(), handle, this->info_));
+                  "%B: make idle, error parsing %C, can't find peer "
+                  "for handle %q, text = %s\n",
+                  this->offset_, this->origin_.c_str(), static_cast<ACE_INT64> (handle), this->info_));
       return;
     }
   this->thr_->exit_wait (pp, this->offset_);
@@ -503,9 +503,9 @@ Log::parse_cleanup_queue_i ()
   if (pp == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%d: cleanup queue, error parsing %C, can't find peer "
-                  "for handle %d, text = %s\n",
-                  this->offset_, this->origin_.c_str(), handle, this->info_));
+                  "%B: cleanup queue, error parsing %C, can't find peer "
+                  "for handle %q, text = %s\n",
+                  this->offset_, this->origin_.c_str(), static_cast<ACE_INT64> (handle), this->info_));
       return;
     }
 
@@ -517,17 +517,17 @@ Log::parse_cleanup_queue_i ()
       if (original_thr == nullptr)
         {
           ACE_ERROR ((LM_ERROR,
-                      "%d: cleanup queue, no original "
-                      "thread found, handle %d\n",
-                      this->offset_, handle));
+                      "%B: cleanup queue, no original "
+                      "thread found, handle %q\n",
+                      this->offset_, static_cast<ACE_INT64> (handle)));
           return;
         }
       target = original_thr->giop_target();
     }
   if (target != nullptr && target->cur_size() == 0 && original_thr->has_dup())
     {
-      ACE_ERROR ((LM_ERROR, "%d: cleanup queue, swapping targets for thread %d\n",
-                  this->offset_, original_thr->id()));
+      ACE_ERROR ((LM_ERROR, "%B: cleanup queue, swapping targets for thread %q\n",
+                  this->offset_, static_cast<ACE_INT64> (original_thr->id())));
       original_thr->swap_target();
     }
   original_thr->set_giop_target (nullptr);
@@ -541,16 +541,16 @@ Log::parse_cleanup_queue_i ()
       if (inv == nullptr)
         {
           ACE_ERROR ((LM_ERROR,
-                      "%d: Cleanup queue detected, "
-                      "could not find invocation for rid = %B on thread %d\n",
-                      this->offset_, rid, original_thr->id()));
+                      "%B: Cleanup queue detected, "
+                      "could not find invocation for rid = %B on thread %q\n",
+                      this->offset_, rid, static_cast<ACE_INT64> (original_thr->id())));
           rid = target->expected_req_id();
           inv = pp->find_invocation (rid, handle);
           if (inv == nullptr)
             {
               ACE_ERROR ((LM_ERROR,
-                          "%d, Cleanup queue still failed to find rid %B, on thread %d\n",
-                          this->offset_, rid, original_thr->id()));
+                          "%B, Cleanup queue still failed to find rid %B, on thread %q\n",
+                          this->offset_, rid, static_cast<ACE_INT64> (original_thr->id())));
               return;
             }
           original_thr->exit_wait(pp, this->offset_);
@@ -676,7 +676,7 @@ Log::parse_handler_open_i (bool is_ssl)
     }
   if (pp == nullptr)
   {
-    ACE_ERROR ((LM_ERROR,"%d: handler_open: no pending peer for addr %s\n",
+    ACE_ERROR ((LM_ERROR,"%B: handler_open: no pending peer for addr %s\n",
                 this->offset_, addr));
     return;
   }
@@ -712,7 +712,7 @@ Log::parse_handler_open_i (bool is_ssl)
       if (trans == nullptr)
         {
           ACE_ERROR ((LM_ERROR,
-                      "%d: Pending peer exists, but no last transport "
+                      "%B: Pending peer exists, but no last transport "
                       "set, file %s\n",
                       this->offset_, this->origin_.c_str()));
           return;
@@ -795,7 +795,7 @@ Log::parse_connection_not_complete_i ()
     }
   else
   {
-    ACE_ERROR ((LM_ERROR,"%d: connection_not_complete: no pending peer\n", offset_));
+    ACE_ERROR ((LM_ERROR,"%B: connection_not_complete: no pending peer\n", offset_));
   }
 }
 
@@ -813,7 +813,7 @@ Log::parse_iiop_connection_handler_ctor_i ()
   PeerProcess *pp = this->thr_->peek_new_connection();
   if (pp == nullptr)
     {
-      ACE_ERROR ((LM_ERROR, "%d: iiop_connection_handler_ctor_i: no pending peer on thread\n", this->offset_));
+      ACE_ERROR ((LM_ERROR, "%B: iiop_connection_handler_ctor_i: no pending peer on thread\n", this->offset_));
       return;
     }
 
@@ -880,8 +880,8 @@ Log::parse_wait_for_connection_i ()
         }
       if (pp == nullptr)
         {
-          ACE_ERROR ((LM_ERROR,"%d: wait_for_connection: no pending peer for handle %s\n",
-                      this->offset_, handle));
+          ACE_ERROR ((LM_ERROR,"%B: wait_for_connection: no pending peer for handle %q\n",
+                      this->offset_, static_cast<ACE_INT64> (handle)));
           return;
         }
       delete pp;
@@ -901,7 +901,9 @@ Log::parse_notify_poa_helper_i ()
   Invocation *inv = this->thr_->current_invocation ();
   if (inv == nullptr)
     {
-      ACE_ERROR ((LM_ERROR,"%d: notify_poa_helper line = %s, no current invocation on thread\n", this->offset_, this->info_));
+      ACE_ERROR ((LM_ERROR,
+                  "%B: notify_poa_helper line = %s, no current invocation on thread\n",
+                  this->offset_, this->info_));
       return;
     }
   bool activate = std::strstr (this->info_, "Activating") != nullptr;
@@ -947,7 +949,8 @@ Log::parse_notify_object_i ()
       NotifyObject notobj = this->hostproc_->find_notify_obj (objid);
       if (notobj == nullptr)
         {
-          ACE_ERROR ((LM_ERROR, "%d: could not find notify object %lx\n", this->offset_, objid));
+          ACE_ERROR ((LM_ERROR, "%B: could not find notify object %Q\n",
+                      this->offset_, static_cast<ACE_UINT64> (objid)));
         }
       else
         {
@@ -979,7 +982,8 @@ Log::parse_notify_object_i ()
       NotifyObject notobj = this->hostproc_->find_notify_obj (objid);
       if (notobj == nullptr)
         {
-          ACE_ERROR ((LM_ERROR, "%d: could not find notify object %x\n", this->offset_, objid));
+          ACE_ERROR ((LM_ERROR, "%B: could not find notify object %Q\n",
+                      this->offset_, static_cast<ACE_UINT64> (objid)));
         }
       else
         {

@@ -89,8 +89,8 @@ Session::add_process (HostProcess *proc)
 {
   if (processes_.bind(proc->pid(),proc) != 0)
     ACE_ERROR ((LM_ERROR,
-                "Session::add_process could not bind pid %d\n",
-                proc->pid()));
+                "Session::add_process could not bind pid %q\n",
+                static_cast<ACE_INT64> (proc->pid())));
   if (procs_by_name_.bind(proc->proc_name(), proc) != 0)
     ACE_ERROR ((LM_ERROR,
                 "Session::add_process could not bind procname %s\n",
