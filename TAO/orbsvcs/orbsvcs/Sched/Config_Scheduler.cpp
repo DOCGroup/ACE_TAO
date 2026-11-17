@@ -33,7 +33,7 @@ ACE_Config_Scheduler::create (char const * entry_point)
   ACE_NEW_RETURN (rt_info[0], RtecScheduler::RT_Info, -1);
   std::unique_ptr<RtecScheduler::RT_Info> rt_info_entry (rt_info[0]);
 
-  rt_info[0]->entry_point = CORBA::string_dup(entry_point);
+  rt_info[0]->entry_point = CORBA::string_dup (entry_point);
   rt_info[0]->handle = -1;
   rt_info[0]->worst_case_execution_time = ORBSVCS_Time::zero ();
   rt_info[0]->typical_execution_time = ORBSVCS_Time::zero ();
@@ -49,7 +49,7 @@ ACE_Config_Scheduler::create (char const * entry_point)
   rt_info[0]->info_type = RtecScheduler::OPERATION;
   rt_info[0]->volatile_token = 0;
 
-  RtecScheduler::handle_t handle = -1;
+  RtecScheduler::handle_t handle {-1};
 #if defined (TAO_USES_STRATEGY_SCHEDULER)
   switch (impl_->register_task (rt_info[0], handle))
 #else
@@ -136,7 +136,7 @@ void ACE_Config_Scheduler::set (RtecScheduler::handle_t handle,
   switch (impl_->lookup_rt_info (handle, rt_info))
     {
     case BaseSchedImplType::SUCCEEDED:
-      rt_info->criticality = criticality,
+      rt_info->criticality = criticality;
       rt_info->worst_case_execution_time = time;
       rt_info->typical_execution_time = typical_time;
       rt_info->cached_execution_time = cached_time;
@@ -189,7 +189,7 @@ void ACE_Config_Scheduler::add_dependency (RtecScheduler::handle_t handle,
     {
     case BaseSchedImplType::SUCCEEDED:
       {
-        RtecScheduler::Dependency_Info dep;
+        RtecScheduler::Dependency_Info dep {};
         dep.rt_info = dependency;
         dep.number_of_calls = number_of_calls;
         dep.dependency_type = dependency_type;
@@ -248,8 +248,7 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
   } anomaly_set_owner (anomaly_set);
 
   // Invoke the imlementation's scheduling method.
-  BaseSchedImplType::status_t schedule_status;
-  schedule_status = impl_->schedule (anomaly_set);
+  BaseSchedImplType::status_t const schedule_status = impl_->schedule (anomaly_set);
 
   if (dependencies.ptr () == nullptr)
     {
@@ -259,11 +258,11 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
   // Iterate over the set of anomalies, reporting each one, storing
   // it in the set of anomalies to return, and determining the worst
   // anomaly severity.
-  RtecScheduler::Anomaly_Severity severity = RtecScheduler::ANOMALY_NONE;
+  RtecScheduler::Anomaly_Severity severity {RtecScheduler::ANOMALY_NONE};
   RtecScheduler::Scheduling_Anomaly **anomaly {};
   char const *anomaly_severity_msg = "NONE";
   CORBA::ULong anomaly_index {};
-  CORBA::ULong anomaly_set_size =
+  CORBA::ULong const anomaly_set_size =
                     static_cast<CORBA::ULong> (anomaly_set.size ());
   if (anomalies.ptr () == nullptr)
     {
