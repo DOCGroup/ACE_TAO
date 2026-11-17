@@ -52,7 +52,6 @@ class TAO_Export TAO_Adapter_Registry
 public:
   explicit TAO_Adapter_Registry (TAO_ORB_Core *);
 
-  /// Close the
   ~TAO_Adapter_Registry ();
 
   /**

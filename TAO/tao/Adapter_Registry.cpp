@@ -6,6 +6,7 @@
 #include "tao/debug.h"
 #include "tao/TAO_Server_Request.h"
 
+#include <algorithm>
 #include <cstring>
 #include <new>
 #include <utility>
@@ -52,15 +53,16 @@ void
 TAO_Adapter_Registry::insert (TAO_Adapter *adapter)
 {
   int const priority = adapter->priority ();
-  adapter_container_type::difference_type insertion_offset {};
-  adapter_container_type::const_iterator position = this->adapters_.begin ();
-  for (; position != this->adapters_.end (); ++position, ++insertion_offset)
-    {
-      if ((*position)->priority () >= priority)
-        {
-          break;
-        }
-    }
+  adapter_container_type::const_iterator const position =
+    std::lower_bound (this->adapters_.begin (),
+                      this->adapters_.end (),
+                      priority,
+                      [] (adapter_type const& candidate, int target_priority)
+                      {
+                        return candidate->priority () < target_priority;
+                      });
+  adapter_container_type::difference_type const insertion_offset =
+    position - this->adapters_.begin ();
 
   try
     {
@@ -151,9 +153,11 @@ TAO_Adapter *
 TAO_Adapter_Registry::find_adapter (char const *name) const
 {
   for (adapter_type const &adapter : this->adapters_)
-    if (std::strcmp (adapter->name (), name) == 0)
     {
-      return adapter.get ();
+      if (std::strcmp (adapter->name (), name) == 0)
+        {
+          return adapter.get ();
+        }
     }
 
   return nullptr;
