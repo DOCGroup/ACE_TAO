@@ -12755,6 +12755,15 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   TAO core slice to 29 sites including the clonable argument wrappers; other
   core moves and the repository-wide audit remain open.
 
+## 2026-11-17 Kokyu scheduler move audit
+
+- Reviewed all 15 `std::move` sites across the MIF, FP, MUF, and EDF scheduler
+  examples. Dispatcher owners transfer into scheduler members. Encoded service
+  context octet sequences transfer into the context record, and GUID sequences
+  transfer into the output sequence; each source is subsequently only
+  destroyed, not read. No moved-from-use defect or code change was found.
+- This is a partial repository audit; other `std::move` sites remain open.
+
 ## 2026-11-17 Const guard macro follow-up
 
 - Replaced direct `ACE_Guard` spellings in `AnyTypeCode` with new
