@@ -13,7 +13,6 @@
 
 #include <algorithm>
 #include <cstdio>
-#include <cstdlib>
 #include <memory>
 
 #if ! defined (__ACE_INLINE__)
@@ -23,46 +22,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 using Scheduler_File_Ptr = std::unique_ptr<FILE, int (*) (FILE *)>;
-
-/// Compares two task entries by DFS finish time, ordering higher times first.
-extern "C" int compare_entry_finish_times (void const *first, void const *second)
-{
-  // sort blank entries to the end
-  if (first == nullptr)
-  {
-    return second != nullptr ? 1 : 0;
-  }
-  else if (second == nullptr)
-  {
-    return -1;
-  }
-
-  Task_Entry const *first_entry =
-          * static_cast<Task_Entry const * const *> (first);
-  Task_Entry const *second_entry =
-          * static_cast<Task_Entry const * const *> (second);
-
-  // sort blank entries to the end
-  if (first_entry == nullptr)
-  {
-    return second_entry != nullptr ? 1 : 0;
-  }
-  else if (second_entry == nullptr)
-  {
-    return -1;
-  }
-
-  if (first_entry->finished () > second_entry->finished ())
-  {
-    return -1;
-  }
-  else if (first_entry->finished () < second_entry->finished ())
-  {
-    return 1;
-  }
-
-  return 0;
-}
 
 char const *
 ACE_DynScheduler::status_message (ACE_DynScheduler::status_t status)
@@ -1541,10 +1500,20 @@ ACE_DynScheduler::check_dependency_cycles ()
   status_t return_status = SUCCEEDED;
 
   // sort the pointers to entries in order of descending finish time
-  std::qsort (ordered_task_entries_,
-              tasks (),
-              sizeof (Task_Entry *),
-              compare_entry_finish_times);
+  std::sort (ordered_task_entries_,
+             ordered_task_entries_ + tasks (),
+             [] (Task_Entry const *first, Task_Entry const *second)
+             {
+               if (first == nullptr)
+                 {
+                   return second != nullptr;
+                 }
+               if (second == nullptr)
+                 {
+                   return false;
+                 }
+               return first->finished () > second->finished ();
+             });
 
   // set all the dfs_status indicators to NOT_VISITED
   for (u_int i {}; i < tasks (); ++i)
