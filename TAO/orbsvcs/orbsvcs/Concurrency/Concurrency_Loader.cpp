@@ -1,15 +1,11 @@
-// ================================================================
-// LIBRARY
-//   libTAO_CosConcurrency.so
-//
-// DESCRIPTION
-//   This class allows for dynamically loading
-//   the Concurrency Service.
-//
-// AUTHORS
-//   Priyanka Gontla <pgontla@ece.uci.edu>
-//   Jaiganesh Balasubramanian <jai@doc.ece.uci.edu>
-// ================================================================
+/**
+ * @file Concurrency_Loader.cpp
+ *
+ * @brief Loads the Concurrency Service dynamically.
+ *
+ * @author Priyanka Gontla <pgontla@ece.uci.edu>
+ * @author Jaiganesh Balasubramanian <jai@doc.ece.uci.edu>
+ */
 
 #include "orbsvcs/Concurrency/Concurrency_Loader.h"
 #include "ace/Dynamic_Service.h"

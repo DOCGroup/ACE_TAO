@@ -1,17 +1,13 @@
 // -*- C++ -*-
 
-// ============================================================================
-// FILENAME
-//   Naming_Loader.h
-//
-// DESCRIPTION
-//   This class loads the Naming Service dynamically
-//   either from svc.conf file or <string_to_object> call.
-//
-// AUTHORS
-//   Priyanka Gontla <pgontla@ece.uci.edu>
-//
-// ============================================================================
+/**
+ * @file Naming_Loader.h
+ *
+ * @brief Loads the Naming Service dynamically from a @c svc.conf file or a
+ * @c string_to_object call.
+ *
+ * @author Priyanka Gontla <pgontla@ece.uci.edu>
+ */
 
 #ifndef TAO_NAMING_LOADER_H
 #define TAO_NAMING_LOADER_H

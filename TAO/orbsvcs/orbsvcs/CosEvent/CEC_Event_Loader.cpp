@@ -1,17 +1,12 @@
-//==========================================================================
-// LIBRARY
-//   libTAO_CosEvent.so
-//
-// DESCRIPTION
-//   This class allows for dynamically loading
-//   the Event Service.
-//
-// AUTHOR
-//   Priyanka Gontla <pgontla@ece.uci.edu>
-//   Carlos O'Ryan <coryan@uci.edu>
-//   Jon Astle <jon@astle45.fsnet.co.uk>
-//
-//===========================================================================
+/**
+ * @file CEC_Event_Loader.cpp
+ *
+ * @brief Loads the Event Service dynamically.
+ *
+ * @author Priyanka Gontla <pgontla@ece.uci.edu>
+ * @author Carlos O'Ryan <coryan@uci.edu>
+ * @author Jon Astle <jon@astle45.fsnet.co.uk>
+ */
 
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/CosEvent/CEC_Event_Loader.h"

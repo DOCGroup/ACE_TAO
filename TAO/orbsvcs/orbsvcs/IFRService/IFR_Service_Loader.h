@@ -1,18 +1,14 @@
 // -*- C++ -*-
 
-// ===========================================================================
-// FILENAME
-//   IFR_Service_Loader.h
-//
-// DESCRIPTION
-//   This class loads the IFR Service dynamically
-//   either from svc.conf file or <string_to_object> call.
-//
-// AUTHORS
-//   Jaiganesh Balasubramanian <jai@doc.ece.uci.edu>
-//   Priyanka Gontla <pgontla@ece.uci.edu>
-//
-// ===========================================================================
+/**
+ * @file IFR_Service_Loader.h
+ *
+ * @brief Loads the IFR Service dynamically from a @c svc.conf file or a
+ * @c string_to_object call.
+ *
+ * @author Jaiganesh Balasubramanian <jai@doc.ece.uci.edu>
+ * @author Priyanka Gontla <pgontla@ece.uci.edu>
+ */
 
 #ifndef TAO_IFR_SERVICE_LOADER_H
 #define TAO_IFR_SERVICE_LOADER_H
