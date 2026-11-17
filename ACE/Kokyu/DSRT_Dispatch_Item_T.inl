@@ -17,11 +17,11 @@ DSRT_Dispatch_Item (Guid_t guid, DSRT_QoSDescriptor const &qos)
 }
 
 template <class DSRT_Scheduler_Traits>
-ACE_INLINE typename DSRT_Dispatch_Item<DSRT_Scheduler_Traits>::Guid_t
+ACE_INLINE typename DSRT_Dispatch_Item<DSRT_Scheduler_Traits>::Guid_t const &
 DSRT_Dispatch_Item<DSRT_Scheduler_Traits>::
 guid () const
 {
-  return guid_;
+  return this->guid_;
 }
 
 template <class DSRT_Scheduler_Traits>
@@ -57,7 +57,7 @@ insertion_time (ACE_Time_Value const &tv)
 }
 
 template <class DSRT_Scheduler_Traits>
-ACE_INLINE ACE_Time_Value
+ACE_INLINE ACE_Time_Value const &
 DSRT_Dispatch_Item<DSRT_Scheduler_Traits>::
 insertion_time () const
 {

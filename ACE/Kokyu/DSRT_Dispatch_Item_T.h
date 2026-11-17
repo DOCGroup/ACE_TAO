@@ -33,7 +33,7 @@ namespace Kokyu
 
   protected:
     ACE_hthread_t thr_handle_ {};
-    Guid_t guid_;
+    Guid_t const guid_;
     DSRT_QoSDescriptor const qos_;
     ACE_Time_Value insertion_time_;
 
@@ -46,7 +46,7 @@ namespace Kokyu
     DSRT_Dispatch_Item &operator= (DSRT_Dispatch_Item &&) = delete;
 
     /// Get the guid.
-    Guid_t guid () const;
+    Guid_t const &guid () const;
 
     /// Get the associated qos value.
     DSRT_QoSDescriptor const &qos () const;
@@ -58,7 +58,7 @@ namespace Kokyu
     void thread_handle (ACE_hthread_t &handle);
 
     /// Get the insertion time.
-    ACE_Time_Value insertion_time () const;
+    ACE_Time_Value const &insertion_time () const;
 
     /// Set the insertion time.
     void insertion_time (ACE_Time_Value const &);

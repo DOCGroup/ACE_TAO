@@ -84,7 +84,7 @@ insert (DSRT_Dispatch_Item<DSRT_Scheduler_Traits>* item)
   ACE_GUARD_RETURN (ACE_LOCK, mon, lock_, -1);
 
   RB_Tree_Dispatch_Item_Node* rb_tree_node;
-  Guid_t const guid = item->guid ();
+  Guid_t const &guid = item->guid ();
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
