@@ -35,6 +35,8 @@ using ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::Monitor_Control_Types;
  */
 struct MC_TEST_UTILITIES_Export MC_Test_Utilities
 {
+  MC_Test_Utilities () = delete;
+
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
   static void display_timestamp (Monitor_Control_Types::Data const &data);

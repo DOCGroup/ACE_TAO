@@ -11,9 +11,7 @@ void
 MC_Test_Utilities::display_timestamp (
   Monitor_Control_Types::Data const &data)
 {
-  /// The heavy lifting of converting an ACE_Time_Value
-  /// to something that's easily outputted in a pretty
-  /// format has already been done in ACE_Date_Time.
+  // ACE_Date_Time converts the timestamp into the displayable fields.
   ACE_Date_Time dt (data.timestamp_);
   std::cout << std::setfill ('0')
        << std::setw (2) << dt.month () << '-'
