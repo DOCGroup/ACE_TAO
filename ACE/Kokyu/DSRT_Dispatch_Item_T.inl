@@ -25,11 +25,11 @@ guid () const
 }
 
 template <class DSRT_Scheduler_Traits>
-ACE_INLINE typename DSRT_Dispatch_Item<DSRT_Scheduler_Traits>::DSRT_QoSDescriptor
+ACE_INLINE typename DSRT_Dispatch_Item<DSRT_Scheduler_Traits>::DSRT_QoSDescriptor const &
 DSRT_Dispatch_Item<DSRT_Scheduler_Traits>::
 qos () const
 {
-  return qos_;
+  return this->qos_;
 }
 
 template <class DSRT_Scheduler_Traits>
