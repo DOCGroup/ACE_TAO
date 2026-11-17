@@ -472,10 +472,11 @@ get (RtecScheduler::handle_t handle)
   ACE_NEW_THROW_EX (new_info,
                     RtecScheduler::RT_Info,
                     CORBA::NO_MEMORY ());
+  std::unique_ptr<RtecScheduler::RT_Info> new_info_owner (new_info);
 
-  *new_info = *rt_info;
+  *new_info_owner = *rt_info;
 
-  return new_info;
+  return new_info_owner.release ();
 }
 
 /// Set characteristics of the RT_Info corresponding to the passed handle.
