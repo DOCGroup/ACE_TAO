@@ -12606,3 +12606,12 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - No moved-from-use defect was found. This is a partial review of the listed
   sites, not a complete audit of all 332 repository `std::move` calls. No
   code changes or builds were needed.
+
+## 2026-11-17 ASNMP ownership move audit
+
+- Reviewed all 14 `std::move` sites in `ACE/ASNMP/asnmp/octet.cpp`, `vb.cpp`,
+  `pdu.cpp`, and `oid.cpp`. The unique-owned buffers and cloned values transfer
+  to their destination; PDU list removal moves each value to its new slot and
+  resets the final moved-from slot. No moved-from value is read afterward.
+- No defect or code change was justified. The repository-wide move audit
+  remains open.

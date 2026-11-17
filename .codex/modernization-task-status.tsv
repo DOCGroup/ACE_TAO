@@ -114,6 +114,7 @@ ACE/ASNMP/agent	TEST_ASSERTIONS	not-applicable	3d48f70f611	No test code in this 
 ACE/ASNMP/agent	USING	not-applicable	3d48f70f611	No typedef aliases
 ACE/ASNMP/agent	VALUE_INIT	done	3d48f70f611	Reviewed value-initialized port parsing state and class members
 ACE/ASNMP/asnmp	BUILD_TEST	done	9e6b539544e	Realclean-built complete ASNMP tree with -j 8 without warnings; all nine tests passed including the new OID right-comparison regression cases
+ACE/ASNMP/asnmp	MOVE_SEMANTICS	needs-work	-	Reviewed 14 std::move sites in octet.cpp, vb.cpp, pdu.cpp, and oid.cpp. Buffer/value owners transfer to destinations; Pdu::delete_vb overwrites each moved-from slot and resets the last one. Other ASNMP move sites remain.
 ACE/ASNMP/asnmp	CLEANUP	done	154f63c16aa	Removed label-only copy-constructor comments and redundant C-style casts from polymorphic clone results
 ACE/ASNMP/asnmp	C_STRING	done	74040f71094	Replaced narrow ACE_OS string calls with <cstring>/std:: functions in address.cpp and oid.cpp; retained ACE APIs for non-string operations
 ACE/ASNMP/asnmp	EXPLICIT	done	3765121fd7b	Marked all eligible single-argument ASNMP constructors explicit; retained copy constructors and multi-argument constructors
