@@ -12564,3 +12564,13 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Added scoped ownership for the stdio input fallback so invalid and empty-file early returns close the file. Read `fgetc` results as `int` to preserve the `EOF` sentinel. Made read-only parser inputs const and replaced temporary prefix `ACE_CString` objects with compile-time character arrays.
 - Built and linked the catior executable and library with C++17 warning flags. Also compiled the `ACE_LACKS_IOSTREAM_TOTALLY` fallback with `-Wall -Wextra`; `git diff --check` passed. This was a focused batch, not a full directory audit; other checklist categories remain open.
 - Commits `d5edd846713`, `6969a80ddae`, and `fd9669231f3` pushed to the modernization branch.
+
+## 2026-11-17 TAO TypeCode_Creation ownership cleanup
+
+- Passed string literals directly to `create_interface_tc` instead of
+  allocating `CORBA::string_dup` buffers for an API that takes borrowed
+  `const char*` arguments. Split the mutable sequence length into two const
+  values and removed redundant blank lines in the example.
+- The example target compiled and linked with C++17 warning flags;
+  `git diff --check` passed. Runtime behavior was not run.
+- Commit `5abf8ad4f22` pushed. The directory checklist remains partial.
