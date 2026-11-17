@@ -140,8 +140,9 @@ operator ()(QoSDescriptor const &qos1,
 {
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
-              "(%t|%T):qos1.importance = %d, qos2.importance = %d\n",
-              qos1.importance_, qos2.importance_));
+              "(%t|%T):qos1.importance = %q, qos2.importance = %q\n",
+              static_cast<ACE_INT64> (qos1.importance_),
+              static_cast<ACE_INT64> (qos2.importance_)));
 #endif
 
   if (qos1.importance_ > qos2.importance_)
