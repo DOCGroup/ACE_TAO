@@ -330,8 +330,8 @@ TAO/examples/Kokyu_dsrt_schedulers/muf_example	7	1	3	5	0	work-recorded	not-audit
 TAO/examples/Load_Balancing	13	1	4	12	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/examples/Load_Balancing_persistent	13	1	4	12	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/examples/Logging	10	1	3	9	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/examples/OBV	2	0	0	2	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/examples/OBV/Typed_Events	10	1	3	8	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/examples/OBV	2	0	0	2	0	batch-complete	partial	OWNERSHIP; FILE_IO; SCOPE_REDUCTION; STYLE	Remaining directory checklist categories are not yet audited	Forced Typed_Events server target compiled and linked with C++17 warnings; git diff --check passed	e4b18b9a71d
+TAO/examples/OBV/Typed_Events	10	1	3	8	0	batch-complete	partial	OVERRIDE	Remaining directory checklist categories are not yet audited	Forced server target rebuilt and linked without override warnings; git diff --check passed	c7200d60bde
 TAO/examples/Persistent_Grid	13	1	4	12	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/examples/PluggableUDP/tests/Performance	8	1	3	7	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/examples/PluggableUDP/tests/SimplePerformance	6	1	3	4	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-

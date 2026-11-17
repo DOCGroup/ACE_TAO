@@ -12574,3 +12574,16 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - The example target compiled and linked with C++17 warning flags;
   `git diff --check` passed. Runtime behavior was not run.
 - Commit `5abf8ad4f22` pushed. The directory checklist remains partial.
+
+## 2026-11-17 TAO OBV utility and Typed_Events override cleanup
+
+- Added Allman braces to single-statement `if`/`else` paths in the shared OBV
+  utility, narrowed the `parse_args` result to its condition, and checked both
+  `fprintf` and `fclose` when writing the server IOR. The file owner remains
+  active until the explicit close, so early returns still close the file.
+- Marked all nine `create_for_unmarshal` declarations in Typed_Events as
+  overrides. The forced C++17 server build initially exposed eight
+  `-Wsuggest-override` diagnostics; after the change, the target rebuilt and
+  linked without warnings. `git diff --check` passed.
+- Commits `e4b18b9a71d` and `c7200d60bde` record the utility and separate
+  override changes. Both directory audits remain partial.
