@@ -224,9 +224,6 @@ protected:
                                 Dispatch_Entry const &second_entry) override;
 
 private:
-  /// Comparison function to pass to qsort: calls instance ()->sort_comp ().
-  static int sort_function (void const *arg1, void const *arg2);
-
   /// Instance of the strategy.
   static ACE_MUF_Scheduler_Strategy *instance_;
 };
@@ -286,9 +283,6 @@ protected:
                                 Dispatch_Entry const &second_entry) override;
 
 private:
-  /// Comparison function to pass to qsort: calls instance ()->sort_comp ().
-  static int sort_function (void const *arg1, void const *arg2);
-
   /// Instance of the strategy.
   static ACE_RMS_Scheduler_Strategy *instance_;
 };
@@ -349,9 +343,6 @@ protected:
                                 Dispatch_Entry const &second_entry) override;
 
 private:
-  /// Comparison function to pass to qsort: calls instance ()->sort_comp ().
-  static int sort_function (void const *arg1, void const *arg2);
-
   /// Instance of the strategy
   static ACE_MLF_Scheduler_Strategy *instance_;
 };
@@ -415,9 +406,6 @@ protected:
      Dispatch_Entry const &second_entry) override;
 
 private:
-  /// Comparison function to pass to qsort: calls instance ()->sort_comp ().
-  static int sort_function (void const *arg1, void const *arg2);
-
   /// Instance of the strategy.
   static ACE_EDF_Scheduler_Strategy *instance_;
 };
@@ -479,9 +467,6 @@ protected:
      Dispatch_Entry const &second_entry) override;
 
 private:
-  /// Comparison function to pass to qsort: calls instance ()->sort_comp ().
-  static int sort_function (void const *arg1, void const *arg2);
-
   /// Instance of the strategy.
   static ACE_Criticality_Scheduler_Strategy *instance_;
 };
