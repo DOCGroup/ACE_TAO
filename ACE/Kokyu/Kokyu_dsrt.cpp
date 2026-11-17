@@ -59,34 +59,40 @@ DSRT_Dispatcher<DSRT_Scheduler_Traits>*
 DSRT_Dispatcher_Factory<DSRT_Scheduler_Traits>::
 create_DSRT_dispatcher (DSRT_ConfigInfo const &config_info)
 {
-  DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits> *tmp {};
-  DSRT_Dispatcher<DSRT_Scheduler_Traits> *disp {};
+  DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits> *raw_impl {};
+  std::unique_ptr<DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits>> impl;
 
   switch (config_info.impl_type_)
     {
     case DSRT_OS_BASED:
-      ACE_NEW_RETURN (tmp,
+      ACE_NEW_RETURN (raw_impl,
                       DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits> (
                       config_info.sched_policy_,
                       config_info.sched_scope_),
                       nullptr);
+      impl.reset (raw_impl);
       break;
 
     case DSRT_CV_BASED:
     default:
-      ACE_NEW_RETURN (tmp,
+      ACE_NEW_RETURN (raw_impl,
                       DSRT_CV_Dispatcher_Impl<DSRT_Scheduler_Traits>(
                       config_info.sched_policy_,
                       config_info.sched_scope_),
                       nullptr);
+      impl.reset (raw_impl);
       break;
     }
 
-  ACE_ASSERT (tmp != nullptr);
-  ACE_NEW_RETURN (disp, DSRT_Dispatcher<DSRT_Scheduler_Traits>, nullptr);
-  disp->implementation (tmp);
-  tmp->init (config_info);
-  return disp;
+  DSRT_Dispatcher<DSRT_Scheduler_Traits> *raw_dispatcher {};
+  ACE_NEW_RETURN (raw_dispatcher,
+                  DSRT_Dispatcher<DSRT_Scheduler_Traits>,
+                  nullptr);
+  std::unique_ptr<DSRT_Dispatcher<DSRT_Scheduler_Traits>> dispatcher (raw_dispatcher);
+  DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits> * const impl_ptr = impl.get ();
+  dispatcher->implementation (impl.release ());
+  impl_ptr->init (config_info);
+  return dispatcher.release ();
 }
 
 template <class QoSDescriptor_t>
