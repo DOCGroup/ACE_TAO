@@ -12702,6 +12702,16 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   audit remains open; TAO_IDL backend and utility directories are still
   unreviewed.
 
+## 2026-11-17 TAO_IDL backend ownership move audit
+
+- Reviewed all nine `std::move` sites in the backend. String and parameter
+  values move into AST nodes; the gperf input stream is owned by `TAO_CodeGen`
+  after transfer while its raw alias is used only to open the same live object;
+  queued `QNode` pointees remain stable when their `unique_ptr`s move during
+  vector growth. No moved-from value is read afterward.
+- No moved-from-use defect or code change was found. The repository-wide move
+  audit remains open; TAO_IDL utilities and AST directories remain unreviewed.
+
 ## 2026-11-17 TAO Object_Adapter ownership move audit
 
 - Reviewed all five `std::move` sites in `TAO/tao/PortableServer/Object_Adapter.cpp`.

@@ -2657,3 +2657,4 @@ TAO/orbsvcs/orbsvcs/Log	COPY_MOVE	done	-	Reviewed both factory servant transfers
 TAO/orbsvcs/orbsvcs/Event	COPY_MOVE	done	-	Reviewed three moves: dispatcher ownership transfers into its member, subscription ownership transfers into the vector, and vector compaction safely replaces a removed slot before pop_back
 ACE/protocols/ace/INet	COPY_MOVE	done	-	Reviewed all 10 std::move sites in HTTP_SessionBase.cpp, HTTP_IOStream.cpp, and ConnectionCache.cpp; transferred stream policies and cloned cache keys have no moved-from reads
 TAO/TAO_IDL/fe	COPY_MOVE	done	-	Reviewed 14 generated/handwritten std::move sites: fe_utils.cpp and the source grammar idl.ypp confirm destination ownership and no later moved-from reads
+TAO/TAO_IDL/be	COPY_MOVE	done	-	Reviewed all 9 std::move sites in the backend; strings/parameters transfer into AST nodes, the gperf stream remains valid through its destination owner, and queued pointees remain stable across vector growth
