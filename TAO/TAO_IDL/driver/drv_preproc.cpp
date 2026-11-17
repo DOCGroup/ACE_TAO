@@ -130,7 +130,7 @@ public:
             return;
           }
       }
-    this->created_files_.emplace_back (filename.data (), filename.size ());
+    this->created_files_.push_back (filename);
   }
 
   void unregister_file (std::string const& filename)
@@ -988,8 +988,8 @@ DRV_get_orb_idl_includes ()
 
  // Search for orb.idl in supplied include file search paths.
   std::string directory;
-  FE_Utils::File_Handle fp =
-    FE_Utils::open_included_file (orb_idl, directory);
+  FE_Utils::File_Handle fp (
+    FE_Utils::open_included_file (orb_idl, directory), ACE_OS::fclose);
 
   if (!fp)
     {
@@ -1254,7 +1254,8 @@ DRV_pre_proc (std::string const& myfile)
 
   // Rename temporary files so that they have extensions accepted
   // by the preprocessor.
-  FE_Utils::File_Handle file (ACE_OS::fopen (myfile.c_str (), "r"), ACE_OS::fclose);
+  FE_Utils::File_Handle file (
+    ACE_OS::fopen (myfile.c_str (), "r"), ACE_OS::fclose);
   if (!file)
     {
       ACE_ERROR ((LM_ERROR,
@@ -1270,13 +1271,13 @@ DRV_pre_proc (std::string const& myfile)
                       ti_file.get (),
                       tmp_ifile,
                       myfile);
-      if (ACE_OS::fclose (ti_file.release ()) == EOF)
+
+      if (ACE_OS::fclose (ti_file.release ()) != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      "%C: cannot close temp file \"%C\" after copying from \"%C\": %m\n",
+                      "%C: cannot close temp file \"%C\": %m\n",
                       idl_global->prog_name ().c_str (),
-                      tmp_ifile.c_str (),
-                      myfile.c_str ()));
+                      tmp_ifile.c_str ()));
           throw Bailout ();
         }
     }
@@ -1504,8 +1505,8 @@ DRV_pre_proc (std::string const& myfile)
 
   if (idl_global->compile_flags () & IDL_CF_ONLY_PREPROC)
     {
-      FE_Utils::File_Handle preproc (ACE_OS::fopen (t_file.c_str (), "r"),
-                                     ACE_OS::fclose);
+      FE_Utils::File_Handle preproc (
+        ACE_OS::fopen (t_file.c_str (), "r"), ACE_OS::fclose);
       char buffer[ACE_MAXLOGMSGLEN];
       size_t bytes;
 
@@ -1542,19 +1543,18 @@ DRV_pre_proc (std::string const& myfile)
 
     }
 
+  if (copy_input_file && ACE_OS::unlink (t_ifile.c_str ()) == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%C: Could not remove cpp "
+                  "input file \"%C\": %m\n",
+                  idl_global->prog_name ().c_str (),
+                  t_ifile.c_str ()));
+
+      throw Bailout ();
+    }
   if (copy_input_file)
     {
-      if (ACE_OS::unlink (t_ifile.c_str ()) == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "%C: Could not remove cpp "
-                      "input file \"%C\": %m\n",
-                      idl_global->prog_name ().c_str (),
-                      t_ifile.c_str ()));
-
-          throw Bailout ();
-        }
-
       temp_files.unregister_file (t_ifile);
     }
 
