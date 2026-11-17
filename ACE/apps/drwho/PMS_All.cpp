@@ -35,13 +35,16 @@ PMS_All::encode (char *packet, int &packet_length)
 
   for (Protocol_Record *prp = this->get_next_friend ();
        prp != nullptr;
-       *buf_ptr++ = '\t', prp = this->get_next_friend ())
-    buf_ptr =
-      this->handle_protocol_entries (ACE_OS::strecpy
-                                       (ACE_OS::strecpy (buf_ptr,
-                                                         prp->get_login ()),
-                                        prp->get_real ()),
-                                     prp->get_drwho_list ());
+       prp = this->get_next_friend ())
+    {
+      buf_ptr =
+        this->handle_protocol_entries (ACE_OS::strecpy
+                                         (ACE_OS::strecpy (buf_ptr,
+                                                           prp->get_login ()),
+                                          prp->get_real ()),
+                                        prp->get_drwho_list ());
+      *buf_ptr++ = '\t';
+    }
 
   *buf_ptr++ = '\n';
   packet_length = buf_ptr - packet;
