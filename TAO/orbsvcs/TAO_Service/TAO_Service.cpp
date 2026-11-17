@@ -1,4 +1,3 @@
-
 /**
  *  @file   TAO_Service.cpp
  *
@@ -24,14 +23,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      // ORB initialization boiler plate...
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       ACE_Sig_Action const sa (handler, SIGHUP);
 
       for (;;)
         {
-          ACE_Time_Value tv (5, 0);
+          ACE_Time_Value tv {5, 0};
 
           orb->perform_work (tv);
 
@@ -40,9 +38,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       ACE_Service_Config::reconfig_occurred ()));
 
           if (ACE_Service_Config::reconfig_occurred ())
-          {
-            ACE_Service_Config::reconfigure ();
-          }
+            {
+              ACE_Service_Config::reconfigure ();
+            }
         }
 
     }
