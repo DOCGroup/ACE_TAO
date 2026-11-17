@@ -167,7 +167,16 @@ Default_Dispatcher_Impl::shutdown_i ()
       task->wait ();
     }
 
-  return 0;
+  int status {};
+  for (Dispatcher_Task_Auto_Ptr const &task : this->tasks_)
+    {
+      if (task->discard_pending_commands () == -1)
+        {
+          status = -1;
+        }
+    }
+
+  return status;
 }
 
 int

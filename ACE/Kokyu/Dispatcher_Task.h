@@ -78,6 +78,7 @@ public:
 
   int enqueue (Dispatch_Command const *cmd,
                QoSDescriptor const &qos_info);
+  int discard_pending_commands ();
 
   /// Process the events in the queue.
   int svc () override;

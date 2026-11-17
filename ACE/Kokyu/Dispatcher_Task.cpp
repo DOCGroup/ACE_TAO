@@ -2,6 +2,7 @@
 
 #include "ace/Malloc_T.h"
 #include "ace/OS_NS_errno.h"
+#include "ace/OS_NS_sys_time.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "Dispatcher_Task.inl"
@@ -183,6 +184,39 @@ Dispatcher_Task::enqueue (Dispatch_Command const *cmd,
     }
 
   return 0;
+}
+
+int
+Dispatcher_Task::discard_pending_commands ()
+{
+  for (;;)
+    {
+      ACE_Message_Block *mb {};
+      ACE_Time_Value timeout {ACE_OS::gettimeofday ()};
+      if (this->getq (mb, &timeout) == -1)
+        {
+          if (ACE_OS::last_error () == EWOULDBLOCK)
+            {
+              return 0;
+            }
+
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("EC (%P|%t) error draining dispatch queue\n")));
+          return -1;
+        }
+
+      ACE_Message_Block_Unique_Ptr message_block (mb);
+      Dispatch_Queue_Item * const qitem =
+        dynamic_cast<Dispatch_Queue_Item*> (message_block.get ());
+      if (qitem != nullptr)
+        {
+          Dispatch_Command * const command = qitem->command ();
+          if (command != nullptr && command->can_be_deleted ())
+            {
+              command->destroy ();
+            }
+        }
+    }
 }
 
 void Dispatch_Queue_Item::init_i (QoSDescriptor const &qos_info)
