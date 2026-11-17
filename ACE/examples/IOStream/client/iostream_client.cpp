@@ -2,7 +2,6 @@
 #include "ace/IOStream.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdlib.h"
-#include "ace/OS_NS_unistd.h"
 
 // This client is a simple example of using the ACE_IOStream and
 // ACE_Streambuf_T templates to create an object based on ACE_*_Stream
