@@ -274,7 +274,7 @@ ACE_DynScheduler::get_rt_info (Object_Name name,
 
   // This makes a copy.  We can optimize this with our own string
   // class.
-  ACE_CString lookup (name);
+  ACE_CString const lookup (name);
   // Search the map for the <name>.  If found, return the RT_Info.
   if (info_collection_.find (lookup, rtinfo) >= 0)
     {
@@ -403,7 +403,7 @@ int ACE_DynScheduler::add_dependency(RT_Info* rt_info,
               temp_info->entry_point.in ()));
 
   RtecScheduler::Dependency_Set& set = temp_info->dependencies;
-  int l = set.length();
+  int const l = set.length();
   set.length(l + 1);
   set[l] = d;
   return 0;

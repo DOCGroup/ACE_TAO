@@ -85,7 +85,7 @@ ACE_Scheduler::get_rt_info (Object_Name name,
 
   // This makes a copy.  We can optimize this with our own string
   // class.
-  ACE_CString lookup (name);
+  ACE_CString const lookup (name);
   // Search the map for the <name>.  If found, return the RT_Info.
   RT_Info **info_array {};
   if (info_collection_.find (lookup, info_array) >= 0)
@@ -142,7 +142,7 @@ int ACE_Scheduler::add_dependency (RT_Info *rt_info,
                                    Dependency_Info const &d)
 {
   RtecScheduler::Dependency_Set& set = rt_info->dependencies;
-  int l = set.length();
+  int const l = set.length();
   set.length(l + 1);
   set[l] = d;
   return 0;
