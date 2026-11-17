@@ -8,9 +8,10 @@
 #include "ace/Sched_Params.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Sched/Scheduler.h"
-#include <cstdio>
-
 #include "ace/Lock_Adapter_T.h"
+
+#include <cstdio>
+#include <memory>
 
 ACE_Scheduler *ACE_Scheduler::instance_ {};
 
@@ -96,21 +97,24 @@ ACE_Scheduler::get_rt_info (Object_Name name,
   else
     // Otherwise, make one, bind it, and register it.
     {
-      rtinfo = new RT_Info;
+      std::unique_ptr<RT_Info> rtinfo_owner = std::make_unique<RT_Info> ();
+      rtinfo = rtinfo_owner.get ();
       rtinfo->entry_point = name;
       // Create and array (size one) of RT_Info*
-      info_array = new RT_Info*[1];
+      std::unique_ptr<RT_Info*[]> info_array_owner =
+        std::make_unique<RT_Info*[]> (1);
+      info_array = info_array_owner.get ();
       info_array[0] = rtinfo;
       // Bind the rtinfo to the name.
       if (info_collection_.bind (lookup, info_array) != 0)
         {
-          delete rtinfo;
-          delete [] info_array;
           rtinfo = nullptr;
           return FAILED; // Error!
         }
       else
         {
+          rtinfo_owner.release ();
+          info_array_owner.release ();
           // Register the array.
           status_t result = this->register_task (info_array, 1, handle);
           if (result == SUCCEEDED)

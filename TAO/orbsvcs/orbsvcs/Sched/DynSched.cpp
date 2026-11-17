@@ -14,6 +14,7 @@
 #include <algorithm>
 #include <cstdio>
 #include <cstdlib>
+#include <memory>
 
 #if ! defined (__ACE_INLINE__)
 #include "orbsvcs/Sched/DynSched.inl"
@@ -283,18 +284,19 @@ ACE_DynScheduler::get_rt_info (Object_Name name,
   else
     // Otherwise, make one, bind it, and register it.
     {
-      rtinfo = new RT_Info;
+      std::unique_ptr<RT_Info> rtinfo_owner = std::make_unique<RT_Info> ();
+      rtinfo = rtinfo_owner.get ();
       rtinfo->info_type = RtecScheduler::OPERATION;
       rtinfo->entry_point = CORBA::string_dup(name);
       // Bind the rtinfo to the name.
       if (info_collection_.bind (lookup, rtinfo) != 0)
         {
-          delete rtinfo;
           rtinfo = nullptr;
           return FAILED; // Error!
         }
       else
         {
+          rtinfo_owner.release ();
           // Register the task
           status_t result = this->register_task (rtinfo, handle);
           if (result == SUCCEEDED)
