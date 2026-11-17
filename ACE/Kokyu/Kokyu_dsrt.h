@@ -52,7 +52,7 @@ namespace Kokyu
     /// Cancel the schedule for a thread. This could alter the current schedule.
     int cancel_schedule (Guid_t guid);
 
-    /// Supply this interface with an appropriate implementation.
+    /// Takes ownership of the implementation.
     void implementation (DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits>*);
     /// @}
 

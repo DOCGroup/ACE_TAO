@@ -1,7 +1,6 @@
 #include "Kokyu.h"
 
 #include <memory>
-#include <utility>
 
 #include "Default_Dispatcher_Impl.h"
 
@@ -27,8 +26,7 @@ int Dispatcher::activate ()
 
 void Dispatcher::implementation (Dispatcher_Impl *impl)
 {
-  std::unique_ptr<Dispatcher_Impl> tmp_impl (impl);
-  dispatcher_impl_ = std::move(tmp_impl);
+  this->dispatcher_impl_.reset (impl);
 }
 
 Dispatcher*

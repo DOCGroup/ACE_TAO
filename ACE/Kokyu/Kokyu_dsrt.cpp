@@ -4,7 +4,7 @@
 #include "DSRT_Direct_Dispatcher_Impl_T.h"
 #include "DSRT_CV_Dispatcher_Impl_T.h"
 
-#include <utility>
+#include <memory>
 
 #if ! defined (__ACE_INLINE__)
 #include "Kokyu_dsrt.inl"
@@ -16,8 +16,7 @@ template <class DSRT_Scheduler_Traits>
 void
 DSRT_Dispatcher<DSRT_Scheduler_Traits>::implementation (DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits>* impl)
 {
-  std::unique_ptr<DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits>> tmp_impl (impl);
-  dispatcher_impl_ = std::move(tmp_impl);
+  this->dispatcher_impl_.reset (impl);
 }
 
 template <class DSRT_Scheduler_Traits>
