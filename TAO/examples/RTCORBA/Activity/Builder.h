@@ -46,14 +46,18 @@ class Builder : public ACE_Service_Object
   Builder &operator= (Builder const &) = delete;
   Builder &operator= (Builder &&) = delete;
 
-  /// = Service_Object virtual method overloads.
+  /// @name Service_Object virtual method overloads
+  /// @{
   int init (int argc, ACE_TCHAR *argv[]) override;
   int fini () override;
+  /// @}
 
-  /// = List access
+  /// @name List access
+  /// @{
   POA_LIST const &poa_list () const;
   TASK_LIST const &task_list () const;
   JOB_LIST const &job_list () const;
+  /// @}
 
  protected:
   /// Number of POA's declared

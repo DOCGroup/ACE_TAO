@@ -41,12 +41,14 @@ class POA_Holder
   /// Cleanup.
   PortableServer::POA_var poa_;
 
-  /// = POA create options.
+  /// @name POA creation options
+  /// @{
   ACE_CString POA_name_;
   RTCORBA::PriorityModel priority_model_ {RTCORBA::CLIENT_PROPAGATED};
   RTCORBA::Priority server_priority_ {};
   RTCORBA::ThreadpoolLanes lanes_;
   RTCORBA::PriorityBands bands_;
+  /// @}
 };
 
 #endif /* POA_HOLDER_H */

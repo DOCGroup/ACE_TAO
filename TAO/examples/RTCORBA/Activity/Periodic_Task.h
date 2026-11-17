@@ -51,12 +51,14 @@ class Periodic_Task : public ACE_Task <ACE_SYNCH>
   /// Dump the stats collected.
   void dump_stats (ACE_TCHAR const *msg);
 
-  /// = Job get/set
+  /// @name Job accessors
+  /// @{
   /// Returns the name of the Job exec'ed by this Task.
   char const *job () const;
 
   /// Sets the Job to exec.
   void job (Job_ptr job);
+  /// @}
 
  protected:
   /// All tasks synch at this barrier.
@@ -68,7 +70,8 @@ class Periodic_Task : public ACE_Task <ACE_SYNCH>
   /// Name of the Job.
   ACE_CString name_;
 
-  /// = Task parameters
+  /// @name Task parameters
+  /// @{
   /// see http://www.cis.ksu.edu/~neilsen/classes/cis721/lectures/lecture2/sld009.htm
 
   /// The priority of this task.
@@ -88,8 +91,9 @@ class Periodic_Task : public ACE_Task <ACE_SYNCH>
 
   /// A load factor supplied to each Job.
   int load_ {};
+  /// @}
 
-  /// = Stats house keeping
+  /// Statistics collected for this task.
   std::unique_ptr<Task_Stats> task_stats_;
 };
 

@@ -60,22 +60,27 @@ public:
   /// Resolve the naming service.
   int resolve_naming_service ();
 
-  /// = Accessors
+  /// @name Accessors
+  /// @{
   CORBA::ORB_ptr orb ();
   RTCORBA::Current_ptr current ();
   void builder (Builder* builder);
+  /// @}
 
   /// Returns priority if server declared model else -1
   CORBA::Short get_server_priority (CORBA::Object_ptr server);
-  /// = Callbacks
+  /// @name Callbacks
+  /// @{
   /// Task ended notification
   void task_ended (Periodic_Task* ended_task);
 
   /// Job shutdown notification
   void job_ended (Job_i* ended_job);
+  /// @}
 
 protected:
-  /// = Activation methods.
+  /// @name Activation methods
+  /// @{
   /// Activate the POA's
   void activate_poa_list ();
 
@@ -91,9 +96,10 @@ protected:
   /// Create a file whose name is specified in the -Started_Flag <file_name> argument at startup.
   /// This file flags that the Activity has finished its bootstrapping step.
   void create_started_flag_file (int argc, ACE_TCHAR *argv[]);
+  /// @}
 
-  /// = Data members
-
+  /// @name Data members
+  /// @{
   /// The Builder object.
   /// Borrowed from the Builder service object.
   Builder *builder_ {};
@@ -128,6 +134,7 @@ protected:
 
   /// Count the number of Jobs active
   int active_job_count_ {};
+  /// @}
 };
 
 using ACTIVITY = ACE_Singleton<Activity, ACE_Null_Mutex>;
