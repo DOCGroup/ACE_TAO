@@ -61,8 +61,8 @@ namespace Kokyu
     virtual int init_i (Dispatcher_Attributes const &) = 0;
     virtual int dispatch_i (Dispatch_Command const *,
                             QoSDescriptor const &) = 0;
-    virtual int shutdown_i () =0;
-    virtual int activate_i () =0;
+    virtual int shutdown_i () = 0;
+    virtual int activate_i () = 0;
 
   protected:
     int thr_creation_flags_ {};

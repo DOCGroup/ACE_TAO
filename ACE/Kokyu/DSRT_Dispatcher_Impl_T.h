@@ -154,12 +154,12 @@ namespace Kokyu
 
     virtual int init_i (DSRT_ConfigInfo const &) = 0;
     virtual int schedule_i (Guid_t guid,
-                    DSRT_QoSDescriptor const &) = 0;
+                            DSRT_QoSDescriptor const &) = 0;
     virtual int update_schedule_i (Guid_t guid,
-                           DSRT_QoSDescriptor const &) = 0;
-    virtual int update_schedule_i (Guid_t guid, Block_Flag_t flag)=0;
-    virtual int cancel_schedule_i (Guid_t guid)=0;
-    virtual int shutdown_i ()=0;
+                                   DSRT_QoSDescriptor const &) = 0;
+    virtual int update_schedule_i (Guid_t guid, Block_Flag_t flag) = 0;
+    virtual int cancel_schedule_i (Guid_t guid) = 0;
+    virtual int shutdown_i () = 0;
 
   protected:
     /// Generate the QoSComparator adapter.
