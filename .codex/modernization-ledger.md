@@ -12587,3 +12587,22 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   linked without warnings. `git diff --check` passed.
 - Commits `e4b18b9a71d` and `c7200d60bde` record the utility and separate
   override changes. Both directory audits remain partial.
+
+## 2026-11-17 TAO ownership move audit
+
+- Reviewed 18 `std::move` sites in `TAO/orbsvcs/orbsvcs/AV/RTCP.cpp` and
+  `RTCP_Packet.*`. They transfer report blocks, SDES linked-list nodes, and
+  owned buffers. Raw observations are used only while the pointee remains
+  owned; moved-from owners are not read.
+- Reviewed all 10 `std::move` sites in `TAO/tao/Acceptor_Registry.cpp`. The
+  acceptor owners move into `open_default_i` or the registry vector. In the
+  IPv4/IPv6 path, the retained acceptor pointer still refers to the object
+  owned by the vector; failure paths return or throw before reading the
+  moved-from owner.
+- Reviewed nine `std::move` sites in logWalker's `Session.cpp` and
+  `GIOP_Buffer.cpp`. Stream owners are passed into `stream_for` and the
+  returned owner replaces the source; buffer metadata is copied after octet
+  ownership transfers, then the source is reset.
+- No moved-from-use defect was found. This is a partial review of the listed
+  sites, not a complete audit of all 332 repository `std::move` calls. No
+  code changes or builds were needed.

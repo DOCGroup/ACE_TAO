@@ -1611,6 +1611,7 @@ TAO/orbsvcs/examples/RtEC/Simple	OWNERSHIP	done	f49b8581d4a	Migrated from existi
 TAO/orbsvcs/examples/RtEC/Simple	STYLE	done	f49b8581d4a	Migrated from existing inventory; see modernization-ledger.md
 TAO/orbsvcs/examples/RtEC/Simple	VALUE_INIT	done	f49b8581d4a	Migrated from existing inventory; see modernization-ledger.md
 TAO/orbsvcs/orbsvcs/AV	BUILD_TEST	done	0581719f4ae	After realclean, full TAO/orbsvcs/orbsvcs make -j 8 built and linked the AV library without diagnostics
+TAO/orbsvcs/orbsvcs/AV	MOVE_SEMANTICS	needs-work	-	Reviewed 18 std::move sites in RTCP.cpp and RTCP_Packet.*; each transfers unique-owned nodes or buffers without later reading the moved-from owner. The full AV directory audit remains open.
 TAO/orbsvcs/orbsvcs/AV	C_STRING	done	0581719f4ae	Replaced decimal ACE_OS::itoa in UDP port construction with std::to_string and ACE text conversion
 TAO/orbsvcs/orbsvcs/AV	SPECIAL_MEMBER_COMMENTS	done	fa129e9fbb3	Removed 103 standalone constructor/destructor label comments from 21 handwritten files; realclean-built and linked TAO_AV without warnings
 TAO/orbsvcs/orbsvcs/Concurrency	BUILD_TEST	done	1637c0752ce	Service realclean and make -j 8 passed without visible warnings; runtime requires separately running Naming and Concurrency services
@@ -2190,6 +2191,8 @@ TAO/orbsvcs/tests/Notify/Structured_Filter	VALUE_INIT	done	d57eccb57a4	Migrated 
 TAO/orbsvcs/tests/Simple_Naming	STD_NARROW_STRING	done	21113c7140f	Replaced six narrow ACE_OS::strcmp calls; realclean regenerated IDL and client build passed.
 TAO/orbsvcs/tests/Time	SPECIAL_MEMBER_COMMENTS	done	a210f3e69a	Removed standalone constructor/destructor labels; Time client realclean build passed; runtime harness fails during server shutdown
 TAO/tao	SPECIAL_MEMBER_COMMENTS	done	ff815715436	Rechecked the root TAO/tao sources after the earlier sweep and removed the remaining standalone `// Constructors.` label in TAO_Server_Request.h; explanatory comments retained
+TAO/tao	MOVE_SEMANTICS	needs-work	-	Reviewed 10 std::move transfers in Acceptor_Registry.cpp. Ownership moves into open_default_i or the acceptor vector; moved-from owners are not read, and the accepted object's pointee remains valid for the retained raw observation. Other TAO/tao move sites remain.
+TAO/utils/logWalker	MOVE_SEMANTICS	needs-work	-	Reviewed nine Output_Stream and GIOP_Buffer ownership moves. Callers do not use moved-from owners; GIOP_Buffer copies metadata while the transferred octet buffer remains owned by the destination, then resets the source. The full directory audit remains open.
 TAO/tao/AnyTypeCode	BUILD_TEST	done	9252d151c90	AnyTypeCode realclean-built with make -j 8; Recursive Any run_test.pl passed against the rebuilt library without compiler warnings
 TAO/tao/AnyTypeCode	CONST	done	pending	Migrated from existing inventory; see modernization-ledger.md
 TAO/tao/AnyTypeCode	OVERRIDE_DEFAULT_DELETE	done	4156f7f45f9	Defaulted the empty CORBA::Any_var constructor while retaining its definition in Any.inl

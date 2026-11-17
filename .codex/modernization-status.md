@@ -69,7 +69,10 @@ task has been reviewed and no follow-up remains.
   nearby sequence copies for cases where the source is dead and moving would
   avoid an allocation/copy. Do not infer safety solely from a successful build.
   The current TAO sequence move call sites were reviewed on 2026-11-16; no
-  moved-from misuse was found. A repository-wide audit remains open.
+  moved-from misuse was found. On 2026-11-17, a further 37 non-sequence
+  ownership moves in TAO AV, `TAO_Acceptor_Registry`, and logWalker were
+  reviewed without finding moved-from use. A repository-wide audit remains
+  open.
 
 ## Inventory columns
 
