@@ -9,13 +9,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       CORBA::TypeCode_var iface_tc =
-        orb->create_interface_tc (CORBA::string_dup ("IDL:iface:1.0"),
-                                  CORBA::string_dup ("iface"));
+        orb->create_interface_tc ("IDL:iface:1.0", "iface");
 
-      CORBA::ULong length {5};
-
-      CORBA::UnionMemberSeq foo_members (length);
-      foo_members.length (length);
+      CORBA::ULong const foo_length {5};
+      CORBA::UnionMemberSeq foo_members (foo_length);
+      foo_members.length (foo_length);
 
       // The first three members are multiple case labels for a
       // single string member. The label values are not in order
@@ -64,18 +62,15 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                                           CORBA::_tc_short,
                                                           foo_members);
 
-      length = 2;
-
-      CORBA::StructMemberSeq bar_members (length);
-      bar_members.length (length);
+      CORBA::ULong const bar_length {2};
+      CORBA::StructMemberSeq bar_members (bar_length);
+      bar_members.length (bar_length);
 
       bar_members[0].name = CORBA::string_dup ("bar_long_member");
       bar_members[0].type = CORBA::TypeCode::_duplicate (CORBA::_tc_long);
-
       bar_members[0].type_def = CORBA::IDLType::_nil ();
 
       bar_members[1].name = CORBA::string_dup ("bar_foo_member");
-
       bar_members[1].type = foo_tc._retn ();
 
       bar_members[1].type_def = CORBA::IDLType::_nil ();
