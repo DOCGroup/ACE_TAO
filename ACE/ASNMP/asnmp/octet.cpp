@@ -443,7 +443,7 @@ OctetStr &OctetStr::operator+= (char c)
       reset_octet_smi(smival);
 
     smival.value.string.ptr = tmp.release ();
-    smival.value.string.len++;          // up the len
+    ++smival.value.string.len;          // up the len
     return *this;
 }
 
