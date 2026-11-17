@@ -129,12 +129,12 @@ Dispatcher_Task::svc ()
             }
         }
 
+      ACE_Message_Block_Unique_Ptr message_block (mb);
       Dispatch_Queue_Item * const qitem =
-        dynamic_cast<Dispatch_Queue_Item*> (mb);
+        dynamic_cast<Dispatch_Queue_Item*> (message_block.get ());
 
       if (qitem == nullptr)
         {
-          ACE_Message_Block::release (mb);
           continue;
         }
 
@@ -147,8 +147,6 @@ Dispatcher_Task::svc ()
       {
         command->destroy ();
       }
-
-      ACE_Message_Block::release (mb);
 
       if (result == -1)
       {
