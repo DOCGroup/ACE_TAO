@@ -26,9 +26,8 @@ int Sched_Ready_Queue<DSRT_Scheduler_Traits,
                       ACE_LOCK>::
 current_size ()
 {
-  return
-    ACE_Utils::truncate_cast<int> (
-      dispatch_items_prio_queue_.current_size ());
+  return ACE_Utils::truncate_cast<int> (
+    this->dispatch_items_prio_queue_.current_size ());
 }
 
 template <class DSRT_Scheduler_Traits,
@@ -39,13 +38,13 @@ int Sched_Ready_Queue<DSRT_Scheduler_Traits,
                       ACE_LOCK>::
 most_eligible (DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>& item)
 {
-  if (dispatch_items_prio_queue_.current_size () == 0)
+  if (this->dispatch_items_prio_queue_.current_size () == 0)
     {
       return -1;
     }
 
-  PRIO_QUEUE_ITERATOR start = dispatch_items_prio_queue_.begin ();
-  PRIO_QUEUE_ENTRY &ent = (*start);
+  PRIO_QUEUE_ITERATOR const start = this->dispatch_items_prio_queue_.begin ();
+  PRIO_QUEUE_ENTRY &ent = *start;
   item = ent.item ();
   return 0;
 }
@@ -62,7 +61,7 @@ find (Guid_t guid,
   ACE_GUARD_RETURN (ACE_LOCK, mon, lock_, -1);
   RB_Tree_Dispatch_Item_Node *rb_tree_node {};
 
-  if (dispatch_items_hash_map_.find(guid, rb_tree_node) == -1)
+  if (this->dispatch_items_hash_map_.find (guid, rb_tree_node) == -1)
     {
       return -1;
     }
@@ -80,38 +79,38 @@ int Sched_Ready_Queue<DSRT_Scheduler_Traits,
 insert (DSRT_Dispatch_Item<DSRT_Scheduler_Traits>* item)
 {
   item->insertion_time (ACE_OS::gettimeofday ());
-  DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits> item_var(item);
+  DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits> const item_var (item);
 
   ACE_GUARD_RETURN (ACE_LOCK, mon, lock_, -1);
 
   RB_Tree_Dispatch_Item_Node* rb_tree_node;
-  Guid_t guid = item->guid ();
+  Guid_t const guid = item->guid ();
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
               "(%t|%T) about to insert item in sched queue\n"));
 #endif
 
-  if (dispatch_items_hash_map_.find (guid, rb_tree_node) == -1)
+  if (this->dispatch_items_hash_map_.find (guid, rb_tree_node) == -1)
     {
 #ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG ((LM_DEBUG,
                   "(%t|%T) item not found in hashmap\n"));
 #endif
-      if (dispatch_items_prio_queue_.bind (item_var,
-                                           item_var,
-                                           rb_tree_node) == 0)
+      if (this->dispatch_items_prio_queue_.bind (item_var,
+                                                 item_var,
+                                                 rb_tree_node) == 0)
         {
 #ifdef KOKYU_DSRT_LOGGING
           ACE_DEBUG ((LM_DEBUG, "(%t|%T): item bound in rbtree\n"));
 #endif
-          if (dispatch_items_hash_map_.bind (guid, rb_tree_node) == 0)
+          if (this->dispatch_items_hash_map_.bind (guid, rb_tree_node) == 0)
             {
 #ifdef KOKYU_DSRT_LOGGING
               ACE_DEBUG ((LM_DEBUG, "(%t|%T): item bound in hashmap\n"));
               ACE_DEBUG ((LM_DEBUG,
                           "<===Hash Table contents Begin===>\n"));
-              dispatch_items_hash_map_.dump ();
+              this->dispatch_items_hash_map_.dump ();
               ACE_DEBUG ((LM_DEBUG,
                           "<===Hash Table contents End=====>\n"));
 #endif
@@ -125,29 +124,29 @@ insert (DSRT_Dispatch_Item<DSRT_Scheduler_Traits>* item)
       ACE_DEBUG ((LM_DEBUG,
                   "(%t|%T) item found in hashmap\n"));
 #endif
-      dispatch_items_hash_map_.unbind (guid);
-      dispatch_items_prio_queue_.unbind (rb_tree_node);
+      this->dispatch_items_hash_map_.unbind (guid);
+      this->dispatch_items_prio_queue_.unbind (rb_tree_node);
 
 #ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG ((LM_DEBUG,
                   "(%t|%T) item removed from hashmap and rbtree\n"));
 #endif
-      if (dispatch_items_prio_queue_.bind (item_var,
-                                           item_var,
-                                           rb_tree_node) == 0)
+      if (this->dispatch_items_prio_queue_.bind (item_var,
+                                                 item_var,
+                                                 rb_tree_node) == 0)
         {
 #ifdef KOKYU_DSRT_LOGGING
           ACE_DEBUG ((LM_DEBUG,
                       "(%t|%T) replacement item bound to rbtree\n"));
 #endif
-          if (dispatch_items_hash_map_.bind (guid, rb_tree_node) == 0)
+          if (this->dispatch_items_hash_map_.bind (guid, rb_tree_node) == 0)
             {
 #ifdef KOKYU_DSRT_LOGGING
               ACE_DEBUG ((LM_DEBUG,
                           "(%t|%T) replacement item bound to hashmap\n"));
               ACE_DEBUG ((LM_DEBUG,
                           "<===Hash Table contents Begin===>\n"));
-              dispatch_items_hash_map_.dump ();
+              this->dispatch_items_hash_map_.dump ();
               ACE_DEBUG ((LM_DEBUG,
                           "<===Hash Table contents End===>\n"));
 #endif
@@ -168,14 +167,14 @@ remove (Guid_t guid)
   ACE_GUARD_RETURN (ACE_LOCK, mon, lock_, -1);
   RB_Tree_Dispatch_Item_Node *rb_tree_node {};
 
-  if (dispatch_items_hash_map_.find(guid, rb_tree_node) == 0)
+  if (this->dispatch_items_hash_map_.find (guid, rb_tree_node) == 0)
     {
-      dispatch_items_hash_map_.unbind (guid);
-      dispatch_items_prio_queue_.unbind (rb_tree_node);
+      this->dispatch_items_hash_map_.unbind (guid);
+      this->dispatch_items_prio_queue_.unbind (rb_tree_node);
 #ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG ((LM_DEBUG,
                   "<===Hash Table contents Begin===>\n"));
-      dispatch_items_hash_map_.dump ();
+      this->dispatch_items_hash_map_.dump ();
       ACE_DEBUG ((LM_DEBUG,
                   "<===Hash Table contents End===>\n"));
 #endif
@@ -204,20 +203,19 @@ template <class DSRT_Scheduler_Traits,
 int Sched_Ready_Queue<DSRT_Scheduler_Traits,
                        More_Eligible_Comparator,
                        ACE_LOCK>::
-change_prio(int old_prio, int new_prio, int policy)
+change_prio (int old_prio, int new_prio, int policy)
 {
-  if (dispatch_items_prio_queue_.current_size ())
+  if (this->dispatch_items_prio_queue_.current_size ())
     {
-      PRIO_QUEUE_ITERATOR end_iter = dispatch_items_prio_queue_.end ();
+      PRIO_QUEUE_ITERATOR const end_iter = this->dispatch_items_prio_queue_.end ();
       PRIO_QUEUE_ITERATOR iter;
       int prio = 0;
 
-      iter = dispatch_items_prio_queue_.begin ();
-      while( iter != end_iter )
+      iter = this->dispatch_items_prio_queue_.begin ();
+      while (iter != end_iter)
         {
           PRIO_QUEUE_ENTRY &ent = (*iter);
-          DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>
-            item_var = ent.item ();
+          DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits> const item_var = ent.item ();
           ACE_OS::thr_getprio (item_var->thread_handle (), prio);
           if (prio == old_prio)
             {
@@ -226,7 +224,7 @@ change_prio(int old_prio, int new_prio, int policy)
           ++iter;
         }
     }
-    return(0);
+  return 0;
 }
 
 }
