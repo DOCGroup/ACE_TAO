@@ -160,7 +160,6 @@ public class DemoCore extends Frame {
           }
       }
 
-
     // If connections have not been established, set up defaults
     if (! connections_established_)
       {
@@ -171,7 +170,6 @@ public class DemoCore extends Frame {
         addConnection ("Navigation Latency (100 ns)");
       }
   }
-
 
   public boolean addConnection (String selected, int max_in_a_row) {
 		// to not fill too many into it
@@ -231,5 +229,4 @@ public class DemoCore extends Frame {
       pushConsumerFactory_.run ();
     }
 }
-
 

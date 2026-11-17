@@ -114,8 +114,6 @@ public class MultiDoubleVisComp extends Canvas implements VisComp
     plot_count_ = new_plot_count;
   }
 
-
-
   public void setName (String title) {
       title_ = title;
   }
@@ -191,7 +189,6 @@ public class MultiDoubleVisComp extends Canvas implements VisComp
 
     repaint ();
   }
-
 
   public void update (Graphics g)
   {
@@ -344,7 +341,6 @@ public class MultiDoubleVisComp extends Canvas implements VisComp
       }
   }
 
-
   private int normalize (int height, float coord, int plot_index)
   {
     // First, figure out the ratio of the value to the max value
@@ -359,5 +355,4 @@ public class MultiDoubleVisComp extends Canvas implements VisComp
     return Math.round (location);
   }
 }
-
 

@@ -195,7 +195,6 @@ extends Canvas
       angles[0] += angle_shift;
       angles[1] -= angle_shift;
 
-
     }
 
   private void roll_horizon (int rad, int[] angles)

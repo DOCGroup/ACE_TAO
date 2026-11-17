@@ -251,7 +251,6 @@ public class DoubleVisComp extends Canvas implements VisComp
     local_max_value_count_++;
   }
 
-
   private int normalize(int height, float coord)
   {
     float ratio = (float)coord/max_value_;
@@ -261,5 +260,4 @@ public class DoubleVisComp extends Canvas implements VisComp
     return Math.round(location);
   }
 }
-
 

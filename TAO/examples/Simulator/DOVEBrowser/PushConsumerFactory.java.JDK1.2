@@ -13,7 +13,6 @@ public class PushConsumerFactory
   private Navigation navigation_;
   private Weapons weapons_;
 
-
   public PushConsumerFactory (DataHandler dataHandler,
 			      String nameServiceIOR,
 			      String[] args,
@@ -113,7 +112,6 @@ public class PushConsumerFactory
 
 	  System.out.println ("Reference to the Naming Service is ok.");
 
-
 	  // Start the consumer
 	  System.out.println ("Instantiating the Push Consumer.");
 	  PushConsumer pushConsumer = new PushConsumer (orb_, dataHandler_);
@@ -125,7 +123,6 @@ public class PushConsumerFactory
 	  orb_.connect (pushConsumer);
 
 	  System.out.println ("Going into the event dispatching loop.");
-
 
 	  java.lang.Object sync = new java.lang.Object();
 	  synchronized (sync) {
@@ -161,10 +158,4 @@ public class PushConsumerFactory
 	}
     }
 } // public class PushConsumerFactory
-
-
-
-
-
-
 

@@ -34,10 +34,3 @@ public class DOVEBrowserApplet extends java.applet.Applet {
   }
 }
 
-
-
-
-
-
-
-

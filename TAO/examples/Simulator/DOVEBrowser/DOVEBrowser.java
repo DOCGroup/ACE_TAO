@@ -75,5 +75,3 @@ public class DOVEBrowser {
   }
 }
 
-
-

@@ -196,4 +196,3 @@ public class PersianVisComp extends Canvas implements VisComp
   }
 }
 
-

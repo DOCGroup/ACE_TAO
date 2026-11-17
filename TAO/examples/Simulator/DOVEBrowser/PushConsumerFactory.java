@@ -306,7 +306,6 @@ public class PushConsumerFactory {
                                            "demo_consumer_" + ec_number);
             }
 
-
   	  // Tell the CORBA environment that we are ready
 
 	  System.out.println ("PushConsumer registered with POA");
@@ -345,12 +344,5 @@ public class PushConsumerFactory {
 	}
     }
 
-
 } // public class PushConsumerFactory
-
-
-
-
-
-
 

@@ -22,6 +22,3 @@ public interface DataHandler {
   public int getObservableProperty (String name);
 }
 
-
-
-

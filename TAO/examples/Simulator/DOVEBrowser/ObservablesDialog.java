@@ -28,7 +28,6 @@ public class ObservablesDialog extends Dialog {
       list_.add ((String)enumeration.nextElement());
     }
 
-
     Button ok_button_ = new Button ("OK");
     ok_button_.setFont ( new Font ("DialogHelvetica", Font.PLAIN, 10));
     Button cancel_button_ = new Button ("Cancel");

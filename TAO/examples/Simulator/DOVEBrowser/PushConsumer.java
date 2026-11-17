@@ -47,7 +47,6 @@ public class PushConsumer extends RtecEventComm.PushConsumerPOA
         }
     }
 
-
   public void push (RtecEventComm.Event[] events)
     {
       if (total_received_ < 5)
@@ -94,7 +93,6 @@ public class PushConsumer extends RtecEventComm.PushConsumerPOA
                         1,
                         RtecScheduler.Info_Type_t.OPERATION);
 
-
         // Register for Notification and Shutdown events
 
         byte payload[] = new byte[1];
@@ -110,10 +108,8 @@ public class PushConsumer extends RtecEventComm.PushConsumerPOA
         RtecEventChannelAdmin.Dependency dependencies_[] = new RtecEventChannelAdmin.Dependency[1];
         dependencies_[0] = new RtecEventChannelAdmin.Dependency (notification_event_, rt_info_);
 
-
         // @@ Carlos please help me to set the right boolean value
         RtecEventChannelAdmin.ConsumerQOS qos = new RtecEventChannelAdmin.ConsumerQOS (dependencies_, false);
-
 
         // The channel administrator is the event channel we got from the invocation
         // of this routine
@@ -134,7 +130,6 @@ public class PushConsumer extends RtecEventComm.PushConsumerPOA
         suppliers_.connect_push_consumer (consumer_ref, qos);
 
         System.out.println ("Registered the consumer successfully.");
-
 
   }
   catch (RtecEventChannelAdmin.TypeError e)

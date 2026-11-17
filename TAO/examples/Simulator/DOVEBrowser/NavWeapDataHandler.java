@@ -14,7 +14,6 @@ public class NavWeapDataHandler implements DataHandler {
   java.util.Hashtable ObservablesTable;
   int received_events_;
 
-
   // Observable for Persian Recursion data
   class PersianObservable extends DemoObservable {
 
@@ -31,7 +30,6 @@ public class NavWeapDataHandler implements DataHandler {
       notifyObservers (data);
     }
   }
-
 
   // Observable for Navigation data
   class NavigationObservable extends DemoObservable {
@@ -182,7 +180,6 @@ public class NavWeapDataHandler implements DataHandler {
       notifyObservers (temp_);
     }
   }
-
 
   public synchronized void update (RtecEventComm.Event event) {
 
@@ -395,6 +392,4 @@ public class NavWeapDataHandler implements DataHandler {
     return obs.getProperty ();
   }
 }
-
-
 

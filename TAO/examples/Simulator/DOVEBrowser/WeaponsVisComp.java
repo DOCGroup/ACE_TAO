@@ -9,7 +9,6 @@ import java.io.*;
 import java.util.*;
 import java.awt.*;
 
-
 public class WeaponsVisComp extends Panel implements VisComp
 {
   private final static String ONLINE = "Online";
@@ -93,7 +92,6 @@ public class WeaponsVisComp extends Panel implements VisComp
 	      status = weapons_.weapon5_status;
 	      break;
 	    }
-
 
 	  Label status_label_ = (Label)weapons_table_.get (weapon);
 

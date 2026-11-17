@@ -13,7 +13,6 @@
 
 #include "valuetype.h"
 
-
 // ******************************************************
 // Valuetype visitor for OBV_ class implementation
 // ******************************************************
