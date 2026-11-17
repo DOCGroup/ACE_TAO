@@ -30,23 +30,23 @@ public:
 
   ~TAO_IFR_Service_Loader () override;
 
-  // Called by the Service Configurator framework to initialize the
-  // Event Service. Defined in <ace/Service_Config.h>
+  /// Called by the Service Configurator framework to initialize the
+  /// Event Service. Defined in <ace/Service_Config.h>
   int init (int argc, ACE_TCHAR *argv[]) override;
 
-  // Called by the Service Configurator framework to remove the
-  // Event Service. Defined in <ace/Service_Config.h>
+  /// Called by the Service Configurator framework to remove the
+  /// Event Service. Defined in <ace/Service_Config.h>
   int fini () override;
 
-  // This function call initializes the IFR Service given a reference to the
-  // ORB and the command line parameters.
+  /// This function call initializes the IFR Service given a reference to the
+  /// ORB and the command line parameters.
   CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                    int argc,
                                    ACE_TCHAR *argv[]) override;
 
 protected:
+  /// Instance of the TAO_IFR_Server.
   TAO_IFR_Server ifr_server_;
-  // Instance of the TAO_IFR_Server
 
 private:
   TAO_IFR_Service_Loader (TAO_IFR_Service_Loader const &) = delete;
