@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-/* Class hierarchy for the File I/O tests. */
+/// Class hierarchy for the file I/O tests.
 
 #include "ace/Profile_Timer.h"
 
@@ -9,12 +9,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-/* Base class for all the File I/O tests. */
+/// Base class for all file I/O tests.
 
 class IO_Test
 {
 public:
-  // Initialize the test name
+  /// Initializes the test name.
   IO_Test (char const *name,
            ACE_Profile_Timer &tm);
 
@@ -25,19 +25,19 @@ public:
   IO_Test &operator= (IO_Test const &) = delete;
   IO_Test &operator= (IO_Test &&) = delete;
 
-  // Return the name of the test
+  /// Returns the name of the test.
   char const *name () const;
 
-  // Execute the IO test (note this is a pure virtual function...)
+  /// Executes the I/O test.
   virtual int run_test (size_t iterations,
                         FILE *input_fp,
                         FILE *output_fp) = 0;
 
 protected:
-  // The caller passes a string literal, so this non-owning pointer remains valid.
+  /// Non-owning pointer to the test name string literal.
   char const *const name_;
 
-  // Reference to a timer
+  /// Reference to the shared timer.
   ACE_Profile_Timer &tm_;
 };
 

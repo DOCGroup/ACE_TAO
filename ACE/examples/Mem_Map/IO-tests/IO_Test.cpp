@@ -45,7 +45,9 @@ Slow_Read_Write_Test::run_test (size_t iterations,
       char c {};
 
       while (ACE_OS::read (ifd, &c, sizeof c) > 0)
-        ACE_OS::write (ofd, &c, sizeof c);
+        {
+          ACE_OS::write (ofd, &c, sizeof c);
+        }
 
       ACE_OS::lseek (ifd, 0, SEEK_SET);
       ACE_OS::lseek (ofd, 0, SEEK_SET);
@@ -73,7 +75,9 @@ Stdio_Test::run_test (size_t iterations,
       int c;
 
       while ((c = ACE_OS::getc (input_fp)) != EOF)
-        ACE_OS::putc (c, output_fp);
+        {
+          ACE_OS::putc (c, output_fp);
+        }
 
       ACE_OS::rewind (input_fp);
       ACE_OS::rewind (output_fp);
@@ -106,7 +110,9 @@ Block_Read_Write_Test::run_test (size_t iterations,
       while ((n = ACE_OS::read (ifd,
                                 buf.data (),
                                 buf.size ())) > 0)
-        ACE_OS::write (ofd, buf.data (), n);
+        {
+          ACE_OS::write (ofd, buf.data (), n);
+        }
 
       ACE_OS::lseek (ifd, 0, SEEK_SET);
       ACE_OS::lseek (ofd, 0, SEEK_SET);
@@ -138,7 +144,9 @@ Block_Fread_Fwrite_Test::run_test (size_t iterations,
                                  1,
                                  buf.size (),
                                  input_fp)) != 0)
-        ACE_OS::fwrite (buf.data (), n, 1, output_fp);
+        {
+          ACE_OS::fwrite (buf.data (), n, 1, output_fp);
+        }
 
       ACE_OS::rewind (input_fp);
       ACE_OS::rewind (output_fp);
@@ -163,37 +171,38 @@ Mmap1_Test::run_test (size_t iterations,
   void * const src = map_input.addr ();
 
   if (src == MAP_FAILED)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%C"), this->name ()), -1);
-  else
     {
-      this->tm_.start ();
-
-      for (size_t iteration = 0; iteration < iterations; ++iteration)
-        {
-          if (ACE_OS::write (ACE_OS::fileno (output_fp),
-                             src,
-                             map_input.size ()) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("%C"),
-                               this->name ()),
-                              -1);
-          ACE_OS::lseek (ACE_OS::fileno (output_fp),
-                         0,
-                         SEEK_SET);
-        }
-
-      this->tm_.stop ();
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%C"), this->name ()), -1);
     }
 
+  this->tm_.start ();
+
+  for (size_t iteration = 0; iteration < iterations; ++iteration)
+    {
+      if (ACE_OS::write (ACE_OS::fileno (output_fp),
+                         src,
+                         map_input.size ()) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%C"),
+                             this->name ()),
+                            -1);
+        }
+      ACE_OS::lseek (ACE_OS::fileno (output_fp),
+                     0,
+                     SEEK_SET);
+    }
+
+  this->tm_.stop ();
+
   if (map_input.unmap () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%C"),
-                       this->name ()),
-                      -1);
-  else
-  {
-    return 0;
-  }
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%C"),
+                         this->name ()),
+                        -1);
+    }
+  return 0;
 }
 
 Mmap2_Test::Mmap2_Test (char const *name,
@@ -217,23 +226,23 @@ Mmap2_Test::run_test (size_t iterations,
   void * const dst = map_output.addr ();
 
   if (src == MAP_FAILED || dst == MAP_FAILED)
-    return -1;
-  else
     {
-      this->tm_.start ();
-
-      for (size_t iteration = 0; iteration < iterations; ++iteration)
-        std::memcpy (dst, src, size);
-
-      this->tm_.stop ();
+      return -1;
     }
+
+  this->tm_.start ();
+
+  for (size_t iteration = 0; iteration < iterations; ++iteration)
+    {
+      std::memcpy (dst, src, size);
+    }
+  this->tm_.stop ();
 
   if (map_input.unmap () == -1
       || map_output.unmap () == -1)
-    return -1;
-  else
-  {
-    return 0;
-  }
+    {
+      return -1;
+    }
+  return 0;
 }
 #endif
