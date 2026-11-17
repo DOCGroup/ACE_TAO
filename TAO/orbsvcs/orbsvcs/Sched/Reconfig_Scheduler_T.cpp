@@ -1090,7 +1090,7 @@ compute_scheduling (CORBA::Long minimum_priority,
   ORBSVCS_DEBUG ((LM_TRACE, "Schedule prepared.\n"));
   ORBSVCS_DEBUG ((LM_TRACE, "Dumping to stdout.\n"));
   ACE_Scheduler_Factory::dump_schedule (*(infos.ptr()), *(dependencies.ptr()), *(configs.ptr()),
-                                            *(anomalies.ptr()), 0);
+                                        *(anomalies.ptr()), nullptr);
   ORBSVCS_DEBUG ((LM_TRACE, "Dump done.\n"));
 #endif // SCHEDULER_DUMP
 

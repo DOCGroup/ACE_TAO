@@ -433,7 +433,7 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
   ACE_Scheduler_Factory::dump_schedule (*(infos.ptr()),
                                         *(dependencies.ptr()),
                                         *(configs.ptr()),
-                                        *(anomalies.ptr()), 0);
+                                        *(anomalies.ptr()), nullptr);
   ORBSVCS_DEBUG ((LM_DEBUG, "Dump done.\n"));
 }
 

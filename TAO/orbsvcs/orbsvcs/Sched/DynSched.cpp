@@ -1019,7 +1019,7 @@ ACE_DynScheduler::schedule (
             }
         }
 
-      temp_status = output_timeline (timeline_filename_, 0);
+      temp_status = output_timeline (timeline_filename_, nullptr);
       if (temp_status != SUCCEEDED)
         {
           // Create an anomaly, add it to anomaly set
