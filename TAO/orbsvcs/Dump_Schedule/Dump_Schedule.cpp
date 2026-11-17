@@ -58,6 +58,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Dump_Schedule");
+      return 1;
     }
 
   return 0;
