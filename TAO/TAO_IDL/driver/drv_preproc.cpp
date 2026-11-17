@@ -113,14 +113,32 @@ public:
   {
     if (this->active_)
       {
-        for (std::string const *filename : this->filenames_)
+        for (size_t i {}; i < this->filenames_.size (); ++i)
           {
-            if (!filename->empty ())
+            std::string const * const filename = this->filenames_[i];
+            if (this->created_[i] && !filename->empty ())
               {
                 (void) ACE_OS::unlink (filename->c_str ());
               }
           }
       }
+  }
+
+  void register_created_file (std::string const& filename)
+  {
+    this->set_created (filename, true);
+  }
+
+  void unregister_file (std::string const& filename)
+  {
+    this->set_created (filename, false);
+  }
+
+  void file_renamed (std::string const& source,
+                     std::string const& destination)
+  {
+    this->set_created (source, false);
+    this->set_created (destination, true);
   }
 
   void release ()
@@ -129,12 +147,25 @@ public:
   }
 
 private:
+  void set_created (std::string const& filename, bool created)
+  {
+    for (size_t i {}; i < this->filenames_.size (); ++i)
+      {
+        if (this->filenames_[i] == std::addressof (filename))
+          {
+            this->created_[i] = created;
+            return;
+          }
+      }
+  }
+
   DRV_Temp_File_Guard (DRV_Temp_File_Guard const &) = delete;
   DRV_Temp_File_Guard &operator= (DRV_Temp_File_Guard const &) = delete;
   DRV_Temp_File_Guard (DRV_Temp_File_Guard &&) = delete;
   DRV_Temp_File_Guard &operator= (DRV_Temp_File_Guard &&) = delete;
 
   std::array<std::string const *, 4> const filenames_;
+  std::array<bool, 4> created_ {};
   bool active_ {true};
 };
 
@@ -1173,6 +1204,7 @@ DRV_pre_proc (std::string const& myfile)
           throw Bailout ();
         }
 
+      temp_files.register_created_file (tmp_ifile);
       ti_file.reset (ACE_OS::fdopen (ti_fd, ACE_TEXT ("w")));
       if (!ti_file)
         {
@@ -1198,6 +1230,7 @@ DRV_pre_proc (std::string const& myfile)
       throw Bailout ();
     }
 
+  temp_files.register_created_file (tmp_file);
   FE_Utils::File_Handle tf_file (
     ACE_OS::fdopen (tf_fd, ACE_TEXT ("w")), ACE_OS::fclose);
   if (!tf_file)
@@ -1317,6 +1350,10 @@ DRV_pre_proc (std::string const& myfile)
 
       throw Bailout ();
     }
+  if (copy_input_file)
+    {
+      temp_files.file_renamed (tmp_file, t_file);
+    }
 
   if (copy_input_file
       && ACE_OS::rename (tmp_ifile.c_str (), t_ifile.c_str ()) != 0)
@@ -1330,9 +1367,14 @@ DRV_pre_proc (std::string const& myfile)
 
       throw Bailout ();
     }
+  if (copy_input_file)
+    {
+      temp_files.file_renamed (tmp_ifile, t_ifile);
+    }
 
-  // Remove any existing output file.
+  // Remove the empty file created by mkstemp before the preprocessor writes.
   (void) ACE_OS::unlink (t_file.c_str ());
+  temp_files.unregister_file (t_file);
 
   ACE_HANDLE fd = ACE_INVALID_HANDLE;
 
@@ -1355,6 +1397,7 @@ DRV_pre_proc (std::string const& myfile)
 
           throw Bailout ();
         }
+      temp_files.register_created_file (t_file);
 
       if (cpp_options.set_handles (ACE_INVALID_HANDLE, fd) == -1)
         {
@@ -1380,6 +1423,10 @@ DRV_pre_proc (std::string const& myfile)
                   DRV_arglist[0].c_str ()));
 
       throw Bailout ();
+    }
+  if (!output_arg_format.empty ())
+    {
+      temp_files.register_created_file (t_file);
     }
 
   if (fd != ACE_INVALID_HANDLE)
