@@ -76,8 +76,9 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
 
   // A generated _copy_value() is needed for every valuetype without
   // operations, including derived valuetypes and factory-based values.
-  // Nested copies cover direct members and one sequence/struct level; they do
-  // not preserve recursive graphs.
+  // Direct valuetype fields are copied. Aggregates retain their generated
+  // shallow-copy behavior, so nested valuetypes are shared and graphs are not
+  // recursively traversed.
   if (!node->have_operation () && !node->opt_accessor ())
     {
       *os << be_nl_2
