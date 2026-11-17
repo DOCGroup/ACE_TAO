@@ -49,7 +49,7 @@ public:
   int svc () override;
 
   /// Dump stats.
-  void dump_stats (ACE_TCHAR* msg, int dump_samples);
+  void dump_stats (ACE_TCHAR const *msg, bool dump_samples);
 
   /// Get the name of the proxy
   const char* proxy_name ();

@@ -17,15 +17,7 @@ Base_Time::Base_Time ()
   base_time_ = ACE_OS::gethrtime ();
 }
 
-Task_Stats::Task_Stats ()
-  : base_time_ (0),
-    end_time_ (0),
-    max_samples_ (0),
-    samples_count_ (0),
-    mean_ (0),
-    var_2_ (0)
-{
-}
+Task_Stats::Task_Stats () = default;
 
 Task_Stats::~Task_Stats () = default;
 
@@ -63,7 +55,7 @@ Task_Stats::end_time (ACE_UINT64 time)
 }
 
 void
-Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg, int dump_samples)
+Task_Stats::dump_samples (ACE_TCHAR const *file_name, ACE_TCHAR const *msg, bool dump_samples)
 {
   FILE* output_file = ACE_OS::fopen (file_name, "w");
 

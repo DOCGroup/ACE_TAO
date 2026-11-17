@@ -44,7 +44,7 @@ public:
   int init_state (ACE_Arg_Shifter& arg_shifter) override;
 
   /// dump stats
-  void dump_stats (ACE_TCHAR* msg, int dump_samples);
+  void dump_stats (ACE_TCHAR const *msg, bool dump_samples);
 
 protected:
   void push_structured_event (

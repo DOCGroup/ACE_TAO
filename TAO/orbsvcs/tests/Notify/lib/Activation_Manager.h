@@ -95,7 +95,7 @@ public:
   void done (TAO_Notify_Tests_Periodic_Consumer* consumer) override;
 
   /// Dumps statistics gathered during execution.
-  void dump_stats (int dump_samples);
+  void dump_stats (bool dump_samples);
 
   /// Opens the output file for writing and returns 0 on success.
   int ior_output_file (ACE_TCHAR const *file_name);

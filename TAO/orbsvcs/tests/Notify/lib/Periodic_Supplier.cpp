@@ -336,7 +336,7 @@ TAO_Notify_Tests_Periodic_Supplier::svc ()
 }
 
 void
-TAO_Notify_Tests_Periodic_Supplier::dump_stats (ACE_TCHAR* msg, int dump_samples)
+TAO_Notify_Tests_Periodic_Supplier::dump_stats (ACE_TCHAR const *msg, bool dump_samples)
 {
   ACE_TCHAR buf[BUFSIZ];
   ACE_OS::sprintf (buf, ACE_TEXT("%s.dat"), this->name_.c_str ());

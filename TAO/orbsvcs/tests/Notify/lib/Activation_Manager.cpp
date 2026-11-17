@@ -189,7 +189,7 @@ TAO_Notify_Tests_Activation_Manager::activate_suppliers ()
 }
 
 void
-TAO_Notify_Tests_Activation_Manager::dump_stats (int dump_samples)
+TAO_Notify_Tests_Activation_Manager::dump_stats (bool dump_samples)
 {
   char hostname[MAXHOSTNAMELEN] {};
   ACE_OS::hostname (hostname, MAXHOSTNAMELEN);
