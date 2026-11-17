@@ -1,8 +1,8 @@
-// Purpose: This program uses ACE_FIFO wrappers to perform
-// interprocess communication between a parent process and a child
-// process.  The parents reads from an input file and writes it into
-// the fifo.  The child reads from the ACE_FIFO and executes the more
-// command.
+/// @file FIFO-test.cpp
+/// @brief Uses ACE_FIFO wrappers for parent-child interprocess communication.
+///
+/// The parent reads from an input file and writes it to the FIFO. The child
+/// reads from the ACE_FIFO and executes the more command.
 
 #include "ace/FIFO_Recv.h"
 #include "ace/FIFO_Send.h"
