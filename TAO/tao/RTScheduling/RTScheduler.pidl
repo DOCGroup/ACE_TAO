@@ -1,14 +1,5 @@
-// ================================================================
-//
-// = LIBRARY
-//   TAO_RTScheduling
-//
-// = FILENAME
-//   RTScheduling.pidl
-//
-// = DESCRIPTION
-//   Some new data types included for GIOP 1.2
-// ================================================================
+/// @file RTScheduler.pidl
+/// @brief Some new data types included for GIOP 1.2.
 #ifndef TAO_RTSCHEDULER_PIDL
 #define TAO_RTSCHEDULER_PIDL
 
