@@ -7,20 +7,17 @@
 #include "Driver_Base.h"
 #include "Priority_Mapping.h"
 
-TAO_Notify_Tests_Application_Command::TAO_Notify_Tests_Application_Command ()
-  : dump_samples_ (0)
-{
-}
+TAO_Notify_Tests_Application_Command::TAO_Notify_Tests_Application_Command () = default;
 
 TAO_Notify_Tests_Application_Command::~TAO_Notify_Tests_Application_Command () = default;
 
-const char*
+char const *
 TAO_Notify_Tests_Application_Command::get_name ()
 {
   return TAO_Notify_Tests_Application_Command::name ();
 }
 
-const char*
+char const *
 TAO_Notify_Tests_Application_Command::name ()
 {
   return TAO_Notify_Tests_Name::application_command;
@@ -64,7 +61,7 @@ TAO_Notify_Tests_Application_Command::init (ACE_Arg_Shifter& arg_shifter)
 
           if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Samples")) == 0)
             {
-              this->dump_samples_ = 1;
+              this->dump_samples_ = true;
 
               arg_shifter.consume_arg ();
             }

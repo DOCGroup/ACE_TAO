@@ -43,7 +43,7 @@ public:
 
   /// Get the command name.
   char const* get_name () override;
-  static const char* name ();
+  static char const *name ();
 
 protected:
   enum COMMAND
@@ -59,7 +59,7 @@ protected:
 
   /// Flag used with the DUMP_STATE command that asks for all samples to be put into the
   /// output data file.
-  int dump_samples_;
+  bool dump_samples_ {};
 
   /// Owns the priority mapping registered as a borrowed pointer with the lookup manager.
   std::unique_ptr<TAO_Notify_Tests_Priority_Mapping> priority_mapping_;
