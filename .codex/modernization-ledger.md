@@ -12776,6 +12776,17 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - No defect or code change was needed. The repository-wide move audit remains
   open.
 
+## 2026-11-17 ACE XML utilities move audit
+
+- Reviewed all seven `std::move` sites in `ACE/ace/XML_Utils`. `XStr` moves
+  transfer Xerces string ownership; its move assignment checks for self-move.
+  Append/erase transfer freshly allocated result buffers into the object.
+  Resolver paths transfer into the path vector, and the generated XML string
+  wrapper transfers its unique-owned string with a self-move guard. No moved-from
+  value is read afterward.
+- No defect or code change was needed. The repository-wide move audit remains
+  open.
+
 ## 2026-11-17 Const guard macro follow-up
 
 - Replaced direct `ACE_Guard` spellings in `AnyTypeCode` with new
