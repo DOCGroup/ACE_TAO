@@ -14,6 +14,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/CORBA_macros.h"
 
+#include <cstring>
 #include <string>
 
 static ACE_TCHAR const file_prefix[] = ACE_TEXT ("http:");
@@ -23,11 +24,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 bool
 TAO_HTTP_Parser::match_prefix (char const *nior_string) const
 {
-  std::basic_string<ACE_TCHAR> const ior_string = ACE_TEXT_CHAR_TO_TCHAR (nior_string);
-  size_t const prefix_length = ACE_OS::strlen (::file_prefix);
-  return (ACE_OS::strncmp (ior_string.c_str (),
-                           ::file_prefix,
-                           prefix_length) == 0);
+  return std::strncmp (nior_string, "http:", sizeof ("http:") - 1) == 0;
 }
 
 CORBA::Object_ptr
