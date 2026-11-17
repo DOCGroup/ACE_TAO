@@ -327,11 +327,15 @@ ACE_Registry_ImpExp::export_section (const ACE_Configuration_Section_Key& sectio
                 {
                   return -2;
                 }
+                std::unique_ptr<char[], ACE_Array_Deleter<char>> binary_data_owner {
+                  static_cast<char *> (binary_data)};
                 line += ACE_TEXT ("hex:");
-                unsigned char* ptr = (unsigned char*)binary_data;
+                unsigned char const * const data =
+                  reinterpret_cast<unsigned char const *> (binary_data_owner.get ());
+                unsigned char const *ptr = data;
                 while (binary_length)
                   {
-                    if (ptr != binary_data)
+                    if (ptr != data)
                       {
                         line += ACE_TEXT (",");
                       }
@@ -340,11 +344,6 @@ ACE_Registry_ImpExp::export_section (const ACE_Configuration_Section_Key& sectio
                     --binary_length;
                     ++ptr;
                   }
-#if defined (ACE_HAS_ALLOC_HOOKS)
-                ACE_Allocator::instance()->free(binary_data);
-#else
-                delete [] (char*) binary_data;
-#endif /* ACE_HAS_ALLOC_HOOKS */
                 break;
               }
             default:
@@ -624,11 +623,15 @@ ACE_Ini_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
                 {
                   return -2;
                 }
+                std::unique_ptr<char[], ACE_Array_Deleter<char>> binary_data_owner {
+                  static_cast<char *> (binary_data)};
                 line += ACE_TEXT ("\"");
-                unsigned char* ptr = (unsigned char*)binary_data;
+                unsigned char const * const data =
+                  reinterpret_cast<unsigned char const *> (binary_data_owner.get ());
+                unsigned char const *ptr = data;
                 while (binary_length)
                   {
-                    if (ptr != binary_data)
+                    if (ptr != data)
                       {
                         line += ACE_TEXT (",");
                       }
@@ -638,11 +641,6 @@ ACE_Ini_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
                     ++ptr;
                   }
                 line += ACE_TEXT ("\"");
-#if defined (ACE_HAS_ALLOC_HOOKS)
-                ACE_Allocator::instance()->free(binary_data);
-#else
-                delete [] (char *) binary_data;
-#endif /* ACE_HAS_ALLOC_HOOKS */
                 break;
               }
             default:
