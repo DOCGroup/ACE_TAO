@@ -80,7 +80,8 @@ class Command_Processor
 public:
   Command_Processor ();
 
-  /// Insert a new <Command> into the <Command_Processor>'s queue.
+  /// Insert a new <Command> into the queue. On success, ownership transfers
+  /// to this Command_Processor; on failure, the caller retains ownership.
   int insert (Command *);
 
   /// Execute all the <Commands> in the queue.
@@ -94,7 +95,8 @@ protected:
   ~Command_Processor ();
 
 private:
-  // @@ You fill in here...
+  /// Commands successfully inserted are destroyed if they remain queued when
+  /// the processor is destroyed.
   ACE_Unbounded_Queue<Command *> url_queue_;
 };
 
