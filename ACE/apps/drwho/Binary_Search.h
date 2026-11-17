@@ -59,10 +59,6 @@ public:
   Protocol_Record *insert (char const *key_name,
                                    int max_len = MAXUSERIDNAMELEN) override = 0;
 
-  /// This function is passed to qsort to perform the comparison
-  /// between login names for two friends.
-  static int name_compare (void const *, void const *);
-
 protected:
   /// Borrowed iterator into sorted_record_.
   Protocol_Record **current_ptr_ {};

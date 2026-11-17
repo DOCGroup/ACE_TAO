@@ -1,18 +1,6 @@
 #include "Options.h"
 #include "Binary_Search.h"
 #include "ace/Log_Msg.h"
-#include <cstring>
-
-// This function is passed to qsort to perform the comparison between
-// login names for two friends.
-
-int
-Binary_Search::name_compare (void const *s1, void const *s2)
-{
-  Protocol_Record * const *left = static_cast<Protocol_Record * const *> (s1);
-  Protocol_Record * const *right = static_cast<Protocol_Record * const *> (s2);
-  return std::strcmp ((*left)->key_name1_, (*right)->key_name1_);
-}
 
 // Returns the next friend in the sequence of sorted friends.  Note
 // that this function would be simplified if we expanded the iterator

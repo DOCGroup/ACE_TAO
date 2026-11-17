@@ -4,6 +4,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_string.h"
+#include <algorithm>
 #include <cstring>
 #include <memory>
 
@@ -35,10 +36,15 @@ BS_Client::BS_Client ()
             (prp->key_name1_, prp->key_name2_);
         }
 
-      ACE_OS::qsort (this->sorted_record_.get (),
-                     this->count_,
-                     sizeof (Protocol_Record *),
-                     Binary_Search::name_compare);
+      if (this->count_ > 1)
+        {
+          std::sort (this->sorted_record_.get (),
+                     this->sorted_record_.get () + this->count_,
+            [] (Protocol_Record const *left, Protocol_Record const *right)
+            {
+              return std::strcmp (left->key_name1_, right->key_name1_) < 0;
+            });
+        }
     }
 }
 
