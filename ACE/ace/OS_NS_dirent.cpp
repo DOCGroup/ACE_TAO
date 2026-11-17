@@ -8,6 +8,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Log_Category.h"
 #include "ace/OS_NS_stdlib.h"
+#include <algorithm>
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # include "ace/Malloc_Base.h"
@@ -299,11 +300,16 @@ ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
 
   *namelist = vector;
 
-  if (comparator)
-    ACE_OS::qsort (*namelist,
-                   nfiles,
-                   sizeof (ACE_DIRENT *),
-                   (ACE_COMPARE_FUNC) comparator);
+  if (comparator && nfiles > 1)
+    {
+      std::sort (*namelist, *namelist + nfiles,
+        [comparator] (ACE_DIRENT *left, ACE_DIRENT *right)
+        {
+          ACE_DIRENT const *left_entry = left;
+          ACE_DIRENT const *right_entry = right;
+          return comparator (&left_entry, &right_entry) < 0;
+        });
+    }
 
   return nfiles;
 }
