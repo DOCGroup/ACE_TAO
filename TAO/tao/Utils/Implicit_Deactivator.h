@@ -33,7 +33,7 @@ namespace TAO
     {
       using argument = PortableServer::ServantBase *;
 
-      // Deactivate an implicitly activated servant
+      /// Deactivates an implicitly activated servant.
       void operator() (PortableServer::ServantBase * servant) const noexcept;
     };
 
@@ -41,7 +41,6 @@ namespace TAO
      * @class Implicit_Deactivator
      *
      * @brief Helper class to deactivate implicitly activated servants.
-     *
      */
     using Implicit_Deactivator =
       ACE_Utils::Auto_Functor<PortableServer::ServantBase, Implicit_Deactivation_Functor>;
