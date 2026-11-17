@@ -26,9 +26,9 @@ int
 Mem_Map_Stream::get_char ()
 {
   if (this->eof () && this->grow_file_and_remap () == -1)
-  {
-    return EOF;
-  }
+    {
+      return EOF;
+    }
 
   return *this->get_pos_++;
 }
@@ -49,9 +49,11 @@ Mem_Map_Stream::peek_char (size_t offset)
 {
   // We may need to iterate if the size of <n> is large.
   while (this->get_pos_ + offset >= this->end_of_mapping_plus1_)
-    if (this->grow_file_and_remap () == -1)
     {
-      return EOF;
+      if (this->grow_file_and_remap () == -1)
+        {
+          return EOF;
+        }
     }
 
   return this->get_pos_[offset];
@@ -71,8 +73,8 @@ Mem_Map_Stream::recv (size_t &len)
     return nullptr;
   }
 
-  const char *s = this->recv_pos_;
-  ACE_OFF_T olen = static_cast <ACE_OFF_T> (len);
+  char const * const s = this->recv_pos_;
+  ACE_OFF_T const olen = static_cast<ACE_OFF_T> (len);
   this->seek (olen, SEEK_CUR);
   len = this->get_pos_ - s;
   return s;
@@ -90,9 +92,11 @@ Mem_Map_Stream::peek_str (size_t offset,
 {
   // We will iterate if the size of <offset> is large.
   while (this->get_pos_ + (offset + size) > this->end_of_mapping_plus1_)
-    if (this->grow_file_and_remap () == -1)
     {
-      return nullptr;
+      if (this->grow_file_and_remap () == -1)
+        {
+          return nullptr;
+        }
     }
 
   return this->get_pos_ + offset;
@@ -122,9 +126,11 @@ Mem_Map_Stream::seek (ACE_OFF_T offset, int whence)
 
   // Make sure that the backing store will cover this.
   while (this->get_pos_ > this->end_of_mapping_plus1_)
-    if (this->grow_file_and_remap () == -1)
     {
-      return (ACE_OFF_T) -1;
+      if (this->grow_file_and_remap () == -1)
+        {
+          return (ACE_OFF_T) -1;
+        }
     }
 
   this->recv_pos_ = this->get_pos_;
@@ -163,24 +169,16 @@ Mem_Map_Stream::open (STRAT_CONNECTOR *connector,
 
   // Create the temporary file via the <ACE_Mem_Map> class API.
   if (this->mem_map_.open (file.get_path_name (),
-                          O_RDWR | O_CREAT | O_APPEND,
-                          ACE_DEFAULT_FILE_PERMS) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "open"),
-                      -1);
-  // Make sure to unlink this right away so that if this process
-  // crashes these files will be removed automatically.
-#if 0
-  else if (ACE_OS::unlink (file.get_path_name ()) == -1)
-  ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "unlink"),
-                      -1);
-  else
-#endif
-    // Initialize all the position pointers to 0.
-    this->rewind ();
+                           O_RDWR | O_CREAT | O_APPEND,
+                           ACE_DEFAULT_FILE_PERMS) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "open"),
+                        -1);
+    }
+  // Initialize all the position pointers to 0.
+  this->rewind ();
 
   return 0;
 }
@@ -192,12 +190,12 @@ Mem_Map_Stream::grow_file_and_remap ()
 
   // Copy the next chunk of bytes from the socket into the temporary
   // file.
-  ACE_Time_Value tv (*OPTIONS::instance ()->timeout ());
+  ACE_Time_Value const tv (*OPTIONS::instance ()->timeout ());
 
-  ssize_t n = this->svc_handler_->peer ().recv_n (buf,
-                                                  sizeof buf,
-                                                  0,
-                                                  &tv);
+  ssize_t const n = this->svc_handler_->peer ().recv_n (buf,
+                                                        sizeof buf,
+                                                        0,
+                                                        &tv);
   if (n == -1)
     {
       if (OPTIONS::instance ()->debug ())
@@ -207,22 +205,28 @@ Mem_Map_Stream::grow_file_and_remap ()
       return -1;
     }
   else if (n == 0)
-    return -1;
+    {
+      return -1;
+    }
   else if (ACE::write_n (this->mem_map_.handle (), buf, n) != n)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "write_n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "write_n"),
+                        -1);
+    }
 
   // Grow the memory-mapping to encompass the entire temporary file.
   if (this->mem_map_.map (static_cast<size_t> (-1),
                           PROT_RDWR,
                           ACE_MAP_PRIVATE | ACE_MAP_FIXED,
                           ACE_DEFAULT_BASE_ADDR) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "map"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "map"),
+                        -1);
+    }
   // MAP_FAILED is used as a "first time in" flag.
   if (this->recv_pos_ == MAP_FAILED)
     {

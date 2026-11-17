@@ -42,7 +42,6 @@ public:
   /// @}
 
 protected:
-  /// C++ destructor.
   virtual ~URL_Iterator ();
 };
 

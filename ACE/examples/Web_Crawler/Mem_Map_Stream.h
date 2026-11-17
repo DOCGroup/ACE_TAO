@@ -141,16 +141,6 @@ public:
   /// Returns 1 if we're at the end of the HTTP stream, else 0.
   virtual int eof () const;
 
-  /*
-  typedef ACE_NOOP_Creation_Strategy<Svc_Handler>
-  NULL_CREATION_STRATEGY;
-  typedef ACE_NOOP_Concurrency_Strategy<Svc_Handler>
-  NULL_ACTIVATION_STRATEGY;
-  typedef ACE_Cached_Connect_Strategy<Svc_Handler,
-                                    ACE_SOCK_CONNECTOR,
-                                    ACE_SYNCH_NULL_MUTEX>
-                                    CACHED_CONNECT_STRATEGY;*/
-
   Svc_Handler *svc_handler ();
 
   /// @}
@@ -163,22 +153,13 @@ private:
    */
   int grow_file_and_remap ();
 
-  //ACE_SOCK_Stream stream_;
-
   /**
    * Connection to peer. The granularity is at the Svc_Handler level.
    * The Svc_Handler has an SOCK_Stream.
    * Configure the Strategy Connector with a strategy that caches
    * connection.
    */
-  Svc_Handler *svc_handler_;
-  /*
-  NULL_CREATION_STRATEGY creation_strategy_;
-  NULL_ACTIVATION_STRATEGY activation_strategy_;
-  CACHED_CONNECT_STRATEGY caching_connect_strategy_;
-
-  STRAT_CONNECTOR *strat_connector_;  */
-
+  Svc_Handler *svc_handler_ {};
   /// Memory-mapped file that we're iterating over.
   ACE_Mem_Map mem_map_;
 
