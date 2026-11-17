@@ -315,12 +315,11 @@ HostProcess::split_thread_invocations (Session *session, const ACE_Time_Value& s
       t_iter.next(thr);
       char fname[100];
       thr->split_filename(fname,100);
-      ostream *strm = session->stream_for (nullptr, this, "threads", fname);
+      Session::Output_Stream strm = session->stream_for ({}, this, "threads", fname);
       thr->dump_invocations (*strm);
       *strm << endl;
       thr->dump_incidents (*strm, start);
       *strm << endl;
-      delete strm;
     }
 }
 void
@@ -347,6 +346,7 @@ HostProcess::iterate_peers (int group,
                             Session *session)
 {
   bool first {true};
+  Session::Output_Stream output;
   for (PeerProcs::ITERATOR i = this->by_addr_.begin(); i != by_addr_.end(); ++i)
     {
       PeerProcs::ENTRY *entry;
@@ -380,12 +380,10 @@ HostProcess::iterate_peers (int group,
             {
               char fname[100];
               entry->item()->split_filename(fname,100);
-              strm = session->stream_for (nullptr, this, "peers",fname);
-              this->dump_ident (*strm, "Invocation Detail");
-              entry->item()->dump_invocation_detail (*strm);
-              *strm << endl;
-              delete (strm);
-              strm = nullptr;
+              output = session->stream_for ({}, this, "peers", fname);
+              this->dump_ident (*output, "Invocation Detail");
+              entry->item()->dump_invocation_detail (*output);
+              *output << endl;
             }
           else
             {
