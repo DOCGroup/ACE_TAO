@@ -72,7 +72,6 @@ Default_Dispatcher_Impl::init_i (Dispatcher_Attributes const &attrs)
         }
     }
 
-  curr_config_info_ = attrs.config_info_set_;
   return 0;
 }
 

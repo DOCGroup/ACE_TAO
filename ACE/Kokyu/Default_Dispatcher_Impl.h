@@ -54,7 +54,6 @@ namespace Kokyu
   private:
     using Dispatcher_Task_Auto_Ptr = std::unique_ptr<Dispatcher_Task>;
     std::vector<Dispatcher_Task_Auto_Ptr> tasks_;
-    ConfigInfoSet curr_config_info_;
     bool activated_ {};
   };
 
