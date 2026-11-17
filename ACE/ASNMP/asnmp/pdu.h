@@ -49,10 +49,8 @@ class ASNMP_Export Pdu
 public:
   Pdu();
 
-  /// constructor with vbs and count
   Pdu (Vb *pvbs, int pvb_count);
 
-  /// constructor with another Pdu instance
   Pdu (Pdu const &pdu);
 
   Pdu (Pdu &&) = delete;

@@ -48,7 +48,6 @@
 class ASNMP_Export Counter32 : public SnmpUInt32
 {
 public:
-  /// constructor with a value
   explicit Counter32 (unsigned long i = 0);
 
   Counter32 (Counter32 const &c);

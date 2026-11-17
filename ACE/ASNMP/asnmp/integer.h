@@ -50,7 +50,6 @@ public:
   SnmpUInt32 (SnmpUInt32 const &c);
   SnmpUInt32 (SnmpUInt32 &&) = delete;
 
-  /// destructor (ensure that SnmpSyntax::~SnmpSyntax() is overridden)
   ~SnmpUInt32 () override = default;
 
   SnmpUInt32 &operator= (SnmpUInt32 &&) = delete;
@@ -94,14 +93,11 @@ protected:
 class ASNMP_Export SnmpInt32 : public SnmpSyntax
 {
 public:
-  /// constructor with value
   explicit SnmpInt32 (long const i = 0);
 
-  /// constructor with value
   SnmpInt32 (SnmpInt32 const &c);
   SnmpInt32 (SnmpInt32 &&) = delete;
 
-  /// destructor (ensure that SnmpSyntax::~SnmpSyntax() is overridden)
   ~SnmpInt32 () override = default;
 
   SnmpInt32 &operator= (SnmpInt32 &&) = delete;

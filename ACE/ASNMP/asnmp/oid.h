@@ -50,14 +50,11 @@
 class ASNMP_Export Oid : public  SnmpSyntax
 {
 public:
-  /// constructor using a dotted string
   explicit Oid (char const * dotted_oid_string = "", size_t size = unsigned(-1));
 
-  /// constructor using another oid object
   Oid ( const Oid &oid);
   Oid (Oid &&) = delete;
 
-  /// constructor from raw form
   Oid(const unsigned long *raw_oid, size_t oid_len);
 
   ~Oid();

@@ -83,7 +83,6 @@ static void TestSnmpTarget()
   ACE_TEST_ASSERT(rd.valid() == 1);
   ACE_TEST_ASSERT(wr.valid() == 1);
 
-  // constructor and get tests
   UdpAddress ga;
   ACE_TEST_ASSERT(ga.valid() == 0);
 

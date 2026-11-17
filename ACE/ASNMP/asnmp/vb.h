@@ -66,15 +66,12 @@
 class ASNMP_Export Vb
 {
 public:
-  /// constructor with no arguments
   /// makes an vb, unitialized (does not make object valid)
   Vb();
 
-  /// constructor to initialize the oid
   /// makes a vb with oid portion initialized (does not make object valid)
   explicit Vb (Oid const &oid);
 
-  /// constructor to initialize the oid
   /// makes a vb with oid portion and value portion initialized, (valid)
   Vb (Oid const &vb, SnmpSyntax const &val, SmiUINT32 status = SNMP_CLASS_SUCCESS);
 
