@@ -42,7 +42,10 @@ create_dispatcher (Dispatcher_Attributes const &attrs)
   std::unique_ptr<Dispatcher> dispatcher (raw_dispatcher);
 
   dispatcher->implementation (impl.release ());
-  raw_impl->init (attrs);
+  if (raw_impl->init (attrs) == -1)
+    {
+      return nullptr;
+    }
   return dispatcher.release ();
 }
 

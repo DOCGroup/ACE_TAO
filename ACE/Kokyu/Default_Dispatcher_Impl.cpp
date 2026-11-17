@@ -2,6 +2,7 @@
 
 #include "ace/Sched_Params.h"
 #include <new>
+#include <utility>
 #if ! defined (__ACE_INLINE__)
 #include "Default_Dispatcher_Impl.inl"
 #endif /* __ACE_INLINE__ */
@@ -38,7 +39,12 @@ Default_Dispatcher_Impl::init_i (Dispatcher_Attributes const &attrs)
                       Dispatcher_Task (*iter,
                                        ACE_Thread_Manager::instance()),
                       -1);
-      tasks.emplace_back (task);
+      std::unique_ptr<Dispatcher_Task> task_owner (task);
+      if (task_owner->msg_queue () == nullptr)
+        {
+          return -1;
+        }
+      tasks.emplace_back (std::move (task_owner));
     }
 
   this->tasks_.swap (tasks);
