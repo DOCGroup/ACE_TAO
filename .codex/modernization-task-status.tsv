@@ -2648,3 +2648,4 @@ TAO/utils/nslist	BUILD_TEST	done	87a26072697	Built and linked tao_nsadd, tao_nsd
 TAO/utils/nslist	CLI_OPTIONS	done	87a26072697	Grouped command-line state in Options and passed it through listing helpers.
 TAO/utils/nslist	SIZE_TYPES	done	87a26072697	Used CORBA::ULong for CosNaming sequence indexes and CORBA sequence lengths.
 TAO/utils/nslist	VALUE_INIT	done	87a26072697	Value-initialized option fields with {}.
+ACE/protocols/ace/INet	COPY_MOVE	done	-	Reviewed all 10 std::move sites in HTTP_SessionBase.cpp, HTTP_IOStream.cpp, and ConnectionCache.cpp; transferred stream policies and cloned cache keys have no moved-from reads

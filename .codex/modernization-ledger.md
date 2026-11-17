@@ -12645,6 +12645,16 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - No defect or code change was justified. This extends the partial
   `TAO/tao` move review; the repository-wide audit remains open.
 
+## 2026-11-17 ACE INet ownership move audit
+
+- Reviewed all 10 `std::move` sites in `HTTP_SessionBase.cpp`,
+  `HTTP_IOStream.cpp`, and `ConnectionCache.cpp`. HTTP stream policies move
+  through the constructor chain into the stream buffer, and the moved-from
+  owners are not used afterward. A cloned connection key transfers into its
+  owning member, after which the raw alias is reset to the owned object.
+- No moved-from-use defect or code change was found. The repository-wide move
+  audit remains open.
+
 ## 2026-11-17 TAO Object_Adapter ownership move audit
 
 - Reviewed all five `std::move` sites in `TAO/tao/PortableServer/Object_Adapter.cpp`.
