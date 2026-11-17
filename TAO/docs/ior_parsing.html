@@ -93,11 +93,13 @@ public:
         prefixes that this parser supports.  Normally this is a single
         prefix, a typical implementation will look like this:
 <PRE>
+#include <cstring>
+
 bool
 HTTP_Parser::match_prefix (const char *ior_string) const
 {
   static char http_prefix[] = "http:";
-  int cmp = ACE_OS::strncmp (ior_string, http_prefix, sizeof(http_prefix));
+  int cmp = std::strncmp (ior_string, http_prefix, sizeof(http_prefix));
   return (cmp == 0);
 }
 </PRE>
