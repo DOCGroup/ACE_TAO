@@ -335,6 +335,16 @@ test_valuetype_copy (int &error_count)
           ++error_count;
           ACE_ERROR ((LM_ERROR, "Copy_Sequence_Holder does not share its valuetype\n"));
         }
+      else
+        {
+          expect_equals<CORBA::Long> (
+            error_count, "Copy_Sequence_Holder shared leaf",
+            copied_leaf->leaf_value (), 51);
+          copied_leaf->leaf_value (53);
+          expect_equals<CORBA::Long> (
+            error_count, "Copy_Sequence_Holder original leaf updated",
+            leaf->leaf_value (), 53);
+        }
     }
 
   Copy_Leaf_Struct leaf_struct;
@@ -357,6 +367,16 @@ test_valuetype_copy (int &error_count)
         {
           ++error_count;
           ACE_ERROR ((LM_ERROR, "Copy_Struct_Holder does not share its valuetype\n"));
+        }
+      else
+        {
+          expect_equals<CORBA::Long> (
+            error_count, "Copy_Struct_Holder shared leaf",
+            copied_leaf->leaf_value (), 53);
+          copied_leaf->leaf_value (54);
+          expect_equals<CORBA::Long> (
+            error_count, "Copy_Struct_Holder original leaf updated",
+            leaf->leaf_value (), 54);
         }
     }
 }
