@@ -1,19 +1,9 @@
 %option noyywrap
 
 %{
-// ========================================================================
-//
-// = LIBRARY
-//   orbsvcs/ECTL
-// 
-// = FILENAME
-//   ETCL.ll
-//
-// = AUTHOR
-//   Carlos O'Ryan <coryan@uci.edu> based on previous work by
-//   Seth Widoff <sbw1@cs.wustl.edu>
-//
-// ========================================================================
+/// @file ETCL.ll
+/// @author Carlos O'Ryan <coryan@uci.edu> based on previous work by
+/// Seth Widoff <sbw1@cs.wustl.edu>
 
 #include "ace/ETCL/ETCL_Interpreter.h"
 #include "ace/ETCL/ETCL_y.h"

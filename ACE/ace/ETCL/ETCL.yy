@@ -1,18 +1,9 @@
 %{
-// ========================================================================
-//
-// = LIBRARY
-//   orbsvcs / Extended Trader Constraint Language parser.
-//
-// = FILENAME
-//   ETCL.yy
-//
-// = AUTHOR
-//   Carlos O'Ryan <coryan@uci.edu> based on previous work by
-//   Seth Widoff <sbw1@cs.wustl.edu>
-//   Jeff Parsons <j.parsons@vanderbilt.edu>
-//
-// ========================================================================
+/// @file ETCL.yy
+/// @brief Extended Trader Constraint Language parser.
+/// @author Carlos O'Ryan <coryan@uci.edu> based on previous work by
+/// Seth Widoff <sbw1@cs.wustl.edu>
+/// Jeff Parsons <j.parsons@vanderbilt.edu>
 
 #include "ace/ETCL/ETCL_y.h"
 #include "ace/ETCL/ETCL_constraint.h"
