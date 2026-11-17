@@ -90,7 +90,7 @@ protected:
   virtual ~Event_factory ();
 
 private:
-  TAO_OBV_CREATE_RETURN_TYPE (Event) create_for_unmarshal ();
+  TAO_OBV_CREATE_RETURN_TYPE (Event) create_for_unmarshal () override;
 };
 #endif /* is not defined */
 
@@ -152,7 +152,7 @@ protected:
   ~Temperature_factory () override = default;
 
 private:
-  TAO_OBV_CREATE_RETURN_TYPE (Temperature) create_for_unmarshal ();
+  TAO_OBV_CREATE_RETURN_TYPE (Temperature) create_for_unmarshal () override;
 };
 
 // Position implementation classes =====================================
@@ -198,7 +198,7 @@ protected:
   ~Position_factory () override = default;
 
 private:
-  TAO_OBV_CREATE_RETURN_TYPE (Position)  create_for_unmarshal ();
+  TAO_OBV_CREATE_RETURN_TYPE (Position)  create_for_unmarshal () override;
 };
 
 // Log_Msg implementation classes =====================================
@@ -236,7 +236,7 @@ protected:
   ~Log_Msg_factory () override = default;
 
 private:
-  TAO_OBV_CREATE_RETURN_TYPE (Log_Msg)  create_for_unmarshal ();
+  TAO_OBV_CREATE_RETURN_TYPE (Log_Msg)  create_for_unmarshal () override;
 };
 
 // Event_List_Link implementation classes =====================================
@@ -285,7 +285,7 @@ protected:
   ~Event_List_Link_factory () override = default;
 
 private:
-  TAO_OBV_CREATE_RETURN_TYPE (Event_List_Link)  create_for_unmarshal ();
+  TAO_OBV_CREATE_RETURN_TYPE (Event_List_Link)  create_for_unmarshal () override;
 };
 
 // The event list itself.   ----------------------------------
@@ -338,7 +338,7 @@ protected:
   ~Event_List_factory () override = default;
 
 private:
-  TAO_OBV_CREATE_RETURN_TYPE (Event_List)  create_for_unmarshal ();
+  TAO_OBV_CREATE_RETURN_TYPE (Event_List)  create_for_unmarshal () override;
 };
 
 class Event_List_Iterator
@@ -414,7 +414,7 @@ public:
 
 private:
   ~Temperature_Criterion_factory () override = default;
-  TAO_OBV_CREATE_RETURN_TYPE (Temperature_Criterion) create_for_unmarshal ();
+  TAO_OBV_CREATE_RETURN_TYPE (Temperature_Criterion) create_for_unmarshal () override;
 };
 
 class Position_Criterion_impl :
@@ -454,7 +454,7 @@ protected:
   ~Position_Criterion_factory () override = default;
 
 private:
-  TAO_OBV_CREATE_RETURN_TYPE (Position_Criterion)  create_for_unmarshal ();
+  TAO_OBV_CREATE_RETURN_TYPE (Position_Criterion)  create_for_unmarshal () override;
 };
 
 class Log_Msg_Criterion_impl : public virtual OBV_Log_Msg_Criterion,
@@ -490,7 +490,7 @@ protected:
   ~Log_Msg_Criterion_factory () override = default;
 
 private:
-  TAO_OBV_CREATE_RETURN_TYPE (Log_Msg_Criterion)  create_for_unmarshal ();
+  TAO_OBV_CREATE_RETURN_TYPE (Log_Msg_Criterion)  create_for_unmarshal () override;
 };
 
 class Criterion_List_impl : public virtual OBV_Criterion_List,
