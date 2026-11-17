@@ -1,6 +1,7 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/PortableGroup/Fragments_Cleanup_Strategy.h"
 #include "orbsvcs/PortableGroup/UIPMC_Transport_Recv_Packet.h"
+#include <algorithm>
 #include <memory>
 
 #if !defined (__ACE_INLINE__)
@@ -15,57 +16,19 @@ namespace
   using HASH_MAP_ENTRY = TAO_UIPMC_Mcast_Transport::Packets_Map::value_type;
   using DESCRIPTOR_SET = HASH_MAP_ENTRY**;
 
-  // The two functions below are stolen from Transport_Cache_Manager.
-#if !defined (ACE_LACKS_QSORT)
-  int
-  cpscmp (void const *a, void const *b)
-  {
-    HASH_MAP_ENTRY * const * left  =
-      reinterpret_cast<HASH_MAP_ENTRY * const *> (a);
-    HASH_MAP_ENTRY * const * right =
-      reinterpret_cast<HASH_MAP_ENTRY * const *> (b);
-
-    if ((*left)->int_id_->started () < (*right)->int_id_->started ())
-    {
-      return -1;
-    }
-
-    if ((*left)->int_id_->started () > (*right)->int_id_->started ())
-    {
-      return 1;
-    }
-
-    return 0;
-  }
-#endif /* ACE_LACKS_QSORT */
-
   void
   sort_set (DESCRIPTOR_SET &entries, int current_size)
   {
-#if defined (ACE_LACKS_QSORT)
-    // Use insertion sort if we don't have qsort
-    for(int i = 1; i < current_size; ++i)
+    if (current_size < 2)
       {
-        if (entries[i]->int_id_->started () <
-            entries[i - 1]->int_id_->started ())
-          {
-            HASH_MAP_ENTRY* entry = entries[i];
-
-            for(int j = i; j > 0 &&
-                  entries[j - 1]->int_id_->started () >
-                  entry->int_id_->started (); --j)
-              {
-                HASH_MAP_ENTRY* holder = entries[j];
-                entries[j] = entries[j - 1];
-                entries[j - 1] = holder;
-              }
-          }
+        return;
       }
-#else
-    ACE_OS::qsort (entries, current_size,
-                   sizeof (HASH_MAP_ENTRY *),
-                   reinterpret_cast<ACE_COMPARE_FUNC> (cpscmp));
-#endif /* ACE_LACKS_QSORT */
+
+    std::sort (entries, entries + current_size,
+      [] (HASH_MAP_ENTRY const *left, HASH_MAP_ENTRY const *right)
+      {
+        return left->int_id_->started () < right->int_id_->started ();
+      });
   }
 
 }
