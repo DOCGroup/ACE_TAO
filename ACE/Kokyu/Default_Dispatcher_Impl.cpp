@@ -54,7 +54,22 @@ Default_Dispatcher_Impl::init_i (Dispatcher_Attributes const &attrs)
 
   if (attrs.immediate_activation_ && !this->activated_)
     {
-      this->activate_i ();
+      if (this->activate_i () == -1)
+        {
+          // The factory has not exposed this dispatcher yet, so no dispatch
+          // commands can be queued while initialization is rolling back.
+          for (Dispatcher_Task_Auto_Ptr const &task : this->tasks_)
+            {
+              task->msg_queue ()->deactivate ();
+            }
+
+          for (Dispatcher_Task_Auto_Ptr const &task : this->tasks_)
+            {
+              task->wait ();
+            }
+
+          return -1;
+        }
     }
 
   curr_config_info_ = attrs.config_info_set_;
