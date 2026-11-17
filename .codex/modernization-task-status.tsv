@@ -1652,6 +1652,7 @@ TAO/orbsvcs/orbsvcs/IFRService	SPECIAL_MEMBER_COMMENTS	done	9eb77bad8f7	Removed 
 TAO/orbsvcs/orbsvcs/IFRService	VALUE_INIT	done	d71159b5636	Migrated from existing inventory; see modernization-ledger.md
 TAO/orbsvcs/orbsvcs/Log	SPECIAL_MEMBER_COMMENTS	done	dfb55393f0a	Removed two standalone constructor/destructor labels from LogStore.h; realclean-built and linked DsLogAdmin_Serv without warnings
 TAO/orbsvcs/orbsvcs/Naming	SPECIAL_MEMBER_COMMENTS	done	1436616bcba	Removed 81 standalone constructor/destructor labels from 30 handwritten files; realclean-built and linked CosNaming and FT_Naming without warnings
+TAO/orbsvcs/orbsvcs/Naming	MOVE_SEMANTICS	needs-work	-	Reviewed six std::move sites in naming-context iterator construction, Bindings_Iterator_T, and FaultTolerant/FT_Naming_Server.cpp. Iterator and queued sequence owners transfer to the recipient and are not read afterward; remaining Naming move sites need review.
 TAO/orbsvcs/orbsvcs/Notify	SPECIAL_MEMBER_COMMENTS	done	7127c6f9d46	Removed 177 standalone constructor/destructor label comments from 85 handwritten files; realclean-built and linked CosNotification_Serv
 TAO/orbsvcs/orbsvcs/Property	BUILD_TEST	done	22ece13b729	Clean service and client/server builds; perl run_test.pl passed without warnings
 TAO/orbsvcs/orbsvcs/Property	CLEANUP	done	22ece13b729	Simplified iterator length selection and removed generic special-member comments

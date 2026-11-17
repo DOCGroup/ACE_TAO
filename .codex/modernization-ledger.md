@@ -12625,3 +12625,13 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   cases; they were not rerun for this read-only audit.
 - No defect or code change was justified. The repository-wide move audit
   remains open.
+
+## 2026-11-17 TAO Naming ownership move audit
+
+- Reviewed the six `std::move` sites in Naming context iterator creation,
+  `Bindings_Iterator_T`, and `FaultTolerant/FT_Naming_Server.cpp`. The
+  iterator owner transfers to the binding servant; queued update-sequence
+  owners transfer to local processing or the queue. No moved-from owner is
+  read afterward.
+- No defect or code change was justified. This is a partial Naming review;
+  the repository-wide move audit remains open.
