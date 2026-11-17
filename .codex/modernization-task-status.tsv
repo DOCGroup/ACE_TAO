@@ -2666,3 +2666,5 @@ ACE/ace	MOVE_SITES	done	-	Reviewed all 7 std::move sites in Process.cpp, Monitor
 ACE/ace/XML_Utils	MOVE_SITES	done	-	Reviewed all 7 std::move sites in XercesString.cpp, XML_Schema_Resolver.cpp, and XSCRT/XML.hpp; source owners are not read after transfer and move assignment handles self-move
 ACE/ace	CONST_GUARD_MACROS	done	3b46834200d	Added const guard macro variants without changing existing ACE_GUARD behavior; targeted fuzz check passed
 TAO/tao/AnyTypeCode	CONST_GUARD_MACROS	done	3b46834200d	Replaced direct ACE_Guard spellings with const guard macros; targeted fuzz check passed and AnyTypeCode realclean build/link passed
+ACE/tests	COPY_MOVE	done	-	Reviewed all 10 std::move sites in tests; move-only feature probes are intentional and owner/value transfers do not read moved-from sources
+TAO/orbsvcs/orbsvcs	COPY_MOVE	done	-	Reviewed all 35 std::move sites in orbsvcs implementations; ownership transfers, linked-list construction/destruction, iterator handoff, and queue drains do not reuse moved-from owners

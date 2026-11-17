@@ -12813,3 +12813,32 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   initialized state.
 - No defect or code change was justified. This extends the partial
   `TAO/tao` move review; the repository-wide audit remains open.
+
+## 2026-11-17 ACE tests move audit
+
+- Reviewed all ten `std::move` sites under `ACE/tests`. The compiler feature
+  probes intentionally test moving a string literal and a `unique_ptr`; the
+  `Data` test explicitly exercises move assignment; configuration keys and
+  handle sets are consumed into destinations and then validated there; the
+  reactor performance tests transfer implementation ownership; and the
+  priority reactor retains the destination owner while using a non-owning
+  alias. No moved-from object is subsequently read and no change was needed.
+- The repository-wide move audit remains open.
+
+## 2026-11-17 TAO orbsvcs implementation move audit
+
+- Reviewed all 35 `std::move` sites in `TAO/orbsvcs/orbsvcs`. Naming iterators
+  take ownership of their hash iterators; fault-tolerant naming queue entries
+  are removed after being moved out; IFR configuration heaps and service
+  objects transfer to members; event-log servants are released only after POA
+  activation; and trader request IDs move into the bounded history queue.
+- Reviewed all AV `RTCP` linked-list moves. The iterative node destructors
+  detach the remaining tail before destroying each node, preventing recursive
+  destruction. Packet constructors preserve raw traversal pointers across
+  `unique_ptr` moves, and SDES nodes take ownership only after allocation and
+  validation succeed.
+- Reviewed event-channel subscription compaction and ownership insertion, plus
+  FT event info replacement and event dispatch setup. Destination owners are
+  used after transfer; moved-from owners are not read. No code change was
+  justified.
+- The repository-wide move audit remains open.
