@@ -128,6 +128,7 @@ Dispatcher_Task::svc ()
             {
               ACE_ERROR ((LM_ERROR,
                           "EC (%P|%t) getq error in Dispatching Queue\n"));
+              return -1;
             }
         }
 
@@ -142,7 +143,13 @@ Dispatcher_Task::svc ()
 
       Dispatch_Command * const command = qitem->command ();
 
-      ACE_ASSERT (command != nullptr);
+      if (command == nullptr)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "EC (%P|%t) null command in Dispatching Queue\n"));
+          return -1;
+        }
+
       int const result = command->execute ();
 
       if (command->can_be_deleted ())
@@ -162,6 +169,11 @@ int
 Dispatcher_Task::enqueue (Dispatch_Command const *cmd,
                           QoSDescriptor const &qos_info)
 {
+  if (!this->initialized_ || cmd == nullptr)
+    {
+      return -1;
+    }
+
   void * const buf = this->allocator_->malloc (sizeof (Dispatch_Queue_Item));
 
   if (buf == nullptr)
