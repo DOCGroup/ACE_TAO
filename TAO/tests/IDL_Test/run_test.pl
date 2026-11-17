@@ -16,7 +16,6 @@ if ($status != 0) {
 
 if ($status == 0) {
     my $valuetype_header;
-    $server->GetFile ("valuetypeC.h");
     open my $generated, "<", "valuetypeC.h"
       or die "ERROR: cannot open generated file <valuetypeC.h>: $!\n";
     {
@@ -53,7 +52,6 @@ if ($status == 0) {
 
     foreach my $check (@checks) {
         my ($file, $unexpected_pattern, $diagnostic) = @{$check};
-        $server->GetFile ($file);
         open my $generated, "<", $file
           or die "ERROR: cannot open generated file <$file>: $!\n";
         local $/;
