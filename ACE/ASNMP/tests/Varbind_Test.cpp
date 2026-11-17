@@ -197,6 +197,11 @@ static void VbTest()
   ACE_TEST_ASSERT(copied_vb == v10);
 
   Vb varbinds[] {v5, v10};
+  Pdu constructed_pdu {varbinds, 2};
+  ACE_TEST_ASSERT(constructed_pdu.get_vb_count() == 2);
+  ACE_TEST_ASSERT(constructed_pdu.get_vb (copied_vb, 1) == 1);
+  ACE_TEST_ASSERT(copied_vb == v10);
+
   Pdu list_pdu;
   ACE_TEST_ASSERT(list_pdu.set_vblist (varbinds, 2) == 1);
   ACE_TEST_ASSERT(list_pdu.get_vb_count() == 2);

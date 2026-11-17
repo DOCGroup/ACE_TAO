@@ -68,9 +68,6 @@ Pdu::Pdu (Vb *pvbs, int pvb_count)
        validity_ = 1;
      }
 
-   // assign the vb count
-   vb_count_ = pvb_count;
-
    validity_ = 1;
 }
 
