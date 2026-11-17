@@ -1,6 +1,6 @@
-#include "ace/streams.h"
-#include "ace/OS_NS_unistd.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/streams.h"
 
 #include "tao/Strategies/advanced_resource.h"
 #include "tao/Monitor/Monitor.h"
@@ -71,7 +71,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb (CORBA::ORB_init (argc, argv));
       Monitor_Client_Options options;
 
       if (parse_args (argc, argv, options) != 0)
@@ -80,8 +80,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       /// Get the MC object reference that the client has exposed.
-      CORBA::Object_var obj =
-        orb->string_to_object (options.monitor_ior);
+      CORBA::Object_var const obj (orb->string_to_object (options.monitor_ior));
 
       if (CORBA::is_nil (obj.in ()))
         {
@@ -90,7 +89,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                              -1);
         }
 
-      Monitor::MC_var monitor = Monitor::MC::_narrow (obj.in ());
+      Monitor::MC_var const monitor (Monitor::MC::_narrow (obj.in ()));
 
       if (CORBA::is_nil (monitor.in ()))
         {
@@ -104,7 +103,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           /// Access the monitor's value a few times and watch it grow.
           for (int i {}; i < options.iterations; ++i)
             {
-              Monitor::DataList_var data;
+              Monitor::DataList_var data {};
 
               if (options.clear)
                 {
@@ -138,11 +137,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
       else
         {
-          Monitor::NameList_var list = monitor->get_statistic_names (ACE_TEXT_ALWAYS_CHAR (options.filter));
+          Monitor::NameList_var const list (
+            monitor->get_statistic_names (ACE_TEXT_ALWAYS_CHAR (options.filter)));
 
           for (CORBA::ULong index {}; index < list->length (); ++index)
             {
-              ACE_DEBUG ((LM_DEBUG, "MP: <%C>\n", list[index].in ()));
+              ACE_DEBUG ((LM_DEBUG, "MP: <%C>\n", list[index]));
             }
         }
 
