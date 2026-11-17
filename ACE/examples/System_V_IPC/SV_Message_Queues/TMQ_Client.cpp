@@ -42,10 +42,10 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("a message of length %d")
-              ACE_TEXT (" received from server %d")
+              ACE_TEXT (" received from server %q")
               ACE_TEXT (" (user %C): %C\n"),
               recv_msg_data.length (),
-              recv_msg_data.pid (),
+              static_cast<ACE_INT64> (recv_msg_data.pid ()),
               recv_msg_data.user (),
               recv_msg_data.text ()));
 
