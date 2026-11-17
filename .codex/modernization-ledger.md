@@ -12666,6 +12666,17 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - No moved-from-use defect or code change was found. The repository-wide move
   audit remains open.
 
+## 2026-11-17 ACEXML ownership move audit
+
+- Reviewed all five `std::move` sites in `ACEXML/examples/SAXPrint/main.cpp`
+  and `ACEXML/common/NamespaceSupport.cpp`. Stream owners move into the common
+  stream owner and are then released to `ACEXML_InputSource`, which takes
+  ownership. NamespaceSupport pushes the old context pointer onto its stack
+  before releasing that owner and replacing it with the newly built context.
+  No moved-from owner is read afterward.
+- No moved-from-use defect or code change was found. The repository-wide move
+  audit remains open.
+
 ## 2026-11-17 TAO Object_Adapter ownership move audit
 
 - Reviewed all five `std::move` sites in `TAO/tao/PortableServer/Object_Adapter.cpp`.
