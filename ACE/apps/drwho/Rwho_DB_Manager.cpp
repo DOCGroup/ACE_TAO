@@ -57,13 +57,15 @@ RWho_DB_Manager::~RWho_DB_Manager ()
 /// A valid user file is at least MIN_HOST_DATA_SIZE bytes long and was
 /// received within the last MAX_HOST_TIMEOUT seconds.
 /// @return 1 if a valid host was found, 0 if there are no more hosts, or -1
-///         if opening a user file failed.
+///         if reading the current time or opening a user file failed.
 int
 RWho_DB_Manager::get_next_host ()
 {
-  time_t current_time;
-
-  ACE_OS::time (&current_time);
+  time_t const current_time = ACE_OS::time ();
+  if (current_time == static_cast<time_t> (-1))
+    {
+      return -1;
+    }
 
   // Go through each file in the directory looking for valid entries.
 
