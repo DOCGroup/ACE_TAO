@@ -111,23 +111,20 @@ ACE_Scheduler::get_rt_info (Object_Name name,
           rtinfo = nullptr;
           return FAILED; // Error!
         }
-      else
+
+      status_t const result = this->register_task (info_array, 1, handle);
+      if (result == SUCCEEDED)
         {
+          // The task registry accepted ownership; the name map indexes it.
           rtinfo_owner.release ();
           info_array_owner.release ();
-          // Register the array.
-          status_t result = this->register_task (info_array, 1, handle);
-          if (result == SUCCEEDED)
-            {
-              rtinfo->handle = handle;
-              return ST_UNKNOWN_TASK; // Didn't find it, but made one!
-            }
-          else
-            {
-              rtinfo->handle = 0;
-              return FAILED;
-            }
+          rtinfo->handle = handle;
+          return ST_UNKNOWN_TASK; // Didn't find it, but made one!
         }
+
+      info_collection_.unbind (lookup);
+      rtinfo = nullptr;
+      return FAILED;
     }
 }
 

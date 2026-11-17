@@ -294,22 +294,19 @@ ACE_DynScheduler::get_rt_info (Object_Name name,
           rtinfo = nullptr;
           return FAILED; // Error!
         }
-      else
+
+      status_t const result = this->register_task (rtinfo, handle);
+      if (result == SUCCEEDED)
         {
+          // The task registry accepted ownership; the name map indexes it.
           rtinfo_owner.release ();
-          // Register the task
-          status_t result = this->register_task (rtinfo, handle);
-          if (result == SUCCEEDED)
-            {
-              rtinfo->handle = handle;
-              return ST_UNKNOWN_TASK; // Didn't find it, but made one!
-            }
-          else
-            {
-              rtinfo->handle = 0;
-              return FAILED;
-            }
+          rtinfo->handle = handle;
+          return ST_UNKNOWN_TASK; // Didn't find it, but made one!
         }
+
+      info_collection_.unbind (lookup);
+      rtinfo = nullptr;
+      return FAILED;
     }
 }
 
