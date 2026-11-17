@@ -21,17 +21,17 @@ extern "C" void
 handler (int)
 {
   if (ace_sv_message_queue.remove () < 0)
-  {
-    ACE_ERROR ((LM_ERROR, "%p\n%a", "ace_sv_message_queue.recv", 1));
-  }
+    {
+      ACE_ERROR ((LM_ERROR, "%p\n%a", "ace_sv_message_queue.remove"));
+    }
   ACE_OS::exit (0);
 }
 
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  char * const username = ACE_OS::cuserid (static_cast<char *> (nullptr));
-  Message_Data const msg_data (static_cast<int> (ACE_OS::getpid ()), username,
+  char const * const username = ACE_OS::cuserid (static_cast<char *> (nullptr));
+  Message_Data const msg_data (static_cast<long> (ACE_OS::getpid ()), username,
                                "I received your message.");
   ACE_Typed_SV_Message<Message_Data> send_msg (msg_data, 0, msg_data.length ());
   ACE_Typed_SV_Message<Message_Data> recv_msg (SRV_ID);
@@ -43,9 +43,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   while (true)
     {
       if (ace_sv_message_queue.recv (recv_msg) == -1)
-      {
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ace_sv_message_queue.recv"), 1);
-      }
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ace_sv_message_queue.recv"), 1);
+        }
 
       Message_Data const &recv_msg_data = recv_msg.data ();
 
@@ -61,9 +61,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       send_msg.type (recv_msg_data.pid ());
 
       if (ace_sv_message_queue.send (send_msg) < 0)
-      {
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ace_sv_message_queue.send"), 1);
-      }
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ace_sv_message_queue.send"), 1);
+        }
     }
 
   ACE_NOTREACHED (return 0;)
