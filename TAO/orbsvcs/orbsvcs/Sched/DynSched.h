@@ -310,37 +310,34 @@ protected:
   /// its call to init ()).
   OS_Priority maximum_priority_;
 
-  /// Collection of known tasks.
+  /// Owns the Task_Entry array for the current schedule.
   Task_Entry *task_entries_ {};
 
   /**
-   * An array of pointers to task entries which wrap RT_Infos. It is
-   * sorted by the DFS finishing time and then the resulting topological
-   * over the call graph is used both to check for call chain cycles and
-   * to correctly propagate scheduling information away from the threads.
+   * Owns an array of non-owning pointers into task_entries_. The array is
+   * sorted by DFS finishing time and used to check call-chain cycles and
+   * propagate scheduling information away from threads.
    */
   Task_Entry **ordered_task_entries_ {};
 
-    /// identifies dispatch entries whose underlying
-    /// Task Entries delineate threads
+  /// Owns the set container; its dispatch-entry pointers are non-owning.
   ACE_Unbounded_Set <Dispatch_Entry *> *thread_delineators_ {};
 
-  /// An array of pointers to task entries which initiate call chains.
-  /// It is sorted by the schedule_threads method defined in the derived class.
+  /// Owns an array of non-owning pointers into thread_delineators_.
+  /// The derived schedule_threads implementation sorts this array.
   Dispatch_Entry **ordered_thread_dispatch_entries_ {};
 
-    /// the set of dispatch entries
+  /// Owns the set container and the Dispatch_Entry objects it contains.
   ACE_Unbounded_Set <Dispatch_Entry *> *dispatch_entries_ {};
 
-  /// Collection of dispatch configuration entries.
+  /// Owns the set container and the Config_Info objects it contains.
   ACE_Unbounded_Set <Config_Info *> *config_info_entries_ {};
 
-    /// expanded set of dispatch entries (all dispatch entries produced by
-    /// expanding sub-frames to the total frame size during timeline creation)
+  /// Owns the set container and entries produced by expanding sub-frames.
   ACE_Unbounded_Set <Dispatch_Entry *> *expanded_dispatches_ {};
 
-  /// An array of pointers to  dispatch entries. It is
-  /// sorted by the schedule_dispatches method.
+  /// Owns an array of non-owning pointers into dispatch_entries_.
+  /// The schedule_dispatches method sorts this array.
   Dispatch_Entry **ordered_dispatch_entries_ {};
 
   /// the number of dispatch entries in the schedule
@@ -349,7 +346,7 @@ protected:
   /// the number of dispatch entries in the schedule
   u_int threads_ {};
 
-  /// Ordered MultiSet of timeline entries.
+  /// Owns the timeline set; reset() separately deletes each linked TimeLine_Entry.
   ACE_Ordered_MultiSet <TimeLine_Entry_Link> *timeline_ {};
 
 private:
