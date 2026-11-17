@@ -2651,4 +2651,8 @@ TAO/utils/nslist	VALUE_INIT	done	87a26072697	Value-initialized option fields wit
 ACE/apps/JAWS2/JAWS	COPY_MOVE	done	-	Reviewed both std::move sites in Assoc_Array.cpp; unique-owned key/data locals transfer into parallel array slots and are not read afterward
 ACE/apps/soreduce	COPY_MOVE	done	-	Reviewed both std::move sites in Library.cpp and SO_Group.cpp; newly allocated module/library owners transfer to vectors and are not read afterward
 ACE/ACEXML/common	COPY_MOVE	done	-	Reviewed the moved namespace-context owner; the old context transfers to the stack before the new context replaces it, and the moved-from owner is not read afterward
+TAO/orbsvcs/Fault_Detector	COPY_MOVE	done	-	Reviewed the detector owner transfer into the indexed map slot; startup uses the stored owner and failure resets that slot before throwing
+TAO/orbsvcs/Event_Service	COPY_MOVE	done	-	Reviewed the event-channel owner transfer into the service member after activation; the local owner is not read afterward
+TAO/orbsvcs/orbsvcs/Log	COPY_MOVE	done	-	Reviewed both factory servant transfers; local unique_ptr owners protect activation and are released only after the POA accepts the servant
+TAO/orbsvcs/orbsvcs/Event	COPY_MOVE	done	-	Reviewed three moves: dispatcher ownership transfers into its member, subscription ownership transfers into the vector, and vector compaction safely replaces a removed slot before pop_back
 ACE/protocols/ace/INet	COPY_MOVE	done	-	Reviewed all 10 std::move sites in HTTP_SessionBase.cpp, HTTP_IOStream.cpp, and ConnectionCache.cpp; transferred stream policies and cloned cache keys have no moved-from reads

@@ -12677,6 +12677,19 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - No moved-from-use defect or code change was found. The repository-wide move
   audit remains open.
 
+## 2026-11-17 TAO event service ownership move audit
+
+- Reviewed all seven moves in `Fault_Detector`, `Event_Service`, the event log
+  factories, and the Event Service implementation. Detector ownership moves
+  into its indexed slot and that stored object is then started; startup failure
+  resets the slot before throwing. The event channel transfers into its
+  service member after activation. Log factory local owners protect POA
+  activation and release only after successful activation. Event subscriptions
+  transfer into the vector; removing one moves the last entry into its slot
+  before `pop_back`, while dispatcher ownership transfers into its member.
+- No moved-from-use defect or code change was found. The repository-wide move
+  audit remains open.
+
 ## 2026-11-17 TAO Object_Adapter ownership move audit
 
 - Reviewed all five `std::move` sites in `TAO/tao/PortableServer/Object_Adapter.cpp`.
