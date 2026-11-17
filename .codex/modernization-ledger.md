@@ -12722,6 +12722,16 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - No moved-from-use defect or code change was found. The repository-wide move
   audit remains open; TAO_IDL utilities remain unreviewed.
 
+## 2026-11-17 TAO_IDL utility ownership move audit
+
+- Reviewed all 10 `std::move` sites in `TAO/TAO_IDL/util/utl_global.cpp`.
+  Owned AST/configuration objects and optional template state transfer into
+  their members; gperf path strings transfer from local strings; the DCPS map
+  receives the newly created owner through `try_emplace`. No moved-from value
+  is read afterward.
+- No moved-from-use defect or code change was found. The repository-wide move
+  audit remains open.
+
 ## 2026-11-17 TAO Object_Adapter ownership move audit
 
 - Reviewed all five `std::move` sites in `TAO/tao/PortableServer/Object_Adapter.cpp`.
