@@ -12635,3 +12635,12 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   read afterward.
 - No defect or code change was justified. This is a partial Naming review;
   the repository-wide move audit remains open.
+
+## 2026-11-17 TAO Active_Object_Map ownership move audit
+
+- Reviewed all six `std::move` sites in `TAO/tao/PortableServer/Active_Object_Map.cpp`.
+  Newly created strategy and map owners transfer into the `TAO_Active_Object_Map`
+  members after initialization succeeds. The moved-from locals are not used
+  afterward.
+- No defect or code change was justified. This extends the partial
+  `TAO/tao` move review; the repository-wide audit remains open.
