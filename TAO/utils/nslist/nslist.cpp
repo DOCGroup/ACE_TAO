@@ -34,26 +34,33 @@
 namespace
 {
   CORBA::ORB_var orb;
-  bool
-    showIOR {},    // Default decodes endpoints
-    showCtxIOR {}, // Default no displaying naming context ior
-    noLoops {};    // Default draw loopback arrows
-  char const *myTree = "|"; // Default string to draw tree "tram-lines"
-  char const *myNode = "+"; // Default string to draw tree node end-points
-  size_t sizeMyTree; // Initialized by main to strlen (myTree)
-  size_t sizeMyNode; // Initialized by main to strlen (myNode)
-  size_t maxDepth {};      // Limit to display depth (default unlimited)
-  ACE_Time_Value
-    rtt = ACE_Time_Value::zero; // relative roundtrip timeout for ctx
-
   constexpr CORBA::ULong MAX_COUNT_DEFAULT = 100;
-  CORBA::ULong max_count = MAX_COUNT_DEFAULT;
+  struct Options
+  {
+    bool show_ior {};
+    bool show_context_ior {};
+    bool no_loops {};
+    bool show_name_service_only {};
+    bool failed {};
+    char const *tree {"|"};
+    char const *node {"+"};
+    size_t tree_size {};
+    size_t node_size {};
+    size_t max_depth {};
+    ACE_Time_Value relative_roundtrip_timeout {ACE_Time_Value::zero};
+    ACE_TCHAR const *name_service {};
+    ACE_TCHAR *name {};
+    ACE_TCHAR kind_separator {ACE_TEXT('.')};
+    ACE_TCHAR context_separator[2] {ACE_TEXT('/'), 0};
+    CORBA::ULong max_count {MAX_COUNT_DEFAULT};
+  };
 
   void list_context (const CosNaming::NamingContext_ptr,
                      size_t level,
-                     CORBA::ULong max_count);
+                     Options const &options);
 
-  CORBA::Object_ptr set_rtt (CORBA::Object_ptr obj);
+  CORBA::Object_ptr set_rtt (CORBA::Object_ptr obj,
+                             ACE_Time_Value const &relative_roundtrip_timeout);
 
   //==========================================================================
   class NestedNamingContexts
@@ -125,7 +132,9 @@ namespace
 
   //==========================================================================
   void
-  display_endpoint_info (CORBA::Object_ptr obj, const size_t level)
+  display_endpoint_info (CORBA::Object_ptr obj,
+                         size_t const level,
+                         Options const &options)
   {
     TAO_Stub *stub = obj->_stubobj ();
     if (!stub)
@@ -155,16 +164,16 @@ namespace
 
     ACE_DEBUG ((LM_DEBUG, "\n"));
     for (size_t count {}; count < level; ++count)
-      ACE_DEBUG ((LM_DEBUG, "%C ", myTree));
-    for (size_t count {}; count < sizeMyNode; ++count)
+      ACE_DEBUG ((LM_DEBUG, "%C ", options.tree));
+    for (size_t count {}; count < options.node_size; ++count)
       ACE_DEBUG ((LM_DEBUG, " "));
     ACE_DEBUG ((LM_DEBUG, " Protocol: %C\n",
                tag_name.c_str()));
 
     // Display Endpoint
     for (size_t count {}; count < level; ++count)
-      ACE_DEBUG ((LM_DEBUG, "%C ", myTree));
-    for (size_t count {}; count < sizeMyNode; ++count)
+      ACE_DEBUG ((LM_DEBUG, "%C ", options.tree));
+    for (size_t count {}; count < options.node_size; ++count)
       ACE_DEBUG ((LM_DEBUG, " "));
     char buf[256] {};
     if (endpoint->addr_to_string (buf, sizeof(buf)-1u) < 0)
@@ -179,15 +188,16 @@ namespace
   void
   show_chunk (const CosNaming::NamingContext_ptr nc,
               const CosNaming::BindingList &bl,
-              size_t level)
+              size_t level,
+              Options const &options)
   {
     for (CORBA::ULong i {};
          i < bl.length ();
          ++i)
       {
         for (size_t count {}; count < level-1; ++count)
-          ACE_DEBUG ((LM_DEBUG, "%C ", myTree));
-        ACE_DEBUG ((LM_DEBUG, "%C %C", myNode,
+          ACE_DEBUG ((LM_DEBUG, "%C ", options.tree));
+        ACE_DEBUG ((LM_DEBUG, "%C %C", options.node,
                    bl[i].binding_name[0].id.in ()));
 
         if (bl[i].binding_name[0].kind[0])
@@ -209,7 +219,7 @@ namespace
           {
             ACE_DEBUG ((LM_DEBUG, ": Naming context"));
 
-            obj = set_rtt(obj.in ());
+            obj = set_rtt (obj.in (), options.relative_roundtrip_timeout);
 
             CosNaming::NamingContext_var xc;
             try
@@ -235,35 +245,35 @@ namespace
             if (const size_t backwards= NestedNamingContexts::hasBeenSeen (xc.in ()))
               {
                 ACE_DEBUG ((LM_DEBUG, " (Binding Loop)\n"));
-                if (!noLoops)
+                if (!options.no_loops)
                   {
                     size_t count_binding {};
                     for (; count_binding < (level - backwards); ++count_binding)
-                      ACE_DEBUG ((LM_DEBUG, "%C ", myTree));
+                      ACE_DEBUG ((LM_DEBUG, "%C ", options.tree));
                     ACE_DEBUG ((LM_DEBUG, "^"));
                     while (++count_binding < level)
-                      for (size_t chars {}; chars <= sizeMyTree; ++chars)
+                      for (size_t chars {}; chars <= options.tree_size; ++chars)
                         ACE_DEBUG ((LM_DEBUG, "-"));
-                    for (size_t chars {}; chars < sizeMyNode; ++chars)
+                    for (size_t chars {}; chars < options.node_size; ++chars)
                       ACE_DEBUG ((LM_DEBUG, "-"));
                     ACE_DEBUG ((LM_DEBUG, "^\n"));
                   }
               }
             else
               {
-                if (showCtxIOR)
+                if (options.show_context_ior)
                   {
                     CORBA::String_var str =
                       orb->object_to_string (obj.in ());
                     ACE_DEBUG ((LM_DEBUG, ": %C", str.in ()));
                   }
 
-                if (maxDepth != level)
+                if (options.max_depth != level)
                   {
                     ACE_DEBUG ((LM_DEBUG, "\n"));
                     if (xc.in ())
                       {
-                        list_context (xc.in (), level + 1, max_count);
+                        list_context (xc.in (), level + 1, options);
                       }
                   }
                 else
@@ -281,7 +291,7 @@ namespace
               ACE_DEBUG ((LM_DEBUG, " {Null}"));
             }
 
-            if (showIOR)
+            if (options.show_ior)
               {
                 CORBA::String_var str =
                   orb->object_to_string (obj.in ());
@@ -291,7 +301,7 @@ namespace
               ACE_DEBUG ((LM_DEBUG, "\n"));
             else
             {
-              display_endpoint_info (obj.in(), level);
+              display_endpoint_info (obj.in (), level, options);
             }
           }
       }
@@ -301,15 +311,15 @@ namespace
   void
   list_context (const CosNaming::NamingContext_ptr nc,
                 size_t level,
-                CORBA::ULong max_bindings)
+                Options const &options)
   {
     CosNaming::BindingIterator_var it;
     CosNaming::BindingList_var bl;
 
     NestedNamingContexts current (nc);
-    nc->list (max_bindings, bl, it);
+    nc->list (options.max_count, bl, it);
 
-    show_chunk (nc, bl.in (), level);
+    show_chunk (nc, bl.in (), level, options);
 
     if (!CORBA::is_nil (it.in ()))
       {
@@ -317,8 +327,8 @@ namespace
 
         do
           {
-            more = it->next_n (max_bindings, bl);
-            show_chunk (nc, bl.in (), level);
+            more = it->next_n (options.max_count, bl);
+            show_chunk (nc, bl.in (), level, options);
           } while (more);
 
         it->destroy ();
@@ -327,13 +337,15 @@ namespace
 
   //==========================================================================
   CORBA::Object_ptr
-  set_rtt(CORBA::Object_ptr obj)
+  set_rtt (CORBA::Object_ptr obj,
+           ACE_Time_Value const &relative_roundtrip_timeout)
   {
-    if (rtt != ACE_Time_Value::zero)
+    if (relative_roundtrip_timeout != ACE_Time_Value::zero)
     {
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
       TimeBase::TimeT roundTripTimeoutVal;
-      ORBSVCS_Time::Time_Value_to_TimeT(roundTripTimeoutVal, rtt);
+      ORBSVCS_Time::Time_Value_to_TimeT (roundTripTimeoutVal,
+                                       relative_roundtrip_timeout);
 
       CORBA::Any anyObjectVal;
       anyObjectVal <<= roundTripTimeoutVal;
@@ -358,7 +370,8 @@ namespace
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int err = 0;
+  int err {};
+  Options options;
 
   try
     {
@@ -366,14 +379,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       orb = CORBA::ORB_init (argc, argv);
 
       // Scan through the command line options
-      bool
-        failed = false,
-        showNSonly = false;
-      ACE_TCHAR kindsep = ACE_TEXT('.');
-      ACE_TCHAR ctxsep[] = ACE_TEXT("/");
-      ACE_TCHAR *name {};
       ACE_TCHAR const *const pname = argv[0];
-      ACE_TCHAR const *nameService {};
 
       if (0 < argc)
         {
@@ -386,71 +392,71 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: --ns requires an argument\n"));
-                      failed = true;
+                      options.failed = true;
                     }
                   else
                     {
                       ++argv;
-                      if (nameService)
+                      if (options.name_service)
                         {
                           ACE_DEBUG ((LM_DEBUG,
                                      "Error: more than one --ns.\n"));
-                          failed = true;
+                          options.failed = true;
                         }
-                      else if (showNSonly)
+                      else if (options.show_name_service_only)
                         {
                           ACE_DEBUG ((LM_DEBUG,
                                      "Error: --nsior and --ns "
                                      "are both specified\n"));
-                          failed = true;
+                          options.failed = true;
                         }
                       else
                       {
-                        nameService = *argv;
+                        options.name_service = *argv;
                       }
                     }
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--nsior")))
                 {
-                  if (showIOR || showCtxIOR || noLoops
-                      || nameService || name || maxDepth)
+                  if (options.show_ior || options.show_context_ior || options.no_loops
+                      || options.name_service || options.name || options.max_depth)
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: --nsior given "
                                  "with other options\n"));
-                      failed = true;
+                      options.failed = true;
                     }
                   else
                   {
-                    showNSonly = true;
+                    options.show_name_service_only = true;
                   }
                 }
               else if (0 == ACE_OS::strcmp(*argv, ACE_TEXT ("--ior")))
                 {
-                  if (showNSonly)
+                  if (options.show_name_service_only)
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: --nsior and --ior are "
                                  "both specified\n"));
-                      failed = true;
+                      options.failed = true;
                     }
                   else
                   {
-                    showIOR = true;
+                    options.show_ior = true;
                   }
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--ctxior")))
                 {
-                  if (showNSonly)
+                  if (options.show_name_service_only)
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: --nsior and --ctxior are "
                                  "both specified\n"));
-                      failed = true;
+                      options.failed = true;
                     }
                   else
                   {
-                    showCtxIOR = true;
+                    options.show_context_ior = true;
                   }
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--tree")))
@@ -459,21 +465,21 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: --tree requires an argument\n"));
-                      failed = true;
+                      options.failed = true;
                     }
                   else
                     {
                       ++argv;
-                      if (showNSonly)
+                      if (options.show_name_service_only)
                         {
                           ACE_DEBUG ((LM_DEBUG,
                                      "Error: --nsior and --tree are "
                                      "both specified\n"));
-                          failed = true;
+                          options.failed = true;
                         }
                       else
                       {
-                        myTree = ACE_TEXT_ALWAYS_CHAR (*argv);
+                        options.tree = ACE_TEXT_ALWAYS_CHAR (*argv);
                       }
                     }
                 }
@@ -483,65 +489,65 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: --node requires an argument\n"));
-                      failed = true;
+                      options.failed = true;
                     }
                   else
                     {
                       ++argv;
-                      if (showNSonly)
+                      if (options.show_name_service_only)
                         {
                           ACE_DEBUG ((LM_DEBUG,
                                      "Error: --nsior and --node are "
                                      "both specified\n"));
-                          failed = true;
+                          options.failed = true;
                         }
                       else
                       {
-                        myNode = ACE_TEXT_ALWAYS_CHAR (*argv);
+                        options.node = ACE_TEXT_ALWAYS_CHAR (*argv);
                       }
                     }
                 }
               else if (0 == ACE_OS::strcmp(*argv, ACE_TEXT ("--noloops")))
                 {
-                  if (showNSonly)
+                  if (options.show_name_service_only)
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: --nsior and --noloops are "
                                  "both specified\n"));
-                      failed = true;
+                      options.failed = true;
                     }
                   else
                   {
-                    noLoops = true;
+                    options.no_loops = true;
                   }
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--name")))
                 {
-                  if (name)
+                  if (options.name)
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: more than one --name\n"));
-                      failed = true;
+                      options.failed = true;
                     }
                   else if (!--argc)
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: --name requires an argument\n"));
-                      failed = true;
+                      options.failed = true;
                     }
                   else
                     {
                       ++argv;
-                      if (showNSonly)
+                      if (options.show_name_service_only)
                         {
                           ACE_DEBUG ((LM_DEBUG,
                                      "Error: --nsior and --name are "
                                      "both specified\n"));
-                          failed = true;
+                          options.failed = true;
                         }
                       else
                       {
-                        name = *argv;
+                        options.name = *argv;
                       }
                     }
                 }
@@ -551,24 +557,24 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: --ctxsep requires a character\n"));
-                      failed = true;
+                      options.failed = true;
                     }
                   else if (1 != ACE_OS::strlen(*(++argv)))
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: --ctxsep takes a single character (not %s)\n", *argv));
-                      failed = true;
+                      options.failed = true;
                     }
-                  else if (showNSonly)
+                  else if (options.show_name_service_only)
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: --nsior and --ctxsep are "
                                  "both specified\n"));
-                      failed = true;
+                      options.failed = true;
                     }
                   else
                   {
-                    ctxsep[0] = (*argv)[0];
+                    options.context_separator[0] = (*argv)[0];
                   }
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--kindsep")))
@@ -577,99 +583,99 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: --kindsep requires a character\n"));
-                      failed = true;
+                      options.failed = true;
                     }
                   else if (1 != ACE_OS::strlen(*(++argv)))
                     {
                        ACE_DEBUG ((LM_DEBUG,
                                   ACE_TEXT ("Error: --kindsep takes a single ")
                                   ACE_TEXT ("character (not %s)\n"), *argv));
-                      failed = true;
+                      options.failed = true;
                     }
-                  else if (showNSonly)
+                  else if (options.show_name_service_only)
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  ACE_TEXT ("Error: --nsior and --kindsep are ")
                                  ACE_TEXT ("both specified\n")));
-                      failed = true;
+                      options.failed = true;
                     }
                   else
                   {
-                    kindsep = (*argv)[0];
+                    options.kind_separator = (*argv)[0];
                   }
                 }
               else if (0 == ACE_OS::strcmp(*argv, ACE_TEXT ("--max")))
                 {
-                  if (maxDepth)
+                  if (options.max_depth)
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: --max given more than once\n"));
-                      failed = true;
+                      options.failed = true;
                     }
                   else if (!--argc || !ACE_OS::ace_isdigit (ACE_TEXT_ALWAYS_CHAR (*(++argv))[0]))
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  ACE_TEXT ("Error: --max requires a number\n")));
-                      failed = true;
+                      options.failed = true;
                     }
-                  else if (showNSonly)
+                  else if (options.show_name_service_only)
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  ACE_TEXT ("Error: --nsior and --max are ")
                                  ACE_TEXT ("both specified\n")));
-                      failed = true;
+                      options.failed = true;
                     }
                   else
                   {
-                    maxDepth= ACE_OS::atoi (*argv);
+                    options.max_depth= ACE_OS::atoi (*argv);
                   }
                 }
               else if (0 == ACE_OS::strcmp(*argv, ACE_TEXT ("--rtt")))
                 {
-                  if (rtt != ACE_Time_Value::zero)
+                  if (options.relative_roundtrip_timeout != ACE_Time_Value::zero)
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  ACE_TEXT ("Error: --rtt given more than once\n")));
-                      failed = true;
+                      options.failed = true;
                     }
                   else if (!--argc || !ACE_OS::ace_isdigit (ACE_TEXT_ALWAYS_CHAR (*(++argv))[0]))
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  ACE_TEXT ("Error: --rtt requires a number\n")));
-                      failed = true;
+                      options.failed = true;
                     }
                  else
                  {
-                   rtt.set (ACE_OS::atoi (*argv), 0);
+                   options.relative_roundtrip_timeout.set (ACE_OS::atoi (*argv), 0);
                  }
                 }
               else if (0 == ACE_OS::strcmp(*argv, ACE_TEXT ("--count")))
                 {
-                  if (max_count != MAX_COUNT_DEFAULT)
+                  if (options.max_count != MAX_COUNT_DEFAULT)
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  ACE_TEXT ("Error: --count given more than once\n")));
-                      failed = true;
+                      options.failed = true;
                     }
                   else if (!--argc || !ACE_OS::ace_isdigit (ACE_TEXT_ALWAYS_CHAR (*(++argv))[0]))
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  ACE_TEXT ("Error: --count requires a number\n")));
-                      failed = true;
+                      options.failed = true;
                     }
                  else
                     {
                      CORBA::ULong count = std::strtoul (ACE_TEXT_ALWAYS_CHAR (*argv), nullptr, 10);
                      if (count > 0)
                        {
-                        max_count = count;
+                        options.max_count = count;
                        }
                      else
                        {
                         ACE_DEBUG ((LM_DEBUG,
                                     ACE_TEXT ("Error: --count requires a number")
                                     ACE_TEXT (" greater than 0\n")));
-                        failed = true;
+                        options.failed = true;
                        }
                     }
                 }
@@ -678,12 +684,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   ACE_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("Unknown option %s\n"),
                               *argv));
-                  failed = true;
+                  options.failed = true;
                 }
             }
         }
 
-      if (failed)
+      if (options.failed)
         {
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n%s options:\n")
             ACE_TEXT ("  --nsior               {Display the naming service IOR and exit}\n")
@@ -707,19 +713,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       // Initialize the lengths of the myTree and myNode draw strings.
-      sizeMyTree = std::strlen (myTree);
-      sizeMyNode = std::strlen (myNode);
+      options.tree_size = std::strlen (options.tree);
+      options.node_size = std::strlen (options.node);
 
       // Contact the name service
       CORBA::Object_var obj;
-      if (nameService)
-        obj = orb->string_to_object (nameService);
+      if (options.name_service)
+        obj = orb->string_to_object (options.name_service);
       else
       {
         obj = orb->resolve_initial_references ("NameService");
       }
 
-      obj = set_rtt(obj.in ());
+      obj = set_rtt (obj.in (), options.relative_roundtrip_timeout);
 
       CosNaming::NamingContext_var root_nc =
         CosNaming::NamingContext::_narrow (obj.in ());
@@ -730,23 +736,23 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           orb->destroy ();
           return 1;
         }
-      if (name)
+      if (options.name)
         {
           // Assemble the name from the user string given
           CosNaming::Name the_name (0);
           ACE_TCHAR *cp;
-          while ((cp = ACE_OS::strtok (name, ctxsep)) != nullptr)
+          while ((cp = ACE_OS::strtok (options.name, options.context_separator)) != nullptr)
             {
-              const int index= the_name.length();
+              CORBA::ULong const index = the_name.length ();
               the_name.length (index+1);
-              ACE_TCHAR *kind = const_cast<ACE_TCHAR*> (ACE_OS::strchr (cp, kindsep));
+              ACE_TCHAR *kind = const_cast<ACE_TCHAR*> (ACE_OS::strchr (cp, options.kind_separator));
               if (kind)
                 {
                   *kind = '\0';
                   the_name[index].kind= CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(++kind));
                 }
               the_name[index].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(cp));
-              name = nullptr; // way strtok works
+              options.name = nullptr; // way strtok works
             }
 
           // Now find this sub-context and replace the root with it.
@@ -756,7 +762,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           if (CORBA::is_nil (root_nc.in ()))
             {
               ACE_DEBUG ((LM_DEBUG,
-                         "Error: Can't find naming context\n    %s\n", name));
+                         "Error: Can't find naming context\n    %s\n", options.name));
               orb->destroy ();
               return 1;
             }
@@ -765,7 +771,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::String_var str =
         orb->object_to_string (root_nc.in ());
 
-      if (showNSonly)
+      if (options.show_name_service_only)
         {
           ACE_DEBUG ((LM_DEBUG,
                      "The NameService is located via:\n%C\n", str.in ()));
@@ -774,8 +780,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           ACE_DEBUG ((LM_DEBUG,
                      "Naming Service: %C\n---------------\n",
-                     ((showCtxIOR)? str.in () : "")));
-          list_context (root_nc.in (), 1, max_count);
+                     ((options.show_context_ior)? str.in () : "")));
+          list_context (root_nc.in (), 1, options);
         }
     }
   catch (const CORBA::Exception& ex)

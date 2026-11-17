@@ -16,9 +16,21 @@
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  struct Options
+  {
+    bool failed {};
+    bool quiet {};
+    bool rebind {};
+    bool context {};
+    ACE_TCHAR const *ior {};
+    ACE_TCHAR const *name_service {};
+    ACE_TCHAR kind_separator {ACE_TEXT('.')};
+    ACE_TCHAR context_separator[2] {ACE_TEXT('/'), 0};
+    ACE_TCHAR *name {};
+  };
+  Options options;
   CosNaming::Name the_name (0);
   CORBA::ORB_var orb;
-  ACE_TCHAR const *ior {};
 
   int err {};
 
@@ -28,16 +40,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       orb = CORBA::ORB_init (argc, argv);
 
       // Scan through the command line options
-      bool
-        failed = false,
-        quiet = false,
-        rebind = false,
-        context = false;
       ACE_TCHAR const *const pname = argv[0];
-      ACE_TCHAR const *nameService {};
-      ACE_TCHAR kindsep = ACE_TEXT('.');
-      ACE_TCHAR ctxsep[] = ACE_TEXT("/");
-      ACE_TCHAR *name {};
 
       if (0 < argc)
         {
@@ -50,44 +53,44 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: --ns requires an argument\n"));
-                      failed= true;
+                      options.failed = true;
                     }
                   else
                     {
                       ++argv;
-                      if (nameService)
+                      if (options.name_service)
                         {
                           ACE_DEBUG ((LM_DEBUG,
                                      "Error: more than one --ns.\n"));
-                          failed= true;
+                          options.failed = true;
                         }
                       else
                       {
-                        nameService = *argv;
+                        options.name_service = *argv;
                       }
                     }
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT("--quiet")))
                 {
-                  quiet = true;
+                  options.quiet = true;
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--name")))
                 {
-                  if (name)
+                  if (options.name)
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: more than one --name\n"));
-                      failed = true;
+                      options.failed = true;
                     }
                   else if (!--argc)
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: --name requires an argument\n"));
-                      failed = true;
+                      options.failed = true;
                     }
                   else
                   {
-                    name = *++argv;
+                    options.name = *++argv;
                   }
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--ctxsep")))
@@ -96,17 +99,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: --ctxsep requires a character\n"));
-                      failed = true;
+                      options.failed = true;
                     }
                   else if (1 != ACE_OS::strlen(*++argv))
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: --ctxsep takes a single character (not %s)\n", *argv));
-                      failed = true;
+                      options.failed = true;
                     }
                   else
                   {
-                    ctxsep[0] = (*argv)[0];
+                    options.context_separator[0] = (*argv)[0];
                   }
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--kindsep")))
@@ -115,57 +118,57 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: --kindsep requires a character\n"));
-                      failed = true;
+                      options.failed = true;
                     }
                   else if (1 != ACE_OS::strlen(*++argv))
                     {
                        ACE_DEBUG ((LM_DEBUG,
                                   "Error: --kindsep takes a single character (not %s)\n", *argv));
-                      failed = true;
+                      options.failed = true;
                     }
                   else
                   {
-                    kindsep = (*argv)[0];
+                    options.kind_separator = (*argv)[0];
                   }
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--ior")))
                 {
-                  if (ior)
+                  if (options.ior)
                     {
                       ACE_DEBUG ((LM_DEBUG,
                         "Error: ior already specified\n"));
-                      failed = true;
+                      options.failed = true;
                     }
                   else if (!--argc)
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                   "Error: --ior requires an IOR\n"));
-                      failed = true;
+                      options.failed = true;
                     }
                   else
                   {
-                    ior = *++argv;
+                    options.ior = *++argv;
                   }
                 }
               else if ((0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--ctx")))
                        ||(0 == ACE_OS::strcmp(*argv, ACE_TEXT ("--newcontext"))))
                 {
-                  context = true;
+                  options.context = true;
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--rebind")))
                 {
-                  rebind = true;
+                  options.rebind = true;
                 }
               else
                 {
                   ACE_DEBUG ((LM_DEBUG,
                              "Unknown option %s\n", *argv));
-                  failed = true;
+                  options.failed = true;
                 }
             }
         }
 
-      if (failed || !name || (!ior && !context))
+      if (options.failed || !options.name || (!options.ior && !options.context))
         {
           ACE_DEBUG ((LM_DEBUG,
             "\nUsage:\n"
@@ -196,8 +199,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Contact the name service
       CORBA::Object_var nc_obj;
-      if (nameService)
-        nc_obj = orb->string_to_object (nameService);
+      if (options.name_service)
+        nc_obj = orb->string_to_object (options.name_service);
       else
       {
         nc_obj = orb->resolve_initial_references ("NameService");
@@ -215,54 +218,54 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Get the object reference from the IOR string given
       CORBA::Object_var obj;
-      if (ior)
+      if (options.ior)
         {
-          obj = orb->string_to_object (ior);
+          obj = orb->string_to_object (options.ior);
         }
 
       // Assemble the name from the user string given
       ACE_TCHAR *cp;
-      while ((cp = ACE_OS::strtok (name, ctxsep)) != nullptr)
+      while ((cp = ACE_OS::strtok (options.name, options.context_separator)) != nullptr)
         {
-          const int index= the_name.length();
+          CORBA::ULong const index = the_name.length ();
           the_name.length (index+1);
-          ACE_TCHAR *kind = const_cast<ACE_TCHAR*> (ACE_OS::strchr (cp, kindsep));
+          ACE_TCHAR *kind = const_cast<ACE_TCHAR*> (ACE_OS::strchr (cp, options.kind_separator));
           if (kind)
             {
               *kind = '\0';
               the_name[index].kind= CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(++kind));
             }
           the_name[index].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(cp));
-          name = nullptr; // way strtok works
+          options.name = nullptr; // way strtok works
         }
 
       // Now attempt the (re)bind
       try
         {
-          if (!ior)
+          if (!options.ior)
             obj= root_nc->bind_new_context (the_name);
-          else if (context)
+          else if (options.context)
             {
               CosNaming::NamingContext_var this_nc =
                 CosNaming::NamingContext::_narrow (obj.in ());
 
-              if (rebind)
+              if (options.rebind)
                 root_nc->rebind_context (the_name, this_nc.in ());
               else
               {
                 root_nc->bind_context (the_name, this_nc.in ());
               }
             }
-          else if (rebind)
+          else if (options.rebind)
             root_nc->rebind (the_name, obj.in ());
           else
           {
             root_nc->bind (the_name, obj.in ());
           }
-          if (!quiet)
+          if (!options.quiet)
             {
-              unsigned int index;
-              for (index= 0u; index < the_name.length()-1u; ++index)
+              CORBA::ULong index {};
+              for (; index < the_name.length () - 1u; ++index)
                 {
                   if (the_name[index].kind && the_name[index].kind[0])
                     ACE_DEBUG ((LM_DEBUG, "Found ID: %C  (Kind: %C)\n",
@@ -272,9 +275,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     ACE_DEBUG ((LM_DEBUG, "Found ID: %C\n",
                                the_name[index].id.in()));
                 }
-              if (!ior)
+              if (!options.ior)
                 ACE_DEBUG ((LM_DEBUG, "Created sub-context"));
-              else if (rebind)
+              else if (options.rebind)
                 ACE_DEBUG ((LM_DEBUG, "ReBound"));
               else
               {
@@ -296,11 +299,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           }
 
           CosNaming::Name fullName (the_name);
-          int
-            index {},
-            found= the_name.length() - nf.rest_of_name.length(),
-            &limit= found;
-          if (quiet)
+          CORBA::ULong index {};
+          CORBA::ULong found = the_name.length () - nf.rest_of_name.length ();
+          CORBA::ULong &limit = found;
+          if (options.quiet)
             index= found;
           else
             {
@@ -317,7 +319,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             }
 
           // need to create the following missing naming contexts
-          limit= fullName.length() - ((ior)?1:0);
+          limit= fullName.length() - ((options.ior)?1:0);
           while (index < limit)
             {
               // As soon as we limit the length, later names are gone so
@@ -326,7 +328,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               the_name[index].id= CORBA::string_dup (fullName[index].id);
               the_name[index].kind= CORBA::string_dup (fullName[index].kind);
 
-              if (!quiet)
+              if (!options.quiet)
                 {
                   if (the_name[index].kind && the_name[index].kind[0])
                     ACE_DEBUG ((LM_DEBUG, "Creating sub-context ID: %C  (Kind: %C)\n",
@@ -343,16 +345,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               ++index;
             }
 
-          if (ior)
+          if (options.ior)
             {
               // As soon as we limit the length, later names are gone so
               // we have to recopy them.
               the_name.length( index + 1 );
               the_name[index].id= CORBA::string_dup (fullName[index].id);
               the_name[index].kind= CORBA::string_dup (fullName[index].kind);
-              if (!quiet)
+              if (!options.quiet)
                 {
-                  if (rebind)
+                  if (options.rebind)
                   {
                     ACE_DEBUG ((LM_DEBUG, "Re"));
                   }
@@ -364,20 +366,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   ACE_DEBUG ((LM_DEBUG, "\n"));
                 }
               // Now re-attempt the (re)bind
-              if (context)
+              if (options.context)
                 {
                   CosNaming::NamingContext_var this_nc =
                     CosNaming::NamingContext::_narrow (obj.in ());
 // This is not a naming context, report to outer
 
-                  if (rebind)
+                  if (options.rebind)
                     root_nc->rebind_context (the_name, this_nc.in ());
                   else
                   {
                     root_nc->bind_context (the_name, this_nc.in ());
                   }
                 }
-              else if (rebind)
+              else if (options.rebind)
                 root_nc->rebind (the_name, obj.in ());
               else
               {
@@ -388,9 +390,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   catch (const CosNaming::NamingContext::NotFound& nf)
     {
-      unsigned int index;
+      CORBA::ULong index {};
       ACE_DEBUG ((LM_DEBUG, "\nError:\n"));
-      for (index= 0u; index < the_name.length()-nf.rest_of_name.length(); ++index)
+      for (; index < the_name.length () - nf.rest_of_name.length (); ++index)
         {
           if (the_name[index].kind && the_name[index].kind[0])
              ACE_DEBUG ((LM_DEBUG, "ID: %C  (Kind: %C)\n",
@@ -414,7 +416,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           break;
         }
       nf._tao_print_exception (why);
-      for (index= 0u; index < nf.rest_of_name.length(); ++index)
+      for (index = 0u; index < nf.rest_of_name.length (); ++index)
         {
           if (nf.rest_of_name[index].kind && nf.rest_of_name[index].kind[0])
              ACE_DEBUG ((LM_DEBUG, "ID: %C  (Kind: %C)\n",
