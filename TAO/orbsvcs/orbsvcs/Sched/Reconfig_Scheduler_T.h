@@ -518,11 +518,10 @@ protected:
   RtecScheduler::handle_t next_handle_;
 
   /**
-   * Array of pointers to scheduling entries.  This
-   * array is maintained by the methods that create
-   * scheduling entries, and sorted in topological
-   * order and then priority order at various points
-   * during schedule computation.
+   * Manually owned array of borrowed pointers to scheduling entries.
+   * The backing array is released by the scheduler destructor; each
+   * entry is owned through its RT_Info and released by close(). The
+   * array is sorted during schedule computation.
    */
   TAO_Reconfig_Scheduler_Entry ** entry_ptr_array_ {};
 
@@ -530,11 +529,9 @@ protected:
   long entry_ptr_array_size_;
 
   /**
-   * Array of pointers to scheduling entries.  This
-   * array is maintained by the methods that create
-   * scheduling entries, and sorted in topological
-   * order and then priority order at various points
-   * during schedule computation.
+   * Manually owned array of borrowed pointers to RT_Info tuples.
+   * The backing array is released by the scheduler destructor; each
+   * tuple is owned by the original tuple set of its scheduling entry.
    */
   TAO_RT_Info_Tuple ** tuple_ptr_array_ {};
 
