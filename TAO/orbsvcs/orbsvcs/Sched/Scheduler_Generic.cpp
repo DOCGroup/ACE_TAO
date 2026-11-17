@@ -8,32 +8,8 @@
 
 #include "orbsvcs/Sched/Scheduler_Generic.h"
 #include <cstdio>
-#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-/// Stores RT_Info data for each task and mode.
-struct Mode_Entry
-{
-  RtecScheduler::RT_Info *rt_info_ {};
-  u_long start_time_ {}; // microseconds
-  u_long stop_time_ {};  // microseconds
-
-  Mode_Entry () = default;
-
-  Mode_Entry (RtecScheduler::RT_Info *rt_info,
-             u_long start_time = 0,
-             u_long stop_time = 0) :
-    rt_info_ (rt_info),
-    start_time_ (start_time),
-    stop_time_ (stop_time)
-  {
-  }
-
-  ~Mode_Entry () = default;
-
-  Mode_Entry &operator= (Mode_Entry const &) = default;
-};
 
 Scheduler_Generic::Scheduler_Generic () :
   Scheduler (),
