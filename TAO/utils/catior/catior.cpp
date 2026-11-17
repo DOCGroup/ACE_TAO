@@ -13,6 +13,8 @@
 #include "tao/ORB.h"
 #include "orbsvcs/CosNamingC.h"
 
+#include <memory>
+
 int
 ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 {
@@ -199,14 +201,12 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                         have_some_input = true;
                       }
 #else
-                FILE* ifstr = ACE_OS::fopen (get_opt.opt_arg (), ACE_TEXT ("r"));
+                std::unique_ptr<FILE, int (*) (FILE *)> ifstr (
+                  ACE_OS::fopen (get_opt.opt_arg (), ACE_TEXT ("r")),
+                  ACE_OS::fclose);
 
-                if (!ifstr || ferror (ifstr))
+                if (!ifstr || ferror (ifstr.get ()))
                   {
-                    if (ifstr)
-                      {
-                      ACE_OS::fclose (ifstr);
-                      }
                       ACE_ERROR_RETURN ((LM_ERROR,
                                         "%s "
                                         "-f %s "
@@ -218,16 +218,16 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                                         -1);
                   }
 
-                while (!feof (ifstr))
+                while (!feof (ifstr.get ()))
                   {
                     char ch;
                     ACE_CString aString;
 
                     have_some_input = false;
 
-                    while (!feof (ifstr))
+                    while (!feof (ifstr.get ()))
                       {
-                        ch = ACE_OS::fgetc (ifstr);
+                        ch = ACE_OS::fgetc (ifstr.get ());
                         if (ch == EOF || ch == '\n' || ch == '\r')
                           break;
                         aString += ch;
@@ -276,8 +276,6 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                               "catior returned false\n"));
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
                 ifstr.close ();
-#else
-                ACE_OS::fclose (ifstr);
 #endif /* !defined (ACE_LACKS_IOSTREAM_TOTALLY) */
               }
               break;
