@@ -16,11 +16,10 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
   TAO_OutputCDR & cdr,
   CORBA::ULong offset) const
 {
-  ACE_Guard<TAO_SYNCH_RECURSIVE_MUTEX> const guard (this->lock_);
-  if (!guard.locked ())
-    {
-      return false;
-    }
+  ACE_GUARD_RETURN_CONST (TAO_SYNCH_RECURSIVE_MUTEX,
+                          guard,
+                          this->lock_,
+                          false);
 
   // Top-level TypeCode case.
   if (this->recursion_start_offset_ == 0)
@@ -57,11 +56,10 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
                               MemberArrayType>::equal_i (
   CORBA::TypeCode_ptr tc) const
 {
-  ACE_Guard<TAO_SYNCH_RECURSIVE_MUTEX> const guard (this->lock_);
-  if (!guard.locked ())
-    {
-      return false;
-    }
+  ACE_GUARD_RETURN_CONST (TAO_SYNCH_RECURSIVE_MUTEX,
+                          guard,
+                          this->lock_,
+                          false);
 
   // Top-level TypeCode case.
   if (this->recursion_start_offset_ == 0)
@@ -90,11 +88,10 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
                               MemberArrayType>::equivalent_i (
   CORBA::TypeCode_ptr tc) const
 {
-  ACE_Guard<TAO_SYNCH_RECURSIVE_MUTEX> const guard (this->lock_);
-  if (!guard.locked ())
-    {
-      return false;
-    }
+  ACE_GUARD_RETURN_CONST (TAO_SYNCH_RECURSIVE_MUTEX,
+                          guard,
+                          this->lock_,
+                          false);
 
   // Top-level TypeCode case.
   if (this->recursion_start_offset_ == 0)
@@ -123,11 +120,10 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
                               MemberArrayType>::tao_marshal_kind (
   TAO_OutputCDR & cdr) const
 {
-  ACE_Guard<TAO_SYNCH_RECURSIVE_MUTEX> const guard (this->lock_);
-  if (!guard.locked ())
-    {
-      return false;
-    }
+  ACE_GUARD_RETURN_CONST (TAO_SYNCH_RECURSIVE_MUTEX,
+                          guard,
+                          this->lock_,
+                          false);
 
   // Top-level TypeCode case.
   if (this->recursion_start_offset_ == 0)

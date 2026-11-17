@@ -259,11 +259,7 @@ CORBA::NVList::_tao_incoming_cdr (TAO_InputCDR &cdr,
       return;
     }
 
-  ACE_Guard<TAO_SYNCH_MUTEX> const ace_mon (this->lock_);
-  if (!ace_mon.locked ())
-    {
-      return;
-    }
+  ACE_GUARD_CONST (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   this->incoming_.reset ();
   TAO_InputCDR *incoming {};
@@ -275,11 +271,7 @@ CORBA::NVList::_tao_incoming_cdr (TAO_InputCDR &cdr,
 void
 CORBA::NVList::_tao_encode (TAO_OutputCDR &cdr, int flag)
 {
-  ACE_Guard<TAO_SYNCH_MUTEX> const ace_mon (this->lock_);
-  if (!ace_mon.locked ())
-    {
-      return;
-    }
+  ACE_GUARD_CONST (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   if (this->incoming_ != nullptr)
     {
@@ -391,11 +383,10 @@ CORBA::NVList::_tao_decode (TAO_InputCDR &incoming, int flag)
 ptrdiff_t
 CORBA::NVList::_tao_target_alignment ()
 {
-  ACE_Guard<TAO_SYNCH_MUTEX> const ace_mon (this->lock_);
-  if (!ace_mon.locked ())
-    {
-      return ACE_CDR::MAX_ALIGNMENT;
-    }
+  ACE_GUARD_RETURN_CONST (TAO_SYNCH_MUTEX,
+                          ace_mon,
+                          this->lock_,
+                          ACE_CDR::MAX_ALIGNMENT);
 
   if (this->incoming_ == nullptr)
     {
@@ -416,11 +407,7 @@ CORBA::NVList::_tao_target_alignment ()
 void
 CORBA::NVList::evaluate ()
 {
-  ACE_Guard<TAO_SYNCH_MUTEX> const ace_mon (this->lock_);
-  if (!ace_mon.locked ())
-    {
-      return;
-    }
+  ACE_GUARD_CONST (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   if (this->incoming_ != nullptr)
     {
