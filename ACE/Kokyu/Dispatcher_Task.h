@@ -52,7 +52,6 @@ private:
   /// The caller owns the command unless can_be_deleted() is true; then the
   /// worker destroys it after execution.
   Dispatch_Command const *command_;
-  QoSDescriptor qos_info_;
 };
 
 /**

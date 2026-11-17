@@ -20,49 +20,46 @@ Dispatcher_Task::initialized () const
 
 ACE_INLINE
 Priority_t
-Dispatcher_Task::preemption_priority() const
+Dispatcher_Task::preemption_priority () const
 {
-    return curr_config_info_.preemption_priority_;
+  return this->curr_config_info_.preemption_priority_;
 }
 
 ACE_INLINE
 ConfigInfo const &
-Dispatcher_Task::get_curr_config_info() const
+Dispatcher_Task::get_curr_config_info () const
 {
-    return curr_config_info_;
+  return this->curr_config_info_;
 }
 
 ACE_INLINE
 Dispatch_Queue_Item::Dispatch_Queue_Item (
-        Dispatch_Command const *cmd,
-        QoSDescriptor const &qos_info,
-        ACE_Data_Block *data_block,
-        int flags,
-        ACE_Allocator* mb_allocator)
- : ACE_Message_Block (data_block,
-                      flags,
-                      mb_allocator),
-   command_ (cmd), qos_info_ (qos_info)
-
+  Dispatch_Command const *cmd,
+  QoSDescriptor const &qos_info,
+  ACE_Data_Block *data_block,
+  int flags,
+  ACE_Allocator *mb_allocator)
+  : ACE_Message_Block (data_block, flags, mb_allocator),
+    command_ (cmd)
 {
-   this->init_i (qos_info);
+  this->init_i (qos_info);
 }
 
 ACE_INLINE
 Dispatch_Queue_Item::Dispatch_Queue_Item (
-        Dispatch_Command const *cmd,
-        QoSDescriptor const &qos_info,
-        ACE_Allocator* mb_allocator)
- : ACE_Message_Block (mb_allocator),
-   command_ (cmd), qos_info_ (qos_info)
+  Dispatch_Command const *cmd,
+  QoSDescriptor const &qos_info,
+  ACE_Allocator *mb_allocator)
+  : ACE_Message_Block (mb_allocator),
+    command_ (cmd)
 {
-   this->init_i (qos_info);
+  this->init_i (qos_info);
 }
 
 ACE_INLINE
 Dispatch_Command *
 Dispatch_Queue_Item::command ()
 {
-  return const_cast<Dispatch_Command*> (command_);
+  return const_cast<Dispatch_Command *> (command_);
 }
 }
