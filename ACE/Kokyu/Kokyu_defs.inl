@@ -34,14 +34,16 @@ bool Dispatch_Command::can_be_deleted () const
 ACE_INLINE
 void Dispatch_Command::destroy ()
 {
-  if (allocator_)
-  {
-    allocator_->free (this);
-  }
+  ACE_Allocator * const allocator = allocator_;
+  if (allocator != nullptr)
+    {
+      this->~Dispatch_Command ();
+      allocator->free (this);
+    }
   else
-  {
-    delete this;
-  }
+    {
+      delete this;
+    }
 }
 
 ACE_INLINE
