@@ -537,102 +537,102 @@ ACE_DynScheduler::reset ()
       dispatch_entries_ != nullptr || config_info_entries_ != nullptr ||
       expanded_dispatches_ != nullptr || ordered_dispatch_entries_ != nullptr ||
       timeline_ != nullptr)
-  {
-    delete [] task_entries_;
-    task_entries_ = nullptr;
-
-    delete [] ordered_task_entries_;
-    ordered_task_entries_ = nullptr;
-
-    delete thread_delineators_;
-    thread_delineators_ = nullptr;
-
-    delete [] ordered_thread_dispatch_entries_;
-    ordered_thread_dispatch_entries_ = nullptr;
-
-    if (dispatch_entries_ != nullptr)
     {
-      // free all the dispatch entries in the list, then the list itself
-      ACE_Unbounded_Set_Iterator <Dispatch_Entry *> iter (*dispatch_entries_);
-      Dispatch_Entry **entry {};
-      for (iter.first (); ! iter.done (); iter.advance (), entry = nullptr)
-      {
-        if (iter.next (entry) != 0 && entry != nullptr && *entry != nullptr)
+      delete [] task_entries_;
+      task_entries_ = nullptr;
+
+      delete [] ordered_task_entries_;
+      ordered_task_entries_ = nullptr;
+
+      delete thread_delineators_;
+      thread_delineators_ = nullptr;
+
+      delete [] ordered_thread_dispatch_entries_;
+      ordered_thread_dispatch_entries_ = nullptr;
+
+      if (dispatch_entries_ != nullptr)
         {
-          delete (*entry);
+          // Free all dispatch entries in the list, then the list itself.
+          ACE_Unbounded_Set_Iterator <Dispatch_Entry *> iter (*dispatch_entries_);
+          Dispatch_Entry **entry {};
+          for (iter.first (); ! iter.done (); iter.advance (), entry = nullptr)
+            {
+              if (iter.next (entry) != 0 && entry != nullptr && *entry != nullptr)
+                {
+                  delete (*entry);
+                }
+            }
+          delete dispatch_entries_;
+          dispatch_entries_ = nullptr;
         }
-      }
-      delete dispatch_entries_;
-      dispatch_entries_ = nullptr;
-    }
 
-    if (config_info_entries_ != nullptr)
-    {
-      // free all the config info entries in the list, then the list itself
-      ACE_Unbounded_Set_Iterator <Config_Info *> iter (*config_info_entries_);
-      Config_Info **entry {};
-      for (iter.first (); ! iter.done (); iter.advance (), entry = nullptr)
-      {
-        if (iter.next (entry) != 0 && entry != nullptr && *entry != nullptr)
+      if (config_info_entries_ != nullptr)
         {
-          delete (*entry);
+          // Free all config-info entries in the list, then the list itself.
+          ACE_Unbounded_Set_Iterator <Config_Info *> iter (*config_info_entries_);
+          Config_Info **entry {};
+          for (iter.first (); ! iter.done (); iter.advance (), entry = nullptr)
+            {
+              if (iter.next (entry) != 0 && entry != nullptr && *entry != nullptr)
+                {
+                  delete (*entry);
+                }
+            }
+          delete config_info_entries_;
+          config_info_entries_ = nullptr;
         }
-      }
-      delete config_info_entries_;
-      config_info_entries_ = nullptr;
-    }
 
-    if (expanded_dispatches_ != nullptr)
-    {
-      // free all the dispatch entries in the list, then the list itself
-      ACE_Unbounded_Set_Iterator <Dispatch_Entry *> expanded_iter (*expanded_dispatches_);
-      Dispatch_Entry **expanded_entry {};
-      for (expanded_iter.first (); ! expanded_iter.done ();
-           expanded_iter.advance (), expanded_entry = nullptr)
-      {
-        if (expanded_iter.next (expanded_entry) != 0 &&
-            expanded_entry != nullptr && *expanded_entry != nullptr)
+      if (expanded_dispatches_ != nullptr)
         {
-          delete (*expanded_entry);
+          // Free all expanded dispatch entries in the list, then the list itself.
+          ACE_Unbounded_Set_Iterator <Dispatch_Entry *> expanded_iter (*expanded_dispatches_);
+          Dispatch_Entry **expanded_entry {};
+          for (expanded_iter.first (); ! expanded_iter.done ();
+               expanded_iter.advance (), expanded_entry = nullptr)
+            {
+              if (expanded_iter.next (expanded_entry) != 0 &&
+                  expanded_entry != nullptr && *expanded_entry != nullptr)
+                {
+                  delete (*expanded_entry);
+                }
+            }
+          delete expanded_dispatches_;
+          expanded_dispatches_ = nullptr;
         }
-      }
-      delete expanded_dispatches_;
-      expanded_dispatches_ = nullptr;
-    }
 
-    delete [] ordered_dispatch_entries_;
-    ordered_dispatch_entries_ = nullptr;
+      delete [] ordered_dispatch_entries_;
+      ordered_dispatch_entries_ = nullptr;
 
-    dispatch_entry_count_ = 0;
-    threads_ = 0;
+      dispatch_entry_count_ = 0;
+      threads_ = 0;
 
-    status_ = NOT_SCHEDULED;
+      status_ = NOT_SCHEDULED;
 
-    frame_size_ = 1;
-    critical_set_frame_size_ = 0;
-    utilization_ = 0.0;
-    critical_set_utilization_ = 0.0;
-    minimum_priority_queue_ = 0;
-    minimum_guaranteed_priority_queue_ = -1;
+      frame_size_ = 1;
+      critical_set_frame_size_ = 0;
+      utilization_ = 0.0;
+      critical_set_utilization_ = 0.0;
+      minimum_priority_queue_ = 0;
+      minimum_guaranteed_priority_queue_ = -1;
 
-    if (timeline_ != nullptr)
-    {
-      // iterate over and delete the set of timeline entries
-      ACE_Ordered_MultiSet_Iterator <TimeLine_Entry_Link> t_iter (*timeline_);
-      TimeLine_Entry_Link *t_entry {};
-      for (t_iter.first (); ! t_iter.done (); t_iter.advance (), t_entry = nullptr)
-      {
-        if (t_iter.next (t_entry) != 0 && t_entry != nullptr)
+      if (timeline_ != nullptr)
         {
-          delete &(t_entry->entry ());
+          // Iterate over and delete the set of timeline entries.
+          ACE_Ordered_MultiSet_Iterator <TimeLine_Entry_Link> t_iter (*timeline_);
+          TimeLine_Entry_Link *t_entry {};
+          for (t_iter.first (); ! t_iter.done (); t_iter.advance (), t_entry = nullptr)
+            {
+              if (t_iter.next (t_entry) != 0 && t_entry != nullptr)
+                {
+                  delete &(t_entry->entry ());
+                }
+            }
+          delete timeline_;
+          timeline_ = nullptr;
         }
-      }
-      delete timeline_;
-      timeline_ = nullptr;
-    }
 
-    up_to_date_ = false;
-  }
+      up_to_date_ = false;
+    }
 }
 
 ACE_DynScheduler::status_t
