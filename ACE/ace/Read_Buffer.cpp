@@ -81,12 +81,10 @@ ACE_Read_Buffer::~ACE_Read_Buffer ()
   }
 }
 
-// Input: term        the character to terminate on
-//        search      the character to search for
-//        replace     the character with which to replace search
-// Output: a buffer containing the contents of stream
-// Method: call the recursive helper function read_helper
-
+/// Reads from the stream up to the termination character.
+///
+/// If @a search is nonnegative, its occurrences are replaced with @a replace.
+/// The result is returned in a dynamically allocated buffer.
 char *
 ACE_Read_Buffer::read (int term, int search, int replace)
 {
@@ -96,17 +94,12 @@ ACE_Read_Buffer::read (int term, int search, int replace)
   return this->rec_read (term, search, replace);
 }
 
-// Input: term       the termination character
-//        search     the character to search for
-//        replace    the character with which to replace search
-// Purpose: read in a file to a buffer using only a single dynamic
-//          allocation.
-// Method: read until the local buffer is full and then recurse.
-//         Must continue until the termination character is reached.
-//         Allocate the final buffer based on the number of local
-//         buffers read and as the recursive calls bottom out,
-//         copy them in reverse order into the allocated buffer.
-
+/// Reads through the stream using a single dynamic allocation.
+///
+/// Reads until the local buffer is full and then recurses, continuing until
+/// the termination character is reached. It allocates the final buffer based
+/// on the number of local buffers read and copies them in reverse order as the
+/// recursive calls return.
 char *
 ACE_Read_Buffer::rec_read (int term, int search, int replace)
 {
