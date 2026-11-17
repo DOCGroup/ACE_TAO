@@ -72,7 +72,7 @@ int TAO_Notify_Method_Request_Dispatch::execute_i ()
 
       if (TAO_debug_level > 1)
         ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Notify (%P|%t) Proxysupplier %x filter ")
+                    ACE_TEXT ("Notify (%P|%t) Proxysupplier %@ filter ")
                     ACE_TEXT ("eval result = %d\n"),
           std::addressof (this->proxy_supplier_), val));
 

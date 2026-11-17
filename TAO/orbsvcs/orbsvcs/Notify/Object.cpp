@@ -19,7 +19,7 @@ TAO_Notify_Object::TAO_Notify_Object ()
 {
   if (TAO_debug_level > 2 )
   {
-    ORBSVCS_DEBUG ((LM_DEBUG,"object:%x  created\n", this ));
+    ORBSVCS_DEBUG ((LM_DEBUG,"object:%@  created\n", this ));
   }
 }
 
@@ -27,7 +27,7 @@ TAO_Notify_Object::~TAO_Notify_Object ()
 {
   if (TAO_debug_level > 2 )
   {
-    ORBSVCS_DEBUG ((LM_DEBUG,"object:%x  destroyed\n", this ));
+    ORBSVCS_DEBUG ((LM_DEBUG,"object:%@  destroyed\n", this ));
   }
 
   this->destroy_proxy_poa ();

@@ -79,7 +79,7 @@ TAO_EC_Per_Supplier_Filter::connected (TAO_EC_ProxyPushSupplier* supplier)
             pub.publications[j].event;
 
 #if TAO_EC_ENABLE_DEBUG_MESSAGES
-          ORBSVCS_DEBUG ((LM_DEBUG, "Connecting consumer <%x> to <%x>, "
+          ORBSVCS_DEBUG ((LM_DEBUG, "Connecting consumer <%@> to <%@>, "
                       "trying event <%d:%d>  ",
                       supplier, this,
                       event.header.source, event.header.type));

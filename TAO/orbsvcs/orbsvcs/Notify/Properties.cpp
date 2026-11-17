@@ -21,7 +21,7 @@ TAO_Notify_Properties::TAO_Notify_Properties ()
 
   if (TAO_debug_level > 1)
   {
-    ORBSVCS_DEBUG ((LM_DEBUG, "in TAO_Properties ctos %x\n", this));
+    ORBSVCS_DEBUG ((LM_DEBUG, "in TAO_Properties ctos %@\n", this));
   }
 }
 
