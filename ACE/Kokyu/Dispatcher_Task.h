@@ -74,11 +74,9 @@ public:
   Dispatcher_Task &operator= (Dispatcher_Task &&) = delete;
 
   int initialize ();
-  bool initialized () const;
 
   int enqueue (Dispatch_Command const *cmd,
                QoSDescriptor const &qos_info);
-  int discard_pending_commands ();
 
   /// Process the events in the queue.
   int svc () override;
@@ -87,6 +85,11 @@ public:
   Priority_t preemption_priority () const;
 
 private:
+  friend class Default_Dispatcher_Impl;
+
+  bool initialized () const;
+  int discard_pending_commands ();
+
   static constexpr int ALLOC_POOL_CHUNKS = 200;
 
   ConfigInfo curr_config_info_;
