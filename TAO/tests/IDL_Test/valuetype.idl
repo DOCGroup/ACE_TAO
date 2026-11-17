@@ -89,6 +89,25 @@ valuetype Supported_Interface_Derived : Supported_Interface_Base
   factory create_supported_interface_derived ();
 };
 
+/// An inherited abstract valuetype may carry a supported interface.
+abstract valuetype Abstract_Supported_Interface_Base
+  supports Empty_Valuetype_Interface
+{
+};
+
+valuetype Supported_Interface_Concrete_Base
+{
+  public long base_value;
+};
+
+/// The supported interface is inherited through an abstract valuetype.
+valuetype Inherited_Supported_Interface_Derived
+  : Supported_Interface_Concrete_Base,
+    Abstract_Supported_Interface_Base
+{
+  public long value;
+};
+
 /// Factory initializers must not make the generated OBV class abstract.
 valuetype Factory_Initialized_Value supports Empty_Valuetype_Interface
 {
