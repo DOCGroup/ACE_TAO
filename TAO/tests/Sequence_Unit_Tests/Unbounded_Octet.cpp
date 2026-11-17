@@ -96,6 +96,52 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
         {
           return 1;
         }
+
+      CORBA::Octet external_buffer[] {5, 9};
+      {
+        CORBA::OctetSeq borrowed_source (2, 2, external_buffer, false);
+        CORBA::OctetSeq borrowed_moved (std::move (borrowed_source));
+        if (borrowed_moved.get_buffer () == external_buffer
+            || !borrowed_moved.release ()
+            || borrowed_moved[0] != 5
+            || borrowed_moved[1] != 9
+            || borrowed_source.get_buffer () != external_buffer
+            || borrowed_source.length () != 2
+            || borrowed_source.release ())
+          {
+            return 1;
+          }
+        external_buffer[0] = 1;
+        if (borrowed_moved[0] != 5)
+          {
+            return 1;
+          }
+
+        external_buffer[0] = 5;
+        CORBA::OctetSeq borrowed_move_assigned (1);
+        borrowed_move_assigned.length (1);
+        borrowed_move_assigned[0] = 3;
+        borrowed_move_assigned = std::move (borrowed_source);
+        if (borrowed_move_assigned.get_buffer () == external_buffer
+            || !borrowed_move_assigned.release ()
+            || borrowed_move_assigned[0] != 5
+            || borrowed_move_assigned[1] != 9
+            || borrowed_source.get_buffer () != external_buffer
+            || borrowed_source.length () != 2
+            || borrowed_source.release ())
+          {
+            return 1;
+          }
+        external_buffer[0] = 2;
+        if (borrowed_move_assigned[0] != 5 || borrowed_source[0] != 2)
+          {
+            return 1;
+          }
+      }
+      if (external_buffer[0] != 2 || external_buffer[1] != 9)
+        {
+          return 1;
+        }
     }
   catch (const ::CORBA::Exception &)
     {
