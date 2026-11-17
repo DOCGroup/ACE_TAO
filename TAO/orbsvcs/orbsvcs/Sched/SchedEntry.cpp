@@ -34,12 +34,11 @@ Task_Entry::~Task_Entry ()
   {
     iter.advance ();
     if (link != nullptr && *link != nullptr)
-    {
-      // remove the link object pointer from the calling entry's
-      // "callers" set and destroy the link object
-      (*link)->called ().callers_.remove (*link);
-      delete *link;
-    }
+      {
+        // Remove the link from the called entry's borrowed set, then destroy it.
+        (*link)->called ().callers_.remove (*link);
+        delete *link;
+      }
   }
 }
 
