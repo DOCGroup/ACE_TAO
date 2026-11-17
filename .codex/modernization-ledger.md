@@ -12655,6 +12655,17 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - No moved-from-use defect or code change was found. The repository-wide move
   audit remains open.
 
+## 2026-11-17 ACE application ownership move audit
+
+- In `ACE/apps/JAWS2/JAWS/Assoc_Array.cpp`, reviewed both moves of newly
+  allocated key/data owners into their corresponding array slots. The local
+  owners are not read after transfer.
+- In `ACE/apps/soreduce/Library.cpp` and `SO_Group.cpp`, reviewed both moves of
+  newly allocated module/library owners into vectors. The source owners are
+  not read afterward.
+- No moved-from-use defect or code change was found. The repository-wide move
+  audit remains open.
+
 ## 2026-11-17 TAO Object_Adapter ownership move audit
 
 - Reviewed all five `std::move` sites in `TAO/tao/PortableServer/Object_Adapter.cpp`.
