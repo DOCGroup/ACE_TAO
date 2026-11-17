@@ -136,9 +136,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
       // If we inherit from CORBA::Object and/or CORBA::AbstractBase
       // (in addition to CORBA::ValueBase) we have to add these
       // to avoid ambiguity.
-      if (node->n_supports () > 0
-          || (node->has_supported_interface ()
-              && node->obv_need_ref_counter ()))
+      if (node->has_supported_interface ())
         {
           TAO_INSERT_COMMENT (os);
 

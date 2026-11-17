@@ -73,6 +73,12 @@
             handle cycles. Applications requiring a recursive graph copy
             must provide their own <CODE>_copy_value()</CODE> implementation.</p>
         </li>
+        <li><p>When a derived valuetype adds operations but its concrete base
+            has no operations, the generated OBV class makes
+            <CODE>_copy_value()</CODE> pure virtual to prevent a sliced copy.
+            Existing derived implementations must provide their own
+            <CODE>_copy_value()</CODE> override.</p>
+        </li>
         <li><p><CODE>Valuetype</CODE>s can be used as arguments in CORBA invocations.
             There is an example in
             <A HREF="../../examples/OBV/Typed_Events">$TAO_ROOT/TAO/examples/OBV/Typed_Events</A>.

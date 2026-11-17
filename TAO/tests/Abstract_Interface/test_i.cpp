@@ -92,6 +92,13 @@ passer_i::pass_state (base_out outarg)
   r_dummy->name ((const char *) "RightNode");
   sn->right (r_dummy.in ());
 
+  CORBA::ValueBase_var copy (tc->_copy_value ());
+  if (TreeController::_downcast (copy.in ()) == nullptr)
+    {
+      ACE_ERROR ((LM_ERROR, "TreeController::_copy_value returned wrong type\n"));
+      throw CORBA::INTERNAL ();
+    }
+
   outarg = tc._retn ();
 }
 
