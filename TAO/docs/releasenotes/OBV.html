@@ -62,6 +62,13 @@
             <CODE>CORBA::DefaultValueRefCountBase</CODE> to a derived
             implementation should remove that redundant base.</p>
         </li>
+        <li><p>Generated <CODE>_copy_value()</CODE> copies direct valuetype
+            fields. Valuetypes nested in structs and sequences are shared,
+            matching the existing sequence and structure copy behavior. It
+            does not recursively traverse aggregates, preserve graph identity,
+            or handle cycles. Applications requiring a recursive graph copy
+            must provide their own <CODE>_copy_value()</CODE> implementation.</p>
+        </li>
         <li><p><CODE>Valuetype</CODE>s can be used as arguments in CORBA invocations.
             There is an example in
             <A HREF="../../examples/OBV/Typed_Events">$TAO_ROOT/TAO/examples/OBV/Typed_Events</A>.

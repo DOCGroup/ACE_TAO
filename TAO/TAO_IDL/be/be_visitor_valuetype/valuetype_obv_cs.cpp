@@ -266,11 +266,6 @@ be_visitor_valuetype_obv_cs::gen_obv_call_base_constructor_args (
   unsigned long &index)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  struct Nested_Valuetype_Member
-  {
-    be_field *field;
-    be_type *type;
-  };
   auto const is_valuetype_or_valuebox = [] (be_type *type)
     {
       return dynamic_cast<be_valuetype_fwd*> (type) != nullptr
@@ -303,7 +298,6 @@ be_visitor_valuetype_obv_cs::gen_obv_call_base_constructor_args (
           // output each accessor on new line
           *os << be_nl;
 
-          // Check the member type for nested valuetypes
           be_type *t = dynamic_cast<be_type*> (f->field_type ());
           be_typedef *td = dynamic_cast<be_typedef*> (t);
           if (td != nullptr)
@@ -311,106 +305,16 @@ be_visitor_valuetype_obv_cs::gen_obv_call_base_constructor_args (
               t = td->primitive_base_type ();
             }
 
-          be_structure *structure = dynamic_cast<be_structure*> (t);
-          std::vector<Nested_Valuetype_Member> nested_valuetype_members;
-          if (structure != nullptr)
+          if (is_valuetype_or_valuebox (t))
             {
-              for (UTL_ScopeActiveIterator si (structure, UTL_Scope::IK_decls);
-                   !si.is_done ();
-                   si.next ())
-                {
-                  be_field *member = dynamic_cast<be_field*> (si.item ());
-                  if (member == nullptr)
-                    {
-                      continue;
-                    }
-
-                  be_type *member_type =
-                    dynamic_cast<be_type*> (member->field_type ());
-                  be_typedef *member_typedef =
-                    dynamic_cast<be_typedef*> (member_type);
-                  if (member_typedef != nullptr)
-                    {
-                      member_type = member_typedef->primitive_base_type ();
-                    }
-
-                  if (is_valuetype_or_valuebox (member_type))
-                    {
-                      nested_valuetype_members.push_back (
-                        {member, member_type});
-                    }
-                }
-            }
-
-          if (!nested_valuetype_members.empty ())
-            {
-              *os << "[&] ()" << be_nl << "{" << be_idt_nl
-                  << "auto _tao_copy = " << f->local_name () << " ();";
-              for (Nested_Valuetype_Member const& nested_member :
-                     nested_valuetype_members)
-                {
-                  be_field * const member = nested_member.field;
-                  be_type * const member_type = nested_member.type;
-                  *os << be_nl
-                      << "if (_tao_copy." << member->local_name ()
-                      << " != nullptr)" << be_idt_nl << "{" << be_idt_nl
-                      << "::CORBA::ValueBase_var _tao_value (_tao_copy."
-                      << member->local_name () << "->_copy_value ());"
-                      << be_nl << member_type->full_name ()
-                      << " * const _tao_typed = "
-                      << member_type->full_name ()
-                      << "::_downcast (_tao_value.in ());" << be_nl
-                      << "if (_tao_typed != nullptr)" << be_idt_nl
-                      << "{" << be_idt_nl
-                      << "_tao_value._retn ();" << be_uidt_nl << "}"
-                      << be_uidt << be_nl
-                      << "_tao_copy." << member->local_name ()
-                      << " = _tao_typed;"
-                      << be_uidt_nl << "}" << be_uidt;
-                }
-              *os << be_nl << "return _tao_copy;" << be_uidt_nl << "} ()";
+              *os << "(" << f->local_name () << " () ?" << be_idt_nl
+                  << t->full_name () << "::_downcast ("
+                  << "::CORBA::ValueBase_var (" << f->local_name ()
+                  << " ()->_copy_value ()).in ())" << be_nl
+                  << ": 0)" << be_uidt;
             }
           else
-            {
-              be_sequence *sequence = dynamic_cast<be_sequence*> (t);
-              be_type *sequence_element =
-                sequence != nullptr ? sequence->primitive_base_type () : nullptr;
-              if (sequence != nullptr
-                  && is_valuetype_or_valuebox (sequence_element))
-                {
-                  *os << "[&] ()" << be_nl << "{" << be_idt_nl
-                      << "auto _tao_copy = " << f->local_name () << " ();"
-                      << be_nl
-                      << "for (::CORBA::ULong i {}; i < _tao_copy.length (); ++i)"
-                      << be_idt_nl << "{" << be_idt_nl
-                      << "if (_tao_copy[i] != nullptr)" << be_idt_nl
-                      << "{" << be_idt_nl
-                      << "::CORBA::ValueBase_var _tao_value ("
-                      << "_tao_copy[i]->_copy_value ());" << be_nl
-                      << sequence_element->full_name ()
-                      << " * const _tao_typed = " << sequence_element->full_name ()
-                      << "::_downcast (_tao_value.in ());" << be_nl
-                      << "if (_tao_typed != nullptr)" << be_idt_nl
-                      << "{" << be_idt_nl << "_tao_value._retn ();"
-                      << be_uidt_nl << "}" << be_uidt_nl
-                      << "_tao_copy[i] = _tao_typed;" << be_uidt_nl
-                      << "}" << be_uidt << be_uidt_nl << "}"
-                      << be_uidt_nl
-                      << "return _tao_copy;" << be_uidt_nl
-                      << "} ()";
-                }
-              else if (is_valuetype_or_valuebox (t))
-                {
-                  // Nested valuetypes/boxes need to be deep copied also
-                  *os << "(" << f->local_name () << " () ?" << be_idt_nl
-                      << t->full_name () << "::_downcast ("
-                      << "::CORBA::ValueBase_var (" << f->local_name ()
-                      << " ()->_copy_value ()).in ())" << be_nl
-                      << ": 0)" << be_uidt;
-                }
-              else // Simple non-nested type
-                *os << f->local_name () << " ()";
-            }
+            *os << f->local_name () << " ()";
         }
     }
 }
