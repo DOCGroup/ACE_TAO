@@ -29,8 +29,10 @@
 #include <cstring>
 #include <type_traits>
 
-static_assert (std::is_nothrow_move_constructible<testdata::ArraycharList>::value);
-static_assert (std::is_nothrow_move_constructible<testdata::BdArraycharList>::value);
+static_assert (std::is_move_constructible<testdata::ArraycharList>::value);
+static_assert (std::is_move_constructible<testdata::BdArraycharList>::value);
+static_assert (!std::is_nothrow_move_constructible<testdata::ArraycharList>::value);
+static_assert (!std::is_nothrow_move_constructible<testdata::BdArraycharList>::value);
 static_assert (std::is_abstract<OBV_Supports_Inherited_Operation>::value,
                "A valuetype that supports an inherited operation is abstract");
 static_assert (!std::is_abstract<OBV_Supported_Interface_Derived>::value,
@@ -387,6 +389,30 @@ test_valuetype_copy (int &error_count)
         }
     }
 
+  Copy_Leaf_var retained_sequence_copy;
+  {
+    CORBA::ValueBase_var holder_copy (sequence_holder._copy_value ());
+    Copy_Sequence_Holder * const holder_downcast =
+      Copy_Sequence_Holder::_downcast (holder_copy.in ());
+    if (holder_downcast == nullptr)
+      {
+        ++error_count;
+        ACE_ERROR ((LM_ERROR, "Copy_Sequence_Holder copy has wrong type\n"));
+      }
+    else
+      {
+        Copy_Leaf * const nested_copy = holder_downcast->leaves ()[0];
+        nested_copy->_add_ref ();
+        retained_sequence_copy = nested_copy;
+      }
+  }
+  if (retained_sequence_copy.in () != nullptr
+      && retained_sequence_copy->_refcount_value () != 1)
+    {
+      ++error_count;
+      ACE_ERROR ((LM_ERROR, "Copy_Sequence_Holder leaked its nested copy\n"));
+    }
+
   Copy_Leaf_Struct leaf_struct;
   leaf->_add_ref ();
   leaf_struct.leaf = leaf;
@@ -418,6 +444,30 @@ test_valuetype_copy (int &error_count)
             error_count, "Copy_Struct_Holder original leaf unchanged",
             leaf->leaf_value (), 51);
         }
+    }
+
+  Copy_Leaf_var retained_struct_copy;
+  {
+    CORBA::ValueBase_var holder_copy (struct_holder._copy_value ());
+    Copy_Struct_Holder * const holder_downcast =
+      Copy_Struct_Holder::_downcast (holder_copy.in ());
+    if (holder_downcast == nullptr)
+      {
+        ++error_count;
+        ACE_ERROR ((LM_ERROR, "Copy_Struct_Holder copy has wrong type\n"));
+      }
+    else
+      {
+        Copy_Leaf * const nested_copy = holder_downcast->value ().leaf.in ();
+        nested_copy->_add_ref ();
+        retained_struct_copy = nested_copy;
+      }
+  }
+  if (retained_struct_copy.in () != nullptr
+      && retained_struct_copy->_refcount_value () != 1)
+    {
+      ++error_count;
+      ACE_ERROR ((LM_ERROR, "Copy_Struct_Holder leaked its nested copy\n"));
     }
 }
 

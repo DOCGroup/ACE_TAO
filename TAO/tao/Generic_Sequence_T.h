@@ -140,23 +140,37 @@ public:
     return * this;
   }
 
-  generic_sequence (generic_sequence &&rhs) noexcept
-    : maximum_ (rhs.maximum_)
-    , length_ (rhs.length_)
-    , buffer_ (rhs.buffer_)
-    , release_ (rhs.release_)
+  generic_sequence (generic_sequence &&rhs)
+    : maximum_ (allocation_traits::default_maximum ())
+    , length_ (0)
+    , buffer_ (nullptr)
+    , release_ (false)
   {
-    rhs.maximum_ = allocation_traits::default_maximum ();
-    rhs.length_ = 0;
-    rhs.buffer_ = nullptr;
-    rhs.release_ = false;
+    if (rhs.release_)
+      {
+        maximum_ = rhs.maximum_;
+        length_ = rhs.length_;
+        buffer_ = rhs.buffer_;
+        release_ = true;
+        rhs.maximum_ = allocation_traits::default_maximum ();
+        rhs.length_ = 0;
+        rhs.buffer_ = nullptr;
+        rhs.release_ = false;
+      }
+    else
+      {
+        generic_sequence tmp (static_cast<generic_sequence const &> (rhs));
+        this->swap (tmp);
+      }
   }
 
-  generic_sequence &operator= (generic_sequence &&rhs) noexcept
+  generic_sequence &operator= (generic_sequence &&rhs)
   {
     if (this != std::addressof (rhs))
       {
-        generic_sequence tmp (std::move (rhs));
+        generic_sequence tmp = rhs.release_
+          ? generic_sequence (std::move (rhs))
+          : generic_sequence (static_cast<generic_sequence const &> (rhs));
         this->swap (tmp);
       }
     return *this;

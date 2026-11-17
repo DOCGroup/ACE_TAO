@@ -50,9 +50,9 @@ public:
     : impl_(maximum, length, data, release)
   {}
   unbounded_object_reference_sequence (unbounded_object_reference_sequence const &) = default;
-  unbounded_object_reference_sequence (unbounded_object_reference_sequence &&) noexcept = default;
+  unbounded_object_reference_sequence (unbounded_object_reference_sequence &&) = default;
   unbounded_object_reference_sequence &operator= (unbounded_object_reference_sequence const &) = default;
-  unbounded_object_reference_sequence &operator= (unbounded_object_reference_sequence &&) noexcept = default;
+  unbounded_object_reference_sequence &operator= (unbounded_object_reference_sequence &&) = default;
 
   // @copydoc TAO::details::generic_sequence::maximum()
   inline CORBA::ULong maximum() const {

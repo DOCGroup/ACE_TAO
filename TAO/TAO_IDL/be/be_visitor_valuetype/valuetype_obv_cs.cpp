@@ -356,9 +356,16 @@ be_visitor_valuetype_obv_cs::gen_obv_call_base_constructor_args (
                           << " != nullptr)" << be_idt_nl << "{" << be_idt_nl
                           << "::CORBA::ValueBase_var _tao_value (_tao_copy."
                           << member->local_name () << "->_copy_value ());"
-                          << be_nl << "_tao_copy." << member->local_name ()
-                          << " = " << member_type->full_name ()
-                          << "::_downcast (_tao_value.in ());"
+                          << be_nl << member_type->full_name ()
+                          << " * const _tao_typed = "
+                          << member_type->full_name ()
+                          << "::_downcast (_tao_value.in ());" << be_nl
+                          << "if (_tao_typed != nullptr)" << be_idt_nl
+                          << "{" << be_idt_nl
+                          << "_tao_value._retn ();" << be_uidt_nl << "}"
+                          << be_uidt << be_nl
+                          << "_tao_copy." << member->local_name ()
+                          << " = _tao_typed;"
                           << be_uidt_nl << "}" << be_uidt;
                     }
                 }
@@ -381,8 +388,13 @@ be_visitor_valuetype_obv_cs::gen_obv_call_base_constructor_args (
                       << "{" << be_idt_nl
                       << "::CORBA::ValueBase_var _tao_value ("
                       << "_tao_copy[i]->_copy_value ());" << be_nl
-                      << "_tao_copy[i] = " << sequence_element->full_name ()
-                      << "::_downcast (_tao_value.in ());" << be_uidt_nl
+                      << sequence_element->full_name ()
+                      << " * const _tao_typed = " << sequence_element->full_name ()
+                      << "::_downcast (_tao_value.in ());" << be_nl
+                      << "if (_tao_typed != nullptr)" << be_idt_nl
+                      << "{" << be_idt_nl << "_tao_value._retn ();"
+                      << be_uidt_nl << "}" << be_uidt_nl
+                      << "_tao_copy[i] = _tao_typed;" << be_uidt_nl
                       << "}" << be_uidt << be_uidt_nl << "}"
                       << be_uidt_nl
                       << "return _tao_copy;" << be_uidt_nl

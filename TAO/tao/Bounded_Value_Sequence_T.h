@@ -42,9 +42,9 @@ public:
     : impl_(MAX, length, data, release)
   {}
   bounded_value_sequence (bounded_value_sequence const &) = default;
-  bounded_value_sequence (bounded_value_sequence &&) noexcept = default;
+  bounded_value_sequence (bounded_value_sequence &&) = default;
   bounded_value_sequence &operator= (bounded_value_sequence const &) = default;
-  bounded_value_sequence &operator= (bounded_value_sequence &&) noexcept = default;
+  bounded_value_sequence &operator= (bounded_value_sequence &&) = default;
   /* Use default ctor, operator= and dtor */
 
   // @copydoc TAO::details::generic_sequence::maximum()

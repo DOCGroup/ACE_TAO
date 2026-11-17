@@ -55,9 +55,9 @@ public:
     : impl_(maximum, length, data, release)
   {}
   unbounded_basic_string_sequence (unbounded_basic_string_sequence const &) = default;
-  unbounded_basic_string_sequence (unbounded_basic_string_sequence &&) noexcept = default;
+  unbounded_basic_string_sequence (unbounded_basic_string_sequence &&) = default;
   unbounded_basic_string_sequence &operator= (unbounded_basic_string_sequence const &) = default;
-  unbounded_basic_string_sequence &operator= (unbounded_basic_string_sequence &&) noexcept = default;
+  unbounded_basic_string_sequence &operator= (unbounded_basic_string_sequence &&) = default;
 
   /* Use default ctor, operator= and dtor */
 

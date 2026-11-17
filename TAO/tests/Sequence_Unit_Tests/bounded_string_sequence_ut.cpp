@@ -30,7 +30,8 @@ CORBA::ULong const MAXIMUM = 32;
 template<class tested_sequence>
 struct Tester
 {
-  static_assert (std::is_nothrow_move_constructible<tested_sequence>::value);
+  static_assert (std::is_move_constructible<tested_sequence>::value);
+  static_assert (!std::is_nothrow_move_constructible<tested_sequence>::value);
   typedef typename tested_sequence::character_type char_type;
   typedef string_sequence_test_helpers<char_type> helper;
   typedef typename tested_sequence::value_type value_type;

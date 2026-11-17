@@ -47,9 +47,9 @@ public:
     : impl_(maximum, length, data, release)
   {}
   unbounded_array_sequence (unbounded_array_sequence const &) = default;
-  unbounded_array_sequence (unbounded_array_sequence &&) noexcept = default;
+  unbounded_array_sequence (unbounded_array_sequence &&) = default;
   unbounded_array_sequence &operator= (unbounded_array_sequence const &) = default;
-  unbounded_array_sequence &operator= (unbounded_array_sequence &&) noexcept = default;
+  unbounded_array_sequence &operator= (unbounded_array_sequence &&) = default;
   inline CORBA::ULong maximum() const {
     return impl_.maximum();
   }

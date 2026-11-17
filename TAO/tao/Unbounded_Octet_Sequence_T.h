@@ -296,26 +296,48 @@ public:
     return * this;
   }
 
-  unbounded_value_sequence (unbounded_value_sequence &&rhs) noexcept
-    : maximum_ (rhs.maximum_)
-    , length_ (rhs.length_)
-    , buffer_ (rhs.buffer_)
-    , release_ (rhs.release_)
-    , mb_ (rhs.mb_)
+  unbounded_value_sequence (unbounded_value_sequence &&rhs)
+    : maximum_ (0)
+    , length_ (0)
+    , buffer_ (nullptr)
+    , release_ (false)
+    , mb_ (nullptr)
   {
-    rhs.maximum_ = 0;
-    rhs.length_ = 0;
-    rhs.buffer_ = nullptr;
-    rhs.release_ = false;
-    rhs.mb_ = nullptr;
+    if (rhs.release_ || rhs.mb_ != nullptr)
+      {
+        maximum_ = rhs.maximum_;
+        length_ = rhs.length_;
+        buffer_ = rhs.buffer_;
+        release_ = rhs.release_;
+        mb_ = rhs.mb_;
+        rhs.maximum_ = 0;
+        rhs.length_ = 0;
+        rhs.buffer_ = nullptr;
+        rhs.release_ = false;
+        rhs.mb_ = nullptr;
+      }
+    else
+      {
+        unbounded_value_sequence tmp (static_cast<unbounded_value_sequence const &> (rhs));
+        this->swap (tmp);
+      }
   }
 
-  unbounded_value_sequence &operator= (unbounded_value_sequence &&rhs) noexcept
+  unbounded_value_sequence &operator= (unbounded_value_sequence &&rhs)
   {
     if (this != std::addressof (rhs))
       {
-        unbounded_value_sequence tmp (std::move (rhs));
-        this->swap (tmp);
+        if (rhs.release_ || rhs.mb_ != nullptr)
+          {
+            unbounded_value_sequence tmp (std::move (rhs));
+            this->swap (tmp);
+          }
+        else
+          {
+            unbounded_value_sequence tmp (
+              static_cast<unbounded_value_sequence const &> (rhs));
+            this->swap (tmp);
+          }
       }
     return *this;
   }

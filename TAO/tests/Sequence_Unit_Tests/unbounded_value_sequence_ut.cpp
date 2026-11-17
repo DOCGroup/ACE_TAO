@@ -117,6 +117,45 @@ struct Tester
     return 0;
   }
 
+  int test_move_constructor_from_borrowed_buffer()
+  {
+    value_type * const buffer = alloc_and_init_buffer ();
+    {
+      tested_sequence source (8, 4, buffer, false);
+      tested_sequence destination (std::move (source));
+
+      CHECK_EQUAL (buffer, source.get_buffer ());
+      CHECK_EQUAL (false, source.release ());
+      CHECK (buffer != destination.get_buffer ());
+      CHECK_EQUAL (true, destination.release ());
+      CHECK_EQUAL (4UL, destination.length ());
+      CHECK_EQUAL (value_type (1), destination[0]);
+      CHECK_EQUAL (value_type (16), destination[3]);
+    }
+    tested_sequence::freebuf (buffer);
+    return 0;
+  }
+
+  int test_move_assignment_from_borrowed_buffer()
+  {
+    value_type * const buffer = alloc_and_init_buffer ();
+    {
+      tested_sequence source (8, 4, buffer, false);
+      tested_sequence destination (4, 2, alloc_and_init_buffer (), true);
+      destination = std::move (source);
+
+      CHECK_EQUAL (buffer, source.get_buffer ());
+      CHECK_EQUAL (false, source.release ());
+      CHECK (buffer != destination.get_buffer ());
+      CHECK_EQUAL (true, destination.release ());
+      CHECK_EQUAL (4UL, destination.length ());
+      CHECK_EQUAL (value_type (1), destination[0]);
+      CHECK_EQUAL (value_type (16), destination[3]);
+    }
+    tested_sequence::freebuf (buffer);
+    return 0;
+  }
+
   int test_ulong_constructor()
   {
     expected_calls a(tested_allocation_traits::allocbuf_calls);
@@ -437,6 +476,8 @@ struct Tester
     status += this->test_assignment_from_ulong();
     status += this->test_move_constructor();
     status += this->test_move_assignment();
+    status += this->test_move_constructor_from_borrowed_buffer ();
+    status += this->test_move_assignment_from_borrowed_buffer ();
     status += this->test_exception_in_ulong_constructor();
     status += this->test_set_length_less_than_maximum();
     status += this->test_set_length_more_than_maximum();

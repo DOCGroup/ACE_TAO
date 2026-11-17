@@ -25,7 +25,8 @@ CORBA::ULong const TMAX = 64;
 struct Tester
 {
   typedef bounded_object_reference_sequence<mock_reference,mock_reference_var,TMAX> tested_sequence;
-  static_assert (std::is_nothrow_move_constructible<tested_sequence>::value);
+  static_assert (std::is_move_constructible<tested_sequence>::value);
+  static_assert (!std::is_nothrow_move_constructible<tested_sequence>::value);
   typedef tested_sequence::value_type value_type;
   typedef tested_sequence::const_value_type const_value_type;
 

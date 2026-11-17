@@ -49,9 +49,9 @@ public:
     : impl_(maximum, length, data, release)
   {}
   unbounded_valuetype_sequence (unbounded_valuetype_sequence const &) = default;
-  unbounded_valuetype_sequence (unbounded_valuetype_sequence &&) noexcept = default;
+  unbounded_valuetype_sequence (unbounded_valuetype_sequence &&) = default;
   unbounded_valuetype_sequence &operator= (unbounded_valuetype_sequence const &) = default;
-  unbounded_valuetype_sequence &operator= (unbounded_valuetype_sequence &&) noexcept = default;
+  unbounded_valuetype_sequence &operator= (unbounded_valuetype_sequence &&) = default;
 
   /* Use default ctor, operator= and dtor */
   inline CORBA::ULong maximum() const {

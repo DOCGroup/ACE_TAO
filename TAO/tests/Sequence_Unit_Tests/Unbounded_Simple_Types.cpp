@@ -16,9 +16,13 @@
 #include <type_traits>
 #include <utility>
 
-static_assert (std::is_nothrow_move_constructible<
+static_assert (std::is_move_constructible<
   TAO::unbounded_valuetype_sequence<CORBA::ValueBase, CORBA::ValueBase_var>>::value);
-static_assert (std::is_nothrow_move_constructible<
+static_assert (std::is_move_constructible<
+  TAO::bounded_valuetype_sequence<CORBA::ValueBase, CORBA::ValueBase_var, 4>>::value);
+static_assert (!std::is_nothrow_move_constructible<
+  TAO::unbounded_valuetype_sequence<CORBA::ValueBase, CORBA::ValueBase_var>>::value);
+static_assert (!std::is_nothrow_move_constructible<
   TAO::bounded_valuetype_sequence<CORBA::ValueBase, CORBA::ValueBase_var, 4>>::value);
 
 struct Foo

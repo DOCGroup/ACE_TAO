@@ -48,9 +48,9 @@ public:
     : impl_(MAX, length, data, release)
   {}
   bounded_basic_string_sequence (bounded_basic_string_sequence const &) = default;
-  bounded_basic_string_sequence (bounded_basic_string_sequence &&) noexcept = default;
+  bounded_basic_string_sequence (bounded_basic_string_sequence &&) = default;
   bounded_basic_string_sequence &operator= (bounded_basic_string_sequence const &) = default;
-  bounded_basic_string_sequence &operator= (bounded_basic_string_sequence &&) noexcept = default;
+  bounded_basic_string_sequence &operator= (bounded_basic_string_sequence &&) = default;
   // @copydoc TAO::details::generic_sequence::maximum()
   inline CORBA::ULong maximum() const {
     return impl_.maximum();
