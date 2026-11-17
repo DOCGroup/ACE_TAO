@@ -49,37 +49,37 @@ Catior_i::decode (const ACE_CString& aString, ACE_CString& output)
   buffer_.clear ();
   this->trace_depth_ = 0;
 
-  ACE_CString const iorPrefix = "IOR:";
-  ACE_CString const iiopPrefix = "iiop:";
-  ACE_CString const poopPrefix = ":IR:";
+  constexpr char ior_prefix[] = "IOR:";
+  constexpr char iiop_prefix[] = "iiop:";
+  constexpr char poop_prefix[] = ":IR:";
 
   std::unique_ptr<char[]> str;
   CORBA::Boolean b {};
-  if (aString.find (iorPrefix) == 0)
+  if (aString.find (ior_prefix) == 0)
     {
       buffer_ += "Decoding an IOR:\n";
 
       // Strip the IOR: off the string.
-      size_t const prefixLength = iorPrefix.length ();
+      size_t const prefix_length = sizeof (ior_prefix) - 1;
       ACE_CString subString =
-        aString.substring (prefixLength,
-                           aString.length () - prefixLength);
+        aString.substring (prefix_length,
+                           aString.length () - prefix_length);
       subString[subString.length ()] = '\0';
       str.reset (subString.rep ());
       b = catior (str.get ());
     }
-  else if (aString.find (iiopPrefix) == 0)
+  else if (aString.find (iiop_prefix) == 0)
     {
       buffer_ += "Decoding an IIOP URL IOR\n";
 
-      size_t const prefixLength = iiopPrefix.length ();
+      size_t const prefix_length = sizeof (iiop_prefix) - 1;
       ACE_CString subString =
-        aString.substring (prefixLength,
-                           aString.length () - prefixLength);
+        aString.substring (prefix_length,
+                           aString.length () - prefix_length);
       str.reset (subString.rep ());
       b = catiiop (str.get ());
     }
-  else if (aString.find (poopPrefix) != ACE_CString::npos)
+  else if (aString.find (poop_prefix) != ACE_CString::npos)
     {
       buffer_ += "Decoding a POOP IOR\n";
 
@@ -864,7 +864,7 @@ Catior_i::cat_tag_policies (TAO_InputCDR& stream) {
 }
 
 CORBA::Boolean
-Catior_i::cat_security_association (const CORBA::UShort& a) {
+Catior_i::cat_security_association (CORBA::UShort a) {
   // Copied from Security.idl
   using AssociationOptions = CORBA::UShort;
   const AssociationOptions NoProtection = 1;
@@ -967,7 +967,7 @@ Catior_i::cat_tag_ssl_sec_trans (TAO_InputCDR& cdr) {
 }
 
 CORBA::Boolean
-Catior_i::cat_octet_seq (const char *object_name,
+Catior_i::cat_octet_seq (char const *object_name,
                          TAO_InputCDR& stream)
 {
   CORBA::ULong length {};
@@ -1057,7 +1057,7 @@ Catior_i::_find_info (CORBA::ULong id)
 }
 
 void
-Catior_i::displayHex (TAO_InputCDR & str)
+Catior_i::displayHex (TAO_InputCDR &str)
 {
   if (!str.good_bit ())
   {
@@ -1272,7 +1272,7 @@ Catior_i::cat_tagged_components (TAO_InputCDR& stream)
 
 CORBA::Boolean
 Catior_i::cat_profile_helper (TAO_InputCDR& stream,
-                              const char *protocol)
+                              char const *protocol)
 {
   // OK, we've got an IIOP profile.  It's going to be
   // encapsulated ProfileData.  Create a new decoding stream and
@@ -1672,7 +1672,7 @@ Catior_i::cat_sciop_profile (TAO_InputCDR& stream)
 
 CORBA::Boolean
 Catior_i::cat_nsk_profile_helper (TAO_InputCDR& stream,
-                                  const char *protocol)
+                                  char const *protocol)
 {
   // OK, we've got an NSK profile.  It's going to be
   // encapsulated ProfileData.  Create a new decoding stream and
