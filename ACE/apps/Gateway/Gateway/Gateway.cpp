@@ -112,8 +112,8 @@ Gateway::init (int argc, ACE_TCHAR *argv[])
                     ACE_TEXT ("schedule_timer")));
       else
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("starting timer for %d seconds...\n"),
-                   Options::instance ()->performance_window ()));
+                    ACE_TEXT ("starting timer for %q seconds...\n"),
+                    static_cast<ACE_INT64> (Options::instance ()->performance_window ())));
     }
 
   // Are we running as a connector?

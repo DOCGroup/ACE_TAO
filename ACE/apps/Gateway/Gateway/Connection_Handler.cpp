@@ -129,9 +129,9 @@ Connection_Handler::handle_timeout (ACE_Time_Value const &,
                                     void const *)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) attempting to reconnect Connection_Handler %d with timeout = %d\n",
+              "(%t) attempting to reconnect Connection_Handler %d with timeout = %q\n",
               this->connection_id (),
-              this->timeout_));
+              static_cast<ACE_INT64> (this->timeout_)));
 
   // Delegate the re-connection attempt to the Event Channel.
   this->event_channel_->initiate_connection_connection (this);
@@ -145,7 +145,7 @@ int
 Connection_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) shutting down %s Connection_Handler %d on handle %@\n",
+              "(%t) shutting down %C Connection_Handler %d on handle %@\n",
               this->connection_role () == 'C' ? "Consumer" : "Supplier",
               this->connection_id (),
               reinterpret_cast<void *> (this->get_handle ())));
@@ -176,7 +176,7 @@ Connection_Handler::state () const
 int
 Connection_Handler::open (void *)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) %s Connection_Handler's handle = %@\n",
+  ACE_DEBUG ((LM_DEBUG, "(%t) %C Connection_Handler's handle = %@\n",
               this->connection_role () == 'C' ? "Consumer" : "Supplier",
               reinterpret_cast<void *> (this->peer ().get_handle ())));
 

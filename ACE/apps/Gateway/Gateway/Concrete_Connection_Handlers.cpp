@@ -463,13 +463,13 @@ Supplier_Handler::recv (ACE_Message_Block *&forward_addr)
 
       this->total_bytes (data_received + header_received);
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t) connection id = %d, cur len = %d, total bytes read = %d\n",
+                  "(%t) connection id = %d, cur len = %d, total bytes read = %b\n",
                   event->header_.connection_id_,
                   event->header_.len_,
                   data_received + header_received));
       if (Options::instance ()->enabled (Options::VERBOSE))
         ACE_DEBUG ((LM_DEBUG,
-                    "data_ = %*s\n",
+                    "data_ = %*C\n",
                     event->header_.len_ - 2,
                     event->data_));
 
@@ -681,7 +681,7 @@ Thr_Consumer_Handler::svc ()
           ACE_Time_Value tv (this->timeout ());
 
           ACE_ERROR ((LM_ERROR,
-                      "(%t) reattempting connection, sec = %d\n",
+                      "(%t) reattempting connection, sec = %:\n",
                       tv.sec ()));
 
           ACE_OS::sleep (tv);
@@ -789,7 +789,7 @@ Thr_Supplier_Handler::svc ()
         {
           ACE_Time_Value tv (this->timeout ());
           ACE_ERROR ((LM_ERROR,
-                      "(%t) reattempting connection, sec = %d\n",
+                      "(%t) reattempting connection, sec = %:\n",
                       tv.sec ()));
           ACE_OS::sleep (tv);
         }

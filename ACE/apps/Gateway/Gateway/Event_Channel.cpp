@@ -60,8 +60,8 @@ Event_Channel::compute_performance_statistics ()
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) after %d seconds, \ntotal_bytes_in = %B\ntotal_bytes_out = %B\n",
-              Options::instance ()->performance_window (),
+              "(%t) after %q seconds, \ntotal_bytes_in = %B\ntotal_bytes_out = %B\n",
+              static_cast<ACE_INT64> (Options::instance ()->performance_window ()),
               total_bytes_in,
               total_bytes_out));
 
