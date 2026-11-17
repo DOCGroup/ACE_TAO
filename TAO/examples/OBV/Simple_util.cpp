@@ -16,9 +16,7 @@ template <class Servant> int
 Server<Servant>::parse_args ()
 {
   ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("do:ni:"));
-  int c {};
-
-  while ((c = get_opts ()) != -1)
+  for (int c {}; (c = get_opts ()) != -1;)
     switch (c)
       {
       case 'd':  // debug flag.
@@ -54,18 +52,20 @@ Server<Servant>::init (char const *servant_name,
   if (this->orb_manager_.init_child_poa (argc,
                                          argv,
                                          "child_poa") == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("init_child_poa")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("init_child_poa")),
+                        -1);
+    }
 
   this->argc_ = argc;
   this->argv_ = argv;
 
-  int const retval = this->parse_args ();
-
-  if (retval != 0)
-    return retval;
+  if (int const retval = this->parse_args (); retval != 0)
+    {
+      return retval;
+    }
 
   CORBA::ORB_var orb = this->orb_manager_.orb ();
 
@@ -92,12 +92,23 @@ Server<Servant>::init (char const *servant_name,
             ACE_OS::fopen (this->ior_output_file_.c_str (), ACE_TEXT ("w")),
             ACE_OS::fclose);
           if (!output_file)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Unable to open %s for writing: %p\n"),
-                               this->ior_output_file_.c_str ()), -1);
-          ACE_OS::fprintf (output_file.get (), "%s", str.in ());
-        }
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Unable to open %s for writing: %p\n"),
+                                 this->ior_output_file_.c_str ()),
+                                -1);
+            }
 
+          int const write_result = ACE_OS::fprintf (output_file.get (), "%s", str.in ());
+          int const close_result = ACE_OS::fclose (output_file.release ());
+          if (write_result < 0 || close_result != 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Unable to write %s: %p\n"),
+                                 this->ior_output_file_.c_str ()),
+                                -1);
+            }
+        }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -112,9 +123,11 @@ Server<Servant>::run ()
 {
   // Run the main event loop for the ORB.
   if (this->orb_manager_.run () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Server_i::run")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Server_i::run")),
+                        -1);
+    }
 
   return 0;
 }
@@ -131,12 +144,13 @@ template <class InterfaceObj, class Var> int
 Client<InterfaceObj, Var>::read_ior (ACE_TCHAR const *filename)
 {
   FILE *ior_file = ACE_OS::fopen (filename, ACE_TEXT ("r"));
-
   if (ior_file == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Unable to open %s for reading: %p\n"),
-                       filename),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Unable to open %s for reading: %p\n"),
+                         filename),
+                        -1);
+    }
 
   ACE_Read_Buffer ior_buffer (ior_file, true);
 
@@ -144,9 +158,11 @@ Client<InterfaceObj, Var>::read_ior (ACE_TCHAR const *filename)
     ior_buffer.read (), {ior_buffer.alloc ()});
 
   if (!data)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Unable to read ior: %p\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Unable to read ior: %p\n")),
+                        -1);
+    }
 
   this->ior_ = data.get ();
 
@@ -159,9 +175,7 @@ template <class InterfaceObj, class Var> int
 Client<InterfaceObj, Var>::parse_args ()
 {
   ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("df:nk:x"));
-  int c {};
-
-  while ((c = get_opts ()) != -1)
+  for (int c {}; (c = get_opts ()) != -1;)
     switch (c)
       {
       case 'd':  // debug flag
@@ -172,10 +186,12 @@ Client<InterfaceObj, Var>::parse_args ()
         break;
       case 'f': // read the IOR from the file.
         if (this->read_ior (get_opts.opt_arg ()) < 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("Unable to read ior from %s : %p\n"),
-                             get_opts.opt_arg ()),
-                            -1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("Unable to read ior from %s : %p\n"),
+                               get_opts.opt_arg ()),
+                              -1);
+          }
         break;
       case 'x': // read the flag for shutting down
         this->shutdown_ = true;
@@ -202,7 +218,9 @@ Client<InterfaceObj, Var>::init (char const *name,
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
-        return -1;
+        {
+          return -1;
+        }
 
       if (!this->ior_.empty ())
         {
@@ -210,16 +228,20 @@ Client<InterfaceObj, Var>::init (char const *name,
             this->orb_->string_to_object (this->ior_.c_str ());
 
           if (CORBA::is_nil (server_object.in ()))
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("invalid ior <%C>\n"),
-                               this->ior_.c_str ()),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("invalid ior <%C>\n"),
+                                 this->ior_.c_str ()),
+                                -1);
+            }
           this->server_ = InterfaceObj::_narrow (server_object.in ());
         }
       else
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("no ior or naming options specified\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("no ior or naming options specified\n")),
+                            -1);
+        }
     }
   catch (CORBA::Exception const &ex)
     {
