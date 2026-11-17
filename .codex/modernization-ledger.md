@@ -12732,6 +12732,16 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - No moved-from-use defect or code change was found. The repository-wide move
   audit remains open.
 
+## 2026-11-17 TAO clonable argument ownership move audit
+
+- Reviewed nine `std::move` sites in the core clonable argument wrappers:
+  Basic, bounded/unbounded string, fixed/variable array, fixed/variable size,
+  special-basic, and vector arguments. Each clone's pointer/reference is
+  constructed from a newly allocated value or buffer, then the owner transfers
+  into that returned clone. The local owner is not read afterward.
+- No moved-from-use defect or code change was found. The `TAO/tao` move audit
+  remains open for its other core ownership and sequence call sites.
+
 ## 2026-11-17 TAO Object_Adapter ownership move audit
 
 - Reviewed all five `std::move` sites in `TAO/tao/PortableServer/Object_Adapter.cpp`.
