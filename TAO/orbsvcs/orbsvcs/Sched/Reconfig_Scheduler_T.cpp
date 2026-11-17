@@ -12,7 +12,6 @@
 #include "orbsvcs/Time_Utilities.h"
 
 #include <algorithm>
-#include <cstdlib>
 #include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -20,12 +19,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-// This is awkward, but it makes MSVC++ happy.
-extern "C"
-{
-using COMP_FUNC = int (*) (void const *, void const *);
-}
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
@@ -2163,10 +2156,18 @@ detect_cycles_i ()
   // Sort the pointers to entries in order of descending forward
   // finish times, which produces a reverse topological ordering,
   // with callers ahead of called nodes.
-  std::qsort (entry_ptr_array_,
-              this->rt_info_count_,
-              sizeof (TAO_Reconfig_Scheduler_Entry *),
-              reinterpret_cast<COMP_FUNC> (RECONFIG_SCHED_STRATEGY::comp_entry_finish_times));
+  if (this->rt_info_count_ > 1)
+    {
+      std::sort (entry_ptr_array_,
+                 entry_ptr_array_ + this->rt_info_count_,
+                 [] (TAO_Reconfig_Scheduler_Entry *first,
+                     TAO_Reconfig_Scheduler_Entry *second)
+                 {
+                   return RECONFIG_SCHED_STRATEGY::comp_entry_finish_times (
+                            &first,
+                            &second) < 0;
+                 });
+    }
 
   // Traverse entries in reverse topological order,
   // looking for strongly connected components (cycles).
@@ -2221,10 +2222,17 @@ perform_admission_i ()
 
   // Sort the pointers to original tuples in ascending admission
   // order, according to the scheduling strategy's admission policy.
-  std::qsort (tuple_ptr_array_,
-              this->rt_info_tuple_count_,
-              sizeof (TAO_RT_Info_Tuple *),
-              reinterpret_cast<COMP_FUNC> (RECONFIG_SCHED_STRATEGY::total_admission_comp));
+  if (this->rt_info_tuple_count_ > 1)
+    {
+      std::sort (tuple_ptr_array_,
+                 tuple_ptr_array_ + this->rt_info_tuple_count_,
+                 [] (TAO_RT_Info_Tuple *first, TAO_RT_Info_Tuple *second)
+                 {
+                   return RECONFIG_SCHED_STRATEGY::total_admission_comp (
+                            &first,
+                            &second) < 0;
+                 });
+    }
 
   // Traverse tuples in admission order, updating the associate tuple
   // for each thread delineator.
@@ -2299,10 +2307,17 @@ propagate_criticalities_i ()
   // Sort the pointers to original tuples in ascending admission
   // order, according to the scheduling strategy's admission policy.
 
-  std::qsort (tuple_ptr_array_,
-              this->rt_info_tuple_count_,
-              sizeof (TAO_RT_Info_Tuple *),
-              reinterpret_cast<COMP_FUNC> (RECONFIG_SCHED_STRATEGY::comp_tuple_finish_times));
+  if (this->rt_info_tuple_count_ > 1)
+    {
+      std::sort (tuple_ptr_array_,
+                 tuple_ptr_array_ + this->rt_info_tuple_count_,
+                 [] (TAO_RT_Info_Tuple *first, TAO_RT_Info_Tuple *second)
+                 {
+                   return RECONFIG_SCHED_STRATEGY::comp_tuple_finish_times (
+                            &first,
+                            &second) < 0;
+                 });
+    }
 
   // Traverse entries in topological (ascending forward DFS
   // finish time) order, propagating aggregate execution
@@ -2396,10 +2411,18 @@ assign_priorities_i ()
   // Sort the pointers to entries in descending order
   // of static priority and static subpriority, according
   // to our given scheduling strategy.
-  std::qsort (entry_ptr_array_,
-              this->rt_info_count_,
-              sizeof (TAO_Reconfig_Scheduler_Entry *),
-              reinterpret_cast<COMP_FUNC> (RECONFIG_SCHED_STRATEGY::total_priority_comp));
+  if (this->rt_info_count_ > 1)
+    {
+      std::sort (entry_ptr_array_,
+                 entry_ptr_array_ + this->rt_info_count_,
+                 [] (TAO_Reconfig_Scheduler_Entry *first,
+                     TAO_Reconfig_Scheduler_Entry *second)
+                 {
+                   return RECONFIG_SCHED_STRATEGY::total_priority_comp (
+                            &first,
+                            &second) < 0;
+                 });
+    }
 
 #ifdef SCHEDULER_LOGGING
   ORBSVCS_DEBUG ((LM_DEBUG, "Scheduler::qsorted array is\n"));

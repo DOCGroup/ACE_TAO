@@ -1500,20 +1500,23 @@ ACE_DynScheduler::check_dependency_cycles ()
   status_t return_status = SUCCEEDED;
 
   // sort the pointers to entries in order of descending finish time
-  std::sort (ordered_task_entries_,
-             ordered_task_entries_ + tasks (),
-             [] (Task_Entry const *first, Task_Entry const *second)
-             {
-               if (first == nullptr)
+  if (tasks () > 1)
+    {
+      std::sort (ordered_task_entries_,
+                 ordered_task_entries_ + tasks (),
+                 [] (Task_Entry const *first, Task_Entry const *second)
                  {
-                   return second != nullptr;
-                 }
-               if (second == nullptr)
-                 {
-                   return false;
-                 }
-               return first->finished () > second->finished ();
-             });
+                   if (first == nullptr)
+                     {
+                       return second != nullptr;
+                     }
+                   if (second == nullptr)
+                     {
+                       return false;
+                     }
+                   return first->finished () > second->finished ();
+                 });
+    }
 
   // set all the dfs_status indicators to NOT_VISITED
   for (u_int i {}; i < tasks (); ++i)
