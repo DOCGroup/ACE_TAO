@@ -37,11 +37,13 @@ class RTSCHEDTESTLIB_Export Job_i : public POA_Job
   /// Init the state of this object.
   int init (ACE_Arg_Shifter& arg_shifter);
 
-  /// = Accessors
+  /// @name Accessors
+  /// @{
   const ACE_CString& name ();
   const ACE_CString& poa ();
+  /// @}
 
-  /// = inteface Job method implementation.
+  /// Implements the Job::work operation.
   void work (CORBA::ULong work,
          CORBA::Short importance) override;
 

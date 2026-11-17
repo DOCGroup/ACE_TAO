@@ -38,7 +38,8 @@ class DT_Test :public ACE_Task <ACE_SYNCH>
   int svc () override;
 
  private:
-  /// = Policies
+  /// @name Scheduling and ORB state
+  /// @{
   long thr_sched_policy_;
   long thr_scope_policy_;
   ACE_Sched_Params::Policy sched_policy_;
@@ -51,6 +52,7 @@ class DT_Test :public ACE_Task <ACE_SYNCH>
   RTCORBA::RTORB_var rt_orb_;
   /// Reference to the root poa.
   PortableServer::POA_var root_poa_;
+  /// @}
 };
 
 using DT_TEST = ACE_Singleton <DT_Test, TAO_SYNCH_MUTEX>;

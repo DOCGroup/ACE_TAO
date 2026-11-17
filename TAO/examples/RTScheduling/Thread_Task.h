@@ -29,12 +29,14 @@ class RTSCHEDTESTLIB_Export Thread_Task : public ACE_Task <ACE_SYNCH>
 
   time_t start_time ();
 
-  /// = Job get/set
+  /// @name Job accessors
+  /// @{
   /// Returns the name of the Job exec'ed by this Task.
   const char* job ();
 
   /// Sets the Job to exec.
   void job (Job_ptr job);
+  /// @}
 
   int dist ();
 
