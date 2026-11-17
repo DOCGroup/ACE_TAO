@@ -168,9 +168,7 @@ public:
   {
     if (this != std::addressof (rhs))
       {
-        generic_sequence tmp = rhs.release_
-          ? generic_sequence (std::move (rhs))
-          : generic_sequence (static_cast<generic_sequence const &> (rhs));
+        generic_sequence tmp (std::move (rhs));
         this->swap (tmp);
       }
     return *this;

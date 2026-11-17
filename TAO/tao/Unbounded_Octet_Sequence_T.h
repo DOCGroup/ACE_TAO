@@ -327,17 +327,8 @@ public:
   {
     if (this != std::addressof (rhs))
       {
-        if (rhs.release_ || rhs.mb_ != nullptr)
-          {
-            unbounded_value_sequence tmp (std::move (rhs));
-            this->swap (tmp);
-          }
-        else
-          {
-            unbounded_value_sequence tmp (
-              static_cast<unbounded_value_sequence const &> (rhs));
-            this->swap (tmp);
-          }
+        unbounded_value_sequence tmp (std::move (rhs));
+        this->swap (tmp);
       }
     return *this;
   }

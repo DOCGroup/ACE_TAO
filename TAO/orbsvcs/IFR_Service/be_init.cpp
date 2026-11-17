@@ -28,7 +28,7 @@ BE_save_orb_args (int &argc, ACE_TCHAR *argv[])
 
           std::basic_string<ACE_TCHAR> const tmp (argv[i + 1]);
 
-          // If the arg ends with either .idl or .pidl, we're done.
+          // Skip the IDL filename but continue scanning for later -ORB args.
 
           size_t const len = tmp.length ();
           if (len >= 4 && tmp.compare (len - 4, 4, ACE_TEXT (".idl")) == 0)

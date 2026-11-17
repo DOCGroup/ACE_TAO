@@ -64,7 +64,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // Pass an IDL file through the C preprocessor
 
-#include <array>
 #include <cstddef>
 #include <cstdio>
 #include <memory>
@@ -103,22 +102,20 @@ std::vector<std::basic_string<ACE_TCHAR>> DRV_arglist;
 class DRV_Temp_File_Guard
 {
 public:
-  explicit DRV_Temp_File_Guard (
-    std::array<std::string const *, 4> const& filenames)
-    : filenames_ (filenames)
+  DRV_Temp_File_Guard ()
   {
+    this->created_files_.reserve (4);
   }
 
   ~DRV_Temp_File_Guard ()
   {
     if (this->active_)
       {
-        for (size_t i {}; i < this->filenames_.size (); ++i)
+        for (std::string const& filename : this->created_files_)
           {
-            std::string const * const filename = this->filenames_[i];
-            if (this->created_[i] && !filename->empty ())
+            if (!filename.empty ())
               {
-                (void) ACE_OS::unlink (filename->c_str ());
+                (void) ACE_OS::unlink (filename.c_str ());
               }
           }
       }
@@ -126,19 +123,35 @@ public:
 
   void register_created_file (std::string const& filename)
   {
-    this->set_created (filename, true);
+    for (std::string const& current : this->created_files_)
+      {
+        if (current == filename)
+          {
+            return;
+          }
+      }
+    this->created_files_.emplace_back (filename.data (), filename.size ());
   }
 
   void unregister_file (std::string const& filename)
   {
-    this->set_created (filename, false);
+    for (auto i = this->created_files_.begin ();
+         i != this->created_files_.end ();
+         ++i)
+      {
+        if (*i == filename)
+          {
+            this->created_files_.erase (i);
+            return;
+          }
+      }
   }
 
   void file_renamed (std::string const& source,
                      std::string const& destination)
   {
-    this->set_created (source, false);
-    this->set_created (destination, true);
+    this->unregister_file (source);
+    this->register_created_file (destination);
   }
 
   void release ()
@@ -147,25 +160,12 @@ public:
   }
 
 private:
-  void set_created (std::string const& filename, bool created)
-  {
-    for (size_t i {}; i < this->filenames_.size (); ++i)
-      {
-        if (this->filenames_[i] == std::addressof (filename))
-          {
-            this->created_[i] = created;
-            return;
-          }
-      }
-  }
-
   DRV_Temp_File_Guard (DRV_Temp_File_Guard const &) = delete;
   DRV_Temp_File_Guard &operator= (DRV_Temp_File_Guard const &) = delete;
   DRV_Temp_File_Guard (DRV_Temp_File_Guard &&) = delete;
   DRV_Temp_File_Guard &operator= (DRV_Temp_File_Guard &&) = delete;
 
-  std::array<std::string const *, 4> const filenames_;
-  std::array<bool, 4> created_ {};
+  std::vector<std::string> created_files_;
   bool active_ {true};
 };
 
@@ -1185,10 +1185,7 @@ DRV_pre_proc (std::string const& myfile)
 
   std::string tmp_cpp_file;
   std::string tmp_cpp_ifile;
-  std::array<std::string const *, 4> const temp_file_names {{
-    &tmp_file, &tmp_ifile, &tmp_cpp_file, &tmp_cpp_ifile
-  }};
-  DRV_Temp_File_Guard temp_files (temp_file_names);
+  DRV_Temp_File_Guard temp_files;
 
   FE_Utils::File_Handle ti_file (nullptr, ACE_OS::fclose);
   if (copy_input_file)
@@ -1545,15 +1542,20 @@ DRV_pre_proc (std::string const& myfile)
 
     }
 
-  if (copy_input_file && ACE_OS::unlink (t_ifile.c_str ()) == -1)
+  if (copy_input_file)
     {
-      ACE_ERROR ((LM_ERROR,
-                  "%C: Could not remove cpp "
-                  "input file \"%C\": %m\n",
-                  idl_global->prog_name ().c_str (),
-                  t_ifile.c_str ()));
+      if (ACE_OS::unlink (t_ifile.c_str ()) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%C: Could not remove cpp "
+                      "input file \"%C\": %m\n",
+                      idl_global->prog_name ().c_str (),
+                      t_ifile.c_str ()));
 
-      throw Bailout ();
+          throw Bailout ();
+        }
+
+      temp_files.unregister_file (t_ifile);
     }
 
   if (ACE_OS::unlink (t_file.c_str ()) == -1)

@@ -67,10 +67,10 @@
             avoid ambiguous reference-count operations.</p>
         </li>
         <li><p>Generated <CODE>_copy_value()</CODE> copies direct valuetype
-            fields and the supported one-level valuetype members in structs
-            and sequences. It does not recursively traverse arbitrary arrays,
-            unions, or nested aggregates, preserve shared references, or
-            handle cycles. Applications requiring a recursive graph copy
+            fields. Valuetypes nested in structs and sequences are shared,
+            matching the existing sequence and structure copy behavior. It
+            does not recursively traverse aggregates, preserve graph identity,
+            or handle cycles. Applications requiring a recursive graph copy
             must provide their own <CODE>_copy_value()</CODE> implementation.</p>
         </li>
         <li><p>When a derived valuetype adds operations but its concrete base

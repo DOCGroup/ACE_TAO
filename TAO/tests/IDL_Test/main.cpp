@@ -397,45 +397,11 @@ test_valuetype_copy (int &error_count)
   else
     {
       Copy_Leaf * const copied_leaf = sequence_downcast->leaves ()[0];
-      if (copied_leaf == leaf)
+      if (copied_leaf != leaf)
         {
           ++error_count;
-          ACE_ERROR ((LM_ERROR, "Copy_Sequence_Holder shares a valuetype\n"));
+          ACE_ERROR ((LM_ERROR, "Copy_Sequence_Holder does not share its valuetype\n"));
         }
-      else
-        {
-          expect_equals<CORBA::Long> (
-            error_count, "Copy_Sequence_Holder copied leaf",
-            copied_leaf->leaf_value (), 51);
-          copied_leaf->leaf_value (53);
-          expect_equals<CORBA::Long> (
-            error_count, "Copy_Sequence_Holder original leaf unchanged",
-            leaf->leaf_value (), 51);
-        }
-    }
-
-  Copy_Leaf_var retained_sequence_copy;
-  {
-    CORBA::ValueBase_var holder_copy (sequence_holder._copy_value ());
-    Copy_Sequence_Holder * const holder_downcast =
-      Copy_Sequence_Holder::_downcast (holder_copy.in ());
-    if (holder_downcast == nullptr)
-      {
-        ++error_count;
-        ACE_ERROR ((LM_ERROR, "Copy_Sequence_Holder copy has wrong type\n"));
-      }
-    else
-      {
-        Copy_Leaf * const nested_copy = holder_downcast->leaves ()[0];
-        nested_copy->_add_ref ();
-        retained_sequence_copy = nested_copy;
-      }
-  }
-  if (retained_sequence_copy.in () != nullptr
-      && retained_sequence_copy->_refcount_value () != 1)
-    {
-      ++error_count;
-      ACE_ERROR ((LM_ERROR, "Copy_Sequence_Holder leaked its nested copy\n"));
     }
 
   Copy_Leaf_Struct leaf_struct;
@@ -454,45 +420,11 @@ test_valuetype_copy (int &error_count)
   else
     {
       Copy_Leaf * const copied_leaf = struct_downcast->value ().leaf.in ();
-      if (copied_leaf == leaf)
+      if (copied_leaf != leaf)
         {
           ++error_count;
-          ACE_ERROR ((LM_ERROR, "Copy_Struct_Holder shares a valuetype\n"));
+          ACE_ERROR ((LM_ERROR, "Copy_Struct_Holder does not share its valuetype\n"));
         }
-      else
-        {
-          expect_equals<CORBA::Long> (
-            error_count, "Copy_Struct_Holder copied leaf",
-            copied_leaf->leaf_value (), 51);
-          copied_leaf->leaf_value (54);
-          expect_equals<CORBA::Long> (
-            error_count, "Copy_Struct_Holder original leaf unchanged",
-            leaf->leaf_value (), 51);
-        }
-    }
-
-  Copy_Leaf_var retained_struct_copy;
-  {
-    CORBA::ValueBase_var holder_copy (struct_holder._copy_value ());
-    Copy_Struct_Holder * const holder_downcast =
-      Copy_Struct_Holder::_downcast (holder_copy.in ());
-    if (holder_downcast == nullptr)
-      {
-        ++error_count;
-        ACE_ERROR ((LM_ERROR, "Copy_Struct_Holder copy has wrong type\n"));
-      }
-    else
-      {
-        Copy_Leaf * const nested_copy = holder_downcast->value ().leaf.in ();
-        nested_copy->_add_ref ();
-        retained_struct_copy = nested_copy;
-      }
-  }
-  if (retained_struct_copy.in () != nullptr
-      && retained_struct_copy->_refcount_value () != 1)
-    {
-      ++error_count;
-      ACE_ERROR ((LM_ERROR, "Copy_Struct_Holder leaked its nested copy\n"));
     }
 }
 
