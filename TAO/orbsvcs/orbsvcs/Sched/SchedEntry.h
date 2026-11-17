@@ -51,14 +51,14 @@ public:
 
   ~Dispatch_Entry_Link () = default;
 
-    /// Less than comparison operator.
+  /// Less than comparison operator.
   bool operator < (Dispatch_Entry_Link const &d) const;
 
-    /// Accessor for reference to the dispatch entry.
+  /// Accessor for reference to the dispatch entry.
   Dispatch_Entry &dispatch_entry () const;
 
 private:
-    /// Dispatch entry to which the smart pointer refers.
+  /// Dispatch entry to which the smart pointer refers.
   Dispatch_Entry &dispatch_entry_;
 };
 
@@ -453,69 +453,69 @@ public:
   /// @name Iterator interface
   /// @{
 
-    /// returns 0 if there are more entries to see, 1 if not
+  /// returns 0 if there are more entries to see, 1 if not
   int done () const;
 
-    /**
-     * positions the iterator at the first entry of the passed
-     * sub-frame, returns 1 if it could position the iterator
-     * correctly, 0 if not, and -1 if an error occurred.
-     */
+  /**
+   * positions the iterator at the first entry of the passed
+   * sub-frame, returns 1 if it could position the iterator
+   * correctly, 0 if not, and -1 if an error occurred.
+   */
   int first (u_int sub_frame = 0);
 
-    /**
-     * positions the iterator at the last entry of the total
-     * frame, returns 1 if it could position the iterator
-     * correctly, 0 if not, and -1 if an error occurred.
-     */
+  /**
+   * positions the iterator at the last entry of the total
+   * frame, returns 1 if it could position the iterator
+   * correctly, 0 if not, and -1 if an error occurred.
+   */
   int last ();
 
-    /**
-     * positions the iterator at the next entry of the total
-     * frame, returns 1 if it could position the iterator
-     * correctly, 0 if not, and -1 if an error occurred.
-     */
+  /**
+   * positions the iterator at the next entry of the total
+   * frame, returns 1 if it could position the iterator
+   * correctly, 0 if not, and -1 if an error occurred.
+   */
   int advance ();
 
-    /**
-     * positions the iterator at the previous entry of the total
-     * frame, returns 1 if it could position the iterator
-     * correctly, 0 if not, and -1 if an error occurred.
-     */
+  /**
+   * positions the iterator at the previous entry of the total
+   * frame, returns 1 if it could position the iterator
+   * correctly, 0 if not, and -1 if an error occurred.
+   */
   int retreat ();
 
   /// @}
   /// @name Proxy interface
   /// @{
 
-    /// returns the adjusted arrival time of the virtual entry
+  /// returns the adjusted arrival time of the virtual entry
   Time arrival () const;
 
-    /// returns the adjusted deadline time of the virtual entry
+  /// returns the adjusted deadline time of the virtual entry
   Time deadline () const;
 
-    /// returns the scheduler priority of the virtual entry
+  /// returns the scheduler priority of the virtual entry
   Preemption_Priority priority () const;
 
-    /// returns the OS priority of the virtual entry
+  /// returns the OS priority of the virtual entry
   OS_Priority OS_priority () const;
   /// @}
 
 private:
-    /// the number of calls corresponding to each actual dispatch
+  /// the number of calls corresponding to each actual dispatch
   u_long number_of_calls_;
 
-    /// the current call number for this dispatch (zero based)
+  /// the current call number for this dispatch (zero based)
   u_long current_call_;
 
-    /// the frame size of the actual dispatches
+  /// the frame size of the actual dispatches
   u_long actual_frame_size_;
 
-    /// the virtaul frame size over which to iterate
+  /// the virtaul frame size over which to iterate
   u_long virtual_frame_size_;
 
-    /// the current offset into the virtual frame
-    /// (should be a multiple of the actual frame size)
+  /// the current offset into the virtual frame
+  /// (should be a multiple of the actual frame size)
   u_long current_frame_offset_;
 
   ACE_Ordered_MultiSet_Iterator <Dispatch_Entry_Link> iter_;
