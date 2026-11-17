@@ -1471,81 +1471,77 @@ create_i (char const *entry_point,
       return new_rt_info;
     }
 
-  // Create a new scheduling entry for the RT_Info.
+  // Create the RT_Info.
   ACE_NEW_THROW_EX (new_rt_info,
                     TAO_RT_Info_Ex,
                     CORBA::NO_MEMORY ());
-
-  // Make sure the new scheduling entry is cleaned up if we exit abruptly.
   std::unique_ptr<TAO_RT_Info_Ex> new_rt_info_ptr (new_rt_info);
 
   // Set some reasonable default values, and store the passed ones.
   new_rt_info->entry_point = CORBA::string_dup (entry_point);
   new_rt_info->handle = handle;
 
-  // Bind the new RT_Info to its handle, in the RT_Info map.
+  // Bind the new RT_Info to its handle in the map.
   result = rt_info_map_.bind (handle, new_rt_info);
   switch (result)
     {
-      case -1:
-        // Something bad but unknown occurred while trying to bind in map.
-        throw RtecScheduler::INTERNAL ();
+    case -1:
+      throw RtecScheduler::INTERNAL ();
 
-      case 1:
-        // Tried to bind an operation that was already in the map.
-        if (ignore_duplicates)
-          {
-            // Should never get here unless something is badly awry.
-            throw RtecScheduler::INTERNAL ();
-          }
-        else
-          {
-            // Already bound, and we're not ignoring duplicates.
-        throw RtecScheduler::DUPLICATE_NAME ();
-          }
+    case 1:
+      if (ignore_duplicates)
+        {
+          throw RtecScheduler::INTERNAL ();
+        }
+      throw RtecScheduler::DUPLICATE_NAME ();
 
-      default:
-        break;
+    default:
+      break;
     }
 
-  // Bind the new RT_Info to *its* entry point, in the tree.
+  // Bind the new RT_Info to its entry point in the tree.
   result = rt_info_tree_.bind (new_rt_info->entry_point, new_rt_info);
   switch (result)
     {
-      case -1:
-        // Something bad but unknown occurred while trying to bind in tree.
-        rt_info_map_.unbind (handle);
-        throw RtecScheduler::INTERNAL ();
+    case -1:
+      rt_info_map_.unbind (handle);
+      throw RtecScheduler::INTERNAL ();
 
-      case 1:
-        // Tried to bind an operation that was already in the tree.
-        rt_info_map_.unbind (handle);
-        throw RtecScheduler::DUPLICATE_NAME ();
+    case 1:
+      rt_info_map_.unbind (handle);
+      throw RtecScheduler::DUPLICATE_NAME ();
 
-      default:
-        break;
+    default:
+      break;
     }
 
-  // Create a new scheduling entry for the RT_Info.
-  ACE_NEW_THROW_EX (new_sched_entry,
-                    TAO_Reconfig_Scheduler_Entry (*new_rt_info),
-                    CORBA::NO_MEMORY ());
+  try
+    {
+      // Create a new scheduling entry for the RT_Info.
+      ACE_NEW_THROW_EX (new_sched_entry,
+                        TAO_Reconfig_Scheduler_Entry (*new_rt_info),
+                        CORBA::NO_MEMORY ());
+      std::unique_ptr<TAO_Reconfig_Scheduler_Entry> new_sched_entry_ptr (
+        new_sched_entry);
 
-  // Make sure the new scheduling entry is cleaned up if we exit abruptly.
-  std::unique_ptr<TAO_Reconfig_Scheduler_Entry> new_sched_entry_ptr (new_sched_entry);
+      // Maintain the size of the entry pointer array.
+      maintain_scheduling_array (entry_ptr_array_, entry_ptr_array_size_,
+                                 handle);
 
-  // Maintain the size of the entry pointer array.
-  maintain_scheduling_array (entry_ptr_array_, entry_ptr_array_size_,
-                             handle);
+      // Store the new entry in the scheduling pointer array.
+      entry_ptr_array_[handle - 1] = new_sched_entry;
 
-  // Store the new entry in the scheduling entry pointer array.
-  entry_ptr_array_ [handle - 1] = new_sched_entry;
-
-  // Release the unique pointers, so their destruction does not
-  // remove the new rt_info that is now in the map and tree,
-  // or the scheduling entry attached to the rt_info.
-  new_rt_info_ptr.release ();
-  new_sched_entry_ptr.release ();
+      // The scheduler now owns the RT_Info; the array owns the entry.
+      new_rt_info_ptr.release ();
+      new_sched_entry_ptr.release ();
+    }
+  catch (...)
+    {
+      // Remove index entries before the RT_Info owner destroys the object.
+      rt_info_tree_.unbind (new_rt_info->entry_point);
+      rt_info_map_.unbind (handle);
+      throw;
+    }
 
   // Connect the entry to the RT_Info.
   new_rt_info->volatile_token =
