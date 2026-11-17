@@ -49,10 +49,11 @@ Default_Dispatcher_Impl::init_i (Dispatcher_Attributes const &attrs)
 
   this->tasks_.swap (tasks);
   tasks.clear ();
+  this->activated_task_count_ = 0;
 
   this->thr_creation_flags_ = attrs.thread_creation_flags ();
 
-  if (attrs.immediate_activation_ && !this->activated_)
+  if (attrs.immediate_activation_)
     {
       if (this->activate_i () == -1)
         {
@@ -78,13 +79,17 @@ Default_Dispatcher_Impl::init_i (Dispatcher_Attributes const &attrs)
 int
 Default_Dispatcher_Impl::activate_i ()
 {
-  if (this->activated_)
+  if (this->activated_task_count_ == this->tasks_.size ())
     {
       return 0;
     }
 
-  for (Dispatcher_Task_Auto_Ptr const &task : this->tasks_)
+  // Commands may already be queued, so retries resume without restarting
+  // workers that were activated successfully.
+  while (this->activated_task_count_ < this->tasks_.size ())
     {
+      Dispatcher_Task_Auto_Ptr const &task =
+        this->tasks_[this->activated_task_count_];
       Priority_t const priority =
         task->get_curr_config_info ().thread_priority_;
 
@@ -96,9 +101,9 @@ Default_Dispatcher_Impl::activate_i ()
              ACE_TEXT ("Need superuser privilege to run in RT class\n")),
              -1);
         }
+      ++this->activated_task_count_;
     }
 
-  this->activated_ = true;
   return 0;
 }
 
