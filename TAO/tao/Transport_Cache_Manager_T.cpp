@@ -10,7 +10,7 @@
 #include "ace/Lock_Adapter_T.h"
 
 #include <cerrno>
-#include <cstdlib>
+#include <algorithm>
 #include <memory>
 #include <new>
 #include <string>
@@ -715,28 +715,6 @@ namespace TAO
     return result;
   }
 
-#if !defined (ACE_LACKS_QSORT)
-  template <typename TT, typename TRDT, typename PSTRAT>
-  int
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::cpscmp(const void* a, const void* b)
-  {
-    HASH_MAP_ENTRY * const * const left =
-      static_cast<HASH_MAP_ENTRY * const *> (a);
-    HASH_MAP_ENTRY * const * const right =
-      static_cast<HASH_MAP_ENTRY * const *> (b);
-
-    if ((*left)->int_id_.transport ()->purging_order () <
-        (*right)->int_id_.transport ()->purging_order ())
-      return -1;
-
-    if ((*left)->int_id_.transport ()->purging_order () >
-        (*right)->int_id_.transport ()->purging_order ())
-      return 1;
-
-    return 0;
-  }
-#endif /* ACE_LACKS_QSORT */
-
   template <typename TT, typename TRDT, typename PSTRAT>
   int
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::purge ()
@@ -855,29 +833,17 @@ namespace TAO
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::
     sort_set (DESCRIPTOR_SET& entries, size_t current_size)
   {
-#if defined (ACE_LACKS_QSORT)
-    // Use insertion sort if we don't have qsort
-    for (size_t i {1}; i < current_size; ++i)
+    if (current_size < 2)
       {
-        if (entries[i]->int_id_.transport ()->purging_order () <
-            entries[i - 1]->int_id_.transport ()->purging_order ())
-          {
-            HASH_MAP_ENTRY * const entry = entries[i];
-
-            for (size_t j = i; j > 0 &&
-                  entries[j - 1]->int_id_.transport ()->purging_order () >
-                  entry->item ().transport ()->purging_order (); --j)
-              {
-                HASH_MAP_ENTRY * const holder = entries[j];
-                entries[j] = entries[j - 1];
-                entries[j - 1] = holder;
-              }
-          }
+        return;
       }
-#else
-    std::qsort (entries.get (), current_size,
-                sizeof (HASH_MAP_ENTRY*), cpscmp);
-#endif /* ACE_LACKS_QSORT */
+
+    std::sort (entries.get (), entries.get () + current_size,
+      [] (HASH_MAP_ENTRY const *left, HASH_MAP_ENTRY const *right)
+      {
+        return left->int_id_.transport ()->purging_order () <
+          right->int_id_.transport ()->purging_order ();
+      });
   }
 
   template <typename TT, typename TRDT, typename PSTRAT>

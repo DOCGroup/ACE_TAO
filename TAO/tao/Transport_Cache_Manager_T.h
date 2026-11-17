@@ -265,11 +265,6 @@ namespace TAO
      */
     bool is_entry_purgable_i (HASH_MAP_ENTRY &entry);
 
-#if !defined(ACE_LACKS_QSORT)
-    /// Used by qsort
-    static int cpscmp(const void* a, const void* b);
-#endif
-
     using DESCRIPTOR_SET = std::unique_ptr<HASH_MAP_ENTRY*[]>;
 
     /// Sort the list of entries
