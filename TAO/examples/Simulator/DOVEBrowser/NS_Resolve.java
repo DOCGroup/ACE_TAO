@@ -1,19 +1,12 @@
-// ============================================================================
-//
-// = FILENAME
-//    NS_Resolve.java
-//
-// = AUTHOR
-//    Michael Kircher (mk1@cs.wustl.edu)
-//    Modified for new protocol by Hans Ridder <ridder@veritas.com>
-//    Further improved by Kevin Regan <kregan@infoglide.com>
-//
-// = DESCRIPTION
-//   Resolves the initial reference to the Naming service,
-//   the orb has to be given as a parameter to the
-//   resolve_name_service call.
-//
-// ============================================================================
+/**
+ * @file NS_Resolve.java
+ * @author Michael Kircher (mk1@cs.wustl.edu)
+ * @author Modified for new protocol by Hans Ridder <ridder@veritas.com>
+ * @author Further improved by Kevin Regan <kregan@infoglide.com>
+ * @brief Resolves the initial reference to the Naming service,
+ * the orb has to be given as a parameter to the
+ * resolve_name_service call.
+ */
 
 import org.omg.CORBA.*;
 import java.net.*;

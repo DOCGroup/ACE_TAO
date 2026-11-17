@@ -1,21 +1,10 @@
-//
-// ============================================================================
-//
-// = FILENAME
-//    PushConsumer.java
-//
-// = AUTHOR
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// = DESCRIPTION
-//    This is a Push Consumer which takes the data field of the
-//    event and updates with it a Data Handler.
-//
-// ============================================================================
-
-
-
-// The Consumer has to implement the Skeleton Consumer
+/**
+ * @file PushConsumer.java
+ * @author Michael Kircher (mk1@cs.wustl.edu)
+ * @brief This is a Push Consumer which takes the data field of the
+ * event and updates with it a Data Handler.
+ * The Consumer has to implement the Skeleton Consumer
+ */
 
 public class PushConsumer extends RtecEventComm.PushConsumerPOA
 {

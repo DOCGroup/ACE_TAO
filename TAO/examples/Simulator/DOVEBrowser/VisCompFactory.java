@@ -1,14 +1,8 @@
-//
-// = FILENAME
-//    VisCompFactory.java
-//
-// = AUTHOR
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// = DESCRIPTION
-//   This class serves as factory for Visualization Components
-//
-// ============================================================================
+/**
+ * @file VisCompFactory.java
+ * @author Michael Kircher (mk1@cs.wustl.edu)
+ * @brief This class serves as factory for Visualization Components
+ */
 
 import java.beans.*;
 

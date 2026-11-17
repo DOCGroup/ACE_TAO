@@ -1,14 +1,8 @@
-//
-// = FILENAME
-//    ObservablesDialog.java
-//
-// = AUTHOR
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// = DESCRIPTION
-//   Dialog for selecting Observables.
-//
-// ============================================================================
+/**
+ * @file ObservablesDialog.java
+ * @author Michael Kircher (mk1@cs.wustl.edu)
+ * @brief Dialog for selecting Observables.
+ */
 
 import java.awt.*;
 import java.awt.event.*;

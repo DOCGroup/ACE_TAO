@@ -1,18 +1,9 @@
-//
-// = FILENAME
-//    MultiDoubleVisComp.java
-//
-// = AUTHOR
-//    Chris Gill (core graph functionality), based on
-//    DoubleVisComp.java by Seth Widoff, and Michael Kircher
-//    (mk1@cs.wustl.edu)
-//
-// = DESCRIPTION
-//   This is a Visualization Component for displaying multiple
-//   plots of double precision integer values.
-//
-// ============================================================================
-
+/**
+ * @file MultiDoubleVisComp.java
+ * @author Chris Gill (core graph functionality), based on DoubleVisComp.java by Seth Widoff, and Michael Kircher (mk1@cs.wustl.edu)
+ * @brief This is a Visualization Component for displaying multiple
+ * plots of double precision integer values.
+ */
 
 import java.awt.*;
 import java.util.*;

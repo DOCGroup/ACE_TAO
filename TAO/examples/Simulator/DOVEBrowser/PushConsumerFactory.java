@@ -1,19 +1,8 @@
-//
-// ============================================================================
-//
-// = FILENAME
-//    PushConsumerFactory.java
-//
-// = AUTHOR
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// = DESCRIPTION
-//   This is the administor/factory for a PushConsumer.
-//
-// ============================================================================
-
-
-
+/**
+ * @file PushConsumerFactory.java
+ * @author Michael Kircher (mk1@cs.wustl.edu)
+ * @brief This is the administor/factory for a PushConsumer.
+ */
 
 public class PushConsumerFactory {
 

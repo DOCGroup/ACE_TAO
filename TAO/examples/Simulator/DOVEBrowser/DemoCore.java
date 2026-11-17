@@ -1,17 +1,10 @@
-//
-// = FILENAME
-//    DemoCore.java
-//
-// = AUTHOR
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// = DESCRIPTION
-//   This class servers as the core class of the simulation demo.
-//   It connects the push consumer of the event service with
-//   one or several Java Beans.
-//
-// ============================================================================
-
+/**
+ * @file DemoCore.java
+ * @author Michael Kircher (mk1@cs.wustl.edu)
+ * @brief This class servers as the core class of the simulation demo.
+ * It connects the push consumer of the event service with
+ * one or several Java Beans.
+ */
 
 import java.awt.*;
 import java.awt.event.*;

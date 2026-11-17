@@ -1,17 +1,11 @@
-//
-// = FILENAME
-//    NavWeapDataHandler.java
-//
-// = AUTHOR
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// = DESCRIPTION
-//   This is an implementation of the interface Data Handler,
-//   it handles Navigation and Weapons data, where statistic data is
-//   part of it. Several Observables are declared, they can be accessed by
-//   any number of Observers, which could reside in a Java Bean for example.
-//
-// ============================================================================
+/**
+ * @file NavWeapDataHandler.java
+ * @author Michael Kircher (mk1@cs.wustl.edu)
+ * @brief This is an implementation of the interface Data Handler,
+ * it handles Navigation and Weapons data, where statistic data is
+ * part of it. Several Observables are declared, they can be accessed by
+ * any number of Observers, which could reside in a Java Bean for example.
+ */
 
 import org.omg.CORBA.*;
 

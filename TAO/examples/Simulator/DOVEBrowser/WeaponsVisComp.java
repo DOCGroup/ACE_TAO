@@ -1,16 +1,9 @@
-//
-// = FILENAME
-//    WeaponsVisComp.java
-//
-// = AUTHOR
-//    Seth Widoff (core functionality)
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// = DESCRIPTION
-//   This is a Visualization Component for displaying weapons.
-//
-// ============================================================================
-
+/**
+ * @file WeaponsVisComp.java
+ * @author Seth Widoff (core functionality)
+ * @author Michael Kircher (mk1@cs.wustl.edu)
+ * @brief This is a Visualization Component for displaying weapons.
+ */
 
 import java.io.*;
 import java.util.*;

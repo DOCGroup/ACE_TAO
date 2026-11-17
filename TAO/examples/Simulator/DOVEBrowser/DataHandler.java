@@ -1,15 +1,9 @@
-//
-// = FILENAME
-//    DataHandler.java
-//
-// = AUTHOR
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// = DESCRIPTION
-//   This is the interface for data handling in the simulation demo
-//   using the Event Channel as transport media.
-//
-// ============================================================================
+/**
+ * @file DataHandler.java
+ * @author Michael Kircher (mk1@cs.wustl.edu)
+ * @brief This is the interface for data handling in the simulation demo
+ * using the Event Channel as transport media.
+ */
 
 import org.omg.CORBA.*;
 

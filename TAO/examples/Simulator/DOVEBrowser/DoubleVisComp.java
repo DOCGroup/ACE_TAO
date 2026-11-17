@@ -1,18 +1,9 @@
-//
-// = FILENAME
-//    DoubleVisComp.java
-//
-// = AUTHOR
-//    Seth Widoff (core graph functionality)
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// = DESCRIPTION
-//   This is a Visualization Component for displaying doubles.
-//
-// ============================================================================
-
-
-
+/**
+ * @file DoubleVisComp.java
+ * @author Seth Widoff (core graph functionality)
+ * @author Michael Kircher (mk1@cs.wustl.edu)
+ * @brief This is a Visualization Component for displaying doubles.
+ */
 
 import java.awt.*;
 import java.util.*;
