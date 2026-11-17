@@ -117,7 +117,9 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
           // we have a value
           end = ACE_OS::strchr (buffer+1, '"');
           if (!end)  // no closing quote, not a value so just skip it
-            continue;
+            {
+              continue;
+            }
 
           // null terminate the name
           *end = 0;
@@ -453,7 +455,9 @@ ACE_Ini_ImpExp::import_config (const ACE_TCHAR* filename)
       if (line[0] == ACE_TEXT (';')  ||
           line[0] == ACE_TEXT ('#')  ||
           line[0] == '\0')
-        continue;
+        {
+          continue;
+        }
 
       if (line[0] == ACE_TEXT ('['))
         {
@@ -690,23 +694,27 @@ ACE_Ini_ImpExp::squish (ACE_TCHAR *src)
   ACE_TCHAR *cp {};
 
   if (src == nullptr)
-  {
-    return nullptr;
-  }
+    {
+      return nullptr;
+    }
 
   // Start at the end and work backwards over all whitespace.
   for (cp = src + ACE_OS::strlen (src) - 1;
        cp != src;
        --cp)
-    if (!ACE_OS::ace_isspace (*cp))
     {
-      break;
+      if (!ACE_OS::ace_isspace (*cp))
+        {
+          break;
+        }
     }
   cp[1] = '\0';          // Chop trailing whitespace
 
   // Now start at the beginning and move over all whitespace.
-  for (cp = src; ACE_OS::ace_isspace (*cp); ++cp)
-    continue;
+  while (ACE_OS::ace_isspace (*cp))
+    {
+      ++cp;
+    }
 
   return cp;
 }
