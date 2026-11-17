@@ -42,7 +42,8 @@ public:
   static const char* name ();
 
 protected:
-  /// = Data Members
+  /// @name Data members
+  /// @{
   enum COMMAND
   {
     CREATE,
@@ -63,15 +64,18 @@ protected:
 
   CosNotification::QoSProperties qos_;
 
-  // Subscription change
+  /// Subscription change.
   CosNotification::EventTypeSeq added_;
   CosNotification::EventTypeSeq removed_;
+  /// @}
 
-  /// = Handlers
+  /// @name Handlers
+  /// @{
   void handle_create ();
   void handle_subscriptions ();
   void handle_status ();
   void handle_set_qos ();
+  /// @}
 };
 
 #include /**/ "ace/post.h"

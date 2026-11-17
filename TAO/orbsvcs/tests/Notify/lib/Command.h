@@ -48,8 +48,8 @@ public:
   /// Return the name of this command.
   virtual const char* get_name () = 0;
 
-  ///= Each derived type must also implement the following signature:
-  // static const char* name ();
+  /// Each derived type must also implement the following signature:
+  /// \c static const char* name ();
 
 protected:
   /// Non-owning link to the next command; TAO_Notify_Tests_Command_Builder owns the chain.

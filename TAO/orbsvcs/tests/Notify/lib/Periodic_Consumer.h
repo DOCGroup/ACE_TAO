@@ -53,7 +53,8 @@ protected:
   void handle_start_event (const CosNotification::PropertySeq& prop_seq);
   void check_priority (const CosNotification::PropertySeq& prop_seq);
 
-  /// = Data members.
+  /// @name Data members
+  /// @{
   /// Serialize state.
   TAO_SYNCH_MUTEX lock_;
 
@@ -82,6 +83,7 @@ protected:
 
   /// This Flag is set if we received an event asking us to "Stop".
   int stop_received_;
+  /// @}
 };
 
 #include /**/ "ace/post.h"

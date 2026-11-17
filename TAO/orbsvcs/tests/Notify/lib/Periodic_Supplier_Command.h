@@ -62,21 +62,25 @@ protected:
   /// QoS
   CosNotification::QoSProperties qos_;
 
-  // Offer change
+  /// Offer change.
   CosNotification::EventTypeSeq added_;
   CosNotification::EventTypeSeq removed_;
 
-  ///= Methods
-  // Retreive the suppliers.
+  /// @name Methods
+  /// @{
+  /// Retrieve the suppliers.
   TAO_Notify_Tests_Periodic_Supplier* supplier ();
+  /// @}
 
-  ///= Handlers
+  /// @name Handlers
+  /// @{
   void handle_create ();
   void handle_offers ();
   void handle_disconnect ();
   void handle_deactivate ();
   void handle_status ();
   void handle_set_qos ();
+  /// @}
 };
 
 #include /**/ "ace/post.h"

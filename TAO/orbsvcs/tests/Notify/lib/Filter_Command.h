@@ -59,12 +59,14 @@ protected:
 
   ACE_CString constraint_;
 
-  ///= Handlers
+  /// @name Handlers
+  /// @{
   void handle_create_filter_factory ();
   void handle_create_filter ();
   void handle_add_constraint ();
   void handle_add_filter ();
   void handle_destroy_filter ();
+  /// @}
 };
 
 #include /**/ "ace/post.h"

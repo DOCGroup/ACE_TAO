@@ -44,18 +44,18 @@ public:
 
   virtual ~TAO_Notify_Tests_Peer_T ();
 
-  // Activates this servant with the POA supplied in init.
-  // Connects to given proxy.
+  /// Activates this servant with the POA supplied in init.
+  /// Connects to the given proxy.
   void connect (Proxy_Traits_PTR proxy, Proxy_Traits_ID proxy_id);
 
-  // Activates this servant with the POA supplied in init.
-  // Creates a new proxy supplier and connects to it.
+  /// Activates this servant with the POA supplied in init.
+  /// Creates a new proxy supplier and connects to it.
   void connect (Admin_Traits_PTR admin_ptr);
 
   /// Connect using options parsed and set initial QoS.
   virtual void connect ();
 
-  // Disconnect from the Peer.
+  /// Disconnect from the peer.
   void disconnect ();
 
   /// Set Qos
@@ -64,22 +64,22 @@ public:
   /// Dump status
   void status ();
 
-  // Accessor for <proxy_>.
+  /// Accessor for <proxy_>.
   Proxy_Traits_PTR get_proxy ();
 
   /// Deactivate the object.
   void deactivate ();
 
   /// @name ServantBase operations
-  //@{
+  /// @{
   PortableServer::POA_ptr _default_POA () override;
-  //@}
+  /// @}
 
 protected:
   /// Activate this object in the default POA.
   virtual Peer_Traits_PTR activate ();
 
-  ///= To be implemented by specializations.
+  /// Specializations must implement these methods.
 
   /// Connect to Peer.
   virtual void connect_to_peer (Proxy_Traits_PTR proxy_ptr, Peer_Traits_PTR peer_ptr) = 0;
@@ -95,13 +95,13 @@ protected:
   virtual void disconnect_from_proxy () = 0;
 
   /// @name Data members
-  //@{
+  /// @{
   /// The proxy that we are connected to.
    typename Proxy_Traits::VAR proxy_;
 
   /// This <proxy_> id.
    typename Proxy_Traits::ID proxy_id_;
-  //@}
+  /// @}
 };
 
 #include "Peer_T.cpp"
