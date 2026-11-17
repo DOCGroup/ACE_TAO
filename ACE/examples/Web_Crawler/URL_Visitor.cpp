@@ -165,9 +165,9 @@ HTML_Body_Validation_Strategy::execute ()
       }
       // Double slash at the end works!e.g www.cs.wustl.edu/~kirthika//
       if (url.find (".html") == url.npos)
-      {
-        url = url + "/";
-      }
+        {
+          url = url + "/";
+        }
 
       // Create the new URL address.
       ACE_URL_Addr *url_addr {};
@@ -190,9 +190,11 @@ HTML_Body_Validation_Strategy::execute ()
           Destroyable_Unique_Ptr<URL_Command> url_command_ptr (url_command);
 
           if (OPTIONS::instance ()->command_processor ()->insert (url_command) != 0)
-          {
-            ACE_ERROR_RETURN ((LM_ERROR, "insert URL command failed\n"), -1);
-          }
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("insert URL command failed\n")),
+                                -1);
+            }
           url_command_ptr.release ();
         }
     }
@@ -480,8 +482,10 @@ URL_Download_Visitation_Strategy_Factory::URL_Download_Visitation_Strategy_Facto
 {
 }
 
-URL_Validation_Visitation_Strategy_Factory::URL_Validation_Visitation_Strategy_Factory (URL *url,
-                                                                                        URL_Validation_Visitor &visitor_context)
+URL_Validation_Visitation_Strategy_Factory::
+URL_Validation_Visitation_Strategy_Factory (
+  URL *url,
+  URL_Validation_Visitor &visitor_context)
   : URL_Visitation_Strategy_Factory (url),
     visitor_context_ (visitor_context)
 {

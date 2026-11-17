@@ -19,13 +19,13 @@ HTTP_URL::HTTP_URL (const ACE_URL_Addr &url_addr,
   : url_addr_ (url_addr),
     containing_page_ (cp == nullptr ? this : cp)
 {
-  ACE_DEBUG ((LM_DEBUG, "HTTP_URL %s\n", url_addr.addr_to_string ()));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("HTTP_URL %s\n"), url_addr.addr_to_string ()));
 }
 
 ssize_t
 HTTP_URL::send_request ()
 {
-  const size_t commandsize =
+  size_t const commandsize =
     ACE_OS::strlen (this->url_addr ().get_path_name ())
     + ACE_OS::strlen (this->url_addr ().get_host_name ())
     + 20 // Extra
@@ -53,23 +53,22 @@ HTTP_URL::send_request ()
                        "Host: %s\r\n\r\n",
                        this->url_addr ().get_host_name ());
 
-      // IMP: The length of teh command has to be sent!
-      const ssize_t retval =
+      // The complete Host header must be sent.
+      ssize_t const retval =
         this->stream ().send_n (cmd_ptr.get (),
                                 std::strlen (cmd_ptr.get ()),
                                 OPTIONS::instance ()->timeout ());
       this->stream ().svc_handler ()->idle (0);
       if (retval <= 0)
-        return -1;
-      else
-      {
-        return retval;
-      }
+        {
+          return -1;
+        }
+      return retval;
     }
   else
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 }
 
 int
@@ -84,5 +83,4 @@ HTTP_URL::destroy ()
 {
   delete this;
   return 0;
-  // Commit suicide!
 }
