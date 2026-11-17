@@ -12742,6 +12742,21 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - No moved-from-use defect or code change was found. The `TAO/tao` move audit
   remains open for its other core ownership and sequence call sites.
 
+## 2026-11-17 Const guard macro follow-up
+
+- Replaced direct `ACE_Guard` spellings in `AnyTypeCode` with new
+  `ACE_GUARD_CONST` and `ACE_GUARD_RETURN_CONST` variants. Existing guard
+  macros keep their current non-const behavior; the new variants retain the
+  const guard objects while still checking lock acquisition.
+- `perl ACE/bin/fuzz.pl -c -t check_for_ACE_Guard` on `Global_Macros.h` and the
+  three affected AnyTypeCode sources passed with zero errors. A full level-1
+  fuzz run reported 4,674 unrelated errors in the current working tree, mostly
+  generated build files and pre-existing source checks; the targeted guard
+  check passed.
+- Ran `source ../../../setenv.sh && make realclean && make -j 8` in
+  `TAO/tao/AnyTypeCode`; IDL regeneration, compilation, and library link passed.
+  `git diff --check` passed. Committed and pushed as `3b46834200d`.
+
 ## 2026-11-17 TAO Object_Adapter ownership move audit
 
 - Reviewed all five `std::move` sites in `TAO/tao/PortableServer/Object_Adapter.cpp`.
