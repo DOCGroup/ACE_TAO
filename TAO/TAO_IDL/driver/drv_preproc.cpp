@@ -988,8 +988,8 @@ DRV_get_orb_idl_includes ()
 
  // Search for orb.idl in supplied include file search paths.
   std::string directory;
-  FE_Utils::File_Handle fp (
-    FE_Utils::open_included_file (orb_idl, directory), ACE_OS::fclose);
+  FE_Utils::File_Handle fp =
+    FE_Utils::open_included_file (orb_idl, directory);
 
   if (!fp)
     {
@@ -1370,8 +1370,10 @@ DRV_pre_proc (std::string const& myfile)
     }
 
   // Remove the empty file created by mkstemp before the preprocessor writes.
-  (void) ACE_OS::unlink (t_file.c_str ());
-  temp_files.unregister_file (t_file);
+  if (ACE_OS::unlink (t_file.c_str ()) == 0)
+    {
+      temp_files.unregister_file (t_file);
+    }
 
   ACE_HANDLE fd = ACE_INVALID_HANDLE;
 

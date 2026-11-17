@@ -471,11 +471,11 @@ FE_Utils::check_for_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list)
   return retval;
 }
 
-FILE *
+FE_Utils::File_Handle
 FE_Utils::open_included_file (std::string const& filename,
                               std::string &directory)
 {
-  FE_Utils::File_Handle file (nullptr, ACE_OS::fclose);
+  File_Handle file (nullptr, ACE_OS::fclose);
   std::string the_file ("/");
   the_file += filename;
 
@@ -493,7 +493,7 @@ FE_Utils::open_included_file (std::string const& filename,
         }
     }
 
-  return file.release ();
+  return file;
 }
 
 bool

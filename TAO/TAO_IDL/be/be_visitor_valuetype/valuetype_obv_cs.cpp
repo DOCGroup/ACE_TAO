@@ -74,9 +74,9 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
 
   // A generated _copy_value() is needed for every valuetype without
   // operations, including derived valuetypes and factory-based values.
-  // Direct valuetype members are copied. Struct and sequence members use
-  // their normal copy behavior, so contained valuetypes remain shared.
-  // Recursive valuetype graphs are not cloned.
+  // Direct valuetype members are copied recursively, without identity
+  // preservation or cycle detection. Struct and sequence members use their
+  // normal copy behavior, so contained valuetypes remain shared.
   if (!node->have_operation ())
     {
       *os << be_nl_2

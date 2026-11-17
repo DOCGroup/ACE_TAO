@@ -97,7 +97,7 @@ struct TAO_IDL_FE_Export FE_Utils
   /// Attempt to open file for reading until it is found in one of the
   /// supplied include paths.  If the file was successfully opened, the
   /// directory within which it was found is returned as well.
-  static FILE *
+  static File_Handle
   open_included_file (std::string const& filename,
                       std::string &directory);
 
