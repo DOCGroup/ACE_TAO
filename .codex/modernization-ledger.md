@@ -13089,3 +13089,7 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 ## 2026-11-18 TMCast prefix increment
 
 - Changed the discarded `current_.id++` statement in `TransactionController.hpp` to `++current_.id`. A `realclean` followed by `make -j 8` rebuilt and linked `libACE_TMCast.so.8.0.8` without warnings. Commit `2c2bc272119`.
+
+## 2026-11-18 SCTP histogram prefix increment
+
+- Changed the discarded `hist->hs[bin]++` statement in `hist.cpp` to `++hist->hs[bin]`. A `realclean` followed by a full client build compiled and linked without warnings. Commit `0bf91127be2`.

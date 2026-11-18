@@ -171,7 +171,7 @@ ACE/netsvcs/lib	21	1	1	16	1	work-recorded	not-audited	SPECIAL_MEMBER_COMMENTS	Di
 ACE/netsvcs/servers	2	1	1	1	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 ACE/performance-tests/Misc	12	1	8	11	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 ACE/performance-tests/RPC	3	1	2	2	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-ACE/performance-tests/SCTP	10	1	5	9	0	work-recorded	not-audited	CONST; VALUE_INIT; USING; OWNERSHIP; CONTAINERS; C_STRING; CLEANUP; STYLE; BUILD_TEST; TEXT_API	Directory checklist not yet fully audited	-	-
+ACE/performance-tests/SCTP	10	1	5	9	0	work-recorded	not-audited	CONST; VALUE_INIT; USING; OWNERSHIP; CONTAINERS; C_STRING; PREFIX_INC; CLEANUP; STYLE; BUILD_TEST; TEXT_API	Directory checklist not yet fully audited	-	-
 ACE/performance-tests/Server_Concurrency	1	0	0	2	0	no-branch-delta	not-audited	CONST; VALUE_INIT; PREFIX_INC; CLEANUP; STYLE; BUILD_TEST	Directory checklist not yet fully audited	-	-
 ACE/performance-tests/Server_Concurrency/Leader_Follower	4	1	1	3	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 ACE/performance-tests/Server_Concurrency/Queue_Based_Workers	4	1	1	3	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-

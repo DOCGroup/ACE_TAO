@@ -729,6 +729,7 @@ ACE/performance-tests/SCTP	CONST	done	6c38a50698e	Marked reporting/statistics hi
 ACE/performance-tests/SCTP	CONTAINERS	done	263238dc3ec	Replaced manual histogram linked structures and arrays with std::list and std::vector
 ACE/performance-tests/SCTP	C_STRING	done	263238dc3ec	Replaced fixed option/name buffers and leaked histogram name allocation with std::basic_string/std::string
 ACE/performance-tests/SCTP	OWNERSHIP	done	6c38a50698e	Initialize a complete histogram locally before moving it into the stable-address list registry, avoiding publication of a partially initialized record.
+ACE/performance-tests/SCTP	PREFIX_INC	done	0bf91127be2	Changed discarded hist->hs[bin]++ to prefix increment; realclean and build of GNUmakefile.SCTP_SOCK_STREAM_Clt passed.
 ACE/performance-tests/SCTP	SIZE_TYPES	needs-work	6c38a50698e	Deferred as instructed; existing size_t and counter types were left unchanged.
 ACE/performance-tests/SCTP	STYLE	done	6c38a50698e	Applied standard spacing and prefix increments in histogram loops; added a header guard; diff check and 120-column review passed.
 ACE/performance-tests/SCTP	TEXT_API	done	263238dc3ec	Server host and program name are std::basic_string<ACE_TCHAR>
