@@ -161,12 +161,30 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
           << node->supports ()[i]->name ();
     }
 
+  if (node->opt_accessor ()
+      && node->obv_need_ref_counter ()
+      && !is_an_amh_exception_holder)
+    {
+      *os << "," << be_nl
+          << "public virtual ::CORBA::DefaultValueRefCountBase";
+    }
+
   // Generate the body.
   *os << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt;
 
   node->gen_stub_decls (os);
+
+  if (node->opt_accessor ()
+      && node->obv_need_ref_counter ()
+      && !node->have_operation ()
+      && be_valuetype::FS_CONCRETE_FACTORY
+           == node->determine_factory_style ())
+    {
+      *os << be_nl_2
+          << "::CORBA::ValueBase *_copy_value () override;";
+    }
 
   if (is_an_amh_exception_holder)
     {
@@ -241,8 +259,16 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   if (node->n_supports () > 0)
     {
       *os << be_uidt_nl << be_nl << "public:" << be_idt_nl;
-      *os << be_nl << "void _add_ref () override = 0;" << be_nl;
-      *os << "void _remove_ref () override = 0;" << be_nl;
+      if (node->opt_accessor () && node->obv_need_ref_counter ())
+        {
+          *os << be_nl << "void _add_ref () override;" << be_nl;
+          *os << "void _remove_ref () override;" << be_nl;
+        }
+      else
+        {
+          *os << be_nl << "void _add_ref () override = 0;" << be_nl;
+          *os << "void _remove_ref () override = 0;" << be_nl;
+        }
       *os << "::CORBA::ValueBase *_tao_to_value ()";
 
       if (node->supports_abstract ())
@@ -305,14 +331,19 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   // Map fields to private data (if optimizing).
   if (node->opt_accessor ())
     {
+      if (node->obv_need_ref_counter ())
+        {
+          *os << "friend class " << node->local_name () << "_init;" << be_nl;
+        }
+
       *os << be_uidt_nl << "protected:" << be_idt_nl;
 
       if (be_global->cdr_support ())
        {
         *os << "::CORBA::Boolean "
-            << "_tao_marshal_state (TAO_OutputCDR &) const;" << be_nl
+            << "_tao_marshal_state (TAO_OutputCDR &, TAO_ChunkInfo &) const;" << be_nl
             << "::CORBA::Boolean "
-            << "_tao_unmarshal_state (TAO_InputCDR &);" << be_nl
+            << "_tao_unmarshal_state (TAO_InputCDR &, TAO_ChunkInfo &);" << be_nl
             << "void truncation_hook () override;" << be_nl;
        }
 
@@ -320,6 +351,11 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
           << "private:" << be_idt_nl;
 
       this->gen_pd (node);
+
+      if (be_global->cdr_support ())
+        {
+          *os << be_nl << "::CORBA::Boolean require_truncation_ {false};";
+        }
     }
   else // Need a way to access the state of derived OBV_ classes.
     {
