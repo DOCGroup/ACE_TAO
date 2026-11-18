@@ -60,4 +60,12 @@ public:
   CORBA::ValueBase *create_for_unmarshal () override;
 };
 
+class ApplicationFactoryValue_impl :
+  public virtual OBV_OBV_FactoryTest::ApplicationFactoryValue,
+  public CORBA::DefaultValueRefCountBase
+{
+public:
+  CORBA::ValueBase *_copy_value () override;
+};
+
 #endif /* TAO_FACTORY_FACTORY_C_IMPL_H */
