@@ -12876,17 +12876,6 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   handle counts; two fields are `size_t`, and the third is `DWORD` converted
   to `size_t` for `%B`.
 - Realclean-built ACE core successfully on Linux; the Windows-only WFMO path
-  is platform-guarded and could not be compiled on this host. `git diff
-  --check` passed. Other ACE/TAO logging conversions remain under review.
-
-## 2026-11-18 ACE core logging-format audit
-
-- Reviewed ACE/ace `%B` and `%b` calls against `ACE_Log_Msg.h`: size fields and
-  container counts use `%B`, signed I/O results use `%b`, and 64-bit time
-  values use `%q`. Fixed the Windows WFMO dump's three `%d` formatters for
-  handle counts; two fields are `size_t`, and the third is `DWORD` converted
-  to `size_t` for `%B`.
-- Realclean-built ACE core successfully on Linux; the Windows-only WFMO path
   is platform-guarded and could not be compiled on this host. `git diff --check`
   passed. Other ACE/TAO logging conversions remain under review.
 
@@ -12902,4 +12891,15 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   and `Map_Manager.cpp` also passed syntax-only compilation with
   `ACE_HAS_DUMP`; `git diff --check` passed. The Windows-only message-queue
   implementation was reviewed but could not be compiled on this host. The
+  repository-wide log-format audit remains open.
+
+
+## 2026-11-18 ACE naming-service log formats
+
+- Corrected `ACE_Name_Request` and `ACE_Name_Reply` diagnostics for their
+  `ACE_UINT32`/`ACE_INT32` lengths, error numbers, and message types using
+  `%Q`/`%q` with explicit 64-bit conversions. Timeout logging now uses `%:` for
+  `time_t` seconds and `%q` for the signed microsecond value.
+- All five affected sources passed syntax-only compilation with
+  `ACE_HAS_DUMP`; the normal ACE core realclean build passed. The broader
   repository-wide log-format audit remains open.
