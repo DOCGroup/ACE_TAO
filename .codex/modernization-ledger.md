@@ -12971,6 +12971,14 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   in `TP_Reactor_Test.cpp` to use `%B`. `git diff --check` passes; the broader
   ACE test log-format audit remains open.
 
+## 2026-11-18 ACE basic-type and getopt test log formats
+
+- Corrected the `ACE_UINT64` failure diagnostics in `Basic_Types_Test.cpp` to
+  use `%Q`, passed the page-size and clock-tick `long` values with `%q`, and
+  made the `ACE_UINT32` and version arguments match `%u`. Changed the `int`
+  argv index in `Get_Opt_Test.cpp` from `%u` to `%d`. `git diff --check` passes;
+  the full ACE test logging-format audit remains open.
+
 ## 2026-11-18 ACE core brace audit
 
 - Ran `clang-tidy`'s `readability-braces-around-statements` check over the
