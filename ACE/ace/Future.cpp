@@ -65,7 +65,9 @@ ACE_Future_Rep<T>::create ()
   // Yes set ref count to zero.
   ACE_Future_Rep<T> *temp = internal_create ();
   if (!temp)
-    throw std::bad_alloc ();
+    {
+      throw std::bad_alloc ();
+    }
    return temp;
  }
 
@@ -191,9 +193,13 @@ ACE_Future_Rep<T>::get (T &value,
       // producer writes to it.
 
       while (this->value_ == nullptr)
-        // Perform a timed wait.
-        if (this->value_ready_.wait (tv) == -1)
-          return -1;
+        {
+          // Perform a timed wait.
+          if (this->value_ready_.wait (tv) == -1)
+            {
+              return -1;
+            }
+        }
 
       // Destructor releases the lock.
     }
@@ -215,9 +221,13 @@ ACE_Future_Rep<T>::attach (ACE_Future_Observer<T> *observer,
 
   // If the value is already produced, then notify observer
   if (this->value_ == nullptr)
-    result = this->observer_collection_.insert (observer);
+    {
+      result = this->observer_collection_.insert (observer);
+    }
   else
-    observer->update (caller);
+    {
+      observer->update (caller);
+    }
 
   return result;
 }
@@ -247,11 +257,15 @@ ACE_Future_Rep<T>::operator T ()
       // Wait ``forever.''
 
       while (this->value_ == nullptr)
-        if (this->value_ready_.wait () == -1)
-          // What to do in this case since we've got to indicate
-          // failure somehow?  Exceptions would be nice, but they're
-          // not portable...
-          return 0;
+        {
+          if (this->value_ready_.wait () == -1)
+            {
+              // What to do in this case since we've got to indicate
+              // failure somehow?  Exceptions would be nice, but they're
+              // not portable...
+              return 0;
+            }
+        }
 
       // Destructor releases the mutex
     }

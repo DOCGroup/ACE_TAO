@@ -17,7 +17,9 @@ template <class T>
 ACE_Future_Set<T>::ACE_Future_Set (ACE_Message_Queue<ACE_SYNCH> *new_queue)
 {
   if (new_queue)
-    this->future_notification_queue_ = new_queue;
+    {
+      this->future_notification_queue_ = new_queue;
+    }
   else
     {
       ACE_Message_Queue<ACE_SYNCH> *queue {};
@@ -88,7 +90,9 @@ ACE_Future_Set<T>::update (ACE_Future<T> const &future)
 
   // Enqueue in priority order.
   if (this->future_notification_queue_->enqueue (mb_owner.get (), nullptr) != -1)
-    mb_owner.release ();
+    {
+      mb_owner.release ();
+    }
 }
 
 template <class T> int
@@ -96,7 +100,9 @@ ACE_Future_Set<T>::next_readable (ACE_Future<T> &future,
                                   ACE_Time_Value *tv)
 {
   if (this->is_empty ())
-    return 0;
+    {
+      return 0;
+    }
 
   ACE_Message_Block *mb {};
   FUTURE_REP *future_rep {};
@@ -110,12 +116,16 @@ ACE_Future_Set<T>::next_readable (ACE_Future<T> &future,
       future_rep = reinterpret_cast<FUTURE_REP *> (message_block_owner->base ());
     }
   else
-    return 0;
+    {
+      return 0;
+    }
 
   // Remove the hash map entry with the specified future rep from our map.
   FUTURE_HOLDER *future_holder {};
   if (this->future_map_.unbind (future_rep, future_holder) == -1)
-    return 0;
+    {
+      return 0;
+    }
 
   std::unique_ptr<FUTURE_HOLDER> owned_future_holder {future_holder};
   future = owned_future_holder->item_;
