@@ -204,7 +204,7 @@ get_statistics (ACE_TCHAR *f_name)
                   f_name));
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("      File size (B): %q\n"),
-                  buf.st_size));
+                  static_cast<ACE_INT64> (buf.st_size)));
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("      Time modified : %s\n"),
