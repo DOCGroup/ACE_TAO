@@ -211,7 +211,9 @@ ACE_Multihomed_INET_Addr::set_port_number (u_short port_number, int encode)
 {
   size_t i = 0;
   while (i < secondaries_.size())
-    secondaries_[i++].set_port_number(port_number, encode);
+    {
+      secondaries_[i++].set_port_number(port_number, encode);
+    }
 
   this->ACE_INET_Addr::set_port_number(port_number, encode);
 }
@@ -290,7 +292,9 @@ ACE_Multihomed_INET_Addr::get_addresses(sockaddr_in6 *addrs,
                                         size_t size) const
 {
   if (size == 0)
-    return;
+    {
+      return;
+    }
   // Copy primary address(es) to the first slot(s) of the user-supplied array
   ACE_INET_Addr me (*this);
   size_t i = 0;
@@ -303,7 +307,9 @@ ACE_Multihomed_INET_Addr::get_addresses(sockaddr_in6 *addrs,
           ++i;
         }
       if (!me.next ())
-        break;
+        {
+          break;
+        }
     }
 
   // Copy secondary addresses to remaining slots of the user-supplied
@@ -321,7 +327,9 @@ ACE_Multihomed_INET_Addr::get_addresses(sockaddr_in6 *addrs,
               ++i;
             }
           if (!copy.next ())
-            break;
+            {
+              break;
+            }
         }
     }
 }

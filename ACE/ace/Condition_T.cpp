@@ -69,9 +69,11 @@ ACE_Condition<MUTEX>::ACE_Condition (MUTEX &m,
                          (short) type,
                          name,
                          arg) != 0)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Condition::ACE_Condition")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_Condition::ACE_Condition")));
+    }
 }
 
 template <class MUTEX>
@@ -85,9 +87,11 @@ ACE_Condition<MUTEX>::ACE_Condition (MUTEX &m,
   if (ACE_OS::cond_init (&this->cond_,
                          const_cast<ACE_condattr_t &> (attributes.attributes ()),
                          name, arg) != 0)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Condition::ACE_Condition")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_Condition::ACE_Condition")));
+    }
 }
 
 template <class MUTEX>
@@ -96,9 +100,11 @@ ACE_Condition<MUTEX>::~ACE_Condition ()
   // ACE_TRACE ("ACE_Condition<MUTEX>::~ACE_Condition");
 
   if (this->remove () == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Condition::~ACE_Condition")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_Condition::~ACE_Condition")));
+    }
 }
 
 template <class MUTEX> int

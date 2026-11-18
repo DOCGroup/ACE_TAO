@@ -33,7 +33,9 @@ ACE_FIFO_Recv::close ()
   int result = ACE_FIFO::close ();
 
   if (this->aux_handle_ != ACE_INVALID_HANDLE)
-    return ACE_OS::close (this->aux_handle_);
+    {
+      return ACE_OS::close (this->aux_handle_);
+    }
   else
   {
     return result;
@@ -54,12 +56,18 @@ ACE_FIFO_Recv::open (const ACE_TCHAR *fifo_name,
   ACE_TRACE ("ACE_FIFO_Recv::open");
 
   if (ACE_FIFO::open (fifo_name, ACE_NONBLOCK | flags, perms, sa) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else if (this->disable (ACE_NONBLOCK) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else if (persistent
            && (this->aux_handle_ = ACE_OS::open (fifo_name, O_WRONLY, 0, sa)) == ACE_INVALID_HANDLE)
-    return -1;
+    {
+      return -1;
+    }
   else
   {
     return this->get_handle () == ACE_INVALID_HANDLE ? -1 : 0;
