@@ -12934,3 +12934,11 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   to `%b` in both hash map manager variants.
 - `git diff --check` passed. The repository-wide ACE/TAO logging-format audit
   remains open.
+
+## 2026-11-18 ACE timer and strategy diagnostics
+
+- Corrected `ACE_Timer_Node_T::timer_id_` to `%q` with an `ACE_INT64`
+  conversion. `ACE_Dynamic_Message_Strategy` now logs its `unsigned long`
+  fields with `%Q` and `ACE_Time_Value` seconds/useconds with `%:`/`%q`.
+- `git diff --check` passed. The repository-wide ACE/TAO logging-format audit
+  remains open.
