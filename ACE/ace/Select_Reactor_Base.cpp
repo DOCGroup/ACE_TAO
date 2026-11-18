@@ -448,7 +448,9 @@ ACE_Select_Reactor_Handler_Repository_Iterator::ACE_Select_Reactor_Handler_Repos
   // There's no need to do this for the Windows case since the hash
   // map will only contain non-zero event handlers.
   while (this->current_ != end && (*(this->current_) == nullptr))
-    ++this->current_;
+    {
+      ++this->current_;
+    }
 #endif
 }
 
@@ -462,11 +464,13 @@ ACE_Select_Reactor_Handler_Repository_Iterator::next (
   bool result = true;
 
   if (this->done ())
-    result = false;
+    {
+      result = false;
+    }
   else
-  {
-    next_item = ACE_SELECT_REACTOR_EVENT_HANDLER (this->current_);
-  }
+    {
+      next_item = ACE_SELECT_REACTOR_EVENT_HANDLER (this->current_);
+    }
 
   return result;
 }
@@ -497,7 +501,9 @@ ACE_Select_Reactor_Handler_Repository_Iterator::advance ()
   // There's no need to do this for the Windows case since the hash
   // map will only contain non-zero event handlers.
   while (this->current_ != end && (*(this->current_) == nullptr))
-    ++this->current_;
+    {
+      ++this->current_;
+    }
 #endif  /* !ACE_SELECT_REACTOR_BASE_USES_HASH_MAP */
 
   return this->current_ != end;
@@ -679,12 +685,16 @@ ACE_Select_Reactor_Notify::open (ACE_Reactor_Impl *r,
       // non-blocking mode.
       if (ACE::set_flags (this->notification_pipe_.read_handle (),
                           ACE_NONBLOCK) == -1)
-        return -1;
+        {
+          return -1;
+        }
       else
-        return this->select_reactor_->register_handler
-          (this->notification_pipe_.read_handle (),
-           this,
-           ACE_Event_Handler::READ_MASK);
+        {
+          return this->select_reactor_->register_handler
+            (this->notification_pipe_.read_handle (),
+             this,
+             ACE_Event_Handler::READ_MASK);
+        }
     }
   else
     {
@@ -905,8 +915,10 @@ ACE_Select_Reactor_Notify::dispatch_notify (ACE_Notification_Buffer &buffer)
         }
 
       if (result == -1)
-        event_handler->handle_close (ACE_INVALID_HANDLE,
-                                     ACE_Event_Handler::EXCEPT_MASK);
+        {
+          event_handler->handle_close (ACE_INVALID_HANDLE,
+                                       ACE_Event_Handler::EXCEPT_MASK);
+        }
 
       if (requires_reference_counting)
         {
@@ -1029,11 +1041,13 @@ ACE_Select_Reactor_Impl::purge_pending_notifications (ACE_Event_Handler *eh,
                                                       ACE_Reactor_Mask mask)
 {
   if (this->notify_handler_ == nullptr)
-    return 0;
+    {
+      return 0;
+    }
   else
-  {
-    return this->notify_handler_->purge_pending_notifications (eh, mask);
-  }
+    {
+      return this->notify_handler_->purge_pending_notifications (eh, mask);
+    }
 }
 
 // Perform GET, CLR, SET, and ADD operations on the Handle_Sets.
@@ -1115,7 +1129,9 @@ ACE_Select_Reactor_Impl::bit_ops (ACE_HANDLE handle,
           (handle_set.rd_mask_.*ptmf) (handle);
         }
       else if (ops == ACE_Reactor::SET_MASK)
-        handle_set.rd_mask_.clr_bit (handle);
+        {
+          handle_set.rd_mask_.clr_bit (handle);
+        }
 
       // WRITE and CONNECT flag will place the handle in the write set
       if (ACE_BIT_ENABLED (mask,
@@ -1126,7 +1142,9 @@ ACE_Select_Reactor_Impl::bit_ops (ACE_HANDLE handle,
           (handle_set.wr_mask_.*ptmf) (handle);
         }
       else if (ops == ACE_Reactor::SET_MASK)
-        handle_set.wr_mask_.clr_bit (handle);
+        {
+          handle_set.wr_mask_.clr_bit (handle);
+        }
 
       // EXCEPT (and CONNECT on Win32) flag will place the handle in
       // the except set.
@@ -1139,7 +1157,9 @@ ACE_Select_Reactor_Impl::bit_ops (ACE_HANDLE handle,
           (handle_set.ex_mask_.*ptmf) (handle);
         }
       else if (ops == ACE_Reactor::SET_MASK)
-        handle_set.ex_mask_.clr_bit (handle);
+        {
+          handle_set.ex_mask_.clr_bit (handle);
+        }
       break;
     default:
       return -1;
