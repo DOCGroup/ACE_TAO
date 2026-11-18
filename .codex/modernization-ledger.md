@@ -12867,3 +12867,14 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   platform-guarded and could not be compiled on this host; `git diff --check`
   passed.
 - The repository-wide modernization audit remains open.
+
+## 2026-11-18 ACE core logging-format audit
+
+- Reviewed ACE/ace `%B` and `%b` calls against `ACE_Log_Msg.h`: size fields and
+  container counts use `%B`, signed I/O results use `%b`, and 64-bit time
+  values use `%q`. Fixed the Windows WFMO dump's three `%d` formatters for
+  handle counts; two fields are `size_t`, and the third is `DWORD` converted
+  to `size_t` for `%B`.
+- Realclean-built ACE core successfully on Linux; the Windows-only WFMO path
+  is platform-guarded and could not be compiled on this host. `git diff
+  --check` passed. Other ACE/TAO logging conversions remain under review.

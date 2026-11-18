@@ -996,8 +996,8 @@ ACE_WFMO_Reactor_Handler_Repository::dump () const
   ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Current info table\n\n")));
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("\tSize = %d\n"),
-              this->max_handlep1_));
+              ACE_TEXT ("\tSize = %B\n"),
+              static_cast<size_t> (this->max_handlep1_)));
   ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\tHandles to be suspended = %B\n"),
               this->handles_to_be_suspended_));
@@ -1011,7 +1011,7 @@ ACE_WFMO_Reactor_Handler_Repository::dump () const
   ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("To-be-added info table\n\n")));
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("\tSize = %d\n"),
+              ACE_TEXT ("\tSize = %B\n"),
               this->handles_to_be_added_));
 
   for (i = 0; i < this->handles_to_be_added_; ++i)
@@ -1023,7 +1023,7 @@ ACE_WFMO_Reactor_Handler_Repository::dump () const
   ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Suspended info table\n\n")));
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("\tSize = %d\n"),
+              ACE_TEXT ("\tSize = %B\n"),
               this->suspended_handles_));
   ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\tHandles to be resumed = %B\n"),
