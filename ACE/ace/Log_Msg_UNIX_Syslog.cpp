@@ -125,7 +125,9 @@ ACE_Log_Msg_UNIX_Syslog::log (ACE_Log_Record &log_record)
                   ACE_TEXT_ALWAYS_CHAR (line));
         }
       else // No formatting required.
-        syslog (syslog_priority, "%s", ACE_TEXT_ALWAYS_CHAR (line));
+        {
+          syslog (syslog_priority, "%s", ACE_TEXT_ALWAYS_CHAR (line));
+        }
     }
 
   return 0;
