@@ -280,7 +280,9 @@ namespace ACE_Utils
     this->uuid_.clock_seq_low_ = static_cast<u_char> (clock_seq_low);
 
     for (size_t i = 0; i < UUID_Node::NODE_ID_SIZE; ++ i)
-      this->uuid_.node_.node_ID ()[i] = static_cast <u_char> (node[i]);
+      {
+        this->uuid_.node_.node_ID ()[i] = static_cast <u_char> (node[i]);
+      }
 
     // Support varient 10- only
     if ((this->uuid_.clock_seq_hi_and_reserved_ & 0xc0) != 0x80 &&
@@ -317,9 +319,11 @@ namespace ACE_Utils
         ACE_CString thr_pid_str (thr_pid_buf);
         ssize_t pos = static_cast<ssize_t> (thr_pid_str.find ('-'));
         if (pos == -1)
-          ACELIB_DEBUG ((LM_DEBUG,
-                      "ACE_UUID::from_string_i - "
-                      "IllegalArgument (Thread and Process Id format incorrect)\n"));
+          {
+            ACELIB_DEBUG ((LM_DEBUG,
+                        "ACE_UUID::from_string_i - "
+                        "IllegalArgument (Thread and Process Id format incorrect)\n"));
+          }
 
         this->thr_id_ = thr_pid_str.substr (0, pos);
         this->pid_ = thr_pid_str.substr (pos+1, thr_pid_str.length ()-pos-1);
@@ -466,12 +470,16 @@ namespace ACE_Utils
     // Account for the clock being set back. Increment the clock /
     // sequence.
     if (timestamp <= time_last_)
-      uuid_state_.clock_sequence = static_cast<ACE_UINT16> ((uuid_state_.clock_sequence + 1) & ACE_UUID_CLOCK_SEQ_MASK);
+      {
+        uuid_state_.clock_sequence = static_cast<ACE_UINT16> ((uuid_state_.clock_sequence + 1) & ACE_UUID_CLOCK_SEQ_MASK);
+      }
 
     // If the system time ticked since the last UUID was
     // generated. Set / the clock sequence back.
     else if (timestamp > time_last_)
-      uuid_state_.clock_sequence = 0;
+      {
+        uuid_state_.clock_sequence = 0;
+      }
 
     time_last_ = timestamp;
     clock_sequence = uuid_state_.clock_sequence;
@@ -519,7 +527,9 @@ namespace ACE_Utils
         }
       }
     else if (release_lock)
-      this->owned_lock_.reset (lock);
+      {
+        this->owned_lock_.reset (lock);
+      }
     else
     {
       this->owned_lock_.reset ();
