@@ -32,9 +32,11 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
     connection_cache_ (caching_s)
 {
   if (this->open (cre_s, con_s, rec_s) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>\n")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>\n")));
+    }
 }
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX>
@@ -112,7 +114,9 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
                                                           possible_entry->int_id_.second);
 
       if (result == -1)
-        return result;
+        {
+          return result;
+        }
     }
   else
     {
@@ -128,7 +132,9 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
     }
 
   if (found)
-    entry = possible_entry;
+    {
+      entry = possible_entry;
+    }
 
   return 0;
 }
@@ -150,46 +156,50 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
   // Try to find the address in the cache.  Only if we don't find it
   // do we create a new <SVC_HANDLER> and connect it with the server.
   while (this->find (search_addr, entry) != -1)
-  {
-    // We found a cached svc_handler.
-    // Get the cached <svc_handler>
-    sh = entry->int_id_.first;
-
-    // Is the connection clean?
-    int const state_result =
-      ACE::handle_ready (sh->peer ().get_handle (),
-                         &ACE_Time_Value::zero,
-                         true, // read ready
-                         false, // write ready
-                         true);// exception ready
-
-    if (state_result == 1)
     {
-      if (sh->close () == -1)
-        return -1;
+      // We found a cached svc_handler.
+      // Get the cached <svc_handler>
+      sh = entry->int_id_.first;
 
-      sh = nullptr;
+      // Is the connection clean?
+      int const state_result =
+        ACE::handle_ready (sh->peer ().get_handle (),
+                           &ACE_Time_Value::zero,
+                           true, // read ready
+                           false, // write ready
+                           true);// exception ready
 
-      // Cycle it once again..
+      if (state_result == 1)
+        {
+          if (sh->close () == -1)
+            {
+              return -1;
+            }
+
+          sh = nullptr;
+
+          // Cycle it once again..
+        }
+      else if ((state_result == -1) && (errno == ETIME))
+        {
+          // Found!!!
+          // Set the flag
+          found = 1;
+
+          // Tell the <svc_handler> that it should prepare itself for
+          // being recycled.
+          if (this->prepare_for_recycling (sh) == -1)
+            {
+              return -1;
+            }
+
+          return 0;
+        }
+      else
+        {
+          return -1;
+        }
     }
-    else if ((state_result == -1) && (errno == ETIME))
-    {
-      // Found!!!
-      // Set the flag
-      found = 1;
-
-      // Tell the <svc_handler> that it should prepare itself for
-      // being recycled.
-      if (this->prepare_for_recycling (sh) == -1)
-        return -1;
-
-      return 0;
-    }
-    else
-    {
-      return -1;
-    }
-  }
 
   // Not found...
 
@@ -207,7 +217,9 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
 
   // Create a new svc_handler
   if (this->make_svc_handler (potential_handler) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   // Connect using the svc_handler.
   if (this->cached_connect (potential_handler,
@@ -274,7 +286,9 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
       // connect().
 
       if (errno == EWOULDBLOCK || errno == ETIMEDOUT)
-        errno = ENOTSUP;
+        {
+          errno = ENOTSUP;
+        }
       else if (ACE::out_of_handles (errno) || errno == EADDRINUSE)
         {
           // If the connect failed due to the process running out of
@@ -283,7 +297,9 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
           // descriptors which get used in the connect process and
           // hence the same method is called again!
           if (this->purge_connections () == -1)
-            return -1;
+            {
+              return -1;
+            }
 
           // Try connecting again.
           if (this->new_connection (sh,
@@ -295,7 +311,9 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
                                     perms) == -1)
             {
               if (errno == EWOULDBLOCK || errno == ETIMEDOUT)
-                errno = ENOTSUP;
+                {
+                  errno = ENOTSUP;
+                }
               return -1;
             }
         }
@@ -334,7 +352,9 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
                                        entry,
                                        found);
       if (result != 0)
-        return result;
+        {
+          return result;
+        }
     }
 
   // If not found
@@ -351,7 +371,9 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
                                                        found);
 
       if (result != 0)
-        return result;
+        {
+          return result;
+        }
 
       // Increment the refcount
       entry->ext_id_.increment ();
@@ -433,7 +455,9 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
   // Reset the <*act_holder> in the confines and protection of the
   // lock.
   if (act_holder)
-    *act_holder = nullptr;
+    {
+      *act_holder = nullptr;
+    }
 
   // The wonders and perils of ACT
   CONNECTION_CACHE_ENTRY *entry = (CONNECTION_CACHE_ENTRY *) recycling_act;
@@ -492,10 +516,14 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
 
       if (addr.recycle_state () != ACE_RECYCLABLE_IDLE_AND_PURGABLE &&
           addr.recycle_state () != ACE_RECYCLABLE_IDLE_BUT_NOT_PURGABLE)
-        continue;
+        {
+          continue;
+        }
 
       if (addr.subject () != search_addr.subject ())
-        continue;
+        {
+          continue;
+        }
 
       entry = std::addressof (*iterator);
 
@@ -511,7 +539,9 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
                                                           entry->int_id_.second);
 
       if (result == -1)
-        return result;
+        {
+          return result;
+        }
 
       return 0;
     }
@@ -549,8 +579,10 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
           // assign next iter
           iter  = next_iter;
         }
-     else
-       ++iter;
+      else
+        {
+          ++iter;
+        }
     }
 }
 
@@ -607,7 +639,7 @@ ACE_Bounded_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_S
           // close the svc_handler down.
           if (sh->close () == -1)
             {
-          ACE_ASSERT (false);
+              ACE_ASSERT (false);
               return -1;
             }
           sh = nullptr;
@@ -623,7 +655,7 @@ ACE_Bounded_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_S
           // being recycled.
           if (this->prepare_for_recycling (sh) == -1)
             {
-          ACE_ASSERT (false);
+              ACE_ASSERT (false);
               return -1;
             }
 
@@ -653,12 +685,16 @@ ACE_Bounded_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_S
     {
       // Try to purge idle connections
       if (this->purge_connections () == -1)
-        return -1;
+        {
+          return -1;
+        }
 
       // Check limit again.
       if (this->connection_cache_.current_size () >= this->max_size_)
-        // still too much!
-        return -1;
+        {
+          // still too much!
+          return -1;
+        }
 
       // OK, we have room now...
     }
@@ -674,7 +710,9 @@ ACE_Bounded_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_S
 
   // Create a new svc_handler
   if (this->make_svc_handler (potential_handler) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   // Connect using the svc_handler.
   if (this->cached_connect (potential_handler,
