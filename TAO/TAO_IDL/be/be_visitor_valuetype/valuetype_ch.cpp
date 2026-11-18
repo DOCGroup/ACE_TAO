@@ -253,27 +253,31 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   // If we inherit from CORBA::Object and/or CORBA::AbstractBase
   // (in addition to CORBA::ValueBase) we have to add these
   // to avoid ambiguity.
-  if (node->n_supports () > 0)
+  if (node->has_supported_interface ())
     {
       *os << be_uidt_nl << be_nl << "public:" << be_idt_nl;
-      if (node->opt_accessor () && node->obv_need_ref_counter ())
+      if (node->opt_accessor () && node->obv_has_refcount_overrides ())
         {
           *os << be_nl << "void _add_ref () override;" << be_nl;
           *os << "void _remove_ref () override;" << be_nl;
         }
-      else
+      else if (node->n_supports () > 0)
         {
           *os << be_nl << "void _add_ref () override = 0;" << be_nl;
           *os << "void _remove_ref () override = 0;" << be_nl;
         }
-      *os << "::CORBA::ValueBase *_tao_to_value ()";
 
-      if (node->supports_abstract ())
+      if (node->n_supports () > 0)
         {
-          *os << " override";
-        }
+          *os << "::CORBA::ValueBase *_tao_to_value ()";
 
-      *os << ";";
+          if (node->supports_abstract ())
+            {
+              *os << " override";
+            }
+
+          *os << ";";
+        }
     }
 
   // Generate the "protected" constructor so that users cannot

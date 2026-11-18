@@ -56,6 +56,17 @@ valuetype Supported_Interface_Value supports Empty_Valuetype_Interface
   public long value;
 };
 
+/// Abstract valuetypes do not own a ref counter; concrete descendants do.
+abstract valuetype Abstract_Supported_Refcount_Base
+  supports Empty_Valuetype_Interface
+{
+};
+
+valuetype Concrete_Supported_Refcount_Derived : Abstract_Supported_Refcount_Base
+{
+  public long value;
+};
+
 /// An application factory's implementation supplies its own copy operation.
 valuetype Application_Factory_Value
 {

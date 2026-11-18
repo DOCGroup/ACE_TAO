@@ -143,6 +143,8 @@ public:
   /// Check whether the generated OBV class needs or inherits a ref counter.
   bool obv_need_ref_counter ();
   bool obv_have_ref_counter ();
+  /// Check whether supported interfaces need refcount overrides.
+  bool obv_has_refcount_overrides ();
 
   /// Check if VT supports an interface with at least 1 operation.
   static bool have_supported_op (be_interface *node);

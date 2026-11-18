@@ -226,8 +226,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << "}" << be_nl_2;
     }
 
-  if (node->opt_accessor () && node->n_supports () > 0
-      && node->obv_need_ref_counter ())
+  if (node->opt_accessor () && node->obv_has_refcount_overrides ())
     {
       *os << "void" << be_nl
           << node->name () << "::_add_ref ()" << be_nl
