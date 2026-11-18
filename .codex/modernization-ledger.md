@@ -12994,6 +12994,14 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   Syntax-only compilation passed for these files and the preceding basic-type,
   getopt, and cache test changes.
 
+## 2026-11-18 ACE message and queue test log formats
+
+- Corrected `ACE_Message_Block::reference_count()` logging from `%u` to `%d`
+  because it returns `int`. In `Message_Queue_Test.cpp`, changed the signed
+  message count to `%d` and the `unsigned long` millisecond value to `%Q` with
+  an `ACE_UINT64` cast. The patch passes `git diff --check`; full runtime
+  validation remains part of the open ACE test audit.
+
 ## 2026-11-18 ACE core brace audit
 
 - Ran `clang-tidy`'s `readability-braces-around-statements` check over the
