@@ -113,7 +113,7 @@ Token_Strategy_Test::svc ()
   for (int i = 0; i < this->invocations_; ++i)
     {
       ACE_GUARD_RETURN (ACE_Token, lock, this->token_, -1);
-      this->vec_token_count_[current]++;
+      ++this->vec_token_count_[current];
       ACE_Auto_IncDec<ACE_Atomic_Op<ACE_Thread_Mutex, int> > token_count_counter (this->counter_);
 
       // Turn this on to watch each thread grab the token.  LIFO has the interesting
