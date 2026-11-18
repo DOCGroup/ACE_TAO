@@ -172,7 +172,7 @@ run_main (int argc, ACE_TCHAR *argv[])
           if (children[i].spawn (options) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("spawn of client %d failed\n"),
+                                 ACE_TEXT ("spawn of client %B failed\n"),
                                  i),
                                  -1);
             }
