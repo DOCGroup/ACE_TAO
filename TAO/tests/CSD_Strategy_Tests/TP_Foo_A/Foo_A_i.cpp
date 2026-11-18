@@ -6,21 +6,21 @@ Foo_A_i::Foo_A_i() = default;
 void
 Foo_A_i::op1()
 {
-  this->op_count_[0] ++;
+  ++this->op_count_[0];
 }
 
 void
 Foo_A_i::op2(CORBA::Long value)
 {
   this->in_values_[1].push_back (value);
-  this->op_count_[1] ++;
+  ++this->op_count_[1];
 }
 
 CORBA::Long
 Foo_A_i::op3(CORBA::Long value)
 {
   this->in_values_[2].push_back (value);
-  this->op_count_[2] ++;
+  ++this->op_count_[2];
   return value;
 }
 
@@ -28,13 +28,13 @@ void
 Foo_A_i::op4(CORBA::Long value)
 {
   this->in_values_[3].push_back (value);
-  this->op_count_[3] ++;
+  ++this->op_count_[3];
 }
 
 void
 Foo_A_i::op5()
 {
-  this->op_count_[4] ++;
+  ++this->op_count_[4];
   throw FooException();
 }
 

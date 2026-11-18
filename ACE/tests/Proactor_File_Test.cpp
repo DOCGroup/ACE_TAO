@@ -307,7 +307,7 @@ FileIOHandler::handle_time_out(const ACE_Time_Value & /*tv*/, const void * /*act
                             this->block_count_ * FILE_FRAME_SIZE) == 0)
     {
       ACE_DEBUG((LM_INFO, ACE_TEXT("Successfully queued write of %B bytes\n"), new_mb->length ())); // success
-      this->block_count_ ++; // next block
+      ++this->block_count_; // next block
     }
     else
     {

@@ -103,10 +103,10 @@ TAO_FTEC_Event_Channel::activate(TAO_FTEC_Event_Channel::MEMBERSHIP membership)
       = FTRTEC::Identification_Service::instance()->object_id();
 
     FtRtecEventComm::ObjectId consumer_admin_object_id(object_id);
-    consumer_admin_object_id[9]++;
+    ++consumer_admin_object_id[9];
 
     FtRtecEventComm::ObjectId supplier_admin_object_id(consumer_admin_object_id);
-    supplier_admin_object_id[9]++;
+    ++supplier_admin_object_id[9];
 
     ec->activate_object(orb_,
                         supplier_admin_object_id,

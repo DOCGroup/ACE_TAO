@@ -18,7 +18,7 @@ work (void *n)
   while (1)
     {
       thr_yield ();
-      count[ni]++;
+      ++count[ni];
     }
   return 0;
 }

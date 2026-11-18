@@ -918,7 +918,7 @@ int advance_addr (ACE_INET_Addr &addr)
 
       if (i >= 2)
         {
-          sin6_addr[i]++;
+          ++sin6_addr[i];
         }
       else
         {

@@ -9,20 +9,20 @@ Foo_i::~Foo_i () = default;
 void
 Foo_i::op1 ()
 {
-  this->op_count_[0]++;
+  ++this->op_count_[0];
 }
 
 void
 Foo_i::op2 (CORBA::Long value)
 {
   ACE_UNUSED_ARG(value);
-  this->op_count_[1]++;
+  ++this->op_count_[1];
 }
 
 CORBA::Long
 Foo_i::op3 (CORBA::Long value)
 {
-  this->op_count_[2]++;
+  ++this->op_count_[2];
   return value;
 }
 
@@ -30,13 +30,13 @@ void
 Foo_i::op4 (CORBA::Long value)
 {
   ACE_UNUSED_ARG(value);
-  this->op_count_[3]++;
+  ++this->op_count_[3];
 }
 
 void
 Foo_i::op5 ()
 {
-  this->op_count_[4]++;
+  ++this->op_count_[4];
   throw FooException();
 }
 

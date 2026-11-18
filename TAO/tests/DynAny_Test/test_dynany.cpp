@@ -703,7 +703,7 @@ Test_DynAny::run_test ()
       good = good && !fa4->equal(fa5.in ());
 
       CORBA::ShortSeq ss6(data.m_shortseq1);
-      ss6[0]++;
+      ++ss6[0];
       CORBA::Any in6;
       in6 <<= ss6;
 

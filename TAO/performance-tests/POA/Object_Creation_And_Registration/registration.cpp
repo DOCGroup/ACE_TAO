@@ -168,7 +168,7 @@ reverse_map_effectiveness (test_i const *servants,
       u_long const hash_index =
         ACE_Utils::truncate_cast<u_long> (
           reinterpret_cast<intptr_t> (std::addressof (servants[i]))) % active_object_map_size;
-      hash_counter[hash_index]++;
+      ++hash_counter[hash_index];
     }
 
   for (u_long i = 0; i < active_object_map_size; ++i)

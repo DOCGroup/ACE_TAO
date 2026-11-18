@@ -42,7 +42,7 @@ MessageLog::register_message_send (int const message_num)
   ACE_GUARD (ACE_Mutex, ace_mon, this->mutex_);
   if (0 <= message_num && message_num < this->expected_)
     {
-      this->sent_[message_num]++;
+      ++this->sent_[message_num];
     }
   else
     {
@@ -60,7 +60,7 @@ MessageLog::register_message_recv (int const message_num)
   ACE_GUARD (ACE_Mutex, ace_mon, this->mutex_);
   if (0 <= message_num && message_num < this->expected_)
     {
-      this->rcvd_[message_num]++;
+      ++this->rcvd_[message_num];
     }
   else
     {
