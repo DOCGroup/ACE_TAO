@@ -13327,3 +13327,9 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Added Allman braces around eleven single-statement branches in `ACE/ace/Service_Repository.cpp` and 33 branches in `ACE/ace/Service_Gestalt.cpp`.
 - Focused `clang-tidy -checks=-*,readability-braces-around-statements` and `git diff --check` passed for both translation units.
 - No build or runtime test was run.
+
+## 2026-11-18 ACE Select_Reactor_T braces
+
+- Added Allman braces around 49 single-statement branches in `ACE/ace/Select_Reactor_T.cpp`; the `handle_error()` branches remain balanced within their preprocessor paths.
+- Focused `clang-tidy -checks=-*,readability-braces-around-statements` and `git diff --check` passed.
+- No build or runtime test was run.
