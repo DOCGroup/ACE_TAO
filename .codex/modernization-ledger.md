@@ -13291,3 +13291,9 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Added Allman braces around seven conversion, loop, and return bodies in `ACE/ace/SString.cpp`, while retaining the existing conversion logic and loop bounds.
 - Focused `clang-tidy -checks=-*,readability-braces-around-statements` and `git diff --check` passed. The broader ACE core audit remains open.
 - No build or runtime test was run.
+
+## 2026-11-18 ACE datagram braces
+
+- Added Allman braces around eight receive, bind, open, address-family, and constructor-error bodies in `ACE/ace/SOCK_Dgram.cpp`.
+- Focused `clang-tidy -checks=-*,readability-braces-around-statements` and `git diff --check` passed. The broader ACE core audit remains open.
+- No build or runtime test was run.
