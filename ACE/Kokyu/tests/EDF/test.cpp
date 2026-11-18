@@ -156,24 +156,24 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
 int parse_args (int argc, ACE_TCHAR *argv[], std::string &sched_policy)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("p:"));
-  int c {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'p':
-        sched_policy = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
-        break;
+  for (int c = get_opts (); c != -1; c = get_opts ())
+    {
+      switch (c)
+        {
+        case 'p':
+          sched_policy = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
+          break;
 
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s %s"
-                           "\n",
-                           argv [0],
-                           "-p <fifo|rr|other>"),
-                          -1);
-      }
-  // Indicates successful parsing of the command line
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage:  %s %s"
+                             "\n",
+                             argv [0],
+                             "-p <fifo|rr|other>"),
+                            -1);
+        }
+    }
   return 0;
 }
