@@ -127,7 +127,8 @@ run_main (int argc, ACE_TCHAR *argv[])
 
     ACE_FILE_Info info;
     file_io.get_info (info);
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT("file size = %B\n"), info.size_));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT("file size = %q\n"),
+                static_cast<ACE_INT64> (info.size_)));
 
     for (ssize_t n_bytes; (n_bytes = file_io.recv (buf, ACE_MAXLOGMSGLEN)) > 0; )
       {

@@ -543,9 +543,9 @@ test_ostream ()
   if (size != info.size_)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Read %b bytes, rather than expected %B bytes\n"),
+                         ACE_TEXT ("Read %b bytes, rather than expected %q bytes\n"),
                          size,
-                         info.size_),
+                         static_cast<ACE_INT64> (info.size_)),
                         -1);
     }
   // Make sure to NUL-terminate this turkey!
