@@ -20,10 +20,12 @@ int
 ACE_Asynch_Pseudo_Task::start ()
 {
   if (this->reactor_.initialized () == 0)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%N:%l:%p\n"),
-                       ACE_TEXT ("start reactor is not initialized")),
-                       -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("%N:%l:%p\n"),
+                            ACE_TEXT ("start reactor is not initialized")),
+                           -1);
+    }
 
   return this->activate () == -1 ? -1 : 0;   // If started, return 0
 }
@@ -32,7 +34,9 @@ int
 ACE_Asynch_Pseudo_Task::stop ()
 {
   if (this->thr_count () == 0)  // already stopped
-    return 0;
+    {
+      return 0;
+    }
 
   if (this->reactor_.end_reactor_event_loop () == -1)
   {
@@ -53,12 +57,16 @@ ACE_Asynch_Pseudo_Task::svc ()
 
   ACE_OS::sigemptyset (&RT_signals);
   for (int si = ACE_SIGRTMIN; si <= ACE_SIGRTMAX; ++si)
-    ACE_OS::sigaddset (&RT_signals, si);
+    {
+      ACE_OS::sigaddset (&RT_signals, si);
+    }
 
   if (ACE_OS::pthread_sigmask (SIG_BLOCK, &RT_signals, nullptr) != 0)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("Error:(%P | %t):%p\n"),
-                ACE_TEXT ("pthread_sigmask")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("Error:(%P | %t):%p\n"),
+                     ACE_TEXT ("pthread_sigmask")));
+    }
 #endif
 
   reactor_.owner (ACE_Thread::self ());
