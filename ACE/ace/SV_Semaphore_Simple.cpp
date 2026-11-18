@@ -29,17 +29,17 @@ ACE_SV_Semaphore_Simple::control (int cmd,
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::control");
   if (this->internal_id_ == -1)
-    return -1;
-  else
     {
-      semun semctl_arg;
-
-      semctl_arg.val = value;
-      return ACE_OS::semctl (this->internal_id_,
-                             semnum,
-                             cmd,
-                             semctl_arg);
+      return -1;
     }
+
+  semun semctl_arg;
+
+  semctl_arg.val = value;
+  return ACE_OS::semctl (this->internal_id_,
+                         semnum,
+                         cmd,
+                         semctl_arg);
 }
 
 #ifdef ACE_HAS_SYSV_IPC
@@ -66,13 +66,15 @@ ACE_SV_Semaphore_Simple::op (short val, u_short n, short flags) const
   op_op.sem_flg = flags;
 
   if (this->internal_id_ == -1)
-    return -1;
+    {
+      return -1;
+    }
   else if ((op_op.sem_op = val) == 0)
-    return -1;
-  else
-  {
-    return ACE_OS::semop (this->internal_id_, &op_op, 1);
-  }
+    {
+      return -1;
+    }
+
+  return ACE_OS::semop (this->internal_id_, &op_op, 1);
 }
 
 // Open or create one or more SV_Semaphores.  We return 0 if all is
@@ -90,9 +92,9 @@ ACE_SV_Semaphore_Simple::open (key_t k,
 
 #ifdef ACE_HAS_SYSV_IPC
   if (k == IPC_PRIVATE || k == static_cast<key_t> (ACE_INVALID_SEM_KEY))
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 #endif
 
   ivalue.val = initial_value;
@@ -102,16 +104,20 @@ ACE_SV_Semaphore_Simple::open (key_t k,
   this->internal_id_ = ACE_OS::semget (this->key_, n, perms | flags);
 
   if (this->internal_id_ == -1)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   if (ACE_BIT_ENABLED (flags, IPC_CREAT))
-    for (int i = 0; i < n; ++i)
-      if (ACE_OS::semctl (this->internal_id_, i, SETVAL, ivalue) == -1)
-      {
-        return -1;
-      }
+    {
+      for (int i = 0; i < n; ++i)
+        {
+          if (ACE_OS::semctl (this->internal_id_, i, SETVAL, ivalue) == -1)
+            {
+              return -1;
+            }
+        }
+    }
 
   return 0;
 }
@@ -125,9 +131,11 @@ ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (key_t k,
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple");
   if (this->open (k, flags, initial_value, n, perms) == -1)
-  {
-    ACELIB_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_SV_Semaphore::ACE_SV_Semaphore")));
-  }
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_SV_Semaphore::ACE_SV_Semaphore")));
+    }
 }
 
 // Convert name to key.  This function is used internally to create keys
@@ -212,9 +220,11 @@ ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (const char *name,
                   initial_value,
                   n,
                   perms) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple")));
+    }
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -230,9 +240,11 @@ ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (const wchar_t *name,
                   initial_value,
                   nsems,
                   perms) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple")));
+    }
 }
 #endif /* ACE_HAS_WCHAR */
 
