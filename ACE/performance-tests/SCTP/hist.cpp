@@ -102,7 +102,7 @@ void record (double point, hist_t *hist)
     bin = (unsigned int)(((point - hist->first)*(hist->num_bins))/(hist->last - hist->first)+1);
   }
 
-  hist->hs[bin]++;
+  ++hist->hs[bin];
   ++hist->num_points;
   hist->sum+=point;
   incsum = point*point;
