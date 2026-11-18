@@ -13225,3 +13225,9 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Added Allman braces around 17 single-statement branches in `ACE/ace/INET_Addr.cpp`, including multiline error logging and compile-time IPv4/IPv6 branches.
 - `clang-tidy -checks=-*,readability-braces-around-statements` reported no diagnostics for `INET_Addr.cpp`; `git diff --check` passed. The full `ACE/ace` brace audit remains open.
 - No build or runtime test was run.
+
+## 2026-11-18 ACE Message_Block braces
+
+- Added Allman braces around 29 single-statement branches in `ACE/ace/Message_Block.cpp`, including allocator macros, release branches, continuation loops, and constructor error logging.
+- `clang-tidy -checks=-*,readability-braces-around-statements` reported no diagnostics for this translation unit; `git diff --check` passed. The broader ACE core audit remains open.
+- No build or runtime test was run.
