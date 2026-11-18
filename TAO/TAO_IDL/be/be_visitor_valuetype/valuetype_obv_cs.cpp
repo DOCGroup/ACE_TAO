@@ -78,7 +78,6 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
   // preservation or cycle detection. Other members use their normal copy
   // behavior, so nested valuetypes remain shared.
   if (node->obv_need_ref_counter ()
-      && !node->have_operation ()
       && be_valuetype::FS_CONCRETE_FACTORY
            == node->determine_factory_style ())
     {
