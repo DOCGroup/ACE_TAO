@@ -94,7 +94,9 @@ ACE_Arg_Shifter_T<CHAR_TYPE>::get_current () const
   CHAR_TYPE const *retval {};
 
   if (this->is_anything_left ())
-    retval = this->temp_[current_index_];
+    {
+      retval = this->temp_[current_index_];
+    }
 
   return retval;
 }
@@ -105,12 +107,16 @@ ACE_Arg_Shifter_T<CHAR_TYPE>::get_the_parameter (CHAR_TYPE const *flag)
 {
   // check to see if any arguments still exist
   if (!this->is_anything_left())
-    return nullptr;
+    {
+      return nullptr;
+    }
 
   // check to see if the flag is the argument
   int const offset = this->cur_arg_strncasecmp (flag);
   if (offset == -1)
-    return nullptr;
+    {
+      return nullptr;
+    }
 
   if (offset == 0)
     {
@@ -130,18 +136,24 @@ int
 ACE_Arg_Shifter_T<CHAR_TYPE>::cur_arg_strncasecmp (CHAR_TYPE const *flag)
 {
   if (!this->is_anything_left ())
-    return -1;
+    {
+      return -1;
+    }
 
   size_t const flag_length = ACE_OS::strlen (flag);
   CHAR_TYPE const * const arg = this->temp_[this->current_index_];
 
   if (ACE_OS::strncasecmp (arg, flag, flag_length) != 0)
-    return -1;
+    {
+      return -1;
+    }
 
   size_t const arg_length = ACE_OS::strlen (arg);
   size_t remaining = flag_length;
   while (remaining < arg_length && arg[remaining] == CHAR_TYPE (' '))
-    ++remaining;
+    {
+      ++remaining;
+    }
   return (arg_length == flag_length) ? 0 : static_cast<int> (remaining);
 }
 
@@ -157,7 +169,9 @@ ACE_Arg_Shifter_T<CHAR_TYPE>::consume_arg (int number)
       for (int i {}, j {this->back_ - (number - 1)};
            i < number;
            ++i, ++j, ++this->current_index_)
-        this->argv_[j] = this->temp_[this->current_index_];
+        {
+          this->argv_[j] = this->temp_[this->current_index_];
+        }
 
       this->back_ -= number;
       retval = 1;
@@ -178,7 +192,9 @@ ACE_Arg_Shifter_T<CHAR_TYPE>::ignore_arg (int number)
       for (int i {};
            i < number;
            ++i, ++this->current_index_, ++this->front_)
-        this->argv_[this->front_] = this->temp_[this->current_index_];
+        {
+          this->argv_[this->front_] = this->temp_[this->current_index_];
+        }
 
       retval = 1;
       this->argc_ += number;
