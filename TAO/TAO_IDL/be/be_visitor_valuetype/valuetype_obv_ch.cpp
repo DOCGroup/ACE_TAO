@@ -188,9 +188,11 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
         }
       *os << node->local_name () << " () override;";
 
-      // Generate _copy_value() only when this path supplies the reference
-      // counter. Application factory implementations provide their own copy.
-      if (node->obv_need_ref_counter ())
+      // Generate _copy_value() only for the generated concrete factory path.
+      // Application factory implementations provide their own copy operation.
+      if (node->obv_need_ref_counter ()
+          && be_valuetype::FS_CONCRETE_FACTORY
+               == node->determine_factory_style ())
         {
           *os << be_uidt_nl << be_nl << "public:" << be_idt_nl
               << "::CORBA::ValueBase *_copy_value () override;";
