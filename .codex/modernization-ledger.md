@@ -13064,3 +13064,9 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   passed for the POA and annotation tests. The RLE test could not be compiled
   because the generated `tao/Compression/CompressionC.h` is absent from this
   worktree. `git diff --check` passed.
+
+## 2026-11-18 ACE process mutex log format
+
+- Changed the `size_t` process index in `Process_Mutex_Test.cpp` from `%d` to
+  ACE logging's `%B`. Syntax-only compilation with the project C++17 warning
+  flags passed, and `git diff --check` passed.
