@@ -45,3 +45,14 @@ Value2_init_impl::create_for_unmarshal ()
 
   return ret_val;
 }
+
+CORBA::ValueBase *
+ApplicationFactoryValue_impl::_copy_value ()
+{
+  ApplicationFactoryValue_impl *ret_val {};
+  ACE_NEW_THROW_EX (ret_val,
+                    ApplicationFactoryValue_impl,
+                    CORBA::NO_MEMORY ());
+  ret_val->value (this->value ());
+  return ret_val;
+}
