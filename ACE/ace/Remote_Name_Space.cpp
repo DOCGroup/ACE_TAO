@@ -99,9 +99,9 @@ ACE_Remote_Name_Space::resolve (const ACE_NS_WString &name,
                             nullptr, 0, nullptr, 0);
 
   if (this->ns_proxy_.send_request (request) == -1)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   ACE_Name_Request reply;
 
@@ -159,10 +159,12 @@ ACE_Remote_Name_Space::list_names (ACE_WSTRING_SET &set,
   while (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
     {
       if (this->ns_proxy_.recv_reply (reply) == -1)
-        ACELIB_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("ACE_Remote_Name_Space::list_names")),
-                           -1);
+        {
+          ACELIB_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("%p\n"),
+                               ACE_TEXT ("ACE_Remote_Name_Space::list_names")),
+                              -1);
+        }
       if (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
         {
           ACE_NS_WString name (reply.name (),
@@ -185,19 +187,21 @@ ACE_Remote_Name_Space::list_values (ACE_WSTRING_SET &set,
                             pattern_len,
                             nullptr, 0, nullptr, 0);
   if (this->ns_proxy_.send_request (request) == -1)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   ACE_Name_Request reply (0, nullptr, 0, nullptr, 0, nullptr, 0, nullptr);
 
   while (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
     {
       if (this->ns_proxy_.recv_reply (reply) == -1)
-        ACELIB_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("ACE_Remote_Name_Space::list_values")),
-                           -1);
+        {
+          ACELIB_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("%p\n"),
+                               ACE_TEXT ("ACE_Remote_Name_Space::list_values")),
+                              -1);
+        }
       if (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
         {
           ACE_NS_WString value (reply.value (),
@@ -222,19 +226,21 @@ ACE_Remote_Name_Space::list_types (ACE_WSTRING_SET &set,
                             nullptr, 0, nullptr, 0);
 
   if (this->ns_proxy_.send_request (request) == -1)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   ACE_Name_Request reply (0, nullptr, 0, nullptr, 0, nullptr, 0, nullptr);
 
   while (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
     {
       if (this->ns_proxy_.recv_reply (reply) == -1)
-        ACELIB_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("ACE_Remote_Name_Space::list_values")),
-                           -1);
+        {
+          ACELIB_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("%p\n"),
+                               ACE_TEXT ("ACE_Remote_Name_Space::list_values")),
+                              -1);
+        }
       if (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
         {
           ACE_NS_WString type (reply.type ());
@@ -258,19 +264,21 @@ ACE_Remote_Name_Space::list_name_entries (ACE_BINDING_SET &set,
                             nullptr, 0, nullptr, 0);
 
   if (this->ns_proxy_.send_request (request) == -1)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   ACE_Name_Request reply (0, nullptr, 0, nullptr, 0, nullptr, 0, nullptr);
 
   while (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
     {
       if (this->ns_proxy_.recv_reply (reply) == -1)
-        ACELIB_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("ACE_Remote_Name_Space::list_names")),
-                           -1);
+        {
+          ACELIB_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("%p\n"),
+                               ACE_TEXT ("ACE_Remote_Name_Space::list_names")),
+                              -1);
+        }
       if (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
         {
           ACE_NS_WString name (reply.name (),
@@ -302,19 +310,21 @@ ACE_Remote_Name_Space::list_value_entries (ACE_BINDING_SET &set,
                             nullptr, 0, nullptr, 0);
 
   if (this->ns_proxy_.send_request (request) == -1)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   ACE_Name_Request reply (0, nullptr, 0, nullptr, 0, nullptr, 0, nullptr);
 
   while (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
     {
       if (this->ns_proxy_.recv_reply (reply) == -1)
-        ACELIB_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("ACE_Remote_Name_Space::list_values")),
-                           -1);
+        {
+          ACELIB_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("%p\n"),
+                               ACE_TEXT ("ACE_Remote_Name_Space::list_values")),
+                              -1);
+        }
       if (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
         {
           ACE_NS_WString name (reply.name (),
@@ -346,19 +356,21 @@ ACE_Remote_Name_Space::list_type_entries (ACE_BINDING_SET &set,
                             nullptr, 0, nullptr, 0);
 
   if (this->ns_proxy_.send_request (request) == -1)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   ACE_Name_Request reply (0, nullptr, 0, nullptr, 0, nullptr, 0, nullptr);
 
   while (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
     {
       if (this->ns_proxy_.recv_reply (reply) == -1)
-        ACELIB_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("ACE_Remote_Name_Space::list_values")),
-                          -1);
+        {
+          ACELIB_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("%p\n"),
+                               ACE_TEXT ("ACE_Remote_Name_Space::list_values")),
+                              -1);
+        }
       if (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
         {
           ACE_NS_WString name (reply.name (),
