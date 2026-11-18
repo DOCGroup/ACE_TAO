@@ -1873,11 +1873,13 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
       std::memset (m, 0, sizeof (*m));
 #   endif
       if (ACE_ADAPT_RETVAL (::pthread_mutex_init (m, attributes), result) == 0)
-        result = 0;
+        {
+          result = 0;
+        }
       else
-      {
-        result = -1;        // ACE_ADAPT_RETVAL used it for intermediate status
-      }
+        {
+          result = -1;        // ACE_ADAPT_RETVAL used it for intermediate status
+        }
     }
 
   // Only do the deletions if the <attributes> parameter wasn't
@@ -2450,7 +2452,9 @@ ACE_OS::event_destroy (ACE_event_t *event)
           // errors.
           while ((r1 = ACE_OS::mutex_destroy (&event->eventdata_->lock_)) == -1
                  && errno == EBUSY)
-            ACE_OS::thr_yield ();
+            {
+              ACE_OS::thr_yield ();
+            }
 # else
           r1 = ACE_OS::sema_destroy (&event->lock_);
 # endif
@@ -2500,7 +2504,9 @@ ACE_OS::event_destroy (ACE_event_t *event)
       // First destroy the mutex so locking after this will return errors.
       while ((r1 = ACE_OS::mutex_destroy (&event->eventdata_->lock_)) == -1
              && errno == EBUSY)
-        ACE_OS::thr_yield ();
+        {
+          ACE_OS::thr_yield ();
+        }
 
       // Now fix event to manual reset, raise signal and broadcast until
       // it's possible to destroy the condition.
@@ -2613,11 +2619,15 @@ ACE_OS::event_init (ACE_event_t *event,
       if (fd == ACE_INVALID_HANDLE)
         {
           if (errno == EEXIST)
-            fd = ACE_OS::shm_open (ACE_TEXT_CHAR_TO_TCHAR (name_p),
-                                   O_RDWR | O_CREAT,
-                                   ACE_DEFAULT_FILE_PERMS);
+            {
+              fd = ACE_OS::shm_open (ACE_TEXT_CHAR_TO_TCHAR (name_p),
+                                     O_RDWR | O_CREAT,
+                                     ACE_DEFAULT_FILE_PERMS);
+            }
           if (fd == ACE_INVALID_HANDLE)   // Still can't get it.
-            return -1;
+            {
+              return -1;
+            }
         }
       else
         {
@@ -2749,8 +2759,10 @@ ACE_OS::event_pulse (ACE_event_t *event)
                 error = errno;
               }
             else
-              event->eventdata_->signal_count_ =
-                event->eventdata_->waiting_threads_;
+              {
+                event->eventdata_->signal_count_ =
+                  event->eventdata_->waiting_threads_;
+              }
         }
       else // Auto-reset event: wakeup one waiter.
         {
@@ -2846,7 +2858,9 @@ ACE_OS::event_signal (ACE_event_t *event)
   else // Auto-reset event
     {
       if (event->eventdata_->waiting_threads_ == 0)
-        event->eventdata_->is_signaled_ = 1;
+        {
+          event->eventdata_->is_signaled_ = 1;
+        }
       else if (event->wake_one () != 0)
         {
           result = -1;
@@ -3512,26 +3526,28 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
   ACE_Base_Thread_Adapter *thread_args {};
   if (thread_adapter == nullptr)
+    {
 #if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
-    ACE_NEW_RETURN (thread_args,
-                    ACE_OS_Thread_Adapter (func, args,
-                                           (ACE_THR_C_FUNC) ACE_THREAD_ADAPTER_NAME,
-                                           ACE_OS_Object_Manager::seh_except_selector(),
-                                           ACE_OS_Object_Manager::seh_except_handler(),
-                                           flags),
-                    -1);
+      ACE_NEW_RETURN (thread_args,
+                      ACE_OS_Thread_Adapter (func, args,
+                                             (ACE_THR_C_FUNC) ACE_THREAD_ADAPTER_NAME,
+                                             ACE_OS_Object_Manager::seh_except_selector(),
+                                             ACE_OS_Object_Manager::seh_except_handler(),
+                                             flags),
+                      -1);
 #else
-  ACE_NEW_RETURN (thread_args,
-                  ACE_OS_Thread_Adapter (func, args,
-                                         (ACE_THR_C_FUNC) ACE_THREAD_ADAPTER_NAME,
-                                         flags),
-                  -1);
+      ACE_NEW_RETURN (thread_args,
+                      ACE_OS_Thread_Adapter (func, args,
+                                             (ACE_THR_C_FUNC) ACE_THREAD_ADAPTER_NAME,
+                                             flags),
+                      -1);
 
 #endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
+    }
   else
-  {
-    thread_args = thread_adapter;
-  }
+    {
+      thread_args = thread_adapter;
+    }
 
   std::unique_ptr <ACE_Base_Thread_Adapter> auto_thread_args;
 
@@ -3591,7 +3607,9 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #     if !defined (ACE_LACKS_PTHREAD_ATTR_SETSTACK)
       int result;
       if (stack != nullptr)
-        result = ACE_ADAPT_RETVAL (pthread_attr_setstack (&attr, stack, size), result);
+        {
+          result = ACE_ADAPT_RETVAL (pthread_attr_setstack (&attr, stack, size), result);
+        }
       else
       {
         result = ACE_ADAPT_RETVAL (pthread_attr_setstacksize (&attr, size), result);
@@ -3684,12 +3702,18 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
           ACE_SET_BITS (flags, THR_EXPLICIT_SCHED);
 
           if (ACE_BIT_ENABLED (flags, THR_SCHED_DEFAULT))
-            spolicy = SCHED_OTHER;
+            {
+              spolicy = SCHED_OTHER;
+            }
           else if (ACE_BIT_ENABLED (flags, THR_SCHED_FIFO))
-            spolicy = SCHED_FIFO;
+            {
+              spolicy = SCHED_FIFO;
+            }
 #       if defined (SCHED_IO)
           else if (ACE_BIT_ENABLED (flags, THR_SCHED_IO))
-            spolicy = SCHED_IO;
+            {
+              spolicy = SCHED_IO;
+            }
 #       else
           else if (ACE_BIT_ENABLED (flags, THR_SCHED_IO))
             {
@@ -3725,11 +3749,17 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
           && priority == ACE_DEFAULT_THREAD_PRIORITY)
         {
           if (ACE_BIT_ENABLED (flags, THR_SCHED_FIFO))
-            priority = ACE_THR_PRI_FIFO_DEF;
+            {
+              priority = ACE_THR_PRI_FIFO_DEF;
+            }
           else if (ACE_BIT_ENABLED (flags, THR_SCHED_RR))
-            priority = ACE_THR_PRI_RR_DEF;
+            {
+              priority = ACE_THR_PRI_RR_DEF;
+            }
           else // THR_SCHED_DEFAULT
-            priority = ACE_THR_PRI_OTHER_DEF;
+            {
+              priority = ACE_THR_PRI_OTHER_DEF;
+            }
         }
 #     endif /* ACE_HAS_PTHREADS */
       if (priority != ACE_DEFAULT_THREAD_PRIORITY)
@@ -3743,17 +3773,23 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #     elif defined(ACE_HAS_PTHREADS)
           // The following code forces priority into range.
           if (ACE_BIT_ENABLED (flags, THR_SCHED_FIFO))
-            sparam.sched_priority =
-              (std::min) (ACE_THR_PRI_FIFO_MAX,
-                       (std::max) (ACE_THR_PRI_FIFO_MIN, priority));
+            {
+              sparam.sched_priority =
+                (std::min) (ACE_THR_PRI_FIFO_MAX,
+                            (std::max) (ACE_THR_PRI_FIFO_MIN, priority));
+            }
           else if (ACE_BIT_ENABLED(flags, THR_SCHED_RR))
-            sparam.sched_priority =
-              (std::min) (ACE_THR_PRI_RR_MAX,
-                       (std::max) (ACE_THR_PRI_RR_MIN, priority));
+            {
+              sparam.sched_priority =
+                (std::min) (ACE_THR_PRI_RR_MAX,
+                            (std::max) (ACE_THR_PRI_RR_MIN, priority));
+            }
           else // Default policy, whether set or not
-            sparam.sched_priority =
-              (std::min) (ACE_THR_PRI_OTHER_MAX,
-                       (std::max) (ACE_THR_PRI_OTHER_MIN, priority));
+            {
+              sparam.sched_priority =
+                (std::min) (ACE_THR_PRI_OTHER_MAX,
+                            (std::max) (ACE_THR_PRI_OTHER_MIN, priority));
+            }
 #     elif defined (PRIORITY_MAX)
           sparam.sched_priority = (std::min) (priority,
                                            (long) PRIORITY_MAX);
@@ -3847,12 +3883,16 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
           if (lwps == -1)
             {
               if (errno == ENOTSUP)
-                // Suppress the ENOTSUP because it's harmless.
-                errno = 0;
+                {
+                  // Suppress the ENOTSUP because it's harmless.
+                  errno = 0;
+                }
               else
-                // This should never happen on SunOS:
-                // ::thr_getconcurrency () should always succeed.
-                return -1;
+                {
+                  // This should never happen on SunOS:
+                  // ::thr_getconcurrency () should always succeed.
+                  return -1;
+                }
             }
           else if (ACE_OS::thr_setconcurrency (lwps + 1) == -1)
             {
