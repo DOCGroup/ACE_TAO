@@ -744,6 +744,7 @@ ACE/performance-tests/Server_Concurrency	CONST	done	5bb605a7e83	Made dump method
 ACE/performance-tests/Server_Concurrency	PREFIX_INC	done	5bb605a7e83	Changed equivalent sample counter increments to prefix form.
 ACE/performance-tests/Server_Concurrency	STYLE	done	5bb605a7e83	git diff --check passed; no repeated blank lines introduced.
 ACE/performance-tests/Server_Concurrency	VALUE_INIT	done	5bb605a7e83	Value-initialized stats members and immutable result locals with braces.
+ACE/performance-tests/Synch-Benchmarks	PREFIX_INC	done	05050f89300	Changed the standalone count-array postfix increment to prefix form; the old value is discarded.
 ACE/performance-tests/Synch-Benchmarks/Base_Test	ATOMIC	not-applicable	562bdbb3340	No atomic state in this directory.
 ACE/performance-tests/Synch-Benchmarks/Base_Test	BUILD_TEST	done	562bdbb3340	Realclean-built Synch_Lib, Base_Test, and synch_driver with make -j 8; 10-iteration normal and try-lock smoke runs passed.
 ACE/performance-tests/Synch-Benchmarks/Base_Test	CLEANUP	done	562bdbb3340	Removed an unused current_iteration accessor, redundant reset return, empty constructor/destructor definitions, and a temporary result variable.
@@ -853,7 +854,7 @@ ACE/tests	CLEANUP	done	54ab7cb832e	Removed twelve redundant constructor/destruct
 ACE/tests	COPY_MOVE	done	-	Reviewed all 10 std::move sites in tests; move-only feature probes are intentional and owner/value transfers do not read moved-from sources
 ACE/tests	C_STRING	done	0581719f4ae	Replaced decimal ACE_OS::itoa formatting in Get_Opt_Test with std::to_string; retained explicit ACE_OS wrapper tests in OS_Test
 ACE/tests	LOG_FORMAT	needs-work	aa659c55a52	Fixed pointer args in Sig_Handlers_Test, size_t/u_long counts, offsets, error codes, and ACE_HANDLE arguments in Bug_2740, Dev_Poll, Process_Strategy, and QtReactor tests. Recent batches fixed object-pointer varargs and timer ID formats across ACE tests; targets built and linked. Further pointer and const-void log arguments fixed across Proactor, RB tree, reference-counted handler, and backend tests; affected targets built and linked. Corrected ACE_OFF_T file-size logging in CDR_File_Test, Log_Msg_Test, and Svc_Handler_Test to %q with ACE_INT64 casts. Audited Reference_Counted_Event_Handler_Test: message_size int uses %d and I/O ssize_t uses %b. Fixed size_t session counts and indexes in TP_Reactor_Test.cpp with %B. Corrected ACE_UINT64, long, ACE_UINT32, and argv index format mismatches in Basic_Types_Test.cpp and Get_Opt_Test.cpp, plus all size_t key/value/index logging in Cache_Map_Manager_Test.cpp. Corrected thread/timer size and unsigned 64-bit formatting in Conn_Test.cpp, Future_Stress_Test.cpp, High_Res_Timer_Test.cpp, and Message_Block_Test.cpp; removed duplicate thread ID args in Recursive_Mutex_Test.cpp. Fixed int reference-count and queue-count format strings and unsigned-long timing formats in Message_Block_Large_Copy_Test.cpp, Message_Queue_Test.cpp, and Message_Queue_Test_Ex.cpp. Corrected unsigned-long thread-count diagnostics and promoted u_short fprintf formatting in Thread_Creation_Threshold_Test.cpp and Service_Config_Test.cpp; both passed syntax-only compilation. Corrected int printf indices in Conn_Test.cpp and Thread_Manager_Test.cpp. Also changed the Process_Mutex_Test size_t index to %B and passed syntax-only compilation. Corrected u_long format mismatch in ACE_Test.cpp; full syntax-only compile passed. Full format audit remains open; Qt lacks headers. | Remote branch follow-up: Fixed pointer args in Sig_Handlers_Test, size_t/u_long counts, offsets, error codes, and ACE_HANDLE arguments in Bug_2740, Dev_Poll, Process_Strategy, and QtReactor tests. Recent batches fixed object-pointer varargs and timer ID formats across ACE tests; targets built and linked. Further pointer and const-void log arguments fixed across Proactor, RB tree, reference-counted handler, and backend tests; affected targets built and linked. Full format audit remains open; Qt lacks headers.
-ACE/tests	PREFIX_INC	done	abdb7fa4960	Changed discarded reference-counter increment in Token_Strategy_Test.cpp to prefix form; realclean build and link passed.
+ACE/tests	PREFIX_INC	done	05050f89300	Changed standalone postfix updates in the Proactor and IPv6 multicast tests to prefix form; the old values are discarded.
 ACE/tests/Message_Queue_Test	SPECIAL_MEMBER_COMMENTS	done	cd99fd1d348	Removed the default-constructor label from Queue_Wrapper; realclean-built and linked Message_Queue_Test without warnings
 ACE/tests/Network_Adapters_Test.h	BUILD_TEST	done	a799aa38416	Test MPC regenerated; Network_Adapters_Test realclean-built and ran successfully
 ACE/tests/Network_Adapters_Test.h	CLEANUP	done	a799aa38416	Removed standalone constructor/destructor labels from two test handlers
@@ -1677,6 +1678,7 @@ TAO/orbsvcs/orbsvcs/FtRtEvent/ClientORB	VALUE_INIT	done	cf69bf7abfa	Value-initia
 TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel	BUILD_TEST	done	8b594dcdeff	Migrated from existing inventory; see modernization-ledger.md
 TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel	CLEANUP	done	8b594dcdeff	Migrated from existing inventory; see modernization-ledger.md
 TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel	OWNERSHIP	done	8b594dcdeff	Migrated from existing inventory; see modernization-ledger.md
+TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel	PREFIX_INC	done	05050f89300	Changed two standalone object-id octet increments to prefix form; the old values are discarded.
 TAO/orbsvcs/orbsvcs/FtRtEvent/Utils	CONST	done	2a48d5b8cd4	Const-qualified the resolved object state and audited pointer storage
 TAO/orbsvcs/orbsvcs/FtRtEvent/Utils	VALUE_INIT	done	2a48d5b8cd4	Value-initialized UUID representation state, gateway pointer locals, and log level
 TAO/orbsvcs/orbsvcs/IFRService	C_STRING	done	d71159b5636	Migrated from existing inventory; see modernization-ledger.md
@@ -2040,6 +2042,7 @@ TAO/orbsvcs/tests/Bug_2377_Regression	CONTAINERS	done	92695a18b81	Replaced manua
 TAO/orbsvcs/tests/Bug_2377_Regression	EXPLICIT	done	pending	Migrated from existing inventory; see modernization-ledger.md
 TAO/orbsvcs/tests/Bug_2377_Regression	OVERRIDE_DEFAULT_DELETE	done	92695a18b81	Marked both ACE_Task_Base::svc implementations override and explicitly deleted copy/move operations
 TAO/orbsvcs/tests/Bug_2377_Regression	OWNERSHIP	done	92695a18b81	Changed non-owning MessageLog pointers to references
+TAO/orbsvcs/tests/Bug_2377_Regression	PREFIX_INC	done	05050f89300	Changed standalone sent/received count increments to prefix form; the old values are discarded.
 TAO/orbsvcs/tests/Bug_2377_Regression	STYLE	done	7c1851f9394	Removed leading and redundant label-comment whitespace; git diff --check and 120-column checks passed
 TAO/orbsvcs/tests/Bug_2377_Regression	VALUE_INIT	done	7c1851f9394	Value-initialized the required-option parser counter in addition to existing vector and scalar state
 TAO/orbsvcs/tests/Bug_2615_Regression	ATOMIC	done	05f2702980b	Made the interceptor result atomic because interceptor and servant requests may execute on separate ORB threads
@@ -2229,6 +2232,8 @@ TAO/orbsvcs/tests/Notify/Structured_Filter	VALUE_INIT	done	d57eccb57a4	Migrated 
 TAO/orbsvcs/tests/Notify/lib	LOG_FORMAT	done	aa659c55a52	Cast ACE_CU64_TO_CU32 results to unsigned int for %u arguments in C fprintf and ACE_DEBUG calls; C++17 syntax-only compilation passed
 TAO/orbsvcs/tests/Simple_Naming	STD_NARROW_STRING	done	21113c7140f	Replaced six narrow ACE_OS::strcmp calls; realclean regenerated IDL and client build passed.
 TAO/orbsvcs/tests/Time	SPECIAL_MEMBER_COMMENTS	done	a210f3e69a	Removed standalone constructor/destructor labels; Time client realclean build passed; runtime harness fails during server shutdown
+TAO/performance-tests/CSD_Strategy/TestServant	PREFIX_INC	done	05050f89300	Changed five standalone operation-counter increments to prefix form; the old values are discarded.
+TAO/performance-tests/POA/Object_Creation_And_Registration	PREFIX_INC	done	05050f89300	Changed the standalone hash-counter increment to prefix form; the old value is discarded.
 TAO/tao	COPY_MOVE	done	96dbf8ae851	The complete TAO/tao move audit supersedes the earlier partial review: all 53 std::move sites across 27 source files were reviewed, with no unsafe moved-from use found. | Earlier remote record: Reviewed 29 moves across clonable argument wrappers, queued messages, codeset/connector/adapter registries, thread resources, RTScheduling, Stub, CSD_Framework, LF_Multi_Event, ETCL, Dynamic_TP, and CSD_ThreadPool; remaining core sites are still open
 TAO/tao	LOG_FORMAT	needs-work	1c632b20b97	Corrected size_t transport IDs, transport-cache unsigned long/CORBA::ULong hash and index formatting, and an unsigned pending-connect count. Three changed TAO sources/template header passed syntax-only compilation; full TAO/tao logging-format audit remains open
 TAO/tao	MOVE_SEMANTICS	done	96dbf8ae851	Audited all 53 move sites across 27 source files. Owners transfer into destinations or temporary RAII holders; sequence moves copy borrowed buffers and preserve the source. No moved-from value is read after transfer. | Earlier remote record: Reviewed 10 std::move transfers in Acceptor_Registry.cpp, six in Active_Object_Map.cpp, and five in Object_Adapter.cpp. Ownership moves into open_default_i, the acceptor vector, owning strategy/map members, or local shutdown owners; moved-from owners are not read, and accepted pointees remain valid for retained raw observations. Other TAO/tao move sites remain.
@@ -2594,8 +2599,10 @@ TAO/tao/ZIOP	CONST	done	b3a2e83a74c	Made initialized offsets, a saved read point
 TAO/tao/ZIOP	SPECIAL_MEMBER_COMMENTS	done	fd81e6e9113	Removed standalone constructor/destructor/copy-constructor labels; realclean build and link passed without warnings
 TAO/tao/ZIOP	STYLE	done	b3a2e83a74c	Kept the diagnostic text intact while bringing its source lines within 120 columns
 TAO/tao/ZIOP	VALUE_INIT	done	b3a2e83a74c	Value-initialized Compression::CompressionLevel instead of assigning zero
+TAO/tests/CSD_Strategy_Tests/TP_Foo_A	PREFIX_INC	done	05050f89300	Changed five standalone operation-counter increments to prefix form; the old values are discarded.
 TAO/tests/CSD_Strategy_Tests/TP_Foo_B	BUILD_TEST	done	5452e6d15aa	Regenerated csd_tp_foo_b_lib.mpc output; realclean-built the library with -j 8 without warnings
 TAO/tests/CSD_Strategy_Tests/TP_Foo_B	C_STRING	done	5452e6d15aa	Replaced ACE_OS::strncmp and ACE_OS::strlen on narrow CORBA string buffers with std:: calls
+TAO/tests/CSD_Strategy_Tests/TP_Foo_B	PREFIX_INC	done	05050f89300	Changed sixteen standalone operation-counter increments to prefix form; the old values are discarded.
 TAO/tests/Compression	BUILD_TEST	done	b6a65a97e58	Regenerated Compression_Test.mpc; realclean-built RLE target with make -j 8; perl run_test.pl passed without build warnings
 TAO/tests/Compression	CONST	done	b6a65a97e58	Const-qualified the fixed result table and immutable input lengths
 TAO/tests/Compression	CONTAINERS	done	b6a65a97e58	Used std::array for the fixed result table and zero-filled byte buffers; no exception-based container adaptation
@@ -2604,6 +2611,7 @@ TAO/tests/Compression	LOG_FORMAT	done	08afed08cfa	Changed the size_t RLE test-lo
 TAO/tests/Compression	SPECIAL_MEMBER_COMMENTS	not-applicable	b6a65a97e58	No comments solely labeling special member functions found in reviewed sources
 TAO/tests/Compression	STYLE	done	b6a65a97e58	Touched source has no lines over 120 columns or repeated blank lines; git diff --check passed
 TAO/tests/Compression	VALUE_INIT	done	b6a65a97e58	Replaced three zero-filled heap buffers with value-initialized fixed std::array storage
+TAO/tests/DynAny_Test	PREFIX_INC	done	05050f89300	Changed a standalone sequence element increment to prefix form; the old value is discarded.
 TAO/tests/Dynamic_TP/Config_Loader	BUILD_TEST	done	18d42e26611	Ran make realclean, make -j 8, and ./test; build and configuration lookup test passed without compiler warnings
 TAO/tests/Dynamic_TP/Config_Loader	CLEANUP	done	18d42e26611	Removed unused stdio and cstddef includes
 TAO/tests/Dynamic_TP/Config_Loader	CONST	done	2eb768449c7	Migrated from existing inventory; see modernization-ledger.md

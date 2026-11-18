@@ -2,7 +2,7 @@
 
 Inventory base: `upstream/master`. Counts are directory-level, not executable/project counts.
 
-Scope: **1268 directories**; **1230** differ from the base; **382** have task-level review records; **246** have a recorded validated batch; **54** have a fully completed directory checklist. These are separate measures, not an overall completion percentage.
+Scope: **1268 directories**; **1230** differ from the base; **387** have task-level review records; **246** have a recorded validated batch; **54** have a fully completed directory checklist. These are separate measures, not an overall completion percentage.
 
 ## Progress by modernization task
 
@@ -26,7 +26,7 @@ Scope: **1268 directories**; **1230** differ from the base; **382** have task-le
 | `CONTAINER_OWNERSHIP` — Standard containers and ownership of container elements | 1 | 1 | 0 | 0 |
 | `C_STRING` — Plain C-string handling | 85 | 60 | 25 | 0 |
 | `STD_NARROW_STRING` — Use std string functions for narrow C strings | 10 | 10 | 0 | 0 |
-| `PREFIX_INC` — Prefer prefix increment and decrement when equivalent | 39 | 37 | 2 | 0 |
+| `PREFIX_INC` — Prefer prefix increment and decrement when equivalent | 47 | 45 | 2 | 0 |
 | `BRACES` — Consistent braces around control-flow bodies | 2 | 0 | 0 | 2 |
 | `CONST_GUARD_MACROS` — Const guard macro usage while preserving ACE_GUARD conventions | 2 | 2 | 0 | 0 |
 | `MOVE_SITES` — Audit std::move sites for moved-from use and ownership correctness | 3 | 3 | 0 | 0 |
@@ -229,7 +229,7 @@ Scope: **1268 directories**; **1230** differ from the base; **382** have task-le
 | `TAO/orbsvcs/tests/Bug_2285_Regression` | CONST; VALUE_INIT; NULLPTR; OWNERSHIP; CONTAINERS; CLI_OPTIONS; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Remaining broad checklist categories and Perl harness are not included in this focused C++ audit | partial | `ca593bcbb0f` |
 | `TAO/orbsvcs/tests/Bug_2287_Regression` | CONST; VALUE_INIT; NULLPTR; OWNERSHIP; C_STRING; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Continue the complete directory checklist in a future pass | partial | `pending` |
 | `TAO/orbsvcs/tests/Bug_2316_Regression` | CONST; VALUE_INIT; OWNERSHIP; C_STRING; CLI_OPTIONS; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Broader directory modernization audit remains | partial | `` |
-| `TAO/orbsvcs/tests/Bug_2377_Regression` | CONST; VALUE_INIT; OVERRIDE_DEFAULT_DELETE; EXPLICIT; OWNERSHIP; CONTAINERS; CLI_OPTIONS; CLEANUP; STYLE | Continue remaining directory categories in a future pass | partial | `pending` |
+| `TAO/orbsvcs/tests/Bug_2377_Regression` | CONST; VALUE_INIT; OVERRIDE_DEFAULT_DELETE; EXPLICIT; OWNERSHIP; CONTAINERS; PREFIX_INC; CLI_OPTIONS; CLEANUP; STYLE | Continue remaining directory categories in a future pass | partial | `pending` |
 | `TAO/orbsvcs/tests/Bug_2615_Regression` | CONST; NULLPTR; OVERRIDE_DEFAULT_DELETE; ATOMIC; OWNERSHIP; C_STRING; CLI_OPTIONS; CLEANUP; STYLE; BUILD_TEST | Continue remaining directory categories in a future pass | partial | `pending` |
 | `TAO/orbsvcs/tests/Bug_2709_Regression` | CONST; VALUE_INIT; OVERRIDE_DEFAULT_DELETE; EXPLICIT; OWNERSHIP; C_STRING; CLI_OPTIONS; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Continue remaining directory categories in a future pass | partial | `pending` |
 | `TAO/orbsvcs/tests/Bug_2800_Regression` | CONST; NULLPTR; OVERRIDE_DEFAULT_DELETE; EXPLICIT; COPY_MOVE; ATOMIC; THREAD_SAFETY; USING=n/a; CONSTEXPR=n/a; OWNERSHIP; CONTAINERS; C_STRING; SIZE_TYPES; IDL_GENERATION; CLI_OPTIONS; LOG_FORMAT; TEST_ASSERTIONS; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Review remaining checklist categories in a future directory audit | partial | `31826bbad88` |
@@ -286,7 +286,7 @@ Scope: **1268 directories**; **1230** differ from the base; **382** have task-le
 | `TAO/tao/Utils` | CONST; NULLPTR; OWNERSHIP; C_STRING; CLEANUP; UNUSED_INCLUDES; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Remaining modernization categories are not yet audited | partial | `7c52bb1d7b0` |
 | `TAO/tao/Valuetype` | CONST; VALUE_INIT; NULLPTR; EXPORTED_DESTRUCTORS; OWNERSHIP; CLEANUP; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Remaining modernization categories are not yet audited | partial | `1858bb7d0c0` |
 | `TAO/tao/ZIOP` | CONST; VALUE_INIT; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Remaining modernization categories are not yet audited | partial | `b3a2e83a74c` |
-| `TAO/tests/CSD_Strategy_Tests/TP_Foo_B` | C_STRING; BUILD_TEST | Other directory modernization categories remain unreviewed | partial | `5452e6d15aa` |
+| `TAO/tests/CSD_Strategy_Tests/TP_Foo_B` | C_STRING; PREFIX_INC; BUILD_TEST | Other directory modernization categories remain unreviewed | partial | `5452e6d15aa` |
 | `TAO/tests/Dynamic_TP/Config_Loader` | CONST; VALUE_INIT; CONTAINERS; C_STRING; LOG_FORMAT; CLEANUP; BUILD_TEST | Audit other applicable cleanup categories for this directory | partial | `2eb768449c7` |
 | `TAO/tests/Dynamic_TP/ORB_ThreadPool` | CONST; VALUE_INIT; CLI_OPTIONS; LOG_FORMAT; STYLE; BUILD_TEST; TEXT_API | Audit other applicable cleanup categories for this directory | partial | `7325f976a16` |
 | `TAO/tests/Dynamic_TP/POA_Loader` | CONST; CONTAINERS; C_STRING; TEST_ASSERTIONS; CLEANUP; BUILD_TEST; TEXT_API | Audit other applicable cleanup categories for this directory | partial | `36b89f3fb6e` |

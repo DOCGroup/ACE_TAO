@@ -13214,3 +13214,8 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 
 - Changed 20 standalone postfix increments/decrements to prefix form in the JAWS WebSTONE C sources. These statements discard the postfix result. Other postfix expressions remain because their old value is consumed.
 - `git diff --check` passed; no build or tests were run for these syntax-only changes.
+
+## 2026-11-18 ACE/TAO counter and index increments
+
+- Changed 35 standalone postfix increments in ACE and TAO counters, indexes, and object-id octets to prefix form. No old result was consumed. Generated parser outputs were excluded, and the remaining postfix expressions that consume old values were retained.
+- `git diff --check` passed. No build or tests were run for these syntax-only changes.
