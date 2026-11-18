@@ -12985,6 +12985,15 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   `Cache_Map_Manager_Test.cpp`; their declared types are `size_t`. `git diff
   --check` passes, and the full ACE test logging-format audit remains open.
 
+## 2026-11-18 ACE thread and timer test log formats
+
+- Corrected size and integer logging in `Conn_Test.cpp`, `Future_Stress_Test.cpp`,
+  `High_Res_Timer_Test.cpp`, `Message_Block_Test.cpp`, and
+  `Service_Config_Test.cpp`. Removed duplicated thread IDs from the recursive
+  mutex messages because the log prefix already includes the current thread ID.
+  Syntax-only compilation passed for these files and the preceding basic-type,
+  getopt, and cache test changes.
+
 ## 2026-11-18 ACE core brace audit
 
 - Ran `clang-tidy`'s `readability-braces-around-statements` check over the
