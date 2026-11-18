@@ -13261,3 +13261,9 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Added Allman braces to four return and logging branches in `ACE/ace/SOCK.cpp`.
 - Focused `clang-tidy -checks=-*,readability-braces-around-statements` and `git diff --check` passed. The broader ACE core audit remains open.
 - No build or runtime test was run.
+
+## 2026-11-18 ACE memory pool and semaphore braces
+
+- Added Allman braces around the error and success branches in `ACE/ace/Sbrk_Memory_Pool.cpp` and the constructor error branch in `ACE/ace/Semaphore.cpp`.
+- Focused `clang-tidy -checks=-*,readability-braces-around-statements` and `git diff --check` passed. The broader ACE core audit remains open.
+- No build or runtime test was run.
