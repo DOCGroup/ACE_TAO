@@ -55,19 +55,21 @@ Gen_Perf::compute_disjoint_union (char *set1, char *set2, char *set3)
   char *base = set3;
 
   while (*set1 && *set2)
-    if (*set1 == *set2)
-      {
-        ++set1;
-        ++set2;
-      }
-    else
-      {
-        *set3 = *set1 < *set2 ? *set1++ : *set2++;
-        if (set3 == base || *set3 != *(set3 - 1))
-          {
-            ++set3;
-          }
-      }
+    {
+      if (*set1 == *set2)
+        {
+          ++set1;
+          ++set2;
+        }
+      else
+        {
+          *set3 = *set1 < *set2 ? *set1++ : *set2++;
+          if (set3 == base || *set3 != *(set3 - 1))
+            {
+              ++set3;
+            }
+        }
+    }
 
   while (*set1)
     {
@@ -107,7 +109,9 @@ Gen_Perf::sort_set (char *union_set, int len)
            && Vectors::occurrences[Vectors::character_index (tmp)] <
              Vectors::occurrences[Vectors::character_index (union_set[curr - 1])];
            --curr)
-        union_set[curr] = union_set[curr - 1];
+        {
+          union_set[curr] = union_set[curr - 1];
+        }
 
       union_set[curr] = static_cast<char> (tmp);
     }
@@ -120,7 +124,9 @@ Gen_Perf::hash (List_Node *key_node)
   int sum = option[NOLENGTH] ? 0 : key_node->length;
 
   for (char const ptr : key_node->keysig)
+    {
       sum += Vectors::asso_values[Vectors::character_index (ptr)];
+    }
 
   key_node->hash_value = sum;
   return sum;
@@ -202,12 +208,14 @@ int
 Gen_Perf::change (List_Node *prior, List_Node *curr)
 {
   if (option[DEBUGGING])
-    ACE_DEBUG ((LM_DEBUG,
-                "collision on keyword #%d, prior = \"%C\", curr = \"%C\" hash = %d\n",
-                num_done,
-                prior->key.c_str (),
-                curr->key.c_str (),
-                curr->hash_value));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "collision on keyword #%d, prior = \"%C\", curr = \"%C\" hash = %d\n",
+                  num_done,
+                  prior->key.c_str (),
+                  curr->key.c_str (),
+                  curr->hash_value));
+    }
   Gen_Perf::sort_set (this->union_set.get (),
                       compute_disjoint_union (prior->keysig.data (),
                                               curr->keysig.data (),
@@ -218,30 +226,38 @@ Gen_Perf::change (List_Node *prior, List_Node *curr)
   ++fewest_collisions;
 
   for (char *temp = this->union_set.get (); *temp != '\0'; ++temp)
-    if (affects_prev (*temp, curr) == 0)
-      {
-        if (option[DEBUGGING])
-          ACE_DEBUG ((LM_DEBUG,
-                      " by changing asso_value['%c'] (char #%d) to %d\n",
-                      *temp,
-                      temp - this->union_set.get () + 1,
-                      Vectors::asso_values[Vectors::character_index (*temp)]));
-        // Good, doesn't affect previous hash values, we'll take it.
-        return 0;
-      }
+    {
+      if (affects_prev (*temp, curr) == 0)
+        {
+          if (option[DEBUGGING])
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          " by changing asso_value['%c'] (char #%d) to %d\n",
+                          *temp,
+                          temp - this->union_set.get () + 1,
+                          Vectors::asso_values[Vectors::character_index (*temp)]));
+            }
+          // Good, doesn't affect previous hash values, we'll take it.
+          return 0;
+        }
+    }
 
   for (List_Node *ptr = this->key_list.head;
        ptr != curr;
        ptr = ptr->next)
-    this->hash (ptr);
+    {
+      this->hash (ptr);
+    }
 
   this->hash (curr);
 
   if (option[DEBUGGING])
-    ACE_DEBUG ((LM_DEBUG,
-                "** collision not resolved after %d iterations, %d duplicates remain, continuing...\n",
-               !option[FAST] ? option.asso_max () : option.iterations () ? option.iterations () : this->key_list.keyword_list_length (),
-                fewest_collisions + this->key_list.total_duplicates));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "** collision not resolved after %d iterations, %d duplicates remain, continuing...\n",
+                  !option[FAST] ? option.asso_max () : option.iterations () ? option.iterations () : this->key_list.keyword_list_length (),
+                  fewest_collisions + this->key_list.total_duplicates));
+    }
   return 0;
 }
 
@@ -270,7 +286,9 @@ Gen_Perf::open ()
       asso_value_max *= non_linked_length;
     }
   else // if (asso_value_max < 0)
-    asso_value_max = non_linked_length / -asso_value_max;
+    {
+      asso_value_max = non_linked_length / -asso_value_max;
+    }
 
   option.asso_max (ACE_POW (asso_value_max));
 
@@ -314,15 +332,17 @@ Gen_Perf::open ()
   Options::print_options ();
 
   if (option[DEBUGGING])
-    ACE_DEBUG ((LM_DEBUG,
-                "total non-linked keys = %d\n"
-                "total duplicates = %d\n"
-                "maximum associated value is %d\n"
-                "maximum size of generated hash table is %d\n",
-                non_linked_length,
-                this->key_list.total_duplicates,
-                asso_value_max,
-                max_hash_value));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "total non-linked keys = %d\n"
+                  "total duplicates = %d\n"
+                  "maximum associated value is %d\n"
+                  "maximum size of generated hash table is %d\n",
+                  non_linked_length,
+                  this->key_list.total_duplicates,
+                  asso_value_max,
+                  max_hash_value));
+    }
   if (this->char_search.open (max_hash_value + 1) == -1)
     {
       return -1;
@@ -385,14 +405,16 @@ Gen_Perf::compute_perfect_hash ()
       for (List_Node *ptr = this->key_list.head;
            ptr != curr;
            ptr = ptr->next)
-        if (ptr->hash_value == curr->hash_value)
-          {
-            if (this->change (ptr, curr) == -1)
-              {
-                return -1;
-              }
-            break;
-          }
+        {
+          if (ptr->hash_value == curr->hash_value)
+            {
+              if (this->change (ptr, curr) == -1)
+                {
+                  return -1;
+                }
+              break;
+            }
+        }
       ++num_done;
     }
 
@@ -484,13 +506,17 @@ Gen_Perf::~Gen_Perf ()
       ACE_DEBUG ((LM_DEBUG,
                   "\ndumping occurrence and associated values tables\n"));
       for (int i = 0; i < ACE_STANDARD_CHARACTER_SET_SIZE; ++i)
-        if (Vectors::occurrences[i])
-          ACE_DEBUG ((LM_DEBUG,
-                      "Vectors::asso_values[%c] = %6d, Vectors::occurrences[%c] = %6d\n",
-                      i,
-                      Vectors::asso_values[i],
-                      i,
-                      Vectors::occurrences[i]));
+        {
+          if (Vectors::occurrences[i])
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "Vectors::asso_values[%c] = %6d, Vectors::occurrences[%c] = %6d\n",
+                          i,
+                          Vectors::asso_values[i],
+                          i,
+                          Vectors::occurrences[i]));
+            }
+        }
       ACE_DEBUG ((LM_DEBUG,
                   "end table dumping\n"));
     }
