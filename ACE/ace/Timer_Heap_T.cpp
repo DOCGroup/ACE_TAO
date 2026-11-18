@@ -376,7 +376,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::dump () const
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nmax_size_ = %B"), this->max_size_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\ncur_size_ = %B"), this->cur_size_));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\ncur_limbo_= %d"), this->cur_limbo_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\ncur_limbo_= %B"), this->cur_limbo_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nids_curr_ = %d"),
               this->timer_ids_curr_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nmin_free_ = %d"),
