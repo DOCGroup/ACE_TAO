@@ -328,7 +328,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   // Map fields to private data (if optimizing).
   if (node->opt_accessor ())
     {
-      if (node->has_concrete_factory ())
+      if (node->generates_obv_copy_value ())
         {
           *os << "friend class " << node->local_name () << "_init;" << be_nl;
         }
