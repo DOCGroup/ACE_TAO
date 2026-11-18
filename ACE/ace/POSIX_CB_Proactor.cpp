@@ -123,11 +123,12 @@ ACE_POSIX_CB_Proactor::handle_events_i (u_long milli_seconds)
       int const lerror = errno;
       if (lerror != ETIME &&   // timeout
           lerror != EINTR )    // interrupted system call
-        ACELIB_ERROR ((LM_ERROR,
-                    ACE_TEXT("%N:%l:(%P | %t)::%p\n"),
-                    ACE_TEXT("ACE_POSIX_CB_Proactor::handle_events:")
-                    ACE_TEXT("semaphore acquire failed")
-                  ));
+        {
+          ACELIB_ERROR ((LM_ERROR,
+                         ACE_TEXT ("%N:%l:(%P | %t)::%p\n"),
+                         ACE_TEXT ("ACE_POSIX_CB_Proactor::handle_events:")
+                         ACE_TEXT ("semaphore acquire failed")));
+        }
     }
 
   size_t index = 0;          // start index to scan aiocb list

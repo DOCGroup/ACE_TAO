@@ -62,9 +62,11 @@ ACE_LSOCK_Dgram::ACE_LSOCK_Dgram (const ACE_Addr &local,
   if (this->open (local,
                   protocol_family,
                   protocol) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_LSOCK_Dgram")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_LSOCK_Dgram")));
+    }
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
