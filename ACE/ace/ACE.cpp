@@ -78,11 +78,13 @@ ACE::out_of_handles (int error)
       error == EBADF ||
 #endif /* ACE_WIN32 */
       error == ENFILE)
-    return 1;
+    {
+      return 1;
+    }
   else
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
 }
 
 u_int
@@ -256,13 +258,17 @@ ACE::process_active (pid_t pid)
 {
 #if !defined(ACE_WIN32)
   if (ACE_OS::kill (pid, 0) == 0)
-    return 1;
+    {
+      return 1;
+    }
   else if (errno == ESRCH)
-    return 0;
+    {
+      return 0;
+    }
   else
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 #else
   // Create a handle for the given process id.
   ACE_HANDLE process_handle =
@@ -408,11 +414,13 @@ ACE::basename (const ACE_TCHAR *pathname, ACE_TCHAR delim)
   const ACE_TCHAR *temp = ACE_OS::strrchr (pathname, delim);
 
   if (temp == nullptr)
-    return pathname;
+    {
+      return pathname;
+    }
   else
-  {
-    return temp + 1;
-  }
+    {
+      return temp + 1;
+    }
 }
 
 const ACE_TCHAR *
@@ -455,12 +463,16 @@ ACE::recv (ACE_HANDLE handle,
            const ACE_Time_Value *timeout)
 {
   if (timeout == nullptr)
-    return ACE_OS::recv (handle, (char *) buf, len, flags);
+    {
+      return ACE_OS::recv (handle, (char *) buf, len, flags);
+    }
   else
     {
       int val = 0;
       if (ACE::enter_recv_timedwait (handle, timeout, val) ==-1)
-        return -1;
+        {
+          return -1;
+        }
       else
         {
           ssize_t bytes_transferred =
@@ -506,12 +518,16 @@ ACE::recv (ACE_HANDLE handle,
            const ACE_Time_Value *timeout)
 {
   if (timeout == nullptr)
-    return ACE::recv_i (handle, buf, n);
+    {
+      return ACE::recv_i (handle, buf, n);
+    }
   else
     {
       int val = 0;
       if (ACE::enter_recv_timedwait (handle, timeout, val) == -1)
-        return -1;
+        {
+          return -1;
+        }
       else
         {
           ssize_t bytes_transferred = ACE::recv_i (handle, buf, n);
@@ -528,12 +544,16 @@ ACE::recvmsg (ACE_HANDLE handle,
               const ACE_Time_Value *timeout)
 {
   if (timeout == nullptr)
-    return ACE_OS::recvmsg (handle, msg, flags);
+    {
+      return ACE_OS::recvmsg (handle, msg, flags);
+    }
   else
     {
       int val = 0;
       if (ACE::enter_recv_timedwait (handle, timeout, val) == -1)
-        return -1;
+        {
+          return -1;
+        }
       else
         {
           ssize_t bytes_transferred = ACE_OS::recvmsg (handle, msg, flags);
@@ -553,12 +573,16 @@ ACE::recvfrom (ACE_HANDLE handle,
                const ACE_Time_Value *timeout)
 {
   if (timeout == nullptr)
-    return ACE_OS::recvfrom (handle, buf, len, flags, addr, addrlen);
+    {
+      return ACE_OS::recvfrom (handle, buf, len, flags, addr, addrlen);
+    }
   else
     {
       int val = 0;
       if (ACE::enter_recv_timedwait (handle, timeout, val) == -1)
-        return -1;
+        {
+          return -1;
+        }
       else
         {
           ssize_t bytes_transferred =
@@ -682,11 +706,13 @@ ACE::recv_n_i (ACE_HANDLE handle,
   ACE::restore_non_blocking_mode (handle, val);
 
   if (error)
-    return result;
+    {
+      return result;
+    }
   else
-  {
-    return static_cast<ssize_t> (bytes_transferred);
-  }
+    {
+      return static_cast<ssize_t> (bytes_transferred);
+    }
 }
 
 #if defined (ACE_HAS_TLI)
@@ -917,11 +943,13 @@ ACE::recv_n_i (ACE_HANDLE handle,
   ACE::restore_non_blocking_mode (handle, val);
 
   if (error)
-    return result;
+    {
+      return result;
+    }
   else
-  {
-    return static_cast<ssize_t> (bytes_transferred);
-  }
+    {
+      return static_cast<ssize_t> (bytes_transferred);
+    }
 }
 
 // This is basically an interface to ACE_OS::readv, that doesn't use
@@ -979,12 +1007,16 @@ ACE::recvv (ACE_HANDLE handle,
             const ACE_Time_Value *timeout)
 {
   if (timeout == nullptr)
-    return ACE_OS::recvv (handle, iov, iovcnt);
+    {
+      return ACE_OS::recvv (handle, iov, iovcnt);
+    }
   else
     {
       int val = 0;
       if (ACE::enter_recv_timedwait (handle, timeout, val) == -1)
-        return -1;
+        {
+          return -1;
+        }
       else
         {
           ssize_t bytes_transferred = ACE_OS::recvv (handle, iov, iovcnt);
@@ -1039,7 +1071,9 @@ ACE::recvv_n_i (ACE_HANDLE handle,
            s < iovcnt
              && n >= static_cast<ssize_t> (iov[s].iov_len);
            ++s)
-        n -= iov[s].iov_len;
+        {
+          n -= iov[s].iov_len;
+        }
 
       if (n != 0)
         {
@@ -1105,7 +1139,9 @@ ACE::recvv_n_i (ACE_HANDLE handle,
            s < iovcnt
              && n >= static_cast<ssize_t> (iov[s].iov_len);
            ++s)
-        n -= iov[s].iov_len;
+        {
+          n -= iov[s].iov_len;
+        }
 
       if (n != 0)
         {
@@ -1238,12 +1274,16 @@ ACE::send (ACE_HANDLE handle,
            const ACE_Time_Value *timeout)
 {
   if (timeout == nullptr)
-    return ACE_OS::send (handle, (const char *) buf, n, flags);
+    {
+      return ACE_OS::send (handle, (const char *) buf, n, flags);
+    }
   else
     {
       int val = 0;
       if (ACE::enter_send_timedwait (handle, timeout, val) == -1)
-        return -1;
+        {
+          return -1;
+        }
       else
         {
           ssize_t const bytes_transferred =
@@ -1289,12 +1329,16 @@ ACE::send (ACE_HANDLE handle,
            const ACE_Time_Value *timeout)
 {
   if (timeout == nullptr)
-    return ACE::send_i (handle, buf, n);
+    {
+      return ACE::send_i (handle, buf, n);
+    }
   else
     {
       int val = 0;
       if (ACE::enter_send_timedwait (handle, timeout, val) == -1)
-        return -1;
+        {
+          return -1;
+        }
       else
         {
           ssize_t const bytes_transferred = ACE::send_i (handle, buf, n);
@@ -1311,12 +1355,16 @@ ACE::sendmsg (ACE_HANDLE handle,
               const ACE_Time_Value *timeout)
 {
   if (timeout == nullptr)
-    return ACE_OS::sendmsg (handle, msg, flags);
+    {
+      return ACE_OS::sendmsg (handle, msg, flags);
+    }
   else
     {
       int val = 0;
       if (ACE::enter_send_timedwait (handle, timeout, val) == -1)
-        return -1;
+        {
+          return -1;
+        }
       else
         {
           ssize_t const bytes_transferred =
@@ -1337,12 +1385,16 @@ ACE::sendto (ACE_HANDLE handle,
              const ACE_Time_Value *timeout)
 {
   if (timeout == nullptr)
-    return ACE_OS::sendto (handle, buf, len, flags, addr, addrlen);
+    {
+      return ACE_OS::sendto (handle, buf, len, flags, addr, addrlen);
+    }
   else
     {
       int val = 0;
       if (ACE::enter_send_timedwait (handle, timeout, val) == -1)
-        return -1;
+        {
+          return -1;
+        }
       else
         {
           ssize_t const bytes_transferred =
@@ -1770,12 +1822,16 @@ ACE::sendv (ACE_HANDLE handle,
             const ACE_Time_Value *timeout)
 {
   if (timeout == nullptr)
-    return ACE_OS::sendv (handle, iov, iovcnt);
+    {
+      return ACE_OS::sendv (handle, iov, iovcnt);
+    }
   else
     {
       int val = 0;
       if (ACE::enter_send_timedwait (handle, timeout, val) == -1)
-        return -1;
+        {
+          return -1;
+        }
       else
         {
           ssize_t bytes_transferred = ACE_OS::sendv (handle, iov, iovcnt);
@@ -1835,7 +1891,9 @@ ACE::sendv_n_i (ACE_HANDLE handle,
            s < iovcnt
              && n >= static_cast<ssize_t> (iov[s].iov_len);
            ++s)
-        n -= iov[s].iov_len;
+        {
+          n -= iov[s].iov_len;
+        }
 
       if (n != 0)
         {
@@ -1907,7 +1965,9 @@ ACE::sendv_n_i (ACE_HANDLE handle,
            s < iovcnt
              && n >= static_cast<ssize_t> (iov[s].iov_len);
            ++s)
-        n -= iov[s].iov_len;
+        {
+          n -= iov[s].iov_len;
+        }
 
       if (n != 0)
         {
@@ -2158,7 +2218,9 @@ ACE::readv_n (ACE_HANDLE handle,
            s < iovcnt
              && n >= static_cast<ssize_t> (iov[s].iov_len);
            ++s)
-        n -= iov[s].iov_len;
+        {
+          n -= iov[s].iov_len;
+        }
 
       if (n != 0)
         {
@@ -2201,7 +2263,9 @@ ACE::writev_n (ACE_HANDLE handle,
            s < iovcnt
              && n >= static_cast<ssize_t> (iov[s].iov_len);
            ++s)
-        n -= iov[s].iov_len;
+        {
+          n -= iov[s].iov_len;
+        }
 
       if (n != 0)
         {
@@ -2311,9 +2375,11 @@ ACE::record_and_set_non_blocking_mode (ACE_HANDLE handle, int &val)
   val = ACE::get_flags (handle);
 
   if (ACE_BIT_DISABLED (val, ACE_NONBLOCK))
-    // Set the handle into non-blocking mode if it's not already in
-    // it.
-    ACE::set_flags (handle, ACE_NONBLOCK);
+    {
+      // Set the handle into non-blocking mode if it's not already in
+      // it.
+      ACE::set_flags (handle, ACE_NONBLOCK);
+    }
 }
 
 void
@@ -2384,7 +2450,9 @@ ACE::format_hexdump (const char *buffer,
                        textver);
 
       while (*obuf != '\0')
-        ++obuf;
+        {
+          ++obuf;
+        }
     }
 
   if (size % bytes_per_line)
@@ -2601,11 +2669,13 @@ ACE::handle_timed_complete (ACE_HANDLE h,
     }
 #else
   if (is_tli)
+    {
 # if defined (ACE_HAS_POLL)
-    need_to_check = (fds.revents & POLLIN) && !(fds.revents & POLLOUT);
+      need_to_check = (fds.revents & POLLIN) && !(fds.revents & POLLOUT);
 # else
-    need_to_check = rd_handles.is_set (h) && !wr_handles.is_set (h);
+      need_to_check = rd_handles.is_set (h) && !wr_handles.is_set (h);
 # endif /* ACE_HAS_POLL */
+    }
 
   else
 # if defined (ACE_HAS_POLL)
@@ -2617,7 +2687,9 @@ ACE::handle_timed_complete (ACE_HANDLE h,
       known_failure = (fds.revents & POLLERR);
     }
 # else
-    need_to_check = true;
+    {
+      need_to_check = true;
+    }
 # endif /* ACE_HAS_POLL */
 #endif /* ACE_WIN32 */
 
@@ -2717,19 +2789,23 @@ ACE::handle_timed_accept (ACE_HANDLE listener,
         {
         case -1:
           if (errno == EINTR && restart)
-            continue;
+            {
+              continue;
+            }
           else
-          {
-            return -1;
-          }
+            {
+              return -1;
+            }
           /* NOTREACHED */
         case 0:
           if (timeout != nullptr && *timeout == ACE_Time_Value::zero)
-            errno = EWOULDBLOCK;
+            {
+              errno = EWOULDBLOCK;
+            }
           else
-          {
-            errno = ETIMEDOUT;
-          }
+            {
+              errno = ETIMEDOUT;
+            }
           return -1;
           /* NOTREACHED */
         case 1:
@@ -2755,9 +2831,13 @@ ACE::daemonize (const ACE_TCHAR pathname[],
   pid_t pid = ACE_OS::fork ();
 
   if (pid == -1)
-    return -1;
+    {
+      return -1;
+    }
   else if (pid != 0)
-    ACE_OS::exit (0); // Parent exits.
+    {
+      ACE_OS::exit (0); // Parent exits.
+    }
 
   // 1st child continues.
   ACE_OS::setsid (); // Become session leader.
@@ -2767,15 +2847,17 @@ ACE::daemonize (const ACE_TCHAR pathname[],
   pid = ACE_OS::fork (program_name);
 
   if (pid != 0)
-  {
-    ACE_OS::exit (0); // First child terminates.
-  }
+    {
+      ACE_OS::exit (0); // First child terminates.
+    }
 
   // Second child continues.
 
   if (pathname != nullptr)
-    // change working directory.
-    ACE_OS::chdir (pathname);
+    {
+      // change working directory.
+      ACE_OS::chdir (pathname);
+    }
 
   ACE_OS::umask (0); // clear our file mode creation mask.
 
@@ -2783,7 +2865,9 @@ ACE::daemonize (const ACE_TCHAR pathname[],
   if (close_all_handles)
     {
       for (int i = ACE::max_handles () - 1; i >= 0; --i)
-        ACE_OS::close (i);
+        {
+          ACE_OS::close (i);
+        }
 
       int fd = ACE_OS::open ("/dev/null", O_RDWR, 0);
       if (fd != -1)
@@ -2793,9 +2877,9 @@ ACE::daemonize (const ACE_TCHAR pathname[],
           ACE_OS::dup2 (fd, ACE_STDERR);
 
           if (fd > ACE_STDERR)
-          {
-            ACE_OS::close (fd);
-          }
+            {
+              ACE_OS::close (fd);
+            }
         }
     }
 
@@ -2814,7 +2898,9 @@ ACE::fork (const ACE_TCHAR *program_name,
            int avoid_zombies)
 {
   if (avoid_zombies == 0)
-    return ACE_OS::fork (program_name);
+    {
+      return ACE_OS::fork (program_name);
+    }
   else
     {
       // This algorithm is adapted from an example in the Stevens book
@@ -2845,24 +2931,28 @@ ACE::fork (const ACE_TCHAR *program_name,
       // Parent process waits for child to terminate.
       ACE_exitcode status;
       if (pid < 0 || ACE_OS::waitpid (pid, &status, 0) < 0)
-      {
-        return -1;
-      }
+        {
+          return -1;
+        }
 
       // child terminated by calling exit()?
       if (WIFEXITED ((status)))
         {
           // child terminated normally?
           if (WEXITSTATUS ((status)) == 0)
-            return 1;
+            {
+              return 1;
+            }
           else
-          {
-            errno = WEXITSTATUS ((status));
-          }
+            {
+              errno = WEXITSTATUS ((status));
+            }
         }
       else
-        // child didn't call exit(); perhaps it received a signal?
-        errno = EINTR;
+        {
+          // child didn't call exit(); perhaps it received a signal?
+          errno = EINTR;
+        }
 
       return -1;
     }
@@ -3028,13 +3118,17 @@ ACE::is_prime (const u_long n,
                const u_long max_factor)
 {
   if (n > 3)
-    for (u_long factor = min_factor;
-         factor <= max_factor;
-         ++factor)
-      if (n / factor * factor == n)
+    {
+      for (u_long factor = min_factor;
+           factor <= max_factor;
+           ++factor)
       {
-        return factor;
+        if (n / factor * factor == n)
+          {
+            return factor;
+          }
       }
+    }
 
   return 0;
 }
@@ -3264,7 +3358,9 @@ ACE::strndup (const char *str, size_t n)
   for (len = 0;
        len < n && *t++ != '\0';
        ++len)
-    continue;
+    {
+      continue;
+    }
 
   char *s;
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -3292,7 +3388,9 @@ ACE::strndup (const wchar_t *str, size_t n)
   for (len = 0;
        len < n && *t++ != '\0';
        ++len)
-    continue;
+    {
+      continue;
+    }
 
   size_t const size = (len + 1) * sizeof (wchar_t);
   wchar_t *s {};
@@ -3322,7 +3420,9 @@ ACE::strnnew (const char *str, size_t n)
   for (len = 0;
        len < n && *t++ != L'\0';
        ++len)
-    continue;
+    {
+      continue;
+    }
 
   char *s;
 
@@ -3352,7 +3452,9 @@ ACE::strnnew (const wchar_t *str, size_t n)
   for (len = 0;
        len < n && *t++ != ACE_TEXT_WIDE ('\0');
        ++len)
-    continue;
+    {
+      continue;
+    }
 
   wchar_t *s;
   ACE_NEW_RETURN (s,
@@ -3366,7 +3468,9 @@ const char *
 ACE::strend (const char *s)
 {
   while (*s++ != '\0')
-    continue;
+    {
+      continue;
+    }
 
   return s;
 }
@@ -3376,7 +3480,9 @@ const wchar_t *
 ACE::strend (const wchar_t *s)
 {
   while (*s++ != ACE_TEXT_WIDE ('\0'))
-    continue;
+    {
+      continue;
+    }
 
   return s;
 }
@@ -3515,7 +3621,9 @@ ACE::wild_match(const char *str, const char *pat, bool case_sensitive,
           while (*++pat == '*') {}
 
           if (*pat == '\0')
-            return true;
+            {
+              return true;
+            }
           p = pat;
         }
       else if (!escape && *p == '?')
