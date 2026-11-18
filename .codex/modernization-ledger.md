@@ -13279,3 +13279,9 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Added Allman braces around fourteen accept, bind, return, and logging bodies in `ACE/ace/SOCK_Acceptor.cpp`.
 - Focused `clang-tidy -checks=-*,readability-braces-around-statements` and `git diff --check` passed. The broader ACE core audit remains open.
 - No build or runtime test was run.
+
+## 2026-11-18 ACE socket I/O braces
+
+- Added Allman braces to six branches in `ACE/ace/SOCK_CODgram.cpp`, `SOCK_IO.cpp`, and `SOCK_Dgram_Mcast.cpp`.
+- Focused `clang-tidy -checks=-*,readability-braces-around-statements` and `git diff --check` passed. The broader ACE core audit remains open.
+- No build or runtime test was run.
