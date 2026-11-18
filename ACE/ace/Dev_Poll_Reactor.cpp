@@ -247,22 +247,26 @@ ACE_Dev_Poll_Reactor_Notify::read_notify_pipe (ACE_HANDLE handle,
                                                           next);
 
       if (result <= 0)   // Nothing dequeued or error
-        return result;
+        {
+          return result;
+        }
 
       // If it's just a wake-up, toss it and see if there's anything else.
       if (buffer.eh_ != nullptr)
-      {
-        break;
-      }
+        {
+          break;
+        }
     }
 
   // If there are more messages, ensure there's a byte in the pipe
   // in case the notification limit stops dequeuing notifies before
   // emptying the queue.
   if (more_messages_queued)
-    (void) ACE::send (this->notification_pipe_.write_handle (),
-                      (char *)&next,
-                      1); /* one byte is enough */
+    {
+      (void) ACE::send (this->notification_pipe_.write_handle (),
+                        (char *)&next,
+                        1); /* one byte is enough */
+    }
   return 1;
 #else
   to_read = sizeof buffer;
@@ -462,7 +466,9 @@ ACE_Dev_Poll_Reactor::Handler_Repository::handle_in_range (
   ACE_TRACE ("ACE_Dev_Poll_Reactor::Handler_Repository::handle_in_range");
 
   if (handle >= 0 && handle < this->max_size_)
-    return true;
+    {
+      return true;
+    }
   else
     {
       errno = ERANGE;
@@ -644,11 +650,13 @@ ACE_Dev_Poll_Reactor::ACE_Dev_Poll_Reactor (ACE_Sig_Handler *sh,
                   tq,
                   disable_notify_pipe,
                   notify) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Dev_Poll_Reactor::open ")
-                ACE_TEXT ("failed inside ")
-                ACE_TEXT ("ACE_Dev_Poll_Reactor::CTOR")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_Dev_Poll_Reactor::open ")
+                     ACE_TEXT ("failed inside ")
+                     ACE_TEXT ("ACE_Dev_Poll_Reactor::CTOR")));
+    }
 }
 
 ACE_Dev_Poll_Reactor::ACE_Dev_Poll_Reactor (size_t size,
@@ -685,10 +693,12 @@ ACE_Dev_Poll_Reactor::ACE_Dev_Poll_Reactor (size_t size,
                   tq,
                   disable_notify_pipe,
                   notify) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Dev_Poll_Reactor::open ")
-                ACE_TEXT ("failed inside ACE_Dev_Poll_Reactor::CTOR")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_Dev_Poll_Reactor::open ")
+                     ACE_TEXT ("failed inside ACE_Dev_Poll_Reactor::CTOR")));
+    }
 }
 
 ACE_Dev_Poll_Reactor::~ACE_Dev_Poll_Reactor ()
@@ -736,11 +746,13 @@ ACE_Dev_Poll_Reactor::open (size_t size,
                       -1);
 
       if (this->signal_handler_ == nullptr)
-        result = -1;
+        {
+          result = -1;
+        }
       else
-      {
-        this->delete_signal_handler_ = true;
-      }
+        {
+          this->delete_signal_handler_ = true;
+        }
     }
 
   // Allows the timer queue to be overridden.
@@ -751,11 +763,13 @@ ACE_Dev_Poll_Reactor::open (size_t size,
                       -1);
 
       if (this->timer_queue_ == nullptr)
-        result = -1;
+        {
+          result = -1;
+        }
       else
-      {
-        this->delete_timer_queue_ = true;
-      }
+        {
+          this->delete_timer_queue_ = true;
+        }
     }
 
   // Allows the Notify_Handler to be overridden.
@@ -766,11 +780,13 @@ ACE_Dev_Poll_Reactor::open (size_t size,
                       -1);
 
       if (this->notify_handler_ == nullptr)
-        result = -1;
+        {
+          result = -1;
+        }
       else
-      {
-        this->delete_notify_handler_ = true;
-      }
+        {
+          this->delete_notify_handler_ = true;
+        }
     }
 
 #if defined (ACE_HAS_EVENT_POLL)
@@ -798,7 +814,9 @@ ACE_Dev_Poll_Reactor::open (size_t size,
 #endif  /* ACE_HAS_EVENT_POLL */
 
   if (result != -1 && this->handler_rep_.open (size) == -1)
-    result = -1;
+    {
+      result = -1;
+    }
 
   // Registration of the notification handler must be done after the
   // /dev/poll device has been fully initialized.
@@ -810,14 +828,20 @@ ACE_Dev_Poll_Reactor::open (size_t size,
                                             this->notify_handler_->notify_handle (),
                                             this->notify_handler_,
                                             ACE_Event_Handler::READ_MASK) == -1))
-    result = -1;
+    {
+      result = -1;
+    }
 
   if (result != -1)
-    // We're all set to go.
-    this->initialized_ = true;
+    {
+      // We're all set to go.
+      this->initialized_ = true;
+    }
   else
-    // This will close down all the allocated resources properly.
-    (void) this->close ();
+    {
+      // This will close down all the allocated resources properly.
+      (void) this->close ();
+    }
 
   return result;
 }
@@ -832,9 +856,9 @@ int
 ACE_Dev_Poll_Reactor::set_sig_handler (ACE_Sig_Handler *signal_handler)
 {
   if (this->delete_signal_handler_)
-  {
-    delete this->signal_handler_;
-  }
+    {
+      delete this->signal_handler_;
+    }
 
   this->signal_handler_ = signal_handler;
   this->delete_signal_handler_ = false;
@@ -846,9 +870,13 @@ int
 ACE_Dev_Poll_Reactor::timer_queue (ACE_Timer_Queue *tq)
 {
   if (this->delete_timer_queue_)
-    delete this->timer_queue_;
+    {
+      delete this->timer_queue_;
+    }
   else if (this->timer_queue_)
-    this->timer_queue_->close ();
+    {
+      this->timer_queue_->close ();
+    }
 
   this->timer_queue_ = tq;
   this->delete_timer_queue_ = false;
@@ -972,8 +1000,10 @@ ACE_Dev_Poll_Reactor::work_pending_i (ACE_Time_Value * max_wait_time)
 #else
   if (this->start_pfds_ != this->end_pfds_)
 #endif /* ACE_HAS_EVENT_POLL */
-    return 1;  // We still have work_pending (). Do not poll for
-               // additional events.
+    {
+      return 1;  // We still have work_pending (). Do not poll for
+                 // additional events.
+    }
 
   ACE_Time_Value timer_buf (0);
   ACE_Time_Value *this_timeout =
@@ -1079,7 +1109,9 @@ ACE_Dev_Poll_Reactor::handle_events_i (ACE_Time_Value *max_wait_time,
   while (result == -1 && this->restart_ != 0 && errno == EINTR);
 
   if (result == 0 || (result == -1 && errno == ETIME))
-    return 0;
+    {
+      return 0;
+    }
   else if (result == -1)
     {
       if (errno != EINTR)
@@ -1237,7 +1269,9 @@ ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
         ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, grd, this->repo_lock_, -1);
         info = this->handler_rep_.find (handle);
         if (info == nullptr)   // No registered handler any longer
-          return 0;
+          {
+            return 0;
+          }
 
         // It is possible another thread has changed (and possibly re-armed)
         // this handle mask before current thread obtained the repo lock.
@@ -1493,51 +1527,53 @@ ACE_Dev_Poll_Reactor::register_handler_i (ACE_HANDLE handle,
       return -1;
     }
 
- if (this->handler_rep_.find (handle) == nullptr)
-   {
-     // Handler not present in the repository.  Bind it.
-     if (this->handler_rep_.bind (handle, event_handler, mask) != 0)
-     {
-       return -1;
-     }
+  if (this->handler_rep_.find (handle) == nullptr)
+    {
+      // Handler not present in the repository.  Bind it.
+      if (this->handler_rep_.bind (handle, event_handler, mask) != 0)
+        {
+          return -1;
+        }
 
 #if defined (ACE_HAS_EVENT_POLL)
 
-     Event_Tuple *info = this->handler_rep_.find (handle);
+      Event_Tuple *info = this->handler_rep_.find (handle);
 
-     struct epoll_event epev;
-     std::memset (&epev, 0, sizeof (epev));
-     static constexpr int op = EPOLL_CTL_ADD;
+      struct epoll_event epev;
+      std::memset (&epev, 0, sizeof (epev));
+      static constexpr int op = EPOLL_CTL_ADD;
 
-     epev.data.fd = handle;
-     epev.events  = this->reactor_mask_to_poll_event (mask);
-     // All but the notify handler get registered with oneshot to facilitate
-     // auto suspend before the upcall. See dispatch_io_event for more
-     // information.
-     if (event_handler != this->notify_handler_)
-     {
-       epev.events |= EPOLLONESHOT;
-     }
+      epev.data.fd = handle;
+      epev.events  = this->reactor_mask_to_poll_event (mask);
+      // All but the notify handler get registered with oneshot to facilitate
+      // auto suspend before the upcall. See dispatch_io_event for more
+      // information.
+      if (event_handler != this->notify_handler_)
+        {
+          epev.events |= EPOLLONESHOT;
+        }
 
-     if (::epoll_ctl (this->poll_fd_, op, handle, &epev) == -1)
-       {
-         ACELIB_ERROR ((LM_ERROR, ACE_TEXT("%p\n"), ACE_TEXT("epoll_ctl")));
-         (void) this->handler_rep_.unbind (handle);
-         return -1;
-       }
-     info->controlled = true;
+      if (::epoll_ctl (this->poll_fd_, op, handle, &epev) == -1)
+        {
+          ACELIB_ERROR ((LM_ERROR, ACE_TEXT("%p\n"), ACE_TEXT("epoll_ctl")));
+          (void) this->handler_rep_.unbind (handle);
+          return -1;
+        }
+      info->controlled = true;
 
 #endif /* ACE_HAS_EVENT_POLL */
-   }
- else
-   {
-     // Handler is already present in the repository, so register it
-     // again, possibly for different event.  Add new mask to the
-     // current one.
-     if (this->mask_ops_i (handle, mask, ACE_Reactor::ADD_MASK) == -1)
-       ACELIB_ERROR_RETURN ((LM_ERROR, ACE_TEXT("%p\n"), ACE_TEXT("mask_ops_i")),
-                         -1);
-   }
+    }
+  else
+    {
+      // Handler is already present in the repository, so register it
+      // again, possibly for different event.  Add new mask to the
+      // current one.
+      if (this->mask_ops_i (handle, mask, ACE_Reactor::ADD_MASK) == -1)
+        {
+          ACELIB_ERROR_RETURN ((LM_ERROR, ACE_TEXT("%p\n"), ACE_TEXT("mask_ops_i")),
+                               -1);
+        }
+    }
 
 #ifdef  ACE_HAS_DEV_POLL
 
@@ -1592,9 +1628,11 @@ ACE_Dev_Poll_Reactor::register_handler (const ACE_Handle_Set &handle_set,
   for (ACE_HANDLE h = handle_iter ();
        h != ACE_INVALID_HANDLE;
        h = handle_iter ())
-    if (this->register_handler_i (h, event_handler, mask) == -1)
     {
-      return -1;
+      if (this->register_handler_i (h, event_handler, mask) == -1)
+        {
+          return -1;
+        }
     }
 
   return 0;
@@ -1628,12 +1666,14 @@ ACE_Dev_Poll_Reactor::register_handler (const ACE_Sig_Set &sigset,
 #if (ACE_NSIG > 0)
 
   for (int s = 1; s < ACE_NSIG; ++s)
-    if ((sigset.is_member (s) == 1)
-        && this->signal_handler_->register_handler (s,
-                                                    new_sh,
-                                                    new_disp) == -1)
     {
-      result = -1;
+      if ((sigset.is_member (s) == 1)
+          && this->signal_handler_->register_handler (s,
+                                                      new_sh,
+                                                      new_disp) == -1)
+        {
+          result = -1;
+        }
     }
 
 #else  /* ACE_NSIG <= 0 */
@@ -1683,7 +1723,9 @@ ACE_Dev_Poll_Reactor::remove_handler_i (ACE_HANDLE handle,
   bool handle_reg_changed = true;
   Event_Tuple *info = this->handler_rep_.find (handle);
   if (info == nullptr && eh == nullptr)  // Nothing to work with
-    return -1;
+    {
+      return -1;
+    }
   if (info != nullptr && (eh == nullptr || info->event_handler == eh))
     {
       if (this->mask_ops_i (handle, mask, ACE_Reactor::CLR_MASK) == -1)
@@ -1761,10 +1803,12 @@ ACE_Dev_Poll_Reactor::remove_handler (const ACE_Sig_Set &sigset)
 #if (ACE_NSIG > 0)
 
   for (int s = 1; s < ACE_NSIG; ++s)
-    if ((sigset.is_member (s) == 1)
-        && this->signal_handler_->remove_handler (s) == -1)
     {
-      result = -1;
+      if ((sigset.is_member (s) == 1)
+          && this->signal_handler_->remove_handler (s) == -1)
+        {
+          result = -1;
+        }
     }
 
 #else  /* ACE_NSIG <= 0 */
@@ -1815,9 +1859,11 @@ ACE_Dev_Poll_Reactor::suspend_handler (const ACE_Handle_Set &handles)
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, grd, this->repo_lock_, -1));
 
   while ((h = handle_iter ()) != ACE_INVALID_HANDLE)
-    if (this->suspend_handler_i (h) == -1)
     {
-      return -1;
+      if (this->suspend_handler_i (h) == -1)
+        {
+          return -1;
+        }
     }
 
   return 0;
@@ -1936,9 +1982,11 @@ ACE_Dev_Poll_Reactor::resume_handler (const ACE_Handle_Set &handles)
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, grd, this->repo_lock_, -1));
 
   while ((h = handle_iter ()) != ACE_INVALID_HANDLE)
-    if (this->resume_handler_i (h) == -1)
     {
-      return -1;
+      if (this->resume_handler_i (h) == -1)
+        {
+          return -1;
+        }
     }
 
   return 0;
@@ -2055,11 +2103,13 @@ ACE_Dev_Poll_Reactor::schedule_timer (ACE_Event_Handler *event_handler,
   ACE_MT (ACE_GUARD_RETURN (ACE_Dev_Poll_Reactor_Token, mon, this->token_, -1));
 
   if (nullptr != this->timer_queue_)
-    return this->timer_queue_->schedule
-      (event_handler,
-       arg,
-       this->timer_queue_->gettimeofday () + delay,
-       interval);
+    {
+      return this->timer_queue_->schedule
+        (event_handler,
+         arg,
+         this->timer_queue_->gettimeofday () + delay,
+         interval);
+    }
 
   errno = ESHUTDOWN;
   return -1;
@@ -2091,11 +2141,13 @@ ACE_Dev_Poll_Reactor::cancel_timer (ACE_Event_Handler *handler,
   // Don't bother waking the poll - the worse that will happen is it will
   // wake up for a timer that doesn't exist then go back to waiting.
   if ((this->timer_queue_ != nullptr) && (handler != nullptr))
-    return this->timer_queue_->cancel (handler, dont_call_handle_close);
+    {
+      return this->timer_queue_->cancel (handler, dont_call_handle_close);
+    }
   else
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
 }
 
 int
@@ -2253,9 +2305,13 @@ ACE_Dev_Poll_Reactor::handler (int signum,
   ACE_Event_Handler *handler = this->signal_handler_->handler (signum);
 
   if (handler == nullptr)
-    return -1;
+    {
+      return -1;
+    }
   else if (eh != nullptr)
-    *eh = handler;
+    {
+      *eh = handler;
+    }
 
   return 0;
 }
@@ -2548,12 +2604,14 @@ ACE_Dev_Poll_Reactor::reactor_mask_to_poll_event (ACE_Reactor_Mask mask)
   ACE_TRACE ("ACE_Dev_Poll_Reactor::reactor_mask_to_poll_event");
 
   if (mask == ACE_Event_Handler::NULL_MASK)
-    // No event.  Remove from interest set.
+    {
+      // No event.  Remove from interest set.
 #if defined (ACE_HAS_EVENT_POLL)
-    return EPOLL_CTL_DEL;
+      return EPOLL_CTL_DEL;
 #else
-    return POLLREMOVE;
+      return POLLREMOVE;
 #endif /* ACE_HAS_EVENT_POLL */
+    }
 
   short events = 0;
 
@@ -2625,7 +2683,9 @@ ACE_Dev_Poll_Reactor::Token_Guard::acquire_quietly (ACE_Time_Value *max_wait)
   if (result == -1)
     {
       if (errno == ETIME)
-        return 0;
+        {
+          return 0;
+        }
       else
         {
           ACELIB_ERROR ((LM_ERROR, ACE_TEXT("%t: %p\n"), ACE_TEXT("token acquire_read")));
@@ -2663,11 +2723,13 @@ ACE_Dev_Poll_Reactor::Token_Guard::acquire (ACE_Time_Value *max_wait)
   if (result == -1)
     {
       if (errno == ETIME)
-        return 0;
+        {
+          return 0;
+        }
       else
-      {
-        return -1;
-      }
+        {
+          return -1;
+        }
     }
 
   // We got the token and so let us mark ourseleves as owner
