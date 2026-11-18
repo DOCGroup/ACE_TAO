@@ -60,13 +60,13 @@ test_transport_current (CORBA::ORB_ptr orb)
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Tester (%P|%t) Transport [%q] [%C:%d -> %C:%d] ")
-              ACE_TEXT ("Sent/Received [bytes=%q/%q, messages=%q/%q]\n"),
-              (ACE_UINT64)id,
+              ACE_TEXT ("Sent/Received [bytes=%Q/%Q, messages=%Q/%Q]\n"),
+              static_cast<ACE_INT64> (id),
               rhost.in (), tc->remote_port (),
               lhost.in (), tc->local_port (),
-              (ACE_UINT64)bs,
-              (ACE_UINT64)br,
-              (ACE_UINT64)rs,
-              (ACE_UINT64)rr));
+              static_cast<ACE_UINT64> (bs),
+              static_cast<ACE_UINT64> (br),
+              static_cast<ACE_UINT64> (rs),
+              static_cast<ACE_UINT64> (rr)));
   return 0;
 }
