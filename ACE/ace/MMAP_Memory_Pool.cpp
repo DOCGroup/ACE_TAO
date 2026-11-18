@@ -39,11 +39,13 @@ ACE_MMAP_Memory_Pool::release (int destroy)
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
   if (destroy)
-    this->mmap_.remove ();
+    {
+      this->mmap_.remove ();
+    }
   else
-  {
-    this->mmap_.close ();
-  }
+    {
+      this->mmap_.close ();
+    }
   return 0;
 }
 
@@ -184,29 +186,33 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (
 
       // If requested an unique filename, use mktemp to get a random file.
       if (options && options->unique_)
-#  if defined (ACE_DISABLE_MKTEMP)
         {
+#  if defined (ACE_DISABLE_MKTEMP)
           ACELIB_ERROR ((LM_ERROR,
                          ACE_TEXT ("mktemp disabled; ")
                          ACE_TEXT ("can't generate unique name")));
           this->backing_store_name_[0] = 0;
-        }
 #  else
-        ACE_OS::mktemp(this->backing_store_name_);
+          ACE_OS::mktemp(this->backing_store_name_);
 #  endif /* ACE_DISABLE_MKTEMP */
+        }
 #endif /* ACE_DEFAULT_BACKING_STORE */
     }
   else
-    ACE_OS::strsncpy (this->backing_store_name_,
-                      backing_store_name,
-                      (sizeof this->backing_store_name_ / sizeof (ACE_TCHAR)));
+    {
+      ACE_OS::strsncpy (this->backing_store_name_,
+                        backing_store_name,
+                        (sizeof this->backing_store_name_ / sizeof (ACE_TCHAR)));
+    }
 
 #if !defined (ACE_WIN32)
   if (this->install_signal_handler_)
     {
       if (this->signal_handler_.register_handler (SIGSEGV, this) == -1)
-        ACELIB_ERROR ((LM_ERROR,
-                    ACE_TEXT("%p\n"), this->backing_store_name_));
+        {
+          ACELIB_ERROR ((LM_ERROR,
+                         ACE_TEXT("%p\n"), this->backing_store_name_));
+        }
     }
 #endif /* ACE_WIN32 */
 }
@@ -227,12 +233,16 @@ ACE_MMAP_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
   size_t seek_len;
 
   if (this->write_each_page_)
-    // Write to the end of every block to ensure that we have enough
-    // space in the backing store.
-    seek_len = this->round_up (1); // round_up(1) is one page.
+    {
+      // Write to the end of every block to ensure that we have enough
+      // space in the backing store.
+      seek_len = this->round_up (1); // round_up(1) is one page.
+    }
   else
-    // We're willing to risk it all in the name of efficiency...
-    seek_len = rounded_bytes;
+    {
+      // We're willing to risk it all in the name of efficiency...
+      seek_len = rounded_bytes;
+    }
 
   // The following loop will execute multiple times (if
   // this->write_each_page == 1) or just once (if
@@ -252,10 +262,12 @@ ACE_MMAP_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
           || ACE_OS::write (this->mmap_.handle (),
                             "",
                             1) == -1)
-        ACELIB_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) %p\n"),
-                           this->backing_store_name_),
-                          -1);
+        {
+          ACELIB_ERROR_RETURN ((LM_ERROR,
+                                ACE_TEXT ("(%P|%t) %p\n"),
+                                this->backing_store_name_),
+                               -1);
+        }
     }
 
   // Increment by one to put us at the beginning of the next chunk...
@@ -341,9 +353,13 @@ ACE_MMAP_Memory_Pool::acquire (size_t nbytes,
 
   if (this->commit_backing_store_name (rounded_bytes,
                                        map_size) == -1)
-    return nullptr;
+    {
+      return nullptr;
+    }
   else if (this->map_file (map_size) == -1)
-    return nullptr;
+    {
+      return nullptr;
+    }
 
   // ACELIB_DEBUG ((LM_DEBUG, "(%P|%t) acquired more chunks, nbytes = %B,
   // rounded_bytes = %B, map_size = %B\n", nbytes, rounded_bytes,
@@ -397,10 +413,12 @@ ACE_MMAP_Memory_Pool::init_acquire (size_t nbytes,
                            this->base_addr_,
                            0,
                            this->sa_) == -1)
-        ACELIB_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("MMAP_Memory_Pool::init_acquire, EEXIST")),
-                          0);
+        {
+          ACELIB_ERROR_RETURN ((LM_ERROR,
+                                ACE_TEXT ("%p\n"),
+                                ACE_TEXT ("MMAP_Memory_Pool::init_acquire, EEXIST")),
+                               0);
+        }
       // After the first time, reset the flag so that subsequent calls
       // will use MAP_FIXED
       if (use_fixed_addr_ == ACE_MMAP_Memory_Pool_Options::FIRSTCALL_FIXED)
@@ -416,10 +434,12 @@ ACE_MMAP_Memory_Pool::init_acquire (size_t nbytes,
       return this->mmap_.addr ();
     }
   else
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("MMAP_Memory_Pool::init_acquire")),
-                      0);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("%p\n"),
+                            ACE_TEXT ("MMAP_Memory_Pool::init_acquire")),
+                           0);
+    }
 }
 
 #if defined (ACE_WIN32)
