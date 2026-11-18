@@ -34,9 +34,13 @@ ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::next ()
 {
   // Make sure that if we are at the end, we don't wrap around
   if (! this->isdone())
-    this->current_node_ = this->current_node_->get_next ();
+    {
+      this->current_node_ = this->current_node_->get_next ();
+    }
   if (this->current_node_  == this->list_.head_)
-    this->current_node_ = nullptr;
+    {
+      this->current_node_ = nullptr;
+    }
 }
 
 // Returns true when we are at <head_>
@@ -53,7 +57,9 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> ACE_T
 ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::item ()
 {
   if (! this->isdone())
-    return this->current_node_;
+    {
+      return this->current_node_;
+    }
   return nullptr;
 }
 
@@ -103,7 +109,9 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::earliest_time () const
   ACE_TRACE ("ACE_Timer_List_T::earliest_time");
   ACE_Timer_Node_T<TYPE> *const first = this->get_first_i();
   if (first != nullptr)
-    return first->get_timer_value ();
+    {
+      return first->get_timer_value ();
+    }
   return ACE_Time_Value::zero;
 }
 
@@ -232,7 +240,9 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::schedule_i (ACE_Timer_No
   // the timers will be scheduled later than existing timers.
   ACE_Timer_Node_T<TYPE>* p = this->head_->get_prev();
   while (p != this->head_ && p->get_timer_value() > expire)
-    p = p->get_prev();
+    {
+      p = p->get_prev();
+    }
 
   // insert after
   n->set_prev(p);
@@ -247,7 +257,9 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::find_node (long timer_id
 {
   ACE_Timer_Node_T<TYPE>* n = this->get_first_i();
   if (n == nullptr)
-    return nullptr;
+    {
+      return nullptr;
+    }
 
   for (; n != this->head_; n = n->get_next()) {
     if (n->get_timer_id() == timer_id) {
@@ -285,7 +297,9 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::cancel (long timer_id,
   if (n != nullptr)
     {
       if (act != nullptr)
-        *act = n->get_act ();
+        {
+          *act = n->get_act ();
+        }
 
       // Call the close hooks.
       int cookie = 0;
@@ -397,7 +411,9 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::get_first_i () const
   ACE_TRACE ("ACE_Timer_List_T::get_first_i");
   ACE_Timer_Node_T<TYPE> *const first = this->head_->get_next();
   if (first != this->head_) // Note : is_empty() uses get_first()
-    return first;
+    {
+      return first;
+    }
   return nullptr;
 }
 
