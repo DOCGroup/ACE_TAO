@@ -53,9 +53,11 @@ void
 ACE_Threading_Helper<ACE_Thread_Mutex>::set (void* p)
 {
   if (ACE_Thread::setspecific (key_, p) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-               ACE_TEXT ("(%P|%t) Service Config failed to set thread key value: %p\n"),
-               ACE_TEXT("")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("(%P|%t) Service Config failed to set thread key value: %p\n"),
+                     ACE_TEXT("")));
+    }
 }
 
 void*
@@ -63,10 +65,12 @@ ACE_Threading_Helper<ACE_Thread_Mutex>::get ()
 {
   void* temp {};
   if (ACE_Thread::getspecific (key_, &temp) == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Service Config failed to get thread key value: %p\n"),
-                       ACE_TEXT("")),
-                      0);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("(%P|%t) Service Config failed to get thread key value: %p\n"),
+                            ACE_TEXT("")),
+                           0);
+    }
   return temp;
 }
 
@@ -100,13 +104,15 @@ ACE_Service_Config_Guard::ACE_Service_Config_Guard (ACE_Service_Gestalt *psg)
   : saved_ (ACE_Service_Config::current ())
 {
   if (ACE::debug ())
-    ACELIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE (%P|%t) - SCG:<ctor=%@>")
-                ACE_TEXT (" - config=%@ repo=%@ superseded by repo=%@\n"),
-                this,
-                this->saved_.get (),
-                this->saved_->repo_,
-                psg->repo_));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("ACE (%P|%t) - SCG:<ctor=%@>")
+                     ACE_TEXT (" - config=%@ repo=%@ superseded by repo=%@\n"),
+                     this,
+                     this->saved_.get (),
+                     this->saved_->repo_,
+                     psg->repo_));
+    }
 
   // Modify the TSS if the repo has changed
   ACE_Service_Config::current (psg);
@@ -120,11 +126,13 @@ ACE_Service_Config_Guard::~ACE_Service_Config_Guard ()
   ACE_Service_Config::current (s);
 
   if (ACE::debug ())
-    ACELIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE (%P|%t) SCG:<dtor=%@>")
-                ACE_TEXT (" - new repo=%@\n"),
-                this,
-                this->saved_->repo_));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("ACE (%P|%t) SCG:<dtor=%@>")
+                     ACE_TEXT (" - new repo=%@\n"),
+                     this,
+                     this->saved_->repo_));
+    }
 }
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Service_Config)
@@ -174,34 +182,38 @@ ACE_Service_Config::parse_args_i (int argc, ACE_TCHAR *argv[])
   //FUZZ: disable check_for_lack_ACE_OS
   for (int c; (c = getopt ()) != -1; )
   //FUZZ: enable check_for_lack_ACE_OS
-    switch (c)
-      {
-      case 'p':
-        ACE_Service_Config::pid_file_name_ = getopt.opt_arg ();
-        break;
-      case 'b':
-        ACE_Service_Config::be_a_daemon_ = true;
-        break;
-      case 's':
+    {
+      switch (c)
         {
-          // There's no point in dealing with this on NT since it
-          // doesn't really support signals very well...
-#if !defined (ACE_LACKS_UNIX_SIGNALS)
-          ACE_Service_Config::signum_ =
-            ACE_OS::atoi (getopt.opt_arg ());
-
-          if (ACE_Reactor::instance ()->register_handler
-              (ACE_Service_Config::signum_,
-               ACE_Service_Config::signal_handler_) == -1)
-            ACELIB_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("cannot obtain signal handler\n")),
-                              -1);
-#endif /* ACE_LACKS_UNIX_SIGNALS */
+        case 'p':
+          ACE_Service_Config::pid_file_name_ = getopt.opt_arg ();
           break;
-        }
-      default:; // unknown arguments are benign
+        case 'b':
+          ACE_Service_Config::be_a_daemon_ = true;
+          break;
+        case 's':
+          {
+            // There's no point in dealing with this on NT since it
+            // doesn't really support signals very well...
+#if !defined (ACE_LACKS_UNIX_SIGNALS)
+            ACE_Service_Config::signum_ =
+              ACE_OS::atoi (getopt.opt_arg ());
 
-      }
+            if (ACE_Reactor::instance ()->register_handler
+                (ACE_Service_Config::signum_,
+                 ACE_Service_Config::signal_handler_) == -1)
+              {
+                ACELIB_ERROR_RETURN ((LM_ERROR,
+                                      ACE_TEXT ("cannot obtain signal handler\n")),
+                                     -1);
+              }
+#endif /* ACE_LACKS_UNIX_SIGNALS */
+            break;
+          }
+        default:; // unknown arguments are benign
+
+        }
+    }
 
   return 0;
 } /* parse_args_i () */
@@ -219,9 +231,11 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
   ACE_Log_Msg *log_msg = ACE_LOG_MSG;
 
   if (ACE::debug ())
-    ACELIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE (%P|%t) SC::open_i - this=%@, opened=%d\n"),
-                this, this->is_opened_));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("ACE (%P|%t) SC::open_i - this=%@, opened=%d\n"),
+                     this, this->is_opened_));
+    }
 
   // Guard against reentrant processing.
   if (this->is_opened_)
@@ -290,8 +304,10 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
   }
 
   if (ACE::debug ())
-    ACELIB_DEBUG ((LM_STARTUP,
-                ACE_TEXT ("starting up daemon %n\n")));
+    {
+      ACELIB_DEBUG ((LM_STARTUP,
+                     ACE_TEXT ("starting up daemon %n\n")));
+    }
 
   // Initialize the Service Repository (this will still work if
   // user forgets to define an object of type ACE_Service_Config).
@@ -313,8 +329,10 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
       if ((ACE_Reactor::instance () != nullptr) &&
           (ACE_Reactor::instance ()->register_handler
            (ss, ACE_Service_Config::signal_handler_) == -1))
-        ACELIB_ERROR ((LM_ERROR,
-                    ACE_TEXT ("can't register signal handler\n")));
+        {
+          ACELIB_ERROR ((LM_ERROR,
+                         ACE_TEXT ("can't register signal handler\n")));
+        }
     }
 #endif /* ACE_LACKS_UNIX_SIGNALS */
 
@@ -527,15 +545,19 @@ ACE_Service_Config::reconfigure ()
       time_t const t = ACE_OS::time (nullptr);
 
       if (ACE::debug ())
-        ACELIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("beginning reconfiguration at %s"),
-                    ACE_OS::ctime (&t)));
+        {
+          ACELIB_DEBUG ((LM_DEBUG,
+                         ACE_TEXT ("beginning reconfiguration at %s"),
+                         ACE_OS::ctime (&t)));
+        }
 #endif /* ! ACE_NLOGGING */
     }
   if (ACE_Service_Config::process_directives () == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("process_directives")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("process_directives")));
+    }
 }
 
 // Tidy up and perform last rites on a terminating ACE_Service_Config.
