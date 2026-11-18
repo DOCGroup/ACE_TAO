@@ -13345,3 +13345,9 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Added Allman braces around eight single-statement branches in `ACE/ace/Arg_Shifter.cpp`.
 - Focused `clang-tidy -checks=-*,readability-braces-around-statements` and `git diff --check` passed.
 - No build or runtime test was run.
+
+## 2026-11-18 ACE Array_Map braces
+
+- Added Allman braces around six single-statement branches in `ACE/ace/Array_Map.cpp`.
+- Focused `clang-tidy -checks=-*,readability-braces-around-statements` and `git diff --check` passed.
+- No build or runtime test was run.
