@@ -360,7 +360,7 @@ testArray_compressor (::Compression::Compressor_var const& compressor)
             }
         }
 
-        ACE_ERROR_RETURN((LM_INFO, ACE_TEXT("****---> END TESTArray - TestLoop %d ERROR!\n"),i), -1);
+        ACE_ERROR_RETURN((LM_INFO, ACE_TEXT("****---> END TESTArray - TestLoop %B ERROR!\n"),i), -1);
     }
 
     ACE_ERROR_RETURN((LM_INFO, ACE_TEXT("****---> END TESTArray - OK!\n")), 0);

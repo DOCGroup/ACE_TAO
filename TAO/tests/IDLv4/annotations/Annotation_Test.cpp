@@ -505,9 +505,9 @@ Annotation_Test::print_idl_with_line_numbers ()
       const std::string line = idl_.substr (start, end - start);
       const bool mark_line = line_number == marked_line;
       ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT ("%C%4u: %C%C\n"),
+        ACE_TEXT ("%C%4q: %C%C\n"),
         mark_line ? start_marker : " ",
-        line_number, line.c_str (),
+        static_cast<ssize_t> (line_number), line.c_str (),
         mark_line ? end_marker : ""));
       if (end == std::string::npos) {
         break;

@@ -65,7 +65,8 @@ ID_Check_i::check_servant_id (CORBA::Short index)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("check_servant_id: index = %B current objectid ")
               ACE_TEXT ("len %u octets: "),
-              index, oid->length ()));
+              object_index,
+              static_cast<unsigned int> (oid->length ())));
   for (size_t i = 0; i < oid->length () && i < 16; ++i)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("%02x "),
