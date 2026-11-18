@@ -36,7 +36,7 @@ run_duplicate_test (const size_t msg_block_count,
     {
       rc = mb_test->total_size();
       ACE_ERROR ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) %u top reference_count ()\n"),
+                  ACE_TEXT ("(%P|%t) %d top reference_count ()\n"),
                   mb_top->reference_count ()));
       ACE_ERROR ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) duplicated: %@ %B %B\n"),
@@ -47,7 +47,7 @@ run_duplicate_test (const size_t msg_block_count,
     }
 
     ACE_ERROR ((LM_DEBUG,
-                ACE_TEXT ("(%P|%t) %u top reference_count ()\n"),
+                ACE_TEXT ("(%P|%t) %d top reference_count ()\n"),
                 mb_top->reference_count ()));
 
     mb_top-> release ();
@@ -77,7 +77,7 @@ run_clone_test (const size_t msg_block_count,
     {
       rc = mb_test->total_size();
       ACE_ERROR ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) %u top reference_count ()\n"),
+                  ACE_TEXT ("(%P|%t) %d top reference_count ()\n"),
                   mb_top->reference_count ()));
       ACE_ERROR ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) cloned: %@ %B %B\n"),
@@ -88,7 +88,7 @@ run_clone_test (const size_t msg_block_count,
     }
 
     ACE_ERROR ((LM_DEBUG,
-                ACE_TEXT ("(%P|%t) %u top reference_count ()\n"),
+                ACE_TEXT ("(%P|%t) %d top reference_count ()\n"),
                 mb_top->reference_count ()));
 
     mb_top-> release();
