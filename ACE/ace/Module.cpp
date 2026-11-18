@@ -97,10 +97,14 @@ ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::open (ACE_TCHAR const *module_name,
 
   // We may already have readers and/or writers.
   if (this->reader ())
-    this->close_i (0, M_DELETE_READER);
+    {
+      this->close_i (0, M_DELETE_READER);
+    }
 
   if (this->writer ())
-    this->close_i (1, M_DELETE_WRITER);
+    {
+      this->close_i (1, M_DELETE_WRITER);
+    }
 
   if (writer_q == nullptr)
     {
@@ -151,11 +155,17 @@ ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::sibling (ACE_Task<ACE_SYNCH_USE, TIME_PO
 {
   ACE_TRACE ("ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::sibling");
   if (this->q_pair_[0] == orig)
-    return this->q_pair_[1];
+    {
+      return this->q_pair_[1];
+    }
   else if (this->q_pair_[1] == orig)
-    return this->q_pair_[0];
+    {
+      return this->q_pair_[0];
+    }
   else
-    return nullptr;
+    {
+      return nullptr;
+    }
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY>
@@ -173,7 +183,9 @@ ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::~ACE_Module ()
 
   // Only close down if we haven't already done so.
   if (this->reader () || this->writer ())
-    this->close ();
+    {
+      this->close ();
+    }
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY>
@@ -186,9 +198,11 @@ ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::ACE_Module (ACE_TCHAR const *module_name
   ACE_TRACE ("ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::ACE_Module");
 
   if (this->open (module_name, writer_q, reader_q, args, flags) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Module")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_Module")));
+    }
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> int
@@ -201,13 +215,19 @@ ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::close (int flags /* = M_DELETE_NONE */)
   // Only pay attention to the flags parameter if we haven't already
   // set the task delete policies.
   if (this->flags_ == M_FLAGS_NOT_SET)
-    ACE_SET_BITS (flags_, flags);
+    {
+      ACE_SET_BITS (flags_, flags);
+    }
 
   if (this->close_i (0, flags_) == -1)
-    result = -1;
+    {
+      result = -1;
+    }
 
   if (this->close_i (1, flags_) == -1)
-    result = -1;
+    {
+      result = -1;
+    }
 
   return result;
 }
@@ -219,7 +239,9 @@ ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::close_i (int which,
   ACE_TRACE ("ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::close_i");
 
   if (this->q_pair_[which] == nullptr)
-    return 0;
+    {
+      return 0;
+    }
 
   // Copy task pointer to prevent problems when ACE_Task::close
   // changes the task pointer
@@ -231,7 +253,9 @@ ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::close_i (int which,
   int result = 0;
 
   if (task->module_closed () == -1)
-    result = -1;
+    {
+      result = -1;
+    }
 
   task->flush ();
   task->next (nullptr);
