@@ -13018,6 +13018,12 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   integer promotion used by `ACE_OS::fprintf`. Both files pass syntax-only
   compilation with the project C++17 warning flags; `git diff --check` passes.
 
+## 2026-11-18 ACE thread test printf formats
+
+- Corrected the `%u` conversions in `Conn_Test.cpp` and the disabled
+  thread-name probe in `Thread_Manager_Test.cpp` to `%d`; both indices are
+  declared `int`. `git diff --check` passes.
+
 ## 2026-11-18 ACE core brace audit
 
 - Ran `clang-tidy`'s `readability-braces-around-statements` check over the
