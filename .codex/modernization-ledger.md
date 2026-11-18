@@ -13385,3 +13385,9 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Added Allman braces around six single-statement branches in `ACE/ace/MEM_Connector.cpp`; focused `clang-tidy -checks=-*,readability-braces-around-statements` and `git diff --check` passed.
 - A follow-up focused scan of all 446 `ACE/ace/*.cpp` files reports 1,773 brace diagnostics in 154 files, with no parse errors. Broader ACE/TAO coverage remains open.
 - No build or runtime test was run.
+
+## 2026-11-18 ACE Asynch_Pseudo_Task braces and scan
+
+- Added Allman braces around four single-statement branches in `ACE/ace/Asynch_Pseudo_Task.cpp`; focused `clang-tidy -checks=-*,readability-braces-around-statements` and `git diff --check` passed.
+- A follow-up focused scan of all 446 `ACE/ace/*.cpp` files reports 1,769 brace diagnostics in 153 files, with no parse errors. Broader ACE/TAO coverage remains open.
+- No build or runtime test was run.
