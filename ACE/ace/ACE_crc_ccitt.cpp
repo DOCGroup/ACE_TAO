@@ -110,7 +110,9 @@ ACE::crc_ccitt (const iovec *iov, int len, ACE_UINT16 crc)
                       *e = (const char *) iov[i].iov_base + iov[i].iov_len;
            p != e;
            ++p)
-        COMPUTE (crc, *p);
+        {
+          COMPUTE (crc, *p);
+        }
     }
 
   return static_cast<ACE_UINT16> (~crc);
