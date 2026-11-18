@@ -13070,3 +13070,10 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Changed the `size_t` process index in `Process_Mutex_Test.cpp` from `%d` to
   ACE logging's `%B`. Syntax-only compilation with the project C++17 warning
   flags passed, and `git diff --check` passed.
+
+## 2026-11-18 ACE and Notify integer log formats
+
+- Changed `ACE::log2`'s `u_long` diagnostics in `ACE_Test.cpp` to `%Q` with
+  `ACE_UINT64` casts. In Notify `Task_Stats.cpp`, added `unsigned int` casts
+  around truncated `ACE_UINT32` values passed to `%u` in both `fprintf` and
+  `ACE_DEBUG`. Both files pass C++17 syntax-only compilation; diff checks pass.
