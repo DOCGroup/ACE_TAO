@@ -158,6 +158,9 @@ if ($status == 0) {
         ["Accessor_Optimized_Refcount_Derived",
          qr/void\s+_add_ref\s*\(\)\s*override\s*;[\s\S]*?void\s+_remove_ref\s*\(\)\s*override\s*;/,
          "missing inherited supported-interface refcount overrides"],
+        ["Accessor_Optimized_Refcount_Inherited",
+         qr/void\s+_add_ref\s*\(\)\s*override\s*;[\s\S]*?void\s+_remove_ref\s*\(\)\s*override\s*;/,
+         "missing supported-interface overrides with an inherited refcount"],
     ) {
         my ($class_name, $pattern, $diagnostic) = @{$class_check};
         my $class_body = generated_class_body ($optimized_header, $class_name);
@@ -166,6 +169,24 @@ if ($status == 0) {
             $status = 1;
         }
     }
+
+    my $optimized_parent_body = generated_class_body (
+      $optimized_header, "Accessor_Optimized_Refcount_Parent");
+    if (!defined $optimized_parent_body
+        || $optimized_parent_body !~ /DefaultValueRefCountBase/)
+      {
+        print STDERR "ERROR: optimized refcount parent does not provide its counter\n";
+        $status = 1;
+      }
+
+    my $optimized_inherited_body = generated_class_body (
+      $optimized_header, "Accessor_Optimized_Refcount_Inherited");
+    if (!defined $optimized_inherited_body
+        || $optimized_inherited_body =~ /DefaultValueRefCountBase/)
+      {
+        print STDERR "ERROR: optimized derived valuetype duplicates its inherited counter\n";
+        $status = 1;
+      }
 
     my $optimized_source;
     open $generated, "<", "valuetype_opt_accessorC.cpp"

@@ -39,6 +39,8 @@ static_assert (std::is_base_of<CORBA::ValueFactoryBase,
                "An optimized derived valuetype retains its concrete factory");
 static_assert (!std::is_abstract<Accessor_Optimized_Refcount_Derived>::value,
                "An optimized valuetype inherits supported-interface refcount overrides");
+static_assert (!std::is_abstract<Accessor_Optimized_Refcount_Inherited>::value,
+               "An optimized valuetype can add a supported interface with an inherited counter");
 
 class hello_i : public virtual POA_hello
 {
@@ -1011,6 +1013,38 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ++error_count;
           ACE_ERROR ((LM_ERROR,
                       "Accessor_Optimized_Derived nested copy is incorrect\n"));
+        }
+
+      Accessor_Optimized_Refcount_Inherited_init * const inherited_factory =
+        new Accessor_Optimized_Refcount_Inherited_init;
+      CORBA::ValueBase_var inherited_value (
+        inherited_factory->create_for_unmarshal ());
+      inherited_factory->_remove_ref ();
+      Accessor_Optimized_Refcount_Inherited * const inherited_downcast =
+        Accessor_Optimized_Refcount_Inherited::_downcast (inherited_value.in ());
+      if (inherited_downcast == nullptr)
+        {
+          ++error_count;
+          ACE_ERROR ((LM_ERROR,
+                      "Inherited refcount factory returned wrong type\n"));
+        }
+      else
+        {
+          inherited_downcast->parent_value (19);
+          inherited_downcast->inherited_value (23);
+          CORBA::ValueBase_var inherited_copy (
+            inherited_downcast->_copy_value ());
+          Accessor_Optimized_Refcount_Inherited * const copied_inherited =
+            Accessor_Optimized_Refcount_Inherited::_downcast (
+              inherited_copy.in ());
+          if (copied_inherited == nullptr
+              || copied_inherited->parent_value () != 19
+              || copied_inherited->inherited_value () != 23)
+            {
+              ++error_count;
+              ACE_ERROR ((LM_ERROR,
+                          "Inherited refcount valuetype copy is incorrect\n"));
+            }
         }
 
       CORBA::Object_var poa_object =
