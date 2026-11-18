@@ -106,7 +106,7 @@ DII_ReplyHandler::handle_location_forward (TAO_InputCDR &incoming,
   bool const is_perm = reply_status == TAO_AMI_REPLY_LOCATION_FORWARD_PERM;
   ACE_DEBUG ((LM_DEBUG,
               "DII_ReplyHandler::handle_location_forward"
-              " got %C, is_perm = %b\n",
+              " got %C, is_perm = %d\n",
               iorstr.in (), is_perm));
 
   CORBA::Request_var const req = fwd->_request ("do_forward");

@@ -216,7 +216,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
 
       // Randomly generate events
       ACE_DEBUG ((LM_DEBUG, "********************************************************\n"));
-      ACE_DEBUG ((LM_DEBUG, "(%t -- main thread) signaling %B events : iteration = %d\n",
+      ACE_DEBUG ((LM_DEBUG, "(%t -- main thread) signaling %d events : iteration = %d\n",
                   number_of_handles_to_signal,
                   i));
       ACE_DEBUG ((LM_DEBUG, "********************************************************\n"));
