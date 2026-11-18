@@ -152,15 +152,19 @@ ACE_SizeCDR::write_wstring (ACE_CDR::ULong len,
     }
 
   else
-    if (x != nullptr)
+    {
+      if (x != nullptr)
       {
         if (this->write_ulong (len + 1))
-        {
-          return this->write_wchar_array (x, len + 1);
-        }
+          {
+            return this->write_wchar_array (x, len + 1);
+          }
       }
-    else if (this->write_ulong (1))
-      return this->write_wchar (0);
+      else if (this->write_ulong (1))
+        {
+          return this->write_wchar (0);
+        }
+    }
    return (this->good_bit_ = false);
 }
 
