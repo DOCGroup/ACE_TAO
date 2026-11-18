@@ -2565,6 +2565,7 @@ TAO/tests/Compression	C_STRING	not-applicable	b6a65a97e58	No ACE_OS narrow C-str
 TAO/tests/Compression	SPECIAL_MEMBER_COMMENTS	not-applicable	b6a65a97e58	No comments solely labeling special member functions found in reviewed sources
 TAO/tests/Compression	STYLE	done	b6a65a97e58	Touched source has no lines over 120 columns or repeated blank lines; git diff --check passed
 TAO/tests/Compression	VALUE_INIT	done	b6a65a97e58	Replaced three zero-filled heap buffers with value-initialized fixed std::array storage
+TAO/tests/Compression	LOG_FORMAT	done	08afed08cfa	Changed the size_t RLE test-loop index diagnostic from %d to ACE logging %B; syntax-only compile unavailable because generated tao/Compression/CompressionC.h is absent
 TAO/tests/Dynamic_TP/Config_Loader	BUILD_TEST	done	18d42e26611	Ran make realclean, make -j 8, and ./test; build and configuration lookup test passed without compiler warnings
 TAO/tests/Dynamic_TP/Config_Loader	CLEANUP	done	18d42e26611	Removed unused stdio and cstddef includes
 TAO/tests/Dynamic_TP/Config_Loader	CONST	done	2eb768449c7	Migrated from existing inventory; see modernization-ledger.md
@@ -2605,6 +2606,8 @@ TAO/tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static	TEXT_API	done	1574b55
 TAO/tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static	VALUE_INIT	done	443e0276d5b	Migrated from existing inventory; see modernization-ledger.md
 TAO/tests/IDLv4/annotations	BUILD_TEST	done	91f8d7a1bff	Clean annotest_idl build and all 39 subtests passed
 TAO/tests/IDLv4/annotations	OWNERSHIP	done	91f8d7a1bff	Test backend stub follows unique_ptr generator_init API
+TAO/tests/IDLv4/annotations	LOG_FORMAT	done	08afed08cfa	Changed the long line-number diagnostic to ACE logging %q with an ssize_t cast; C++17 syntax-only compile passed
+TAO/tests/POA/Non_Retain_System_Id	LOG_FORMAT	done	08afed08cfa	Logged CORBA::Short index as validated size_t with %B and cast CORBA sequence length to unsigned int for %u; C++17 syntax-only compile passed
 TAO/tests/Monitor/Marshal_Buffer	BUILD_TEST	done	3fbef1afadd	make realclean regenerated IDL; make -j 8 rebuilt and linked client/server without warnings. Runtime script cannot run its monitor path because ACE_HAS_MONITOR_FRAMEWORK is disabled in this configuration.
 TAO/tests/Monitor/Marshal_Buffer	NULLPTR	done	3fbef1afadd	Replaced the server FILE pointer comparison against integer zero with unique_ptr truth testing.
 TAO/tests/Monitor/Marshal_Buffer	OWNERSHIP	done	3fbef1afadd	Used unique_ptr<FILE> with ACE_OS::fclose deleters for client and server IOR output.

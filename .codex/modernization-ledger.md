@@ -13054,3 +13054,13 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   no `ACE_*_FORMAT_SPECIFIER` macros used inside ACE logging calls. Search
   matches were nearby `ACE_OS::sprintf`/`snprintf` calls, where those printf
   macros are appropriate. The full type-by-type log-format audit remains open.
+
+## 2026-11-18 TAO test log format corrections
+
+- Changed the RLE compressor test's `size_t` loop index to `%B`. In the POA
+  non-retain test, logged the validated `size_t` index with `%B` and cast the
+  CORBA length to `unsigned int` for `%u`. In the annotation test, changed the
+  `long` line number to `%q` with an `ssize_t` cast. Syntax-only compilation
+  passed for the POA and annotation tests. The RLE test could not be compiled
+  because the generated `tao/Compression/CompressionC.h` is absent from this
+  worktree. `git diff --check` passed.
