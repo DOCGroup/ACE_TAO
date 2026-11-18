@@ -1155,7 +1155,7 @@ ACE_OS::rw_trywrlock_upgrade (ACE_rwlock_t *rw)
     {
       while (rw->ref_count_ > 1) // wait until only I am left
         {
-          rw->num_waiting_writers_++; // prohibit any more readers
+          ++rw->num_waiting_writers_; // prohibit any more readers
           rw->important_writer_ = true;
 
           if (ACE_OS::cond_wait (&rw->waiting_important_writer_, &rw->lock_) == -1)
