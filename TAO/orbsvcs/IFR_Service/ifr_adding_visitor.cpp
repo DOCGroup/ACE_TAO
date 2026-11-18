@@ -144,7 +144,9 @@ decode_wide_literal (std::string const &source,
           ++source_index;
           while (source_index < source.size ()
                  && (source[source_index] == ' ' || source[source_index] == '\t'))
-            ++source_index;
+            {
+              ++source_index;
+            }
 
           if (source_index + 1 >= source.size ()
               || source[source_index] != 'L'
@@ -194,7 +196,9 @@ decode_wide_literal (std::string const &source,
                   if (source_index + 2 >= source.size ()
                       || source[source_index] != '\\'
                       || source[source_index + 1] != 'u')
-                    return false;
+                    {
+                      return false;
+                    }
                   size_t next_index = source_index + 2;
                   std::uint32_t low_surrogate = 0;
                   if (read_hex_escape (source, next_index, 4, low_surrogate)
@@ -210,7 +214,9 @@ decode_wide_literal (std::string const &source,
                     }
                 }
               else if (codepoint >= 0xdc00 && codepoint <= 0xdfff)
-                return false;
+                {
+                  return false;
+                }
               break;
             default:
               if (escape >= '0' && escape <= '7')
