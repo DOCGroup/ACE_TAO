@@ -77,7 +77,9 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
   // unmap() before (potentially) mapping to the same location.
   int const unmap_result = this->unmap ();
   if (unmap_result != 0)
-    return unmap_result;
+    {
+      return unmap_result;
+    }
 #endif /* ACE_LACKS_AUTO_MMAP_REPLACEMENT */
 
   this->base_addr_ = addr;
@@ -127,9 +129,9 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
           if (static_cast<ACE_UINT64> (length_request)
               + static_cast<ACE_UINT64> (offset)
               > static_cast<ACE_UINT64> ((ACE_Numeric_Limits<ACE_OFF_T>::max) ()))
-          {
-            return -1;
-          }
+            {
+              return -1;
+            }
 
           // File length implicitly requested by user
           requested_file_length = static_cast<ACE_OFF_T> (length_request) + offset;
@@ -166,14 +168,16 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
                               "",
                               1,
                               null_byte_position) == -1)
-          {
-            return -1;
-          }
+            {
+              return -1;
+            }
         }
-      }
-    else
+    }
+  else
+    {
       // Unmappable file type.
       return -1;
+    }
 
   this->base_addr_ = ACE_OS::mmap (this->base_addr_,
                                      this->length_,
@@ -202,16 +206,16 @@ ACE_Mem_Map::open (const ACE_TCHAR *file_name,
 #endif /* ACE_INTEGRITY */
 
   if (this->handle_ == ACE_INVALID_HANDLE)
-    return -1;
-  else
     {
-      ACE_OS::strsncpy (this->filename_,
-                        file_name,
-                        MAXPATHLEN);
-
-      this->close_handle_ = true;
-      return 0;
+      return -1;
     }
+
+  ACE_OS::strsncpy (this->filename_,
+                    file_name,
+                    MAXPATHLEN);
+
+  this->close_handle_ = true;
+  return 0;
 }
 
 int
@@ -232,15 +236,17 @@ ACE_Mem_Map::map (const ACE_TCHAR *file_name,
                   flags,
                   mode,
                   sa) == -1)
-    return -1;
-  else
-    return this->map_it (this->handle (),
-                         len,
-                         prot,
-                         share,
-                         addr,
-                         offset,
-                         sa);
+    {
+      return -1;
+    }
+
+  return this->map_it (this->handle (),
+                       len,
+                       prot,
+                       share,
+                       addr,
+                       offset,
+                       sa);
 }
 
 ACE_Mem_Map::ACE_Mem_Map ()
@@ -280,9 +286,11 @@ ACE_Mem_Map::ACE_Mem_Map (const ACE_TCHAR *file_name,
                  addr,
                  offset,
                  sa) < 0)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Mem_Map::ACE_Mem_Map")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_Mem_Map::ACE_Mem_Map")));
+    }
 }
 
 // Map a file from an open file descriptor HANDLE.  This function will
@@ -312,9 +320,11 @@ ACE_Mem_Map::ACE_Mem_Map (ACE_HANDLE handle,
                  addr,
                  offset,
                  sa) < 0)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Mem_Map::ACE_Mem_Map")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_Mem_Map::ACE_Mem_Map")));
+    }
 }
 
 // Close down and remove the file from the file system.
@@ -328,16 +338,15 @@ ACE_Mem_Map::remove ()
   this->close ();
 
   if (this->filename_[0] != '\0')
+    {
 #if defined (ACE_INTEGRITY) || defined (__QNXNTO__) || defined (ACE_VXWORKS)
-  return ACE_OS::shm_unlink (this->filename_);
+      return ACE_OS::shm_unlink (this->filename_);
 #else
-  return ACE_OS::unlink (this->filename_);
+      return ACE_OS::unlink (this->filename_);
 #endif /* __QNXNTO__ */
+    }
 
-  else
-  {
-    return 0;
-  }
+  return 0;
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
