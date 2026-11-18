@@ -160,6 +160,60 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << be_nl
       << "{}" << be_nl_2;
 
+  if (node->opt_accessor ()
+      && node->obv_need_ref_counter ()
+      && !node->have_operation ()
+      && be_valuetype::FS_CONCRETE_FACTORY
+           == node->determine_factory_style ())
+    {
+      *os << "::CORBA::ValueBase *" << be_nl
+          << node->name () << "::_copy_value ()" << be_nl
+          << "{" << be_idt_nl
+          << node->local_name () << " *ret_val {};" << be_nl
+          << "ACE_NEW_THROW_EX (" << be_idt_nl
+          << "ret_val," << be_nl
+          << node->local_name () << " ()," << be_nl
+          << "::CORBA::NO_MEMORY ());" << be_uidt_nl;
+
+      for (be_valuetype *current = node;
+           current != nullptr;
+           current = dynamic_cast<be_valuetype *> (
+             current->inherits_concrete ()))
+        {
+          for (UTL_ScopeActiveIterator si (current,
+                                           UTL_Scope::IK_decls);
+               !si.is_done ();
+               si.next ())
+            {
+              AST_Decl * const decl = si.item ();
+              if (decl != nullptr && decl->node_type () == AST_Decl::NT_field)
+                {
+                  *os << "ret_val->" << decl->local_name ()
+                      << " (this->" << decl->local_name () << " ());"
+                      << be_nl;
+                }
+            }
+        }
+
+      *os << "return ret_val;" << be_uidt_nl
+          << "}" << be_nl_2;
+    }
+
+  if (node->opt_accessor () && node->n_supports () > 0
+      && node->obv_need_ref_counter ())
+    {
+      *os << "void" << be_nl
+          << node->name () << "::_add_ref ()" << be_nl
+          << "{" << be_idt_nl
+          << "this->::CORBA::DefaultValueRefCountBase::_add_ref ();"
+          << be_uidt_nl << "}" << be_nl_2
+          << "void" << be_nl
+          << node->name () << "::_remove_ref ()" << be_nl
+          << "{" << be_idt_nl
+          << "this->::CORBA::DefaultValueRefCountBase::_remove_ref ();"
+          << be_uidt_nl << "}" << be_nl_2;
+    }
+
   bool const is_an_amh_exception_holder =
     this->is_amh_exception_holder (node);
 

@@ -1,5 +1,6 @@
 #include "FactoryC.h"
 #include "FactoryC_impl.h"
+#include "Opt_AccessorC.h"
 #include "ace/Get_Opt.h"
 
 ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
@@ -129,6 +130,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       OBV_FactoryTest::BaseValue_var base_value =
         test->get_base_value ();
 
+      CORBA::ValueBase_var base_copy (base_value->_copy_value ());
+      OBV_FactoryTest::BaseValue * const copied_base =
+        OBV_FactoryTest::BaseValue::_downcast (base_copy.in ());
+      if (copied_base == nullptr || copied_base->some_data () != 23)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Generated concrete-factory copy failed\n"),
+                            1);
+        }
+
       OBV_FactoryTest::Value1_var value1 =
         test->get_value1 ();
 
@@ -143,6 +154,74 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       data.value = 2;
 
       value2 = value2_factory->create (1, data);
+
+      ApplicationFactoryValue_init_impl application_factory;
+      OBV_FactoryTest::ApplicationFactoryValue_var application_value =
+        application_factory.create ();
+      application_value->value (31);
+      ApplicationFactoryValue_impl * const application_value_impl =
+        dynamic_cast<ApplicationFactoryValue_impl *> (application_value.in ());
+      if (application_value_impl == nullptr)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Application-factory value has unexpected type\n"),
+                            1);
+        }
+      application_value_impl->application_state (37);
+      CORBA::ValueBase_var application_copy (
+        application_value->_copy_value ());
+      ApplicationFactoryValue_impl * const copied_application =
+        dynamic_cast<ApplicationFactoryValue_impl *> (application_copy.in ());
+      if (copied_application == nullptr
+          || copied_application->value () != 31
+          || copied_application->application_state () != 37)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Application-factory copy failed\n"),
+                            1);
+        }
+
+      OBV_OBV_FactoryTest::SupportedValue supported_value;
+      supported_value.value (47);
+      CORBA::ValueBase_var supported_copy (
+        supported_value._copy_value ());
+      OBV_FactoryTest::SupportedValue * const copied_supported =
+        OBV_FactoryTest::SupportedValue::_downcast (supported_copy.in ());
+      if (copied_supported == nullptr || copied_supported->value () != 47)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Supported-interface valuetype copy failed\n"),
+                            1);
+        }
+
+      OBV_FactoryTest::Opt_Accessor_Value_init * const opt_accessor_factory =
+        new OBV_FactoryTest::Opt_Accessor_Value_init;
+      CORBA::ValueFactory previous_factory = orb->register_value_factory (
+        opt_accessor_factory->tao_repository_id (),
+        opt_accessor_factory);
+      if (previous_factory != nullptr)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unexpected optimized-accessor factory\n"),
+                            1);
+        }
+
+      CORBA::ValueBase_var opt_accessor_value (
+        opt_accessor_factory->create_for_unmarshal ());
+      OBV_FactoryTest::Opt_Accessor_Value * const original_opt_accessor =
+        OBV_FactoryTest::Opt_Accessor_Value::_downcast (opt_accessor_value.in ());
+      original_opt_accessor->value (53);
+      CORBA::ValueBase_var opt_accessor_copy_base (
+        opt_accessor_value->_copy_value ());
+      OBV_FactoryTest::Opt_Accessor_Value * const opt_accessor_copy =
+        OBV_FactoryTest::Opt_Accessor_Value::_downcast (opt_accessor_copy_base.in ());
+      opt_accessor_factory->_remove_ref ();
+      if (opt_accessor_copy == nullptr || opt_accessor_copy->value () != 53)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Optimized-accessor factory or copy failed\n"),
+                            1);
+        }
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - test finished\n"));
 

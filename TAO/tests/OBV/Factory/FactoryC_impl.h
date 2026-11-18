@@ -60,4 +60,33 @@ public:
   CORBA::ValueBase *create_for_unmarshal () override;
 };
 
+class ApplicationFactoryValue_impl :
+  public virtual OBV_OBV_FactoryTest::ApplicationFactoryValue,
+  public CORBA::DefaultValueRefCountBase
+{
+public:
+  void application_state (CORBA::ULong value)
+  {
+    this->application_state_ = value;
+  }
+
+  CORBA::ULong application_state () const
+  {
+    return this->application_state_;
+  }
+
+  CORBA::ValueBase *_copy_value () override;
+
+private:
+  CORBA::ULong application_state_ {};
+};
+
+class ApplicationFactoryValue_init_impl :
+  public OBV_FactoryTest::ApplicationFactoryValue_init
+{
+public:
+  OBV_FactoryTest::ApplicationFactoryValue *create () override;
+  CORBA::ValueBase *create_for_unmarshal () override;
+};
+
 #endif /* TAO_FACTORY_FACTORY_C_IMPL_H */

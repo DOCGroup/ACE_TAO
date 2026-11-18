@@ -56,11 +56,25 @@
             </UL></P>
 	    <p></p>
         </li>
-        <li><p>Generated OBV classes for operation-free valuetypes provide
-            <CODE>_copy_value()</CODE> and the required reference-count base.
-            Applications that add
-            <CODE>CORBA::DefaultValueRefCountBase</CODE> to a derived
-            implementation should remove that redundant base.</p>
+        <li><p>Generated OBV classes provide <CODE>_copy_value()</CODE> when
+            TAO generates the concrete factory and when needed for supported
+            interfaces. For application-defined factories, the application
+            implementation provides <CODE>_copy_value()</CODE>. The generated
+            concrete path includes the required reference-count base; valuetype
+            factories remain available with <CODE>-Wb,obv_opt_accessor</CODE>.</p>
+        </li>
+        <li><p>Generated <CODE>_copy_value()</CODE> copies direct valuetype
+            fields. Valuetypes nested in other members are shared, matching
+            their normal copy behavior. It does not recursively traverse
+            aggregates, preserve graph identity, or handle cycles. Applications
+            requiring a recursive graph copy must provide their own
+            <CODE>_copy_value()</CODE> implementation.</p>
+        </li>
+        <li><p>When a derived valuetype adds operations but its concrete base
+            has no operations, the generated OBV class makes
+            <CODE>_copy_value()</CODE> pure virtual to prevent a sliced copy.
+            Existing derived implementations must provide their own
+            <CODE>_copy_value()</CODE> override.</p>
         </li>
         <li><p><CODE>Valuetype</CODE>s can be used as arguments in CORBA invocations.
             There is an example in

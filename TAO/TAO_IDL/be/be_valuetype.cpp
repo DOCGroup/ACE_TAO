@@ -142,6 +142,10 @@ be_valuetype::redefine (AST_Interface *from)
     }
 
   this->AST_ValueType::redefine (from);
+  this->have_operation_computed_ = false;
+  this->has_supported_interface_computed_ = false;
+  this->obv_need_ref_counter_computed_ = false;
+  this->obv_have_ref_counter_computed_ = false;
 }
 
 // Is true if non-virtual accessor and modifier should be generated
@@ -242,6 +246,11 @@ be_valuetype::determine_factory_style ()
 bool
 be_valuetype::have_operation ()
 {
+  if (this->have_operation_computed_)
+    {
+      return this->have_operation_cache_;
+    }
+
   // Check whatever scope we get for operations/attributes.
 
   bool have_operation {};
@@ -301,23 +310,109 @@ be_valuetype::have_operation ()
 
   if (! have_operation)
     {
-      // Check for operations on supported interfaces
-      AST_Type * supported = this->supports_concrete ();
-
-      if (supported != nullptr)
+      // Only concrete supported interfaces contribute operations here.
+      // Abstract-interface operations have generated default implementations
+      // in TAO and do not make the OBV_ class abstract.
+      AST_Type_List const& supports = this->supports ();
+      for (size_t i = 0; i < supports.size (); ++i)
         {
-          be_interface *intf =
-            dynamic_cast<be_interface*> (supported);
+          be_interface *intf = dynamic_cast<be_interface*> (supports[i]);
 
-          if (intf != nullptr)
+          if (intf != nullptr && !intf->is_abstract ()
+              && be_valuetype::have_supported_op (intf))
             {
-              have_operation =
-                be_valuetype::have_supported_op (intf);
+              have_operation = true;
+              break;
             }
         }
     }
 
+  this->have_operation_cache_ = have_operation;
+  this->have_operation_computed_ = true;
   return have_operation;
+}
+
+bool
+be_valuetype::has_supported_interface () const
+{
+  if (this->has_supported_interface_computed_)
+    {
+      return this->has_supported_interface_cache_;
+    }
+
+  bool result = this->n_supports () != 0;
+  if (!result)
+    {
+      AST_Type_List const& inherits = this->inherits ();
+      for (size_t i = 0; i < inherits.size (); ++i)
+        {
+          be_valuetype const * const vt =
+            dynamic_cast<be_valuetype const *> (inherits[i]);
+          if (vt != nullptr && vt->has_supported_interface ())
+            {
+              result = true;
+              break;
+            }
+        }
+    }
+
+  this->has_supported_interface_cache_ = result;
+  this->has_supported_interface_computed_ = true;
+  return result;
+}
+
+bool
+be_valuetype::obv_need_ref_counter ()
+{
+  if (this->obv_need_ref_counter_computed_)
+    {
+      return this->obv_need_ref_counter_cache_;
+    }
+
+  bool base_has_ref_counter {};
+  for (int i = 0; i < this->n_inherits (); ++i)
+    {
+      be_valuetype * const vt =
+        dynamic_cast<be_valuetype *> (this->inherits ()[i]);
+      if (vt != nullptr && vt->obv_have_ref_counter ())
+        {
+          base_has_ref_counter = true;
+          break;
+        }
+    }
+
+  // Inherited CORBA interfaces add another refcount implementation.
+  bool const result =
+    !base_has_ref_counter
+    && (this->has_supported_interface ()
+        || FS_CONCRETE_FACTORY == this->determine_factory_style ());
+  this->obv_need_ref_counter_cache_ = result;
+  this->obv_need_ref_counter_computed_ = true;
+  return result;
+}
+
+bool
+be_valuetype::obv_have_ref_counter ()
+{
+  if (this->obv_have_ref_counter_computed_)
+    {
+      return this->obv_have_ref_counter_cache_;
+    }
+
+  bool result = !this->is_abstract () && this->obv_need_ref_counter ();
+  for (int i = 0; !result && i < this->n_inherits (); ++i)
+    {
+      be_valuetype * const vt =
+        dynamic_cast<be_valuetype *> (this->inherits ()[i]);
+      if (vt != nullptr && !vt->is_abstract () && vt->obv_have_ref_counter ())
+        {
+          result = true;
+        }
+    }
+
+  this->obv_have_ref_counter_cache_ = result;
+  this->obv_have_ref_counter_computed_ = true;
+  return result;
 }
 
 bool
@@ -606,9 +701,9 @@ be_valuetype::data_members_count (AST_Field::Visibility vis)
       if (vis != AST_Field::vis_NA)
         {
           if (vis == field->visibility ())
-          {
-            ++count;
-          }
+            {
+              ++count;
+            }
         }
       else
         {

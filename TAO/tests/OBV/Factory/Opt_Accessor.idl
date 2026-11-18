@@ -1,0 +1,7 @@
+module OBV_FactoryTest
+{
+  valuetype Opt_Accessor_Value
+  {
+    public unsigned long value;
+  };
+};
