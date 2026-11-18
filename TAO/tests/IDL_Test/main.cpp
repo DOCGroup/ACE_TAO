@@ -37,6 +37,8 @@ static_assert (std::is_abstract<OBV_Copy_Operation_Derived>::value,
 static_assert (std::is_base_of<CORBA::ValueFactoryBase,
                                Accessor_Optimized_Derived_init>::value,
                "An optimized derived valuetype retains its concrete factory");
+static_assert (!std::is_abstract<Accessor_Optimized_Refcount_Derived>::value,
+               "An optimized supported valuetype inherits its refcount overrides");
 
 class hello_i : public virtual POA_hello
 {
