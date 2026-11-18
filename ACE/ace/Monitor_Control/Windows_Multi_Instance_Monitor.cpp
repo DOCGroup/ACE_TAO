@@ -68,9 +68,8 @@ namespace ACE
       /// Create a regular Windows monitor for each path name.
       while (*path != ACE_TEXT ('\0'))
         {
-          std::unique_ptr<Windows_Monitor> instance {
-            new Windows_Monitor (path)
-          };
+          std::unique_ptr<Windows_Monitor> instance =
+            std::make_unique<Windows_Monitor> (path);
 
           if (this->instances_.enqueue_tail (instance.get ()) == -1)
             ACELIB_ERROR ((LM_ERROR,
@@ -97,6 +96,7 @@ namespace ACE
     Windows_Multi_Instance_Monitor::update_i ()
     {
       Windows_Monitor **current_instance {};
+      this->value_ = 0;
 
       /// Sum the values of each single instance monitor.
       for (INSTANCES_ITERATOR i (this->instances_); !i.done (); i.advance ())
