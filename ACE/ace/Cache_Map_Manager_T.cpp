@@ -27,9 +27,11 @@ ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMP
   : caching_strategy_ (caching_s)
 {
   if (this->open (size, alloc) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Cache_Map_Manager::ACE_Cache_Map_Manager")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_Cache_Map_Manager::ACE_Cache_Map_Manager")));
+    }
 }
 
 template <class KEY, class VALUE, class CMAP_TYPE, class ITERATOR_IMPL, class REVERSE_ITERATOR_IMPL, class CACHING_STRATEGY, class ATTRIBUTES>
@@ -105,7 +107,9 @@ ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMP
           // notification fails after a bind which is denoted by
           // rebind_result = 0
           if (rebind_result == 0)
-            this->map_.unbind (key);
+            {
+              this->map_.unbind (key);
+            }
 
           // Unless the notification goes thru the rebind operation is
           // not complete.
@@ -143,7 +147,9 @@ ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMP
           // notification fails after a bind which is denoted by
           // rebind_result = 0
           if (rebind_result == 0)
-            this->map_.unbind (key);
+            {
+              this->map_.unbind (key);
+            }
 
           // Unless the notification goes thru the rebind operation is
           // not complete.
@@ -187,7 +193,9 @@ ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMP
           // notification fails after a bind which is denoted by
           // rebind_result = 0
           if (rebind_result == 0)
-            this->map_.unbind (key);
+            {
+              this->map_.unbind (key);
+            }
 
           // Unless the notification goes thru the rebind operation is
           // not complete.
@@ -223,7 +231,9 @@ ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMP
           // If the entry has got inserted into the map, it is removed
           // due to failure.
           if (trybind_result == 0)
-            this->map_.unbind (key);
+            {
+              this->map_.unbind (key);
+            }
 
           trybind_result = -1;
         }
@@ -232,7 +242,9 @@ ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMP
           // If an attempt is made to bind an existing entry the value
           // is overwritten with the value from the map.
           if (trybind_result == 1)
-            value = cache_value.first ();
+            {
+              value = cache_value.first ();
+            }
         }
 
     }
@@ -258,7 +270,9 @@ ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMP
       // Unless the find and notification operations go thru, this
       // method is not successful.
       if (result == -1)
-        find_result = -1;
+        {
+          find_result = -1;
+        }
       else
         {
           // Since the <cache_value> has now changed after the
@@ -266,9 +280,13 @@ ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMP
           int rebind_result = this->map_.rebind (key,
                                                  cache_value);
           if (rebind_result == -1)
-            find_result = -1;
+            {
+              find_result = -1;
+            }
           else
-            value = cache_value.first;
+            {
+              value = cache_value.first;
+            }
         }
 
     }
@@ -293,7 +311,9 @@ ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMP
       // Unless the find and notification operations go thru, this
       // method is not successful.
       if (result == -1)
-        find_result = -1;
+        {
+          find_result = -1;
+        }
       else
         {
           // Since the <cache_value> has now changed after the
@@ -302,7 +322,9 @@ ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMP
                                                  cache_value);
 
           if (rebind_result == -1)
-            find_result = -1;
+            {
+              find_result = -1;
+            }
         }
 
     }
@@ -325,7 +347,9 @@ ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMP
                                                           cache_value.second);
 
       if (result == -1)
-        unbind_result = -1;
+        {
+          unbind_result = -1;
+        }
     }
 
   return unbind_result;
@@ -347,9 +371,13 @@ ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMP
                                                           cache_value.second ());
 
       if (result == -1)
-        unbind_result = -1;
+        {
+          unbind_result = -1;
+        }
       else
-        value = cache_value.first ();
+        {
+          value = cache_value.first ();
+        }
     }
 
   return unbind_result;
