@@ -89,8 +89,10 @@ ACE_Thread::spawn_n (ACE_thread_t thread_ids[],
           }
         }
       else
-        // Bail out if error occurs.
-        break;
+        {
+          // Bail out if error occurs.
+          break;
+        }
     }
 
   return i;
