@@ -28,14 +28,18 @@ ACE_Array_Base<T>::ACE_Array_Base (typename ACE_Array_Base<T>::size_type size,
     allocator_ (alloc)
 {
   if (this->allocator_ == nullptr)
-    this->allocator_ = ACE_Allocator::instance ();
+    {
+      this->allocator_ = ACE_Allocator::instance ();
+    }
 
   if (size != 0)
     {
       ACE_ALLOCATOR (this->array_,
                      (T *) this->allocator_->malloc (size * sizeof (T)));
       for (size_type i = 0; i < size; ++i)
-        new (std::addressof (array_[i])) T;
+        {
+          new (std::addressof (array_[i])) T;
+        }
     }
 }
 
@@ -48,14 +52,18 @@ ACE_Array_Base<T>::ACE_Array_Base (typename ACE_Array_Base<T>::size_type size,
     allocator_ (alloc)
 {
   if (this->allocator_ == nullptr)
-    this->allocator_ = ACE_Allocator::instance ();
+    {
+      this->allocator_ = ACE_Allocator::instance ();
+    }
 
   if (size != 0)
     {
       ACE_ALLOCATOR (this->array_,
                      (T *) this->allocator_->malloc (size * sizeof (T)));
       for (size_type i = 0; i < size; ++i)
-        new (std::addressof (array_[i])) T (default_value);
+        {
+          new (std::addressof (array_[i])) T (default_value);
+        }
     }
 }
 
@@ -68,12 +76,16 @@ ACE_Array_Base<T>::ACE_Array_Base (ACE_Array_Base<T> const &s)
     allocator_ (s.allocator_)
 {
   if (this->allocator_ == nullptr)
-    this->allocator_ = ACE_Allocator::instance ();
+    {
+      this->allocator_ = ACE_Allocator::instance ();
+    }
 
   ACE_ALLOCATOR (this->array_,
                  (T *) this->allocator_->malloc (s.size () * sizeof (T)));
   for (size_type i = 0; i < this->size (); ++i)
-    new (std::addressof (this->array_[i])) T (s.array_[i]);
+    {
+      new (std::addressof (this->array_[i])) T (s.array_[i]);
+    }
 }
 
 // Assignment operator (performs assignment).
@@ -118,7 +130,9 @@ ACE_Array_Base<T>::operator= (ACE_Array_Base<T> const &s)
           this->cur_size_ = s.size ();
 
           for (size_type i = 0; i < this->size (); ++i)
-            new (std::addressof (this->array_[i])) T (s.array_[i]);
+            {
+              new (std::addressof (this->array_[i])) T (s.array_[i]);
+            }
         }
     }
 }
@@ -135,7 +149,9 @@ ACE_Array_Base<T>::set (T const &new_item,
       return 0;
     }
   else
-    return -1;
+    {
+      return -1;
+    }
 }
 
 // Get an item in the array at location slot.
@@ -152,7 +168,9 @@ ACE_Array_Base<T>::get (T &item,
       return 0;
     }
   else
-    return -1;
+    {
+      return -1;
+    }
 }
 
 template<class T> int
@@ -166,12 +184,16 @@ ACE_Array_Base<T>::max_size (typename ACE_Array_Base<T>::size_type new_size)
                             (T *) this->allocator_->malloc (new_size * sizeof (T)),
                             -1);
       for (size_type i = 0; i < this->cur_size_; ++i)
-        new (std::addressof (tmp[i])) T (this->array_[i]);
+        {
+          new (std::addressof (tmp[i])) T (this->array_[i]);
+        }
 
       // Initialize the new portion of the array that exceeds the
       // previously allocated section.
       for (size_type j = this->cur_size_; j < new_size; ++j)
-        new (std::addressof (tmp[j])) T;
+        {
+          new (std::addressof (tmp[j])) T;
+        }
 
       ACE_DES_ARRAY_FREE (this->array_,
                           this->max_size_,
@@ -191,7 +213,9 @@ ACE_Array_Base<T>::size (typename ACE_Array_Base<T>::size_type new_size)
   int const r = this->max_size (new_size);
 
   if (r == 0)
-    this->cur_size_ = new_size;
+    {
+      this->cur_size_ = new_size;
+    }
 
   return r;
 }
