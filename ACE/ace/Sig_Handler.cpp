@@ -49,9 +49,11 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Sig_Handler)
 ACE_Sig_Handler::~ACE_Sig_Handler ()
 {
   for (int s = 1; s < ACE_NSIG; ++s)
-    if (ACE_Sig_Handler::signal_handlers_[s])
     {
-      ACE_Sig_Handler::remove_handler_i (s);
+      if (ACE_Sig_Handler::signal_handlers_[s])
+      {
+        ACE_Sig_Handler::remove_handler_i (s);
+      }
     }
 }
 
@@ -96,11 +98,13 @@ ACE_Sig_Handler::handler (int signum)
     ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, m, *lock, nullptr));
 
   if (ACE_Sig_Handler::in_range (signum))
-    return ACE_Sig_Handler::signal_handlers_[signum];
+    {
+      return ACE_Sig_Handler::signal_handlers_[signum];
+    }
   else
-  {
-    return nullptr;
-  }
+    {
+      return nullptr;
+    }
 }
 
 ACE_Event_Handler *
@@ -323,11 +327,15 @@ ACE_SIG_HANDLERS_SET *
 ACE_Sig_Handlers_Set::instance (int signum)
 {
   if (signum <= 0 || signum >= ACE_NSIG)
-    return nullptr; // This will cause problems...
+    {
+      return nullptr; // This will cause problems...
+    }
   else if (ACE_Sig_Handlers_Set::sig_handlers_[signum] == nullptr)
-    ACE_NEW_RETURN (ACE_Sig_Handlers_Set::sig_handlers_[signum],
-                    ACE_SIG_HANDLERS_SET,
-                    nullptr);
+    {
+      ACE_NEW_RETURN (ACE_Sig_Handlers_Set::sig_handlers_[signum],
+                      ACE_SIG_HANDLERS_SET,
+                      nullptr);
+    }
   return ACE_Sig_Handlers_Set::sig_handlers_[signum];
 }
 
@@ -379,9 +387,11 @@ ACE_Sig_Handlers::register_handler (int signum,
           // RESTART_MODE can only be changed by 3rd party libraries.
           if (ACE_BIT_DISABLED (sa.flags (), SA_RESTART)
               && ACE_Sig_Handlers::third_party_sig_handler_)
-            // Toggling is disallowed since we might break 3rd party
-            // code.
-            return -1;
+            {
+              // Toggling is disallowed since we might break 3rd party
+              // code.
+              return -1;
+            }
 
           // Note that we've seen a 3rd party handler...
           ACE_Sig_Handlers::third_party_sig_handler_ = true;
@@ -425,7 +435,9 @@ ACE_Sig_Handlers::register_handler (int signum,
         }
       // If ACE_Sig_Handlers::dispatch() was set we're done.
       else if (sa.handler () == ace_signal_handlers_dispatcher)
-        return ace_sig_adapter->sigkey ();
+        {
+          return ace_sig_adapter->sigkey ();
+        }
 
       // Otherwise, we need to register our handler function so that
       // all signals will be dispatched through ACE.
@@ -461,7 +473,9 @@ ACE_Sig_Handlers::register_handler (int signum,
             }
           else // Return the signal key so that programs can cancel this
             // handler if they want!
-            return ace_sig_adapter->sigkey ();
+            {
+              return ace_sig_adapter->sigkey ();
+            }
         }
     }
 
@@ -562,11 +576,13 @@ ACE_Sig_Handlers::dispatch (int signum, siginfo_t *siginfo, ucontext_t *ucontext
   for (ACE_Event_Handler **eh {};
        handler_iterator.next (eh) != 0;
        )
-    if ((*eh)->handle_signal (signum, siginfo, ucontext) == -1)
+    {
+      if ((*eh)->handle_signal (signum, siginfo, ucontext) == -1)
       {
         handler_set->remove (*eh);
         delete *eh;
       }
+    }
 }
 
 /// Return the first item in the list of handlers.  Note that this will

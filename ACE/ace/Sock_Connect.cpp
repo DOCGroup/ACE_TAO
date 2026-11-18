@@ -111,18 +111,21 @@ ACE::bind_port (ACE_HANDLE handle, ACE_UINT32 ip_addr, int address_family)
 
 #if defined (ACE_HAS_IPV6)
   if (address_family != PF_INET6)
-    // What do we do if it is PF_"INET6?  Since it's 4 bytes, it must be an
-    // IPV4 address. Is there a difference?  Why is this test done? dhinton
+    {
+      // What do we do if it is PF_"INET6?  Since it's 4 bytes, it must be an
+      // IPV4 address. Is there a difference?  Why is this test done? dhinton
+      addr = ACE_INET_Addr ((u_short)0, ip_addr);
+    }
+  else if (ip_addr != INADDR_ANY)
+    {
+      // address_family == PF_INET6 and a non default IP address means to bind
+      // to the IPv4-mapped IPv6 address
+      addr.set ((u_short)0, ip_addr, 1, 1);
+    }
 #else /* ACE_HAS_IPV6 */
-    ACE_UNUSED_ARG (address_family);
+  ACE_UNUSED_ARG (address_family);
+  addr = ACE_INET_Addr ((u_short)0, ip_addr);
 #endif /* !ACE_HAS_IPV6 */
-    addr = ACE_INET_Addr ((u_short)0, ip_addr);
-#if defined (ACE_HAS_IPV6)
- else if (ip_addr != INADDR_ANY)
- // address_family == PF_INET6 and a non default IP address means to bind
- // to the IPv4-mapped IPv6 address
-   addr.set ((u_short)0, ip_addr, 1, 1);
-#endif /* ACE_HAS_IPV6 */
 
   // The OS kernel should select a free port for us.
   return ACE_OS::bind (handle,
@@ -148,15 +151,17 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
   ACE_HANDLE s = handle;
 
   if (s == ACE_INVALID_HANDLE)
-  {
-    s = ACE_OS::socket (AF_INET, SOCK_STREAM, 0);
-  }
+    {
+      s = ACE_OS::socket (AF_INET, SOCK_STREAM, 0);
+    }
 
   if (s == ACE_INVALID_HANDLE)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("ACE_OS::socket")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("%p\n"),
+                            ACE_TEXT ("ACE_OS::socket")),
+                           -1);
+    }
 
   struct ifconf ifc;
   char buf[BUFSIZ];
@@ -167,11 +172,13 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
   // Get interface structure and initialize the addresses using UNIX
   // techniques
   if (ACE_OS::ioctl (s, SIOCGIFCONF_CMD, (char *) &ifc) == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("ACE::get_bcast_addr:")
-                       ACE_TEXT ("ioctl (get interface configuration)")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("%p\n"),
+                            ACE_TEXT ("ACE::get_bcast_addr:")
+                            ACE_TEXT ("ioctl (get interface configuration)")),
+                           -1);
+    }
 
   struct ifreq *ifr = ifc.ifc_req;
 
@@ -183,15 +190,19 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
       hostent *hp = ACE_OS::gethostbyname (ACE_TEXT_ALWAYS_CHAR (host_name));
 
       if (hp == nullptr)
-        return -1;
+        {
+          return -1;
+        }
       else
-        std::memcpy ((char *) &ip_addr.sin_addr.s_addr,
+        {
+          std::memcpy ((char *) &ip_addr.sin_addr.s_addr,
 # ifdef ACE_HOSTENT_H_ADDR
-                     (char *) hp->ACE_HOSTENT_H_ADDR,
+                       (char *) hp->ACE_HOSTENT_H_ADDR,
 # else
-                     (char *) hp->h_addr,
+                       (char *) hp->h_addr,
 # endif
-                     hp->h_length);
+                       hp->h_length);
+        }
     }
   else
     {
@@ -255,19 +266,21 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
         }
 
       if (ACE_BIT_ENABLED (flags.ifr_flags, IFF_LOOPBACK))
-      {
-        continue;
-      }
+        {
+          continue;
+        }
 
       if (ACE_BIT_ENABLED (flags.ifr_flags, IFF_BROADCAST))
         {
           if (ACE_OS::ioctl (s,
                              SIOCGIFBRDADDR,
                              (char *) &if_req) == -1)
-            ACELIB_ERROR ((LM_ERROR,
-                        ACE_TEXT ("%p\n"),
-                        ACE_TEXT ("ACE::get_bcast_addr:")
-                        ACE_TEXT ("ioctl (get broadaddr)")));
+            {
+              ACELIB_ERROR ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("ACE::get_bcast_addr:")
+                             ACE_TEXT ("ioctl (get broadaddr)")));
+            }
           else
             {
               std::memcpy (&ip_addr, &if_req.ifr_broadaddr, sizeof if_req.ifr_broadaddr);
@@ -275,24 +288,26 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
               std::memcpy ((void *) &host_addr, (void *) &ip_addr.sin_addr, sizeof host_addr);
 
               if (handle == ACE_INVALID_HANDLE)
-              {
-                ACE_OS::close (s);
-              }
+                {
+                  ACE_OS::close (s);
+                }
 
               bcast_addr = host_addr;
               return 0;
             }
         }
       else
-        ACELIB_ERROR ((LM_ERROR,
-                    ACE_TEXT ("%p\n"),
-                    ACE_TEXT ("ACE::get_bcast_addr:")
-                    ACE_TEXT ("Broadcast is not enabled for this interface.")));
+        {
+          ACELIB_ERROR ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("ACE::get_bcast_addr:")
+                         ACE_TEXT ("Broadcast is not enabled for this interface.")));
+        }
 
       if (handle == ACE_INVALID_HANDLE)
-      {
-        ACE_OS::close (s);
-      }
+        {
+          ACE_OS::close (s);
+        }
 
       bcast_addr = host_addr;
       return 0;
@@ -325,15 +340,17 @@ ACE::get_fqdn (ACE_INET_Addr const & addr,
                            addr_size, hostname,
                            static_cast<ACE_SOCKET_LEN> (len),
                            nullptr, 0, NI_NAMEREQD) != 0)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   if (ACE::debug ())
-    ACELIB_DEBUG ((LM_DEBUG,
-                   ACE_TEXT ("(%P|%t) - ACE::get_fqdn, ")
-                   ACE_TEXT ("canonical host name is %C\n"),
-                   hostname));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("(%P|%t) - ACE::get_fqdn, ")
+                     ACE_TEXT ("canonical host name is %C\n"),
+                     hostname));
+    }
 
   return 0;
 #else // below, ACE_LACKS_GETNAMEINFO
@@ -574,16 +591,18 @@ get_ip_interfaces_getifaddrs (size_t &count,
   struct ifaddrs *p_if {};
 
   if (::getifaddrs (&ifap) != 0)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
   std::unique_ptr<struct ifaddrs, decltype (&::freeifaddrs)> safe_ifap (
     ifap, ::freeifaddrs);
 
   // Count number of interfaces.
   size_t num_ifs = 0;
   for (p_if = ifap; p_if != nullptr; p_if = p_if->ifa_next)
-    ++num_ifs;
+    {
+      ++num_ifs;
+    }
 
   // Now create and initialize output array.
   ACE_INET_Addr *addr_array {};
