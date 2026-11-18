@@ -83,9 +83,13 @@ ACE_Process::spawn (ACE_Process_Options &options)
   // ones to include in command line options if that's needed below.
   ACE_Handle_Set *set_p {};
   if (options.dup_handles (this->dup_handles_))
-    set_p = &this->dup_handles_;
+    {
+      set_p = &this->dup_handles_;
+    }
   else if (options.passed_handles (this->handles_passed_))
-    set_p = &this->handles_passed_;
+    {
+      set_p = &this->handles_passed_;
+    }
 
   // If we are going to end up running a new program (i.e. Win32, or
   // NO_EXEC option is set) then get any handles passed in the options,
@@ -328,42 +332,48 @@ ACE_Process::spawn (ACE_Process_Options &options)
 # if !defined (ACE_LACKS_SETREGID)
       if (options.getrgid () != (gid_t) -1
           || options.getegid () != (gid_t) -1)
-        if (ACE_OS::setregid (options.getrgid (),
-                              options.getegid ()) == -1)
-          {
+        {
+          if (ACE_OS::setregid (options.getrgid (),
+                                options.getegid ()) == -1)
+            {
 #if !defined (ACE_HAS_THREADS)
-            // We can't emit this log message because ACELIB_ERROR(), etc.
-            // will invoke async signal unsafe functions, which results
-            // in undefined behavior in threaded programs.
-            ACELIB_ERROR ((LM_ERROR,
-                        ACE_TEXT ("%p.\n"),
-                        ACE_TEXT ("ACE_Process::spawn: setregid failed.")));
+              // We can't emit this log message because ACELIB_ERROR(), etc.
+              // will invoke async signal unsafe functions, which results
+              // in undefined behavior in threaded programs.
+              ACELIB_ERROR ((LM_ERROR,
+                             ACE_TEXT ("%p.\n"),
+                             ACE_TEXT ("ACE_Process::spawn: setregid failed.")));
 #endif
-          }
+            }
+        }
 # endif /* ACE_LACKS_SETREGID */
 
 # if !defined (ACE_LACKS_SETREUID)
       // Set user and group id's.
       if (options.getruid () != (uid_t) -1
           || options.geteuid () != (uid_t) -1)
-        if (ACE_OS::setreuid (options.getruid (),
-                              options.geteuid ()) == -1)
-          {
+        {
+          if (ACE_OS::setreuid (options.getruid (),
+                                options.geteuid ()) == -1)
+            {
 #if !defined (ACE_HAS_THREADS)
-            // We can't emit this log message because ACELIB_ERROR(), etc.
-            // will invoke async signal unsafe functions, which results
-            // in undefined behavior in threaded programs.
-            ACELIB_ERROR ((LM_ERROR,
-                        ACE_TEXT ("%p.\n"),
-                        ACE_TEXT ("ACE_Process::spawn: setreuid failed.")));
+              // We can't emit this log message because ACELIB_ERROR(), etc.
+              // will invoke async signal unsafe functions, which results
+              // in undefined behavior in threaded programs.
+              ACELIB_ERROR ((LM_ERROR,
+                             ACE_TEXT ("%p.\n"),
+                             ACE_TEXT ("ACE_Process::spawn: setreuid failed.")));
 #endif
-          }
+            }
+        }
 # endif /* ACE_LACKS_SETREUID */
 
       this->child (ACE_OS::getppid ());
     }
   else if (this->child_id_ != -1)
-    this->parent (this->child_id_);
+    {
+      this->parent (this->child_id_);
+    }
 
   // If we're not supposed to exec, return the process id.
   if (ACE_BIT_ENABLED (options.creation_flags (),
@@ -383,15 +393,21 @@ ACE_Process::spawn (ACE_Process_Options &options)
         if (options.get_stdin () != ACE_INVALID_HANDLE
             && ACE_OS::dup2 (options.get_stdin (),
                              ACE_STDIN) == -1)
-          ACE_OS::exit (errno);
+          {
+            ACE_OS::exit (errno);
+          }
         else if (options.get_stdout () != ACE_INVALID_HANDLE
                  && ACE_OS::dup2 (options.get_stdout (),
                                   ACE_STDOUT) == -1)
-          ACE_OS::exit (errno);
+          {
+            ACE_OS::exit (errno);
+          }
         else if (options.get_stderr () != ACE_INVALID_HANDLE
                  && ACE_OS::dup2 (options.get_stderr (),
                                   ACE_STDERR) == -1)
-          ACE_OS::exit (errno);
+          {
+            ACE_OS::exit (errno);
+          }
 
         // close down unneeded descriptors
         ACE_OS::close (options.get_stdin ());
@@ -470,9 +486,11 @@ ACE_Process::spawn (ACE_Process_Options &options)
             // Add the new environment variables to the environment
             // context of the context before doing an <execvp>.
             for (size_t i = 0; procenv[i] != nullptr; ++i)
-              if (ACE_OS::putenv (procenv[i]) != 0)
               {
-                return ACE_INVALID_PID;
+                if (ACE_OS::putenv (procenv[i]) != 0)
+                  {
+                    return ACE_INVALID_PID;
+                  }
               }
 
             // Now the forked process has both inherited variables and
@@ -534,11 +552,15 @@ ACE_Process::running () const
     return result && code == STILL_ACTIVE;
 #else
   if (ACE_INVALID_PID == this->getpid ())
-    return 0;
+    {
+      return 0;
+    }
   else
-    return ACE_OS::kill (this->getpid (),
-                         0) == 0
-      || errno != ESRCH;
+    {
+      return ACE_OS::kill (this->getpid (),
+                           0) == 0
+        || errno != ESRCH;
+    }
 #endif /* ACE_WIN32 */
 }
 
@@ -691,7 +713,9 @@ ACE_Process::close_dup_handles ()
       for (ACE_HANDLE h = h_iter ();
            h != ACE_INVALID_HANDLE;
            h = h_iter ())
-        ACE_OS::closesocket (h);
+        {
+          ACE_OS::closesocket (h);
+        }
       this->dup_handles_.reset ();
     }
   return;
@@ -706,7 +730,9 @@ ACE_Process::close_passed_handles ()
       for (ACE_HANDLE h = h_iter ();
            h != ACE_INVALID_HANDLE;
            h = h_iter ())
-        ACE_OS::closesocket (h);
+        {
+          ACE_OS::closesocket (h);
+        }
       this->handles_passed_.reset ();
     }
   return;
@@ -1006,12 +1032,16 @@ ACE_Process_Options::setenv (const ACE_TCHAR *variable_name,
           retval = ACE_OS::vsprintf (safe_stack_buf.get (), safe_newformat.get (), argp);
           va_end (argp);
           if (retval == -1)
-            // vsprintf is failed.
-            return -1;
+            {
+              // vsprintf is failed.
+              return -1;
+            }
         }
       else
-        // vsnprintf is failed.
-        return -1;
+        {
+          // vsnprintf is failed.
+          return -1;
+        }
     }
 
   // Append the string to our environment buffer.
@@ -1279,7 +1309,9 @@ ACE_TCHAR *
 ACE_Process_Options::env_buf ()
 {
   if (environment_buf_[0] == '\0')
-    return nullptr;
+    {
+      return nullptr;
+    }
   else
   {
     return environment_buf_;
@@ -1308,7 +1340,9 @@ ACE_Process_Options::command_line_argv ()
 
       unsigned int x = 0;
       do
-        command_line_argv_[x] = parser.next ();
+        {
+          command_line_argv_[x] = parser.next ();
+        }
       while (command_line_argv_[x] != nullptr
              // subtract one for the ending zero.
              && ++x < max_command_line_args_ - 1);
