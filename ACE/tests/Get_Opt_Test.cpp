@@ -208,7 +208,7 @@ parse_args (int test_number,
 
   // Now print them all so we can examine the permuted cmd line.
   for (index = 0; index < args.argc (); ++index)
-    ACE_DEBUG ((LM_INFO, "   argv[%u] \"%s\"\n",
+    ACE_DEBUG ((LM_INFO, "   argv[%d] \"%s\"\n",
                 index, args.argv ()[index]));
   return 0;
 }

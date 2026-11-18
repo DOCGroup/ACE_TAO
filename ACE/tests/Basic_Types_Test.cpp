@@ -37,13 +37,16 @@ check (const ACE_TCHAR* message, ACE_UINT32 i, ACE_UINT32 j)
 {
   if (i == j)
     {
-      ACE_DEBUG ((LM_DEBUG, message, j, ACE_TEXT ("\n")));
+      ACE_DEBUG ((LM_DEBUG, message,
+                  static_cast<unsigned int> (j), ACE_TEXT ("\n")));
       return 0;
     }
   else
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("assertion failed \"%s\": %u != %u\n"),
-                  message, i, j));
+                  message,
+                  static_cast<unsigned int> (i),
+                  static_cast<unsigned int> (j)));
       return 1;
     }
 }
@@ -58,7 +61,8 @@ check64 (const ACE_TCHAR* message, ACE_UINT64 i, ACE_UINT64 j)
   }
   else
   {
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("assertion failed \"%s\": %u != %u\n"), message, i, j));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("assertion failed \"%s\": %Q != %Q\n"),
+                message, i, j));
     return 1;
   }
 }
@@ -69,9 +73,9 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("Basic_Types_Test"));
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("This is ACE Version %u.%u.%u\n\n"),
-              ACE_MAJOR_VERSION,
-              ACE_MINOR_VERSION,
-              ACE_MICRO_VERSION));
+              static_cast<unsigned int> (ACE_MAJOR_VERSION),
+              static_cast<unsigned int> (ACE_MINOR_VERSION),
+              static_cast<unsigned int> (ACE_MICRO_VERSION)));
 
   u_int errors = 0;
 
@@ -171,16 +175,16 @@ run_main (int, ACE_TCHAR *[])
   errors +=
     check64 (ACE_TEXT ("ACE_SWAP_LONG_LONG(0x0123456789abcdef) is %Q%s"), ACE_SWAP_LONG_LONG (test_val_3), 0xefcdab8967452301);
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OS page size: %d\n"),
-              ACE_OS::getpagesize ()));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OS page size: %q\n"),
+              static_cast<ACE_INT64> (ACE_OS::getpagesize ())));
 
 #if defined (_SC_PAGESIZE)
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("sysconf page size: %d\n"),
-              (int) ACE_OS::sysconf (_SC_PAGESIZE)));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("sysconf page size: %q\n"),
+              static_cast<ACE_INT64> (ACE_OS::sysconf (_SC_PAGESIZE))));
 #endif /* _SC_PAGESIZE */
 #if defined (_SC_CLK_TCK)
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("clock ticks/sec = %d\n"),
-              (int) ACE_OS::sysconf (_SC_CLK_TCK)));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("clock ticks/sec = %q\n"),
+              static_cast<ACE_INT64> (ACE_OS::sysconf (_SC_CLK_TCK))));
 #endif /* _SC_CLK_TCK */
 
   ACE_END_TEST;
