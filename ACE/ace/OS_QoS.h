@@ -377,7 +377,6 @@ private:
 // method.
 using ACE_QOS_CONDITION_FUNC = int (*)(iovec *, iovec *, ACE_QoS *, ACE_QoS *, iovec *, iovec *, ACE_SOCK_GROUP *, unsigned long);
 
-
 /**
  * @class ACE_Accept_QoS_Params
  *

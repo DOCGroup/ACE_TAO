@@ -38,7 +38,6 @@ class ACE_Export ACE_INET_Addr : public ACE_Addr
 public:
   ACE_INET_Addr ();
 
-
   ACE_INET_Addr (const ACE_INET_Addr &);
 
   /// Creates an ACE_INET_Addr from a sockaddr_in structure.

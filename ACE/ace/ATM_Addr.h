@@ -65,7 +65,6 @@ public:
 
   ACE_ATM_Addr (u_char selector = DEFAULT_SELECTOR);
 
-
   ACE_ATM_Addr (const ACE_ATM_Addr &,
                 u_char selector = DEFAULT_SELECTOR);
 

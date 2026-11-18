@@ -31,8 +31,6 @@ int ACE_Netlink_Addr::set (const ACE_Netlink_Addr &sa)
   return 0;
 }
 
-
-
 ACE_Netlink_Addr::ACE_Netlink_Addr (const ACE_Netlink_Addr &sa)
 : ACE_Addr (AF_NETLINK, sa.get_size ())
 {

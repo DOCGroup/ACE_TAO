@@ -35,7 +35,6 @@ class ACE_Export ACE_SPIPE_Addr : public ACE_Addr
 public:
   ACE_SPIPE_Addr ();
 
-
   ACE_SPIPE_Addr (const ACE_SPIPE_Addr &sa);
 
   ACE_SPIPE_Addr& operator= (const ACE_SPIPE_Addr&) = default;

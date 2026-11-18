@@ -261,7 +261,6 @@ public:
    */
   ACE_Unbounded_Set_Ex (C const &comparator, ACE_Allocator *alloc = nullptr);
 
-
   /**
    * Initialize this set to be an exact copy of the set provided.
    */

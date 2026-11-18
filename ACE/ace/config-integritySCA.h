@@ -39,7 +39,6 @@
 
 /***** End Stack Defines *****/
 
-
 /* SCA STUFF */
 #if defined(INTEGRITY_VERSION) && (INTEGRITY_VERSION >= 40108)
 # define ACE_HAS_SIG_ATOMIC_T

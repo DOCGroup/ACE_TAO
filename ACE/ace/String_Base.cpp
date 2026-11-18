@@ -81,8 +81,6 @@ ACE_String_Base<ACE_CHAR_T>::ACE_String_Base (
   this->set (s, len, release);
 }
 
-
-
 template <class ACE_CHAR_T>
 ACE_String_Base<ACE_CHAR_T>::ACE_String_Base (const ACE_String_Base<ACE_CHAR_T> &s)
   : allocator_ (s.allocator_ ? s.allocator_ : ACE_Allocator::instance ()),
