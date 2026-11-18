@@ -158,7 +158,8 @@ if ($sv1->GetFile ($test1file) == -1) {
     $status = 1;
 }
 elsif (compare ($inputfile, $test1file) != 0) {
-    print STDERR "ERROR: server 1 output differs from input <$inputfile>\n";
+    print STDERR "ERROR: server 1 output differs from input <$inputfile> (input bytes: "
+        . (-s $inputfile) . ", output bytes: " . (-s $test1file) . ")\n";
     $status = 1;
 }
 
@@ -167,7 +168,8 @@ if ($sv2->GetFile ($test2file) == -1) {
     $status = 1;
 }
 elsif (compare ($inputfile, $test2file) != 0) {
-    print STDERR "ERROR: server 2 output differs from input <$inputfile>\n";
+    print STDERR "ERROR: server 2 output differs from input <$inputfile> (input bytes: "
+        . (-s $inputfile) . ", output bytes: " . (-s $test2file) . ")\n";
     $status = 1;
 }
 
