@@ -136,13 +136,17 @@ ACE_Thread_Adapter::invoke_i ()
             ACE_OS_Object_Manager::thread_hook ();
 
           if (hook)
-            // Invoke the start hook to give the user a chance to
-            // perform some initialization processing before the
-            // <func> is invoked.
-            status = hook->start (func, arg);
+            {
+              // Invoke the start hook to give the user a chance to
+              // perform some initialization processing before the
+              // <func> is invoked.
+              status = hook->start (func, arg);
+            }
           else
-            // Call thread entry point.
-            status = (*func) (arg);
+            {
+              // Call thread entry point.
+              status = (*func) (arg);
+            }
         }
 
 #if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
