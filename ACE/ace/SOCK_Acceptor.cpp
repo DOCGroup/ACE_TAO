@@ -255,7 +255,9 @@ ACE_SOCK_Acceptor::shared_open (const ACE_Addr &local_sap,
           local_inet6_addr.sin6_addr = in6addr_any;
         }
       else
-        local_inet6_addr = *reinterpret_cast<sockaddr_in6 *> (local_sap.get_addr ());
+        {
+          local_inet6_addr = *reinterpret_cast<sockaddr_in6 *> (local_sap.get_addr ());
+        }
 
       /*
        * Handle IPv6-only requests. On Windows, v6-only is the default
@@ -270,15 +272,21 @@ ACE_SOCK_Acceptor::shared_open (const ACE_Addr &local_sap,
                                     IPV6_V6ONLY,
                                     (char *)&setting,
                                     sizeof (setting)))
-        error = 1;
-      else
-        // We probably don't need a bind_port written here.
-        // There are currently no supported OS's that define
-        // ACE_LACKS_WILDCARD_BIND.
-        if (ACE_OS::bind (this->get_handle (),
-                          reinterpret_cast<sockaddr *> (&local_inet6_addr),
-                          sizeof local_inet6_addr) == -1)
+        {
           error = 1;
+        }
+      else
+        {
+          // We probably don't need a bind_port written here.
+          // There are currently no supported OS's that define
+          // ACE_LACKS_WILDCARD_BIND.
+          if (ACE_OS::bind (this->get_handle (),
+                            reinterpret_cast<sockaddr *> (&local_inet6_addr),
+                            sizeof local_inet6_addr) == -1)
+            {
+              error = 1;
+            }
+        }
     }
   else
 #endif /* ACE_HAS_IPV6 */
