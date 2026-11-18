@@ -430,10 +430,12 @@ ACE_High_Res_Timer::print_ave (const ACE_TCHAR *str,
                         (u_long) ((avg_nsecs + 500u) / 1000u));
     }
   else
-    ACE_OS::snprintf (buf, 100,
-                      ACE_TEXT (" total %3lu.%06lu secs\n"),
-                      total_secs,
-                      (extra_nsecs + 500lu) / 1000lu);
+    {
+      ACE_OS::snprintf (buf, 100,
+                        ACE_TEXT (" total %3lu.%06lu secs\n"),
+                        total_secs,
+                        (extra_nsecs + 500lu) / 1000lu);
+    }
 
   ACE_OS::write (handle,
                  str,
@@ -473,10 +475,12 @@ ACE_High_Res_Timer::print_total (const ACE_TCHAR *str,
                         (u_long) ((avg_nsecs + 500u) / 1000u));
     }
   else
-    ACE_OS::snprintf (buf, 100,
-                      ACE_TEXT (" total %3lu.%06u secs\n"),
-                      total_secs,
-                      (extra_nsecs + 500u) / 1000u);
+    {
+      ACE_OS::snprintf (buf, 100,
+                        ACE_TEXT (" total %3lu.%06u secs\n"),
+                        total_secs,
+                        (extra_nsecs + 500u) / 1000u);
+    }
 
   ACE_OS::write (handle,
                  str,

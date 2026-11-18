@@ -63,7 +63,9 @@ ACE_Mutex::ACE_Mutex (int type, const ACE_TCHAR *name,
       if (fd == ACE_INVALID_HANDLE)
         {
           if (errno == EEXIST)
-            fd = ACE_OS::shm_open (name, O_RDWR | O_CREAT, mode);
+            {
+              fd = ACE_OS::shm_open (name, O_RDWR | O_CREAT, mode);
+            }
           else
           {
             return;
@@ -144,8 +146,10 @@ ACE_Mutex::ACE_Mutex (int type, const ACE_TCHAR *name,
 #endif /* ACE_MUTEX_PROCESS_LOCK_IS_MUTEX */
 
   if (ACE_OS::mutex_init (&this->lock_, type, name, arg) != 0)
-    ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
-                   ACE_TEXT ("ACE_Mutex::ACE_Mutex")));
+    {
+      ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_Mutex::ACE_Mutex")));
+    }
 }
 
 ACE_Mutex::~ACE_Mutex ()

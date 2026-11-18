@@ -26,9 +26,13 @@ ACE_LSOCK_Stream::get_local_addr (ACE_Addr &addr) const
   ACE_UNIX_Addr lhs_unix_addr;
 
   if (rhs_unix_addr == nullptr)
-    return -1;
+    {
+      return -1;
+    }
   else if (ACE_SOCK::get_local_addr (lhs_unix_addr) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       *rhs_unix_addr = lhs_unix_addr;
