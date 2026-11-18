@@ -76,10 +76,14 @@ ACE_Service_Type_Impl::fini () const
                        ACE_Service_Type::DELETE_OBJ))
     {
       if (gobbler_ != nullptr)
-        gobbler_ (this->object ());
+        {
+          gobbler_ (this->object ());
+        }
       else
-        // Cast to remove const-ness.
-        operator delete ((void *) this->object ());
+        {
+          // Cast to remove const-ness.
+          operator delete ((void *) this->object ());
+        }
     }
 
   if (ACE_BIT_ENABLED (this->flags_,
@@ -214,11 +218,13 @@ ACE_Module_Type::init (int argc, ACE_TCHAR *argv[]) const
 
   if (reader->init (argc, argv) == -1
       || writer->init (argc, argv) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
 }
 
 int
@@ -232,11 +238,13 @@ ACE_Module_Type::suspend () const
 
   if (reader->suspend () == -1
       || writer->suspend () == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
 }
 
 int
@@ -250,11 +258,13 @@ ACE_Module_Type::resume () const
 
   if (reader->resume () == -1
       || writer->resume () == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
 }
 
 // Note, these operations are somewhat too familiar with the
@@ -296,11 +306,13 @@ ACE_Module_Type::info (ACE_TCHAR **str, size_t len) const
                     ACE_TEXT ("# ACE_Module\n"));
 
   if (*str == nullptr && (*str = ACE_OS::strdup (buf)) == nullptr)
-    return -1;
+    {
+      return -1;
+    }
   else
-  {
-    ACE_OS::strsncpy (*str, buf, len);
-  }
+    {
+      ACE_OS::strsncpy (*str, buf, len);
+    }
   return static_cast<int> (ACE_OS::strlen (buf));
 }
 
@@ -343,7 +355,9 @@ ACE_Stream_Type::suspend () const
   for (ACE_Module_Type *m = this->head_;
        m != nullptr;
        m = m->link ())
-    m->suspend ();
+    {
+      m->suspend ();
+    }
 
   return 0;
 }
@@ -356,7 +370,9 @@ ACE_Stream_Type::resume () const
   for (ACE_Module_Type *m = this->head_;
        m != nullptr;
        m = m->link ())
-    m->resume ();
+    {
+      m->resume ();
+    }
 
   return 0;
 }
@@ -388,11 +404,13 @@ ACE_Stream_Type::info (ACE_TCHAR **str, size_t len) const
                     ACE_TEXT ("# STREAM\n"));
 
   if (*str == nullptr && (*str = ACE_OS::strdup (buf)) == nullptr)
-    return -1;
+    {
+      return -1;
+    }
   else
-  {
-    ACE_OS::strsncpy (*str, buf, len);
-  }
+    {
+      ACE_OS::strsncpy (*str, buf, len);
+    }
   return static_cast<int> (ACE_OS::strlen (buf));
 }
 
@@ -437,11 +455,13 @@ ACE_Stream_Type::remove (ACE_Module_Type *mod)
       if (m == mod)
         {
           if (prev == nullptr)
-            this->head_ = link;
+            {
+              this->head_ = link;
+            }
           else
-          {
-            prev->link (link);
-          }
+            {
+              prev->link (link);
+            }
 
           // Final arg is an indication to *not* delete the Module.
           if (str->remove (m->name (),
@@ -485,9 +505,11 @@ ACE_Stream_Type::find (const ACE_TCHAR *module_name) const
   for (ACE_Module_Type *m = this->head_;
        m != nullptr;
        m = m->link ())
-    if (ACE_OS::strcmp (m->name (), module_name) == 0)
     {
-      return m;
+      if (ACE_OS::strcmp (m->name (), module_name) == 0)
+        {
+          return m;
+        }
     }
 
   return nullptr;
