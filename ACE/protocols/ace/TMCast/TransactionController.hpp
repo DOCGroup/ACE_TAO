@@ -357,7 +357,7 @@ namespace ACE_TMCast
           ACE_OS::abort ();
         }
 
-        current_.id++;
+        ++current_.id;
         current_.status = Protocol::TS_BEGIN;
 
         initiated_ = true;
