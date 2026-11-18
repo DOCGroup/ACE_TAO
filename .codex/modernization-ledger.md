@@ -12903,3 +12903,10 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - All five affected sources passed syntax-only compilation with
   `ACE_HAS_DUMP`; the normal ACE core realclean build passed. The broader
   repository-wide log-format audit remains open.
+
+## 2026-11-18 ACE allocator and token log formats
+
+- Corrected `ACE_Static_Allocator_Base::dump()` to log its `size_t` offset
+  with `%B`, and `ACE_TPQ_Iterator::dump()` to log its pointer with `%@`.
+- `git diff --check` passed. These are narrow format corrections; the wider
+  ACE/TAO logging-format audit remains open.
