@@ -46,9 +46,11 @@ ACE_Semaphore::ACE_Semaphore (unsigned int count,
   if (ACE_OS::sema_init (&this->semaphore_, count, type,
                          name, arg, max) != 0)
 #endif
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Semaphore::ACE_Semaphore")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_Semaphore::ACE_Semaphore")));
+    }
 }
 
 ACE_Semaphore::~ACE_Semaphore ()
