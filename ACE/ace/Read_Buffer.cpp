@@ -77,7 +77,7 @@ ACE_Read_Buffer::~ACE_Read_Buffer ()
 {
   ACE_TRACE ("ACE_Read_Buffer::~ACE_Read_Buffer");
 
-  if (this->close_on_delete_)
+  if (this->close_on_delete_ && this->stream_ != nullptr)
     {
       ACE_OS::fclose (this->stream_);
     }
