@@ -27,7 +27,9 @@ ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (ACE_Allocator *alloc)
   //   ACE_TRACE ("ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue ()");
 
   if (this->allocator_ == nullptr)
-    this->allocator_ = ACE_Allocator::instance ();
+    {
+      this->allocator_ = ACE_Allocator::instance ();
+    }
 
   ACE_NEW_MALLOC (this->head_,
                   (ACE_Node<T> *) this->allocator_->malloc (sizeof (ACE_Node<T>)),
@@ -43,7 +45,9 @@ ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (ACE_Unbounded_Queue<T> const &us)
   //   ACE_TRACE ("ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue");
 
   if (this->allocator_ == nullptr)
-    this->allocator_ = ACE_Allocator::instance ();
+    {
+      this->allocator_ = ACE_Allocator::instance ();
+    }
 
   ACE_NEW_MALLOC (this->head_,
                   (ACE_Node<T> *) this->allocator_->malloc (sizeof (ACE_Node<T>)),
@@ -109,9 +113,13 @@ ACE_Unbounded_Queue<T>::copy_nodes (ACE_Unbounded_Queue<T> const &us)
   for (ACE_Node<T> *curr = us.head_->next_;
        curr != us.head_;
        curr = curr->next_)
-    if (this->enqueue_tail (curr->item_) == -1)
-      // @@ What's the right thing to do here?
-      this->delete_nodes ();
+    {
+      if (this->enqueue_tail (curr->item_) == -1)
+        {
+          // @@ What's the right thing to do here?
+          this->delete_nodes ();
+        }
+    }
 }
 
 template <class T> void
@@ -206,7 +214,9 @@ ACE_Unbounded_Queue<T>::dequeue_head (T &item)
 
   // Check for empty queue.
   if (this->is_empty ())
-    return -1;
+    {
+      return -1;
+    }
 
   ACE_Node<T> *temp = this->head_->next_;
 
@@ -240,7 +250,9 @@ ACE_Unbounded_Queue<T>::get (T *&item, size_t slot) const
   for (i = 0; i < this->cur_size_; ++i)
     {
       if (i == slot)
-        break;
+        {
+          break;
+        }
 
       curr = curr->next_;
     }
@@ -251,7 +263,9 @@ ACE_Unbounded_Queue<T>::get (T *&item, size_t slot) const
       return 0;
     }
   else
-    return -1;
+    {
+      return -1;
+    }
 }
 
 template <class T> int
@@ -267,7 +281,9 @@ ACE_Unbounded_Queue<T>::set (T const &item,
   for (i = 0;
        i < slot && i < this->cur_size_;
        ++i)
-    curr = curr->next_;
+    {
+      curr = curr->next_;
+    }
 
   if (i < this->cur_size_)
     {
@@ -285,9 +301,13 @@ ACE_Unbounded_Queue<T>::set (T const &item,
         {
           // Try to expand the size of the set by 1.
           if (this->enqueue_tail (item) == -1)
-            return -1;
+            {
+              return -1;
+            }
           else
-            return 0;
+            {
+              return 0;
+            }
         }
       else
         {
@@ -304,7 +324,9 @@ ACE_Unbounded_Queue<T>::set (T const &item,
               // Try to expand the size of the set by 1, but don't
               // store anything in the dummy node (yet).
               if (this->enqueue_tail (dummy) == -1)
-                return -1;
+                {
+                  return -1;
+                }
             }
 
           curr->item_ = item;
@@ -362,7 +384,9 @@ ACE_Unbounded_Queue_Const_Iterator<T>::next (T *&item)
 {
   // ACE_TRACE ("ACE_Unbounded_Queue_Const_Iterator<T>::next");
   if (this->current_ == this->queue_.head_)
-    return 0;
+    {
+      return 0;
+    }
   else
     {
       item = std::addressof (this->current_->item_);
@@ -417,7 +441,9 @@ ACE_Unbounded_Queue_Iterator<T>::next (T *&item)
 {
   // ACE_TRACE ("ACE_Unbounded_Queue_Iterator<T>::next");
   if (this->current_ == this->queue_.head_)
-    return 0;
+    {
+      return 0;
+    }
   else
     {
       item = std::addressof (this->current_->item_);
