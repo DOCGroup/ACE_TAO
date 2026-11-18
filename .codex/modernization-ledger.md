@@ -13010,6 +13010,14 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   `ACE_UINT64` cast. `git diff --check` passes; the ACE test log-format audit
   remains open.
 
+## 2026-11-18 ACE thread count log formats
+
+- Changed `Thread_Creation_Threshold_Test.cpp` to use `%Q` and `ACE_UINT64`
+  casts for its `unsigned long` thread totals and limits. Corrected the
+  `u_short` diagnostic in `Service_Config_Test.cpp` to `%d`, matching the
+  integer promotion used by `ACE_OS::fprintf`. Both files pass syntax-only
+  compilation with the project C++17 warning flags; `git diff --check` passes.
+
 ## 2026-11-18 ACE core brace audit
 
 - Ran `clang-tidy`'s `readability-braces-around-statements` check over the
