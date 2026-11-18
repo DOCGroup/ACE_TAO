@@ -2168,17 +2168,19 @@ Key_List::dump ()
   u_int keysig_width = option.max_keysig_size () > std::strlen ("keysig")
     ? option.max_keysig_size ()
     : static_cast<u_int> (std::strlen ("keysig"));
+  int const keysig_field_width = static_cast<int> (keysig_width);
 
   size_t key_length = this->max_key_length ();
   size_t keyword_width = key_length > std::strlen ("keysig")
     ? key_length
     : std::strlen ("keysig");
+  int const keyword_field_width = static_cast<int> (keyword_width);
 
   ACE_DEBUG ((LM_DEBUG,
               "\nList contents are:\n(hash value, key length, slot, %*s, %*s, duplicates):\n",
-              keysig_width,
+              keysig_field_width,
               "keysig",
-              keyword_width,
+              keyword_field_width,
               "keyword"));
 
   for (List_Node *ptr = head; ptr; ptr = ptr->next)
@@ -2188,9 +2190,9 @@ Key_List::dump ()
                   ptr->hash_value,
                   ptr->length,
                   ptr->slot,
-                  keysig_width,
+                  keysig_field_width,
                   ptr->keysig.c_str (),
-                  keyword_width,
+                  keyword_field_width,
                   ptr->key.c_str ()));
 
       List_Node *dup = ptr->link;

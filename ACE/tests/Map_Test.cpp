@@ -98,7 +98,7 @@ functionality_test (TEST_MAP &map,
 
         // Debugging info.
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%B|%d|%d)"),
+                    ACE_TEXT ("(%B|%B|%B)"),
                     counter,
                     original_value,
                     entry.second ()));
@@ -135,7 +135,7 @@ functionality_test (TEST_MAP &map,
 
         // Debugging info.
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%d|%d|%d)"),
+                    ACE_TEXT ("(%B|%B|%B)"),
                     counter,
                     original_value,
                     entry.second ()));
