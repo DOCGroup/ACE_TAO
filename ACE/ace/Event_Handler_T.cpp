@@ -65,7 +65,9 @@ ACE_Event_Handler_T<T>::set_handle (ACE_HANDLE h)
 {
   ACE_TRACE ("ACE_Event_Handler_T<T>::set_handle");
   if (this->set_handle_ != nullptr)
-    ((*this->op_handler_).*set_handle_) (h);
+    {
+      ((*this->op_handler_).*set_handle_) (h);
+    }
 }
 
 template<class T> int

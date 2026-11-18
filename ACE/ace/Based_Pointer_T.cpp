@@ -82,8 +82,10 @@ ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic (CONCRETE *rhs)
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic");
 
   if (rhs == 0)
-    // Store a value of <target_> that indicate "NULL" pointer.
-    this->target_ = -1;
+    {
+      // Store a value of <target_> that indicate "NULL" pointer.
+      this->target_ = -1;
+    }
   else
     {
       void *base_addr {};
