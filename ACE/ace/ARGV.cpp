@@ -83,7 +83,9 @@ ACE_ARGV_T<CHAR_TYPE>::ACE_ARGV_T (CHAR_TYPE const buf[],
   ACE_TRACE ("ACE_ARGV_T::ACE_ARGV_T CHAR_TYPE[] to CHAR_TYPE *[]");
 
   if (buf == nullptr || buf[0] == '\0')
-    return;
+    {
+      return;
+    }
 
   // Make an internal copy of the string.
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -100,9 +102,11 @@ ACE_ARGV_T<CHAR_TYPE>::ACE_ARGV_T (CHAR_TYPE const buf[],
 
   // Create this->argv_.
   if (this->string_to_argv () == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("string_to_argv")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("string_to_argv")));
+    }
 }
 
 template <typename CHAR_TYPE>
@@ -114,7 +118,9 @@ ACE_ARGV_T<CHAR_TYPE>::ACE_ARGV_T (CHAR_TYPE *argv[],
   ACE_TRACE ("ACE_ARGV_T::ACE_ARGV_T CHAR_TYPE*[] to CHAR_TYPE[]");
 
   if (argv == nullptr || argv[0] == nullptr)
-    return;
+    {
+      return;
+    }
 
   this->argc_ = ACE_OS::argv_to_string (argv,
                                         this->buf_,
@@ -224,8 +230,15 @@ ACE_ARGV_T<CHAR_TYPE>::add (CHAR_TYPE const *next_arg, bool quote_arg)
     {
       this->length_ += 2;
       if (ACE_OS::strchr (next_arg, '"') != nullptr)
-        for (CHAR_TYPE const *p = next_arg; *p != '\0'; ++p)
-          if (*p == '"') ++this->length_;
+        {
+          for (CHAR_TYPE const *p = next_arg; *p != '\0'; ++p)
+            {
+              if (*p == '"')
+                {
+                  ++this->length_;
+                }
+            }
+        }
     }
   else
     {
@@ -234,9 +247,11 @@ ACE_ARGV_T<CHAR_TYPE>::add (CHAR_TYPE const *next_arg, bool quote_arg)
 
   // Put the new argument at the end of the queue.
   if (this->queue_.enqueue_tail (ACE_ARGV_Queue_Entry_T<CHAR_TYPE> (next_arg, quote_arg)) == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Can't add more to ARGV queue")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("Can't add more to ARGV queue")),
+                           -1);
+    }
 
   ++this->argc_;
 
@@ -245,7 +260,9 @@ ACE_ARGV_T<CHAR_TYPE>::add (CHAR_TYPE const *next_arg, bool quote_arg)
   if (this->argv_ != nullptr)
     {
       for (int i {}; this->argv_[i] != nullptr; ++i)
-        ACE_OS::free (this->argv_[i]);
+        {
+          ACE_OS::free (this->argv_[i]);
+        }
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
       ACE_Allocator::instance()->free (this->argv_);
@@ -270,8 +287,12 @@ int
 ACE_ARGV_T<CHAR_TYPE>::add (CHAR_TYPE *argv[], bool quote_args)
 {
   for (int i {}; argv[i] != nullptr; ++i)
-    if (this->add (argv[i], quote_args) == -1)
-      return -1;
+    {
+      if (this->add (argv[i], quote_args) == -1)
+        {
+          return -1;
+        }
+    }
 
   return 0;
 }
@@ -283,12 +304,16 @@ ACE_ARGV_T<CHAR_TYPE>::~ACE_ARGV_T ()
   ACE_TRACE ("ACE_ARGV_T::~ACE_ARGV_T");
 
   if (this->argv_ != nullptr)
-    for (int i {}; this->argv_[i] != nullptr; ++i)
+    {
+      for (int i {}; this->argv_[i] != nullptr; ++i)
+        {
 #if defined (ACE_HAS_ALLOC_HOOKS)
-      ACE_Allocator::instance()->free (this->argv_[i]);
+          ACE_Allocator::instance()->free (this->argv_[i]);
 #else
-      ACE_OS::free (this->argv_[i]);
+          ACE_OS::free (this->argv_[i]);
 #endif /* ACE_HAS_ALLOC_HOOKS */
+        }
+    }
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_Allocator::instance()->free (this->argv_);
@@ -310,7 +335,9 @@ ACE_ARGV_T<CHAR_TYPE>::create_buf_from_queue ()
 
   // If the are no arguments, don't do anything
   if (this->argc_ <= 0)
-    return -1;
+    {
+      return -1;
+    }
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_Allocator::instance()->free (this->buf_);
@@ -351,7 +378,10 @@ ACE_ARGV_T<CHAR_TYPE>::create_buf_from_queue ()
               CHAR_TYPE prev {};
               for (CHAR_TYPE const *p = arg->arg_; *p != '\0'; ++p)
                 {
-                  if (*p == '"' && prev != '\\') *ptr++ = '\\';
+                  if (*p == '"' && prev != '\\')
+                    {
+                      *ptr++ = '\\';
+                    }
                   prev = *ptr++ = *p;
                 }
             }
