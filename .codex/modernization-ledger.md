@@ -12927,3 +12927,10 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   `%B`, and its signed timer-id values use `%b`.
 - `git diff --check` passed. The wider ACE/TAO logging-format audit remains
   open.
+
+## 2026-11-18 ACE hash-manager log formats
+
+- Changed hash-entry next/previous links to `%@` and signed iterator indexes
+  to `%b` in both hash map manager variants.
+- `git diff --check` passed. The repository-wide ACE/TAO logging-format audit
+  remains open.
