@@ -157,11 +157,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ApplicationFactoryValue_impl application_value;
       application_value.value (31);
+      application_value.application_state (37);
       CORBA::ValueBase_var application_copy (
         application_value._copy_value ());
       ApplicationFactoryValue_impl * const copied_application =
         dynamic_cast<ApplicationFactoryValue_impl *> (application_copy.in ());
-      if (copied_application == nullptr || copied_application->value () != 31)
+      if (copied_application == nullptr
+          || copied_application->value () != 31
+          || copied_application->application_state () != 37)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Application-factory copy failed\n"),
