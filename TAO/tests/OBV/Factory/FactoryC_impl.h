@@ -65,7 +65,20 @@ class ApplicationFactoryValue_impl :
   public CORBA::DefaultValueRefCountBase
 {
 public:
+  void application_state (CORBA::ULong value)
+  {
+    this->application_state_ = value;
+  }
+
+  CORBA::ULong application_state () const
+  {
+    return this->application_state_;
+  }
+
   CORBA::ValueBase *_copy_value () override;
+
+private:
+  CORBA::ULong application_state_ {};
 };
 
 #endif /* TAO_FACTORY_FACTORY_C_IMPL_H */

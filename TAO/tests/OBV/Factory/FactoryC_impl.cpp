@@ -54,5 +54,6 @@ ApplicationFactoryValue_impl::_copy_value ()
                     ApplicationFactoryValue_impl,
                     CORBA::NO_MEMORY ());
   ret_val->value (this->value ());
+  ret_val->application_state (this->application_state ());
   return ret_val;
 }
