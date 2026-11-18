@@ -72,8 +72,8 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
   *os << node->local_name () << " ()" << be_nl
       << "{}";
 
-  // Generate _copy_value() only for the generated concrete factory path.
-  // Application factory implementations provide their own copy operation.
+  // Generate _copy_value() only for a concrete generated factory path.
+  // Application factory implementations provide their own copy.
   // Direct valuetype members are copied recursively, without identity
   // preservation or cycle detection. Other members use their normal copy
   // behavior, so nested valuetypes remain shared.

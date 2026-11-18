@@ -188,8 +188,8 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
         }
       *os << node->local_name () << " () override;";
 
-      // Generate _copy_value() only for the generated concrete factory path.
-      // Application factory implementations provide their own copy operation.
+      // Generate _copy_value() only for a concrete generated factory path.
+      // Application factory implementations provide their own copy.
       if (node->obv_need_ref_counter ()
           && be_valuetype::FS_CONCRETE_FACTORY
                == node->determine_factory_style ())
