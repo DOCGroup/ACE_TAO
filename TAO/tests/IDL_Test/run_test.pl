@@ -161,6 +161,9 @@ if ($status == 0) {
         ["Accessor_Optimized_Refcount_Inherited",
          qr/void\s+_add_ref\s*\(\)\s*override\s*;[\s\S]*?void\s+_remove_ref\s*\(\)\s*override\s*;/,
          "missing supported-interface overrides with an inherited refcount"],
+        ["Accessor_Optimized_Refcount_Multi_Derived",
+         qr/void\s+_add_ref\s*\(\)\s*override\s*;[\s\S]*?void\s+_remove_ref\s*\(\)\s*override\s*;/,
+         "missing refcount overrides when a derived valuetype adds a supported interface"],
     ) {
         my ($class_name, $pattern, $diagnostic) = @{$class_check};
         my $class_body = generated_class_body ($optimized_header, $class_name);
@@ -188,6 +191,15 @@ if ($status == 0) {
         $status = 1;
       }
 
+    my $optimized_multi_derived_body = generated_class_body (
+      $optimized_header, "Accessor_Optimized_Refcount_Multi_Derived");
+    if (!defined $optimized_multi_derived_body
+        || $optimized_multi_derived_body =~ /DefaultValueRefCountBase/)
+      {
+        print STDERR "ERROR: optimized supported descendant duplicates its inherited counter\n";
+        $status = 1;
+      }
+
     my $optimized_source;
     open $generated, "<", "valuetype_opt_accessorC.cpp"
       or die "ERROR: cannot open generated file <valuetype_opt_accessorC.cpp>: $!\n";
@@ -204,6 +216,14 @@ if ($status == 0) {
         print STDERR "ERROR: missing deep copy of an optimized direct valuetype member\n";
         $status = 1;
     }
+
+    if ($optimized_source !~ /Accessor_Optimized_Refcount_Multi_Derived::_add_ref\s*\(/s
+        || $optimized_source !~ /Accessor_Optimized_Refcount_Multi_Derived::_remove_ref\s*\(/s
+        || $optimized_source !~ /Accessor_Optimized_Refcount_Multi_Derived::_copy_value\s*\(/s)
+      {
+        print STDERR "ERROR: optimized supported descendant lacks refcount or copy definitions\n";
+        $status = 1;
+      }
 }
 
 exit $status;
