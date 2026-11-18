@@ -13321,3 +13321,9 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Added Allman braces around fourteen open, connect, timeout, and constructor-error bodies in `ACE/ace/SOCK_SEQPACK_Connector.cpp`.
 - Focused `clang-tidy -checks=-*,readability-braces-around-statements` and `git diff --check` passed. The broader ACE core audit remains open.
 - No build or runtime test was run.
+
+## 2026-11-18 ACE service repository and gestalt braces
+
+- Added Allman braces around eleven single-statement branches in `ACE/ace/Service_Repository.cpp` and 33 branches in `ACE/ace/Service_Gestalt.cpp`.
+- Focused `clang-tidy -checks=-*,readability-braces-around-statements` and `git diff --check` passed for both translation units.
+- No build or runtime test was run.
