@@ -253,8 +253,8 @@ ACE_TPQ_Iterator::dump () const
   ACE_TRACE ("ACE_TPQ_Iterator::dump");
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("ACE_TPQ_Iterator::dump:\n")
-              ACE_TEXT (" current_ = %d\n"),
-              (long) this->current_));
+              ACE_TEXT (" current_ = %@\n"),
+              this->current_));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("head_ and tail_\n")));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
