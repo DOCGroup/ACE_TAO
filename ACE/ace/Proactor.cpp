@@ -139,18 +139,22 @@ ACE_Proactor_Timer_Handler::svc ()
           // Compare absolute time with curent time received from the
           // timer queue.
           if (absolute_time > cur_time)
-            relative_time = absolute_time - cur_time;
+            {
+              relative_time = absolute_time - cur_time;
+            }
           else
-          {
-            relative_time = ACE_Time_Value::zero;
-          }
+            {
+              relative_time = ACE_Time_Value::zero;
+            }
 
           // Block for relative time.
           result = this->timer_event_.wait (&relative_time, 0);
         }
       else
-        // The timer queue has no entries, so wait indefinitely.
-        result = this->timer_event_.wait ();
+        {
+          // The timer queue has no entries, so wait indefinitely.
+          result = this->timer_event_.wait ();
+        }
 
       // Check for timer expiries.
       if (result == -1)
@@ -219,10 +223,12 @@ ACE_Proactor_Handle_Timeout_Upcall::timeout (ACE_Proactor_Timer_Queue &,
                                              const ACE_Time_Value &time)
 {
   if (this->proactor_ == nullptr)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%t) No Proactor set in ACE_Proactor_Handle_Timeout_Upcall,")
-                       ACE_TEXT (" no completion port to post timeout to?!@\n")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("(%t) No Proactor set in ACE_Proactor_Handle_Timeout_Upcall,")
+                            ACE_TEXT (" no completion port to post timeout to?!@\n")),
+                           -1);
+    }
 
   // Create the Asynch_Timer.
   ACE_Asynch_Result_Impl *asynch_timer =
@@ -234,21 +240,25 @@ ACE_Proactor_Handle_Timeout_Upcall::timeout (ACE_Proactor_Timer_Queue &,
                                           -1);
 
   if (asynch_timer == nullptr)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%N:%l:(%P | %t):%p\n"),
-                       ACE_TEXT ("ACE_Proactor_Handle_Timeout_Upcall::timeout:")
-                       ACE_TEXT ("create_asynch_timer failed")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("%N:%l:(%P | %t):%p\n"),
+                            ACE_TEXT ("ACE_Proactor_Handle_Timeout_Upcall::timeout:")
+                            ACE_TEXT ("create_asynch_timer failed")),
+                           -1);
+    }
 
   std::unique_ptr<ACE_Asynch_Result_Impl> safe_asynch_timer (asynch_timer);
 
   // Post a completion.
   if (-1 == safe_asynch_timer->post_completion
       (this->proactor_->implementation ()))
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Failure in dealing with timers: ")
-                       ACE_TEXT ("PostQueuedCompletionStatus failed\n")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("Failure in dealing with timers: ")
+                            ACE_TEXT ("PostQueuedCompletionStatus failed\n")),
+                           -1);
+    }
 
   // The completion has been posted.  The proactor is now responsible
   // for managing the asynch_timer memory.
@@ -295,10 +305,12 @@ ACE_Proactor_Handle_Timeout_Upcall::proactor (ACE_Proactor &proactor)
       return 0;
     }
   else
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("ACE_Proactor_Handle_Timeout_Upcall is only suppose")
-                       ACE_TEXT (" to be used with ONE (and only one) Proactor\n")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("ACE_Proactor_Handle_Timeout_Upcall is only suppose")
+                            ACE_TEXT (" to be used with ONE (and only one) Proactor\n")),
+                           -1);
+    }
 }
 
 // *********************************************************************
@@ -353,9 +365,11 @@ ACE_Proactor::ACE_Proactor (ACE_Proactor_Impl *implementation,
 
   // Activate <timer_handler>.
   if (this->timer_handler_->activate () == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%N:%l:(%P | %t):%p\n"),
-                ACE_TEXT ("Task::activate:could not create thread\n")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%N:%l:(%P | %t):%p\n"),
+                     ACE_TEXT ("Task::activate:could not create thread\n")));
+    }
 }
 
 ACE_Proactor::~ACE_Proactor ()
@@ -630,9 +644,11 @@ ACE_Proactor::close ()
 {
   // Close the implementation.
   if (this->implementation ()->close () == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%N:%l:(%P | %t):%p\n"),
-                ACE_TEXT ("ACE_Proactor::close: implementation close")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%N:%l:(%P | %t):%p\n"),
+                     ACE_TEXT ("ACE_Proactor::close: implementation close")));
+    }
 
   // Delete the implementation.
   if (this->delete_implementation_)
