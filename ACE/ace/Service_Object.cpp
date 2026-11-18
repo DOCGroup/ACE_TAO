@@ -89,10 +89,12 @@ int
 ACE_Service_Type::fini ()
 {
   if (ACE::debug ())
-    ACELIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE (%P|%t) ST::fini - destroying name=%s, dll=%s\n"),
-                this->name_.get (),
-                this->dll_.dll_name_));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("ACE (%P|%t) ST::fini - destroying name=%s, dll=%s\n"),
+                     this->name_.get (),
+                     this->dll_.dll_name_));
+    }
 
   if (this->fini_already_called_)
   {

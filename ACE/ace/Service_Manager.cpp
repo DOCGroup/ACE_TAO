@@ -97,17 +97,19 @@ ACE_Service_Manager::init (int argc, ACE_TCHAR *argv[])
 
   for (int c {}; (c = getopt ()) != -1; )
   //FUZZ: enable check_for_lack_ACE_OS
-     switch (c)
-       {
-       case 'd':
-         this->debug_ = true;
-         break;
-       case 'p':
-         local_addr.set ((u_short) ACE_OS::atoi (getopt.opt_arg ()));
-         break;
-       default:
-         break;
-       }
+    {
+      switch (c)
+        {
+        case 'd':
+          this->debug_ = true;
+          break;
+        case 'p':
+          local_addr.set ((u_short) ACE_OS::atoi (getopt.opt_arg ()));
+          break;
+        default:
+          break;
+        }
+    }
 
   if (this->get_handle () == ACE_INVALID_HANDLE &&
       this->open (local_addr) == -1)
@@ -247,7 +249,9 @@ ACE_Service_Manager::process_request (ACE_TCHAR *request)
   ACE_TRACE ("ACE_Service_Manager::process_request");
   ACE_TCHAR *p = request;
   while (*p != '\0' && *p != '\r' && *p != '\n')
-    ++p;
+    {
+      ++p;
+    }
 
   *p = '\0';
 
