@@ -101,11 +101,15 @@ ACE_Malloc_Lock_Adapter_T<ACE_Process_Semaphore>::operator () (const ACE_TCHAR *
 {
   ACE_Process_Semaphore *p {};
   if (name == nullptr)
-    ACE_NEW_RETURN (p, ACE_Process_Semaphore (1, name), nullptr);
+    {
+      ACE_NEW_RETURN (p, ACE_Process_Semaphore (1, name), nullptr);
+    }
   else
-    ACE_NEW_RETURN (p, ACE_Process_Semaphore (1, ACE::basename (name,
-                                                                ACE_DIRECTORY_SEPARATOR_CHAR)),
-                    nullptr);
+    {
+      ACE_NEW_RETURN (p, ACE_Process_Semaphore (1, ACE::basename (name,
+                                                                  ACE_DIRECTORY_SEPARATOR_CHAR)),
+                      nullptr);
+    }
   return p;
 }
 

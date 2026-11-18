@@ -117,12 +117,16 @@ int
 ACE_UNIX_Addr::set (const ACE_UNIX_Addr &sa)
 {
   if (sa.get_type () == AF_ANY)
-    (void) std::memset (&this->unix_addr_,
-                        0,
-                        sizeof this->unix_addr_);
+    {
+      (void) std::memset (&this->unix_addr_,
+                          0,
+                          sizeof this->unix_addr_);
+    }
   else
-    std::strcpy (this->unix_addr_.sun_path,
-                 sa.unix_addr_.sun_path);
+    {
+      std::strcpy (this->unix_addr_.sun_path,
+                   sa.unix_addr_.sun_path);
+    }
 
   this->unix_addr_.sun_family = AF_UNIX;
   this->base_set (sa.get_type (), sa.get_size ());

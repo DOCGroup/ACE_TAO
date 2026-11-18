@@ -26,19 +26,21 @@ namespace {
     int val = ACE_OS::fcntl (handle, F_GETFL, 0);
 
     if (val == -1)
-    {
-      return -1;
-    }
+      {
+        return -1;
+      }
 
     // Turn on flags.
     ACE_SET_BITS (val, flags);
 
     if (ACE_OS::fcntl (handle, F_SETFL, val) == -1)
-      return -1;
+      {
+        return -1;
+      }
     else
-    {
-      return 0;
-    }
+      {
+        return 0;
+      }
   }
 
   int clr_flags_helper (ACE_HANDLE handle, int flags)
@@ -46,19 +48,21 @@ namespace {
     int val = ACE_OS::fcntl (handle, F_GETFL, 0);
 
     if (val == -1)
-    {
-      return -1;
-    }
+      {
+        return -1;
+      }
 
     // Turn flags off.
     ACE_CLR_BITS (val, flags);
 
     if (ACE_OS::fcntl (handle, F_SETFL, val) == -1)
-      return -1;
+      {
+        return -1;
+      }
     else
-    {
-      return 0;
-    }
+      {
+        return 0;
+      }
   }
 }
 #endif
