@@ -118,7 +118,7 @@ Test_Singleton::~Test_Singleton ()
   if (variety_ != --current_)
     {
       ACE_OS::fprintf (stderr,
-                       ACE_TEXT ("ERROR: instance %u destroyed out of order!\n"),
+                       ACE_TEXT ("ERROR: instance %d destroyed out of order!\n"),
                        variety_);
       /* ACE_DEBUG ((LM_ERROR, ACE_TEXT ("ERROR: instance %u destroyed out of order!\n"),
                  variety_)); */
