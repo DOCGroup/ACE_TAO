@@ -126,7 +126,9 @@ ACE_Handle_Set::count_bits (u_long n)
   for (u_long m = n;
        m != 0;
        m &= m - 1)
-    ++rval;
+    {
+      ++rval;
+    }
 
   return rval;
 #else
@@ -197,7 +199,9 @@ ACE_Handle_Set::sync (ACE_HANDLE max)
   for (int i = ACE_DIV_BY_WORDSIZE (max - 1);
        i >= 0;
        --i)
-    this->size_ += ACE_Handle_Set::count_bits (maskp[i]);
+    {
+      this->size_ += ACE_Handle_Set::count_bits (maskp[i]);
+    }
 
   this->set_max (max);
 #else
@@ -215,17 +219,23 @@ ACE_Handle_Set::set_max (ACE_HANDLE current_max)
   fd_mask * const maskp = reinterpret_cast<fd_mask *> (this->mask_.fds_bits);
 
   if (this->size_ == 0)
-    this->max_handle_ = ACE_INVALID_HANDLE;
+    {
+      this->max_handle_ = ACE_INVALID_HANDLE;
+    }
   else
     {
       int i = ACE_DIV_BY_WORDSIZE (current_max - 1);
       for (; maskp[i] == 0; --i)
-        continue;
+        {
+          continue;
+        }
       this->max_handle_ = ACE_MULT_BY_WORDSIZE (i);
       for (fd_mask val = maskp[i];
            (val & ~1) != 0; // This obscure code is needed since "bit 0" is in location 1...
            val = (val >> 1) & ACE_MSB_MASK)
-        ++this->max_handle_;
+        {
+          ++this->max_handle_;
+        }
     }
 
   // Do some sanity checking...
@@ -374,7 +384,9 @@ ACE_Handle_Set_Iterator::operator () ()
 
        // Move index to least significative bit.
        while (lsb >>= 1)
-         ++this->handle_index_;
+         {
+           ++this->handle_index_;
+         }
      }
    else
      {
