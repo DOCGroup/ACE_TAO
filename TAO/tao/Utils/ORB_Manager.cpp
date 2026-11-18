@@ -38,17 +38,21 @@ TAO_ORB_Manager::init (int &argc,
         this->orb_->resolve_initial_references (TAO_OBJID_ROOTPOA);
 
       if (CORBA::is_nil (poa_object.in ()))
-        TAOLIB_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
-                          -1);
+        {
+          TAOLIB_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
+                            -1);
+        }
 
       // Get the POA object.
       this->poa_ = PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (this->poa_.in ()))
-        TAOLIB_ERROR_RETURN ((LM_ERROR,
-                              ACE_TEXT (" (%P|%t) Unable to narrow the RootPOA reference.\n")),
-                             -1);
+        {
+          TAOLIB_ERROR_RETURN ((LM_ERROR,
+                                ACE_TEXT (" (%P|%t) Unable to narrow the RootPOA reference.\n")),
+                               -1);
+        }
     }
 
   if (CORBA::is_nil (this->poa_manager_.in ()))
@@ -69,9 +73,11 @@ TAO_ORB_Manager::init_child_poa (int &argc,
 {
   // Check to see if root poa has to be created.
   if (this->init (argc, argv, orb_name) == -1)
-    TAOLIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT (" (%P|%t) Error in init.\n")),
-                      -1);
+    {
+      TAOLIB_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT (" (%P|%t) Error in init.\n")),
+                        -1);
+    }
 
   // Create the default policies - user-supplied ID, and persistent
   // objects.

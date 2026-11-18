@@ -26,9 +26,11 @@ namespace TAO
       if (CORBA::is_nil (tao_info.in ()))
         {
           if (TAO_debug_level > 0)
-            TAOLIB_ERROR ((LM_ERROR,
-                        "TAO (%P|%t) TAO::Transport::ORBInitializer::pre_init - "
-                        "Panic: unable to narrow the ORBInitInfo_ptr\n"));
+            {
+              TAOLIB_ERROR ((LM_ERROR,
+                          "TAO (%P|%t) TAO::Transport::ORBInitializer::pre_init - "
+                          "Panic: unable to narrow the ORBInitInfo_ptr\n"));
+            }
 
           throw ::CORBA::INTERNAL ();
         }
