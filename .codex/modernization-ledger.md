@@ -442,8 +442,7 @@ the directory has had a complete audit against every modernization category.
   and centralized copying the contained address's SMI syntax and octets. Added
   a copy-independence assertion. Regenerated the ASNMP library and test
   makefiles with `mpc.pl`; after `realclean`, the library, `Address_Test`, and
-  `Varbind_Test` built and both tests exited 0 without warnings. `git diff
-  --check` passed.
+  `Varbind_Test` built and both tests exited 0 without warnings. `git diff --check` passed.
 
 - `TAO/tao/Transport_Cache_Manager_T`: replaced the owned purging-strategy and
   polymorphic-lock raw members with `std::unique_ptr`, retaining constructor
@@ -946,8 +945,7 @@ the directory has had a complete audit against every modernization category.
   templates had no warnings.
 - `ACE/ace/Map_T.cpp`: changed 34 local iterator and map-value pointer
   declarations from `= nullptr` to direct-list initialization (`{}`). The
-  remaining `= nullptr` matches are comparisons or assignments. `git diff
-  --check` passed. After `make realclean`, `make -j 8` in `ACE/ace` rebuilt and
+  remaining `= nullptr` matches are comparisons or assignments. `git diff --check` passed. After `make realclean`, `make -j 8` in `ACE/ace` rebuilt and
   linked the ACE core successfully. Existing diagnostics included the
   `ACE_Reactor_Token_T::sleep_hook()` `-Wsuggest-override` suggestion and
   linker warnings for `tempnam` and `mktemp`; none came from the edited file.
@@ -1486,8 +1484,7 @@ the directory has had a complete audit against every modernization category.
   inputs and results from `std::string_view` to `std::string const&`; C logging
   callers now use `.c_str()`. | `7e9eb5c5b6b`; TAO_IDL realclean build,
   IDL_Test IDL regeneration and `interfaceC.cpp` compilation, and both
-  `tao_idl --list-idl-versions` and `--default-idl-version` passed. `git diff
-  --check` passed. Environment emitted existing pyenv shim warnings.
+  `tao_idl --list-idl-versions` and `--default-idl-version` passed. `git diff --check` passed. Environment emitted existing pyenv shim warnings.
 
 ## Snapshot validation
 
@@ -5925,8 +5922,7 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - TAO `orbsvcs/tests/ImplRepo` override follow-up: replaced `virtual` with
   `override` on the confirmed servant and task overrides identified by
   `-Wsuggest-override`. Rebuilt the five affected server targets after each
-  target's `realclean`; all compiled and linked without warnings. `git diff
-  --check` passed.
+  target's `realclean`; all compiled and linked without warnings. `git diff --check` passed.
 - TAO `orbsvcs/tests/Simple_Naming`: changed the selected test to
   `std::unique_ptr`, made the persistent IOR output file RAII-owned, and
   changed the persistent IOR storage to an owned `ACE_TString`. Wrapped
@@ -6245,8 +6241,7 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   run_test.pl` in `TAO/tests/IDL_Test`; IDL generation, build, and runtime test
   passed. IDL_Test emitted three existing `-Waddress` warnings in
   `main.cpp:890,898,906`; the gperf build emitted no compiler warnings. The
-  only environment notices were pyenv shim permission messages. `git diff
-  --check` passed. Commit `f3a541d7b9d` was pushed.
+  only environment notices were pyenv shim permission messages. `git diff --check` passed. Commit `f3a541d7b9d` was pushed.
 - `IFR_Service` / TAO_IDL ownership audit: changed the internal
   `be_util::generator_init()` API in both backends to return
   `std::unique_ptr<AST_Generator>`, updated the common driver to move that
@@ -7450,8 +7445,7 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 ## 2026-11-09 `TAO/orbsvcs/orbsvcs/AV` special member label comments
 
 - Removed 103 standalone constructor/destructor labels from 21 handwritten
-  source and header files; left the HTML documentation unchanged. `git diff
-  --check` passed. Realclean-built and linked `libTAO_AV` with `make -f
+  source and header files; left the HTML documentation unchanged. `git diff --check` passed. Realclean-built and linked `libTAO_AV` with `make -f
   GNUmakefile.AV -j 8`; no warnings were emitted. Commit `fa129e9fbb3` was
   pushed.
 
@@ -7766,8 +7760,7 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   constructor now accepts `std::string const &`, and C APIs/logging receive
   `c_str()` at their boundaries. MPC regenerated the utility and fault
   detector projects; `TAO_Utils` and the `tao_fault_detector` consumer both
-  passed `realclean` builds with `make -j 8`, without warnings. `git diff
-  --check` passed. Commit `7c52bb1d7b0` was pushed.
+  passed `realclean` builds with `make -j 8`, without warnings. `git diff --check` passed. Commit `7c52bb1d7b0` was pushed.
 
 ## 2026-11-09 `TAO/tao/Valuetype`
 
@@ -8971,8 +8964,7 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   diagnostic. Removed unused includes and a redundant parse-success comment.
 - Regenerated with `mpc.pl -type gnuace Struct_Filter.mpc`; realclean-built
   the directory with `make -j 8` without warnings. `perl -c run_test.pl` and
-  the runtime test passed (90 unfiltered and 40 filtered events). `git diff
-  --check` passed. Broader directory audit remains.
+  the runtime test passed (90 unfiltered and 40 filtered events). `git diff --check` passed. Broader directory audit remains.
 
 ## 2026-11-10 `ACE/apps/gperf` follow-up
 
@@ -9361,8 +9353,7 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   `make -f GNUmakefile.RTEvent_Serv -j 8` compiled and linked successfully.
   GCC emitted one existing `-Wmaybe-uninitialized` warning because the
   uninitialized byte buffer's address is passed to `ACE_ptr_align_binary`;
-  that helper aligns the pointer and does not read the buffer. `git diff
-  --check` passed.
+  that helper aligns the pointer and does not read the buffer. `git diff --check` passed.
 
 ## 2026-11-10 `TAO/orbsvcs/orbsvcs/Notify` follow-up
 
@@ -12876,5 +12867,4 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   handle counts; two fields are `size_t`, and the third is `DWORD` converted
   to `size_t` for `%B`.
 - Realclean-built ACE core successfully on Linux; the Windows-only WFMO path
-  is platform-guarded and could not be compiled on this host. `git diff
-  --check` passed. Other ACE/TAO logging conversions remain under review.
+  is platform-guarded and could not be compiled on this host. `git diff --check` passed. Other ACE/TAO logging conversions remain under review.
