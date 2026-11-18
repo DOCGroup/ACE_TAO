@@ -570,9 +570,9 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                 if (total_keysig_size_ != 2
                     || (key_positions_[0] != 1
                         || key_positions_[1] != WORD_END))
-                {
-                  ACE_CLR_BITS (option_word_, DEFAULTCHARS);
-                }
+                  {
+                    ACE_CLR_BITS (option_word_, DEFAULTCHARS);
+                  }
               }
             break;
           }

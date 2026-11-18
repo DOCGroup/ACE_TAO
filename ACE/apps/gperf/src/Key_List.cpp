@@ -968,9 +968,9 @@ Key_List::output_keyword_table ()
     {
       if (!option[SWITCH] && (total_duplicates == 0 || !option[DUP])
           && wordlist_slot < size_temp->hash_value)
-      {
-        wordlist_slot = size_temp->hash_value;
-      }
+        {
+          wordlist_slot = size_temp->hash_value;
+        }
       ++wordlist_slot;
       for (List_Node *link = size_temp->link; link; link = link->link)
         ++wordlist_slot;

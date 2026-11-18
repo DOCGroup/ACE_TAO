@@ -149,9 +149,9 @@ decode_wide_literal (std::string const &source,
           if (source_index + 1 >= source.size ()
               || source[source_index] != 'L'
               || source[source_index + 1] != '"')
-          {
-            return false;
-          }
+            {
+              return false;
+            }
 
           source_index += 2;
           continue;
@@ -276,9 +276,9 @@ decode_wide_literal (std::string const &source,
           if ((continuation_count == 1 && codepoint < 0x80)
               || (continuation_count == 2 && codepoint < 0x800)
               || (continuation_count == 3 && codepoint < 0x10000))
-          {
-            return false;
-          }
+            {
+              return false;
+            }
         }
 
       if (!append_wide_codepoint (codepoint, target, target_size, target_length))
