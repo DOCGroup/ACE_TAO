@@ -106,9 +106,13 @@ dynamic
   : ACE_DYNAMIC svc_location parameters_opt
     {
       if ($2 != 0)
-        $$ = new ACE_Dynamic_Node ($2, $3);
+        {
+          $$ = new ACE_Dynamic_Node ($2, $3);
+        }
       else
-        $$ = 0;
+        {
+          $$ = 0;
+        }
     }
   ;
 

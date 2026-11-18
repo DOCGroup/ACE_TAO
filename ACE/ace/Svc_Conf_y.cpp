@@ -1233,11 +1233,13 @@ ace_yyreduce:
   case 11: /* dynamic: ACE_DYNAMIC svc_location parameters_opt  */
     {
       if ((ace_yyvsp[-1].svc_record_) != nullptr)
-        (ace_yyval.parse_node_) = new ACE_Dynamic_Node ((ace_yyvsp[-1].svc_record_), (ace_yyvsp[0].ident_));
+        {
+          (ace_yyval.parse_node_) = new ACE_Dynamic_Node ((ace_yyvsp[-1].svc_record_), (ace_yyvsp[0].ident_));
+        }
       else
-      {
-        (ace_yyval.parse_node_) = nullptr;
-      }
+        {
+          (ace_yyval.parse_node_) = nullptr;
+        }
     }
     break;
 
