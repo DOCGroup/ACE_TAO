@@ -39,9 +39,11 @@ ACE_DLL::ACE_DLL (const ACE_DLL &rhs)
                      rhs.open_mode_,
                      rhs.close_handle_on_destruction_) != 0
       && ACE::debug ())
-    ACELIB_ERROR ((LM_ERROR,
-    ACE_TEXT ("ACE_DLL::copy_ctor: error: %s\n"),
-    this->error ()));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("ACE_DLL::copy_ctor: error: %s\n"),
+                     this->error ()));
+    }
 }
 
 ACE_DLL &
@@ -77,9 +79,11 @@ ACE_DLL::ACE_DLL (const ACE_TCHAR *dll_name,
 
   if (this->open (dll_name, this->open_mode_, close_handle_on_destruction) != 0
       && ACE::debug ())
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("ACE_DLL::open: error calling open: %s\n"),
-                this->error ()));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("ACE_DLL::open: error calling open: %s\n"),
+                     this->error ()));
+    }
 }
 
 // The library is closed before the class gets destroyed depending on
@@ -138,10 +142,12 @@ ACE_DLL::open_i (const ACE_TCHAR *dll_filename,
   if (!dll_filename)
     {
       if (ACE::debug ())
-        ACELIB_ERROR ((LM_ERROR,
-                    ACE_TEXT ("ACE_DLL::open_i: dll_name is %s\n"),
-                    this->dll_name_ == nullptr ? ACE_TEXT ("(null)")
-        : this->dll_name_));
+        {
+          ACELIB_ERROR ((LM_ERROR,
+                         ACE_TEXT ("ACE_DLL::open_i: dll_name is %s\n"),
+                         this->dll_name_ == nullptr ? ACE_TEXT ("(null)")
+                                                    : this->dll_name_));
+        }
       return -1;
     }
 
@@ -149,11 +155,13 @@ ACE_DLL::open_i (const ACE_TCHAR *dll_filename,
     {
       // If we have a good handle and its the same name, just return.
       if (ACE_OS::strcmp (this->dll_name_, dll_filename) == 0)
-        return 0;
+        {
+          return 0;
+        }
       else
-      {
-        this->close ();
-      }
+        {
+          this->close ();
+        }
     }
 
   if (!this->dll_name_)

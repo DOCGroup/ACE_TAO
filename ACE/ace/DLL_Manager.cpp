@@ -60,11 +60,13 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
       if (ACE_OS::strcmp (this->dll_name_, dll_name) != 0)
         {
           if (ACE::debug ())
-            ACELIB_ERROR ((LM_ERROR,
-                        ACE_TEXT ("ACE (%P|%t) DLL_Handle::open: error, ")
-                        ACE_TEXT ("tried to reopen <%s> with name <%s>\n"),
-                        this->dll_name_,
-                        dll_name));
+            {
+              ACELIB_ERROR ((LM_ERROR,
+                             ACE_TEXT ("ACE (%P|%t) DLL_Handle::open: error, ")
+                             ACE_TEXT ("tried to reopen <%s> with name <%s>\n"),
+                             this->dll_name_,
+                             dll_name));
+            }
 
           return -1;
         }
@@ -83,7 +85,9 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
   if (this->handle_ == ACE_SHLIB_INVALID_HANDLE)
     {
       if (handle)
-        this->handle_ = handle;
+        {
+          this->handle_ = handle;
+        }
       else
         {
           /*
@@ -126,9 +130,9 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
                name_iter.next (name); name_iter.advance ())
             {
               if (this->open_i (name->c_str (), open_mode, errors))
-              {
-                break;
-              }
+                {
+                  break;
+                }
             }
 
           if (this->handle_ == ACE_SHLIB_INVALID_HANDLE)
@@ -151,11 +155,13 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
   ++this->refcount_;
 
   if (ACE::debug ())
-    ACELIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE (%P|%t) DLL_Handle::open - <%s> (%@), refcount=%d\n"),
-                this->dll_name_,
-                reinterpret_cast<void *> (this->handle_),
-                this->refcount_));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("ACE (%P|%t) DLL_Handle::open - <%s> (%@), refcount=%d\n"),
+                     this->dll_name_,
+                     reinterpret_cast<void *> (this->handle_),
+                     this->refcount_));
+    }
   return 0;
 }
 
@@ -177,30 +183,36 @@ ACE_DLL_Handle::close (int unload)
     // reaches zero, we need to make sure we don't decrement it below
     // zero.
     if (this->refcount_ > 0)
-      --this->refcount_;
+      {
+        --this->refcount_;
+      }
     else
-    {
-      this->refcount_ = 0;
-    }
+      {
+        this->refcount_ = 0;
+      }
 
     if (ACE::debug ())
-      ACELIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("ACE (%P|%t) DLL_Handle::close - ")
-                  ACE_TEXT ("<%s> (handle=%@, refcount=%d)\n"),
-                  this->dll_name_,
-                  reinterpret_cast<void *> (this->handle_),
-                  this->refcount_));
+      {
+        ACELIB_DEBUG ((LM_DEBUG,
+                       ACE_TEXT ("ACE (%P|%t) DLL_Handle::close - ")
+                       ACE_TEXT ("<%s> (handle=%@, refcount=%d)\n"),
+                       this->dll_name_,
+                       reinterpret_cast<void *> (this->handle_),
+                       this->refcount_));
+      }
 
     if (this->refcount_ == 0 &&
         this->handle_ != ACE_SHLIB_INVALID_HANDLE &&
         unload == 1)
       {
         if (ACE::debug ())
-          ACELIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("ACE (%P|%t) DLL_Handle::close: ")
-                      ACE_TEXT ("Unloading <%s> (handle=%@)\n"),
-                      this->dll_name_,
-                      reinterpret_cast<void *> (this->handle_)));
+          {
+            ACELIB_DEBUG ((LM_DEBUG,
+                           ACE_TEXT ("ACE (%P|%t) DLL_Handle::close: ")
+                           ACE_TEXT ("Unloading <%s> (handle=%@)\n"),
+                           this->dll_name_,
+                           reinterpret_cast<void *> (this->handle_)));
+          }
 
         // First remove any associated Framework Components.
         ACE_Framework_Repository *frPtr= ACE_Framework_Repository::instance ();
@@ -266,11 +278,13 @@ ACE_DLL_Handle::symbol (const ACE_TCHAR *sym_name, bool ignore_errors, ACE_TStri
           this->error (error);
 
           if (ACE::debug ())
-            ACELIB_ERROR ((LM_ERROR,
-                        ACE_TEXT ("ACE (%P|%t) DLL_Handle::symbol <%s>")
-                        ACE_TEXT (" failed with <%s>\n"),
-                        auto_name.get (),
-                        error.c_str ()));
+            {
+              ACELIB_ERROR ((LM_ERROR,
+                             ACE_TEXT ("ACE (%P|%t) DLL_Handle::symbol <%s>")
+                             ACE_TEXT (" failed with <%s>\n"),
+                             auto_name.get (),
+                             error.c_str ()));
+            }
 
           return nullptr;
         }
@@ -288,9 +302,11 @@ ACE_DLL_Handle::get_handle (bool become_owner)
   if (this->refcount_ == 0 && become_owner)
     {
       if (ACE::debug ())
-        ACELIB_ERROR ((LM_ERROR,
-                    ACE_TEXT ("ACE (%P|%t) DLL_Handle::get_handle: ")
-                    ACE_TEXT ("cannot become owner, refcount == 0.\n")));
+        {
+          ACELIB_ERROR ((LM_ERROR,
+                         ACE_TEXT ("ACE (%P|%t) DLL_Handle::get_handle: ")
+                         ACE_TEXT ("cannot become owner, refcount == 0.\n")));
+        }
 
       return ACE_SHLIB_INVALID_HANDLE;
     }
@@ -300,18 +316,20 @@ ACE_DLL_Handle::get_handle (bool become_owner)
   if (become_owner)
     {
       if (--this->refcount_ == 0)
-      {
-        this->handle_ = ACE_SHLIB_INVALID_HANDLE;
-      }
+        {
+          this->handle_ = ACE_SHLIB_INVALID_HANDLE;
+        }
     }
 
   if (ACE::debug ())
-    ACELIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE (%P|%t) DLL_Handle::get_handle: ")
-                ACE_TEXT ("post call: handle %s, refcount %d\n"),
-                this->handle_ == ACE_SHLIB_INVALID_HANDLE ?
-                ACE_TEXT ("invalid") : ACE_TEXT ("valid"),
-                this->refcount_));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("ACE (%P|%t) DLL_Handle::get_handle: ")
+                     ACE_TEXT ("post call: handle %s, refcount %d\n"),
+                     this->handle_ == ACE_SHLIB_INVALID_HANDLE ?
+                     ACE_TEXT ("invalid") : ACE_TEXT ("valid"),
+                     this->refcount_));
+    }
 
   return handle;
 }
@@ -404,12 +422,14 @@ ACE_DLL_Handle::get_dll_names (const ACE_TCHAR *dll_name,
             break;
           try_this = base_dir;
           if (i < 2)
-          {
-            try_this += prefix;
-          }
+            {
+              try_this += prefix;
+            }
           try_this += base_file;
           if (base_suffix.length () > 0)
-            try_this += base_suffix;
+            {
+              try_this += base_suffix;
+            }
           else
             {
 #if defined (ACE_LD_DECORATOR_STR) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
@@ -510,9 +530,11 @@ ACE_DLL_Manager::ACE_DLL_Manager (int size)
   ACE_TRACE ("ACE_DLL_Manager::ACE_DLL_Manager");
 
   if (this->open (size) != 0 && ACE::debug ())
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("ACE (%P|%t) DLL_Manager ctor failed to allocate ")
-                ACE_TEXT ("handle_vector_.\n")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("ACE (%P|%t) DLL_Manager ctor failed to allocate ")
+                     ACE_TEXT ("handle_vector_.\n")));
+    }
 }
 
 ACE_DLL_Manager::~ACE_DLL_Manager ()
@@ -520,9 +542,11 @@ ACE_DLL_Manager::~ACE_DLL_Manager ()
   ACE_TRACE ("ACE_DLL_Manager::~ACE_DLL_Manager");
 
   if (this->close () != 0 && ACE::debug ())
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("ACE (%P|%t) DLL_Manager dtor failed to close ")
-                ACE_TEXT ("properly.\n")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("ACE (%P|%t) DLL_Manager dtor failed to close ")
+                     ACE_TEXT ("properly.\n")));
+    }
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_DLL_Manager)
@@ -561,10 +585,12 @@ ACE_DLL_Manager::open_dll (const ACE_TCHAR *dll_name,
         {
           // Error while opening dll. Free temp handle
           if (ACE::debug ())
-            ACELIB_ERROR ((LM_ERROR,
-                        ACE_TEXT ("ACE (%P|%t) DLL_Manager::open_dll: Could not ")
-                        ACE_TEXT ("open dll <%s>\n"),
-                        dll_name));
+            {
+              ACELIB_ERROR ((LM_ERROR,
+                             ACE_TEXT ("ACE (%P|%t) DLL_Manager::open_dll: Could not ")
+                             ACE_TEXT ("open dll <%s>\n"),
+                             dll_name));
+            }
 
           return nullptr;
         }
@@ -622,21 +648,23 @@ ACE_DLL_Manager::unload_policy (u_long unload_policy)
   // call close(1) on all the ACE_DLL_Handle objects with refcount == 0
   // which will force those that are still loaded to be unloaded.
   if (this->handle_vector_)
-    if (( ACE_BIT_ENABLED (old_policy, ACE_DLL_UNLOAD_POLICY_LAZY) &&
+    {
+      if (( ACE_BIT_ENABLED (old_policy, ACE_DLL_UNLOAD_POLICY_LAZY) &&
           ACE_BIT_DISABLED (this->unload_policy_, ACE_DLL_UNLOAD_POLICY_LAZY) ) ||
         ( ACE_BIT_DISABLED (this->unload_policy_, ACE_DLL_UNLOAD_POLICY_LAZY) &&
           ACE_BIT_ENABLED (old_policy, ACE_DLL_UNLOAD_POLICY_PER_DLL) &&
           ACE_BIT_DISABLED (this->unload_policy_, ACE_DLL_UNLOAD_POLICY_PER_DLL) ))
-      {
-        for (int i = this->current_size_ - 1; i >= 0; --i)
           {
-            if (this->handle_vector_[i] &&
-                this->handle_vector_[i]->refcount () == 0)
+          for (int i = this->current_size_ - 1; i >= 0; --i)
             {
-              this->handle_vector_[i]->close (1);
+              if (this->handle_vector_[i] &&
+                  this->handle_vector_[i]->refcount () == 0)
+                {
+                  this->handle_vector_[i]->close (1);
+                }
             }
           }
-      }
+    }
 }
 
 int
@@ -701,10 +729,12 @@ ACE_DLL_Manager::find_dll (const ACE_TCHAR *dll_name) const
   ACE_TRACE ("ACE_DLL_Manager::find_dll");
 
   for (int i = 0; i < this->current_size_; ++i)
-    if (this->handle_vector_[i] &&
-        ACE_OS::strcmp (this->handle_vector_[i]->dll_name (), dll_name) == 0)
       {
-        return this->handle_vector_[i];
+        if (this->handle_vector_[i] &&
+            ACE_OS::strcmp (this->handle_vector_[i]->dll_name (), dll_name) == 0)
+          {
+            return this->handle_vector_[i];
+          }
       }
 
   return nullptr;
@@ -740,19 +770,25 @@ ACE_DLL_Manager::unload_dll (ACE_DLL_Handle *dll_handle, int force_unload)
                 reinterpret_cast<dll_unload_policy> (temp_p);
 
               if (the_policy != nullptr)
-                unload = ACE_BIT_DISABLED (the_policy (),
-                                           ACE_DLL_UNLOAD_POLICY_LAZY);
+                {
+                  unload = ACE_BIT_DISABLED (the_policy (),
+                                             ACE_DLL_UNLOAD_POLICY_LAZY);
+                }
               else
-                unload = ACE_BIT_DISABLED (this->unload_policy_,
-                                           ACE_DLL_UNLOAD_POLICY_LAZY);
+                {
+                  unload = ACE_BIT_DISABLED (this->unload_policy_,
+                                             ACE_DLL_UNLOAD_POLICY_LAZY);
+                }
             }
         }
 
       if (dll_handle->close (unload) != 0)
         {
           if (ACE::debug ())
-            ACELIB_ERROR ((LM_ERROR,
-                        ACE_TEXT ("ACE (%P|%t) DLL_Manager::unload error.\n")));
+            {
+              ACELIB_ERROR ((LM_ERROR,
+                             ACE_TEXT ("ACE (%P|%t) DLL_Manager::unload error.\n")));
+            }
 
           return -1;
         }
@@ -760,9 +796,11 @@ ACE_DLL_Manager::unload_dll (ACE_DLL_Handle *dll_handle, int force_unload)
   else
     {
       if (ACE::debug ())
-        ACELIB_ERROR ((LM_ERROR,
-                    ACE_TEXT ("ACE (%P|%t) DLL_Manager::unload_dll called with ")
-                    ACE_TEXT ("null pointer.\n")));
+        {
+          ACELIB_ERROR ((LM_ERROR,
+                         ACE_TEXT ("ACE (%P|%t) DLL_Manager::unload_dll called with ")
+                         ACE_TEXT ("null pointer.\n")));
+        }
 
       return -1;
     }
