@@ -12923,6 +12923,7 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 
 - Corrected the timer heap's two `size_t` timer-ID indexes to `%B`. Token
   request/reply lengths are `ACE_UINT32` and now use `%Q` with an explicit
-  `ACE_UINT64` conversion.
+  `ACE_UINT64` conversion. The timer heap dump's traversal indexes now use
+  `%B`, and its signed timer-id values use `%b`.
 - `git diff --check` passed. The wider ACE/TAO logging-format audit remains
   open.
