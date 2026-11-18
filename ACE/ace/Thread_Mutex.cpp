@@ -33,22 +33,21 @@ ACE_Thread_Mutex::dump () const
 
 ACE_Thread_Mutex::~ACE_Thread_Mutex ()
 {
-// ACE_TRACE ("ACE_Thread_Mutex::~ACE_Thread_Mutex");
   this->remove ();
 }
 
 ACE_Thread_Mutex::ACE_Thread_Mutex (const ACE_TCHAR *name, ACE_mutexattr_t *arg)
   : removed_ (false)
 {
-//  ACE_TRACE ("ACE_Thread_Mutex::ACE_Thread_Mutex");
-
   if (ACE_OS::thread_mutex_init (&this->lock_,
                                  0,
                                  name,
                                  arg) != 0)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Thread_Mutex::ACE_Thread_Mutex")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_Thread_Mutex::ACE_Thread_Mutex")));
+    }
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
