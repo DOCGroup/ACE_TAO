@@ -77,7 +77,7 @@ test_cache_map_manager (size_t table_size,
              ++iter)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%d|%d|%d)"),
+                        ACE_TEXT ("(%u|%u|%u)"),
                         i,
                         (*iter).first (),
                         (*iter).second ()));
@@ -99,7 +99,7 @@ test_cache_map_manager (size_t table_size,
              ++iter)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%b|%d|%d)"),
+                        ACE_TEXT ("(%b|%u|%u)"),
                         k,
                         (*iter).first (),
                         (*iter).second ()));
@@ -121,7 +121,7 @@ test_cache_map_manager (size_t table_size,
              ++iter)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%d|%d|%d)"),
+                        ACE_TEXT ("(%u|%u|%u)"),
                         i,
                         (*iter).first (),
                         (*iter).second ()));
@@ -143,7 +143,7 @@ test_cache_map_manager (size_t table_size,
              ++iter)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%d|%d|%d)"),
+                        ACE_TEXT ("(%b|%u|%u)"),
                         k,
                         (*iter).first (),
                         (*iter).second ()));
@@ -201,7 +201,7 @@ test_hash_cache_map_manager (size_t table_size,
              ++iter)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%d|%d|%d)"),
+                        ACE_TEXT ("(%u|%u|%u)"),
                         i,
                         (*iter).first (),
                         (*iter).second ()));
@@ -223,7 +223,7 @@ test_hash_cache_map_manager (size_t table_size,
              ++iter)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%b|%d|%d)"),
+                        ACE_TEXT ("(%b|%u|%u)"),
                         k,
                         (*iter).first (),
                         (*iter).second ()));
@@ -245,7 +245,7 @@ test_hash_cache_map_manager (size_t table_size,
              ++iter)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%d|%d|%d)"),
+                        ACE_TEXT ("(%u|%u|%u)"),
                         i,
                         (*iter).first (),
                         (*iter).second ()));
@@ -267,7 +267,7 @@ test_hash_cache_map_manager (size_t table_size,
              ++iter)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%d|%d|%d)"),
+                        ACE_TEXT ("(%b|%u|%u)"),
                         k,
                         (*iter).first (),
                         (*iter).second ()));
@@ -333,7 +333,7 @@ test_active_map_manager (size_t table_size,
           {
             ACTIVE_MAP_MANAGER::ENTRY &entry = *iter;
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%d|%d-%d|%d)"),
+                        ACE_TEXT ("(%u|%u-%u|%u)"),
                         i,
                         entry.ext_id_.slot_index (),
                         entry.ext_id_.slot_generation (),
@@ -358,7 +358,7 @@ test_active_map_manager (size_t table_size,
             ACTIVE_MAP_MANAGER::ENTRY &entry = *iter;
             ACE_UNUSED_ARG (entry);
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%b|%d-%d|%d)"),
+                        ACE_TEXT ("(%b|%u-%u|%u)"),
                         k,
                         entry.ext_id_.slot_index (),
                         entry.ext_id_.slot_generation (),
@@ -414,7 +414,7 @@ test_hash_map_manager (size_t table_size,
           {
             HASH_ENTRY &entry = *iter;
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%d|%d|%d)"),
+                        ACE_TEXT ("(%u|%u|%u)"),
                         i,
                         entry.ext_id_,
                         entry.int_id_));
@@ -435,7 +435,7 @@ test_hash_map_manager (size_t table_size,
              iterator.advance ())
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%d|%d|%d)"),
+                        ACE_TEXT ("(%u|%u|%u)"),
                         i,
                         entry->ext_id_,
                         entry->int_id_));
@@ -457,7 +457,7 @@ test_hash_map_manager (size_t table_size,
           {
             HASH_ENTRY &entry = *iter;
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%b|%d|%d)"),
+                        ACE_TEXT ("(%b|%u|%u)"),
                         k,
                         entry.ext_id_,
                         entry.int_id_));
@@ -478,7 +478,7 @@ test_hash_map_manager (size_t table_size,
              iterator.advance ())
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%b|%d|%d)"),
+                        ACE_TEXT ("(%b|%u|%u)"),
                         k,
                         entry->ext_id_,
                         entry->int_id_));
@@ -500,7 +500,7 @@ test_hash_map_manager (size_t table_size,
           {
             HASH_MAP_MANAGER::ENTRY &entry = *iter;
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%d|%d|%d)"),
+                        ACE_TEXT ("(%u|%u|%u)"),
                         i,
                         entry.ext_id_,
                         entry.int_id_));
@@ -521,7 +521,7 @@ test_hash_map_manager (size_t table_size,
              iterator.advance ())
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%d|%d|%d)"),
+                        ACE_TEXT ("(%u|%u|%u)"),
                         i,
                         entry->ext_id_,
                         entry->int_id_));
@@ -543,7 +543,7 @@ test_hash_map_manager (size_t table_size,
           {
             HASH_MAP_MANAGER::ENTRY &entry = *iter;
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%d|%d|%d)"),
+                        ACE_TEXT ("(%b|%u|%u)"),
                         k,
                         entry.ext_id_,
                         entry.int_id_));
@@ -564,7 +564,7 @@ test_hash_map_manager (size_t table_size,
              iterator.advance ())
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%d|%d|%d)"),
+                        ACE_TEXT ("(%b|%u|%u)"),
                         k,
                         entry->ext_id_,
                         entry->int_id_));
@@ -619,7 +619,7 @@ test_map_manager (size_t table_size,
           {
             MAP_ENTRY &entry = *iter;
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%d|%d|%d)"),
+                        ACE_TEXT ("(%u|%u|%u)"),
                         i,
                         entry.ext_id_,
                         entry.int_id_));
@@ -640,7 +640,7 @@ test_map_manager (size_t table_size,
              iterator.advance ())
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%d|%d|%d)"),
+                        ACE_TEXT ("(%u|%u|%u)"),
                         i,
                         entry->ext_id_,
                         entry->int_id_));
@@ -662,7 +662,7 @@ test_map_manager (size_t table_size,
           {
             MAP_ENTRY &entry = *iter;
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%b|%d|%d)"),
+                        ACE_TEXT ("(%b|%u|%u)"),
                         k,
                         entry.ext_id_,
                         entry.int_id_));
@@ -683,7 +683,7 @@ test_map_manager (size_t table_size,
              iterator.advance ())
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%b|%d|%d)"),
+                        ACE_TEXT ("(%b|%u|%u)"),
                         k,
                         entry->ext_id_,
                         entry->int_id_));
@@ -705,7 +705,7 @@ test_map_manager (size_t table_size,
           {
             MAP_MANAGER::ENTRY &entry = *iter;
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%d|%d|%d)"),
+                        ACE_TEXT ("(%u|%u|%u)"),
                         i,
                         entry.ext_id_,
                         entry.int_id_));
@@ -726,7 +726,7 @@ test_map_manager (size_t table_size,
              iterator.advance ())
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%d|%d|%d)"),
+                        ACE_TEXT ("(%u|%u|%u)"),
                         i,
                         entry->ext_id_,
                         entry->int_id_));
@@ -748,7 +748,7 @@ test_map_manager (size_t table_size,
           {
             MAP_ENTRY &entry = *iter;
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%d|%d|%d)"),
+                        ACE_TEXT ("(%b|%u|%u)"),
                         k,
                         entry.ext_id_,
                         entry.int_id_));
@@ -769,7 +769,7 @@ test_map_manager (size_t table_size,
              iterator.advance ())
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%d|%d|%d)"),
+                        ACE_TEXT ("(%b|%u|%u)"),
                         k,
                         entry->ext_id_,
                         entry->int_id_));
