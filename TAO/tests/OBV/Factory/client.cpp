@@ -1,8 +1,9 @@
 #include "FactoryC.h"
 #include "FactoryC_impl.h"
+#include "Opt_AccessorC.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -41,28 +42,28 @@ no_factory (OBV_FactoryTest::Test_ptr test)
       OBV_FactoryTest::BaseValue_var base_value =
         test->get_base_value ();
     }
-  catch (const CORBA::MARSHAL& ex)
+  catch (CORBA::MARSHAL const& ex)
     {
-      if ((ex.minor() & 0xFFFU) == 1)
+      if ((ex.minor () & 0xFFFU) == 1)
         {
           succeed = true;
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
     }
 
   if (!succeed)
-  {
-    ACE_ERROR ((LM_ERROR,
-                "(%t) ERROR, no_factory failed\n"));
-  }
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%t) ERROR, no_factory failed\n"));
+    }
 
   return succeed;
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -70,30 +71,34 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       // Obtain reference to the object
       CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+        orb->string_to_object (ior);
 
       OBV_FactoryTest::Test_var test =
-        OBV_FactoryTest::Test::_narrow(tmp.in ());
+        OBV_FactoryTest::Test::_narrow (tmp.in ());
 
       if (CORBA::is_nil (test.in ()))
-      {
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           "Nil OBV_FactoryTest::Test reference <%s>\n",
-                           ior),
-                          1);
-      }
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             "Nil OBV_FactoryTest::Test reference <%s>\n",
+                             ior),
+                            1);
+        }
 
       // Check if we get the correct exception with minor code because no
       // factory has been set.
       if (!no_factory (test.in ()))
+      {
         return 1;
+      }
 
       // Create factories.
-      OBV_FactoryTest::BaseValue_init *base_factory = 0;
+      OBV_FactoryTest::BaseValue_init *base_factory {};
       ACE_NEW_RETURN (base_factory,
                       OBV_FactoryTest::BaseValue_init,
                       1); // supplied by mapping
@@ -102,7 +107,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                    base_factory);
       base_factory->_remove_ref (); // release ownership
 
-      OBV_FactoryTest::Value1_init *value1_factory = 0;
+      OBV_FactoryTest::Value1_init *value1_factory {};
       ACE_NEW_RETURN (value1_factory,
                       OBV_FactoryTest::Value1_init,
                       1); // supplied by mapping
@@ -111,7 +116,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                    value1_factory);
       value1_factory->_remove_ref ();
 
-      OBV_FactoryTest::Value2_init *value2_factory = 0;
+      OBV_FactoryTest::Value2_init *value2_factory {};
       ACE_NEW_RETURN (value2_factory,
                       Value2_init_impl,
                       1); // custom implementation
@@ -124,6 +129,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // I just hope to get MARSHAL.
       OBV_FactoryTest::BaseValue_var base_value =
         test->get_base_value ();
+
+      CORBA::ValueBase_var base_copy (base_value->_copy_value ());
+      OBV_FactoryTest::BaseValue * const copied_base =
+        OBV_FactoryTest::BaseValue::_downcast (base_copy.in ());
+      if (copied_base == nullptr || copied_base->some_data () != 23)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Generated concrete-factory copy failed\n"),
+                            1);
+        }
 
       OBV_FactoryTest::Value1_var value1 =
         test->get_value1 ();
@@ -140,13 +155,68 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       value2 = value2_factory->create (1, data);
 
+      ApplicationFactoryValue_impl application_value;
+      application_value.value (31);
+      CORBA::ValueBase_var application_copy (
+        application_value._copy_value ());
+      ApplicationFactoryValue_impl * const copied_application =
+        dynamic_cast<ApplicationFactoryValue_impl *> (application_copy.in ());
+      if (copied_application == nullptr || copied_application->value () != 31)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Application-factory copy failed\n"),
+                            1);
+        }
+
+      OBV_OBV_FactoryTest::SupportedValue supported_value;
+      supported_value.value (47);
+      CORBA::ValueBase_var supported_copy (
+        supported_value._copy_value ());
+      OBV_FactoryTest::SupportedValue * const copied_supported =
+        OBV_FactoryTest::SupportedValue::_downcast (supported_copy.in ());
+      if (copied_supported == nullptr || copied_supported->value () != 47)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Supported-interface valuetype copy failed\n"),
+                            1);
+        }
+
+      OBV_FactoryTest::Opt_Accessor_Value_init * const opt_accessor_factory =
+        new OBV_FactoryTest::Opt_Accessor_Value_init;
+      CORBA::ValueFactory previous_factory = orb->register_value_factory (
+        opt_accessor_factory->tao_repository_id (),
+        opt_accessor_factory);
+      if (previous_factory != nullptr)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unexpected optimized-accessor factory\n"),
+                            1);
+        }
+
+      CORBA::ValueBase_var opt_accessor_value (
+        opt_accessor_factory->create_for_unmarshal ());
+      OBV_FactoryTest::Opt_Accessor_Value * const original_opt_accessor =
+        OBV_FactoryTest::Opt_Accessor_Value::_downcast (opt_accessor_value.in ());
+      original_opt_accessor->value (53);
+      CORBA::ValueBase_var opt_accessor_copy_base (
+        opt_accessor_value->_copy_value ());
+      OBV_FactoryTest::Opt_Accessor_Value * const opt_accessor_copy =
+        OBV_FactoryTest::Opt_Accessor_Value::_downcast (opt_accessor_copy_base.in ());
+      opt_accessor_factory->_remove_ref ();
+      if (opt_accessor_copy == nullptr || opt_accessor_copy->value () != 53)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Optimized-accessor factory or copy failed\n"),
+                            1);
+        }
+
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - test finished\n"));
 
       test->shutdown ();
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
