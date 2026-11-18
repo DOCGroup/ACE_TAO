@@ -101,11 +101,17 @@ read_hex_escape (std::string const &source,
       unsigned char const ch = static_cast<unsigned char> (source[source_index]);
       std::uint32_t value = 0;
       if (ch >= '0' && ch <= '9')
-        value = ch - '0';
+        {
+          value = ch - '0';
+        }
       else if (ch >= 'a' && ch <= 'f')
-        value = ch - 'a' + 10;
+        {
+          value = ch - 'a' + 10;
+        }
       else if (ch >= 'A' && ch <= 'F')
-        value = ch - 'A' + 10;
+        {
+          value = ch - 'A' + 10;
+        }
       else
         {
           break;
@@ -138,7 +144,9 @@ decode_wide_literal (std::string const &source,
           ++source_index;
           while (source_index < source.size ()
                  && (source[source_index] == ' ' || source[source_index] == '\t'))
-            ++source_index;
+            {
+              ++source_index;
+            }
 
           if (source_index + 1 >= source.size ()
               || source[source_index] != 'L'
@@ -188,7 +196,9 @@ decode_wide_literal (std::string const &source,
                   if (source_index + 2 >= source.size ()
                       || source[source_index] != '\\'
                       || source[source_index + 1] != 'u')
-                    return false;
+                    {
+                      return false;
+                    }
                   size_t next_index = source_index + 2;
                   std::uint32_t low_surrogate = 0;
                   if (read_hex_escape (source, next_index, 4, low_surrogate)
@@ -204,7 +214,9 @@ decode_wide_literal (std::string const &source,
                     }
                 }
               else if (codepoint >= 0xdc00 && codepoint <= 0xdfff)
-                return false;
+                {
+                  return false;
+                }
               break;
             default:
               if (escape >= '0' && escape <= '7')
@@ -226,7 +238,9 @@ decode_wide_literal (std::string const &source,
             }
         }
       else if (first < 0x80)
-        codepoint = first;
+        {
+          codepoint = first;
+        }
       else
         {
           unsigned int continuation_count = 0;
