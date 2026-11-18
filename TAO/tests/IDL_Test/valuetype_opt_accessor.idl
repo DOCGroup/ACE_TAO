@@ -18,6 +18,10 @@ interface Accessor_Optimized_Interface
 {
 };
 
+interface Accessor_Optimized_Second_Interface
+{
+};
+
 /// The derived valuetype inherits refcount overrides for a supported interface.
 valuetype Accessor_Optimized_Refcount_Base
   supports Accessor_Optimized_Interface
@@ -28,6 +32,14 @@ valuetype Accessor_Optimized_Refcount_Base
 valuetype Accessor_Optimized_Refcount_Derived : Accessor_Optimized_Refcount_Base
 {
   public long derived_value;
+};
+
+/// A derived valuetype inherits one counter and supports another interface.
+valuetype Accessor_Optimized_Refcount_Multi_Derived
+  : Accessor_Optimized_Refcount_Base
+  supports Accessor_Optimized_Second_Interface
+{
+  public long multi_derived_value;
 };
 
 /// The derived valuetype inherits a counter and adds another supported interface.

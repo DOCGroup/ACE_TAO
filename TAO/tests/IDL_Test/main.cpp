@@ -1047,6 +1047,42 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             }
         }
 
+      Accessor_Optimized_Refcount_Multi_Derived_init * const
+        multi_inherited_factory =
+          new Accessor_Optimized_Refcount_Multi_Derived_init;
+      CORBA::ValueBase_var multi_inherited_value (
+        multi_inherited_factory->create_for_unmarshal ());
+      multi_inherited_factory->_remove_ref ();
+      Accessor_Optimized_Refcount_Multi_Derived * const
+        multi_inherited_downcast =
+        Accessor_Optimized_Refcount_Multi_Derived::_downcast (
+          multi_inherited_value.in ());
+      if (multi_inherited_downcast == nullptr)
+        {
+          ++error_count;
+          ACE_ERROR ((LM_ERROR,
+                      "Inherited supported-interface factory returned wrong type\n"));
+        }
+      else
+        {
+          multi_inherited_downcast->base_value (29);
+          multi_inherited_downcast->multi_derived_value (31);
+          CORBA::ValueBase_var multi_inherited_copy (
+            multi_inherited_downcast->_copy_value ());
+          Accessor_Optimized_Refcount_Multi_Derived * const
+            copied_multi_inherited =
+            Accessor_Optimized_Refcount_Multi_Derived::_downcast (
+              multi_inherited_copy.in ());
+          if (copied_multi_inherited == nullptr
+              || copied_multi_inherited->base_value () != 29
+              || copied_multi_inherited->multi_derived_value () != 31)
+            {
+              ++error_count;
+              ACE_ERROR ((LM_ERROR,
+                          "Inherited supported-interface valuetype copy is incorrect\n"));
+            }
+        }
+
       CORBA::Object_var poa_object =
         orb->resolve_initial_references ("RootPOA");
 
