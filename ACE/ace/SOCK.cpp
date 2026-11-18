@@ -98,7 +98,9 @@ ACE_SOCK::open (int type,
                                     protocol));
 
   if (this->get_handle () == ACE_INVALID_HANDLE)
-    return -1;
+    {
+      return -1;
+    }
   else if (protocol_family != PF_UNIX
            && reuse_addr
            && this->set_option (SOL_SOCKET,
@@ -125,9 +127,11 @@ ACE_SOCK::ACE_SOCK (int type,
                   protocol_family,
                   protocol,
                   reuse_addr) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_SOCK::ACE_SOCK")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_SOCK::ACE_SOCK")));
+    }
 }
 
 int
@@ -150,7 +154,9 @@ ACE_SOCK::open (int type,
   int one = 1;
 
   if (this->get_handle () == ACE_INVALID_HANDLE)
-    return -1;
+    {
+      return -1;
+    }
   else if (reuse_addr
            && this->set_option (SOL_SOCKET,
                                 SO_REUSEADDR,
@@ -161,9 +167,9 @@ ACE_SOCK::open (int type,
       return -1;
     }
   else
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
 }
 
 ACE_SOCK::ACE_SOCK (int type,
@@ -182,9 +188,11 @@ ACE_SOCK::ACE_SOCK (int type,
                   g,
                   flags,
                   reuse_addr) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_SOCK::ACE_SOCK")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_SOCK::ACE_SOCK")));
+    }
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
