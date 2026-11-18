@@ -12979,6 +12979,12 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   argv index in `Get_Opt_Test.cpp` from `%u` to `%d`. `git diff --check` passes;
   the full ACE test logging-format audit remains open.
 
+## 2026-11-18 ACE cache test log formats
+
+- Replaced `%d` with `%B` for cache map keys, values, and lookup indices in
+  `Cache_Map_Manager_Test.cpp`; their declared types are `size_t`. `git diff
+  --check` passes, and the full ACE test logging-format audit remains open.
+
 ## 2026-11-18 ACE core brace audit
 
 - Ran `clang-tidy`'s `readability-braces-around-statements` check over the
