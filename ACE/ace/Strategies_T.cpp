@@ -48,7 +48,9 @@ ACE_Singleton_Strategy<SVC_HANDLER>::~ACE_Singleton_Strategy ()
 {
   ACE_TRACE ("ACE_Singleton_Strategy<SVC_HANDLER>::~ACE_Singleton_Strategy");
   if (this->delete_svc_handler_)
-    delete this->svc_handler_;
+    {
+      delete this->svc_handler_;
+    }
 }
 
 // Create a Singleton SVC_HANDLER by always returning the same
@@ -69,7 +71,9 @@ ACE_Singleton_Strategy<SVC_HANDLER>::open (SVC_HANDLER *sh,
   ACE_TRACE ("ACE_Singleton_Strategy<SVC_HANDLER>::open");
 
   if (this->delete_svc_handler_)
-    delete this->svc_handler_;
+    {
+      delete this->svc_handler_;
+    }
 
   // If <sh> is NULL then create a new <SVC_HANDLER>.
   if (sh == nullptr)
@@ -151,7 +155,9 @@ ACE_DLL_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
         }
 
       if (this->svc_rep_->insert (srp) == -1)
-        return -1;
+        {
+          return -1;
+        }
       // @@ Somehow, we need to deal with this->thr_mgr_...
     }
 
@@ -176,19 +182,27 @@ ACE_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_ha
   if (ACE_BIT_ENABLED (this->flags_, ACE_NONBLOCK))
     {
       if (svc_handler->peer ().enable (ACE_NONBLOCK) == -1)
-        result = -1;
+        {
+          result = -1;
+        }
     }
   // Otherwise, make sure it's disabled by default.
   else if (svc_handler->peer ().disable (ACE_NONBLOCK) == -1)
-    result = -1;
+    {
+      result = -1;
+    }
 
   if (result == 0 && svc_handler->open (arg) == -1)
-    result = -1;
+    {
+      result = -1;
+    }
 
   if (result == -1)
-    // The connection was already made; so this close is a "normal" close
-    // operation.
-    svc_handler->close (NORMAL_CLOSE_OPERATION);
+    {
+      // The connection was already made; so this close is a "normal" close
+      // operation.
+      svc_handler->close (NORMAL_CLOSE_OPERATION);
+    }
 
   return result;
 }
@@ -205,9 +219,13 @@ ACE_Reactive_Strategy<SVC_HANDLER>::open (ACE_Reactor *reactor,
 
   // Must have a <Reactor>
   if (this->reactor_ == nullptr)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 template <class SVC_HANDLER> int
@@ -219,11 +237,15 @@ ACE_Reactive_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handl
   int result = 0;
 
   if (this->reactor_ == nullptr)
-    result = -1;
+    {
+      result = -1;
+    }
 
   // Register with the Reactor with the appropriate <mask>.
   else if (this->reactor_->register_handler (svc_handler, this->mask_) == -1)
-    result = -1;
+    {
+      result = -1;
+    }
 
   // If the implementation of the reactor uses event associations
   else if (this->reactor_->uses_event_associations ())
@@ -234,18 +256,26 @@ ACE_Reactive_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handl
       // if (!ACE_BIT_ENABLED (this->flags_, ACE_NONBLOCK))
       // goto failure;
       if (svc_handler->open (arg) != -1)
-        return 0;
+        {
+          return 0;
+        }
       else
-        result = -1;
+        {
+          result = -1;
+        }
     }
   else
-    // Call up to our parent to do the SVC_HANDLER initialization.
-    return this->inherited::activate_svc_handler (svc_handler, arg);
+    {
+      // Call up to our parent to do the SVC_HANDLER initialization.
+      return this->inherited::activate_svc_handler (svc_handler, arg);
+    }
 
   if (result == -1)
-    // The connection was already made; so this close is a "normal" close
-    // operation.
-    svc_handler->close (NORMAL_CLOSE_OPERATION);
+    {
+      // The connection was already made; so this close is a "normal" close
+      // operation.
+      svc_handler->close (NORMAL_CLOSE_OPERATION);
+    }
 
   return result;
 }
@@ -264,11 +294,15 @@ ACE_Thread_Strategy<SVC_HANDLER>::open (ACE_Thread_Manager *thr_mgr,
 
   // Must have a thread manager!
   if (this->thr_mgr_ == nullptr)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("error: must have a non-NULL thread manager\n")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("error: must have a non-NULL thread manager\n")),
+                        -1);
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 template <class SVC_HANDLER> int
@@ -279,12 +313,16 @@ ACE_Thread_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handler
   // Call up to our parent to do the SVC_HANDLER initialization.
   if (this->inherited::activate_svc_handler (svc_handler,
                                              arg) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    // Turn the <svc_handler> into an active object (if it isn't
-    // already one as a result of the first activation...)
-    return svc_handler->activate (this->thr_flags_,
-                                  this->n_threads_);
+    {
+      // Turn the <svc_handler> into an active object (if it isn't
+      // already one as a result of the first activation...)
+      return svc_handler->activate (this->thr_flags_,
+                                    this->n_threads_);
+    }
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
@@ -294,7 +332,9 @@ ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
   this->reuse_addr_ = reuse_addr;
   this->peer_acceptor_addr_ = local_addr;
   if (this->peer_acceptor_.open (local_addr, reuse_addr) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   // Set the peer acceptor's handle into non-blocking mode.  This is a
   // safe-guard against the race condition that can otherwise occur
@@ -303,7 +343,9 @@ ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
   // interval, the client can shutdown the connection, in which case,
   // the <accept> call can hang!
   if (this->peer_acceptor_.enable (ACE_NONBLOCK) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   return 0;
 }
@@ -318,9 +360,11 @@ ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Accept_Strategy
   ACE_TRACE ("ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Accept_Strategy");
 
   if (this->open (local_addr, reuse_addr) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("open")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("open")));
+    }
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
@@ -353,7 +397,9 @@ ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler
       return -1;
     }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1> int
@@ -441,9 +487,11 @@ ACE_Process_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handle
       // Close down the SOCK_Acceptor's handle since we don't need to
       // keep it open.
       if (this->acceptor_ != nullptr)
-        // Ignore the return value here...
-        (void) this->reactor_->remove_handler (this->acceptor_,
-                                               ACE_Event_Handler::ACCEPT_MASK);
+        {
+          // Ignore the return value here...
+          (void) this->reactor_->remove_handler (this->acceptor_,
+                                                 ACE_Event_Handler::ACCEPT_MASK);
+        }
 
       // Call up to our ancestor in the inheritance to do the
       // SVC_HANDLER initialization.
@@ -486,9 +534,11 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::ACE_Cache
   if (this->open (cre_s,
                   con_s,
                   rec_s) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Cached_Connect_Strategy::ACE_Cached_Connect_Strategy")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("ACE_Cached_Connect_Strategy::ACE_Cached_Connect_Strategy")));
+    }
 }
 
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX>
@@ -671,7 +721,9 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::check_hin
     }
 
   if (found)
-    entry = possible_entry;
+    {
+      entry = possible_entry;
+    }
 
   return 0;
 }
@@ -709,7 +761,9 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::find_or_c
 
       // Create a new svc_handler
       if (this->make_svc_handler (potential_handler) == -1)
-        return -1;
+        {
+          return -1;
+        }
 
       // Actively establish the connection.  This is a timed blocking
       // connect.
@@ -727,7 +781,9 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::find_or_c
           // to complete and for the <Connector> to notify the cache
           // of the completion of connect().
           if (errno == EWOULDBLOCK)
-            errno = ENOTSUP;
+            {
+              errno = ENOTSUP;
+            }
 
           // Close the svc handler.
           potential_handler->close (0);
@@ -825,7 +881,9 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_s
                                               perms,
                                               found);
     if (result != 0)
-      return result;
+      {
+        return result;
+      }
   }
 
   // If it is a new connection, activate it.
@@ -891,7 +949,9 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_s
     sh_copy = sh;
 
     if (result != 0)
-      return result;
+      {
+        return result;
+      }
   }
 
   // If it is a new connection, activate it.
@@ -951,7 +1011,9 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_s
                                        entry,
                                        found);
       if (result != 0)
-        return result;
+        {
+          return result;
+        }
     }
 
   // If not found
@@ -967,7 +1029,9 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_s
                                                        entry,
                                                        found);
       if (result != 0)
-        return result;
+        {
+          return result;
+        }
     }
 
   if (entry != nullptr)
@@ -1117,7 +1181,9 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::cleanup_h
   // Reset the <*act_holder> in the confines and protection of the
   // lock.
   if (act_holder)
-    *act_holder = nullptr;
+    {
+      *act_holder = nullptr;
+    }
 
   // The wonders and perils of ACT
   CONNECTION_MAP_ENTRY *entry = (CONNECTION_MAP_ENTRY *) recycling_act;
@@ -1183,10 +1249,14 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::find (
 
       if (addr.recycle_state () != ACE_RECYCLABLE_IDLE_AND_PURGABLE &&
           addr.recycle_state () != ACE_RECYCLABLE_IDLE_BUT_NOT_PURGABLE)
-        continue;
+        {
+          continue;
+        }
 
       if (addr.subject () != search_addr.subject ())
-        continue;
+        {
+          continue;
+        }
 
       entry = std::addressof (*iterator);
       return 0;
@@ -1416,7 +1486,9 @@ ACE_Creation_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
   ACE_TRACE ("ACE_Creation_Strategy<SVC_HANDLER>::make_svc_handler");
 
   if (sh == nullptr)
-    ACE_NEW_RETURN (sh, SVC_HANDLER (this->thr_mgr_), -1);
+    {
+      ACE_NEW_RETURN (sh, SVC_HANDLER (this->thr_mgr_), -1);
+    }
   sh->reactor (this->reactor_);
   return 0;
 }
