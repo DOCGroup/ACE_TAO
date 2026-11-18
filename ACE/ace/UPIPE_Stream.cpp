@@ -122,50 +122,56 @@ ACE_UPIPE_Stream::recv (char *buffer,
   size_t bytes_read = 0;
 
   while (bytes_read < n)
-    if (this->mb_last_ != nullptr)
-      {
-        // We have remaining data in our last read Message_Buffer.
-        size_t this_len = this->mb_last_->length ();
-        if (this_len < n)
-          {
-            // The remaining data is not enough.
-
-            std::memcpy (buffer + bytes_read, this->mb_last_->rd_ptr (), this_len);
-            bytes_read += this_len;
-            this->mb_last_ = this->mb_last_->release ();   // mb_last_ now 0
-            return static_cast<ssize_t> (bytes_read);
-          }
-        else
-          {
-            // The remaining data is at least enough.  If there's
-            // more, we'll get it the next time through.
-            std::memcpy (buffer + bytes_read, this->mb_last_->rd_ptr (), n);
-            bytes_read += n;
-
-            // Advance rd_ptr.
-            this->mb_last_->rd_ptr (n);
-
-            if (this->mb_last_->length () == 0)
-              // Now the Message_Buffer is empty.
-              this->mb_last_ = this->mb_last_->release ();
-          }
-      }
-    else
-      {
-        // We have to get a new Message_Buffer from our stream.
-        int result = this->stream_.get (this->mb_last_, timeout);
-
-        if (result == -1)
-          {
-            if (errno == EWOULDBLOCK && bytes_read > 0)
-              // Return the number of bytes read before we timed out.
-              return static_cast<ssize_t> (bytes_read);
-            else
+    {
+      if (this->mb_last_ != nullptr)
+        {
+          // We have remaining data in our last read Message_Buffer.
+          size_t this_len = this->mb_last_->length ();
+          if (this_len < n)
             {
-              return -1;
+              // The remaining data is not enough.
+
+              std::memcpy (buffer + bytes_read, this->mb_last_->rd_ptr (), this_len);
+              bytes_read += this_len;
+              this->mb_last_ = this->mb_last_->release ();   // mb_last_ now 0
+              return static_cast<ssize_t> (bytes_read);
             }
-          }
-      }
+          else
+            {
+              // The remaining data is at least enough.  If there's
+              // more, we'll get it the next time through.
+              std::memcpy (buffer + bytes_read, this->mb_last_->rd_ptr (), n);
+              bytes_read += n;
+
+              // Advance rd_ptr.
+              this->mb_last_->rd_ptr (n);
+
+              if (this->mb_last_->length () == 0)
+                {
+                  // Now the Message_Buffer is empty.
+                  this->mb_last_ = this->mb_last_->release ();
+                }
+            }
+        }
+      else
+        {
+          // We have to get a new Message_Buffer from our stream.
+          int result = this->stream_.get (this->mb_last_, timeout);
+
+          if (result == -1)
+            {
+              if (errno == EWOULDBLOCK && bytes_read > 0)
+                {
+                  // Return the number of bytes read before we timed out.
+                  return static_cast<ssize_t> (bytes_read);
+                }
+              else
+                {
+                  return -1;
+                }
+            }
+        }
+    }
 
   return static_cast<ssize_t> (bytes_read);
 }

@@ -238,8 +238,10 @@ ACE_Name_Request::encode (void *&buf)
     / sizeof (ACE_WCHAR_T);
 
   for (size_t i = 0; i < nv_data_len; ++i)
-    this->transfer_.data_[i] =
-      static_cast<ACE_WCHAR_T> (ACE_HTONS (this->transfer_.data_[i]));
+    {
+      this->transfer_.data_[i] =
+        static_cast<ACE_WCHAR_T> (ACE_HTONS (this->transfer_.data_[i]));
+    }
 
   buf = (void *) &this->transfer_;
   this->transfer_.block_forever_ = ACE_HTONL (this->transfer_.block_forever_);
@@ -282,8 +284,10 @@ ACE_Name_Request::decode ()
     / sizeof (ACE_WCHAR_T);
 
   for (size_t i = 0; i < nv_data_len; ++i)
-    this->transfer_.data_[i] =
-      static_cast<ACE_WCHAR_T> (ACE_NTOHS (this->transfer_.data_[i]));
+    {
+      this->transfer_.data_[i] =
+        static_cast<ACE_WCHAR_T> (ACE_NTOHS (this->transfer_.data_[i]));
+    }
 
   this->name_ = this->transfer_.data_;
   this->value_ = &this->name_[this->transfer_.name_len_ / sizeof (ACE_WCHAR_T)];
@@ -454,11 +458,13 @@ ACE_Name_Reply::status (ACE_INT32 s)
 {
   ACE_TRACE ("ACE_Name_Reply::status");
   if (s == -1)
-    this->transfer_.type_ = -1;
+    {
+      this->transfer_.type_ = -1;
+    }
   else
-  {
-    this->transfer_.type_ = 0;
-  }
+    {
+      this->transfer_.type_ = 0;
+    }
 }
 
 ACE_UINT32

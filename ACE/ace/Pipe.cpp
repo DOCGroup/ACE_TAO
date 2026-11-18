@@ -199,10 +199,12 @@ ACE_Pipe::open (int buffer_size)
                           SOCK_STREAM,
                           0,
                           this->handles_) == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("socketpair")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("socketpair")),
+                          -1);
+    }
 # if defined (ACE_LACKS_SO_SNDBUF) && defined (ACE_LACKS_SO_RCVBUF)
   ACE_UNUSED_ARG (buffer_size);
 # endif
@@ -243,7 +245,9 @@ ACE_Pipe::open (ACE_HANDLE handles[2])
   ACE_TRACE ("ACE_Pipe::open");
 
   if (this->open () == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       handles[0] = this->handles_[0];
@@ -267,8 +271,10 @@ ACE_Pipe::ACE_Pipe (ACE_HANDLE handles[2])
   ACE_TRACE ("ACE_Pipe::ACE_Pipe");
 
   if (this->open (handles) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("ACE_Pipe::ACE_Pipe")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("ACE_Pipe::ACE_Pipe")));
+    }
 }
 
 ACE_Pipe::ACE_Pipe (ACE_HANDLE read,
