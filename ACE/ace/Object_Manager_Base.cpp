@@ -220,34 +220,44 @@ ACE_OS_Object_Manager::init ()
           ACE_OS_PREALLOCATE_OBJECT (ACE_thread_mutex_t, ACE_OS_MONITOR_LOCK)
           if (ACE_OS::thread_mutex_init
               (reinterpret_cast <ACE_thread_mutex_t *> (ACE_OS_Object_Manager::preallocated_object[ACE_OS_MONITOR_LOCK])) != 0)
-            ACE_OS_Object_Manager::print_error_message (
-              __LINE__, ACE_TEXT ("ACE_OS_MONITOR_LOCK"));
+            {
+              ACE_OS_Object_Manager::print_error_message (
+                __LINE__, ACE_TEXT ("ACE_OS_MONITOR_LOCK"));
+            }
           ACE_OS_PREALLOCATE_OBJECT (ACE_recursive_thread_mutex_t,
                                      ACE_TSS_CLEANUP_LOCK)
           if (ACE_OS::recursive_mutex_init
               (reinterpret_cast <ACE_recursive_thread_mutex_t *> (ACE_OS_Object_Manager::preallocated_object[ACE_TSS_CLEANUP_LOCK])) != 0)
-            ACE_OS_Object_Manager::print_error_message (
-              __LINE__, ACE_TEXT ("ACE_TSS_CLEANUP_LOCK"));
+            {
+              ACE_OS_Object_Manager::print_error_message (
+                __LINE__, ACE_TEXT ("ACE_TSS_CLEANUP_LOCK"));
+            }
           ACE_OS_PREALLOCATE_OBJECT (ACE_thread_mutex_t,
                                      ACE_LOG_MSG_INSTANCE_LOCK)
           if (ACE_OS::thread_mutex_init
               (reinterpret_cast <ACE_thread_mutex_t *> (ACE_OS_Object_Manager::preallocated_object[ACE_LOG_MSG_INSTANCE_LOCK])) != 0)
-            ACE_OS_Object_Manager::print_error_message (
-              __LINE__, ACE_TEXT ("ACE_LOG_MSG_INSTANCE_LOCK"));
+            {
+              ACE_OS_Object_Manager::print_error_message (
+                __LINE__, ACE_TEXT ("ACE_LOG_MSG_INSTANCE_LOCK"));
+            }
 #   if defined (ACE_HAS_TSS_EMULATION)
           ACE_OS_PREALLOCATE_OBJECT (ACE_recursive_thread_mutex_t,
                                      ACE_TSS_KEY_LOCK)
           if (ACE_OS::recursive_mutex_init
               (reinterpret_cast <ACE_recursive_thread_mutex_t *> (ACE_OS_Object_Manager::preallocated_object[ACE_TSS_KEY_LOCK])) != 0)
-            ACE_OS_Object_Manager::print_error_message (
-              __LINE__, ACE_TEXT ("ACE_TSS_KEY_LOCK"));
+            {
+              ACE_OS_Object_Manager::print_error_message (
+                __LINE__, ACE_TEXT ("ACE_TSS_KEY_LOCK"));
+            }
 #     if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
           ACE_OS_PREALLOCATE_OBJECT (ACE_recursive_thread_mutex_t,
                                      ACE_TSS_BASE_LOCK)
           if (ACE_OS::recursive_mutex_init
               (reinterpret_cast <ACE_recursive_thread_mutex_t *> (ACE_OS_Object_Manager::preallocated_object[ACE_TSS_BASE_LOCK])) != 0)
-            ACE_OS_Object_Manager::print_error_message (
-              __LINE__, ACE_TEXT ("ACE_TSS_BASE_LOCK"));
+            {
+              ACE_OS_Object_Manager::print_error_message (
+                __LINE__, ACE_TEXT ("ACE_TSS_BASE_LOCK"));
+            }
 #     endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
 #   endif /* ACE_HAS_TSS_EMULATION */
 # endif /* ACE_MT_SAFE */
@@ -286,7 +296,9 @@ ACE_OS_Object_Manager::init ()
 #   pragma warning(pop)
 # endif /* ACE_WIN32 */
       return 0;
-    } else {
+    }
+  else
+    {
       // Had already initialized.
       return 1;
     }
@@ -299,10 +311,12 @@ ACE_OS_Object_Manager::init ()
 int
 ACE_OS_Object_Manager::fini ()
 {
-  if (instance_ == nullptr ||  shutting_down_i ())
-    // Too late.  Or, maybe too early.  Either fini () has already
-    // been called, or init () was never called.
-    return object_manager_state_ == OBJ_MAN_SHUT_DOWN  ?  1  :  -1;
+  if (instance_ == nullptr || shutting_down_i ())
+    {
+      // Too late.  Or, maybe too early.  Either fini () has already
+      // been called, or init () was never called.
+      return object_manager_state_ == OBJ_MAN_SHUT_DOWN ? 1 : -1;
+    }
 
   // No mutex here.  Only the main thread should destroy the singleton
   // ACE_OS_Object_Manager instance.
@@ -336,33 +350,54 @@ ACE_OS_Object_Manager::fini ()
 #   if !defined(ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK)
       if (ACE_OS::thread_mutex_destroy
           (reinterpret_cast <ACE_thread_mutex_t *> (ACE_OS_Object_Manager::preallocated_object[ACE_OS_MONITOR_LOCK])) != 0)
+        {
 #     ifdef ACE_LACKS_PTHREAD_MUTEX_DESTROY
-        if (errno != ENOTSUP)
+          if (errno != ENOTSUP)
+            {
+              ACE_OS_Object_Manager::print_error_message (
+                __LINE__, ACE_TEXT ("ACE_OS_MONITOR_LOCK"));
+            }
+#     else
+          ACE_OS_Object_Manager::print_error_message (
+            __LINE__, ACE_TEXT ("ACE_OS_MONITOR_LOCK"));
 #     endif
-        ACE_OS_Object_Manager::print_error_message (
-          __LINE__, ACE_TEXT ("ACE_OS_MONITOR_LOCK"));
+        }
 #   endif /* ! ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK */
       ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_thread_mutex_t,
                                          ACE_OS_MONITOR_LOCK)
 #   if !defined(ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK)
       if (ACE_OS::recursive_mutex_destroy
           (reinterpret_cast <ACE_recursive_thread_mutex_t *> (ACE_OS_Object_Manager::preallocated_object[ACE_TSS_CLEANUP_LOCK])) != 0)
+        {
 #     ifdef ACE_LACKS_PTHREAD_MUTEX_DESTROY
-        if (errno != ENOTSUP)
+          if (errno != ENOTSUP)
+            {
+              ACE_OS_Object_Manager::print_error_message (
+                __LINE__, ACE_TEXT ("ACE_TSS_CLEANUP_LOCK"));
+            }
+#     else
+          ACE_OS_Object_Manager::print_error_message (
+            __LINE__, ACE_TEXT ("ACE_TSS_CLEANUP_LOCK"));
 #     endif
-        ACE_OS_Object_Manager::print_error_message (
-          __LINE__, ACE_TEXT ("ACE_TSS_CLEANUP_LOCK"));
+        }
 #   endif /* ! ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK */
       ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_recursive_thread_mutex_t,
                                          ACE_TSS_CLEANUP_LOCK)
 #   if !defined(ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK)
       if (ACE_OS::thread_mutex_destroy
           (reinterpret_cast <ACE_thread_mutex_t *> (ACE_OS_Object_Manager::preallocated_object [ACE_LOG_MSG_INSTANCE_LOCK])) != 0)
+        {
 #     ifdef ACE_LACKS_PTHREAD_MUTEX_DESTROY
-        if (errno != ENOTSUP)
+          if (errno != ENOTSUP)
+            {
+              ACE_OS_Object_Manager::print_error_message (
+                __LINE__, ACE_TEXT ("ACE_LOG_MSG_INSTANCE_LOCK "));
+            }
+#     else
+          ACE_OS_Object_Manager::print_error_message (
+            __LINE__, ACE_TEXT ("ACE_LOG_MSG_INSTANCE_LOCK "));
 #     endif
-        ACE_OS_Object_Manager::print_error_message (
-          __LINE__, ACE_TEXT ("ACE_LOG_MSG_INSTANCE_LOCK "));
+        }
 #   endif /* ! ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK */
       ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_thread_mutex_t,
                                          ACE_LOG_MSG_INSTANCE_LOCK)
@@ -370,8 +405,10 @@ ACE_OS_Object_Manager::fini ()
 #     if !defined(ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK)
         if (ACE_OS::recursive_mutex_destroy
             (reinterpret_cast <ACE_recursive_thread_mutex_t *> (ACE_OS_Object_Manager::preallocated_object[ACE_TSS_KEY_LOCK])) != 0)
-          ACE_OS_Object_Manager::print_error_message (
-            __LINE__, ACE_TEXT ("ACE_TSS_KEY_LOCK"));
+          {
+            ACE_OS_Object_Manager::print_error_message (
+              __LINE__, ACE_TEXT ("ACE_TSS_KEY_LOCK"));
+          }
 #     endif /* ! ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK */
       ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_recursive_thread_mutex_t,
                                          ACE_TSS_KEY_LOCK)
@@ -379,8 +416,10 @@ ACE_OS_Object_Manager::fini ()
 #       if !defined(ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK)
           if (ACE_OS::recursive_mutex_destroy
               (reinterpret_cast <ACE_recursive_thread_mutex_t *> (ACE_OS_Object_Manager::preallocated_object[ACE_TSS_BASE_LOCK])) != 0)
-            ACE_OS_Object_Manager::print_error_message (
-              __LINE__, ACE_TEXT ("ACE_TSS_BASE_LOCK"));
+            {
+              ACE_OS_Object_Manager::print_error_message (
+                __LINE__, ACE_TEXT ("ACE_TSS_BASE_LOCK"));
+            }
 #       endif /* ! ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK */
       ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_recursive_thread_mutex_t,
                                          ACE_TSS_BASE_LOCK)
@@ -406,9 +445,9 @@ ACE_OS_Object_Manager::fini ()
     }
 
   if (this == instance_)
-  {
-    instance_ = nullptr;
-  }
+    {
+      instance_ = nullptr;
+    }
 
   return 0;
 }
