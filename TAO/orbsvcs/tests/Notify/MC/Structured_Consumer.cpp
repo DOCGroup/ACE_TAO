@@ -1,11 +1,8 @@
-// ******************************************************************
-// Include Section
-// ******************************************************************
-
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <cstdio>
 #include <memory>
 
 #include "Notify_Structured_Push_Consumer.h"
@@ -100,13 +97,9 @@ create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
   consumer->_connect (admin);
 }
 
-// ******************************************************************
-// Main Section
-// ******************************************************************
-
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int status = 0;
+  int status {};
 
   try
     {
@@ -121,7 +114,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       CosNotifyChannelAdmin::EventChannel_var const ec =
-        client.create_event_channel ("MyEventChannel", 0);
+        client.create_event_channel ("MyEventChannel", false);
 
 #ifdef TEST_QOS_MAX_QUEUE_LENGTH
       ACE_OS::printf ("%s: setting max queue length to 1000\n", argv[0]);
@@ -165,7 +158,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       {
         std::unique_ptr<FILE, int (*) (FILE *)> ready_file (
-          ACE_OS::fopen (options.ready_output_file, ACE_TEXT ("w")), ACE_OS::fclose);
+          ACE_OS::fopen (options.ready_output_file, ACE_TEXT ("w")), std::fclose);
         if (!ready_file)
           {
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -173,7 +166,14 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                               1);
           }
 
-        ACE_OS::fprintf (ready_file.get (), ACE_TEXT ("%s"), ACE_TEXT ("ready\n"));
+        int const write_result = std::fprintf (ready_file.get (), "%s", "ready\n");
+        int const close_result = std::fclose (ready_file.release ());
+        if (write_result < 0 || close_result != 0)
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("Unable to write or close ready file\n")),
+                              1);
+          }
       }
 
       client.ORB_run ();

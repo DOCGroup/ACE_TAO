@@ -1,8 +1,9 @@
 #include "ace/Get_Opt.h"
 #include "ace/Monitor_Point_Registry.h"
 
-#include <memory>
+#include <cstdio>
 #include <cstring>
+#include <memory>
 
 #include "orbsvcs/Notify/MonitorControl/NotificationServiceMCC.h"
 #include "orbsvcs/Notify/MonitorControlExt/NotifyMonitoringExtC.h"
@@ -13,17 +14,9 @@ using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
 
 #include "MonitorTestInterfaceS.h"
 
-extern "C" int
-sorter (void const* a, void const* b)
-{
-  char const* left = *static_cast<char const* const*> (a);
-  char const* right = *static_cast<char const* const*> (b);
-  return std::strcmp (left, right);
-}
-
 // It's reasonable to assume that there is only one event channel
 // factory and that we know its name.
-class MonitorTestInterface_i: public virtual POA_MonitorTestInterface
+class MonitorTestInterface_i : public virtual POA_MonitorTestInterface
 {
 public:
   explicit MonitorTestInterface_i (
@@ -43,10 +36,8 @@ public:
   void finished (MonitorTestInterface::Which proc) override;
 
 private:
-  void brain_dump (char const* context);
-  void stat_dump (char const* stat_name);
   void consumer_stats_check ();
-private:
+
   ACE_CString base_ {};
   CosNotification::NotificationServiceMonitorControl_var nsm_ {};
 };
@@ -63,106 +54,105 @@ MonitorTestInterface_i::running (MonitorTestInterface::Which proc)
     {
     case MonitorTestInterface::NotifyService:
       {
-      data = this->nsm_->get_statistic (NotifyMonitoringExt::EventChannelFactoryNames);
-      list = data->data_union.list ();
+        data = this->nsm_->get_statistic (NotifyMonitoringExt::EventChannelFactoryNames);
+        list = data->data_union.list ();
 
-      if (list.length () != 1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "ERROR: There should be only one Event "
-                      "Channel Factory\n"));
-        }
+        if (list.length () != 1)
+          {
+            ACE_ERROR ((LM_ERROR,
+                        "ERROR: There should be only one Event "
+                        "Channel Factory\n"));
+          }
 
-      this->base_ = list[0];
-      this->base_ += "/";
-      str = this->base_ + NotifyMonitoringExt::ActiveEventChannelCount;
-      data = this->nsm_->get_statistic (str.c_str ());
-      num = data->data_union.num ();
+        this->base_ = list[0];
+        this->base_ += "/";
+        str = this->base_ + NotifyMonitoringExt::ActiveEventChannelCount;
+        data = this->nsm_->get_statistic (str.c_str ());
+        num = data->data_union.num ();
 
-      if (!ACE::is_equal (num.dlist[0].value, 0.0))
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "ERROR: There should be no active Event "
-                      "Channels\n"));
-        }
+        if (!ACE::is_equal (num.dlist[0].value, 0.0))
+          {
+            ACE_ERROR ((LM_ERROR,
+                        "ERROR: There should be no active Event "
+                        "Channels\n"));
+          }
 
-      str = this->base_ + NotifyMonitoringExt::InactiveEventChannelCount;
-      data = this->nsm_->get_statistic (str.c_str ());
-      num = data->data_union.num ();
+        str = this->base_ + NotifyMonitoringExt::InactiveEventChannelCount;
+        data = this->nsm_->get_statistic (str.c_str ());
+        num = data->data_union.num ();
 
-      if (!ACE::is_equal (num.dlist[0].value, 0.0))
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "ERROR: There should be no inactive Event "
-                      "Channels\n"));
-        }
+        if (!ACE::is_equal (num.dlist[0].value, 0.0))
+          {
+            ACE_ERROR ((LM_ERROR,
+                        "ERROR: There should be no inactive Event "
+                        "Channels\n"));
+          }
 
-      break;
+        break;
       }
     case MonitorTestInterface::Consumer:
       {
-      str = this->base_ + NotifyMonitoringExt::ActiveEventChannelNames;
-      data = this->nsm_->get_statistic (str.c_str ());
-      list = data->data_union.list ();
+        str = this->base_ + NotifyMonitoringExt::ActiveEventChannelNames;
+        data = this->nsm_->get_statistic (str.c_str ());
+        list = data->data_union.list ();
 
-      if (list.length () != 1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "ERROR: There should be only one active "
-                      "Event Channel\n"));
-        }
+        if (list.length () != 1)
+          {
+            ACE_ERROR ((LM_ERROR,
+                        "ERROR: There should be only one active "
+                        "Event Channel\n"));
+          }
 
-      // Base will now be the factory plus the event channel.
-      this->base_ = list[0];
-      this->base_ += "/";
+        // Base will now be the factory plus the event channel.
+        this->base_ = list[0];
+        this->base_ += "/";
 
-      str = this->base_ + NotifyMonitoringExt::EventChannelConsumerCount;
-      data = this->nsm_->get_statistic (str.c_str ());
-      num = data->data_union.num ();
-      if (!ACE::is_equal (num.dlist[0].value, 1.0))
-      {
-        ACE_ERROR ((LM_ERROR, "Monitor: ERROR: There should be only one Consumer\n"));
-      }
+        str = this->base_ + NotifyMonitoringExt::EventChannelConsumerCount;
+        data = this->nsm_->get_statistic (str.c_str ());
+        num = data->data_union.num ();
+        if (!ACE::is_equal (num.dlist[0].value, 1.0))
+          {
+            ACE_ERROR ((LM_ERROR, "Monitor: ERROR: There should be only one Consumer\n"));
+          }
 
-      str = this->base_ + NotifyMonitoringExt::EventChannelConsumerAdminCount;
-      data = this->nsm_->get_statistic (str.c_str ());
-      num = data->data_union.num ();
-      if (!ACE::is_equal (num.dlist[0].value, 1.0))
-      {
-        ACE_ERROR ((LM_ERROR, "Monitor: ERROR: There should be only one ConsumerAdmin\n"));
-      }
+        str = this->base_ + NotifyMonitoringExt::EventChannelConsumerAdminCount;
+        data = this->nsm_->get_statistic (str.c_str ());
+        num = data->data_union.num ();
+        if (!ACE::is_equal (num.dlist[0].value, 1.0))
+          {
+            ACE_ERROR ((LM_ERROR, "Monitor: ERROR: There should be only one ConsumerAdmin\n"));
+          }
 
-      str = this->base_ + NotifyMonitoringExt::EventChannelQueueElementCount;
-      data = this->nsm_->get_statistic (str.c_str ());
-      num = data->data_union.num ();
-      if (!ACE::is_equal (num.dlist[0].value, 0.0))
-      {
-        ACE_ERROR ((LM_ERROR, "Monitor: ERROR: There should be no events queued\n"));
-      }
+        str = this->base_ + NotifyMonitoringExt::EventChannelQueueElementCount;
+        data = this->nsm_->get_statistic (str.c_str ());
+        num = data->data_union.num ();
+        if (!ACE::is_equal (num.dlist[0].value, 0.0))
+          {
+            ACE_ERROR ((LM_ERROR, "Monitor: ERROR: There should be no events queued\n"));
+          }
 
-      brain_dump ("Running Consumer");
-
-      break;
+        break;
       }
     case MonitorTestInterface::Supplier:
       {
-      str = this->base_ + NotifyMonitoringExt::EventChannelSupplierCount;
-      data = this->nsm_->get_statistic (str.c_str ());
-      num = data->data_union.num ();
+        str = this->base_ + NotifyMonitoringExt::EventChannelSupplierCount;
+        data = this->nsm_->get_statistic (str.c_str ());
+        num = data->data_union.num ();
 
-      if (!ACE::is_equal (num.dlist[0].value, 1.0))
-      {
-        ACE_ERROR ((LM_ERROR, "Monitor: ERROR: There should be only one Supplier\n"));
-      }
+        if (!ACE::is_equal (num.dlist[0].value, 1.0))
+          {
+            ACE_ERROR ((LM_ERROR, "Monitor: ERROR: There should be only one Supplier\n"));
+          }
 
-      str = this->base_ + NotifyMonitoringExt::EventChannelSupplierAdminCount;
-      data = this->nsm_->get_statistic (str.c_str ());
-      num = data->data_union.num ();
-      if (!ACE::is_equal (num.dlist[0].value, 1.0))
-        ACE_ERROR ((LM_ERROR,
-                    "Monitor: ERROR: There should be only one SupplierAdmin\n"));
-      brain_dump ("Running Supplier");
-      break;
+        str = this->base_ + NotifyMonitoringExt::EventChannelSupplierAdminCount;
+        data = this->nsm_->get_statistic (str.c_str ());
+        num = data->data_union.num ();
+        if (!ACE::is_equal (num.dlist[0].value, 1.0))
+          {
+            ACE_ERROR ((LM_ERROR,
+                        "Monitor: ERROR: There should be only one SupplierAdmin\n"));
+          }
+        break;
       }
     default:
       ACE_ERROR ((LM_ERROR, "Monitor: ERROR: Impossible enum value %d\n", proc));
@@ -209,17 +199,21 @@ MonitorTestInterface_i::consumer_stats_check ()
                           queue_size_num.maximum,
                           queue_size_num.last));
               if (queue_size_num.average <= 0.0 || queue_size_num.average > 2000.0)
-                ACE_ERROR ((LM_ERROR,
-                            "Monitor: ERROR: %s average queue size [%f] should be greater than "
-                            "zero and less than 2000.\n",
-                            name,
-                            queue_size_num.average));
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              "Monitor: ERROR: %s average queue size [%f] should be greater than "
+                              "zero and less than 2000.\n",
+                              name,
+                              queue_size_num.average));
+                }
               if (queue_size_num.last > 2000.0)
-                ACE_ERROR ((LM_ERROR,
-                            "Monitor: ERROR: %s most recent queue size [%f] should not be "
-                            "greater than 2000.\n",
-                            name,
-                            queue_size_num.last));
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              "Monitor: ERROR: %s most recent queue size [%f] should not be "
+                              "greater than 2000.\n",
+                              name,
+                              queue_size_num.last));
+                }
             }
           catch (CORBA::Exception const& ex)
             {
@@ -231,73 +225,6 @@ MonitorTestInterface_i::consumer_stats_check ()
     {
       ACE_ERROR ((LM_ERROR, "Monitor: ERROR: No consumer queue size statistics found.\n"
                 ));
-    }
-}
-
-void
-MonitorTestInterface_i::brain_dump (char const* /*context*/)
-{
-#if 0 // verbose output should be controlled via a command line option
-  ACE_DEBUG ((LM_DEBUG, "\nStatistics as of: %s\n", context));
-  // Temporary::Dale: Dump known names
-  CosNotification::NotificationServiceMonitorControl::NameList_var names =
-    nsm_->get_statistic_names ();
-  CORBA::ULong length = names->length ();
-  ACE_DEBUG ((LM_DEBUG, "Statistic names [%d]\n", (int)length));
-
-  // It's much easier to read once it's sorted
-  const char **narray {};
-  ACE_NEW_THROW_EX (narray,
-                    const char* [length],
-                    CORBA::NO_MEMORY ());
-  for(CORBA::ULong i = 0; i < length; ++i)
-    narray[i] = names[i].in ();
-  ACE_OS::qsort (narray, length,
-                 sizeof (const char*), sorter);
-
-  for(CORBA::ULong i = 0; i < length; ++i)
-    {
-      stat_dump(narray[i]);
-    }
-  delete [] narray;
-#endif // verbose option
-}
-
-void
-MonitorTestInterface_i::stat_dump (char const* stat_name)
-{
-  try
-    {
-      Monitor::Data_var const data = this->nsm_->get_statistic (stat_name);
-      switch (data->data_union._d ())
-        {
-      case Monitor::DATA_NUMERIC:
-        {
-          ACE_DEBUG ((LM_DEBUG, "Numeric: %s\n", stat_name));
-          Monitor::Numeric const num = data->data_union.num ();
-          ACE_DEBUG ((LM_DEBUG, "   count: %d, average: %f; sumsq: %f, min: %f, max: %f: last %f\n",
-                      static_cast<unsigned int> (num.count), num.average, num.sum_of_squares,
-                      num.minimum, num.maximum, num.last));
-          break;
-        }
-      default:
-        {
-          Monitor::NameList const list = data->data_union.list ();
-          size_t const len = list.length ();
-          ACE_DEBUG ((LM_DEBUG, "Text[%d]: %s\n", static_cast<int> (len), stat_name));
-
-          for (size_t i {}; i < len; ++i)
-            {
-              ACE_CString const str = list[i].in ();
-              ACE_DEBUG ((LM_DEBUG, "   %d: %s\n", static_cast<int> (i), str.c_str ()));
-            }
-          break;
-        }
-        }
-    }
-  catch (CORBA::Exception const& ex)
-    {
-      ex._tao_print_exception (stat_name);
     }
 }
 
@@ -322,9 +249,9 @@ MonitorTestInterface_i::finished (MonitorTestInterface::Which proc)
           this->nsm_->get_statistic (consumer_count_name.c_str ());
         Monitor::Numeric const consumer_count_num = consumer_count_data->data_union.num ();
         if (!ACE::is_equal (consumer_count_num.last, 1.0))
-        {
-          ACE_ERROR ((LM_ERROR, "Monitor: ERROR: There should still be one Consumer\n"));
-        }
+          {
+            ACE_ERROR ((LM_ERROR, "Monitor: ERROR: There should still be one Consumer\n"));
+          }
 
         ACE_CString const queue_element_name =
           this->base_ + NotifyMonitoringExt::EventChannelQueueElementCount;
@@ -332,8 +259,10 @@ MonitorTestInterface_i::finished (MonitorTestInterface::Which proc)
           this->nsm_->get_statistic (queue_element_name.c_str ());
         Monitor::Numeric const queue_element_num = queue_element_data->data_union.num ();
         if (ACE::is_equal (queue_element_num.last, 0.0))
-          ACE_ERROR ((LM_ERROR,
-                      "Monitor: ERROR: There should be at least one event queued\n"));
+          {
+            ACE_ERROR ((LM_ERROR,
+                        "Monitor: ERROR: There should be at least one event queued\n"));
+          }
 
         ACE_CString const admin_names_name =
           this->base_ + NotifyMonitoringExt::EventChannelConsumerAdminNames;
@@ -352,19 +281,22 @@ MonitorTestInterface_i::finished (MonitorTestInterface::Which proc)
                         "Monitor: Queue Size: Average: %f, Maximum: %f, Most recent: %f\n",
                         queue_size_num.average, queue_size_num.maximum, queue_size_num.last));
             if (queue_size_num.average <= 0.0 || queue_size_num.average > 2000.0)
-              ACE_ERROR ((LM_ERROR,
-                          "Monitor: ERROR: The average queue size [%f] should be greater "
-                          "than zero and less than 2000.\n",
-                          queue_size_num.average));
+              {
+                ACE_ERROR ((LM_ERROR,
+                            "Monitor: ERROR: The average queue size [%f] should be greater "
+                            "than zero and less than 2000.\n",
+                            queue_size_num.average));
+              }
             if (queue_size_num.last > 2000.0)
-              ACE_ERROR ((LM_ERROR,
-                          "Monitor: ERROR: The most recent queue size [%f] should not be "
-                          "greater than 2000.\n",
-                          queue_size_num.last));
+              {
+                ACE_ERROR ((LM_ERROR,
+                            "Monitor: ERROR: The most recent queue size [%f] should not be "
+                            "greater than 2000.\n",
+                            queue_size_num.last));
+              }
           }
 
         this->consumer_stats_check ();
-        this->brain_dump ("Finished Supplier");
         break;
       }
     default:
@@ -460,7 +392,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
       {
         std::unique_ptr<FILE, int (*) (FILE *)> output_file (
-          ACE_OS::fopen (options.ior_output_file, ACE_TEXT ("w")), ACE_OS::fclose);
+          ACE_OS::fopen (options.ior_output_file, ACE_TEXT ("w")), std::fclose);
         if (!output_file)
           {
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -468,7 +400,14 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
                               1);
           }
 
-        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+        int const write_result = std::fprintf (output_file.get (), "%s", ior.in ());
+        int const close_result = std::fclose (output_file.release ());
+        if (write_result < 0 || close_result != 0)
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("Unable to write or close IOR output file\n")),
+                              1);
+          }
       }
 
       PortableServer::POAManager_var poa_manager =

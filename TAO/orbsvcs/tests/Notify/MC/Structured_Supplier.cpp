@@ -1,7 +1,3 @@
-// ******************************************************************
-// Include Section
-// ******************************************************************
-
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
@@ -16,10 +12,6 @@ struct Supplier_Options
   int max_events { 2000 };
   ACE_TCHAR const* ior { ACE_TEXT ("file://test_monitor.ior") };
 };
-
-// ******************************************************************
-// Subroutine Section
-// ******************************************************************
 
 class Supplier_Client : public Notify_Test_Client
 {
@@ -125,10 +117,6 @@ create_suppliers (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
   supplier->offer_change (added, removed);
 }
 
-// ******************************************************************
-// Main Section
-// ******************************************************************
-
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int status {};
@@ -140,7 +128,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (status == 0)
         {
           CosNotifyChannelAdmin::EventChannel_var ec =
-            client.create_event_channel ("MyEventChannel", 1);
+            client.create_event_channel ("MyEventChannel", true);
 
           CORBA::ORB_ptr orb = client.orb ();
           CORBA::Object_var const object =
@@ -150,9 +138,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             MonitorTestInterface::_narrow (object.in ());
 
           if (CORBA::is_nil (sig.in ()))
-          {
-            ACE_ERROR_RETURN ((LM_ERROR, "Error: Structured Supplier: Narrow to MonitorTestInterface failed.\n"),1);
-          }
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Error: Structured Supplier: Narrow to MonitorTestInterface failed.\n")),
+                                1);
+            }
           CosNotifyChannelAdmin::SupplierAdmin_var admin =
             create_supplieradmin (ec.in ());
           if (!CORBA::is_nil (admin.in ()))
