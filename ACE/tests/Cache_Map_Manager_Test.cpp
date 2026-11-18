@@ -370,7 +370,7 @@ functionality_test_cache (MAP_CACHING_STRATEGY &caching_strategy)
       ACE_UNUSED_ARG (result);
 
       if (debug)
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("keys[%d]=%d value=[%d]=%d\n"),
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("keys[%B]=%B value=[%B]=%B\n"),
                     i, i, j, j));
       ++counter;
       ACE_TEST_ASSERT (cache.current_size () == counter);
@@ -413,7 +413,7 @@ functionality_test_hash_cache (HASH_MAP_CACHING_STRATEGY &caching_strategy)
 
       if (debug)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("keys[%d]=%d value=[%d]=%d\n"),
+                    ACE_TEXT ("keys[%B]=%B value=[%B]=%B\n"),
                     i, i, j, j));
       ++counter;
       ACE_TEST_ASSERT (cache.current_size () == counter);
@@ -598,7 +598,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       }
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("%d  "),
+                  ACE_TEXT ("%B  "),
                   lookup_array[k]));
     }
 
