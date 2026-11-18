@@ -163,7 +163,7 @@ Server_Info::start_allowed ()
   bool allowed = active->start_count_ < active->start_limit_;
   if (allowed)
     {
-      active->start_count_++;
+      ++active->start_count_;
     }
   return allowed;
 }
