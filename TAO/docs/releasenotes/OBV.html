@@ -52,19 +52,16 @@
         Relevant option of TAO's IDL compiler is: <P>
             <UL>
             <LI>-Wb,obv_opt_accessor Make accessor and modifier functions inline.
-            Overriding them is not allowed in this mode. Operation-free
-            valuetypes do not get a generated concrete OBV factory in this
-            mode.</LI>
+            Overriding them is not allowed in this mode.</LI>
             </UL></P>
 	    <p></p>
         </li>
-        <li><p>Generated OBV classes for operation-free valuetypes provide
-            <CODE>_copy_value()</CODE> and the required reference-count base.
-            Applications that add
-            <CODE>CORBA::DefaultValueRefCountBase</CODE> to a derived
-            implementation should remove that redundant base. Existing code
-            that derives non-virtually from this base may need adjustment to
-            avoid ambiguous reference-count operations.</p>
+        <li><p>Generated OBV classes provide <CODE>_copy_value()</CODE> when
+            TAO generates the concrete factory and when needed for supported
+            interfaces. For application-defined factories, the application
+            implementation provides <CODE>_copy_value()</CODE>. The generated
+            concrete path includes the required reference-count base; valuetype
+            factories remain available with <CODE>-Wb,obv_opt_accessor</CODE>.</p>
         </li>
         <li><p>Generated <CODE>_copy_value()</CODE> copies direct valuetype
             fields. Valuetypes nested in other members are shared, matching
