@@ -1342,6 +1342,7 @@ TAO/orbsvcs/IFR_Service	CONST	done	10fbdddbe75	Audited immutable visitor and bac
 TAO/orbsvcs/IFR_Service	OWNERSHIP	done	91f8d7a1bff	generator_init returns unique_ptr; remaining ACE_NEW_RETURN results transfer ownership to CORBA/AST APIs or backend global state
 TAO/orbsvcs/ImplRepo_Service	BUILD_TEST	done	0581719f4ae	After realclean, GNUmakefile target built and linked all ImplRepo_Service projects with make -j 8 without diagnostics
 TAO/orbsvcs/ImplRepo_Service	C_STRING	done	0581719f4ae	Replaced decimal ACE_OS::itoa in create_uid with std::to_string and ACE text conversion; preserved ACE_TString behavior
+TAO/orbsvcs/ImplRepo_Service	PREFIX_INC	done	c1e2a740a3e	Changed discarded active->start_count_++ to prefix increment; Server_Info.cpp compiled. Full locator target was skipped because local TAO_Async_IORTable and TAO_DynamicInterface libraries are unavailable.
 TAO/orbsvcs/LifeCycle_Service	BUILD_TEST	done	-	Migrated from existing inventory; see modernization-ledger.md
 TAO/orbsvcs/LifeCycle_Service	CLEANUP	done	-	Migrated from existing inventory; see modernization-ledger.md
 TAO/orbsvcs/LifeCycle_Service	CONST	done	-	Migrated from existing inventory; see modernization-ledger.md

@@ -13093,3 +13093,7 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 ## 2026-11-18 SCTP histogram prefix increment
 
 - Changed the discarded `hist->hs[bin]++` statement in `hist.cpp` to `++hist->hs[bin]`. A `realclean` followed by a full client build compiled and linked without warnings. Commit `0bf91127be2`.
+
+## 2026-11-18 ImR locator prefix increment
+
+- Changed the discarded `active->start_count_++` statement in `Server_Info.cpp` to `++active->start_count_`. The source object compiled. A full `GNUmakefile.ImR_Locator` build was skipped because the local `TAO_Async_IORTable` and `TAO_DynamicInterface` libraries are unavailable. Commit `c1e2a740a3e`.
