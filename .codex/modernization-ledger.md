@@ -13243,3 +13243,9 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Added Allman braces to the option-parsing loop and request scan in `ACE/ace/Service_Manager.cpp`, plus the debug log branch in `ACE/ace/Service_Object.cpp`.
 - Focused `clang-tidy -checks=-*,readability-braces-around-statements` checks reported no diagnostics for either translation unit; `git diff --check` passed. The broader ACE core audit remains open.
 - No build or runtime test was run.
+
+## 2026-11-18 ACE service type braces
+
+- Added Allman braces around 11 control-flow bodies in `ACE/ace/Service_Types.cpp`, including deleter branches, module lifecycle checks, list traversal loops, and link updates.
+- Focused `clang-tidy -checks=-*,readability-braces-around-statements` and `git diff --check` passed. The broader ACE core audit remains open.
+- No build or runtime test was run.
