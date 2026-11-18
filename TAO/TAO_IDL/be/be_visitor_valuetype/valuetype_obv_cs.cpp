@@ -77,7 +77,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
   // Direct valuetype members are copied recursively, without identity
   // preservation or cycle detection. Other members use their normal copy
   // behavior, so nested valuetypes remain shared.
-  if (node->obv_need_ref_counter ())
+  if (node->generates_obv_copy_value ())
     {
       *os << be_nl_2
           << "::CORBA::ValueBase *" << be_nl

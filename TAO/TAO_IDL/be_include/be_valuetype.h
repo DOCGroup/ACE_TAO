@@ -124,6 +124,15 @@ public:
   /// Determine what kind of factory needed.
   FactoryStyle determine_factory_style ();
 
+  /// Does this valuetype use a generated concrete factory?
+  bool has_concrete_factory ();
+
+  /// Does its generated implementation provide _copy_value()?
+  bool generates_obv_copy_value ();
+
+  /// Does a base valuetype provide a generated _copy_value()?
+  bool inherits_obv_copy_value ();
+
   /// Recurse down the inheritance tree to determine
   /// if valuetype has at least one operation/attribute.
   bool have_operation ();

@@ -244,6 +244,34 @@ be_valuetype::determine_factory_style ()
 }
 
 bool
+be_valuetype::has_concrete_factory ()
+{
+  return this->determine_factory_style () == FS_CONCRETE_FACTORY;
+}
+
+bool
+be_valuetype::generates_obv_copy_value ()
+{
+  return !this->have_operation () && this->has_concrete_factory ();
+}
+
+bool
+be_valuetype::inherits_obv_copy_value ()
+{
+  for (int i = 0; i < this->n_inherits (); ++i)
+    {
+      be_valuetype * const vt =
+        dynamic_cast<be_valuetype *> (this->inherits ()[i]);
+      if (vt != nullptr && vt->generates_obv_copy_value ())
+        {
+          return true;
+        }
+    }
+
+  return false;
+}
+
+bool
 be_valuetype::have_operation ()
 {
   if (this->have_operation_computed_)

@@ -30,6 +30,13 @@
 
 static_assert (std::is_abstract<OBV_Supports_Inherited_Operation>::value,
                "A valuetype that supports an inherited operation is abstract");
+static_assert (!std::is_abstract<OBV_Copy_Derived>::value,
+               "A concrete derived valuetype gets its own copy implementation");
+static_assert (std::is_abstract<OBV_Copy_Operation_Derived>::value,
+               "A derived operation-bearing valuetype requires its own copy");
+static_assert (std::is_base_of<CORBA::ValueFactoryBase,
+                               Accessor_Optimized_Derived_init>::value,
+               "An optimized derived valuetype retains its concrete factory");
 
 class hello_i : public virtual POA_hello
 {
@@ -246,6 +253,21 @@ test_default_initialized_valuetype (int &error_count)
 void
 test_valuetype_copy (int &error_count)
 {
+  OBV_Copy_Base base_value;
+  base_value.base_value (19);
+  CORBA::ValueBase_var base_copy (base_value._copy_value ());
+  Copy_Base * const base_downcast = Copy_Base::_downcast (base_copy.in ());
+  if (base_downcast == nullptr)
+    {
+      ++error_count;
+      ACE_ERROR ((LM_ERROR, "Copy_Base copy has wrong type\n"));
+    }
+  else
+    {
+      expect_equals<CORBA::Long> (
+        error_count, "Copy_Base member", base_downcast->base_value (), 19);
+    }
+
   OBV_DefaultInitializedValue generated_value;
   generated_value.boolean_value (true);
   generated_value.long_value (17);
@@ -945,6 +967,48 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ++error_count;
           ACE_ERROR ((LM_ERROR,
                       "Accessor_Optimized_Value factory returned wrong type\n"));
+        }
+
+      Accessor_Optimized_Leaf_init * const opt_leaf_factory =
+        new Accessor_Optimized_Leaf_init;
+      orb->register_value_factory (opt_leaf_factory->tao_repository_id (),
+                                   opt_leaf_factory);
+      CORBA::ValueBase_var opt_leaf_value (
+        opt_leaf_factory->create_for_unmarshal ());
+      opt_leaf_factory->_remove_ref ();
+      Accessor_Optimized_Leaf * const opt_leaf =
+        Accessor_Optimized_Leaf::_downcast (opt_leaf_value.in ());
+      opt_leaf->leaf_value (53);
+
+      Accessor_Optimized_Derived_init * const opt_derived_factory =
+        new Accessor_Optimized_Derived_init;
+      orb->register_value_factory (opt_derived_factory->tao_repository_id (),
+                                  opt_derived_factory);
+      CORBA::ValueBase_var opt_derived_value (
+        opt_derived_factory->create_for_unmarshal ());
+      opt_derived_factory->_remove_ref ();
+      Accessor_Optimized_Derived * const opt_derived =
+        Accessor_Optimized_Derived::_downcast (opt_derived_value.in ());
+      opt_derived->value (31);
+      opt_derived->derived_value (47);
+      opt_derived->child (opt_leaf);
+      CORBA::ValueBase_var opt_derived_copy (opt_derived->_copy_value ());
+      Accessor_Optimized_Derived * const opt_derived_downcast =
+        Accessor_Optimized_Derived::_downcast (opt_derived_copy.in ());
+      if (opt_derived_downcast == nullptr
+          || opt_derived_downcast->value () != 31
+          || opt_derived_downcast->derived_value () != 47
+          || opt_derived_downcast->child () == opt_leaf)
+        {
+          ++error_count;
+          ACE_ERROR ((LM_ERROR,
+                      "Accessor_Optimized_Derived copy is incomplete\n"));
+        }
+      else if (opt_derived_downcast->child ()->leaf_value () != 53)
+        {
+          ++error_count;
+          ACE_ERROR ((LM_ERROR,
+                      "Accessor_Optimized_Derived nested copy is incorrect\n"));
         }
 
       CORBA::Object_var poa_object =

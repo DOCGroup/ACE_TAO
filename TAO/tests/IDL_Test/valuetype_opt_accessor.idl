@@ -1,6 +1,17 @@
+valuetype Accessor_Optimized_Leaf
+{
+  public long leaf_value;
+};
+
 valuetype Accessor_Optimized_Value
 {
   public long value;
+  public Accessor_Optimized_Leaf child;
+};
+
+valuetype Accessor_Optimized_Derived : Accessor_Optimized_Value
+{
+  public long derived_value;
 };
 
 valuetype Accessor_Optimized_Base

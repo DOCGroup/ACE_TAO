@@ -190,10 +190,15 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
 
       // The generated OBV_ class provides _copy_value() when it has the
       // generated reference counter. Otherwise application code provides it.
-      if (node->obv_need_ref_counter ())
+      if (node->generates_obv_copy_value ())
         {
           *os << be_uidt_nl << be_nl << "public:" << be_idt_nl
               << "::CORBA::ValueBase *_copy_value () override;";
+        }
+      else if (node->have_operation () && node->inherits_obv_copy_value ())
+        {
+          *os << be_uidt_nl << be_nl << "public:" << be_idt_nl
+              << "::CORBA::ValueBase *_copy_value () override = 0;";
         }
 
       // Map fields to private data.
