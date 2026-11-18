@@ -138,15 +138,21 @@ ACE_OS::wcsicmp_emulation (const wchar_t *s, const wchar_t *t)
   // against the end-of-string NUL.
 
   if (*scan1 == '\0' && *scan2 == '\0')
-    return 0;
+    {
+      return 0;
+    }
   else if (*scan1 == '\0')
-    return -1;
+    {
+      return -1;
+    }
   else if (*scan2 == '\0')
-    return 1;
+    {
+      return 1;
+    }
   else
-  {
-    return ACE_OS::ace_tolower (*scan1) - ACE_OS::ace_towlower (*scan2);
-  }
+    {
+      return ACE_OS::ace_tolower (*scan1) - ACE_OS::ace_towlower (*scan2);
+    }
 }
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSICMP */
 
@@ -269,15 +275,21 @@ ACE_OS::wcsnicmp_emulation (const wchar_t *s,
   // against the end-of-string NUL.
 
   if (*scan1 == '\0' && *scan2 == '\0')
-    return 0;
+    {
+      return 0;
+    }
   else if (*scan1 == '\0')
-    return -1;
+    {
+      return -1;
+    }
   else if (*scan2 == '\0')
-    return 1;
+    {
+      return 1;
+    }
   else
-  {
-    return ACE_OS::ace_towlower (*scan1) - ACE_OS::ace_towlower (*scan2);
-  }
+    {
+      return ACE_OS::ace_towlower (*scan1) - ACE_OS::ace_towlower (*scan2);
+    }
 }
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSNICMP */
 
