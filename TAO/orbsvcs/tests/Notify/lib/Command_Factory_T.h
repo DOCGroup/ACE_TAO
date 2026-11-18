@@ -33,9 +33,11 @@ public:
 
   ~TAO_Notify_Tests_Command_Factory_T ();
 
-  /// = Service_Object virtual method overloads.
+  /// @name Service_Object virtual method overloads
+  /// @{
   int init (int argc, ACE_TCHAR *argv[]) override;
   int fini () override;
+  /// @}
 
   /// Create the <COMMAND> command.
   TAO_Notify_Tests_Command* create () override;

@@ -36,6 +36,27 @@ struct TAO_IDL_FE_Export FE_Utils
   using T_PARAMLIST_INFO = std::vector<T_Param_Info>;
   using File_Handle = std::unique_ptr<FILE, int (*) (FILE *)>;
 
+  class TAO_IDL_FE_Export Temp_File_Guard
+  {
+  public:
+    Temp_File_Guard ();
+    ~Temp_File_Guard ();
+    Temp_File_Guard (Temp_File_Guard const &) = delete;
+    Temp_File_Guard &operator= (Temp_File_Guard const &) = delete;
+    Temp_File_Guard (Temp_File_Guard &&) = delete;
+    Temp_File_Guard &operator= (Temp_File_Guard &&) = delete;
+
+    void register_created_file (std::string const& filename);
+    void unregister_file (std::string const& filename);
+    void file_renamed (std::string const& source,
+                       std::string const& destination);
+    void release ();
+
+  private:
+    std::vector<std::string> created_files_;
+    bool active_ {true};
+  };
+
   struct TAO_IDL_FE_Export Scoped_Name_Deleter
   {
     void operator() (UTL_ScopedName *scoped_name) const;
@@ -97,7 +118,7 @@ struct TAO_IDL_FE_Export FE_Utils
   /// Attempt to open file for reading until it is found in one of the
   /// supplied include paths.  If the file was successfully opened, the
   /// directory within which it was found is returned as well.
-  static FILE *
+  static File_Handle
   open_included_file (std::string const& filename,
                       std::string &directory);
 

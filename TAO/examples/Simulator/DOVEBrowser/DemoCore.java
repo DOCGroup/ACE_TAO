@@ -1,17 +1,10 @@
-//
-// = FILENAME
-//    DemoCore.java
-//
-// = AUTHOR
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// = DESCRIPTION
-//   This class servers as the core class of the simulation demo.
-//   It connects the push consumer of the event service with
-//   one or several Java Beans.
-//
-// ============================================================================
-
+/**
+ * @file DemoCore.java
+ * @author Michael Kircher (mk1@cs.wustl.edu)
+ * @brief This class servers as the core class of the simulation demo.
+ * It connects the push consumer of the event service with
+ * one or several Java Beans.
+ */
 
 import java.awt.*;
 import java.awt.event.*;
@@ -167,7 +160,6 @@ public class DemoCore extends Frame {
           }
       }
 
-
     // If connections have not been established, set up defaults
     if (! connections_established_)
       {
@@ -178,7 +170,6 @@ public class DemoCore extends Frame {
         addConnection ("Navigation Latency (100 ns)");
       }
   }
-
 
   public boolean addConnection (String selected, int max_in_a_row) {
 		// to not fill too many into it
@@ -238,5 +229,4 @@ public class DemoCore extends Frame {
       pushConsumerFactory_.run ();
     }
 }
-
 

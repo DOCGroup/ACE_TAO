@@ -473,7 +473,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             ACE_ERROR_RETURN ((LM_ERROR, "%p recv of ack failed\n", "ttcp"), -1);
 
           if (ack != data_buf_len)
-            ACE_DEBUG ((LM_DEBUG, "received ack for only %Q bytes\n",
+            ACE_DEBUG ((LM_DEBUG, "received ack for only %q bytes\n",
                         static_cast<ACE_INT64> (ack)));
         }
       std::printf("Client finished.\n");

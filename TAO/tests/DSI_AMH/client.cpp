@@ -77,7 +77,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
           if (TAO_debug_level > 0)
           {
-            ACE_DEBUG ((LM_DEBUG, "test return value: %Q\n", retval));
+            ACE_DEBUG ((LM_DEBUG, "test return value: %Q\n",
+                        static_cast<ACE_UINT64> (retval)));
           }
         }
       ACE_DEBUG ((LM_DEBUG, "test finished\n"));

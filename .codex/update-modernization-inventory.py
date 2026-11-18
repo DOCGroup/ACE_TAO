@@ -51,6 +51,8 @@ TASKS = {
     "IDL_GENERATION": "tao_idl/gperf inputs and generated output",
     "CLI_OPTIONS": "Grouped command-line settings",
     "LOG_FORMAT": "ACE logging format specifiers",
+    "ACE_SIZE_LOG_FORMAT": "ACE fixed-width and size-oriented logging formats",
+    "WINDOWS_CTOR_ACCESS": "Constructor access and ownership in Windows-specific classes",
     "TEST_ASSERTIONS": "Regression test assertions",
     "CLEANUP": "Unused helpers and stale commented code",
     "UNUSED_INCLUDES": "Unused include removal",

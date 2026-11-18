@@ -60,14 +60,14 @@ public:
   bool is_collocated (TAO_MProfile const &mprofile) override;
 
   /// @name Accessors
-  // @{
+  /// @{
   TAO_Thread_Lane_Resources &lane_resources () override;
 
   TAO_Thread_Lane_Resources &default_lane_resources () override;
 
   TAO_DTP_Thread_Pool_Manager &tp_manager ();
 
-  // @}
+  /// @}
 
   TAO_DTP_Thread_Lane_Resources_Manager (TAO_DTP_Thread_Lane_Resources_Manager const &) = delete;
   TAO_DTP_Thread_Lane_Resources_Manager &operator= (

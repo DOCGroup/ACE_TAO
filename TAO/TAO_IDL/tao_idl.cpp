@@ -394,8 +394,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           throw Bailout ();
         }
 
-      FE_Utils::File_Handle output_file (nullptr, ACE_OS::fclose);
       std::string const big_file_name = idl_global->big_file_name ();
+      FE_Utils::Temp_File_Guard big_file_guard;
+      FE_Utils::File_Handle output_file (nullptr, ACE_OS::fclose);
 
       if (idl_global->multi_file_input ())
         {
@@ -408,12 +409,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                           big_file_name.c_str ()));
               throw Bailout ();
             }
+          big_file_guard.register_created_file (big_file_name);
         }
-
-      auto const remove_big_file = [&]()
-        {
-          (void) ACE_OS::unlink (big_file_name.c_str ());
-        };
 
       for (size_t i = 0; i < DRV_files.size (); ++i)
         {
@@ -426,13 +423,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   ACE_ERROR ((LM_ERROR,
                               "TAO_IDL: cannot write temporary input file \"%C\": %m\n",
                               big_file_name.c_str ()));
-                  if (ACE_OS::fclose (output_file.release ()) != 0)
-                    {
-                      ACE_ERROR ((LM_ERROR,
-                                  "TAO_IDL: cannot close temporary input file \"%C\": %m\n",
-                                  big_file_name.c_str ()));
-                    }
-                  remove_big_file ();
                   throw Bailout ();
                 }
             }
@@ -449,21 +439,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               ACE_ERROR ((LM_ERROR,
                           "TAO_IDL: cannot close temporary input file \"%C\": %m\n",
                           big_file_name.c_str ()));
-              remove_big_file ();
               throw Bailout ();
             }
 
-          try
-            {
-              DRV_drive (big_file_name);
-            }
-          catch (...)
-            {
-              remove_big_file ();
-              throw;
-            }
-
-          remove_big_file ();
+          DRV_drive (big_file_name);
         }
     }
   catch (Bailout const &bailout)

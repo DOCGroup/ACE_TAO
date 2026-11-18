@@ -302,8 +302,8 @@ ACE_Name_Request::dump () const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Name_Request::dump");
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("*******\nlength = %u\n"),
-              this->length ()));
+              ACE_TEXT ("*******\nlength = %Q\n"),
+              static_cast<ACE_UINT64> (this->length ())));
   ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("message-type = ")));
 
@@ -351,8 +351,8 @@ ACE_Name_Request::dump () const
       break;
     default:
       ACELIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("<unknown type> = %d\n"),
-                  this->msg_type ()));
+                  ACE_TEXT ("<unknown type> = %q\n"),
+                  static_cast<ACE_INT64> (this->msg_type ())));
       break;
     }
 
@@ -365,16 +365,16 @@ ACE_Name_Request::dump () const
       ACE_Time_Value tv = this->timeout ();
 #endif /* ! ACE_NLOGGING */
       ACELIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("waiting for %d secs and %d usecs\n"),
+                  ACE_TEXT ("waiting for %: secs and %q usecs\n"),
                   tv.sec (),
-                  tv.usec ()));
+                  static_cast<ACE_INT64> (tv.usec ())));
     }
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("*******\nname_len = %d\n"),
-              this->name_len ()));
+              ACE_TEXT ("*******\nname_len = %Q\n"),
+              static_cast<ACE_UINT64> (this->name_len ())));
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("*******\nvalue_len = %d\n"),
-              this->value_len ()));
+              ACE_TEXT ("*******\nvalue_len = %Q\n"),
+              static_cast<ACE_UINT64> (this->value_len ())));
 
   ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("+++++++\n")));
@@ -512,9 +512,9 @@ ACE_Name_Reply::dump () const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Name_Reply::dump");
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("*******\nlength = %u\nerrnum = %d"),
-              this->length (),
-              this->errnum ()));
+              ACE_TEXT ("*******\nlength = %Q\nerrnum = %Q"),
+              static_cast<ACE_UINT64> (this->length ()),
+              static_cast<ACE_UINT64> (this->errnum ())));
   ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("type = ")));
   switch (this->msg_type ())

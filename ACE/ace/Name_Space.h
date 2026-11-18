@@ -41,9 +41,7 @@ public:
 
   ACE_Name_Binding ();
 
-
   ACE_Name_Binding (const ACE_Name_Binding &);
-
 
   const ACE_Name_Binding& operator= (const ACE_Name_Binding &);
 

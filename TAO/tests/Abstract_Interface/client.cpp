@@ -75,14 +75,14 @@ dump_node (BaseNode * const bn, int const indent, Options const &options)
 
       if (sn != nullptr)
         {
-          ACE_DEBUG ((LM_DEBUG, "%x <StringNode> %C\n",
+          ACE_DEBUG ((LM_DEBUG, "%@ <StringNode> %C\n",
                      bn,
                      sn->name ()));
         }
       else
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "%x <BaseNode>\n",
+                      "%@ <BaseNode>\n",
                       bn));
         }
     }
@@ -101,7 +101,7 @@ dump_tree (TreeController * const tc, Options const &options)
   if (options.debug)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) start tree dump <%x>\n",
+                  "(%P|%t) start tree dump <%@>\n",
                   tc));
     }
 
@@ -112,7 +112,7 @@ dump_tree (TreeController * const tc, Options const &options)
   if (options.debug)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) end tree dump <%x>\n",
+                  "(%P|%t) end tree dump <%@>\n",
                   tc));
     }
 }

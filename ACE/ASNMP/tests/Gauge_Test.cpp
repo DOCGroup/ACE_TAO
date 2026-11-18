@@ -67,7 +67,6 @@ TestGuage ()
    constexpr unsigned short us = 10;
    constexpr short si = static_cast<short> (65535);
 
-   // constructors
    Gauge32 g1;
    ACE_TEST_ASSERT(g1 == def);
    Gauge32 g2(l);

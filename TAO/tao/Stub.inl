@@ -57,7 +57,7 @@ TAO_Stub::reset_profiles ()
     {
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Stub::reset_profiles, acquired ")
-                  ACE_TEXT ("profile lock this = 0x%x\n"),
+                  ACE_TEXT ("profile lock this = %@\n"),
                   this));
     }
 
@@ -152,7 +152,7 @@ TAO_Stub::next_profile_i ()
                 TAOLIB_DEBUG ((LM_DEBUG,
                             ACE_TEXT ("TAO (%P|%t) - Stub::next_profile_i, ")
                             ACE_TEXT ("released profile lock to reinitialize ")
-                            ACE_TEXT ("this = 0x%x\n"),
+                            ACE_TEXT ("this = %@\n"),
                             this));
               }
             // We may have been forwarded to / from a collocated situation
@@ -164,7 +164,7 @@ TAO_Stub::next_profile_i ()
               TAOLIB_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("TAO (%P|%t) - Stub::next_profile_i, ")
                           ACE_TEXT ("reacquired profile lock on object ")
-                          ACE_TEXT ("this = 0x%x\n"),
+                          ACE_TEXT ("this = %@\n"),
                           this));
               }
         }
@@ -190,7 +190,7 @@ TAO_Stub::next_profile ()
   if (TAO_debug_level > 5)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Stub::next_profile, acquired profile lock this = 0x%x\n"), this));
+                  ACE_TEXT ("TAO (%P|%t) - Stub::next_profile, acquired profile lock this = %@\n"), this));
     }
   return this->next_profile_i ();
 }
@@ -223,7 +223,7 @@ TAO_Stub::base_profiles (TAO_MProfile const &mprofiles)
   if (TAO_debug_level > 5)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Stub::base_profiles, acquired profile lock this = 0x%x\n"), this));
+                  ACE_TEXT ("TAO (%P|%t) - Stub::base_profiles, acquired profile lock this = %@\n"), this));
     }
 
   // first reset things so we start from scratch!
@@ -248,7 +248,7 @@ TAO_Stub::next_profile_retry ()
   if (TAO_debug_level > 5)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Stub::next_profile_retry, acquired profile lock this = 0x%x\n"), this));
+                  ACE_TEXT ("TAO (%P|%t) - Stub::next_profile_retry, acquired profile lock this = %@\n"), this));
     }
 
   if (this->profile_success_ && this->forward_profiles_)

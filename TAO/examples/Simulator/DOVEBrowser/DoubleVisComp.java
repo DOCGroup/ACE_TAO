@@ -1,18 +1,9 @@
-//
-// = FILENAME
-//    DoubleVisComp.java
-//
-// = AUTHOR
-//    Seth Widoff (core graph functionality)
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// = DESCRIPTION
-//   This is a Visualization Component for displaying doubles.
-//
-// ============================================================================
-
-
-
+/**
+ * @file DoubleVisComp.java
+ * @author Seth Widoff (core graph functionality)
+ * @author Michael Kircher (mk1@cs.wustl.edu)
+ * @brief This is a Visualization Component for displaying doubles.
+ */
 
 import java.awt.*;
 import java.util.*;
@@ -260,7 +251,6 @@ public class DoubleVisComp extends Canvas implements VisComp
     local_max_value_count_++;
   }
 
-
   private int normalize(int height, float coord)
   {
     float ratio = (float)coord/max_value_;
@@ -270,5 +260,4 @@ public class DoubleVisComp extends Canvas implements VisComp
     return Math.round(location);
   }
 }
-
 

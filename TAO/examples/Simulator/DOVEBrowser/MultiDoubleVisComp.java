@@ -1,18 +1,9 @@
-//
-// = FILENAME
-//    MultiDoubleVisComp.java
-//
-// = AUTHOR
-//    Chris Gill (core graph functionality), based on
-//    DoubleVisComp.java by Seth Widoff, and Michael Kircher
-//    (mk1@cs.wustl.edu)
-//
-// = DESCRIPTION
-//   This is a Visualization Component for displaying multiple
-//   plots of double precision integer values.
-//
-// ============================================================================
-
+/**
+ * @file MultiDoubleVisComp.java
+ * @author Chris Gill (core graph functionality), based on DoubleVisComp.java by Seth Widoff, and Michael Kircher (mk1@cs.wustl.edu)
+ * @brief This is a Visualization Component for displaying multiple
+ * plots of double precision integer values.
+ */
 
 import java.awt.*;
 import java.util.*;
@@ -123,8 +114,6 @@ public class MultiDoubleVisComp extends Canvas implements VisComp
     plot_count_ = new_plot_count;
   }
 
-
-
   public void setName (String title) {
       title_ = title;
   }
@@ -200,7 +189,6 @@ public class MultiDoubleVisComp extends Canvas implements VisComp
 
     repaint ();
   }
-
 
   public void update (Graphics g)
   {
@@ -353,7 +341,6 @@ public class MultiDoubleVisComp extends Canvas implements VisComp
       }
   }
 
-
   private int normalize (int height, float coord, int plot_index)
   {
     // First, figure out the ratio of the value to the max value
@@ -368,5 +355,4 @@ public class MultiDoubleVisComp extends Canvas implements VisComp
     return Math.round (location);
   }
 }
-
 

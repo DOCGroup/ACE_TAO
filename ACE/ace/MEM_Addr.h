@@ -35,7 +35,6 @@ class ACE_Export ACE_MEM_Addr : public ACE_Addr
 public:
   ACE_MEM_Addr ();
 
-
   ACE_MEM_Addr (const ACE_MEM_Addr &);
 
   ACE_MEM_Addr& operator= (const ACE_MEM_Addr&) = default;

@@ -76,17 +76,16 @@ static void TestGenAddr()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) GenAddress: Tests: var(expected) [actual]\n"));
 
-  // the constructors and destructors
   std::unique_ptr<GenAddress> ga1 = std::make_unique<GenAddress> ("1.2.3.4");
   ACE_TEST_ASSERT(ga1->valid() == 1);
-  GenAddress ga2(*ga1); // copy constructor;
+  GenAddress ga2(*ga1);
   ACE_TEST_ASSERT(ga2.valid() == 1);
   GenAddress ga3("localhost");
   ACE_TEST_ASSERT(ga3.valid() == 1);
-  GenAddress ga4; // default constructor
+  GenAddress ga4;
   ACE_TEST_ASSERT(ga4.valid() == 0);
   ACE_TEST_ASSERT(std::strcmp (ga4.to_string (), "") == 0);
-  GenAddress ga5; // default constructor
+  GenAddress ga5;
   ACE_TEST_ASSERT(ga5.valid() == 0);
   GenAddress ga6("127.0.0.1:7"); // udp address
   ACE_TEST_ASSERT(ga6.valid() == 1);
@@ -164,7 +163,6 @@ static void TestIpAddress()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) IpAddress: Tests\n"));
 
-  // constructors
   GenAddress ga("255.255.255.255");
   IpAddress ia1;
   ACE_TEST_ASSERT(ia1.valid() == 0);

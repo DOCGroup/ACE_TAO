@@ -11,6 +11,8 @@
 #include "ace/Service_Config.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <cstring>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
@@ -49,9 +51,9 @@ ACE_Read_Buffer::ACE_Read_Buffer (FILE *fp,
 {
   ACE_TRACE ("ACE_Read_Buffer::ACE_Read_Buffer");
   if (this->allocator_ == nullptr)
-  {
-    this->allocator_ = ACE_Allocator::instance ();
-  }
+    {
+      this->allocator_ = ACE_Allocator::instance ();
+    }
 }
 
 ACE_Read_Buffer::ACE_Read_Buffer (ACE_HANDLE handle,
@@ -66,27 +68,25 @@ ACE_Read_Buffer::ACE_Read_Buffer (ACE_HANDLE handle,
   ACE_TRACE ("ACE_Read_Buffer::ACE_Read_Buffer");
 
   if (this->allocator_ == nullptr)
-  {
-    this->allocator_ = ACE_Allocator::instance ();
-  }
+    {
+      this->allocator_ = ACE_Allocator::instance ();
+    }
 }
 
 ACE_Read_Buffer::~ACE_Read_Buffer ()
 {
   ACE_TRACE ("ACE_Read_Buffer::~ACE_Read_Buffer");
 
-  if (this->close_on_delete_)
-  {
-    ACE_OS::fclose (this->stream_);
-  }
+  if (this->close_on_delete_ && this->stream_ != nullptr)
+    {
+      ACE_OS::fclose (this->stream_);
+    }
 }
 
-// Input: term        the character to terminate on
-//        search      the character to search for
-//        replace     the character with which to replace search
-// Output: a buffer containing the contents of stream
-// Method: call the recursive helper function read_helper
-
+/// Reads from the stream up to the termination character.
+///
+/// If @a search is nonnegative, its occurrences are replaced with @a replace.
+/// The result is returned in a dynamically allocated buffer.
 char *
 ACE_Read_Buffer::read (int term, int search, int replace)
 {
@@ -96,17 +96,12 @@ ACE_Read_Buffer::read (int term, int search, int replace)
   return this->rec_read (term, search, replace);
 }
 
-// Input: term       the termination character
-//        search     the character to search for
-//        replace    the character with which to replace search
-// Purpose: read in a file to a buffer using only a single dynamic
-//          allocation.
-// Method: read until the local buffer is full and then recurse.
-//         Must continue until the termination character is reached.
-//         Allocate the final buffer based on the number of local
-//         buffers read and as the recursive calls bottom out,
-//         copy them in reverse order into the allocated buffer.
-
+/// Reads through the stream using a single dynamic allocation.
+///
+/// Reads until the local buffer is full and then recurses, continuing until
+/// the termination character is reached. It allocates the final buffer based
+/// on the number of local buffers read and copies them in reverse order as the
+/// recursive calls return.
 char *
 ACE_Read_Buffer::rec_read (int term, int search, int replace)
 {
@@ -114,9 +109,9 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
   // This is our temporary workspace.
   char buf[BUFSIZ];
 
-  int c = EOF;
-  size_t slot = 0;
-  bool done = false;
+  int c {EOF};
+  size_t slot {};
+  bool done {};
 
   // Read in the file char by char
   while (slot < BUFSIZ)
@@ -130,7 +125,9 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
           break;
         }
       else if (c == term)
-        done = true;
+        {
+          done = true;
+        }
 
       // Check for possible substitutions.
       if (c == search)
@@ -138,18 +135,18 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
           ++this->occurrences_;
 
           if (replace >= 0)
-          {
-            c = replace;
-          }
+            {
+              c = replace;
+            }
         }
 
-      buf[slot++] = (char) c;
+      buf[slot++] = static_cast<char> (c);
 
       // Substitutions must be made before checking for termination.
       if (done)
-      {
-        break;
-      }
+        {
+          break;
+        }
     }
 
   // Increment the number of bytes.
@@ -157,9 +154,9 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
 
   // Don't bother going any farther if the total size is 0.
   if (this->size_ == 0)
-  {
-    return nullptr;
-  }
+    {
+      return nullptr;
+    }
 
   char *result {};
 
@@ -169,7 +166,7 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
     {
       // Use the allocator to acquire the memory.  The + 1 allows
       // space for the null terminator.
-      result = (char *) this->allocator_->malloc (this->size_ + 1);
+      result = static_cast<char *> (this->allocator_->malloc (this->size_ + 1));
 
       if (result == nullptr)
         {
@@ -182,13 +179,15 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
       *result = '\0';
     }
   else if ((result = this->rec_read (term, search, replace)) == nullptr)
-    return nullptr;
+    {
+      return nullptr;
+    }
 
-  // Copy buf into the appropriate location starting from end of
-  // buffer.  Peter says this is confusing and that we should use
-  // memcpy() ;-)
-  for (size_t j = slot; j > 0; --j)
-    *--result = buf[j - 1];
+  if (slot != 0)
+    {
+      result -= slot;
+      std::memcpy (result, buf, slot);
+    }
 
   return result;
 }

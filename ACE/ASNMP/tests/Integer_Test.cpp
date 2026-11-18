@@ -67,7 +67,6 @@ static constexpr unsigned short si = 32768;
 static void TestInteger32()
 {
 #if !defined (ACE_WIN32)
-   // constructors
    SnmpInt32 i1;
    ACE_TEST_ASSERT(i1 == static_cast<long> (def));
    SnmpInt32 i2(l);
@@ -132,7 +131,6 @@ static void TestInteger32()
 static void TestUnsignedInteger32()
 {
 #if !defined (ACE_WIN32)
-  // constructors
    SnmpUInt32 u1;
    ACE_TEST_ASSERT(u1 == def);
    SnmpUInt32 u2(l);

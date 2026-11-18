@@ -235,7 +235,7 @@ run_test ()
        hash_iter.advance ())
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("iterating (%d): %s:\n"),
+                  ACE_TEXT ("iterating (%B): %s:\n"),
                   i,
                   entry->key ()));
       ++i;
@@ -303,7 +303,7 @@ run_test ()
        hash_iter.advance ())
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("reverse iterating (%d): %s\n"),
+                  ACE_TEXT ("reverse iterating (%B): %s\n"),
                   i,
                   entry->key ()));
       ++i;
@@ -334,7 +334,7 @@ run_test ()
        hash_iter.advance ())
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("const iterating (%d): %s\n"),
+                  ACE_TEXT ("const iterating (%B): %s\n"),
                   i,
                   entry->key ()));
       ++i;

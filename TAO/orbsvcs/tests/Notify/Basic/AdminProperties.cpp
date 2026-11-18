@@ -117,7 +117,7 @@ AdminProperties_StructuredPushConsumer::push_structured_event (const CosNotifica
 
   if (TAO_debug_level)
   {
-    ACE_DEBUG ((LM_DEBUG, "\nConsumer %x received event %d\n", this, events_received_.load ()));
+    ACE_DEBUG ((LM_DEBUG, "\nConsumer %@ received event %d\n", this, events_received_.load ()));
   }
 }
 

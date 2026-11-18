@@ -261,7 +261,7 @@ Param_Test_i::test_strseq (const CORBA::StringSeq &s1,
       for (CORBA::ULong i=0; (i < s2.length ()); ++i)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "Element #%d\n"
+                      "Element #%u\n"
                       "in : %C\n",
                       i,
                       (s2[i]? (const char *)s2[i]:"<nul>")));
@@ -463,11 +463,11 @@ Param_Test_i::test_coffe_mix (const Param_Test::Coffee_Mix & s1,
       if (CORBA::is_nil (c))
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "Element #%d is nil\n", i));
+                      "Element #%u is nil\n", i));
           continue;
         }
       ACE_DEBUG ((LM_DEBUG,
-                  "Element #%d\n"
+                  "Element #%u\n"
                   "\ttype = <%s>\n",
                   i,
                   c->_interface_repository_id ()));
@@ -503,11 +503,11 @@ Param_Test_i::test_bounded_coffe_mix (const Param_Test::Bounded_Coffee_Mix & s1,
       if (CORBA::is_nil (c))
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "Element #%d is nil\n", i));
+                      "Element #%u is nil\n", i));
           continue;
         }
       ACE_DEBUG ((LM_DEBUG,
-                  "Element #%d\n"
+                  "Element #%u\n"
                   "\ttype = <%s>\n",
                   i,
                   c->_interface_repository_id ()));

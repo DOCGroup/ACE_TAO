@@ -141,11 +141,9 @@ public:
 
   ACE_Iterator (ACE_Iterator_Impl<T> *impl);
 
-
   ACE_Iterator (const ACE_Iterator<T> &rhs);
 
   ~ACE_Iterator ();
-
 
   ACE_Iterator<T> &operator= (const ACE_Iterator<T> &rhs);
 
@@ -193,11 +191,9 @@ public:
 
   ACE_Reverse_Iterator (ACE_Reverse_Iterator_Impl<T> *impl);
 
-
   ACE_Reverse_Iterator (const ACE_Reverse_Iterator<T> &rhs);
 
   ~ACE_Reverse_Iterator ();
-
 
   ACE_Reverse_Iterator<T> &operator= (const ACE_Reverse_Iterator<T> &rhs);
 

@@ -147,17 +147,17 @@ ACE_Data_Block::dump () const
   ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("-----( Data Block )-----\n")
               ACE_TEXT ("type_ = %d\n")
-              ACE_TEXT ("cur_size_ = %u\n")
-              ACE_TEXT ("max_size_ = %u\n")
-              ACE_TEXT ("flags_ = %u\n")
+              ACE_TEXT ("cur_size_ = %B\n")
+              ACE_TEXT ("max_size_ = %B\n")
+              ACE_TEXT ("flags_ = %Q\n")
               ACE_TEXT ("base_ = %@\n")
-              ACE_TEXT ("locking_strategy_ = %u\n")
-              ACE_TEXT ("reference_count_ = %u\n")
+              ACE_TEXT ("locking_strategy_ = %@\n")
+              ACE_TEXT ("reference_count_ = %d\n")
               ACE_TEXT ("---------------------------\n"),
               this->type_,
               this->cur_size_,
               this->max_size_,
-              this->flags_,
+              static_cast<ACE_UINT64> (this->flags_),
               this->base_,
               this->locking_strategy_,
               this->reference_count_));

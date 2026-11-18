@@ -605,7 +605,6 @@ public:
 protected:
   ACE_Double_Linked_List_Iterator_Base (const ACE_Double_Linked_List<T> &);
 
-
   ACE_Double_Linked_List_Iterator_Base (const
                                         ACE_Double_Linked_List_Iterator_Base<T>
                                         &iter);
@@ -852,13 +851,11 @@ public:
    */
   ACE_Double_Linked_List (ACE_Allocator *the_allocator = nullptr);
 
-
   /**
    * Create a double linked list that is a copy of the provided
    * parameter.
    */
   ACE_Double_Linked_List (const ACE_Double_Linked_List<T> &);
-
 
   /**
    * Perform a deep copy of the provided list by first deleting the nodes of the
@@ -1417,12 +1414,10 @@ public:
    */
   ACE_Fixed_Set ();
 
-
   /**
    * Initializes a set to be a copy of the set parameter.
    */
   ACE_Fixed_Set (const ACE_Fixed_Set<T, ACE_SIZE> &);
-
 
   /**
    * Deep copy of one set to another.
@@ -1623,7 +1618,6 @@ public:
    * Initialize the Bounded_Set to be a copy of the Bounded_Set parameter.
    */
   ACE_Bounded_Set (const ACE_Bounded_Set<T> &);
-
 
   /**
    * The assignment will make a deep copy of the Bounded_Set provided.  If the
@@ -1827,7 +1821,6 @@ public:
    */
   ACE_Ordered_MultiSet (ACE_Allocator *the_allocator = nullptr);
 
-
   /**
    * Initialize the set to be a copy of the provided set.
    */
@@ -1837,7 +1830,6 @@ public:
    * Delete the nodes of the set.
    */
   ~ACE_Ordered_MultiSet ();
-
 
   /**
    * Delete the nodes in lhs, and copy the nodes from the rhs.
@@ -2008,7 +2000,6 @@ public:
   ACE_Array (size_t size,
              const T &default_value,
              ACE_Allocator* alloc = nullptr);
-
 
   /**
    * The copy constructor performs initialization by making an exact

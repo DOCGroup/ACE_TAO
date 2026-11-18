@@ -1,18 +1,9 @@
-//
-// = FILENAME
-//     PersianVisComp.java
-//
-// = AUTHOR
-//      Chris Gill <cdgill@cs.wustl.edu>
-//
-// = DESCRIPTION
-//     This is a Visualization Component for displaying a Persian
-//     Recursion drawing.
-//
-// ============================================================================
-
-
-
+/**
+ * @file PersianVisComp.java
+ * @author Chris Gill <cdgill@cs.wustl.edu>
+ * @brief This is a Visualization Component for displaying a Persian
+ * Recursion drawing.
+ */
 
 import java.awt.*;
 import java.util.*;
@@ -204,5 +195,4 @@ public class PersianVisComp extends Canvas implements VisComp
     //    System.out.println ("painted.");
   }
 }
-
 

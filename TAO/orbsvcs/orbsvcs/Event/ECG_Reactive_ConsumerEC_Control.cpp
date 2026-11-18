@@ -169,7 +169,8 @@ TAO_ECG_Reactive_ConsumerEC_Control::event_channel_not_exist (
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                   "EC_Reactive_ConsumerControl(%P|%t) - "
-                  "channel %x does not exists\n"));
+                  "channel %@ does not exists\n",
+                  gateway));
       gateway->cleanup_consumer_ec ();
 
       gateway->cleanup_consumer_proxies ();

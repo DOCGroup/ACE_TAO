@@ -54,7 +54,7 @@ protected:
   TAO_Notify_ORB_Objects& orb_objects_;
 
   /// Supplier that sends events.
-  // The POA retains the activated servant; this pointer is non-owning.
+  /// The POA retains the activated servant; this pointer is non-owning.
   TAO_Notify_Lanes_Supplier* supplier_ {};
 
   struct Options

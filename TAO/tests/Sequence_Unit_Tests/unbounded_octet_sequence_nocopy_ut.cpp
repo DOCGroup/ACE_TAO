@@ -18,11 +18,16 @@
 #include "tao/Basic_Types.h"
 #include "tao/CDR.h"
 
+#include <type_traits>
 #include <utility>
 
 using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO;
 
 using tested_sequence = unbounded_value_sequence<CORBA::Octet>;
+static_assert (std::is_move_constructible<tested_sequence>::value);
+static_assert (!std::is_nothrow_move_constructible<tested_sequence>::value);
+static_assert (std::is_move_assignable<tested_sequence>::value);
+static_assert (!std::is_nothrow_move_assignable<tested_sequence>::value);
 using tested_element_traits = tested_sequence::element_traits;
 using tested_allocation_traits = tested_sequence::allocation_traits;
 using range = details::range_checking<CORBA::Octet,true>;
@@ -126,6 +131,44 @@ struct Tester
     CHECK_EQUAL (CORBA::ULong (0), source.maximum ());
     CHECK_EQUAL (CORBA::ULong (0), source.length ());
     CHECK_EQUAL (false, source.release ());
+    return 0;
+  }
+
+  int test_move_borrowed_buffer ()
+  {
+    value_type const initial[] {1, 4, 9, 16};
+    value_type buffer[8] {1, 4, 9, 16};
+    tested_sequence source;
+    source.replace (8, 4, buffer, false);
+
+    tested_sequence destination (std::move (source));
+
+    CHECK (destination.get_buffer () != buffer);
+    CHECK_EQUAL (true, destination.release ());
+    CHECK_EQUAL (CORBA::ULong (8), destination.maximum ());
+    CHECK_EQUAL (CORBA::ULong (4), destination.length ());
+    CHECK_EQUAL (initial[0], destination[0]);
+    CHECK_EQUAL (initial[3], destination[3]);
+    CHECK_EQUAL (buffer, source.get_buffer ());
+    CHECK_EQUAL (false, source.release ());
+
+    buffer[0] = 25;
+    CHECK_EQUAL (initial[0], destination[0]);
+
+    value_type assignment_buffer[8] {1, 4, 9, 16};
+    tested_sequence assignment_source;
+    assignment_source.replace (8, 4, assignment_buffer, false);
+    tested_sequence assignment_destination (2);
+
+    assignment_destination = std::move (assignment_source);
+
+    CHECK (assignment_destination.get_buffer () != assignment_buffer);
+    CHECK_EQUAL (true, assignment_destination.release ());
+    CHECK_EQUAL (CORBA::ULong (8), assignment_destination.maximum ());
+    CHECK_EQUAL (CORBA::ULong (4), assignment_destination.length ());
+    CHECK_EQUAL (assignment_buffer, assignment_source.get_buffer ());
+    assignment_buffer[0] = 25;
+    CHECK_EQUAL (initial[0], assignment_destination[0]);
     return 0;
   }
 
@@ -463,6 +506,7 @@ struct Tester
     status += this->test_assignment_from_ulong();
     status += this->test_move_constructor();
     status += this->test_move_assignment();
+    status += this->test_move_borrowed_buffer ();
     status += this->test_exception_in_ulong_constructor();
     status += this->test_set_length_less_than_maximum();
     status += this->test_set_length_more_than_maximum();

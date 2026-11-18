@@ -52,21 +52,20 @@ RWho_DB_Manager::~RWho_DB_Manager ()
                 "disposing the RWho_DB_Manager\n"));
 }
 
-// This procedure looks through the rwhod directory until it finds the next
-// valid user file.
-//
-// The requirements for user files are:
-//   1) The file is at least MIN_HOST_DATA_SIZE bytes long
-//   2) It was received within the last MAX_HOST_TIMEOUT seconds
-// Return:
-//  Are there any more hosts? */
-
+/// Finds the next valid user file in the rwhod directory.
+///
+/// A valid user file is at least MIN_HOST_DATA_SIZE bytes long and was
+/// received within the last MAX_HOST_TIMEOUT seconds.
+/// @return 1 if a valid host was found, 0 if there are no more hosts, or -1
+///         if reading the current time or opening a user file failed.
 int
 RWho_DB_Manager::get_next_host ()
 {
-  time_t current_time;
-
-  ACE_OS::time (&current_time);
+  time_t const current_time = ACE_OS::time ();
+  if (current_time == static_cast<time_t> (-1))
+    {
+      return -1;
+    }
 
   // Go through each file in the directory looking for valid entries.
 

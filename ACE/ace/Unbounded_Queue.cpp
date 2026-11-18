@@ -85,8 +85,8 @@ ACE_Unbounded_Queue<T>::dump () const
   //   ACE_TRACE ("ACE_Unbounded_Queue<T>::dump");
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nhead_ = %u"), this->head_));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nhead_->next_ = %u"), this->head_->next_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nhead_ = %@"), this->head_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nhead_->next_ = %@"), this->head_->next_));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ncur_size_ = %B\n"), this->cur_size_));
 
   T *item {};
@@ -97,7 +97,7 @@ ACE_Unbounded_Queue<T>::dump () const
   for (ACE_Unbounded_Queue_Iterator<T> iter (*(ACE_Unbounded_Queue<T> *) this);
        iter.next (item) != 0;
        iter.advance ())
-    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("count = %d\n"), count++));
+    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("count = %B\n"), count++));
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */

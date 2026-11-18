@@ -72,7 +72,6 @@ ACE_SPIPE_Addr::set (const ACE_SPIPE_Addr &sa)
   return 0;
 }
 
-
 ACE_SPIPE_Addr::ACE_SPIPE_Addr (const ACE_SPIPE_Addr &sa)
   : ACE_Addr (AF_SPIPE, sizeof this->SPIPE_addr_)
 {

@@ -259,9 +259,9 @@ run_test (int write_file,
       if (size != msgsize)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("Read %b bytes, rather than expected ")
-                           ACE_TEXT ("%B bytes\n"),
+                           ACE_TEXT ("%q bytes\n"),
                            size,
-                           msgsize),
+                           static_cast<ACE_INT64> (msgsize)),
                           -1);
 
       // Create message block for the whole file.  Ensure that it is

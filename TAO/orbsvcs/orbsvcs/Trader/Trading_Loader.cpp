@@ -1,13 +1,11 @@
 
-// LIBRARY
-//   libTAO_CosTrading.so
-//
-// DESCRIPTION
-//   This class allows for dynamically loading
-//   the Trading Service.
-//
-// AUTHORS
-//   Priyanka Gontla <pgontla@ece.uci.edu>
+/**
+ * @file Trading_Loader.cpp
+ *
+ * @brief Loads the Trading Service dynamically.
+ *
+ * @author Priyanka Gontla <pgontla@ece.uci.edu>
+ */
 
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Trader/Trading_Loader.h"

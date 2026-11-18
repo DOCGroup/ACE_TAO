@@ -40,13 +40,14 @@ public:
   TAO_Notify_Tests_RT_Test_FilterFactory& operator= (TAO_Notify_Tests_RT_Test_FilterFactory&&) = delete;
   ~TAO_Notify_Tests_RT_Test_FilterFactory () override = default;
 
-  ///= TAO_Notify_Tests_FilterFactory methods.
-
+  /// @name TAO_Notify_Tests_FilterFactory methods
+  /// @{
   CosNotifyFilter::FilterFactory_ptr create (PortableServer::POA_ptr filter_poa) override;
   void destroy () override;
+  /// @}
 
-  ///= CosNotifyFilter::FilterFactory methods
-
+  /// @name CosNotifyFilter::FilterFactory methods
+  /// @{
   CosNotifyFilter::Filter_ptr create_filter (char const* constraint_grammar) override;
 
   CosNotifyFilter::MappingFilter_ptr create_mapping_filter (char const* constraint_grammar,
@@ -55,6 +56,7 @@ public:
   TAO_Notify_Object::ID get_filter_id (CosNotifyFilter::Filter_ptr filter) override;
   CosNotifyFilter::Filter_ptr get_filter (TAO_Notify_Object::ID const& id) override;
   void save_persistent (TAO_Notify::Topology_Saver& saver) override;
+  /// @}
 
 protected:
   /// Release this object.

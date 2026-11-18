@@ -54,7 +54,7 @@ namespace Kokyu
   private:
     using Dispatcher_Task_Auto_Ptr = std::unique_ptr<Dispatcher_Task>;
     std::vector<Dispatcher_Task_Auto_Ptr> tasks_;
-    bool activated_ {};
+    size_t activated_task_count_ {};
   };
 
   class Shutdown_Task_Command : public Dispatch_Command

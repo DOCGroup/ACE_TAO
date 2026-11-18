@@ -12856,7 +12856,6 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   succeed. No moved-from object is read afterward and no change was needed.
 - The repository-wide move audit remains open.
 
-
 ## 2026-11-18 ASNMP move audit
 
 - Rechecked every `std::move` under `ACE/ASNMP`: 14 sites in `octet.cpp`,
@@ -12867,7 +12866,6 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   read after transfer. No code change was warranted for move behavior.
 - The repository-wide move audit remains open.
 
-
 ## 2026-11-18 ACE web services move audit
 
 - Audited all 14 `std::move` sites in `ACE/websvcs/lib/URL_Addr.cpp`. URL
@@ -12875,7 +12873,6 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   methods return or proceed without reading moved-from locals. A full search of
   `ACE/websvcs/lib` found no other move operations. No code change was needed.
 - The repository-wide move audit remains open.
-
 
 ## 2026-11-18 TAO Naming move audit
 
@@ -12886,18 +12883,15 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   found no other move sites. No code change was needed.
 - The repository-wide move audit remains open.
 
-
 ## 2026-11-18 TAO AV move audit
 
 - Reviewed all 18 `std::move` sites in `TAO/orbsvcs/orbsvcs/AV`. RTCP report blocks, SDES chunks, item data, and packet buffers transfer to owning members or constructors; list destruction detaches tails before deleting nodes. No moved-from owner is read and a full subtree search found no additional move sites. No code change was warranted.
 - The repository-wide move audit remains open.
 
-
 ## 2026-11-18 TAO logWalker move audit
 
 - Reviewed all nine `std::move` sites. `Output_Stream` transfers ownership and is replaced before subsequent use; the borrowed `std::cout` case remains non-owning. `GIOP_Buffer::transfer_from` transfers the octet owner after copying metadata and resets the source. No other move sites were found and no change was needed.
 - The repository-wide move audit remains open.
-
 
 ## 2026-11-18 TAO core move audit
 
@@ -13113,3 +13107,99 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 ## 2026-11-18 oneway test argument decrements
 
 - Changed the two discarded `my_argc--` operations in `Oneway_Send_Timeouts/Server.cpp` to prefix form. Regenerated the MPC makefiles; `realclean` and a full test build completed successfully. Commit `38158b8ad9c`.
+
+## 2026-11-18 ACE Windows monitor ownership fix
+
+- Changed `Windows_Multi_Instance_Monitor` to construct the protected
+  `Windows_Monitor` constructor directly inside its friend class, then retain
+  ownership in `unique_ptr` until queue insertion succeeds. `make_unique`
+  cannot access that protected constructor from its library implementation.
+  Confirmed the aggregation value is reset before summing each update.
+- The full ACE core realclean build passed on Linux. The Windows PDH branch is
+  platform-guarded and could not be compiled on this host; `git diff --check`
+  passed.
+- The repository-wide modernization audit remains open.
+
+## 2026-11-18 ACE core logging-format audit
+
+- Reviewed ACE/ace `%B` and `%b` calls against `ACE_Log_Msg.h`: size fields and
+  container counts use `%B`, signed I/O results use `%b`, and 64-bit time
+  values use `%q`. Fixed the Windows WFMO dump's three `%d` formatters for
+  handle counts; two fields are `size_t`, and the third is `DWORD` converted
+  to `size_t` for `%B`.
+- Realclean-built ACE core successfully on Linux; the Windows-only WFMO path
+  is platform-guarded and could not be compiled on this host. `git diff --check`
+  passed. Other ACE/TAO logging conversions remain under review.
+
+## 2026-11-18 ACE core fixed-width logging audit
+
+- Corrected `ACE_Data_Block::dump()` to use `%B` for `size_t`, `%Q` for its
+  unsigned-long flags, `%@` for the locking-strategy pointer, and `%d` for the
+  integer reference count. `ACE_Log_Record::dump()` now uses `%q`/`%Q` for its
+  fixed-width fields. `ACE_Map_Manager` counters use `%Q` with explicit
+  `ACE_UINT64` conversion. Windows message-queue thread counts use `%u` after
+  conversion from `DWORD` to `unsigned int`.
+- The ACE core realclean build passed. `Message_Block.cpp`, `Log_Record.cpp`,
+  and `Map_Manager.cpp` also passed syntax-only compilation with
+  `ACE_HAS_DUMP`; `git diff --check` passed. The Windows-only message-queue
+  implementation was reviewed but could not be compiled on this host. The
+  repository-wide log-format audit remains open.
+
+## 2026-11-18 ACE naming-service log formats
+
+- Corrected `ACE_Name_Request` and `ACE_Name_Reply` diagnostics for their
+  `ACE_UINT32`/`ACE_INT32` lengths, error numbers, and message types using
+  `%Q`/`%q` with explicit 64-bit conversions. Timeout logging now uses `%:` for
+  `time_t` seconds and `%q` for the signed microsecond value.
+- All five affected sources passed syntax-only compilation with
+  `ACE_HAS_DUMP`; the normal ACE core realclean build passed. The broader
+  repository-wide log-format audit remains open.
+
+## 2026-11-18 ACE allocator and token log formats
+
+- Corrected `ACE_Static_Allocator_Base::dump()` to log its `size_t` offset
+  with `%B`, and `ACE_TPQ_Iterator::dump()` to log its pointer with `%@`.
+- `git diff --check` passed. These are narrow format corrections; the wider
+  ACE/TAO logging-format audit remains open.
+
+## 2026-11-18 ACE container and timer log formats
+
+- Corrected unbounded set/queue node pointers to use `%@`, their `size_t`
+  traversal counters to use `%B`, and the timer heap's `size_t` limbo count to
+  use `%B`.
+- `git diff --check` passed. The broader ACE/TAO logging-format audit remains
+  open.
+
+## 2026-11-18 ACE timer and token log formats
+
+- Corrected the timer heap's two `size_t` timer-ID indexes to `%B`. Token
+  request/reply lengths are `ACE_UINT32` and now use `%Q` with an explicit
+  `ACE_UINT64` conversion. The timer heap dump's traversal indexes now use
+  `%B`, and its signed timer-id values use `%b`.
+- `git diff --check` passed. The wider ACE/TAO logging-format audit remains
+  open.
+
+## 2026-11-18 ACE hash-manager log formats
+
+- Changed hash-entry next/previous links to `%@` and signed iterator indexes
+  to `%b` in both hash map manager variants.
+- `git diff --check` passed. The repository-wide ACE/TAO logging-format audit
+  remains open.
+
+## 2026-11-18 ACE timer and strategy diagnostics
+
+- Corrected `ACE_Timer_Node_T::timer_id_` to `%q` with an `ACE_INT64`
+  conversion. `ACE_Dynamic_Message_Strategy` now logs its `unsigned long`
+  fields with `%Q` and `ACE_Time_Value` seconds/useconds with `%:`/`%q`.
+- `git diff --check` passed. The repository-wide ACE/TAO logging-format audit
+  remains open.
+
+## 2026-11-18 TAO transport log formats
+
+- Corrected `TAO_Transport::id()` logging to `%B`, transport-cache `u_long` /
+  `CORBA::ULong` hash and index values to `%Q` with explicit `ACE_UINT64`
+  conversions, and the unsigned pending-connect count to `%u`.
+- Syntax-only compilation passed for `Wait_On_LF_No_Upcall.cpp` and
+  `IIOP_Connector.cpp`; the `Transport_Cache_Manager_T.h` template
+  implementation also passed syntax-only compilation. `git diff --check`
+  passed. The TAO/ACE logging-format audit remains open.

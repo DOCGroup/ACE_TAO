@@ -184,8 +184,6 @@ ACE_SString::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-
-
 ACE_SString::ACE_SString (const ACE_SString &s)
   : allocator_ (s.allocator_),
     len_ (s.len_)

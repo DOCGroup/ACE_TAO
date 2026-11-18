@@ -97,6 +97,7 @@ namespace ACE
     Windows_Multi_Instance_Monitor::update_i ()
     {
       Windows_Monitor **current_instance {};
+      this->value_ = 0;
 
       /// Sum the values of each single instance monitor.
       for (INSTANCES_ITERATOR i (this->instances_); !i.done (); i.advance ())

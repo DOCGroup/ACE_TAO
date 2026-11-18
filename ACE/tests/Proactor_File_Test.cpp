@@ -95,18 +95,7 @@ FileIOHandler::~FileIOHandler ()
   }
 }
 
-//***************************************************************************
-//
-//    Method:          Connect
-//
-//    Description:   Establishes connection, primes read process
-//
-// Inputs:        port name, port parameter block
-//
-// Returns:       none
-//
-//***************************************************************************
-
+/// Establishes a connection and primes the read process.
 int FileIOHandler::Connect()
 {
   int result = 0;
@@ -197,17 +186,8 @@ int FileIOHandler::Connect()
   return result;
 }
 
-//***************************************************************************
-//
-//    Method:          handle_read_file
-//
-//    Description:   Callback used when a read completes
-//
-// Inputs:        read file result structure containing message block
-//
-// Returns:       none
-//
-//***************************************************************************
+/// Handles completion of an asynchronous file read.
+/// @param result The read result containing the message block.
 void
 FileIOHandler::handle_read_file(const ACE_Asynch_Read_File::Result &result)
 {
@@ -269,17 +249,8 @@ FileIOHandler::handle_read_file(const ACE_Asynch_Read_File::Result &result)
   }
 }
 
-//***************************************************************************
-//
-//    Method:          handle_write_file
-//
-//    Description:   Callback used when a write completes
-//
-// Inputs:        write file result structure containing message block
-//
-// Returns:       none
-//
-//***************************************************************************
+/// Handles completion of an asynchronous file write.
+/// @param result The write result containing the message block.
 void
 FileIOHandler::handle_write_file(const ACE_Asynch_Write_File::Result &result)
 {
@@ -310,18 +281,9 @@ FileIOHandler::handle_write_file(const ACE_Asynch_Write_File::Result &result)
 #endif
 }
 
-//***************************************************************************
-//
-//    Method:          handle_time_out
-//
-//    Description:   Hook method called when a timer expires
-//
-// Inputs:        time value, completion token passed to timer at scheduling
-//                The token tells us which timer we're handling
-//
-// Returns:       none
-//
-//***************************************************************************
+/// Handles timer expiration.
+/// @param tv The time value associated with the timer.
+/// @param act The completion token associated with the timer.
 void
 FileIOHandler::handle_time_out(const ACE_Time_Value & /*tv*/, const void * /*act*/)
 {

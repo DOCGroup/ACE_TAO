@@ -56,7 +56,7 @@ namespace TAO
 
       if (TAO_debug_level > 6)
         TAOLIB_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - Wait_On_LF_No_Upcall[%d]::wait, "
+                    "TAO (%P|%t) - Wait_On_LF_No_Upcall[%B]::wait, "
                     "disabling upcalls\n", t->id ()));
     }
 
@@ -75,7 +75,7 @@ namespace TAO
       if (TAO_debug_level > 6)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - Wait_On_LF_No_Upcall[%d]::wait, "
+                      "TAO (%P|%t) - Wait_On_LF_No_Upcall[%B]::wait, "
                       "re-enabling upcalls\n", this->t_->id ()));
         }
     }

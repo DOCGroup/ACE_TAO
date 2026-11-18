@@ -56,8 +56,6 @@ ACE_ATM_Addr::ACE_ATM_Addr (u_char selector)
   this->init (selector);
 }
 
-
-
 ACE_ATM_Addr::ACE_ATM_Addr (const ACE_ATM_Addr &sap,
                             u_char selector)
 #if defined (ACE_HAS_FORE_ATM_XTI) || defined (ACE_HAS_FORE_ATM_WS2)

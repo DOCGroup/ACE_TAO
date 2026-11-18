@@ -71,7 +71,6 @@ static void  TestCounter()
    constexpr unsigned short us = 10;
    constexpr short si = static_cast<short> (65535);
 
-   // constructors
    Counter32 c1;
    ACE_TEST_ASSERT(c1 == def);
    Counter32 c2(l);

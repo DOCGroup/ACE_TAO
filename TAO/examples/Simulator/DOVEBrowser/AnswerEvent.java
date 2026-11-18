@@ -1,14 +1,8 @@
-//
-// = FILENAME
-//    AnswerEvent.java
-//
-// = AUTHOR
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// = DESCRIPTION
-//   Event definition for the Dialog for selecting Observables.
-//
-// ============================================================================
+/**
+ * @file AnswerEvent.java
+ * @author Michael Kircher (mk1@cs.wustl.edu)
+ * @brief Event definition for the Dialog for selecting Observables.
+ */
 
 public class AnswerEvent extends java.util.EventObject {
 

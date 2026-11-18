@@ -77,7 +77,7 @@ EC_Shutdown::consumer_disconnect (void* cookie)
   ++this->consumer_disconnects_;
   if (this->verbose ())
   {
-    ACE_DEBUG ((LM_DEBUG, "Consumer %x has been disconnected\n", cookie));
+    ACE_DEBUG ((LM_DEBUG, "Consumer %@ has been disconnected\n", cookie));
   }
 }
 
@@ -87,6 +87,6 @@ EC_Shutdown::supplier_disconnect (void* cookie)
   ++this->supplier_disconnects_;
   if (this->verbose ())
   {
-    ACE_DEBUG ((LM_DEBUG, "Supplier %x has been disconnected\n", cookie));
+    ACE_DEBUG ((LM_DEBUG, "Supplier %@ has been disconnected\n", cookie));
   }
 }

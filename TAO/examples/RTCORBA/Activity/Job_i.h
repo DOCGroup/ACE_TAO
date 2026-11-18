@@ -33,11 +33,13 @@ class Job_i : public POA_Job
   /// Init the state of this object.
   int init (ACE_Arg_Shifter& arg_shifter);
 
-  /// = Accessors
+  /// @name Accessors
+  /// @{
   ACE_CString const &name () const;
   ACE_CString const &poa () const;
+  /// @}
 
-  /// = inteface Job method implementation.
+  /// Implements the Job::work operation.
   void work (CORBA::ULong work) override;
 
   void shutdown () override;

@@ -48,14 +48,12 @@ class ASNMP_Export Counter64 : public  SnmpSyntax
 public:
   explicit Counter64 (ACE_UINT64 llw = 0);
 
-  /// constructor with values
   Counter64 (unsigned long hiparm, unsigned long loparm);
 
   Counter64 (Counter64 const &ctr64);
   Counter64 (Counter64 &&) = delete;
   Counter64 &operator= (Counter64 &&) = delete;
 
-  /// destructor (ensure that SnmpSyntax::~SnmpSyntax() is overridden)
   ~Counter64 () override = default;
 
   /// syntax type

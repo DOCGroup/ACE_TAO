@@ -86,8 +86,8 @@ ACE_Hash_Map_Entry<EXT_ID, INT_ID>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("next_ = %d"), this->next_));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("prev_ = %d"), this->prev_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("next_ = %@"), this->next_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("prev_ = %@"), this->prev_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -404,7 +404,7 @@ ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>:
   ACE_TRACE ("ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::dump_i");
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("index_ = %d "), this->index_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("index_ = %b "), this->index_));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("next_ = %@"), this->next_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -476,7 +476,7 @@ ACE_Hash_Map_Const_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_
   ACE_TRACE ("ACE_Hash_Map_Const_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::dump_i");
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("index_ = %d "), this->index_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("index_ = %b "), this->index_));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("next_ = %@"), this->next_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }

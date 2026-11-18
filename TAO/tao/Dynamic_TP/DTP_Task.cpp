@@ -331,9 +331,9 @@ TAO_DTP_Task::svc ()
                               this->busy_threads_.load()));
                 }
 
-              ACE_Time_Value const tmp_sec = this->thread_idle_time_.to_absolute_time();
-
               {
+                ACE_Time_Value const tmp_sec =
+                  this->thread_idle_time_.to_absolute_time ();
                 ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->work_lock_, false);
                 int wait_state {};
                 while (!(this->shutdown_ || this->check_queue_) && wait_state != -1)

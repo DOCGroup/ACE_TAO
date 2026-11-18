@@ -376,10 +376,10 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::dump () const
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nmax_size_ = %B"), this->max_size_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\ncur_size_ = %B"), this->cur_size_));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\ncur_limbo_= %d"), this->cur_limbo_));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nids_curr_ = %d"),
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\ncur_limbo_= %B"), this->cur_limbo_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nids_curr_ = %B"),
               this->timer_ids_curr_));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nmin_free_ = %d"),
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nmin_free_ = %B"),
               this->timer_ids_min_free_));
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nheap_ =\n")));
@@ -387,7 +387,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::dump () const
   for (size_t i = 0; i < this->cur_size_; ++i)
     {
       ACELIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("%d\n"),
+                  ACE_TEXT ("%B\n"),
                   i));
       this->heap_[i]->dump ();
     }
@@ -396,7 +396,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::dump () const
 
   for (size_t j = 0; j < this->max_size_; ++j)
     ACELIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("%d\t%d\n"),
+                ACE_TEXT ("%B\t%b\n"),
                 j,
                 this->timer_ids_[j]));
 

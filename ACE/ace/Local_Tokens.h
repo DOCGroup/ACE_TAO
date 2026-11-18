@@ -116,7 +116,6 @@ public:
   ACE_TPQ_Entry (const ACE_Token_Proxy *proxy,
                  const ACE_TCHAR *client_id);
 
-
   ACE_TPQ_Entry (const ACE_TPQ_Entry &rhs);
 
   ~ACE_TPQ_Entry ();

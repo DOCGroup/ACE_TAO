@@ -458,35 +458,35 @@ private:
 
   u_int output_level_ {};
 
-    /// minimum frame size for all tasks
+  /// minimum frame size for all tasks
   u_long frame_size_ {1}; /* 100 nanosec */
 
-    /// minimum frame size for guaranteed schedulable tasks
+  /// minimum frame size for guaranteed schedulable tasks
   u_long critical_set_frame_size_ {}; /* 100 nanosec */
 
-    /// total utilization for all tasks
+  /// total utilization for all tasks
   double utilization_ {};
 
-    /// minimum frame size for guaranteed schedulable tasks
+  /// minimum frame size for guaranteed schedulable tasks
   double critical_set_utilization_ {};
 
-    /**
-     * The platform-independent priority value of the Event Channel's
-     * minimum priority dispatch queue.  The value of the maximum priority
-     * dispatch queue is always 0.
-     */
+  /**
+   * The platform-independent priority value of the Event Channel's
+   * minimum priority dispatch queue.  The value of the maximum priority
+   * dispatch queue is always 0.
+   */
   Preemption_Priority minimum_priority_queue_ {};
 
-    /**
-     * The platform-independent priority value of the minimum priority dispatch
-     * queue whose operations are guaranteed to be schedulable.  The value of
-     * the maximum priority dispatch queue is always 0, -1 indicates none can
-     * be guaranteed.
-     */
+  /**
+   * The platform-independent priority value of the minimum priority dispatch
+   * queue whose operations are guaranteed to be schedulable.  The value of
+   * the maximum priority dispatch queue is always 0, -1 indicates none can
+   * be guaranteed.
+   */
   Preemption_Priority minimum_guaranteed_priority_queue_ {-1};
 
-    /// indicates whether the a valid schedule has been generated since the last
-    /// relevant change (addition, alteration or removal of an RT_Info, etc.)
+  /// indicates whether the a valid schedule has been generated since the last
+  /// relevant change (addition, alteration or removal of an RT_Info, etc.)
   bool up_to_date_ {};
 
   u_long min_dispatch_id_ {};

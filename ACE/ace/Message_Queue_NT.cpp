@@ -213,14 +213,14 @@ ACE_Message_Queue_NT::dump () const
     }
 
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("max_cthrs_ = %d\n")
-              ACE_TEXT ("cur_thrs_ = %d\n")
+              ACE_TEXT ("max_cthrs_ = %u\n")
+              ACE_TEXT ("cur_thrs_ = %u\n")
               ACE_TEXT ("cur_bytes = %B\n")
               ACE_TEXT ("cur_length = %B\n")
               ACE_TEXT ("cur_count = %B\n")
               ACE_TEXT ("completion_port_ = %@\n"),
-              this->max_cthrs_,
-              this->cur_thrs_,
+              static_cast<unsigned int> (this->max_cthrs_),
+              static_cast<unsigned int> (this->cur_thrs_),
               this->cur_bytes_,
               this->cur_length_,
               this->cur_count_,

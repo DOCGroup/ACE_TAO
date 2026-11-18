@@ -94,7 +94,6 @@ public:
   /// @name Priority accessors.
   /// @{
 
-
   /// Get the priority of the Event_Handler.
   /// @note Priorities run from MIN_PRIORITY (which is the "lowest priority")
   /// to MAX_PRIORITY (which is the "highest priority").
@@ -319,7 +318,6 @@ public:
 
   /// Construct with a handler.
   ACE_Event_Handler_var (ACE_Event_Handler *p);
-
 
   ACE_Event_Handler_var (const ACE_Event_Handler_var &b);
 

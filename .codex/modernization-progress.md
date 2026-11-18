@@ -34,7 +34,9 @@ Scope: **1268 directories**; **1230** differ from the base; **380** have task-le
 | `SIZE_TYPES` — Count and size types | 58 | 34 | 15 | 9 |
 | `IDL_GENERATION` — tao_idl/gperf inputs and generated output | 36 | 6 | 30 | 0 |
 | `CLI_OPTIONS` — Grouped command-line settings | 82 | 64 | 18 | 0 |
-| `LOG_FORMAT` — ACE logging format specifiers | 77 | 60 | 16 | 1 |
+| `LOG_FORMAT` — ACE logging format specifiers | 78 | 60 | 16 | 2 |
+| `ACE_SIZE_LOG_FORMAT` — ACE fixed-width and size-oriented logging formats | 1 | 1 | 0 | 0 |
+| `WINDOWS_CTOR_ACCESS` — Constructor access and ownership in Windows-specific classes | 1 | 1 | 0 | 0 |
 | `TEST_ASSERTIONS` — Regression test assertions | 51 | 25 | 24 | 2 |
 | `CLEANUP` — Unused helpers and stale commented code | 244 | 244 | 0 | 0 |
 | `UNUSED_INCLUDES` — Unused include removal | 11 | 11 | 0 | 0 |
@@ -68,7 +70,7 @@ Scope: **1268 directories**; **1230** differ from the base; **380** have task-le
 | `ACE/ASNMP/tests` | CONST; VALUE_INIT; NULLPTR; OVERRIDE_DEFAULT_DELETE; EXPLICIT=n/a; COPY_MOVE; USING=n/a; CONSTEXPR; OWNERSHIP; CONTAINERS; C_STRING; SIZE_TYPES; IDL_GENERATION=n/a; CLI_OPTIONS=n/a; TEST_ASSERTIONS; CLEANUP; BUILD_TEST | Review deferred size_t uses separately; the user requested postponing that modernization | partial | `70bbff352a2` |
 | `ACE/Kokyu` | CONST; SCOPE_REDUCTION; VALUE_INIT; OVERRIDE_DEFAULT_DELETE; EXPLICIT; COPY_MOVE; OWNERSHIP; PREFIX_INC; LOG_FORMAT; CLEANUP; UNUSED_INCLUDES; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST; DIRECTORY_PASS | Full directory checklist remains; size-type modernization deferred | partial | `288e92d8158` |
 | `ACE/Kokyu/tests/DSRT_MIF` | CONST; CLEANUP; BUILD_TEST; DIRECTORY_PASS | Full test-directory checklist remains | partial | `288e92d8158` |
-| `ACE/ace` | CONST; VALUE_INIT; NULLPTR; PREFIX_INC; CONST_GUARD_MACROS; MOVE_SITES; CLEANUP; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Directory checklist remains partially audited; pointer initialization and other modernization categories still need review | partial | `c50c8c65e08` |
+| `ACE/ace` | CONST; VALUE_INIT; NULLPTR; PREFIX_INC; CONST_GUARD_MACROS; MOVE_SITES; ACE_SIZE_LOG_FORMAT; WINDOWS_CTOR_ACCESS; CLEANUP; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Directory checklist remains partially audited; pointer initialization and other modernization categories still need review | partial | `c50c8c65e08` |
 | `ACE/ace/Compression` | CONST; VALUE_INIT; NULLPTR=n/a; OVERRIDE_DEFAULT_DELETE; EXPLICIT; COPY_MOVE; USING=n/a; CONSTEXPR=n/a; OWNERSHIP=n/a; CONTAINERS=n/a; C_STRING=n/a; SIZE_TYPES; IDL_GENERATION=n/a; CLI_OPTIONS=n/a; LOG_FORMAT=n/a; TEST_ASSERTIONS=n/a; CLEANUP; STYLE; BUILD_TEST | Deferred size_t review remains open | partial | `72001d34344` |
 | `ACE/ace/Compression/rle` | CONST; VALUE_INIT; OVERRIDE_DEFAULT_DELETE; EXPLICIT; COPY_MOVE; SIZE_TYPES; CLEANUP; STYLE; BUILD_TEST | Deferred size_t review remains open | partial | `627188f6d27` |
 | `ACE/ace/ETCL` | OWNERSHIP; CONTAINERS; CLEANUP; STYLE; BUILD_TEST | Directory checklist remains open; review remaining modernization categories | partial | `0883f62bd10` |

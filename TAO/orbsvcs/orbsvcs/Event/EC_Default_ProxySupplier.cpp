@@ -91,7 +91,7 @@ TAO_EC_Default_ProxyPushSupplier::connect_push_consumer (
 
 #if TAO_EC_ENABLE_DEBUG_MESSAGES
     ORBSVCS_DEBUG ((LM_DEBUG,
-                "Building filters for consumer <%x>.\n",
+                "Building filters for consumer <%@>.\n",
                 this));
 #endif /* TAO_EC_ENABLED_DEBUG_MESSAGES */
     this->child_.reset (

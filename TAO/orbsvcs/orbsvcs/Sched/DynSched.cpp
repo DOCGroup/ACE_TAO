@@ -1370,8 +1370,13 @@ ACE_DynScheduler::relate_task_entries_recurse (long &time, Task_Entry &entry)
           ? ST_VIRTUAL_MEMORY_EXHAUSTED : ST_BAD_INTERNAL_POINTER;
       }
 
-      // depth first recursion on the newly identified entry
-      relate_task_entries_recurse (time, *dependency_entry_ptr);
+      // Depth-first recursion on the newly identified entry.
+      status_t const status =
+        relate_task_entries_recurse (time, *dependency_entry_ptr);
+      if (status != SUCCEEDED)
+        {
+          return status;
+        }
     }
   }
 

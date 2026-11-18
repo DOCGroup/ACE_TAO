@@ -114,7 +114,7 @@ public:
 private:
   MT_Server mT_Server_;
   int argc_ {};
-  // argv_ and orb_manager_ptr_ are borrowed until svc() completes.
+  /// argv_ and orb_manager_ptr_ are borrowed until svc() completes.
   ACE_TCHAR **argv_;
   TAO_ORB_Manager *orb_manager_ptr_ {};
 };

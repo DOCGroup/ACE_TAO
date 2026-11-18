@@ -492,9 +492,9 @@ ACE_Buffered_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::dump () const
               this->current_buffer_size_));
   if (this->timeoutp_ != 0)
     ACELIB_DEBUG ((LM_DEBUG,
-                "next_timeout_.sec = %d, next_timeout_.usec = %d\n",
+                "next_timeout_.sec = %:, next_timeout_.usec = %q\n",
                 this->next_timeout_.sec (),
-                this->next_timeout_.usec ()));
+                static_cast<ACE_INT64> (this->next_timeout_.usec ())));
 #endif /* ACE_HAS_DUMP */
 }
 

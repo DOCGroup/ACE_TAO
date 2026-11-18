@@ -516,7 +516,7 @@ TAO_IIOP_Connector::complete_connection (int result,
                 TAOLIB_ERROR ((LM_ERROR,
                             ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::")
                             ACE_TEXT ("complete_connection, wait for completion ")
-                            ACE_TEXT ("failed for %d pending connects\n"),
+                            ACE_TEXT ("failed for %u pending connects\n"),
                             count));
             }
         }

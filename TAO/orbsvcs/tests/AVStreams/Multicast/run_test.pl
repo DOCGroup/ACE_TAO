@@ -6,6 +6,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
+use File::Compare;
 use File::stat;
 
 $status = 0;
@@ -152,6 +153,24 @@ if ($NS_status != 0) {
     $status = 1;
 }
 
+if ($sv1->GetFile ($test1file) == -1) {
+    print STDERR "ERROR: cannot retrieve server 1 output <$test1file>\n";
+    $status = 1;
+}
+elsif (compare ($inputfile, $test1file) != 0) {
+    print STDERR "ERROR: server 1 output differs from input <$inputfile>\n";
+    $status = 1;
+}
+
+if ($sv2->GetFile ($test2file) == -1) {
+    print STDERR "ERROR: cannot retrieve server 2 output <$test2file>\n";
+    $status = 1;
+}
+elsif (compare ($inputfile, $test2file) != 0) {
+    print STDERR "ERROR: server 2 output differs from input <$inputfile>\n";
+    $status = 1;
+}
+
 $ns->DeleteFile ($nsiorfile);
 $sv1->DeleteFile ($nsiorfile);
 $sv2->DeleteFile ($nsiorfile);
@@ -159,5 +178,8 @@ $cl->DeleteFile ($nsiorfile);
 $cl->DeleteFile ($inputfile);
 $sv1->DeleteFile ($test1file);
 $sv2->DeleteFile ($test2file);
+unlink $inputfile;
+unlink $test1file;
+unlink $test2file;
 
 exit $status;

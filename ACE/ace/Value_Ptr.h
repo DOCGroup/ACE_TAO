@@ -81,10 +81,8 @@ namespace ACE
      */
     void swap (Value_Ptr & other) { std::swap (this->p_, other.p_); }
 
-
     Value_Ptr (Value_Ptr const & other)
       : p_ (create_from (other.p_)) { }
-
 
     Value_Ptr & operator= (Value_Ptr const & other)
     {

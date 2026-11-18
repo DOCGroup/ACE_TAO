@@ -462,7 +462,7 @@ Admin_Client::enum_test ()
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("EnumDef::describe::value::type::")
-                      ACE_TEXT ("member_name[%d]: %C\n"),
+                      ACE_TEXT ("member_name[%u]: %C\n"),
                       i,
                       str.in ()));
         }
@@ -498,7 +498,7 @@ Admin_Client::enum_test ()
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("EnumDef::")
-                      ACE_TEXT ("members[%d]: %C\n"),
+                      ACE_TEXT ("members[%u]: %C\n"),
                       i,
                       tmp));
         }
@@ -923,7 +923,7 @@ Admin_Client::struct_test ()
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("StructDef::type::member_name[%d]: %C\n"),
+                      ACE_TEXT ("StructDef::type::member_name[%u]: %C\n"),
                       i,
                       str.in ()));
         }
@@ -1005,7 +1005,7 @@ Admin_Client::struct_test ()
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("StructDef::members[%d]::name: %C\n"),
+                      ACE_TEXT ("StructDef::members[%u]::name: %C\n"),
                       i,
                       out_members[i].name.in ()));
         }
@@ -1103,7 +1103,7 @@ Admin_Client::struct_test ()
         {
           ACE_DEBUG ((
               LM_DEBUG,
-              ACE_TEXT ("StructDef::contents[%d]::absolute_name: %C\n"),
+              ACE_TEXT ("StructDef::contents[%u]::absolute_name: %C\n"),
               i,
               str.in ()
             ));
@@ -1143,7 +1143,7 @@ Admin_Client::struct_test ()
         {
           ACE_DEBUG ((
               LM_DEBUG,
-              ACE_TEXT ("Repository::lookup_name[%d]::absolute_name: %C\n"),
+              ACE_TEXT ("Repository::lookup_name[%u]::absolute_name: %C\n"),
               i,
               str.in ()
             ));
@@ -1180,7 +1180,7 @@ Admin_Client::struct_test ()
         {
           ACE_DEBUG ((
               LM_DEBUG,
-              ACE_TEXT ("Repository::describe_contents[%d]::id: %C\n"),
+              ACE_TEXT ("Repository::describe_contents[%u]::id: %C\n"),
               i,
               str.in ()
             ));
@@ -1228,7 +1228,7 @@ Admin_Client::struct_test ()
         {
           ACE_DEBUG ((
               LM_DEBUG,
-              ACE_TEXT ("StructDef::contents[%d]::absolute_name: %C\n"),
+              ACE_TEXT ("StructDef::contents[%u]::absolute_name: %C\n"),
               i,
               str.in ()
             ));
@@ -1401,7 +1401,7 @@ Admin_Client::union_test ()
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("UnionDef::type::member_name[%d]: %C\n"),
+                      ACE_TEXT ("UnionDef::type::member_name[%u]: %C\n"),
                       i,
                       str.in ()));
         }
@@ -1430,7 +1430,7 @@ Admin_Client::union_test ()
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("UnionDef::type::member_label[%d]: %C\n"),
+                      ACE_TEXT ("UnionDef::type::member_label[%u]: %C\n"),
                       i,
                       i == (CORBA::ULong) slot ? "default" : tmp));
         }
@@ -1524,7 +1524,7 @@ Admin_Client::exception_test ()
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("ExceptionDef::type::member_name[%d]: %C\n"),
+                      ACE_TEXT ("ExceptionDef::type::member_name[%u]: %C\n"),
                       i,
                       str.in ()));
         }
@@ -1617,7 +1617,7 @@ Admin_Client::exception_test ()
     {
       if (this->debug_)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("ExceptionDef::members[%d]::name: %C\n"),
+                    ACE_TEXT ("ExceptionDef::members[%u]::name: %C\n"),
                     i,
                     out_members[i].name.in ()));
 
@@ -1651,7 +1651,7 @@ Admin_Client::exception_test ()
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("ExceptionDef::members[%d]::name: %C\n"),
+                      ACE_TEXT ("ExceptionDef::members[%u]::name: %C\n"),
                       i,
                       out_members[i].name.in ()));
         }
@@ -1733,7 +1733,7 @@ Admin_Client::exception_test ()
         {
           ACE_DEBUG ((
               LM_DEBUG,
-              ACE_TEXT ("ExceptionDef::contents[%d]::absolute_name: %C\n"),
+              ACE_TEXT ("ExceptionDef::contents[%u]::absolute_name: %C\n"),
               i,
               str.in ()
             ));
@@ -1767,7 +1767,7 @@ Admin_Client::exception_test ()
         {
           ACE_DEBUG ((
               LM_DEBUG,
-              ACE_TEXT ("Repository::lookup_name%d]::absolute_name: %C\n"),
+              ACE_TEXT ("Repository::lookup_name%u]::absolute_name: %C\n"),
               i,
               str.in ()
             ));
@@ -1808,7 +1808,7 @@ Admin_Client::exception_test ()
           if (this->debug_)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("Repository::describe_contents[%d]")
+                          ACE_TEXT ("Repository::describe_contents[%u]")
                           ACE_TEXT ("::value::type::member_count: %d\n"),
                           i,
                           length));
@@ -1819,7 +1819,7 @@ Admin_Client::exception_test ()
           if (this->debug_)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("Repository::describe_contents[%d]")
+                          ACE_TEXT ("Repository::describe_contents[%u]")
                           ACE_TEXT ("::value::name: %C\n"),
                           i,
                           ed->name.in ()));
@@ -1837,7 +1837,7 @@ Admin_Client::exception_test ()
           if (this->debug_)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("Repository::describe_contents[%d]")
+                          ACE_TEXT ("Repository::describe_contents[%u]")
                           ACE_TEXT ("::value::type::member_count: %d\n"),
                           i,
                           length));
@@ -1848,7 +1848,7 @@ Admin_Client::exception_test ()
           if (this->debug_)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("Repository::describe_contents[%d]")
+                          ACE_TEXT ("Repository::describe_contents[%u]")
                           ACE_TEXT ("::value::name: %C\n"),
                           i,
                           td->name.in ()));
@@ -1880,7 +1880,7 @@ Admin_Client::exception_test ()
         {
           ACE_DEBUG ((
               LM_DEBUG,
-              ACE_TEXT ("ExceptionDef::contents[%d]::absolute_name: %C\n"),
+              ACE_TEXT ("ExceptionDef::contents[%u]::absolute_name: %C\n"),
               i,
               str.in ()
             ));
@@ -2225,7 +2225,7 @@ Admin_Client::interface_test ()
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("OperationDef::describe::parameters[%d]::")
+                      ACE_TEXT ("OperationDef::describe::parameters[%u]::")
                       ACE_TEXT ("name: %C\n"),
                       i,
                       tmp));
@@ -2236,7 +2236,7 @@ Admin_Client::interface_test ()
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("OperationDef::describe::parameters[%d]::")
+                      ACE_TEXT ("OperationDef::describe::parameters[%u]::")
                       ACE_TEXT ("mode: %d\n"),
                       i,
                       od->parameters[i].mode));
@@ -2325,7 +2325,7 @@ Admin_Client::interface_test ()
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("InterfaceDef::describe_interface::")
-                      ACE_TEXT ("operations[0]::contexts[%d]: %C\n"),
+                      ACE_TEXT ("operations[0]::contexts[%u]: %C\n"),
                       i,
                       tmp));
         }
@@ -2353,7 +2353,7 @@ Admin_Client::interface_test ()
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("InterfaceDef::describe::operations[3]::")
-                      ACE_TEXT ("contexts[%d]: %C\n"),
+                      ACE_TEXT ("contexts[%u]: %C\n"),
                       i,
                       tmp));
         }
@@ -2408,7 +2408,7 @@ Admin_Client::interface_test ()
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("InterfaceDef::describe::")
-                      ACE_TEXT ("base_interfaces[%d]: %C\n"),
+                      ACE_TEXT ("base_interfaces[%u]: %C\n"),
                       i,
                       base_iface_id));
         }
@@ -2436,7 +2436,7 @@ Admin_Client::interface_test ()
         {
           ACE_DEBUG ((
               LM_DEBUG,
-              ACE_TEXT ("InterfaceDef::base_interfaces[%d]::name: %C\n"),
+              ACE_TEXT ("InterfaceDef::base_interfaces[%u]::name: %C\n"),
               i,
               str.in ()
             ));
@@ -2464,7 +2464,7 @@ Admin_Client::interface_test ()
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("InterfaceDef::contents[%d]::name: %C\n"),
+                      ACE_TEXT ("InterfaceDef::contents[%u]::name: %C\n"),
                       i,
                       str.in ()));
         }
@@ -2480,7 +2480,7 @@ Admin_Client::interface_test ()
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("InterfaceDef::contents[%d]::")
+                      ACE_TEXT ("InterfaceDef::contents[%u]::")
                       ACE_TEXT ("defined_in::name: %C\n"),
                       i,
                       str.in ()));
@@ -2604,7 +2604,7 @@ Admin_Client::move_test ()
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("UnionDef::members[%d]::name: %C\n"),
+                      ACE_TEXT ("UnionDef::members[%u]::name: %C\n"),
                       i,
                       tmp));
         }
@@ -2657,7 +2657,7 @@ Admin_Client::move_test ()
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("UnionDef::members[%d]::name: %C\n"),
+                      ACE_TEXT ("UnionDef::members[%u]::name: %C\n"),
                       i,
                       tmp));
         }
@@ -2696,7 +2696,7 @@ Admin_Client::move_test ()
         {
           ACE_DEBUG ((
               LM_DEBUG,
-              ACE_TEXT ("UnionDef::contents[%d]::absolute_name: %C\n"),
+              ACE_TEXT ("UnionDef::contents[%u]::absolute_name: %C\n"),
               i,
               str.in ()
             ));
@@ -2757,7 +2757,7 @@ Admin_Client::move_test ()
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("UnionDef::members[%d]::name: %C\n"),
+                      ACE_TEXT ("UnionDef::members[%u]::name: %C\n"),
                       i,
                       tmp));
         }
@@ -2790,7 +2790,7 @@ Admin_Client::move_test ()
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("UnionDef::contents[%d]::absolute_name: %C\n"),
+                      ACE_TEXT ("UnionDef::contents[%u]::absolute_name: %C\n"),
                       i,
                       str.in ()));
         }
@@ -2829,7 +2829,7 @@ Admin_Client::move_test ()
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("StructDef::contents[%d]::absolute_name: %C\n"),
+                      ACE_TEXT ("StructDef::contents[%u]::absolute_name: %C\n"),
                       i,
                       str.in ()));
         }
@@ -2866,7 +2866,7 @@ Admin_Client::move_test ()
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("StructDef::members[%d]::name: %C\n"),
+                      ACE_TEXT ("StructDef::members[%u]::name: %C\n"),
                       i,
                       tmp));
         }
@@ -3042,7 +3042,7 @@ Admin_Client::module_test ()
         {
           ACE_DEBUG ((
               LM_DEBUG,
-              ACE_TEXT ("Repository::lookup_name[%d]::absolute_name: %C\n"),
+              ACE_TEXT ("Repository::lookup_name[%u]::absolute_name: %C\n"),
               i,
               str.in ()
             ));
@@ -3078,7 +3078,7 @@ Admin_Client::module_test ()
         {
           ACE_DEBUG ((
               LM_DEBUG,
-              ACE_TEXT ("Repository::lookup_name[%d]::absolute_name: %C\n"),
+              ACE_TEXT ("Repository::lookup_name[%u]::absolute_name: %C\n"),
               i,
               str.in ()
             ));
@@ -3121,7 +3121,7 @@ Admin_Client::module_test ()
         {
           ACE_DEBUG ((
               LM_DEBUG,
-              ACE_TEXT ("Repository::lookup_name[%d]::absolute_name: %C\n"),
+              ACE_TEXT ("Repository::lookup_name[%u]::absolute_name: %C\n"),
               i,
               str.in ()
             ));

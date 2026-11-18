@@ -1,15 +1,13 @@
 // -*- C++ -*-
 
-// FILENAME
-//   Trading_Loader.h
-//
-// DESCRIPTION
-//   This class loads the Trading Service dynamically
-//   either from svc.conf file or <string_to_object> call.
-//
-// AUTHORS
-//   Priyanka Gontla <pgontla@ece.uci.edu>
-//
+/**
+ * @file Trading_Loader.h
+ *
+ * @brief Loads the Trading Service dynamically from a @c svc.conf file or
+ * a @c string_to_object call.
+ *
+ * @author Priyanka Gontla <pgontla@ece.uci.edu>
+ */
 
 #ifndef TAO_TRADING_LOADER_H
 #define TAO_TRADING_LOADER_H

@@ -1,17 +1,9 @@
-//
-// = FILENAME
-//    NavigationVisComp.java
-//
-// = AUTHOR
-//    Seth Widoff (core functionality)
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// = DESCRIPTION
-//   This is a Visualization Component for displaying navigation.
-//
-// ============================================================================
-
-
+/**
+ * @file NavigationVisComp.java
+ * @author Seth Widoff (core functionality)
+ * @author Michael Kircher (mk1@cs.wustl.edu)
+ * @brief This is a Visualization Component for displaying navigation.
+ */
 
 import java.awt.*;
 import java.io.*;
@@ -202,7 +194,6 @@ extends Canvas
 
       angles[0] += angle_shift;
       angles[1] -= angle_shift;
-
 
     }
 

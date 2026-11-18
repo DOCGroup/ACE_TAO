@@ -85,7 +85,6 @@ public:
   /// Derived literal types can supply additional expression kinds.
   virtual Literal_Type expr_type () const;
 
-
   void operator= (ETCL_Literal_Constraint const &co);
   void operator= (ETCL_Literal_Constraint &&) = delete;
 

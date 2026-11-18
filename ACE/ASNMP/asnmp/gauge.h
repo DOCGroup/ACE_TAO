@@ -46,14 +46,12 @@
 class ASNMP_Export Gauge32: public SnmpUInt32
 {
 public:
-  /// constructor with a value
   explicit Gauge32 (unsigned long i = 0);
 
   Gauge32 (Gauge32 const &g);
   Gauge32 (Gauge32 &&) = delete;
   Gauge32 &operator= (Gauge32 &&) = delete;
 
-  /// destructor for a Gauge32 (ensure that Value::~Value() is overridden)
   ~Gauge32 () override = default;
 
   /// syntax type

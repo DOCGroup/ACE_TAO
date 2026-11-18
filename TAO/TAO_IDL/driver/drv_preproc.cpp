@@ -64,7 +64,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // Pass an IDL file through the C preprocessor
 
-#include <array>
 #include <cstddef>
 #include <cstdio>
 #include <memory>
@@ -79,6 +78,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "drv_extern.h"
 #include "utl_string.h"
 #include "utl_err.h"
+#include "fe_utils.h"
 
 #include "ace/Version.h"
 #include "ace/Process.h"
@@ -99,44 +99,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // Storage for preprocessor args.
 constexpr unsigned long DRV_MAX_ARGCOUNT = 1024;
 std::vector<std::basic_string<ACE_TCHAR>> DRV_arglist;
-
-class DRV_Temp_File_Guard
-{
-public:
-  explicit DRV_Temp_File_Guard (
-    std::array<std::string const *, 4> const& filenames)
-    : filenames_ (filenames)
-  {
-  }
-
-  ~DRV_Temp_File_Guard ()
-  {
-    if (this->active_)
-      {
-        for (std::string const *filename : this->filenames_)
-          {
-            if (!filename->empty ())
-              {
-                (void) ACE_OS::unlink (filename->c_str ());
-              }
-          }
-      }
-  }
-
-  void release ()
-  {
-    this->active_ = false;
-  }
-
-private:
-  DRV_Temp_File_Guard (DRV_Temp_File_Guard const &) = delete;
-  DRV_Temp_File_Guard &operator= (DRV_Temp_File_Guard const &) = delete;
-  DRV_Temp_File_Guard (DRV_Temp_File_Guard &&) = delete;
-  DRV_Temp_File_Guard &operator= (DRV_Temp_File_Guard &&) = delete;
-
-  std::array<std::string const *, 4> const filenames_;
-  bool active_ {true};
-};
 
 static std::basic_string<ACE_TCHAR> output_arg_format;
 static size_t output_arg_index {};
@@ -957,8 +919,8 @@ DRV_get_orb_idl_includes ()
 
  // Search for orb.idl in supplied include file search paths.
   std::string directory;
-  FE_Utils::File_Handle fp (
-    FE_Utils::open_included_file (orb_idl, directory), ACE_OS::fclose);
+  FE_Utils::File_Handle fp =
+    FE_Utils::open_included_file (orb_idl, directory);
 
   if (!fp)
     {
@@ -1154,10 +1116,7 @@ DRV_pre_proc (std::string const& myfile)
 
   std::string tmp_cpp_file;
   std::string tmp_cpp_ifile;
-  std::array<std::string const *, 4> const temp_file_names {{
-    &tmp_file, &tmp_ifile, &tmp_cpp_file, &tmp_cpp_ifile
-  }};
-  DRV_Temp_File_Guard temp_files (temp_file_names);
+  FE_Utils::Temp_File_Guard temp_files;
 
   FE_Utils::File_Handle ti_file (nullptr, ACE_OS::fclose);
   if (copy_input_file)
@@ -1173,6 +1132,7 @@ DRV_pre_proc (std::string const& myfile)
           throw Bailout ();
         }
 
+      temp_files.register_created_file (tmp_ifile);
       ti_file.reset (ACE_OS::fdopen (ti_fd, ACE_TEXT ("w")));
       if (!ti_file)
         {
@@ -1198,29 +1158,24 @@ DRV_pre_proc (std::string const& myfile)
       throw Bailout ();
     }
 
-  FE_Utils::File_Handle tf_file (
-    ACE_OS::fdopen (tf_fd, ACE_TEXT ("w")), ACE_OS::fclose);
-  if (!tf_file)
+  temp_files.register_created_file (tmp_file);
+  if (ACE_OS::close (tf_fd) == -1)
     {
-      ACE_OS::close (tf_fd);
       ACE_ERROR ((LM_ERROR,
-                  "%C: cannot open temp file \"%C\" for writing: %m\n",
+                  "%C: cannot close temp file \"%C\": %m\n",
                   idl_global->prog_name ().c_str (),
                   tmp_file.c_str ()));
       throw Bailout ();
     }
 
-  tmp_cpp_file = tmp_file;
-  tmp_cpp_file += temp_file_extension;
-
   // Append C++ source file extensions. Temporary files will be renamed to
   // these filenames when the preprocessor requires an input extension.
+  tmp_cpp_file = tmp_file;
+  tmp_cpp_file += temp_file_extension;
 
   std::string const &t_file = copy_input_file ? tmp_cpp_file : tmp_file;
   std::string const &t_ifile = tmp_cpp_ifile;
   std::string const input_file = copy_input_file ? t_ifile : myfile;
-
-  tf_file.reset ();
 
   // Rename temporary files so that they have extensions accepted
   // by the preprocessor.
@@ -1317,6 +1272,10 @@ DRV_pre_proc (std::string const& myfile)
 
       throw Bailout ();
     }
+  if (copy_input_file)
+    {
+      temp_files.file_renamed (tmp_file, t_file);
+    }
 
   if (copy_input_file
       && ACE_OS::rename (tmp_ifile.c_str (), t_ifile.c_str ()) != 0)
@@ -1327,12 +1286,18 @@ DRV_pre_proc (std::string const& myfile)
                   idl_global->prog_name ().c_str (),
                   tmp_ifile.c_str (),
                   t_ifile.c_str ()));
-
       throw Bailout ();
     }
+  if (copy_input_file)
+    {
+      temp_files.file_renamed (tmp_ifile, t_ifile);
+    }
 
-  // Remove any existing output file.
-  (void) ACE_OS::unlink (t_file.c_str ());
+  // Remove the empty file created by mkstemp before the preprocessor writes.
+  if (ACE_OS::unlink (t_file.c_str ()) == 0)
+    {
+      temp_files.unregister_file (t_file);
+    }
 
   ACE_HANDLE fd = ACE_INVALID_HANDLE;
 
@@ -1355,12 +1320,13 @@ DRV_pre_proc (std::string const& myfile)
 
           throw Bailout ();
         }
+      temp_files.register_created_file (t_file);
 
       if (cpp_options.set_handles (ACE_INVALID_HANDLE, fd) == -1)
         {
           ACE_ERROR ((LM_ERROR, "%C: cannot set stdout for child process: %m\n",
                       idl_global->prog_name ().c_str ()));
-
+          ACE_OS::close (fd);
           throw Bailout ();
         }
     }
@@ -1378,8 +1344,15 @@ DRV_pre_proc (std::string const& myfile)
                   "%C: spawn of \"%s\" failed\n",
                   idl_global->prog_name ().c_str (),
                   DRV_arglist[0].c_str ()));
-
+      if (fd != ACE_INVALID_HANDLE)
+        {
+          ACE_OS::close (fd);
+        }
       throw Bailout ();
+    }
+  if (!output_arg_format.empty ())
+    {
+      temp_files.register_created_file (t_file);
     }
 
   if (fd != ACE_INVALID_HANDLE)
@@ -1444,9 +1417,10 @@ DRV_pre_proc (std::string const& myfile)
   // version the current process
   // would exit if the pre-processor
   // returned with error.
-  FILE * const yyin = ACE_OS::fopen (t_file.c_str (), "r");
+  FE_Utils::File_Handle yyin (
+    ACE_OS::fopen (t_file.c_str (), "r"), ACE_OS::fclose);
 
-  if (yyin == nullptr)
+  if (!yyin)
     {
       ACE_ERROR ((LM_ERROR,
                   "%C: Could not open cpp "
@@ -1457,7 +1431,7 @@ DRV_pre_proc (std::string const& myfile)
       throw Bailout ();
     }
 
-  FE_set_yyin (yyin);
+  FE_set_yyin (yyin.get ());
 
   if (idl_global->compile_flags () & IDL_CF_ONLY_PREPROC)
     {
@@ -1474,6 +1448,7 @@ DRV_pre_proc (std::string const& myfile)
                       idl_global->prog_name ().c_str (),
                       t_file.c_str ()));
 
+          FE_set_yyin (static_cast<FILE *> (nullptr));
           throw Bailout ();
         }
 
@@ -1494,9 +1469,12 @@ DRV_pre_proc (std::string const& myfile)
                != 0)
         {
           buffer[bytes] = '\0';
-          ACE_DEBUG ((LM_DEBUG, buffer));
+          ACE_DEBUG ((LM_DEBUG, "%C", buffer));
         }
 
+      // No parser will take ownership in preprocess-only mode.
+      FE_set_yyin (static_cast<FILE *> (nullptr));
+      yyin.reset ();
     }
 
   if (copy_input_file && ACE_OS::unlink (t_ifile.c_str ()) == -1)
@@ -1506,8 +1484,12 @@ DRV_pre_proc (std::string const& myfile)
                   "input file \"%C\": %m\n",
                   idl_global->prog_name ().c_str (),
                   t_ifile.c_str ()));
-
+      FE_set_yyin (static_cast<FILE *> (nullptr));
       throw Bailout ();
+    }
+  if (copy_input_file)
+    {
+      temp_files.unregister_file (t_ifile);
     }
 
   if (ACE_OS::unlink (t_file.c_str ()) == -1)
@@ -1517,9 +1499,11 @@ DRV_pre_proc (std::string const& myfile)
                   "output file \"%C\": %m\n",
                   idl_global->prog_name ().c_str (),
                   t_file.c_str ()));
-
+      FE_set_yyin (static_cast<FILE *> (nullptr));
       throw Bailout ();
     }
 
+  // The parser owns the stream from this point and closes it after parsing.
+  yyin.release ();
   temp_files.release ();
 }

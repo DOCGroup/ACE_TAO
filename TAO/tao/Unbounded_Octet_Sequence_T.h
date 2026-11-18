@@ -283,20 +283,34 @@ public:
     return * this;
   }
 
-  unbounded_value_sequence (unbounded_value_sequence &&rhs) noexcept
-    : maximum_ (rhs.maximum_)
-    , length_ (rhs.length_)
-    , buffer_ (rhs.buffer_)
-    , release_ (rhs.release_)
+  unbounded_value_sequence (unbounded_value_sequence &&rhs)
+    : maximum_ (allocation_traits::default_maximum ())
+    , length_ (0)
+    , buffer_ (nullptr)
+    , release_ (false)
   {
-    this->mb_.swap (rhs.mb_);
-    rhs.maximum_ = 0;
-    rhs.length_ = 0;
-    rhs.buffer_ = nullptr;
-    rhs.release_ = false;
+    if (rhs.release_ || rhs.mb_ != nullptr)
+      {
+        this->maximum_ = rhs.maximum_;
+        this->length_ = rhs.length_;
+        this->buffer_ = rhs.buffer_;
+        this->release_ = rhs.release_;
+        this->mb_.swap (rhs.mb_);
+        rhs.maximum_ = allocation_traits::default_maximum ();
+        rhs.length_ = 0;
+        rhs.buffer_ = nullptr;
+        rhs.release_ = false;
+      }
+    else
+      {
+        // A borrowed buffer has no ownership to transfer, so keep the source
+        // intact and copy its contents.
+        unbounded_value_sequence copy (rhs);
+        this->swap (copy);
+      }
   }
 
-  unbounded_value_sequence &operator= (unbounded_value_sequence &&rhs) noexcept
+  unbounded_value_sequence &operator= (unbounded_value_sequence &&rhs)
   {
     if (this != std::addressof (rhs))
       {

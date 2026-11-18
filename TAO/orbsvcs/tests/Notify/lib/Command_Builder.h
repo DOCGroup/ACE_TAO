@@ -46,9 +46,11 @@ public:
 
   ~TAO_Notify_Tests_Command_Builder ();
 
-  /// = Service_Object virtual method overloads.
+  /// @name Service_Object virtual method overloads
+  /// @{
   int init (int argc, ACE_TCHAR *argv[]) override;
   int fini () override;
+  /// @}
 
   /// Register the factory against the name of the factory.
   void _register (ACE_CString command_factory_name, TAO_Notify_Tests_Command_Factory* command_factory);

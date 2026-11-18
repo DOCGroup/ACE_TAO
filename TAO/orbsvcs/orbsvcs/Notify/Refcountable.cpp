@@ -69,12 +69,12 @@ TAO_Notify_Refcountable::~TAO_Notify_Refcountable ()
   TAO_Notify_Tracker::Entry e = TAO_Notify_Tracker::get_instance().find( this );
   if ( e.obj != nullptr )
   {
-    ORBSVCS_DEBUG ((LM_DEBUG,"object:%x %s(%d) with refcount:%d destroyed incorrectly.\n",
+    ORBSVCS_DEBUG ((LM_DEBUG,"object:%@ %s(%d) with refcount:%d destroyed incorrectly.\n",
         e.obj, e.class_name, e.obj->ref_id_, e.obj->refcount_.load () ));
 
     if ( e.obj != this || e.obj->ref_id_ != this->ref_id_ )
     {
-      ORBSVCS_DEBUG ((LM_DEBUG, "  with an ID mismatch %x->%d != %x->%d!\n",
+      ORBSVCS_DEBUG ((LM_DEBUG, "  with an ID mismatch %@->%d != %@->%d!\n",
         this, ref_id_, e.obj, e.obj->ref_id_));
     }
     TAO_Notify_Tracker::get_instance().remove( this );
@@ -91,7 +91,7 @@ TAO_Notify_Refcountable::_incr_refcnt ()
   CORBA::Long refcount = ++this->refcount_;
   if (TAO_debug_level > 1 )
   {
-    ORBSVCS_DEBUG ((LM_DEBUG,"object:%x incr refcount = %d\n", this, refcount ));
+    ORBSVCS_DEBUG ((LM_DEBUG,"object:%@ incr refcount = %d\n", this, refcount ));
   }
 #if (TAO_NOTIFY_REFCOUNT_DIAGNOSTICS != 0)
   // Stack-instantiated-non-servants should never have _incr_refcnt called.
@@ -112,7 +112,7 @@ TAO_Notify_Refcountable::_decr_refcnt ()
 
   if (TAO_debug_level > 1 )
   {
-    ORBSVCS_DEBUG ((LM_DEBUG,"object:%x decr refcount = %d\n", this, refcount ));
+    ORBSVCS_DEBUG ((LM_DEBUG,"object:%@ decr refcount = %d\n", this, refcount ));
   }
 
   ACE_ASSERT(refcount >= 0);
@@ -150,7 +150,7 @@ TAO_Notify_Tracker::dump (char const *title)
   EntityMap::const_iterator iter( map_.begin() );
   while ( iter != map_.end() )
   {
-    ORBSVCS_DEBUG ((LM_DEBUG,"object:%x %s(%d) with refcount:%d.\n",
+    ORBSVCS_DEBUG ((LM_DEBUG,"object:%@ %s(%d) with refcount:%d.\n",
       iter->second.obj, iter->second.class_name, iter->first, iter->second.obj->refcount_.load () ));
     ++iter;
   }
@@ -185,7 +185,7 @@ TAO_Notify_Tracker::add (TAO_Notify_Refcountable *p)
   EntityMap::iterator& it = result.first;
   if (!result.second)
   {
-    ORBSVCS_DEBUG ((LM_DEBUG,"object:%x %s(%d) added twice.\n",
+    ORBSVCS_DEBUG ((LM_DEBUG,"object:%@ %s(%d) added twice.\n",
       it->second.obj, it->second.class_name.c_str(), it->first ));
   }
   else
@@ -208,7 +208,7 @@ TAO_Notify_Tracker::remove (TAO_Notify_Refcountable const *p)
   if ( iter == map_.end() )
   {
     char const *class_name = typeid (*p).name ();
-    ORBSVCS_DEBUG ((LM_DEBUG,"object:%x %s(%d) not found.\n",
+    ORBSVCS_DEBUG ((LM_DEBUG,"object:%@ %s(%d) not found.\n",
       p, class_name, ref_id ));
   }
   else

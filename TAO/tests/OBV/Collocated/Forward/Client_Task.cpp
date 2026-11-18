@@ -230,14 +230,14 @@ Client_Task::dump_node (BaseNode *bn, int indent)
   StringNode * const sn = StringNode::_downcast (bn);
   if (sn != nullptr)
     {
-      ACE_DEBUG ((LM_DEBUG, "%x <StringNode> %s\n",
+      ACE_DEBUG ((LM_DEBUG, "%@ <StringNode> %s\n",
                   bn,
                   sn->name ()));
     }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%x <BaseNode>\n",
+                  "%@ <BaseNode>\n",
                   bn));
     }
 
@@ -249,12 +249,12 @@ void
 Client_Task::dump_tree (TreeController *tc)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) start tree dump <%x>\n",
+              "(%P|%t) start tree dump <%@>\n",
               tc));
 
   dump_node (tc->root (), 1);
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) end tree dump <%x>\n",
+              "(%P|%t) end tree dump <%@>\n",
               tc));
 }

@@ -54,7 +54,7 @@ protected:
   /// ORB Objects.
   TAO_Notify_ORB_Objects& orb_objects_;
 
-  // The POA retains ownership of this servant after implicit activation.
+  /// The POA retains ownership of this servant after implicit activation.
   TAO_Notify_ThreadPool_Supplier* supplier_ {};
 
   struct Options

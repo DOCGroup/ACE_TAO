@@ -29,7 +29,7 @@ TAO_EC_TPC_ProxyPushConsumer::~TAO_EC_TPC_ProxyPushConsumer ()
   // disconnect_push_consumer.
   if (TAO_EC_TPC_debug_level > 0)
   {
-    ORBSVCS_DEBUG ((LM_DEBUG, "RTEC (%P|%t): inside ~TAO_EC_TPC_ProxyPushConsumer (%x)\n", this));
+    ORBSVCS_DEBUG ((LM_DEBUG, "RTEC (%P|%t): inside ~TAO_EC_TPC_ProxyPushConsumer (%@)\n", this));
   }
 }
 

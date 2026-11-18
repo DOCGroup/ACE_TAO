@@ -38,7 +38,6 @@ class ACE_Export ACE_UNIX_Addr : public ACE_Addr
 public:
   ACE_UNIX_Addr ();
 
-
   ACE_UNIX_Addr (const ACE_UNIX_Addr &sa);
 
   ACE_UNIX_Addr& operator= (const ACE_UNIX_Addr&) = default;

@@ -46,7 +46,8 @@ public:
   static const char* name ();
 
 protected:
-  ///= Data Members
+  /// @name Data members
+  /// @{
   enum COMMAND
   {
     CREATE,
@@ -68,15 +69,18 @@ protected:
 
   /// Flag to tell if the Channel Factory should be collocated.
   CORBA::Boolean collocated_;
+  /// @}
 
   /// Helper method to create a collocated ECF.
   void create_collocated_ecf ();
 
-  /// = Handlers
+  /// @name Handlers
+  /// @{
   void handle_create ();
   void handle_destroy ();
   void handle_set_qos ();
   void handle_status ();
+  /// @}
 };
 
 #include /**/ "ace/post.h"

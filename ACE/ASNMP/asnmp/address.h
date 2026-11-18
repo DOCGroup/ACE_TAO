@@ -210,7 +210,6 @@ public:
   /// construct an IP address with a GenAddress
   explicit IpAddress (GenAddress const &genaddr);
 
-  /// destructor (ensure that SnmpSyntax::~SnmpSyntax() is overridden)
   ~IpAddress() override;
 
   /// copy an instance of this Value
@@ -412,10 +411,8 @@ protected:
 class  ASNMP_Export MacAddress : public Address
 {
 public:
-  /// constructor with a string argument
   explicit MacAddress( const char  *inaddr = "");
 
-  /// constructor with another MAC object
   MacAddress( const MacAddress  &macaddr);
 
   /// construct a MacAddress with a GenAddress
@@ -641,10 +638,8 @@ private:
 class ASNMP_Export IpxAddress : public Address
 {
 public:
-  /// default constructor with a string arg
   explicit IpxAddress( const char  *inaddr = "");
 
-  /// constructor with another ipx object
   IpxAddress( const IpxAddress  &ipxaddr);
 
   /// construct with a GenAddress
@@ -706,16 +701,12 @@ protected:
 class ASNMP_Export IpxSockAddress : public IpxAddress
 {
 public:
-  /// constructor with a dotted string
   explicit IpxSockAddress( const char *inaddr = "");
 
-  /// construct an Udp address with another Udp address
   IpxSockAddress( const IpxSockAddress &ipxaddr);
 
-  ///constructor with a GenAddress
   explicit IpxSockAddress (GenAddress const &genaddr);
 
-  ///constructor with a IpxAddress
   /// default socket # is 0
   explicit IpxSockAddress (IpxAddress const &ipxaddr);
 
@@ -772,13 +763,10 @@ protected:
 class ASNMP_Export GenAddress : public Address
 {
 public:
-  /// constructor with a string argument
   explicit GenAddress (char const *addr = "");
 
-  /// constructor with an Address
   explicit GenAddress (Address const &addr);
 
-  /// constructor with another GenAddress
   GenAddress (GenAddress const &addr);
   GenAddress (GenAddress &&) = delete;
 

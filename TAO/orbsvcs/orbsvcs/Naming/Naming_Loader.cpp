@@ -1,15 +1,11 @@
-// ================================================================
-// LIBRARY
-//   libTAO_CosNaming.so
-//
-// DESCRIPTION
-//   This class allows for dynamically loading
-//   the Naming Service.
-//
-// AUTHORS
-//   Priyanka Gontla <pgontla@ece.uci.edu>
-//   Carlos O'Ryan <coryan@uci.edu>
-// ================================================================
+/**
+ * @file Naming_Loader.cpp
+ *
+ * @brief Loads the Naming Service dynamically.
+ *
+ * @author Priyanka Gontla <pgontla@ece.uci.edu>
+ * @author Carlos O'Ryan <coryan@uci.edu>
+ */
 
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Naming/Naming_Loader.h"
