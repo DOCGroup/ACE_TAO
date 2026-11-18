@@ -13105,3 +13105,7 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 ## 2026-11-18 ACE thread synchronization increment
 
 - Changed the discarded `rw->num_waiting_writers_++` statement in `OS_NS_Thread.inl` to prefix form. A realclean ACE library build linked ACE and Monitor_Control successfully; it reported an existing `-Wsuggest-override` warning in `Reactor_Token_T.cpp`. Commit `5496213dbbe`.
+
+## 2026-11-18 Token strategy test increment
+
+- Changed the discarded `this->vec_token_count_[current]++` statement in `Token_Strategy_Test.cpp` to prefix form. The target rebuilt and linked after `realclean`. Commit `abdb7fa4960`.

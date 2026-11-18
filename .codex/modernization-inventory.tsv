@@ -18,7 +18,7 @@ ACE/Kokyu	32	1	1	29	2	batch-complete	partial	CONST; SCOPE_REDUCTION; VALUE_INIT;
 ACE/Kokyu/tests/DSRT_MIF	2	1	0	1	0	batch-complete	partial	CONST; CLEANUP; BUILD_TEST; DIRECTORY_PASS	Full test-directory checklist remains	Realclean build passed; runtime exited 0 after joining tasks before barrier destruction; RT priority warnings expected in unprivileged environment	288e92d8158
 ACE/Kokyu/tests/EDF	2	1	0	1	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 ACE/Kokyu/tests/FIFO	2	1	0	1	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-ACE/ace	1186	3	3	773	31	batch-complete	partial	CONST; VALUE_INIT; NULLPTR; PREFIX_INC; CONST_GUARD_MACROS; MOVE_SITES; CLEANUP; SPECIAL_MEMBER_COMMENTS; BUILD_TEST	Directory checklist remains partially audited; pointer initialization and other modernization categories still need review	ACE realclean; ACE/ace make -j 8 compiled and linked; one existing template override suggestion is not safely applicable	c50c8c65e08
+ACE/ace	1186	3	3	772	31	batch-complete	partial	CONST; VALUE_INIT; NULLPTR; PREFIX_INC; CONST_GUARD_MACROS; MOVE_SITES; CLEANUP; SPECIAL_MEMBER_COMMENTS; BUILD_TEST	Directory checklist remains partially audited; pointer initialization and other modernization categories still need review	ACE realclean; ACE/ace make -j 8 compiled and linked; one existing template override suggestion is not safely applicable	c50c8c65e08
 ACE/ace/Compression	5	1	1	3	0	batch-complete	partial	CONST; VALUE_INIT; NULLPTR=n/a; OVERRIDE_DEFAULT_DELETE; EXPLICIT; COPY_MOVE; USING=n/a; CONSTEXPR=n/a; OWNERSHIP=n/a; CONTAINERS=n/a; C_STRING=n/a; SIZE_TYPES; IDL_GENERATION=n/a; CLI_OPTIONS=n/a; LOG_FORMAT=n/a; TEST_ASSERTIONS=n/a; CLEANUP; STYLE; BUILD_TEST	Deferred size_t review remains open	MPC regenerated; ACE_Compression realclean build passed without warnings	72001d34344
 ACE/ace/Compression/rle	4	1	1	2	0	batch-complete	partial	CONST; VALUE_INIT; OVERRIDE_DEFAULT_DELETE; EXPLICIT; COPY_MOVE; SIZE_TYPES; CLEANUP; STYLE; BUILD_TEST	Deferred size_t review remains open	MPC regenerated; ACE_RLECompression realclean build passed without warnings	627188f6d27
 ACE/ace/ETCL	15	1	2	9	1	batch-complete	partial	OWNERSHIP; CONTAINERS; CLEANUP; STYLE; BUILD_TEST	Directory checklist remains open; review remaining modernization categories	ETCL and ETCL_Parser realclean-built with make -j 8; Monitor_Control dependent library realclean-built; no warnings; git diff --check passed	0883f62bd10
@@ -29,7 +29,7 @@ ACE/ace/QoS	15	1	1	13	0	work-recorded	not-audited	OWNERSHIP; CLEANUP; BUILD_TEST
 ACE/ace/QtReactor	5	2	4	2	0	work-recorded	not-audited	CONST; SCOPE_REDUCTION; STYLE	Directory checklist not yet fully audited	-	-
 ACE/ace/SSL	26	2	2	19	0	batch-complete	partial	VALUE_INIT; COPY_MOVE; OWNERSHIP; STYLE; BUILD_TEST	SSL directory needs continued category review beyond ownership, explicit special members, pointer value initialization, and build validation	ACE/ace/SSL: realclean then make -j 8 passed; ACE/tests/SSL realclean builds and links passed for all three projects; git diff --check passed; Reactor_Token_T sleep_hook override suggestion is not valid for ACE_Noop_Token	0b0f0d3ab47
 ACE/ace/TkReactor	4	1	1	2	0	batch-complete	partial	CONST; VALUE_INIT; COPY_MOVE; STYLE; BUILD_TEST	Continue full modernization checklist; current pass reviewed special members, local initialization/const, ownership notes, and build configuration	ACE/ace/TkReactor: realclean then make tk=1 -j 8 passed; git diff --check passed; only build warning is the known generic Reactor_Token_T override suggestion	fe4ffaaeb53
-ACE/ace/XML_Utils	9	1	1	10	0	batch-complete	partial	CONST; SCOPE_REDUCTION; NULLPTR; OWNERSHIP; MOVE_SITES; CLEANUP; STYLE; BUILD_TEST	Full XML_Utils checklist remains open; schema and XSCRT subdirectories are separately tracked; size-type review deferred	XML_Utils realclean/build passed with GCC C++17 warnings enabled; warning-enabled XML_Helper template syntax check passed; `git diff --check` passed	4c7088ba578
+ACE/ace/XML_Utils	9	1	1	9	0	batch-complete	partial	CONST; SCOPE_REDUCTION; NULLPTR; OWNERSHIP; MOVE_SITES; CLEANUP; STYLE; BUILD_TEST	Full XML_Utils checklist remains open; schema and XSCRT subdirectories are separately tracked; size-type review deferred	XML_Utils realclean/build passed with GCC C++17 warnings enabled; warning-enabled XML_Helper template syntax check passed; `git diff --check` passed	4c7088ba578
 ACE/ace/XML_Utils/XMLSchema	6	0	0	7	0	batch-complete	partial	CONST; SCOPE_REDUCTION; EXPLICIT; COPY_MOVE; OWNERSHIP; CLEANUP; UNUSED_INCLUDES; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST	Remaining XML Schema files still need the full directory checklist; size-type review deferred	Warning-enabled C++17 syntax compile for all changed headers and XMLSchema::ID assignment; git diff --check passed	5cc77dbc766
 ACE/ace/XML_Utils/XSCRT	9	0	0	10	0	batch-complete	partial	VALUE_INIT; NULLPTR; OVERRIDE_DEFAULT_DELETE; EXPLICIT; COPY_MOVE; OWNERSHIP; PREFIX_INC; CLEANUP; UNUSED_INCLUDES; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST	Full XSCRT checklist remains open; deferred size-type review unchanged	XML_Utils realclean/build passed; warning-enabled XSCRT template syntax check and git diff --check passed	214c9b9dc5b
 ACE/ace/XtReactor	4	1	1	2	0	work-recorded	partial	CONST; SCOPE_REDUCTION; VALUE_INIT; OVERRIDE_DEFAULT_DELETE; EXPLICIT; COPY_MOVE; OWNERSHIP; CONTAINERS; STYLE	Clean library build blocked because the environment lacks X11/Intrinsic.h; continue remaining category review and build once X11 development headers are available	git diff --check and 120-column check passed; realclean then make xt=1 -j 8 attempted but stopped at missing system header X11/Intrinsic.h	829d85d35ac
@@ -56,9 +56,9 @@ ACE/apps/JAWS3/http	4	0	0	4	0	batch-complete	partial	CONST; VALUE_INIT; NULLPTR=
 ACE/apps/JAWS3/jaws3	51	1	2	44	0	work-recorded	not-audited	CONST; OWNERSHIP; CONTAINERS; C_STRING; STD_NARROW_STRING; PREFIX_INC; CLEANUP; BUILD_TEST	Directory checklist not yet fully audited	-	-
 ACE/apps/JAWS3/small	15	0	0	14	0	no-branch-delta	not-audited	-	Directory checklist not yet fully audited	-	-
 ACE/apps/drwho	78	1	2	76	4	batch-complete	partial	SCOPE_REDUCTION; OWNERSHIP; CONTAINER_OWNERSHIP; SPECIAL_MEMBER_COMMENTS	Further modernization categories remain to audit	After realclean, C++17 warning-enabled client/server build passed without warnings; git diff --check passed	-
-ACE/apps/gperf	1	1	1	4	0	batch-complete	partial	PREFIX_INC	Generated ace_gperf.info could not be rebuilt: makeinfo/texi2any unavailable	gperf clean build and all 10 generator regressions passed; high-byte input generation passed; TAO IDL_Test clean build/run passed	4004b8b10cd
-ACE/apps/gperf/src	19	1	1	18	0	batch-complete	partial	VALUE_INIT; NULLPTR=n/a; OVERRIDE_DEFAULT_DELETE=n/a; EXPLICIT; COPY_MOVE=n/a; CONSTEXPR; OWNERSHIP; CONTAINERS; C_STRING; PREFIX_INC; CLEANUP; SPECIAL_MEMBER_COMMENTS; BUILD_TEST	The custom linked List_Node/hash-generation algorithms and ACE allocation/error semantics remain; no broad directory checklist is claimed	Realclean gperf build and all 10 output regressions passed without compiler warnings; previous IDL regressions remain recorded	4004b8b10cd
-ACE/apps/gperf/tests	2	1	10	2	0	batch-complete	audited	GENERATOR_REGRESSION	No test source changes required	All 10 configured generator output regressions passed	9a7ca5b51a2
+ACE/apps/gperf	1	1	1	1	0	batch-complete	partial	PREFIX_INC	Generated ace_gperf.info could not be rebuilt: makeinfo/texi2any unavailable	gperf clean build and all 10 generator regressions passed; high-byte input generation passed; TAO IDL_Test clean build/run passed	4004b8b10cd
+ACE/apps/gperf/src	19	1	1	10	0	batch-complete	partial	VALUE_INIT; NULLPTR=n/a; OVERRIDE_DEFAULT_DELETE=n/a; EXPLICIT; COPY_MOVE=n/a; CONSTEXPR; OWNERSHIP; CONTAINERS; C_STRING; PREFIX_INC; CLEANUP; SPECIAL_MEMBER_COMMENTS; BUILD_TEST	The custom linked List_Node/hash-generation algorithms and ACE allocation/error semantics remain; no broad directory checklist is claimed	Realclean gperf build and all 10 output regressions passed without compiler warnings; previous IDL regressions remain recorded	4004b8b10cd
+ACE/apps/gperf/tests	2	1	10	1	0	batch-complete	audited	GENERATOR_REGRESSION	No test source changes required	All 10 configured generator output regressions passed	9a7ca5b51a2
 ACE/apps/mkcsregdb	2	1	0	1	0	batch-complete	partial	CONST; VALUE_INIT; CONTAINERS; C_STRING; CLEANUP; BUILD_TEST	SIZE_TYPES deferred; other checklist categories remain for future audit	Regenerated makefile; realclean and make -j 8 passed; generated registry source passed C++17 syntax check in temporary ACE_ROOT; no compiler warnings	110de2d49f1
 ACE/apps/soreduce	12	1	1	11	0	batch-complete	partial	CONST; VALUE_INIT; OVERRIDE_DEFAULT_DELETE; EXPLICIT; COPY_MOVE; OWNERSHIP; CONTAINERS; CLEANUP; BUILD_TEST	SIZE_TYPES deferred per instruction; remaining modernization categories are not yet audited	Regenerated soreduce.mpc; realclean-built and linked with make -j 8 without warnings	ee3e2d50aa6
 ACE/bin	2	1	1	0	0	no-branch-delta	not-audited	-	Directory checklist not yet fully audited	-	-
@@ -222,73 +222,73 @@ TAO/DevGuideExamples/RTCORBA	8	1	3	5	0	work-recorded	not-audited	CONST; VALUE_IN
 TAO/DevGuideExamples/SmartProxies	12	1	3	11	0	work-recorded	not-audited	CLEANUP; BUILD_TEST	Directory checklist not yet fully audited	-	-
 TAO/DevGuideExamples/ValueTypes/Bank	6	1	3	2	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/DevGuideExamples/ValueTypes/Messenger	10	1	3	7	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL	4	3	12	2	1	work-recorded	partial	VALUE_INIT; OWNERSHIP; CONTAINERS; C_STRING; PREFIX_INC; IDL_GENERATION; LOG_FORMAT; CLEANUP; BUILD_TEST	Prefix increment/decrement applied where prior values were unused; broader audit remains	Added TAO_IDL_HAS_STD_UNIQUE_PTR_API and rebuilt all TAO_IDL targets after realclean with make -j 8 and -Wsuggest-override; OpenDDS PR 5327 updated to gate both backend generator_init declarations/definitions on this ownership macro; focused Clang C++17 -Wnon-pod-varargs checks passed earlier	ca54e89aed5
-TAO/TAO_IDL/ast	65	0	0	65	0	work-recorded	not-audited	COPY_MOVE	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be	83	0	0	76	0	work-recorded	not-audited	COPY_MOVE	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be/be_visitor_argument	7	0	0	6	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be/be_visitor_array	9	0	0	8	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be/be_visitor_attribute	4	0	0	3	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be/be_visitor_component	24	0	0	23	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be/be_visitor_component_fwd	4	0	0	4	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be/be_visitor_connector	10	0	0	9	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be/be_visitor_constant	4	0	0	4	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be/be_visitor_enum	7	0	0	6	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be/be_visitor_exception	11	0	0	10	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be/be_visitor_field	6	0	0	5	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be/be_visitor_home	6	0	0	5	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be/be_visitor_interface	32	0	0	31	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be/be_visitor_interface_fwd	4	0	0	4	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be/be_visitor_map	6	0	0	4	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be/be_visitor_module	7	0	0	6	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL	4	3	12	1	1	work-recorded	partial	VALUE_INIT; OWNERSHIP; CONTAINERS; C_STRING; PREFIX_INC; IDL_GENERATION; LOG_FORMAT; CLEANUP; BUILD_TEST	Prefix increment/decrement applied where prior values were unused; broader audit remains	Added TAO_IDL_HAS_STD_UNIQUE_PTR_API and rebuilt all TAO_IDL targets after realclean with make -j 8 and -Wsuggest-override; OpenDDS PR 5327 updated to gate both backend generator_init declarations/definitions on this ownership macro; focused Clang C++17 -Wnon-pod-varargs checks passed earlier	ca54e89aed5
+TAO/TAO_IDL/ast	65	0	0	24	0	work-recorded	not-audited	COPY_MOVE	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be	83	0	0	33	0	work-recorded	not-audited	COPY_MOVE	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be/be_visitor_argument	7	0	0	5	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be/be_visitor_array	9	0	0	3	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be/be_visitor_attribute	4	0	0	0	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be/be_visitor_component	24	0	0	8	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be/be_visitor_component_fwd	4	0	0	2	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be/be_visitor_connector	10	0	0	6	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be/be_visitor_constant	4	0	0	0	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be/be_visitor_enum	7	0	0	1	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be/be_visitor_exception	11	0	0	4	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be/be_visitor_field	6	0	0	3	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be/be_visitor_home	6	0	0	3	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be/be_visitor_interface	32	0	0	16	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be/be_visitor_interface_fwd	4	0	0	2	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be/be_visitor_map	6	0	0	2	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be/be_visitor_module	7	0	0	0	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/TAO_IDL/be/be_visitor_native	2	0	0	2	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be/be_visitor_operation	31	0	0	30	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be/be_visitor_root	21	0	0	20	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be/be_visitor_sequence	9	0	0	8	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be/be_visitor_structure	9	0	0	8	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be/be_visitor_operation	31	0	0	14	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be/be_visitor_root	21	0	0	3	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be/be_visitor_sequence	9	0	0	4	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be/be_visitor_structure	9	0	0	5	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/TAO_IDL/be/be_visitor_structure_fwd	2	0	0	2	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be/be_visitor_typecode	9	0	0	8	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be/be_visitor_typecode	9	0	0	6	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/TAO_IDL/be/be_visitor_typedef	9	0	0	9	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/TAO_IDL/be/be_visitor_union	12	0	0	11	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be/be_visitor_union_branch	10	0	0	9	0	work-recorded	not-audited	SPECIAL_MEMBER_COMMENTS	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be/be_visitor_union_branch	10	0	0	7	0	work-recorded	not-audited	SPECIAL_MEMBER_COMMENTS	Directory checklist not yet fully audited	-	-
 TAO/TAO_IDL/be/be_visitor_union_fwd	2	0	0	2	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be/be_visitor_valuebox	13	0	0	12	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be/be_visitor_valuetype	28	0	0	27	0	work-recorded	not-audited	OVERRIDE_DEFAULT_DELETE	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be/be_visitor_valuebox	13	0	0	11	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be/be_visitor_valuetype	28	0	0	13	0	work-recorded	not-audited	OVERRIDE_DEFAULT_DELETE	Directory checklist not yet fully audited	-	-
 TAO/TAO_IDL/be/be_visitor_valuetype_fwd	4	0	0	4	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be_include	111	0	0	99	0	work-recorded	not-audited	SPECIAL_MEMBER_COMMENTS	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be_include	111	0	0	56	0	work-recorded	not-audited	SPECIAL_MEMBER_COMMENTS	Directory checklist not yet fully audited	-	-
 TAO/TAO_IDL/be_include/be_visitor_argument	6	0	0	6	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be_include/be_visitor_array	9	0	0	9	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be_include/be_visitor_attribute	3	0	0	3	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be_include/be_visitor_component	23	0	0	23	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be_include/be_visitor_array	9	0	0	7	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be_include/be_visitor_attribute	3	0	0	2	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be_include/be_visitor_component	23	0	0	7	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/TAO_IDL/be_include/be_visitor_component_fwd	3	0	0	3	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/TAO_IDL/be_include/be_visitor_connector	9	0	0	9	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/TAO_IDL/be_include/be_visitor_constant	2	0	0	2	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be_include/be_visitor_enum	6	0	0	6	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be_include/be_visitor_exception	11	0	0	11	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be_include/be_visitor_field	5	0	0	5	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be_include/be_visitor_home	5	0	0	5	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be_include/be_visitor_interface	31	0	0	31	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be_include/be_visitor_enum	6	0	0	3	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be_include/be_visitor_exception	11	0	0	1	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be_include/be_visitor_field	5	0	0	2	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be_include/be_visitor_home	5	0	0	4	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be_include/be_visitor_interface	31	0	0	15	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/TAO_IDL/be_include/be_visitor_interface_fwd	3	0	0	3	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be_include/be_visitor_map	5	0	0	5	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be_include/be_visitor_map	5	0	0	4	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/TAO_IDL/be_include/be_visitor_module	6	0	0	6	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be_include/be_visitor_native	1	0	0	1	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be_include/be_visitor_operation	30	0	0	30	0	work-recorded	not-audited	SPECIAL_MEMBER_COMMENTS	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be_include/be_visitor_root	20	0	0	20	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be_include/be_visitor_native	1	0	0	0	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be_include/be_visitor_operation	30	0	0	24	0	work-recorded	not-audited	SPECIAL_MEMBER_COMMENTS	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be_include/be_visitor_root	20	0	0	0	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/TAO_IDL/be_include/be_visitor_sequence	8	0	0	8	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/TAO_IDL/be_include/be_visitor_structure	8	0	0	8	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/TAO_IDL/be_include/be_visitor_structure_fwd	1	0	0	1	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be_include/be_visitor_typecode	8	0	0	8	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be_include/be_visitor_typecode	8	0	0	0	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/TAO_IDL/be_include/be_visitor_typedef	8	0	0	8	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/TAO_IDL/be_include/be_visitor_union	11	0	0	11	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be_include/be_visitor_union_branch	9	0	0	9	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be_include/be_visitor_union_branch	9	0	0	4	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/TAO_IDL/be_include/be_visitor_union_fwd	1	0	0	1	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/TAO_IDL/be_include/be_visitor_valuebox	11	0	0	11	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/be_include/be_visitor_valuetype	28	0	0	28	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/be_include/be_visitor_valuetype	28	0	0	27	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/TAO_IDL/be_include/be_visitor_valuetype_fwd	3	0	0	3	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/TAO_IDL/driver	2	0	0	2	1	batch-complete	partial	VALUE_INIT; CLEANUP; BUILD_TEST	Broader driver modernization checklist remains	TAO_IDL workspace realclean build passed; IDL_Test realclean build and runtime passed with three nested-interface -Waddress warnings	6fdc9979c49
-TAO/TAO_IDL/fe	15	0	0	17	1	batch-complete	partial	COPY_MOVE; OWNERSHIP; CLEANUP; BUILD_TEST	Broader FE checklist remains; generated parser ownership follows Bison semantic-value transfers	TAO_IDL realclean build passed; IDL_Test realclean build and runtime passed with three nested-interface -Waddress warnings; diff checks passed	28886ce1362
-TAO/TAO_IDL/include	96	0	0	92	1	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/fe	15	0	0	9	1	batch-complete	partial	COPY_MOVE; OWNERSHIP; CLEANUP; BUILD_TEST	Broader FE checklist remains; generated parser ownership follows Bison semantic-value transfers	TAO_IDL realclean build passed; IDL_Test realclean build and runtime passed with three nested-interface -Waddress warnings; diff checks passed	28886ce1362
+TAO/TAO_IDL/include	96	0	0	38	1	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/TAO_IDL/narrow	1	0	0	0	0	no-branch-delta	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/TAO_IDL/util	15	0	0	16	0	work-recorded	not-audited	COPY_MOVE	Directory checklist not yet fully audited	-	-
+TAO/TAO_IDL/util	15	0	0	8	0	work-recorded	not-audited	COPY_MOVE	Directory checklist not yet fully audited	-	-
 TAO/docs/tutorials/Quoter/AMI	10	1	3	8	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/docs/tutorials/Quoter/Event_Service	11	1	3	9	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/docs/tutorials/Quoter/Naming_Service	7	1	2	6	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
@@ -398,7 +398,7 @@ TAO/orbsvcs/FT_Naming_Service	4	1	1	3	0	batch-complete	partial	CONST; VALUE_INIT
 TAO/orbsvcs/FT_ReplicationManager	17	1	1	14	0	batch-complete	partial	CONST; VALUE_INIT; OWNERSHIP; SPECIAL_MEMBER_COMMENTS; BUILD_TEST	Analyzer ownership API remains deliberately non-owning; full directory category audit remains	MPC regenerated; realclean and make -j 8 linked library and executable without warnings; FT_App_FaultConsumer built; runtime script blocked by missing Release/ft_replica; git diff --check passed	-
 TAO/orbsvcs/Fault_Detector	6	1	0	4	0	batch-complete	partial	VALUE_INIT; COPY_MOVE; OWNERSHIP; CLEANUP; BUILD_TEST	Remaining directory modernization categories still need audit	MPC regenerated; realclean and make -j 8 linked without warnings; run_test_detector.pl --debug_build blocked by local ReplicationManager/fault-notifier setup failure; git diff --check passed	0593351e6ef
 TAO/orbsvcs/Fault_Notifier	4	1	0	2	0	batch-complete	partial	CONST; VALUE_INIT; CLEANUP; SPECIAL_MEMBER_COMMENTS; BUILD_TEST	Remaining directory modernization categories still need audit	MPC regenerated; realclean and make -j 8 linked without warnings; git diff --check and 120-column checks passed; runtime test unsupported due option/dependency mismatch	-
-TAO/orbsvcs/IFR_Service	30	1	3	27	1	batch-complete	partial	CONST; OWNERSHIP; CLEANUP; BUILD_TEST	ACE_NEW_RETURN values remain only where ownership is transferred to CORBA/AST APIs or backend global state; generator_init now returns unique_ptr	Regenerated IFR_Service.mpc; realclean and make -j 8 succeeded; tao_ifr -V passed; diff checks passed	8f87102fd92
+TAO/orbsvcs/IFR_Service	30	1	3	14	1	batch-complete	partial	CONST; OWNERSHIP; CLEANUP; BUILD_TEST	ACE_NEW_RETURN values remain only where ownership is transferred to CORBA/AST APIs or backend global state; generator_init now returns unique_ptr	Regenerated IFR_Service.mpc; realclean and make -j 8 succeeded; tao_ifr -V passed; diff checks passed	8f87102fd92
 TAO/orbsvcs/ImplRepo_Service	67	1	8	49	0	work-recorded	not-audited	C_STRING; PREFIX_INC; BUILD_TEST	Directory checklist not yet fully audited	-	-
 TAO/orbsvcs/LifeCycle_Service	9	1	0	8	0	batch-complete	partial	CONST; VALUE_INIT; NULLPTR; OVERRIDE_DEFAULT_DELETE; COPY_MOVE; CLEANUP; STYLE; BUILD_TEST	Remaining directory modernization categories still need audit	MPC regenerated; realclean and make -j 8 linked without warnings; no focused test is present; git diff --check, 120-column, and blank-line checks passed	-
 TAO/orbsvcs/LoadBalancer	9	1	2	8	0	batch-complete	partial	CONST; VALUE_INIT; CLI_OPTIONS; CLEANUP; STYLE; BUILD_TEST	Remaining directory modernization categories still need audit	MPC regenerated; realclean and make -j 8 linked LoadManager and LoadMonitor without warnings; both -h smoke checks passed; diff, line-length, and blank-line checks passed	-
@@ -454,7 +454,7 @@ TAO/orbsvcs/orbsvcs/FtRtEvent/ClientORB	7	0	0	6	0	work-recorded	partial	CONST; V
 TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel	78	0	0	69	0	work-recorded	partial	OWNERSHIP; CLEANUP; BUILD_TEST	Directory checklist not yet fully audited; clean build reported an unrelated ACE_Reactor_Token_T::sleep_hook suggested-override warning, queued for a separate commit	GNUmakefile.FTRT_EventChannel realclean && make -j 8 linked with the loader stop API; FtRtEvent also realclean-built; git diff --check passed	8b594dcdeff
 TAO/orbsvcs/orbsvcs/FtRtEvent/Utils	16	0	0	11	0	work-recorded	not-audited	CONST; VALUE_INIT	Directory checklist not yet fully audited	-	-
 TAO/orbsvcs/orbsvcs/HTIOP	23	0	0	20	1	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/orbsvcs/orbsvcs/IFRService	109	0	0	107	2	work-recorded	partial	SCOPE_REDUCTION; VALUE_INIT; C_STRING; SPECIAL_MEMBER_COMMENTS	Value-initialized scalar locals in ComponentDef_i.cpp and InterfaceDef_i.cpp; converted the narrow port parse to std::atoi; wider audit remains	IFRService MPC regenerated; realclean and make -j 8 passed without compiler warnings	d71159b5636
+TAO/orbsvcs/orbsvcs/IFRService	109	0	0	78	2	work-recorded	partial	SCOPE_REDUCTION; VALUE_INIT; C_STRING; SPECIAL_MEMBER_COMMENTS	Value-initialized scalar locals in ComponentDef_i.cpp and InterfaceDef_i.cpp; converted the narrow port parse to std::atoi; wider audit remains	IFRService MPC regenerated; realclean and make -j 8 passed without compiler warnings	d71159b5636
 TAO/orbsvcs/orbsvcs/LifeCycle	2	0	0	0	0	no-branch-delta	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/orbsvcs/orbsvcs/LoadBalancing	53	0	0	42	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/orbsvcs/orbsvcs/Log	70	0	0	55	0	work-recorded	not-audited	COPY_MOVE; SPECIAL_MEMBER_COMMENTS	Directory checklist not yet fully audited	-	-
@@ -598,8 +598,8 @@ TAO/orbsvcs/tests/InterfaceRepo/IFR_Test	4	1	0	3	0	work-recorded	not-audited	-	D
 TAO/orbsvcs/tests/InterfaceRepo/Latency_Test	4	1	0	3	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/orbsvcs/tests/InterfaceRepo/Persistence_Test	4	1	0	3	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/orbsvcs/tests/InterfaceRepo/Union_Forward_Test	3	1	1	1	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/orbsvcs/tests/InterfaceRepo/WString_Constant_Test	2	1	1	3	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/orbsvcs/tests/InterfaceRepo/WString_Constant_Test/idl	1	0	0	1	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/orbsvcs/tests/InterfaceRepo/WString_Constant_Test	2	1	1	0	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/orbsvcs/tests/InterfaceRepo/WString_Constant_Test/idl	1	0	0	0	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/orbsvcs/tests/Interoperable_Naming	5	1	0	4	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled	8	1	3	6	0	no-branch-delta	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl	8	1	3	7	0	no-branch-delta	not-audited	-	Directory checklist not yet fully audited	-	-
@@ -726,10 +726,10 @@ TAO/performance-tests/Sequence_Latency/Thread_Pool	10	1	3	8	0	work-recorded	not-
 TAO/performance-tests/Throughput	8	1	3	7	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/tao	629	1	2	447	4	work-recorded	not-audited	COPY_MOVE; MOVE_SEMANTICS; SPECIAL_MEMBER_COMMENTS	Directory checklist not yet fully audited	-	-
 TAO/tao/AnyTypeCode	146	1	2	107	0	batch-complete	partial	CONST; VALUE_INIT; OVERRIDE_DEFAULT_DELETE; PREFIX_INC; CONST_GUARD_MACROS; SPECIAL_MEMBER_COMMENTS; BUILD_TEST	Remaining modernization categories are not yet audited	GNUmakefile.AnyTypeCode realclean; make -j 8 passed without warnings or errors; git diff --check passed	pending
-TAO/tao/BiDir_GIOP	13	1	2	12	0	batch-complete	partial	CONST; VALUE_INIT; SPECIAL_MEMBER_COMMENTS; BUILD_TEST	Remaining modernization categories still need audit	GNUmakefile.BiDir_GIOP realclean build and link passed without warnings; BiDirectional IDL/client/server clean-built and run_test.pl passed; git diff --check passed	1e6aa561e2a
+TAO/tao/BiDir_GIOP	13	1	2	2	0	batch-complete	partial	CONST; VALUE_INIT; SPECIAL_MEMBER_COMMENTS; BUILD_TEST	Remaining modernization categories still need audit	GNUmakefile.BiDir_GIOP realclean build and link passed without warnings; BiDirectional IDL/client/server clean-built and run_test.pl passed; git diff --check passed	1e6aa561e2a
 TAO/tao/CSD_Framework	26	1	2	23	0	batch-complete	partial	CONST; OWNERSHIP; PREFIX_INC; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST	Manual request clone cleanup retained for ownership-sensitive APIs; remaining modernization categories still need audit	Regenerated MPC; GNUmakefile.CSD_Framework realclean and make -j 8 linked without warnings; rebuilt ThreadPool example client/server and perl run_test.pl passed; git diff --check and whitespace checks passed	4ffd1cb1be6
 TAO/tao/CSD_ThreadPool	63	1	1	56	0	batch-complete	audited	CONST; VALUE_INIT; NULLPTR; OVERRIDE_DEFAULT_DELETE; EXPLICIT; COPY_MOVE; OWNERSHIP; PREFIX_INC; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST	Retained intrusive reference-count handles and non-owning queue links; SIZE_TYPES intentionally deferred	GNUmakefile.CSD_ThreadPool realclean and make -j 8 passed without warnings; regenerated and rebuilt CSD_TP_Test_Lib, CSD_TP_Foo_A, and TP_Test_1; perl run_test.pl passed; git diff --check and 120-column check passed	5f20df0c422
-TAO/tao/CodecFactory	7	1	2	6	0	batch-complete	audited	CONST; VALUE_INIT; OVERRIDE_DEFAULT_DELETE; EXPLICIT; COPY_MOVE; OWNERSHIP; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST	No additional ownership conversion justified; CORBA var ownership matches API	GNUmakefile.CodecFactory realclean and C++17 build/link passed with -Wsuggest-override; git diff --check passed	b1c8c9e85d8
+TAO/tao/CodecFactory	7	1	2	2	0	batch-complete	audited	CONST; VALUE_INIT; OVERRIDE_DEFAULT_DELETE; EXPLICIT; COPY_MOVE; OWNERSHIP; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST	No additional ownership conversion justified; CORBA var ownership matches API	GNUmakefile.CodecFactory realclean and C++17 build/link passed with -Wsuggest-override; git diff --check passed	b1c8c9e85d8
 TAO/tao/Codeset	24	1	2	20	0	batch-complete	partial	CONST; VALUE_INIT; NULLPTR; OVERRIDE_DEFAULT_DELETE; OWNERSHIP; PREFIX_INC; SPECIAL_MEMBER_COMMENTS; BUILD_TEST	SIZE_TYPES deferred by instruction; other checklist categories remain to be audited; ACE_CString remains required by registry API	GNUmakefile.Codeset realclean; make -j 8 compiled and linked without warnings or errors; git diff --check passed	8a4f7a90837
 TAO/tao/Compression	10	1	2	7	0	batch-complete	partial	CONST; VALUE_INIT; OVERRIDE_DEFAULT_DELETE; STYLE; BUILD_TEST	Root library and RLE/zlib/bzip2 ownership and cleanup reviewed; LZO dependency/build validation remains unavailable	GNUmakefile.Compression, GNUmakefile.RLECompressor, GNUmakefile.ZlibCompressor, and GNUmakefile.Bzip2Compressor with bzip2=1 passed realclean/build and link; LZO headers and generated makefile unavailable	pending
 TAO/tao/Compression/bzip2	6	1	1	4	0	batch-complete	audited	CONST; CLEANUP; STYLE; BUILD_TEST	No additional ownership change justified	C++17 build/link passed with bzip2=1 and -Wsuggest-override	pending
@@ -749,14 +749,14 @@ TAO/tao/IORInterceptor	12	1	2	9	0	batch-complete	audited	CONST; OWNERSHIP; SPECI
 TAO/tao/IORManipulation	9	1	2	8	0	batch-complete	audited	CONST; VALUE_INIT; OWNERSHIP; CONTAINERS; PREFIX_INC; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST	Replaced the local two-element pointer array with std::array; reverse endpoint iteration now uses an unsigned-safe countdown; profile and stub owners remain RAII guarded	GNUmakefile.IORManipulation realclean/build/link passed with C++17 and -Wsuggest-override; git diff --check passed	pending
 TAO/tao/IORTable	17	2	4	15	0	batch-complete	partial	CONST; NULLPTR; OWNERSHIP; SPECIAL_MEMBER_COMMENTS; BUILD_TEST	Other modernization categories are not yet audited	Both IORTable libraries realclean-built with make -j 8; IORTable_Locator IDL/server/client realclean-built; perl run_test.pl passed; diff and line length checks passed	aaef8e54e5c
 TAO/tao/ImR_Client	8	1	2	6	0	batch-complete	partial	CONST; VALUE_INIT; OWNERSHIP; SPECIAL_MEMBER_COMMENTS; BUILD_TEST	The servant pointer remains POA-owned and is documented as non-owning; object references use CORBA _var handles; no hand-managed arrays or std::size_t use found. Corrected the class name in existing Doxygen and simplified a redundant nested debug-level check.	GNUmakefile.ImR_Client realclean/build/link passed with GCC C++17 and -Wsuggest-override; git diff --check passed	44b25e6bea9
-TAO/tao/Messaging	36	1	2	31	0	batch-complete	partial	CONST; VALUE_INIT; OWNERSHIP; CONTAINERS; SPECIAL_MEMBER_COMMENTS; BUILD_TEST	ExceptionHolder uses unique_ptr and ValueBase_var guards; borrowed exception metadata, CDR translator, and AMH pointers documented; policy factories use a const array and range loop; timeout handler reference uniquely owned with a custom deleter; queueing strategy ownership documented.	GNUmakefile.Messaging realclean/build/link passed with GCC C++17 and -Wsuggest-override; git diff --check passed	6b4d5bc322b
+TAO/tao/Messaging	36	1	2	14	0	batch-complete	partial	CONST; VALUE_INIT; OWNERSHIP; CONTAINERS; SPECIAL_MEMBER_COMMENTS; BUILD_TEST	ExceptionHolder uses unique_ptr and ValueBase_var guards; borrowed exception metadata, CDR translator, and AMH pointers documented; policy factories use a const array and range loop; timeout handler reference uniquely owned with a custom deleter; queueing strategy ownership documented.	GNUmakefile.Messaging realclean/build/link passed with GCC C++17 and -Wsuggest-override; git diff --check passed	6b4d5bc322b
 TAO/tao/Monitor	6	1	2	4	0	batch-complete	partial	VALUE_INIT; OWNERSHIP; CLEANUP; SPECIAL_MEMBER_COMMENTS; BUILD_TEST	Remaining modernization categories are not yet audited	TAO_Monitor realclean build and link passed without warnings; git diff --check passed	f66c6f38608
 TAO/tao/ObjRefTemplate	9	1	2	7	0	batch-complete	complete	CONST; VALUE_INIT; OWNERSHIP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST	Audited implementation ownership: POA/reference-counted objects follow their CORBA var/factory contracts; generated raw sequence and Any APIs are intentionally unchanged. Fixed constructor and macro-call indentation, if-block brace style, and redundant whitespace in ObjectReferenceTemplate_i.cpp.	GNUmakefile.ObjRefTemplate realclean/build/link passed with GCC C++17 and -Wsuggest-override; git diff --check passed	cfaea119b8d
 TAO/tao/PI	50	1	2	41	0	batch-complete	complete	VALUE_INIT; OWNERSHIP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST	Retained ACE_Array_Base because failure uses status returns and std::vector would require exception translation. Checked all size(new_len) returns and now raise CORBA::NO_MEMORY; documented PICurrent stack back-link ownership and ORB_Core ownership of interceptor adapters; normalized pointer checks, braces, and formatting in touched handwritten code.	GNUmakefile.PI realclean/build/link passed twice with GCC C++17 and -Wsuggest-override; git diff --check passed	af5483475d4
-TAO/tao/PI_Server	28	1	2	22	0	batch-complete	partial	VALUE_INIT; OWNERSHIP; CONTAINERS; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST	Directory checklist still needs broader review	GNUmakefile.PI_Server realclean/build/link passed with GCC C++17 and -Wsuggest-override; no warnings; git diff --check passed	c56d73bc10c
+TAO/tao/PI_Server	28	1	2	11	0	batch-complete	partial	VALUE_INIT; OWNERSHIP; CONTAINERS; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST	Directory checklist still needs broader review	GNUmakefile.PI_Server realclean/build/link passed with GCC C++17 and -Wsuggest-override; no warnings; git diff --check passed	c56d73bc10c
 TAO/tao/PortableServer	210	1	2	171	1	batch-complete	partial	CONST; VALUE_INIT; ATOMIC; OWNERSHIP; C_STRING; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST	PortableServer ownership audit remains incomplete; other applicable modernization categories still need review	GNUmakefile.PortableServer realclean then make -j 8 passed without warnings after returning create_lock as unique_ptr.	0ba18368694
 TAO/tao/QtResource	6	1	1	4	0	work-recorded	not-audited	CONST; SCOPE_REDUCTION; VALUE_INIT; NULLPTR; OVERRIDE_DEFAULT_DELETE; EXPLICIT; COPY_MOVE; THREAD_SAFETY; USING=n/a; CONSTEXPR=n/a; OWNERSHIP; CONTAINERS=n/a; C_STRING=n/a; SIZE_TYPES=n/a; IDL_GENERATION=n/a; CLI_OPTIONS=n/a; LOG_FORMAT; TEST_ASSERTIONS=n/a; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE	Directory checklist not yet fully audited	-	-
-TAO/tao/RTCORBA	69	1	2	60	0	batch-complete	partial	VALUE_INIT; CLEANUP; SPECIAL_MEMBER_COMMENTS; BUILD_TEST; DIRECTORY_PASS	Remaining modernization categories are not yet audited	Regenerated TAO_ACE.mwc; RTCORBA realclean build and link passed without warnings; git diff --check passed	cfbc78f6654
+TAO/tao/RTCORBA	69	1	2	59	0	batch-complete	partial	VALUE_INIT; CLEANUP; SPECIAL_MEMBER_COMMENTS; BUILD_TEST; DIRECTORY_PASS	Remaining modernization categories are not yet audited	Regenerated TAO_ACE.mwc; RTCORBA realclean build and link passed without warnings; git diff --check passed	cfbc78f6654
 TAO/tao/RTPortableServer	17	1	2	15	0	work-recorded	not-audited	CONST; EXPLICIT; SPECIAL_MEMBER_COMMENTS; BUILD_TEST	Directory checklist not yet fully audited	-	-
 TAO/tao/RTScheduling	18	1	2	16	0	batch-complete	partial	CONST; LOG_FORMAT; SPECIAL_MEMBER_COMMENTS; BUILD_TEST	Remaining modernization categories are not yet audited	TAO_RTScheduler realclean build and link passed without warnings; git diff --check passed	aa144353486
 TAO/tao/SmartProxies	5	1	1	2	0	batch-complete	audited	CONST=n/a; VALUE_INIT=n/a; NULLPTR=n/a; OVERRIDE_DEFAULT_DELETE; EXPORTED_DESTRUCTORS; EXPLICIT; COPY_MOVE; ATOMIC=n/a; THREAD_SAFETY=n/a; USING=n/a; CONSTEXPR=n/a; OWNERSHIP; CONTAINERS=n/a; C_STRING=n/a; PREFIX_INC=n/a; SIZE_TYPES=n/a; IDL_GENERATION=n/a; CLI_OPTIONS=n/a; LOG_FORMAT=n/a; TEST_ASSERTIONS=n/a; CLEANUP; UNUSED_INCLUDES; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST; TEXT_API=n/a; DIRECTORY_PASS	-	Realclean build/link passed; removed unused TAO_Singleton.h; git diff --check passed	ab6126aaa8a
@@ -764,8 +764,8 @@ TAO/tao/Strategies	97	1	2	86	0	work-recorded	not-audited	SPECIAL_MEMBER_COMMENTS
 TAO/tao/TkResource	6	1	1	4	0	work-recorded	not-audited	CONST; SCOPE_REDUCTION; VALUE_INIT; NULLPTR; OVERRIDE_DEFAULT_DELETE; EXPLICIT=n/a; COPY_MOVE; THREAD_SAFETY; USING=n/a; CONSTEXPR=n/a; OWNERSHIP; CONTAINERS=n/a; C_STRING=n/a; SIZE_TYPES=n/a; IDL_GENERATION=n/a; CLI_OPTIONS=n/a; LOG_FORMAT; TEST_ASSERTIONS=n/a; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST	Directory checklist not yet fully audited	-	-
 TAO/tao/TransportCurrent	19	2	4	13	0	batch-complete	partial	CONST; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST	Remaining modernization categories are not yet audited	TAO_TC and TAO_TC_IIOP realclean builds and links passed without warnings; git diff --check passed	159588586e0
 TAO/tao/TypeCodeFactory	8	1	2	6	0	batch-complete	partial	CONST; VALUE_INIT; NULLPTR; OVERRIDE_DEFAULT_DELETE; COPY_MOVE; USING; OWNERSHIP; CONTAINERS; C_STRING; PREFIX_INC; SIZE_TYPES; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST	Other applicable modernization categories still need review	Realclean TypeCodeFactory build/link passed; Recursive Any IDL regenerated with dynamic hashing because gperf was unavailable; client/server build and perl run_test.pl passed; diff/120-column checks passed	2bd176959a2
-TAO/tao/Utils	17	1	1	14	0	batch-complete	partial	CONST; NULLPTR; OWNERSHIP; C_STRING; CLEANUP; UNUSED_INCLUDES; SPECIAL_MEMBER_COMMENTS; BUILD_TEST	Remaining modernization categories are not yet audited	Regenerated Utils and Fault_Detector; realclean builds passed without warnings	7c52bb1d7b0
-TAO/tao/Valuetype	31	1	2	26	1	batch-complete	partial	CONST; VALUE_INIT; NULLPTR; EXPORTED_DESTRUCTORS; OWNERSHIP; CLEANUP; SPECIAL_MEMBER_COMMENTS; BUILD_TEST	Remaining modernization categories are not yet audited	Valuetype library and OBV Simple client/server realclean-built; OBV run_test.pl passed	1858bb7d0c0
+TAO/tao/Utils	17	1	1	6	0	batch-complete	partial	CONST; NULLPTR; OWNERSHIP; C_STRING; CLEANUP; UNUSED_INCLUDES; SPECIAL_MEMBER_COMMENTS; BUILD_TEST	Remaining modernization categories are not yet audited	Regenerated Utils and Fault_Detector; realclean builds passed without warnings	7c52bb1d7b0
+TAO/tao/Valuetype	31	1	2	5	1	batch-complete	partial	CONST; VALUE_INIT; NULLPTR; EXPORTED_DESTRUCTORS; OWNERSHIP; CLEANUP; SPECIAL_MEMBER_COMMENTS; BUILD_TEST	Remaining modernization categories are not yet audited	Valuetype library and OBV Simple client/server realclean-built; OBV run_test.pl passed	1858bb7d0c0
 TAO/tao/XtResource	6	1	1	4	0	work-recorded	not-audited	CONST; SCOPE_REDUCTION; VALUE_INIT; NULLPTR; OVERRIDE_DEFAULT_DELETE; EXPLICIT; COPY_MOVE; THREAD_SAFETY; USING=n/a; CONSTEXPR=n/a; OWNERSHIP; CONTAINERS=n/a; C_STRING=n/a; SIZE_TYPES=n/a; IDL_GENERATION=n/a; CLI_OPTIONS=n/a; LOG_FORMAT; TEST_ASSERTIONS=n/a; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE	Directory checklist not yet fully audited	-	-
 TAO/tao/ZIOP	17	1	2	16	0	batch-complete	partial	CONST; VALUE_INIT; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST	Remaining modernization categories are not yet audited	TAO_ZIOP realclean build and link passed without warnings; git diff --check passed	b3a2e83a74c
 TAO/tests/AMH_Exceptions	4	1	3	2	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
@@ -773,7 +773,7 @@ TAO/tests/AMH_Oneway	4	1	3	2	0	work-recorded	not-audited	-	Directory checklist n
 TAO/tests/AMI	7	1	4	6	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/tests/AMI_Buffering	13	1	4	11	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/tests/AMI_Timeouts	8	1	3	8	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/tests/AST_Unit_Tests	2	1	0	1	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/tests/AST_Unit_Tests	2	1	0	0	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/tests/Abstract_Interface	6	1	3	5	1	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/tests/Alt_Mapping	20	1	3	19	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/tests/Any/Indirected	3	1	2	1	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
@@ -1041,12 +1041,12 @@ TAO/tests/HandleExhaustion	4	1	3	2	0	work-recorded	not-audited	-	Directory check
 TAO/tests/Hang_Shutdown	5	1	3	3	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/tests/Hello	6	1	3	4	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/tests/ICMG_Any_Bug	8	1	3	6	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/tests/IDL_Illegal_Test	6	0	0	8	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/tests/IDL_Inherited_Operation	6	1	3	4	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/tests/IDL_Test	63	1	6	61	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/tests/IDL_Illegal_Test	6	0	0	3	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/tests/IDL_Inherited_Operation	6	1	3	3	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/tests/IDL_Test	63	1	6	58	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/tests/IDL_Test/Versioned_Namespace	4	1	2	0	0	no-branch-delta	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/tests/IDLv4	1	0	0	1	0	no-branch-delta	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/tests/IDLv4/annotations	14	1	0	9	0	work-recorded	not-audited	OWNERSHIP; LOG_FORMAT; BUILD_TEST	Directory checklist not yet fully audited	-	-
+TAO/tests/IDLv4/annotations	14	1	0	4	0	work-recorded	not-audited	OWNERSHIP; LOG_FORMAT; BUILD_TEST	Directory checklist not yet fully audited	-	-
 TAO/tests/IDLv4/anonymous_types	2	1	0	1	0	no-branch-delta	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/tests/IDLv4/explicit_ints	3	1	0	1	0	no-branch-delta	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/tests/IDLv4/maps	3	1	0	2	0	no-branch-delta	not-audited	-	Directory checklist not yet fully audited	-	-
@@ -1105,7 +1105,7 @@ TAO/tests/ORB_Local_Config/Shared	2	1	1	1	0	work-recorded	not-audited	-	Director
 TAO/tests/ORB_Local_Config/Simple	2	1	1	1	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/tests/ORB_Local_Config/Two_DLL_ORB	10	1	4	6	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/tests/ORB_Local_Config/lib	1	0	0	1	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-TAO/tests/ORB_destroy	2	1	0	2	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
+TAO/tests/ORB_destroy	2	1	0	1	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/tests/ORB_init	2	1	0	1	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/tests/ORB_portspan	5	1	1	3	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 TAO/tests/ORB_shutdown	5	1	1	2	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-

@@ -1,8 +1,8 @@
 # ACE/TAO modernization progress
 
-Inventory base: `origin/master`. Counts are directory-level, not executable/project counts.
+Inventory base: `upstream/master`. Counts are directory-level, not executable/project counts.
 
-Scope: **1268 directories**; **1239** differ from the base; **379** have task-level review records; **246** have a recorded validated batch; **54** have a fully completed directory checklist. These are separate measures, not an overall completion percentage.
+Scope: **1268 directories**; **1230** differ from the base; **379** have task-level review records; **246** have a recorded validated batch; **54** have a fully completed directory checklist. These are separate measures, not an overall completion percentage.
 
 ## Progress by modernization task
 
