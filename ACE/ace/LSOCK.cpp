@@ -164,7 +164,9 @@ ACE_LSOCK::recv_handle (ACE_HANDLE &handle, char *pbuf, ssize_t *len) const
 #endif /* ACE_LACKS_SENDMSG */
           if (ACE_OS::recvmsg (this->get_handle (),
                                &recv_msg, 0) == ACE_INVALID_HANDLE)
-            return ACE_INVALID_HANDLE;
+            {
+              return ACE_INVALID_HANDLE;
+            }
           else
             {
 #if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)

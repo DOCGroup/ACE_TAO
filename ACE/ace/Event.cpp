@@ -32,9 +32,11 @@ ACE_Event_T<TIME_POLICY>::ACE_Event_T (int manual_reset,
                           name,
                           arg,
                           sa) != 0)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Event_T<TIME_POLICY>::ACE_Event_T")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_Event_T<TIME_POLICY>::ACE_Event_T")));
+    }
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
