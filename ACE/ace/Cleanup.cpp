@@ -54,11 +54,13 @@ ACE_Cleanup_Info_Node::ACE_Cleanup_Info_Node (void *object,
 ACE_Cleanup_Info_Node::~ACE_Cleanup_Info_Node ()
 {
   if (this->name_)
+    {
 #if defined (ACE_HAS_ALLOC_HOOKS)
-    ACE_Allocator::instance()->free ((void *) name_);
+      ACE_Allocator::instance()->free ((void *) name_);
 #else
-    ACE_OS::free ((void *) name_);
+      ACE_OS::free ((void *) name_);
 #endif /* ACE_HAS_ALLOC_HOOKS */
+    }
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Cleanup_Info_Node)

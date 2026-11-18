@@ -106,7 +106,9 @@ ACE_Barrier::wait ()
 
       // Block until all the other threads wait().
       while (sbp->running_threads_ != this->count_)
-        sbp->barrier_finished_.wait ();
+        {
+          sbp->barrier_finished_.wait ();
+        }
 
       // We're awake and the count has completed. See if it completed
       // because all threads hit the barrier, or because the barrier

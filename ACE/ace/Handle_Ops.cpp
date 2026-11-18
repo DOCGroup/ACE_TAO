@@ -29,8 +29,10 @@ ACE::handle_timed_open (ACE_Time_Value *timeout,
       if (handle == ACE_INVALID_HANDLE
           && (errno == EWOULDBLOCK
               && (timeout->sec () > 0 || timeout->usec () > 0)))
-        // This expression checks if we were polling.
-        errno = ETIMEDOUT;
+        {
+          // This expression checks if we were polling.
+          errno = ETIMEDOUT;
+        }
 
       return handle;
     }
