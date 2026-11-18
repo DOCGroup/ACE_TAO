@@ -65,7 +65,9 @@ ACE_Task_Base::wait ()
   // If we don't have a thread manager, we probably were never
   // activated.
   if (this->thr_mgr () != nullptr)
-    return this->thr_mgr ()->wait_task (this);
+    {
+      return this->thr_mgr ()->wait_task (this);
+    }
   else
   {
     return 0;
@@ -125,17 +127,23 @@ ACE_Task_Base::activate (long flags,
   }
 
   if (this->thr_count_ > 0 && force_active == 0)
-    return 1; // Already active.
+    {
+      return 1; // Already active.
+    }
   else
     {
       if ((this->thr_count_ > 0 || grp_id == -1) &&
             this->grp_id_ != -1)
-        // If we're joining an existing group of threads then make
-        // sure to (re)use its group id.
-        grp_id = this->grp_id_;
+        {
+          // If we're joining an existing group of threads then make
+          // sure to (re)use its group id.
+          grp_id = this->grp_id_;
+        }
       else if (grp_id != -1)
-        // make sure to reset the cached grp_id
-        this->grp_id_ = -1;
+        {
+          // make sure to reset the cached grp_id
+          this->grp_id_ = -1;
+        }
       this->thr_count_ += n_threads;
     }
 
@@ -143,42 +151,48 @@ ACE_Task_Base::activate (long flags,
   // active object and the caller didn't supply us with a
   // Thread_Manager.
   if (this->thr_mgr_ == nullptr)
+    {
 # if defined (ACE_THREAD_MANAGER_LACKS_STATICS)
-    this->thr_mgr_ = ACE_THREAD_MANAGER_SINGLETON::instance ();
+      this->thr_mgr_ = ACE_THREAD_MANAGER_SINGLETON::instance ();
 # else /* ! ACE_THREAD_MANAGER_LACKS_STATICS */
-    this->thr_mgr_ = ACE_Thread_Manager::instance ();
+      this->thr_mgr_ = ACE_Thread_Manager::instance ();
 # endif /* ACE_THREAD_MANAGER_LACKS_STATICS */
+    }
 
   int grp_spawned = -1;
   if (thread_ids == nullptr)
-    // Thread Ids were not specified
-    grp_spawned =
-      this->thr_mgr_->spawn_n (n_threads,
-                               &ACE_Task_Base::svc_run,
-                               (void *) this,
-                               flags,
-                               priority,
-                               grp_id,
-                               task,
-                               thread_handles,
-                               stack,
-                               stack_size,
-                               thr_name);
+    {
+      // Thread Ids were not specified
+      grp_spawned =
+        this->thr_mgr_->spawn_n (n_threads,
+                                 &ACE_Task_Base::svc_run,
+                                 (void *) this,
+                                 flags,
+                                 priority,
+                                 grp_id,
+                                 task,
+                                 thread_handles,
+                                 stack,
+                                 stack_size,
+                                 thr_name);
+    }
   else
-    // thread names were specified
-    grp_spawned =
-      this->thr_mgr_->spawn_n (thread_ids,
-                               n_threads,
-                               &ACE_Task_Base::svc_run,
-                               (void *) this,
-                               flags,
-                               priority,
-                               grp_id,
-                               stack,
-                               stack_size,
-                               thread_handles,
-                               task,
-                               thr_name);
+    {
+      // thread names were specified
+      grp_spawned =
+        this->thr_mgr_->spawn_n (thread_ids,
+                                 n_threads,
+                                 &ACE_Task_Base::svc_run,
+                                 (void *) this,
+                                 flags,
+                                 priority,
+                                 grp_id,
+                                 stack,
+                                 stack_size,
+                                 thread_handles,
+                                 task,
+                                 thr_name);
+    }
   if (grp_spawned == -1)
     {
       // If spawn_n fails, restore original thread count.
