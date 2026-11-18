@@ -120,7 +120,7 @@ private:
   TAO_IDL_Temp_File_Guard (TAO_IDL_Temp_File_Guard const &) = delete;
   TAO_IDL_Temp_File_Guard &operator= (TAO_IDL_Temp_File_Guard const &) = delete;
 
-  std::string const& filename_;
+  std::string filename_;
   bool active_ {};
 };
 
@@ -452,12 +452,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   ACE_ERROR ((LM_ERROR,
                               "TAO_IDL: cannot write temporary input file \"%C\": %m\n",
                               big_file_name.c_str ()));
-                  if (ACE_OS::fclose (output_file.release ()) != 0)
-                    {
-                      ACE_ERROR ((LM_ERROR,
-                                  "TAO_IDL: cannot close temporary input file \"%C\": %m\n",
-                                  big_file_name.c_str ()));
-                    }
                   throw Bailout ();
                 }
             }

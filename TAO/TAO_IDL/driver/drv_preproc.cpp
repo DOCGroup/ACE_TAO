@@ -1543,7 +1543,7 @@ DRV_pre_proc (std::string const& myfile)
                != 0)
         {
           buffer[bytes] = '\0';
-          ACE_DEBUG ((LM_DEBUG, buffer));
+          ACE_DEBUG ((LM_DEBUG, "%C", buffer));
         }
 
       // No parser will take ownership in preprocess-only mode.
