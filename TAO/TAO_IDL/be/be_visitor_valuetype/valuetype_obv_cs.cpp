@@ -75,8 +75,8 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
   // A generated _copy_value() is needed for every valuetype without
   // operations, including derived valuetypes and factory-based values.
   // Direct valuetype members are copied recursively, without identity
-  // preservation or cycle detection. Struct and sequence members use their
-  // normal copy behavior, so contained valuetypes remain shared.
+  // preservation or cycle detection. Other members use their normal copy
+  // behavior, so nested valuetypes remain shared.
   if (!node->have_operation ())
     {
       *os << be_nl_2
@@ -300,15 +300,7 @@ be_visitor_valuetype_obv_cs::gen_obv_call_base_constructor_args (
               t = td->primitive_base_type ();
             }
 
-          be_sequence *sequence = dynamic_cast<be_sequence*> (t);
-          be_type *sequence_element =
-            sequence != nullptr ? sequence->primitive_base_type () : nullptr;
-          if (sequence != nullptr
-              && is_valuetype_or_valuebox (sequence_element))
-            {
-              *os << f->local_name () << " ()";
-            }
-          else if (is_valuetype_or_valuebox (t))
+          if (is_valuetype_or_valuebox (t))
             {
               *os << "(" << f->local_name () << " () ?" << be_idt_nl
                   << t->full_name () << "::_downcast ("
