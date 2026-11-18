@@ -597,7 +597,9 @@ ACE_SOCK_Dgram::set_nic (const ACE_TCHAR *net_if,
       if (this->make_multicast_ifaddr6 (&send_mreq,
                                         addr,
                                         net_if) == -1)
-        return -1;
+        {
+          return -1;
+        }
 
       // Only let this attempt to set unknown interface when INET6 is
       // specifically requested. Otherwise we will just try INET.
@@ -607,7 +609,9 @@ ACE_SOCK_Dgram::set_nic (const ACE_TCHAR *net_if,
                               (IPPROTO_IPV6, IPV6_MULTICAST_IF,
                                &(send_mreq.ipv6mr_interface),
                                sizeof send_mreq.ipv6mr_interface) == -1)
-            return -1;
+            {
+              return -1;
+            }
         }
       ipv6_mif_set = send_mreq.ipv6mr_interface != 0;
     }
@@ -625,7 +629,9 @@ ACE_SOCK_Dgram::set_nic (const ACE_TCHAR *net_if,
       if (this->make_multicast_ifaddr (&send_mreq, addr, net_if) == -1)
         {
           if (!ipv6_mif_set)
-            return -1;
+            {
+              return -1;
+            }
         }
       else if (this->ACE_SOCK::set_option (IPPROTO_IP,
                                            IP_MULTICAST_IF,
@@ -633,7 +639,9 @@ ACE_SOCK_Dgram::set_nic (const ACE_TCHAR *net_if,
                                            sizeof send_mreq.imr_interface) == -1)
         {
           if (!ipv6_mif_set)
-            return -1;
+            {
+              return -1;
+            }
         }
     }
 # else /* ACE_HAS_IPV6 */
@@ -861,7 +869,9 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
 
   // Set return info, if requested.
   if (ret_mreq)
-    *ret_mreq = lmreq;
+    {
+      *ret_mreq = lmreq;
+    }
 
   return 0;
 }
