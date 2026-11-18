@@ -47,9 +47,11 @@ ACE_Name_Proxy::ACE_Name_Proxy (
   ACE_TRACE ("ACE_Name_Proxy::ACE_Name_Proxy");
   if (this->open (remote_addr, options) == -1
       && options[ACE_Synch_Options::USE_TIMEOUT] && errno != EWOULDBLOCK)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Name_Proxy::ACE_Name_Proxy")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_Name_Proxy::ACE_Name_Proxy")));
+    }
 }
 
 /// Obtain underlying handle.
@@ -68,17 +70,21 @@ ACE_Name_Proxy::request_reply (ACE_Name_Request &request)
   ssize_t const length = request.encode (buffer);
 
   if (length == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("encode failed")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("%p\n"),
+                            ACE_TEXT ("encode failed")),
+                           -1);
+    }
 
   // Transmit request via a blocking send.
   if (this->peer_.send_n (buffer, length) != length)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("send_n failed")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("send_n failed")),
+                           -1);
+    }
   else
     {
       ACE_Name_Reply reply;
@@ -86,15 +92,19 @@ ACE_Name_Proxy::request_reply (ACE_Name_Request &request)
       // Receive reply via blocking read.
       if (this->peer_.recv_n (&reply,
                               sizeof reply) == -1)
-        ACELIB_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("recv failed")),
-                          -1);
+        {
+          ACELIB_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("%p\n"),
+                               ACE_TEXT ("recv failed")),
+                               -1);
+        }
       else if (reply.decode () == -1)
-        ACELIB_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("decode failed")),
-                          -1);
+        {
+          ACELIB_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("%p\n"),
+                               ACE_TEXT ("decode failed")),
+                               -1);
+        }
       errno = int (reply.errnum ());
       return reply.status ();
     }
@@ -108,17 +118,21 @@ ACE_Name_Proxy::send_request (ACE_Name_Request &request)
   ssize_t const length = request.encode (buffer);
 
   if (length == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("encode failed")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("%p\n"),
+                            ACE_TEXT ("encode failed")),
+                           -1);
+    }
 
   // Transmit request via a blocking send.
   else if (this->peer_.send_n (buffer, length) != length)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("send_n failed")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("send_n failed")),
+                           -1);
+    }
   return 0;
 }
 
