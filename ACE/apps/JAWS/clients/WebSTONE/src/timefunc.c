@@ -48,7 +48,7 @@ addtime(struct timeval *OrigTime, struct timeval *NewTime)
         /*
          * NEED TO CARRY 1.
          */
-        OrigTime->tv_sec++;
+        ++OrigTime->tv_sec;
         OrigTime->tv_usec -= USECINSEC;
     }
     OrigTime->tv_sec += NewTime->tv_sec;
@@ -66,7 +66,7 @@ compdifftime(struct timeval *EndTime, struct timeval *StartTime, struct timeval 
           * NEED TO BORROW.
           */
           endtime.tv_usec += USECINSEC;
-          endtime.tv_sec--;
+          --endtime.tv_sec;
       }
       DiffTime->tv_usec = endtime.tv_usec - StartTime->tv_usec;
       DiffTime->tv_sec =  endtime.tv_sec  - StartTime->tv_sec;

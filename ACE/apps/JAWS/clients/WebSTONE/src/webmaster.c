@@ -444,8 +444,8 @@ extern int  optind;
       */
 
       sscanf(argv[currarg],"%s",filelist[number_of_pages]);
-      number_of_pages++;
-      currarg++;
+      ++number_of_pages;
+      ++currarg;
   }
     }
     else
@@ -620,7 +620,7 @@ char *commandline;
       */
       strcat(commandline," ");
       strcat(commandline,filelist[cnt]);
-      cnt++;
+      ++cnt;
   }
     }
     puts(commandline);
@@ -736,7 +736,7 @@ struct sockaddr_in  *serveraddr;
   }
 
 
-  cnt++;
+  ++cnt;
   if (cnt > MAXCLIENTS || cnt > FD_SETSIZE)
   {
       errexit("Number of Clients can't exceed %d\n", MAXCLIENTS);

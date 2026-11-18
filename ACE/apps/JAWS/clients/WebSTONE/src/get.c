@@ -52,8 +52,8 @@ int mystrincmp(const char *str1, const char *str2, int len) {
     while (*str1 && *str2 && len--) {
         if (diff = UPPER(*str1) - UPPER(*str2))
             return diff < 0 ? -1 : 1;
-        str1++;
-        str2++;
+        ++str1;
+        ++str2;
     }
     return 0;
 }

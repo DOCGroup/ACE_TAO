@@ -33,14 +33,14 @@ char **argv, *opts;
         argv[optind][0] != '-' || argv[optind][1] == '\0')
             return(EOF);
         else if(strcmp(argv[optind], "--") == MYNULL) {
-            optind++;
+            ++optind;
             return(EOF);
         }
     optopt = c = argv[optind][sp];
     if(c == ':' || (cp=strchr(opts, c)) == 0) {
         ERR(": unknown option, -", c);
         if(argv[optind][++sp] == '\0') {
-            optind++;
+            ++optind;
             sp = 1;
         }
         return('?');
@@ -58,7 +58,7 @@ char **argv, *opts;
     } else {
         if(argv[optind][++sp] == '\0') {
             sp = 1;
-            optind++;
+            ++optind;
         }
         optarg = 0;
     }

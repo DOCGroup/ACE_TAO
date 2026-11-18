@@ -303,7 +303,7 @@ connecttomaster(char *str)
      * ZERO OUT THE COLON SO WE HAVE TWO STRINGS, THE HOSTNAME AND THE PORT
      */
     *tempch = '\0';
-    tempch++;
+    ++tempch;
 
     /* loop here to connect to webmaster - TCP/IP allows no more than 5
      * connection requests outstanding at once and thus the webmaster may
@@ -502,7 +502,7 @@ makeload(int maxcount, int pageval, THREAD rqst_timer_t *timerarray, THREAD stat
   else if (!timeexpired) /* INVALID, INCREMENT THE ERROR COUNTER */
   {
       D_PRINTF( "GET error counter incremented\n" );
-      timestat->rs.totalerrs++;
+      ++timestat->rs.totalerrs;
   }
 
   if (amclient) {
@@ -542,7 +542,7 @@ makeload(int maxcount, int pageval, THREAD rqst_timer_t *timerarray, THREAD stat
 
   rqstat_sum(ps_rs, pst_rs);
 
-  page_stats[pageval].totalpages++;
+  ++page_stats[pageval].totalpages;
 
   if (page_stats[pageval].page_size == 0)
   {
@@ -737,8 +737,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
      usage(argv[0]);
        }
        sscanf(argv[currarg],"%s",filelist[numfiles]);
-       numfiles++;
-       currarg++;
+       ++numfiles;
+       ++currarg;
     }
 
     if ((numfiles != 0) && uil_filelist_f)
@@ -1087,7 +1087,7 @@ void ClientThread(void *dummy)
     page_index = -1;
     while (ran_number >= 0)
       {
-        page_index++;
+        ++page_index;
         D_PRINTF( "Current page index %d: %ld - %d\n",
           page_index, ran_number,
           load_file_list[page_index].load_num

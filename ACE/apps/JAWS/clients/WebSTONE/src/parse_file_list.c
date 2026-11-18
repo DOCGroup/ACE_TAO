@@ -89,7 +89,7 @@ count_file_list(const char *url_list_file)
           /* is there more? */
           if (textvalue != 0)
             {
-              num_of_pages++;
+              ++num_of_pages;
               D_PRINTF( "Found %ld pages\n", num_of_pages );
             }
         }
@@ -253,7 +253,7 @@ parse_file_list (const char *url_list_file, page_list_t *page_list,
                        returnval);
             } /* end if textvalue not NULL */
 
-          numpages++;
+          ++numpages;
         } /* end while not EOF */
       if (numpages < 1)
         {

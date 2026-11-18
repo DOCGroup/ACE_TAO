@@ -116,7 +116,7 @@ SOCKET rexec(const char **hostname, NETPORT port, char *username, char *password
     if (*command != '\0') {
         char *p = command;
         if (*p == '\001') {
-            p++;
+            ++p;
         }
         errexit("Rexec: Remote aborted connection: %s\n", p);
     }
