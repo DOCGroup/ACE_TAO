@@ -209,7 +209,9 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET, typename TIME
 ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::next ()
 {
   if (this->isdone ())
-    return;
+    {
+      return;
+    }
 
   // If there is no more in the current bucket, go to the next
   if (this->iter_->isdone ())
@@ -231,7 +233,9 @@ ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::next ()
       this->iter_ = nullptr;
     }
   else
-    this->iter_->next ();
+    {
+      this->iter_->next ();
+    }
 }
 
 // Returns true when we are at the end (when bucket_item_ == nullptr)
@@ -249,7 +253,9 @@ ACE_Timer_Node_T<TYPE> *
 ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::item ()
 {
   if (this->isdone ())
-    return nullptr;
+    {
+      return nullptr;
+    }
 
   return this->iter_->item ();
 }
@@ -338,7 +344,9 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::~ACE_Timer_Hash_
   for (size_t i = 0;
        i < this->table_size_;
        ++i)
-    delete this->table_[i];
+    {
+      delete this->table_[i];
+    }
 
   delete [] this->table_;
 }
@@ -437,7 +445,9 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::reschedule (
   if (this->table_[this->earliest_position_]->is_empty ()
       || this->table_[h->pos_]->earliest_time ()
       < this->table_[this->earliest_position_]->earliest_time ())
-    this->earliest_position_ = h->pos_;
+    {
+      this->earliest_position_ = h->pos_;
+    }
 }
 
 // Insert a new handler that expires at time future_time; if interval
@@ -474,7 +484,9 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::schedule_i (
   if (this->table_[this->earliest_position_]->is_empty ()
       || this->table_[position]->earliest_time ()
       < this->table_[this->earliest_position_]->earliest_time ())
-    this->earliest_position_ = position;
+    {
+      this->earliest_position_ = position;
+    }
 
   ++this->size_;
 
@@ -509,7 +521,9 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::reset_interval (
   // Make sure we are getting a valid <timer_id>, not an error
   // returned by <schedule>.
   if (timer_id == -1)
-    return -1;
+    {
+      return -1;
+    }
 
 #if defined (ACE_WIN64)
   unsigned long const timer_offset =
@@ -546,7 +560,9 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::cancel (long tim
   // Make sure we are getting a valid <timer_id>, not an error
   // returned by <schedule>.
   if (timer_id == -1)
-    return 0;
+    {
+      return 0;
+    }
 
 #if defined (ACE_WIN64)
   unsigned long const timer_offset =
@@ -587,10 +603,14 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::cancel (long tim
                                             cookie);
 
       if (h->pos_ == this->earliest_position_)
-        this->find_new_earliest ();
+        {
+          this->find_new_earliest ();
+        }
 
       if (act != nullptr)
-        *act = h->act_;
+        {
+          *act = h->act_;
+        }
 
       // We could destruct Hash_Token explicitly but we better
       // schedule it for destruction. In this case next
@@ -634,14 +654,20 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::cancel (TYPE con
       for (iter.first ();
            !iter.isdone ();
            iter.next ())
-        if (iter.item ()->get_type () == type)
-          timer_ids[pos++] =
-            reinterpret_cast<Hash_Token<TYPE> *> (
-              const_cast<void *> (iter.item ()->get_act ()));
+        {
+          if (iter.item ()->get_type () == type)
+            {
+              timer_ids[pos++] =
+                reinterpret_cast<Hash_Token<TYPE> *> (
+                  const_cast<void *> (iter.item ()->get_act ()));
+            }
+        }
     }
 
   if (pos > this->size_)
-    return -1;
+    {
+      return -1;
+    }
 
   for (i = 0; i < pos; ++i)
     {
@@ -690,7 +716,9 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET, typename TIME
 ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::remove_first ()
 {
   if (this->is_empty ())
-    return nullptr;
+    {
+      return nullptr;
+    }
 
   ACE_Timer_Node_T<TYPE> *temp =
     this->table_[this->earliest_position_]->remove_first ();
@@ -708,11 +736,17 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET, typename TIME
 ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::find_new_earliest ()
 {
   for (size_t i = 0; i < this->table_size_; ++i)
-    if (!this->table_[i]->is_empty ())
-      if (this->table_[this->earliest_position_]->is_empty ()
-          || this->earliest_time () == ACE_Time_Value::zero
-          || this->table_[i]->earliest_time () <= this->earliest_time ())
-          this->earliest_position_ = i;
+    {
+      if (!this->table_[i]->is_empty ())
+        {
+          if (this->table_[this->earliest_position_]->is_empty ()
+              || this->earliest_time () == ACE_Time_Value::zero
+              || this->table_[i]->earliest_time () <= this->earliest_time ())
+            {
+              this->earliest_position_ = i;
+            }
+        }
+    }
 }
 
 // Returns the earliest node without removing it
@@ -723,7 +757,9 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::get_first ()
   ACE_TRACE ("ACE_Timer_Hash_T::get_first");
 
   if (this->is_empty ())
-    return nullptr;
+    {
+      return nullptr;
+    }
 
   return this->table_[this->earliest_position_]->get_first ();
 }
@@ -837,7 +873,9 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::expire (ACE_Time
     }
 
   if (number_of_timers_expired > 0)
-    this->find_new_earliest ();
+    {
+      this->find_new_earliest ();
+    }
 
   return number_of_timers_expired;
 }
