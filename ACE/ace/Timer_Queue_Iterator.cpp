@@ -29,7 +29,8 @@ ACE_Timer_Node_T<TYPE>::dump () const
   this->interval_.dump ();
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nprev_ = %@"), this->prev_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nnext_ = %@"), this->next_));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntimer_id_ = %d\n"), this->timer_id_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntimer_id_ = %q\n"),
+                 static_cast<ACE_INT64> (this->timer_id_)));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
