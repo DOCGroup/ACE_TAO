@@ -13209,3 +13209,8 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Changed the four standalone `TAO_debug_level++` statements in Callback_Quoter and NestedUpcall/Triangle_Test to prefix increment. The old values were discarded, so this is behavior-preserving.
 - Scanned both directories for remaining postfix increment/decrement operations; none required an equivalent conversion.
 - No build or runtime test was run for these syntax-only changes.
+
+## 2026-11-18 WebSTONE prefix increments
+
+- Changed 20 standalone postfix increments/decrements to prefix form in the JAWS WebSTONE C sources. These statements discard the postfix result. Other postfix expressions remain because their old value is consumed.
+- `git diff --check` passed; no build or tests were run for these syntax-only changes.

@@ -2,7 +2,7 @@
 
 Inventory base: `upstream/master`. Counts are directory-level, not executable/project counts.
 
-Scope: **1268 directories**; **1230** differ from the base; **381** have task-level review records; **246** have a recorded validated batch; **54** have a fully completed directory checklist. These are separate measures, not an overall completion percentage.
+Scope: **1268 directories**; **1230** differ from the base; **382** have task-level review records; **246** have a recorded validated batch; **54** have a fully completed directory checklist. These are separate measures, not an overall completion percentage.
 
 ## Progress by modernization task
 
@@ -26,7 +26,7 @@ Scope: **1268 directories**; **1230** differ from the base; **381** have task-le
 | `CONTAINER_OWNERSHIP` — Standard containers and ownership of container elements | 1 | 1 | 0 | 0 |
 | `C_STRING` — Plain C-string handling | 85 | 60 | 25 | 0 |
 | `STD_NARROW_STRING` — Use std string functions for narrow C strings | 10 | 10 | 0 | 0 |
-| `PREFIX_INC` — Prefer prefix increment and decrement when equivalent | 38 | 36 | 2 | 0 |
+| `PREFIX_INC` — Prefer prefix increment and decrement when equivalent | 39 | 37 | 2 | 0 |
 | `BRACES` — Consistent braces around control-flow bodies | 2 | 0 | 0 | 2 |
 | `CONST_GUARD_MACROS` — Const guard macro usage while preserving ACE_GUARD conventions | 2 | 2 | 0 | 0 |
 | `MOVE_SITES` — Audit std::move sites for moved-from use and ownership correctness | 3 | 3 | 0 | 0 |

@@ -42,7 +42,7 @@ ACE/apps/Gateway/Gateway	24	1	2	23	0	batch-complete	partial	CONST; VALUE_INIT; O
 ACE/apps/Gateway/Peer	6	1	2	5	0	batch-complete	partial	CONST; VALUE_INIT; COPY_MOVE; OWNERSHIP; LOG_FORMAT; CLEANUP; STYLE; BUILD_TEST	Further directory checklist categories still need audit.	After realclean, Gateway_Peer and peerd compiled and linked with make -j 8 without warnings; git diff --check and 120-column scan passed.	93cef720aa2
 ACE/apps/JAWS/clients/Blobby	8	1	1	7	0	batch-complete	partial	CONST; VALUE_INIT; OVERRIDE_DEFAULT_DELETE; EXPLICIT=n/a; COPY_MOVE; OWNERSHIP; C_STRING; CLEANUP; UNUSED_INCLUDES; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST	Further modernization categories remain to audit	After realclean, C++17 warning-enabled client/server build passed without warnings; git diff --check passed	-
 ACE/apps/JAWS/clients/Caching	20	1	2	19	0	work-recorded	not-audited	CONST; VALUE_INIT; NULLPTR; EXPLICIT; STD_NARROW_STRING; PREFIX_INC; TEST_ASSERTIONS; CLEANUP; UNUSED_INCLUDES; SPECIAL_MEMBER_COMMENTS; BUILD_TEST	Directory checklist not yet fully audited	-	-
-ACE/apps/JAWS/clients/WebSTONE/src	24	0	0	11	0	no-branch-delta	not-audited	-	Directory checklist not yet fully audited	-	-
+ACE/apps/JAWS/clients/WebSTONE/src	24	0	0	13	0	no-branch-delta	not-audited	PREFIX_INC	Directory checklist not yet fully audited	-	-
 ACE/apps/JAWS/clients/WebSTONE/src/nsapi-includes	1	0	0	1	0	no-branch-delta	not-audited	-	Directory checklist not yet fully audited	-	-
 ACE/apps/JAWS/clients/WebSTONE/src/nsapi-includes/base	21	0	0	21	0	no-branch-delta	not-audited	-	Directory checklist not yet fully audited	-	-
 ACE/apps/JAWS/clients/WebSTONE/src/nsapi-includes/frame	12	0	0	12	0	no-branch-delta	not-audited	-	Directory checklist not yet fully audited	-	-

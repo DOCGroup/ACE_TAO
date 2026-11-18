@@ -417,6 +417,7 @@ ACE/apps/JAWS/clients/Caching	STD_NARROW_STRING	done	995219e5742	HTTP client use
 ACE/apps/JAWS/clients/Caching	TEST_ASSERTIONS	done	4c736a038fa	test_URL validates request round-trip after copying encoded bytes to an unaligned address.
 ACE/apps/JAWS/clients/Caching	UNUSED_INCLUDES	done	995219e5742	Removed the now-unused ace/OS_NS_string.h from http_client.cpp.
 ACE/apps/JAWS/clients/Caching	VALUE_INIT	done	4c736a038fa	Value-initialized decoded network words and initialized locator record pointers.
+ACE/apps/JAWS/clients/WebSTONE/src	PREFIX_INC	done	392ea37b718	Changed 20 standalone postfix increment/decrement statements to prefix form. Remaining postfix expressions produce or use the old value and were retained.
 ACE/apps/JAWS/server	BUILD_TEST	done	fe2955ec79f	After realclean, GNUmakefile.JAWS and GNUmakefile.JAWS_server built and linked with C++17, -Wall -Wextra, -Wnon-virtual-dtor, and -Wsuggest-override.
 ACE/apps/JAWS/server	CLEANUP	done	fe2955ec79f	Replaced unbounded response formatting with checked std::snprintf; defaulted the handler destructor out of line.
 ACE/apps/JAWS/server	CONTAINERS	done	fe2955ec79f	Replaced the manually allocated CGI environment pointer table with std::vector<char*>; URI strings remain borrowed.
