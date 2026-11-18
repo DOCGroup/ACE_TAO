@@ -222,12 +222,16 @@ ACE_SOCK_Dgram_Mcast::open_i (const ACE_INET_Addr &mcast_addr,
         {
           if (bind_addy.set (mcast_addr.get_port_number (), "::",
                              1, AF_INET6) == -1)
-            return -1;
+            {
+              return -1;
+            }
         }
       else
         // Bind to "any" address and explicit port#.
         if (bind_addy.set (mcast_addr.get_port_number ()) == -1)
-          return -1;
+          {
+            return -1;
+          }
 #else
       // Bind to "any" address and explicit port#.
       if (bind_addy.set (mcast_addr.get_port_number ()) == -1)
@@ -340,7 +344,9 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
 
               // Skip the ANY address
               if (IN6_IS_ADDR_UNSPECIFIED(&addr->sin6_addr))
-                continue;
+                {
+                  continue;
+                }
             }
 #  endif /* ACE_HAS_IPV6 */
 
@@ -476,7 +482,9 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
   if (mcast_addr.get_type () == AF_INET6)
     {
       if (this->make_multicast_ifaddr6 (nullptr, mcast_addr, net_if) == -1)
-        return -1;
+        {
+          return -1;
+        }
     }
   else
 #endif /* ACE_HAS_IPV6 - Fall into IPv4-only case */
@@ -609,13 +617,17 @@ ACE_SOCK_Dgram_Mcast::subscribe_i (const ACE_INET_Addr &mcast_addr,
   if (mcast_addr.get_type () == AF_INET6)
     {
       if (this->make_multicast_ifaddr6 (&mreq6, mcast_addr, net_if) == -1)
-        return -1;
+        {
+          return -1;
+        }
       // Tell IP stack to pass messages sent to this group.
       else if (this->ACE_SOCK::set_option (IPPROTO_IPV6,
                                            IPV6_JOIN_GROUP,
                                            &mreq6,
                                            sizeof mreq6) == -1)
-        return -1;
+        {
+          return -1;
+        }
 
       return 0;
     }
@@ -656,13 +668,17 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
           struct if_nameindex *intf = ACE_OS::if_nameindex ();
 
           if (intf == nullptr)
-            return -1;
+            {
+              return -1;
+            }
 
           int index = 0;
           while (intf[index].if_index != 0 || intf[index].if_name != nullptr)
             {
               if (this->leave (mcast_addr, ACE_TEXT_CHAR_TO_TCHAR(intf[index].if_name)) == 0)
-                ++nr_unsubscribed;
+                {
+                  ++nr_unsubscribed;
+                }
 
               ++index;
             }
@@ -731,7 +747,9 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
           // old versions of MSVC.  The reliable way of getting the interface
           // list is available only with MSVC 5 and newer.
           if (ACE::get_ip_interfaces (if_cnt, if_addrs) != 0)
-            return -1;
+            {
+              return -1;
+            }
           std::unique_ptr<ACE_INET_Addr[]> safe_if_addrs (if_addrs);
 
           size_t nr_unsubscribed {};
@@ -740,7 +758,9 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
             {
               if (this->leave (mcast_addr,
                                ACE_TEXT ("0.0.0.0")) == 0)
-                ++nr_unsubscribed;
+                {
+                  ++nr_unsubscribed;
+                }
             }
           else
             {
@@ -749,12 +769,16 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
                   --if_cnt;
                   // Convert to 0-based for indexing, next loop check
                   if (if_addrs[if_cnt].get_type () != AF_INET || if_addrs[if_cnt].is_loopback ())
-                    continue;
+                    {
+                      continue;
+                    }
                   char addr_buf[INET6_ADDRSTRLEN];
                   if (this->leave (mcast_addr,
                                    ACE_TEXT_CHAR_TO_TCHAR
                                    (if_addrs[if_cnt].get_host_addr (addr_buf, INET6_ADDRSTRLEN))) == 0)
-                    ++nr_unsubscribed;
+                    {
+                      ++nr_unsubscribed;
+                    }
                 }
             }
 
