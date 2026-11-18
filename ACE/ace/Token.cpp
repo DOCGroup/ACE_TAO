@@ -102,17 +102,25 @@ ACE_Token::ACE_Token_Queue::remove_entry (ACE_Token::ACE_Token_Queue_Entry *entr
   for (curr = this->head_;
        curr != nullptr && curr != entry;
        curr = curr->next_)
-    prev = curr;
+    {
+      prev = curr;
+    }
 
   if (curr == nullptr)
-    // Didn't find the entry...
-    return;
+    {
+      // Didn't find the entry...
+      return;
+    }
   else if (prev == nullptr)
-    // Delete at the head.
-    this->head_ = this->head_->next_;
+    {
+      // Delete at the head.
+      this->head_ = this->head_->next_;
+    }
   else
-    // Delete in the middle.
-    prev->next_ = curr->next_;
+    {
+      // Delete in the middle.
+      prev->next_ = curr->next_;
+    }
 
   // We need to update the tail of the list if we've deleted the last
   // entry.
@@ -154,7 +162,9 @@ ACE_Token::ACE_Token_Queue::insert_entry (ACE_Token::ACE_Token_Queue_Entry &entr
 
       ACE_Token::ACE_Token_Queue_Entry *insert_after = this->head_;
       while (requeue_position-- && insert_after->next_ != nullptr)
-        insert_after = insert_after->next_;
+        {
+          insert_after = insert_after->next_;
+        }
 
       entry.next_ = insert_after->next_;
 
@@ -284,11 +294,13 @@ ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
           // We come here if a timeout occurs or some serious
           // ACE_Condition object error.
           if (errno == ETIME)
-            timed_out = true;
+            {
+              timed_out = true;
+            }
           else
-          {
-            error = true;
-          }
+            {
+              error = true;
+            }
 
           // Stop the loop.
           break;
@@ -378,8 +390,10 @@ ACE_Token::renew (int requeue_position,
   if (this->writers_.head_ == nullptr &&
       (this->in_use_ == ACE_Token::WRITE_TOKEN ||
        this->readers_.head_ == nullptr))
-    // Immediate return.
-    return 0;
+    {
+      // Immediate return.
+      return 0;
+    }
 
   // We've got to sleep until we get the token again.
 
@@ -434,11 +448,13 @@ ACE_Token::renew (int requeue_position,
           // We come here if a timeout occurs or some serious
           // ACE_Condition object error.
           if (errno == ETIME)
-            timed_out = true;
+            {
+              timed_out = true;
+            }
           else
-          {
-            error = true;
-          }
+            {
+              error = true;
+            }
 
           // Stop the loop.
           break;
@@ -497,7 +513,9 @@ ACE_Token::release ()
 
   // Nested release...
   if (this->nesting_level_ > 0)
-    --this->nesting_level_;
+    {
+      --this->nesting_level_;
+    }
   else
     {
       //
