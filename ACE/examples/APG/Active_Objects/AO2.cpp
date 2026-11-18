@@ -112,9 +112,9 @@ public:
 
         // Invoke the method request.
         if (request == nullptr || request->call () == -1)
-        {
-          break;
-        }
+          {
+            break;
+          }
       }
 
     return 0;
@@ -123,7 +123,7 @@ public:
   int enqueue (std::unique_ptr<ACE_Method_Request> request)
   {
     ACE_TRACE ("Scheduler::enqueue");
-    const int result = this->activation_queue_.enqueue (request.get ());
+    int const result = this->activation_queue_.enqueue (request.get ());
     if (result != -1)
     {
       request.release ();
@@ -178,7 +178,8 @@ class CompletionCallBack : public ACE_Future_Observer<int>
 public:
   explicit CompletionCallBack (HA_ControllerAgentProxy &proxy)
     : proxy_ (proxy)
-  { }
+  {
+  }
 
   CompletionCallBack (const CompletionCallBack &) = delete;
   CompletionCallBack &operator = (const CompletionCallBack &) = delete;
@@ -192,9 +193,9 @@ public:
     ACE_DEBUG ((LM_INFO,
                 ACE_TEXT ("(%t) New Status %d\n"), result));
     if (result == 10)
-    {
-      this->proxy_.exit ();
-    }
+      {
+        this->proxy_.exit ();
+      }
   }
 
 private:

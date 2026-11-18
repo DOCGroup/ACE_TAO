@@ -115,9 +115,9 @@ public:
 
         // Invoke the method request.
         if (request == nullptr || request->call () == -1)
-        {
-          break;
-        }
+          {
+            break;
+          }
       }
 
     return 0;
@@ -126,7 +126,7 @@ public:
   int enqueue (std::unique_ptr<ACE_Method_Request> request)
   {
     ACE_TRACE ("Scheduler::enqueue");
-    const int result = this->activation_queue_.enqueue (request.get ());
+    int const result = this->activation_queue_.enqueue (request.get ());
     if (result != -1)
     {
       request.release ();
