@@ -121,15 +121,15 @@ Task_Stats::dump_samples (ACE_TCHAR const *file_name, ACE_TCHAR const *msg, bool
 
   ACE_OS::fprintf (output_file.get (),
                    "## Latency: Avg = %u, Var^2 = %u\n",
-                   ACE_CU64_TO_CU32 (this->mean_),
-                   ACE_CU64_TO_CU32 (this->var_2_));
+                   static_cast<unsigned int> (ACE_CU64_TO_CU32 (this->mean_)),
+                   static_cast<unsigned int> (ACE_CU64_TO_CU32 (this->var_2_)));
 
   if (TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   " Latency: Avg = %u, Var^2 = %u\n",
-                  ACE_CU64_TO_CU32 (this->mean_),
-                  ACE_CU64_TO_CU32 (this->var_2_)));
+                  static_cast<unsigned int> (ACE_CU64_TO_CU32 (this->mean_)),
+                  static_cast<unsigned int> (ACE_CU64_TO_CU32 (this->var_2_))));
     }
 
   // if we are asked to, dump the samples recorded.

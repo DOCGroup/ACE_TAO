@@ -22,7 +22,10 @@ log2_test ()
       result = ACE::log2(values [i]);
       if (result != results [i])
         {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Log2 error: input %d, output %d, expected %d\n"), values [i], result, results [i]));
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Log2 error: input %Q, output %Q, expected %Q\n"),
+                      static_cast<ACE_UINT64> (values[i]),
+                      static_cast<ACE_UINT64> (result),
+                      static_cast<ACE_UINT64> (results[i])));
           ++error_count;
         }
     }
