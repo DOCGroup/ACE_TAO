@@ -20,9 +20,11 @@ ACE_Dynamic_Service_Dependency::ACE_Dynamic_Service_Dependency (const ACE_Servic
 ACE_Dynamic_Service_Dependency::~ACE_Dynamic_Service_Dependency ()
 {
   if (ACE::debug ())
-    ACELIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P|%t) DSD, this=%@ - destroying\n"),
-                this));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("(%P|%t) DSD, this=%@ - destroying\n"),
+                     this));
+    }
 }
 
 void
