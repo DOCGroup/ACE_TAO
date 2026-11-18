@@ -99,9 +99,10 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_START_TEST (ACE_TEXT ("High_Res_Timer_Test"));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("The ACE_High_Res_Timer scale factor is %u ")
+              ACE_TEXT ("The ACE_High_Res_Timer scale factor is %Q ")
               ACE_TEXT ("1/microsecond\n"),
-              ACE_High_Res_Timer::global_scale_factor ()));
+              static_cast<ACE_UINT64> (
+                ACE_High_Res_Timer::global_scale_factor ())));
 
   u_int errors = 0;
 

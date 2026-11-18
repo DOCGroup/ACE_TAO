@@ -102,7 +102,7 @@ Test_Singleton::Test_Singleton (u_short variety)
   if (variety_ != current_++)
     {
       ACE_DEBUG ((LM_ERROR,
-                  ACE_TEXT ("ERROR: instance %u created out of order!\n"),
+                  ACE_TEXT ("ERROR: instance %d created out of order!\n"),
                  variety_));
       ++error;
     }

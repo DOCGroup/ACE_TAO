@@ -79,9 +79,8 @@ test_recursion_depth (int nesting_level,
         }
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) = acquired, nesting = %d, thread id = %u\n"),
-                  rm->get_nesting_level (),
-                  rm->get_thread_id ()));
+                  ACE_TEXT ("(%P|%t) = acquired, nesting = %d\n"),
+                  rm->get_nesting_level ()));
 #endif /* !ACE_HAS_WTHREADS */
 
       test_recursion_depth (nesting_level + 1,
@@ -100,9 +99,8 @@ test_recursion_depth (int nesting_level,
       ACE_TEST_ASSERT (result == 0);
 #if !defined (ACE_HAS_WTHREADS)
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) = released, nesting = %d, thread id = %u\n"),
-                  rm->get_nesting_level (),
-                  rm->get_thread_id ()));
+                  ACE_TEXT ("(%P|%t) = released, nesting = %d\n"),
+                  rm->get_nesting_level ()));
 
       if (nesting_level_supported
           && nesting_level != 0

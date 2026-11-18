@@ -430,7 +430,7 @@ server (void *arg)
 {
 #if defined (VXWORKS)
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) server stack size is %u\n"),
+              ACE_TEXT ("(%P|%t) server stack size is %B\n"),
               ACE_OS::thr_min_stack ()));
 #endif /* VXWORKS */
 

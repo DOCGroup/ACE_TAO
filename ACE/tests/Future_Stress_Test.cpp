@@ -57,7 +57,8 @@ void* runner (void* args)
   {
     if( ++runNum % 5000 == 0 )
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) runner iteration %u\n"), runNum));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) runner iteration %Q\n"),
+                  static_cast<ACE_UINT64> (runNum)));
     }
     ACE_Future<int> result;
     Worker_Config config;
