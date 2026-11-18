@@ -289,10 +289,10 @@ namespace TAO
        {
          TAOLIB_DEBUG ((LM_INFO,
             ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::bind_i, ")
-            ACE_TEXT ("Transport[%B] @ hash:index{%d:%d}\n"),
+            ACE_TEXT ("Transport[%B] @ hash:index{%Q:%Q}\n"),
             int_id.transport ()->id (),
-            ext_id.hash (),
-            ext_id.index ()));
+            static_cast<ACE_UINT64> (ext_id.hash ()),
+            static_cast<ACE_UINT64> (ext_id.index ())));
        }
 
     // Get the entry too
@@ -352,11 +352,11 @@ namespace TAO
                     {
                       TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::bind_i, ")
-                        ACE_TEXT ("Unable to bind Transport[%B] @ hash:index{%d:%d}. ")
+                        ACE_TEXT ("Unable to bind Transport[%B] @ hash:index{%Q:%Q}. ")
                         ACE_TEXT ("Trying with a new index\n"),
                         int_id.transport ()->id (),
-                        ext_id.hash (),
-                        ext_id.index ()));
+                        static_cast<ACE_UINT64> (ext_id.hash ()),
+                        static_cast<ACE_UINT64> (ext_id.index ())));
                     }
                 }
               }
@@ -378,11 +378,11 @@ namespace TAO
           {
             TAOLIB_DEBUG ((LM_INFO,
               ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::bind_i: ")
-              ACE_TEXT ("Success Transport[%B] @ hash:index{%d:%d}. ")
+              ACE_TEXT ("Success Transport[%B] @ hash:index{%Q:%Q}. ")
               ACE_TEXT ("Cache size is [%B]\n"),
               int_id.transport ()->id (),
-              ext_id.hash (),
-              ext_id.index (),
+              static_cast<ACE_UINT64> (ext_id.hash ()),
+              static_cast<ACE_UINT64> (ext_id.index ()),
               this->current_size ()));
           }
       }
@@ -478,10 +478,10 @@ namespace TAO
                   {
                     TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::find_i, ")
-                      ACE_TEXT ("found available Transport[%B] @hash:index {%d:%d}\n"),
+                      ACE_TEXT ("found available Transport[%B] @hash:index {%Q:%Q}\n"),
                       entry->item ().transport ()->id (),
-                      entry->ext_id_.hash (),
-                      entry->ext_id_.index ()));
+                      static_cast<ACE_UINT64> (entry->ext_id_.hash ()),
+                      static_cast<ACE_UINT64> (entry->ext_id_.index ())));
                   }
               }
             else if (this->is_entry_connecting_i (*entry))
@@ -490,10 +490,10 @@ namespace TAO
                   {
                     TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::find_i, ")
-                      ACE_TEXT ("found connecting Transport[%B] @hash:index {%d:%d}\n"),
+                      ACE_TEXT ("found connecting Transport[%B] @hash:index {%Q:%Q}\n"),
                       entry->item ().transport ()->id (),
-                      entry->ext_id_.hash (),
-                      entry->ext_id_.index ()));
+                      static_cast<ACE_UINT64> (entry->ext_id_.hash ()),
+                      static_cast<ACE_UINT64> (entry->ext_id_.index ())));
                   }
                 // if this is the first interesting entry
                 if (found != CACHE_FOUND_CONNECTING)
@@ -515,10 +515,10 @@ namespace TAO
                   {
                     TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::find_i, ")
-                      ACE_TEXT ("found busy Transport[%B] @hash:index {%d:%d}\n"),
+                      ACE_TEXT ("found busy Transport[%B] @hash:index {%Q:%Q}\n"),
                       entry->item ().transport ()->id (),
-                      entry->ext_id_.hash (),
-                      entry->ext_id_.index ()
+                      static_cast<ACE_UINT64> (entry->ext_id_.hash ()),
+                      static_cast<ACE_UINT64> (entry->ext_id_.index ())
                       ));
                   }
               }

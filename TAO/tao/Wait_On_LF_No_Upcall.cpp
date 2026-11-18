@@ -43,7 +43,7 @@ namespace TAO
   {
     if (TAO_debug_level > 6)
       TAOLIB_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - Wait_On_LF_No_Upcall[%d]::defer_upcall, "
+                  "TAO (%P|%t) - Wait_On_LF_No_Upcall[%B]::defer_upcall, "
                   "deferring upcall on transport "
                   "because upcalls temporarily suspended on this thread\n",
                   this->transport_->id()));
