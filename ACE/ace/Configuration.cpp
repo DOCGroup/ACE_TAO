@@ -1279,9 +1279,11 @@ ACE_Configuration_Heap::open (const ACE_TCHAR* file_name,
 #if !defined (ACE_LACKS_ACCESS)
   // Now check if the backing store has been created successfully.
   if (ACE_OS::access (file_name, F_OK) != 0)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("create_index\n")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("create_index\n")),
+                           -1);
+    }
 #endif /* ACE_LACKS_ACCESS */
 
   return create_index ();
@@ -1295,7 +1297,9 @@ ACE_Configuration_Heap::create_index ()
   // This is the easy case since if we find hash table in the
   // memory-mapped file we know it's already initialized.
   if (this->allocator_->find (ACE_CONFIG_SECTION_INDEX, section_index) == 0)
-    this->index_ = (SECTION_MAP *) section_index;
+    {
+      this->index_ = (SECTION_MAP *) section_index;
+    }
 
   // Create a new <index_> (because we've just created a new
   // memory-mapped file).
@@ -1413,7 +1417,9 @@ ACE_Configuration_Heap::new_section (const ACE_TString& section,
   int return_value = -1;
 
   if (ptr == nullptr)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       // Populate memory with data.
@@ -1510,7 +1516,9 @@ ACE_Configuration_Heap::open_section (const ACE_Configuration_Section_Key& base,
 {
   ACE_ASSERT (this->allocator_);
   if (validate_name (sub_section, 1))    // 1 == allow_path
-    return -1;
+    {
+      return -1;
+    }
 
   result = base;
 

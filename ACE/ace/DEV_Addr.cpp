@@ -62,13 +62,17 @@ ACE_DEV_Addr::set (ACE_DEV_Addr const &sa)
   this->base_set (sa.get_type (), sa.get_size ());
 
   if (sa.get_type () == AF_ANY)
-    (void) std::memset (&this->devname_,
-                        0,
-                        sizeof this->devname_);
+    {
+      (void) std::memset (&this->devname_,
+                          0,
+                          sizeof this->devname_);
+    }
   else
-    (void) ACE_OS::strsncpy (this->devname_,
-                             sa.devname_,
-                             ACE_DEV_Addr::DEVNAME_LENGTH);
+    {
+      (void) ACE_OS::strsncpy (this->devname_,
+                               sa.devname_,
+                               ACE_DEV_Addr::DEVNAME_LENGTH);
+    }
   return 0;
 }
 
