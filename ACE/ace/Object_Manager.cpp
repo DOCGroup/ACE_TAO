@@ -509,13 +509,17 @@ ACE_Object_Manager::get_singleton_lock (ACE_Null_Mutex *&lock)
         }
 
       if (ACE_Object_Manager::instance ()->singleton_null_lock_ != nullptr)
-        lock = &ACE_Object_Manager::instance ()->singleton_null_lock_->
-          object ();
+        {
+          lock = &ACE_Object_Manager::instance ()->singleton_null_lock_->
+            object ();
+        }
     }
   else
-    // Use the Object_Manager's preallocated lock.
-    lock = ACE_Managed_Object<ACE_Null_Mutex>::get_preallocated_object
-      (ACE_Object_Manager::ACE_SINGLETON_NULL_LOCK);
+    {
+      // Use the Object_Manager's preallocated lock.
+      lock = ACE_Managed_Object<ACE_Null_Mutex>::get_preallocated_object
+        (ACE_Object_Manager::ACE_SINGLETON_NULL_LOCK);
+    }
 
   return 0;
 }
@@ -629,18 +633,22 @@ ACE_Object_Manager::get_singleton_lock (ACE_Recursive_Thread_Mutex *&lock)
       // for interface compatibility, though there should be no
       // contention on it.
       if (ACE_Object_Manager::instance ()->singleton_recursive_lock_ == nullptr)
-        ACE_NEW_RETURN (ACE_Object_Manager::instance ()->
-                          singleton_recursive_lock_,
-                        ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex>,
-                        -1);
+        {
+          ACE_NEW_RETURN (ACE_Object_Manager::instance ()->
+                            singleton_recursive_lock_,
+                          ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex>,
+                          -1);
+        }
 
       // Can't register with the ACE_Object_Manager here!  The lock's
       // declaration is visible to the ACE_Object_Manager destructor,
       // so it will clean it up as a special case.
 
       if (ACE_Object_Manager::instance ()->singleton_recursive_lock_ != nullptr)
-        lock = &ACE_Object_Manager::instance ()->singleton_recursive_lock_->
-          object ();
+        {
+          lock = &ACE_Object_Manager::instance ()->singleton_recursive_lock_->
+            object ();
+        }
     }
   else
     {
@@ -711,9 +719,11 @@ int
 ACE_Object_Manager::fini ()
 {
   if (shutting_down_i ())
-    // Too late.  Or, maybe too early.  Either fini () has already
-    // been called, or init () was never called.
-    return object_manager_state_ == OBJ_MAN_SHUT_DOWN  ?  1  :  -1;
+    {
+      // Too late.  Or, maybe too early.  Either fini () has already
+      // been called, or init () was never called.
+      return object_manager_state_ == OBJ_MAN_SHUT_DOWN ? 1 : -1;
+    }
 
   // No mutex here.  Only the main thread should destroy the singleton
   // ACE_Object_Manager instance.
@@ -947,10 +957,12 @@ ACE_Static_Object_Lock::instance ()
       return &ACE_Static_Object_Lock_lock->object ();
     }
   else
-    // Return the preallocated ACE_STATIC_OBJECT_LOCK.
-    return
-      ACE_Managed_Object<ACE_Recursive_Thread_Mutex>::get_preallocated_object
-        (ACE_Object_Manager::ACE_STATIC_OBJECT_LOCK);
+    {
+      // Return the preallocated ACE_STATIC_OBJECT_LOCK.
+      return
+        ACE_Managed_Object<ACE_Recursive_Thread_Mutex>::get_preallocated_object
+          (ACE_Object_Manager::ACE_STATIC_OBJECT_LOCK);
+    }
 }
 
 void
