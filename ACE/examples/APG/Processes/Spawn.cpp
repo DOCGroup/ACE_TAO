@@ -34,13 +34,17 @@ public:
     ACE_Process_Options options {};
     pid_t const pid = this->spawn (options);
     if (pid == ACE_INVALID_PID)
-      ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT ("%p\n"),
-                        ACE_TEXT ("spawn")), -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("spawn")), -1);
+      }
 
     // Wait forever for my child to exit.
     if (this->wait () == -1)
-      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                         ACE_TEXT ("wait")), -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("wait")), -1);
+      }
 
     // Dump whatever happened.
     this->dumpRun ();
@@ -55,8 +59,10 @@ private:
     ACE_TRACE ("Manager::dumpRun");
 
     if (ACE_OS::lseek (this->outputfd_, 0, SEEK_SET) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                         ACE_TEXT ("lseek")), -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("lseek")), -1);
+      }
 
     std::array<char, 1024> buffer {};
 
@@ -68,9 +74,9 @@ private:
                                              buffer.data (),
                                              buffer.size () - 1);
         if (length <= 0)
-        {
-          break;
-        }
+          {
+            break;
+          }
         buffer[static_cast<size_t> (length)] = '\0';
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%C\n"), buffer.data ()));
       }
@@ -89,9 +95,9 @@ private:
     options.command_line (ACE_TEXT ("%s 1"), this->program_name_.c_str ());
     if (this->setStdHandles (options) == -1 ||
         this->setEnvVariable (options) == -1)
-    {
-      return -1;
-    }
+      {
+        return -1;
+      }
 #if !defined (ACE_WIN32) && !defined (ACE_LACKS_PWD_FUNCTIONS)
     return this->setUserID (options);
 #else
@@ -125,9 +131,9 @@ private:
     ACE_TRACE ("Manager::setUserID");
     struct passwd const *pw = ACE_OS::getpwnam ("nobody");
     if (pw == nullptr)
-    {
-      return -1;
-    }
+      {
+        return -1;
+      }
     options.seteuid (pw->pw_uid);
     return 0;
   }
@@ -177,9 +183,9 @@ public:
 #if !defined (ACE_LACKS_PWD_FUNCTIONS)
     struct passwd const *pw = ::getpwuid (ACE_OS::geteuid ());
     if (pw == nullptr)
-    {
-      return;
-    }
+      {
+        return;
+      }
     ACE_DEBUG ((LM_INFO,
                 ACE_TEXT ("(%P) Running this process as:%C\n"),
                 pw->pw_name));
@@ -204,9 +210,9 @@ public:
             ++i;
           }
         else
-        {
-          return str;
-        }
+          {
+            return str;
+          }
       }
   }
 };

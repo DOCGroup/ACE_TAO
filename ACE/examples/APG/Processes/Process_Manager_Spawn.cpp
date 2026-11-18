@@ -38,10 +38,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
 #if !defined(ACE_WIN32)
       if (WIFSIGNALED (status) != 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%d died because of a signal ")
-                    ACE_TEXT ("of type %d\n"),
-                    pids[0], WTERMSIG (status)));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("%d died because of a signal ")
+                      ACE_TEXT ("of type %d\n"),
+                      pids[0], WTERMSIG (status)));
+        }
 #else
       ACE_DEBUG
         ((LM_DEBUG,

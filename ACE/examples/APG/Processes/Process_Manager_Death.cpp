@@ -30,9 +30,9 @@ public:
         process->getpid (), process->return_value ()));
 
     if (++count_ == NCHILDREN)
-    {
-      ACE_Reactor::instance ()->end_reactor_event_loop ();
-    }
+      {
+        ACE_Reactor::instance ()->end_reactor_event_loop ();
+      }
 
     return 0;
   }
@@ -45,7 +45,9 @@ private:
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (argc > 1)      // Running as a child.
-    return 0;
+    {
+      return 0;
+    }
 
   // Instantiate a process manager with space for
   // 10 processes.
@@ -64,7 +66,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // Register handler to be called when these processes exit.
   for (int i {}; i < NCHILDREN; ++i)
-    pm.register_handler (&handler, pids[i]);
+    {
+      pm.register_handler (&handler, pids[i]);
+    }
 
   // Run the reactor event loop waiting for events to occur.
   ACE_Reactor::instance ()->run_reactor_event_loop ();

@@ -22,8 +22,7 @@ public:
   {
     ACE_TRACE ("GResourceUser::run");
 
-    int count {};
-    while (count++ < 10)
+    for (int count {}; count < 10; ++count)
       {
         int const acquire_result = this->gmutex_.acquire ();
         ACE_TEST_ASSERT (acquire_result == 0);
@@ -71,12 +70,16 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   pida, pidb));
 
       if (processa.wait () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("processa wait")), -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("processa wait")), -1);
+        }
 
       if (processb.wait () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("processb wait")), -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("processb wait")), -1);
+        }
     }
 
   return 0;
