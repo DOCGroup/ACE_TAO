@@ -41,7 +41,9 @@ ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::clear_cac
 {
   // Check that the purge_percent is non-zero.
   if (ACE::is_equal (purge_percent, 0.0))
-    return 0;
+    {
+      return 0;
+    }
 
   // Get the number of entries in the container.
   size_t current_map_size = container.current_size ();
@@ -49,7 +51,9 @@ ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::clear_cac
   // Also whether the number of entries in the cache!
   // Oops! then there is no way out but exiting. So return an error.
   if (current_map_size == 0)
-    return 0;
+    {
+      return 0;
+    }
 
   // Calculate the no of entries to remove from the cache depending
   // upon the <purge_percent>.
@@ -71,12 +75,16 @@ ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::clear_cac
       // entry cant be found due to constraints on the type of entry
       // to remove.
       if (key_to_remove == nullptr)
-        return 0;
+        {
+          return 0;
+        }
 
       if (this->cleanup_strategy_->cleanup (container,
                                             key_to_remove,
                                             value_to_remove) == -1)
-        return -1;
+        {
+          return -1;
+        }
     }
 
   return 0;
@@ -137,7 +145,9 @@ ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUT
 {
   // Check that the purge_percent is non-zero.
   if (ACE::is_equal (purge_percent, 0.0))
-    return 0;
+    {
+      return 0;
+    }
 
   // Get the number of entries in the container.
   size_t current_map_size = container.current_size ();
@@ -146,7 +156,9 @@ ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUT
   // Oops! then there is no way out but exiting. So return an error.
   //  if (current_map_size <= 1)
   if (current_map_size == 0)
-    return 0;
+    {
+      return 0;
+    }
 
   // Calculate the no of entries to remove from the cache depending
   // upon the <purge_percent>.
@@ -169,12 +181,16 @@ ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUT
       // entry cant be found due to constraints on the type of entry
       // to remove.
       if (key_to_remove == nullptr)
-        return 0;
+        {
+          return 0;
+        }
 
       if (this->cleanup_strategy_->cleanup (container,
                                             key_to_remove,
                                             value_to_remove) == -1)
-        return -1;
+        {
+          return -1;
+        }
     }
 
   return 0;
@@ -256,7 +272,9 @@ ACE_Refcounted_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATO
 {
   // Check that the purge_percent is non-zero.
   if (ACE::is_equal (purge_percent, 0.0))
-    return 0;
+    {
+      return 0;
+    }
 
   // Get the number of entries in the container which can be considered for purging.
   size_t const available_entries =
@@ -265,7 +283,9 @@ ACE_Refcounted_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATO
   // Also whether the number of entries in the cache zero.
   // Oops! then there is no way out but exiting.
   if (available_entries <= 0)
-    return 0;
+    {
+      return 0;
+    }
 
   // Calculate the no of entries to remove from the cache depending
   // upon the <purge_percent>.
@@ -275,7 +295,9 @@ ACE_Refcounted_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATO
                                        / 100 * available_entries));
 
   if (entries_to_remove >= available_entries  || entries_to_remove == 0)
-    entries_to_remove = available_entries - 1;
+    {
+      entries_to_remove = available_entries - 1;
+    }
 
   KEY *key_to_remove {};
   VALUE *value_to_remove {};
@@ -291,12 +313,16 @@ ACE_Refcounted_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATO
       // entry cant be found due to constraints on the type of entry
       // to remove.
       if (key_to_remove == nullptr)
-        return 0;
+        {
+          return 0;
+        }
 
       if (this->cleanup_strategy_->cleanup (container,
                                             key_to_remove,
                                             value_to_remove) == -1)
-        return -1;
+        {
+          return -1;
+        }
 
       ++this->marked_as_closed_entries_;
     }
@@ -377,7 +403,9 @@ ACE_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::clear_
 {
   // Check that the purge_percent is non-zero.
   if (ACE::is_equal (purge_percent, 0.0))
-    return 0;
+    {
+      return 0;
+    }
 
   // Get the number of entries in the container.
   size_t current_map_size = container.current_size ();
@@ -385,7 +413,9 @@ ACE_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::clear_
   // Also whether the number of entries in the cache is just one!
   // Oops! then there is no way out but exiting. So return an error.
   if (current_map_size == 0)
-    return 0;
+    {
+      return 0;
+    }
 
   // Calculate the no of entries to remove from the cache depending
   // upon the <purge_percent>.
@@ -406,7 +436,9 @@ ACE_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::clear_
       if (this->cleanup_strategy_->cleanup (container,
                                             key_to_remove,
                                             value_to_remove) == -1)
-        return -1;
+        {
+          return -1;
+        }
     }
 
   return 0;
