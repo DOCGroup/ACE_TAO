@@ -55,9 +55,9 @@ Iterator::operator() ()
   if (size)
     {
       if (++curr_value >= upper_bound)
-      {
-        size = 0;
-      }
+        {
+          size = 0;
+        }
       return curr_value;
     }
   else

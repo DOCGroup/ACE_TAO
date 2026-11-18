@@ -61,16 +61,16 @@ append_wide_codepoint (std::uint32_t codepoint,
                        size_t &target_index)
 {
   if (codepoint > 0x10ffff || (codepoint >= 0xd800 && codepoint <= 0xdfff))
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 
   if (sizeof (CORBA::WChar) == 2 && codepoint > 0xffff)
     {
       if (target_index + 2 > target_size)
-      {
-        return false;
-      }
+        {
+          return false;
+        }
 
       codepoint -= 0x10000;
       target[target_index++] = static_cast<CORBA::WChar> (0xd800 + (codepoint >> 10));
@@ -79,9 +79,9 @@ append_wide_codepoint (std::uint32_t codepoint,
   else
     {
       if (target_index >= target_size)
-      {
-        return false;
-      }
+        {
+          return false;
+        }
 
       target[target_index++] = static_cast<CORBA::WChar> (codepoint);
     }
@@ -107,13 +107,13 @@ read_hex_escape (std::string const &source,
       else if (ch >= 'A' && ch <= 'F')
         value = ch - 'A' + 10;
       else
-      {
-        break;
-      }
+        {
+          break;
+        }
       if (codepoint > (0x10ffff - value) / 16)
-      {
-        return false;
-      }
+        {
+          return false;
+        }
       codepoint = codepoint * 16 + value;
       ++source_index;
       ++digits;
@@ -143,9 +143,9 @@ decode_wide_literal (std::string const &source,
           if (source_index + 1 >= source.size ()
               || source[source_index] != 'L'
               || source[source_index + 1] != '"')
-          {
-            return false;
-          }
+            {
+              return false;
+            }
 
           source_index += 2;
           continue;
@@ -173,16 +173,16 @@ decode_wide_literal (std::string const &source,
             case 'x':
               {
                 if (!read_hex_escape (source, source_index, source.size (), codepoint))
-                {
-                  codepoint = 'x';
-                }
+                  {
+                    codepoint = 'x';
+                  }
                 break;
               }
             case 'u':
               if (!read_hex_escape (source, source_index, 4, codepoint))
-              {
-                return false;
-              }
+                {
+                  return false;
+                }
               if (codepoint >= 0xd800 && codepoint <= 0xdbff)
                 {
                   if (source_index + 2 >= source.size ()
@@ -199,9 +199,9 @@ decode_wide_literal (std::string const &source,
                       source_index = next_index;
                     }
                   else
-                  {
-                    return false;
-                  }
+                    {
+                      return false;
+                    }
                 }
               else if (codepoint >= 0xdc00 && codepoint <= 0xdfff)
                 return false;
@@ -219,9 +219,9 @@ decode_wide_literal (std::string const &source,
                     }
                 }
               else
-              {
-                codepoint = static_cast<unsigned char> (escape);
-              }
+                {
+                  codepoint = static_cast<unsigned char> (escape);
+                }
               break;
             }
         }
@@ -246,37 +246,37 @@ decode_wide_literal (std::string const &source,
               continuation_count = 3;
             }
           else
-          {
-            return false;
-          }
+            {
+              return false;
+            }
 
           for (unsigned int i = 0; i < continuation_count; ++i)
             {
               if (source_index >= source.size ())
-              {
-                return false;
-              }
+                {
+                  return false;
+                }
 
               unsigned char const next = static_cast<unsigned char> (source[source_index++]);
               if ((next & 0xc0) != 0x80)
-              {
-                return false;
-              }
+                {
+                  return false;
+                }
               codepoint = (codepoint << 6) | (next & 0x3f);
             }
 
           if ((continuation_count == 1 && codepoint < 0x80)
               || (continuation_count == 2 && codepoint < 0x800)
               || (continuation_count == 3 && codepoint < 0x10000))
-          {
-            return false;
-          }
+            {
+              return false;
+            }
         }
 
       if (!append_wide_codepoint (codepoint, target, target_size, target_length))
-      {
-        return false;
-      }
+        {
+          return false;
+        }
     }
 
   return true;
@@ -3720,38 +3720,38 @@ void
 ifr_adding_visitor::get_referenced_type (AST_Type *node)
 {
   switch (node->node_type ())
-  {
-    // For anonymous types, a new IR object is be created each
-    // time, so we just visit the node, which get the object and
-    // updates ir_current_.
-    case AST_Decl::NT_pre_defined:
-    case AST_Decl::NT_string:
-    case AST_Decl::NT_wstring:
-    case AST_Decl::NT_array:
-    case AST_Decl::NT_sequence:
-      if (node->ast_accept (this) == -1)
-        {
-          ORBSVCS_ERROR ((
-              LM_ERROR,
-              ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
-              ACE_TEXT ("get_scope_member -")
-              ACE_TEXT (" failed to accept visitor\n")
-            ));
-        }
+    {
+      // For anonymous types, a new IR object is be created each
+      // time, so we just visit the node, which get the object and
+      // updates ir_current_.
+      case AST_Decl::NT_pre_defined:
+      case AST_Decl::NT_string:
+      case AST_Decl::NT_wstring:
+      case AST_Decl::NT_array:
+      case AST_Decl::NT_sequence:
+        if (node->ast_accept (this) == -1)
+          {
+            ORBSVCS_ERROR ((
+                LM_ERROR,
+                ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
+                ACE_TEXT ("get_scope_member -")
+                ACE_TEXT (" failed to accept visitor\n")
+              ));
+          }
 
-      break;
-    // For names types, we can just look up the entry and update
-    // ir_current_.
-    default:
-      {
-        CORBA::Contained_var prev_def =
-          be_global->repository ()->lookup_id (node->repoID ().c_str ());
-
-        this->ir_current_ =
-          CORBA::IDLType::_narrow (prev_def.in ());
         break;
-      }
-  }
+      // For names types, we can just look up the entry and update
+      // ir_current_.
+      default:
+        {
+          CORBA::Contained_var prev_def =
+            be_global->repository ()->lookup_id (node->repoID ().c_str ());
+
+          this->ir_current_ =
+            CORBA::IDLType::_narrow (prev_def.in ());
+          break;
+        }
+    }
 }
 
 void

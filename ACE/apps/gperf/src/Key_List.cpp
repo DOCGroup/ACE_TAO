@@ -110,9 +110,9 @@ std::array<int, ACE_STANDARD_CHARACTER_SET_SIZE> Key_List::determined_;
 Key_List::~Key_List ()
 {
   if (option[DEBUGGING])
-  {
-    this->dump ();
-  }
+    {
+      this->dump ();
+    }
 
   // Free up all the nodes in the list.
   while (this->head != nullptr)
@@ -169,17 +169,17 @@ Key_List::special_input (char delimiter, std::string& result)
               if (!result.empty () && result.back () == '\n')
                 result.pop_back ();
               if (delimiter == '%' && !result.empty () && result.back () == ';')
-              {
-                result.pop_back ();
-              }
+                {
+                  result.pop_back ();
+                }
               return true;
             }
           else
             {
               if (c == EOF)
-              {
-                return false;
-              }
+                {
+                  return false;
+                }
               result.push_back ('%');
             }
         }
@@ -199,9 +199,9 @@ Key_List::save_include_src (std::string& result)
   if (c != '%')
     {
       if (c != EOF)
-      {
-        ACE_OS::ungetc (c, stdin);
-      }
+        {
+          ACE_OS::ungetc (c, stdin);
+        }
       result.clear ();
       return true;
     }
@@ -213,9 +213,9 @@ Key_List::save_include_src (std::string& result)
       return false;
     }
   else
-  {
-    return special_input ('}', result);
-  }
+    {
+      return special_input ('}', result);
+    }
 }
 
 /// Determines from the input file whether the user wants to build a
@@ -246,9 +246,9 @@ Key_List::output_types ()
           // Yow, we've got a user-defined type...
           size_t struct_tag_length = this->array_type_.find_first_of ("{\n");
           if (struct_tag_length == std::string::npos)
-          {
-            struct_tag_length = this->array_type_.size ();
-          }
+            {
+              struct_tag_length = this->array_type_.size ();
+            }
           if (option[POINTER])      // And it must return a pointer...
             {
               this->return_type.assign (this->array_type_, 0, struct_tag_length);
@@ -257,9 +257,9 @@ Key_List::output_types ()
 
           this->struct_tag.assign (this->array_type_, 0, struct_tag_length);
           if (!this->struct_tag.empty () && this->struct_tag.back () != ' ')
-          {
-            this->struct_tag.push_back (' ');
-          }
+            {
+              this->struct_tag.push_back (' ');
+            }
         }
     }
   else if (option[POINTER])     // Return a char *.
@@ -318,9 +318,9 @@ Key_List::read_keys ()
           // See if any additional source code is included at end of
           // this file.
           if (buffer != nullptr)
-          {
-            additional_code = 1;
-          }
+            {
+              additional_code = 1;
+            }
 
           this->list_len = this->total_keys;
 
@@ -366,13 +366,13 @@ Key_List::read_keys ()
 
               // Update minimum and maximum keyword length, if needed.
               if (max_key_len < temp->length)
-              {
-                max_key_len = temp->length;
-              }
+                {
+                  max_key_len = temp->length;
+                }
               if (min_key_len > temp->length)
-              {
-                min_key_len = temp->length;
-              }
+                {
+                  min_key_len = temp->length;
+                }
             }
         }
 
@@ -395,9 +395,9 @@ Key_List::read_keys ()
                               -1);
         }
       if (option[ALLCHARS])
-      {
-        option.keysig_size (max_key_len);
-      }
+        {
+          option.keysig_size (max_key_len);
+        }
     }
 
   return 0;
@@ -450,9 +450,9 @@ Key_List::merge_sort (List_Node *a_head)
           temp = temp->next;
           middle = middle->next;
           if (temp)
-          {
-            temp = temp->next;
-          }
+            {
+              temp = temp->next;
+            }
         }
 
       temp = middle->next;
@@ -490,9 +490,9 @@ Key_List::already_determined (List_Node *ptr)
 
   for (char const temp : ptr->keysig)
     if (is_determined)
-    {
-      is_determined = determined_[Vectors::character_index (temp)];
-    }
+      {
+        is_determined = determined_[Vectors::character_index (temp)];
+      }
 
   return is_determined;
 }
@@ -535,9 +535,9 @@ Key_List::reorder ()
                   ptr = ptr->next = run_ptr;
                 }
               else
-              {
-                trail_ptr = run_ptr;
-              }
+                {
+                  trail_ptr = run_ptr;
+                }
             }
         }
     }
@@ -625,13 +625,13 @@ Key_List::output_switch (int use_keyword_table)
   if (!option[GLOBAL] && use_keyword_table == 0)
     {
       if (option[LENTABLE] && option[DUP])
-      {
-        output_keylength_table ();
-      }
+        {
+          output_keylength_table ();
+        }
       if (option[POINTER] && option[TYPE])
-      {
-        output_keyword_table ();
-      }
+        {
+          output_keyword_table ();
+        }
     }
 
   std::string comp_buffer;
@@ -654,9 +654,9 @@ Key_List::output_switch (int use_keyword_table)
         + " && !" + string_compare_prefix (option[STRCASECMP])
         + comparison_function + " (str + 1, resword->" + key_name + " + 1";
       if (option[COMP])
-      {
-        comp_buffer += ", len - 1";
-      }
+        {
+          comp_buffer += ", len - 1";
+        }
       comp_buffer += ")";
     }
   else
@@ -671,15 +671,15 @@ Key_List::output_switch (int use_keyword_table)
           : "*str == *resword && !std::strcmp (str + 1, resword + 1)";
     }
   if (!option[OPTIMIZE])
-  {
-    ACE_OS::printf ("  if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)\n    {\n");
-  }
+    {
+      ACE_OS::printf ("  if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)\n    {\n");
+    }
   ACE_OS::printf ("      %s const key = %s (str, len);\n\n",
                   generated_size_type (), option.hash_name ().c_str ());
   if (!option[OPTIMIZE])
-  {
-    ACE_OS::printf ("      if (key <= MAX_HASH_VALUE && key >= MIN_HASH_VALUE)\n");
-  }
+    {
+      ACE_OS::printf ("      if (key <= MAX_HASH_VALUE && key >= MIN_HASH_VALUE)\n");
+    }
 
   ACE_OS::printf ("        {\n");
 
@@ -701,9 +701,9 @@ Key_List::output_switch (int use_keyword_table)
       if (temp && total_switches != 1)
         ACE_OS::printf ("          if (key <= %d)\n            {\n", temp->hash_value);
       else
-      {
-        ACE_OS::printf ("            {\n");
-      }
+        {
+          ACE_OS::printf ("            {\n");
+        }
 
       // Output each keyword as part of a switch statement indexed by
       // hash value.
@@ -722,9 +722,9 @@ Key_List::output_switch (int use_keyword_table)
               lowest_case_value = 0;
             }
           else
-          {
-            ACE_OS::printf ("              switch (key - %d)\n                {\n", lowest_case_value);
-          }
+            {
+              ACE_OS::printf ("              switch (key - %d)\n                {\n", lowest_case_value);
+            }
 
           for (temp = curr; temp && ++i <= number_of_cases; temp = temp->next)
             {
@@ -759,9 +759,9 @@ Key_List::output_switch (int use_keyword_table)
                       else if (use_keyword_table)
                         ACE_OS::printf ("                  resword = wordlist[%d];\n", links->slot);
                       else
-                      {
-                        ACE_OS::printf ("                  resword = \"%s\";\n", links->key.c_str ());
-                      }
+                        {
+                          ACE_OS::printf ("                  resword = \"%s\";\n", links->key.c_str ());
+                        }
                       ACE_OS::printf ("                  if (%s) return resword;\n", comp_buffer.c_str ());
                     }
                 }
@@ -781,9 +781,9 @@ Key_List::output_switch (int use_keyword_table)
                       else if (use_keyword_table)
                         ACE_OS::printf ("                  resword = wordlist[%d];", temp->slot);
                       else
-                      {
-                        ACE_OS::printf ("                  resword = \"%s\";\n", temp->key.c_str ());
-                      }
+                        {
+                          ACE_OS::printf ("                  resword = \"%s\";\n", temp->key.c_str ());
+                        }
                       ACE_OS::printf ("                  if (%s) return resword;\n", comp_buffer.c_str ());
                     }
                   if (pointer_and_type_enabled)
@@ -793,9 +793,9 @@ Key_List::output_switch (int use_keyword_table)
                   else if (use_keyword_table)
                     ACE_OS::printf ("                  resword = wordlist[%d];", temp->slot);
                   else
-                  {
-                    ACE_OS::printf ("                  resword = \"%s\";\n", temp->key.c_str ());
-                  }
+                    {
+                      ACE_OS::printf ("                  resword = \"%s\";\n", temp->key.c_str ());
+                    }
                   ACE_OS::printf ("                  return %s ? resword : %s;\n",
                                   comp_buffer.c_str (), generated_null_pointer ());
                 }
@@ -810,13 +810,13 @@ Key_List::output_switch (int use_keyword_table)
                   else if (use_keyword_table)
                     ACE_OS::printf ("                  resword = wordlist[%d];", temp->slot);
                   else
-                  {
-                    ACE_OS::printf ("                  resword = \"%s\";", temp->key.c_str ());
-                  }
+                    {
+                      ACE_OS::printf ("                  resword = \"%s\";", temp->key.c_str ());
+                    }
                   if (option[LENTABLE] && !option[DUP])
-                  {
-                    ACE_OS::printf (" key_len = %d;", temp->length);
-                  }
+                    {
+                      ACE_OS::printf (" key_len = %d;", temp->length);
+                    }
                   ACE_OS::printf (" break;\n");
                 }
             }
@@ -929,9 +929,9 @@ Key_List::output_keyword_table ()
     {
       if (!option[SWITCH] && (total_duplicates == 0 || !option[DUP])
           && wordlist_slot < size_temp->hash_value)
-      {
-        wordlist_slot = size_temp->hash_value;
-      }
+        {
+          wordlist_slot = size_temp->hash_value;
+        }
       ++wordlist_slot;
       for (List_Node *link = size_temp->link; link; link = link->link)
         ++wordlist_slot;
@@ -958,9 +958,9 @@ Key_List::output_keyword_table ()
   // Skip over leading blank entries if there are no duplicates.
 
   if (0 < head->hash_value)
-  {
-    ACE_OS::printf ("      ");
-  }
+    {
+      ACE_OS::printf ("      ");
+    }
 
   int column_defaults;
 
@@ -975,9 +975,9 @@ Key_List::output_keyword_table ()
     }
 
   if (0 < head->hash_value && column_defaults % 10)
-  {
-    ACE_OS::printf ("\n");
-  }
+    {
+      ACE_OS::printf ("\n");
+    }
 
   // Generate an array of reserved words at appropriate locations.
 
@@ -1051,17 +1051,17 @@ Key_List::output_binary_search_function ()
 
   // Get prototype for strncmp() and strcmp().
   if (!option[SKIPSTDCSTRING])
-  {
-    ACE_OS::printf ("#include <cstring>\n");
-  }
+    {
+      ACE_OS::printf ("#include <cstring>\n");
+    }
   if (!option[SKIPCPP17HEADERS])
-  {
-    ACE_OS::printf ("#include <array>\n#include <cstddef>\n#include <memory>\n");
-  }
+    {
+      ACE_OS::printf ("#include <array>\n#include <cstddef>\n#include <memory>\n");
+    }
   if (!option[SKIPSTRINGH] && option[STRCASECMP])
-  {
-    ACE_OS::printf ("#include \"ace/OS_NS_string.h\"\n");
-  }
+    {
+      ACE_OS::printf ("#include \"ace/OS_NS_string.h\"\n");
+    }
 
   // Output type declaration now, reference it later on....
   if (option[TYPE] && !option[NOTYPE])
@@ -1071,9 +1071,9 @@ Key_List::output_binary_search_function ()
   output_min_max ();
 
   if (option[STRCASECMP])
-  {
-    output_strcasecmp ();
-  }
+    {
+      output_strcasecmp ();
+    }
 
   // Class definition if -M is *not* enabled.
   if (!option[SKIPCLASS])
@@ -1086,9 +1086,9 @@ Key_List::output_binary_search_function ()
 
   // Use the inline keyword to remove function overhead.
   if (option[INLINE])
-  {
-    ACE_OS::printf ("inline\n");
-  }
+    {
+      ACE_OS::printf ("inline\n");
+    }
 
   output_return_type (this->return_type.c_str (), option[CONSTANT]);
   ACE_OS::printf ("\n");
@@ -1107,9 +1107,9 @@ Key_List::output_binary_search_function ()
       if (!option[GLOBAL])
         {
           if (option[LENTABLE])
-          {
-            output_keylength_table ();
-          }
+            {
+              output_keylength_table ();
+            }
           output_keyword_table ();
         }
     }
@@ -1148,9 +1148,9 @@ Key_List::output_binary_search_function ()
           if (c == EOF)
             break;
           else
-          {
-            putchar (c);
-          }
+            {
+              putchar (c);
+            }
         }
     }
 
@@ -1169,17 +1169,17 @@ Key_List::output_linear_search_function ()
 
   // Get prototype for strncmp() and strcmp().
   if (!option[SKIPSTDCSTRING])
-  {
-    ACE_OS::printf ("#include <cstring>\n");
-  }
+    {
+      ACE_OS::printf ("#include <cstring>\n");
+    }
   if (!option[SKIPCPP17HEADERS])
-  {
-    ACE_OS::printf ("#include <array>\n#include <cstddef>\n#include <memory>\n");
-  }
+    {
+      ACE_OS::printf ("#include <array>\n#include <cstddef>\n#include <memory>\n");
+    }
   if (!option[SKIPSTRINGH] && option[STRCASECMP])
-  {
-    ACE_OS::printf ("#include \"ace/OS_NS_string.h\"\n");
-  }
+    {
+      ACE_OS::printf ("#include \"ace/OS_NS_string.h\"\n");
+    }
 
   // Output type declaration now, reference it later on....
   if (option[TYPE] && !option[NOTYPE])
@@ -1189,9 +1189,9 @@ Key_List::output_linear_search_function ()
   output_min_max ();
 
   if (option[STRCASECMP])
-  {
-    output_strcasecmp ();
-  }
+    {
+      output_strcasecmp ();
+    }
 
   // Class definition if -M is *not* enabled.
   if (!option[SKIPCLASS])
@@ -1204,9 +1204,9 @@ Key_List::output_linear_search_function ()
 
   // Use the inline keyword to remove function overhead.
   if (option[INLINE])
-  {
-    ACE_OS::printf ("inline\n");
-  }
+    {
+      ACE_OS::printf ("inline\n");
+    }
 
   output_return_type (this->return_type.c_str (), option[CONSTANT]);
   ACE_OS::printf ("\n");
@@ -1224,9 +1224,9 @@ Key_List::output_linear_search_function ()
       if (!option[GLOBAL])
         {
           if (option[LENTABLE])
-          {
-            output_keylength_table ();
-          }
+            {
+              output_keylength_table ();
+            }
           output_keyword_table ();
         }
     }
@@ -1251,9 +1251,9 @@ Key_List::output_linear_search_function ()
           if (c == EOF)
             break;
           else
-          {
-            putchar (c);
-          }
+            {
+              putchar (c);
+            }
         }
     }
 
@@ -1305,9 +1305,9 @@ Key_List::output_hash_function ()
     continue;
 
   if (option[INLINE])
-  {
-    ACE_OS::printf ("inline\n");
-  }
+    {
+      ACE_OS::printf ("inline\n");
+    }
 
   ACE_OS::printf ("%s\n", generated_size_type ());
   ACE_OS::printf ("%s::", option.class_name ().c_str ());
@@ -1343,9 +1343,9 @@ Key_List::output_hash_function ()
       for (count = 0; count < ACE_ASCII_SIZE; ++count)
         {
           if (!(count % max_column))
-          {
-            ACE_OS::printf ("\n    ");
-          }
+            {
+              ACE_OS::printf ("\n    ");
+            }
 
           ACE_OS::printf ("%*d,",
                           Key_List::field_width,
@@ -1400,9 +1400,9 @@ Key_List::output_hash_function ()
               if ((key_pos = option.get ()) != EOS)
                 ACE_OS::printf (" + ");
               else
-              {
-                break;
-              }
+                {
+                  break;
+                }
             }
 
           ACE_OS::printf ("%s;\n}\n\n", key_pos == WORD_END
@@ -1649,9 +1649,9 @@ Key_List::output_lookup_array ()
         {
           int val = abs (*--lookup_ptr);
           if (max < val)
-          {
-            max = val;
-          }
+            {
+              max = val;
+            }
         }
 
       char const *indent = option[GLOBAL] ? "" : "  ";
@@ -1692,9 +1692,9 @@ Key_List::output_lookup_array ()
                               Key_List::field_width,
                               *lookup_ptr);
               if (lookup_ptr + 1 < lookup_array + max_hash_value + 1)
-              {
-                ACE_OS::printf (++column % (max_column - 1) ? " " : "\n      ");
-              }
+                {
+                  ACE_OS::printf (++column % (max_column - 1) ? " " : "\n      ");
+                }
             }
         }
       ACE_OS::printf ("%s%s%s};\n\n", option[DEBUGGING] ? "" : "\n", indent, indent);
@@ -1708,15 +1708,15 @@ void
 Key_List::output_lookup_function ()
 {
   if (!option[OPTIMIZE])
-  {
-    ACE_OS::printf ("  if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)\n    {\n");
-  }
+    {
+      ACE_OS::printf ("  if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)\n    {\n");
+    }
   ACE_OS::printf ("      %s const key = %s (str, len);\n\n",
                   generated_size_type (), option.hash_name ().c_str ());
   if (!option[OPTIMIZE])
-  {
-    ACE_OS::printf ("      if (key <= MAX_HASH_VALUE && key >= MIN_HASH_VALUE)\n");
-  }
+    {
+      ACE_OS::printf ("      if (key <= MAX_HASH_VALUE && key >= MIN_HASH_VALUE)\n");
+    }
   ACE_OS::printf ("        {\n");
 
   if (option[DUP] && total_duplicates > 0)
@@ -1736,9 +1736,9 @@ Key_List::output_lookup_function ()
                           option[CONSTANT] || pointer_and_type_enabled == 0
                             ? "char const" : "char");
           if (this->array_type_ != Key_List::default_array_type)
-          {
-            ACE_OS::printf (".%s", option.key_name ().c_str ());
-          }
+            {
+              ACE_OS::printf (".%s", option.key_name ().c_str ());
+            }
 
           ACE_OS::printf (";\n\n              if (%s%s == *s && !%s%s)\n"
                          "                return %s%s%s;\n            }\n",
@@ -1830,9 +1830,9 @@ Key_List::output_lookup_function ()
                             ? "char const" : "char");
 
           if (this->array_type_ != Key_List::default_array_type)
-          {
-            ACE_OS::printf (".%s", option.key_name ().c_str ());
-          }
+            {
+              ACE_OS::printf (".%s", option.key_name ().c_str ());
+            }
 
           ACE_OS::printf (";\n\n          if (%s%s == *s && !%s%s)\n            return %s%s%s",
                   option[LENTABLE] ? "len == lengthtable[key]\n              && " : "",
@@ -1927,17 +1927,17 @@ Key_List::output ()
 
       // Get prototype for strncmp() and strcmp().
       if (!option[SKIPSTDCSTRING])
-      {
-        ACE_OS::printf ("#include <cstring>\n");
-      }
+        {
+          ACE_OS::printf ("#include <cstring>\n");
+        }
       if (!option[SKIPCPP17HEADERS])
-      {
-        ACE_OS::printf ("#include <array>\n#include <cstddef>\n#include <memory>\n");
-      }
+        {
+          ACE_OS::printf ("#include <array>\n#include <cstddef>\n#include <memory>\n");
+        }
       if (!option[SKIPSTRINGH] && option[STRCASECMP])
-      {
-        ACE_OS::printf ("#include \"ace/OS_NS_string.h\"\n");
-      }
+        {
+          ACE_OS::printf ("#include \"ace/OS_NS_string.h\"\n");
+        }
 
       // Output type declaration now, reference it later on....
       if (option[TYPE] && !option[NOTYPE])
@@ -1947,9 +1947,9 @@ Key_List::output ()
       output_min_max ();
 
       if (option[STRCASECMP])
-      {
-        output_strcasecmp ();
-      }
+        {
+          output_strcasecmp ();
+        }
 
       // Class definition if -M is *not* enabled.
       if (!option[SKIPCLASS])
@@ -2039,9 +2039,9 @@ Key_List::output ()
           if (!option[GLOBAL])
             {
               if (option[LENTABLE])
-              {
-                output_keylength_table ();
-              }
+                {
+                  output_keylength_table ();
+                }
               output_keyword_table ();
             }
           if (!option[GLOBAL])
@@ -2064,9 +2064,9 @@ Key_List::output ()
                 }
             }
           else
-          {
-            output_lookup_function ();
-          }
+            {
+              output_lookup_function ();
+            }
         }
 
       if (additional_code)
@@ -2078,9 +2078,9 @@ Key_List::output ()
               if (c == EOF)
                 break;
               else
-              {
-                putchar (c);
-              }
+                {
+                  putchar (c);
+                }
             }
         }
       ACE_OS::fflush (stdout);
@@ -2121,9 +2121,9 @@ Key_List::string_sort ()
 
               // Save the pointer for the last node.
               if (curr->link == nullptr)
-              {
-                last_node = curr;
-              }
+                {
+                  last_node = curr;
+                }
             }
 
           // Set the pointers, correctly.

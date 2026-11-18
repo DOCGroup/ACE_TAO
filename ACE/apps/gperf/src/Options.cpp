@@ -37,9 +37,9 @@ namespace
   print_option (ACE_TCHAR const *option)
   {
     if (option == nullptr)
-    {
-      option = ACE_TEXT ("");
-    }
+      {
+        option = ACE_TEXT ("");
+      }
 
 #if defined (ACE_USES_WCHAR)
     ACE_Wide_To_Ascii narrow_option (option);
@@ -118,9 +118,9 @@ Options::print_options ()
   if (argv_ != nullptr && argc_ > 0 && argv_[0] != nullptr)
     print_option (ACE::basename (argv_[0]));
   else
-  {
-    print_option (nullptr);
-  }
+    {
+      print_option (nullptr);
+    }
 
   for (int i = 1; argv_ != nullptr && i < argc_; ++i)
     print_option (argv_[i]);
@@ -259,9 +259,9 @@ Options::~Options ()
         if (*ptr == WORD_END)
           ACE_OS::fprintf (stderr, "$\n");
         else
-        {
-          ACE_OS::fprintf (stderr, "%d\n", *ptr);
-        }
+          {
+            ACE_OS::fprintf (stderr, "%d\n", *ptr);
+          }
 
       ACE_OS::fprintf (stderr, "finished dumping Options\n");
     }
@@ -273,9 +273,9 @@ int
 Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
   if (ACE_LOG_MSG->open (argv[0]) == -1)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("bBcCdDe:Ef:F:gGhH:i:IJj:k:K:lmMnN:oOprs:S:tTvVZ:QR"));
 
@@ -544,9 +544,9 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                                        usage),
                                       -1);
                   else
-                  {
-                    *l_key_pos = static_cast<char> (value);
-                  }
+                    {
+                      *l_key_pos = static_cast<char> (value);
+                    }
 
                 *l_key_pos = EOS;
 
@@ -564,9 +564,9 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                 if (total_keysig_size_ != 2
                     || (key_positions_[0] != 1
                         || key_positions_[1] != WORD_END))
-                {
-                  ACE_CLR_BITS (option_word_, DEFAULTCHARS);
-                }
+                  {
+                    ACE_CLR_BITS (option_word_, DEFAULTCHARS);
+                  }
               }
             break;
           }
