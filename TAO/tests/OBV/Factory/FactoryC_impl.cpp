@@ -57,3 +57,21 @@ ApplicationFactoryValue_impl::_copy_value ()
   ret_val->application_state (this->application_state ());
   return ret_val;
 }
+
+OBV_FactoryTest::ApplicationFactoryValue *
+ApplicationFactoryValue_init_impl::create ()
+{
+  ApplicationFactoryValue_impl *ret_val {};
+  ACE_NEW_RETURN (ret_val, ApplicationFactoryValue_impl, nullptr);
+  return ret_val;
+}
+
+CORBA::ValueBase *
+ApplicationFactoryValue_init_impl::create_for_unmarshal ()
+{
+  ApplicationFactoryValue_impl *ret_val {};
+  ACE_NEW_THROW_EX (ret_val,
+                    ApplicationFactoryValue_impl,
+                    CORBA::NO_MEMORY ());
+  return ret_val;
+}

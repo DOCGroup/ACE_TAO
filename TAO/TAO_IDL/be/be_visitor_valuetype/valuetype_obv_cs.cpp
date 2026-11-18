@@ -72,14 +72,12 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
   *os << node->local_name () << " ()" << be_nl
       << "{}";
 
-  // Generate _copy_value() for the concrete OBV path. Application
-  // factory implementations provide their own copy operation.
+  // Generate _copy_value() only when this path supplies the reference
+  // counter. Application factory implementations provide their own copy.
   // Direct valuetype members are copied recursively, without identity
   // preservation or cycle detection. Other members use their normal copy
   // behavior, so nested valuetypes remain shared.
-  if (node->obv_need_ref_counter ()
-      && be_valuetype::FS_CONCRETE_FACTORY
-           == node->determine_factory_style ())
+  if (node->obv_need_ref_counter ())
     {
       *os << be_nl_2
           << "::CORBA::ValueBase *" << be_nl
