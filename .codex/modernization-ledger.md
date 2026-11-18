@@ -12918,3 +12918,11 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   use `%B`.
 - `git diff --check` passed. The broader ACE/TAO logging-format audit remains
   open.
+
+## 2026-11-18 ACE timer and token log formats
+
+- Corrected the timer heap's two `size_t` timer-ID indexes to `%B`. Token
+  request/reply lengths are `ACE_UINT32` and now use `%Q` with an explicit
+  `ACE_UINT64` conversion.
+- `git diff --check` passed. The wider ACE/TAO logging-format audit remains
+  open.
