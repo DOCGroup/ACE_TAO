@@ -90,14 +90,22 @@ template<class T> void
 ACE_Intrusive_List<T>::unsafe_remove (T *node)
 {
   if (node->prev () != nullptr)
-    node->prev ()->next (node->next ());
+    {
+      node->prev ()->next (node->next ());
+    }
   else
-    this->head_ = node->next ();
+    {
+      this->head_ = node->next ();
+    }
 
   if (node->next () != nullptr)
-    node->next ()->prev (node->prev ());
+    {
+      node->next ()->prev (node->prev ());
+    }
   else
-    this->tail_ = node->prev ();
+    {
+      this->tail_ = node->prev ();
+    }
 
   node->next (nullptr);
   node->prev (nullptr);

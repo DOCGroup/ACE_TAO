@@ -78,9 +78,13 @@ ACE_MEM_SAP::close_shm_malloc ()
   int retv = -1;
 
   if (this->shm_malloc_ != nullptr)
-    if (this->shm_malloc_->release (1) == 0)
-      ACE_Process_Mutex::unlink (this->shm_malloc_->memory_pool ().
-                                 mmap ().filename ());
+    {
+      if (this->shm_malloc_->release (1) == 0)
+        {
+          ACE_Process_Mutex::unlink (this->shm_malloc_->memory_pool ().
+                                     mmap ().filename ());
+        }
+    }
 
   this->shm_malloc_.reset ();
 
