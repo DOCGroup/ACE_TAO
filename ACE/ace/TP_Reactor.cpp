@@ -43,7 +43,9 @@ ACE_TP_Token_Guard::acquire_read_token (ACE_Time_Value *max_wait_time)
   if (result == -1)
     {
       if (errno == ETIME)
-        return 0;
+        {
+          return 0;
+        }
       else
       {
         return -1;
@@ -83,7 +85,9 @@ ACE_TP_Token_Guard::acquire_token (ACE_Time_Value *max_wait_time)
   if (result == -1)
     {
       if (errno == ETIME)
-        return 0;
+        {
+          return 0;
+        }
       else
       {
         return -1;
@@ -402,9 +406,11 @@ ACE_TP_Reactor::handle_socket_events (int &event_count,
   // NOTE: This check was performed in older versions of the
   // TP_Reactor. Looks like it is a waste..
   if (dispatch_info.event_handler_ != this->notify_handler_)
-    if (this->suspend_i (dispatch_info.handle_) == -1)
     {
-      return 0;
+      if (this->suspend_i (dispatch_info.handle_) == -1)
+        {
+          return 0;
+        }
     }
 
   // Call add_reference() if needed.
@@ -563,7 +569,9 @@ ACE_TP_Reactor::dispatch_socket_event (ACE_EH_Dispatch_Info &dispatch_info)
   // handling other things.
   int status = 1;
   while (status > 0)
-    status = (event_handler->*callback) (dispatch_info.handle_);
+    {
+      status = (event_handler->*callback) (dispatch_info.handle_);
+    }
 
   // Post process socket event
   return this->post_process_socket_event (dispatch_info, status);
