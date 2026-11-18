@@ -13077,3 +13077,15 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   `ACE_UINT64` casts. In Notify `Task_Stats.cpp`, added `unsigned int` casts
   around truncated `ACE_UINT32` values passed to `%u` in both `fprintf` and
   `ACE_DEBUG`. Both files pass C++17 syntax-only compilation; diff checks pass.
+
+## 2026-11-18 AV prefix increments
+
+- Changed discarded postfix increments to prefix form in `RTCP_Packet.cpp`
+  and the MD5 implementation's count and encode/decode loops. Kept postfix
+  operations where the old index, fragment number, token, or sequence ID is
+  consumed. `GNUmakefile.AV realclean` followed by a full `make -j 8` rebuilt
+  and linked the AV library without warnings. Commit `dcd3d5742b0`.
+
+## 2026-11-18 TMCast prefix increment
+
+- Changed the discarded `current_.id++` statement in `TransactionController.hpp` to `++current_.id`. A `realclean` followed by `make -j 8` rebuilt and linked `libACE_TMCast.so.8.0.8` without warnings. Commit `2c2bc272119`.

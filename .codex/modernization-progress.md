@@ -2,44 +2,48 @@
 
 Inventory base: `origin/master`. Counts are directory-level, not executable/project counts.
 
-Scope: **1268 directories**; **1239** differ from the base; **366** have task-level review records; **243** have a recorded validated batch; **54** have a fully completed directory checklist. These are separate measures, not an overall completion percentage.
+Scope: **1268 directories**; **1239** differ from the base; **379** have task-level review records; **246** have a recorded validated batch; **54** have a fully completed directory checklist. These are separate measures, not an overall completion percentage.
 
 ## Progress by modernization task
 
 | Task | Reviewed | Done | Not applicable | Needs work |
 | --- | ---: | ---: | ---: | ---: |
-| `CONST` — East-side const and immutable locals/handles | 241 | 240 | 1 | 0 |
-| `SCOPE_REDUCTION` — Keep variables and declarations in the narrowest useful scope | 14 | 14 | 0 | 0 |
+| `CONST` — East-side const and immutable locals/handles | 242 | 241 | 1 | 0 |
+| `SCOPE_REDUCTION` — Keep variables and declarations in the narrowest useful scope | 15 | 15 | 0 | 0 |
 | `VALUE_INIT` — Value initialization and simpler constructors | 228 | 226 | 2 | 0 |
 | `NULLPTR` — Eligible nullptr modernization | 81 | 64 | 17 | 0 |
 | `OVERRIDE_DEFAULT_DELETE` — override/default/delete and exported destructor placement | 122 | 112 | 10 | 0 |
-| `OVERRIDE` — Missing override specifiers | 5 | 5 | 0 | 0 |
+| `OVERRIDE` — Missing override specifiers | 6 | 6 | 0 | 0 |
 | `EXPORTED_DESTRUCTORS` — Out-of-line destructor symbols for exported classes | 6 | 4 | 2 | 0 |
 | `EXPLICIT` — Single-argument constructor explicitness | 90 | 64 | 26 | 0 |
-| `COPY_MOVE` — Copy/move support review | 135 | 132 | 3 | 0 |
+| `COPY_MOVE` — Copy/move support review | 149 | 146 | 3 | 0 |
 | `ATOMIC` — Atomic state and memory-order review | 15 | 9 | 6 | 0 |
 | `THREAD_SAFETY` — Synchronization and data-race review | 15 | 12 | 2 | 1 |
 | `USING` — Suitable typedef-to-using conversions | 43 | 15 | 28 | 0 |
 | `CONSTEXPR` — Internal constants and linkage | 44 | 21 | 23 | 0 |
-| `OWNERSHIP` — Manual ownership and smart pointers | 181 | 173 | 8 | 0 |
+| `OWNERSHIP` — Manual ownership and smart pointers | 183 | 175 | 8 | 0 |
 | `CONTAINERS` — Manual arrays/containers and exception-safety cost | 69 | 43 | 26 | 0 |
 | `CONTAINER_OWNERSHIP` — Standard containers and ownership of container elements | 1 | 1 | 0 | 0 |
 | `C_STRING` — Plain C-string handling | 85 | 60 | 25 | 0 |
 | `STD_NARROW_STRING` — Use std string functions for narrow C strings | 10 | 10 | 0 | 0 |
-| `PREFIX_INC` — Prefer prefix increment and decrement when equivalent | 30 | 28 | 2 | 0 |
+| `PREFIX_INC` — Prefer prefix increment and decrement when equivalent | 32 | 30 | 2 | 0 |
+| `BRACES` — Consistent braces around control-flow bodies | 2 | 0 | 0 | 2 |
+| `CONST_GUARD_MACROS` — Const guard macro usage while preserving ACE_GUARD conventions | 2 | 2 | 0 | 0 |
+| `MOVE_SITES` — Audit std::move sites for moved-from use and ownership correctness | 3 | 3 | 0 | 0 |
+| `MOVE_SEMANTICS` — Copy/move semantics and moved-from object safety | 6 | 6 | 0 | 0 |
 | `SIZE_TYPES` — Count and size types | 58 | 34 | 15 | 9 |
 | `IDL_GENERATION` — tao_idl/gperf inputs and generated output | 36 | 6 | 30 | 0 |
 | `CLI_OPTIONS` — Grouped command-line settings | 82 | 64 | 18 | 0 |
-| `LOG_FORMAT` — ACE logging format specifiers | 73 | 55 | 16 | 2 |
+| `LOG_FORMAT` — ACE logging format specifiers | 77 | 60 | 16 | 1 |
 | `TEST_ASSERTIONS` — Regression test assertions | 51 | 25 | 24 | 2 |
 | `CLEANUP` — Unused helpers and stale commented code | 244 | 244 | 0 | 0 |
 | `UNUSED_INCLUDES` — Unused include removal | 11 | 11 | 0 | 0 |
 | `SPECIAL_MEMBER_COMMENTS` — Tree-wide removal of special-member label comments | 151 | 144 | 7 | 0 |
-| `STYLE` — Blank lines, layout, line length, formatting | 193 | 193 | 0 | 0 |
+| `STYLE` — Blank lines, layout, line length, formatting | 195 | 195 | 0 | 0 |
 | `BUILD_TEST` — Regeneration, realclean, focused build/test | 309 | 296 | 0 | 13 |
 | `TEXT_API` — ACE_TCHAR and text-aware API usage | 10 | 8 | 2 | 0 |
 | `WINDOWS_RESOURCE_LIFETIME` — Windows system resource and platform handle lifetime | 1 | 1 | 0 | 0 |
-| `DIRECTORY_PASS` — Validated directory modernization batch | 9 | 6 | 0 | 3 |
+| `DIRECTORY_PASS` — Validated directory modernization batch | 9 | 8 | 0 | 1 |
 
 `SPECIAL_MEMBER_COMMENTS` remains a tree-wide follow-up even where a directory has a historical `done` or `not-applicable` row: revisit all source directories and generator inputs, including previously modernized areas. These counts show recorded directory reviews, not completion of the global sweep.
 
@@ -48,30 +52,30 @@ Scope: **1268 directories**; **1239** differ from the base; **366** have task-le
 | Directory | Completed task areas | Open items | Checklist | Commit |
 | --- | --- | --- | --- | --- |
 | `ACE/ACEXML/apps/svcconf` | VALUE_INIT; OVERRIDE_DEFAULT_DELETE; COPY_MOVE; OWNERSHIP; CLEANUP; BUILD_TEST | None; retained ACE::strnew allocation and delete[] semantics under unique_ptr ownership | audited | `56a3bb07cc5` |
-| `ACE/ACEXML/common` | CONST; VALUE_INIT; OVERRIDE_DEFAULT_DELETE; EXPLICIT; OWNERSHIP; CONTAINERS; CLEANUP; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Remaining modernization categories are not yet audited | partial | `3835a20c046` |
+| `ACE/ACEXML/common` | CONST; VALUE_INIT; OVERRIDE_DEFAULT_DELETE; EXPLICIT; COPY_MOVE; OWNERSHIP; CONTAINERS; CLEANUP; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Remaining modernization categories are not yet audited | partial | `3835a20c046` |
 | `ACE/ACEXML/examples/SAXPrint` | CONST; VALUE_INIT; NULLPTR; OVERRIDE_DEFAULT_DELETE; EXPLICIT; COPY_MOVE; OWNERSHIP; CLEANUP; STYLE; BUILD_TEST | None identified; ErrorHandler API requires non-const exception references | audited | `63144db1f17` |
 | `ACE/ACEXML/parser/debug_validator` | CONST; VALUE_INIT; NULLPTR; OVERRIDE_DEFAULT_DELETE; EXPLICIT; COPY_MOVE; USING; CONSTEXPR=n/a; OWNERSHIP; CONTAINERS; C_STRING=n/a; SIZE_TYPES=n/a; IDL_GENERATION=n/a; CLI_OPTIONS=n/a; LOG_FORMAT=n/a; TEST_ASSERTIONS=n/a; CLEANUP; STYLE; BUILD_TEST | None | audited | `cff666cf71f` |
 | `ACE/ACEXML/parser/parser` | CONST; VALUE_INIT; NULLPTR; OVERRIDE_DEFAULT_DELETE; EXPLICIT=n/a; COPY_MOVE; USING; CONSTEXPR; OWNERSHIP; CONTAINERS=n/a; C_STRING=n/a; SIZE_TYPES; IDL_GENERATION=n/a; LOG_FORMAT=n/a; TEST_ASSERTIONS=n/a; CLEANUP; STYLE; BUILD_TEST | Remaining modernization categories are not yet audited | partial | `5423c7f31f6` |
 | `ACE/ACEXML/tests` | CONST; VALUE_INIT; NULLPTR; OVERRIDE_DEFAULT_DELETE; COPY_MOVE; OWNERSHIP; C_STRING; SIZE_TYPES; TEST_ASSERTIONS; CLEANUP; STYLE; BUILD_TEST | HTTP test opens external URLs; both return HTTP 400 and its legacy test still exits 0 | audited | `e3789237083` |
 | `ACE/ACEXML/tests/util` | CONST; VALUE_INIT; NULLPTR=n/a; OVERRIDE_DEFAULT_DELETE=n/a; EXPLICIT=n/a; COPY_MOVE=n/a; USING=n/a; CONSTEXPR; OWNERSHIP=n/a; CONTAINERS; C_STRING=n/a; SIZE_TYPES; IDL_GENERATION=n/a; LOG_FORMAT; TEST_ASSERTIONS; CLEANUP; STYLE; BUILD_TEST | None | audited | `5abbcc58e88` |
 | `ACE/ASNMP/agent` | CONST; VALUE_INIT; NULLPTR=n/a; OVERRIDE_DEFAULT_DELETE; EXPLICIT=n/a; COPY_MOVE; USING=n/a; CONSTEXPR; OWNERSHIP; CONTAINERS=n/a; C_STRING=n/a; SIZE_TYPES=n/a; IDL_GENERATION=n/a; CLI_OPTIONS; LOG_FORMAT=n/a; TEST_ASSERTIONS=n/a; CLEANUP; STYLE; BUILD_TEST | None | audited | `3d48f70f611` |
-| `ACE/ASNMP/asnmp` | OVERRIDE_DEFAULT_DELETE; EXPLICIT; C_STRING; PREFIX_INC; CLEANUP; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Broader modernization audit remains; narrow ACE_OS::strncmp calls in three test directories are tracked in the ledger | partial | `9e6b539544e` |
+| `ACE/ASNMP/asnmp` | OVERRIDE_DEFAULT_DELETE; EXPLICIT; C_STRING; PREFIX_INC; MOVE_SEMANTICS; CLEANUP; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Broader modernization audit remains; narrow ACE_OS::strncmp calls in three test directories are tracked in the ledger | partial | `9e6b539544e` |
 | `ACE/ASNMP/examples/get` | CONST; VALUE_INIT; NULLPTR=n/a; OVERRIDE_DEFAULT_DELETE; EXPLICIT=n/a; COPY_MOVE; USING=n/a; CONSTEXPR=n/a; OWNERSHIP=n/a; CONTAINERS=n/a; C_STRING=n/a; SIZE_TYPES=n/a; IDL_GENERATION=n/a; CLI_OPTIONS; LOG_FORMAT=n/a; TEST_ASSERTIONS=n/a; CLEANUP; STYLE; BUILD_TEST | None | audited | `19728040202` |
 | `ACE/ASNMP/examples/next` | CONST; VALUE_INIT; NULLPTR=n/a; OVERRIDE_DEFAULT_DELETE=n/a; EXPLICIT=n/a; COPY_MOVE; USING=n/a; CONSTEXPR=n/a; OWNERSHIP=n/a; CONTAINERS=n/a; C_STRING=n/a; SIZE_TYPES=n/a; IDL_GENERATION=n/a; CLI_OPTIONS; LOG_FORMAT=n/a; TEST_ASSERTIONS=n/a; CLEANUP; STYLE; BUILD_TEST | None | audited | `66ccb87bb8b` |
 | `ACE/ASNMP/examples/set` | CONST; VALUE_INIT; NULLPTR=n/a; OVERRIDE_DEFAULT_DELETE=n/a; EXPLICIT=n/a; COPY_MOVE; USING=n/a; CONSTEXPR=n/a; OWNERSHIP=n/a; CONTAINERS=n/a; C_STRING=n/a; SIZE_TYPES=n/a; IDL_GENERATION=n/a; CLI_OPTIONS; LOG_FORMAT=n/a; TEST_ASSERTIONS=n/a; CLEANUP; STYLE; BUILD_TEST | None | audited | `2dd54c18ae1` |
 | `ACE/ASNMP/examples/trap` | CONST; VALUE_INIT; NULLPTR=n/a; OVERRIDE_DEFAULT_DELETE=n/a; EXPLICIT=n/a; COPY_MOVE; USING=n/a; CONSTEXPR=n/a; OWNERSHIP=n/a; CONTAINERS=n/a; C_STRING=n/a; SIZE_TYPES=n/a; IDL_GENERATION=n/a; CLI_OPTIONS; LOG_FORMAT=n/a; TEST_ASSERTIONS=n/a; CLEANUP; STYLE; BUILD_TEST | None | audited | `d276d90f85c` |
 | `ACE/ASNMP/examples/walk` | CONST; VALUE_INIT; NULLPTR=n/a; OVERRIDE_DEFAULT_DELETE=n/a; EXPLICIT=n/a; COPY_MOVE; USING=n/a; CONSTEXPR=n/a; OWNERSHIP; CONTAINERS=n/a; C_STRING=n/a; SIZE_TYPES=n/a; IDL_GENERATION=n/a; CLI_OPTIONS; LOG_FORMAT=n/a; TEST_ASSERTIONS=n/a; CLEANUP; STYLE; BUILD_TEST | None | audited | `c85f30d4082` |
 | `ACE/ASNMP/tests` | CONST; VALUE_INIT; NULLPTR; OVERRIDE_DEFAULT_DELETE; EXPLICIT=n/a; COPY_MOVE; USING=n/a; CONSTEXPR; OWNERSHIP; CONTAINERS; C_STRING; SIZE_TYPES; IDL_GENERATION=n/a; CLI_OPTIONS=n/a; TEST_ASSERTIONS; CLEANUP; BUILD_TEST | Review deferred size_t uses separately; the user requested postponing that modernization | partial | `70bbff352a2` |
-| `ACE/Kokyu` | CONST; SCOPE_REDUCTION; VALUE_INIT; OVERRIDE_DEFAULT_DELETE; EXPLICIT; COPY_MOVE; OWNERSHIP; PREFIX_INC; LOG_FORMAT; CLEANUP; UNUSED_INCLUDES; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Full directory checklist remains; size-type modernization deferred | partial | `288e92d8158` |
-| `ACE/Kokyu/tests/DSRT_MIF` | CONST; CLEANUP; BUILD_TEST | Full test-directory checklist remains | partial | `288e92d8158` |
-| `ACE/ace` | CONST; VALUE_INIT; NULLPTR; PREFIX_INC; CLEANUP; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Directory checklist remains partially audited; pointer initialization and other modernization categories still need review | partial | `c50c8c65e08` |
+| `ACE/Kokyu` | CONST; SCOPE_REDUCTION; VALUE_INIT; OVERRIDE_DEFAULT_DELETE; EXPLICIT; COPY_MOVE; OWNERSHIP; PREFIX_INC; LOG_FORMAT; CLEANUP; UNUSED_INCLUDES; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST; DIRECTORY_PASS | Full directory checklist remains; size-type modernization deferred | partial | `288e92d8158` |
+| `ACE/Kokyu/tests/DSRT_MIF` | CONST; CLEANUP; BUILD_TEST; DIRECTORY_PASS | Full test-directory checklist remains | partial | `288e92d8158` |
+| `ACE/ace` | CONST; VALUE_INIT; NULLPTR; PREFIX_INC; CONST_GUARD_MACROS; MOVE_SITES; CLEANUP; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Directory checklist remains partially audited; pointer initialization and other modernization categories still need review | partial | `c50c8c65e08` |
 | `ACE/ace/Compression` | CONST; VALUE_INIT; NULLPTR=n/a; OVERRIDE_DEFAULT_DELETE; EXPLICIT; COPY_MOVE; USING=n/a; CONSTEXPR=n/a; OWNERSHIP=n/a; CONTAINERS=n/a; C_STRING=n/a; SIZE_TYPES; IDL_GENERATION=n/a; CLI_OPTIONS=n/a; LOG_FORMAT=n/a; TEST_ASSERTIONS=n/a; CLEANUP; STYLE; BUILD_TEST | Deferred size_t review remains open | partial | `72001d34344` |
 | `ACE/ace/Compression/rle` | CONST; VALUE_INIT; OVERRIDE_DEFAULT_DELETE; EXPLICIT; COPY_MOVE; SIZE_TYPES; CLEANUP; STYLE; BUILD_TEST | Deferred size_t review remains open | partial | `627188f6d27` |
 | `ACE/ace/ETCL` | OWNERSHIP; CONTAINERS; CLEANUP; STYLE; BUILD_TEST | Directory checklist remains open; review remaining modernization categories | partial | `0883f62bd10` |
 | `ACE/ace/Monitor_Control` | CONST; VALUE_INIT; COPY_MOVE; OWNERSHIP; CLEANUP; BUILD_TEST; WINDOWS_RESOURCE_LIFETIME; DIRECTORY_PASS | Full directory checklist remains open; validate the Windows PDH implementation on Windows. | partial | `9b417e12fc6` |
 | `ACE/ace/SSL` | VALUE_INIT; COPY_MOVE; OWNERSHIP; STYLE; BUILD_TEST | SSL directory needs continued category review beyond ownership, explicit special members, pointer value initialization, and build validation | partial | `0b0f0d3ab47` |
 | `ACE/ace/TkReactor` | CONST; VALUE_INIT; COPY_MOVE; STYLE; BUILD_TEST | Continue full modernization checklist; current pass reviewed special members, local initialization/const, ownership notes, and build configuration | partial | `fe4ffaaeb53` |
-| `ACE/ace/XML_Utils` | CONST; SCOPE_REDUCTION; NULLPTR; OWNERSHIP; CLEANUP; STYLE; BUILD_TEST | Full XML_Utils checklist remains open; schema and XSCRT subdirectories are separately tracked; size-type review deferred | partial | `4c7088ba578` |
+| `ACE/ace/XML_Utils` | CONST; SCOPE_REDUCTION; NULLPTR; OWNERSHIP; MOVE_SITES; CLEANUP; STYLE; BUILD_TEST | Full XML_Utils checklist remains open; schema and XSCRT subdirectories are separately tracked; size-type review deferred | partial | `4c7088ba578` |
 | `ACE/ace/XML_Utils/XMLSchema` | CONST; SCOPE_REDUCTION; EXPLICIT; COPY_MOVE; OWNERSHIP; CLEANUP; UNUSED_INCLUDES; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Remaining XML Schema files still need the full directory checklist; size-type review deferred | partial | `5cc77dbc766` |
 | `ACE/ace/XML_Utils/XSCRT` | VALUE_INIT; NULLPTR; OVERRIDE_DEFAULT_DELETE; EXPLICIT; COPY_MOVE; OWNERSHIP; PREFIX_INC; CLEANUP; UNUSED_INCLUDES; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Full XSCRT checklist remains open; deferred size-type review unchanged | partial | `214c9b9dc5b` |
 | `ACE/apps/Gateway/Gateway` | CONST; VALUE_INIT; OWNERSHIP; PREFIX_INC; CLEANUP; STYLE; BUILD_TEST | Remaining checklist categories still need audit. | partial | `5143cca248b` |
@@ -110,9 +114,12 @@ Scope: **1268 directories**; **1239** differ from the base; **366** have task-le
 | `ACE/protocols/examples/INet` | VALUE_INIT; OVERRIDE_DEFAULT_DELETE; EXPLICIT; COPY_MOVE; OWNERSHIP; CONTAINERS; SIZE_TYPES; CLI_OPTIONS; CLEANUP; STYLE; BUILD_TEST | Review remaining checklist areas, including whether ACE_CString is appropriate for CLI option storage | partial | `918de2522e0` |
 | `ACE/protocols/examples/RMCast/Send_Msg` | CONST; VALUE_INIT; USING; CONSTEXPR; CONTAINERS; SIZE_TYPES; LOG_FORMAT; CLEANUP; STYLE; BUILD_TEST | Full checklist pending; retained ACE_Vector and the protocol C array to preserve existing allocator/capacity and message-layout behavior | partial | `6e9768bffd6` |
 | `TAO/TAO_IDL/driver` | VALUE_INIT; CLEANUP; BUILD_TEST | Broader driver modernization checklist remains | partial | `6fdc9979c49` |
-| `TAO/TAO_IDL/fe` | OWNERSHIP; CLEANUP; BUILD_TEST | Broader FE checklist remains; generated parser ownership follows Bison semantic-value transfers | partial | `28886ce1362` |
+| `TAO/TAO_IDL/fe` | COPY_MOVE; OWNERSHIP; CLEANUP; BUILD_TEST | Broader FE checklist remains; generated parser ownership follows Bison semantic-value transfers | partial | `28886ce1362` |
 | `TAO/examples/Advanced/ch_3` | CONST; STYLE; BUILD_TEST | Full directory checklist remains open | partial | `0ebf77a93ad` |
-| `TAO/examples/Kokyu_dsrt_schedulers` | COPY_MOVE; BUILD_TEST | Full directory checklist remains open | partial | `7fd29da81c1` |
+| `TAO/examples/Kokyu_dsrt_schedulers` | COPY_MOVE; MOVE_SITES; BUILD_TEST | Full directory checklist remains open | partial | `7fd29da81c1` |
+| `TAO/examples/OBV` | SCOPE_REDUCTION; OWNERSHIP; STYLE | Remaining directory checklist categories are not yet audited | partial | `e4b18b9a71d` |
+| `TAO/examples/OBV/Typed_Events` | OVERRIDE | Remaining directory checklist categories are not yet audited | partial | `c7200d60bde` |
+| `TAO/examples/TypeCode_Creation` | CONST; OWNERSHIP; STYLE | Remaining directory checklist categories are not yet audited | partial | `5abf8ad4f22` |
 | `TAO/orbsvcs/DevGuideExamples/EventServices/OMG_Basic` | CONST; VALUE_INIT; STYLE; BUILD_TEST | Audit remaining applicable modernization categories | partial | `0f4366dbac0` |
 | `TAO/orbsvcs/DevGuideExamples/EventServices/OMG_SupplierSideEC` | CONST; VALUE_INIT; OWNERSHIP; CLEANUP; STYLE; BUILD_TEST | Audit remaining applicable modernization categories | partial | `682a8068a4a` |
 | `TAO/orbsvcs/DevGuideExamples/EventServices/OMG_TypedEC` | CONST; OWNERSHIP; CLEANUP; STYLE; BUILD_TEST | Audit remaining applicable modernization categories | partial | `5f5e58ff22c` |
@@ -143,13 +150,13 @@ Scope: **1268 directories**; **1239** differ from the base; **366** have task-le
 | `TAO/orbsvcs/DevGuideExamples/Security/SecurityUnawareApp` | CONST; VALUE_INIT; OVERRIDE_DEFAULT_DELETE; COPY_MOVE; CLEANUP; STYLE; BUILD_TEST | Remaining modernization categories are not yet fully audited; stale unbuilt MessengerI.cpp intentionally left untouched | partial | `64602dc5917` |
 | `TAO/orbsvcs/DevGuideExamples/ValueTypes/Notify` | CONST; VALUE_INIT; NULLPTR; OVERRIDE_DEFAULT_DELETE; COPY_MOVE; OWNERSHIP; CLI_OPTIONS; CLEANUP; STYLE; BUILD_TEST | Remaining modernization categories across the complete directory/codebase are not yet fully audited | partial | `0c591925970` |
 | `TAO/orbsvcs/Dump_Schedule` | CONST; VALUE_INIT; CLEANUP; STYLE; BUILD_TEST | Remaining directory modernization categories still need audit | partial | `741601b55eb` |
-| `TAO/orbsvcs/Event_Service` | CONST; VALUE_INIT; OWNERSHIP; CLEANUP; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Remaining directory modernization categories still need audit | partial | `5ba6f8cd300` |
+| `TAO/orbsvcs/Event_Service` | CONST; VALUE_INIT; COPY_MOVE; OWNERSHIP; CLEANUP; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Remaining directory modernization categories still need audit | partial | `5ba6f8cd300` |
 | `TAO/orbsvcs/FTRT_Event_Service/Event_Service` | CONST; VALUE_INIT; OWNERSHIP; CLEANUP; STYLE; BUILD_TEST | No run_test.pl is present; remaining directory checklist is not fully audited | partial | `affa57ccb45` |
 | `TAO/orbsvcs/FTRT_Event_Service/Factory_Service` | CONST; VALUE_INIT; OVERRIDE_DEFAULT_DELETE; COPY_MOVE; OWNERSHIP; C_STRING; CLI_OPTIONS; CLEANUP; STYLE; BUILD_TEST | Remaining directory modernization categories still need audit | partial | `` |
 | `TAO/orbsvcs/FTRT_Event_Service/Gateway_Service` | CONST; VALUE_INIT; OVERRIDE_DEFAULT_DELETE; COPY_MOVE; OWNERSHIP; CLI_OPTIONS; CLEANUP; STYLE; BUILD_TEST | Remaining directory modernization categories still need audit | partial | `` |
 | `TAO/orbsvcs/FT_Naming_Service` | CONST; VALUE_INIT; OVERRIDE_DEFAULT_DELETE; EXPLICIT; COPY_MOVE; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Remaining directory modernization categories still need audit | partial | `` |
 | `TAO/orbsvcs/FT_ReplicationManager` | CONST; VALUE_INIT; OWNERSHIP; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Analyzer ownership API remains deliberately non-owning; full directory category audit remains | partial | `` |
-| `TAO/orbsvcs/Fault_Detector` | VALUE_INIT; OWNERSHIP; CLEANUP; BUILD_TEST | Remaining directory modernization categories still need audit | partial | `0593351e6ef` |
+| `TAO/orbsvcs/Fault_Detector` | VALUE_INIT; COPY_MOVE; OWNERSHIP; CLEANUP; BUILD_TEST | Remaining directory modernization categories still need audit | partial | `0593351e6ef` |
 | `TAO/orbsvcs/Fault_Notifier` | CONST; VALUE_INIT; CLEANUP; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Remaining directory modernization categories still need audit | partial | `` |
 | `TAO/orbsvcs/IFR_Service` | CONST; OWNERSHIP; CLEANUP; BUILD_TEST | ACE_NEW_RETURN values remain only where ownership is transferred to CORBA/AST APIs or backend global state; generator_init now returns unique_ptr | partial | `8f87102fd92` |
 | `TAO/orbsvcs/LifeCycle_Service` | CONST; VALUE_INIT; NULLPTR; OVERRIDE_DEFAULT_DELETE; COPY_MOVE; CLEANUP; STYLE; BUILD_TEST | Remaining directory modernization categories still need audit | partial | `` |
@@ -242,7 +249,7 @@ Scope: **1268 directories**; **1239** differ from the base; **366** have task-le
 | `TAO/orbsvcs/tests/Notify/Reconnecting` | CONST; VALUE_INIT; NULLPTR; C_STRING; BUILD_TEST | Other checklist modernization categories remain unaudited; ACE_TCHAR parsing and file-I/O wrappers retained | partial | `d7686e313eb` |
 | `TAO/orbsvcs/tests/Notify/Sequence_Multi_Filter` | CONST; VALUE_INIT; COPY_MOVE; OWNERSHIP; CLEANUP; STYLE; BUILD_TEST | Other checklist modernization categories remain unaudited | partial | `4ffe44273f1` |
 | `TAO/orbsvcs/tests/Notify/Structured_Filter` | VALUE_INIT; OVERRIDE_DEFAULT_DELETE; COPY_MOVE; OWNERSHIP; CLEANUP; BUILD_TEST | Broader directory checklist remains | partial | `d57eccb57a4` |
-| `TAO/tao/AnyTypeCode` | CONST; VALUE_INIT; OVERRIDE_DEFAULT_DELETE; PREFIX_INC; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Remaining modernization categories are not yet audited | partial | `pending` |
+| `TAO/tao/AnyTypeCode` | CONST; VALUE_INIT; OVERRIDE_DEFAULT_DELETE; PREFIX_INC; CONST_GUARD_MACROS; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Remaining modernization categories are not yet audited | partial | `pending` |
 | `TAO/tao/BiDir_GIOP` | CONST; VALUE_INIT; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Remaining modernization categories still need audit | partial | `1e6aa561e2a` |
 | `TAO/tao/CSD_Framework` | CONST; OWNERSHIP; PREFIX_INC; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Manual request clone cleanup retained for ownership-sensitive APIs; remaining modernization categories still need audit | partial | `4ffd1cb1be6` |
 | `TAO/tao/CSD_ThreadPool` | CONST; VALUE_INIT; NULLPTR; OVERRIDE_DEFAULT_DELETE; EXPLICIT; COPY_MOVE; OWNERSHIP; PREFIX_INC; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Retained intrusive reference-count handles and non-owning queue links; SIZE_TYPES intentionally deferred | audited | `5f20df0c422` |

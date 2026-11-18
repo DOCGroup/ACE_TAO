@@ -12,6 +12,7 @@ ACE/ACEXML/common	BUILD_TEST	done	d23ec9f4720	Realclean-built ACEXML common; Att
 ACE/ACEXML/common	CLEANUP	done	ed09c99ab65	Removed the no-op destructor body and generic destructor label; corrected failed-stream allocation leaks
 ACE/ACEXML/common	CONST	done	ed09c99ab65	Applied east-side const to the stream factory input
 ACE/ACEXML/common	CONTAINERS	done	d23ec9f4720	Replaced the indexed ACE_Array with std::vector; only append points catch allocation and length failures to preserve -1 return behavior.
+ACE/ACEXML/common	COPY_MOVE	done	-	Reviewed the moved namespace-context owner; the old context transfers to the stack before the new context replaces it, and the moved-from owner is not read afterward
 ACE/ACEXML/common	EXPLICIT	done	35b9319f538	Made the size-taking AttributesImpl constructor explicit.
 ACE/ACEXML/common	OVERRIDE_DEFAULT_DELETE	done	ed09c99ab65	Defaulted empty exported constructors and destructors out of line to retain symbols
 ACE/ACEXML/common	OWNERSHIP	done	5cc3eb5625a	URL_Addr path and formatted-address buffers now use unique_ptr with ACE_OS::free-compatible deletion; self-assignment and failed-copy states are safe.
@@ -114,10 +115,10 @@ ACE/ASNMP/agent	TEST_ASSERTIONS	not-applicable	3d48f70f611	No test code in this 
 ACE/ASNMP/agent	USING	not-applicable	3d48f70f611	No typedef aliases
 ACE/ASNMP/agent	VALUE_INIT	done	3d48f70f611	Reviewed value-initialized port parsing state and class members
 ACE/ASNMP/asnmp	BUILD_TEST	done	9e6b539544e	Realclean-built complete ASNMP tree with -j 8 without warnings; all nine tests passed including the new OID right-comparison regression cases
-ACE/ASNMP/asnmp	MOVE_SEMANTICS	done	880476e8e2b	Reviewed all 14 std::move sites in ASNMP; buffer/value owners transfer to destinations, and Pdu::delete_vb overwrites moved-from slots then resets the final slot. No moved-from object is read afterward.
 ACE/ASNMP/asnmp	CLEANUP	done	154f63c16aa	Removed label-only copy-constructor comments and redundant C-style casts from polymorphic clone results
 ACE/ASNMP/asnmp	C_STRING	done	74040f71094	Replaced narrow ACE_OS string calls with <cstring>/std:: functions in address.cpp and oid.cpp; retained ACE APIs for non-string operations
 ACE/ASNMP/asnmp	EXPLICIT	done	3765121fd7b	Marked all eligible single-argument ASNMP constructors explicit; retained copy constructors and multi-argument constructors
+ACE/ASNMP/asnmp	MOVE_SEMANTICS	done	880476e8e2b	Reviewed all 14 std::move sites in ASNMP; buffer/value owners transfer to destinations, and Pdu::delete_vb overwrites moved-from slots then resets the final slot. No moved-from object is read afterward.
 ACE/ASNMP/asnmp	OVERRIDE_DEFAULT_DELETE	done	e39ecaf64f6	Defaulted empty exported address and transaction_result destructors out of line; kept the .cpp definitions and symbols
 ACE/ASNMP/asnmp	PREFIX_INC	done	9e6b539544e	Used prefix increment/decrement when the prior value was unused; retained post-increment where its old value is consumed
 ACE/ASNMP/asnmp	SPECIAL_MEMBER_COMMENTS	done	154f63c16aa	Removed label-only copy-constructor comments from implementation and interface files; realclean library build passed without warnings
@@ -253,9 +254,12 @@ ACE/Kokyu/tests/DSRT_MIF	BUILD_TEST	done	a4f85a6070f	Realclean-built and linked 
 ACE/Kokyu/tests/DSRT_MIF	CLEANUP	done	288e92d8158	Join worker tasks before destroying their shared barrier and shutting down the dispatcher.
 ACE/Kokyu/tests/DSRT_MIF	CONST	done	a4f85a6070f	Made task configuration and immutable state const, made the scheduler handle pointer member const, and value-initialized const QoS descriptors.
 ACE/Kokyu/tests/DSRT_MIF	DIRECTORY_PASS	done	-	Re-audited MIF.cpp, its MPC project, scheduler trait aliases, ownership/lifetimes, initialization, and ACE log arguments; no further change was justified. Existing build validation is recorded separately.
+ACE/ace	BRACES	needs-work	2e73304b683	Repository scan found 2,026 single-statement brace diagnostics in 187 ACE/ace files; fixed and verified CRC, Dynamic_Service_Dependency, Activation_Queue (including ACE_HAS_DUMP), Barrier, CDR_Size, Cleanup (including ACE_HAS_ALLOC_HOOKS), FILE, Handle_Ops, Based_Pointer_T, Event_Handler_T, FIFO_Send, and LSOCK. Event.cpp received its fix, but standalone clang-tidy hits a template redefinition. Full core and repository-wide brace audits remain open.
 ACE/ace	BUILD_TEST	done	47ead510b06	ACE/ace make realclean && make -j 8 succeeded; DEV_Addr changes emitted no warnings
 ACE/ace	CLEANUP	done	46b21c52a7d	Removed redundant special member labels from eight core files; retained explanatory Thread_Exit wording
 ACE/ace	CONST	done	47ead510b06	Normalized DEV_Addr parameter and return pointer const placement
+ACE/ace	CONST_GUARD_MACROS	done	3b46834200d	Added const guard macro variants without changing existing ACE_GUARD behavior; targeted fuzz check passed
+ACE/ace	MOVE_SITES	done	-	Reviewed all 7 std::move sites in Process.cpp, Monitor_Control/Constraint_Interpreter.cpp, and WFMO_Reactor.cpp; transferred owners remain valid at their destinations and moved-from locals are not read
 ACE/ace	NULLPTR	done	84ebf146d46	Replaced remaining active pointer zero sentinels in ACE.cpp, ATM_Addr.cpp, ATM_Stream.cpp, Local_Tokens.inl, Mem_Map.inl, OS_NS_arpa_inet.cpp, and OS_NS_stropts.inl; realclean ACE core build passed
 ACE/ace	PREFIX_INC	done	c50c8c65e08	Changed discarded postfix operations to prefix across 76 files; retained cases where old value is used; ACE core realclean build passed
 ACE/ace	SPECIAL_MEMBER_COMMENTS	done	aa2a8921a2e	Removed 424 standalone constructor/destructor labels from 151 tracked source files; realclean core build passed; existing override and tempnam/mktemp linker warnings remain
@@ -334,6 +338,7 @@ ACE/ace/UUID.h	CLEANUP	done	fc004b94cb1	Removed standalone constructor/destructo
 ACE/ace/XML_Utils	BUILD_TEST	done	c19f8fabcea	XML_Utils realclean/build linked cleanly; XML_Helper and resolver templates passed warning-enabled syntax check
 ACE/ace/XML_Utils	CLEANUP	done	c19f8fabcea	Removed unused includes and clarified resolver ownership contracts
 ACE/ace/XML_Utils	CONST	done	c19f8fabcea	Applied east-side const to XML helper, resolver, and error-handler APIs
+ACE/ace/XML_Utils	MOVE_SITES	done	-	Reviewed all 7 std::move sites in XercesString.cpp, XML_Schema_Resolver.cpp, and XSCRT/XML.hpp; source owners are not read after transfer and move assignment handles self-move
 ACE/ace/XML_Utils	NULLPTR	done	c19f8fabcea	Made raw-pointer checks explicit and used unique_ptr::reset() without a redundant nullptr
 ACE/ace/XML_Utils	OWNERSHIP	done	c19f8fabcea	Documented borrowed helper inputs and Xerces ownership of created/parsed DOM objects
 ACE/ace/XML_Utils	SCOPE_REDUCTION	done	4c7088ba578	Reviewed XML helper and Xerces locals; removed the single-use XStr::erase validity flag and retained locals needed for cleanup, multiple operations, or ACE logging
@@ -442,7 +447,7 @@ ACE/apps/JAWS2/HTTPU	VALUE_INIT	done	23212871d3a	Changed pointer locals and pars
 ACE/apps/JAWS2/JAWS	BUILD_TEST	done	62e6cc11ceb	realclean build and link passed with make -j 8; no warnings or errors
 ACE/apps/JAWS2/JAWS	CONST	done	62e6cc11ceb	Made stable locals and read-only iterator/cache accessors const
 ACE/apps/JAWS2/JAWS	CONTAINERS	done	62e6cc11ceb	Replaced Assoc_Array parallel pointer arrays with vectors of unique_ptr; API preserved
-ACE/apps/JAWS2/JAWS	COPY_MOVE	done	62e6cc11ceb	Explicitly deleted copy and move operations for owning arrays, cache structures, nodes, and iterators
+ACE/apps/JAWS2/JAWS	COPY_MOVE	done	-	Reviewed both std::move sites in Assoc_Array.cpp; unique-owned key/data locals transfer into parallel array slots and are not read afterward
 ACE/apps/JAWS2/JAWS	C_STRING	done	62e6cc11ceb	Replaced narrow ACE_OS::strcmp calls with std::strcmp
 ACE/apps/JAWS2/JAWS	EXPLICIT	done	62e6cc11ceb	Marked single-argument iterator constructors explicit
 ACE/apps/JAWS2/JAWS	NULLPTR	done	62e6cc11ceb	Converted pointer sentinel comparisons, assignments, and allocation failure returns to nullptr
@@ -513,7 +518,7 @@ ACE/apps/soreduce	BUILD_TEST	done	ee3e2d50aa6	Regenerated soreduce.mpc; realclea
 ACE/apps/soreduce	CLEANUP	done	bdbb4b2d5e4	Removed unused Sig_List::remove and Obj_Module::remove_extref plus unused Signature fields and stale comments
 ACE/apps/soreduce	CONST	done	bdbb4b2d5e4	Applied east-side const to reviewed immutable handles and local results
 ACE/apps/soreduce	CONTAINERS	done	bdbb4b2d5e4	Replaced Sig_List's manual pointer array with vector<shared_ptr<Signature>>; retained sparse iteration semantics
-ACE/apps/soreduce	COPY_MOVE	done	bdbb4b2d5e4	Non-copyable and non-movable stateful classes declare both operations deleted
+ACE/apps/soreduce	COPY_MOVE	done	-	Reviewed both std::move sites in Library.cpp and SO_Group.cpp; newly allocated module/library owners transfer to vectors and are not read afterward
 ACE/apps/soreduce	EXPLICIT	done	bdbb4b2d5e4	Single-argument constructors are explicit
 ACE/apps/soreduce	OVERRIDE_DEFAULT_DELETE	done	bdbb4b2d5e4	Moved Library and SO_Group default destructors to declarations; retained virtual base destructor and overrides
 ACE/apps/soreduce	OWNERSHIP	done	ee3e2d50aa6	Reviewed the ACE_Message_Block chain: the stack root owns heap continuations, and borrowed cursors now use references; no unique_ptr transfer is needed
@@ -807,7 +812,9 @@ ACE/performance-tests/TCP	STYLE	done	8746f68a4e6	Checked east-side const, blank 
 ACE/performance-tests/TCP	VALUE_INIT	done	8746f68a4e6	Brace-initialized packet buffers, state flags, counters, scheduler bounds, and immutable results.
 ACE/protocols/ace/HTBP	SPECIAL_MEMBER_COMMENTS	done	7bddc338681	Removed 18 standalone constructor/destructor labels from handwritten headers and definitions; realclean build and link passed without warnings
 ACE/protocols/ace/INet	CONST	done	-	Migrated from existing inventory; see modernization-ledger.md
+ACE/protocols/ace/INet	COPY_MOVE	done	-	Reviewed all 10 std::move sites in HTTP_SessionBase.cpp, HTTP_IOStream.cpp, and ConnectionCache.cpp; transferred stream policies and cloned cache keys have no moved-from reads
 ACE/protocols/ace/INet	SPECIAL_MEMBER_COMMENTS	done	6ea0f6686c1	Removed 20 standalone constructor/destructor labels from handwritten headers; realclean build and link passed without warnings
+ACE/protocols/ace/TMCast	PREFIX_INC	done	2c2bc272119	Changed the discarded current_.id++ statement to prefix increment; TMCast realclean build and link passed without warnings.
 ACE/protocols/examples/INet	BUILD_TEST	done	918de2522e0	Migrated from existing inventory; see modernization-ledger.md
 ACE/protocols/examples/INet	CLEANUP	done	918de2522e0	Migrated from existing inventory; see modernization-ledger.md
 ACE/protocols/examples/INet	CLI_OPTIONS	done	918de2522e0	Migrated from existing inventory; see modernization-ledger.md
@@ -839,9 +846,9 @@ ACE/protocols/examples/TMCast/Member	VALUE_INIT	done	ce90f1f342f	Used brace init
 ACE/protocols/tests/HTBP/Send_Recv_Tests	LOG_FORMAT	done	a7131d56d64	Corrected ssize_t byte results to %b, handles to %@, removed malformed errno-format arguments, and fixed missing/wrong format arguments; client/server targets realclean-built and linked.
 ACE/tests	BUILD_TEST	done	a26c6f5b464	Get_Opt_Test realclean-built and ran successfully with ACE/lib on LD_LIBRARY_PATH; Added Read_Buffer_Test with custom allocator deleter coverage; direct C++17 compile/link/run passed after ACE library build. MPC unavailable locally; see modernization ledger.
 ACE/tests	CLEANUP	done	54ab7cb832e	Removed twelve redundant constructor/destructor labels across seven files; kept explanatory comments
+ACE/tests	COPY_MOVE	done	-	Reviewed all 10 std::move sites in tests; move-only feature probes are intentional and owner/value transfers do not read moved-from sources
 ACE/tests	C_STRING	done	0581719f4ae	Replaced decimal ACE_OS::itoa formatting in Get_Opt_Test with std::to_string; retained explicit ACE_OS wrapper tests in OS_Test
 ACE/tests	LOG_FORMAT	needs-work	aa659c55a52	Fixed pointer args in Sig_Handlers_Test, size_t/u_long counts, offsets, error codes, and ACE_HANDLE arguments in Bug_2740, Dev_Poll, Process_Strategy, and QtReactor tests. Recent batches fixed object-pointer varargs and timer ID formats across ACE tests; targets built and linked. Further pointer and const-void log arguments fixed across Proactor, RB tree, reference-counted handler, and backend tests; affected targets built and linked. Corrected ACE_OFF_T file-size logging in CDR_File_Test, Log_Msg_Test, and Svc_Handler_Test to %q with ACE_INT64 casts. Audited Reference_Counted_Event_Handler_Test: message_size int uses %d and I/O ssize_t uses %b. Fixed size_t session counts and indexes in TP_Reactor_Test.cpp with %B. Corrected ACE_UINT64, long, ACE_UINT32, and argv index format mismatches in Basic_Types_Test.cpp and Get_Opt_Test.cpp, plus all size_t key/value/index logging in Cache_Map_Manager_Test.cpp. Corrected thread/timer size and unsigned 64-bit formatting in Conn_Test.cpp, Future_Stress_Test.cpp, High_Res_Timer_Test.cpp, and Message_Block_Test.cpp; removed duplicate thread ID args in Recursive_Mutex_Test.cpp. Fixed int reference-count and queue-count format strings and unsigned-long timing formats in Message_Block_Large_Copy_Test.cpp, Message_Queue_Test.cpp, and Message_Queue_Test_Ex.cpp. Corrected unsigned-long thread-count diagnostics and promoted u_short fprintf formatting in Thread_Creation_Threshold_Test.cpp and Service_Config_Test.cpp; both passed syntax-only compilation. Corrected int printf indices in Conn_Test.cpp and Thread_Manager_Test.cpp. Also changed the Process_Mutex_Test size_t index to %B and passed syntax-only compilation. Corrected u_long format mismatch in ACE_Test.cpp; full syntax-only compile passed. Full format audit remains open; Qt lacks headers.
-TAO/orbsvcs/tests/Notify/lib	LOG_FORMAT	done	aa659c55a52	Cast ACE_CU64_TO_CU32 results to unsigned int for %u arguments in C fprintf and ACE_DEBUG calls; C++17 syntax-only compilation passed
 ACE/tests/Message_Queue_Test	SPECIAL_MEMBER_COMMENTS	done	cd99fd1d348	Removed the default-constructor label from Queue_Wrapper; realclean-built and linked Message_Queue_Test without warnings
 ACE/tests/Network_Adapters_Test.h	BUILD_TEST	done	a799aa38416	Test MPC regenerated; Network_Adapters_Test realclean-built and ran successfully
 ACE/tests/Network_Adapters_Test.h	CLEANUP	done	a799aa38416	Removed standalone constructor/destructor labels from two test handlers
@@ -851,8 +858,8 @@ ACE/tests/SOCK_Netlink_Test	SPECIAL_MEMBER_COMMENTS	done	42f088b8e3c	Removed the
 ACE/tests/SSL	BUILD_TEST	done	265806ac764	Realclean-built and linked SSL_Asynch_Stream_Test without warnings
 ACE/tests/SSL	C_STRING	done	265806ac764	Changed the narrow byte-buffer comparison to std::strncmp
 ACE/tests/SSL	LOG_FORMAT	done	3473e14ac25	Reviewed every ACE log call in the three SSL test sources. %@ arguments are object pointers, %B arguments are size_t counters/byte lengths, %s uses ACE_TCHAR text, %d uses int errno/error values, and %Q/%p are no-argument system-error formatters; no printf-only FORMAT_SPECIFIER macros occur in ACE logging calls.
-ACE/websvcs/lib	SPECIAL_MEMBER_COMMENTS	done	833e21b75f0	Removed nine standalone constructor/destructor labels; realclean-built and linked websvcs without warnings
 ACE/websvcs/lib	MOVE_SEMANTICS	done	880476e8e2b	Reviewed all 14 std::move sites in URL_Addr.cpp; URL buffers and parsed strings transfer into owning members, and no moved-from local is subsequently read. Repository-wide search found no other move sites in ACE/websvcs/lib.
+ACE/websvcs/lib	SPECIAL_MEMBER_COMMENTS	done	833e21b75f0	Removed nine standalone constructor/destructor labels; realclean-built and linked websvcs without warnings
 TAO/DevGuideExamples/AMH	BUILD_TEST	done	7588f0489d4	MPC regenerated; IDL/server/client realclean builds and runtime test passed
 TAO/DevGuideExamples/AMH	CLEANUP	done	7588f0489d4	Removed redundant class/constructor/destructor label comments from handwritten files
 TAO/DevGuideExamples/AMH_AMI	BUILD_TEST	done	12a77acdeb2	MPC regenerated; IDL/client/inner-server/middle-server realclean builds and runtime test passed
@@ -984,6 +991,8 @@ TAO/TAO_IDL	LOG_FORMAT	done	89730b2e081	Reviewed std::string values used with AC
 TAO/TAO_IDL	OWNERSHIP	done	10fbdddbe75	Re-audited AST/generator ownership transfer; no safe replacement for AST pointers without changing the public ownership model
 TAO/TAO_IDL	PREFIX_INC	done	9c7d10c9fed	Migrated from existing inventory; see modernization-ledger.md
 TAO/TAO_IDL	VALUE_INIT	done	10fbdddbe75	Completed a final pass for local pointer and scalar initialization
+TAO/TAO_IDL/ast	COPY_MOVE	done	-	Reviewed all 11 std::move sites in the AST; strings, template parameters, and annotation expressions transfer into their destination owners, and visitor state restoration consumes its saved optional
+TAO/TAO_IDL/be	COPY_MOVE	done	-	Reviewed all 9 std::move sites in the backend; strings/parameters transfer into AST nodes, the gperf stream remains valid through its destination owner, and queued pointees remain stable across vector growth
 TAO/TAO_IDL/be/be_visitor_union_branch	SPECIAL_MEMBER_COMMENTS	done	6a4b1906c7f	Removed six standalone constructor/destructor labels; realclean-built TAO_IDL_BE without warnings
 TAO/TAO_IDL/be/be_visitor_valuetype	OVERRIDE_DEFAULT_DELETE	done	6b9a3643065	Emit override for _tao_to_value only when supported abstract interfaces inherit it; Abstract_Interface realclean build/run passed
 TAO/TAO_IDL/be_include	SPECIAL_MEMBER_COMMENTS	done	c071c2ecb3c	Removed 261 standalone constructor/destructor label comments from 133 headers; realclean-built TAO_IDL_BE without warnings
@@ -993,7 +1002,9 @@ TAO/TAO_IDL/driver	CLEANUP	done	6fdc9979c49	Migrated from existing inventory; se
 TAO/TAO_IDL/driver	VALUE_INIT	done	6fdc9979c49	Migrated from existing inventory; see modernization-ledger.md
 TAO/TAO_IDL/fe	BUILD_TEST	done	28886ce1362	Migrated from existing inventory; see modernization-ledger.md
 TAO/TAO_IDL/fe	CLEANUP	done	28886ce1362	Migrated from existing inventory; see modernization-ledger.md
+TAO/TAO_IDL/fe	COPY_MOVE	done	-	Reviewed 14 generated/handwritten std::move sites: fe_utils.cpp and the source grammar idl.ypp confirm destination ownership and no later moved-from reads
 TAO/TAO_IDL/fe	OWNERSHIP	done	28886ce1362	Migrated from existing inventory; see modernization-ledger.md
+TAO/TAO_IDL/util	COPY_MOVE	done	-	Reviewed all 10 std::move sites in utl_global.cpp; owned AST/configuration objects and optional state transfer into members, path strings transfer into gperf_path_, and DCPS map entries take ownership
 TAO/examples/Advanced/ch_12	BUILD_TEST	done	8e346bd5ede	IDL, client, and server realclean builds passed with C++17 and -Wsuggest-override; manual local server/client run passed. Perl harness unavailable because Process.pm is missing
 TAO/examples/Advanced/ch_12	SPECIAL_MEMBER_COMMENTS	done	3f5af07837d	Removed six constructor/destructor-only labels; realclean-built and linked server with dummy_label=1 without warnings
 TAO/examples/Advanced/ch_12	TEST_ASSERTIONS	done	8e346bd5ede	Replaced ICP operations inside assert expressions with checked calls so required reads and mutations execute under NDEBUG; device creation rolls back state on failure. Server catch-all reports failure and returns 1 with NDEBUG
@@ -1007,12 +1018,21 @@ TAO/examples/Callback_Quoter	SPECIAL_MEMBER_COMMENTS	done	50a276449a4	Removed th
 TAO/examples/Event_Comm	SPECIAL_MEMBER_COMMENTS	done	f412284664c	Removed four constructor/destructor-only labels; changed translation units compiled, but target build blocked by generated Event_CommS.cpp unsigned int versus std::size_t operation-table signatures
 TAO/examples/Kokyu_dsrt_schedulers	BUILD_TEST	done	7fd29da81c1	Migrated from existing inventory; see modernization-ledger.md
 TAO/examples/Kokyu_dsrt_schedulers	COPY_MOVE	done	7fd29da81c1	Migrated from existing inventory; see modernization-ledger.md
+TAO/examples/Kokyu_dsrt_schedulers	MOVE_SITES	done	-	Reviewed all 15 std::move sites across MIF, FP, MUF, and EDF schedulers; dispatcher, service-context sequence, and GUID transfers have no moved-from reads
+TAO/examples/OBV	OWNERSHIP	done	e4b18b9a71d	Migrated from existing inventory; see modernization-ledger.md
+TAO/examples/OBV	SCOPE_REDUCTION	done	e4b18b9a71d	Migrated from existing inventory; see modernization-ledger.md
+TAO/examples/OBV	STYLE	done	e4b18b9a71d	Migrated from existing inventory; see modernization-ledger.md
+TAO/examples/OBV/Typed_Events	OVERRIDE	done	c7200d60bde	Migrated from existing inventory; see modernization-ledger.md
+TAO/examples/RTScheduling/Fixed_Priority_Scheduler	BRACES	needs-work	-	Added Allman braces around three single-statement if/else bodies in test.cpp; clang-tidy then stopped on missing generated RTSchedulerC.h, and full-tree brace audit remains open
 TAO/examples/Simple/bank	SPECIAL_MEMBER_COMMENTS	done	0b9ac56310b	Removed constructor/destructor-only comments; regenerated IDL, realclean-built server/client, and passed run_test.pl
 TAO/examples/Simple/chat	SPECIAL_MEMBER_COMMENTS	done	3ccb07f5916	Removed constructor/destructor-only comments; regenerated IDL and realclean-built server/client; no run_test.pl exists in this example
 TAO/examples/Simple/echo	SPECIAL_MEMBER_COMMENTS	done	47f3d3b0ded	Removed constructor/destructor-only comments; regenerated IDL, realclean-built client/server, and passed run_test.pl
 TAO/examples/Simple/grid	SPECIAL_MEMBER_COMMENTS	done	6ab343225bf	Removed constructor/destructor-only comments; regenerated IDL, realclean-built client/server, and passed run_test.pl
 TAO/examples/Simple/time	SPECIAL_MEMBER_COMMENTS	done	a6323e58186	Removed constructor/destructor-only comments; regenerated IDL outputs, realclean-built server and client, and passed run_test.pl
 TAO/examples/Simple/time-date	SPECIAL_MEMBER_COMMENTS	done	997518dba78	Removed constructor/destructor-only comments; regenerated makefiles, realclean-built library/server/client, and passed run_test.pl
+TAO/examples/TypeCode_Creation	CONST	done	5abf8ad4f22	Migrated from existing inventory; see modernization-ledger.md
+TAO/examples/TypeCode_Creation	OWNERSHIP	done	5abf8ad4f22	Migrated from existing inventory; see modernization-ledger.md
+TAO/examples/TypeCode_Creation	STYLE	done	5abf8ad4f22	Migrated from existing inventory; see modernization-ledger.md
 TAO/interop-tests/wchar	SPECIAL_MEMBER_COMMENTS	done	96f01b37197	Removed constructor/destructor-only comments; generated client/server and handwritten implementation compiled and the local wchar interop test passed
 TAO/orbsvcs/Concurrency_Service	BUILD_TEST	done	3ab644e4dc9	Regenerated Concurrency_Service.mpc; realclean-built and linked with make -j 8 without compiler warnings
 TAO/orbsvcs/Concurrency_Service	CLEANUP	done	3ab644e4dc9	Removed unused child POA local and applied scoped FILE cleanup
@@ -1262,6 +1282,7 @@ TAO/orbsvcs/Dump_Schedule	VALUE_INIT	done	741601b55eb	Migrated from existing inv
 TAO/orbsvcs/Event_Service	BUILD_TEST	done	5ba6f8cd300	Migrated from existing inventory; see modernization-ledger.md
 TAO/orbsvcs/Event_Service	CLEANUP	done	5ba6f8cd300	Migrated from existing inventory; see modernization-ledger.md
 TAO/orbsvcs/Event_Service	CONST	done	5ba6f8cd300	Migrated from existing inventory; see modernization-ledger.md
+TAO/orbsvcs/Event_Service	COPY_MOVE	done	-	Reviewed the event-channel owner transfer into the service member after activation; the local owner is not read afterward
 TAO/orbsvcs/Event_Service	OWNERSHIP	done	5ba6f8cd300	Migrated from existing inventory; see modernization-ledger.md
 TAO/orbsvcs/Event_Service	SPECIAL_MEMBER_COMMENTS	done	5ba6f8cd300	Migrated from existing inventory; see modernization-ledger.md
 TAO/orbsvcs/Event_Service	VALUE_INIT	done	5ba6f8cd300	Migrated from existing inventory; see modernization-ledger.md
@@ -1306,6 +1327,7 @@ TAO/orbsvcs/FT_ReplicationManager	SPECIAL_MEMBER_COMMENTS	done	-	Migrated from e
 TAO/orbsvcs/FT_ReplicationManager	VALUE_INIT	done	-	Migrated from existing inventory; see modernization-ledger.md
 TAO/orbsvcs/Fault_Detector	BUILD_TEST	done	0593351e6ef	Migrated from existing inventory; see modernization-ledger.md
 TAO/orbsvcs/Fault_Detector	CLEANUP	done	0593351e6ef	Migrated from existing inventory; see modernization-ledger.md
+TAO/orbsvcs/Fault_Detector	COPY_MOVE	done	-	Reviewed the detector owner transfer into the indexed map slot; startup uses the stored owner and failure resets that slot before throwing
 TAO/orbsvcs/Fault_Detector	OWNERSHIP	done	0593351e6ef	Migrated from existing inventory; see modernization-ledger.md
 TAO/orbsvcs/Fault_Detector	VALUE_INIT	done	0593351e6ef	Migrated from existing inventory; see modernization-ledger.md
 TAO/orbsvcs/Fault_Notifier	BUILD_TEST	done	-	Migrated from existing inventory; see modernization-ledger.md
@@ -1613,9 +1635,11 @@ TAO/orbsvcs/examples/RtEC/Simple	CONST	done	f49b8581d4a	Migrated from existing i
 TAO/orbsvcs/examples/RtEC/Simple	OWNERSHIP	done	f49b8581d4a	Migrated from existing inventory; see modernization-ledger.md
 TAO/orbsvcs/examples/RtEC/Simple	STYLE	done	f49b8581d4a	Migrated from existing inventory; see modernization-ledger.md
 TAO/orbsvcs/examples/RtEC/Simple	VALUE_INIT	done	f49b8581d4a	Migrated from existing inventory; see modernization-ledger.md
+TAO/orbsvcs/orbsvcs	COPY_MOVE	done	-	Reviewed all 35 std::move sites in orbsvcs implementations; ownership transfers, linked-list construction/destruction, iterator handoff, and queue drains do not reuse moved-from owners
 TAO/orbsvcs/orbsvcs/AV	BUILD_TEST	done	0581719f4ae	After realclean, full TAO/orbsvcs/orbsvcs make -j 8 built and linked the AV library without diagnostics
-TAO/orbsvcs/orbsvcs/AV	MOVE_SEMANTICS	done	96dbf8ae851	Reviewed all 18 std::move sites in RTCP.cpp and RTCP_Packet.*; each transfers unique-owned nodes or buffers without later reading the moved-from owner. Full AV search found no other move sites.
 TAO/orbsvcs/orbsvcs/AV	C_STRING	done	0581719f4ae	Replaced decimal ACE_OS::itoa in UDP port construction with std::to_string and ACE text conversion
+TAO/orbsvcs/orbsvcs/AV	MOVE_SEMANTICS	done	96dbf8ae851	Reviewed all 18 std::move sites in RTCP.cpp and RTCP_Packet.*; each transfers unique-owned nodes or buffers without later reading the moved-from owner. Full AV search found no other move sites.
+TAO/orbsvcs/orbsvcs/AV	PREFIX_INC	done	dcd3d5742b0	Changed discarded postfix increments in RTCP_Packet.cpp and md5c.cpp to prefix; retained postfix cases where the old value is consumed
 TAO/orbsvcs/orbsvcs/AV	SPECIAL_MEMBER_COMMENTS	done	fa129e9fbb3	Removed 103 standalone constructor/destructor label comments from 21 handwritten files; realclean-built and linked TAO_AV without warnings
 TAO/orbsvcs/orbsvcs/Concurrency	BUILD_TEST	done	1637c0752ce	Service realclean and make -j 8 passed without visible warnings; runtime requires separately running Naming and Concurrency services
 TAO/orbsvcs/orbsvcs/Concurrency	CLEANUP	done	1637c0752ce	Removed obsolete commented-out lock member/function declarations and their stale notes
@@ -1623,6 +1647,7 @@ TAO/orbsvcs/orbsvcs/Concurrency	PREFIX_INC	done	e4b3db5f1ef	Replaced discarded p
 TAO/orbsvcs/orbsvcs/Concurrency	SPECIAL_MEMBER_COMMENTS	done	1637c0752ce	Removed comments that only label constructors/destructors; preserved explanatory behavior and ownership notes
 TAO/orbsvcs/orbsvcs/CosEvent	SPECIAL_MEMBER_COMMENTS	done	2a9ca90e5c4	Removed 54 standalone constructor/destructor label comments from 25 handwritten headers; realclean-built and linked CosEvent_Serv without warnings
 TAO/orbsvcs/orbsvcs/ESF	SPECIAL_MEMBER_COMMENTS	done	33cafcaa384	Removed six constructor/destructor label comments; realclean-built and linked CosEvent_Serv without warnings
+TAO/orbsvcs/orbsvcs/Event	COPY_MOVE	done	-	Reviewed three moves: dispatcher ownership transfers into its member, subscription ownership transfers into the vector, and vector compaction safely replaces a removed slot before pop_back
 TAO/orbsvcs/orbsvcs/Event	SPECIAL_MEMBER_COMMENTS	done	b2dd6555903	Removed 123 standalone constructor/destructor label comments from 68 handwritten headers; realclean-built and linked RTEvent_Serv without warnings
 TAO/orbsvcs/orbsvcs/FtRtEvent/ClientORB	ATOMIC	not-applicable	cf69bf7abfa	A once flag provides the needed synchronization; atomic state is unnecessary
 TAO/orbsvcs/orbsvcs/FtRtEvent/ClientORB	BUILD_TEST	done	cf69bf7abfa	Regenerated FtRtEvent.mpc; clean FTRT_ClientORB library build and link passed without visible warnings
@@ -1651,9 +1676,10 @@ TAO/orbsvcs/orbsvcs/IFRService	C_STRING	done	d71159b5636	Migrated from existing 
 TAO/orbsvcs/orbsvcs/IFRService	SCOPE_REDUCTION	done	68eface4ac3	Addressed 31 Codacy scope-reduction findings; IFR_Service realclean build/link passed
 TAO/orbsvcs/orbsvcs/IFRService	SPECIAL_MEMBER_COMMENTS	done	9eb77bad8f7	Removed 97 standalone constructor/destructor label comments from 50 handwritten files; realclean-built and linked IFRService without warnings
 TAO/orbsvcs/orbsvcs/IFRService	VALUE_INIT	done	d71159b5636	Migrated from existing inventory; see modernization-ledger.md
+TAO/orbsvcs/orbsvcs/Log	COPY_MOVE	done	-	Reviewed both factory servant transfers; local unique_ptr owners protect activation and are released only after the POA accepts the servant
 TAO/orbsvcs/orbsvcs/Log	SPECIAL_MEMBER_COMMENTS	done	dfb55393f0a	Removed two standalone constructor/destructor labels from LogStore.h; realclean-built and linked DsLogAdmin_Serv without warnings
-TAO/orbsvcs/orbsvcs/Naming	SPECIAL_MEMBER_COMMENTS	done	1436616bcba	Removed 81 standalone constructor/destructor labels from 30 handwritten files; realclean-built and linked CosNaming and FT_Naming without warnings
 TAO/orbsvcs/orbsvcs/Naming	MOVE_SEMANTICS	done	880476e8e2b	Reviewed all six std::move sites in the full Naming subtree. Iterator owners transfer into servants; queued update sequences transfer under lock and are popped or consumed without later reading moved-from owners. No other move sites were found.
+TAO/orbsvcs/orbsvcs/Naming	SPECIAL_MEMBER_COMMENTS	done	1436616bcba	Removed 81 standalone constructor/destructor labels from 30 handwritten files; realclean-built and linked CosNaming and FT_Naming without warnings
 TAO/orbsvcs/orbsvcs/Notify	SPECIAL_MEMBER_COMMENTS	done	7127c6f9d46	Removed 177 standalone constructor/destructor label comments from 85 handwritten files; realclean-built and linked CosNotification_Serv
 TAO/orbsvcs/orbsvcs/Property	BUILD_TEST	done	22ece13b729	Clean service and client/server builds; perl run_test.pl passed without warnings
 TAO/orbsvcs/orbsvcs/Property	CLEANUP	done	22ece13b729	Simplified iterator length selection and removed generic special-member comments
@@ -1689,6 +1715,7 @@ TAO/orbsvcs/orbsvcs/Trader	EXPLICIT	done	434c09850dd	Reviewed one-argument const
 TAO/orbsvcs/orbsvcs/Trader	SPECIAL_MEMBER_COMMENTS	done	8baad532290	Removed standalone constructor/destructor/copy/assignment labels; searched the directory and retained behavior-explaining comments
 TAO/orbsvcs/orbsvcs/Trader	STYLE	done	434c09850dd	Used east-side const for changed declarations/conversions; git diff --check passed and added lines remain within 120 columns
 TAO/orbsvcs/orbsvcs/Trader	VALUE_INIT	done	0ec45e5c305	Value-initialized zero-valued policy counters/cardinalities and remaining false/zero locals; synchronized the one-line generated lexer output
+TAO/orbsvcs/tests	COPY_MOVE	done	-	Reviewed all 22 std::move sites in orbsvcs tests; sequence values, file handles, event handlers, command owners, and event-channel implementations transfer into their intended owners
 TAO/orbsvcs/tests/AVStreams/Asynch_Three_Stage	BUILD_TEST	done	b046090f4d0	MPC regenerated; realclean build and asynchronous run_test.pl passed; compiler emitted no warnings
 TAO/orbsvcs/tests/AVStreams/Asynch_Three_Stage	CLEANUP	done	b046090f4d0	Removed unused destroy declarations and empty constructors/destructors; corrected receiver fwrite item-count check
 TAO/orbsvcs/tests/AVStreams/Asynch_Three_Stage	CLI_OPTIONS	done	b046090f4d0	Grouped sender, receiver, and distributer command-line settings in Options structs
@@ -2192,13 +2219,15 @@ TAO/orbsvcs/tests/Notify/Structured_Filter	COPY_MOVE	done	d57eccb57a4	Migrated f
 TAO/orbsvcs/tests/Notify/Structured_Filter	OVERRIDE_DEFAULT_DELETE	done	d57eccb57a4	Migrated from existing inventory; see modernization-ledger.md
 TAO/orbsvcs/tests/Notify/Structured_Filter	OWNERSHIP	done	d57eccb57a4	Migrated from existing inventory; see modernization-ledger.md
 TAO/orbsvcs/tests/Notify/Structured_Filter	VALUE_INIT	done	d57eccb57a4	Migrated from existing inventory; see modernization-ledger.md
+TAO/orbsvcs/tests/Notify/lib	LOG_FORMAT	done	aa659c55a52	Cast ACE_CU64_TO_CU32 results to unsigned int for %u arguments in C fprintf and ACE_DEBUG calls; C++17 syntax-only compilation passed
 TAO/orbsvcs/tests/Simple_Naming	STD_NARROW_STRING	done	21113c7140f	Replaced six narrow ACE_OS::strcmp calls; realclean regenerated IDL and client build passed.
 TAO/orbsvcs/tests/Time	SPECIAL_MEMBER_COMMENTS	done	a210f3e69a	Removed standalone constructor/destructor labels; Time client realclean build passed; runtime harness fails during server shutdown
-TAO/tao	SPECIAL_MEMBER_COMMENTS	done	ff815715436	Rechecked the root TAO/tao sources after the earlier sweep and removed the remaining standalone `// Constructors.` label in TAO_Server_Request.h; explanatory comments retained
+TAO/tao	COPY_MOVE	done	96dbf8ae851	The complete TAO/tao move audit supersedes the earlier partial review: all 53 std::move sites across 27 source files were reviewed, with no unsafe moved-from use found.
 TAO/tao	MOVE_SEMANTICS	done	96dbf8ae851	Audited all 53 move sites across 27 source files. Owners transfer into destinations or temporary RAII holders; sequence moves copy borrowed buffers and preserve the source. No moved-from value is read after transfer.
-TAO/utils/logWalker	MOVE_SEMANTICS	done	96dbf8ae851	Reviewed all nine Output_Stream and GIOP_Buffer ownership moves. Callers replace moved-from streams before use; GIOP_Buffer copies metadata, transfers its octet buffer, and resets the source. No other move sites exist in the directory.
+TAO/tao	SPECIAL_MEMBER_COMMENTS	done	ff815715436	Rechecked the root TAO/tao sources after the earlier sweep and removed the remaining standalone `// Constructors.` label in TAO_Server_Request.h; explanatory comments retained
 TAO/tao/AnyTypeCode	BUILD_TEST	done	9252d151c90	AnyTypeCode realclean-built with make -j 8; Recursive Any run_test.pl passed against the rebuilt library without compiler warnings
 TAO/tao/AnyTypeCode	CONST	done	pending	Migrated from existing inventory; see modernization-ledger.md
+TAO/tao/AnyTypeCode	CONST_GUARD_MACROS	done	3b46834200d	Replaced direct ACE_Guard spellings with const guard macros; targeted fuzz check passed and AnyTypeCode realclean build/link passed
 TAO/tao/AnyTypeCode	OVERRIDE_DEFAULT_DELETE	done	4156f7f45f9	Defaulted the empty CORBA::Any_var constructor while retaining its definition in Any.inl
 TAO/tao/AnyTypeCode	PREFIX_INC	done	9252d151c90	Rewrote postfix count-decrement loops to explicit nonzero checks and prefix decrement, avoiding unsigned underflow at zero
 TAO/tao/AnyTypeCode	SPECIAL_MEMBER_COMMENTS	done	571fc1498bb	Removed 36 standalone constructor/destructor labels from handwritten sources; realclean build and link passed without warnings
@@ -2563,10 +2592,10 @@ TAO/tests/Compression	BUILD_TEST	done	b6a65a97e58	Regenerated Compression_Test.m
 TAO/tests/Compression	CONST	done	b6a65a97e58	Const-qualified the fixed result table and immutable input lengths
 TAO/tests/Compression	CONTAINERS	done	b6a65a97e58	Used std::array for the fixed result table and zero-filled byte buffers; no exception-based container adaptation
 TAO/tests/Compression	C_STRING	not-applicable	b6a65a97e58	No ACE_OS narrow C-string wrappers remain in the compression test sources
+TAO/tests/Compression	LOG_FORMAT	done	08afed08cfa	Changed the size_t RLE test-loop index diagnostic from %d to ACE logging %B; syntax-only compile unavailable because generated tao/Compression/CompressionC.h is absent
 TAO/tests/Compression	SPECIAL_MEMBER_COMMENTS	not-applicable	b6a65a97e58	No comments solely labeling special member functions found in reviewed sources
 TAO/tests/Compression	STYLE	done	b6a65a97e58	Touched source has no lines over 120 columns or repeated blank lines; git diff --check passed
 TAO/tests/Compression	VALUE_INIT	done	b6a65a97e58	Replaced three zero-filled heap buffers with value-initialized fixed std::array storage
-TAO/tests/Compression	LOG_FORMAT	done	08afed08cfa	Changed the size_t RLE test-loop index diagnostic from %d to ACE logging %B; syntax-only compile unavailable because generated tao/Compression/CompressionC.h is absent
 TAO/tests/Dynamic_TP/Config_Loader	BUILD_TEST	done	18d42e26611	Ran make realclean, make -j 8, and ./test; build and configuration lookup test passed without compiler warnings
 TAO/tests/Dynamic_TP/Config_Loader	CLEANUP	done	18d42e26611	Removed unused stdio and cstddef includes
 TAO/tests/Dynamic_TP/Config_Loader	CONST	done	2eb768449c7	Migrated from existing inventory; see modernization-ledger.md
@@ -2606,9 +2635,8 @@ TAO/tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static	STYLE	done	1574b55cd1
 TAO/tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static	TEXT_API	done	1574b55cd12	Used ACE_TCHAR-aware formats and fopen mode literals
 TAO/tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static	VALUE_INIT	done	443e0276d5b	Migrated from existing inventory; see modernization-ledger.md
 TAO/tests/IDLv4/annotations	BUILD_TEST	done	91f8d7a1bff	Clean annotest_idl build and all 39 subtests passed
-TAO/tests/IDLv4/annotations	OWNERSHIP	done	91f8d7a1bff	Test backend stub follows unique_ptr generator_init API
 TAO/tests/IDLv4/annotations	LOG_FORMAT	done	08afed08cfa	Changed the long line-number diagnostic to ACE logging %q with an ssize_t cast; C++17 syntax-only compile passed
-TAO/tests/POA/Non_Retain_System_Id	LOG_FORMAT	done	08afed08cfa	Logged CORBA::Short index as validated size_t with %B and cast CORBA sequence length to unsigned int for %u; C++17 syntax-only compile passed
+TAO/tests/IDLv4/annotations	OWNERSHIP	done	91f8d7a1bff	Test backend stub follows unique_ptr generator_init API
 TAO/tests/Monitor/Marshal_Buffer	BUILD_TEST	done	3fbef1afadd	make realclean regenerated IDL; make -j 8 rebuilt and linked client/server without warnings. Runtime script cannot run its monitor path because ACE_HAS_MONITOR_FRAMEWORK is disabled in this configuration.
 TAO/tests/Monitor/Marshal_Buffer	NULLPTR	done	3fbef1afadd	Replaced the server FILE pointer comparison against integer zero with unique_ptr truth testing.
 TAO/tests/Monitor/Marshal_Buffer	OWNERSHIP	done	3fbef1afadd	Used unique_ptr<FILE> with ACE_OS::fclose deleters for client and server IOR output.
@@ -2624,6 +2652,7 @@ TAO/tests/Multiple_Inheritance	STYLE	done	f0e77298f59	Removed duplicate narrow c
 TAO/tests/Multiple_Inheritance	TEXT_API	done	f0e77298f59	Used ACE_TEXT for file modes and diagnostics carrying ACE_TCHAR paths
 TAO/tests/Multiple_Inheritance	VALUE_INIT	done	363e9ccec21	Removed the empty out-of-line constructor body and used the defaulted constructor
 TAO/tests/OBV/Simple	BUILD_TEST	done	708b58e94b8	Regenerated OBV IDL; realclean-built client/server and perl run_test.pl passed
+TAO/tests/POA/Non_Retain_System_Id	LOG_FORMAT	done	08afed08cfa	Logged CORBA::Short index as validated size_t with %B and cast CORBA sequence length to unsigned int for %u; C++17 syntax-only compile passed
 TAO/tests/POA/TIE	BUILD_TEST	done	247e85f653d	Regenerated TIE IDL; realclean-built client/server without warnings; run_test.pl passed
 TAO/tests/POA/TIE	SPECIAL_MEMBER_COMMENTS	done	247e85f653d	Removed four constructor-only labels from the TIE servant implementations
 TAO/tests/Sequence_Unit_Tests	BUILD_TEST	done	-	Migrated from existing inventory; see modernization-ledger.md
@@ -2640,6 +2669,7 @@ TAO/utils/catior	BUILD_TEST	done	fd9669231f3	Built and linked catior utility/lib
 TAO/utils/catior	CONST	done	6969a80ddae	Made parser input pointers const where the input is only read.
 TAO/utils/catior	C_STRING	done	fd9669231f3	Used literal prefixes instead of temporary ACE_CString objects; changed fgetc locals to int so EOF checks are valid.
 TAO/utils/catior	OWNERSHIP	done	d5edd846713	The stdio fallback now owns input files with unique_ptr, closing them on all early returns.
+TAO/utils/logWalker	MOVE_SEMANTICS	done	96dbf8ae851	Reviewed all nine Output_Stream and GIOP_Buffer ownership moves. Callers replace moved-from streams before use; GIOP_Buffer copies metadata, transfers its octet buffer, and resets the source. No other move sites exist in the directory.
 TAO/utils/monitor	BUILD_TEST	done	c8849a7fb45	Rebuilt and linked monitor_client with C++17 and -Wsuggest-override after rebuilding its stale ACE/TAO dependency libraries; no runtime harness exists for this client-only utility.
 TAO/utils/monitor	CONST	done	c8849a7fb45	Const-qualified read-only ORB, object, monitor, and name-list var handles; kept the conditionally assigned data sequence mutable.
 TAO/utils/monitor	SPECIAL_MEMBER_COMMENTS	not-applicable	c8849a7fb45	No constructor/destructor-only comments in the directory.
@@ -2652,26 +2682,3 @@ TAO/utils/nslist	BUILD_TEST	done	87a26072697	Built and linked tao_nsadd, tao_nsd
 TAO/utils/nslist	CLI_OPTIONS	done	87a26072697	Grouped command-line state in Options and passed it through listing helpers.
 TAO/utils/nslist	SIZE_TYPES	done	87a26072697	Used CORBA::ULong for CosNaming sequence indexes and CORBA sequence lengths.
 TAO/utils/nslist	VALUE_INIT	done	87a26072697	Value-initialized option fields with {}.
-ACE/apps/JAWS2/JAWS	COPY_MOVE	done	-	Reviewed both std::move sites in Assoc_Array.cpp; unique-owned key/data locals transfer into parallel array slots and are not read afterward
-ACE/apps/soreduce	COPY_MOVE	done	-	Reviewed both std::move sites in Library.cpp and SO_Group.cpp; newly allocated module/library owners transfer to vectors and are not read afterward
-ACE/ACEXML/common	COPY_MOVE	done	-	Reviewed the moved namespace-context owner; the old context transfers to the stack before the new context replaces it, and the moved-from owner is not read afterward
-TAO/orbsvcs/Fault_Detector	COPY_MOVE	done	-	Reviewed the detector owner transfer into the indexed map slot; startup uses the stored owner and failure resets that slot before throwing
-TAO/orbsvcs/Event_Service	COPY_MOVE	done	-	Reviewed the event-channel owner transfer into the service member after activation; the local owner is not read afterward
-TAO/orbsvcs/orbsvcs/Log	COPY_MOVE	done	-	Reviewed both factory servant transfers; local unique_ptr owners protect activation and are released only after the POA accepts the servant
-TAO/orbsvcs/orbsvcs/Event	COPY_MOVE	done	-	Reviewed three moves: dispatcher ownership transfers into its member, subscription ownership transfers into the vector, and vector compaction safely replaces a removed slot before pop_back
-ACE/protocols/ace/INet	COPY_MOVE	done	-	Reviewed all 10 std::move sites in HTTP_SessionBase.cpp, HTTP_IOStream.cpp, and ConnectionCache.cpp; transferred stream policies and cloned cache keys have no moved-from reads
-TAO/TAO_IDL/fe	COPY_MOVE	done	-	Reviewed 14 generated/handwritten std::move sites: fe_utils.cpp and the source grammar idl.ypp confirm destination ownership and no later moved-from reads
-TAO/TAO_IDL/be	COPY_MOVE	done	-	Reviewed all 9 std::move sites in the backend; strings/parameters transfer into AST nodes, the gperf stream remains valid through its destination owner, and queued pointees remain stable across vector growth
-TAO/TAO_IDL/ast	COPY_MOVE	done	-	Reviewed all 11 std::move sites in the AST; strings, template parameters, and annotation expressions transfer into their destination owners, and visitor state restoration consumes its saved optional
-TAO/TAO_IDL/util	COPY_MOVE	done	-	Reviewed all 10 std::move sites in utl_global.cpp; owned AST/configuration objects and optional state transfer into members, path strings transfer into gperf_path_, and DCPS map entries take ownership
-TAO/tao	COPY_MOVE	done	96dbf8ae851	The complete TAO/tao move audit supersedes the earlier partial review: all 53 std::move sites across 27 source files were reviewed, with no unsafe moved-from use found.
-TAO/examples/Kokyu_dsrt_schedulers	MOVE_SITES	done	-	Reviewed all 15 std::move sites across MIF, FP, MUF, and EDF schedulers; dispatcher, service-context sequence, and GUID transfers have no moved-from reads
-ACE/ace	MOVE_SITES	done	-	Reviewed all 7 std::move sites in Process.cpp, Monitor_Control/Constraint_Interpreter.cpp, and WFMO_Reactor.cpp; transferred owners remain valid at their destinations and moved-from locals are not read
-ACE/ace	BRACES	needs-work	2e73304b683	Repository scan found 2,026 single-statement brace diagnostics in 187 ACE/ace files; fixed and verified CRC, Dynamic_Service_Dependency, Activation_Queue (including ACE_HAS_DUMP), Barrier, CDR_Size, Cleanup (including ACE_HAS_ALLOC_HOOKS), FILE, Handle_Ops, Based_Pointer_T, Event_Handler_T, FIFO_Send, and LSOCK. Event.cpp received its fix, but standalone clang-tidy hits a template redefinition. Full core and repository-wide brace audits remain open.
-ACE/ace/XML_Utils	MOVE_SITES	done	-	Reviewed all 7 std::move sites in XercesString.cpp, XML_Schema_Resolver.cpp, and XSCRT/XML.hpp; source owners are not read after transfer and move assignment handles self-move
-ACE/ace	CONST_GUARD_MACROS	done	3b46834200d	Added const guard macro variants without changing existing ACE_GUARD behavior; targeted fuzz check passed
-TAO/tao/AnyTypeCode	CONST_GUARD_MACROS	done	3b46834200d	Replaced direct ACE_Guard spellings with const guard macros; targeted fuzz check passed and AnyTypeCode realclean build/link passed
-ACE/tests	COPY_MOVE	done	-	Reviewed all 10 std::move sites in tests; move-only feature probes are intentional and owner/value transfers do not read moved-from sources
-TAO/orbsvcs/orbsvcs	COPY_MOVE	done	-	Reviewed all 35 std::move sites in orbsvcs implementations; ownership transfers, linked-list construction/destruction, iterator handoff, and queue drains do not reuse moved-from owners
-TAO/orbsvcs/tests	COPY_MOVE	done	-	Reviewed all 22 std::move sites in orbsvcs tests; sequence values, file handles, event handlers, command owners, and event-channel implementations transfer into their intended owners
-TAO/examples/RTScheduling/Fixed_Priority_Scheduler	BRACES	needs-work	-	Added Allman braces around three single-statement if/else bodies in test.cpp; clang-tidy then stopped on missing generated RTSchedulerC.h, and full-tree brace audit remains open
