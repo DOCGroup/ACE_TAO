@@ -335,7 +335,7 @@ iterator_test ()
 
       if (queue.is_full ())
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("QUEUE:: the message queue is full on iteration %u!\n"),
+                           ACE_TEXT ("QUEUE:: the message queue is full on iteration %d!\n"),
                            i + 1),
                           -1);
 

@@ -53,10 +53,10 @@ print_message (const ACE_TCHAR *message)
   ACE_Time_Value tv;
   timer->elapsed_time (tv);
   ACE_DEBUG ((LM_INFO,
-              ACE_TEXT ("%s: %u messages took %u msec (%f msec/message)\n"),
+              ACE_TEXT ("%s: %d messages took %Q msec (%f msec/message)\n"),
               message,
               max_messages,
-              tv.msec (),
+              static_cast<ACE_UINT64> (tv.msec ()),
               (double) tv.msec () / max_messages));
 }
 
