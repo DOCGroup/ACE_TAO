@@ -24,7 +24,7 @@ TAO_PI_Server_Loader::init (int, ACE_TCHAR* [])
   // Register the ORB initializer.
   try
     {
-      /// Register the Messaging ORBInitializer.
+      /// Register the PortableServer ORBInitializer.
       PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
         PortableInterceptor::ORBInitializer::_nil ();
 
