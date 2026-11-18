@@ -48,11 +48,15 @@ ACE_Malloc_Lock_Adapter_T<ACE_Thread_Semaphore>::operator () (const ACE_TCHAR *n
 {
   ACE_Thread_Semaphore *p {};
   if (name == nullptr)
-    ACE_NEW_RETURN (p, ACE_Thread_Semaphore (1, name), nullptr);
+    {
+      ACE_NEW_RETURN (p, ACE_Thread_Semaphore (1, name), nullptr);
+    }
   else
-    ACE_NEW_RETURN (p, ACE_Thread_Semaphore (1, ACE::basename (name,
-                                                               ACE_DIRECTORY_SEPARATOR_CHAR)),
-                    nullptr);
+    {
+      ACE_NEW_RETURN (p, ACE_Thread_Semaphore (1, ACE::basename (name,
+                                                                 ACE_DIRECTORY_SEPARATOR_CHAR)),
+                      nullptr);
+    }
   return p;
 }
 
