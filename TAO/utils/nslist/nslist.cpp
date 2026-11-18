@@ -25,9 +25,9 @@
 #include "ace/Log_Msg.h"
 #include "ace/Argv_Type_Converter.h"
 #include "ace/OS_NS_ctype.h"
+#include "ace/OS_NS_stdlib.h"
 
 #include <cstdio>
-#include <cstdlib>
 #include <cstring>
 
 //============================================================================
@@ -612,7 +612,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                  "Error: --max given more than once\n"));
                       options.failed = true;
                     }
-                  else if (!--argc || !ACE_OS::ace_isdigit (ACE_TEXT_ALWAYS_CHAR (*(++argv))[0]))
+                  else if (!--argc || !ACE_OS::ace_isdigit ((*(++argv))[0]))
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  ACE_TEXT ("Error: --max requires a number\n")));
@@ -638,7 +638,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                  ACE_TEXT ("Error: --rtt given more than once\n")));
                       options.failed = true;
                     }
-                  else if (!--argc || !ACE_OS::ace_isdigit (ACE_TEXT_ALWAYS_CHAR (*(++argv))[0]))
+                  else if (!--argc || !ACE_OS::ace_isdigit ((*(++argv))[0]))
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  ACE_TEXT ("Error: --rtt requires a number\n")));
@@ -657,7 +657,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                  ACE_TEXT ("Error: --count given more than once\n")));
                       options.failed = true;
                     }
-                  else if (!--argc || !ACE_OS::ace_isdigit (ACE_TEXT_ALWAYS_CHAR (*(++argv))[0]))
+                  else if (!--argc || !ACE_OS::ace_isdigit ((*(++argv))[0]))
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  ACE_TEXT ("Error: --count requires a number\n")));
@@ -665,7 +665,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     }
                  else
                     {
-                     CORBA::ULong count = std::strtoul (ACE_TEXT_ALWAYS_CHAR (*argv), nullptr, 10);
+                     CORBA::ULong count = ACE_OS::strtoul (*argv, nullptr, 10);
                      if (count > 0)
                        {
                         options.max_count = count;
@@ -739,13 +739,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (options.name)
         {
           // Assemble the name from the user string given
-          CosNaming::Name the_name (0);
+          CosNaming::Name the_name {};
           ACE_TCHAR *cp;
           while ((cp = ACE_OS::strtok (options.name, options.context_separator)) != nullptr)
             {
               CORBA::ULong const index = the_name.length ();
               the_name.length (index+1);
-              ACE_TCHAR *kind = const_cast<ACE_TCHAR*> (ACE_OS::strchr (cp, options.kind_separator));
+              ACE_TCHAR *kind = ACE_OS::strchr (cp, options.kind_separator);
               if (kind)
                 {
                   *kind = '\0';

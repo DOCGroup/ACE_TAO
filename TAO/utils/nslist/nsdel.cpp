@@ -20,9 +20,8 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
+#include "ace/OS_NS_stdlib.h"
 #include "ace/Argv_Type_Converter.h"
-
-#include <cstdlib>
 
 //============================================================================
 namespace
@@ -75,7 +74,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   };
   Options options;
   int err {};
-  CosNaming::Name the_name (0);
+  CosNaming::Name the_name {};
   CORBA::ORB_var orb;
 
   try
@@ -183,7 +182,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                  "Error: --rtt given more than once\n"));
                       options.failed = true;
                     }
-                  else if (!--argc || !ACE_OS::ace_isdigit (ACE_TEXT_ALWAYS_CHAR (*(++argv))[0]))
+                  else if (!--argc || !ACE_OS::ace_isdigit ((*(++argv))[0]))
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: --rtt requires a number\n"));
@@ -191,7 +190,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     }
                  else
                  {
-                   options.relative_roundtrip_timeout.set (std::atoi (ACE_TEXT_ALWAYS_CHAR (*argv)), 0);
+                   options.relative_roundtrip_timeout.set (ACE_OS::atoi (*argv), 0);
                  }
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--destroy")))
@@ -257,7 +256,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           CORBA::ULong const index = the_name.length ();
           the_name.length (index+1);
-          ACE_TCHAR *kind = const_cast<ACE_TCHAR*> (ACE_OS::strchr (cp, options.kind_separator));
+          ACE_TCHAR *kind = ACE_OS::strchr (cp, options.kind_separator);
           if (kind)
             {
               *kind = '\0';

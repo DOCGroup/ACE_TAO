@@ -29,7 +29,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     ACE_TCHAR *name {};
   };
   Options options;
-  CosNaming::Name the_name (0);
+  CosNaming::Name the_name {};
   CORBA::ORB_var orb;
 
   int err {};
@@ -229,7 +229,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           CORBA::ULong const index = the_name.length ();
           the_name.length (index+1);
-          ACE_TCHAR *kind = const_cast<ACE_TCHAR*> (ACE_OS::strchr (cp, options.kind_separator));
+          ACE_TCHAR *kind = ACE_OS::strchr (cp, options.kind_separator);
           if (kind)
             {
               *kind = '\0';
