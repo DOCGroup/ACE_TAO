@@ -164,7 +164,8 @@ ACE_URL_Offer::size () const
 size_t
 ACE_URL_Offer::encode (void *buf) const
 {
-  ACE_UINT32 const encoded_size = htonl (this->prop_.size ());
+  ACE_UINT32 const encoded_size = htonl (
+    static_cast<ACE_UINT32> (this->prop_.size ()));
   std::memcpy (buf, std::addressof (encoded_size), sizeof (encoded_size));
 
   size_t len = sizeof (ACE_UINT32);
