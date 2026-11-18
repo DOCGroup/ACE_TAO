@@ -13046,3 +13046,11 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   `2e73304b683`.
   The ACE core and repository-wide brace audits remain open. Pushed commits
   `5fd4a0d79b5`, `98ab7cef922`, `f500c12f599`, and `d21f99fd5d6`.
+
+## 2026-11-18 ACE/TAO logging formatter macro scan
+
+- Scanned C/C++ headers and sources across `ACE` and `TAO`, balancing each
+  ACE_DEBUG/ACE_ERROR/ACE_TRACE macro call before checking its contents. Found
+  no `ACE_*_FORMAT_SPECIFIER` macros used inside ACE logging calls. Search
+  matches were nearby `ACE_OS::sprintf`/`snprintf` calls, where those printf
+  macros are appropriate. The full type-by-type log-format audit remains open.
