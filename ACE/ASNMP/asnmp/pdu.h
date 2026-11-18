@@ -205,7 +205,6 @@ public:
   int next(Vb& vb);
 
 private:
-  /// disallow copy constructor use
   /// current object in list
   int idx_ {-1};
 

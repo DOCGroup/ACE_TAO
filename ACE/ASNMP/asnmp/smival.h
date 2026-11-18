@@ -82,7 +82,6 @@ public:
   /// virtual destructor to ensure deletion of derived classes...
   virtual ~SnmpSyntax() = default;
 
-  /// overloaded assignment operator
   /// This should be pure virtual, but WinNT compiler
   /// complains about unresolved reference at link time.
   virtual SnmpSyntax& operator=(SnmpSyntax &/*val*/)

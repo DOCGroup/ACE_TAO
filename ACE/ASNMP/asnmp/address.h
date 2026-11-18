@@ -164,7 +164,6 @@ public:
   /// return the type of address
   virtual addr_type get_type() const = 0;
 
-  /// overloaded assignment operator
   SnmpSyntax& operator=( SnmpSyntax &val) override = 0;
 
   /// return a hash key
@@ -346,7 +345,6 @@ public:
   /// default constructor with a dotted string in the form of addr:port
   explicit UdpAddress (char const *inaddr = "");
 
-  /// construct an Udp address with another Udp address
   UdpAddress( const UdpAddress &udpaddr);
 
   /// construct a Udp address with a GenAddress
@@ -470,7 +468,6 @@ protected:
 class  ASNMP_Export NetbiosAddress : public Address
 {
 public:
-   /// default constructor with string arg
    explicit NetbiosAddress( const char *inaddr = "");
 
    /// set name and service type
@@ -530,7 +527,6 @@ protected:
 class  ASNMP_Export DecNetAddress : public Address
 {
 public:
-  /// default constructor with string arg
   explicit DecNetAddress( const char *inaddr = "");
 
   DecNetAddress( const DecNetAddress& decaddr);
@@ -578,7 +574,6 @@ protected:
 class  ASNMP_Export AppleTalkAddress :  public Address
 {
 public:
-  /// default constructor with string arg
   explicit AppleTalkAddress( const char *inaddr = "");
 
   AppleTalkAddress( const AppleTalkAddress& atkaddr);
