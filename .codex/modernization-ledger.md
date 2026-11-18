@@ -12889,3 +12889,17 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Realclean-built ACE core successfully on Linux; the Windows-only WFMO path
   is platform-guarded and could not be compiled on this host. `git diff --check`
   passed. Other ACE/TAO logging conversions remain under review.
+
+## 2026-11-18 ACE core fixed-width logging audit
+
+- Corrected `ACE_Data_Block::dump()` to use `%B` for `size_t`, `%Q` for its
+  unsigned-long flags, `%@` for the locking-strategy pointer, and `%d` for the
+  integer reference count. `ACE_Log_Record::dump()` now uses `%q`/`%Q` for its
+  fixed-width fields. `ACE_Map_Manager` counters use `%Q` with explicit
+  `ACE_UINT64` conversion. Windows message-queue thread counts use `%u` after
+  conversion from `DWORD` to `unsigned int`.
+- The ACE core realclean build passed. `Message_Block.cpp`, `Log_Record.cpp`,
+  and `Map_Manager.cpp` also passed syntax-only compilation with
+  `ACE_HAS_DUMP`; `git diff --check` passed. The Windows-only message-queue
+  implementation was reviewed but could not be compiled on this host. The
+  repository-wide log-format audit remains open.

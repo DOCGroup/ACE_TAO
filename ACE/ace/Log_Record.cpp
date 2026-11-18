@@ -106,11 +106,14 @@ ACE_Log_Record::dump () const
   // ACE_TRACE ("ACE_Log_Record::dump");
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("length_ = %d\n"), this->length_));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntype_ = %u\n"), this->type_));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntime_stamp_ = (%:, %d)\n"),
-              this->secs_, this->usecs_));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\npid_ = %u\n"), this->pid_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("length_ = %q\n"),
+                 static_cast<ACE_INT64> (this->length_)));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntype_ = %Q\n"),
+                 static_cast<ACE_UINT64> (this->type_)));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntime_stamp_ = (%:, %Q)\n"),
+              this->secs_, static_cast<ACE_UINT64> (this->usecs_)));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\npid_ = %Q\n"),
+                 static_cast<ACE_UINT64> (this->pid_)));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nmsg_data_ (0x%@) = %s\n"),
               this->msg_data_, this->msg_data_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nmsg_data_size_ = %B\n"),
