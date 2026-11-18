@@ -13373,3 +13373,9 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 
 - A focused clang-tidy scan of all 446 `ACE/ace/*.cpp` files now reports 1,785 brace diagnostics in 156 files, with no parse errors.
 - This includes the completed brace fixes in `ARGV.cpp`, `Arg_Shifter.cpp`, `Array_Map.cpp`, `Array_Base.cpp`, and `Asynch_Acceptor.cpp`. The scan is limited to ACE/ace `.cpp` files; full ACE/TAO coverage remains open.
+
+## 2026-11-18 ACE Handle_Set braces and scan
+
+- Added Allman braces around six single-statement branches in `ACE/ace/Handle_Set.cpp`; focused `clang-tidy -checks=-*,readability-braces-around-statements` and `git diff --check` passed.
+- A follow-up scan of all 446 `ACE/ace/*.cpp` files reports 1,779 brace diagnostics in 155 files, with no parse errors. Full ACE/TAO coverage remains open.
+- No build or runtime test was run.
