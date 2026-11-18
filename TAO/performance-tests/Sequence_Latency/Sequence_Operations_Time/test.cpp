@@ -38,13 +38,13 @@ stringseq_time_test (CORBA::ULong const num_loops,
                 ACE_TEXT("1, 0, 0, %u, %s, %Q\n"),
                 num_loops,
                 use_long_str ? ACE_TEXT("long") : ACE_TEXT("short"),
-                time));
+                static_cast<ACE_UINT64> (time)));
   else
     ACE_DEBUG ((LM_INFO,
                 ACE_TEXT("String sequence (%u, %s) = %Q ns\n"),
                 num_loops,
                 use_long_str ? ACE_TEXT("long") : ACE_TEXT("short"),
-                time));
+                static_cast<ACE_UINT64> (time)));
 }
 
 void
@@ -82,14 +82,14 @@ seqstrseq_time_test (CORBA::ULong const num_seq_loops,
                 num_string_loops,
                 num_seq_loops,
                 use_long_str ? ACE_TEXT("long") : ACE_TEXT("short"),
-                time));
+                static_cast<ACE_UINT64> (time)));
   else
     ACE_DEBUG ((LM_INFO,
                 ACE_TEXT("Sequence of string seq (%u, %u, %s) = %Q ns\n"),
                 num_string_loops,
                 num_seq_loops,
                 use_long_str ? ACE_TEXT("long") : ACE_TEXT("short"),
-                time));
+                static_cast<ACE_UINT64> (time)));
 }
 
 void
