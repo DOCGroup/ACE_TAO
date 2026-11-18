@@ -46,11 +46,13 @@ ACE_SOCK_SEQPACK_Connector::shared_open (ACE_SOCK_SEQPACK_Association &new_assoc
                                protocol_family,
                                protocol,
                                reuse_addr) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
 }
 
 int
@@ -77,11 +79,13 @@ ACE_SOCK_SEQPACK_Connector::shared_open (ACE_SOCK_SEQPACK_Association &new_assoc
                                g,
                                flags,
                                reuse_addr) == -1)
+    {
       return -1;
+    }
   else
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
 }
 
 int
@@ -110,11 +114,13 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
   // Enable non-blocking, if required.
   if (timeout != nullptr
       && new_association.enable (ACE_NONBLOCK) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
 }
 
 // Multihomed version of same
@@ -231,11 +237,13 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
   // Enable non-blocking, if required.
   if (timeout != nullptr
       && new_association.enable (ACE_NONBLOCK) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
 }
 
 int
@@ -254,26 +262,34 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_finish (ACE_SOCK_SEQPACK_Association 
         {
           // This expression checks if we were polling.
           if (*timeout == ACE_Time_Value::zero)
-            error = EWOULDBLOCK;
+            {
+              error = EWOULDBLOCK;
+            }
           // Wait synchronously using timeout.
           else if (this->complete (new_association,
                                    nullptr,
                                    timeout) == -1)
-            error = errno;
+            {
+              error = errno;
+            }
           else
-          {
-            return 0;
-          }
+            {
+              return 0;
+            }
         }
     }
 
   // EISCONN is treated specially since this routine may be used to
   // check if we are already connected.
   if (result != -1 || error == EISCONN)
-    // Start out with non-blocking disabled on the <new_association>.
-    new_association.disable (ACE_NONBLOCK);
+    {
+      // Start out with non-blocking disabled on the <new_association>.
+      new_association.disable (ACE_NONBLOCK);
+    }
   else if (!(error == EWOULDBLOCK || error == ETIMEDOUT))
-    new_association.close ();
+    {
+      new_association.close ();
+    }
 
   return result;
 }
@@ -296,11 +312,15 @@ ACE_SOCK_SEQPACK_Connector::connect (ACE_SOCK_SEQPACK_Association &new_associati
                          remote_sap.get_type (),
                          protocol,
                          reuse_addr) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else if (this->shared_connect_start (new_association,
                                        timeout,
                                        local_sap) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   int result = ACE_OS::connect (new_association.get_handle (),
                                 reinterpret_cast<sockaddr *> (remote_sap.get_addr ()),
@@ -328,11 +348,15 @@ ACE_SOCK_SEQPACK_Connector::connect (ACE_SOCK_SEQPACK_Association &new_associati
                          remote_sap.get_type (),
                          protocol,
                          reuse_addr) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else if (this->shared_connect_start (new_association,
                                        timeout,
                                        local_sap) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   int result = ACE_OS::connect (new_association.get_handle (),
                                 reinterpret_cast<sockaddr *> (remote_sap.get_addr ()),
@@ -418,9 +442,11 @@ ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector (ACE_SOCK_SEQPACK_Associa
                      protocol) == -1
       && timeout != nullptr
       && !(errno == EWOULDBLOCK || errno == ETIME || errno == ETIMEDOUT))
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector")));
+    }
 }
 
 // Multihomed version of same
@@ -445,9 +471,11 @@ ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector (ACE_SOCK_SEQPACK_Associa
                      protocol) == -1
       && timeout != nullptr
       && !(errno == EWOULDBLOCK || errno == ETIME || errno == ETIMEDOUT))
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector")));
+    }
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
