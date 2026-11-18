@@ -87,11 +87,13 @@ ACE_SSL_SOCK_Stream::sendv (const iovec iov[],
           // then always return -1.  Otherwise return bytes_sent.
           // This gives the caller an opportunity to keep track of
           if (bytes_sent > 0)
-            break;
+            {
+              break;
+            }
           else
-          {
-            return -1;
-          }
+            {
+              return -1;
+            }
         }
       else
         {
@@ -158,7 +160,9 @@ ACE_SSL_SOCK_Stream::recvv (iovec *io_vec,
   if (ACE_OS::ioctl (this->get_handle (),
                      FIONREAD,
                      &inlen) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else if (inlen > 0)
     {
       ACE_NEW_RETURN (io_vec->iov_base,
@@ -249,7 +253,9 @@ ACE_SSL_SOCK_Stream::send (size_t n, ...) const
           // This gives the caller an opportunity to keep track of
           // which data was actually sent.
           if (bytes_sent > 0)
-            break;
+            {
+              break;
+            }
           else
             {
               va_end (argp);
@@ -418,9 +424,13 @@ ACE_SSL_SOCK_Stream::recv_n (void *buf,
                       timeout);
 
       if (n < 0)
-        return -1;
+        {
+          return -1;
+        }
       else if (n == 0)
-        break;
+        {
+          break;
+        }
     }
 
   return ACE_Utils::truncate_cast<ssize_t> (bytes_transferred);
@@ -451,9 +461,13 @@ ACE_SSL_SOCK_Stream::recv_n (void *buf, int len, int flags) const
                       flags);
 
       if (n < 0)
-        return -1;
+        {
+          return -1;
+        }
       else if (n == 0)
-        break;
+        {
+          break;
+        }
     }
 
   return ACE_Utils::truncate_cast<ssize_t> (bytes_transferred);
@@ -482,9 +496,13 @@ ACE_SSL_SOCK_Stream::send_n (const void *buf, int len, int flags) const
                       len - bytes_transferred,
                       flags);
       if (n < 0)
-        return -1;
+        {
+          return -1;
+        }
       else if (n == 0)
-        break;
+        {
+          break;
+        }
     }
 
   return ACE_Utils::truncate_cast<ssize_t> (bytes_transferred);
