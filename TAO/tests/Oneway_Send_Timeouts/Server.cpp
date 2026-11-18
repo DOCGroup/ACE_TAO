@@ -41,7 +41,7 @@ Server::Server (int, ACE_TCHAR *argv[])
     replace (&(my_argv[count]), &(my_argv[my_argc-2]));
     replace (&(my_argv[count+1]), &(my_argv[my_argc-1]));
 
-    my_argc--; my_argc--;
+    --my_argc; --my_argc;
     orb_ = CORBA::ORB_init (my_argc, my_argv, "Server");
     if (CORBA::is_nil (orb_.in())) {
       ACE_ERROR ((LM_ERROR, "Server::Server> ORB initialization failed.\n"));
@@ -63,7 +63,7 @@ Server::Server (int, ACE_TCHAR *argv[])
     replace (&(my_argv[count+1]), &(my_argv[my_argc-1]));
 
     // initialize management ORB
-    my_argc--; my_argc--;
+    --my_argc; --my_argc;
     management_orb_ = CORBA::ORB_init (my_argc, my_argv, "Management");
     if (CORBA::is_nil (orb_.in())) {
       ACE_ERROR ((LM_ERROR, "Server::Server> Mgmt ORB initialization failed.\n"));
