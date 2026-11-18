@@ -387,7 +387,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::dump () const
   for (size_t i = 0; i < this->cur_size_; ++i)
     {
       ACELIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("%d\n"),
+                  ACE_TEXT ("%B\n"),
                   i));
       this->heap_[i]->dump ();
     }
@@ -396,7 +396,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::dump () const
 
   for (size_t j = 0; j < this->max_size_; ++j)
     ACELIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("%d\t%d\n"),
+                ACE_TEXT ("%B\t%b\n"),
                 j,
                 this->timer_ids_[j]));
 
