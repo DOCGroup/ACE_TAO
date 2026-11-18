@@ -12855,3 +12855,15 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   containers, and sample arrays into `Task_Stats` after both allocations
   succeed. No moved-from object is read afterward and no change was needed.
 - The repository-wide move audit remains open.
+
+## 2026-11-18 ACE Windows monitor ownership fix
+
+- Changed `Windows_Multi_Instance_Monitor` to construct the protected
+  `Windows_Monitor` constructor directly inside its friend class, then retain
+  ownership in `unique_ptr` until queue insertion succeeds. `make_unique`
+  cannot access that protected constructor from its library implementation.
+  Confirmed the aggregation value is reset before summing each update.
+- The full ACE core realclean build passed on Linux. The Windows PDH branch is
+  platform-guarded and could not be compiled on this host; `git diff --check`
+  passed.
+- The repository-wide modernization audit remains open.
