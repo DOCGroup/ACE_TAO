@@ -58,7 +58,9 @@ ACE_Async_Timer_Queue_Adapter<TQ, TYPE>::schedule_ualarm ()
   // Beware of negative times and zero times (which cause problems for
   // <ualarm>).
   if (tv < ACE_Time_Value::zero)
-    tv = ACE_Time_Value (0, 1);
+    {
+      tv = ACE_Time_Value (0, 1);
+    }
 
   // @@ This code should be clever enough to avoid updating the
   // <ualarm> if we haven't actually changed the earliest time.
@@ -84,13 +86,17 @@ ACE_Async_Timer_Queue_Adapter<TQ, TYPE>::schedule (TYPE eh,
   long const tid = this->timer_queue_.schedule (eh, act, future_time);
 
   if (tid == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("schedule_timer")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("schedule_timer")),
+                          -1);
+    }
 
   if (this->schedule_ualarm () == -1)
-    return 0;
+    {
+      return 0;
+    }
 
   return tid;
 }
@@ -110,9 +116,11 @@ ACE_Async_Timer_Queue_Adapter<TQ, TYPE>::ACE_Async_Timer_Queue_Adapter (ACE_Sig_
                      SA_RESTART);
 
   if (this->sig_handler_.register_handler (SIGALRM, this, &sa) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("register_handler")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("register_handler")));
+    }
 }
 
 // This is the signal handler function for the asynchronous timer
@@ -137,9 +145,13 @@ ACE_Async_Timer_Queue_Adapter<TQ, TYPE>::handle_signal (int signum, siginfo_t *,
         // @@ This code should also become smarter to avoid
         // unnecessary calls to ualarm().
         if (!this->timer_queue_.is_empty ())
-          return this->schedule_ualarm ();
+          {
+            return this->schedule_ualarm ();
+          }
         else
-          return 0;
+          {
+            return 0;
+          }
         /* NOTREACHED */
       }
     default:
@@ -258,7 +270,9 @@ ACE_Thread_Timer_Queue_Adapter<TQ, TYPE>::svc ()
 
       // If the queue is empty, sleep until there is a change on it.
       if (this->timer_queue_->is_empty ())
-        this->condition_.wait ();
+        {
+          this->condition_.wait ();
+        }
       else
         {
           // Compute the remaining time, being careful not to sleep

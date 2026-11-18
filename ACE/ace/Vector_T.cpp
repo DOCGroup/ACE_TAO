@@ -22,8 +22,12 @@ void ACE_Vector<T, DEFAULT_SIZE>::resize (size_t const new_size,
 {
   ACE_Array<T>::size (new_size);
   if (new_size > length_)
-    for (size_t i = length_; i < new_size; ++i)
-      (*this)[i]=t;
+    {
+      for (size_t i = length_; i < new_size; ++i)
+        {
+          (*this)[i]=t;
+        }
+    }
 
   curr_max_size_ = this->max_size ();
   length_ = new_size;
@@ -38,7 +42,9 @@ void ACE_Vector<T, DEFAULT_SIZE>::push_back (T const &elem)
       curr_max_size_ = this->max_size ();
     }
   else
-    ACE_Array<T>::size (length_ + 1);
+    {
+      ACE_Array<T>::size (length_ + 1);
+    }
 
   ++length_;
   (*this)[length_-1] = elem;
@@ -54,14 +60,22 @@ template <class T, size_t DEFAULT_SIZE> bool
 ACE_Vector<T, DEFAULT_SIZE>::operator== (ACE_Vector<T, DEFAULT_SIZE> const &s) const
 {
   if (this == std::addressof (s))
-    return true;
+    {
+      return true;
+    }
   else if (this->size () != s.size ())
-    return false;
+    {
+      return false;
+    }
 
   size_t const len = s.size ();
   for (size_t slot = 0; slot < len; ++slot)
-    if ((*this)[slot] != s[slot])
-      return false;
+      {
+        if ((*this)[slot] != s[slot])
+          {
+            return false;
+          }
+      }
 
   return true;
 }
