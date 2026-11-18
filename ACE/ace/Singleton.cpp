@@ -80,8 +80,10 @@ ACE_Singleton<TYPE, ACE_LOCK>::instance ()
           static ACE_LOCK *lock {};
 #endif /* ACE_FACE_SAFETY_BASE */
           if (ACE_Object_Manager::get_singleton_lock (lock) != 0)
-            // Failed to acquire the lock!
-            return 0;
+            {
+              // Failed to acquire the lock!
+              return 0;
+            }
 
           ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *lock, 0);
 
@@ -197,16 +199,20 @@ ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::instance ()
           static ACE_LOCK *lock {};
 #endif /* ACE_FACE_SAFETY_BASE */
           if (ACE_Object_Manager::get_singleton_lock (lock) != 0)
-            // Failed to acquire the lock!
-            return 0;
+            {
+              // Failed to acquire the lock!
+              return 0;
+            }
 
           ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *lock, 0);
 #endif /* ACE_MT_SAFE */
 
           if (singleton == 0)
-            ACE_NEW_RETURN (singleton,
-                            (ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>),
-                            0);
+            {
+              ACE_NEW_RETURN (singleton,
+                              (ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>),
+                              0);
+            }
         }
     }
 
@@ -279,8 +285,10 @@ ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance ()
           static ACE_LOCK *lock {};
 #endif /* ACE_FACE_SAFETY_BASE */
           if (ACE_Object_Manager::get_singleton_lock (lock) != 0)
-            // Failed to acquire the lock!
-            return 0;
+            {
+              // Failed to acquire the lock!
+              return 0;
+            }
 
           ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *lock, 0);
 
@@ -364,16 +372,20 @@ ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::instance ()
           static ACE_LOCK *lock {};
 #endif /* ACE_FACE_SAFETY_BASE */
           if (ACE_Object_Manager::get_singleton_lock (lock) != 0)
-            // Failed to acquire the lock!
-            return 0;
+            {
+              // Failed to acquire the lock!
+              return 0;
+            }
 
           ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *lock, 0);
 #endif /* ACE_MT_SAFE */
 
           if (singleton == 0)
-            ACE_NEW_RETURN (singleton,
-                            (ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>),
-                            0);
+            {
+              ACE_NEW_RETURN (singleton,
+                              (ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>),
+                              0);
+            }
         }
     }
 
@@ -387,7 +399,9 @@ ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::close ()
     ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::instance_i ();
 
   if (singleton)
-    singleton->cleanup ();
+    {
+      singleton->cleanup ();
+    }
 }
 
 // Pointer to the Singleton instance.
@@ -461,16 +475,20 @@ ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::instance ()
           static ACE_LOCK *lock {};
 #endif /* ACE_FACE_SAFETY_BASE */
           if (ACE_Object_Manager::get_singleton_lock (lock) != 0)
-            // Failed to acquire the lock!
-            return 0;
+            {
+              // Failed to acquire the lock!
+              return 0;
+            }
 
           ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *lock, 0);
 #endif /* ACE_MT_SAFE */
 
           if (singleton == 0)
-            ACE_NEW_RETURN (singleton,
-                            (ACE_DLL_Singleton_T<TYPE, ACE_LOCK>),
-                            0);
+            {
+              ACE_NEW_RETURN (singleton,
+                              (ACE_DLL_Singleton_T<TYPE, ACE_LOCK>),
+                              0);
+            }
         }
       //ACE_REGISTER_FRAMEWORK_COMPONENT(ACE_DLL_Singleton<TYPE,ACE_LOCK>, singleton);
       ACE_Framework_Repository::instance ()->register_component
