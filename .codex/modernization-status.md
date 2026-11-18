@@ -161,5 +161,5 @@ ledger remains the detailed evidence for the work itself.
 <!-- generated-snapshot:start -->
 The inventory was generated against `upstream/master`. It contains 1,268 source/project directories, 1,161 MPC files, and 2,957 MPC project declarations. The branch differs from the base in 1,230 directories, containing 2,945 project declarations. These describe touched scope, not completion.
 
-Task-level tracking currently has 2686 reviewed task records across 379 directories; 246 scoped batches are marked validated, and 54 directories have a full checklist audit. There are 124 directories with no branch delta. Earlier work remains preserved in the ledger and Git history; no overall modernization percentage is claimed because applicability has not been reviewed for every directory/task pair.
+Task-level tracking currently has 2687 reviewed task records across 380 directories; 246 scoped batches are marked validated, and 54 directories have a full checklist audit. There are 124 directories with no branch delta. Earlier work remains preserved in the ledger and Git history; no overall modernization percentage is claimed because applicability has not been reviewed for every directory/task pair.
 <!-- generated-snapshot:end -->

@@ -13109,3 +13109,7 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 ## 2026-11-18 Token strategy test increment
 
 - Changed the discarded `this->vec_token_count_[current]++` statement in `Token_Strategy_Test.cpp` to prefix form. The target rebuilt and linked after `realclean`. Commit `abdb7fa4960`.
+
+## 2026-11-18 oneway test argument decrements
+
+- Changed the two discarded `my_argc--` operations in `Oneway_Send_Timeouts/Server.cpp` to prefix form. Regenerated the MPC makefiles; `realclean` and a full test build completed successfully. Commit `38158b8ad9c`.
