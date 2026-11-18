@@ -40,11 +40,13 @@ ACE_SOCK_Connector::shared_open (ACE_SOCK_Stream &new_stream,
                           protocol_family,
                           protocol,
                           reuse_addr) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
 }
 
 int
@@ -67,11 +69,13 @@ ACE_SOCK_Connector::shared_open (ACE_SOCK_Stream &new_stream,
                           g,
                           flags,
                           reuse_addr) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
 }
 
 int
@@ -97,11 +101,13 @@ ACE_SOCK_Connector::shared_connect_start (ACE_SOCK_Stream &new_stream,
 
   // Enable non-blocking, if required.
   if (timeout != nullptr && new_stream.enable (ACE_NONBLOCK) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
 }
 
 int
@@ -152,11 +158,13 @@ ACE_SOCK_Connector::shared_connect_finish (ACE_SOCK_Stream &new_stream,
             }
           // Wait synchronously using timeout.
           else if (this->complete (new_stream, nullptr, timeout) == -1)
-            error = errno;
+            {
+              error = errno;
+            }
           else
-          {
-            return 0;
-          }
+            {
+              return 0;
+            }
         }
     }
 
@@ -196,11 +204,15 @@ ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
                          remote_sap.get_type (),
                          protocol,
                          reuse_addr) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else if (this->shared_connect_start (new_stream,
                                        timeout,
                                        local_sap) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
 #if defined(ACE_WIN32) && defined(ACE_HAS_IPV6)
   // On windows, the IPv4-mapped IPv6 address format can only be used on a dual-stack socket.
@@ -243,11 +255,15 @@ ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
                          g,
                          flags,
                          reuse_addr) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else if (this->shared_connect_start (new_stream,
                                        timeout,
                                        local_sap) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
 #if defined(ACE_WIN32) && defined(ACE_HAS_IPV6)
   // On windows, the IPv4-mapped IPv6 address format can only be used on a dual-stack socket.
@@ -342,9 +358,11 @@ ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
                      protocol) == -1
       && timeout != nullptr
       && !(errno == EWOULDBLOCK || errno == ETIME || errno == ETIMEDOUT))
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_SOCK_Connector::ACE_SOCK_Connector")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_SOCK_Connector::ACE_SOCK_Connector")));
+    }
 }
 
 ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
@@ -372,9 +390,11 @@ ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
                      perms) == -1
       && timeout != nullptr
       && !(errno == EWOULDBLOCK || errno == ETIME || errno == ETIMEDOUT))
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_SOCK_Connector::ACE_SOCK_Connector")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_SOCK_Connector::ACE_SOCK_Connector")));
+    }
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
