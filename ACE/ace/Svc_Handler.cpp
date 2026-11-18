@@ -97,11 +97,13 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::destroy ()
   // Only delete ourselves if we're not owned by a module and have
   // been allocated dynamically.
   if (this->mod_ == 0 && this->dynamic_ && this->closing_ == false)
-    // Will call the destructor, which automatically calls <shutdown>.
-    // Note that if we are *not* allocated dynamically then the
-    // destructor will call <shutdown> automatically when it gets run
-    // during cleanup.
-    delete this;
+    {
+      // Will call the destructor, which automatically calls <shutdown>.
+      // Note that if we are *not* allocated dynamically then the
+      // destructor will call <shutdown> automatically when it gets run
+      // during cleanup.
+      delete this;
+    }
 }
 
 template <typename PEER_STREAM, typename SYNCH_TRAITS> void
@@ -137,8 +139,10 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::ACE_Svc_Handler (ACE_Thread_Manager 
   this->dynamic_ = ACE_Dynamic::instance ()->is_dynamic ();
 
   if (this->dynamic_)
-    // Make sure to reset the flag.
-    ACE_Dynamic::instance ()->reset ();
+    {
+      // Make sure to reset the flag.
+      ACE_Dynamic::instance ()->reset ();
+    }
 }
 
 // Default behavior for a ACE_Svc_Handler object is to be registered
@@ -171,10 +175,12 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::open (void *)
       && this->reactor ()->register_handler
       (this,
        ACE_Event_Handler::READ_MASK) == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("unable to register client handler")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("unable to register client handler")),
+                        -1);
+    }
   return 0;
 }
 
@@ -195,13 +201,17 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::shutdown ()
       this->reactor ()->cancel_timer (this);
 
       if (this->peer ().get_handle () != ACE_INVALID_HANDLE)
-        // Remove self from reactor.
-        this->reactor ()->remove_handler (this, mask);
+        {
+          // Remove self from reactor.
+          this->reactor ()->remove_handler (this, mask);
+        }
     }
 
   // Remove self from the recycler.
   if (this->recycler ())
-    this->recycler ()->purge (this->recycling_act_);
+    {
+      this->recycler ()->purge (this->recycling_act_);
+    }
 
   this->peer ().close ();
 }
@@ -213,8 +223,10 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::cleanup_hint (void **act_holder)
 
   // Remove as hint.
   if (this->recycler ())
-    this->recycler ()->cleanup_hint (this->recycling_act_,
-                                     act_holder);
+    {
+      this->recycler ()->cleanup_hint (this->recycling_act_,
+                                       act_holder);
+    }
 }
 
 template <typename PEER_STREAM, typename SYNCH_TRAITS> void
@@ -336,17 +348,23 @@ template <typename PEER_STREAM, typename SYNCH_TRAITS> int
 ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::idle (u_long flags)
 {
   if (this->recycler ())
-    return this->recycler ()->cache (this->recycling_act_);
+    {
+      return this->recycler ()->cache (this->recycling_act_);
+    }
   else
-    return this->close (flags);
+    {
+      return this->close (flags);
+    }
 }
 
 template <typename PEER_STREAM, typename SYNCH_TRAITS> int
 ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::recycle_state (ACE_Recyclable_State new_state)
 {
   if (this->recycler ())
-    return this->recycler ()->recycle_state (this->recycling_act_,
-                                             new_state);
+    {
+      return this->recycler ()->recycle_state (this->recycling_act_,
+                                               new_state);
+    }
 
   return 0;
 }
@@ -355,7 +373,9 @@ template <typename PEER_STREAM, typename SYNCH_TRAITS> ACE_Recyclable_State
 ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::recycle_state () const
 {
   if (this->recycler ())
-    return this->recycler ()->recycle_state (this->recycling_act_);
+    {
+      return this->recycler ()->recycle_state (this->recycling_act_);
+    }
 
   return ACE_RECYCLABLE_UNKNOWN;
 }
@@ -425,7 +445,9 @@ ACE_Buffered_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::put (ACE_Message_Block *mb,
 
   // Enqueue <mb> onto the message queue.
   if (this->putq (mb, tv) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       // Update the current number of bytes on the queue.
@@ -436,9 +458,13 @@ ACE_Buffered_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::put (ACE_Message_Block *mb,
       if (this->current_buffer_size_ >= this->maximum_buffer_size_
           || (this->timeoutp_ != 0
               && this->next_timeout_ <= ACE_OS::gettimeofday ()))
-        return this->flush_i ();
+        {
+          return this->flush_i ();
+        }
       else
-        return 0;
+        {
+          return 0;
+        }
     }
 }
 
@@ -462,15 +488,21 @@ ACE_Buffered_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::flush_i ()
   // Get the first <ACE_Message_Block> so that we can write everything
   // out via the <send_n>.
   if (iterator.next (mblk) != 0)
-    result = this->peer ().send_n (mblk);
+    {
+      result = this->peer ().send_n (mblk);
+    }
 
   // This method assumes the caller holds the queue's lock!
   if (result != -1)
-    this->msg_queue ()->flush_i ();
+    {
+      this->msg_queue ()->flush_i ();
+    }
 
   if (this->timeoutp_ != 0)
-    // Update the next timeout period by adding the interval.
-    this->next_timeout_ += this->interval_;
+    {
+      // Update the next timeout period by adding the interval.
+      this->next_timeout_ += this->interval_;
+    }
 
   this->current_buffer_size_ = 0;
 
