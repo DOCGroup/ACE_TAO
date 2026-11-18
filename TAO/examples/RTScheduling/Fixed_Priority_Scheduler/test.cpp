@@ -97,8 +97,11 @@ DT_Test::check_supported_priorities ()
                       " to run the test, aborting\n"));
           ACE_OS::exit (2);
         }
-      else ACE_DEBUG ((LM_DEBUG, "max_priority = %d, min_priority = %d\n",
-                       max_priority_, min_priority_));
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG, "max_priority = %d, min_priority = %d\n",
+                      max_priority_, min_priority_));
+        }
     }
 }
 
@@ -143,8 +146,10 @@ DT_Test::init (int argc, ACE_TCHAR *argv [])
                           "test runs in time-shared class\n"));
             }
           else
-            ACE_ERROR ((LM_ERROR,
-                        "(%P|%t): sched_params failed\n"));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "(%P|%t): sched_params failed\n"));
+            }
         }
     }
 
@@ -229,9 +234,11 @@ DT_Test::activate_task ()
                       50) == -1)
     {
       if (ACE_OS::last_error () == EPERM)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Insufficient privilege to run this test.\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Insufficient privilege to run this test.\n")),
+                            -1);
+        }
     }
 
   return 0;
