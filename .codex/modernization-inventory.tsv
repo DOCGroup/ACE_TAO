@@ -196,7 +196,7 @@ ACE/protocols/tests/HTBP/Send_Recv_Tests	3	1	2	2	0	work-recorded	not-audited	LOG
 ACE/protocols/tests/HTBP/ping	3	1	2	2	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 ACE/protocols/tests/INet/MT_Get	2	1	1	1	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
 ACE/protocols/tests/RMCast	4	1	2	3	0	work-recorded	not-audited	-	Directory checklist not yet fully audited	-	-
-ACE/tests	349	1	294	282	5	work-recorded	partial	COPY_MOVE; C_STRING; CLEANUP; BUILD_TEST	Full directory modernization audit remains; retained ACE_OS wrapper tests and generic-character calls; Process_Manager_Test decimal assembly now uses std::to_string	mpc.pl -type gnuace tests.mpc; GNUmakefile.Process_Manager_Test realclean + make -j 8 + ./Process_Manager_Test passed without warnings	1bed40b9a82
+ACE/tests	349	1	294	282	5	work-recorded	partial	COPY_MOVE; C_STRING; PREFIX_INC; CLEANUP; BUILD_TEST	Full directory modernization audit remains; retained ACE_OS wrapper tests and generic-character calls; Process_Manager_Test decimal assembly now uses std::to_string	mpc.pl -type gnuace tests.mpc; GNUmakefile.Process_Manager_Test realclean + make -j 8 + ./Process_Manager_Test passed without warnings	1bed40b9a82
 ACE/tests/SSL	6	1	3	4	0	work-recorded	partial	C_STRING; LOG_FORMAT; BUILD_TEST	Full directory modernization audit remains	make -f GNUmakefile.SSL_Asynch_Stream_Test realclean; build passed without warnings	265806ac764
 ACE/tests/non_mpc_makefile	1	0	0	0	0	no-branch-delta	not-audited	-	Directory checklist not yet fully audited	-	-
 ACE/websvcs/lib	5	1	1	3	0	work-recorded	not-audited	MOVE_SEMANTICS; SPECIAL_MEMBER_COMMENTS	Directory checklist not yet fully audited	-	-

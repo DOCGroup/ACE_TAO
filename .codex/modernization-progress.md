@@ -26,7 +26,7 @@ Scope: **1268 directories**; **1239** differ from the base; **379** have task-le
 | `CONTAINER_OWNERSHIP` — Standard containers and ownership of container elements | 1 | 1 | 0 | 0 |
 | `C_STRING` — Plain C-string handling | 85 | 60 | 25 | 0 |
 | `STD_NARROW_STRING` — Use std string functions for narrow C strings | 10 | 10 | 0 | 0 |
-| `PREFIX_INC` — Prefer prefix increment and decrement when equivalent | 34 | 32 | 2 | 0 |
+| `PREFIX_INC` — Prefer prefix increment and decrement when equivalent | 35 | 33 | 2 | 0 |
 | `BRACES` — Consistent braces around control-flow bodies | 2 | 0 | 0 | 2 |
 | `CONST_GUARD_MACROS` — Const guard macro usage while preserving ACE_GUARD conventions | 2 | 2 | 0 | 0 |
 | `MOVE_SITES` — Audit std::move sites for moved-from use and ownership correctness | 3 | 3 | 0 | 0 |

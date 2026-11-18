@@ -13097,3 +13097,7 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 ## 2026-11-18 ImR locator prefix increment
 
 - Changed the discarded `active->start_count_++` statement in `Server_Info.cpp` to `++active->start_count_`. The source object compiled. A full `GNUmakefile.ImR_Locator` build was skipped because the local `TAO_Async_IORTable` and `TAO_DynamicInterface` libraries are unavailable. Commit `c1e2a740a3e`.
+
+## 2026-11-18 Intrusive auto pointer test increments
+
+- Changed the discarded `one->ref++` and `one->ref--` operations in `Intrusive_Auto_Ptr_Test.cpp` to prefix form. The test target rebuilt and linked after `realclean`. Commit `9d984cf860c`.
