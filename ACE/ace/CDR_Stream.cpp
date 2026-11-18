@@ -278,10 +278,12 @@ ACE_OutputCDR::write_wchar (ACE_CDR::WChar x)
       if (this->write_1 (&len))
         {
           if (ACE_OutputCDR::wchar_maxbytes_ == sizeof(ACE_CDR::WChar))
-            return
-              this->write_octet_array (
-                                       reinterpret_cast<const ACE_CDR::Octet*> (&x),
-                                       static_cast<ACE_CDR::ULong> (len));
+            {
+              return
+                this->write_octet_array (
+                                         reinterpret_cast<const ACE_CDR::Octet*> (&x),
+                                         static_cast<ACE_CDR::ULong> (len));
+            }
           else
             if (ACE_OutputCDR::wchar_maxbytes_ == 2)
               {
@@ -416,7 +418,9 @@ ACE_OutputCDR::write_wstring (ACE_CDR::ULong len,
         }
       }
     else if (this->write_ulong (1))
-      return this->write_wchar (0);
+      {
+        return this->write_wchar (0);
+      }
   return (this->good_bit_ = false);
 }
 
@@ -623,22 +627,28 @@ ACE_OutputCDR::write_wchar_array_i (const ACE_CDR::WChar *x,
         {
           ACE_CDR::UShort *sb = reinterpret_cast<ACE_CDR::UShort *> (buf);
           for (size_t i = 0; i < length; ++i)
+            {
 #if !defined (ACE_ENABLE_SWAP_ON_WRITE)
-            sb[i] = static_cast<ACE_CDR::UShort> (x[i]);
+              sb[i] = static_cast<ACE_CDR::UShort> (x[i]);
 #else
               if (!this->do_byte_swap_)
-              sb[i] = static_cast<ACE_CDR::UShort> (x[i]);
-            else
-              {
-                ACE_CDR::UShort sx = static_cast<ACE_CDR::UShort> (x[i]);
-                ACE_CDR::swap_2 (reinterpret_cast<char *> (&sx), buf + i * 2);
-              }
+                {
+                  sb[i] = static_cast<ACE_CDR::UShort> (x[i]);
+                }
+              else
+                {
+                  ACE_CDR::UShort sx = static_cast<ACE_CDR::UShort> (x[i]);
+                  ACE_CDR::swap_2 (reinterpret_cast<char *> (&sx), buf + i * 2);
+                }
 #endif /* ACE_ENABLE_SWAP_ON_WRITE */
+            }
         }
       else
         {
           for (size_t i = 0; i < length; ++i)
-            buf[i] = static_cast<char> (x[i]);
+            {
+              buf[i] = static_cast<char> (x[i]);
+            }
         }
       return this->good_bit_;
     }
@@ -710,7 +720,9 @@ ACE_OutputCDR::write_boolean_array (const ACE_CDR::Boolean* x,
   for (ACE_CDR::Boolean const * i = x;
        i != end && this->good_bit ();
        ++i)
-    (void) this->write_boolean (*i);
+    {
+      (void) this->write_boolean (*i);
+    }
 
   return this->good_bit ();
 }
@@ -720,11 +732,13 @@ ACE_OutputCDR::write_long_placeholder ()
 {
   char *buf {};
   if (this->adjust (ACE_CDR::LONG_SIZE, buf) == 0)
-    *reinterpret_cast<ACE_CDR::ULong*> (buf) = 0;
+    {
+      *reinterpret_cast<ACE_CDR::ULong*> (buf) = 0;
+    }
   else
-  {
-    buf = nullptr;
-  }
+    {
+      buf = nullptr;
+    }
   return buf;
 }
 
@@ -733,11 +747,13 @@ ACE_OutputCDR::write_short_placeholder ()
 {
   char *buf {};
   if (this->adjust (ACE_CDR::SHORT_SIZE, buf) == 0)
-    *reinterpret_cast<ACE_CDR::UShort*> (buf) = 0;
+    {
+      *reinterpret_cast<ACE_CDR::UShort*> (buf) = 0;
+    }
   else
-  {
-    buf = nullptr;
-  }
+    {
+      buf = nullptr;
+    }
   return buf;
 }
 
@@ -746,11 +762,13 @@ ACE_OutputCDR::write_boolean_placeholder ()
 {
   char *buf {};
   if (this->adjust (ACE_CDR::OCTET_SIZE, buf) == 0)
-    *reinterpret_cast<ACE_CDR::Boolean*> (buf) = false;
+    {
+      *reinterpret_cast<ACE_CDR::Boolean*> (buf) = false;
+    }
   else
-  {
-    buf = nullptr;
-  }
+    {
+      buf = nullptr;
+    }
   return buf;
 }
 
@@ -759,11 +777,13 @@ ACE_OutputCDR::write_char_placeholder ()
 {
   char *buf {};
   if (this->adjust (ACE_CDR::OCTET_SIZE, buf) == 0)
-    *reinterpret_cast<ACE_CDR::Char*> (buf) = 0;
+    {
+      *reinterpret_cast<ACE_CDR::Char*> (buf) = 0;
+    }
   else
-  {
-    buf = nullptr;
-  }
+    {
+      buf = nullptr;
+    }
   return buf;
 }
 
@@ -772,11 +792,13 @@ ACE_OutputCDR::write_octet_placeholder ()
 {
   char *buf {};
   if (this->adjust (ACE_CDR::OCTET_SIZE, buf) == 0)
-    *reinterpret_cast<ACE_CDR::Octet*> (buf) = 0;
+    {
+      *reinterpret_cast<ACE_CDR::Octet*> (buf) = 0;
+    }
   else
-  {
-    buf = nullptr;
-  }
+    {
+      buf = nullptr;
+    }
   return buf;
 }
 
@@ -785,11 +807,13 @@ ACE_OutputCDR::write_longlong_placeholder ()
 {
   char *buf {};
   if (this->adjust (ACE_CDR::LONGLONG_SIZE, buf) == 0)
-    *reinterpret_cast<ACE_CDR::ULongLong*> (buf) = 0;
+    {
+      *reinterpret_cast<ACE_CDR::ULongLong*> (buf) = 0;
+    }
   else
-  {
-    buf = nullptr;
-  }
+    {
+      buf = nullptr;
+    }
   return buf;
 }
 
@@ -798,11 +822,13 @@ ACE_OutputCDR::write_float_placeholder ()
 {
   char *buf {};
   if (this->adjust (ACE_CDR::LONG_SIZE, buf) == 0)
-    *reinterpret_cast<ACE_CDR::ULong*> (buf) = 0;
+    {
+      *reinterpret_cast<ACE_CDR::ULong*> (buf) = 0;
+    }
   else
-  {
-    buf = nullptr;
-  }
+    {
+      buf = nullptr;
+    }
   return buf;
 }
 
@@ -811,11 +837,13 @@ ACE_OutputCDR::write_double_placeholder ()
 {
   char *buf {};
   if (this->adjust (ACE_CDR::LONGLONG_SIZE, buf) == 0)
-    *reinterpret_cast<ACE_CDR::ULongLong*> (buf) = 0;
+    {
+      *reinterpret_cast<ACE_CDR::ULongLong*> (buf) = 0;
+    }
   else
-  {
-    buf = nullptr;
-  }
+    {
+      buf = nullptr;
+    }
   return buf;
 }
 
@@ -1459,7 +1487,9 @@ ACE_InputCDR::skip_wchar ()
       ACE_CDR::WChar x;
       void * const temp = &x;
       if (ACE_OutputCDR::wchar_maxbytes_ == 2)
-        return this->read_2 (reinterpret_cast<ACE_CDR::UShort *> (temp));
+        {
+          return this->read_2 (reinterpret_cast<ACE_CDR::UShort *> (temp));
+        }
       else
       {
         return this->read_4 (reinterpret_cast<ACE_CDR::ULong *> (temp));
@@ -1491,11 +1521,13 @@ ACE_InputCDR::read_wchar (ACE_CDR::WChar& x)
           ACE_CDR::Octet len;
 
           if (this->read_1 (&len))
-            return this->read_array
-              (reinterpret_cast<ACE_CDR::Octet*> (&x),
-               static_cast<ACE_CDR::ULong> (len),
-               ACE_CDR::OCTET_ALIGN,
-               1);
+            {
+              return this->read_array
+                (reinterpret_cast<ACE_CDR::Octet*> (&x),
+                 static_cast<ACE_CDR::ULong> (len),
+                 ACE_CDR::OCTET_ALIGN,
+                 1);
+            }
 
           else
           {
@@ -1505,7 +1537,9 @@ ACE_InputCDR::read_wchar (ACE_CDR::WChar& x)
 
       void * const temp = &x;
       if (sizeof (ACE_CDR::WChar) == 2)
-        return this->read_2 (reinterpret_cast<ACE_CDR::UShort *> (temp));
+        {
+          return this->read_2 (reinterpret_cast<ACE_CDR::UShort *> (temp));
+        }
       else
       {
         return this->read_4 (reinterpret_cast<ACE_CDR::ULong *> (temp));
@@ -1914,7 +1948,9 @@ ACE_InputCDR::read_array (void* x,
       std::memcpy (x, buf, size*length);
 #else
       if (!this->do_byte_swap_ || size == 1)
-        std::memcpy (x, buf, size*length);
+        {
+          std::memcpy (x, buf, size*length);
+        }
       else
         {
           char *target = reinterpret_cast<char*> (x);
@@ -1963,23 +1999,29 @@ ACE_InputCDR::read_wchar_array_i (ACE_CDR::WChar* x,
         {
           ACE_CDR::UShort *sb = reinterpret_cast<ACE_CDR::UShort *> (buf);
           for (size_t i = 0; i < length; ++i)
+            {
 #if defined (ACE_DISABLE_SWAP_ON_READ)
-            x[i] = static_cast<ACE_CDR::WChar> (sb[i]);
-#else
-            if (!this->do_byte_swap_)
               x[i] = static_cast<ACE_CDR::WChar> (sb[i]);
-            else
-              {
-                ACE_CDR::UShort sx;
-                ACE_CDR::swap_2 (buf + i * 2, reinterpret_cast<char *> (&sx));
-                x[i] = static_cast<ACE_CDR::WChar> (sx);
-              }
+#else
+              if (!this->do_byte_swap_)
+                {
+                  x[i] = static_cast<ACE_CDR::WChar> (sb[i]);
+                }
+              else
+                {
+                  ACE_CDR::UShort sx;
+                  ACE_CDR::swap_2 (buf + i * 2, reinterpret_cast<char *> (&sx));
+                  x[i] = static_cast<ACE_CDR::WChar> (sx);
+                }
 #endif /* ACE_DISABLE_SWAP_ON_READ */
+            }
         }
       else
         {
           for (size_t i = 0; i < length; ++i)
-            x[i] = static_cast<ACE_CDR::Octet> (buf[i]);
+            {
+              x[i] = static_cast<ACE_CDR::Octet> (buf[i]);
+            }
         }
       return this->good_bit_;
     }
@@ -2037,7 +2079,9 @@ ACE_InputCDR::read_2 (ACE_CDR::UShort *x)
     {
 #if !defined (ACE_DISABLE_SWAP_ON_READ)
       if (!this->do_byte_swap_)
-        *x = *reinterpret_cast<ACE_CDR::UShort*> (buf);
+        {
+          *x = *reinterpret_cast<ACE_CDR::UShort*> (buf);
+        }
       else
       {
         ACE_CDR::swap_2 (buf, reinterpret_cast<char*> (x));
@@ -2059,7 +2103,9 @@ ACE_InputCDR::read_4 (ACE_CDR::ULong *x)
     {
 #if !defined (ACE_DISABLE_SWAP_ON_READ)
       if (!this->do_byte_swap_)
-        *x = *reinterpret_cast<ACE_CDR::ULong*> (buf);
+        {
+          *x = *reinterpret_cast<ACE_CDR::ULong*> (buf);
+        }
       else
       {
         ACE_CDR::swap_4 (buf, reinterpret_cast<char*> (x));
@@ -2082,7 +2128,9 @@ ACE_InputCDR::read_8 (ACE_CDR::ULongLong *x)
     {
 #if !defined (ACE_DISABLE_SWAP_ON_READ)
       if (!this->do_byte_swap_)
-        *x = *reinterpret_cast<ACE_CDR::ULongLong *> (buf);
+        {
+          *x = *reinterpret_cast<ACE_CDR::ULongLong *> (buf);
+        }
       else
       {
         ACE_CDR::swap_8 (buf, reinterpret_cast<char *> (x));
@@ -2107,7 +2155,9 @@ ACE_InputCDR::read_16 (ACE_CDR::LongDouble *x)
     {
 #if !defined (ACE_DISABLE_SWAP_ON_READ)
       if (!this->do_byte_swap_)
-        *x = *reinterpret_cast<ACE_CDR::LongDouble *> (buf);
+        {
+          *x = *reinterpret_cast<ACE_CDR::LongDouble *> (buf);
+        }
       else
       {
         ACE_CDR::swap_16 (buf, reinterpret_cast<char*> (x));
@@ -2158,10 +2208,16 @@ ACE_InputCDR::skip_wstring ()
     {
       if (static_cast<ACE_CDR::Short> (this->major_version_) == 1
             && static_cast<ACE_CDR::Short> (this->minor_version_) == 2)
+        {
           continue_skipping = this->skip_bytes ((size_t)len);
+        }
       else
-        while (continue_skipping && len--)
-          continue_skipping = this->skip_wchar ();
+        {
+          while (continue_skipping && len--)
+            {
+              continue_skipping = this->skip_wchar ();
+            }
+        }
     }
   return continue_skipping;
 }
