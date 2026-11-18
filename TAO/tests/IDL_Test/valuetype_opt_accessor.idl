@@ -29,3 +29,26 @@ valuetype Accessor_Optimized_Refcount_Derived : Accessor_Optimized_Refcount_Base
 {
   public long derived_value;
 };
+
+/// The derived valuetype inherits a counter and adds another supported interface.
+valuetype Accessor_Optimized_Refcount_Parent
+{
+  public long parent_value;
+};
+
+valuetype Accessor_Optimized_Refcount_Inherited : Accessor_Optimized_Refcount_Parent
+  supports Accessor_Optimized_Interface
+{
+  public long inherited_value;
+};
+
+valuetype Accessor_Optimized_Base
+{
+  public long value;
+  factory create ();
+};
+
+valuetype Accessor_Optimized_Derived : Accessor_Optimized_Base
+{
+  void op ();
+};
