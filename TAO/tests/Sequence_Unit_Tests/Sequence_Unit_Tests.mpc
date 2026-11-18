@@ -145,9 +145,8 @@ project(*B_Value_Sequence): seq_tests, taoexe {
   }
 }
 
-project(*Sequence_Move_Maximum): seq_tests, taoexe {
+project(*Sequence_Move_Maximum): seq_tests, taoexe, valuetype {
   exename = sequence_move_maximum_ut
-  libs += TAO_Valuetype
   Source_Files {
     mock_array.cpp
     mock_reference.cpp
