@@ -1018,6 +1018,7 @@ TAO/examples/Advanced/ch_3	BUILD_TEST	done	0ebf77a93ad	Migrated from existing in
 TAO/examples/Advanced/ch_3	CONST	done	0ebf77a93ad	Migrated from existing inventory; see modernization-ledger.md
 TAO/examples/Advanced/ch_3	STYLE	done	0ebf77a93ad	Migrated from existing inventory; see modernization-ledger.md
 TAO/examples/Advanced/ch_8_and_10	SPECIAL_MEMBER_COMMENTS	done	fa443633e90	Removed three constructor/destructor-only labels; realclean-built and linked server with dummy_label=1 without warnings
+TAO/examples/Callback_Quoter	PREFIX_INC	done	46a5c138eec	Changed the three standalone TAO_debug_level++ statements to prefix increment; directory scan found no other postfix increment/decrement cases requiring an equivalent change.
 TAO/examples/Callback_Quoter	SPECIAL_MEMBER_COMMENTS	done	50a276449a4	Removed the destructor-only label from Notifier_Input_Handler.cpp; realclean-built and linked notifier without warnings
 TAO/examples/Event_Comm	SPECIAL_MEMBER_COMMENTS	done	f412284664c	Removed four constructor/destructor-only labels; changed translation units compiled, but target build blocked by generated Event_CommS.cpp unsigned int versus std::size_t operation-table signatures
 TAO/examples/Kokyu_dsrt_schedulers	BUILD_TEST	done	7fd29da81c1	Migrated from existing inventory; see modernization-ledger.md
@@ -2657,6 +2658,7 @@ TAO/tests/Multiple_Inheritance	OWNERSHIP	done	f0e77298f59	Owned the input FILE w
 TAO/tests/Multiple_Inheritance	STYLE	done	f0e77298f59	Removed duplicate narrow comments and blank lines; normalized ACE_TMAIN spacing
 TAO/tests/Multiple_Inheritance	TEXT_API	done	f0e77298f59	Used ACE_TEXT for file modes and diagnostics carrying ACE_TCHAR paths
 TAO/tests/Multiple_Inheritance	VALUE_INIT	done	363e9ccec21	Removed the empty out-of-line constructor body and used the defaulted constructor
+TAO/tests/NestedUpcall/Triangle_Test	PREFIX_INC	done	46a5c138eec	Changed standalone TAO_debug_level++ to prefix increment; directory scan found no other postfix increment/decrement cases requiring an equivalent change.
 TAO/tests/OBV/Simple	BUILD_TEST	done	708b58e94b8	Regenerated OBV IDL; realclean-built client/server and perl run_test.pl passed
 TAO/tests/Oneway_Send_Timeouts	PREFIX_INC	done	38158b8ad9c	Changed two discarded my_argc decrements to prefix form; generated target realclean-built and linked successfully.
 TAO/tests/POA/Non_Retain_System_Id	LOG_FORMAT	done	08afed08cfa	Logged CORBA::Short index as validated size_t with %B and cast CORBA sequence length to unsigned int for %u; C++17 syntax-only compile passed

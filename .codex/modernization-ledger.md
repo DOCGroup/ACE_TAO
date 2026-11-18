@@ -13203,3 +13203,9 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   `IIOP_Connector.cpp`; the `Transport_Cache_Manager_T.h` template
   implementation also passed syntax-only compilation. `git diff --check`
   passed. The TAO/ACE logging-format audit remains open.
+
+## 2026-11-18 TAO debug-level increments
+
+- Changed the four standalone `TAO_debug_level++` statements in Callback_Quoter and NestedUpcall/Triangle_Test to prefix increment. The old values were discarded, so this is behavior-preserving.
+- Scanned both directories for remaining postfix increment/decrement operations; none required an equivalent conversion.
+- No build or runtime test was run for these syntax-only changes.
