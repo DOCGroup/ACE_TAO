@@ -99,11 +99,13 @@ ACE_SSL_Asynch_Stream::ACE_SSL_Asynch_Stream (
   this->ssl_.reset (::SSL_new (ctx->context ()));
 
   if (!this->ssl_)
-    ACELIB_ERROR
-      ((LM_ERROR,
-        ACE_TEXT ("(%P|%t) ACE_SSL_Asynch_Stream %p\n"),
-        ACE_TEXT ("- cannot allocate new SSL structure")
-     ));
+    {
+      ACELIB_ERROR
+        ((LM_ERROR,
+          ACE_TEXT ("(%P|%t) ACE_SSL_Asynch_Stream %p\n"),
+          ACE_TEXT ("- cannot allocate new SSL structure")
+         ));
+    }
 }
 
 ACE_SSL_Asynch_Stream::~ACE_SSL_Asynch_Stream ()
@@ -114,11 +116,15 @@ ACE_SSL_Asynch_Stream::~ACE_SSL_Asynch_Stream ()
   // i.e., state is SF_DELETE_ENABLE or if proactor event loop is
   // done.
   if (this->flags_ & SF_STREAM_OPEN)             // open
-    if ((this->flags_ & SF_DELETE_ENABLE) == 0)  // but ..
-      ACELIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("ACE_SSL_Asynch_Stream::DTOR-")
-                  ACE_TEXT("possible access violation ")
-                  ACE_TEXT("if proactor still handles events\n")));
+    {
+      if ((this->flags_ & SF_DELETE_ENABLE) == 0)  // but ..
+        {
+          ACELIB_DEBUG ((LM_DEBUG,
+                         ACE_TEXT("ACE_SSL_Asynch_Stream::DTOR-")
+                         ACE_TEXT("possible access violation ")
+                         ACE_TEXT("if proactor still handles events\n")));
+        }
+    }
 
   // Was honestly copied from ACE_SSL_SOCK_Stream :)
 
@@ -137,12 +143,14 @@ ACE_SSL_Asynch_Stream::close ()
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1));
 
   if ((flags_ & SF_STREAM_OPEN) == 0) // not open
-    flags_ |= SF_DELETE_ENABLE;
+    {
+      flags_ |= SF_DELETE_ENABLE;
+    }
 
   if (flags_ & SF_DELETE_ENABLE)
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
 
   flags_ |= SF_REQ_SHUTDOWN;
 
@@ -199,25 +207,31 @@ ACE_SSL_Asynch_Stream::open (ACE_Handler & handler,
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1));
 
   if (this->flags_ & SF_STREAM_OPEN)
-    ACELIB_ERROR_RETURN
-      ((LM_ERROR,
-        ACE_TEXT ("(%P|%t) ACE_SSL_Asynch_Stream::open() %p\n"),
-        ACE_TEXT ("- already opened")),
-       -1);
+    {
+      ACELIB_ERROR_RETURN
+        ((LM_ERROR,
+          ACE_TEXT ("(%P|%t) ACE_SSL_Asynch_Stream::open() %p\n"),
+          ACE_TEXT ("- already opened")),
+         -1);
+    }
 
   if (!this->ssl_)
-    ACELIB_ERROR_RETURN
-      ((LM_ERROR,
-        ACE_TEXT ("(%P|%t) ACE_SSL_Asynch_Stream::open() %p\n"),
-        ACE_TEXT ("- SSL structure is absent")),
-       -1);
+    {
+      ACELIB_ERROR_RETURN
+        ((LM_ERROR,
+          ACE_TEXT ("(%P|%t) ACE_SSL_Asynch_Stream::open() %p\n"),
+          ACE_TEXT ("- SSL structure is absent")),
+         -1);
+    }
 
   if (handle == ACE_INVALID_HANDLE)
-    ACELIB_ERROR_RETURN
-      ((LM_ERROR,
-        ACE_TEXT ("(%P|%t) ACE_SSL_Asynch_Stream::open() %p\n"),
-        ACE_TEXT ("- invalid handle")),
-       -1);
+    {
+      ACELIB_ERROR_RETURN
+        ((LM_ERROR,
+          ACE_TEXT ("(%P|%t) ACE_SSL_Asynch_Stream::open() %p\n"),
+          ACE_TEXT ("- invalid handle")),
+         -1);
+    }
 
   // Get a proactor for/from the user.
   this->proactor_    = this->get_proactor (proactor, handler);
@@ -229,29 +243,31 @@ ACE_SSL_Asynch_Stream::open (ACE_Handler & handler,
                                handle,
                                completion_key,
                                this->proactor_) != 0)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   // Open internal output stream
   if (this->bio_ostream_.open (*this,  // real callbacks to this
                                handle,
                                completion_key,
                                this->proactor_) != 0)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   std::unique_ptr<BIO, decltype(&::BIO_free)> bio (
     ACE_SSL_make_BIO (this),
     ::BIO_free);
 
   if (bio == nullptr)
-    ACELIB_ERROR_RETURN
-      ((LM_ERROR,
-        ACE_TEXT ("(%P|%t) ACE_SSL_Asynch_Stream::open() %p\n"),
-        ACE_TEXT ("- cannot allocate new BIO structure")),
-       -1);
+    {
+      ACELIB_ERROR_RETURN
+        ((LM_ERROR,
+          ACE_TEXT ("(%P|%t) ACE_SSL_Asynch_Stream::open() %p\n"),
+          ACE_TEXT ("- cannot allocate new BIO structure")),
+         -1);
+    }
 
   ::SSL_set_bio (this->ssl_.get (), bio.get (), bio.get ());
   bio.release ();
@@ -291,20 +307,22 @@ ACE_SSL_Asynch_Stream::read (ACE_Message_Block & message_block,
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1));
 
   if ((this->flags_ & SF_STREAM_OPEN) == 0)  // not open
-    return -1;
+    {
+      return -1;
+    }
 
   if (this->flags_ & SF_REQ_SHUTDOWN)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   // only one read operation is allowed now
   // later it will be possible to make a queue
 
   if (this->ext_read_result_ != nullptr)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   // create result for future notification
   ACE_NEW_RETURN (this->ext_read_result_,
@@ -334,20 +352,22 @@ ACE_SSL_Asynch_Stream::write (ACE_Message_Block & message_block,
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1));
 
   if ((this->flags_ & SF_STREAM_OPEN) == 0)  // not open
-    return -1;
+    {
+      return -1;
+    }
 
   if (this->flags_ & SF_REQ_SHUTDOWN)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   // only one read operation is allowed now
   // later it will be possible to make a queue
 
   if (this->ext_write_result_ != nullptr)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   // create result for future notification
   ACE_NEW_RETURN (this->ext_write_result_,
@@ -375,18 +395,22 @@ ACE_SSL_Asynch_Stream::do_SSL_state_machine ()
   int const retval = this->do_SSL_handshake ();
 
   if (retval == 0)          // handshake in progress ?
-    return 0;
+    {
+      return 0;
+    }
 
   if (retval < 0)
-  {
-    this->flags_ |= SF_REQ_SHUTDOWN;
-  }
+    {
+      this->flags_ |= SF_REQ_SHUTDOWN;
+    }
 
   this->do_SSL_read ();  // execute user read request
   this->do_SSL_write (); // execute user write request
 
   if ((this->flags_ & SF_REQ_SHUTDOWN) == 0)     // Do we have any errors
-    return 0;
+    {
+      return 0;
+    }
 
   this->do_SSL_shutdown ();
 
@@ -403,7 +427,9 @@ int
 ACE_SSL_Asynch_Stream::do_SSL_shutdown ()
 {
   if (this->flags_ & SF_SHUTDOWN_DONE) // already done
-    return 1;
+    {
+      return 1;
+    }
 
   this->flags_ |= SF_REQ_SHUTDOWN;
 
@@ -641,13 +667,19 @@ int
 ACE_SSL_Asynch_Stream::notify_close ()
 {
   if (this->flags_ & SF_CLOSE_NTF_SENT)  // already sent
-    return 1;
+    {
+      return 1;
+    }
 
   if ((this->flags_ & SF_SHUTDOWN_DONE) == 0)  // only after shutdown
-    return 2;    // too early , we will do later
+    {
+      return 2;    // too early , we will do later
+    }
 
   if (this->pending_BIO_count () != 0)   // wait for all internal IO
-    return 2;   // too early , we will do later
+    {
+      return 2;   // too early , we will do later
+    }
 
   // create result for future notification
   ACE_SSL_Asynch_Result * close_result {};
@@ -670,9 +702,9 @@ ACE_SSL_Asynch_Stream::notify_close ()
 #else
   retval = close_result->post_completion (this->proactor_->implementation ());
   if (retval == 0)
-  {
-    close_result_owner.release ();
-  }
+    {
+      close_result_owner.release ();
+    }
 #endif
 
   if (retval == 0)
@@ -693,7 +725,9 @@ ACE_SSL_Asynch_Stream::notify_read (int bytes_transferred,
                                     int error)
 {
   if (ext_read_result_ == nullptr) //nothing to notify
-    return 1;
+    {
+      return 1;
+    }
 
   this->ext_read_result_->set_bytes_transferred (bytes_transferred);
   this->ext_read_result_->set_error (error);
@@ -733,7 +767,9 @@ ACE_SSL_Asynch_Stream::notify_write (int bytes_transferred,
                                      int error)
 {
   if (this->ext_write_result_ == nullptr) //nothing to notify
-    return 1;
+    {
+      return 1;
+    }
 
   this->ext_write_result_->set_bytes_transferred (bytes_transferred);
   this->ext_write_result_->set_error (error);
@@ -969,7 +1005,9 @@ ACE_SSL_Asynch_Stream::handle_write_stream (
   size_t const len = bytes_req - bytes_trn;
 
   if (errval != 0)                    // error ?
-    this->bio_out_errno_ = errval;    // save err code
+    {
+      this->bio_out_errno_ = errval;    // save err code
+    }
   else if (len > 0)                   // TCP/IP overloaded ?
     {                                 // continue, rd_ptr at right place
       if (this->bio_ostream_.write (
@@ -1010,9 +1048,13 @@ ACE_SSL_Asynch_Stream::handle_read_stream (
   u_long const errval = result.error ();
 
   if (errval != 0)                     // error ?
-     this->bio_inp_errno_ = errval;    // save err code
+    {
+      this->bio_inp_errno_ = errval;    // save err code
+    }
   else if (bytes_trn == 0)             // end of stream ?
-     this->bio_inp_flag_ |= BF_EOS;    // set flag EOS
+    {
+      this->bio_inp_flag_ |= BF_EOS;    // set flag EOS
+    }
 
   this->do_SSL_state_machine ();
 
