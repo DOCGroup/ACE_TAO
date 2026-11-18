@@ -546,7 +546,7 @@ RTCP_SDES_Packet::RTCP_SDES_Packet(char* buffer, int *len):
         // each chunk must end on an even 32 bit boundary
         while (i % 4)
         {
-          i++;
+          ++i;
         }
     }
 
