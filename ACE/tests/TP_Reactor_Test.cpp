@@ -296,7 +296,7 @@ Acceptor::on_new_receiver (Receiver &rcvr)
   ++this->sessions_;
   this->list_receivers_[rcvr.index_] = std::addressof (rcvr);
   ACE_DEBUG ((LM_DEBUG,
-              "Receiver::CTOR sessions_=%d\n",
+              "Receiver::CTOR sessions_=%B\n",
               this->sessions_));
 }
 
@@ -330,7 +330,7 @@ Acceptor::on_delete_receiver (Receiver &rcvr)
                     rcvr.get_total_r ());
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Receiver::~DTOR index=%d snd=%s rcv=%s sessions_=%d\n"),
+              ACE_TEXT ("Receiver::~DTOR index=%B snd=%s rcv=%s sessions_=%B\n"),
               rcvr.index_,
               bufs,
               bufr,
@@ -522,7 +522,7 @@ Receiver::handle_input (ACE_HANDLE h)
     {
       LogLocker log_lock;
 
-      ACE_DEBUG ((LM_DEBUG, "**** Receiver::handle_input () SessionId=%d****\n", index_));
+      ACE_DEBUG ((LM_DEBUG, "**** Receiver::handle_input () SessionId=%B****\n", index_));
       ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "bytes_to_read", BUFSIZ));
       ACE_DEBUG ((LM_DEBUG, "%C = %@\n", "handle",
                   reinterpret_cast<void *> (h)));
@@ -615,7 +615,7 @@ Receiver::handle_output (ACE_HANDLE h)
         {
           LogLocker log_lock;
 
-          ACE_DEBUG ((LM_DEBUG, "**** Receiver::handle_output () SessionId=%d****\n", index_));
+          ACE_DEBUG ((LM_DEBUG, "**** Receiver::handle_output () SessionId=%B****\n", index_));
           ACE_DEBUG ((LM_DEBUG, "%C = %B\n", "bytes_to_write", bytes));
           ACE_DEBUG ((LM_DEBUG, "%C = %@\n", "handle",
                       reinterpret_cast<void *> (h)));
@@ -694,7 +694,7 @@ Connector::on_new_sender (Sender & sndr)
   ++this->sessions_;
   this->list_senders_[sndr.index_] = std::addressof (sndr);
   ACE_DEBUG ((LM_DEBUG,
-              "Sender::CTOR sessions_=%d\n",
+              "Sender::CTOR sessions_=%B\n",
               this->sessions_));
 }
 
@@ -727,7 +727,7 @@ Connector::on_delete_sender (Sender & sndr)
                     sndr.get_total_r ());
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Sender::~DTOR index=%d snd=%s rcv=%s sessions_=%d\n"),
+              ACE_TEXT ("Sender::~DTOR index=%B snd=%s rcv=%s sessions_=%B\n"),
               sndr.index_,
               bufs,
               bufr,
@@ -975,7 +975,7 @@ Sender::handle_input (ACE_HANDLE h)
     {
       LogLocker log_lock;
 
-      ACE_DEBUG ((LM_DEBUG, "**** Sender::handle_input () SessionId=%d****\n", index_));
+      ACE_DEBUG ((LM_DEBUG, "**** Sender::handle_input () SessionId=%B****\n", index_));
       ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "bytes_to_read", BUFSIZ));
       ACE_DEBUG ((LM_DEBUG, "%C = %@\n", "handle",
                   reinterpret_cast<void *> (h)));
@@ -1054,7 +1054,7 @@ Sender::handle_output (ACE_HANDLE h)
         {
           LogLocker log_lock;
 
-          ACE_DEBUG ((LM_DEBUG, "**** Sender::handle_output () SessionId=%d****\n", index_));
+          ACE_DEBUG ((LM_DEBUG, "**** Sender::handle_output () SessionId=%B****\n", index_));
           ACE_DEBUG ((LM_DEBUG, "%C = %B\n", "bytes_to_write", bytes));
           ACE_DEBUG ((LM_DEBUG, "%C = %@\n", "handle",
                       reinterpret_cast<void *> (h)));
