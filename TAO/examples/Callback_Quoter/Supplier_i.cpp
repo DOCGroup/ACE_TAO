@@ -69,7 +69,7 @@ Supplier::parse_args ()
     switch (c)
       {
       case 'd':  // Debug flag
-        TAO_debug_level++; //****
+        ++TAO_debug_level; //****
         break;
 
       case 'n':  // Period_value: time between two successive stockfeeds.

@@ -76,7 +76,7 @@ Consumer_Handler::parse_args ()
     switch (c)
       {
       case 'd':  // debug flag
-        TAO_debug_level++; //****
+        ++TAO_debug_level; //****
         break;
 
       case 'k':  // ior provide on command line
