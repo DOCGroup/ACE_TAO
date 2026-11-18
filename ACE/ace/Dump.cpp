@@ -67,9 +67,11 @@ ACE_ODB::instance ()
         ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, nullptr));
 
       if (ACE_ODB::instance_ == nullptr)
-        ACE_NEW_RETURN (ACE_ODB::instance_,
-                        ACE_ODB,
-                        nullptr);
+        {
+          ACE_NEW_RETURN (ACE_ODB::instance_,
+                          ACE_ODB,
+                          nullptr);
+        }
     }
 
   return ACE_ODB::instance_;
@@ -82,8 +84,10 @@ ACE_ODB::dump_objects ()
   for (int i = 0; i < this->current_size_; ++i)
     {
       if (this->object_table_[i].this_ != nullptr)
-        // Dump the state of the object.
-        this->object_table_[i].dumper_->dump ();
+        {
+          // Dump the state of the object.
+          this->object_table_[i].dumper_->dump ();
+        }
     }
 }
 
@@ -100,7 +104,9 @@ ACE_ODB::register_object (const ACE_Dumpable *dumper)
   for (i = 0; i < this->current_size_; ++i)
     {
       if (this->object_table_[i].this_ == nullptr)
-        slot = i;
+        {
+          slot = i;
+        }
       else if (this->object_table_[i].this_ == dumper->this_)
         {
           slot = i;
