@@ -191,7 +191,6 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
       // Generate _copy_value() for the concrete OBV path. Application
       // factory implementations provide their own copy operation.
       if (node->obv_need_ref_counter ()
-          && !node->have_operation ()
           && be_valuetype::FS_CONCRETE_FACTORY
                == node->determine_factory_style ())
         {
