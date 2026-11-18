@@ -1228,13 +1228,10 @@ DRV_pre_proc (std::string const& myfile)
     }
 
   temp_files.register_created_file (tmp_file);
-  FE_Utils::File_Handle tf_file (
-    ACE_OS::fdopen (tf_fd, ACE_TEXT ("w")), ACE_OS::fclose);
-  if (!tf_file)
+  if (ACE_OS::close (tf_fd) == -1)
     {
-      ACE_OS::close (tf_fd);
       ACE_ERROR ((LM_ERROR,
-                  "%C: cannot open temp file \"%C\" for writing: %m\n",
+                  "%C: cannot close temp file \"%C\": %m\n",
                   idl_global->prog_name ().c_str (),
                   tmp_file.c_str ()));
       throw Bailout ();
@@ -1248,8 +1245,6 @@ DRV_pre_proc (std::string const& myfile)
   std::string const &t_file = copy_input_file ? tmp_cpp_file : tmp_file;
   std::string const &t_ifile = tmp_cpp_ifile;
   std::string const input_file = copy_input_file ? t_ifile : myfile;
-
-  tf_file.reset ();
 
   // Rename temporary files so that they have extensions accepted
   // by the preprocessor.
