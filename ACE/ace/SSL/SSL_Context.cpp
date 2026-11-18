@@ -135,9 +135,9 @@ ACE_SSL_Context::ssl_library_init ()
 {
   ACE_TRACE ("ACE_SSL_Context::ssl_library_init");
 
-  ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex,
-                     ace_ssl_mon,
-                     *ACE_Static_Object_Lock::instance ()));
+  ACE_MT (ACE_GUARD_CONST (ACE_Recursive_Thread_Mutex,
+                           ace_ssl_mon,
+                           *ACE_Static_Object_Lock::instance ()));
 
   if (ssl_library_init_count == 0)
     {
@@ -203,9 +203,9 @@ ACE_SSL_Context::ssl_library_fini ()
 {
   ACE_TRACE ("ACE_SSL_Context::ssl_library_fini");
 
-  ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex,
-                     ace_ssl_mon,
-                     *ACE_Static_Object_Lock::instance ()));
+  ACE_MT (ACE_GUARD_CONST (ACE_Recursive_Thread_Mutex,
+                           ace_ssl_mon,
+                           *ACE_Static_Object_Lock::instance ()));
 
   --ssl_library_init_count;
   if (ssl_library_init_count == 0)
@@ -229,10 +229,10 @@ ACE_SSL_Context::set_mode (int mode)
 {
   ACE_TRACE ("ACE_SSL_Context::set_mode");
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex,
-                            ace_ssl_mon,
-                            *ACE_Static_Object_Lock::instance (),
-                            -1));
+  ACE_MT (ACE_GUARD_RETURN_CONST (ACE_Recursive_Thread_Mutex,
+                                  ace_ssl_mon,
+                                  *ACE_Static_Object_Lock::instance (),
+                                  -1));
 
   if (this->context_)
   {

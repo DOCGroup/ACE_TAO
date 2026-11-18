@@ -140,7 +140,7 @@ ACE_SSL_Asynch_Stream::~ACE_SSL_Asynch_Stream ()
 int
 ACE_SSL_Asynch_Stream::close ()
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1));
+  ACE_MT (ACE_GUARD_RETURN_CONST (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1));
 
   if ((flags_ & SF_STREAM_OPEN) == 0) // not open
     {
@@ -162,7 +162,7 @@ ACE_SSL_Asynch_Stream::close ()
 int
 ACE_SSL_Asynch_Stream::cancel ()
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1));
+  ACE_MT (ACE_GUARD_RETURN_CONST (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1));
 
   if ((flags_ & SF_STREAM_OPEN) == 0) // not open
     {
@@ -204,7 +204,7 @@ ACE_SSL_Asynch_Stream::open (ACE_Handler & handler,
                              const void * completion_key,
                              ACE_Proactor * proactor)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1));
+  ACE_MT (ACE_GUARD_RETURN_CONST (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1));
 
   if (this->flags_ & SF_STREAM_OPEN)
     {
@@ -304,7 +304,7 @@ ACE_SSL_Asynch_Stream::read (ACE_Message_Block & message_block,
                              int priority,
                              int signal_number)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1));
+  ACE_MT (ACE_GUARD_RETURN_CONST (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1));
 
   if ((this->flags_ & SF_STREAM_OPEN) == 0)  // not open
     {
@@ -349,7 +349,7 @@ ACE_SSL_Asynch_Stream::write (ACE_Message_Block & message_block,
                               int priority,
                               int signal_number)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1));
+  ACE_MT (ACE_GUARD_RETURN_CONST (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1));
 
   if ((this->flags_ & SF_STREAM_OPEN) == 0)  // not open
     {
@@ -993,7 +993,7 @@ void
 ACE_SSL_Asynch_Stream::handle_write_stream (
   const ACE_Asynch_Write_Stream::Result &result)
 {
-  ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex_));
+  ACE_MT (ACE_GUARD_CONST (ACE_SYNCH_MUTEX, ace_mon, this->mutex_));
 
   this->bio_out_flag_ &= ~BF_AIO;
 
@@ -1040,7 +1040,7 @@ void
 ACE_SSL_Asynch_Stream::handle_read_stream (
   const ACE_Asynch_Read_Stream::Result &result)
 {
-  ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex_));
+  ACE_MT (ACE_GUARD_CONST (ACE_SYNCH_MUTEX, ace_mon, this->mutex_));
 
   this->bio_inp_flag_ &= ~BF_AIO;
 
@@ -1067,7 +1067,7 @@ ACE_SSL_Asynch_Stream::handle_wakeup ()
   ACE_Handler * user_handler {};
 
   {
-    ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex_));
+    ACE_MT (ACE_GUARD_CONST (ACE_SYNCH_MUTEX, ace_mon, this->mutex_));
 
     this->flags_ |= SF_DELETE_ENABLE;
 

@@ -191,7 +191,7 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
 
   if (reset_blocking_mode)
     {
-      ACE_Errno_Guard eguard (errno);
+      ACE_Errno_Guard const eguard (errno);
       ACE::clr_flags (handle, ACE_NONBLOCK);
     }
 
