@@ -47,7 +47,9 @@ ACE_Obstack_T<ACE_CHAR_T>::request (size_t len)
   // Increase the length of the underlying chunks if the request made is
   // for bigger sized chunks.
   if (this->size_ < resulting_len)
-    this->size_ = this->size_ << 1;
+    {
+      this->size_ = this->size_ << 1;
+    }
 
   // We now know the request will fit; see if it can fit in the current
   // chunk or will need a new one.
@@ -61,7 +63,9 @@ ACE_Obstack_T<ACE_CHAR_T>::request (size_t len)
           // We must allocate new memory.
           ACE_Obchunk* tmp = this->new_chunk();
           if (!tmp)
-            return -1;
+            {
+              return -1;
+            }
           this->curr_->next_ = tmp;
           this->curr_ = this->curr_->next_;
         }
@@ -99,7 +103,9 @@ ACE_Obstack_T<ACE_CHAR_T>::grow (ACE_CHAR_T c)
       return retv;
     }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 template <class ACE_CHAR_T> ACE_Obchunk *
@@ -128,8 +134,10 @@ ACE_Obstack_T<ACE_CHAR_T>::ACE_Obstack_T (size_t size,
   ACE_TRACE ("ACE_Obstack_T<ACE_CHAR_T>::ACE_Obstack");
 
   if (this->allocator_strategy_ == 0)
-    ACE_ALLOCATOR (this->allocator_strategy_,
-                   ACE_Allocator::instance ());
+    {
+      ACE_ALLOCATOR (this->allocator_strategy_,
+                     ACE_Allocator::instance ());
+    }
 
   this->head_ = this->new_chunk ();
   this->curr_ = this->head_;
@@ -158,7 +166,9 @@ ACE_Obstack_T<ACE_CHAR_T>::copy (const ACE_CHAR_T *s,
   ACE_TRACE ("ACE_Obstack_T<ACE_CHAR_T>::copy");
 
   if (this->request (len) != 0)
-    return 0;
+    {
+      return 0;
+    }
 
   size_t tsize = len * sizeof (ACE_CHAR_T);
   std::memcpy (this->curr_->cur_, s, tsize);
@@ -170,9 +180,13 @@ template <class ACE_CHAR_T> void
 ACE_Obstack_T<ACE_CHAR_T>::unwind (void* obj)
 {
   if (obj >= this->curr_->contents_ && obj < this->curr_->end_)
-    this->curr_->block_ = this->curr_->cur_ = reinterpret_cast<char*> (obj);
+    {
+      this->curr_->block_ = this->curr_->cur_ = reinterpret_cast<char*> (obj);
+    }
   else
-    this->unwind_i (obj);
+    {
+      this->unwind_i (obj);
+    }
 }
 
 template <class ACE_CHAR_T> void
@@ -180,15 +194,19 @@ ACE_Obstack_T<ACE_CHAR_T>::unwind_i (void* obj)
 {
   ACE_Obchunk* curr = this->head_;
   while (curr != nullptr && (curr->contents_ > obj || curr->end_ < obj))
+    {
       curr = curr->next_;
+    }
   if (curr)
     {
       this->curr_ = curr;
       this->curr_->block_ = this->curr_->cur_ = reinterpret_cast<char*> (obj);
     }
   else if (obj != nullptr)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("Deletion of non-existent object.\n%a")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("Deletion of non-existent object.\n%a")));
+    }
 }
 
 template <class ACE_CHAR_T> void
