@@ -214,7 +214,7 @@ server (void *arg)
     if (buffer[i] != i)
       {
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) Test 1, rcvd byte %d is %d, not %d\n"),
+                    ACE_TEXT ("(%P|%t) Test 1, rcvd byte %B is %d, not %B\n"),
                     i,
                     buffer[i],
                     i));

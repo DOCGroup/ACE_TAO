@@ -199,7 +199,7 @@ Invoker_Task::svc ()
        ++task)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  " (%t) in task %d\n",
+                  " (%t) in task %B\n",
                   task + 1));
 
       Worker_Task *worker_task {};

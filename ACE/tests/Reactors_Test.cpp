@@ -157,7 +157,7 @@ Test_Task::handle_input (ACE_HANDLE)
     {
       --done_count;
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t) handle_input, handled_ = %d, done_count = %d\n"),
+                  ACE_TEXT ("(%t) handle_input, handled_ = %B, done_count = %d\n"),
                   this->handled_,
                   done_count.value ()));
     }

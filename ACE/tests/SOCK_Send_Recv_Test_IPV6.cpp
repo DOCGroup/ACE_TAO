@@ -168,7 +168,7 @@ client (void *arg)
       if (sent != sizeof (buff) && errno != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) Test 3, pass %d, sent %b, %p\n"),
+                      ACE_TEXT ("(%P|%t) Test 3, pass %B, sent %b, %p\n"),
                       i, sent, ACE_TEXT ("error")));
           Test_Result = 1;   // Fail
         }
@@ -297,7 +297,7 @@ server (void *arg)
     }
   else
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) Test 3 expected %d %p\n"),
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) Test 3 expected %B %p\n"),
                   Test3_Total_Size, ACE_TEXT ("bytes")));
       Test_Result = 1;
     }

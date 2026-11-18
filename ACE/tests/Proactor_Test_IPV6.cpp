@@ -1644,7 +1644,7 @@ Client::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
         if (this->total_snd_ >= xfer_limit)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%t) Client %d sent %d, limit %d\n"),
+                        ACE_TEXT ("(%t) Client %d sent %B, limit %B\n"),
                         this->id_, this->total_snd_, xfer_limit));
             this->close ();
           }
