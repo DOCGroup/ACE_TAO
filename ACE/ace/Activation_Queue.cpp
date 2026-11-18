@@ -23,9 +23,13 @@ ACE_Activation_Queue::dump () const
               this->owned_queue_ != nullptr));
   ACELIB_DEBUG ((LM_INFO, ACE_TEXT ("queue_:\n")));
   if (this->queue_ != nullptr)
-    this->queue_->dump();
+    {
+      this->queue_->dump ();
+    }
   else
-    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("(nullptr)\n")));
+    {
+      ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("(nullptr)\n")));
+    }
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
@@ -44,7 +48,9 @@ ACE_Activation_Queue::ACE_Activation_Queue (
   }
 
   if (new_queue)
-    this->queue_ = new_queue;
+    {
+      this->queue_ = new_queue;
+    }
   else
     {
       ACE_Message_Queue<ACE_SYNCH> *queue {};
