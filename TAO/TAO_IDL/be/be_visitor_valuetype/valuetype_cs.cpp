@@ -161,10 +161,8 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << "{}" << be_nl_2;
 
   if (node->opt_accessor ()
-      && node->obv_need_ref_counter ()
       && !node->have_operation ()
-      && be_valuetype::FS_CONCRETE_FACTORY
-           == node->determine_factory_style ())
+      && node->has_concrete_factory ())
     {
       *os << "::CORBA::ValueBase *" << be_nl
           << node->name () << "::_copy_value ()" << be_nl
@@ -188,9 +186,39 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
               AST_Decl * const decl = si.item ();
               if (decl != nullptr && decl->node_type () == AST_Decl::NT_field)
                 {
-                  *os << "ret_val->" << decl->local_name ()
-                      << " (this->" << decl->local_name () << " ());"
-                      << be_nl;
+                  be_field * const field = dynamic_cast<be_field *> (decl);
+                  be_type *field_type =
+                    field == nullptr
+                    ? nullptr
+                    : dynamic_cast<be_type *> (field->field_type ());
+                  be_typedef * const field_typedef =
+                    dynamic_cast<be_typedef *> (field_type);
+                  if (field_typedef != nullptr)
+                    {
+                      field_type = field_typedef->primitive_base_type ();
+                    }
+
+                  bool const is_valuetype_or_valuebox =
+                    dynamic_cast<be_valuetype_fwd *> (field_type) != nullptr
+                    || dynamic_cast<be_valuetype *> (field_type) != nullptr
+                    || dynamic_cast<be_valuebox *> (field_type) != nullptr;
+
+                  if (is_valuetype_or_valuebox)
+                    {
+                      *os << "ret_val->" << decl->local_name ()
+                          << " (this->" << decl->local_name () << " () ? "
+                          << field_type->full_name ()
+                          << "::_downcast (::CORBA::ValueBase_var (this->"
+                          << decl->local_name ()
+                          << " ()->_copy_value ()).in ()) : nullptr);"
+                          << be_nl;
+                    }
+                  else
+                    {
+                      *os << "ret_val->" << decl->local_name ()
+                          << " (this->" << decl->local_name () << " ());"
+                          << be_nl;
+                    }
                 }
             }
         }

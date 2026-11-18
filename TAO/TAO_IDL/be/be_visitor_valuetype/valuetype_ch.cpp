@@ -177,10 +177,8 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   node->gen_stub_decls (os);
 
   if (node->opt_accessor ()
-      && node->obv_need_ref_counter ()
       && !node->have_operation ()
-      && be_valuetype::FS_CONCRETE_FACTORY
-           == node->determine_factory_style ())
+      && node->has_concrete_factory ())
     {
       *os << be_nl_2
           << "::CORBA::ValueBase *_copy_value () override;";
@@ -331,7 +329,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   // Map fields to private data (if optimizing).
   if (node->opt_accessor ())
     {
-      if (node->obv_need_ref_counter ())
+      if (node->has_concrete_factory ())
         {
           *os << "friend class " << node->local_name () << "_init;" << be_nl;
         }

@@ -50,8 +50,14 @@ interface Empty_Valuetype_Interface
 {
 };
 
-/// Factory initializers must not make the generated OBV class abstract.
-valuetype Factory_Initialized_Value supports Empty_Valuetype_Interface
+/// A supported interface must not make the generated refcount methods ambiguous.
+valuetype Supported_Interface_Value supports Empty_Valuetype_Interface
+{
+  public long value;
+};
+
+/// An application factory's implementation supplies its own copy operation.
+valuetype Application_Factory_Value
 {
   public long value;
   factory create ();
@@ -60,12 +66,16 @@ valuetype Factory_Initialized_Value supports Empty_Valuetype_Interface
 valuetype Copy_Base
 {
   public long base_value;
-  factory create_copy_base ();
 };
 
 valuetype Copy_Derived : Copy_Base
 {
   public long derived_value;
+};
+
+valuetype Copy_Operation_Derived : Copy_Base
+{
+  void op ();
 };
 
 valuetype Copy_Leaf
