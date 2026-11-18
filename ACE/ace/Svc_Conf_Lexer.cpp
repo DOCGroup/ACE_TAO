@@ -544,8 +544,10 @@ ACE_Svc_Conf_Lexer::scan (ACE_YYSTYPE* ace_yylval,
         {
           buffer->size_ = current - buffer->index_;
           if (buffer->size_ != 0 && buffer->index_ != 0)
-            std::memmove (buffer->input_,
-                          buffer->input_ + buffer->index_, buffer->size_);
+            {
+              std::memmove (buffer->input_,
+                            buffer->input_ + buffer->index_, buffer->size_);
+            }
           buffer->index_ = 0;
           buffer->state_ = ACE_NO_STATE;
         }

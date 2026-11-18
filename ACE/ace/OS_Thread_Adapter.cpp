@@ -80,11 +80,13 @@ ACE_OS_Thread_Adapter::invoke ()
             ACE_OS_Object_Manager::thread_hook ();
 
           if (hook)
-            // Invoke the start hook to give the user a chance to
-            // perform some initialization processing before the
-            // <func> is invoked.
-            status = hook->start (reinterpret_cast<ACE_THR_FUNC> (func),
-                                  arg);
+            {
+              // Invoke the start hook to give the user a chance to
+              // perform some initialization processing before the
+              // <func> is invoked.
+              status = hook->start (reinterpret_cast<ACE_THR_FUNC> (func),
+                                    arg);
+            }
           else
             {
               // Call thread entry point.
