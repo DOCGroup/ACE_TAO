@@ -161,8 +161,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << "{}" << be_nl_2;
 
   if (node->opt_accessor ()
-      && !node->have_operation ()
-      && node->has_concrete_factory ())
+      && node->generates_obv_copy_value ())
     {
       *os << "::CORBA::ValueBase *" << be_nl
           << node->name () << "::_copy_value ()" << be_nl
