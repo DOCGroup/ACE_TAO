@@ -163,11 +163,13 @@ ACE_Event_Handler::add_reference ()
     ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
 
   if (reference_counting_required)
-    return ++this->reference_count_;
+    {
+      return ++this->reference_count_;
+    }
   else
-  {
-    return 1;
-  }
+    {
+      return 1;
+    }
 }
 
 ACE_Event_Handler::Reference_Count
@@ -226,7 +228,9 @@ ACE_Event_Handler::read_adapter (void *args)
   ACE_Reactor *r = this_ptr->reactor ();
 
   while (this_ptr->handle_input (ACE_STDIN) != -1)
-    continue;
+    {
+      continue;
+    }
 
   this_ptr->handle_close (ACE_STDIN, ACE_Event_Handler::READ_MASK);
   // It's possible for handle_close() to "delete this" so we need to
