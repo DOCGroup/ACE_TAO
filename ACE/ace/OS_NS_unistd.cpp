@@ -38,7 +38,9 @@ ACE_OS::argv_to_string (ACE_TCHAR **argv,
 
   int argc;
   for (argc = 0; argv[argc] != nullptr; ++argc)
-    continue;
+    {
+      continue;
+    }
 
   return argv_to_string (argc,
                          argv,
@@ -125,9 +127,11 @@ ACE_OS::argv_to_string (int argc,
           if (ACE_OS::strchr (temp, ACE_TEXT ('"')) != nullptr)
             {
               for (int j = 0; temp[j] != 0; ++j)
-                if (temp[j] == ACE_TEXT ('"'))
                 {
-                  ++quotes;
+                  if (temp[j] == ACE_TEXT ('"'))
+                    {
+                      ++quotes;
+                    }
                 }
             }
           argv_p[i] =
@@ -157,9 +161,11 @@ ACE_OS::argv_to_string (int argc,
               for (ACE_TCHAR *p = temp;
                    *p != 0;
                    *end++ = *p++)
-                if (*p == ACE_TEXT ('"'))
                 {
-                  *end++ = ACE_TEXT ('\\');
+                  if (*p == ACE_TEXT ('"'))
+                    {
+                      *end++ = ACE_TEXT ('\\');
+                    }
                 }
 
               *end++ = ACE_TEXT ('\0');
@@ -173,11 +179,13 @@ ACE_OS::argv_to_string (int argc,
 
           *end = ACE_TEXT ('\0');
           if (temp != argv[i])
+            {
 #if defined (ACE_HAS_ALLOC_HOOKS)
-            ACE_Allocator::instance()->free (temp);
+              ACE_Allocator::instance()->free (temp);
 #else
-            ACE_OS::free (temp);
+              ACE_OS::free (temp);
 #endif /* ACE_HAS_ALLOC_HOOKS */
+            }
         }
       buf_len += ACE_OS::strlen (argv_p[i]);
 
@@ -206,11 +214,13 @@ ACE_OS::argv_to_string (int argc,
     {
       end = ACE_OS::strecpy (end, argv_p[i]);
       if (argv_p[i] != argv[i])
+        {
 #if defined (ACE_HAS_ALLOC_HOOKS)
-        ACE_Allocator::instance()->free (argv_p[i]);
+          ACE_Allocator::instance()->free (argv_p[i]);
 #else
-        ACE_OS::free (argv_p[i]);
+          ACE_OS::free (argv_p[i]);
 #endif /* ACE_HAS_ALLOC_HOOKS */
+        }
 
       // Replace the null char that strecpy put there with white
       // space.
@@ -220,11 +230,13 @@ ACE_OS::argv_to_string (int argc,
   *end = ACE_TEXT ('\0');
 
   if (argv_p != argv)
+    {
 #if defined (ACE_HAS_ALLOC_HOOKS)
-    ACE_Allocator::instance()->free (argv_p);
+      ACE_Allocator::instance()->free (argv_p);
 #else
-    ACE_OS::free (argv_p);
+      ACE_OS::free (argv_p);
 #endif /* ACE_HAS_ALLOC_HOOKS */
+    }
 
   // The number of arguments.
   return argc;
@@ -779,11 +791,15 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
     {
       // Skip whitespace..
       while (ACE_OS::ace_isspace (*cp))
-        ++cp;
+        {
+          ++cp;
+        }
 
       // Increment count and move to next whitespace..
       if (*cp != ACE_TEXT ('\0'))
-        ++argc;
+        {
+          ++argc;
+        }
 
       while (*cp != ACE_TEXT ('\0') && !ACE_OS::ace_isspace (*cp))
         {
@@ -795,7 +811,9 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
               // Scan past the string..
               for (++cp; *cp != ACE_TEXT ('\0')
                    && (*cp != quote || cp[-1] == ACE_TEXT ('\\')); ++cp)
-                continue;
+                {
+                  continue;
+                }
 
               // '\0' implies unmatched quote..
               if (*cp == ACE_TEXT ('\0'))
@@ -822,15 +840,17 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
   // Make sure that the buffer we're copying into is always large
   // enough.
   if (cp - buf >= ACE_DEFAULT_ARGV_BUFSIZ)
+    {
 #if defined (ACE_HAS_ALLOC_HOOKS)
-  ACE_ALLOCATOR_RETURN(argp,
-                       static_cast<ACE_TCHAR *>(ACE_Allocator::instance()->malloc(sizeof (ACE_TCHAR) * (cp - buf + 1))),
-                       -1);
+      ACE_ALLOCATOR_RETURN(argp,
+                           static_cast<ACE_TCHAR *>(ACE_Allocator::instance()->malloc(sizeof (ACE_TCHAR) * (cp - buf + 1))),
+                           -1);
 #else
-    ACE_NEW_RETURN (argp,
-                    ACE_TCHAR[cp - buf + 1],
-                    -1);
+      ACE_NEW_RETURN (argp,
+                      ACE_TCHAR[cp - buf + 1],
+                      -1);
 #endif /* ACE_HAS_ALLOC_HOOKS */
+    }
 
   // Make a new argv vector of argc + 1 elements.
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -849,50 +869,60 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
     {
       // Skip whitespace..
       while (ACE_OS::ace_isspace (*ptr))
-        ++ptr;
+        {
+          ++ptr;
+        }
 
       // Copy next argument and move to next whitespace..
       cp = argp;
       while (*ptr != ACE_TEXT ('\0') && !ACE_OS::ace_isspace (*ptr))
-        if (*ptr == ACE_TEXT ('\'') || *ptr == ACE_TEXT ('"'))
-          {
-            ACE_TCHAR quote = *ptr++;
-
-            while (*ptr != ACE_TEXT ('\0')
-                   && (*ptr != quote || ptr[-1] == ACE_TEXT ('\\')))
-              {
-                if (*ptr == quote && ptr[-1] == ACE_TEXT ('\\')) --cp;
-                *cp++ = *ptr++;
-              }
-
-            if (*ptr == quote)
-            {
-              ++ptr;
-            }
-          }
-        else
         {
-          *cp++ = *ptr++;
+          if (*ptr == ACE_TEXT ('\'') || *ptr == ACE_TEXT ('"'))
+            {
+              ACE_TCHAR quote = *ptr++;
+
+              while (*ptr != ACE_TEXT ('\0')
+                     && (*ptr != quote || ptr[-1] == ACE_TEXT ('\\')))
+                {
+                  if (*ptr == quote && ptr[-1] == ACE_TEXT ('\\'))
+                    {
+                      --cp;
+                    }
+                  *cp++ = *ptr++;
+                }
+
+              if (*ptr == quote)
+                {
+                  ++ptr;
+                }
+            }
+          else
+            {
+              *cp++ = *ptr++;
+            }
         }
 
       *cp = ACE_TEXT ('\0');
 
       // Check for environment variable substitution here.
-      if (substitute_env_args) {
+      if (substitute_env_args)
+        {
           argv[i] = ACE_OS::strenvdup (argp);
 
           if (argv[i] == nullptr)
             {
               if (argp != arg)
+                {
 #if defined (ACE_HAS_ALLOC_HOOKS)
-                ACE_Allocator::instance()->free(argp);
+                  ACE_Allocator::instance()->free(argp);
 #else
-                delete [] argp;
+                  delete [] argp;
 #endif /* ACE_HAS_ALLOC_HOOKS */
+                }
               errno = ENOMEM;
               return -1;
             }
-      }
+        }
       else
         {
           argv[i] = ACE_OS::strdup (argp);
