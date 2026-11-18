@@ -188,22 +188,15 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
         }
       *os << node->local_name () << " () override;";
 
-      // A generated _copy_value() is needed for every valuetype without
-      // operations, including derived valuetypes and factory-based values.
-      if (!node->have_operation ())
+      // Generate _copy_value() for the concrete OBV path. Application
+      // factory implementations provide their own copy operation.
+      if (node->obv_need_ref_counter ()
+          && !node->have_operation ()
+          && be_valuetype::FS_CONCRETE_FACTORY
+               == node->determine_factory_style ())
         {
           *os << be_uidt_nl << be_nl << "public:" << be_idt_nl
               << "::CORBA::ValueBase *_copy_value () override;";
-        }
-      else
-        {
-          be_valuetype * const vt =
-            dynamic_cast<be_valuetype *> (node->inherits_concrete ());
-          if (vt != nullptr && !vt->have_operation ())
-            {
-              *os << be_uidt_nl << be_nl << "public:" << be_idt_nl
-                  << "::CORBA::ValueBase *_copy_value () override = 0;";
-            }
         }
 
       // Map fields to private data.

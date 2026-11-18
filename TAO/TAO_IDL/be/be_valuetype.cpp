@@ -229,9 +229,7 @@ be_valuetype::determine_factory_style ()
 
   if (!have_operation && !have_factory)
     {
-      factory_style = be_global->obv_opt_accessor ()
-        ? FS_NO_FACTORY
-        : FS_CONCRETE_FACTORY;
+      factory_style = FS_CONCRETE_FACTORY;
     }
   else if (have_operation && !have_factory)
     {
@@ -386,7 +384,8 @@ be_valuetype::obv_need_ref_counter ()
   // Inherited CORBA interfaces add another refcount implementation.
   bool const result =
     !base_has_ref_counter
-    && (this->has_supported_interface () || !this->have_operation ());
+    && (this->has_supported_interface ()
+        || FS_CONCRETE_FACTORY == this->determine_factory_style ());
   this->obv_need_ref_counter_cache_ = result;
   this->obv_need_ref_counter_computed_ = true;
   return result;

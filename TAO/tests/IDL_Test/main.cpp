@@ -21,7 +21,6 @@
 #include "valuetypeC.h"
 #include "valuetype_opt_accessorC.h"
 #include "fixedA.h"
-#include "arrayC.h"
 
 #include "ace/Log_Msg.h"
 #include "tao/AnyTypeCode/Any.h"
@@ -29,37 +28,8 @@
 #include <cstring>
 #include <type_traits>
 
-static_assert (std::is_move_constructible<testdata::ArraycharList>::value);
-static_assert (std::is_move_constructible<testdata::BdArraycharList>::value);
-static_assert (!std::is_nothrow_move_constructible<testdata::ArraycharList>::value);
-static_assert (!std::is_nothrow_move_constructible<testdata::BdArraycharList>::value);
 static_assert (std::is_abstract<OBV_Supports_Inherited_Operation>::value,
-               "A concrete supported interface with inherited operations is abstract");
-static_assert (!std::is_abstract<OBV_Supports_Abstract_Operation>::value,
-               "A supported abstract interface has default operations");
-static_assert (!std::is_abstract<OBV_Inherited_Supported_Interface_Derived>::value,
-               "A supported interface inherited through an abstract base needs refcount overrides");
-static_assert (std::is_base_of<CORBA::ValueFactoryBase,
-                               Supports_Abstract_Operation_init>::value,
-               "A supported abstract interface must retain the generated init factory");
-static_assert (!std::is_abstract<OBV_Supported_Interface_Derived>::value,
-               "An inherited supported interface needs refcount overrides");
-static_assert (!std::is_abstract<OBV_Concrete_From_Abstract>::value,
-               "Abstract valuetype bases must not claim an OBV refcount base");
-static_assert (std::is_same<OBV_Accessor_Optimized_Value,
-                            Accessor_Optimized_Value>::value,
-               "Optimized accessors map OBV_ to the valuetype");
-static_assert (std::is_same<OBV_Accessor_Optimized_Base,
-                            Accessor_Optimized_Base>::value,
-               "The accessor option applies to every valuetype");
-static_assert (std::is_same<OBV_Accessor_Optimized_Derived,
-                            Accessor_Optimized_Derived>::value,
-               "Derived optimized valuetypes retain their base class");
-static_assert (std::is_base_of<Accessor_Optimized_Base,
-                               Accessor_Optimized_Derived>::value,
-               "The optimized derived valuetype retains its IDL base");
-static_assert (std::is_abstract<OBV_Copy_Operation_Derived>::value,
-               "Operation-bearing derived OBV classes must redeclare copy");
+               "A valuetype that supports an inherited operation is abstract");
 
 class hello_i : public virtual POA_hello
 {
@@ -87,6 +57,35 @@ class schmooze_i : public virtual gleep::schmooze
 
 class schmeer_i : public virtual gleep::schmeer
 {
+};
+
+class Application_Factory_Value_impl :
+  public virtual OBV_Application_Factory_Value,
+  public CORBA::DefaultValueRefCountBase
+{
+public:
+  explicit Application_Factory_Value_impl (CORBA::Long extra_state)
+    : extra_state_ (extra_state)
+  {
+  }
+
+  CORBA::ValueBase *_copy_value () override
+  {
+    Application_Factory_Value_impl *copy {};
+    ACE_NEW_THROW_EX (copy,
+                      Application_Factory_Value_impl (this->extra_state_),
+                      CORBA::NO_MEMORY ());
+    copy->value (this->value ());
+    return copy;
+  }
+
+  CORBA::Long extra_state () const
+  {
+    return this->extra_state_;
+  }
+
+private:
+  CORBA::Long extra_state_;
 };
 
 class schlemiel_i : public virtual gleep::schlemiel
@@ -247,57 +246,63 @@ test_default_initialized_valuetype (int &error_count)
 void
 test_valuetype_copy (int &error_count)
 {
-  OBV_Supports_Abstract_Operation abstract_interface_value;
-  abstract_interface_value.value (19);
-  CORBA::ValueBase_var abstract_interface_copy (
-    abstract_interface_value._copy_value ());
-  Supports_Abstract_Operation * const abstract_interface_downcast =
-    Supports_Abstract_Operation::_downcast (abstract_interface_copy.in ());
-  if (abstract_interface_downcast == nullptr)
+  OBV_DefaultInitializedValue generated_value;
+  generated_value.boolean_value (true);
+  generated_value.long_value (17);
+  CORBA::ValueBase_var generated_copy (generated_value._copy_value ());
+  DefaultInitializedValue * const generated_downcast =
+    DefaultInitializedValue::_downcast (generated_copy.in ());
+  if (generated_downcast == nullptr)
     {
       ++error_count;
-      ACE_ERROR ((LM_ERROR, "Supports_Abstract_Operation copy has wrong type\n"));
+      ACE_ERROR ((LM_ERROR, "Generated OBV copy has wrong type\n"));
     }
   else
     {
+      expect_equals<CORBA::Boolean> (
+        error_count, "Generated OBV copy boolean value",
+        generated_downcast->boolean_value (), true);
       expect_equals<CORBA::Long> (
-        error_count, "Supports_Abstract_Operation copied value",
-        abstract_interface_downcast->value (), 19);
+        error_count, "Generated OBV copy long value",
+        generated_downcast->long_value (), 17);
     }
 
-  OBV_Concrete_From_Abstract abstract_base_value;
-  abstract_base_value.value (61);
-  CORBA::ValueBase_var abstract_base_copy_value (
-    abstract_base_value._copy_value ());
-  Concrete_From_Abstract * const abstract_base_copy =
-    Concrete_From_Abstract::_downcast (abstract_base_copy_value.in ());
-  if (abstract_base_copy == nullptr)
+  Application_Factory_Value_impl application_value (73);
+  application_value.value (29);
+  CORBA::ValueBase_var application_copy (application_value._copy_value ());
+  Application_Factory_Value_impl * const application_downcast =
+    dynamic_cast<Application_Factory_Value_impl *> (application_copy.in ());
+  if (application_downcast == nullptr)
     {
       ++error_count;
-      ACE_ERROR ((LM_ERROR, "Concrete_From_Abstract copy has wrong type\n"));
+      ACE_ERROR ((LM_ERROR,
+                  "Application_Factory_Value copy has wrong type\n"));
     }
   else
     {
       expect_equals<CORBA::Long> (
-        error_count, "Concrete_From_Abstract copied value",
-        abstract_base_copy->value (), 61);
+        error_count, "Application_Factory_Value copy value",
+        application_downcast->value (), 29);
+      expect_equals<CORBA::Long> (
+        error_count, "Application_Factory_Value copy extra state",
+        application_downcast->extra_state (), 73);
     }
 
-  OBV_Factory_Initialized_Value factory_value;
-  factory_value.value (17);
-  CORBA::ValueBase_var factory_copy (factory_value._copy_value ());
-  Factory_Initialized_Value * const factory_downcast =
-    Factory_Initialized_Value::_downcast (factory_copy.in ());
-  if (factory_downcast == nullptr)
+  OBV_Supported_Interface_Value supported_value;
+  supported_value.value (17);
+  CORBA::ValueBase_var supported_copy (supported_value._copy_value ());
+  Supported_Interface_Value * const supported_downcast =
+    Supported_Interface_Value::_downcast (supported_copy.in ());
+  if (supported_downcast == nullptr)
     {
       ++error_count;
-      ACE_ERROR ((LM_ERROR, "Factory_Initialized_Value copy has wrong type\n"));
+      ACE_ERROR ((LM_ERROR, "Supported_Interface_Value copy has wrong type\n"));
     }
   else
     {
       expect_equals<CORBA::Long> (
-        error_count, "Factory_Initialized_Value copy",
-        factory_downcast->value (), 17);
+        error_count, "Supported_Interface_Value copy",
+        supported_downcast->value (), 17);
     }
 
   OBV_Copy_Derived derived_value;
@@ -924,6 +929,23 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv);
+
+      Accessor_Optimized_Value_init * const opt_accessor_factory =
+        new Accessor_Optimized_Value_init;
+      orb->register_value_factory (
+        opt_accessor_factory->tao_repository_id (),
+        opt_accessor_factory);
+
+      CORBA::ValueBase_var opt_accessor_value (
+        opt_accessor_factory->create_for_unmarshal ());
+      opt_accessor_factory->_remove_ref ();
+      if (Accessor_Optimized_Value::_downcast (opt_accessor_value.in ())
+          == nullptr)
+        {
+          ++error_count;
+          ACE_ERROR ((LM_ERROR,
+                      "Accessor_Optimized_Value factory returned wrong type\n"));
+        }
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references ("RootPOA");

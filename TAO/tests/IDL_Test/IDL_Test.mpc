@@ -241,6 +241,7 @@ project(*DLL): taoidldefaults, taolib, messaging {
     union_anonymousC.cpp
     union_anonymousS.cpp
     valuetypeC.cpp
+    valuetype_opt_accessorC.cpp
     valuetypeS.cpp
   }
 
