@@ -147,7 +147,9 @@ ACE_INET_Addr::is_ip_equal (const ACE_INET_Addr &sap) const
     }
   else
 #endif /* ACE_HAS_IPV6 */
-  return this->get_ip_address () == sap.get_ip_address();
+    {
+      return this->get_ip_address () == sap.get_ip_address();
+    }
 }
 
 u_long
@@ -161,7 +163,9 @@ ACE_INET_Addr::hash () const
     }
   else
 #endif /* ACE_HAS_IPV6 */
-  return this->get_ip_address () + this->get_port_number ();
+    {
+      return this->get_ip_address () + this->get_port_number ();
+    }
 }
 
 bool
@@ -256,9 +260,13 @@ ACE_INET_Addr::string_to_addr (const char s[], int address_family)
           *cp_pos = '\0'; // blank out ']'
           ++ip_addr; // skip over '['
           if (cp_pos[1] == ':')
-            port_p = cp_pos + 1;
+            {
+              port_p = cp_pos + 1;
+            }
           else
-            port_p = cp_pos; // leads to error on missing port
+            {
+              port_p = cp_pos; // leads to error on missing port
+            }
         }
     }
 #endif /* ACE_HAS_IPV6 */
@@ -392,7 +400,9 @@ ACE_INET_Addr::set (u_short port_number,
 
 #ifdef ACE_HAS_IPV6
   if (address_family == AF_UNSPEC && ACE::ipv6_enabled ())
-    address_family = AF_INET6;
+    {
+      address_family = AF_INET6;
+    }
 
   if (address_family != AF_INET
       && ACE_OS::inet_pton (AF_INET6, host_name,
@@ -465,10 +475,14 @@ ACE_INET_Addr::set (u_short port_number,
       std::memcpy (&addr, curr->ai_addr, curr->ai_addrlen);
 #ifdef ACE_HAS_IPV6
       if (curr->ai_family == AF_INET6)
-        addr.in6_.sin6_port = encode ? ACE_NTOHS (port_number) : port_number;
+        {
+          addr.in6_.sin6_port = encode ? ACE_NTOHS (port_number) : port_number;
+        }
       else
 #endif
-        addr.in4_.sin_port = encode ? ACE_NTOHS (port_number) : port_number;
+        {
+          addr.in4_.sin_port = encode ? ACE_NTOHS (port_number) : port_number;
+        }
       this->inet_addrs_.push_back (addr);
     }
 
@@ -541,13 +555,15 @@ ACE_INET_Addr::set (const char port_name[],
 
   int address_family = PF_UNSPEC;
   if (std::strcmp (protocol, "tcp") == 0)
-  {
-    address_family = AF_INET;
-  }
+    {
+      address_family = AF_INET;
+    }
 
 #  if defined (ACE_HAS_IPV6)
   if (std::strcmp (protocol, "tcp6") == 0)
-    address_family = AF_INET6;
+    {
+      address_family = AF_INET6;
+    }
 #  endif /* ACE_HAS_IPV6 */
 
   return this->set (static_cast<u_short> (port_number),
@@ -640,7 +656,9 @@ ACE_INET_Addr::set (const sockaddr_in *addr, int len)
     {
       int const maxlen = static_cast<int> (sizeof (this->inet_addr_.in6_));
       if (len > maxlen)
-        len = maxlen;
+        {
+          len = maxlen;
+        }
       std::memcpy (&this->inet_addr_.in6_, addr, len);
       this->base_set (AF_INET6, len);
       return 0;
@@ -677,10 +695,14 @@ ACE_INET_Addr::set_addr (const void *addr, int /* len */, int map)
     {
 #if defined (ACE_HAS_IPV6)
       if (map)
-        this->set_type (AF_INET6);
+        {
+          this->set_type (AF_INET6);
+        }
       else
 #endif /* ACE_HAS_IPV6 */
-        this->set_type (AF_INET);
+        {
+          this->set_type (AF_INET);
+        }
       this->set_port_number (getfamily->sin_port, 0);
       this->set_address (reinterpret_cast<const char*> (&getfamily->sin_addr),
                          sizeof (getfamily->sin_addr),
@@ -885,25 +907,33 @@ ACE_INET_Addr::set_port_number (u_short port_number,
 
 #if defined (ACE_HAS_IPV6)
   if (this->get_type () == AF_INET6)
-    this->inet_addr_.in6_.sin6_port = port_number;
+    {
+      this->inet_addr_.in6_.sin6_port = port_number;
+    }
   else
 #endif /* ACE_HAS_IPV6 */
-    this->inet_addr_.in4_.sin_port = port_number;
+    {
+      this->inet_addr_.in4_.sin_port = port_number;
+    }
 
   if (this->inet_addrs_.empty ())
-  {
-    return;
-  }
+    {
+      return;
+    }
   for (std::vector<union ip46>::iterator i = this->inet_addrs_.begin ();
        i != this->inet_addrs_.end ();
        ++i)
     {
 #if defined (ACE_HAS_IPV6)
       if (this->get_type () == AF_INET6)
-        i->in6_.sin6_port = port_number;
+        {
+          i->in6_.sin6_port = port_number;
+        }
       else
 #endif /* ACE_HAS_IPV6 */
-        i->in4_.sin_port = port_number;
+        {
+          i->in4_.sin_port = port_number;
+        }
     }
 }
 
@@ -1057,12 +1087,18 @@ ACE_INET_Addr::set_interface (const char *intf_name)
 #endif
       // check to see if the interface lookup succeeded
       if (this->inet_addr_.in6_.sin6_scope_id != 0)
-        return 0;
+        {
+          return 0;
+        }
       else
-        return -1;
+        {
+          return -1;
+        }
     }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 #endif /* ACE_LINUX && ACE_HAS_IPV6 */
 
