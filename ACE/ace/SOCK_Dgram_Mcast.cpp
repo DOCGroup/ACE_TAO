@@ -53,14 +53,16 @@ public:
                               int clip_portnum)       // clip port# info?
     {
       if (ip_addr.addr_to_string (ret_string, len, 1) == -1)
-        ACE_OS::strcpy (ret_string, ACE_TEXT ("<?>"));
+        {
+          ACE_OS::strcpy (ret_string, ACE_TEXT ("<?>"));
+        }
       else
         {
           ACE_TCHAR *pc = ACE_OS::strrchr (ret_string, ACE_TEXT (':'));
           if (clip_portnum && pc)
-          {
-            *pc = ACE_TEXT ('\0'); // clip port# info.
-          }
+            {
+              *pc = ACE_TEXT ('\0'); // clip port# info.
+            }
         }
     }
     // op== for ip_mreq structs.
@@ -622,13 +624,17 @@ ACE_SOCK_Dgram_Mcast::subscribe_i (const ACE_INET_Addr &mcast_addr,
 
   // Create multicast addr/if struct.
   if (this->make_multicast_ifaddr (&mreq, mcast_addr, net_if) == -1)
-    return -1;
+    {
+      return -1;
+    }
   // Tell IP stack to pass messages sent to this group.
   else if (this->ACE_SOCK::set_option (IPPROTO_IP,
                                        IP_ADD_MEMBERSHIP,
                                        &mreq,
                                        sizeof mreq) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   return 0;
 }

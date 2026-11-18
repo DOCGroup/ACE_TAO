@@ -73,7 +73,9 @@ ACE_SOCK_CODgram::open (const ACE_Addr &remote, const ACE_Addr &local,
   if (remote != ACE_Addr::sap_any)
     {
       if (local == ACE_Addr::sap_any)
-        protocol_family = remote.get_type ();
+        {
+          protocol_family = remote.get_type ();
+        }
       else
         { // Both specified; family must match
           if (local.get_type () != remote.get_type ())
