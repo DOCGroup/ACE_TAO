@@ -28,19 +28,21 @@ ACE_Codeset_Registry::locale_to_registry_i (const ACE_CString &locale,
 {
   registry_entry const *element {};
   for (size_t i {}; element == nullptr && i < num_registry_entries_; ++i)
-    if (std::strcmp (registry_db_[i].loc_name_, locale.c_str ()) == 0)
     {
-      element = std::addressof (registry_db_[i]);
+      if (std::strcmp (registry_db_[i].loc_name_, locale.c_str ()) == 0)
+        {
+          element = std::addressof (registry_db_[i]);
+        }
     }
   if (element == nullptr)
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
   codeset_id = element->codeset_id_;
   if (num_sets != nullptr)
-  {
-    *num_sets = element->num_sets_;
-  }
+    {
+      *num_sets = element->num_sets_;
+    }
   if (char_sets != nullptr)
     {
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -61,14 +63,16 @@ ACE_Codeset_Registry::registry_to_locale_i (ACE_CDR::ULong codeset_id,
 {
   registry_entry const *element {};
   for (size_t i {}; element == nullptr && i < num_registry_entries_; ++i)
-    if (codeset_id == registry_db_[i].codeset_id_)
     {
-      element = std::addressof (registry_db_[i]);
+      if (codeset_id == registry_db_[i].codeset_id_)
+        {
+          element = std::addressof (registry_db_[i]);
+        }
     }
   if (element == nullptr)
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
   locale.set (element->loc_name_);
   if (num_sets != nullptr)
   {
@@ -110,11 +114,15 @@ ACE_Codeset_Registry::is_compatible_i (ACE_CDR::ULong codeset_id,
   }
 
   for (ACE_CDR::UShort l {}; l < lhs->num_sets_; ++l)
-    for (ACE_CDR::UShort r {}; r < rhs->num_sets_; ++r)
-      if (rhs->char_sets_[r] == lhs->char_sets_[l])
-      {
-        return true;
-      }
+    {
+      for (ACE_CDR::UShort r {}; r < rhs->num_sets_; ++r)
+        {
+          if (rhs->char_sets_[r] == lhs->char_sets_[l])
+            {
+              return true;
+            }
+        }
+    }
   return false;
 }
 
@@ -122,9 +130,11 @@ ACE_CDR::Short
 ACE_Codeset_Registry::get_max_bytes_i (ACE_CDR::ULong codeset_id)
 {
   for (size_t i {}; i < num_registry_entries_; ++i)
-    if (codeset_id == registry_db_[i].codeset_id_)
     {
-      return registry_db_[i].max_bytes_;
+      if (codeset_id == registry_db_[i].codeset_id_)
+        {
+          return registry_db_[i].max_bytes_;
+        }
     }
   return 0;
 }

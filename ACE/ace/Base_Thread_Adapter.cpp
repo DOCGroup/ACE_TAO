@@ -39,13 +39,15 @@ ACE_Base_Thread_Adapter::ACE_Base_Thread_Adapter (
   ACE_OS_TRACE ("ACE_Base_Thread_Adapter::ACE_Base_Thread_Adapter");
 
   if (ACE_Base_Thread_Adapter::init_log_msg_hook_ != nullptr)
-    (*ACE_Base_Thread_Adapter::init_log_msg_hook_) (
+    {
+      (*ACE_Base_Thread_Adapter::init_log_msg_hook_) (
           this->log_msg_attributes_
 # if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
           , selector
           , handler
 # endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
           );
+    }
 #ifdef ACE_USES_GPROF
   getitimer (ITIMER_PROF, &itimer_);
 #endif // ACE_USES_GPROF
@@ -55,9 +57,11 @@ void
 ACE_Base_Thread_Adapter::inherit_log_msg ()
 {
   if (ACE_Base_Thread_Adapter::inherit_log_msg_hook_ != nullptr)
-    (*ACE_Base_Thread_Adapter::inherit_log_msg_hook_)(
+    {
+      (*ACE_Base_Thread_Adapter::inherit_log_msg_hook_)(
            this->thr_desc_,
            this->log_msg_attributes_);
+    }
 
   // Initialize the proper configuration context for the new thread
   // Placed here since inherit_log_msg() gets called from any of our

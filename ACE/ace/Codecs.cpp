@@ -143,7 +143,9 @@ ACE_Base64::length (ACE_Byte const *input)
   while (*ptr != 0 &&
          (member_[*ptr] == 1 || *ptr == pad
           || ACE_OS::ace_isspace (*ptr)))
-    ++ptr;
+    {
+      ++ptr;
+    }
   size_t len = static_cast<size_t> (ptr - input);
   len = ((len + 3) / 4) * 3 + 1 ;
   return len;
@@ -179,7 +181,9 @@ ACE_Base64::decode (ACE_Byte const *input, size_t *output_len)
   while (*ptr != 0 &&
          (member_[*ptr] == 1 || *ptr == pad
           || ACE_OS::ace_isspace (*ptr)))
-    ++ptr;
+    {
+      ++ptr;
+    }
   size_t const input_len = static_cast<size_t> (ptr - input);
 
   int char_count {};
