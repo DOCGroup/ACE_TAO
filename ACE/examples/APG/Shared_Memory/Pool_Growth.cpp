@@ -6,6 +6,7 @@
 #include "ace/Process.h"
 #include "ace/Unbounded_Queue.h"
 #include "ace/MMAP_Memory_Pool.h"
+#include <memory>
 
 #define BACKING_STORE "queue.dat"
 #define QUEUE_NAME "queue.db"
@@ -21,23 +22,24 @@ class Unbounded_Queue : public ACE_Unbounded_Queue<T>
 public:
   using BASE = ACE_Unbounded_Queue<T>;
 
-  Unbounded_Queue(ACE_Allocator* allocator)
+  Unbounded_Queue (ACE_Allocator *allocator)
     : ACE_Unbounded_Queue<T> (allocator)
-  { }
+  {
+  }
 
-  int enqueue_tail (const T &new_item, ACE_Allocator* allocator)
+  int enqueue_tail (T const &new_item, ACE_Allocator *allocator)
   {
     this->allocator_ = allocator;
     return BASE::enqueue_tail (new_item);
   }
 
-  int dequeue_head (T &item, ACE_Allocator* allocator)
+  int dequeue_head (T &item, ACE_Allocator *allocator)
   {
     this->allocator_ = allocator;
     return BASE::dequeue_head (item);
   }
 
-  void delete_nodes (ACE_Allocator* allocator)
+  void delete_nodes (ACE_Allocator *allocator)
   {
     this->allocator_ = allocator;
     delete_nodes ();
@@ -49,16 +51,16 @@ public:
 
 using QUEUE = Unbounded_Queue<Record>;
 
-QUEUE* squeue(ALLOCATOR* shmem_allocator)
+QUEUE *squeue (ALLOCATOR *shmem_allocator)
 {
   void *queue {};
 
   // This is the easy case since if we find hash table in the
   // memory-mapped file we know it's already initialized.
   if (shmem_allocator->find (QUEUE_NAME, queue) == 0)
-  {
-    return (QUEUE *) queue;
-  }
+    {
+      return static_cast<QUEUE *> (queue);
+    }
 
   // Create a new map (because we've just created a new
   // memory-mapped file).
@@ -68,9 +70,9 @@ QUEUE* squeue(ALLOCATOR* shmem_allocator)
 
   // If allocation failed ...
   if (queue == nullptr)
-  {
-    return nullptr;
-  }
+    {
+      return nullptr;
+    }
 
   new (queue) QUEUE (shmem_allocator);
 
@@ -79,12 +81,12 @@ QUEUE* squeue(ALLOCATOR* shmem_allocator)
       // Attempt to clean up.
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("squeue bind\n")));
-      shmem_allocator->remove();
+      shmem_allocator->remove ();
 
       return nullptr;
     }
 
-  return (QUEUE*)queue;
+  return static_cast<QUEUE *> (queue);
 }
 
 static ALLOCATOR *g_shmem_allocator {};
@@ -94,20 +96,22 @@ int processRecord (ALLOCATOR *shmem_allocator)
 {
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, coordMutex, -1);
 
-  QUEUE* queue = squeue (shmem_allocator);
+  QUEUE *queue = squeue (shmem_allocator);
   if (queue == nullptr)
     {
-      delete shmem_allocator;
       ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                          ACE_TEXT ("Could not obtain queue")),
                         -1);
     }
 
   if (queue->is_empty ())  // Check for anything to process.
-    return 0;
+    {
+      return 0;
+    }
 
   Record record;
-  if (queue->dequeue_head (record, shmem_allocator) == -1)
+  int const result = queue->dequeue_head (record, shmem_allocator);
+  if (result == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                          ACE_TEXT ("dequeue_head\n")),
@@ -119,9 +123,9 @@ int processRecord (ALLOCATOR *shmem_allocator)
               ACE_TEXT ("|Record id1:%d|Record id2:%d\n"),
               record.name (), record.id1 (), record.id2 ()));
   if (record.id1 () == -1)
-  {
-    queue->enqueue_tail (record, shmem_allocator);
-  }
+    {
+      queue->enqueue_tail (record, shmem_allocator);
+    }
   return record.id1 ();
 }
 // Listing 4
@@ -176,16 +180,24 @@ int sendRecord (int recordId,  ALLOCATOR *shmem_allocator)
               ACE_TEXT ("(%P|%t) Sending record %d\n"),
               recordId));
 
-  QUEUE * queue = squeue (shmem_allocator);
+  QUEUE *queue = squeue (shmem_allocator);
+  if (queue == nullptr)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("Could not obtain queue")),
+                        -1);
+    }
   char buf[128];
   ACE_OS::sprintf (buf, "%s:%d", "Record", recordId);
   Record newRecord (recordId, recordId+1, buf);
 
-  int result = queue->enqueue_tail (newRecord, shmem_allocator);
+  int const result = queue->enqueue_tail (newRecord, shmem_allocator);
   if (result == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("enqueue failed\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("enqueue failed\n")),
+                        -1);
+    }
   return 0;
 }
 
@@ -203,6 +215,7 @@ int handle_parent (ACE_TCHAR *cmdLine)
                              BACKING_STORE,
                              &options),
                   -1);
+  std::unique_ptr<ALLOCATOR> allocator_owner {shmem_allocator};
 
   ACE_Process processa, processb;
   ACE_Process_Options poptions;
@@ -240,15 +253,17 @@ int handle_child ()
                              BACKING_STORE,
                              &options),
                   -1);
-  g_shmem_allocator = shmem_allocator;
+  std::unique_ptr<ALLOCATOR> allocator_owner {shmem_allocator};
+  g_shmem_allocator = allocator_owner.get ();
 
 #if defined (WIN32)
-  while (processWin32Record (shmem_allocator) != -1)
+  while (processWin32Record (allocator_owner.get ()) != -1)
     ;
 #else
-  while (processRecord (shmem_allocator) != -1)
+  while (processRecord (allocator_owner.get ()) != -1)
     ;
 #endif
+  g_shmem_allocator = nullptr;
   return 0;
 }
 // Listing 3
@@ -256,12 +271,12 @@ int handle_child ()
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (argc == 1)
-    handle_parent(argv[0]);
+    {
+      return handle_parent (argv[0]);
+    }
   else
-  {
-    handle_child();
-  }
-
-  return 0;
+    {
+      return handle_child ();
+    }
 }
 
