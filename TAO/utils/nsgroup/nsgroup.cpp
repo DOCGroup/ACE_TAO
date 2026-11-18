@@ -18,9 +18,9 @@ show_help (int argc, ACE_TCHAR *argv[])
 
   // Not enough arguments indicates help is required
   if (argc < 2)
-  {
-    return true;
-  }
+    {
+      return true;
+    }
 
   // Did they ask for help?
   ACE_Get_Opt get_opts (
@@ -34,17 +34,20 @@ show_help (int argc, ACE_TCHAR *argv[])
   );
 
   if (get_opts.long_option (ACE_TEXT ("help"), 'h') != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("  Unable to add long option 'H'\n")),
-                      true);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("  Unable to add long option 'H'\n")),
+                        true);
+    }
 
-  int c {};
-  while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'h':
-        return true;
-      }
+  for (int c = get_opts (); c != -1; c = get_opts ())
+    {
+      switch (c)
+        {
+        case 'h':
+          return true;
+        }
+    }
   return false;
 }
 
@@ -128,50 +131,54 @@ NSGROUP::start_orb ()
   constexpr int RC_ERROR = -1;
 
   try
-  {
-    // Initialise the ORB.
-
-    CORBA::ORB_var orb_ = CORBA::ORB_init (this->argc_, this->argv_);
-
-    if (RC_SUCCESS != svc_.set_orb (orb_.in ()))
     {
-      ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT (" (%P|%t) Unable to initialize the ORB.\n")),
-                          RC_ERROR);
+      // Initialise the ORB.
+
+      CORBA::ORB_var orb_ = CORBA::ORB_init (this->argc_, this->argv_);
+
+      if (RC_SUCCESS != svc_.set_orb (orb_.in ()))
+        {
+          ACE_ERROR_RETURN (( LM_ERROR,
+                              ACE_TEXT (" (%P|%t) Unable to initialize the ORB.\n")),
+                            RC_ERROR);
+        }
+
+      {
+        CORBA::Object_var naming_manager_object =
+          orb_->resolve_initial_references ("NamingManager");
+
+        FT_Naming::NamingManager_var naming_manager =
+          FT_Naming::NamingManager::_narrow (naming_manager_object.in ());
+
+        if (RC_SUCCESS != svc_.set_naming_manager (naming_manager.in ()))
+          {
+            ACE_ERROR_RETURN (( LM_ERROR,
+                                ACE_TEXT (" (%P|%t) Unable to get Naming ")
+                                ACE_TEXT ("Manager Reference\n")),
+                              RC_ERROR);
+          }
+      }
+      {
+        CORBA::Object_var naming_object =
+          orb_->resolve_initial_references ("NameService");
+
+        CosNaming::NamingContextExt_var name_service =
+          CosNaming::NamingContextExt::_narrow (naming_object.in ());
+
+        if (RC_SUCCESS != svc_.set_name_context (name_service.in ()))
+          {
+            ACE_ERROR_RETURN (( LM_ERROR,
+                                ACE_TEXT (" (%P|%t) Unable to get Name Service ")
+                                ACE_TEXT ("Reference\n")),
+                              RC_ERROR);
+          }
+      }
     }
-
-    CORBA::Object_var naming_manager_object =
-      orb_->resolve_initial_references ("NamingManager");
-
-    FT_Naming::NamingManager_var naming_manager_ =
-      FT_Naming::NamingManager::_narrow (naming_manager_object.in ());
-
-    if (RC_SUCCESS != svc_.set_naming_manager (naming_manager_.in ()))
-    {
-      ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT (" (%P|%t) Unable to get Naming ")
-                          ACE_TEXT ("Manager Reference\n")),
-                        RC_ERROR);
-    }
-    CORBA::Object_var naming_object =
-      orb_->resolve_initial_references ("NameService");
-
-    CosNaming::NamingContextExt_var name_service_ =
-      CosNaming::NamingContextExt::_narrow (naming_object.in ());
-
-    if (RC_SUCCESS != svc_.set_name_context (name_service_.in ()))
-    {
-      ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT (" (%P|%t) Unable to get Name Service ")
-                          ACE_TEXT ("Reference\n")),
-                        RC_ERROR);
-    }
-  }
   catch (CORBA::Exception const &ex)
-  {
-    ex._tao_print_exception (ACE_TEXT ("\nException raised initialising ORB\n"));
-    return RC_ERROR;
-  }
+    {
+      ex._tao_print_exception (ACE_TEXT ("\nException raised initialising ORB\n"));
+      return RC_ERROR;
+    }
 
   return RC_SUCCESS;
 }
@@ -235,9 +242,9 @@ NSGROUP::run_cmd ()
     }
 
   if (rc == RC_BADARG)
-  {
-    show_usage ();
-  }
+    {
+      show_usage ();
+    }
 
   return rc;
 }
@@ -318,28 +325,29 @@ NSGROUP::parse_command_line ()
       return NSGROUP_COMMAND::none;
     }
 
-  int c {};
-  while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'g':  // group
-        this->group_arg_ =  get_opts.opt_arg ();
-        break;
-      case 'p':  // policy
-        this->policy_arg_ = get_opts.opt_arg ();
-        break;
-      case 'l':  // location
-        this->location_arg_ = get_opts.opt_arg ();
-        break;
-      case 'i': // ior
-        this->ior_arg_ = get_opts.opt_arg ();
-        break;
-      case 'n': // name
-        this->namepath_arg_ = get_opts.opt_arg ();
-        break;
-      case 'h':
-        return NSGROUP_COMMAND::help;
-      }
+  for (int c = get_opts (); c != -1; c = get_opts ())
+    {
+      switch (c)
+        {
+        case 'g':  // group
+          this->group_arg_ = get_opts.opt_arg ();
+          break;
+        case 'p':  // policy
+          this->policy_arg_ = get_opts.opt_arg ();
+          break;
+        case 'l':  // location
+          this->location_arg_ = get_opts.opt_arg ();
+          break;
+        case 'i': // ior
+          this->ior_arg_ = get_opts.opt_arg ();
+          break;
+        case 'n': // name
+          this->namepath_arg_ = get_opts.opt_arg ();
+          break;
+        case 'h':
+          return NSGROUP_COMMAND::help;
+        }
+    }
 
   // handle non-option arguments
   int non_option_arg_count {};
@@ -348,37 +356,57 @@ NSGROUP::parse_command_line ()
       ++non_option_arg_count;
 
       if (ACE_OS::strcmp (this->argv_[i], ACE_TEXT ("group_create")) == 0)
-        nsgroup_cmd_ = NSGROUP_COMMAND::group_create;
+        {
+          nsgroup_cmd_ = NSGROUP_COMMAND::group_create;
+        }
       else if (ACE_OS::strcmp (this->argv_[i], ACE_TEXT ("group_bind")) == 0)
-        nsgroup_cmd_ = NSGROUP_COMMAND::group_bind;
+        {
+          nsgroup_cmd_ = NSGROUP_COMMAND::group_bind;
+        }
       else if (ACE_OS::strcmp (this->argv_[i], ACE_TEXT ("group_unbind")) == 0)
-        nsgroup_cmd_ = NSGROUP_COMMAND::group_unbind;
+        {
+          nsgroup_cmd_ = NSGROUP_COMMAND::group_unbind;
+        }
       else if (ACE_OS::strcmp (this->argv_[i], ACE_TEXT ("group_modify")) == 0)
-        // reserve command group_modify for future use
-        nsgroup_cmd_ = NSGROUP_COMMAND::none;
+        {
+          // reserve command group_modify for future use
+          nsgroup_cmd_ = NSGROUP_COMMAND::none;
+        }
       else if (ACE_OS::strcmp (this->argv_[i], ACE_TEXT ("group_list")) == 0)
-        nsgroup_cmd_ = NSGROUP_COMMAND::group_list;
+        {
+          nsgroup_cmd_ = NSGROUP_COMMAND::group_list;
+        }
       else if (ACE_OS::strcmp (this->argv_[i], ACE_TEXT ("group_remove")) == 0)
-        nsgroup_cmd_ = NSGROUP_COMMAND::group_remove;
+        {
+          nsgroup_cmd_ = NSGROUP_COMMAND::group_remove;
+        }
       else if (ACE_OS::strcmp (this->argv_[i], ACE_TEXT ("member_list")) == 0)
-        nsgroup_cmd_ = NSGROUP_COMMAND::member_list;
+        {
+          nsgroup_cmd_ = NSGROUP_COMMAND::member_list;
+        }
       else if (ACE_OS::strcmp (this->argv_[i], ACE_TEXT ("member_add")) == 0)
-        nsgroup_cmd_ = NSGROUP_COMMAND::member_add;
+        {
+          nsgroup_cmd_ = NSGROUP_COMMAND::member_add;
+        }
       else if (ACE_OS::strcmp (this->argv_[i], ACE_TEXT ("member_remove")) == 0)
-        nsgroup_cmd_ = NSGROUP_COMMAND::member_remove;
+        {
+          nsgroup_cmd_ = NSGROUP_COMMAND::member_remove;
+        }
       else if (ACE_OS::strcmp (this->argv_[i], ACE_TEXT ("member_show")) == 0)
-        nsgroup_cmd_ = NSGROUP_COMMAND::member_show;
+        {
+          nsgroup_cmd_ = NSGROUP_COMMAND::member_show;
+        }
       else
-      {
-        nsgroup_cmd_ = NSGROUP_COMMAND::none;
-      }
+        {
+          nsgroup_cmd_ = NSGROUP_COMMAND::none;
+        }
     }
 
   // The command should be the only non option argument
   if (non_option_arg_count > 1)
-  {
-    nsgroup_cmd_ = NSGROUP_COMMAND::none;
-  }
+    {
+      nsgroup_cmd_ = NSGROUP_COMMAND::none;
+    }
 
   return nsgroup_cmd_;
 }
