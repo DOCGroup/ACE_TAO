@@ -48,12 +48,12 @@ bool One::released = true;
 
 void
 One::intrusive_add_ref (One *one) {
-  one->ref++;
+  ++one->ref;
 }
 
 void
 One::intrusive_remove_ref (One *one) {
-  one->ref--;
+  --one->ref;
   if (one->ref == 0)
   {
     delete one;
