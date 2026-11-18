@@ -69,7 +69,9 @@ ACE_Capabilities::parse (const ACE_TCHAR *buf, ACE_TString &cap)
               for (int i {};
                    i < 3 && *buf && ACE_OS::ace_isdigit (*buf);
                    ++i)
-                oc = oc * 8 + (*buf++ - ACE_TEXT ('0'));
+                {
+                  oc = oc * 8 + (*buf++ - ACE_TEXT ('0'));
+                }
 
               cap += (ACE_TCHAR) oc;
               continue;
@@ -86,7 +88,9 @@ ACE_Capabilities::parse (const ACE_TCHAR *buf, int &cap)
   int n {};
 
   while (*buf && ACE_OS::ace_isdigit (*buf))
-    n = n * 10 + (*buf++ - ACE_TEXT ('0'));
+    {
+      n = n * 10 + (*buf++ - ACE_TEXT ('0'));
+    }
 
   cap = n;
 
@@ -121,24 +125,35 @@ ACE_Capabilities::fillent (const ACE_TCHAR *buf)
       ACE_CapEntry *ce;
 
       // Skip blanks
-      while (*buf && ACE_OS::ace_isspace(*buf)) ++buf;
+      while (*buf && ACE_OS::ace_isspace(*buf))
+        {
+          ++buf;
+        }
       // If we get end of line return
 
       if (*buf == ACE_TEXT ('\0'))
-        break;
+        {
+          break;
+        }
 
       if (*buf == ACE_TEXT ('#'))
         {
           while (*buf && *buf != ACE_TEXT ('\n'))
-            ++buf;
+            {
+              ++buf;
+            }
           if (*buf == ACE_TEXT ('\n'))
-            ++buf;
+            {
+              ++buf;
+            }
           continue;
         }
       while(*buf && *buf != ACE_TEXT ('=')
             && *buf!= ACE_TEXT ('#')
             && *buf != ACE_TEXT (','))
-        name += *buf++;
+        {
+          name += *buf++;
+        }
 
       // If name is null.
       switch (*buf)
@@ -198,26 +213,34 @@ ACE_Capabilities::is_entry (const ACE_TCHAR *name, const ACE_TCHAR *line)
     {
       // Skip blanks or irrelevant characters
       while (*line && ACE_OS::ace_isspace(*line))
-        ++line;
+        {
+          ++line;
+        }
 
       // End of line reached
       if (*line == ACE_TEXT ('\0'))
-        break;
+        {
+          break;
+        }
 
       // Build the entry name
       ACE_TString nextname;
       while (*line && *line != ACE_TEXT ('|') && *line != ACE_TEXT (','))
-        nextname += *line++;
+        {
+          nextname += *line++;
+        }
 
       // We have found the required entry?
       if (ACE_OS::strcmp (nextname.c_str (), name) == 0)
-      {
-        return true;
-      }
+        {
+          return true;
+        }
 
       // Skip puntuaction char if neccesary.
       if (*line == ACE_TEXT ('|') || *line == ACE_TEXT (','))
-        ++line;
+        {
+          ++line;
+        }
       else
         {
           ACELIB_DEBUG ((LM_DEBUG,
@@ -236,10 +259,14 @@ ACE_Capabilities::getline (FILE *fp, ACE_TString &line)
   line.set (nullptr, false);
 
   while ((ch = ACE_OS::fgetc (fp)) != EOF && ch != ACE_TEXT ('\n'))
-    line += (ACE_TCHAR) ch;
+    {
+      line += (ACE_TCHAR) ch;
+    }
 
   if (ch == EOF && line.length () == 0)
-    return -1;
+    {
+      return -1;
+    }
   else
   {
     return 0;
@@ -299,7 +326,9 @@ static bool
 is_empty (const ACE_TCHAR *line)
 {
   while (*line && ACE_OS::ace_isspace (*line))
-    ++line;
+    {
+      ++line;
+    }
 
   return *line == ACE_TEXT ('\0') || *line == ACE_TEXT ('#');
 }
@@ -308,7 +337,9 @@ static bool
 is_line (const ACE_TCHAR *line)
 {
   while (*line && ACE_OS::ace_isspace (*line))
-    ++line;
+    {
+      ++line;
+    }
 
   return *line != ACE_TEXT ('\0');
 }
@@ -320,17 +351,21 @@ ACE_Capabilities::getent (const ACE_TCHAR *fname, const ACE_TCHAR *name)
     ACE_OS::fopen (fname, ACE_TEXT ("r")), ACE_OS::fclose};
 
   if (fp == nullptr)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Can't open %s file\n"),
-                       fname),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("Can't open %s file\n"),
+                            fname),
+                           -1);
+    }
 
   bool done {};
   ACE_TString line;
 
   while (!(done = (this->getline (fp.get (), line) == -1))
          && is_empty (line.c_str ()))
-    continue;
+    {
+      continue;
+    }
 
   while (!done)
     {
@@ -338,11 +373,15 @@ ACE_Capabilities::getent (const ACE_TCHAR *fname, const ACE_TCHAR *name)
       ACE_TString description;
 
       while (!(done = (this->getline (fp.get (), newline) == -1)))
-        if (is_line (newline.c_str ()))
-          description += newline;
-        else
         {
-          break;
+          if (is_line (newline.c_str ()))
+            {
+              description += newline;
+            }
+          else
+            {
+              break;
+            }
         }
 
       if (this->is_entry (name, line.c_str()))
@@ -353,7 +392,9 @@ ACE_Capabilities::getent (const ACE_TCHAR *fname, const ACE_TCHAR *name)
 
       line = newline;
       while (!done && is_empty (line.c_str ()))
-        done = this->getline (fp.get (), line) == -1;
+        {
+          done = this->getline (fp.get (), line) == -1;
+        }
     }
 
   return -1;
