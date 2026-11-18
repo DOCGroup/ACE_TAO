@@ -64,7 +64,9 @@ ACE_SOCK_Dgram::recv (iovec *io_vec,
   if (ACE_OS::ioctl (this->get_handle (),
                      FIONREAD,
                      &inlen) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else if (inlen > 0)
     {
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -156,7 +158,9 @@ ACE_SOCK_Dgram::shared_open (const ACE_Addr &local,
   else if (ACE_OS::bind (this->get_handle (),
                          reinterpret_cast<sockaddr *> (local.get_addr ()),
                          local.get_size ()) == -1)
-    error = true;
+    {
+      error = true;
+    }
 
   if (error)
   {
@@ -183,13 +187,17 @@ ACE_SOCK_Dgram::open (const ACE_Addr &local,
                       g,
                       flags,
                       reuse_addr) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else if (this->shared_open (local, protocol_family, ipv6_only) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
 }
 
 // Here's the general-purpose open routine.
@@ -203,7 +211,9 @@ ACE_SOCK_Dgram::open (const ACE_Addr &local,
   ACE_TRACE ("ACE_SOCK_Dgram::open");
 
   if (local != ACE_Addr::sap_any)
-    protocol_family = local.get_type ();
+    {
+      protocol_family = local.get_type ();
+    }
   else if (protocol_family == PF_UNSPEC)
     {
 #if defined (ACE_HAS_IPV6)
@@ -214,11 +224,13 @@ ACE_SOCK_Dgram::open (const ACE_Addr &local,
     }
 
   if (ACE_SOCK::open (SOCK_DGRAM, protocol_family, protocol, reuse_addr) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-  {
-    return this->shared_open (local, protocol_family, ipv6_only);
-  }
+    {
+      return this->shared_open (local, protocol_family, ipv6_only);
+    }
 }
 
 // Here's the general-purpose constructor used by a connectionless
@@ -236,9 +248,11 @@ ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local,
                   protocol,
                   reuse_addr,
                   ipv6_only) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_SOCK_Dgram")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_SOCK_Dgram")));
+    }
 }
 
 ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local,
@@ -259,9 +273,11 @@ ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local,
                   flags,
                   reuse_addr,
                   ipv6_only) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_SOCK_Dgram")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_SOCK_Dgram")));
+    }
 }
 
 #if defined (ACE_HAS_MSG)
