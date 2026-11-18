@@ -78,6 +78,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "drv_extern.h"
 #include "utl_string.h"
 #include "utl_err.h"
+#include "fe_utils.h"
 
 #include "ace/Version.h"
 #include "ace/Process.h"
@@ -98,76 +99,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // Storage for preprocessor args.
 constexpr unsigned long DRV_MAX_ARGCOUNT = 1024;
 std::vector<std::basic_string<ACE_TCHAR>> DRV_arglist;
-
-class DRV_Temp_File_Guard
-{
-public:
-  DRV_Temp_File_Guard ()
-  {
-    this->created_files_.reserve (4);
-  }
-
-  ~DRV_Temp_File_Guard ()
-  {
-    if (this->active_)
-      {
-        for (std::string const& filename : this->created_files_)
-          {
-            if (!filename.empty ())
-              {
-                (void) ACE_OS::unlink (filename.c_str ());
-              }
-          }
-      }
-  }
-
-  void register_created_file (std::string const& filename)
-  {
-    for (std::string const& current : this->created_files_)
-      {
-        if (current == filename)
-          {
-            return;
-          }
-      }
-    this->created_files_.push_back (filename);
-  }
-
-  void unregister_file (std::string const& filename)
-  {
-    for (auto i = this->created_files_.begin ();
-         i != this->created_files_.end ();
-         ++i)
-      {
-        if (*i == filename)
-          {
-            this->created_files_.erase (i);
-            return;
-          }
-      }
-  }
-
-  void file_renamed (std::string const& source,
-                     std::string const& destination)
-  {
-    this->unregister_file (source);
-    this->register_created_file (destination);
-  }
-
-  void release ()
-  {
-    this->active_ = false;
-  }
-
-private:
-  DRV_Temp_File_Guard (DRV_Temp_File_Guard const &) = delete;
-  DRV_Temp_File_Guard &operator= (DRV_Temp_File_Guard const &) = delete;
-  DRV_Temp_File_Guard (DRV_Temp_File_Guard &&) = delete;
-  DRV_Temp_File_Guard &operator= (DRV_Temp_File_Guard &&) = delete;
-
-  std::vector<std::string> created_files_;
-  bool active_ {true};
-};
 
 static std::basic_string<ACE_TCHAR> output_arg_format;
 static size_t output_arg_index {};
@@ -1185,7 +1116,7 @@ DRV_pre_proc (std::string const& myfile)
 
   std::string tmp_cpp_file;
   std::string tmp_cpp_ifile;
-  DRV_Temp_File_Guard temp_files;
+  FE_Utils::Temp_File_Guard temp_files;
 
   FE_Utils::File_Handle ti_file (nullptr, ACE_OS::fclose);
   if (copy_input_file)

@@ -95,35 +95,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #  include "ace/streams.h"
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
-class TAO_IDL_Temp_File_Guard
-{
-public:
-  explicit TAO_IDL_Temp_File_Guard (std::string const& filename)
-    : filename_ (filename)
-  {
-  }
-
-  ~TAO_IDL_Temp_File_Guard ()
-  {
-    if (this->active_)
-      {
-        (void) ACE_OS::unlink (this->filename_.c_str ());
-      }
-  }
-
-  void register_created_file ()
-  {
-    this->active_ = true;
-  }
-
-private:
-  TAO_IDL_Temp_File_Guard (TAO_IDL_Temp_File_Guard const &) = delete;
-  TAO_IDL_Temp_File_Guard &operator= (TAO_IDL_Temp_File_Guard const &) = delete;
-
-  std::string filename_;
-  bool active_ {};
-};
-
 std::vector<std::string> DRV_files;
 
 void
@@ -424,7 +395,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       std::string const big_file_name = idl_global->big_file_name ();
-      TAO_IDL_Temp_File_Guard big_file_guard (big_file_name);
+      FE_Utils::Temp_File_Guard big_file_guard;
       FE_Utils::File_Handle output_file (
         nullptr, ACE_OS::fclose);
 
@@ -439,7 +410,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                           big_file_name.c_str ()));
               throw Bailout ();
             }
-          big_file_guard.register_created_file ();
+          big_file_guard.register_created_file (big_file_name);
         }
 
       for (size_t i = 0; i < DRV_files.size (); ++i)

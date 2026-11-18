@@ -30,6 +30,67 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
+FE_Utils::Temp_File_Guard::Temp_File_Guard ()
+{
+  this->created_files_.reserve (4);
+}
+
+FE_Utils::Temp_File_Guard::~Temp_File_Guard ()
+{
+  if (this->active_)
+    {
+      for (std::string const& filename : this->created_files_)
+        {
+          if (!filename.empty ())
+            {
+              (void) ACE_OS::unlink (filename.c_str ());
+            }
+        }
+    }
+}
+
+void
+FE_Utils::Temp_File_Guard::register_created_file (std::string const& filename)
+{
+  for (std::string const& current : this->created_files_)
+    {
+      if (current == filename)
+        {
+          return;
+        }
+    }
+  this->created_files_.push_back (filename);
+}
+
+void
+FE_Utils::Temp_File_Guard::unregister_file (std::string const& filename)
+{
+  for (auto i = this->created_files_.begin ();
+       i != this->created_files_.end ();
+       ++i)
+    {
+      if (*i == filename)
+        {
+          this->created_files_.erase (i);
+          return;
+        }
+    }
+}
+
+void
+FE_Utils::Temp_File_Guard::file_renamed (std::string const& source,
+                                        std::string const& destination)
+{
+  this->unregister_file (source);
+  this->register_created_file (destination);
+}
+
+void
+FE_Utils::Temp_File_Guard::release ()
+{
+  this->active_ = false;
+}
+
 bool
 FE_Utils::duplicate_param_id (T_PARAMLIST_INFO *params)
 {
