@@ -56,12 +56,13 @@
             </UL></P>
 	    <p></p>
         </li>
-        <li><p>Generated OBV classes provide <CODE>_copy_value()</CODE> when
-            TAO generates the concrete factory and when needed for supported
-            interfaces. For application-defined factories, the application
-            implementation provides <CODE>_copy_value()</CODE>. The generated
-            concrete path includes the required reference-count base; valuetype
-            factories remain available with <CODE>-Wb,obv_opt_accessor</CODE>.</p>
+        <li><p>Generated OBV classes get the required reference-count base
+            when TAO generates a concrete factory or a supported interface
+            needs it. TAO generates <CODE>_copy_value()</CODE> only for the
+            concrete factory path. For application-defined factories, the
+            application implementation provides <CODE>_copy_value()</CODE>.
+            Valuetype factories remain available with
+            <CODE>-Wb,obv_opt_accessor</CODE>.</p>
         </li>
         <li><p>Generated <CODE>_copy_value()</CODE> copies direct valuetype
             fields. Valuetypes nested in other members are shared, matching
