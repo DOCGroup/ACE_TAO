@@ -1672,7 +1672,9 @@ Key_List::output_lookup_array ()
       // Calculate maximum number of digits required for LOOKUP_ARRAY_SIZE.
 
       for (Key_List::field_width = 2; (count /= 10) > 0; ++Key_List::field_width)
-        continue;
+        {
+          continue;
+        }
 
       int const max_column = 15;
       int column = 0;
@@ -1682,10 +1684,12 @@ Key_List::output_lookup_array ()
            ++lookup_ptr)
         {
           if (option[DEBUGGING])
-            ACE_OS::printf ("      %*d, /* slot = %d */\n",
-                            Key_List::field_width,
-                            *lookup_ptr,
-                            (int)(lookup_ptr - lookup_array));
+            {
+              ACE_OS::printf ("      %*d, /* slot = %d */\n",
+                              Key_List::field_width,
+                              *lookup_ptr,
+                              (int)(lookup_ptr - lookup_array));
+            }
           else
             {
               ACE_OS::printf ("%*d,",
@@ -1726,9 +1730,11 @@ Key_List::output_lookup_function ()
       ACE_OS::printf ("          int const slot = lookup[key];\n\n");
       ACE_OS::printf ("          if (slot >= 0 && slot < static_cast<int> (wordlist.size ()))\n");
       if (option[OPTIMIZE])
-        ACE_OS::printf ("            return %swordlist[slot]%s;\n",
-                        pointer_and_type_enabled ? generated_address_prefix () : "",
-                        pointer_and_type_enabled ? generated_address_suffix () : "");
+        {
+          ACE_OS::printf ("            return %swordlist[slot]%s;\n",
+                          pointer_and_type_enabled ? generated_address_prefix () : "",
+                          pointer_and_type_enabled ? generated_address_suffix () : "");
+        }
       else
         {
           ACE_OS::printf ("            {\n"
@@ -1792,24 +1798,32 @@ Key_List::output_lookup_function ()
       if (this->array_type_ != Key_List::default_array_type)
         {
           if (option[COMP])
+            {
               ACE_OS::printf ("if (%s == *ptr->%s && !%s%s (str + 1, ptr->%s + 1, len - 1",
-                      option[STRCASECMP] ? "charmap[*str]" : "*str", option.key_name ().c_str (),
-                      string_compare_prefix (option[STRCASECMP]),
-                      option[STRCASECMP] ? "strncasecmp" : "strncmp", option.key_name ().c_str ());
+                              option[STRCASECMP] ? "charmap[*str]" : "*str", option.key_name ().c_str (),
+                              string_compare_prefix (option[STRCASECMP]),
+                              option[STRCASECMP] ? "strncasecmp" : "strncmp", option.key_name ().c_str ());
+            }
           else
+            {
               ACE_OS::printf ("if (%s == *ptr->%s && !%s%s (str + 1, ptr->%s + 1",
-                      option[STRCASECMP] ? "charmap[*str]" : "*str", option.key_name ().c_str (),
-                      string_compare_prefix (option[STRCASECMP]),
-                      option[STRCASECMP] ? "strcasecmp" : "strcmp", option.key_name ().c_str ());
+                              option[STRCASECMP] ? "charmap[*str]" : "*str", option.key_name ().c_str (),
+                              string_compare_prefix (option[STRCASECMP]),
+                              option[STRCASECMP] ? "strcasecmp" : "strcmp", option.key_name ().c_str ());
+            }
         }
       else
-        ACE_OS::printf (option[STRCASECMP] ? "if (charmap[*str] == **ptr && !ACE_OS::%s" :
-                        "if (*str == **ptr && !std::%s",
-                option[COMP]
-                ? (option[STRCASECMP]
-                  ? "strncasecmp (str + 1, *ptr + 1, len - 1"
-                  : "strncmp (str + 1, *ptr + 1, len - 1")
-                : (option[STRCASECMP] ? "strcasecmp (str + 1, *ptr + 1" : "strcmp (str + 1, *ptr + 1"));
+        {
+          ACE_OS::printf (option[STRCASECMP] ? "if (charmap[*str] == **ptr && !ACE_OS::%s" :
+                          "if (*str == **ptr && !std::%s",
+                          option[COMP]
+                            ? (option[STRCASECMP]
+                                 ? "strncasecmp (str + 1, *ptr + 1, len - 1"
+                                 : "strncmp (str + 1, *ptr + 1, len - 1")
+                            : (option[STRCASECMP]
+                                 ? "strcasecmp (str + 1, *ptr + 1"
+                                 : "strcmp (str + 1, *ptr + 1"));
+        }
       ACE_OS::printf ("))\n                  return %sptr;"
               "\n            }\n        }\n    %s\n}\n", this->array_type_ ==
               Key_List::default_array_type ? "*" : "",
@@ -1818,9 +1832,11 @@ Key_List::output_lookup_function ()
   else
     {
       if (option[OPTIMIZE])
-        ACE_OS::printf ("          return %swordlist[key]%s",
-                        option[TYPE] && option[POINTER] ? generated_address_prefix () : "",
-                        option[TYPE] && option[POINTER] ? generated_address_suffix () : "");
+        {
+          ACE_OS::printf ("          return %swordlist[key]%s",
+                          option[TYPE] && option[POINTER] ? generated_address_prefix () : "",
+                          option[TYPE] && option[POINTER] ? generated_address_suffix () : "");
+        }
       else
         {
           int pointer_and_type_enabled = option[POINTER] && option[TYPE];
@@ -1915,11 +1931,15 @@ int
 Key_List::output ()
 {
   if (option[BINARYSEARCH])
-    // Generate code binary search.
-    this->output_binary_search_function ();
+    {
+      // Generate code binary search.
+      this->output_binary_search_function ();
+    }
   else if (option[LINEARSEARCH])
-    // Generate code for linear search.
-    this->output_linear_search_function ();
+    {
+      // Generate code for linear search.
+      this->output_linear_search_function ();
+    }
   else
     {
       // Generate the usual GPERF things.
@@ -1941,8 +1961,10 @@ Key_List::output ()
 
       // Output type declaration now, reference it later on....
       if (option[TYPE] && !option[NOTYPE])
-        ACE_OS::printf ("%s;\n",
-                this->array_type_.c_str ());
+        {
+          ACE_OS::printf ("%s;\n",
+                          this->array_type_.c_str ());
+        }
 
       output_min_max ();
 
@@ -2201,9 +2223,11 @@ Key_List::dump ()
           for (;
                dup != nullptr;
                dup = dup->link)
-            ACE_DEBUG ((LM_DEBUG,
-                        " %s",
-                        dup->key.c_str ()));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          " %s",
+                          dup->key.c_str ()));
+            }
         }
       ACE_DEBUG ((LM_DEBUG,
                   "\n"));
