@@ -130,10 +130,12 @@ ACE_Service_Repository::fini ()
       ACE_Service_Type * const s =
         const_cast<ACE_Service_Type *> (this->service_array_[i]);
       if (s == nullptr)
-        ACELIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("ACE (%P|%t) SR::fini, repo=%@ [%d] -> 0\n"),
-                    this,
-                    i));
+        {
+          ACELIB_DEBUG ((LM_DEBUG,
+                         ACE_TEXT ("ACE (%P|%t) SR::fini, repo=%@ [%d] -> 0\n"),
+                         this,
+                         i));
+        }
     }
   }
 #endif
@@ -212,10 +214,12 @@ ACE_Service_Repository::close ()
 
 #ifndef ACE_NLOGGING
   if(ACE::debug ())
-    ACELIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE (%P|%t) SR::close - repo=%@, size=%B\n"),
-                this,
-                this->service_array_.size()));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("ACE (%P|%t) SR::close - repo=%@, size=%B\n"),
+                     this,
+                     this->service_array_.size()));
+    }
 #endif
 
   // Do not use the prefix decrement operator since the index is
@@ -230,17 +234,21 @@ ACE_Service_Repository::close ()
       if(ACE::debug ())
         {
           if (s == nullptr)
-            ACELIB_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("ACE (%P|%t) SR::close - repo=%@ [%d] -> 0\n"),
-                        this,
-                        i));
+            {
+              ACELIB_DEBUG ((LM_DEBUG,
+                             ACE_TEXT ("ACE (%P|%t) SR::close - repo=%@ [%d] -> 0\n"),
+                             this,
+                             i));
+            }
           else
-            ACELIB_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("ACE (%P|%t) SR::close - repo=%@ [%d], name=%s, object=%@\n"),
-                        this,
-                        i,
-                        s->name (),
-                        s));
+            {
+              ACELIB_DEBUG ((LM_DEBUG,
+                             ACE_TEXT ("ACE (%P|%t) SR::close - repo=%@ [%d], name=%s, object=%@\n"),
+                             this,
+                             i,
+                             s->name (),
+                             s));
+            }
         }
 #endif
       delete s;
@@ -342,20 +350,24 @@ ACE_Service_Repository::relocate_i (size_t begin,
       if (ACE::debug ())
         {
           if (type == nullptr)
-            ACELIB_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("ACE (%P|%t) SR::relocate_i - repo=%@ [%d]")
-                        ACE_TEXT (": skipping empty slot\n"),
-                        this,
-                        i));
+            {
+              ACELIB_DEBUG ((LM_DEBUG,
+                             ACE_TEXT ("ACE (%P|%t) SR::relocate_i - repo=%@ [%d]")
+                             ACE_TEXT (": skipping empty slot\n"),
+                             this,
+                             i));
+            }
           else
-            ACELIB_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("ACE (%P|%t) SR::relocate_i - repo=%@ [%d]")
-                        ACE_TEXT (": trying name=%s, handle: %@ -> %@\n"),
-                        this,
-                        i,
-                        type->name (),
-                        reinterpret_cast<void *> (old_handle),
-                        reinterpret_cast<void *> (new_handle)));
+            {
+              ACELIB_DEBUG ((LM_DEBUG,
+                             ACE_TEXT ("ACE (%P|%t) SR::relocate_i - repo=%@ [%d]")
+                             ACE_TEXT (": trying name=%s, handle: %@ -> %@\n"),
+                             this,
+                             i,
+                             type->name (),
+                             reinterpret_cast<void *> (old_handle),
+                             reinterpret_cast<void *> (new_handle)));
+            }
         }
 #endif
 
@@ -365,14 +377,16 @@ ACE_Service_Repository::relocate_i (size_t begin,
         {
 #ifndef ACE_NLOGGING
           if (ACE::debug ())
-            ACELIB_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("ACE (%P|%t) SR::relocate_i - repo=%@ [%d]")
-                        ACE_TEXT (": relocating name=%s, handle: %@ -> %@\n"),
-                        this,
-                        i,
-                        type->name (),
-                        reinterpret_cast<void *> (old_handle),
-                        reinterpret_cast<void *> (new_handle)));
+            {
+              ACELIB_DEBUG ((LM_DEBUG,
+                             ACE_TEXT ("ACE (%P|%t) SR::relocate_i - repo=%@ [%d]")
+                             ACE_TEXT (": relocating name=%s, handle: %@ -> %@\n"),
+                             this,
+                             i,
+                             type->name (),
+                             reinterpret_cast<void *> (old_handle),
+                             reinterpret_cast<void *> (new_handle)));
+            }
 #endif
           type->dll (adll); // ups the refcount on adll
         }
@@ -440,16 +454,18 @@ ACE_Service_Repository::insert (ACE_Service_Type const *sr)
   }
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
-    ACELIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE (%P|%t) SR::insert - repo=%@ [%d],")
-                ACE_TEXT (" name=%s (%C) (type=%@, object=%@, active=%d)\n"),
-                this,
-                i,
-                sr->name(),
-                (return_value == 0 ? ((s==nullptr) ? "new" : "replacing") : "failed"),
-                sr->type (),
-                (sr->type () != nullptr) ? sr->type ()->object () : nullptr,
-                sr->active ()));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("ACE (%P|%t) SR::insert - repo=%@ [%d],")
+                     ACE_TEXT (" name=%s (%C) (type=%@, object=%@, active=%d)\n"),
+                     this,
+                     i,
+                     sr->name(),
+                     (return_value == 0 ? ((s==nullptr) ? "new" : "replacing") : "failed"),
+                     sr->type (),
+                     (sr->type () != nullptr) ? sr->type ()->object () : nullptr,
+                     sr->active ()));
+    }
 #endif
 
   // If necessary, delete outside the lock. (s may be nullptr, but
@@ -559,14 +575,16 @@ ACE_Service_Repository::remove_i (ACE_TCHAR const name[], ACE_Service_Type **ps)
 
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
-    ACELIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE (%P|%t) SR::remove_i - repo=%@ [%d],")
-                ACE_TEXT (" name=%s (removed) (type=%@, active=%d)\n"),
-                this,
-                i,
-                name,
-                *ps,
-                (*ps)->active ()));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("ACE (%P|%t) SR::remove_i - repo=%@ [%d],")
+                     ACE_TEXT (" name=%s (removed) (type=%@, active=%d)\n"),
+                     this,
+                     i,
+                     name,
+                     *ps,
+                     (*ps)->active ()));
+    }
 #endif
 
   this->service_array_[i] = nullptr; // simply leave a gap
@@ -592,7 +610,9 @@ ACE_Service_Repository_Iterator::ACE_Service_Repository_Iterator
     ignore_suspended_ (ignored_suspended)
 {
   while (!(done() || valid()))
-    ++this->next_;
+    {
+      ++this->next_;
+    }
 }
 
 /// Obtains a pointer to the next valid service in the table.  If there
@@ -625,7 +645,11 @@ ACE_Service_Repository_Iterator::advance ()
     return 0;
   }
 
-  do ++this->next_; while (!(done () || valid ()));
+  do
+    {
+      ++this->next_;
+    }
+  while (!(done () || valid ()));
 
   return !done();
 }
