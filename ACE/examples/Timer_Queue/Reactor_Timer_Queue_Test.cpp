@@ -35,7 +35,7 @@ Reactor_Timer_Handler::handle_timeout (ACE_Time_Value const &,
               "\nTimer #%q fired at %:.%06d (%T)!\n",
               static_cast<ACE_INT64> (this->tid_),
               txv.sec (),
-              txv.usec ()));
+              static_cast<int> (txv.usec ())));
   // Reactor callbacks own and delete their one-shot handler.
   delete this;
 
@@ -119,7 +119,7 @@ Input_Handler::list_timer (void *)
       ACE_DEBUG ((LM_DEBUG, "Timer #%q: %:.%06d\n",
                   static_cast<ACE_INT64> (tn->get_timer_id ()),
                   tn->get_timer_value ().sec (),
-                  tn->get_timer_value ().usec ()));
+                  static_cast<int> (tn->get_timer_value ().usec ())));
     }
   return 0;
 }

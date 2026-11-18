@@ -167,10 +167,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "(%P) Server got %d of %d SYNC_WITH_TARGET messages\n"
                   "        and %d of %d SYNC_WITH_TRANSPORT or SYNC_NONE messages\n"
-                  "        in %d.%06d sec\n",
+                  "        in %:.%06d sec\n",
                   count, options.expected,
                   maybe_lost_count, options.maybe_lost,
-                  runtime.sec(), runtime.usec()));
+                  runtime.sec (),
+                  static_cast<int> (runtime.usec ())));
 
       root_poa->destroy (true, true);
 

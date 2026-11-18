@@ -28,10 +28,10 @@ Async_Timer_Handler::handle_timeout (ACE_Time_Value const &tv,
   // signal-safe since the ACE logging mechanism uses functions that
   // aren't guaranteed to work in all signal handlers).
   ACE_DEBUG ((LM_DEBUG,
-              "handle_timeout() = (%d, %d) %d\n",
+              "handle_timeout() = (%:, %q) %@\n",
               tv.sec (),
-              tv.usec (),
-              arg));
+              static_cast<ACE_INT64> (tv.usec ()),
+              const_cast<void *> (arg)));
 
   // Timer callbacks own and delete their one-shot handler.
   delete this;

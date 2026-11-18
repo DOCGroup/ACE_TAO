@@ -129,13 +129,13 @@ UDP_PerformanceClient::svc ()
               tv.msec () == 0 ? 0 : (1000L * burst_messages_) / tv.msec ();
 
             ACE_DEBUG ((LM_DEBUG,
-                        "\n  Time needed %: s %d us  (%u ms) for %d messages"
-                        "\n  Performance = %d asynch calls per second\n\n",
+                        "\n  Time needed %: s %d us  (%B ms) for %u messages"
+                        "\n  Performance = %u asynch calls per second\n\n",
                         elapsed_sec,
-                        elapsed_usec,
-                        elapsed_msec,
-                        burst_messages_,
-                        calls_per_second));
+                        static_cast<int> (elapsed_usec),
+                        static_cast<size_t> (elapsed_msec),
+                        static_cast<unsigned int> (burst_messages_),
+                        static_cast<unsigned int> (calls_per_second)));
           }
 
           if (current_wrong_messages == 0)
