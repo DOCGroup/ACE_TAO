@@ -149,7 +149,9 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind_i (
   char *ptr = (char *) this->allocator_->malloc (total_len);
 
   if (ptr == nullptr)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       // Note that the value_rep *must* come first to make sure we can
@@ -205,13 +207,17 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind_i (
         }
 
       if (result == -1)
-        // Free our dynamically allocated memory.
-        this->allocator_->free ((void *) ptr);
+        {
+          // Free our dynamically allocated memory.
+          this->allocator_->free ((void *) ptr);
+        }
       else
-        // If bind() or rebind() succeed, they will automatically sync
-        // up the map manager entry.  However, we must sync up our
-        // name/value memory.
-        this->allocator_->sync (ptr, total_len);
+        {
+          // If bind() or rebind() succeed, they will automatically sync
+          // up the map manager entry.  However, we must sync up our
+          // name/value memory.
+          this->allocator_->sync (ptr, total_len);
+        }
 
       return result;
     }
@@ -247,7 +253,9 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::unbind_i (
   if (this->name_space_map_->unbind (ns_name,
                                      ns_internal,
                                      this->allocator_.get ()) != 0)
-    return -1;
+    {
+      return -1;
+    }
 
   // Free up the memory we allocated in shared_bind().  Note that this
   // assumes that the "value" pointer comes first and that the value,
@@ -317,7 +325,9 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::resolve_i (
   if (this->name_space_map_->find (ns_name,
                                    ns_internal,
                                    this->allocator_.get ()) != 0)
-    return -1;
+    {
+      return -1;
+    }
 
   // Calls conversion operator and then calls the ACE_NS_WString
   // assignment operator to get a fresh copy.  (*#*(@#&!*@!!*@&( HP
@@ -373,7 +383,9 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Local_Name_Space (
 {
   ACE_TRACE ("ACE_Local_Name_Space::ACE_Local_Name_Space");
   if (this->open (scope_in) == -1)
-    ACELIB_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_Local_Name_Space::ACE_Local_Name_Space")));
+    {
+      ACELIB_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_Local_Name_Space::ACE_Local_Name_Space")));
+    }
 }
 
 ACE_ALLOC_HOOK_DEFINE_Tcc(ACE_Local_Name_Space)
@@ -462,9 +474,11 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i ()
   this->allocator_.reset (allocator);
 
   if (ACE_LOG_MSG->op_status ())
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Allocator::Allocator\n")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Allocator::Allocator\n")),
+                        -1);
+    }
 
   ACE_LOCK *lock {};
   ACE_NEW_RETURN (lock,
@@ -475,9 +489,11 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i ()
 #if !defined (ACE_LACKS_ACCESS)
   // Now check if the backing store has been created successfully
   if (ACE_OS::access (this->context_file_, F_OK) != 0)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("create_manager\n")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("create_manager\n")),
+                        -1);
+    }
 #endif /* ACE_LACKS_ACCESS */
 
   void *ns_map {};
@@ -488,9 +504,11 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i ()
     {
       this->name_space_map_ = (ACE_Name_Space_Map <ALLOCATOR> *) ns_map;
       if (ACE::debug ())
-        ACELIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("name_space_map_ = %@, ns_map = %@\n"),
-                    this->name_space_map_, ns_map));
+        {
+          ACELIB_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("name_space_map_ = %@, ns_map = %@\n"),
+                      this->name_space_map_, ns_map));
+        }
     }
 
   // This is the hard part since we have to avoid potential race
@@ -505,9 +523,11 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i ()
         {
           this->name_space_map_ = (ACE_Name_Space_Map <ALLOCATOR> *) ns_map;
           if (ACE::debug ())
-            ACELIB_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("name_space_map_ = %@, ns_map = %@\n"),
-                        this->name_space_map_, ns_map));
+            {
+              ACELIB_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("name_space_map_ = %@, ns_map = %@\n"),
+                          this->name_space_map_, ns_map));
+            }
         }
       else
         {
@@ -519,14 +539,18 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i ()
             new (ns_map) ACE_Name_Space_Map <ALLOCATOR> (this->allocator_.get ());
 
           if (this->allocator_->bind (ACE_NAME_SERVER_MAP, ns_map) == -1)
-            ACELIB_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("create_manager\n")), -1);
+            {
+              ACELIB_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("create_manager\n")), -1);
+            }
         }
 
       if (ACE::debug ())
-        ACELIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("name_space_map_ = %@, ns_map = %@\n"),
-                    this->name_space_map_, ns_map));
+        {
+          ACELIB_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("name_space_map_ = %@, ns_map = %@\n"),
+                      this->name_space_map_, ns_map));
+        }
     }
 
   return 0;
@@ -559,7 +583,9 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_names_i (
               break;
             }
           else
-            result = 0;
+            {
+              result = 0;
+            }
         }
     }
 
@@ -593,7 +619,9 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_values_i (
               break;
             }
           else
-            result = 0;
+            {
+              result = 0;
+            }
         }
     }
 
@@ -619,17 +647,21 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types_i (
 
   // Check for wildcard case first.
   if (wildcard)
-    compiled_regexp = ACE_OS::strdup ("");
+    {
+      compiled_regexp = ACE_OS::strdup ("");
+    }
   else
-    // Compile the regular expression (the 0's cause ACE_OS::compile
-    // to allocate space).
+    {
+      // Compile the regular expression (the 0's cause ACE_OS::compile
+      // to allocate space).
 #if defined (ACE_HAS_REGEX)
-    compiled_regexp = ACE_OS::compile (pattern_rep, 0, 0);
+      compiled_regexp = ACE_OS::compile (pattern_rep, 0, 0);
 #else
-  // If we don't have regular expressions just use the pattern
-  // directly.
-  compiled_regexp = pattern_rep;
+      // If we don't have regular expressions just use the pattern
+      // directly.
+      compiled_regexp = pattern_rep;
 #endif /* ACE_HAS_REGEX */
+    }
 
   if (compiled_regexp == nullptr)
     {
@@ -669,7 +701,9 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types_i (
               break;
             }
           else
-            result = 0;
+            {
+              result = 0;
+            }
         }
     }
 #if defined (ACE_HAS_REGEX)
@@ -706,7 +740,9 @@ ACE_Local_Name_Space <ACE_MEM_POOL_2, ACE_LOCK>::list_name_entries_i (
                                   map_entry->int_id_.type ());
 
           if (set.insert (entry) == -1)
-            return -1;
+            {
+              return -1;
+            }
         }
     }
 
@@ -735,7 +771,9 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_value_entries_i (
                                   map_entry->int_id_.type ());
 
           if (set.insert (entry) == -1)
-            return -1;
+            {
+              return -1;
+            }
         }
     }
   return 0;
@@ -759,16 +797,20 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries_i (
 
   // Check for wildcard case first.
   if (wildcard)
-    compiled_regexp = ACE_OS::strdup ("");
+    {
+      compiled_regexp = ACE_OS::strdup ("");
+    }
   else
-    // Compile the regular expression (the 0's cause ACE_OS::compile
-    // to allocate space).
+    {
+      // Compile the regular expression (the 0's cause ACE_OS::compile
+      // to allocate space).
 #if defined (ACE_HAS_REGEX)
-    compiled_regexp = ACE_OS::compile (pattern_rep, 0, 0);
+      compiled_regexp = ACE_OS::compile (pattern_rep, 0, 0);
 #else /* If we don't have regular expressions just the pattern
          directly. */
-  compiled_regexp = pattern_rep;
+      compiled_regexp = pattern_rep;
 #endif /* ACE_HAS_REGEX */
+    }
 
   if (compiled_regexp == nullptr)
     {
