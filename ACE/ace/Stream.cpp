@@ -75,9 +75,13 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::push (ACE_Module<ACE_SYNCH_USE, TIME_POL
   if (this->push_module  (new_top,
                           this->stream_head_->next (),
                           this->stream_head_) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> int
@@ -102,7 +106,9 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::top (ACE_Module<ACE_SYNCH_USE, TIME_POLI
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::top");
   if (this->stream_head_->next () == this->stream_tail_)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       m = this->stream_head_->next ();
@@ -119,25 +125,33 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::insert (ACE_TCHAR const *prev_name,
   for (ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *prev_mod = this->stream_head_;
        prev_mod != nullptr;
        prev_mod = prev_mod->next ())
-    if (ACE_OS::strcmp (prev_mod->name (), prev_name) == 0)
-      {
-        ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *next_mod = prev_mod->next ();
+    {
+      if (ACE_OS::strcmp (prev_mod->name (), prev_name) == 0)
+        {
+          ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *next_mod = prev_mod->next ();
 
-        // We can't insert a module below <stream_tail_>.
-        if (next_mod == nullptr)
-          return -1;
+          // We can't insert a module below <stream_tail_>.
+          if (next_mod == nullptr)
+            {
+              return -1;
+            }
 
-        mod->link (next_mod);
-        prev_mod->link (mod);
+          mod->link (next_mod);
+          prev_mod->link (mod);
 
-        if (mod->reader ()->open (mod->arg ()) == -1)
-          return -1;
+          if (mod->reader ()->open (mod->arg ()) == -1)
+            {
+              return -1;
+            }
 
-        if (mod->writer ()->open (mod->arg ()) == -1)
-          return -1;
+          if (mod->writer ()->open (mod->arg ()) == -1)
+            {
+              return -1;
+            }
 
-        return 0;
-      }
+          return 0;
+        }
+    }
 
   return -1;
 }
@@ -153,43 +167,55 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::replace (ACE_TCHAR const *replace_name,
   for (ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *rep_mod = this->stream_head_;
        rep_mod != nullptr;
        rep_mod = rep_mod->next ())
-    if (ACE_OS::strcmp (rep_mod->name (), replace_name) == 0)
-      {
-        ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *next_mod = rep_mod->next ();
+    {
+      if (ACE_OS::strcmp (rep_mod->name (), replace_name) == 0)
+        {
+          ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *next_mod = rep_mod->next ();
 
-        if (next_mod)
-          mod->link (next_mod);
-        else // In case the <next_mod> is <stream_tail_>.
-          {
-            mod->writer ()->next (nullptr);
-            mod->next (nullptr);
-            this->stream_tail_ = mod;
-          }
+          if (next_mod)
+            {
+              mod->link (next_mod);
+            }
+          else // In case the <next_mod> is <stream_tail_>.
+            {
+              mod->writer ()->next (nullptr);
+              mod->next (nullptr);
+              this->stream_tail_ = mod;
+            }
 
-        if (prev_mod)
-          prev_mod->link (mod);
-        else // In case the <rep_mod> is <stream_head_>.
-          {
-            mod->reader ()->next (nullptr);
-            this->stream_head_ = mod;
-          }
+          if (prev_mod)
+            {
+              prev_mod->link (mod);
+            }
+          else // In case the <rep_mod> is <stream_head_>.
+            {
+              mod->reader ()->next (nullptr);
+              this->stream_head_ = mod;
+            }
 
-        if (mod->reader ()->open (mod->arg ()) == -1)
-          return -1;
+          if (mod->reader ()->open (mod->arg ()) == -1)
+            {
+              return -1;
+            }
 
-        if (mod->writer ()->open (mod->arg ()) == -1)
-          return -1;
+          if (mod->writer ()->open (mod->arg ()) == -1)
+            {
+              return -1;
+            }
 
-        if (flags != ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::M_DELETE_NONE)
-          {
-            rep_mod->close (flags);
-            delete rep_mod;
-          }
+          if (flags != ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::M_DELETE_NONE)
+            {
+              rep_mod->close (flags);
+              delete rep_mod;
+            }
 
-        return 0;
-      }
-    else
-      prev_mod = rep_mod;
+          return 0;
+        }
+      else
+        {
+          prev_mod = rep_mod;
+        }
+    }
 
   return -1;
 }
@@ -202,7 +228,9 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::pop (int flags)
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::pop");
   if (this->stream_head_->next () == this->stream_tail_)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       // Skip over the ACE_Stream head.
@@ -217,7 +245,9 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::pop (int flags)
 
       // Don't delete the Module unless the flags request this.
       if (flags != ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::M_DELETE_NONE)
-        delete top_mod;
+        {
+          delete top_mod;
+        }
 
       this->stream_head_->writer ()->next (new_top->writer ());
       new_top->reader ()->next (this->stream_head_->reader ());
@@ -252,9 +282,13 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::remove (ACE_TCHAR const *name,
     if (ACE_OS::strcmp (mod->name (), name) == 0)
       {
         if (prev == nullptr) // Deleting ACE_Stream Head
-          this->stream_head_->link (mod->next ());
+          {
+            this->stream_head_->link (mod->next ());
+          }
         else
-          prev->link (mod->next ());
+          {
+            prev->link (mod->next ());
+          }
 
         // Close down the module.
         mod->close (flags);
@@ -269,7 +303,9 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::remove (ACE_TCHAR const *name,
         return 0;
       }
     else
-      prev = mod;
+      {
+        prev = mod;
+      }
   }
 
   ACELIB_DEBUG ((LM_WARNING,  ACE_TEXT ("ACE_Stream::remove failed to find module with name %s to remove\n"),name));
@@ -283,8 +319,12 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::find (ACE_TCHAR const *name)
   for (ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *mod = this->stream_head_;
        mod != nullptr;
        mod = mod->next ())
-    if (ACE_OS::strcmp (mod->name (), name) == 0)
-        return mod;
+    {
+      if (ACE_OS::strcmp (mod->name (), name) == 0)
+        {
+          return mod;
+        }
+    }
 
   return nullptr;
 }
@@ -314,18 +354,26 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::push_module (ACE_Module<ACE_SYNCH_USE, T
   if (head)
     {
       if (head != new_top)
-        head->link (new_top);
+        {
+          head->link (new_top);
+        }
     }
   else
-    nt_reader->next (nullptr);
+    {
+      nt_reader->next (nullptr);
+    }
 
   new_top->next (current_top);
 
   if (nt_reader->open (new_top->arg ()) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   if (nt_writer->open (new_top->arg ()) == -1)
-    return -1;
+    {
+      return -1;
+    }
   return 0;
 }
 
@@ -388,11 +436,15 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::open (void *a,
   this->stream_tail_ = tail;
 
   if (this->push_module (this->stream_tail_) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else if (this->push_module (this->stream_head_,
                               this->stream_tail_,
                               this->stream_head_) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   return 0;
 }
@@ -414,14 +466,22 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::close (int flags)
       // Remove and cleanup all the intermediate modules.
 
       while (this->stream_head_->next () != this->stream_tail_)
-        if (this->pop (flags) == -1)
-          result = -1;
+        {
+          if (this->pop (flags) == -1)
+            {
+              result = -1;
+            }
+        }
 
       // Clean up the head and tail of the stream.
       if (this->stream_head_->close (flags) == -1)
-        result = -1;
+        {
+          result = -1;
+        }
       if (this->stream_tail_->close (flags) == -1)
-        result = -1;
+        {
+          result = -1;
+        }
 
       // Cleanup the memory.
       delete this->stream_head_;
@@ -479,11 +539,17 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::control (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cm
   int result;
 
   if (this->stream_head_->writer ()->put (cb) == -1)
-    result = -1;
+    {
+      result = -1;
+    }
   else if (this->stream_head_->reader ()->getq (cb) == -1)
-    result = -1;
+    {
+      result = -1;
+    }
   else
-    result = ((ACE_IO_Cntl_Msg *) cb->rd_ptr ())->rval ();
+    {
+      result = ((ACE_IO_Cntl_Msg *) cb->rd_ptr ())->rval ();
+    }
 
   // This will also release db if it's reference count == 0.
   cb->release ();
@@ -507,20 +573,28 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::link_i (ACE_Stream<ACE_SYNCH_USE, TIME_P
   ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *my_tail = this->stream_head_;
 
   if (my_tail == nullptr)
-    return -1;
+    {
+      return -1;
+    }
 
   // Locate the module just above our Stream tail.
   while (my_tail->next () != this->stream_tail_)
-    my_tail = my_tail->next ();
+    {
+      my_tail = my_tail->next ();
+    }
 
   ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *other_tail = us.stream_head_;
 
   if (other_tail == nullptr)
-    return -1;
+    {
+      return -1;
+    }
 
   // Locate the module just above the other Stream's tail.
   while (other_tail->next () != us.stream_tail_)
-    other_tail = other_tail->next ();
+    {
+      other_tail = other_tail->next ();
+    }
 
   // Reattach the pointers so that the two streams are linked!
   my_tail->writer ()->next (other_tail->reader ());
@@ -556,7 +630,9 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::unlink_i ()
         {
           // Find the module that's just before our stream tail.
           while (my_tail->next () != this->stream_tail_)
-            my_tail = my_tail->next ();
+            {
+              my_tail = my_tail->next ();
+            }
 
           // Restore the writer's next() link to our tail.
           my_tail->writer ()->next (this->stream_tail_->writer ());
@@ -569,7 +645,9 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::unlink_i ()
       if (other_tail != nullptr)
         {
           while (other_tail->next () != this->linked_us_->stream_tail_)
-            other_tail = other_tail->next ();
+            {
+              other_tail = other_tail->next ();
+            }
 
           other_tail->writer ()->next (this->linked_us_->stream_tail_->writer ());
         }
@@ -581,7 +659,9 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::unlink_i ()
       return 0;
     }
   else
-    return -1;
+    {
+      return -1;
+    }
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> int
@@ -604,9 +684,11 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::ACE_Stream (void * a,
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::ACE_Stream");
   if (this->open (a, head, tail) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::open (%s, %s)\n"),
-               head->name (), tail->name ()));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::open (%s, %s)\n"),
+                     head->name (), tail->name ()));
+    }
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY>
@@ -615,7 +697,9 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::~ACE_Stream ()
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::~ACE_Stream");
 
   if (this->stream_head_ != nullptr)
-    this->close ();
+    {
+      this->close ();
+    }
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY>
