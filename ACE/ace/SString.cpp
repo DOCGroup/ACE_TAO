@@ -61,7 +61,9 @@ ACE_NS_WString::char_rep () const
 {
   ACE_TRACE ("ACE_NS_WString::char_rep");
   if (this->len_ == 0)
-    return nullptr;
+    {
+      return nullptr;
+    }
   else
     {
       char *t {};
@@ -77,9 +79,11 @@ ACE_NS_WString::char_rep () const
 #endif
 
       for (size_type i = 0; i < this->len_; ++i)
-        // Note that this cast may lose data if wide chars are
-        // actually used!
-        t[i] = char (this->rep_[i]);
+        {
+          // Note that this cast may lose data if wide chars are
+          // actually used!
+          t[i] = char (this->rep_[i]);
+        }
 
       t[this->len_] = '\0';
       return t;
@@ -91,7 +95,9 @@ ACE_NS_WString::ushort_rep () const
 {
   ACE_TRACE ("ACE_NS_WString::ushort_rep");
   if (this->len_ <= 0)
-    return nullptr;
+    {
+      return nullptr;
+    }
   else
     {
       ACE_UINT16 *t {};
@@ -107,9 +113,11 @@ ACE_NS_WString::ushort_rep () const
 #endif
 
       for (size_type i = 0; i < this->len_; ++i)
-        // Note that this cast may lose data if wide chars are
-        // actually used!
-        t[i] = (ACE_UINT16)this->rep_[i];
+        {
+          // Note that this cast may lose data if wide chars are
+          // actually used!
+          t[i] = (ACE_UINT16)this->rep_[i];
+        }
 
       t[this->len_] = 0;
       return t;
@@ -128,9 +136,9 @@ ACE_NS_WString::ACE_NS_WString (const char *s,
   this->len_ = this->buf_len_ = std::strlen (s);
 
   if (this->buf_len_ == 0)
-  {
-    return;
-  }
+    {
+      return;
+    }
 
   ACE_ALLOCATOR (this->rep_,
                  (ACE_WSTRING_TYPE *)
@@ -138,7 +146,9 @@ ACE_NS_WString::ACE_NS_WString (const char *s,
                                            sizeof (ACE_WSTRING_TYPE)));
   this->release_ = true;
   for (size_type i = 0; i <= this->buf_len_; ++i)
-    this->rep_[i] = s[i];
+    {
+      this->rep_[i] = s[i];
+    }
 }
 
 #if defined (ACE_WSTRING_HAS_USHORT_SUPPORT)
@@ -148,16 +158,16 @@ ACE_NS_WString::ACE_NS_WString (const ACE_UINT16 *s,
   : ACE_WString (alloc)
 {
   if (s == nullptr)
-  {
-    return;
-  }
+    {
+      return;
+    }
 
   this->buf_len_ = len;
 
   if (this->buf_len_ == 0)
-  {
-    return;
-  }
+    {
+      return;
+    }
 
   ACE_ALLOCATOR (this->rep_,
                  (ACE_WSTRING_TYPE *)
@@ -165,7 +175,9 @@ ACE_NS_WString::ACE_NS_WString (const ACE_UINT16 *s,
                                            sizeof (ACE_WSTRING_TYPE)));
   this->release_ = true;
   for (size_type i = 0; i < this->buf_len_; ++i)
-    this->rep_[i] = s[i];
+    {
+      this->rep_[i] = s[i];
+    }
 }
 #endif /* ACE_WSTRING_HAS_USHORT_SUPPORT */
 
@@ -227,11 +239,13 @@ ACE_SString::rep (char *s)
   this->rep_ = s;
 
   if (s == nullptr)
-    this->len_ = 0;
+    {
+      this->len_ = 0;
+    }
   else
-  {
-    this->len_ = std::strlen (s);
-  }
+    {
+      this->len_ = std::strlen (s);
+    }
 }
 
 // Constructor that actually copies memory.
