@@ -218,11 +218,13 @@ ACE_Stats::print_summary (const u_int precision,
       // Build a format string, in case the C library doesn't support %*u.
       ACE_TCHAR format[32];
       if (tmp_precision == 0)
-        ACE_OS::snprintf (format, 32, ACE_TEXT ("%%%d"), tmp_precision);
+        {
+          ACE_OS::snprintf (format, 32, ACE_TEXT ("%%%d"), tmp_precision);
+        }
       else
-      {
-        ACE_OS::snprintf (format, 32, ACE_TEXT ("%%d.%%0%du"), tmp_precision);
-      }
+        {
+          ACE_OS::snprintf (format, 32, ACE_TEXT ("%%d.%%0%du"), tmp_precision);
+        }
 
       ACE_Stats_Value u (tmp_precision);
       ((ACE_Stats *) this)->mean (u, scale_factor);
@@ -345,20 +347,26 @@ ACE_Stats::square_root (const ACE_UINT64 n,
     {
       mid = (ceiling - floor) / 2  +  floor;
       if (floor == mid)
-        // Can't divide the interval any further.
-        break;
+        {
+          // Can't divide the interval any further.
+          break;
+        }
       else
         {
           // Multiply carefully to avoid overflow.
           ACE_UINT64 mid_squared = mid; mid_squared *= mid;
           if (mid_squared == n)
-            break;
+            {
+              break;
+            }
           else if (mid_squared < n)
-            floor = mid;
+            {
+              floor = mid;
+            }
           else
-          {
-            ceiling = mid;
-          }
+            {
+              ceiling = mid;
+            }
         }
     }
 
@@ -396,11 +404,13 @@ ACE_Stats::square_root (const ACE_UINT64 n,
               break;
             }
           else if (current <= target)
-            floor = mid;
+            {
+              floor = mid;
+            }
           else
-          {
-            ceiling = mid;
-          }
+            {
+              ceiling = mid;
+            }
         }
 
       // Check to see if the fractional part should be one greater.
