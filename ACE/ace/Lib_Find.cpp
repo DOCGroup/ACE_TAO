@@ -279,7 +279,9 @@ ACE::ldfind (const ACE_TCHAR* filename,
                   // We need to do it here rather than anywhere else so
                   // that the loop condition will still work.
                   else if (path_entry[0] == '\0')
-                    path_entry = ACE_TEXT (".");
+                    {
+                      path_entry = ACE_TEXT (".");
+                    }
 
                   // First, try matching the filename *without* adding a
                   // prefix.
@@ -345,11 +347,11 @@ ACE::ldopen (const ACE_TCHAR *filename,
   if (ACE::ldfind (filename,
                    buf,
                    sizeof (buf) /sizeof (ACE_TCHAR)) == -1)
-    return nullptr;
-  else
-  {
-    return ACE_OS::fopen (buf, type);
-  }
+    {
+      return nullptr;
+    }
+
+  return ACE_OS::fopen (buf, type);
 }
 
 ACE_TCHAR *
@@ -463,9 +465,9 @@ ACE::open_temp_file (const ACE_TCHAR *name, int mode, int perm)
 #endif /* ACE_WIN32 */
 
   if (handle == ACE_INVALID_HANDLE)
-  {
-    return ACE_INVALID_HANDLE;
-  }
+    {
+      return ACE_INVALID_HANDLE;
+    }
 
   // Unlink it so that the file will be removed automatically when the
   // process goes away.
@@ -474,9 +476,9 @@ ACE::open_temp_file (const ACE_TCHAR *name, int mode, int perm)
       ACE_OS::close (handle);
       return ACE_INVALID_HANDLE;
     }
-  else
-    // Return the handle.
-    return handle;
+
+  // Return the handle.
+  return handle;
 }
 
 size_t
@@ -487,11 +489,13 @@ ACE::strrepl (char *s, char search, char replace)
   size_t replaced = 0;
 
   for (size_t i = 0; s[i] != '\0'; ++i)
-    if (s[i] == search)
-      {
-        s[i] = replace;
-        ++replaced;
-      }
+    {
+      if (s[i] == search)
+        {
+          s[i] = replace;
+          ++replaced;
+        }
+    }
 
   return replaced;
 }
@@ -578,11 +582,13 @@ ACE::strrepl (wchar_t *s, wchar_t search, wchar_t replace)
   size_t replaced = 0;
 
   for (size_t i = 0; s[i] != '\0'; ++i)
-    if (s[i] == search)
-      {
-        s[i] = replace;
-        ++replaced;
-      }
+    {
+      if (s[i] == search)
+        {
+          s[i] = replace;
+          ++replaced;
+        }
+    }
 
   return replaced;
 }
