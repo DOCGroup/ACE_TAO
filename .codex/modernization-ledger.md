@@ -12910,3 +12910,11 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   with `%B`, and `ACE_TPQ_Iterator::dump()` to log its pointer with `%@`.
 - `git diff --check` passed. These are narrow format corrections; the wider
   ACE/TAO logging-format audit remains open.
+
+## 2026-11-18 ACE container and timer log formats
+
+- Corrected unbounded set/queue node pointers to use `%@`, their `size_t`
+  traversal counters to use `%B`, and the timer heap's `size_t` limbo count to
+  use `%B`.
+- `git diff --check` passed. The broader ACE/TAO logging-format audit remains
+  open.
