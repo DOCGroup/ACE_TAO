@@ -38,12 +38,14 @@ template <class T, class ACE_LOCK>
 ACE_Locked_Free_List<T, ACE_LOCK>::~ACE_Locked_Free_List ()
 {
   if (this->mode_ != ACE_PURE_FREE_LIST)
-    while (this->free_list_ != nullptr)
-      {
-        T *temp = this->free_list_;
-        this->free_list_ = this->free_list_->get_next ();
-        delete temp;
-      }
+    {
+      while (this->free_list_ != nullptr)
+        {
+          T *temp = this->free_list_;
+          this->free_list_ = this->free_list_->get_next ();
+          delete temp;
+        }
+    }
 }
 
 // Inserts an element onto the free list (if we are allowed to manage
@@ -64,7 +66,9 @@ ACE_Locked_Free_List<T, ACE_LOCK>::add (T *element)
       ++this->size_;
     }
   else
-    delete element;
+    {
+      delete element;
+    }
 }
 
 // Takes a element off the freelist and returns it.  It creates <inc>
@@ -78,7 +82,9 @@ ACE_Locked_Free_List<T, ACE_LOCK>::remove ()
 
   // If we are at the low water mark, add some nodes
   if (this->mode_ != ACE_PURE_FREE_LIST && this->size_ <= this->lwm_)
-    this->alloc (this->inc_);
+    {
+      this->alloc (this->inc_);
+    }
 
   // Remove a node
   T *temp = this->free_list_;
