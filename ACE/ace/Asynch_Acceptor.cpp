@@ -56,10 +56,12 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
   // Create the listener socket
   this->listen_handle_ = ACE_OS::socket (address.get_type (), SOCK_STREAM, 0);
   if (this->listen_handle_ == ACE_INVALID_HANDLE)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("ACE_OS::socket")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("%p\n"),
+                            ACE_TEXT ("ACE_OS::socket")),
+                           -1);
+    }
   // Initialize the ACE_Asynch_Accept
   if (this->asynch_accept_.open (*this,
                                  this->listen_handle_,
@@ -140,7 +142,9 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
 
   // For the number of <intial_accepts>.
   if (number_of_initial_accepts == -1)
-    number_of_initial_accepts = backlog;
+    {
+      number_of_initial_accepts = backlog;
+    }
 
   for (int i = 0; i < number_of_initial_accepts; ++i)
     {
@@ -173,10 +177,12 @@ ACE_Asynch_Acceptor<HANDLER>::set_handle (ACE_HANDLE listen_handle)
                                  this->listen_handle_,
                                  0,
                                  this->proactor ()) == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("ACE_Asynch_Accept::open")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("%p\n"),
+                            ACE_TEXT ("ACE_Asynch_Accept::open")),
+                           -1);
+    }
   return 0;
 }
 
@@ -215,7 +221,9 @@ ACE_Asynch_Acceptor<HANDLER>::accept (size_t bytes_to_read, const void *act)
                                    0,
                                    ACE_SIGRTMIN,
                                    this->addr_family_) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   // Ownership is transferred to the asynchronous accept operation.
   message_block_owner.release ();
@@ -258,10 +266,12 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
   ACE_INET_Addr remote_address;
   if (!error &&
       (this->validate_new_connection_ || this->pass_addresses_))
-    // Parse the addresses.
-    this->parse_address (result,
-                         remote_address,
-                         local_address);
+    {
+      // Parse the addresses.
+      this->parse_address (result,
+                           remote_address,
+                           local_address);
+    }
 
   // Validate remote address
   if (!error &&
@@ -288,16 +298,22 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
       // Update the Proactor unless make_handler() or constructed handler
       // set up its own.
       if (new_handler->proactor () == nullptr)
-        new_handler->proactor (this->proactor ());
+        {
+          new_handler->proactor (this->proactor ());
+        }
 
       // Pass the addresses
       if (this->pass_addresses_)
-        new_handler->addresses (remote_address,
-                                local_address);
+        {
+          new_handler->addresses (remote_address,
+                                  local_address);
+        }
 
       // Pass the ACT
       if (result.act () != nullptr)
-        new_handler->act (result.act ());
+        {
+          new_handler->act (result.act ());
+        }
 
       // Set up the handler's new handle value
       new_handler->handle (result.accept_handle ());
@@ -310,7 +326,9 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
   // On failure, no choice but to close the socket
   if (error &&
       result.accept_handle() != ACE_INVALID_HANDLE )
-    ACE_OS::closesocket (result.accept_handle ());
+    {
+      ACE_OS::closesocket (result.accept_handle ());
+    }
 
   // Delete the dynamically allocated message_block
   result.message_block ().release ();
