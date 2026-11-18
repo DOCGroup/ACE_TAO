@@ -126,7 +126,9 @@ ACE_TSS<TYPE>::ts_init ()
                                  &ACE_TSS<TYPE>::cleanup
 #endif /* ACE_HAS_THR_C_DEST */
                                  ) != 0)
-        return -1; // Major problems, this should *never* happen!
+        {
+          return -1; // Major problems, this should *never* happen!
+        }
       else
         {
           // This *must* come last to avoid race conditions!
@@ -189,8 +191,10 @@ ACE_TSS<TYPE>::ts_get () const
     {
       // Create and initialize thread-specific ts_obj.
       if (const_cast< ACE_TSS < TYPE > * >(this)->ts_init () == -1)
-        // Seriously wrong..
-        return 0;
+        {
+          // Seriously wrong..
+          return 0;
+        }
     }
 
   TYPE *ts_obj {};
@@ -222,7 +226,9 @@ ACE_TSS<TYPE>::ts_get () const
       ts_obj = this->make_TSS_TYPE ();
 
       if (ts_obj == 0)
-        return 0;
+        {
+          return 0;
+        }
 
 #if defined (ACE_HAS_THR_C_DEST)
       // Encapsulate a ts_obj and it's destructor in an
@@ -267,7 +273,9 @@ template <class TYPE> TYPE *
 ACE_TSS<TYPE>::ts_object () const
 {
   if (!this->once_) // Return 0 if we've never been initialized.
-    return 0;
+    {
+      return 0;
+    }
 
   TYPE *ts_obj {};
 
@@ -296,7 +304,9 @@ ACE_TSS<TYPE>::ts_object (TYPE *new_ts_obj)
     {
       // Create and initialize thread-specific ts_obj.
       if (this->ts_init () == -1)
-        return 0;
+        {
+          return 0;
+        }
     }
 
   TYPE *ts_obj {};
