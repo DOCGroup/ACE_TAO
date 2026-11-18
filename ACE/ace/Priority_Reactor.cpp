@@ -37,8 +37,10 @@ ACE_Priority_Reactor::init_bucket ()
 
   // This loops "ensures" exception safety.
   for (int i = 0; i < npriorities; ++i)
-    ACE_NEW (this->bucket_[i],
-             QUEUE (this->tuple_allocator_));
+    {
+      ACE_NEW (this->bucket_[i],
+               QUEUE (this->tuple_allocator_));
+    }
 }
 
 ACE_Priority_Reactor::ACE_Priority_Reactor (ACE_Sig_Handler *sh,
@@ -68,7 +70,9 @@ ACE_Priority_Reactor::~ACE_Priority_Reactor ()
   ACE_TRACE ("ACE_Priority_Reactor::~ACE_Priority_Reactor");
 
   for (int i = 0; i < npriorities; ++i)
-    delete this->bucket_[i];
+    {
+      delete this->bucket_[i];
+    }
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_Allocator::instance()->free(this->bucket_);
