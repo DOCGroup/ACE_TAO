@@ -1261,17 +1261,21 @@ ACE_OS::setprogname_emulation (const char* progname)
 {
   const char *p = std::strrchr (progname, '/');
   if (p != nullptr)
+    {
 #  if defined (ACE_INTEGRITY)
     __progname = const_cast<char*> (p + 1);
 #  else
     __progname = p + 1;
 #  endif
+    }
   else
+    {
 #  if defined (ACE_INTEGRITY)
     __progname = const_cast<char*> (progname);
 # else
     __progname = progname;
 # endif
+    }
 }
 #endif /* !ACE_HAS_SETPROGNAME */
 

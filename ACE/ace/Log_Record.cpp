@@ -276,13 +276,15 @@ ACE_Log_Record::format_msg (const ACE_TCHAR host_name[],
                        this->msg_data_);
     }
   else if (ACE_BIT_ENABLED (verbose_flag, ACE_Log_Msg::VERBOSE_LITE))
-    ACE_OS::snprintf (verbose_msg, verbose_msg_size,
-                     ACE_TEXT ("%") ACE_TEXT_PRIs
-                     ACE_TEXT ("@%") ACE_TEXT_PRIs
-                     ACE_TEXT ("@%") ACE_TEXT_PRIs,
-                     timestamp,
-                     ACE_Log_Record::priority_name (ACE_Log_Priority (this->type_)),
-                     this->msg_data_);
+    {
+      ACE_OS::snprintf (verbose_msg, verbose_msg_size,
+                       ACE_TEXT ("%") ACE_TEXT_PRIs
+                       ACE_TEXT ("@%") ACE_TEXT_PRIs
+                       ACE_TEXT ("@%") ACE_TEXT_PRIs,
+                       timestamp,
+                       ACE_Log_Record::priority_name (ACE_Log_Priority (this->type_)),
+                       this->msg_data_);
+    }
   else
   {
     ACE_OS::strcpy (verbose_msg, this->msg_data_);
@@ -331,11 +333,13 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
                                                          safe_verbose_msg.get ());
               // We should have written everything
               if (fwrite_result != verbose_msg_len)
-                result = -1;
+                {
+                  result = -1;
+                }
               else
-              {
-                ACE_OS::fflush (fp);
-              }
+                {
+                  ACE_OS::fflush (fp);
+                }
             }
         }
 

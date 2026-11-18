@@ -58,7 +58,9 @@ ACE_OS::strecpy (char *s, const char *t)
   const char *sscan = t;
 
   while ((*dscan++ = *sscan++) != '\0')
-    continue;
+    {
+      continue;
+    }
 
   return dscan;
 }
@@ -71,7 +73,9 @@ ACE_OS::strecpy (wchar_t *s, const wchar_t *t)
   const wchar_t *sscan = t;
 
   while ((*dscan++ = *sscan++) != ACE_TEXT_WIDE ('\0'))
-    continue;
+    {
+      continue;
+    }
 
   return dscan;
 }
@@ -195,10 +199,12 @@ const char *
 ACE_OS::strnchr (const char *s, int c, size_t len)
 {
   for (size_t i = 0; i < len; ++i)
-    if (s[i] == c)
-    {
-      return s + i;
-    }
+      {
+        if (s[i] == c)
+          {
+            return s + i;
+          }
+      }
 
   return nullptr;
 }
