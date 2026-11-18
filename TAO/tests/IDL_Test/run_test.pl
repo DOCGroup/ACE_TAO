@@ -9,9 +9,9 @@ use PerlACE::TestTarget;
 
 sub generated_class_body {
     my ($contents, $class_name) = @_;
-    my ($body) = $contents =~
-      /^class\s+\S+\s+\Q$class_name\E\b[\s\S]*?\{([\s\S]*?^\s*\};)/m;
-    return $body;
+    my ($definition) = $contents =~
+      /(^class\s+\S+\s+\Q$class_name\E\b[\s\S]*?^\s*\};)/m;
+    return $definition;
 }
 
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
@@ -96,7 +96,7 @@ if ($status == 0) {
       }
 
     my ($abstract_supported_body) = generated_class_body (
-      $valuetype_header, "OBV_Abstract_Supported_Refcount_Base");
+      $valuetype_header, "Abstract_Supported_Refcount_Base");
     if (!defined $abstract_supported_body
         || $abstract_supported_body =~ /DefaultValueRefCountBase/)
       {

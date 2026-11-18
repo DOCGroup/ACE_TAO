@@ -177,7 +177,8 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   node->gen_stub_decls (os);
 
   if (node->opt_accessor ()
-      && node->generates_obv_copy_value ())
+      && node->generates_obv_copy_value ()
+      && !is_an_amh_exception_holder)
     {
       *os << be_nl_2
           << "::CORBA::ValueBase *_copy_value () override;";

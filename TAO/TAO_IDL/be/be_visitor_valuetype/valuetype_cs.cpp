@@ -161,7 +161,8 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << "{}" << be_nl_2;
 
   if (node->opt_accessor ()
-      && node->generates_obv_copy_value ())
+      && node->generates_obv_copy_value ()
+      && !this->is_amh_exception_holder (node))
     {
       *os << "::CORBA::ValueBase *" << be_nl
           << node->name () << "::_copy_value ()" << be_nl
