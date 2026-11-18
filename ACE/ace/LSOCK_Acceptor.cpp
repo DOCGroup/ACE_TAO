@@ -72,8 +72,10 @@ ACE_LSOCK_Acceptor::ACE_LSOCK_Acceptor (const ACE_Addr &remote_sap,
                   protocol_family,
                   backlog,
                   protocol) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                "ACE_LSOCK_Acceptor::ACE_LSOCK_Acceptor"));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     "ACE_LSOCK_Acceptor::ACE_LSOCK_Acceptor"));
+    }
 }
 
 // General purpose routine for accepting new connections.
@@ -91,7 +93,9 @@ ACE_LSOCK_Acceptor::accept (ACE_LSOCK_Stream &new_stream,
   if (this->shared_accept_start (timeout,
                                  restart,
                                  in_blocking_mode) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       sockaddr *addr {};
@@ -104,9 +108,11 @@ ACE_LSOCK_Acceptor::accept (ACE_LSOCK_Stream &new_stream,
         }
 
       do
-        new_stream.set_handle (ACE_OS::accept (this->get_handle (),
-                                               addr,
-                                               &len));
+        {
+          new_stream.set_handle (ACE_OS::accept (this->get_handle (),
+                                                 addr,
+                                                 &len));
+        }
       while (new_stream.get_handle () == ACE_INVALID_HANDLE
              && restart != 0
              && errno == EINTR
