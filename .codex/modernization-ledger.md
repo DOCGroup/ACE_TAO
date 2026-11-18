@@ -13002,6 +13002,14 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   an `ACE_UINT64` cast. The patch passes `git diff --check`; full runtime
   validation remains part of the open ACE test audit.
 
+## 2026-11-18 ACE queue test format follow-up
+
+- Corrected the iteration number in `Message_Queue_Test.cpp` to `%d` for its
+  `int` argument. In `Message_Queue_Test_Ex.cpp`, aligned the signed message
+  count with `%d` and `ACE_Time_Value::msec()` (`unsigned long`) with `%Q` and an
+  `ACE_UINT64` cast. `git diff --check` passes; the ACE test log-format audit
+  remains open.
+
 ## 2026-11-18 ACE core brace audit
 
 - Ran `clang-tidy`'s `readability-braces-around-statements` check over the
