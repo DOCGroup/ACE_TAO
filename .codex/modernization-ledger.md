@@ -12942,3 +12942,13 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   fields with `%Q` and `ACE_Time_Value` seconds/useconds with `%:`/`%q`.
 - `git diff --check` passed. The repository-wide ACE/TAO logging-format audit
   remains open.
+
+## 2026-11-18 TAO transport log formats
+
+- Corrected `TAO_Transport::id()` logging to `%B`, transport-cache `u_long` /
+  `CORBA::ULong` hash and index values to `%Q` with explicit `ACE_UINT64`
+  conversions, and the unsigned pending-connect count to `%u`.
+- Syntax-only compilation passed for `Wait_On_LF_No_Upcall.cpp` and
+  `IIOP_Connector.cpp`; the `Transport_Cache_Manager_T.h` template
+  implementation also passed syntax-only compilation. `git diff --check`
+  passed. The TAO/ACE logging-format audit remains open.
