@@ -64,9 +64,11 @@ ACE_Local_Memory_Pool::acquire (size_t nbytes,
   std::unique_ptr<char[], ACE_Array_Deleter<char>> cp (temp);
 
   if (this->allocated_chunks_.insert (cp.get ()) != 0)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) insertion into set failed\n")),
-                      0);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("(%P|%t) insertion into set failed\n")),
+                           0);
+    }
 
   return cp.release ();
 }
@@ -80,11 +82,13 @@ ACE_Local_Memory_Pool::release (int)
   for (ACE_Unbounded_Set<char *>::iterator i = this->allocated_chunks_.begin ();
        i != this->allocated_chunks_.end ();
        ++i)
+    {
 #if defined (ACE_HAS_ALLOC_HOOKS)
-    ACE_Allocator::instance()->free(*i);
+      ACE_Allocator::instance()->free(*i);
 #else
-    delete [] *i;
+      delete [] *i;
 #endif /* ACE_HAS_ALLOC_HOOKS */
+    }
 
   this->allocated_chunks_.reset ();
   return 0;
