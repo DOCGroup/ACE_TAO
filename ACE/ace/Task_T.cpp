@@ -67,7 +67,9 @@ ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::~ACE_Task ()
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::~ACE_Task");
   if (this->delete_msg_queue_)
-    delete this->msg_queue_;
+    {
+      delete this->msg_queue_;
+    }
 
   // These assignments aren't strickly necessary but they help guard
   // against odd race conditions...
@@ -79,9 +81,13 @@ ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::sibling ()
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::sibling");
   if (this->mod_ == nullptr)
-    return nullptr;
+    {
+      return nullptr;
+    }
   else
-    return this->mod_->sibling (this);
+    {
+      return this->mod_->sibling (this);
+    }
 }
 
 template<ACE_SYNCH_DECL, class TIME_POLICY> ACE_TCHAR const *
@@ -89,9 +95,13 @@ ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::name () const
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::name");
   if (this->mod_ == nullptr)
-    return nullptr;
+    {
+      return nullptr;
+    }
   else
-    return this->mod_->name ();
+    {
+      return this->mod_->name ();
+    }
 }
 
 template<ACE_SYNCH_DECL, class TIME_POLICY> ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *
