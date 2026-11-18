@@ -186,7 +186,9 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Addr &local_sap,
           local_inet6_addr.sin6_addr = in6addr_any;
         }
       else
-        local_inet6_addr = *reinterpret_cast<sockaddr_in6 *> (local_sap.get_addr ());
+        {
+          local_inet6_addr = *reinterpret_cast<sockaddr_in6 *> (local_sap.get_addr ());
+        }
 
       // We probably don't need a bind_port written here.
       // There are currently no supported OS's that define
@@ -194,7 +196,9 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Addr &local_sap,
       if (ACE_OS::bind (this->get_handle (),
                         reinterpret_cast<sockaddr *> (&local_inet6_addr),
                         sizeof local_inet6_addr) == -1)
-        error = 1;
+        {
+          error = 1;
+        }
     }
   else
 #endif
@@ -273,7 +277,9 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
           local_inet6_addr.sin6_addr = in6addr_any;
         }
       else
-        local_inet6_addr = *reinterpret_cast<sockaddr_in6 *> (local_sap.get_addr ());
+        {
+          local_inet6_addr = *reinterpret_cast<sockaddr_in6 *> (local_sap.get_addr ());
+        }
 
       // We probably don't need a bind_port written here.
       // There are currently no supported OS's that define
@@ -281,7 +287,9 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
       if (ACE_OS::bind (this->get_handle (),
                         reinterpret_cast<sockaddr *> (&local_inet6_addr),
                         sizeof local_inet6_addr) == -1)
-        error = 1;
+        {
+          error = 1;
+        }
     }
   else
 #endif
