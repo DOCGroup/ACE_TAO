@@ -607,7 +607,7 @@ spawn_threads (ACCEPTOR *acceptor,
     {
       ACE_NEW_RETURN (server_name[i], ACE_TCHAR[32], -1);
       ACE_OS::sprintf (server_name[i],
-                       ACE_TEXT ("server%u"),
+                       ACE_TEXT ("server%d"),
                        i);
       stack_size[i] = 40000;
       ACE_NEW_RETURN (stack[i], char[stack_size[i]], -1);
