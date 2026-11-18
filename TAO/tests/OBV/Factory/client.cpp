@@ -155,11 +155,21 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       value2 = value2_factory->create (1, data);
 
-      ApplicationFactoryValue_impl application_value;
-      application_value.value (31);
-      application_value.application_state (37);
+      ApplicationFactoryValue_init_impl application_factory;
+      OBV_FactoryTest::ApplicationFactoryValue_var application_value =
+        application_factory.create ();
+      application_value->value (31);
+      ApplicationFactoryValue_impl * const application_value_impl =
+        dynamic_cast<ApplicationFactoryValue_impl *> (application_value.in ());
+      if (application_value_impl == nullptr)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Application-factory value has unexpected type\n"),
+                            1);
+        }
+      application_value_impl->application_state (37);
       CORBA::ValueBase_var application_copy (
-        application_value._copy_value ());
+        application_value->_copy_value ());
       ApplicationFactoryValue_impl * const copied_application =
         dynamic_cast<ApplicationFactoryValue_impl *> (application_copy.in ());
       if (copied_application == nullptr

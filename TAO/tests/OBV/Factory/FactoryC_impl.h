@@ -81,4 +81,12 @@ private:
   CORBA::ULong application_state_ {};
 };
 
+class ApplicationFactoryValue_init_impl :
+  public OBV_FactoryTest::ApplicationFactoryValue_init
+{
+public:
+  OBV_FactoryTest::ApplicationFactoryValue *create () override;
+  CORBA::ValueBase *create_for_unmarshal () override;
+};
+
 #endif /* TAO_FACTORY_FACTORY_C_IMPL_H */
