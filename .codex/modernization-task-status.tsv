@@ -114,7 +114,7 @@ ACE/ASNMP/agent	TEST_ASSERTIONS	not-applicable	3d48f70f611	No test code in this 
 ACE/ASNMP/agent	USING	not-applicable	3d48f70f611	No typedef aliases
 ACE/ASNMP/agent	VALUE_INIT	done	3d48f70f611	Reviewed value-initialized port parsing state and class members
 ACE/ASNMP/asnmp	BUILD_TEST	done	9e6b539544e	Realclean-built complete ASNMP tree with -j 8 without warnings; all nine tests passed including the new OID right-comparison regression cases
-ACE/ASNMP/asnmp	MOVE_SEMANTICS	needs-work	-	Reviewed 14 std::move sites in octet.cpp, vb.cpp, pdu.cpp, and oid.cpp. Buffer/value owners transfer to destinations; Pdu::delete_vb overwrites each moved-from slot and resets the last one. Other ASNMP move sites remain.
+ACE/ASNMP/asnmp	MOVE_SEMANTICS	done	880476e8e2b	Reviewed all 14 std::move sites in ASNMP; buffer/value owners transfer to destinations, and Pdu::delete_vb overwrites moved-from slots then resets the final slot. No moved-from object is read afterward.
 ACE/ASNMP/asnmp	CLEANUP	done	154f63c16aa	Removed label-only copy-constructor comments and redundant C-style casts from polymorphic clone results
 ACE/ASNMP/asnmp	C_STRING	done	74040f71094	Replaced narrow ACE_OS string calls with <cstring>/std:: functions in address.cpp and oid.cpp; retained ACE APIs for non-string operations
 ACE/ASNMP/asnmp	EXPLICIT	done	3765121fd7b	Marked all eligible single-argument ASNMP constructors explicit; retained copy constructors and multi-argument constructors
@@ -237,7 +237,7 @@ ACE/Kokyu	BUILD_TEST	done	a4f85a6070f	Realclean-built the Kokyu library and DSRT
 ACE/Kokyu	CLEANUP	done	288e92d8158	Removed stale dispatcher traces and the unused get_native_prio helper; made touched control flow/layout consistent.
 ACE/Kokyu	CONST	done	288e92d8158	Applied const to stable local values in dispatcher initialization, dispatch, and DSRT comparison.
 ACE/Kokyu	COPY_MOVE	done	288e92d8158	Explicitly deleted copy/move operations on Dispatch_Queue_Item.
-ACE/Kokyu	DIRECTORY_PASS	needs-work	288e92d8158	Completed a focused dispatcher pass; the full directory checklist is not yet audited.
+ACE/Kokyu	DIRECTORY_PASS	done	-	Re-audited the library and all three test projects. Ownership, special members, comments, value initialization, loop increments, log formats, and pointer sentinels are consistent; the partial-activation retry state avoids restarting already-started workers. No further source change was justified.
 ACE/Kokyu	EXPLICIT	done	288e92d8158	Marked the single-argument-effective Dispatcher_Task and Dispatch_Command constructors explicit.
 ACE/Kokyu	LOG_FORMAT	done	a4f85a6070f	Reviewed Kokyu library and test logging calls; DSRT_MIF now uses the signed 64-bit ACE formatter for its long importance value. No other mismatches found in the directory scan.
 ACE/Kokyu	OVERRIDE_DEFAULT_DELETE	done	288e92d8158	Defaulted applicable destructors; retained out-of-line definitions for existing library symbols.
@@ -252,7 +252,7 @@ ACE/Kokyu	VALUE_INIT	done	288e92d8158	Value-initialized dispatcher state and Kok
 ACE/Kokyu/tests/DSRT_MIF	BUILD_TEST	done	a4f85a6070f	Realclean-built and linked DSRT_MIF with C++17 warning flags after const and ACE log-format fixes. Runtime was not run in this batch.
 ACE/Kokyu/tests/DSRT_MIF	CLEANUP	done	288e92d8158	Join worker tasks before destroying their shared barrier and shutting down the dispatcher.
 ACE/Kokyu/tests/DSRT_MIF	CONST	done	a4f85a6070f	Made task configuration and immutable state const, made the scheduler handle pointer member const, and value-initialized const QoS descriptors.
-ACE/Kokyu/tests/DSRT_MIF	DIRECTORY_PASS	needs-work	288e92d8158	Fixed the known worker/barrier lifetime issue and reviewed constness and log argument formats. A complete test-directory audit remains open.
+ACE/Kokyu/tests/DSRT_MIF	DIRECTORY_PASS	done	-	Re-audited MIF.cpp, its MPC project, scheduler trait aliases, ownership/lifetimes, initialization, and ACE log arguments; no further change was justified. Existing build validation is recorded separately.
 ACE/ace	BUILD_TEST	done	47ead510b06	ACE/ace make realclean && make -j 8 succeeded; DEV_Addr changes emitted no warnings
 ACE/ace	CLEANUP	done	46b21c52a7d	Removed redundant special member labels from eight core files; retained explanatory Thread_Exit wording
 ACE/ace	CONST	done	47ead510b06	Normalized DEV_Addr parameter and return pointer const placement
@@ -297,7 +297,7 @@ ACE/ace/Filecache	BUILD_TEST	done	d00729ceb2d	ACE core realclean build passed; e
 ACE/ace/Filecache	COPY_MOVE	done	d00729ceb2d	Deleted copy/move operations to prevent duplicating its cache reference and file handle ownership
 ACE/ace/Filecache	EXPLICIT	done	d00729ceb2d	Made the filename-only converting constructor explicit
 ACE/ace/Filecache	VALUE_INIT	done	d00729ceb2d	Moved ACE_Filecache_Handle initial state into in-class value-initialized members and removed the init helper
-ACE/ace/FlReactor	BUILD_TEST	needs-work	507e3f8ae94	After realclean, build enabled with fl=1 gl=1 x11=1 ace_flreactor=1 but cannot compile because FL/Fl.H is missing on this host.
+ACE/ace/FlReactor	BUILD_TEST	needs-work	507e3f8ae94	Retried dependency discovery after the FLTK installation update: pkg-config, fltk-config, and searches under /usr, /usr/local, /opt, /home/johnny, /root, and /tmp still find neither FL/Fl.H nor FLTK metadata on this host. Build remains blocked by the missing dependency.
 ACE/ace/FlReactor	SCOPE_REDUCTION	done	507e3f8ae94	Scoped timeout lookup to the if-init and removed two result locals used only for immediate error checks.
 ACE/ace/FlReactor	STYLE	done	507e3f8ae94	Normalized while-loop layout and corrected the stale toolkit comment; git diff --check passed.
 ACE/ace/Monitor_Control	BUILD_TEST	done	54db9d6069d	realclean + make -j 8 built ACE_Monitor_Control without warnings; Marshal_Buffer client/server also rebuilt. Its runtime script is unavailable with ACE_HAS_MONITOR_FRAMEWORK disabled. CPU_Load and Num_Threads examples passed.
@@ -840,7 +840,7 @@ ACE/protocols/tests/HTBP/Send_Recv_Tests	LOG_FORMAT	done	a7131d56d64	Corrected s
 ACE/tests	BUILD_TEST	done	a26c6f5b464	Get_Opt_Test realclean-built and ran successfully with ACE/lib on LD_LIBRARY_PATH; Added Read_Buffer_Test with custom allocator deleter coverage; direct C++17 compile/link/run passed after ACE library build. MPC unavailable locally; see modernization ledger.
 ACE/tests	CLEANUP	done	54ab7cb832e	Removed twelve redundant constructor/destructor labels across seven files; kept explanatory comments
 ACE/tests	C_STRING	done	0581719f4ae	Replaced decimal ACE_OS::itoa formatting in Get_Opt_Test with std::to_string; retained explicit ACE_OS wrapper tests in OS_Test
-ACE/tests	LOG_FORMAT	needs-work	a02e241deeb	Fixed pointer args in Sig_Handlers_Test, size_t/u_long counts, offsets, error codes, and ACE_HANDLE arguments in Bug_2740, Dev_Poll, Process_Strategy, and QtReactor tests. Recent batches fixed object-pointer varargs and timer ID formats across ACE tests; targets built and linked. Further pointer and const-void log arguments fixed across Proactor, RB tree, reference-counted handler, and backend tests; affected targets built and linked. Full format audit remains open; Qt lacks headers.
+ACE/tests	LOG_FORMAT	needs-work	a9fc4c0f2a3	Fixed pointer args in Sig_Handlers_Test, size_t/u_long counts, offsets, error codes, and ACE_HANDLE arguments in Bug_2740, Dev_Poll, Process_Strategy, and QtReactor tests. Recent batches fixed object-pointer varargs and timer ID formats across ACE tests; targets built and linked. Further pointer and const-void log arguments fixed across Proactor, RB tree, reference-counted handler, and backend tests; affected targets built and linked. Corrected ACE_OFF_T file-size logging in CDR_File_Test, Log_Msg_Test, and Svc_Handler_Test to %q with ACE_INT64 casts. Audited Reference_Counted_Event_Handler_Test: message_size int uses %d and I/O ssize_t uses %b. Fixed size_t session counts and indexes in TP_Reactor_Test.cpp with %B. Full format audit remains open; Qt lacks headers.
 ACE/tests/Message_Queue_Test	SPECIAL_MEMBER_COMMENTS	done	cd99fd1d348	Removed the default-constructor label from Queue_Wrapper; realclean-built and linked Message_Queue_Test without warnings
 ACE/tests/Network_Adapters_Test.h	BUILD_TEST	done	a799aa38416	Test MPC regenerated; Network_Adapters_Test realclean-built and ran successfully
 ACE/tests/Network_Adapters_Test.h	CLEANUP	done	a799aa38416	Removed standalone constructor/destructor labels from two test handlers
@@ -849,9 +849,9 @@ ACE/tests/RB_Tree_Test	CLEANUP	done	07e7ea9a746	Removed redundant special member
 ACE/tests/SOCK_Netlink_Test	SPECIAL_MEMBER_COMMENTS	done	42f088b8e3c	Removed the default-constructor label from Secondary_Ipaddr_Handler; realclean-built and linked SOCK_Netlink_Test without warnings
 ACE/tests/SSL	BUILD_TEST	done	265806ac764	Realclean-built and linked SSL_Asynch_Stream_Test without warnings
 ACE/tests/SSL	C_STRING	done	265806ac764	Changed the narrow byte-buffer comparison to std::strncmp
-ACE/tests/SSL	LOG_FORMAT	needs-work	3473e14ac25	Fixed %@ object-pointer arguments in SSL asynchronous stream and thread-pool reactor tests; both targets built and linked. Continue auditing ACE/TAO logging formats.
+ACE/tests/SSL	LOG_FORMAT	done	3473e14ac25	Reviewed every ACE log call in the three SSL test sources. %@ arguments are object pointers, %B arguments are size_t counters/byte lengths, %s uses ACE_TCHAR text, %d uses int errno/error values, and %Q/%p are no-argument system-error formatters; no printf-only FORMAT_SPECIFIER macros occur in ACE logging calls.
 ACE/websvcs/lib	SPECIAL_MEMBER_COMMENTS	done	833e21b75f0	Removed nine standalone constructor/destructor labels; realclean-built and linked websvcs without warnings
-ACE/websvcs/lib	MOVE_SEMANTICS	needs-work	-	Reviewed 14 std::move sites in URL_Addr.cpp. Local URL buffers transfer into component owners; parsed local strings are moved only on the terminating success path. No moved-from local is read afterward; other web services move sites remain.
+ACE/websvcs/lib	MOVE_SEMANTICS	done	880476e8e2b	Reviewed all 14 std::move sites in URL_Addr.cpp; URL buffers and parsed strings transfer into owning members, and no moved-from local is subsequently read. Repository-wide search found no other move sites in ACE/websvcs/lib.
 TAO/DevGuideExamples/AMH	BUILD_TEST	done	7588f0489d4	MPC regenerated; IDL/server/client realclean builds and runtime test passed
 TAO/DevGuideExamples/AMH	CLEANUP	done	7588f0489d4	Removed redundant class/constructor/destructor label comments from handwritten files
 TAO/DevGuideExamples/AMH_AMI	BUILD_TEST	done	12a77acdeb2	MPC regenerated; IDL/client/inner-server/middle-server realclean builds and runtime test passed
@@ -1613,7 +1613,7 @@ TAO/orbsvcs/examples/RtEC/Simple	OWNERSHIP	done	f49b8581d4a	Migrated from existi
 TAO/orbsvcs/examples/RtEC/Simple	STYLE	done	f49b8581d4a	Migrated from existing inventory; see modernization-ledger.md
 TAO/orbsvcs/examples/RtEC/Simple	VALUE_INIT	done	f49b8581d4a	Migrated from existing inventory; see modernization-ledger.md
 TAO/orbsvcs/orbsvcs/AV	BUILD_TEST	done	0581719f4ae	After realclean, full TAO/orbsvcs/orbsvcs make -j 8 built and linked the AV library without diagnostics
-TAO/orbsvcs/orbsvcs/AV	MOVE_SEMANTICS	needs-work	-	Reviewed 18 std::move sites in RTCP.cpp and RTCP_Packet.*; each transfers unique-owned nodes or buffers without later reading the moved-from owner. The full AV directory audit remains open.
+TAO/orbsvcs/orbsvcs/AV	MOVE_SEMANTICS	done	96dbf8ae851	Reviewed all 18 std::move sites in RTCP.cpp and RTCP_Packet.*; each transfers unique-owned nodes or buffers without later reading the moved-from owner. Full AV search found no other move sites.
 TAO/orbsvcs/orbsvcs/AV	C_STRING	done	0581719f4ae	Replaced decimal ACE_OS::itoa in UDP port construction with std::to_string and ACE text conversion
 TAO/orbsvcs/orbsvcs/AV	SPECIAL_MEMBER_COMMENTS	done	fa129e9fbb3	Removed 103 standalone constructor/destructor label comments from 21 handwritten files; realclean-built and linked TAO_AV without warnings
 TAO/orbsvcs/orbsvcs/Concurrency	BUILD_TEST	done	1637c0752ce	Service realclean and make -j 8 passed without visible warnings; runtime requires separately running Naming and Concurrency services
@@ -1652,7 +1652,7 @@ TAO/orbsvcs/orbsvcs/IFRService	SPECIAL_MEMBER_COMMENTS	done	9eb77bad8f7	Removed 
 TAO/orbsvcs/orbsvcs/IFRService	VALUE_INIT	done	d71159b5636	Migrated from existing inventory; see modernization-ledger.md
 TAO/orbsvcs/orbsvcs/Log	SPECIAL_MEMBER_COMMENTS	done	dfb55393f0a	Removed two standalone constructor/destructor labels from LogStore.h; realclean-built and linked DsLogAdmin_Serv without warnings
 TAO/orbsvcs/orbsvcs/Naming	SPECIAL_MEMBER_COMMENTS	done	1436616bcba	Removed 81 standalone constructor/destructor labels from 30 handwritten files; realclean-built and linked CosNaming and FT_Naming without warnings
-TAO/orbsvcs/orbsvcs/Naming	MOVE_SEMANTICS	needs-work	-	Reviewed six std::move sites in naming-context iterator construction, Bindings_Iterator_T, and FaultTolerant/FT_Naming_Server.cpp. Iterator and queued sequence owners transfer to the recipient and are not read afterward; remaining Naming move sites need review.
+TAO/orbsvcs/orbsvcs/Naming	MOVE_SEMANTICS	done	880476e8e2b	Reviewed all six std::move sites in the full Naming subtree. Iterator owners transfer into servants; queued update sequences transfer under lock and are popped or consumed without later reading moved-from owners. No other move sites were found.
 TAO/orbsvcs/orbsvcs/Notify	SPECIAL_MEMBER_COMMENTS	done	7127c6f9d46	Removed 177 standalone constructor/destructor label comments from 85 handwritten files; realclean-built and linked CosNotification_Serv
 TAO/orbsvcs/orbsvcs/Property	BUILD_TEST	done	22ece13b729	Clean service and client/server builds; perl run_test.pl passed without warnings
 TAO/orbsvcs/orbsvcs/Property	CLEANUP	done	22ece13b729	Simplified iterator length selection and removed generic special-member comments
@@ -2194,8 +2194,8 @@ TAO/orbsvcs/tests/Notify/Structured_Filter	VALUE_INIT	done	d57eccb57a4	Migrated 
 TAO/orbsvcs/tests/Simple_Naming	STD_NARROW_STRING	done	21113c7140f	Replaced six narrow ACE_OS::strcmp calls; realclean regenerated IDL and client build passed.
 TAO/orbsvcs/tests/Time	SPECIAL_MEMBER_COMMENTS	done	a210f3e69a	Removed standalone constructor/destructor labels; Time client realclean build passed; runtime harness fails during server shutdown
 TAO/tao	SPECIAL_MEMBER_COMMENTS	done	ff815715436	Rechecked the root TAO/tao sources after the earlier sweep and removed the remaining standalone `// Constructors.` label in TAO_Server_Request.h; explanatory comments retained
-TAO/tao	MOVE_SEMANTICS	needs-work	-	Reviewed 10 std::move transfers in Acceptor_Registry.cpp, six in Active_Object_Map.cpp, and five in Object_Adapter.cpp. Ownership moves into open_default_i, the acceptor vector, owning strategy/map members, or local shutdown owners; moved-from owners are not read, and accepted pointees remain valid for retained raw observations. Other TAO/tao move sites remain.
-TAO/utils/logWalker	MOVE_SEMANTICS	needs-work	-	Reviewed nine Output_Stream and GIOP_Buffer ownership moves. Callers do not use moved-from owners; GIOP_Buffer copies metadata while the transferred octet buffer remains owned by the destination, then resets the source. The full directory audit remains open.
+TAO/tao	MOVE_SEMANTICS	done	96dbf8ae851	Audited all 53 move sites across 27 source files. Owners transfer into destinations or temporary RAII holders; sequence moves copy borrowed buffers and preserve the source. No moved-from value is read after transfer.
+TAO/utils/logWalker	MOVE_SEMANTICS	done	96dbf8ae851	Reviewed all nine Output_Stream and GIOP_Buffer ownership moves. Callers replace moved-from streams before use; GIOP_Buffer copies metadata, transfers its octet buffer, and resets the source. No other move sites exist in the directory.
 TAO/tao/AnyTypeCode	BUILD_TEST	done	9252d151c90	AnyTypeCode realclean-built with make -j 8; Recursive Any run_test.pl passed against the rebuilt library without compiler warnings
 TAO/tao/AnyTypeCode	CONST	done	pending	Migrated from existing inventory; see modernization-ledger.md
 TAO/tao/AnyTypeCode	OVERRIDE_DEFAULT_DELETE	done	4156f7f45f9	Defaulted the empty CORBA::Any_var constructor while retaining its definition in Any.inl
@@ -2660,12 +2660,14 @@ TAO/TAO_IDL/fe	COPY_MOVE	done	-	Reviewed 14 generated/handwritten std::move site
 TAO/TAO_IDL/be	COPY_MOVE	done	-	Reviewed all 9 std::move sites in the backend; strings/parameters transfer into AST nodes, the gperf stream remains valid through its destination owner, and queued pointees remain stable across vector growth
 TAO/TAO_IDL/ast	COPY_MOVE	done	-	Reviewed all 11 std::move sites in the AST; strings, template parameters, and annotation expressions transfer into their destination owners, and visitor state restoration consumes its saved optional
 TAO/TAO_IDL/util	COPY_MOVE	done	-	Reviewed all 10 std::move sites in utl_global.cpp; owned AST/configuration objects and optional state transfer into members, path strings transfer into gperf_path_, and DCPS map entries take ownership
-TAO/tao	COPY_MOVE	needs-work	-	Reviewed 29 moves across clonable argument wrappers, queued messages, codeset/connector/adapter registries, thread resources, RTScheduling, Stub, CSD_Framework, LF_Multi_Event, ETCL, Dynamic_TP, and CSD_ThreadPool; remaining core sites are still open
+TAO/tao	COPY_MOVE	done	96dbf8ae851	The complete TAO/tao move audit supersedes the earlier partial review: all 53 std::move sites across 27 source files were reviewed, with no unsafe moved-from use found.
 TAO/examples/Kokyu_dsrt_schedulers	MOVE_SITES	done	-	Reviewed all 15 std::move sites across MIF, FP, MUF, and EDF schedulers; dispatcher, service-context sequence, and GUID transfers have no moved-from reads
 ACE/ace	MOVE_SITES	done	-	Reviewed all 7 std::move sites in Process.cpp, Monitor_Control/Constraint_Interpreter.cpp, and WFMO_Reactor.cpp; transferred owners remain valid at their destinations and moved-from locals are not read
+ACE/ace	BRACES	needs-work	2e73304b683	Repository scan found 2,026 single-statement brace diagnostics in 187 ACE/ace files; fixed and verified CRC, Dynamic_Service_Dependency, Activation_Queue (including ACE_HAS_DUMP), Barrier, CDR_Size, Cleanup (including ACE_HAS_ALLOC_HOOKS), FILE, Handle_Ops, Based_Pointer_T, Event_Handler_T, FIFO_Send, and LSOCK. Event.cpp received its fix, but standalone clang-tidy hits a template redefinition. Full core and repository-wide brace audits remain open.
 ACE/ace/XML_Utils	MOVE_SITES	done	-	Reviewed all 7 std::move sites in XercesString.cpp, XML_Schema_Resolver.cpp, and XSCRT/XML.hpp; source owners are not read after transfer and move assignment handles self-move
 ACE/ace	CONST_GUARD_MACROS	done	3b46834200d	Added const guard macro variants without changing existing ACE_GUARD behavior; targeted fuzz check passed
 TAO/tao/AnyTypeCode	CONST_GUARD_MACROS	done	3b46834200d	Replaced direct ACE_Guard spellings with const guard macros; targeted fuzz check passed and AnyTypeCode realclean build/link passed
 ACE/tests	COPY_MOVE	done	-	Reviewed all 10 std::move sites in tests; move-only feature probes are intentional and owner/value transfers do not read moved-from sources
 TAO/orbsvcs/orbsvcs	COPY_MOVE	done	-	Reviewed all 35 std::move sites in orbsvcs implementations; ownership transfers, linked-list construction/destruction, iterator handoff, and queue drains do not reuse moved-from owners
 TAO/orbsvcs/tests	COPY_MOVE	done	-	Reviewed all 22 std::move sites in orbsvcs tests; sequence values, file handles, event handlers, command owners, and event-channel implementations transfer into their intended owners
+TAO/examples/RTScheduling/Fixed_Priority_Scheduler	BRACES	needs-work	-	Added Allman braces around three single-statement if/else bodies in test.cpp; clang-tidy then stopped on missing generated RTSchedulerC.h, and full-tree brace audit remains open

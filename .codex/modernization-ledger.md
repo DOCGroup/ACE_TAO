@@ -12855,3 +12855,141 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   containers, and sample arrays into `Task_Stats` after both allocations
   succeed. No moved-from object is read afterward and no change was needed.
 - The repository-wide move audit remains open.
+
+
+## 2026-11-18 ASNMP move audit
+
+- Rechecked every `std::move` under `ACE/ASNMP`: 14 sites in `octet.cpp`,
+  `vb.cpp`, `pdu.cpp`, and `oid.cpp`. Temporary buffers and cloned values
+  transfer into their owning members; PDU insertion and replacement transfer
+  heap-owning `unique_ptr` values; and `Pdu::delete_vb` shifts owners left,
+  overwrites each moved-from slot, then resets the final slot. No source is
+  read after transfer. No code change was warranted for move behavior.
+- The repository-wide move audit remains open.
+
+
+## 2026-11-18 ACE web services move audit
+
+- Audited all 14 `std::move` sites in `ACE/websvcs/lib/URL_Addr.cpp`. URL
+  buffers and parsed string owners transfer into their destination members;
+  methods return or proceed without reading moved-from locals. A full search of
+  `ACE/websvcs/lib` found no other move operations. No code change was needed.
+- The repository-wide move audit remains open.
+
+
+## 2026-11-18 TAO Naming move audit
+
+- Reviewed all six `std::move` sites in `TAO/orbsvcs/orbsvcs/Naming`. Hash
+  iterators transfer into binding iterator servants; fault-tolerant update
+  sequences transfer into queued owners while holding their mutex and are
+  popped or consumed without using the moved-from owner. The full subtree search
+  found no other move sites. No code change was needed.
+- The repository-wide move audit remains open.
+
+
+## 2026-11-18 TAO AV move audit
+
+- Reviewed all 18 `std::move` sites in `TAO/orbsvcs/orbsvcs/AV`. RTCP report blocks, SDES chunks, item data, and packet buffers transfer to owning members or constructors; list destruction detaches tails before deleting nodes. No moved-from owner is read and a full subtree search found no additional move sites. No code change was warranted.
+- The repository-wide move audit remains open.
+
+
+## 2026-11-18 TAO logWalker move audit
+
+- Reviewed all nine `std::move` sites. `Output_Stream` transfers ownership and is replaced before subsequent use; the borrowed `std::cout` case remains non-owning. `GIOP_Buffer::transfer_from` transfers the octet owner after copying metadata and resets the source. No other move sites were found and no change was needed.
+- The repository-wide move audit remains open.
+
+
+## 2026-11-18 TAO core move audit
+
+- Audited all 53 `std::move`/`std::forward` sites across 27 source files under `TAO/tao`. Argument-clone holders transfer only after the cloned argument is constructed; acceptor, connector, adapter, strategy, and policy owners transfer to their final containers or members; linked-list destructors detach the next owner before node destruction; and the PortableServer shutdown path holds moved owners locally through destruction.
+- The generic and octet sequence move paths transfer owned buffers but copy borrowed buffers without invalidating the source. The sequence unit tests cover moved-from maximum behavior and borrowed storage. No other moved-from value is read after transfer. No code change was justified.
+- The repository-wide move audit remains open outside this directory.
+
+## 2026-11-18 ACE SSL logging format audit
+
+- Reviewed every ACE logging call in `ACE/tests/SSL`'s three C++ sources.
+  `%@` arguments are object pointers, `%B` arguments are `size_t` counters and
+  byte lengths, `%s` uses `ACE_TCHAR` text, `%d` uses `int` error values, and
+  `%Q`/`%p` use ACE's current-error formatter without an argument. No
+  printf-only `ACE_*_FORMAT_SPECIFIER` macro occurs inside an ACE logging call.
+  No further change was needed.
+
+## 2026-11-18 ACE test log format correction
+
+- The all-tests `%B`/`%b` scan found `ACE/tests/CDR_File_Test.cpp` passing an
+  `ACE_OFF_T` file size to `%B`, whose argument type is `size_t`. Changed the
+  conversion to `%q` and cast the signed file offset to `ACE_INT64` so the
+  logging varargs type matches. The broader `ACE/tests` log-format audit
+  remains open.
+
+- The declaration-aware pass found the same mismatch for `ACE_FILE_Info::size_`
+  in `Log_Msg_Test.cpp` and `Svc_Handler_Test.cpp`. Both now use `%q` with an
+  `ACE_INT64` cast.
+
+## 2026-11-18 Repository ACE log format scan
+
+- Scanned ACE and TAO logging calls for printf-only `ACE_*_FORMAT_SPECIFIER`
+  macros; none occur inside ACE logging macros. The `%B`/`%b` argument scan
+  found and fixed three further type mismatches: an `int` expected byte count
+  now uses `%d` in `TS_Clerk_Handler.cpp`, an `int` event count uses `%d` in
+  the WFMO reactor example, and a promoted `bool` uses `%d` in the DII AMI
+  forward test. The full format audit remains open pending review of other
+  conversion types.
+
+## 2026-11-18 Kokyu directory pass
+
+- Re-audited the Kokyu library and its FIFO, EDF, and DSRT_MIF tests for the
+  agreed modernization checklist. The activation retry state resumes at the
+  first worker not yet activated, preventing duplicate worker starts after a
+  partial activation failure. Dispatcher ownership, value initialization,
+  special members, increment style, pointer sentinels, and log argument types
+  were reviewed; no additional source change was warranted. Existing clean
+  build and test validation is recorded in the earlier Kokyu ledger entries.
+- Retried FLTK discovery for the separate ACE_FlReactor build item. No
+  FL/Fl.H, fltk-config, or pkg-config package is present in the current
+  environment's standard, opt, home, or temporary trees, so that optional
+  target remains unbuilt here.
+
+## 2026-11-18 Fixed_Priority_Scheduler brace follow-up
+
+- Added Allman braces around the three remaining single-statement `else` and
+  `if` bodies in `TAO/examples/RTScheduling/Fixed_Priority_Scheduler/test.cpp`.
+  A scoped `clang-tidy` pass found those cases, then stopped at the missing
+  generated `RTSchedulerC.h`; `git diff --check` passes. The full repository
+  single-statement brace audit remains open.
+
+## 2026-11-18 ACE test log format follow-up
+
+- Reviewed the log conversions in `ACE/tests/Reference_Counted_Event_Handler_Test.cpp`.
+  `message_size` is an `int` for `%d`, transfer results are `ssize_t` for `%b`,
+  and the close count is an `int`; these calls are correctly typed. No edit was
+  needed. The full `ACE/tests` log-format audit remains open.
+
+## 2026-11-18 TP Reactor test log formats
+
+- Corrected ACE logging for `size_t` receiver/sender indexes and session counts
+  in `TP_Reactor_Test.cpp` to use `%B`. `git diff --check` passes; the broader
+  ACE test log-format audit remains open.
+
+## 2026-11-18 ACE core brace audit
+
+- Ran `clang-tidy`'s `readability-braces-around-statements` check over the
+  ACE/ace translation units. It reported 2,026 single-statement bodies across
+  187 files; 37 translation units also had parse errors without project
+  defines or generated declarations. Fixed the two confirmed loop bodies in
+  `ACE_crc_ccitt.cpp` and `ACE_crc32.cpp`. Both files now pass the focused check
+  and `git diff --check`. Also fixed the destructor guard in
+  `Dynamic_Service_Dependency.cpp`; its focused brace check and diff check pass.
+  Fixed all three single-statement branches in `Activation_Queue.cpp`, including
+  the `ACE_HAS_DUMP` path; both default and `ACE_HAS_DUMP` clang-tidy checks pass.
+  Added Allman braces to single-statement branches in `Barrier.cpp`,
+  `CDR_Size.cpp`, `Cleanup.cpp`, `FILE.cpp`, and `Handle_Ops.cpp`. All five
+  files pass the focused check; `Cleanup.cpp` also passes with
+  `ACE_HAS_ALLOC_HOOKS` defined. `git diff --check` passes.
+  Added braces to one branch each in `Based_Pointer_T.cpp`,
+  `Event_Handler_T.cpp`, `FIFO_Send.cpp`, and `LSOCK.cpp`; their focused checks
+  pass. `Event.cpp` received its brace fix, but clang-tidy reports a template
+  redefinition before checking it in the standalone invocation. Pushed commit
+  `2e73304b683`.
+  The ACE core and repository-wide brace audits remain open. Pushed commits
+  `5fd4a0d79b5`, `98ab7cef922`, `f500c12f599`, and `d21f99fd5d6`.
