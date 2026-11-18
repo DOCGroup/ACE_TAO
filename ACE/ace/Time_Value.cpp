@@ -317,7 +317,9 @@ std::ostream &operator<< (std::ostream &o, ACE_Time_Value const &v)
       }
     }
   else if (tv->tv_usec < 0)
-    o << "-0." << std::setw (6) << - tv->tv_usec;
+    {
+      o << "-0." << std::setw (6) << - tv->tv_usec;
+    }
   else
     {
       o << '0';
