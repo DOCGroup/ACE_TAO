@@ -51,7 +51,9 @@ int
 ACE_Thread_Manager::set_thr_exit (ACE_TSS_TYPE (ACE_Thread_Exit) *ptr)
 {
   if (ACE_Thread_Manager::thr_exit_ == nullptr)
-    ACE_Thread_Manager::thr_exit_ = ptr;
+    {
+      ACE_Thread_Manager::thr_exit_ = ptr;
+    }
   else
   {
     return -1;
@@ -136,7 +138,9 @@ ACE_Thread_Descriptor::at_exit (ACE_At_Thread_Exit* cleanup)
 {
   ACE_TRACE ("ACE_Thread_Descriptor::at_exit");
   if (cleanup==nullptr)
-   return -1;
+    {
+      return -1;
+    }
   else
    {
      this->at_push (cleanup);
@@ -149,7 +153,9 @@ ACE_Thread_Descriptor::do_at_exit ()
 {
   ACE_TRACE ("ACE_Thread_Descriptor::do_at_exit");
   while (at_exit_list_!=nullptr)
-    this->at_pop ();
+    {
+      this->at_pop ();
+    }
 }
 
 void
@@ -359,7 +365,9 @@ ACE_Thread_Manager::thr_self (ACE_hthread_t &self)
     this->thread_desc_self ();
 
   if (desc == nullptr)
-    return -1;
+    {
+      return -1;
+    }
   else
   {
     desc->self (self);
@@ -479,7 +487,9 @@ ACE_Thread_Manager::close ()
 
   // Clean up the thread descriptor list.
   if (this->automatic_wait_)
-    this->wait (nullptr, true);
+    {
+      this->wait (nullptr, true);
+    }
   else
     {
       ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
@@ -1132,10 +1142,12 @@ ACE_Thread_Manager::cancel_thr (ACE_Thread_Descriptor *td, int async_cancel)
   ACE_SET_BITS (td->thr_state_, ACE_THR_CANCELLED);
 
   if (async_cancel != 0)
-    // Note that this call only does something relevant if the OS
-    // platform supports asynchronous thread cancellation.  Otherwise,
-    // it's a no-op.
-    return ACE_Thread::cancel (td->thr_id_);
+    {
+      // Note that this call only does something relevant if the OS
+      // platform supports asynchronous thread cancellation.  Otherwise,
+      // it's a no-op.
+      return ACE_Thread::cancel (td->thr_id_);
+    }
 
   return 0;
 }
@@ -1347,7 +1359,9 @@ ACE_Thread_Manager::get_grp (ACE_thread_t t_id, int &grp_id)
   ACE_FIND (this->find_thread (t_id), ptr);
 
   if (ptr)
-    grp_id = ptr->grp_id_;
+    {
+      grp_id = ptr->grp_id_;
+    }
   else
   {
     return -1;
@@ -1365,7 +1379,9 @@ ACE_Thread_Manager::set_grp (ACE_thread_t t_id, int grp_id)
 
   ACE_FIND (this->find_thread (t_id), ptr);
   if (ptr)
-    ptr->grp_id_ = grp_id;
+    {
+      ptr->grp_id_ = grp_id;
+    }
   else
   {
     return -1;
@@ -1410,7 +1426,9 @@ ACE_Thread_Manager::apply_grp (int grp_id,
       for (ACE_Thread_Descriptor *td;
            this->thr_to_be_removed_.dequeue_head (td) != -1;
            )
-        this->remove_thr (td, 1);
+        {
+          this->remove_thr (td, 1);
+        }
     }
 
   return result;
@@ -1485,7 +1503,9 @@ ACE_Thread_Manager::apply_all (ACE_THR_MEMBER_FUNC func, int arg)
       for (ACE_Thread_Descriptor *td;
            this->thr_to_be_removed_.dequeue_head (td) != -1;
            )
-        this->remove_thr (td, 1);
+        {
+          this->remove_thr (td, 1);
+        }
     }
 
   return result;
@@ -1816,20 +1836,26 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
               {
                 ACE_Thread_Descriptor *td {};
                 while (this->thr_to_be_removed_.dequeue_head (td) != -1)
-                  this->remove_thr (td, 1);
+                  {
+                    this->remove_thr (td, 1);
+                  }
               }
           }
 
         while (this->thr_list_.size () > 0)
-          if (this->zero_cond_.wait (timeout) == -1)
           {
-            return -1;
+            if (this->zero_cond_.wait (timeout) == -1)
+              {
+                return -1;
+              }
           }
       }
     else
+      {
         // Program is shutting down, no chance to wait on threads.
         // Therefore, we'll just remove threads from the list.
         this->remove_thr_all ();
+      }
 
 #if !defined (ACE_HAS_VXTHREADS)
   ACE_Thread_Descriptor_Base* item {};
@@ -1851,8 +1877,10 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
 #ifndef ACE_LACKS_PTHREAD_JOIN
         if (ACE_BIT_DISABLED (item->flags_, THR_DETACHED | THR_DAEMON)
             || ACE_BIT_ENABLED (item->flags_, THR_JOINABLE))
-          // Detached handles shouldn't reached here.
-          (void) ACE_Thread::join (item->thr_handle_);
+          {
+            // Detached handles shouldn't reached here.
+            (void) ACE_Thread::join (item->thr_handle_);
+          }
 #endif
         delete item;
       }
@@ -1880,10 +1908,12 @@ ACE_Thread_Manager::apply_task (ACE_Task_Base *task,
   for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
        !iter.done ();
        iter.advance ())
-    if (iter.next ()->task_ == task
-        && (this->*func) (iter.next (), arg) == -1)
     {
-      result = -1;
+      if (iter.next ()->task_ == task
+          && (this->*func) (iter.next (), arg) == -1)
+        {
+          result = -1;
+        }
     }
 
   // Must remove threads after we have traversed the thr_list_ to
@@ -1897,7 +1927,9 @@ ACE_Thread_Manager::apply_task (ACE_Task_Base *task,
       for (ACE_Thread_Descriptor *td {};
            this->thr_to_be_removed_.dequeue_head (td) != -1;
            )
-        this->remove_thr (td, 1);
+        {
+          this->remove_thr (td, 1);
+        }
     }
 
   return result;
