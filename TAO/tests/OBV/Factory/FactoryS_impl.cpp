@@ -13,6 +13,7 @@ Test_impl::get_base_value ()
   ACE_NEW_RETURN (ret_val,
                   OBV_OBV_FactoryTest::BaseValue,
                   nullptr);
+  ret_val->some_data (23);
 
   return ret_val;
 }
