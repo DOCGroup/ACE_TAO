@@ -29,28 +29,29 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 
 // Listing 1
 
-  int option {};
   Command_Line_Options command_line {};
-  while ((option = cmd_opts ()) != EOF)
-    switch (option)
-      {
-      case 'f':
-        command_line.config_file = cmd_opts.opt_arg ();
-        break;
+  for (int option = cmd_opts (); option != EOF; option = cmd_opts ())
+    {
+      switch (option)
+        {
+        case 'f':
+          command_line.config_file = cmd_opts.opt_arg ();
+          break;
 
-      case 'h':
-        command_line.hostname = cmd_opts.opt_arg ();
-        break;
+        case 'h':
+          command_line.hostname = cmd_opts.opt_arg ();
+          break;
 
-      case ':':
-        ACE_ERROR_RETURN
-          ((LM_ERROR, ACE_TEXT ("-%c requires an argument\n"),
-            cmd_opts.opt_opt ()), -1);
+        case ':':
+          ACE_ERROR_RETURN
+            ((LM_ERROR, ACE_TEXT ("-%c requires an argument\n"),
+              cmd_opts.opt_opt ()), -1);
 
-      default:
-        ACE_ERROR_RETURN
-          ((LM_ERROR, ACE_TEXT ("Parse error.\n")), -1);
-      }
+        default:
+          ACE_ERROR_RETURN
+            ((LM_ERROR, ACE_TEXT ("Parse error.\n")), -1);
+        }
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Config file: %s\n"),
               command_line.config_file.c_str ()));
