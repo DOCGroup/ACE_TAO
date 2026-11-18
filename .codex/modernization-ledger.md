@@ -13219,3 +13219,9 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 
 - Changed 35 standalone postfix increments in ACE and TAO counters, indexes, and object-id octets to prefix form. No old result was consumed. Generated parser outputs were excluded, and the remaining postfix expressions that consume old values were retained.
 - `git diff --check` passed. No build or tests were run for these syntax-only changes.
+
+## 2026-11-18 ACE INET_Addr braces
+
+- Added Allman braces around 17 single-statement branches in `ACE/ace/INET_Addr.cpp`, including multiline error logging and compile-time IPv4/IPv6 branches.
+- `clang-tidy -checks=-*,readability-braces-around-statements` reported no diagnostics for `INET_Addr.cpp`; `git diff --check` passed. The full `ACE/ace` brace audit remains open.
+- No build or runtime test was run.
