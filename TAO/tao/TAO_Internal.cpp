@@ -345,9 +345,11 @@ TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
       else
         {
           if (TAO_debug_level > 4)
-            TAOLIB_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("TAO (%P|%t) - Did not find default ")
-                        ACE_TEXT ("svc.conf\n")));
+            {
+              TAOLIB_DEBUG ((LM_DEBUG,
+                             ACE_TEXT ("TAO (%P|%t) - Did not find default ")
+                             ACE_TEXT ("svc.conf\n")));
+            }
           status = 0;
         }
     }
@@ -365,20 +367,26 @@ TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
     }
 
   if (TAO_debug_level > 2)
-    TAOLIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) - Completed initializing the ")
-                ACE_TEXT ("process-wide service context\n")));
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("TAO (%P|%t) - Completed initializing the ")
+                     ACE_TEXT ("process-wide service context\n")));
+    }
 
   if (TAO_debug_level > 4)
-    TAOLIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) - Default ORB services initialization begins\n")));
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("TAO (%P|%t) - Default ORB services initialization begins\n")));
+    }
 
   // Load more ORB-related services
   register_additional_services_i (theone);
 
   if (TAO_debug_level > 4)
-    TAOLIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) - Default ORB services initialization completed\n")));
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("TAO (%P|%t) - Default ORB services initialization completed\n")));
+    }
 
   // Notify all other threads that may be waiting, that the global
   // gestalt has been initialized.
@@ -406,28 +414,34 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
     if (service_open_count == 1)
       {
         if (TAO_debug_level > 4)
-          TAOLIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - Waiting for the default ")
-                      ACE_TEXT ("ORB to complete the global ")
-                      ACE_TEXT ("initialization\n")));
+          {
+            TAOLIB_DEBUG ((LM_DEBUG,
+                           ACE_TEXT ("TAO (%P|%t) - Waiting for the default ")
+                           ACE_TEXT ("ORB to complete the global ")
+                           ACE_TEXT ("initialization\n")));
+          }
 
       ACE_MT (while (!is_ubergestalt_ready)
       TAO_Ubergestalt_Ready_Condition::instance ()->wait ());
 
         if (TAO_debug_level > 4)
-          TAOLIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - The default ")
-                      ACE_TEXT ("ORB must have completed the global ")
-                      ACE_TEXT ("initialization...\n")));
+          {
+            TAOLIB_DEBUG ((LM_DEBUG,
+                           ACE_TEXT ("TAO (%P|%t) - The default ")
+                           ACE_TEXT ("ORB must have completed the global ")
+                           ACE_TEXT ("initialization...\n")));
+          }
       }
     else
       {
         if (TAO_debug_level > 4)
-          TAOLIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - We are%Cthe default ")
-                      ACE_TEXT ("%C ORB ...\n"),
-                      (service_open_count == 0) ? " " : " not ",
-                      TAO_VERSION));
+          {
+            TAOLIB_DEBUG ((LM_DEBUG,
+                           ACE_TEXT ("TAO (%P|%t) - We are%Cthe default ")
+                           ACE_TEXT ("%C ORB ...\n"),
+                           (service_open_count == 0) ? " " : " not ",
+                           TAO_VERSION));
+          }
       }
 
     ++service_open_count;
@@ -467,17 +481,21 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
   int status = parse_global_args_i(argc, argv, global_svc_config_argv, false);
 
   if (status == -1 && TAO_debug_level > 0)
-    TAOLIB_DEBUG ((LM_DEBUG,
-    ACE_TEXT ("TAO (%P|%t) - Skipping the process-wide ")
-    ACE_TEXT ("service configuration, service_open_count ")
-    ACE_TEXT ("= %d, status = %d\n"),
-    service_open_count,
-    status));
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("TAO (%P|%t) - Skipping the process-wide ")
+                     ACE_TEXT ("service configuration, service_open_count ")
+                     ACE_TEXT ("= %d, status = %d\n"),
+                     service_open_count,
+                     status));
+    }
 
   if (TAO_debug_level > 2)
-    TAOLIB_DEBUG ((LM_DEBUG,
-    ACE_TEXT ("TAO (%P|%t) - Initializing the ")
-    ACE_TEXT ("orb-specific services\n")));
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("TAO (%P|%t) - Initializing the ")
+                     ACE_TEXT ("orb-specific services\n")));
+    }
 
   if (parse_svcconf_args_i (argc, argv, svc_config_argv) == -1)
   {
@@ -501,17 +519,21 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
       if (errno != ENOENT)
         {
           if (TAO_debug_level > 0)
-            TAOLIB_ERROR ((LM_ERROR,
-                        ACE_TEXT ("TAO (%P|%t) - Failed to open ORB-specific ")
-                        ACE_TEXT ("service configuration\n")));
+            {
+              TAOLIB_ERROR ((LM_ERROR,
+                             ACE_TEXT ("TAO (%P|%t) - Failed to open ORB-specific ")
+                             ACE_TEXT ("service configuration\n")));
+            }
           return -1;
         }
       else
         {
           if (TAO_debug_level > 4)
-            TAOLIB_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("TAO (%P|%t) - Did not find default ")
-                        ACE_TEXT ("svc.conf\n")));
+            {
+              TAOLIB_DEBUG ((LM_DEBUG,
+                             ACE_TEXT ("TAO (%P|%t) - Did not find default ")
+                             ACE_TEXT ("svc.conf\n")));
+            }
           status = 0;
         }
     }
