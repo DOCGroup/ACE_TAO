@@ -41,14 +41,18 @@ void
 
               // Check if the connect has completed.
               if (r->try_parallel_connect (std::addressof (desc), max_wait_time))
-                return;
+                {
+                  return;
+                }
               // The default implementation of try_parallel_connect returns
               // a not supported errno. In this case, allow the ordinary
               // connection mechanism to be tried. OTOH, if the connection
               // attempt failed for some other reason, then abandon this
               // profile and try the next one in the list.
               else if (errno != ENOTSUP)
-                continue;
+                {
+                  continue;
+                }
             }
 
           for (TAO_Endpoint *ep = r->profile ()->first_filtered_endpoint ();
