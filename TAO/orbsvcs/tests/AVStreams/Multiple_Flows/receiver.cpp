@@ -56,10 +56,12 @@ Receiver_Callback::flowname (std::string const &flow_name)
   // Make sure we have a valid <output_file>
   this->output_file_.reset (std::fopen (this->flowname_.c_str (), "wb"));
   if (!this->output_file_)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Cannot open output file %C\n",
-                       this->flowname_.c_str ()),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Cannot open output file %C\n",
+                         this->flowname_.c_str ()),
+                        -1);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "%C File Opened Successfully\n",
@@ -95,9 +97,11 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
                                               this->output_file_.get ());
 
       if (result != frame->length ())
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Receiver_Callback::fwrite failed\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Receiver_Callback::fwrite failed\n"),
+                            -1);
+        }
 
       frame = frame->cont ();
     }
@@ -190,10 +194,12 @@ Receiver::init (int argc,
 
   // Initialize the naming services
   if (this->naming_client_.init (TAO_AV_CORE::instance ()->orb ()) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to initialize "
-                       "the TAO_Naming_Client\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Unable to initialize "
+                         "the TAO_Naming_Client\n"),
+                        -1);
+    }
 
   // Register the receiver object with the naming server.
   this->naming_client_->rebind (name,
