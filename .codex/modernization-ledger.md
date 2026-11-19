@@ -13808,3 +13808,16 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   delete_vb shifts owners then resets the final slot. INet policies and cache
   key duplicates move into their destination objects. No moved-from reads or
   ownership errors were found. No source changes/builds/tests were needed.
+
+## 2026-11-19 TAO examples and tests std::move call-site audit
+
+- Reviewed previously untracked move sites across TAO examples, the two
+  Portable Interceptor DevGuide examples, and TAO tests. The ownership moves
+  are consumed by destination members/containers, and code continues through
+  destination owners rather than moved-from locals.
+- Checked the OctetSeq tests specifically: they assert moved-from lengths,
+  verify transferred contents, and verify that a move of a borrowed
+  Message_Block-backed sequence remains valid after the message block scope
+  ends. No moved-from misuse or ownership error was found. No source changes,
+  builds, or tests were run. `TAO/TAO_IDL` remains excluded from source changes
+  per the release-branch boundary.

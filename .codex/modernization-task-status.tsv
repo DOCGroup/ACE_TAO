@@ -1,4 +1,21 @@
 directory	task	status	evidence_commit	notes
+TAO/DevGuideExamples/PortableInterceptors/IOR	MOVE_SITES	done	-	Reviewed ServiceContext sequence transfer; the _var source is not used after its contents move into the destination.
+TAO/DevGuideExamples/PortableInterceptors/SimpleCodec	MOVE_SITES	done	-	Reviewed ServiceContext sequence transfer; the _var source is not used after its contents move into the destination.
+TAO/examples/Advanced/ch_12	MOVE_SITES	done	-	Reviewed device-state insertion into the map; the local state is not read after it is moved.
+TAO/examples/Persistent_Grid	MOVE_SITES	done	-	Reviewed pool/Grid unique_ptr transfers into owner vectors; subsequent access is through the vector-owned objects.
+TAO/examples/Quoter	MOVE_SITES	done	-	Reviewed servant unique_ptr transfer into quoters_; the servant pointer is obtained from the destination owner.
+TAO/examples/RTCORBA/Activity	MOVE_SITES	done	-	Reviewed task and POA owner transfers, Task_Stats buffer initialization, and task_stats_ transfer; source owners are not read after moving.
+TAO/examples/RTScheduling	MOVE_SITES	done	-	Reviewed task/POA/log transfers and statistics-buffer initialization; sources are not read after transfer, and DT_Creator teardown clears owning containers while ORB refs remain alive.
+TAO/examples/Simple/grid	MOVE_SITES	done	-	Reviewed array replacement transfers; dimensions are updated after installing each new owned array.
+TAO/examples/Simulator/Event_Supplier	MOVE_SITES	done	-	Reviewed connection-parameter unique_ptr transfer into the list; subsequent indexing and access use the list-owned object.
+TAO/tests/Alt_Mapping	MOVE_SITES	done	-	Reviewed constructor transfer of unique_ptr<T> into test_object_; no moved-from parameter use.
+TAO/tests/Bug_3171_Regression	MOVE_SITES	done	-	Reviewed ORB ID string constructor transfer into orb_id_; no moved-from parameter use.
+TAO/tests/DynAny_Test	MOVE_SITES	done	-	Reviewed Test_Wrapper constructor transfer of unique_ptr<T> into test_object_; no moved-from parameter use.
+TAO/tests/IDLv4/annotations	MOVE_SITES	done	-	Reviewed forwarding an owned-by-value annotation expected value into AST_Expression; the parameter is not used afterward.
+TAO/tests/IDLv4/maps	MOVE_SITES	done	-	Reviewed the generated sequence move into the map; subsequent validation reads the map value, not the moved-from source.
+TAO/tests/OBV/Simple	MOVE_SITES	done	-	Reviewed IOR file owner transfer into a local guard; the member is not used again after transfer.
+TAO/tests/OctetSeq	MOVE_SITES	done	-	Reviewed sequence move tests, including moved-from length checks and borrowed Message_Block-backed sequence lifetime after the block scope ends.
+TAO/tests/Portable_Interceptors/IORInterceptor	MOVE_SITES	done	-	Reviewed component sequence transfer from the _var into the component; the _var is not used after its sequence is moved.
 +ACE/apps/JAWS/stress_testing	BUILD_TEST	done	af952fde770	All six C++ translation units passed standalone C++17 syntax checks with -Wall -Wextra, -Wnon-virtual-dtor, -Wsuggest-override, and -Wpointer-arith; git diff --check passed.
 +ACE/apps/JAWS2	BUILD_TEST	done	0529d40cd23	HTTP_10_Request.cpp passed standalone C++17 syntax checking with -Wall -Wextra, -Wnon-virtual-dtor, -Wsuggest-override, and -Wpointer-arith; git diff --check passed. No MPC project builds the root HTTP_10 application sources.
 +ACE/apps/JAWS3/bench	BUILD_TEST	done	a8d36b09f0e	All three C++ translation units passed standalone C++17 syntax checks with -Wall -Wextra, -Wnon-virtual-dtor, -Wsuggest-override, and -Wpointer-arith; git diff --check passed. No MPC project exists for a linked build.
