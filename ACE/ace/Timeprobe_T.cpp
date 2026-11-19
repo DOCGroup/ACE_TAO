@@ -319,8 +319,8 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::print_absolute_times ()
                                           : this->current_size_;
 
   ACELIB_DEBUG ((LM_DEBUG,
-              "\nACE_Timeprobe_Ex; %u timestamps were recorded:\n",
-              size));
+              "\nACE_Timeprobe_Ex; %Q timestamps were recorded:\n",
+              static_cast<ACE_UINT64> (size)));
 
   if (size == 0)
     return;

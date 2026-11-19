@@ -951,7 +951,7 @@ void ACE_POSIX_AIOCB_Proactor::check_max_aio_num ()
   }
 
   ACELIB_DEBUG ((LM_DEBUG,
-             "(%P | %t) ACE_POSIX_AIOCB_Proactor::Max Number of AIOs=%d\n",
+             "(%P | %t) ACE_POSIX_AIOCB_Proactor::Max Number of AIOs=%B\n",
               aiocb_list_max_size_));
 }
 

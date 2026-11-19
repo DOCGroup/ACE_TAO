@@ -13731,3 +13731,7 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Follow-up review of Proactor IPv6 diagnostics found server/client byte totals
   still using `%d`; those values are `size_t`. Changed both byte-count fields
   to `%B`, retaining `%d` for the integer operation counts.
+- Corrected three more ACE core diagnostics: POSIX Proactor's `size_t` AIO
+  limit now uses `%B`, Timeprobe's `u_long` count uses `%Q` with an
+  `ACE_UINT64` conversion, and the VxWorks message queue now formats its
+  `tail_` pointer with `%@` and labels it accurately.
