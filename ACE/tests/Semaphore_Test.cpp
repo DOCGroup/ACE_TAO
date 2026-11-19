@@ -122,21 +122,23 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opt ()) != -1)
-    switch (c)
     {
-    case 's':
-      n_release_count = ACE_OS::atoi (get_opt.opt_arg ());
-      break;
-    case 'w':
-      n_workers = ACE_OS::atoi (get_opt.opt_arg ());
-      break;
-    case 'n':
-      n_iterations = ACE_OS::atoi (get_opt.opt_arg ());
-      break;
-    default:
-      print_usage_and_die ();
-      break;
-  }
+      switch (c)
+        {
+        case 's':
+          n_release_count = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'w':
+          n_workers = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'n':
+          n_iterations = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        default:
+          print_usage_and_die ();
+          break;
+        }
+    }
 }
 
 // Worker tries to acquire the semaphore, hold it for a while, and
@@ -208,9 +210,11 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
   //Test timed waits.
   for (size_t i = 0; i < test_timeout_count; ++i)
-    if (test_timeout () != 0)
     {
-      test_result = 1;
+      if (test_timeout () != 0)
+        {
+          test_result = 1;
+        }
     }
 
   // Release the semaphore a certain number of times.
@@ -221,10 +225,12 @@ int run_main (int argc, ACE_TCHAR *argv[])
        ACE_THR_FUNC (worker),
        nullptr,
        THR_NEW_LWP) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("spawn_n")),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("spawn_n")),
+                        1);
+    }
 
   ACE_Thread_Manager::instance ()->wait ();
 

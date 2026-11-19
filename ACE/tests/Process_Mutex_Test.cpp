@@ -47,21 +47,23 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opt ()) != -1)
-    switch (c)
     {
-    case 'd':
-      release_mutex = 0;
-      break;
-    case 'c':
-      child_process = 1;
-      break;
-    case 'n':
-      mutex_name = get_opt.opt_arg ();
-      break;
-    default:
-      print_usage_and_die ();
-      break;
-  }
+      switch (c)
+        {
+        case 'd':
+          release_mutex = 0;
+          break;
+        case 'c':
+          child_process = 1;
+          break;
+        case 'n':
+          mutex_name = get_opt.opt_arg ();
+          break;
+        default:
+          print_usage_and_die ();
+          break;
+        }
+    }
 }
 
 static void
@@ -198,13 +200,17 @@ run_main (int argc, ACE_TCHAR *argv[])
           int wait_result = children[i].wait (&child_status);
           ACE_TEST_ASSERT (wait_result != -1);
           if (child_status == 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("Child %d finished ok\n"),
-                        children[i].getpid ()));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("Child %d finished ok\n"),
+                          children[i].getpid ()));
+            }
           else
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("Child %d finished with status %d\n"),
-                        children[i].getpid (), child_status));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("Child %d finished with status %d\n"),
+                          children[i].getpid (), child_status));
+            }
         }
 
 #endif // ACE_HAS_PROCESS_SPAWN
