@@ -41,9 +41,11 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
                                                  output_file);
 
       if (result != 1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Receiver_Callback::fwrite failed\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Receiver_Callback::fwrite failed\n"),
+                            -1);
+        }
 
       frame = frame->cont ();
     }
@@ -189,14 +191,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ACE_OS::fopen (receiver.output_file_name ().c_str (), "w"));
       output_file = output_file_owner.get ();
       if (!output_file_owner)
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           "Cannot open output file %s\n",
-                           receiver.output_file_name ().c_str () ),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             "Cannot open output file %s\n",
+                             receiver.output_file_name ().c_str () ),
+                            -1);
+        }
 
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    "File Opened Successfully\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "File Opened Successfully\n"));
+        }
 
       result = receiver.init ();
 
@@ -207,7 +213,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_Time_Value tv (0, 10000);
       while (!done)
-        orb->run (tv);
+        {
+          orb->run (tv);
+        }
 
       // Hack for now....
       ACE_OS::sleep (1);

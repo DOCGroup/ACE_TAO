@@ -32,9 +32,11 @@ Connection_Manager::load_ep_addr (char const *file_name)
         }
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "%C\n",
-                    buf));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "%C\n",
+                      buf));
+        }
 
       Endpoint_Addresses addr {};
 
@@ -100,18 +102,24 @@ Connection_Manager::load_ep_addr (char const *file_name)
       if (result == 0)
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        "Flowname %C Bound Successfully\n",
-                        flowname.c_str ()));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "Flowname %C Bound Successfully\n",
+                          flowname.c_str ()));
+            }
         }
       else if (result == 1)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Flowname %C already exists\n",
-                    flowname.c_str ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Flowname %C already exists\n",
+                      flowname.c_str ()));
+        }
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    "Flowname %C Bound Failed\n",
-                    flowname.c_str ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Flowname %C Bound Failed\n",
+                      flowname.c_str ()));
+        }
     }
 }
 
@@ -120,10 +128,12 @@ Connection_Manager::init (CORBA::ORB_ptr orb)
 {
   // Initialize the naming service
   if (this->naming_client_.init (orb) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       " (%P|%t) Unable to initialize "
-                       "the TAO_Naming_Client.\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         " (%P|%t) Unable to initialize "
+                         "the TAO_Naming_Client.\n"),
+                        -1);
+    }
   return 0;
 }
 
@@ -295,9 +305,11 @@ Connection_Manager::connect_to_receivers (AVStreams::MMDevice_ptr sender)
                       receiver_addr_str.c_str ()));
         }
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    "No endpoint address for flowname %C\n",
-                    flowname.c_str ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "No endpoint address for flowname %C\n",
+                      flowname.c_str ()));
+        }
 
       ACE_INET_Addr receiver_addr (receiver_addr_str.c_str ());
       ACE_INET_Addr sender_addr (sender_addr_str.c_str ());
@@ -320,9 +332,11 @@ Connection_Manager::connect_to_receivers (AVStreams::MMDevice_ptr sender)
         CORBA::string_dup (sender_entry.entry_to_string ());
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Connection_Manager::connect_to_receivers Flow Spec Entry %C\n",
-                    sender_entry.entry_to_string ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Connection_Manager::connect_to_receivers Flow Spec Entry %C\n",
+                      sender_entry.entry_to_string ()));
+        }
 
       // Create the stream control for this stream.
       TAO_StreamCtrl *streamctrl {};
@@ -501,9 +515,11 @@ Connection_Manager::connect_to_sender ()
     CORBA::string_dup (sender_entry.entry_to_string ());
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "Connection_Manager::connect_to_sender Flow Spec Entry %C\n",
-                sender_entry.entry_to_string ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Connection_Manager::connect_to_sender Flow Spec Entry %C\n",
+                  sender_entry.entry_to_string ()));
+    }
 
   // Create the stream control for this stream
   TAO_StreamCtrl* streamctrl {};
@@ -536,8 +552,10 @@ Connection_Manager::connect_to_sender ()
                            flow_spec);
 
   if (result == 0)
-    ACE_ERROR ((LM_ERROR,
-                "Streamctrl::bind_devs failed\n"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Streamctrl::bind_devs failed\n"));
+    }
 
   // Start the data sending.
   AVStreams::flowSpec start_spec;

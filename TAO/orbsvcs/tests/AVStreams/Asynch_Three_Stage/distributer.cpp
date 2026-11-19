@@ -64,10 +64,12 @@ Distributer_Receiver_Callback::receive_frame (ACE_Message_Block *frame,
         (*iterator).int_id_->send_frame (frame);
 
       if (result < 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "send failed:%p",
-                           "Sender::pace_data send\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "send failed:%p",
+                             "Sender::pace_data send\n"),
+                            -1);
+        }
     }
 
   return 0;
