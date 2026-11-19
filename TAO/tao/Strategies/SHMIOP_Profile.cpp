@@ -207,11 +207,13 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string)
         if (host_addr_str == nullptr)
           {
             if (TAO_debug_level > 0)
-              TAOLIB_DEBUG ((LM_DEBUG,
+              {
+                TAOLIB_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("\n\nTAO (%P|%t) ")
                           ACE_TEXT ("SHMIOP_Profile::parse_string ")
                           ACE_TEXT ("- %p\n\n"),
                           ACE_TEXT ("cannot determine hostname")));
+              }
 
             // @@ What's the right exception to throw here?
             throw ::CORBA::INV_OBJREF (
@@ -275,7 +277,9 @@ TAO_SHMIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
        endp = endp->next_)
     {
       if (endp->is_equivalent (other_endp))
-        other_endp = other_endp->next_;
+        {
+          other_endp = other_endp->next_;
+        }
       else
       {
         return false;
@@ -383,7 +387,9 @@ TAO_SHMIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
 
   // OCTET SEQUENCE for object key
   if (this->ref_object_key_)
-    encap << this->ref_object_key_->object_key ();
+    {
+      encap << this->ref_object_key_->object_key ();
+    }
   else
     {
       TAOLIB_ERROR ((LM_ERROR,

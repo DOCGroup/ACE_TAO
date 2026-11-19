@@ -93,11 +93,13 @@ TAO_SHMIOP_Endpoint::set (const ACE_INET_Addr &addr,
       if (tmp == nullptr)
         {
           if (TAO_debug_level > 0)
-            TAOLIB_DEBUG ((LM_DEBUG,
+            {
+              TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - ")
                         ACE_TEXT ("SHMIOP_Endpoint::set ")
                         ACE_TEXT ("- %p\n"),
                         ACE_TEXT ("cannot determine hostname")));
+            }
           return -1;
         }
       else

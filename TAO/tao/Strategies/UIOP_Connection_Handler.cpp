@@ -127,11 +127,13 @@ TAO_UIOP_Connection_Handler::open (void*)
   }
 
   if (TAO_debug_level > 0)
-    TAOLIB_DEBUG ((LM_DEBUG,
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO (%P|%t) - UIOP_Connection_Handler::open, connection to server ")
                 ACE_TEXT ("<%C> on %@\n"),
                 addr.get_path_name (),
                 reinterpret_cast<void *> (this->peer ().get_handle ())));
+    }
 
   // Set that the transport is now connected, if fails we return -1
   // Use C-style cast b/c otherwise we get warnings on lots of

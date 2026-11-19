@@ -364,7 +364,9 @@ TAO_DIOP_Connection_Handler::set_tos (int tos)
 #if defined (ACE_HAS_IPV6)
       ACE_INET_Addr local_addr;
       if (this->peer ().get_local_addr (local_addr) == -1)
-        return -1;
+        {
+          return -1;
+        }
       else if (local_addr.get_type () == AF_INET6)
 # if !defined (IPV6_TCLASS)
         // IPv6 defines option IPV6_TCLASS for specifying traffic class/priority
@@ -379,17 +381,21 @@ TAO_DIOP_Connection_Handler::set_tos (int tos)
           return 0;
         }
 # else /* !IPV6_TCLASS */
-        result = this->peer ().set_option (IPPROTO_IPV6,
-                                           IPV6_TCLASS,
-                                           (int *) &tos ,
-                                           (int) sizeof (tos));
+        {
+          result = this->peer ().set_option (IPPROTO_IPV6,
+                                             IPV6_TCLASS,
+                                             (int *) &tos ,
+                                             (int) sizeof (tos));
+        }
       else
 # endif /* IPV6_TCLASS */
 #endif /* ACE_HAS_IPV6 */
-      result = this->peer ().set_option (IPPROTO_IP,
-                                         IP_TOS,
-                                         (int *) &tos ,
-                                         (int) sizeof (tos));
+        {
+          result = this->peer ().set_option (IPPROTO_IP,
+                                             IP_TOS,
+                                             (int *) &tos ,
+                                             (int) sizeof (tos));
+        }
 
       if (TAO_debug_level)
         {

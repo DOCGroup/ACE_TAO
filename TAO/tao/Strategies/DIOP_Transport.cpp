@@ -51,7 +51,9 @@ TAO_DIOP_Transport::send (iovec *iov, int iovcnt,
 
   ssize_t bytes_to_send {};
   for (int i {}; i < iovcnt; ++i)
-     bytes_to_send += iov[i].iov_len;
+    {
+      bytes_to_send += iov[i].iov_len;
+    }
 
   this->connection_handler_->peer ().send (iov, iovcnt, addr);
 
@@ -268,11 +270,13 @@ TAO_DIOP_Transport::send_message (TAO_OutputCDR &stream,
   if (n == -1)
     {
       if (TAO_debug_level)
-        TAOLIB_DEBUG ((LM_DEBUG,
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - DIOP_Transport::send_message, ")
                     ACE_TEXT ("closing transport %B after fault %p\n"),
                     this->id (),
                     ACE_TEXT ("send_message ()\n")));
+        }
 
       return -1;
     }

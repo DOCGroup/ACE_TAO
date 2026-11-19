@@ -84,9 +84,11 @@ TAO_SHMIOP_Protocol_Factory::init (int argc,
           arg_shifter.consume_arg ();
         }
       else
-        // Any arguments that don't match are ignored so that the
-        // caller can still use them.
-        arg_shifter.ignore_arg ();
+        {
+          // Any arguments that don't match are ignored so that the
+          // caller can still use them.
+          arg_shifter.ignore_arg ();
+        }
     }
 
   return 0;

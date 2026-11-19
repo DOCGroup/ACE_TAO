@@ -141,11 +141,15 @@ TAO_SHMIOP_Connection_Handler::open (void*)
 
   // Get the peername.
   if (this->peer ().get_remote_addr (addr) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   // Verify that we can resolve the peer hostname.
   else if (addr.addr_to_string (local_as_string, sizeof (local_as_string)) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   if (TAO_debug_level > 0)
     {

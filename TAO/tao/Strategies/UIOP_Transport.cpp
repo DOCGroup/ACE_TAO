@@ -139,10 +139,12 @@ TAO_UIOP_Transport::send_message (TAO_OutputCDR &stream,
   if (n == -1)
     {
       if (TAO_debug_level)
-        TAOLIB_DEBUG ((LM_DEBUG,
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) closing transport %B after fault %p\n"),
                     this->id (),
                     ACE_TEXT ("send_message ()\n")));
+        }
 
       return -1;
     }
