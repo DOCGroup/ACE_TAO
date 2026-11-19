@@ -13477,3 +13477,9 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Added Allman braces around 17 interceptor status, retry, exception, and diagnostic branches in `Synch_Invocation.cpp`, aligning logging macro arguments.
 - Focused `clang-tidy -p TAO/tao --checks=-*,readability-braces-around-statements` reported no diagnostics; `git diff --check` passed. No build or runtime test was run.
 - Commit `e03bcc78f6c`. The wider TAO/tao brace audit remains open.
+
+## 2026-11-19 TAO Valuetype brace follow-up
+
+- Added Allman braces to the null-check body in `AbstractBase_T.cpp`.
+- Ran `clang-tidy -p TAO/tao -checks=-*,readability-braces-around-statements` over all 11 `.cpp` files in `TAO/tao/Valuetype`; no diagnostics remained. `git diff --check` passed. No build or runtime test was run.
+- Commit `c7f66075c02`. The wider directory checklist remains partial.

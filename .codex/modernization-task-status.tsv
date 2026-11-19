@@ -2565,6 +2565,7 @@ TAO/tao/Utils	NULLPTR	done	1dbbefd1348	Changed the error return to nullptr and c
 TAO/tao/Utils	OWNERSHIP	done	7c52bb1d7b0	Server_Main stores a value copy of its identity string
 TAO/tao/Utils	SPECIAL_MEMBER_COMMENTS	done	234445fa7d7	Removed the standalone destructor label; realclean build and link passed without warnings
 TAO/tao/Utils	UNUSED_INCLUDES	done	1dbbefd1348	Removed the unused stdexcept include from RIR_Narrow.cpp
+TAO/tao/Valuetype	BRACES	needs-work	c7f66075c02	Added Allman braces in AbstractBase_T.cpp; targeted clang-tidy found no further diagnostics in all 11 translation units. Headers and the complete directory checklist remain open.
 TAO/tao/Valuetype	BUILD_TEST	done	5bf40b9daab	Valuetype library and OBV Simple realclean-built with make -j 8; perl run_test.pl passed without compiler warnings
 TAO/tao/Valuetype	CLEANUP	done	2cf0c307e2a	Replaced legacy C-style cast with const_cast for freeing the allocated map key
 TAO/tao/Valuetype	CONST	done	5bf40b9daab	Previously normalized repository ID and API declarations; added east-side const to stable local pointers and offsets
