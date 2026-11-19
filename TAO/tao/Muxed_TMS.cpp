@@ -46,10 +46,12 @@ TAO_Muxed_TMS::request_id ()
   }
 
   if (TAO_debug_level > 4)
-    TAOLIB_DEBUG ((LM_DEBUG,
-                "TAO (%P|%t) - Muxed_TMS[%B]::request_id, [%d]\n",
-                this->transport_->id (),
-                this->request_id_generator_));
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                     "TAO (%P|%t) - Muxed_TMS[%B]::request_id, [%d]\n",
+                     this->transport_->id (),
+                     this->request_id_generator_));
+    }
 
   return this->request_id_generator_;
 }
@@ -80,10 +82,12 @@ TAO_Muxed_TMS::bind_dispatcher (CORBA::ULong request_id,
   if (result != 0)
     {
       if (TAO_debug_level > 0)
-        TAOLIB_ERROR ((LM_ERROR,
-                    ACE_TEXT ("TAO (%P|%t) - TAO_Muxed_TMS::bind_dispatcher, ")
-                    ACE_TEXT ("bind dispatcher failed: result = %d, request id [%d]\n"),
-                    result, request_id));
+        {
+          TAOLIB_ERROR ((LM_ERROR,
+                         ACE_TEXT ("TAO (%P|%t) - TAO_Muxed_TMS::bind_dispatcher, ")
+                         ACE_TEXT ("bind dispatcher failed: result = %d, request id [%d]\n"),
+                         result, request_id));
+        }
 
       return -1;
     }
@@ -131,10 +135,12 @@ TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
   if (result == 0 && rd)
     {
       if (TAO_debug_level > 8)
-        TAOLIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - TAO_Muxed_TMS::dispatch_reply, ")
-                    ACE_TEXT ("id [%d]\n"),
-                    params.request_id_));
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
+                         ACE_TEXT ("TAO (%P|%t) - TAO_Muxed_TMS::dispatch_reply, ")
+                         ACE_TEXT ("id [%d]\n"),
+                         params.request_id_));
+        }
 
       // Dispatch the reply.
       // They return 1 on success, and -1 on failure.
@@ -143,11 +149,13 @@ TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
   else
     {
       if (TAO_debug_level > 0)
-        TAOLIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - TAO_Muxed_TMS::dispatch_reply, ")
-                    ACE_TEXT ("unbind dispatcher failed, id [%d], result = %d\n"),
-                    params.request_id_,
-                    result));
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
+                         ACE_TEXT ("TAO (%P|%t) - TAO_Muxed_TMS::dispatch_reply, ")
+                         ACE_TEXT ("unbind dispatcher failed, id [%d], result = %d\n"),
+                         params.request_id_,
+                         result));
+        }
 
       // Result = 0 means that the mux strategy was not able
       // to find a registered reply handler, either because the reply
@@ -196,11 +204,13 @@ TAO_Muxed_TMS::reply_timed_out (CORBA::ULong request_id)
   else
     {
       if (TAO_debug_level > 0)
-        TAOLIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - TAO_Muxed_TMS::reply_timed_out, ")
-                    ACE_TEXT ("unbind dispatcher failed, id [%d] result = %d\n"),
-                    request_id,
-                    result));
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
+                         ACE_TEXT ("TAO (%P|%t) - TAO_Muxed_TMS::reply_timed_out, ")
+                         ACE_TEXT ("unbind dispatcher failed, id [%d] result = %d\n"),
+                         request_id,
+                         result));
+        }
 
       // Result = 0 means that the mux strategy was not able
       // to find a registered reply handler, either because the reply
