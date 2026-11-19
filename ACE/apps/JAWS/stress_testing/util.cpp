@@ -3,12 +3,16 @@
 URL::URL (char const *input)
 {
   if (input == nullptr)
-    return;
+    {
+      return;
+    }
 
   std::string const url (input);
   std::string::size_type const scheme_end = url.find ("://");
   if (scheme_end == std::string::npos)
-    return;
+    {
+      return;
+    }
 
   this->protocol_ = url.substr (0, scheme_end);
   std::string::size_type const host_begin = scheme_end + 3;

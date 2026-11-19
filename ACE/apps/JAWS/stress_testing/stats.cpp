@@ -14,7 +14,9 @@ void
 Stats::log (int id, float throughput, float latency)
 {
   if (id < 0 || id >= this->thread_count_)
-    return;
+    {
+      return;
+    }
   throughput_[id] = throughput;
   latency_[id] = latency;
 }
@@ -33,20 +35,28 @@ Stats::output ()
              {
                if (!(lhs.timestamp < rhs.timestamp)
                    && !(rhs.timestamp < lhs.timestamp))
-                 return lhs.type == THREAD_START && rhs.type == THREAD_END;
+                 {
+                   return lhs.type == THREAD_START && rhs.type == THREAD_END;
+                 }
                return lhs.timestamp < rhs.timestamp;
              });
 
   int max {};
   int thread_peak {};
   for (Init_Fini_t const &event : this->init_fini_)
-    if (event.type == THREAD_START)
       {
-        if (++thread_peak > max)
-          max = thread_peak;
+        if (event.type == THREAD_START)
+          {
+            if (++thread_peak > max)
+              {
+                max = thread_peak;
+              }
+          }
+        else
+          {
+            --thread_peak;
+          }
       }
-    else
-      --thread_peak;
 
   float tavg {};
   float lavg {};
@@ -63,7 +73,9 @@ void
 Stats::i_have_started (int id)
 {
   if (id < 0 || id >= this->thread_count_)
-    return;
+    {
+      return;
+    }
   this->init_fini_[2 * id].type = THREAD_START;
   this->init_fini_[2 * id].timestamp = ACE_OS::gettimeofday ();
 }
@@ -72,7 +84,9 @@ void
 Stats::i_am_done (int id)
 {
   if (id < 0 || id >= this->thread_count_)
-    return;
+    {
+      return;
+    }
   this->init_fini_[(2 * id) + 1].type = THREAD_END;
   this->init_fini_[(2 * id) + 1].timestamp = ACE_OS::gettimeofday ();
 }
