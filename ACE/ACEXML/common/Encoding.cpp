@@ -40,18 +40,30 @@ ACEXML_Encoding::get_encoding (const char* input)
 {
   if ((std::memcmp (&ACEXML_Encoding::byte_order_mark_[ACEXML_Encoding::UTF16BE][0], input, 2) == 0)
       && (input[2] != 0 || input[3] != 0)) // 3 & 4 should not be both zero
-    return ACEXML_Encoding::encoding_names_[ACEXML_Encoding::UTF16BE];
+    {
+      return ACEXML_Encoding::encoding_names_[ACEXML_Encoding::UTF16BE];
+    }
   else if ((std::memcmp (&ACEXML_Encoding::byte_order_mark_[ACEXML_Encoding::UTF16LE][0], input, 2) == 0)
     && (input[2] != 0 || input[3] != 0)) // 3 & 4 should not be both zero
-    return ACEXML_Encoding::encoding_names_[ACEXML_Encoding::UTF16LE];
+    {
+      return ACEXML_Encoding::encoding_names_[ACEXML_Encoding::UTF16LE];
+    }
   else if (std::memcmp (&ACEXML_Encoding::byte_order_mark_[ACEXML_Encoding::UTF8][0], input, 3) == 0)
-    return ACEXML_Encoding::encoding_names_[ACEXML_Encoding::UTF8];
+    {
+      return ACEXML_Encoding::encoding_names_[ACEXML_Encoding::UTF8];
+    }
   else if (std::memcmp (&ACEXML_Encoding::magic_values_[ACEXML_Encoding::UTF16BE][0], input, 4) == 0)
-    return ACEXML_Encoding::encoding_names_[ACEXML_Encoding::UTF16BE];
+    {
+      return ACEXML_Encoding::encoding_names_[ACEXML_Encoding::UTF16BE];
+    }
   else if (std::memcmp (&ACEXML_Encoding::magic_values_[ACEXML_Encoding::UTF16LE][0], input, 4) == 0)
-    return ACEXML_Encoding::encoding_names_[ACEXML_Encoding::UTF16LE];
+    {
+      return ACEXML_Encoding::encoding_names_[ACEXML_Encoding::UTF16LE];
+    }
   else if (std::memcmp (&ACEXML_Encoding::magic_values_[ACEXML_Encoding::UTF8][0], input, 4) == 0)
-    return ACEXML_Encoding::encoding_names_[ACEXML_Encoding::UTF8];
+    {
+      return ACEXML_Encoding::encoding_names_[ACEXML_Encoding::UTF8];
+    }
   else
     {
       // ACE_ERROR ((LM_ERROR, "Unknown encoding. Assuming UTF-8\n"));

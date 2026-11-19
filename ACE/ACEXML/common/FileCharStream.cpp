@@ -72,7 +72,9 @@ ACEXML_FileCharStream::determine_encoding ()
   int retval = 0;
   int i = 0;
   for (; i < 4 && retval != -1; ++i)
-    retval = this->getchar_i(input[i]);
+    {
+      retval = this->getchar_i(input[i]);
+    }
   if (i < 4)
   {
     return -1;
@@ -83,7 +85,9 @@ ACEXML_FileCharStream::determine_encoding ()
 
   const ACEXML_Char* temp = ACEXML_Encoding::get_encoding (input);
   if (temp == nullptr)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       this->encoding_.reset (ACE::strnew (temp));
@@ -98,7 +102,9 @@ ACEXML_FileCharStream::determine_encoding ()
       }
       if (ch == '\xFF' || ch == '\xFE' || ch == '\xEF' || ch == '\xBB' ||
           ch == '\xBF')
-        continue;
+        {
+          continue;
+        }
       else
         {
           ACE_OS::ungetc (ch, this->infile_);

@@ -24,7 +24,9 @@ ACEXML_Base64::encode (const ACEXML_Char* input,
     }
 
   for (size_t i = 0; i < len; ++i)
-    buf[i] = static_cast<ACE_Byte> (input[i]);
+    {
+      buf[i] = static_cast<ACE_Byte> (input[i]);
+    }
   buf[len] = 0;
 
   size_t encode_len = 0;
@@ -42,7 +44,9 @@ ACEXML_Base64::encode (const ACEXML_Char* input,
                   nullptr);
 
   for (size_t j = 0; j < encode_len; ++j)
-    result[j] = (ACEXML_Char)encoded_buf[j];
+    {
+      result[j] = (ACEXML_Char)encoded_buf[j];
+    }
   result[encode_len] = 0;
 
   *output_len = encode_len;
@@ -68,7 +72,9 @@ ACEXML_Base64::decode (const ACEXML_Char* input,
     }
 
   for (size_t i = 0; i < len; ++i)
-    buf[i] = static_cast<ACE_Byte> (input[i]);
+    {
+      buf[i] = static_cast<ACE_Byte> (input[i]);
+    }
 
   buf[len] = 0;
 
@@ -89,7 +95,9 @@ ACEXML_Base64::decode (const ACEXML_Char* input,
                   nullptr);
 
   for (size_t j = 0; j < decode_len; ++j)
-    result[j] = (ACEXML_Char)decoded_buf[j];
+    {
+      result[j] = (ACEXML_Char)decoded_buf[j];
+    }
 
   result[decode_len] = 0;
 

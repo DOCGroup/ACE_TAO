@@ -122,9 +122,11 @@ ACEXML_XMLFilterImpl::endElement (const ACEXML_Char *namespaceURI,
                                   const ACEXML_Char *qName)
 {
   if (this->contentHandler_ != nullptr)
-    this->contentHandler_->endElement (namespaceURI,
-                                       localName,
-                                       qName);
+    {
+      this->contentHandler_->endElement (namespaceURI,
+                                         localName,
+                                         qName);
+    }
 }
 
 void
@@ -142,9 +144,11 @@ ACEXML_XMLFilterImpl::ignorableWhitespace (const ACEXML_Char *ch,
                                            int length)
 {
   if (this->contentHandler_ != nullptr)
-    this->contentHandler_->ignorableWhitespace (ch,
-                                                start,
-                                                length);
+    {
+      this->contentHandler_->ignorableWhitespace (ch,
+                                                  start,
+                                                  length);
+    }
 }
 
 void
@@ -152,8 +156,10 @@ ACEXML_XMLFilterImpl::processingInstruction (const ACEXML_Char *target,
                                              const ACEXML_Char *data)
 {
   if (this->contentHandler_ != nullptr)
-    this->contentHandler_->processingInstruction (target,
-                                                  data);
+    {
+      this->contentHandler_->processingInstruction (target,
+                                                    data);
+    }
 }
 
 void
@@ -190,10 +196,12 @@ ACEXML_XMLFilterImpl::startElement (const ACEXML_Char *namespaceURI,
                                     ACEXML_Attributes *atts)
 {
   if (this->contentHandler_ != nullptr)
-    this->contentHandler_->startElement (namespaceURI,
-                                         localName,
-                                         qName,
-                                         atts);
+    {
+      this->contentHandler_->startElement (namespaceURI,
+                                           localName,
+                                           qName,
+                                           atts);
+    }
 }
 
 void
@@ -201,8 +209,10 @@ ACEXML_XMLFilterImpl::startPrefixMapping (const ACEXML_Char *prefix,
                                           const ACEXML_Char *uri)
 {
   if (this->contentHandler_ != nullptr)
-    this->contentHandler_->startPrefixMapping (prefix,
-                                               uri);
+    {
+      this->contentHandler_->startPrefixMapping (prefix,
+                                                 uri);
+    }
 }
 
 void
@@ -211,9 +221,11 @@ ACEXML_XMLFilterImpl::notationDecl (const ACEXML_Char *name,
                                     const ACEXML_Char *systemId)
 {
   if (this->dtdHandler_ != nullptr)
-    this->dtdHandler_->notationDecl (name,
-                                     publicId,
-                                     systemId);
+    {
+      this->dtdHandler_->notationDecl (name,
+                                       publicId,
+                                       systemId);
+    }
 }
 
 void
@@ -223,10 +235,12 @@ ACEXML_XMLFilterImpl::unparsedEntityDecl (const ACEXML_Char *name,
                                           const ACEXML_Char *notationName)
 {
   if (this->dtdHandler_ != nullptr)
-    this->dtdHandler_->unparsedEntityDecl (name,
-                                           publicId,
-                                           systemId,
-                                           notationName);
+    {
+      this->dtdHandler_->unparsedEntityDecl (name,
+                                             publicId,
+                                             systemId,
+                                             notationName);
+    }
 }
 
 ACEXML_InputSource *
@@ -234,8 +248,10 @@ ACEXML_XMLFilterImpl::resolveEntity (const ACEXML_Char *publicId,
                                      const ACEXML_Char *systemId)
 {
   if (this->entityResolver_ != nullptr)
-    return this->entityResolver_->resolveEntity (publicId,
-                                                 systemId);
+    {
+      return this->entityResolver_->resolveEntity (publicId,
+                                                   systemId);
+    }
   return nullptr;
 }
 
