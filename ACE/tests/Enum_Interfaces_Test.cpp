@@ -42,12 +42,16 @@ run_main (int, ACE_TCHAR *[])
   int rc = ACE::get_ip_interfaces (how_many, the_addr_array);
 
   if (rc != 0)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE::get_ip_interfaces failed")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("ACE::get_ip_interfaces failed")));
+    }
   else if (how_many == 0)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("No interfaces presently configured in the kernel\n")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("No interfaces presently configured in the kernel\n")));
+    }
   else
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" there are %B interfaces\n"), how_many));

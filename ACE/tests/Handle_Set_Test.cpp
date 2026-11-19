@@ -170,7 +170,9 @@ test_performance (size_t max_handles,
   size_t i;
 
   for (i = 0; i < max_handles; ++i)
-    handle_set.set_bit ((ACE_HANDLE) i);
+    {
+      handle_set.set_bit ((ACE_HANDLE) i);
+    }
 
   ACE_Profile_Timer timer;
   size_t count = 0;
@@ -183,7 +185,9 @@ test_performance (size_t max_handles,
 
       // Only iterate up to <handle_set.max_set ()>.
       while (iter () != ACE_INVALID_HANDLE)
-        ++count;
+        {
+          ++count;
+        }
     }
 
   timer.stop ();

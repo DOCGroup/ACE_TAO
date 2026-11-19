@@ -76,17 +76,21 @@ run_test ()
     {
       if (ACE_EVEN (i)
           && list.insert_tail ((ACE_STRING *) &string_table[i]) == nullptr)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p failed for %s\n"),
-                           ACE_TEXT ("insert"),
-                           string_table[i]),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p failed for %s\n"),
+                             ACE_TEXT ("insert"),
+                             string_table[i]),
+                            -1);
+        }
       else if (list.insert_head ((ACE_STRING *) &string_table[i]) == nullptr)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p failed for %s\n"),
-                           ACE_TEXT ("insert"),
-                           string_table[i]),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p failed for %s\n"),
+                             ACE_TEXT ("insert"),
+                             string_table[i]),
+                            -1);
+        }
       run_iterate (list);
       run_reverse_iterate (list);
     }
