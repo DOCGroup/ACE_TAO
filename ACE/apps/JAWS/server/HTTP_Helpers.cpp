@@ -40,11 +40,13 @@ HTTP_Helper::HTTP_mktime (const char *httpdate)
   do
     {
       if (*ptr1 == ' ')
-        *ptr2++ = ';';
+        {
+          *ptr2++ = ';';
+        }
       else
-      {
-        *ptr2++ = *ptr1;
-      }
+        {
+          *ptr2++ = *ptr1;
+        }
     }
   while (*ptr1++ != '\0');
 
@@ -73,7 +75,8 @@ HTTP_Helper::HTTP_mktime (const char *httpdate)
                &tms.tm_hour,
                &tms.tm_min,
                &tms.tm_sec) == 7)
-    ;
+    {
+    }
   else if (::sscanf(buf, "%s,;%2d-%3s-%2d;%2d:%2d:%2d;GMT", // RFC-850 date format
                     weekday,
                     &tms.tm_mday, month, &tms.tm_year,
@@ -166,9 +169,11 @@ int
 HTTP_Helper::HTTP_month (const char *month)
 {
   for (size_t i = 0; i < 12; ++i)
-    if (std::strcmp (month, HTTP_Helper::months_[i]) == 0)
     {
-      return i;
+      if (std::strcmp (month, HTTP_Helper::months_[i]) == 0)
+        {
+          return i;
+        }
     }
 
   return -1;
@@ -368,7 +373,9 @@ HTTP_Helper::fixyear (int year)
   // Fix the year 2000 problem
 
   if (year > 1000)
-    year -= 1900;
+    {
+      year -= 1900;
+    }
   else if (year < 100)
     {
       struct tm tms;
