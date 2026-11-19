@@ -13533,3 +13533,10 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Added `BOOL_ARGUMENTS` to the task catalog and recorded the tree-wide requirement to pass `true`/`false` to Boolean parameters instead of `1`/`0`.
 - In DynamicAny, reviewed numeric literal arguments and Boolean declarations. `write_ulong(0/1)`, sequence `size(0)`, `seek(0)`, string offsets, and the `CORBA::Long` chunk level are numeric values, not Boolean parameters. No confirmed misuse was found; signature-aware review remains open.
 - `rg -n 'std::move\\s*\\(' TAO/tao/DynamicAny` found no move sites, recorded as not applicable.
+
+
+## 2026-11-19 Repository-wide special-member comment audit
+
+- Searched all tracked files under `ACE/` and `TAO/` for standalone comments that only label constructors, destructors, copy/move operations, or assignment operators, including old `// = CONSTRUCTOR` and `// = DESTRUCTOR` labels. No matches were found, so no source edits were needed.
+- Recorded `SPECIAL_MEMBER_COMMENTS` as not applicable for all previously unrecorded source/project directories. This records the current-tree audit; continue checking newly touched directories in future batches. No build or runtime test was run.
+- Evidence commit: `e814e00fb1a`.
