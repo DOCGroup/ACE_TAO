@@ -102,9 +102,11 @@ Echo_Handler::handle_input (ACE_HANDLE)
   len = this->peer ().recv (buf, MAXPATHLEN * sizeof (ACE_TCHAR));
 
   if (len == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Error receiving from MEM_Stream\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Error receiving from MEM_Stream\n")),
+                        -1);
+    }
   else if (len == 0)            // Connection closed.
     {
       ACE_DEBUG ((LM_INFO,
@@ -119,9 +121,11 @@ Echo_Handler::handle_input (ACE_HANDLE)
   len = (ACE_OS::strlen (return_buf) + 1) * sizeof (ACE_TCHAR);
 
   if (this->peer ().send (return_buf, len) != len)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Error sending from MEM_Stream\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Error sending from MEM_Stream\n")),
+                        -1);
+    }
 
   return 0;
 }
@@ -134,8 +138,10 @@ Echo_Handler::handle_close (ACE_HANDLE,
   (*Waiting::instance ())--;
 
   if (client_strategy != ACE_MEM_IO::Reactive)
-    this->reactor ()->remove_handler (this,
-                                      mask | ACE_Event_Handler::DONT_CALL);
+    {
+      this->reactor ()->remove_handler (this,
+                                        mask | ACE_Event_Handler::DONT_CALL);
+    }
 
   // If no connections are open.
   if (*Waiting::instance () == 0)
@@ -156,7 +162,9 @@ int
 Echo_Handler::svc ()
 {
   while (this->handle_input (this->get_handle ()) >= 0)
-    continue;
+    {
+      continue;
+    }
   return 0;
 }
 
@@ -173,11 +181,13 @@ run_client (u_short port,
   //  connector.preferred_strategy (ACE_MEM_IO::MT);
 
   if (connector.connect (stream, to_server.get_remote_addr ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Failed to connect to <%C> %p\n"),
-                       to_server.get_host_name (),
-                       ACE_TEXT ("connector.connect()")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Failed to connect to <%C> %p\n"),
+                         to_server.get_host_name (),
+                         ACE_TEXT ("connector.connect()")),
+                        -1);
+    }
 
   ACE_TCHAR buf[MAXPATHLEN];
 
@@ -236,8 +246,10 @@ create_reactor ()
 #endif /* TEST_CAN_USE_WFMO_REACTOR */
 
   if (impl == nullptr && opt_select_reactor)
-    ACE_NEW (impl,
-             ACE_Select_Reactor);
+    {
+      ACE_NEW (impl,
+               ACE_Select_Reactor);
+    }
 
   ACE_Reactor *reactor {};
   ACE_NEW (reactor,
@@ -264,15 +276,19 @@ test_reactive (const ACE_TCHAR *prog,
                      &create_strategy,
                      &accept_strategy,
                      &reactive_strategy) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("MEM_Acceptor::accept\n")), 1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("MEM_Acceptor::accept\n")), 1);
+    }
   acceptor.acceptor ().mmap_prefix (ACE_TEXT ("MEM_Acceptor_"));
 
   ACE_MEM_Addr local_addr;
   if (acceptor.acceptor ().get_local_addr (local_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("MEM_Acceptor::get_local_addr\n")),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("MEM_Acceptor::get_local_addr\n")),
+                        1);
+    }
 
   u_short sport = local_addr.get_port_number ();
 
@@ -349,8 +365,10 @@ test_concurrent (const ACE_TCHAR *prog,
                      &create_strategy,
                      &accept_strategy,
                      &act_strategy) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("MEM_Acceptor::accept\n")), 1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("MEM_Acceptor::accept\n")), 1);
+    }
 
   // Make sure the MEM_Stream created by the underlying MEM_Acceptor
   // is capable of passing messages of 1MB.
@@ -360,9 +378,11 @@ test_concurrent (const ACE_TCHAR *prog,
 
   ACE_MEM_Addr local_addr;
   if (acceptor.acceptor ().get_local_addr (local_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("MEM_Acceptor::get_local_addr\n")),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("MEM_Acceptor::get_local_addr\n")),
+                        1);
+    }
 
   u_short sport = local_addr.get_port_number ();
 
