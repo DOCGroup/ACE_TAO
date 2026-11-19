@@ -437,10 +437,12 @@ TAO_Transport::remove_handler ()
                          ACE_Event_Handler::DONT_CALL) == -1)
     {
       if (TAO_debug_level > 0)
-        TAOLIB_ERROR ((LM_ERROR,
-                    ACE_TEXT ("TAO (%P|%t) - Transport[%B]::remove_handler - ")
-                    ACE_TEXT ("reactor->remove_handler failed\n"),
-                    this->id ()));
+        {
+          TAOLIB_ERROR ((LM_ERROR,
+                         ACE_TEXT ("TAO (%P|%t) - Transport[%B]::remove_handler - ")
+                         ACE_TEXT ("reactor->remove_handler failed\n"),
+                         this->id ()));
+        }
       return -1;
     }
   else
@@ -1086,15 +1088,19 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[],
 
 #if TAO_HAS_SENDFILE == 1
   if (this->mmap_allocator_)
-    retval = this->sendfile (this->mmap_allocator_,
-                             iov,
-                             iovcnt,
-                             byte_count,
-                             dc);
+    {
+      retval = this->sendfile (this->mmap_allocator_,
+                               iov,
+                               iovcnt,
+                               byte_count,
+                               dc);
+    }
   else
 #endif  /* TAO_HAS_SENDFILE==1 */
-    retval = this->send (iov, iovcnt, byte_count,
-                         this->io_timeout (dc));
+    {
+      retval = this->send (iov, iovcnt, byte_count,
+                           this->io_timeout (dc));
+    }
 
   this->touch_activity ();
 
@@ -2499,7 +2505,9 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
                   rh.set_flag (TAO_Resume_Handle::TAO_HANDLE_LEAVE_SUSPENDED);
                 }
               else if (retval < 0)
-                return -1;
+                {
+                  return -1;
+                }
             }
           else
             {
@@ -2707,7 +2715,9 @@ TAO_Transport::process_queue_head (TAO_Resume_Handle &rh)
               rh.set_flag (TAO_Resume_Handle::TAO_HANDLE_LEAVE_SUSPENDED);
             }
           else if (retval < 0)
-            return -1;
+            {
+              return -1;
+            }
         }
       else
         {
