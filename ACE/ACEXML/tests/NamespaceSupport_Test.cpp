@@ -35,9 +35,11 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       status = 1;
     }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Namespace URI: %s\nLocal name: %s\nRaw name: %s\n"),
-                uri, lName, n1));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Namespace URI: %s\nLocal name: %s\nRaw name: %s\n"),
+                  uri, lName, n1));
+    }
 
   ACEXML_Char const * const n2 = ACE_TEXT ("dc:title");
   if (xmlns.processName (n2, uri, lName, false) != 0)
@@ -48,9 +50,11 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       status = 1;
     }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Namespace URI: %s\nLocal name: %s\nRaw name: %s\n"),
-                uri, lName, n2));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Namespace URI: %s\nLocal name: %s\nRaw name: %s\n"),
+                  uri, lName, n2));
+    }
 
   ACEXML_Char const * const n3 = ACE_TEXT ("xml:title");
   if (xmlns.processName (n3, uri, lName, false) != 0)
@@ -61,9 +65,11 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       status = 1;
     }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Namespace URI: %s\nLocal name: %s\nRaw name: %s\n"),
-                uri, lName, n3));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Namespace URI: %s\nLocal name: %s\nRaw name: %s\n"),
+                  uri, lName, n3));
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\n*** Checking getDeclaredPrefixes\n")));
@@ -81,7 +87,9 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       ACEXML_Char const **prefix {};
 
       for (; iter.next (prefix); iter.advance ())
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("prefix: \"%s\"\n"), *prefix));
+        {
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("prefix: \"%s\"\n"), *prefix));
+        }
     }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n*** Checking getPrefix\n")));
@@ -94,9 +102,11 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       status = 1;
     }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Prefix of http://www.purl.org/dc# is %s\n"),
-                prefix));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Prefix of http://www.purl.org/dc# is %s\n"),
+                  prefix));
+    }
 
   if ((prefix = xmlns.getPrefix (ACE_TEXT ("http://www.w3.org/1999/xhtml"))) == nullptr ||
       *prefix != ACE_TEXT ('\0'))
@@ -117,9 +127,11 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       status = 1;
     }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Prefix of http://www.w3.org/XML/1998/namespace is %s\n"),
-                prefix));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Prefix of http://www.w3.org/XML/1998/namespace is %s\n"),
+                  prefix));
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n*** Checking getPrefixes with known URI\n")));
   prefixes.reset ();
@@ -135,7 +147,9 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       ACEXML_Char const **prefix {};
 
       for (; iter.next (prefix); iter.advance ())
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("prefix: \"%s\"\n"), *prefix));
+        {
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("prefix: \"%s\"\n"), *prefix));
+        }
     }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n*** Checking getPrefixes\n")));
@@ -152,7 +166,9 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       ACEXML_Char const **prefix {};
 
       for (; iter.next (prefix); iter.advance ())
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("prefix: \"%s\"\n"), *prefix));
+        {
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("prefix: \"%s\"\n"), *prefix));
+        }
     }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n*** Checking getURI\n")));
