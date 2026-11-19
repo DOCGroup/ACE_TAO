@@ -563,10 +563,12 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                                      &Options::usage),
                                     -1);
                 else if (key_sort (key_positions_.data (), total_keysig_size_) == 0)
-                  ACE_ERROR_RETURN ((LM_ERROR,
-                                     "Duplicate keys selected\n%r",
-                                     &Options::usage),
-                                    -1);
+                  {
+                    ACE_ERROR_RETURN ((LM_ERROR,
+                                       "Duplicate keys selected\n%r",
+                                       &Options::usage),
+                                      -1);
+                  }
                 if (total_keysig_size_ != 2
                     || (key_positions_[0] != 1
                         || key_positions_[1] != WORD_END))

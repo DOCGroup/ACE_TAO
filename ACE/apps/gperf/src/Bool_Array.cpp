@@ -71,7 +71,9 @@ int
 Bool_Array::find (u_long slot)
 {
   if (this->storage_array_[slot] == generation_number_)
-    return 1;
+    {
+      return 1;
+    }
   else
     {
       this->storage_array_[slot] = generation_number_;
