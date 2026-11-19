@@ -51,11 +51,13 @@ TAO_HTTP_Parser::parse_string (char const *nior,
     {
       ptr = ACE_OS::strstr (http_url, ACE_TEXT (":"));
       if (ptr != nullptr)
-        port = static_cast<u_short> (ACE_OS::atoi (ptr + 1));
+        {
+          port = static_cast<u_short> (ACE_OS::atoi (ptr + 1));
+        }
       else
-      {
-        ptr = ACE_OS::strstr (http_url, ACE_TEXT ("/"));
-      }
+        {
+          ptr = ACE_OS::strstr (http_url, ACE_TEXT ("/"));
+        }
 
       if (ptr == nullptr)
         {
