@@ -476,9 +476,11 @@ TAO_Profile::get_policies (CORBA::PolicyList &pl)
                       // spec. ptc/99-05-03 we just ignore these
                       // un-understood policies.
                       if (TAO_debug_level >= 5)
-                        TAOLIB_DEBUG ((LM_DEBUG,
-                                    ACE_TEXT ("The IOR contains unsupported ")
-                                    ACE_TEXT ("policies.\n")));
+                        {
+                          TAOLIB_DEBUG ((LM_DEBUG,
+                                         ACE_TEXT ("The IOR contains unsupported ")
+                                         ACE_TEXT ("policies.\n")));
+                        }
                     }
                 }
               catch (::CORBA::Exception const &ex)
@@ -489,9 +491,11 @@ TAO_Profile::get_policies (CORBA::PolicyList &pl)
                   // just ignore these un-understood policies.
 
                   if (TAO_debug_level >= 5)
-                    ex._tao_print_exception (
-                      ACE_TEXT ("IOR contains ")
-                      ACE_TEXT ("unsupported policies."));
+                    {
+                      ex._tao_print_exception (
+                        ACE_TEXT ("IOR contains ")
+                        ACE_TEXT ("unsupported policies."));
+                    }
                 }
             }
         }
