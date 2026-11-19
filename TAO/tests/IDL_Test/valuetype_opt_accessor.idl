@@ -60,7 +60,7 @@ valuetype Accessor_Optimized_Base
   factory create ();
 };
 
-valuetype Accessor_Optimized_Derived : Accessor_Optimized_Base
+valuetype Accessor_Optimized_Factory_Derived : Accessor_Optimized_Base
 {
   void op ();
 };
