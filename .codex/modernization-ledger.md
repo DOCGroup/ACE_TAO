@@ -13697,3 +13697,18 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   send/receive code, and DII_Deferred_Transient. The remaining includes all
   accompany a use of a standard size-related declaration.
 - `git diff --check` passed. No build or tests were run.
+
+
+## 2026-11-19 C string and ACE logging formatter audit
+
+- Scanned all ACE/TAO C++ sources for `ACE_OS::strncmp`. Remaining call sites
+  are ACE_TCHAR/ACEXML_Char-width-generic operations or tests that exercise
+  the ACE wrapper itself; no production narrow `const char *` replacement
+  with `std::strncmp` was appropriate.
+- Scanned for `itoa`: production code has no call sites. Remaining calls are
+  in `ACE/tests/OS_Test.cpp`, which directly tests ACE_OS::itoa, so they stay.
+- Parsed ACE/TAO logging macro invocations and found zero uses of
+  `ACE_*_FORMAT_SPECIFIER` macros inside ACE logging calls. Their remaining
+  uses are C printf/output or generated-code formatting contexts.
+- No code changes or tests were needed; repository state was unchanged by the
+  scans.
