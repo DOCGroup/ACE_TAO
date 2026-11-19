@@ -82,7 +82,9 @@ TAO_ORBInitInfo::arguments ()
 
   args->length (this->argc_);   // Not a problem if argc is zero.
   for (int i {}; i < this->argc_; ++i)
-    (*args)[i] = CORBA::string_dup (this->argv_[i]);
+    {
+      (*args)[i] = CORBA::string_dup (this->argv_[i]);
+    }
 
   return safe_args._retn ();
 }
