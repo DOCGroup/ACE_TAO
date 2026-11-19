@@ -177,10 +177,12 @@ Client::bind_to_server (char const *name)
     {
       // Initialize the naming services
       if (my_naming_client_.init (TAO_AV_CORE::instance ()->orb ()) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize "
-                           "the TAO_Naming_Client.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize "
+                             "the TAO_Naming_Client.\n"),
+                            -1);
+        }
 
       CosNaming::Name server_mmdevice_name (1);
       server_mmdevice_name.length (1);
@@ -192,10 +194,12 @@ Client::bind_to_server (char const *name)
         AVStreams::MMDevice::_narrow (server_mmdevice_obj.in ());
 
       if (CORBA::is_nil (this->server_mmdevice_.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " could not resolve Server_Mmdevice in Naming service <%C>\n",
-                           name),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " could not resolve Server_Mmdevice in Naming service <%C>\n",
+                             name),
+                            -1);
+        }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -236,10 +240,12 @@ Client::init (int argc, ACE_TCHAR *argv[])
       mmdevice->add_fdev (fdev_ref.in ());
 
       if (this->my_naming_client_.init (TAO_AV_CORE::instance ()->orb ()) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize "
-                           "the TAO_Naming_Client.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize "
+                             "the TAO_Naming_Client.\n"),
+                            -1);
+        }
 
       this->fp_.reset (ACE_OS::fopen (this->options_.filename.c_str (), "r"));
       if (!this->fp_)
@@ -292,9 +298,11 @@ Client::run ()
         ACE_ERROR_RETURN ((LM_ERROR,"streamctrl::bind_devs for client_mmdevice failed\n"),-1);
       }
       if (this->bind_to_server ("Server_MMDevice1") == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) Error binding to the naming service\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%P|%t) Error binding to the naming service\n"),
+                            -1);
+        }
       result = this->streamctrl_.bind_devs (AVStreams::MMDevice::_nil (),
                                             this->server_mmdevice_.in (),
                                             the_qos.inout (),
@@ -305,9 +313,11 @@ Client::run ()
         ACE_ERROR_RETURN ((LM_ERROR,"(%N,%l) streamctrl::bind_devs for mmdevice 1 failed\n"),-1);
       }
       if (this->bind_to_server ("Server_MMDevice2") == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) Error binding to the naming service\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%P|%t) Error binding to the naming service\n"),
+                            -1);
+        }
       result = this->streamctrl_.bind_devs (AVStreams::MMDevice::_nil (),
                                             this->server_mmdevice_.in (),
                                             the_qos.inout (),
