@@ -237,7 +237,9 @@ private:
       (ACE_Thread_Mutex, worker_mon, this->workers_lock_, nullptr)
 
       while (this->workers_.is_empty ())
-        workers_cond_.wait ();
+        {
+          workers_cond_.wait ();
+        }
 
     Worker *worker {};
     this->workers_.dequeue_head (worker);

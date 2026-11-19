@@ -306,7 +306,9 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
     }
 
   while (tp.processed_messages () < MESSAGE_COUNT)
-    std::this_thread::sleep_for (std::chrono::milliseconds (10));
+    {
+      std::this_thread::sleep_for (std::chrono::milliseconds (10));
+    }
 
   tp.shut_down ();
   ACE_Thread_Manager::instance ()->wait ();
