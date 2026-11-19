@@ -42,8 +42,10 @@ been_signalled (const ACE_thread_t t_id,
   for (u_int i = 0; i < n_threads; ++i)
     {
       if (ACE_OS::thr_equal (signalled[i], t_id))
-        // Already signalled.
-        return 1;
+        {
+          // Already signalled.
+          return 1;
+        }
 
       if (update  &&
           unused_slot == n_threads  &&
@@ -55,8 +57,10 @@ been_signalled (const ACE_thread_t t_id,
     }
 
   if (update  &&  unused_slot < n_threads)
-    // Update the array using the first unused_slot.
-    signalled[unused_slot] = t_id;
+    {
+      // Update the array using the first unused_slot.
+      signalled[unused_slot] = t_id;
+    }
 
   return 0;
 }
@@ -173,7 +177,9 @@ ThrMgr_Task::svc ()
               static_cast<void *> (this)));
   ACE_thread_t me = ACE_Thread::self ();
   for (int i = 0; i < 30 && !this->thr_mgr ()->testcancel (me); ++i)
-    ACE_OS::sleep (1);
+    {
+      ACE_OS::sleep (1);
+    }
 
   if (this->thr_mgr ()->testcancel (me))
     {
@@ -229,7 +235,9 @@ test_task_record_keeping (ACE_Thread_Manager *mgr)
            || (task_list[1] == std::addressof (t1)
                && task_list[0] == std::addressof (t2)))
           && task_list[0] != task_list[1])
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("The Task IDs are correct\n")));
+        {
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("The Task IDs are correct\n")));
+        }
       else
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("But Task ID values are wrong!\n")));
@@ -237,12 +245,16 @@ test_task_record_keeping (ACE_Thread_Manager *mgr)
     }
   ACE_DEBUG ((LM_DEBUG, "Canceling grp %d\n", t1_grp));
   if (-1 == mgr->cancel_grp (t1_grp))
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("cancel_grp")),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("cancel_grp")),
+                        1);
+    }
   ACE_DEBUG ((LM_DEBUG, "Canceling grp %d\n", t2_grp));
   if (-1 == mgr->cancel_grp (t2_grp))
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("cancel_grp")),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("cancel_grp")),
+                        1);
+    }
 
   mgr->wait ();
   if (ThrMgr_Task::errors > 0 && status == 0)
@@ -274,7 +286,9 @@ run_main (int, ACE_TCHAR *[])
                   1);
   // Initialize each ACE_thread_t to avoid Purify UMR's.
   for (i = 0; i < n_threads; ++i)
-    signalled[i] = ACE_OS::NULL_thread;
+    {
+      signalled[i] = ACE_OS::NULL_thread;
+    }
 
   // And similarly, dynamically allocate the thread_start barrier.
   ACE_NEW_RETURN (thread_start,
@@ -425,12 +439,16 @@ run_main (int, ACE_TCHAR *[])
   if (thr_mgr->wait (&wait_time) == -1)
     {
       if (errno == ETIME)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("maximum wait time of %Q msec exceeded\n"),
-                               static_cast<ACE_UINT64> (max_wait.msec ())));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("maximum wait time of %Q msec exceeded\n"),
+                      static_cast<ACE_UINT64> (max_wait.msec ())));
+        }
       else
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("%p\n"), ACE_TEXT ("wait")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%p\n"), ACE_TEXT ("wait")));
+        }
       status = -1;
     }
 
