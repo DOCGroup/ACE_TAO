@@ -69,7 +69,9 @@ map_test ()
 
   // Insert a few entries.
   for (i = 0; i < 3; ++i)
-    map.bind (i, i);
+    {
+      map.bind (i, i);
+    }
 
   display_map (map);
 
@@ -148,13 +150,17 @@ map_test ()
 
   // Insert a few entries.  This will force an increase in map size.
   for (i = 0; i < 4; ++i)
-    map.bind (i, i);
+    {
+      map.bind (i, i);
+    }
 
   display_map (map);
 
   // Remove a few entries (in reverse order).
   for (i = 3; i >= 0; --i)
-    map.unbind (i);
+    {
+      map.unbind (i);
+    }
 
   display_map (map);
 }
@@ -215,7 +221,9 @@ active_map_test ()
 
   // Insert a few entries.
   for (i = 0; i < 3; ++i)
-    map.bind (i, keys[i]);
+    {
+      map.bind (i, keys[i]);
+    }
 
   display_map (map);
 
@@ -294,13 +302,17 @@ active_map_test ()
 
   // Insert a few entries.  This will force an increase in map size.
   for (i = 0; i < 4; ++i)
-    map.bind (i, keys[i]);
+    {
+      map.bind (i, keys[i]);
+    }
 
   display_map (map);
 
   // Remove a few entries (in reverse order).
   for (i = 3; i >= 0; --i)
-    map.unbind (keys[i]);
+    {
+      map.unbind (keys[i]);
+    }
 
   display_map (map);
 }

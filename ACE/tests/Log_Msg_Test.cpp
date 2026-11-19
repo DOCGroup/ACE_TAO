@@ -89,10 +89,13 @@ Logger::log (ACE_Log_Record &log_record)
   if (!this->verbose_logging_)
     {
       if (use_log_msg)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Logger::log->%s\n"),
-                    log_record.msg_data ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Logger::log->%s\n"),
+                      log_record.msg_data ()));
+        }
       else
+        {
 #ifdef ACE_LACKS_IOSTREAM_TOTALLY
         ACE_OS::fprintf (ace_file_stream::instance ()->output_file (),
                          "Recursive Logger callback = %s\n",
@@ -103,6 +106,7 @@ Logger::log (ACE_Log_Record &log_record)
           << log_record.msg_data ()
           << endl;
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
+        }
     }
   else
     {
@@ -114,10 +118,13 @@ Logger::log (ACE_Log_Record &log_record)
       if (result == 0)
         {
           if (use_log_msg)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("Logger::log->%s\n"),
-                        verbose_msg));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("Logger::log->%s\n"),
+                          verbose_msg));
+            }
           else
+            {
 #ifdef ACE_LACKS_IOSTREAM_TOTALLY
             ACE_OS::fprintf (ace_file_stream::instance ()->output_file (),
                              "Recursive Logger callback = %s\n",
@@ -128,6 +135,7 @@ Logger::log (ACE_Log_Record &log_record)
               << log_record.msg_data ()
               << endl;
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
+            }
         }
     }
 
@@ -208,19 +216,25 @@ test_log_msg_features (const ACE_TCHAR *program)
   int counter = 1 ;
 
   if (ACE_LOG_MSG->open (program) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("cannot open logger!!!\n")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("cannot open logger!!!\n")));
+    }
 
   cause_error ();
 
   // Check to see what happened.
   if (ACE_LOG_MSG->op_status () == -1
       && ACE_LOG_MSG->errnum () == EWOULDBLOCK)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("op_status and errnum work!\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("op_status and errnum work!\n")));
+    }
   else
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("op_status and errnum failed!\n")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("op_status and errnum failed!\n")));
+    }
 
   const char *badname = "badname";
 
@@ -229,11 +243,13 @@ test_log_msg_features (const ACE_TCHAR *program)
   // start catching them as errors.
   if (ACE_OS::open (badname,
                     O_RDONLY) == ACE_INVALID_HANDLE)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("%n: (%x), can't open %C%r\n"),
-                10000,
-                badname,
-                cleanup));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("%n: (%x), can't open %C%r\n"),
+                  10000,
+                  badname,
+                  cleanup));
+    }
 
   // Try a log operation that would overflow the logging buffer if not
   // properly guarded.
@@ -709,10 +725,14 @@ int
 Log_Spec_Verify::result ()
 {
   if (this->fail_ == 0)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("All logging specifier tests passed.\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("All logging specifier tests passed.\n")));
+    }
   else
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%d logging specifier tests failed!\n"),
-                this->fail_));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%d logging specifier tests failed!\n"),
+                  this->fail_));
+    }
 
   if (this->tests_ != 19)
   {
