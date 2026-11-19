@@ -12,7 +12,7 @@ Scope: **1268 directories**; **1230** differ from the base; **1281** have task-l
 | `SCOPE_REDUCTION` — Keep variables and declarations in the narrowest useful scope | 16 | 15 | 1 | 0 |
 | `VALUE_INIT` — Value initialization and simpler constructors | 228 | 226 | 2 | 0 |
 | `BOOL_ARGUMENTS` — Use Boolean literals for Boolean arguments | 2 | 0 | 2 | 0 |
-| `ADDRESSOF` — Use `std::addressof` where overloaded `operator&` is possible | 1 | 0 | 1 | 0 |
+| `ADDRESSOF` — Use `std::addressof` where overloaded `operator&` is possible | 2 | 0 | 1 | 1 |
 | `NULLPTR` — Eligible nullptr modernization | 81 | 64 | 17 | 0 |
 | `OVERRIDE_DEFAULT_DELETE` — override/default/delete and exported destructor placement | 122 | 112 | 10 | 0 |
 | `OVERRIDE` — Missing override specifiers | 6 | 6 | 0 | 0 |

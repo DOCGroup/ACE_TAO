@@ -596,7 +596,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::find (const EXT_ID &k)
 
   ACE_RB_Tree_Node<EXT_ID, INT_ID> *entry {};
   int result = this->find_i (k, entry);
-  return (result == 0) ? &(entry->item ()) : 0;
+  return (result == 0) ? std::addressof (entry->item ()) : 0;
 }
 
 // Inserts a *copy* of the key and the item into the tree:
@@ -890,7 +890,7 @@ ACE_INLINE EXT_ID *
 ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::key ()
 {
   ACE_TRACE ("ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::key");
-  return this->node_ ? (&(this->node_->key ())) : 0;
+  return this->node_ ? std::addressof (this->node_->key ()) : 0;
 }
 
 // Accessor for item of node under iterator (if any). DEPRECATED.
@@ -900,7 +900,7 @@ ACE_INLINE INT_ID *
 ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::item ()
 {
   ACE_TRACE ("ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::item");
-  return this->node_ ? (&(this->node_->item ())) : 0;
+  return this->node_ ? std::addressof (this->node_->item ()) : 0;
 }
 
 // Move to the first item in the tree. DEPRECATED.

@@ -13656,3 +13656,8 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Reviewed the Utils directory for `ADDRESSOF`; it contains no object-address
   expressions, only reference declarations and operators. The whole-tree audit
   remains open.
+- In `ACE/ace/RB_Tree.inl`, changed the three addresses taken from generic
+  key/item references in deprecated tree and iterator accessors to
+  `std::addressof`, so user-defined `operator&` cannot redirect these results.
+  `RB_Tree.h` already includes `<memory>`. `git diff --check` passed; no test
+  was run. The ACE/ace and repository-wide audits remain open.
