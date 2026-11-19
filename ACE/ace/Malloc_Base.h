@@ -209,7 +209,10 @@ public:
   {
     void* raw_mem = ACE_Allocator::instance()->malloc(n * sizeof(T));
 #if !defined (ACE_INTEGRITY) || _HAS_EXCEPTIONS
-    if (!raw_mem) throw std::bad_alloc();
+    if (!raw_mem)
+      {
+        throw std::bad_alloc();
+      }
 #endif
     return static_cast<T*>(raw_mem);
   }
