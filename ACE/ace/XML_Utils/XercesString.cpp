@@ -123,10 +123,14 @@ namespace XML
     XMLCh const *cursor = begin ();
 
     while (cursor != head)
-      *target++ = *cursor++;
+      {
+        *target++ = *cursor++;
+      }
     cursor = tail;
     while (cursor != end ())
-      *target++ = *cursor++;
+      {
+        *target++ = *cursor++;
+      }
     *target = 0;
 
     _wstr = std::move (result);

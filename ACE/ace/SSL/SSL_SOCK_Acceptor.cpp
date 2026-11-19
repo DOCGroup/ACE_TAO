@@ -116,9 +116,13 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
               // Use that to decide what to do.
               status = 1;               // Wait for more activity
               if (SSL_want_write (ssl))
-                wr_handle.set_bit (handle);
+                {
+                  wr_handle.set_bit (handle);
+                }
               else if (SSL_want_read (ssl))
-                rd_handle.set_bit (handle);
+                {
+                  rd_handle.set_bit (handle);
+                }
               else
               {
                 status = -1;            // Doesn't want anything - bail out
@@ -157,9 +161,13 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
           // Could be both handles set (same handle in both masks) so
           // set to 1.
           if (status >= 1)
-            status = 1;
+            {
+              status = 1;
+            }
           else                   // Timeout or failure
-            status = -1;
+            {
+              status = -1;
+            }
         }
 
     } while (status == 1 && !SSL_is_init_finished (ssl));

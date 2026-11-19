@@ -105,10 +105,12 @@ ACE_SSL_make_BIO (void * ssl_asynch_stream)
 #endif
 
   if (pBIO != nullptr)
-    BIO_ctrl (pBIO,
-              BIO_C_SET_FILE_PTR,
-              0,
-              ssl_asynch_stream);
+    {
+      BIO_ctrl (pBIO,
+                BIO_C_SET_FILE_PTR,
+                0,
+                ssl_asynch_stream);
+    }
 
   return pBIO;
 }

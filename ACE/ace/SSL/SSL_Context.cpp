@@ -489,11 +489,13 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file,
           if (cert_names == nullptr)
             {
               if ((cert_names = ::SSL_load_client_CA_file (ca_file)) != nullptr)
-                ::SSL_CTX_set_client_CA_list (this->context_.get (), cert_names);
+                {
+                  ::SSL_CTX_set_client_CA_list (this->context_.get (), cert_names);
+                }
               else
-              {
-                error = true;
-              }
+                {
+                  error = true;
+                }
             }
           else
             {
@@ -769,16 +771,18 @@ ACE_SSL_Context::seed_file (const char * seed_file, long bytes)
   // random number generator. If the file reads ok, check RAND_status to
   // see if it got enough entropy.
   if (::RAND_load_file (seed_file, bytes) > 0)
+    {
 #if OPENSSL_VERSION_NUMBER >= 0x00905100L
-    // RAND_status() returns 1 if the PRNG has enough entropy.
-    return (::RAND_status () == 1 ? 0 : -1);
+      // RAND_status() returns 1 if the PRNG has enough entropy.
+      return (::RAND_status () == 1 ? 0 : -1);
 #else
-    return 0;  // Ugly, but OpenSSL <= 0.9.4 doesn't have RAND_status().
+      return 0;  // Ugly, but OpenSSL <= 0.9.4 doesn't have RAND_status().
 #endif  /* OPENSSL_VERSION_NUMBER >= 0x00905100L */
+    }
   else
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 }
 
 void
