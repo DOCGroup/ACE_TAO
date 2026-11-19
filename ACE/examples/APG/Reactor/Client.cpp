@@ -82,9 +82,11 @@ int Client::handle_output (ACE_HANDLE)
         this->peer ().send (message_block->rd_ptr (),
                             message_block->length ());
       if (send_cnt == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) %p\n"),
-                    ACE_TEXT ("send")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) %p\n"),
+                      ACE_TEXT ("send")));
+        }
       else
       {
         message_block->rd_ptr (static_cast<size_t> (send_cnt));
@@ -100,11 +102,15 @@ int Client::handle_output (ACE_HANDLE)
         }
     }
   if (this->msg_queue ()->is_empty ())
-    this->reactor ()->cancel_wakeup
-      (this, ACE_Event_Handler::WRITE_MASK);
+    {
+      this->reactor ()->cancel_wakeup
+        (this, ACE_Event_Handler::WRITE_MASK);
+    }
   else
-    this->reactor ()->schedule_wakeup
-      (this, ACE_Event_Handler::WRITE_MASK);
+    {
+      this->reactor ()->schedule_wakeup
+        (this, ACE_Event_Handler::WRITE_MASK);
+    }
   return 0;
 }
 // Listing 5
@@ -117,8 +123,10 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   Client client;
   Client *pc = &client;
   if (connector.connect (pc, port_to_connect) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("connect")), 1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("connect")), 1);
+    }
 
   ACE_Reactor::instance ()->run_reactor_event_loop ();
   return (0);
