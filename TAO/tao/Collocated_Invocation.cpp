@@ -138,7 +138,9 @@ namespace TAO
 
         if (status == PortableInterceptor::LOCATION_FORWARD ||
             status == PortableInterceptor::TRANSPORT_RETRY)
-          s = TAO_INVOKE_RESTART;
+          {
+            s = TAO_INVOKE_RESTART;
+          }
         else
 #endif /* TAO_HAS_INTERCEPTORS */
           {
@@ -169,10 +171,14 @@ namespace TAO
 
         if (status == PortableInterceptor::LOCATION_FORWARD ||
             status == PortableInterceptor::TRANSPORT_RETRY)
-          s = TAO_INVOKE_RESTART;
+          {
+            s = TAO_INVOKE_RESTART;
+          }
         else
 #endif /* TAO_HAS_INTERCEPTORS */
-          throw;
+          {
+            throw;
+          }
       }
 #if TAO_HAS_INTERCEPTORS == 1
     catch (...)
@@ -184,7 +190,9 @@ namespace TAO
 
         if (st == PortableInterceptor::LOCATION_FORWARD ||
             st == PortableInterceptor::TRANSPORT_RETRY)
-          s = TAO_INVOKE_RESTART;
+          {
+            s = TAO_INVOKE_RESTART;
+          }
         else
         {
           throw;

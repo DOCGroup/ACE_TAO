@@ -67,10 +67,12 @@ TAO_GIOP_Message_State::parse_message_header_i (ACE_Message_Block &incoming)
           return 0;
         default:
           if (TAO_debug_level > 0)
-            TAOLIB_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("TAO (%P|%t) - ")
-                        ACE_TEXT ("TAO_GIOP_Message_State::parse_magic_bytes, ")
-                        ACE_TEXT ("Message of size zero recd.\n")));
+            {
+              TAOLIB_DEBUG ((LM_DEBUG,
+                             ACE_TEXT ("TAO (%P|%t) - ")
+                             ACE_TEXT ("TAO_GIOP_Message_State::parse_magic_bytes, ")
+                             ACE_TEXT ("Message of size zero recd.\n")));
+            }
           return -1;
         }
     }
@@ -87,16 +89,18 @@ TAO_GIOP_Message_State::parse_magic_bytes (char const *buf)
         && buf [3] == 0x50)) // 'P'
     {
       if (TAO_debug_level > 0)
-        TAOLIB_ERROR ((LM_ERROR,
-                    ACE_TEXT ("TAO (%P|%t) - ")
-                    ACE_TEXT ("TAO_GIOP_Message_State::parse_magic_bytes, ")
-                    ACE_TEXT ("bad %cIOP header: ")
-                    ACE_TEXT ("magic word [%02x,%02x,%02x,%02x]\n"),
-                    buf[0],
-                    buf[0],
-                    buf[1],
-                    buf[2],
-                    buf[3]));
+        {
+          TAOLIB_ERROR ((LM_ERROR,
+                         ACE_TEXT ("TAO (%P|%t) - ")
+                         ACE_TEXT ("TAO_GIOP_Message_State::parse_magic_bytes, ")
+                         ACE_TEXT ("bad %cIOP header: ")
+                         ACE_TEXT ("magic word [%02x,%02x,%02x,%02x]\n"),
+                         buf[0],
+                         buf[0],
+                         buf[1],
+                         buf[2],
+                         buf[3]));
+        }
       return -1;
     }
  return 0;

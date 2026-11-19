@@ -37,9 +37,11 @@ TAO_Exclusive_TMS::request_id ()
   }
 
   if (TAO_debug_level > 4)
-    TAOLIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) - Exclusive_TMS::request_id - [%d]\n"),
-                this->request_id_generator_));
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("TAO (%P|%t) - Exclusive_TMS::request_id - [%d]\n"),
+                     this->request_id_generator_));
+    }
 
   return this->request_id_generator_;
 }
@@ -81,9 +83,11 @@ TAO_Exclusive_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
   if (!this->rd_ || this->request_id_ != params.request_id_)
     {
       if (TAO_debug_level > 0)
-        TAOLIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - Exclusive_TMS::dispatch_reply - [%d] != [%d]\n"),
-                    this->request_id_, params.request_id_));
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
+                         ACE_TEXT ("TAO (%P|%t) - Exclusive_TMS::dispatch_reply - [%d] != [%d]\n"),
+                         this->request_id_, params.request_id_));
+        }
 
       // The return value 0 informs the transport that the mux strategy
       // did not find the right reply handler.
@@ -106,9 +110,11 @@ TAO_Exclusive_TMS::reply_timed_out (CORBA::ULong request_id)
   if (!this->rd_ || this->request_id_ != request_id)
     {
       if (TAO_debug_level > 0)
-        TAOLIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - Exclusive_TMS::reply_timed_out - [%d] != [%d]\n"),
-                    this->request_id_, request_id));
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
+                         ACE_TEXT ("TAO (%P|%t) - Exclusive_TMS::reply_timed_out - [%d] != [%d]\n"),
+                         this->request_id_, request_id));
+        }
 
       // The return value 0 informs the transport that the mux strategy
       // did not find the right reply handler.

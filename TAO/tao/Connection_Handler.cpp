@@ -59,15 +59,17 @@ TAO_Connection_Handler::set_socket_option (ACE_SOCK &sock,
                           sizeof (snd_size)) == -1)
   {
     if (TAO_debug_level)
-      TAOLIB_DEBUG ((LM_ERROR,
-                  ACE_TEXT ("TAO (%P|%t) - Connection_Handler::")
-                  ACE_TEXT ("set_socket_option, setting SO_SNDBUF failed ")
-                  ACE_TEXT ("'%m'\n")));
+      {
+        TAOLIB_DEBUG ((LM_ERROR,
+                       ACE_TEXT ("TAO (%P|%t) - Connection_Handler::")
+                       ACE_TEXT ("set_socket_option, setting SO_SNDBUF failed ")
+                       ACE_TEXT ("'%m'\n")));
+      }
 
     if (errno != ENOTSUP)
-    {
-      return -1;
-    }
+      {
+        return -1;
+      }
   }
 #endif /* !ACE_LACKS_SO_SNDBUF */
 
@@ -78,16 +80,18 @@ TAO_Connection_Handler::set_socket_option (ACE_SOCK &sock,
                           std::addressof (rcv_size),
                           sizeof (int)) == -1)
   {
-      if (TAO_debug_level)
+    if (TAO_debug_level)
+      {
         TAOLIB_ERROR ((LM_ERROR,
-                    ACE_TEXT ("TAO (%P|%t) - Connection_Handler::")
-                    ACE_TEXT ("set_socket_option, setting SO_RCVBUF failed ")
-                    ACE_TEXT ("'%m'\n")));
+                       ACE_TEXT ("TAO (%P|%t) - Connection_Handler::")
+                       ACE_TEXT ("set_socket_option, setting SO_RCVBUF failed ")
+                       ACE_TEXT ("'%m'\n")));
+      }
 
     if (errno != ENOTSUP)
-    {
-      return -1;
-    }
+      {
+        return -1;
+      }
   }
 #endif /* !ACE_LACKS_SO_RCVBUF */
 
@@ -110,8 +114,10 @@ TAO_Connection_Handler::svc_i ()
   int result {};
 
   if (TAO_debug_level > 0)
-    TAOLIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) - Connection_Handler::svc_i begin\n")));
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("TAO (%P|%t) - Connection_Handler::svc_i begin\n")));
+    }
 
   // Here we simply synthesize the "typical" event loop one might find
   // in a reactive handler, except that this can simply block waiting
@@ -161,9 +167,12 @@ TAO_Connection_Handler::svc_i ()
       current_timeout = timeout;
 
       if (TAO_debug_level > 0)
-        TAOLIB_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - Connection_Handler::svc_i - "
-                       "loop <%d> shutdown = %d\n", current_timeout.msec (), this->is_closed_));
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
+                         "TAO (%P|%t) - Connection_Handler::svc_i - "
+                         "loop <%d> shutdown = %d\n",
+                         current_timeout.msec (), this->is_closed_));
+        }
       if (this->is_closed_)
         {
           return result;
@@ -171,8 +180,10 @@ TAO_Connection_Handler::svc_i ()
     }
 
   if (TAO_debug_level > 0)
-    TAOLIB_DEBUG  ((LM_DEBUG,
-                 "TAO (%P|%t) - Connection_Handler::svc_i - end\n"));
+    {
+      TAOLIB_DEBUG  ((LM_DEBUG,
+                     "TAO (%P|%t) - Connection_Handler::svc_i - end\n"));
+    }
 
   return result;
 }
@@ -229,21 +240,25 @@ TAO_Connection_Handler::handle_input_eh (ACE_HANDLE h, ACE_Event_Handler *eh)
   if (!this->transport ()->wait_strategy ()->can_process_upcalls ())
     {
       if (TAO_debug_level > 6)
-        TAOLIB_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - Connection_Handler[%B]::handle_input_eh, "
-                    "not going to handle_input on transport "
-                    "because upcalls temporarily suspended on this thread\n",
-                    this->transport()->id()));
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
+                         "TAO (%P|%t) - Connection_Handler[%B]::handle_input_eh, "
+                         "not going to handle_input on transport "
+                         "because upcalls temporarily suspended on this thread\n",
+                         this->transport ()->id ()));
+        }
 
       // defer upcall at leader_follower
       if (this->transport ()->wait_strategy ()->defer_upcall (eh) != 0)
         {
           if (TAO_debug_level > 5)
-            TAOLIB_ERROR ((LM_ERROR,
-                      "TAO (%P|%t) - Connection_Handler[%B]::handle_input_eh, "
-                      "Error deferring upcall handler[%@]\n",
-                      this->transport ()->id (),
-                      reinterpret_cast<void *> (eh->get_handle ())));
+            {
+              TAOLIB_ERROR ((LM_ERROR,
+                             "TAO (%P|%t) - Connection_Handler[%B]::handle_input_eh, "
+                             "Error deferring upcall handler[%@]\n",
+                             this->transport ()->id (),
+                             reinterpret_cast<void *> (eh->get_handle ())));
+            }
           return -1;
         }
       // Returning 0 causes the wait strategy to exit and the leader thread
