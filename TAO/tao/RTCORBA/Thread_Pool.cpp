@@ -199,7 +199,8 @@ TAO_Thread_Lane::new_dynamic_thread ()
       this->dynamic_threads_.thr_count () < this->dynamic_threads_number_)
     {
       if (TAO_debug_level > 0)
-        TAOLIB_DEBUG ((LM_DEBUG,
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO Process %P Pool %d Lane %d Thread %t\n")
                     ACE_TEXT ("Current number of dynamic threads = %d; ")
                     ACE_TEXT ("static threads = %d; max dynamic threads = %d\n")
@@ -209,6 +210,7 @@ TAO_Thread_Lane::new_dynamic_thread ()
                     this->dynamic_threads_.thr_count (),
                     this->static_threads_number_,
                     this->dynamic_threads_number_));
+        }
 
       int result =
         this->create_threads_i (this->dynamic_threads_,
@@ -216,12 +218,14 @@ TAO_Thread_Lane::new_dynamic_thread ()
                                 THR_BOUND | THR_DETACHED);
 
       if (result != 0)
-        TAOLIB_ERROR_RETURN ((LM_ERROR,
+        {
+          TAOLIB_ERROR_RETURN ((LM_ERROR,
                           ACE_TEXT ("Pool %d Lane %d Thread %t: ")
                           ACE_TEXT ("cannot create dynamic thread\n"),
                           this->pool_.id (),
                           this->id_),
                           false);
+        }
     }
 
   return true;
@@ -355,11 +359,13 @@ TAO_Thread_Lane::open ()
     this->resources_.open_acceptor_registry (endpoint_set, ignore_address);
 
   if (result == -1)
-    throw ::CORBA::INTERNAL (
+    {
+      throw ::CORBA::INTERNAL (
                  CORBA::SystemException::_tao_minor_code (
                    TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
                    0),
                  CORBA::COMPLETED_NO);
+    }
 }
 
 void
@@ -449,8 +455,10 @@ TAO_Thread_Lane::create_threads_i (TAO_Thread_Pool_Threads &thread_pool,
   for (size_t index {};
        index != number_of_threads;
        ++index)
-    stack_size_array[index] =
-      this->pool ().stack_size ();
+    {
+      stack_size_array[index] =
+        this->pool ().stack_size ();
+    }
 
   // Make sure the dynamically created stack size array is properly
   // deleted.
@@ -551,14 +559,16 @@ TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
   for (CORBA::ULong i {};
        i != lanes.length ();
        ++i)
-    this->lanes_.push_back (
-      std::make_unique<TAO_Thread_Lane> (*this,
-                                         i,
-                                         lanes[i].lane_priority,
-                                         lanes[i].static_threads,
-                                         lanes[i].dynamic_threads,
-                                         lifespan,
-                                         dynamic_thread_time));
+    {
+      this->lanes_.push_back (
+        std::make_unique<TAO_Thread_Lane> (*this,
+                                           i,
+                                           lanes[i].lane_priority,
+                                           lanes[i].static_threads,
+                                           lanes[i].dynamic_threads,
+                                           lifespan,
+                                           dynamic_thread_time));
+    }
 }
 
 void
@@ -664,7 +674,9 @@ TAO_Thread_Pool_Manager::~TAO_Thread_Pool_Manager ()
   for (THREAD_POOLS::ITERATOR iterator = this->thread_pools_.begin ();
        iterator != this->thread_pools_.end ();
        ++iterator)
-    delete (*iterator).int_id_;
+    {
+      delete (*iterator).int_id_;
+    }
 }
 
 void
@@ -674,7 +686,9 @@ TAO_Thread_Pool_Manager::finalize ()
   for (THREAD_POOLS::ITERATOR iterator = this->thread_pools_.begin ();
        iterator != this->thread_pools_.end ();
        ++iterator)
-    (*iterator).int_id_->finalize ();
+    {
+      (*iterator).int_id_->finalize ();
+    }
 }
 
 void
@@ -684,7 +698,9 @@ TAO_Thread_Pool_Manager::shutdown_reactor ()
   for (THREAD_POOLS::ITERATOR iterator = this->thread_pools_.begin ();
        iterator != this->thread_pools_.end ();
        ++iterator)
-    (*iterator).int_id_->shutdown_reactor ();
+    {
+      (*iterator).int_id_->shutdown_reactor ();
+    }
 }
 
 void
@@ -694,7 +710,9 @@ TAO_Thread_Pool_Manager::wait ()
   for (THREAD_POOLS::ITERATOR iterator = this->thread_pools_.begin ();
        iterator != this->thread_pools_.end ();
        ++iterator)
-    (*iterator).int_id_->wait ();
+    {
+      (*iterator).int_id_->wait ();
+    }
 }
 
 bool
