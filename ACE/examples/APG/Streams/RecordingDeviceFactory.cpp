@@ -15,10 +15,12 @@ RecordingDevice *RecordingDeviceFactory::instantiate (int argc,
 
   // Initialize the device with the remaining parameters.
   if (device->init (argc, argv) < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("RecordingDeviceFactory::instantiate() - ")
-                       ACE_TEXT ("%s->init(argc, argv)"),
-                       device->get_name()),
-                      0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("RecordingDeviceFactory::instantiate() - ")
+                         ACE_TEXT ("%s->init(argc, argv)"),
+                         device->get_name()),
+                        0);
+    }
   return device.release ();
 }
