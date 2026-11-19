@@ -165,10 +165,12 @@ TAO_MProfile::add_profile (TAO_Profile *pfile)
   pfiles_[last_++] = pfile;
 
   if (pfile && pfile->_incr_refcnt () == 0)
-    TAOLIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Unable to increment reference ")
-                       ACE_TEXT ("count in add_profile!\n")),
-                      -1);
+    {
+      TAOLIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("(%P|%t) Unable to increment reference ")
+                            ACE_TEXT ("count in add_profile!\n")),
+                           -1);
+    }
 
   return last_ - 1;
 }
@@ -263,11 +265,15 @@ TAO_MProfile::is_equivalent (const TAO_MProfile *rhs)
   // from the first list is_equivalent to at least one of the profiles
   // from the second list!!
   for (TAO_PHandle h1 {}; h1 < this->last_; ++h1)
-    for (TAO_PHandle h2 {}; h2 < rhs->last_; ++h2)
-      if (this->pfiles_[h1]->is_equivalent (rhs->pfiles_[h2]))
-      {
-        return true;
-      }
+    {
+      for (TAO_PHandle h2 {}; h2 < rhs->last_; ++h2)
+        {
+          if (this->pfiles_[h1]->is_equivalent (rhs->pfiles_[h2]))
+            {
+              return true;
+            }
+        }
+    }
 
   return false;
 }
@@ -356,14 +362,16 @@ int
 TAO_MProfile::give_shared_profile (TAO_Profile *pfile)
 {
   for (unsigned i {}; i < this->last_; ++i)
-    if (pfile->tag() == this->pfiles_[i]->tag() &&
-        pfile->compare_key(this->pfiles_[i]))
       {
-        this->pfiles_[i]->add_generic_endpoint(pfile->endpoint());
-        pfile->_decr_refcnt();
-        return i;
+        if (pfile->tag() == this->pfiles_[i]->tag() &&
+            pfile->compare_key(this->pfiles_[i]))
+          {
+            this->pfiles_[i]->add_generic_endpoint (pfile->endpoint ());
+            pfile->_decr_refcnt ();
+            return i;
+          }
       }
-  return this->give_profile(pfile, 0);
+  return this->give_profile (pfile, 0);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
