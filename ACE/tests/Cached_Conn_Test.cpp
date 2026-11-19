@@ -84,10 +84,12 @@ int
 Svc_Handler::open (void *)
 {
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("opening Svc_Handler %@ with handle %@\n"),
-                static_cast<void *> (this),
-                reinterpret_cast<void *> (this->peer ().get_handle ())));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("opening Svc_Handler %@ with handle %@\n"),
+                  static_cast<void *> (this),
+                  reinterpret_cast<void *> (this->peer ().get_handle ())));
+    }
 
   return 0;
 }
@@ -141,9 +143,11 @@ out_of_sockets_handler ()
           ACE_TEXT ("Purging connections from Connection Cache...\n")));
 
       if (-1 == connect_strategy->purge_connections ())
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("%p\n"),
-                    ACE_TEXT ("purge_connections")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("purge_connections")));
+        }
     }
   else
     {
@@ -168,10 +172,12 @@ cached_connect (STRATEGY_CONNECTOR &con,
   int result = con.connect (svc_handler,
                             remote_addr);
   if (result == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("connection failed")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("connection failed")),
+                        -1);
+    }
 
   // Reset Svc_Handler state.
   svc_handler->recycle_state (ACE_RECYCLABLE_PURGABLE_BUT_NOT_IDLE);
@@ -190,15 +196,17 @@ server (ACCEPTOR *acceptor)
   int result = acceptor->accept (&svc_handler,
                                  &cli_addr);
   if (result == -1)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("client %s connected from %d\n"),
-                cli_addr.get_host_name (),
-                cli_addr.get_port_number ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("client %s connected from %d\n"),
+                  cli_addr.get_host_name (),
+                  cli_addr.get_port_number ()));
+    }
 
   //
   // Svc_Handler dies here, closing the server side socket.
@@ -274,9 +282,11 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
             }
 
           if (debug)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("starting server at port %d\n"),
-                        server_addr.get_port_number ()));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("starting server at port %d\n"),
+                          server_addr.get_port_number ()));
+            }
         }
 
       // Run the cached blocking test.
@@ -340,58 +350,60 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int cc;
 
   while ((cc = get_opt ()) != -1)
-    switch (cc)
-      {
-      case 'd':
-        debug = 1;
-        break;
-      case 'l':
-        listen_once = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      case 'i':
-        iterations = ACE_OS::atoi (get_opt.opt_arg ());
-        user_has_specified_iterations = 1;
-        break;
-      case 'p':
-        purge_percentage = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      case 'c':
-        // Note that if null caching strategy is used then this test
-        // will fail if the number of servers exceed number of open
-        // files allowed for the process.
-        if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("null")) == 0)
         {
-          caching_strategy_type = ACE_NULL;
-        }
-        if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("lru")) == 0)
+      switch (cc)
         {
-          caching_strategy_type = ACE_LRU;
+        case 'd':
+          debug = 1;
+          break;
+        case 'l':
+          listen_once = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'i':
+          iterations = ACE_OS::atoi (get_opt.opt_arg ());
+          user_has_specified_iterations = 1;
+          break;
+        case 'p':
+          purge_percentage = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'c':
+          // Note that if null caching strategy is used then this test
+          // will fail if the number of servers exceed number of open
+          // files allowed for the process.
+          if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("null")) == 0)
+            {
+              caching_strategy_type = ACE_NULL;
+            }
+          if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("lru")) == 0)
+            {
+              caching_strategy_type = ACE_LRU;
+            }
+          if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("lfu")) == 0)
+            {
+              caching_strategy_type = ACE_LFU;
+            }
+          if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("fifo")) == 0)
+            {
+              caching_strategy_type = ACE_FIFO;
+            }
+          break;
+        case 'a':
+          keep_handles_available = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case '?':
+        case 'h':
+        default:
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("usage: %s ")
+                      ACE_TEXT ("[-c (caching strategy: lru / lfu / fifo / null [default = all])] ")
+                      ACE_TEXT ("[-i (iterations)] ")
+                      ACE_TEXT ("[-l (listen once)] ")
+                      ACE_TEXT ("[-d (addition debugging output)] ")
+                      ACE_TEXT ("[-p (purge percent)] ")
+                      ACE_TEXT ("[-a (keep handles available)] "),
+                      ACE_TEXT ("Cached_Conn_Test")));
+          return -1;
         }
-        if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("lfu")) == 0)
-        {
-          caching_strategy_type = ACE_LFU;
-        }
-        if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("fifo")) == 0)
-        {
-          caching_strategy_type = ACE_FIFO;
-        }
-        break;
-      case 'a':
-        keep_handles_available = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      case '?':
-      case 'h':
-      default:
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("usage: %s ")
-                    ACE_TEXT ("[-c (caching strategy: lru / lfu / fifo / null [default = all])] ")
-                    ACE_TEXT ("[-i (iterations)] ")
-                    ACE_TEXT ("[-l (listen once)] ")
-                    ACE_TEXT ("[-d (addition debugging output)] ")
-                    ACE_TEXT ("[-p (purge percent)] ")
-                    ACE_TEXT ("[-a (keep handles available)] "),
-                    ACE_TEXT ("Cached_Conn_Test")));
-        return -1;
       }
 
   return 0;
