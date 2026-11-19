@@ -98,15 +98,18 @@ set::set (int argc, char *argv[])
                         to_tchar.get_TCHAR_argv (),
                         ACE_TEXT ("o:c:r:t:I:U:C:G:T:O:S:P:"));
    for (int option = get_opt (); option != -1; option = get_opt ())
-     switch (option)
+     {
+       switch (option)
        {
        case 'o':
          {
            char const * const oid_arg = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
            req = oid_arg;
            if (!req.valid ())
-             cout << "ERROR: oid value: " << oid_arg
-                  << " is not valid. using default.\n";
+             {
+               cout << "ERROR: oid value: " << oid_arg
+                    << " is not valid. using default.\n";
+             }
          }
          break;
 
@@ -189,6 +192,7 @@ set::set (int argc, char *argv[])
        default:
          break;
        }
+     }
 
   // if user didn't set anything use defaults
   if (pdu_.get_vb_count () == 0)

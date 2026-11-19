@@ -94,15 +94,18 @@ getapp::getapp (int argc, char *argv[])
                         to_tchar.get_TCHAR_argv (),
                         ACE_TEXT ("o:c:r:t:p:"));
    for (int option = get_opt (); option != -1; option = get_opt ())
-     switch (option)
+     {
+       switch (option)
        {
        case 'o':
          {
            char const * const oid_arg = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
            req = oid_arg;
            if (!req.valid ())
-             cout << "ERROR: oid value: " << oid_arg
-                  << " is not valid. using default.\n";
+             {
+               cout << "ERROR: oid value: " << oid_arg
+                    << " is not valid. using default.\n";
+             }
          }
          break;
 
@@ -122,14 +125,17 @@ getapp::getapp (int argc, char *argv[])
        default:
          break;
        }
+     }
 
   Vb vb {}; // construct a Vb object
   if (req.valid ())
-    vb.set_oid (req); // set the Oid portion of the Vb
+    {
+      vb.set_oid (req); // set the Oid portion of the Vb
+    }
   else
-  {
-    vb.set_oid (def_oid); // set the Oid portion of the Vb
-  }
+    {
+      vb.set_oid (def_oid); // set the Oid portion of the Vb
+    }
   pdu_ += vb;
   vb.get_oid (oid_); // store for later use
   this->valid_ = true;

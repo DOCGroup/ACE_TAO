@@ -82,7 +82,9 @@ trapapp::trapapp (int argc, char *argv[])
    Oid ent {}, trap {}; // user-specified values
 
    if (argc < 2) // hostname mandatory
-     return;
+     {
+       return;
+     }
 
    address_ = UdpAddress (argv[argc - 1]);
    if (!address_.valid ())
@@ -97,7 +99,8 @@ trapapp::trapapp (int argc, char *argv[])
                         to_tchar.get_TCHAR_argv (),
                         ACE_TEXT ("c:e:t:"));
    for (int option = get_opt (); option != -1; option = get_opt ())
-     switch (option)
+     {
+       switch (option)
        {
        case 'c': // community string
          community_ = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
@@ -115,20 +118,25 @@ trapapp::trapapp (int argc, char *argv[])
        default:
          break;
        }
+     }
 
    if (ent.valid ())
-     pdu_.set_notify_enterprise (ent); // set up the enterprise of the trap
+     {
+       pdu_.set_notify_enterprise (ent); // set up the enterprise of the trap
+     }
    else
-   {
-     pdu_.set_notify_enterprise (def_ent_oid);
-   }
+     {
+       pdu_.set_notify_enterprise (def_ent_oid);
+     }
 
    if (trap.valid ())
-     pdu_.set_notify_id (trap); // set the id of the trap
+     {
+       pdu_.set_notify_id (trap); // set the id of the trap
+     }
    else
-   {
-     pdu_.set_notify_id (coldStart); // set the id of the trap
-   }
+     {
+       pdu_.set_notify_id (coldStart); // set the id of the trap
+     }
 
    Oid const detail_oid ("1.3.6.1.4.1.11.2.16.2");
    OctetStr const detail_value ("SNMP++ Trap Send Test");
