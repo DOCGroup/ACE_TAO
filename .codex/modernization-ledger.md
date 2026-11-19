@@ -13510,3 +13510,15 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Added Allman braces to six return branches in `Any_Array_Impl_T.cpp`, `Any_Basic_Impl_T.cpp`, `Any_Dual_Impl_T.cpp`, `Any_Impl_T.cpp`, and `Any_Special_Impl_T.cpp`.
 - Focused `clang-tidy -p TAO/tao -checks=-*,readability-braces-around-statements` reported no remaining brace diagnostics in these five translation units; `git diff --check` passed. No build or runtime test was run.
 - Commit `edb35c58c99`. The AnyTypeCode brace audit and wider TAO/tao modernization audits remain open.
+
+
+## 2026-11-19 TAO AnyTypeCode reference-count policy braces
+
+- Added Allman braces around the zero-reference deletion branch in `True_RefCount_Policy.inl`.
+- Focused `clang-tidy` brace checks through the including translation unit reported no remaining diagnostics for the AnyTypeCode header/inl; `git diff --check` passed. No build or runtime test was run.
+- Commit `e6fa5d72aa1`. The AnyTypeCode brace audit and wider TAO/tao modernization audits remain open.
+
+## 2026-11-19 PR #2642 factory-copy CI correction carried to modernization branch
+
+- Added the application-owned `_copy_value()` implementation to the OBV Factory test's `Value2_impl` and a client check that verifies both inherited and derived state are copied. PR #2642 commit `da74bd747b` was carried here as `af59f0fb86`.
+- This corrects the CI compile failure where generated `Value2` correctly redeclared `_copy_value()` as pure for an application factory implementation.

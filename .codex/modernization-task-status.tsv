@@ -2705,4 +2705,4 @@ TAO/utils/nslist	BUILD_TEST	done	87a26072697	Built and linked tao_nsadd, tao_nsd
 TAO/utils/nslist	CLI_OPTIONS	done	87a26072697	Grouped command-line state in Options and passed it through listing helpers.
 TAO/utils/nslist	SIZE_TYPES	done	87a26072697	Used CORBA::ULong for CosNaming sequence indexes and CORBA sequence lengths.
 TAO/utils/nslist	VALUE_INIT	done	87a26072697	Value-initialized option fields with {}.
-TAO/tao/AnyTypeCode	BRACES	needs-work	edb35c58c99	Added Allman braces to six branches across Any_Array_Impl_T.cpp, Any_Basic_Impl_T.cpp, Any_Dual_Impl_T.cpp, Any_Impl_T.cpp, and Any_Special_Impl_T.cpp; the focused check now passes in these five and the six TypeCode translation units; git diff --check passed. Other AnyTypeCode sources remain to audit.
+TAO/tao/AnyTypeCode	BRACES	needs-work	e6fa5d72aa1	Added Allman braces to six branches across Any_Array_Impl_T.cpp, Any_Basic_Impl_T.cpp, Any_Dual_Impl_T.cpp, Any_Impl_T.cpp, and Any_Special_Impl_T.cpp, plus True_RefCount_Policy.inl; focused clang-tidy checks and git diff --check passed. Other AnyTypeCode sources remain to audit.
