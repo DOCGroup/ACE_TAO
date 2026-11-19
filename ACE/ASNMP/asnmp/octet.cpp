@@ -88,7 +88,9 @@ OctetStr::OctetStr (char const *string, long size)
   }
 
   if (size == -1) // calc if no length given - assume c style string
-    size = static_cast<long> (std::strlen (string));
+    {
+      size = static_cast<long> (std::strlen (string));
+    }
 
   if (size < 0)
   {
@@ -111,7 +113,9 @@ void OctetStr::set_data (SmiBYTE const *string, long size)
 
   // assume non-zero terminated string
   if (size == -1) // calc if no length given - assume c style string
-    size = static_cast<long> (std::strlen (reinterpret_cast<char const *> (string)));
+    {
+      size = static_cast<long> (std::strlen (reinterpret_cast<char const *> (string)));
+    }
 
   if (size < 0)
     {
@@ -215,7 +219,9 @@ OctetStr &OctetStr::operator= (OctetStr const &octet)
 bool operator== (OctetStr const &lhs, OctetStr const &rhs)
 {
    if( lhs.left_comparison( rhs.smival.value.string.len, rhs)==0)
-       return true;
+       {
+         return true;
+       }
    else
    {
      return false;
@@ -226,7 +232,9 @@ bool operator== (OctetStr const &lhs, OctetStr const &rhs)
 bool operator!= (OctetStr const &lhs, OctetStr const &rhs)
 {
    if( lhs.left_comparison( rhs.smival.value.string.len, rhs)!=0)
-       return true;
+       {
+         return true;
+       }
    else
    {
      return false;
@@ -237,7 +245,9 @@ bool operator!= (OctetStr const &lhs, OctetStr const &rhs)
 bool operator< (OctetStr const &lhs, OctetStr const &rhs)
 {
    if( lhs.left_comparison( rhs.smival.value.string.len, rhs)<0)
-      return true;
+      {
+        return true;
+      }
    else
    {
      return false;
@@ -249,7 +259,9 @@ bool operator<= (OctetStr const &lhs, OctetStr const &rhs)
 {
    if(( lhs.left_comparison( rhs.smival.value.string.len, rhs)<0) ||
       ( lhs.left_comparison( rhs.smival.value.string.len, rhs)==0))
-      return true;
+      {
+        return true;
+      }
    else
    {
      return false;
@@ -260,7 +272,9 @@ bool operator<= (OctetStr const &lhs, OctetStr const &rhs)
 bool operator> (OctetStr const &lhs, OctetStr const &rhs)
 {
   if( lhs.left_comparison( rhs.smival.value.string.len, rhs)>0)
+    {
       return true;
+    }
   else
   {
     return false;
@@ -272,7 +286,9 @@ bool operator>= (OctetStr const &lhs, OctetStr const &rhs)
 {
   if(( lhs.left_comparison( rhs.smival.value.string.len, rhs)>0) ||
      ( lhs.left_comparison( rhs.smival.value.string.len, rhs)==0))
-     return true;
+    {
+      return true;
+    }
   else
   {
     return false;
@@ -284,7 +300,9 @@ bool operator== (OctetStr const &lhs, char const *rhs)
 {
    OctetStr to( rhs);
    if( lhs.left_comparison( to.smival.value.string.len,to)==0)
-       return true;
+       {
+         return true;
+       }
    else
    {
      return false;
@@ -296,7 +314,9 @@ bool operator!= (OctetStr const &lhs, char const *rhs)
 {
    OctetStr to( rhs);
    if ( lhs.left_comparison( to.smival.value.string.len,to)!=0)
-       return true;
+       {
+         return true;
+       }
    else
    {
      return false;
@@ -308,7 +328,9 @@ bool operator< (OctetStr const &lhs, char const *rhs)
 {
    OctetStr to( rhs);
    if ( lhs.left_comparison( to.smival.value.string.len,to)<0)
-       return true;
+       {
+         return true;
+       }
    else
    {
      return false;
@@ -321,7 +343,9 @@ bool operator<= (OctetStr const &lhs, char *rhs)
    OctetStr to( rhs);
    if (( lhs.left_comparison( to.smival.value.string.len,to)<0) ||
        ( lhs.left_comparison( to.smival.value.string.len,to)==0))
-      return true;
+      {
+        return true;
+      }
    else
    {
      return false;
@@ -333,7 +357,9 @@ bool operator> (OctetStr const &lhs, char const *rhs)
 {
    OctetStr to( rhs);
    if ( lhs.left_comparison( to.smival.value.string.len,to)>0)
-       return true;
+       {
+         return true;
+       }
    else
    {
      return false;
@@ -346,7 +372,9 @@ bool operator>= (OctetStr const &lhs, char const *rhs)
    OctetStr to( rhs);
    if (( lhs.left_comparison( to.smival.value.string.len,to)>0) ||
        ( lhs.left_comparison( to.smival.value.string.len,to)==0))
-      return true;
+      {
+        return true;
+      }
    else
    {
      return false;
@@ -440,7 +468,9 @@ OctetStr &OctetStr::operator+= (char c)
     }
     tmp[smival.value.string.len] = static_cast<SmiBYTE> (c);
     if ( smival.value.string.ptr )      // delete the original
-      reset_octet_smi(smival);
+      {
+        reset_octet_smi(smival);
+      }
 
     smival.value.string.ptr = tmp.release ();
     ++smival.value.string.len;          // up the len
@@ -560,7 +590,9 @@ char const *OctetStr::to_string ()
     if (( smival.value.string.ptr[i] != '\r')&&
                 ( smival.value.string.ptr[i] != '\n')&&
                 (ACE_OS::ace_isprint((int) (smival.value.string.ptr[i]))==0))
-         return(to_string_hex());
+        {
+          return(to_string_hex());
+        }
   }
 
   std::unique_ptr<char[]> new_buffer {new (std::nothrow) char[smival.value.string.len + 1]};
@@ -645,7 +677,9 @@ char const *OctetStr::to_string_hex ()
 
       line_ptr +=3;   /* the display of a byte always 3 chars long */
       if (ACE_OS::ace_isprint(*bytes))
-        std::sprintf (buf_ptr, "%c", *bytes);
+        {
+          std::sprintf (buf_ptr, "%c", *bytes);
+        }
       else
       {
         std::sprintf (buf_ptr, ".");
