@@ -6,10 +6,12 @@ Connection_Manager::init (CORBA::ORB_ptr orb)
 {
   // Initialize the naming service
   if (this->naming_client_.init (orb) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       " (%P|%t) Unable to initialize "
-                       "the TAO_Naming_Client.\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         " (%P|%t) Unable to initialize "
+                         "the TAO_Naming_Client.\n"),
+                        -1);
+    }
   return 0;
 }
 
@@ -363,8 +365,10 @@ Connection_Manager::connect_to_sender ()
                            flow_spec);
 
   if (result == 0)
-    ACE_ERROR ((LM_ERROR,
-                "Streamctrl::bind_devs failed\n"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Streamctrl::bind_devs failed\n"));
+    }
 
   // Start the data sending.
   AVStreams::flowSpec start_spec;
@@ -405,8 +409,10 @@ Connection_Manager::unbind_sender (ACE_CString const &sender_name,
                                    AVStreams::MMDevice_ptr sender_mmdevice_obj)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "Connection_Manager::unbind_sender\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Connection_Manager::unbind_sender\n"));
+    }
 
   CosNaming::Name name (1);
   name.length (1);
@@ -424,8 +430,10 @@ Connection_Manager::unbind_sender (ACE_CString const &sender_name,
         CosNaming::NamingContext::_narrow (object.in ());
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Sender Context Found\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Sender Context Found\n"));
+        }
 
       try
         {
@@ -440,8 +448,10 @@ Connection_Manager::unbind_sender (ACE_CString const &sender_name,
             sender_context->unbind (name);
 
             if (TAO_debug_level > 0)
-              ACE_DEBUG ((LM_DEBUG,
-                          "Sender Unbound\n"));
+              {
+                ACE_DEBUG ((LM_DEBUG,
+                            "Sender Unbound\n"));
+              }
           }
         }
       catch (CosNaming::NamingContext::NotFound const &)
@@ -467,8 +477,10 @@ Connection_Manager::unbind_receiver (ACE_CString const &sender_name,
                                      AVStreams::MMDevice_ptr receiver_mmdevice)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "Connection_Manager::unbind_receiver\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Connection_Manager::unbind_receiver\n"));
+    }
 
   CosNaming::Name name (1);
   name.length (1);
@@ -486,8 +498,10 @@ Connection_Manager::unbind_receiver (ACE_CString const &sender_name,
         CosNaming::NamingContext::_narrow (object.in ());
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Sender Context Found\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Sender Context Found\n"));
+        }
 
       try
         {
@@ -498,8 +512,10 @@ Connection_Manager::unbind_receiver (ACE_CString const &sender_name,
             sender_context->resolve (name);
 
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        "Receivers Context Found\n"));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "Receivers Context Found\n"));
+            }
 
           CosNaming::NamingContext_var receivers_context =
             CosNaming::NamingContext::_narrow (object.in ());
@@ -518,8 +534,10 @@ Connection_Manager::unbind_receiver (ACE_CString const &sender_name,
             receivers_context->unbind (name);
 
             if (TAO_debug_level > 0)
-              ACE_DEBUG ((LM_DEBUG,
-                          "Receiver Unbound\n"));
+              {
+                ACE_DEBUG ((LM_DEBUG,
+                            "Receiver Unbound\n"));
+              }
           }
         }
       catch (CosNaming::NamingContext::NotFound const &)

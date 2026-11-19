@@ -14,8 +14,10 @@ Signal_Handler::handle_signal (int signum, siginfo_t *, ucontext_t*)
   if (signum == SIGINT)
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "In the signal handler\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "In the signal handler\n"));
+        }
 
       DISTRIBUTER::instance ()->done (true);
     }
@@ -81,8 +83,10 @@ CORBA::Boolean
 Distributer_Receiver_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &flowspec)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "Distributer_Receiver_StreamEndPoint::handle_connection_requested\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Distributer_Receiver_StreamEndPoint::handle_connection_requested\n"));
+    }
 
   Connection_Manager &connection_manager =
     DISTRIBUTER::instance ()->connection_manager ();
@@ -98,9 +102,11 @@ Distributer_Receiver_StreamEndPoint::handle_connection_requested (AVStreams::flo
       entry.parse (flowspec[i]);
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Handle Connection Requested flowname %C\n",
-                    entry.flowname ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Handle Connection Requested flowname %C\n",
+                      entry.flowname ()));
+        }
 
       ACE_CString const flowname (entry.flowname ());
 
@@ -155,10 +161,12 @@ Distributer_Receiver_Callback::receive_frame (ACE_Message_Block *frame,
       int const result = (*iterator).int_id_->send_frame (frame);
 
       if (result < 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "send failed:%p",
-                           "Sender::pace_data send\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "send failed:%p",
+                             "Sender::pace_data send\n"),
+                            -1);
+        }
     }
 
   return 0;
@@ -300,9 +308,11 @@ Distributer::init (int argc,
 
   if (reactor->register_handler (SIGINT,
                                  &this->signal_handler_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error in handler register\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Error in handler register\n"),
+                        -1);
+    }
   // Register the signal handler for clean termination of the process.
 
   ACE_NEW_RETURN (this->distributer_sender_mmdevice_,

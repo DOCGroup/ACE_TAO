@@ -19,8 +19,10 @@ Signal_Handler::handle_signal (int signum, siginfo_t *, ucontext_t*)
   if (signum == SIGINT)
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "In the signal handler\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "In the signal handler\n"));
+        }
 
       done = true;
     }
@@ -47,8 +49,10 @@ CORBA::Boolean
 Receiver_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &flowspec)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "In Handle Connection Requested\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "In Handle Connection Requested\n"));
+    }
 
   for (CORBA::ULong i = 0;
        i < flowspec.length ();
@@ -117,9 +121,11 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
                      output_file);
 
       if (bytes_written != frame->length ())
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Receiver_Callback::fwrite failed\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Receiver_Callback::fwrite failed\n"),
+                            -1);
+        }
 
       frame = frame->cont ();
     }
@@ -155,9 +161,11 @@ Receiver::init (int,
 
   if (reactor->register_handler (SIGINT,
                                  &this->signal_handler_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error in handler register\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Error in handler register\n"),
+                        -1);
+    }
   // Register the signal handler for clean termination of the process.
 
   // Register the receiver mmdevice object with the ORB
@@ -284,14 +292,18 @@ ACE_TMAIN (int argc,
       output_file_owner.reset (std::fopen (receiver.output_file_name ().c_str (), "wb"));
       output_file = output_file_owner.get ();
       if (!output_file_owner)
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           "Cannot open output file %C\n",
-                           receiver.output_file_name ().c_str ()),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             "Cannot open output file %C\n",
+                             receiver.output_file_name ().c_str ()),
+                            -1);
+        }
 
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    "File Opened Successfully\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "File Opened Successfully\n"));
+        }
 
       result =
         receiver.init (argc,

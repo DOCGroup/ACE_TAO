@@ -101,8 +101,10 @@ Sender_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &flowspec)
 Sender::~Sender ()
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "Sender destructor\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Sender destructor\n"));
+    }
 }
 
 void
@@ -189,13 +191,17 @@ Sender::init (int argc,
   this->input_file_.reset (std::fopen (this->options_.filename.c_str (), "rb"));
 
   if (!this->input_file_)
-    ACE_ERROR_RETURN ((LM_DEBUG,
-                       "Cannot open input file %C\n",
-                       this->options_.filename.c_str ()),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_DEBUG,
+                         "Cannot open input file %C\n",
+                         this->options_.filename.c_str ()),
+                        -1);
+    }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                "File opened successfully\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "File opened successfully\n"));
+    }
 
   // Register the sender mmdevice object with the ORB
   ACE_NEW_RETURN (this->sender_mmdevice_,
@@ -232,11 +238,13 @@ Sender::pace_data ()
   inter_frame_time.set (1.0 / this->options_.frame_rate);
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "Frame Rate = %d / second\n"
-                "Inter Frame Time = %Q (msec)\n",
-                this->options_.frame_rate,
-                static_cast<ACE_UINT64> (inter_frame_time.msec ())));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Frame Rate = %d / second\n"
+                  "Inter Frame Time = %Q (msec)\n",
+                  this->options_.frame_rate,
+                  static_cast<ACE_UINT64> (inter_frame_time.msec ())));
+    }
 
   try
     {
@@ -282,9 +290,11 @@ Sender::pace_data ()
               elapsed_timer.elapsed_time (elapsed_time);
 
               if (TAO_debug_level > 0)
-                ACE_DEBUG ((LM_DEBUG,
-                            "Elapsed Time = %Q\n",
-                            static_cast<ACE_UINT64> (elapsed_time.msec ())));
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "Elapsed Time = %Q\n",
+                              static_cast<ACE_UINT64> (elapsed_time.msec ())));
+                }
 
               // Check to see if the inter frame time has elapsed.
               if (elapsed_time < inter_frame_time)
@@ -295,9 +305,11 @@ Sender::pace_data ()
                   ACE_Time_Value wait_time (inter_frame_time - elapsed_time);
 
                   if (TAO_debug_level > 0)
-                    ACE_DEBUG ((LM_DEBUG,
-                                "Wait Time = %Q\n",
-                                static_cast<ACE_UINT64> (wait_time.msec ())));
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                  "Wait Time = %Q\n",
+                                  static_cast<ACE_UINT64> (wait_time.msec ())));
+                    }
 
                   // Run the orb for the wait time so the sender can
                   // continue other orb requests.
@@ -320,10 +332,12 @@ Sender::pace_data ()
                 (*iterator).int_id_->send_frame (&this->mb_);
 
               if (result < 0)
-                ACE_ERROR_RETURN ((LM_ERROR,
-                                   "send failed:%p",
-                                   "Sender::pace_data send\n"),
-                                  -1);
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     "send failed:%p",
+                                     "Sender::pace_data send\n"),
+                                    -1);
+                }
             }
 
           ACE_DEBUG ((LM_DEBUG,
@@ -377,8 +391,10 @@ ACE_TMAIN (int argc,
       int const result = SENDER::instance ()->init (argc, argv);
 
       if (result < 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "client::init failed\n"), -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "client::init failed\n"), -1);
+        }
 
       SENDER::instance ()->pace_data ();
 
