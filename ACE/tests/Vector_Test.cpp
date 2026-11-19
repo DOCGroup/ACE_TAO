@@ -34,7 +34,9 @@ int run_main (int, ACE_TCHAR *[])
   size_t i;
 
   for (i = 0; i < TOP; ++i)
-    vector.push_back (i);
+    {
+      vector.push_back (i);
+    }
 
   ACE_TEST_ASSERT (vector.size () == TOP);
   ACE_DEBUG ((LM_DEBUG,
@@ -42,7 +44,9 @@ int run_main (int, ACE_TCHAR *[])
               vector.size ()));
 
   for (i = 0; i < TOP; ++i)
-    ACE_TEST_ASSERT (vector[i] == i);
+    {
+      ACE_TEST_ASSERT (vector[i] == i);
+    }
 
   // Test to be sure the iterator gets the correct count and entries.
   ITERATOR iter (vector);
@@ -51,20 +55,28 @@ int run_main (int, ACE_TCHAR *[])
   while (!iter.done ())
     {
       if (iter.next (p_item) == 0)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Fail to get value on iter pass %B\n"),
-                    iter_count));
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Fail to get value on iter pass %B\n"),
+                      iter_count));
+        }
       if (*p_item != iter_count)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Iter pass %B got %B\n"),
-                    iter_count, *p_item));
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Iter pass %B got %B\n"),
+                      iter_count, *p_item));
+        }
       ++iter_count;
       iter.advance();
     }
   if (iter_count != TOP)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Iterated %B elements; expected %B\n"),
-                iter_count, TOP));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Iterated %B elements; expected %B\n"),
+                  iter_count, TOP));
+    }
 
   for (i = 0; i < (TOP - LEFT); ++i)
-    vector.pop_back ();
+    {
+      vector.pop_back ();
+    }
 
   ACE_TEST_ASSERT (vector.size () == LEFT);
   ACE_DEBUG ((LM_DEBUG,
@@ -118,7 +130,9 @@ int run_main (int, ACE_TCHAR *[])
   // 1, 1, 1, 1, 1, 1, 1, 1,
   // 1, 1, 1, 1, 1, 1, 1, 1,
   for (i = 0; i < boundary; ++i)
-    vector2.push_back (FILLER1);
+    {
+      vector2.push_back (FILLER1);
+    }
 
   // we throw almost everything away.
   vector2.resize (1, 0);
@@ -130,12 +144,16 @@ int run_main (int, ACE_TCHAR *[])
   // 2, 2, 2, 2, 2, 2, 2, 2,
   // 2,
   for (i = 0; i < boundary; ++i)
-    vector2.push_back (FILLER2);
+    {
+      vector2.push_back (FILLER2);
+    }
 
   // now we check the result
   ACE_TEST_ASSERT (vector2[0] == FILLER1);
   for (i = 0; i < boundary; ++i)
-    ACE_TEST_ASSERT (vector2[i+1] == FILLER2);
+    {
+      ACE_TEST_ASSERT (vector2[i+1] == FILLER2);
+    }
 
   VECTOR v1;
   VECTOR v2;
