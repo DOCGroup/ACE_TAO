@@ -61,8 +61,10 @@ JAWS_Thread_Per_Task::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
   const int nthreads = 1;
 
   if (this->activate (this->flags_, nthreads, force_active) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "JAWS_Thread_Pool_Task::activate"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "JAWS_Thread_Pool_Task::activate"),
+                        -1);
+    }
 
   this->putq (mb, tv);
 
