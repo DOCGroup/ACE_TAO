@@ -81,12 +81,16 @@ output_return_type (char const *type, bool const is_const)
       if (pointer != nullptr)
         {
           if (std::strstr (type, "const") != nullptr)
-            ACE_OS::printf ("%s", type);
+            {
+              ACE_OS::printf ("%s", type);
+            }
           else
-            ACE_OS::printf ("%.*sconst %s",
-                            static_cast<int> (pointer - type),
-                            type,
-                            pointer);
+            {
+              ACE_OS::printf ("%.*sconst %s",
+                              static_cast<int> (pointer - type),
+                              type,
+                              pointer);
+            }
         }
       else
         {
@@ -167,7 +171,9 @@ Key_List::special_input (char delimiter, std::string& result)
                 continue;
 
               if (!result.empty () && result.back () == '\n')
-                result.pop_back ();
+                {
+                  result.pop_back ();
+                }
               if (delimiter == '%' && !result.empty () && result.back () == ';')
                 {
                   result.pop_back ();
@@ -239,9 +245,11 @@ Key_List::output_types ()
       else
         {
           if (this->array_type_.empty ())
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "empty type definition in input\n"),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "empty type definition in input\n"),
+                                -1);
+            }
 
           // Yow, we've got a user-defined type...
           size_t struct_tag_length = this->array_type_.find_first_of ("{\n");

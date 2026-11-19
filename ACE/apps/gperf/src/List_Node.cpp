@@ -105,10 +105,12 @@ List_Node::List_Node (char const *input, int len)
       // Didn't get any hits and user doesn't want to consider the
       // keylength, so there are essentially no usable hash positions!
       if (this->keysig.empty () && option[NOLENGTH])
-        ACE_ERROR ((LM_ERROR,
-                    "Can't hash keyword %s with chosen key positions.\n%a",
-                    this->key.c_str (),
-                    1));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "Can't hash keyword %s with chosen key positions.\n%a",
+                      this->key.c_str (),
+                      1));
+        }
     }
 
   // Sort the KEYSIG items alphabetically.

@@ -42,10 +42,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   struct tm time_data {};
   if (option[DEBUGGING]
       && ACE_OS::localtime_r (&clock, &time_data) != nullptr)
-    ACE_OS::printf ("/* starting time is %d:%02d:%02d */\n",
-                    time_data.tm_hour,
-                    time_data.tm_min,
-                    time_data.tm_sec);
+    {
+      ACE_OS::printf ("/* starting time is %d:%02d:%02d */\n",
+                      time_data.tm_hour,
+                      time_data.tm_min,
+                      time_data.tm_sec);
+    }
 
   // Initializes the key word list.
   Gen_Perf gperf;
@@ -57,9 +59,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   clock = ACE_OS::time ();
   if (option[DEBUGGING]
       && ACE_OS::localtime_r (&clock, &time_data) != nullptr)
-    ACE_OS::printf ("/* ending time is %d:%02d:%02d */\n",
-                    time_data.tm_hour,
-                    time_data.tm_min,
-                    time_data.tm_sec);
+    {
+      ACE_OS::printf ("/* ending time is %d:%02d:%02d */\n",
+                      time_data.tm_hour,
+                      time_data.tm_min,
+                      time_data.tm_sec);
+    }
   return status;
 }
