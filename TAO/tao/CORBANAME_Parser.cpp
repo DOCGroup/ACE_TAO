@@ -94,9 +94,11 @@ TAO_CORBANAME_Parser::parse_string (const char *ior, CORBA::ORB_ptr orb)
 
       // Check if the Object reference is nil.
       if (CORBA::is_nil (name_context.in ()))
-        TAOLIB_ERROR_RETURN ((LM_ERROR,
-                           "Cannot resolve Naming Service: CORBANAME_Parser\n"),
-                          0);
+        {
+          TAOLIB_ERROR_RETURN ((LM_ERROR,
+                                "Cannot resolve Naming Service: CORBANAME_Parser\n"),
+                               0);
+        }
 
       CORBA::Boolean is_a =
         name_context->_is_a ("IDL:omg.org/CosNaming/NamingContextExt:1.0");
