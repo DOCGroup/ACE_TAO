@@ -121,7 +121,6 @@ public:
   Temperature_impl (Temperature_impl&&) = delete;
   Temperature_impl& operator= (Temperature_impl const&) = delete;
   Temperature_impl& operator= (Temperature_impl&&) = delete;
-  // Constructor for the factory
 
   explicit Temperature_impl (CORBA::Float temp);
   // Constructor, should regularly be a factory create () method.
