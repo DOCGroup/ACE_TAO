@@ -233,51 +233,54 @@ TAO_ORB_Parameters::check_preferred_interfaces_string (const char *s)
   bool expect_wild {true};
   bool found_remote {};
 
-  for (const char *p = s; *p; ++p) switch (*p)
+  for (const char *p = s; *p; ++p)
     {
+      switch (*p)
+        {
 #if !defined (ACE_HAS_IPV6)
-      // Can't use this as assignment operator when IPv6 decimal
-      // addresses may be involved.
-    case ':':
+          // Can't use this as assignment operator when IPv6 decimal
+          // addresses may be involved.
+        case ':':
 #endif /* ACE_HAS_IPV6 */
-    case '=':
-      if (!expect_assign)
-      {
-        return false;
-      }
-      found_remote = true;
-      expect_assign = false;
-      expect_comma = false;
-      expect_wild = true;
-      break;
+        case '=':
+          if (!expect_assign)
+            {
+              return false;
+            }
+          found_remote = true;
+          expect_assign = false;
+          expect_comma = false;
+          expect_wild = true;
+          break;
 
-    case ',':
-      if (!expect_comma)
-      {
-        return false;
-      }
-      found_remote = false;
-      expect_assign = false;
-      expect_comma = false;
-      expect_wild = true;
-      break;
+        case ',':
+          if (!expect_comma)
+            {
+              return false;
+            }
+          found_remote = false;
+          expect_assign = false;
+          expect_comma = false;
+          expect_wild = true;
+          break;
 
-    case '*':
-    case '?':
-      if (!expect_wild)
-      {
-        return false;
-      }
-      expect_assign = !found_remote;
-      expect_comma = found_remote;
-      expect_wild = false;
-      break;
+        case '*':
+        case '?':
+          if (!expect_wild)
+            {
+              return false;
+            }
+          expect_assign = !found_remote;
+          expect_comma = found_remote;
+          expect_wild = false;
+          break;
 
-    default:
-      expect_assign = !found_remote;
-      expect_comma = found_remote;
-      expect_wild = true;
-      break;
+        default:
+          expect_assign = !found_remote;
+          expect_comma = found_remote;
+          expect_wild = true;
+          break;
+        }
     }
 
   return expect_comma && !expect_assign;
