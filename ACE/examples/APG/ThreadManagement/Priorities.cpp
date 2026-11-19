@@ -44,7 +44,9 @@ public:
                 name_));
     // Simulate compute bound task.
     for (int i = 0; i < 100; ++i)
-      ;
+      {
+        ;
+      }
   }
 
 private:

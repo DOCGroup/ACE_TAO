@@ -43,11 +43,13 @@ public:
         int const result = this->getq (mb, &tv);
 
         if (result == -1 && errno == EWOULDBLOCK)
-          continue;
+          {
+            continue;
+          }
         else
-        {
-          process_message (mb);
-        }
+          {
+            process_message (mb);
+          }
       }
 
     ACE_NOTREACHED (return 0);
@@ -82,7 +84,9 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_OS::sleep (1);      // Allow threads to start
 
   for (int i = 0; i < 5; ++i)
-    ACE_OS::kill (ACE_OS::getpid (), SIGUSR1);
+    {
+      ACE_OS::kill (ACE_OS::getpid (), SIGUSR1);
+    }
   handler.wait ();
   return 0;
 }

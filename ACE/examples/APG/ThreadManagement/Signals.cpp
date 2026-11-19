@@ -41,11 +41,13 @@ public:
         tv += ACE_OS::time (nullptr);
         int const result = this->getq (mb, &tv);
         if (result == -1 && errno == EWOULDBLOCK)
-          continue;
+          {
+            continue;
+          }
         else
-        {
-          process_message (mb);
-        }
+          {
+            process_message (mb);
+          }
       }
 
     ACE_NOTREACHED (return 0);
