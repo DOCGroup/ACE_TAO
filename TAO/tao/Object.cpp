@@ -218,9 +218,11 @@ CORBA::Object::_is_a (char const *type_id)
   if (this->protocol_proxy_ == nullptr)
     {
       if (TAO_debug_level > 0)
-        TAOLIB_ERROR ((LM_ERROR,
-                    ACE_TEXT ("TAO (%P|%t) - No protocol proxy for %C\n"),
-                    type_id));
+        {
+          TAOLIB_ERROR ((LM_ERROR,
+                         ACE_TEXT ("TAO (%P|%t) - No protocol proxy for %C\n"),
+                         type_id));
+        }
 
       throw ::CORBA::NO_IMPLEMENT ();
     }
@@ -277,7 +279,9 @@ CORBA::Object::_hash (CORBA::ULong maximum)
   TAO_OBJECT_IOR_EVALUATE_RETURN;
 
   if (this->protocol_proxy_ != nullptr)
-    return this->protocol_proxy_->hash (maximum);
+    {
+      return this->protocol_proxy_->hash (maximum);
+    }
   else
     {
       // Locality-constrained object.
@@ -387,9 +391,11 @@ CORBA::Object::_create_request (CORBA::Context_ptr ctx,
   if (ctx != nullptr || this->protocol_proxy_ == nullptr)
     {
       if (TAO_debug_level > 0)
-        TAOLIB_ERROR ((LM_ERROR,
-                    ACE_TEXT ("TAO (%P|%t) - No protocol proxy for %C\n"),
-                    operation));
+        {
+          TAOLIB_ERROR ((LM_ERROR,
+                         ACE_TEXT ("TAO (%P|%t) - No protocol proxy for %C\n"),
+                         operation));
+        }
 
       throw ::CORBA::NO_IMPLEMENT ();
     }
@@ -431,9 +437,11 @@ CORBA::Object::_create_request (CORBA::Context_ptr ctx,
   if (ctx != nullptr || this->protocol_proxy_ == nullptr)
     {
       if (TAO_debug_level > 0)
-        TAOLIB_ERROR ((LM_ERROR,
-                    ACE_TEXT ("TAO (%P|%t) - No protocol proxy for %C\n"),
-                    operation));
+        {
+          TAOLIB_ERROR ((LM_ERROR,
+                         ACE_TEXT ("TAO (%P|%t) - No protocol proxy for %C\n"),
+                         operation));
+        }
 
       throw ::CORBA::NO_IMPLEMENT ();
     }
@@ -474,9 +482,11 @@ CORBA::Object::_request (char const *operation)
   else
     {
       if (TAO_debug_level > 0)
-        TAOLIB_ERROR ((LM_ERROR,
-                    ACE_TEXT ("TAO (%P|%t) - No protocol proxy for %C\n"),
-                    operation));
+        {
+          TAOLIB_ERROR ((LM_ERROR,
+                         ACE_TEXT ("TAO (%P|%t) - No protocol proxy for %C\n"),
+                         operation));
+        }
 
       throw ::CORBA::NO_IMPLEMENT ();
     }
@@ -545,12 +555,16 @@ CORBA::Object::_get_policy (CORBA::PolicyType type)
   TAO_OBJECT_IOR_EVALUATE_RETURN;
 
   if (this->protocol_proxy_)
-    return this->protocol_proxy_->get_policy (type);
+    {
+      return this->protocol_proxy_->get_policy (type);
+    }
   else
     {
       if (TAO_debug_level > 0)
-        TAOLIB_ERROR ((LM_ERROR,
-                    ACE_TEXT ("TAO (%P|%t) - No protocol proxy in _get_policy\n")));
+        {
+          TAOLIB_ERROR ((LM_ERROR,
+                         ACE_TEXT ("TAO (%P|%t) - No protocol proxy in _get_policy\n")));
+        }
 
       throw ::CORBA::NO_IMPLEMENT ();
     }
@@ -562,12 +576,16 @@ CORBA::Object::_get_cached_policy (TAO_Cached_Policy_Type type)
   TAO_OBJECT_IOR_EVALUATE_RETURN;
 
   if (this->protocol_proxy_)
-    return this->protocol_proxy_->get_cached_policy (type);
+    {
+      return this->protocol_proxy_->get_cached_policy (type);
+    }
   else
     {
       if (TAO_debug_level > 0)
-        TAOLIB_ERROR ((LM_ERROR,
-                    ACE_TEXT ("TAO (%P|%t) - No protocol proxy in _get_policy\n")));
+        {
+          TAOLIB_ERROR ((LM_ERROR,
+                         ACE_TEXT ("TAO (%P|%t) - No protocol proxy in _get_policy\n")));
+        }
 
       throw ::CORBA::NO_IMPLEMENT ();
     }
@@ -583,8 +601,10 @@ CORBA::Object::_set_policy_overrides (
   if (!this->protocol_proxy_)
     {
       if (TAO_debug_level > 0)
-        TAOLIB_ERROR ((LM_ERROR,
-                    ACE_TEXT ("TAO (%P|%t) - No protocol proxy in _get_policy\n")));
+        {
+          TAOLIB_ERROR ((LM_ERROR,
+                         ACE_TEXT ("TAO (%P|%t) - No protocol proxy in _get_policy\n")));
+        }
 
       throw ::CORBA::NO_IMPLEMENT ();
     }
@@ -622,12 +642,16 @@ CORBA::Object::_get_policy_overrides (CORBA::PolicyTypeSeq const &types)
 {
   TAO_OBJECT_IOR_EVALUATE_RETURN;
   if (this->protocol_proxy_)
-    return this->protocol_proxy_->get_policy_overrides (types);
+    {
+      return this->protocol_proxy_->get_policy_overrides (types);
+    }
   else
     {
       if (TAO_debug_level > 0)
-        TAOLIB_ERROR ((LM_ERROR,
-                    ACE_TEXT ("TAO (%P|%t) - No protocol proxy in _get_policy\n")));
+        {
+          TAOLIB_ERROR ((LM_ERROR,
+                         ACE_TEXT ("TAO (%P|%t) - No protocol proxy in _get_policy\n")));
+        }
 
       throw ::CORBA::NO_IMPLEMENT ();
     }
@@ -682,12 +706,16 @@ CORBA::Object::_get_orb ()
     {
       TAO_OBJECT_IOR_EVALUATE_RETURN;
       if (this->protocol_proxy_)
-        return CORBA::ORB::_duplicate (this->protocol_proxy_->orb_core ()->orb ());
+        {
+          return CORBA::ORB::_duplicate (this->protocol_proxy_->orb_core ()->orb ());
+        }
       else
         {
           if (TAO_debug_level > 0)
-            TAOLIB_ERROR ((LM_ERROR,
-                        ACE_TEXT ("TAO (%P|%t) - No protocol proxy in _get_policy\n")));
+            {
+              TAOLIB_ERROR ((LM_ERROR,
+                             ACE_TEXT ("TAO (%P|%t) - No protocol proxy in _get_policy\n")));
+            }
 
           throw ::CORBA::NO_IMPLEMENT ();
         }
@@ -827,10 +855,12 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
   catch (::CORBA::Exception const &ex)
     {
       if (TAO_debug_level > 0)
-        ex._tao_print_exception (
-          ACE_TEXT ("TAO - ERROR creating stub ")
-          ACE_TEXT ("object when demarshaling object ")
-          ACE_TEXT ("reference."));
+        {
+          ex._tao_print_exception (
+            ACE_TEXT ("TAO - ERROR creating stub ")
+            ACE_TEXT ("object when demarshaling object ")
+            ACE_TEXT ("reference."));
+        }
 
       return;
     }
@@ -957,10 +987,12 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
       catch (::CORBA::Exception const &ex)
         {
           if (TAO_debug_level > 0)
-            ex._tao_print_exception (
-              ACE_TEXT ("TAO (%P|%t) - ERROR creating stub ")
-              ACE_TEXT ("object when demarshaling object ")
-              ACE_TEXT ("reference.\n"));
+            {
+              ex._tao_print_exception (
+                ACE_TEXT ("TAO (%P|%t) - ERROR creating stub ")
+                ACE_TEXT ("object when demarshaling object ")
+                ACE_TEXT ("reference.\n"));
+            }
 
           return false;
         }
