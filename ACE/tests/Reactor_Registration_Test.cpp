@@ -104,8 +104,10 @@ Event_Handler::handle_input (ACE_HANDLE handle)
                  buf,
                  sizeof buf - 1);
   if (result != static_cast<ssize_t> (message_size))
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Handler recv'd %b bytes; expected %B\n"),
-                result, message_size));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Handler recv'd %b bytes; expected %B\n"),
+                  result, message_size));
+    }
   buf[result > 0 ? result : 0] = '\0';
 
   ACE_DEBUG ((LM_DEBUG,

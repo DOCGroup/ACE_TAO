@@ -47,21 +47,23 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opt ()) != -1)
-    switch (c)
     {
-    case 'd':
-      close_pipe = 0;
-      break;
-    case 'c':
-      child_process = 1;
-      break;
-    case 'i':
-      iterations = ACE_OS::atoi (get_opt.opt_arg ());
-      break;
-    default:
-      print_usage_and_die ();
-      break;
-  }
+      switch (c)
+        {
+        case 'd':
+          close_pipe = 0;
+          break;
+        case 'c':
+          child_process = 1;
+          break;
+        case 'i':
+          iterations = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        default:
+          print_usage_and_die ();
+          break;
+        }
+    }
 }
 
 // Consolidate the ACE_Pipe initializations.

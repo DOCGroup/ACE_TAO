@@ -34,10 +34,12 @@ test_accept (ACE_Addr listen_addr, int v6_only)
                      0,
                      v6_only) == -1
       || acceptor.get_local_addr (listening_at) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) %p\n"),
-                       ACE_TEXT ("open")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) %p\n"),
+                         ACE_TEXT ("open")),
+                        -1);
+    }
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) listening at port %d\n"),
               listening_at.get_port_number ()));
 
