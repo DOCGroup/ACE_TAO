@@ -22,7 +22,9 @@ consume_arg (int argc, ACE_TCHAR *argv[])
   }
   // Once we initialize an arg_shifter, we must iterate through it all!
   while ((arg_shifter.is_anything_left ()))
-    arg_shifter.ignore_arg (1);
+    {
+      arg_shifter.ignore_arg (1);
+    }
 }
 
 static int
@@ -47,10 +49,12 @@ test_simple_argv (ACE_TCHAR *argv[])
 
   // Print the contents of the combined <ACE_ARGV>.
   for (int i = 0; i < a.argc (); ++i)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT (" (%d) %s\n"),
-                i,
-                a.argv ()[i]));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT (" (%d) %s\n"),
+                  i,
+                  a.argv ()[i]));
+    }
 
   return 0;
 }
@@ -87,14 +91,18 @@ test_argv_type_converter ()
 
   {
     for (size_t i = 0; i < 4; ++i)
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT (" (%B) %C\n"),
-                  i,
-                  argv[i]));
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT (" (%B) %C\n"),
+                    i,
+                    argv[i]));
+      }
   }
 
   for (size_t i = 0; save_argv[i]; ++i)
-    ACE_OS::free (save_argv[i]);
+    {
+      ACE_OS::free (save_argv[i]);
+    }
 
   return 0;
 }
@@ -124,14 +132,18 @@ test_argv_type_converter2 ()
 
   {
     for (size_t i = 0; i < 4; ++i)
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT (" (%B) %s\n"),
-                  i,
-                  argv[i]));
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT (" (%B) %s\n"),
+                    i,
+                    argv[i]));
+      }
   }
 
   for (size_t i = 0; save_argv[i]; ++i)
-    ACE_OS::free (save_argv[i]);
+    {
+      ACE_OS::free (save_argv[i]);
+    }
 
   return 0;
 }
@@ -190,12 +202,16 @@ test_argv_quotes ()
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("argc: %d\n"), argc));
 
   for (int i = 0; i < argc; ++i)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("argv[%02d] = %s\n"), i, argv[i]));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("argv[%02d] = %s\n"), i, argv[i]));
+    }
 
   // args
   ACE_ARGV args;
   for (int i = 0; i < argc; ++i)
-    args.add (argv[i]);
+    {
+      args.add (argv[i]);
+    }
   args.add (ACE_TEXT ("'fourth in single quotes'"));
   args.add (ACE_TEXT ("\"fifth in double quotes\""));
   args.add (ACE_TEXT ("sixth without any quotes"));
@@ -204,7 +220,9 @@ test_argv_quotes ()
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("args.argc (): %d\n"), args.argc ()));
 
   for (int i = 0; i < args.argc (); ++i)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("args[%02d]: %s\n"), i, args[i]));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("args[%02d]: %s\n"), i, args[i]));
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("args.argc (): %d\n"), args.argc ()));
 
@@ -212,15 +230,19 @@ test_argv_quotes ()
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("args.argc (): %d\n"), args.argc ()));
 
   for (int i = 0; i < args.argc (); ++i)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("args.argv ()[%02d]: %s\n"),
-                i, args.argv ()[i]));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("args.argv ()[%02d]: %s\n"),
+                  i, args.argv ()[i]));
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("args.argc (): %d\n"), args.argc ()));
 
   // args2
   ACE_ARGV args2;
   for (int i = 0; i < argc; ++i)
-    args2.add (argv[i], true);
+    {
+      args2.add (argv[i], true);
+    }
   args2.add (ACE_TEXT ("'fourth in single quotes'"), true);
   args2.add (ACE_TEXT ("\"fifth in double quotes\""), true);
   args2.add (ACE_TEXT ("sixth without any quotes"), true);
@@ -229,7 +251,9 @@ test_argv_quotes ()
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("args.argc (): %d\n"), args2.argc ()));
 
   for (int i = 0; i < args2.argc (); ++i)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("args[%02d]: %s\n"), i, args2[i]));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("args[%02d]: %s\n"), i, args2[i]));
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("args.argc (): %d\n"), args2.argc ()));
 
@@ -237,8 +261,10 @@ test_argv_quotes ()
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("args.argc (): %d\n"), args2.argc ()));
 
   for (int i = 0; i < args2.argc (); ++i)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("args.argv ()[%02d]: %s\n"),
-                i, args2.argv ()[i]));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("args.argv ()[%02d]: %s\n"),
+                  i, args2.argv ()[i]));
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("args.argc (): %d\n"), args2.argc ()));
 
@@ -249,7 +275,9 @@ test_argv_quotes ()
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("args.argc (): %d\n"), args3.argc ()));
 
   for (int i = 0; i < args3.argc (); ++i)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("args[%02d]: %s\n"), i, args3[i]));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("args[%02d]: %s\n"), i, args3[i]));
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("args.argc (): %d\n"), args3.argc ()));
 
