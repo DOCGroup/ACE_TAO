@@ -83,11 +83,13 @@ TAO_DIOP_Endpoint::set (const ACE_INET_Addr &addr,
       if (tmp == nullptr)
         {
           if (TAO_debug_level > 0)
-            TAOLIB_DEBUG ((LM_DEBUG,
+            {
+              TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - ")
                         ACE_TEXT ("DIOP_Endpoint::set, ")
                         ACE_TEXT ("%p\n"),
                         ACE_TEXT ("cannot determine hostname\n")));
+            }
           return -1;
         }
       else
@@ -95,7 +97,9 @@ TAO_DIOP_Endpoint::set (const ACE_INET_Addr &addr,
           this->host_ = tmp;
 #if defined (ACE_HAS_IPV6)
           if (addr.get_type () == PF_INET6)
-            this->is_ipv6_decimal_ = true;
+            {
+              this->is_ipv6_decimal_ = true;
+            }
 #endif /* ACE_HAS_IPV6 */
         }
     }
@@ -120,7 +124,9 @@ TAO_DIOP_Endpoint::addr_to_string (char *buffer, size_t length)
 
 #if defined (ACE_HAS_IPV6)
   if (this->is_ipv6_decimal_)
-    actual_len += 2; // '[' + ']'
+    {
+      actual_len += 2; // '[' + ']'
+    }
 #endif /* ACE_HAS_IPV6 */
 
   if (length < actual_len)
@@ -130,12 +136,16 @@ TAO_DIOP_Endpoint::addr_to_string (char *buffer, size_t length)
 
 #if defined (ACE_HAS_IPV6)
   if (this->is_ipv6_decimal_)
-    std::sprintf (buffer, "[%s]:%d",
+    {
+      std::sprintf (buffer, "[%s]:%d",
                      this->host_.in (), this->port_);
+    }
   else
 #endif /* ACE_HAS_IPV6 */
-  std::sprintf (buffer, "%s:%d",
+    {
+      std::sprintf (buffer, "%s:%d",
                    this->host_.in (), this->port_);
+    }
 
   return 0;
 }
@@ -146,7 +156,9 @@ TAO_DIOP_Endpoint::host (const char *h)
   this->host_ = h;
 #if defined (ACE_HAS_IPV6)
   if (std::strchr (h, ':') != nullptr)
-    this->is_ipv6_decimal_ = true;
+    {
+      this->is_ipv6_decimal_ = true;
+    }
 #endif /* ACE_HAS_IPV6 */
 
   return this->host_.in ();
@@ -247,9 +259,11 @@ TAO_DIOP_Endpoint::object_addr_i () const
 #if defined (ACE_HAS_IPV6)
   bool is_ipv4_decimal_ {};
   if (!this->is_ipv6_decimal_)
-    is_ipv4_decimal_ =
-      std::strspn (this->host_.in (), ".0123456789") ==
-      std::strlen (this->host_.in ());
+    {
+      is_ipv4_decimal_ =
+        std::strspn (this->host_.in (), ".0123456789") ==
+        std::strlen (this->host_.in ());
+    }
 
   // If this is *not* an IPv4 decimal address at first try to
   // resolve the address as an IPv6 address; if that fails
