@@ -184,7 +184,9 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   std::array<ACE_Future<int>, status_update_count> results {};
 
   for (int i = 0; i < status_update_count; ++i)
-    results[i] = controller.status_update ();
+    {
+      results[i] = controller.status_update ();
+    }
 
   std::this_thread::sleep_for (std::chrono::seconds (5));  // Do other work.
 

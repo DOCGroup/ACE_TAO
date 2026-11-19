@@ -67,10 +67,12 @@ int CommandTask::svc ()
                   this->module ()->name ()));
 
       if (this->getq (message) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("getq")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("getq")),
+                            -1);
+        }
 
       if (message->msg_type () == ACE_Message_Block::MB_HANGUP)
         {

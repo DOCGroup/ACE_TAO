@@ -190,10 +190,12 @@ int RecordMessageUpstreamTask::process (Command *command)
     (ACE_FILE_Addr *)command->extra_data_;
 
   if (connector.connect (file, *addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("create file")),
-                      Command::RESULT_FAILURE);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("create file")),
+                        Command::RESULT_FAILURE);
+    }
   file.truncate (0);
 
   CommandModule *module =
