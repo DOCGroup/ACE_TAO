@@ -85,7 +85,9 @@ TAO_IIOP_Connection_Handler_Array_Guard::~TAO_IIOP_Connection_Handler_Array_Guar
 {
   ACE_Errno_Guard eguard (errno);
   for (unsigned i {}; i < this->count_; ++i)
-    this->handlers_[i]->remove_reference ();
+    {
+      this->handlers_[i]->remove_reference ();
+    }
 }
 
 //---------------------------------------------------------------------------
@@ -279,13 +281,17 @@ TAO_IIOP_Connector::make_parallel_connection (
   for (TAO_Endpoint *ep = root_ep->next_filtered (this->orb_core(), nullptr);
        ep != nullptr;
        ep = ep->next_filtered (this->orb_core(), root_ep))
-    ++max_count;
+    {
+      ++max_count;
+    }
 
   if (TAO_debug_level > 2)
-    TAOLIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::")
-                ACE_TEXT ("make_parallel_connection, ")
-                ACE_TEXT ("to %B endpoints\n"), max_count));
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::")
+                     ACE_TEXT ("make_parallel_connection, ")
+                     ACE_TEXT ("to %B endpoints\n"), max_count));
+    }
   std::vector<TAO_IIOP_Connection_Handler *> shlist;
   std::vector<TAO_IIOP_Endpoint *> eplist;
   try
@@ -464,7 +470,9 @@ TAO_IIOP_Connector::complete_connection (int result,
 
   //  populate the transport list
   for (unsigned i {}; i < count; ++i)
-    tlist[i] = sh_list[i]->transport();
+    {
+      tlist[i] = sh_list[i]->transport();
+    }
 
   if (result != -1)
     {
@@ -497,10 +505,12 @@ TAO_IIOP_Connector::complete_connection (int result,
                                                      timeout))
             {
               if (TAO_debug_level > 2)
-                TAOLIB_ERROR ((LM_ERROR,
-                            ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::")
-                            ACE_TEXT ("complete_connection, wait for completion ")
-                            ACE_TEXT ("failed for 1 pending connect\n")));
+                {
+                  TAOLIB_ERROR ((LM_ERROR,
+                                 ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::")
+                                 ACE_TEXT ("complete_connection, wait for completion ")
+                                 ACE_TEXT ("failed for 1 pending connect\n")));
+                }
             }
         }
       else
@@ -513,11 +523,13 @@ TAO_IIOP_Connector::complete_connection (int result,
                                                      timeout))
             {
               if (TAO_debug_level > 2)
-                TAOLIB_ERROR ((LM_ERROR,
-                            ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::")
-                            ACE_TEXT ("complete_connection, wait for completion ")
-                            ACE_TEXT ("failed for %u pending connects\n"),
-                            count));
+                {
+                  TAOLIB_ERROR ((LM_ERROR,
+                                 ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::")
+                                 ACE_TEXT ("complete_connection, wait for completion ")
+                                 ACE_TEXT ("failed for %u pending connects\n"),
+                                 count));
+                }
             }
         }
     }
@@ -595,9 +607,11 @@ TAO_IIOP_Connector::complete_connection (int result,
   if (transport->connection_handler()->error_detected(leader_follower))
     {
       if (TAO_debug_level > 0)
-        TAOLIB_DEBUG((LM_DEBUG,
-                   ACE_TEXT("TAO (%P|%t) - IIOP_Connector::make_connection, ")
-                   ACE_TEXT("transport in error before cache!\n")));
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
+                         ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::make_connection, ")
+                         ACE_TEXT ("transport in error before cache!\n")));
+        }
       transport->connection_handler()->cancel_pending_connection();
       return nullptr;
     }
@@ -656,9 +670,11 @@ TAO_IIOP_Connector::complete_connection (int result,
   if (svc_handler->error_detected(leader_follower))
     {
       if (TAO_debug_level > 0)
-        TAOLIB_DEBUG((LM_DEBUG,
-                   ACE_TEXT("TAO (%P|%t) - IIOP_Connector::make_connection, ")
-                   ACE_TEXT("transport in error after cache!\n")));
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
+                         ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::make_connection, ")
+                         ACE_TEXT ("transport in error after cache!\n")));
+        }
       svc_handler->cancel_pending_connection();
       transport->purge_entry();
       return nullptr;
@@ -725,13 +741,17 @@ TAO_IIOP_Connector::check_prefix (const char *endpoint)
 {
   // Check for a valid string
   if (endpoint == nullptr || *endpoint == '\0')
-    return -1;  // Failure
+    {
+      return -1;  // Failure
+    }
 
   static char const * const protocol[] = { "iiop", "iioploc" };
 
   size_t const slot = std::strchr (endpoint, ':') - endpoint;
   if (slot == 0) // an empty string is valid for corbaloc.
-    return 0;
+    {
+      return 0;
+    }
 
   size_t const len0 = std::strlen (protocol[0]);
   size_t const len1 = std::strlen (protocol[1]);
@@ -739,9 +759,13 @@ TAO_IIOP_Connector::check_prefix (const char *endpoint)
   // Check for the proper prefix in the IOR.  If the proper prefix
   // isn't in the IOR then it is not an IOR we can use.
   if (slot == len0 && ACE_OS::strncasecmp (endpoint, protocol[0], len0) == 0)
-    return 0;
+    {
+      return 0;
+    }
   else if (slot == len1 && ACE_OS::strncasecmp (endpoint, protocol[1], len1) == 0)
-    return 0;
+    {
+      return 0;
+    }
 
   return -1;
   // Failure: not an IIOP IOR
