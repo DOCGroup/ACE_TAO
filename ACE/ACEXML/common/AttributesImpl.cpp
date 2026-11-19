@@ -18,7 +18,9 @@ ACEXML_AttributesImpl::ACEXML_AttributesImpl (
     attrs_ (attrs.attrs_.size ())
 {
   for (size_t i = 0; i < attrs.attrs_.size (); ++i)
-    this->attrs_[i] = attrs.attrs_[i];
+    {
+      this->attrs_[i] = attrs.attrs_[i];
+    }
 }
 
 ACEXML_AttributesImpl::~ACEXML_AttributesImpl () = default;
@@ -96,9 +98,11 @@ int
 ACEXML_AttributesImpl::getIndex (const ACEXML_Char *qName)
 {
   for (size_t i = 0; i < this->attrs_.size (); ++i)
-    if (ACE_OS::strcmp (qName, this->attrs_[i].qName ()) == 0)
     {
-      return static_cast<int> (i);
+      if (ACE_OS::strcmp (qName, this->attrs_[i].qName ()) == 0)
+        {
+          return static_cast<int> (i);
+        }
     }
 
   return -1;
@@ -109,10 +113,12 @@ ACEXML_AttributesImpl::getIndex (const ACEXML_Char *uri,
                                  const ACEXML_Char *localPart)
 {
   for (size_t i = 0; i < this->attrs_.size (); ++i)
-    if (ACE_OS::strcmp (uri, this->attrs_[i].uri ()) == 0 &&
-        ACE_OS::strcmp (localPart, this->attrs_[i].localName ()) == 0)
     {
-      return static_cast<int> (i);
+      if (ACE_OS::strcmp (uri, this->attrs_[i].uri ()) == 0 &&
+          ACE_OS::strcmp (localPart, this->attrs_[i].localName ()) == 0)
+        {
+          return static_cast<int> (i);
+        }
     }
 
   return -1;
@@ -158,9 +164,11 @@ const ACEXML_Char *
 ACEXML_AttributesImpl::getType (const ACEXML_Char *qName)
 {
   for (size_t i = 0; i < this->attrs_.size (); ++i)
-    if (ACE_OS::strcmp (qName, this->attrs_[i].qName ()) == 0)
     {
-      return this->attrs_[i].type ();
+      if (ACE_OS::strcmp (qName, this->attrs_[i].qName ()) == 0)
+        {
+          return this->attrs_[i].type ();
+        }
     }
 
   return nullptr;
@@ -171,10 +179,12 @@ ACEXML_AttributesImpl::getType (const ACEXML_Char *uri,
                                 const ACEXML_Char *localPart)
 {
   for (size_t i = 0; i < this->attrs_.size (); ++i)
-    if (ACE_OS::strcmp (uri, this->attrs_[i].uri ()) == 0 &&
-        ACE_OS::strcmp (localPart, this->attrs_[i].localName ()) == 0)
     {
-      return this->attrs_[i].type ();
+      if (ACE_OS::strcmp (uri, this->attrs_[i].uri ()) == 0 &&
+          ACE_OS::strcmp (localPart, this->attrs_[i].localName ()) == 0)
+        {
+          return this->attrs_[i].type ();
+        }
     }
 
   return nullptr;
@@ -204,9 +214,11 @@ const ACEXML_Char *
 ACEXML_AttributesImpl::getValue (const ACEXML_Char *qName)
 {
   for (size_t i = 0; i < this->attrs_.size (); ++i)
-    if (ACE_OS::strcmp (qName, this->attrs_[i].qName ()) == 0)
     {
-      return this->attrs_[i].value ();
+      if (ACE_OS::strcmp (qName, this->attrs_[i].qName ()) == 0)
+        {
+          return this->attrs_[i].value ();
+        }
     }
 
   return nullptr;
@@ -217,10 +229,12 @@ ACEXML_AttributesImpl::getValue (const ACEXML_Char *uri,
                                  const ACEXML_Char *localPart)
 {
   for (size_t i = 0; i < this->attrs_.size (); ++i)
-    if (ACE_OS::strcmp (uri, this->attrs_[i].uri ()) == 0 &&
-        ACE_OS::strcmp (localPart, this->attrs_[i].localName ()) == 0)
     {
-      return this->attrs_[i].value ();
+      if (ACE_OS::strcmp (uri, this->attrs_[i].uri ()) == 0 &&
+          ACE_OS::strcmp (localPart, this->attrs_[i].localName ()) == 0)
+        {
+          return this->attrs_[i].value ();
+        }
     }
 
   return nullptr;

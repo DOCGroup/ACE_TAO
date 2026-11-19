@@ -73,7 +73,9 @@ ACEXML_NamespaceSupport::pushContext ()
   for (ACEXML_NS_CONTEXT_ITER iter (*this->effective_context_);
        iter.next (entry) != 0;
        iter.advance ())
-    new_context->bind (entry->ext_id_, entry->int_id_);
+    {
+      new_context->bind (entry->ext_id_, entry->int_id_);
+    }
 
   if (this->ns_stack_.push (this->effective_context_.get ()) != 0)
   {
@@ -107,7 +109,9 @@ ACEXML_NamespaceSupport::init ()
 ACEXML_NamespaceSupport::~ACEXML_NamespaceSupport ()
 {
   while (this->popContext () == 0)
-    ;
+    {
+      ;
+    }
 }
 
 int
@@ -142,7 +146,9 @@ ACEXML_NamespaceSupport::getDeclaredPrefixes (ACEXML_STR_LIST &prefixes) const
   for (ACEXML_NS_CONTEXT_ITER iter (*this->effective_context_);
        iter.next (entry) != 0;
        iter.advance ())
-    prefixes.enqueue_tail (entry->ext_id_.c_str ());
+    {
+      prefixes.enqueue_tail (entry->ext_id_.c_str ());
+    }
 
   return 0;
 }
@@ -160,9 +166,11 @@ ACEXML_NamespaceSupport::getPrefix (const ACEXML_Char *uri) const
   for (ACEXML_NS_CONTEXT_ITER iter (*this->effective_context_);
        iter.next (entry) != 0;
        iter.advance ())
-    if (entry->int_id_ == ACEXML_String (uri, 0, false))
     {
-      return entry->ext_id_.c_str ();
+      if (entry->int_id_ == ACEXML_String (uri, 0, false))
+        {
+          return entry->ext_id_.c_str ();
+        }
     }
 
   return nullptr;               // Nothing found.
@@ -178,7 +186,9 @@ ACEXML_NamespaceSupport::getPrefixes (ACEXML_STR_LIST &prefixes) const
   for (ACEXML_NS_CONTEXT_ITER iter (*this->effective_context_);
        iter.next (entry) != 0;
        iter.advance ())
-    prefixes.enqueue_tail (entry->ext_id_.c_str ());
+    {
+      prefixes.enqueue_tail (entry->ext_id_.c_str ());
+    }
   return 0;
 }
 
@@ -196,12 +206,16 @@ ACEXML_NamespaceSupport::getPrefixes (const ACEXML_Char *uri,
   for (ACEXML_NS_CONTEXT_ITER iter (*this->effective_context_);
        iter.next (entry) != 0;
        iter.advance ())
-    if (entry->int_id_ == ACEXML_String (uri, 0, false) &&
-        entry->ext_id_ != ACEXML_String (ACEXML_DEFAULT_NS_PREFIX, 0, false))
-      prefixes.enqueue_tail (entry->ext_id_.c_str ());
-    else
     {
-      continue;
+      if (entry->int_id_ == ACEXML_String (uri, 0, false) &&
+          entry->ext_id_ != ACEXML_String (ACEXML_DEFAULT_NS_PREFIX, 0, false))
+        {
+          prefixes.enqueue_tail (entry->ext_id_.c_str ());
+        }
+      else
+        {
+          continue;
+        }
     }
 
   return 0;                     // Nothing found.
@@ -234,30 +248,37 @@ ACEXML_NamespaceSupport::processName (ACEXML_Char const *qName,
   int qlen = static_cast<int> (ACE_OS::strlen (qName));
   int len = -1;
   for (int i = 0; i < qlen; ++i)
-    if (qName [i] == ':')
       {
-        len = i;
-        break;
+        if (qName [i] == ':')
+          {
+            len = i;
+            break;
+          }
       }
 
   ACEXML_String prefix (ACE_TEXT (""), 0, false);
   if (len == -1)
+    {
       name = qName;
+    }
   else
     {
       prefix.set (qName, len, 1);
       name = qName + len + 1;
     }
 
-  if (is_attribute && len == -1) {
-    uri = ACEXML_DEFAULT_NS_PREFIX;
-    return 0;
-  }
+  if (is_attribute && len == -1)
+    {
+      uri = ACEXML_DEFAULT_NS_PREFIX;
+      return 0;
+    }
 
   ACEXML_NS_CONTEXT_ENTRY *entry {};
 
   if (this->effective_context_->find (prefix, entry) == 0)
-    uri = entry->int_id_.c_str ();
+    {
+      uri = entry->int_id_.c_str ();
+    }
   else
     {
       uri = ACEXML_DEFAULT_NS_PREFIX;
@@ -270,7 +291,9 @@ int
 ACEXML_NamespaceSupport::reset ()
 {
   while (this->popContext() != -1)
-    ;
+    {
+      ;
+    }
   return 0;
 }
 
