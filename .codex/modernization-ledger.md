@@ -13772,3 +13772,14 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   do not read moved-from objects. The `std::move` of a string literal in the
   compiler feature probe is intentional overload/forwarding coverage. No
   source changes were needed. No build or tests were run.
+
+## 2026-11-19 ACE examples std::move call-site audit
+
+- Reviewed all `std::move` sites under ACE/examples (13 files) in APG Naming
+  and Reactor, three QoS examples, Smart_Pointers, Web_Crawler, and Threads.
+- String constructor/member transfers are not reused after the move. QoS
+  examples retain valid raw observers because the pointee is owned by the
+  destination vector. Widget parts transfer between unique owners; the
+  non-owning observer is used only while the widget owns the object. URL
+  command construction consumes its unique pointer. No moved-from reads or
+  ownership errors were found. No source changes/builds/tests were needed.

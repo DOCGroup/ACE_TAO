@@ -280,6 +280,14 @@ ACE/ace	CLEANUP	done	46b21c52a7d	Removed redundant special member labels from ei
 ACE/ace	CONST	done	47ead510b06	Normalized DEV_Addr parameter and return pointer const placement
 ACE/ace	CONST_GUARD_MACROS	done	3b46834200d	Added const guard macro variants without changing existing ACE_GUARD behavior; targeted fuzz check passed
 ACE/ace	MOVE_SITES	done	-	Reviewed all std::move sites across 7 files: Process.cpp, Monitor_Control/Constraint_Interpreter.cpp, WFMO_Reactor.cpp, XML_Schema_Resolver.cpp, XercesString.cpp, XSCRT/XML.hpp, and XMLSchema/TypeInfo.tpp; moved-from locals are not read, and ownership transfer destinations remain valid
+ACE/examples/APG/Naming	MOVE_SITES	done	-	Reviewed Thermometer.h constructor transfer; its address string is moved into member storage and not reused.
+ACE/examples/APG/Reactor	MOVE_SITES	done	-	Reviewed Timer_State_Data.cpp constructor transfer; its location string is moved into member storage and not reused.
+ACE/examples/QOS/Change_Receiver_FlowSpec	MOVE_SITES	done	-	Reviewed flow-spec ownership transfer; the raw observer remains valid because the pointee is owned by the vector after transfer.
+ACE/examples/QOS/Change_Sender_TSpec	MOVE_SITES	done	-	Reviewed flow-spec ownership transfer; the raw observer remains valid because the pointee is owned by the vector after transfer.
+ACE/examples/QOS/Simple	MOVE_SITES	done	-	Reviewed flow-spec ownership transfer; the raw observer remains valid because the pointee is owned by the vector after transfer.
+ACE/examples/Smart_Pointers	MOVE_SITES	done	-	Reviewed widget-part transfers between unique_ptr owners; the observer is used only while the widget retains ownership, and moved-from pointers are not read.
+ACE/examples/Web_Crawler	MOVE_SITES	done	-	Reviewed URL command and URL address transfers; ownership is consumed at construction/member assignment and moved-from values are not read.
+ACE/examples/Threads	MOVE_SITES	done	-	Reviewed both Scheduler constructors; name strings are moved into member storage and not reused.
 ACE/ace	NULLPTR	done	84ebf146d46	Replaced remaining active pointer zero sentinels in ACE.cpp, ATM_Addr.cpp, ATM_Stream.cpp, Local_Tokens.inl, Mem_Map.inl, OS_NS_arpa_inet.cpp, and OS_NS_stropts.inl; realclean ACE core build passed
 ACE/ace	PREFIX_INC	done	5496213dbbe	Changed discarded postfix operations to prefix across 76 files; retained cases where old value is used; ACE core realclean build passed This follow-up changed the discarded rw->num_waiting_writers_++ increment to prefix; ACE realclean build linked successfully.
 ACE/ace	SPECIAL_MEMBER_COMMENTS	done	aa2a8921a2e	Removed 424 standalone constructor/destructor labels from 151 tracked source files; realclean core build passed; existing override and tempnam/mktemp linker warnings remain
