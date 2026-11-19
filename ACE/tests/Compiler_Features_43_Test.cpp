@@ -72,7 +72,10 @@ struct TAO_DynValue_i : virtual DynamicAny::DynValue, virtual TAO_DynValueCommon
             cached->_add_ref();
             throw cached; // throw of the raw pointer
         }
-        if (!cached) cached = this;
+        if (!cached)
+          {
+            cached = this;
+          }
     }
     void _add_ref() { ACE_DEBUG ((LM_DEBUG, ACE_TEXT("    _add_ref on %@\n"), static_cast<void *> (this))); }
 };

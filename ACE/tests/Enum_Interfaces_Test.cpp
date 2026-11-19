@@ -60,12 +60,14 @@ run_main (int, ACE_TCHAR *[])
       for (size_t i = 0; i < how_many; ++i)
         {
           if (the_addr_array[i].get_type() == AF_INET)
-          {
-            ++num_ipv4;
-          }
+            {
+              ++num_ipv4;
+            }
 #if defined (ACE_HAS_IPV6)
           else if (the_addr_array[i].get_type() == AF_INET6)
-            ++num_ipv6;
+            {
+              ++num_ipv6;
+            }
 #endif /* ACE_HAS_IPV6 */
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\t%C\n"),
                     the_addr_array[i].get_host_addr ()));
