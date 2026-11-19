@@ -584,8 +584,8 @@ TAO_ZIOP_Loader::complete_compression (Compression::Compressor_ptr compressor,
                     ACE_TEXT ("ZIOP (%P|%t) ")
                     ACE_TEXT ("TAO_ZIOP_Loader::complete_compression, ")
                     ACE_TEXT ("COMPRESSION_LOW_VALUE_POLICY applied, ")
-                    ACE_TEXT ("message length %u < %u (did not compress).\n"),
-                    static_cast <unsigned int> (original_data_length),
+                    ACE_TEXT ("message length %B < %u (did not compress).\n"),
+                    original_data_length,
                     static_cast <unsigned int> (low_value)));
         return false;
       }

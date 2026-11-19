@@ -13712,3 +13712,18 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   uses are C printf/output or generated-code formatting contexts.
 - No code changes or tests were needed; repository state was unchanged by the
   scans.
+
+
+## 2026-11-19 ACE and TAO size_t logging format corrections
+
+- Corrected active ACE logging calls that passed `size_t` values to `%d` in
+  WFMO_Reactor, Service_Repository, and Service_Gestalt. Updated the shared
+  memory segment count to `%B`, and corrected its base pointer (`%@`) and
+  64-bit file offset (`%q`) formatting to avoid truncation.
+- Corrected TAO's ZIOP low-value diagnostic to log the full `size_t`
+  original length with `%B` instead of narrowing it to `unsigned int` for
+  `%u`.
+- Verified the relevant declarations and ACE logger formatter definitions;
+  `git diff --check` passed. No build or tests were run.
+- The repository-wide formatter audit remains open; this batch covers the
+  confirmed ACE core and TAO ZIOP sites found during the current scan.

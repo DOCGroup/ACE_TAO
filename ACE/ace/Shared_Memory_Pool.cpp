@@ -126,10 +126,10 @@ ACE_Shared_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
   if (counter == this->max_segments_)
     {
       ACELIB_ERROR_RETURN ((LM_ERROR,
-                        "ACE_Shared_Memory_Pool::commit_backing_store_name, exceeded max number of segments = %d, base = %u, offset = %u\n",
+                        "ACE_Shared_Memory_Pool::commit_backing_store_name, exceeded max number of segments = %B, base = %@, offset = %q\n",
                         counter,
                         this->shm_addr_table_[0],
-                        static_cast<unsigned int>(offset)),
+                        static_cast<ACE_INT64> (offset)),
                         -1);
     }
   else

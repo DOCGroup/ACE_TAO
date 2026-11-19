@@ -96,7 +96,7 @@ ACE_Service_Type_Dynamic_Guard::~ACE_Service_Type_Dynamic_Guard ()
       if (ACE::debug ())
       {
         ACELIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("ACE (%P|%t) STDG::<dtor>, repo=%@ [%d], ")
+                    ACE_TEXT ("ACE (%P|%t) STDG::<dtor>, repo=%@ [%B], ")
                     ACE_TEXT ("name=%s - updating dependents [%d - %B)\n"),
                     &this->repo_,
                     slot,
@@ -114,7 +114,7 @@ ACE_Service_Type_Dynamic_Guard::~ACE_Service_Type_Dynamic_Guard ()
       if (ACE::debug ())
       {
         ACELIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("ACE (%P|%t) STDG::<dtor>, repo=%@ [%d], ")
+                    ACE_TEXT ("ACE (%P|%t) STDG::<dtor>, repo=%@ [%B], ")
                     ACE_TEXT ("name=%s - loaded (type=%@, impl=%@, object=%@, active=%d)\n"),
                     &this->repo_,
                     slot,
