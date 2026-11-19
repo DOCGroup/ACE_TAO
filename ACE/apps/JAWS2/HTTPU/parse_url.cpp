@@ -69,7 +69,9 @@ HTTP_Parse_URL::parse_url ()
   char *q;
   if ((q = std::strchr (this->url_, '\r'))
       || (q = std::strchr (this->url_, '\n')))
-    *q = '\0';
+    {
+      *q = '\0';
+    }
 
   this->parse_scheme (p);
   if (*p == '\0')
@@ -89,10 +91,14 @@ HTTP_Parse_URL::parse_url ()
   this->parse_host (p);
 
   while (*p == '/')
-    ++p;
+    {
+      ++p;
+    }
 
   if (*p == '\0')
-    return;
+    {
+      return;
+    }
 
   this->url_path_ = p;
   this->is_cgi (this->url_path_);
@@ -150,7 +156,9 @@ HTTP_Parse_URL::parse_host (char *&p)
           if (colon1 == nullptr)
             {
               if (at != nullptr && colon2 == nullptr)
-                colon2 = q;
+                {
+                  colon2 = q;
+                }
               else
               {
                 colon1 = q;
@@ -178,7 +186,9 @@ HTTP_Parse_URL::parse_host (char *&p)
   if (at == nullptr && colon1 == nullptr)
     {
       if (*p != '\0' && *p != '/')
-        this->host_ = p;
+        {
+          this->host_ = p;
+        }
     }
 
   // no user, port
@@ -198,7 +208,9 @@ HTTP_Parse_URL::parse_host (char *&p)
       this->user_ = p;
       *at++ = '\0';
       if (*at != '\0' && *at != '/')
-        this->host_ = at;
+        {
+          this->host_ = at;
+        }
     }
 
   // user, no passwd, port
@@ -222,7 +234,9 @@ HTTP_Parse_URL::parse_host (char *&p)
       this->passwd_ = colon1;
       *at++ = '\0';
       if (*at != '\0')
-        this->host_ = at;
+        {
+          this->host_ = at;
+        }
     }
 
   // user, passwd, and port
