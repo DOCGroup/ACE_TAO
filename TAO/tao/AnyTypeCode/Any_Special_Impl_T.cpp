@@ -50,7 +50,9 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::insert (CORBA::Any & any,
     }
 
   if (CORBA::is_nil (bounded_tc.in ()))
-    return;
+    {
+      return;
+    }
 
   Any_Special_Impl_T<T, from_T, to_T> * new_impl;
   ACE_NEW (new_impl,
@@ -128,7 +130,9 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (CORBA::Any const & any,
         dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
       if (!unk)
-        return false;
+        {
+          return false;
+        }
 
       // We don't want the rd_ptr of unk to move, in case it is
       // shared by another Any. This copies the state, not the buffer.
