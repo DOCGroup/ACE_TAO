@@ -30,7 +30,7 @@ Scope: **1268 directories**; **1230** differ from the base; **1281** have task-l
 | `PREFIX_INC` — Prefer prefix increment and decrement when equivalent | 47 | 45 | 2 | 0 |
 | `BRACES` — Consistent braces around control-flow bodies | 8 | 2 | 0 | 6 |
 | `CONST_GUARD_MACROS` — Const guard macro usage while preserving ACE_GUARD conventions | 2 | 2 | 0 | 0 |
-| `MOVE_SITES` — Audit std::move sites for moved-from use and ownership correctness | 5 | 4 | 1 | 0 |
+| `MOVE_SITES` — Audit std::move sites for moved-from use and ownership correctness | 6 | 5 | 1 | 0 |
 | `MOVE_SEMANTICS` — Copy/move semantics and moved-from object safety | 6 | 6 | 0 | 0 |
 | `SIZE_TYPES` — Count and size types | 58 | 34 | 15 | 9 |
 | `IDL_GENERATION` — tao_idl/gperf inputs and generated output | 36 | 6 | 30 | 0 |
@@ -280,7 +280,7 @@ Scope: **1268 directories**; **1230** differ from the base; **1281** have task-l
 | `TAO/tao/PI_Server` | VALUE_INIT; OWNERSHIP; CONTAINERS; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Directory checklist still needs broader review | partial | `c56d73bc10c` |
 | `TAO/tao/PortableServer` | CONST; VALUE_INIT; ATOMIC; OWNERSHIP; C_STRING; MOVE_SITES; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | PortableServer ownership audit remains incomplete; other applicable modernization categories still need review | partial | `0ba18368694` |
 | `TAO/tao/RTCORBA` | VALUE_INIT; CLEANUP; SPECIAL_MEMBER_COMMENTS; BUILD_TEST; DIRECTORY_PASS | Remaining modernization categories are not yet audited | partial | `cfbc78f6654` |
-| `TAO/tao/RTScheduling` | CONST; LOG_FORMAT; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Remaining modernization categories are not yet audited | partial | `aa144353486` |
+| `TAO/tao/RTScheduling` | CONST; MOVE_SITES; LOG_FORMAT; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Remaining modernization categories are not yet audited | partial | `aa144353486` |
 | `TAO/tao/SmartProxies` | CONST=n/a; VALUE_INIT=n/a; NULLPTR=n/a; OVERRIDE_DEFAULT_DELETE; EXPORTED_DESTRUCTORS; EXPLICIT; COPY_MOVE; ATOMIC=n/a; THREAD_SAFETY=n/a; USING=n/a; CONSTEXPR=n/a; OWNERSHIP; CONTAINERS=n/a; C_STRING=n/a; PREFIX_INC=n/a; SIZE_TYPES=n/a; IDL_GENERATION=n/a; CLI_OPTIONS=n/a; LOG_FORMAT=n/a; TEST_ASSERTIONS=n/a; CLEANUP; UNUSED_INCLUDES; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST; TEXT_API=n/a; DIRECTORY_PASS |  | audited | `ab6126aaa8a` |
 | `TAO/tao/TransportCurrent` | CONST; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Remaining modernization categories are not yet audited | partial | `159588586e0` |
 | `TAO/tao/TypeCodeFactory` | CONST; VALUE_INIT; NULLPTR; OVERRIDE_DEFAULT_DELETE; COPY_MOVE; USING; OWNERSHIP; CONTAINERS; C_STRING; PREFIX_INC; SIZE_TYPES; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Other applicable modernization categories still need review | partial | `2bd176959a2` |

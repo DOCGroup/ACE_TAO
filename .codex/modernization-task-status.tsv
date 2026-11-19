@@ -3117,6 +3117,7 @@ TAO/tao/RTPortableServer	SPECIAL_MEMBER_COMMENTS	done	34c008581e7	Removed four s
 TAO/tao/RTScheduling	BUILD_TEST	done	aa144353486	Realclean-built and linked TAO_RTScheduler without compiler warnings
 TAO/tao/RTScheduling	CONST	done	aa144353486	Marked GUID temporaries and hash operation results const where their values are not reassigned
 TAO/tao/RTScheduling	LOG_FORMAT	done	aa144353486	Used ACE %B for size_t GUIDs and %ld for the atomic long counter
+TAO/tao/RTScheduling	MOVE_SITES	done	ec07082e9cd	Manually reviewed both std::move sites: current_owner transfers into DTTask and its unique_ptr member; svc releases that owner to TSS before using the raw pointer. No moved-from reads. clang-tidy could not parse Current.cpp because generated RTSchedulerC.h is absent.
 TAO/tao/RTScheduling	SPECIAL_MEMBER_COMMENTS	done	b887dd4a117	Removed four standalone constructor/destructor labels; realclean build and link passed without warnings
 TAO/tao/SmartProxies	ATOMIC	not-applicable	ab6126aaa8a	No atomic state.
 TAO/tao/SmartProxies	BUILD_TEST	done	ab6126aaa8a	GNUmakefile.SmartProxies realclean-built with make -j 8; library compiled and linked without warnings.

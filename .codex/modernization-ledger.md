@@ -13554,3 +13554,10 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Reviewed all 12 `std::move` sites in `TAO/tao/PortableServer`: six Active Object Map strategy/map owners transfer into the object, the ObjectId sequence is moved into its output owner and never read again, and Object Adapter moves hint/map owners plus root POA and manager factory ownership for teardown. No moved-from object is read.
 - `clang-tidy` `bugprone-use-after-move` on `Active_Object_Map.cpp` and `Object_Adapter.cpp` produced no findings. No source edits were needed; no build or runtime test was run.
 - Evidence commit: `59014ce2761`.
+
+
+## 2026-11-19 TAO RTScheduling move-site audit
+
+- Reviewed both `std::move` sites in `TAO/tao/RTScheduling/Current.cpp`. `current_owner` transfers into `DTTask` and then its `current_` unique_ptr member. In `svc()`, ownership is released to thread-specific storage before the pointer is used; the moved-from owners are not read.
+- Recorded `MOVE_SITES` as done. `bugprone-use-after-move` could not parse `Current.cpp` because generated `RTSchedulerC.h` is absent in this checkout. No source edits, build, or runtime test were made.
+- Evidence commit: `ec07082e9cd`.
