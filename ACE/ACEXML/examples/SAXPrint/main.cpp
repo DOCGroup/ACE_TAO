@@ -108,10 +108,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           std::unique_ptr<ACEXML_FileCharStream> fstm =
             std::make_unique<ACEXML_FileCharStream> ();
           if (fstm->open (filename) != 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Failed to open XML file: %s\n"),
-                               filename),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Failed to open XML file: %s\n"),
+                                 filename),
+                                -1);
+            }
           stm = std::move (fstm);
 #ifdef USE_ZZIP
         }
@@ -122,10 +124,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       std::unique_ptr<ACEXML_HttpCharStream> ustm =
         std::make_unique<ACEXML_HttpCharStream> ();
       if (ustm->open (url) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Failed to open URL : %s\n"),
-                           url),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Failed to open URL : %s\n"),
+                             url),
+                            -1);
+        }
       stm = std::move (ustm);
     }
   else
@@ -133,16 +137,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       std::unique_ptr<ACEXML_StrCharStream> sstm =
         std::make_unique<ACEXML_StrCharStream> ();
       if (sstm->open (test_string, ACE_TEXT ("test_string")) < 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Failed to open string : %s\n"),
-                           test_string),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Failed to open string : %s\n"),
+                             test_string),
+                            -1);
+        }
       stm = std::move (sstm);
     }
 
   ACEXML_Char const * const name = (filename == nullptr) ? url : filename;
   if (!sax)
-    handler = std::make_unique<ACEXML_Print_Handler> (name);
+    {
+      handler = std::make_unique<ACEXML_Print_Handler> (name);
+    }
   else
   {
     handler = std::make_unique<ACEXML_SAXPrint_Handler> (name);

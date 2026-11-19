@@ -95,11 +95,13 @@ ACEXML_Print_Handler::startElement (ACEXML_Char const *uri,
               uri, name, qName));
 
   if (alist != nullptr)
-    for (size_t i = 0; i < alist->getLength (); ++i)
       {
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("    %s = \"%s\"\n"),
-                    alist->getQName (i), alist->getValue (i)));
+        for (size_t i = 0; i < alist->getLength (); ++i)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("    %s = \"%s\"\n"),
+                        alist->getQName (i), alist->getValue (i)));
+          }
       }
 }
 
@@ -125,17 +127,23 @@ ACEXML_Print_Handler::notationDecl (ACEXML_Char const *name,
               name));
 
   if (publicID == nullptr)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("SYSTEM %s\n"),
-                systemID));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("SYSTEM %s\n"),
+                  systemID));
+    }
   else if (systemID == nullptr)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("PUBLIC %s\n"),
-                publicID));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("PUBLIC %s\n"),
+                  publicID));
+    }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("PUBLIC %s %s\n"),
-                publicID, systemID));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("PUBLIC %s %s\n"),
+                  publicID, systemID));
+    }
 }
 
 void
@@ -149,13 +157,17 @@ ACEXML_Print_Handler::unparsedEntityDecl (ACEXML_Char const *name,
               name));
 
   if (publicID == nullptr)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT (" SYSTEM %s"),
-                systemID));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT (" SYSTEM %s"),
+                  systemID));
+    }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT (" PUBLIC %s %s"),
-                publicID, systemID));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT (" PUBLIC %s %s"),
+                  publicID, systemID));
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT (" NDATA %s\n"),

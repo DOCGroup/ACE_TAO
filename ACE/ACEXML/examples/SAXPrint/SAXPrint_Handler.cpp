@@ -103,11 +103,13 @@ ACEXML_SAXPrint_Handler::startElement (ACEXML_Char const *,
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("<%s"),
               qName));
   if (alist != nullptr)
-    for (size_t i = 0; i < alist->getLength (); ++i)
       {
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT (" %s = \"%s\""),
-                    alist->getQName (i), alist->getValue (i)));
+        for (size_t i = 0; i < alist->getLength (); ++i)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT (" %s = \"%s\""),
+                        alist->getQName (i), alist->getValue (i)));
+          }
       }
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT (">")));
   this->inc_indent ();
@@ -198,5 +200,7 @@ ACEXML_SAXPrint_Handler::print_indent ()
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
   for (size_t i = 0; i < this->indent_; ++i)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("  ")));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("  ")));
+    }
 }

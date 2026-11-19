@@ -106,7 +106,9 @@ ACEXML_Debug_Attribute_Builder::dump ()
         while (iter.advance () != 0)
           {
             if (n == nullptr)
-              cout << " | ";
+              {
+                cout << " | ";
+              }
             iter.next (n);
             cout << *n;
           }
