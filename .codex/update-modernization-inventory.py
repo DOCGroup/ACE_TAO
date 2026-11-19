@@ -27,6 +27,7 @@ TASKS = {
     "CONST": "East-side const and immutable locals/handles",
     "SCOPE_REDUCTION": "Keep variables and declarations in the narrowest useful scope",
     "VALUE_INIT": "Value initialization and simpler constructors",
+    "BOOL_ARGUMENTS": "Use Boolean literals for Boolean arguments",
     "NULLPTR": "Eligible nullptr modernization",
     "OVERRIDE_DEFAULT_DELETE": "override/default/delete and exported destructor placement",
     "OVERRIDE": "Missing override specifiers",

@@ -13527,3 +13527,9 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 
 - Scanned all 15 `TAO/tao/DynamicAny/*.cpp` translation units and their directory headers with `clang-tidy`'s `readability-braces-around-statements` check. No missing-brace diagnostics were reported. `git diff --check` passed; no build or runtime test was run.
 - Recorded `BRACES` as complete for DynamicAny; the directory's other modernization categories remain open.
+
+## 2026-11-19 Boolean-argument modernization follow-up
+
+- Added `BOOL_ARGUMENTS` to the task catalog and recorded the tree-wide requirement to pass `true`/`false` to Boolean parameters instead of `1`/`0`.
+- In DynamicAny, reviewed numeric literal arguments and Boolean declarations. `write_ulong(0/1)`, sequence `size(0)`, `seek(0)`, string offsets, and the `CORBA::Long` chunk level are numeric values, not Boolean parameters. No confirmed misuse was found; signature-aware review remains open.
+- `rg -n 'std::move\\s*\\(' TAO/tao/DynamicAny` found no move sites, recorded as not applicable.
