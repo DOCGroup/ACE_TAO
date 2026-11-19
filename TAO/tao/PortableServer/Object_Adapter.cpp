@@ -152,11 +152,15 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
 
   Hint_Strategy *hint_strategy {};
   if (creation_parameters.use_active_hint_in_poa_names_)
-    ACE_NEW (hint_strategy,
-             Active_Hint_Strategy (creation_parameters.poa_map_size_));
+    {
+      ACE_NEW (hint_strategy,
+               Active_Hint_Strategy (creation_parameters.poa_map_size_));
+    }
   else
-    ACE_NEW (hint_strategy,
-             No_Hint_Strategy);
+    {
+      ACE_NEW (hint_strategy,
+               No_Hint_Strategy);
+    }
 
   // Give ownership to the unique pointer.
   std::unique_ptr<Hint_Strategy> new_hint_strategy (hint_strategy);
@@ -430,7 +434,9 @@ TAO_Object_Adapter::activate_poa (const poa_name &folded_name,
 
   TAO_Root_POA *parent = this->root_.get ();
   if (parent == nullptr || parent->name () != *iterator)
-    throw ::CORBA::OBJ_ADAPTER ();
+    {
+      throw ::CORBA::OBJ_ADAPTER ();
+    }
   else
   {
     ++iterator;
@@ -496,7 +502,9 @@ TAO_Object_Adapter::bind_poa (const poa_name &folded_name,
                               poa_name_out system_name)
 {
   if (poa->persistent ())
-    return this->bind_persistent_poa (folded_name, poa, system_name);
+    {
+      return this->bind_persistent_poa (folded_name, poa, system_name);
+    }
   else
   {
     return this->bind_transient_poa (poa, system_name);
@@ -509,7 +517,9 @@ TAO_Object_Adapter::unbind_poa (TAO_Root_POA *poa,
                                 const poa_name &system_name)
 {
   if (poa->persistent ())
-    return this->unbind_persistent_poa (folded_name, system_name);
+    {
+      return this->unbind_persistent_poa (folded_name, system_name);
+    }
   else
   {
     return this->unbind_transient_poa (system_name);
@@ -1020,11 +1030,15 @@ TAO_Object_Adapter::Active_Hint_Strategy::bind_persistent_poa (
         this->object_adapter_->persistent_poa_name_map_->bind (folded_name, poa);
 
       if (result != 0)
-        this->persistent_poa_system_map_.unbind (name);
+        {
+          this->persistent_poa_system_map_.unbind (name);
+        }
       else
-        ACE_NEW_RETURN (system_name,
-                        poa_name (name),
-                        -1);
+        {
+          ACE_NEW_RETURN (system_name,
+                          poa_name (name),
+                          -1);
+        }
     }
 
   return result;
@@ -1038,8 +1052,10 @@ TAO_Object_Adapter::Active_Hint_Strategy::unbind_persistent_poa (
   int result = this->persistent_poa_system_map_.unbind (system_name);
 
   if (result == 0)
-    result =
-      this->object_adapter_->persistent_poa_name_map_->unbind (folded_name);
+    {
+      result =
+        this->object_adapter_->persistent_poa_name_map_->unbind (folded_name);
+    }
 
   return result;
 }
@@ -1070,9 +1086,11 @@ TAO_Object_Adapter::No_Hint_Strategy::bind_persistent_poa (
   int const result =
     this->object_adapter_->persistent_poa_name_map_->bind (folded_name, poa);
   if (result == 0)
-    ACE_NEW_RETURN (system_name,
-                    poa_name (folded_name),
-                    -1);
+    {
+      ACE_NEW_RETURN (system_name,
+                      poa_name (folded_name),
+                      -1);
+    }
   return result;
 }
 
