@@ -31,7 +31,9 @@ const char *
 JAWS_HTTP_10_Request::path () const
 {
   if (this->path_.empty ())
-    this->set_path (this->uri ());
+    {
+      this->set_path (this->uri ());
+    }
   return this->path_.empty () ? nullptr : this->path_.c_str ();
 }
 
@@ -52,7 +54,9 @@ JAWS_HTTP_10_Request::set_path (char const *uri_string) const
 {
   this->path_.clear ();
   if (uri_string == nullptr || uri_string[0] != '/')
-    return;
+    {
+      return;
+    }
 
   if (uri_string[1] == '~')
     {
@@ -68,7 +72,9 @@ JAWS_HTTP_10_Request::set_path (char const *uri_string) const
         {
           char const * const home_environment = ACE_OS::getenv ("HOME");
           if (home_environment == nullptr)
-            return;
+            {
+              return;
+            }
           home = home_environment;
         }
       else
@@ -81,7 +87,9 @@ JAWS_HTTP_10_Request::set_path (char const *uri_string) const
                                   sizeof pw_buf, &pw_result) != 0
               || pw_result == nullptr
               || pw_result->pw_dir == nullptr)
-            return;
+            {
+              return;
+            }
           home = pw_result->pw_dir;
 #else
           return;
@@ -90,8 +98,12 @@ JAWS_HTTP_10_Request::set_path (char const *uri_string) const
 
       this->path_ = home + "/.www-docs";
       if (slash != nullptr)
-        this->path_ += slash;
+        {
+          this->path_ += slash;
+        }
     }
   else
-    this->path_ = std::string (".") + uri_string;
+    {
+      this->path_ = std::string (".") + uri_string;
+    }
 }
