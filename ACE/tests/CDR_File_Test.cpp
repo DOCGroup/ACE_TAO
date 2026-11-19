@@ -178,10 +178,12 @@ run_test (int write_file,
       char byte_order = ACE_CDR_BYTE_ORDER;
       size_t n = file.send (&byte_order, 1);
       if (n != 1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("send failed on %p\n"),
-                           filename),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("send failed on %p\n"),
+                             filename),
+                            -1);
+        }
 
       ACE_OutputCDR output_cdr (0,
                                 ACE_CDR_BYTE_ORDER,
@@ -209,19 +211,23 @@ run_test (int write_file,
       n = file.send (output_mb->rd_ptr (),
                      output_mb->length ());
       if (n != (size_t) output_mb->length ())
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("send failed on %p\n"),
-                           filename),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("send failed on %p\n"),
+                             filename),
+                            -1);
+        }
     }
   else // We're reading from the file.
     {
       ACE_FILE_Info info;
       if (file.get_info (info) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("get_info failed on %p\n"),
-                           filename),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("get_info failed on %p\n"),
+                             filename),
+                            -1);
+        }
 
       ACE_OFF_T msgsize = info.size_ - 1;
 
@@ -240,29 +246,35 @@ run_test (int write_file,
       // Move the file pointer back to the beginning of the file.
       if (file.seek (0,
                      SEEK_SET) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           filename),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             filename),
+                            -1);
+        }
 
       char byte_order;
       ssize_t size = file.recv (&byte_order, 1);
       if (size != 1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Read %b bytes, rather than expected ")
-                           ACE_TEXT ("1 bytes\n"),
-                           size),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Read %b bytes, rather than expected ")
+                             ACE_TEXT ("1 bytes\n"),
+                             size),
+                            -1);
+        }
 
       // Read the cdr data from the file into the buffer.
       size = file.recv (buffer, msgsize);
       if (size != msgsize)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Read %b bytes, rather than expected ")
-                           ACE_TEXT ("%q bytes\n"),
-                           size,
-                           static_cast<ACE_INT64> (msgsize)),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Read %b bytes, rather than expected ")
+                             ACE_TEXT ("%q bytes\n"),
+                             size,
+                             static_cast<ACE_INT64> (msgsize)),
+                            -1);
+        }
 
       // Create message block for the whole file.  Ensure that it is
       // aligned to properly handle the double.
@@ -373,10 +385,12 @@ run_main (int argc, ACE_TCHAR *argv[])
                          0,
                          ((writing) ? (O_RDWR | O_CREAT) : O_RDONLY),
                          ACE_DEFAULT_FILE_PERMS) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("connect failed for %p\n"),
-                       filename.get_path_name ()),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("connect failed for %p\n"),
+                         filename.get_path_name ()),
+                        1);
+    }
 
   CDR_Test cdr_test ('a',
                      0x00ff,
@@ -407,10 +421,12 @@ run_main (int argc, ACE_TCHAR *argv[])
     {
       file.close ();
       if (file.unlink () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("unlink failed for %p\n"),
-                           filename.get_path_name ()),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("unlink failed for %p\n"),
+                             filename.get_path_name ()),
+                            1);
+        }
     }
 
   ACE_END_TEST;
