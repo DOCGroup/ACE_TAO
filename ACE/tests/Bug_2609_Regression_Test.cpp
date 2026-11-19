@@ -113,10 +113,12 @@ run_main (int, ACE_TCHAR *[])
 
   My_Acceptor acceptor;
   if (-1 == acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &)))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("acceptor open")),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("acceptor open")),
+                        1);
+    }
   ACE_INET_Addr listen_addr;
   acceptor.acceptor ().get_local_addr (listen_addr);
 #if defined (ACE_HAS_IPV6)
