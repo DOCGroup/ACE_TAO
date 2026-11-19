@@ -92,10 +92,12 @@ int
 ClientAcceptor::open (ACE_INET_Addr const &listen_addr)
 {
   if (this->acceptor_.open (listen_addr, 1) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("acceptor.open")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("acceptor.open")),
+                        -1);
+    }
   return this->reactor ()->register_handler
     (this, ACE_Event_Handler::ACCEPT_MASK);
 }
@@ -110,11 +112,13 @@ ClientAcceptor::handle_input (ACE_HANDLE)
   std::unique_ptr<ClientService> client {raw_client};
 
   if (this->acceptor_.accept (client->peer ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) %p\n"),
-                       ACE_TEXT ("Failed to accept ")
-                       ACE_TEXT ("client connection")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) %p\n"),
+                         ACE_TEXT ("Failed to accept ")
+                         ACE_TEXT ("client connection")),
+                        -1);
+    }
   client->reactor (this->reactor ());
   // The registered handler owns the accepted service from here onward.
   ClientService *const accepted_client = client.release ();
@@ -149,9 +153,11 @@ ClientService::open ()
   ACE_INET_Addr peer_addr {};
   if (this->sock_.get_remote_addr (peer_addr) == 0 &&
       peer_addr.addr_to_string (peer_name, MAXHOSTNAMELEN) == 0)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P|%t) Connection from %s\n"),
-                peer_name));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) Connection from %s\n"),
+                  peer_name));
+    }
   return this->reactor ()->register_handler
     (this, ACE_Event_Handler::READ_MASK);
 }
@@ -180,10 +186,12 @@ ClientService::handle_input (ACE_HANDLE)
     return 0;
   }
   if (send_cnt == -1 && ACE_OS::last_error () != EWOULDBLOCK)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) %p\n"),
-                       ACE_TEXT ("send")),
-                      0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) %p\n"),
+                         ACE_TEXT ("send")),
+                        0);
+    }
   if (send_cnt == -1)
   {
     send_cnt = 0;
@@ -205,8 +213,10 @@ ClientService::handle_input (ACE_HANDLE)
     }
   message_block.release ();
   if (output_off)
-    return this->reactor ()->register_handler
-      (this, ACE_Event_Handler::WRITE_MASK);
+    {
+      return this->reactor ()->register_handler
+        (this, ACE_Event_Handler::WRITE_MASK);
+    }
   return 0;
 }
 // Listing 8
@@ -224,9 +234,11 @@ ClientService::handle_output (ACE_HANDLE)
         this->sock_.send (message_block->rd_ptr (),
                           message_block->length ());
       if (send_cnt == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) %p\n"),
-                    ACE_TEXT ("send")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) %p\n"),
+                      ACE_TEXT ("send")));
+        }
       else
       {
         message_block->rd_ptr (static_cast<size_t> (send_cnt));
@@ -345,11 +357,13 @@ int
 LogSwitcher::handle_exception (ACE_HANDLE)
 {
   if (this->on_off_)
-    ACE_LOG_MSG->clr_flags (ACE_Log_Msg::SILENT);
+    {
+      ACE_LOG_MSG->clr_flags (ACE_Log_Msg::SILENT);
+    }
   else
-  {
-    ACE_LOG_MSG->set_flags (ACE_Log_Msg::SILENT);
-  }
+    {
+      ACE_LOG_MSG->set_flags (ACE_Log_Msg::SILENT);
+    }
   return 0;
 }
 // Listing 15
