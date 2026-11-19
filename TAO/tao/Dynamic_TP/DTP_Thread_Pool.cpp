@@ -268,11 +268,13 @@ TAO_DTP_Thread_Pool::new_dynamic_thread ()
       (int)this->active_count_ < this->definition_.max_threads_)
     {
       if (TAO_debug_level > 7)
-        TAOLIB_DEBUG ((LM_DEBUG,
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) DTP Pool %d new_dynamic_thread, ")
                     ACE_TEXT ("count = %B, creating new thread\n"),
                     this->id_,
                     this->active_count_));
+        }
 
       if (this->create_threads_i (1))
         {
@@ -436,7 +438,9 @@ TAO_DTP_Thread_Pool_Manager::~TAO_DTP_Thread_Pool_Manager ()
   for (THREAD_POOLS::ITERATOR iterator = this->thread_pools_.begin ();
        iterator != this->thread_pools_.end ();
        ++iterator)
-    delete (*iterator).int_id_;
+    {
+      delete (*iterator).int_id_;
+    }
 }
 
 void
@@ -445,7 +449,9 @@ TAO_DTP_Thread_Pool_Manager::wait ()
   for (THREAD_POOLS::ITERATOR iterator = this->thread_pools_.begin ();
        iterator != this->thread_pools_.end ();
        ++iterator)
-    (*iterator).int_id_->wait ();
+    {
+      (*iterator).int_id_->wait ();
+    }
 }
 
 CORBA::ULong
