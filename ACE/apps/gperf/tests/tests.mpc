@@ -127,7 +127,7 @@ project(switchinset): gperf_test {
     all: runtests
 
     runtests: switchout$(EXEEXT)
-    "	@echo "Testing switch output (-S1)""
+    "	@echo Testing switch output -S1"
     "	./switchout -v < switch.in > switch.out"
     "	diff -b switch.exp switch.out"
 
@@ -151,7 +151,7 @@ project(switch_ci_inset): gperf_test {
     all: runtests
 
     runtests: switch_ci_out$(EXEEXT)
-    "	@echo "Testing switch output (-S1 -I)""
+    "	@echo Testing switch output -S1 -I"
     "	./switch_ci_out -v < switch.in > switch_ci.out"
     "	diff -b switch_ci.exp switch_ci.out"
 
@@ -176,9 +176,9 @@ project(switch_comp_inset): gperf_test {
     all: runtests
 
     runtests: switch_comp_out$(EXEEXT)
-    "	@echo "Testing switch output (-S1 -c)""
+    "	@echo Testing switch output -S1 -c"
     "	./switch_comp_out -v < switch.in > switch_comp.out"
-    "	diff -b switch.exp switch_comp.out"
+    "	diff -b switch_comp.exp switch_comp.out"
 
     endif # CROSS-COMPILE
   }
@@ -189,7 +189,7 @@ project(switch_comp_inset): gperf_test {
     switch.gperf
   }
 
-  defines += GPERF_SWITCH_TEST
+  macros += GPERF_SWITCH_TEST
 
   Source_Files {
     switch_comp_gen/switch.cpp
@@ -203,7 +203,7 @@ project(switch_ci_comp_inset): gperf_test {
     all: runtests
 
     runtests: switch_ci_comp_out$(EXEEXT)
-    "	@echo "Testing switch output (-S1 -I -c)""
+    "	@echo Testing switch output -S1 -I -c"
     "	./switch_ci_comp_out -v < switch.in > switch_ci_comp.out"
     "	diff -b switch_ci_comp.exp switch_ci_comp.out"
 
@@ -216,7 +216,7 @@ project(switch_ci_comp_inset): gperf_test {
     switch.gperf
   }
 
-  defines += GPERF_SWITCH_TEST
+  macros += GPERF_SWITCH_TEST
 
   Source_Files {
     switch_ci_comp_gen/switch.cpp
@@ -230,7 +230,7 @@ project(hash_prefix_inset): gperf_test {
     all: runtests
 
     runtests: hash_prefix_out$(EXEEXT)
-    "	@echo "Testing hash prefix comparison (-c)"
+    "	@echo Testing hash prefix comparison -c"
     "	./hash_prefix_out -v < switch.in > hash_prefix.out"
     "	diff -b hash_prefix.exp hash_prefix.out"
 

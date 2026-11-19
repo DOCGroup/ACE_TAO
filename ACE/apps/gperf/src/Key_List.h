@@ -112,7 +112,6 @@ private:
   int output_binary_search_function();
   int output_linear_search_function ();
   int output_lookup_array ();
-  void output_strcasecmp ();
   int output_types ();
   void dump ();
   bool array_type (std::string& result);

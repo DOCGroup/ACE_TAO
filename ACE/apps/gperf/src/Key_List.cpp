@@ -56,12 +56,18 @@ std::string
 string_comparison_expression (bool const case_insensitive,
                               bool const compare_length,
                               std::string const& input,
-                              std::string const& keyword)
+                              std::string const& keyword,
+                              bool const keyword_length_verified = false)
 {
   std::string expression;
-  if (compare_length)
+  if (!case_insensitive)
     {
-      expression = "len == std::strlen (" + keyword + ") && ";
+      expression = "*" + input + " == *" + keyword + " && ";
+    }
+
+  if (compare_length && !keyword_length_verified)
+    {
+      expression += "len == std::strlen (" + keyword + ") && ";
     }
 
   expression += "!";
@@ -1132,11 +1138,6 @@ Key_List::output_binary_search_function ()
 
   output_min_max ();
 
-  if (option[STRCASECMP])
-    {
-      output_strcasecmp ();
-    }
-
   // Class definition if -M is *not* enabled.
   if (!option[SKIPCLASS])
     {
@@ -1253,11 +1254,6 @@ Key_List::output_linear_search_function ()
             this->array_type_.c_str ());
 
   output_min_max ();
-
-  if (option[STRCASECMP])
-    {
-      output_strcasecmp ();
-    }
 
   // Class definition if -M is *not* enabled.
   if (!option[SKIPCLASS])
@@ -1819,7 +1815,7 @@ Key_List::output_lookup_function ()
             }
 
           std::string comparison = string_comparison_expression (
-            option[STRCASECMP], option[COMP], "str", "s");
+            option[STRCASECMP], option[COMP], "str", "s", option[LENTABLE]);
           if (option[LENTABLE])
             {
               comparison = "len == lengthtable[key] && " + comparison;
@@ -1914,7 +1910,7 @@ Key_List::output_lookup_function ()
             }
 
           std::string comparison = string_comparison_expression (
-            option[STRCASECMP], option[COMP], "str", "s");
+            option[STRCASECMP], option[COMP], "str", "s", option[LENTABLE]);
           if (option[LENTABLE])
             {
               comparison = "len == lengthtable[key] && " + comparison;
@@ -1931,65 +1927,6 @@ Key_List::output_lookup_function ()
           ACE_OS::printf ("\n            }");
         }
       ACE_OS::printf ("\n        }\n    %s\n}\n", option[OPTIMIZE] ? "" : generated_null_return ());
-    }
-}
-
-// Output the table and the functions that map upper case into lower case!
-
-void
-Key_List::output_strcasecmp ()
-{
-  ACE_OS::printf ("%s",
-          "/* This array is designed for mapping upper and lower case letter\n"
-          " * together for a case independent comparison.  The mappings are\n"
-          " * based upon ascii character sequences.\n */");
-  ACE_OS::printf ("static constexpr std::array<char, 256> charmap = {\n");
-  ACE_OS::printf ("%s",
-          "   '\\000', '\\001', '\\002', '\\003', '\\004', '\\005', '\\006', '\\007',\n"
-          "   '\\010', '\\011', '\\012', '\\013', '\\014', '\\015', '\\016', '\\017',\n"
-          "   '\\020', '\\021', '\\022', '\\023', '\\024', '\\025', '\\026', '\\027',\n"
-          "   '\\030', '\\031', '\\032', '\\033', '\\034', '\\035', '\\036', '\\037',\n"
-          "   '\\040', '\\041', '\\042', '\\043', '\\044', '\\045', '\\046', '\\047',\n"
-          "   '\\050', '\\051', '\\052', '\\053', '\\054', '\\055', '\\056', '\\057',\n"
-          "   '\\060', '\\061', '\\062', '\\063', '\\064', '\\065', '\\066', '\\067',\n"
-          "   '\\070', '\\071', '\\072', '\\073', '\\074', '\\075', '\\076', '\\077',\n"
-          "   '\\100', '\\141', '\\142', '\\143', '\\144', '\\145', '\\146', '\\147',\n"
-          "   '\\150', '\\151', '\\152', '\\153', '\\154', '\\155', '\\156', '\\157',\n"
-          "   '\\160', '\\161', '\\162', '\\163', '\\164', '\\165', '\\166', '\\167',\n"
-          "   '\\170', '\\171', '\\172', '\\133', '\\134', '\\135', '\\136', '\\137',\n"
-          "   '\\140', '\\141', '\\142', '\\143', '\\144', '\\145', '\\146', '\\147',\n"
-          "   '\\150', '\\151', '\\152', '\\153', '\\154', '\\155', '\\156', '\\157',\n"
-          "   '\\160', '\\161', '\\162', '\\163', '\\164', '\\165', '\\166', '\\167',\n"
-          "   '\\170', '\\171', '\\172', '\\173', '\\174', '\\175', '\\176', '\\177',\n"
-          "   '\\200', '\\201', '\\202', '\\203', '\\204', '\\205', '\\206', '\\207',\n"
-          "   '\\210', '\\211', '\\212', '\\213', '\\214', '\\215', '\\216', '\\217',\n"
-          "   '\\220', '\\221', '\\222', '\\223', '\\224', '\\225', '\\226', '\\227',\n"
-          "   '\\230', '\\231', '\\232', '\\233', '\\234', '\\235', '\\236', '\\237',\n"
-          "   '\\240', '\\241', '\\242', '\\243', '\\244', '\\245', '\\246', '\\247',\n"
-          "   '\\250', '\\251', '\\252', '\\253', '\\254', '\\255', '\\256', '\\257',\n"
-          "   '\\260', '\\261', '\\262', '\\263', '\\264', '\\265', '\\266', '\\267',\n"
-          "   '\\270', '\\271', '\\272', '\\273', '\\274', '\\275', '\\276', '\\277',\n"
-          "   '\\300', '\\341', '\\342', '\\343', '\\344', '\\345', '\\346', '\\347',\n"
-          "   '\\350', '\\351', '\\352', '\\353', '\\354', '\\355', '\\356', '\\357',\n"
-          "   '\\360', '\\361', '\\362', '\\363', '\\364', '\\365', '\\366', '\\367',\n"
-          "   '\\370', '\\371', '\\372', '\\333', '\\334', '\\335', '\\336', '\\337',\n"
-          "   '\\340', '\\341', '\\342', '\\343', '\\344', '\\345', '\\346', '\\347',\n"
-          "   '\\350', '\\351', '\\352', '\\353', '\\354', '\\355', '\\356', '\\357',\n"
-          "   '\\360', '\\361', '\\362', '\\363', '\\364', '\\365', '\\366', '\\367',\n"
-          "   '\\370', '\\371', '\\372', '\\373', '\\374', '\\375', '\\376', '\\377',\n};\n\nstatic int\n");
-  if (option[COMP])
-    {
-      ACE_OS::printf ("strncasecmp (char *s1, char *s2, int n)");
-      ACE_OS::printf ("\n{\n  char const *cm = charmap.data ();\n\n  while (--n >= 0 && cm[*s1] == cm[*s2++])\n"
-              "    if (*s1++ == '\\0')\n      return 0;\n"
-              "\n  return n < 0 ? 0 : cm[*s1] - cm[*--s2];\n}\n\n");
-    }
-  else
-    {
-      ACE_OS::printf ("strcasecmp (char *s1, char *s2)");
-      ACE_OS::printf ("\n{\n  char const *cm = charmap.data ();\n\n  while (cm[*s1] == cm[*s2++])\n"
-              "    if (*s1++ == '\\0')\n      return 0;\n"
-              "\n  return cm[*s1] - cm[*--s2];\n}\n\n");
     }
 }
 
@@ -2036,11 +1973,6 @@ Key_List::output ()
         }
 
       output_min_max ();
-
-      if (option[STRCASECMP])
-        {
-          output_strcasecmp ();
-        }
 
       // Class definition if -M is *not* enabled.
       if (!option[SKIPCLASS])
