@@ -175,14 +175,18 @@ run_main (int, ACE_TCHAR *[])
   // Test the #defined and constants and runtime values.
   errno = 0;
   if (have_asynchio () == 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "Basic test successful"
-                "Check the run time values of the predefined constants\n"
-                "ACE_HAS_AIO_CALLS can be defined for this platform\n"
-                "Further tests at $ACE_ROOT/examples/Reactor/Proactor\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Basic test successful"
+                  "Check the run time values of the predefined constants\n"
+                  "ACE_HAS_AIO_CALLS can be defined for this platform\n"
+                  "Further tests at $ACE_ROOT/examples/Reactor/Proactor\n"));
+    }
   else
-    ACE_ERROR ((LM_INFO,
-                "AIO not supported on this platform\n"));
+    {
+      ACE_ERROR ((LM_INFO,
+                  "AIO not supported on this platform\n"));
+    }
 
   ACE_END_TEST;
 

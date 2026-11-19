@@ -136,7 +136,9 @@ void Child::do_something ()
   }
 
   for (int i = 0; i < 5; ++i)
-    strong_parent->do_something ();
+    {
+      strong_parent->do_something ();
+    }
 }
 
 size_t Printer::instance_count_ = 0;
@@ -457,9 +459,11 @@ run_main (int, ACE_TCHAR *[])
     Printer_var r (printer2);
 
     for (int i = 0; i < n_loops; ++i)
-      // Spawn off the methods, which run in a separate thread as
-      // active object invocations.
-      scheduler->print (r);
+      {
+        // Spawn off the methods, which run in a separate thread as
+        // active object invocations.
+        scheduler->print (r);
+      }
   }
 
   // Close things down.
