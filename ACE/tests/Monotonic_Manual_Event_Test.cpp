@@ -71,17 +71,19 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opt ()) != -1)
-    switch (c)
       {
-      case 'w':
-        n_workers = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      case 's':
-        use_monotonic = false;
-        break;
-      default:
-        print_usage_and_die ();
-        break;
+        switch (c)
+          {
+          case 'w':
+            n_workers = ACE_OS::atoi (get_opt.opt_arg ());
+            break;
+          case 's':
+            use_monotonic = false;
+            break;
+          default:
+            print_usage_and_die ();
+            break;
+          }
       }
 }
 
@@ -126,10 +128,12 @@ worker (void *)
                             0);
         }
       else
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT (" (%P|%t) %p\n"),
-                           ACE_TEXT ("Failed waiting for pulse ()")),
-                          0);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT (" (%P|%t) %p\n"),
+                             ACE_TEXT ("Failed waiting for pulse ()")),
+                            0);
+        }
     }
 
   ACE_Time_Value tm_now = initial_timeout->now ();
@@ -161,11 +165,15 @@ worker (void *)
         {
           // verify that we have ETIME
           if (ACE_OS::last_error () == ETIME)
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%P|%t) timeout\n")));
+            {
+              ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%P|%t) timeout\n")));
+            }
           else
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT (" (%P|%t) wait failed %p\n"),
-                        ACE_TEXT ("but not with ETIME")));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT (" (%P|%t) wait failed %p\n"),
+                          ACE_TEXT ("but not with ETIME")));
+            }
         }
       else
         {
@@ -261,10 +269,12 @@ int run_main (int argc, ACE_TCHAR *argv[])
        ACE_THR_FUNC (worker),
        nullptr,
        THR_NEW_LWP) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("spawn_n")),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("spawn_n")),
+                        1);
+    }
 
   // gives all workers chance to start
   ACE_OS::sleep (5);
@@ -280,10 +290,12 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
   // Release the all workers.
   if (evt->pulse () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("pulse")),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("pulse")),
+                        1);
+    }
 
   // Wait 2 sec
   ACE_OS::sleep (2);
@@ -295,10 +307,12 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
   // Signal
   if (evt->signal () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("signal")),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("signal")),
+                        1);
+    }
 
   ACE_Thread_Manager::instance ()->wait ();
 #  else
