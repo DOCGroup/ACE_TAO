@@ -24,9 +24,11 @@ template <class SVC_HANDLER> int
 TAO_Connect_Creation_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
 {
   if (sh == nullptr)
-    ACE_NEW_RETURN (sh,
-                    SVC_HANDLER (this->orb_core_),
-                    -1);
+    {
+      ACE_NEW_RETURN (sh,
+                      SVC_HANDLER (this->orb_core_),
+                      -1);
+    }
 
   sh->transport ()->opened_as (TAO::TAO_CLIENT_ROLE);
 

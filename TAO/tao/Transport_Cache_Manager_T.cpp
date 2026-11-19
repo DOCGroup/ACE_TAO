@@ -335,11 +335,13 @@ namespace TAO
                     entry->item ().recycle_state (int_id.recycle_state ());
                     if (TAO_debug_level > 9 &&
                         entry->item ().is_connected () != int_id.is_connected ())
-                      TAOLIB_DEBUG ((LM_DEBUG,
-                                  ACE_TEXT ("TAO (%P|%t) - Transport_Cache_")
-                                  ACE_TEXT ("Manager::bind_i, Updating existing ")
-                                  ACE_TEXT ("entry sets is_connected to %C\n"),
-                                  (int_id.is_connected () ? "true" : "false")));
+                      {
+                        TAOLIB_DEBUG ((LM_DEBUG,
+                                       ACE_TEXT ("TAO (%P|%t) - Transport_Cache_")
+                                       ACE_TEXT ("Manager::bind_i, Updating existing ")
+                                       ACE_TEXT ("entry sets is_connected to %C\n"),
+                                       (int_id.is_connected () ? "true" : "false")));
+                      }
 
                     entry->item ().is_connected (int_id.is_connected ());
                     retval = 0;
@@ -427,10 +429,12 @@ namespace TAO
                                        ACE_Event_Handler::DONT_CALL) == -1)
                   {
                     if (TAO_debug_level > 0)
-                      TAOLIB_ERROR ((LM_ERROR,
-                                  ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T[%B]")
-                                  ACE_TEXT ("::find_transport, remove_handler failed\n"),
-                                  transport->id ()));
+                      {
+                        TAOLIB_ERROR ((LM_ERROR,
+                                       ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T[%B]")
+                                       ACE_TEXT ("::find_transport, remove_handler failed\n"),
+                                       transport->id ()));
+                      }
                   }
                 else
                   {
