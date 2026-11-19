@@ -183,6 +183,13 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       *os << be_nl_2
           << "::CORBA::ValueBase *_copy_value () override;";
     }
+  else if (node->opt_accessor ()
+           && node->inherits_obv_copy_value ()
+           && !is_an_amh_exception_holder)
+    {
+      *os << be_nl_2
+          << "::CORBA::ValueBase *_copy_value () override = 0;";
+    }
 
   if (is_an_amh_exception_holder)
     {

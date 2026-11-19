@@ -14,6 +14,12 @@ valuetype Accessor_Optimized_Derived : Accessor_Optimized_Value
   public long derived_value;
 };
 
+/// An operation-bearing optimized derived value must not inherit a sliced copy.
+valuetype Accessor_Optimized_Operation_Derived : Accessor_Optimized_Value
+{
+  void op ();
+};
+
 interface Accessor_Optimized_Interface
 {
 };

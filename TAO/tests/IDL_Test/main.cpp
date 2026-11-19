@@ -45,6 +45,8 @@ static_assert (!std::is_abstract<Accessor_Optimized_Refcount_Derived>::value,
                "An optimized valuetype inherits supported-interface refcount overrides");
 static_assert (!std::is_abstract<Accessor_Optimized_Refcount_Inherited>::value,
                "An optimized valuetype can add a supported interface with an inherited counter");
+static_assert (std::is_abstract<Accessor_Optimized_Operation_Derived>::value,
+               "An optimized derived valuetype must not inherit a sliced copy");
 
 class hello_i : public virtual POA_hello
 {
