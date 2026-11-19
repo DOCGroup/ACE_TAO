@@ -134,7 +134,9 @@ TAO_IIOP_Endpoint::set (ACE_INET_Addr const &addr,
           this->host_ = tmp;
 #if defined (ACE_HAS_IPV6)
           if (addr.get_type () == PF_INET6)
-            this->is_ipv6_decimal_ = true;
+            {
+              this->is_ipv6_decimal_ = true;
+            }
 #endif /* ACE_HAS_IPV6 */
         }
     }
@@ -159,22 +161,28 @@ TAO_IIOP_Endpoint::addr_to_string (char *buffer, size_t length)
 
 #if defined (ACE_HAS_IPV6)
   if (this->is_ipv6_decimal_)
-    actual_len += 2; // '[' + ']'
+    {
+      actual_len += 2; // '[' + ']'
+    }
 #endif /* ACE_HAS_IPV6 */
 
   if (length < actual_len)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
 #if defined (ACE_HAS_IPV6)
   if (this->is_ipv6_decimal_)
-    std::sprintf (buffer, "[%s]:%d",
-                  this->host_.in (), this->port_);
+    {
+      std::sprintf (buffer, "[%s]:%d",
+                    this->host_.in (), this->port_);
+    }
   else
 #endif /* ACE_HAS_IPV6 */
-  std::sprintf (buffer, "%s:%d",
-                this->host_.in (), this->port_);
+    {
+      std::sprintf (buffer, "%s:%d",
+                    this->host_.in (), this->port_);
+    }
 
   return 0;
 }
@@ -185,7 +193,9 @@ TAO_IIOP_Endpoint::host (char const *h)
   this->host_ = h;
 #if defined (ACE_HAS_IPV6)
   if (std::strchr (h, ':') != nullptr)
-    this->is_ipv6_decimal_ = true;
+    {
+      this->is_ipv6_decimal_ = true;
+    }
 #endif /* ACE_HAS_IPV6 */
 
   return this->host_.in ();
@@ -228,15 +238,17 @@ TAO_IIOP_Endpoint::next_filtered_i (TAO_IIOP_Endpoint *root,
   // initialized.
   TAO_IIOP_Endpoint *candidate = (root == nullptr) ? this : next_;
   if (root == nullptr)
-  {
-    root = this;
-  }
+    {
+      root = this;
+    }
 
 #if defined (ACE_HAS_IPV6)
   if (ipv6_only)
     {
       if (candidate == nullptr || candidate->is_ipv6_decimal())
-        return candidate;
+        {
+          return candidate;
+        }
       ACE_INET_Addr const &addr = candidate->object_addr ();
       bool const allowed = addr.get_type () == AF_INET6 &&
         !addr.is_ipv4_mapped_ipv6 ();
@@ -247,11 +259,15 @@ TAO_IIOP_Endpoint::next_filtered_i (TAO_IIOP_Endpoint *root,
   if (prefer_ipv6)
     {
       if (candidate == nullptr)
-        return !want_ipv6 ? candidate :
-          root->next_filtered_i(nullptr, ipv6_only, prefer_ipv6, false);
+        {
+          return !want_ipv6 ? candidate :
+            root->next_filtered_i(nullptr, ipv6_only, prefer_ipv6, false);
+        }
 
       if (want_ipv6 == candidate->is_ipv6_decimal())
-        return candidate;
+        {
+          return candidate;
+        }
 
       ACE_INET_Addr const &addr = candidate->object_addr ();
       bool const really_ipv6 = addr.get_type () == AF_INET6 &&
@@ -313,9 +329,11 @@ TAO_IIOP_Endpoint::object_addr_i () const
 #if defined (ACE_HAS_IPV6)
   bool is_ipv4_decimal_ {};
   if (!this->is_ipv6_decimal_)
-    is_ipv4_decimal_ =
-      std::strspn (this->host_.in (), ".0123456789") ==
-                              std::strlen (this->host_.in ());
+    {
+      is_ipv4_decimal_ =
+        std::strspn (this->host_.in (), ".0123456789") ==
+                                std::strlen (this->host_.in ());
+    }
 
   // If this is *not* an IPv4 decimal address at first try to
   // resolve the address as an IPv6 address; if that fails
@@ -447,11 +465,13 @@ TAO_IIOP_Endpoint::find_preferred_interfaces (
 
       ACE_CString wild_local;
       if (comma == ACE_CString::npos)
-        wild_local = csv_preferred.substr (assign + 1);
+        {
+          wild_local = csv_preferred.substr (assign + 1);
+        }
       else
-      {
-        wild_local = csv_preferred.substr (assign + 1, comma - assign - 1);
-      }
+        {
+          wild_local = csv_preferred.substr (assign + 1, comma - assign - 1);
+        }
       ACE_CString const wild_remote = csv_preferred.substr (index, assign - index);
       index = comma + 1;
 
@@ -523,19 +543,21 @@ TAO_IIOP_Endpoint::preferred_interfaces (char const *csv,
       for (++i; i < count; ++i)
         {
           if (std::strstr (preferred[i].c_str (), "if=") == nullptr)
-          {
-            ep = add_local_endpoint (ep, preferred[i].c_str (), profile);
-          }
+            {
+              ep = add_local_endpoint (ep, preferred[i].c_str (), profile);
+            }
         }
 
       // If we're not enforcing the preferred interfaces, then we can just add
       // a new non-preferred endpoint to the end with a default local addr.
       if (!enforce)
-        ep = add_local_endpoint (ep, "", profile);
+        {
+          ep = add_local_endpoint (ep, "", profile);
+        }
       else
-      {
-        --count;
-      }
+        {
+          --count;
+        }
     }
   return count;
 }
