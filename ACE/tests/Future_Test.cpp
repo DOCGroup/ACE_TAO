@@ -334,8 +334,10 @@ ACE_Future<const ACE_TCHAR *>
 Prime_Scheduler::name ()
 {
   if (this->scheduler_)
-    // Delegate to the Prime_Scheduler.
-    return this->scheduler_->name ();
+    {
+      // Delegate to the Prime_Scheduler.
+      return this->scheduler_->name ();
+    }
   else
     {
       ACE_Future<const ACE_TCHAR*> new_future;
@@ -431,8 +433,10 @@ run_main (int, ACE_TCHAR *[])
 
         // See if the result is available...
         if (fresulta.ready ())
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%t) wow.. work is ready.....\n")));
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("(%t) wow.. work is ready.....\n")));
+          }
 
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%t) non-blocking call done... now blocking...\n")));
@@ -517,12 +521,16 @@ run_main (int, ACE_TCHAR *[])
 
     if (f1.get (value, &timeout) == 0
         && value == 100)
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Ace_Future<T>::Set followed by Ace_Future<T>::Get works.\n")));
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("Ace_Future<T>::Set followed by Ace_Future<T>::Get works.\n")));
+      }
     else
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("ACE_Future<T>::Set followed by Ace_Future<T>::Get does ")
-                  ACE_TEXT ("not work, broken Ace_Future<> implementation.\n")));
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("ACE_Future<T>::Set followed by Ace_Future<T>::Get does ")
+                    ACE_TEXT ("not work, broken Ace_Future<> implementation.\n")));
+      }
   }
 
   {
