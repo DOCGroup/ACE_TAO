@@ -12,7 +12,9 @@ void Timer_Dispatcher::wait_for_event ()
         this->timer_queue_->calculate_timeout (&max_tv);
 
       if (*this_timeout == ACE_Time_Value::zero)
-        this->timer_queue_->expire ();
+        {
+          this->timer_queue_->expire ();
+        }
       else
         {
           // Convert to absolute time.
