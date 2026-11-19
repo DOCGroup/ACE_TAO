@@ -56,9 +56,11 @@ Distributer_Receiver_Callback::receive_frame (ACE_Message_Block *frame,
     DISTRIBUTER::instance ()->sender_protocol_object ()->send_frame (frame);
 
   if (result < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Distributer_Callback::receive_frame send failed\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Distributer_Callback::receive_frame send failed\n"),
+                        -1);
+    }
 
   return 0;
 }

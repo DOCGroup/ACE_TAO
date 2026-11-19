@@ -41,9 +41,11 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
                         output_file);
 
       if (result != frame->length ())
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Receiver_Callback::fwrite failed\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Receiver_Callback::fwrite failed\n"),
+                            -1);
+        }
 
       frame = frame->cont ();
     }
@@ -104,10 +106,12 @@ Receiver::init (int,
 
   // Initialize the naming services
   if (this->naming_client_.init (TAO_AV_CORE::instance ()->orb ()) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to initialize "
-                       "the TAO_Naming_Client\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Unable to initialize "
+                         "the TAO_Naming_Client\n"),
+                        -1);
+    }
 
   // Register the receiver object with the naming server.
   this->naming_client_->rebind (name,
@@ -184,10 +188,12 @@ ACE_TMAIN (int argc,
       // The receive callback borrows the file handle while the ORB is running.
       output_file = output_file_owner.get ();
       if (!output_file)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Cannot open output file %s\n"),
-                           output_file_name.c_str ()),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot open output file %s\n"),
+                             output_file_name.c_str ()),
+                            -1);
+        }
 
       ACE_DEBUG ((LM_DEBUG,
                   "File Opened Successfully\n"));

@@ -136,10 +136,12 @@ Sender::init (int argc,
     ACE_OS::fopen (this->options_.filename.c_str (), ACE_TEXT ("rb")));
 
   if (!this->input_file_)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Cannot open input file %s\n"),
-                       this->options_.filename.c_str ()),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Cannot open input file %s\n"),
+                         this->options_.filename.c_str ()),
+                        -1);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "File opened successfully\n"));
@@ -179,11 +181,13 @@ Sender::pace_data ()
   inter_frame_time.set (1.0 / this->options_.frame_rate);
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "Frame Rate = %f / second\n"
-                "Inter Frame Time = %d (msec)\n",
-                this->options_.frame_rate,
-                inter_frame_time.msec ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Frame Rate = %f / second\n"
+                  "Inter Frame Time = %d (msec)\n",
+                  this->options_.frame_rate,
+                  inter_frame_time.msec ()));
+    }
 
   try
     {
@@ -209,9 +213,11 @@ Sender::pace_data ()
                                                this->input_file_.get ());
 
           if (n == 0 && std::ferror (this->input_file_.get ()))
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Sender::pace_data fread failed\n"),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Sender::pace_data fread failed\n"),
+                                -1);
+            }
 
           if (n == 0)
             {
@@ -239,9 +245,11 @@ Sender::pace_data ()
               elapsed_timer.elapsed_time (elapsed_time);
 
               if (TAO_debug_level > 0)
-                ACE_DEBUG ((LM_DEBUG,
-                            "Elapsed Time = %d\n",
-                            elapsed_time.msec ()));
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "Elapsed Time = %d\n",
+                              elapsed_time.msec ()));
+                }
 
               // Check to see if the inter frame time has elapsed.
               if (elapsed_time < inter_frame_time)
@@ -252,9 +260,11 @@ Sender::pace_data ()
                   ACE_Time_Value wait_time (inter_frame_time - elapsed_time);
 
                   if (TAO_debug_level > 0)
-                    ACE_DEBUG ((LM_DEBUG,
-                                "Wait Time = %d\n",
-                                wait_time.msec ()));
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                  "Wait Time = %d\n",
+                                  wait_time.msec ()));
+                    }
 
                   // Run the orb for the wait time so the sender can
                   // continue other orb requests.
@@ -270,9 +280,11 @@ Sender::pace_data ()
             this->protocol_object_->send_frame (&this->mb_);
 
           if (result < 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Sender::pace_data send failed\n"),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Sender::pace_data send failed\n"),
+                                -1);
+            }
 
           ACE_DEBUG ((LM_DEBUG,
                       "Sender::pace_data frame %d was sent successfully\n",
@@ -329,9 +341,11 @@ ACE_TMAIN (int argc,
                                           argv);
 
       if (result < 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Sender::init failed\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Sender::init failed\n"),
+                            -1);
+        }
 
       result = SENDER::instance ()->pace_data ();
       if (result == 0)
