@@ -72,7 +72,9 @@ TimeTicks &TimeTicks::operator= (TimeTicks const &uli)
 SnmpSyntax& TimeTicks::operator=( SnmpSyntax &in_val)
 {
   if (this == std::addressof (in_val))        // handle assignment from itself
+    {
       return *this;
+    }
 
   valid_flag = false;
   if (in_val.valid()) {
@@ -121,14 +123,20 @@ char const *TimeTicks::to_string ()
   unsigned long const hseconds = remaining;
 
   if (days == 0)
-    std::snprintf (output_buffer, sizeof output_buffer, "%lu:%02lu:%02lu.%02lu",
-                   hours, minutes, seconds, hseconds);
+    {
+      std::snprintf (output_buffer, sizeof output_buffer, "%lu:%02lu:%02lu.%02lu",
+                     hours, minutes, seconds, hseconds);
+    }
   else if (days == 1)
-    std::snprintf (output_buffer, sizeof output_buffer, "1 day %lu:%02lu:%02lu.%02lu",
-                   hours, minutes, seconds, hseconds);
+    {
+      std::snprintf (output_buffer, sizeof output_buffer, "1 day %lu:%02lu:%02lu.%02lu",
+                     hours, minutes, seconds, hseconds);
+    }
   else
-    std::snprintf (output_buffer, sizeof output_buffer, "%lu days, %lu:%02lu:%02lu.%02lu",
-                   days, hours, minutes, seconds, hseconds);
+    {
+      std::snprintf (output_buffer, sizeof output_buffer, "%lu days, %lu:%02lu:%02lu.%02lu",
+                     days, hours, minutes, seconds, hseconds);
+    }
 
   return output_buffer;
 }

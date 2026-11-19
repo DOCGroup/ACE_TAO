@@ -94,11 +94,13 @@ u_char * asn1::parse_int(u_char *data,
   }
   *datalength -= (int)asn_length + (bufp - data);
   if (*bufp & 0x80)
-  {
-    value = -1; /* integer is negative */
-  }
+    {
+      value = -1; /* integer is negative */
+    }
   while(asn_length--)
-    value = (value << 8) | *bufp++;
+    {
+      value = (value << 8) | *bufp++;
+    }
   *intp = value;
   return bufp;
 }
@@ -148,11 +150,13 @@ u_char * asn1::parse_unsigned_int( u_char *data,
   }
   *datalength -= (int)asn_length + (bufp - data);
   if (*bufp & 0x80)
-  {
-    value = (u_long) -1;
-  }
+    {
+      value = (u_long) -1;
+    }
   while(asn_length--)
-    value = (value << 8) | *bufp++;
+    {
+      value = (value << 8) | *bufp++;
+    }
   *intp = value;
   return bufp;
 }
