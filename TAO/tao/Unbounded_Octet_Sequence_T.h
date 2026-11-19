@@ -68,7 +68,9 @@ public:
   {}
   inline ~unbounded_value_sequence() {
     if (release_)
-      freebuf(buffer_);
+      {
+        freebuf(buffer_);
+      }
   }
   /// Create a sequence of octets from a single message block (i.e. it
   /// ignores any chaining in the message block).
