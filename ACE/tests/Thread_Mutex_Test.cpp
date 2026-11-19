@@ -62,9 +62,11 @@ test (void *args)
       if (mutex->acquire (timeout) != 0)
         {
           if (errno == ETIME)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%P|%t) = mutex acquisition ")
-                        ACE_TEXT ("timed out\n")));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) = mutex acquisition ")
+                          ACE_TEXT ("timed out\n")));
+            }
           else if (errno == ENOTSUP)
             {
 #if !defined (ACE_HAS_MUTEX_TIMEOUTS)
@@ -244,9 +246,11 @@ spawn ()
                                                 ACE_THR_FUNC (test),
                                                 (void *) &mutex,
                                                 THR_NEW_LWP | THR_DETACHED) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n%a"),
-                ACE_TEXT ("thread create failed")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n%a"),
+                  ACE_TEXT ("thread create failed")));
+    }
 
   // Wait for the threads to exit.
   ACE_Thread_Manager::instance ()->wait ();

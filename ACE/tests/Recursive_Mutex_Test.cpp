@@ -120,8 +120,10 @@ test_timed_wait (int nesting_level,
 {
   // Make sure that we're inside of a recursive level.
   if (nesting_level == 0)
-    test_timed_wait (nesting_level + 1,
-                     rm);
+    {
+      test_timed_wait (nesting_level + 1,
+                       rm);
+    }
   else
     {
       u_int seed = (u_int) ACE_OS::time (nullptr);
@@ -145,9 +147,11 @@ test_timed_wait (int nesting_level,
           if (rm->acquire (timeout) != 0)
             {
               if (errno == ETIME)
-                ACE_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("(%P|%t) = mutex acquisition ")
-                            ACE_TEXT ("timed out\n")));
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("(%P|%t) = mutex acquisition ")
+                              ACE_TEXT ("timed out\n")));
+                }
               else if (errno == ENOTSUP)
                 {
 #if !defined (ACE_HAS_MUTEX_TIMEOUTS)

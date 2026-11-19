@@ -33,7 +33,9 @@ size_t count_const_set (ACE_Unbounded_Set<MyNode> const& cubs)
 {
   size_t number_of_elements = 0;
   for (ACE_Unbounded_Set<MyNode>::const_iterator ci (cubs); !ci.done (); ++ci)
-    ++number_of_elements;
+    {
+      ++number_of_elements;
+    }
   return number_of_elements;
 }
 
@@ -223,7 +225,9 @@ run_main (int, ACE_TCHAR *[])
     ACE_Unbounded_Set_Iterator<MyNode*> ubs3_iter (ubs3.begin ());
     // The set stores non-owning pointers; delete each pointee after iteration.
     for (; ubs3_iter.next (i_n); ++ubs3_iter)
-      delete *i_n;
+      {
+        delete *i_n;
+      }
   }
   ACE_END_TEST;
   return retval;
