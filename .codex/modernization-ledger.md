@@ -13580,3 +13580,19 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Recorded `MOVE_SITES` as done for all three directories. No source changes,
   builds, or runtime tests were needed for this audit.
 - Source evidence commit: `9ce214b363f`.
+
+
+## 2026-11-19 TAO core top-level move-site audit
+
+- Reviewed all 32 `std::move` sites in top-level `TAO/tao` sources. The
+  acceptor and connector/adapter registry moves transfer owners into their
+  final containers; acceptor raw pointers used after transfer remain valid on
+  successful registration, and failure paths return before dereferencing them.
+  Argument clone helpers transfer local buffer/value owners into clone objects;
+  asynchronous-message, policy, and connector-registry moves transfer locals to
+  their destination members or constructors. Sequence move assignment uses a
+  temporary and swap, preserving the borrowed-buffer copy behavior. No moved-from
+  object is read.
+- Recorded `MOVE_SITES` as done. No source changes, builds, or runtime tests
+  were needed for this audit.
+- Source evidence commit: `1482cda66ec`.

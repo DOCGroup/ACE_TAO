@@ -30,7 +30,7 @@ Scope: **1268 directories**; **1230** differ from the base; **1281** have task-l
 | `PREFIX_INC` — Prefer prefix increment and decrement when equivalent | 47 | 45 | 2 | 0 |
 | `BRACES` — Consistent braces around control-flow bodies | 8 | 2 | 0 | 6 |
 | `CONST_GUARD_MACROS` — Const guard macro usage while preserving ACE_GUARD conventions | 2 | 2 | 0 | 0 |
-| `MOVE_SITES` — Audit std::move sites for moved-from use and ownership correctness | 11 | 10 | 1 | 0 |
+| `MOVE_SITES` — Audit std::move sites for moved-from use and ownership correctness | 12 | 11 | 1 | 0 |
 | `MOVE_SEMANTICS` — Copy/move semantics and moved-from object safety | 6 | 6 | 0 | 0 |
 | `SIZE_TYPES` — Count and size types | 58 | 34 | 15 | 9 |
 | `IDL_GENERATION` — tao_idl/gperf inputs and generated output | 36 | 6 | 30 | 0 |
