@@ -25,10 +25,12 @@ protected:
     ACE_TRACE ("AnswerIncomingCall::process()");
 
     if (message->recorder ()->answer_call () < 0)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p\n"),
-                         ACE_TEXT ("AnswerIncomingCall")),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("AnswerIncomingCall")),
+                          -1);
+      }
     return 0;
   }
 };
@@ -45,10 +47,12 @@ protected:
     CallerId *id;
     id = message->recorder ()->retrieve_callerId ();
     if (!id)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p\n"),
-                         ACE_TEXT ("GetCallerId")),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("GetCallerId")),
+                          -1);
+      }
 
     message->caller_id (id);
     return 0;
@@ -70,10 +74,12 @@ protected:
     int pmrv =
       message->recorder ()->play_message (outgoing_message);
     if (pmrv < 0)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p\n"),
-                         ACE_TEXT ("PlayOutgoingMessage")),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("PlayOutgoingMessage")),
+                          -1);
+      }
     return 0;
   }
 
@@ -100,10 +106,12 @@ protected:
     MessageType *type =
       message->recorder ()->record_message (incoming_message);
     if (!type)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p\n"),
-                         ACE_TEXT ("RecordIncomingMessage")),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("RecordIncomingMessage")),
+                          -1);
+      }
     message->incoming_message (incoming_message, type);
     return 0;
   }
@@ -142,11 +150,17 @@ protected:
     ACE_FILE_Addr addr = this->get_message_destination (message);
 
     if (message->is_text ())
-      Util::convert_to_unicode (incoming, addr);
+      {
+        Util::convert_to_unicode (incoming, addr);
+      }
     else if (message->is_audio ())
-      Util::convert_to_mp3 (incoming, addr);
+      {
+        Util::convert_to_mp3 (incoming, addr);
+      }
     else if (message->is_video ())
-      Util::convert_to_mpeg (incoming, addr);
+      {
+        Util::convert_to_mpeg (incoming, addr);
+      }
 
     message->addr (addr);
     return 0;
@@ -176,10 +190,12 @@ protected:
     ACE_FILE_IO file;
     ACE_FILE_Addr addr (path.c_str ());
     if (connector.connect (file, addr) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p\n"),
-                         ACE_TEXT ("create meta-data file")),
-                        0);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("create meta-data file")),
+                          0);
+      }
 
     file.truncate (0);
     this->write (file, "<Message>\n");
@@ -240,9 +256,11 @@ public:
   {
   //FUZZ: enable check_for_lack_ACE_OS
     if (tail == nullptr)
-      ACE_NEW_RETURN (tail,
-                      Module (ACE_TEXT ("End Module"), new TheEndTask ()),
-                      -1);
+      {
+        ACE_NEW_RETURN (tail,
+                        Module (ACE_TEXT ("End Module"), new TheEndTask ()),
+                        -1);
+      }
     this->inherited::open (arg, head, tail);
     // Listing 1000
 
@@ -299,45 +317,61 @@ public:
 
     // Listing 12 code/ch18
     if (this->push (notificationModule) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Failed to push %p\n"),
-                         ACE_TEXT ("notificationModule")),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Failed to push %p\n"),
+                           ACE_TEXT ("notificationModule")),
+                          -1);
+      }
     if (this->push (saveMetaDataModule) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Failed to push %p\n"),
-                         ACE_TEXT ("saveMetaDataModule")),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Failed to push %p\n"),
+                           ACE_TEXT ("saveMetaDataModule")),
+                          -1);
+      }
     if (this->push (conversionModule) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Failed to push %p\n"),
-                         ACE_TEXT ("conversionModule")),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Failed to push %p\n"),
+                           ACE_TEXT ("conversionModule")),
+                          -1);
+      }
     if (this->push (releaseModule) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Failed to push %p\n"),
-                         ACE_TEXT ("releaseModule")),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Failed to push %p\n"),
+                           ACE_TEXT ("releaseModule")),
+                          -1);
+      }
     if (this->push (recordModule) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Failed to push %p\n"),
-                         ACE_TEXT ("recordModule")),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Failed to push %p\n"),
+                           ACE_TEXT ("recordModule")),
+                          -1);
+      }
     if (this->push (playOGMModule) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Failed to push %p\n"),
-                         ACE_TEXT ("playOGMModule")),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Failed to push %p\n"),
+                           ACE_TEXT ("playOGMModule")),
+                          -1);
+      }
     if (this->push (getCallerIdModule) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Failed to push %p\n"),
-                         ACE_TEXT ("getCallerIdModule")),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Failed to push %p\n"),
+                           ACE_TEXT ("getCallerIdModule")),
+                          -1);
+      }
     if (this->push (answerIncomingCallModule) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Failed to push %p\n")
-                         ACE_TEXT ("answerIncomingCallModule")),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Failed to push %p\n")
+                           ACE_TEXT ("answerIncomingCallModule")),
+                          -1);
+      }
     // Listing 12
 
     return 0;
@@ -379,10 +413,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_NEW_RETURN (recording_stream, RecordingStream, -1);
 
   if (recording_stream->open (nullptr) < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("RecordingStream->open()")),
-                      0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("RecordingStream->open()")),
+                        0);
+    }
   // Listing 2
 
   // Listing 3 code/ch18
