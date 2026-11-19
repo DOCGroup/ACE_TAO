@@ -13761,3 +13761,14 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   event, and type-info map transfers likewise use the destination afterward.
 - No moved-from read, borrowed-buffer transfer, or invalid ownership transition
   was found. No source changes were needed. No build or tests were run.
+
+## 2026-11-19 ACE tests std::move call-site audit
+
+- Reviewed all `std::move` sites in the eight matching ACE test files:
+  Config_Test, DLL_Test_Impl, Handle_Set_Test, Compiler_Features_09_Test,
+  Compiler_Features_27_Test, Priority_Reactor_Test, Notify_Performance_Test,
+  and Reactor_Performance_Test.
+- The ownership transfers are consumed at their destinations, and test cases
+  do not read moved-from objects. The `std::move` of a string literal in the
+  compiler feature probe is intentional overload/forwarding coverage. No
+  source changes were needed. No build or tests were run.
