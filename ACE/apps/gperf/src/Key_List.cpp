@@ -60,6 +60,12 @@ string_comparison_expression (bool const case_insensitive,
                               bool const keyword_length_verified = false)
 {
   std::string expression;
+  if (!case_insensitive && compare_length)
+    {
+      return "*" + input + " == *" + keyword + " && !std::strncmp ("
+        + input + " + 1, " + keyword + " + 1, len - 1)";
+    }
+
   if (!case_insensitive)
     {
       expression = "*" + input + " == *" + keyword + " && ";
