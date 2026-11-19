@@ -204,8 +204,10 @@ Client::init (int argc, ACE_TCHAR *argv[])
       this->file_.reset (std::fopen (this->options_.filename.c_str (), "r"));
 
       if (!this->file_)
-        ACE_ERROR_RETURN ((LM_ERROR, "ERROR: file %C could not be opened\n",
-                           this->options_.filename.c_str ()), -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "ERROR: file %C could not be opened\n",
+                             this->options_.filename.c_str ()), -1);
+        }
 
       ACE_DEBUG ((LM_DEBUG, "file opened successfully\n"));
     }
