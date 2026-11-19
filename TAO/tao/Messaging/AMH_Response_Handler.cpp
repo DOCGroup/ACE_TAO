@@ -223,10 +223,12 @@ TAO_AMH_Response_Handler::_tao_rh_send_exception (CORBA::Exception const &ex)
                                       TAO_Message_Semantics (TAO_Message_Semantics::TAO_REPLY)) == -1)
     {
       if (TAO_debug_level > 0)
-        TAOLIB_ERROR ((LM_ERROR,
+        {
+          TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO: (%P|%t|%N|%l):  ")
                     ACE_TEXT ("TAO_AMH_Response_Handler:")
                     ACE_TEXT (" could not send exception reply\n")));
+        }
     }
 
   {
@@ -276,9 +278,11 @@ TAO_AMH_Response_Handler::_tao_rh_send_location_forward (CORBA::Object_ptr fwd,
   if (!(this->_tao_out << fwd))
     {
       if (TAO_debug_level > 0)
-        TAOLIB_ERROR ((LM_ERROR,
+        {
+          TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) ERROR: Unable to marshal ")
                     ACE_TEXT ("forward reference.\n")));
+        }
       return;
     }
 
@@ -289,10 +293,12 @@ TAO_AMH_Response_Handler::_tao_rh_send_location_forward (CORBA::Object_ptr fwd,
                                       TAO_Message_Semantics (TAO_Message_Semantics::TAO_REPLY)) == -1)
     {
       if (TAO_debug_level > 0)
-        TAOLIB_ERROR ((LM_ERROR,
+        {
+          TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO: (%P|%t|%N|%l):  ")
                     ACE_TEXT ("TAO_AMH_Response_Handler: could not send ")
                     ACE_TEXT ("location forward reply\n")));
+        }
     }
 
   {

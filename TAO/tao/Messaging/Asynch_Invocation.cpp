@@ -158,10 +158,14 @@ namespace TAO
 
         if (status == PortableInterceptor::LOCATION_FORWARD ||
             status == PortableInterceptor::TRANSPORT_RETRY)
-          s = TAO_INVOKE_RESTART;
+          {
+            s = TAO_INVOKE_RESTART;
+          }
         else if (status == PortableInterceptor::SYSTEM_EXCEPTION
             || status == PortableInterceptor::USER_EXCEPTION)
-          throw;
+          {
+            throw;
+          }
       }
     catch (...)
       {
@@ -173,7 +177,9 @@ namespace TAO
 
          if (st == PortableInterceptor::LOCATION_FORWARD ||
              st == PortableInterceptor::TRANSPORT_RETRY)
-           s = TAO_INVOKE_RESTART;
+           {
+             s = TAO_INVOKE_RESTART;
+           }
          else
          {
            throw;
