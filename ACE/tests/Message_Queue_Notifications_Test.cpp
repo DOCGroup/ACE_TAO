@@ -157,10 +157,12 @@ Message_Handler::process_message ()
 
   if (this->getq (mb,
                   (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("dequeue_head")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("dequeue_head")),
+                        -1);
+    }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -267,10 +269,12 @@ Watermark_Test::get_message ()
   ACE_Message_Block *mb {};
 
   if (this->getq (mb) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("dequeue_head")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("dequeue_head")),
+                        -1);
+    }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -339,7 +343,9 @@ run_main (int, ACE_TCHAR *[])
   Message_Handler mh (reactor);
 
   while (iterations > 0)
-    reactor.handle_events ();
+    {
+      reactor.handle_events ();
+    }
 
 #if defined (ACE_HAS_THREADS)
   ACE_DEBUG ((LM_DEBUG,

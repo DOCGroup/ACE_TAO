@@ -116,7 +116,9 @@ parent (void * = nullptr)
   char *s = shm;
 
   for (const char *c = ACE_ALPHABET; *c != '\0'; ++c)
-    *s++ = *c;
+    {
+      *s++ = *c;
+    }
 
   *s = '\0';
 
@@ -126,8 +128,10 @@ parent (void * = nullptr)
 
   // Perform a "busy wait" until the child sets the character to '*'.
   while (*shm != '*')
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P) spinning in parent!\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P) spinning in parent!\n")));
+    }
 
   result = shm_parent.remove ();
   ACE_TEST_ASSERT (result != -1);
@@ -222,10 +226,12 @@ run_main (int, ACE_TCHAR *[])
   if (ACE_OS::mktemp (shm_key) == nullptr
       || (ACE_OS::unlink (shm_key) == -1
           && errno == EPERM))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) %p\n"),
-                       shm_key),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) %p\n"),
+                         shm_key),
+                        1);
+    }
   spawn ();
 
 #else /* !ACE_LACKS_MMAP */
