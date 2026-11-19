@@ -22,7 +22,9 @@ void dump_utf16 (ACEXML_UTF16 const *data, size_t len)
       }
 
       if ((i + 1) % 4 == 0)
-        ACE_DEBUG ((LM_DEBUG, "\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG, "\n"));
+        }
       else
       {
         ACE_DEBUG ((LM_DEBUG, "  "));
@@ -68,7 +70,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     ACEXML_Base64::encode (ACE_TEXT ("A"), &encoded_len)};
   if (!encoded || encoded_len != 5 ||
       ACE_OS::strcmp (encoded.get (), ACE_TEXT ("QQ==\n")) != 0)
-    return 1;
+    {
+      return 1;
+    }
 
   size_t decoded_len {};
   std::unique_ptr<ACEXML_Char[]> base64_decoded {

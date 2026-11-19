@@ -15,7 +15,9 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   if (first.open (test) != -1)
     {
       while (first.get (ch) != -1)
-        ACE_OS::printf ("%c", ch);
+        {
+          ACE_OS::printf ("%c", ch);
+        }
     }
   else
     {
@@ -25,7 +27,9 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   if (second.open (simple) != -1)
     {
       while (second.get (ch) != -1)
-        ACE_OS::printf ("%c", ch);
+        {
+          ACE_OS::printf ("%c", ch);
+        }
     }
   else
     {
