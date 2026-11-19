@@ -40,8 +40,12 @@ TAO_DIOP_Acceptor::~TAO_DIOP_Acceptor ()
   this->close ();
 
   if (this->hosts_ != nullptr)
-    for (CORBA::ULong i {}; i < this->endpoint_count_; ++i)
-      CORBA::string_free (this->hosts_[i]);
+    {
+      for (CORBA::ULong i {}; i < this->endpoint_count_; ++i)
+        {
+          CORBA::string_free (this->hosts_[i]);
+        }
+    }
 }
 
 int
@@ -59,7 +63,9 @@ TAO_DIOP_Acceptor::create_profile (const TAO::ObjectKey & object_key,
   // they should be spread across multiple profiles.
   if (priority == TAO_INVALID_PRIORITY &&
       this->orb_core_->orb_params ()->shared_profile () == 0)
-    return this->create_new_profile (object_key, mprofile, priority);
+    {
+      return this->create_new_profile (object_key, mprofile, priority);
+    }
   else
   {
     return this->create_shared_profile (object_key, mprofile, priority);
@@ -271,8 +277,10 @@ TAO_DIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   }
 
   if (major >=0 && minor >= 0)
-    this->version_.set_version (static_cast<CORBA::Octet> (major),
-                                static_cast<CORBA::Octet> (minor));
+    {
+      this->version_.set_version (static_cast<CORBA::Octet> (major),
+                                  static_cast<CORBA::Octet> (minor));
+    }
   // Parse options
   if (this->parse_options (options) == -1)
   {
@@ -392,8 +400,10 @@ TAO_DIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
     }
 
   if (major >= 0 && minor >= 0)
-    this->version_.set_version (static_cast<CORBA::Octet> (major),
-                                static_cast<CORBA::Octet> (minor));
+    {
+      this->version_.set_version (static_cast<CORBA::Octet> (major),
+                                  static_cast<CORBA::Octet> (minor));
+    }
 
   // Parse options
   if (this->parse_options (options) == -1)
@@ -436,9 +446,11 @@ TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
                       -1);
 
       if (TAO_debug_level > 5)
-        TAOLIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - DIOP_Acceptor::open_i, ")
-                    ACE_TEXT ("trying to listen on port %d\n"), p));
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) - DIOP_Acceptor::open_i, ")
+                      ACE_TEXT ("trying to listen on port %d\n"), p));
+        }
       // Now try to actually open on that port
       a.set_port_number ((u_short)p);
       this->connection_handler_->local_addr (a);
@@ -467,11 +479,13 @@ TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
   if (! found_a_port)
     {
       if (TAO_debug_level > 0)
-        TAOLIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - DIOP_Acceptor::open_i, ")
-                    ACE_TEXT ("cannot open acceptor in port range (%d,%d)")
-                    ACE_TEXT ("- %p\n"),
-                    requested_port, last_port, ACE_TEXT("")));
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) - DIOP_Acceptor::open_i, ")
+                      ACE_TEXT ("cannot open acceptor in port range (%d,%d)")
+                      ACE_TEXT ("- %p\n"),
+                      requested_port, last_port, ACE_TEXT("")));
+        }
       return -1;
     }
 
@@ -485,10 +499,12 @@ TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
   if (this->connection_handler_->peer ().get_local_addr (address) != 0)
     {
       if (TAO_debug_level > 0)
-        TAOLIB_ERROR ((LM_ERROR,
-                    ACE_TEXT ("TAO (%P|%t) DIOP_Acceptor::open_i, ")
-                    ACE_TEXT ("%p"),
-                    ACE_TEXT ("cannot get local addr\n\n")));
+        {
+          TAOLIB_ERROR ((LM_ERROR,
+                      ACE_TEXT ("TAO (%P|%t) DIOP_Acceptor::open_i, ")
+                      ACE_TEXT ("%p"),
+                      ACE_TEXT ("cannot get local addr\n\n")));
+        }
       return -1;
     }
 
@@ -498,7 +514,9 @@ TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
   // to work.
   unsigned short const port = address.get_port_number ();
   for (CORBA::ULong j {}; j < this->endpoint_count_; ++j)
-    this->addrs_[j].set_port_number (port, 1);
+    {
+      this->addrs_[j].set_port_number (port, 1);
+    }
 
   this->default_address_.set_port_number (port);
 
@@ -610,17 +628,25 @@ TAO_DIOP_Acceptor::parse_address (const char *address,
           size_t const len = cp_pos - (address + 1);
 
           if (len >= sizeof (tmp_host))
-            return -1;
+            {
+              return -1;
+            }
 
           ipv6_in_host = true;
           host_defaulted = (cp_pos == address+1) ||
             (cp_pos == address+3 && address[1] == ':' && address[2] == ':');
           if (cp_pos[1] == ':')    // Look for a port
-            port_separator_loc = cp_pos + 1;
+            {
+              port_separator_loc = cp_pos + 1;
+            }
           else
-            port_separator_loc = 0;
+            {
+              port_separator_loc = 0;
+            }
           if (def_type)
-            *def_type = AF_INET6;
+            {
+              *def_type = AF_INET6;
+            }
 
           std::memcpy (tmp_host, address + 1, len);
           tmp_host[len] = '\0';
@@ -752,11 +778,13 @@ TAO_DIOP_Acceptor::dotted_decimal_address (ACE_INET_Addr &addr,
   if (tmp == nullptr || result != 0)
     {
       if (TAO_debug_level > 0)
-        TAOLIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - ")
-                    ACE_TEXT ("DIOP_Acceptor::dotted_decimal_address, ")
-                    ACE_TEXT ("%p\n\n"),
-                    ACE_TEXT ("cannot determine hostname")));
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) - ")
+                      ACE_TEXT ("DIOP_Acceptor::dotted_decimal_address, ")
+                      ACE_TEXT ("%p\n\n"),
+                      ACE_TEXT ("cannot determine hostname")));
+        }
       return -1;
     }
 
@@ -809,9 +837,11 @@ TAO_DIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
   // the list of cached hostnames unless it is the only interface.
   size_t lo_cnt {};  // Loopback interface count
   for (size_t j {}; j < if_cnt; ++j)
-    if (if_addrs[j].is_loopback ())
     {
-      ++lo_cnt;
+      if (if_addrs[j].is_loopback ())
+        {
+          ++lo_cnt;
+        }
     }
 
 #if defined (ACE_HAS_IPV6)
@@ -822,23 +852,27 @@ TAO_DIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
   // Scan for IPv4 interfaces since these should not be included
   // when IPv6-only is selected.
   for (size_t j {}; j < if_cnt; ++j)
-    if (if_addrs[j].get_type () != AF_INET6 ||
-        if_addrs[j].is_ipv4_mapped_ipv6 ())
-      {
-        ++ipv4_cnt;
-        if (if_addrs[j].is_loopback ())
-          ++ipv4_lo_cnt;  // keep track of IPv4 loopback ifs
-      }
-    else if (!if_addrs[j].is_linklocal () &&
-             !if_addrs[j].is_loopback())
-      {
-        ipv6_non_ll = true; // we have at least 1 non-local IPv6 if
-      }
-    else if (!orb_core->orb_params ()->use_ipv6_link_local () &&
-             if_addrs[j].is_linklocal ())
-      {
-        ++ipv6_ll;  // count link local addrs to exclude them afterwards
-      }
+    {
+      if (if_addrs[j].get_type () != AF_INET6 ||
+          if_addrs[j].is_ipv4_mapped_ipv6 ())
+        {
+          ++ipv4_cnt;
+          if (if_addrs[j].is_loopback ())
+            {
+              ++ipv4_lo_cnt;  // keep track of IPv4 loopback ifs
+            }
+        }
+      else if (!if_addrs[j].is_linklocal () &&
+               !if_addrs[j].is_loopback())
+        {
+          ipv6_non_ll = true; // we have at least 1 non-local IPv6 if
+        }
+      else if (!orb_core->orb_params ()->use_ipv6_link_local () &&
+               if_addrs[j].is_linklocal ())
+        {
+          ++ipv6_ll;  // count link local addrs to exclude them afterwards
+        }
+    }
 #endif /* ACE_HAS_IPV6 */
 
 #if defined (ACE_HAS_IPV6)
@@ -856,12 +890,18 @@ TAO_DIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
   // exclude it from the list.
   bool ignore_lo;
   if (ipv6_only)
-    // only exclude loopback if non-local if exists
-    ignore_lo = ipv6_non_ll;
+    {
+      // only exclude loopback if non-local if exists
+      ignore_lo = ipv6_non_ll;
+    }
   else if (ipv4_only)
-    ignore_lo = ipv4_cnt != ipv4_lo_cnt;
+    {
+      ignore_lo = ipv4_cnt != ipv4_lo_cnt;
+    }
   else
-    ignore_lo = if_cnt != lo_cnt;
+    {
+      ignore_lo = if_cnt != lo_cnt;
+    }
 
   // Adjust counts for IPv6 only if required
   size_t if_ok_cnt = if_cnt;
@@ -882,12 +922,18 @@ TAO_DIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
   // IPv6 loopback will be needed to successfully connect IPv6 clients
   // in a localhost environment.
   if (!ipv4_only && !ipv6_non_ll)
-    lo_cnt = ipv4_lo_cnt;
+    {
+      lo_cnt = ipv4_lo_cnt;
+    }
 
   if (!ignore_lo)
-    this->endpoint_count_ = static_cast<CORBA::ULong> (if_ok_cnt - ipv6_ll);
+    {
+      this->endpoint_count_ = static_cast<CORBA::ULong> (if_ok_cnt - ipv6_ll);
+    }
   else
-    this->endpoint_count_ = static_cast<CORBA::ULong> (if_ok_cnt - ipv6_ll - lo_cnt);
+    {
+      this->endpoint_count_ = static_cast<CORBA::ULong> (if_ok_cnt - ipv6_ll - lo_cnt);
+    }
 #else /* ACE_HAS_IPV6 */
   // If the loopback interface is the only interface then include it
   // in the list of interfaces to query for a hostname, otherwise
@@ -905,10 +951,12 @@ TAO_DIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
   if (this->endpoint_count_ == 0)
     {
       if (TAO_debug_level > 0)
-        TAOLIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("(%P|%t) - DIOP_Acceptor::probe_interfaces, ")
-                    ACE_TEXT("found no usable addresses, def_type = %d\n"),
-                    def_type));
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
+                      ACE_TEXT("(%P|%t) - DIOP_Acceptor::probe_interfaces, ")
+                      ACE_TEXT("found no usable addresses, def_type = %d\n"),
+                      def_type));
+        }
       return -1;
     }
 
@@ -941,23 +989,31 @@ TAO_DIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
           (ipv4_only ||
            ipv6_non_ll ||
            if_addrs[i].get_type () != AF_INET6))
-        continue;
+        {
+          continue;
+        }
 
       // Ignore any non-IPv4 interfaces when so required.
       if (ipv4_only &&
           (if_addrs[i].get_type () != AF_INET))
-        continue;
+        {
+          continue;
+        }
 
       // Ignore any non-IPv6 interfaces when so required.
       if (ipv6_only &&
           (if_addrs[i].get_type () != AF_INET6 ||
            if_addrs[i].is_ipv4_mapped_ipv6 ()))
-        continue;
+        {
+          continue;
+        }
 
       // Ignore all IPv6 link local interfaces when so required.
       if (!orb_core->orb_params ()->use_ipv6_link_local () &&
           if_addrs[i].is_linklocal ())
-        continue;
+        {
+          continue;
+        }
 #else /* ACE_HAS_IPV6 */
       // Ignore any loopback interface if there are other
       // non-loopback interfaces.
@@ -1075,9 +1131,11 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
   // Only check for endpoints after the protocol specification and
   // before the object key.
   for (size_t i {}; i < len; ++i)
-    if (options[i] == option_delimiter)
     {
-      ++option_count;
+      if (options[i] == option_delimiter)
+        {
+          ++option_count;
+        }
     }
 
   // The idea behind the following loop is to split the options into
@@ -1094,7 +1152,9 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
   for (CORBA::ULong j {}; j < option_count;)
     {
       if (j < option_count - 1)
-        end = options.find (option_delimiter, begin);
+        {
+          end = options.find (option_delimiter, begin);
+        }
       else
       {
         end = len;
@@ -1116,11 +1176,13 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
 
           if (slot == len - 1
               || slot == ACE_CString::npos)
-            TAOLIB_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("TAO (%P|%t) - DIOP option <%C> is ")
-                               ACE_TEXT ("missing a value.\n"),
-                               opt.c_str ()),
-                              -1);
+            {
+              TAOLIB_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("TAO (%P|%t) - DIOP option <%C> is ")
+                                 ACE_TEXT ("missing a value.\n"),
+                                 opt.c_str ()),
+                                -1);
+            }
 
           ACE_CString const name = opt.substring (0, slot);
           ACE_CString const value = opt.substring (slot + 1);
@@ -1128,10 +1190,12 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
           begin = end + 1;
 
           if (name.length () == 0)
-            TAOLIB_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("TAO (%P|%t) - Zero length DIOP ")
-                               ACE_TEXT ("option name.\n")),
-                              -1);
+            {
+              TAOLIB_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("TAO (%P|%t) - Zero length DIOP ")
+                                 ACE_TEXT ("option name.\n")),
+                                -1);
+            }
 
           if (name == "priority")
             {
@@ -1145,12 +1209,14 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
               int const range = std::atoi (value.c_str ());
               // @@ What's the lower bound on the range?  zero, or one?
               if (range < 1 || range > ACE_MAX_DEFAULT_PORT)
-                TAOLIB_ERROR_RETURN ((LM_ERROR,
-                                   ACE_TEXT ("TAO (%P|%t) Invalid DIOP endpoint ")
-                                   ACE_TEXT ("portspan: <%C>\n")
-                                   ACE_TEXT ("Valid range 1 -- %d\n"),
-                                   value.c_str (), ACE_MAX_DEFAULT_PORT),
-                                  -1);
+                {
+                  TAOLIB_ERROR_RETURN ((LM_ERROR,
+                                     ACE_TEXT ("TAO (%P|%t) Invalid DIOP endpoint ")
+                                     ACE_TEXT ("portspan: <%C>\n")
+                                     ACE_TEXT ("Valid range 1 -- %d\n"),
+                                     value.c_str (), ACE_MAX_DEFAULT_PORT),
+                                    -1);
+                }
 
               this->port_span_ = static_cast <u_short> (range);
             }
