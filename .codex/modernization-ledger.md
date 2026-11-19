@@ -13522,3 +13522,8 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 
 - Added the application-owned `_copy_value()` implementation to the OBV Factory test's `Value2_impl` and a client check that verifies both inherited and derived state are copied. PR #2642 commit `da74bd747b` was carried here as `af59f0fb86`.
 - This corrects the CI compile failure where generated `Value2` correctly redeclared `_copy_value()` as pure for an application factory implementation.
+
+## 2026-11-19 TAO DynamicAny brace audit
+
+- Scanned all 15 `TAO/tao/DynamicAny/*.cpp` translation units and their directory headers with `clang-tidy`'s `readability-braces-around-statements` check. No missing-brace diagnostics were reported. `git diff --check` passed; no build or runtime test was run.
+- Recorded `BRACES` as complete for DynamicAny; the directory's other modernization categories remain open.

@@ -2312,6 +2312,7 @@ TAO/tao/DiffServPolicy	OWNERSHIP	done	pending	Held the service-context handler i
 TAO/tao/DiffServPolicy	SPECIAL_MEMBER_COMMENTS	done	0eda8eaa21f	Removed five standalone constructor/destructor labels; realclean build and link passed without warnings
 TAO/tao/DiffServPolicy	VALUE_INIT	done	pending	Migrated from existing inventory; see modernization-ledger.md
 TAO/tao/DynamicAny	BUILD_TEST	done	1dcc4002089	DynamicAny realclean build passed; DynAny_Test built and passed
+TAO/tao/DynamicAny	BRACES	done	e6fa5d72aa1	Scanned all 15 DynamicAny translation units and their directory headers with readability-braces-around-statements; no diagnostics remain.
 TAO/tao/DynamicAny	CONST	done	83504cbc1a0	Const-qualified immutable TypeCode kind and TypeCode var locals
 TAO/tao/DynamicAny	SCOPE_REDUCTION	done	c5a98e7ec13	Moved TypeCode_var and Boolean comparison locals into their loop bodies in DynArray_i.cpp, DynSequence_i.cpp, and DynStruct_i.cpp.
 TAO/tao/DynamicAny	SPECIAL_MEMBER_COMMENTS	done	905f8b4c9f0	Removed 23 standalone constructor/destructor labels; realclean build and link passed without warnings
