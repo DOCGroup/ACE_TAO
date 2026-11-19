@@ -22,7 +22,9 @@ std::string t (std::uint32_t prop)
   std::uint32_t log = 0;
 
   for (; prop > 1; ++log)
-    prop >>= 1;
+    {
+      prop >>= 1;
+    }
 
   return priority_names[log];
 }

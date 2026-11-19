@@ -62,11 +62,13 @@ encode_decode_stream (const ACE_Byte* stream, size_t length)
               decodeBuf));
 
   for (size_t i = 0; i < length; ++i)
-    if (decodeBuf[i] != stream[i])
     {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Encoded->Decoded stream differs from original stream\n")));
-      return -1;
+      if (decodeBuf[i] != stream[i])
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Encoded->Decoded stream differs from original stream\n")));
+          return -1;
+        }
     }
   return 0;
 }

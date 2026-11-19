@@ -98,8 +98,10 @@ A::A()
   this->dynamic_ = ACE_Dynamic::instance ()->is_dynamic ();
 
   if (this->dynamic_)
-    // Make sure to reset the flag.
-    ACE_Dynamic::instance ()->reset ();
+    {
+      // Make sure to reset the flag.
+      ACE_Dynamic::instance ()->reset ();
+    }
 }
 
 int
