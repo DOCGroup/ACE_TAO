@@ -13456,3 +13456,10 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Added Allman braces around 12 loop, diagnostic, and return bodies in `IIOP_Connector.cpp`, aligning logging macro indentation.
 - Focused `clang-tidy -p TAO/tao --checks=-*,readability-braces-around-statements` reported no diagnostics; `git diff --check` passed. No build or runtime test was run.
 - Commit `782552f9e69`. The wider TAO/tao brace audit remains open.
+
+
+## 2026-11-19 TAO CORBA Object braces
+
+- Added Allman braces around 16 protocol-proxy returns and debug/error diagnostics in `Object.cpp`, aligning ACE log macro indentation.
+- Focused `clang-tidy -p TAO/tao --checks=-*,readability-braces-around-statements` reported no diagnostics; `git diff --check` passed. No build or runtime test was run.
+- Commit `043ba9d10b4`. The wider TAO/tao brace audit remains open.
