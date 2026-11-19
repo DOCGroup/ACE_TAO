@@ -92,7 +92,6 @@ project(optinset): gperf_test {
 
   Source_Files {
     optimize.cpp
-    test.cpp
   }
 }
 
@@ -221,6 +220,31 @@ project(switch_ci_comp_inset): gperf_test {
 
   Source_Files {
     switch_ci_comp_gen/switch.cpp
+  }
+}
+
+project(hash_prefix_inset): gperf_test {
+  exename = hash_prefix_out
+
+  verbatim(gnuace, bottom) {
+    all: runtests
+
+    runtests: hash_prefix_out$(EXEEXT)
+    "	@echo "Testing hash prefix comparison (-c)"
+    "	./hash_prefix_out -v < switch.in > hash_prefix.out"
+    "	diff -b hash_prefix.exp hash_prefix.out"
+
+    endif # CROSS-COMPILE
+  }
+
+  GPERF_Files {
+    gendir = hash_prefix_gen
+    commandflags += -c
+    switch.gperf
+  }
+
+  Source_Files {
+    hash_prefix_gen/switch.cpp
   }
 }
 

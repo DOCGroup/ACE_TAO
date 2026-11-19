@@ -128,7 +128,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
       *os << " (max) {}" << be_uidt;
     }
 
-  /// If we are using std::vector, we can't implement this
+  /// The buffer constructor is unavailable when using std::vector.
   if (!be_global->alt_mapping () || !node->unbounded ())
     {
       // Constructor with the buffer

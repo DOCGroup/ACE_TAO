@@ -305,8 +305,7 @@ TAO_IDL_CPP_Keyword_Table::lookup (char const *str, size_t len)
         {
           char const *s = wordlist[key].keyword_;
 
-          if (len == std::strlen (s) && *str == *s &&
-              !std::strncmp (str + 1, s + 1, len - 1))
+          if (len == std::strlen (s) && !std::strncmp (str, s, len))
             {
               return std::addressof (wordlist[key]);
             }

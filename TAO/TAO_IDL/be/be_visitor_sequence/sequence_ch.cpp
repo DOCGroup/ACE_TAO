@@ -183,7 +183,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
               << "explicit " << node->local_name () << " (::CORBA::ULong max);";
         }
 
-      /// If we are using std::vector, we can't implement this
+      /// The buffer constructor is unavailable when using std::vector.
       if (!be_global->alt_mapping () || !node->unbounded ())
         {
           *os << be_nl

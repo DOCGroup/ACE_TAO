@@ -52,6 +52,32 @@ string_compare_prefix (bool const case_insensitive)
   return case_insensitive ? "ACE_OS::" : "std::";
 }
 
+std::string
+string_comparison_expression (bool const case_insensitive,
+                              bool const compare_length,
+                              std::string const& input,
+                              std::string const& keyword)
+{
+  std::string expression;
+  if (compare_length)
+    {
+      expression = "len == std::strlen (" + keyword + ") && ";
+    }
+
+  expression += "!";
+  expression += string_compare_prefix (case_insensitive);
+  expression += case_insensitive
+    ? (compare_length ? "strncasecmp" : "strcasecmp")
+    : (compare_length ? "strncmp" : "strcmp");
+  expression += " (" + input + ", " + keyword;
+  if (compare_length)
+    {
+      expression += ", len";
+    }
+  expression += ")";
+  return expression;
+}
+
 char const *
 generated_size_type ()
 {
@@ -666,7 +692,6 @@ Key_List::output_switch (int use_keyword_table)
     }
 
   std::string comp_buffer;
-
   List_Node *curr = head;
   int pointer_and_type_enabled = option[POINTER] && option[TYPE];
   int total_switches = option.total_switches ();
@@ -674,32 +699,15 @@ Key_List::output_switch (int use_keyword_table)
 
   if (pointer_and_type_enabled)
     {
-      std::string const compare_first_character = option[STRCASECMP]
-        ? "charmap[*str]"
-        : "*str";
       std::string const key_name = option.key_name ();
-      std::string const comparison_function = option[STRCASECMP]
-        ? (option[COMP] ? "strncasecmp" : "strcasecmp")
-        : (option[COMP] ? "strncmp" : "strcmp");
-      comp_buffer = compare_first_character + " == *resword->" + key_name
-        + " && !" + string_compare_prefix (option[STRCASECMP])
-        + comparison_function + " (str + 1, resword->" + key_name + " + 1";
-      if (option[COMP])
-        {
-          comp_buffer += ", len - 1";
-        }
-      comp_buffer += ")";
+      std::string const keyword = "resword->" + key_name;
+      comp_buffer = string_comparison_expression (
+        option[STRCASECMP], option[COMP], "str", keyword);
     }
   else
     {
-      if (option[COMP])
-        comp_buffer = option[STRCASECMP]
-          ? "charmap[*str] == *resword && !ACE_OS::strncasecmp (str + 1, resword + 1, len - 1)"
-          : "*str == *resword && !std::strncmp (str + 1, resword + 1, len - 1)";
-      else
-        comp_buffer = option[STRCASECMP]
-          ? "charmap[*str] == *resword && !ACE_OS::strncasecmp (str + 1, resword + 1, len - 1)"
-          : "*str == *resword && !std::strcmp (str + 1, resword + 1)";
+      comp_buffer = string_comparison_expression (
+        option[STRCASECMP], option[COMP], "str", "resword");
     }
   if (!option[OPTIMIZE])
     {
@@ -880,8 +888,8 @@ Key_List::output_switch (int use_keyword_table)
           else
             {
               ACE_OS::printf (option[LENTABLE] && !option[DUP]
-                      ? "              if (len == key_len && %s)\n                return resword;\n"
-                      : "              if (%s)\n                return resword;\n", comp_buffer.c_str ());
+                      ? "              if (len == key_len && %s)\n                {\n                  return resword;\n                }\n"
+                      : "              if (%s)\n                {\n                  return resword;\n                }\n", comp_buffer.c_str ());
               ACE_OS::printf ("              return %s;\n", generated_null_pointer ());
             }
           ACE_OS::printf ("            }\n");
@@ -909,21 +917,14 @@ Key_List::output_switch (int use_keyword_table)
 
           ACE_OS::printf ("                default: return %s;\n                }\n              ",
                           generated_null_pointer ());
-          char const *comparison = option[STRCASECMP]
-            ? (option[COMP]
-               ? "strncasecmp (s + 1, str + 1, len - 1)"
-               : "strcasecmp (s + 1, str + 1)")
-            : (option[COMP]
-               ? "strncmp (s + 1, str + 1, len - 1)"
-               : "strcmp (s + 1, str + 1)");
-          ACE_OS::printf ("if (%s == *s && !%s%s)\n"
+          std::string const comparison = string_comparison_expression (
+            option[STRCASECMP], option[COMP], "str", "s");
+          ACE_OS::printf ("if (%s)\n"
                           "  {\n"
                           "    return s;\n"
                           "  }\n"
                           "return %s;\n            }\n",
-                          option[STRCASECMP] ? "charmap[*str]" : "*str",
-                          string_compare_prefix (option[STRCASECMP]),
-                          comparison,
+                          comparison.c_str (),
                           generated_null_pointer ());
           curr = temp;
         }
@@ -1121,7 +1122,7 @@ Key_List::output_binary_search_function ()
     }
   if (!option[SKIPSTRINGH] && option[STRCASECMP])
     {
-      ACE_OS::printf ("#include \"ace/OS_NS_string.h\"\n");
+      ACE_OS::printf ("#include \"ace/OS_NS_strings.h\"\n");
     }
 
   // Output type declaration now, reference it later on....
@@ -1243,7 +1244,7 @@ Key_List::output_linear_search_function ()
     }
   if (!option[SKIPSTRINGH] && option[STRCASECMP])
     {
-      ACE_OS::printf ("#include \"ace/OS_NS_string.h\"\n");
+      ACE_OS::printf ("#include \"ace/OS_NS_strings.h\"\n");
     }
 
   // Output type declaration now, reference it later on....
@@ -1817,17 +1818,18 @@ Key_List::output_lookup_function ()
               ACE_OS::printf (".%s", option.key_name ().c_str ());
             }
 
-          ACE_OS::printf (";\n\n              if (%s%s == *s && !%s%s)\n"
+          std::string comparison = string_comparison_expression (
+            option[STRCASECMP], option[COMP], "str", "s");
+          if (option[LENTABLE])
+            {
+              comparison = "len == lengthtable[key] && " + comparison;
+            }
+
+          ACE_OS::printf (";\n\n              if (%s)\n"
                          "                {\n"
                          "                  return %s%s%s;\n"
                          "                }\n            }\n",
-                  option[LENTABLE] ? "len == lengthtable[key]\n              && " : "",
-                  option[STRCASECMP] ? "charmap[*str]" : "*str",
-                  string_compare_prefix (option[STRCASECMP]),
-                  option[COMP] ? (option[STRCASECMP]
-                    ? "strncasecmp (str + 1, s + 1, len - 1)"
-                    : "strncmp (str + 1, s + 1, len - 1)")
-                  : (option[STRCASECMP] ? "strcasecmp (str + 1, s + 1)" : "strcmp (str + 1, s + 1)"),
+                  comparison.c_str (),
                   pointer_and_type_enabled ? generated_address_prefix () : "",
                   pointer_and_type_enabled ? "wordlist[slot]" : "s",
                   pointer_and_type_enabled ? generated_address_suffix () : "");
@@ -1875,42 +1877,19 @@ Key_List::output_lookup_function ()
                           this->struct_tag.c_str (),
                           element_const);
         }
-      if (this->array_type_ != Key_List::default_array_type)
-        {
-          if (option[COMP])
-            {
-              ACE_OS::printf ("if (%s == *ptr->%s && !%s%s (str + 1, ptr->%s + 1, len - 1",
-                              option[STRCASECMP] ? "charmap[*str]" : "*str", option.key_name ().c_str (),
-                              string_compare_prefix (option[STRCASECMP]),
-                              option[STRCASECMP] ? "strncasecmp" : "strncmp", option.key_name ().c_str ());
-            }
-          else
-            {
-              ACE_OS::printf ("if (%s == *ptr->%s && !%s%s (str + 1, ptr->%s + 1",
-                              option[STRCASECMP] ? "charmap[*str]" : "*str", option.key_name ().c_str (),
-                              string_compare_prefix (option[STRCASECMP]),
-                              option[STRCASECMP] ? "strcasecmp" : "strcmp", option.key_name ().c_str ());
-            }
-        }
-      else
-        {
-          ACE_OS::printf (option[STRCASECMP] ? "if (charmap[*str] == **ptr && !ACE_OS::%s" :
-                          "if (*str == **ptr && !std::%s",
-                          option[COMP]
-                            ? (option[STRCASECMP]
-                                 ? "strncasecmp (str + 1, *ptr + 1, len - 1"
-                                 : "strncmp (str + 1, *ptr + 1, len - 1")
-                            : (option[STRCASECMP]
-                                 ? "strcasecmp (str + 1, *ptr + 1"
-                                 : "strcmp (str + 1, *ptr + 1"));
-        }
-      ACE_OS::printf ("))\n"
+      std::string const keyword = this->array_type_ != Key_List::default_array_type
+        ? "ptr->" + std::string (option.key_name ())
+        : "*ptr";
+      std::string const comparison = string_comparison_expression (
+        option[STRCASECMP], option[COMP], "str", keyword);
+      ACE_OS::printf ("if (%s)\n"
                       "                  {\n"
                       "                    return %sptr;\n"
                       "                  }\n"
                       "                }\n"
-                      "            }\n        }\n    %s\n}\n", this->array_type_ ==
-              Key_List::default_array_type ? "*" : "",
+                      "            }\n        }\n    %s\n}\n",
+              comparison.c_str (),
+              this->array_type_ == Key_List::default_array_type ? "*" : "",
               option[OPTIMIZE] ? "" : generated_null_return ());
     }
   else
@@ -1934,13 +1913,14 @@ Key_List::output_lookup_function ()
               ACE_OS::printf (".%s", option.key_name ().c_str ());
             }
 
-          ACE_OS::printf (";\n\n          if (%s%s == *s && !%s%s)\n            {\n              return %s%s%s",
-                  option[LENTABLE] ? "len == lengthtable[key]\n              && " : "",
-                  option[STRCASECMP] ? "charmap[*str]" : "*str",
-                  string_compare_prefix (option[STRCASECMP]),
-                  option[COMP]
-                  ? (option[STRCASECMP] ? "strncasecmp (str + 1, s + 1, len - 1)" : "strncmp (str + 1, s + 1, len - 1)")
-                  : (option[STRCASECMP] ? "strcasecmp (str + 1, s + 1)" : "strcmp (str + 1, s + 1)"),
+          std::string comparison = string_comparison_expression (
+            option[STRCASECMP], option[COMP], "str", "s");
+          if (option[LENTABLE])
+            {
+              comparison = "len == lengthtable[key] && " + comparison;
+            }
+          ACE_OS::printf (";\n\n          if (%s)\n            {\n              return %s%s%s",
+                  comparison.c_str (),
                   option[TYPE] && option[POINTER] ? generated_address_prefix () : "",
                   option[TYPE] && option[POINTER] ? "wordlist[key]" : "s",
                   option[TYPE] && option[POINTER] ? generated_address_suffix () : "");
@@ -2045,7 +2025,7 @@ Key_List::output ()
         }
       if (!option[SKIPSTRINGH] && option[STRCASECMP])
         {
-          ACE_OS::printf ("#include \"ace/OS_NS_string.h\"\n");
+          ACE_OS::printf ("#include \"ace/OS_NS_strings.h\"\n");
         }
 
       // Output type declaration now, reference it later on....

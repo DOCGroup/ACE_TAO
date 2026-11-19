@@ -3,3 +3,6 @@ in word set IF
 in word set while
 in word set WHILE
 NOT in word set foobar
+NOT in word set go
+NOT in word set GO
+in word set goto
