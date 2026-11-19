@@ -231,7 +231,9 @@ int handle_parent (ACE_TCHAR *cmdLine)
   ACE_OS::sleep (2);
 
   for (int i = 0; i < 100; ++i)
-    sendRecord (i, shmem_allocator);
+    {
+      sendRecord (i, shmem_allocator);
+    }
   sendRecord (-1, shmem_allocator);
 
   processa.wait ();
@@ -258,10 +260,14 @@ int handle_child ()
 
 #if defined (WIN32)
   while (processWin32Record (allocator_owner.get ()) != -1)
-    ;
+    {
+      ;
+    }
 #else
   while (processRecord (allocator_owner.get ()) != -1)
-    ;
+    {
+      ;
+    }
 #endif
   g_shmem_allocator = nullptr;
   return 0;
