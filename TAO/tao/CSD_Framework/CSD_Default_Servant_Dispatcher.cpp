@@ -39,10 +39,12 @@ TAO_CSD_Default_Servant_Dispatcher::create_Root_POA (
   if (repo == nullptr)
     {
       if (TAO_debug_level > 0)
-        TAOLIB_DEBUG ((LM_DEBUG,
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT("(%P|%t) CSD_Default_Servant_Dispatcher::")
                     ACE_TEXT("create_POA could not find ")
                     ACE_TEXT("TAO_CSD_Strategy_Repository\n")));
+        }
       return nullptr;
     }
 

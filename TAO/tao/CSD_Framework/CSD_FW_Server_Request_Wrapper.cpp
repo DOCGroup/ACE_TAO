@@ -18,7 +18,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO::CSD::FW_Server_Request_Wrapper::~FW_Server_Request_Wrapper()
 {
   if (this->is_clone_)
-    destroy_clone (this->request_);
+    {
+      destroy_clone (this->request_);
+    }
 }
 
 void
@@ -26,10 +28,14 @@ TAO::CSD::FW_Server_Request_Wrapper::destroy_clone (
   TAO_ServerRequest *request) noexcept
 {
   if (request == nullptr)
-    return;
+    {
+      return;
+    }
 
   if (request->profile_.type_id_ != nullptr)
-    CORBA::string_free (const_cast<char*> (request->profile_.type_id_));
+    {
+      CORBA::string_free (const_cast<char*> (request->profile_.type_id_));
+    }
 
   delete request->incoming_;
 
@@ -48,14 +54,18 @@ TAO::CSD::FW_Server_Request_Wrapper::destroy_clone (
 
       for (CORBA::ULong i {};
            i < request->operation_details_->num_args_; ++i)
-        delete request->operation_details_->args_[i];
+        {
+          delete request->operation_details_->args_[i];
+        }
 
       delete [] request->operation_details_->args_;
       delete request->operation_details_;
     }
 
   if (request->transport_ != nullptr)
-    request->transport_->remove_reference ();
+    {
+      request->transport_->remove_reference ();
+    }
 
   delete request;
 }
@@ -180,7 +190,9 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_ServerRequest*& request)
     {
       clone_obj->incoming_ = this->clone (request->incoming_);
       if (clone_obj->incoming_ == nullptr)
-        return nullptr;
+        {
+          return nullptr;
+        }
     }
 
   // TYPE: TAO_OutputCDR*
@@ -189,7 +201,9 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_ServerRequest*& request)
     {
       clone_obj->outgoing_ = this->create_new_output_cdr ();
       if (clone_obj->outgoing_ == nullptr)
-        return nullptr;
+        {
+          return nullptr;
+        }
     }
 
   // TYPE: TAO_Transport*
@@ -328,7 +342,9 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_Operation_Details *& from,
     void operator() (TAO::Argument **args) const noexcept
     {
       for (CORBA::ULong i {}; i < this->count_; ++i)
-        delete args[i];
+        {
+          delete args[i];
+        }
       delete [] args;
     }
   };
