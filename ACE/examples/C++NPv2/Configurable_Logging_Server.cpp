@@ -10,7 +10,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[]) {
   ACE_STATIC_SVC_REGISTER (Reporter_Descriptor);
 
   ACE_Service_Config::open
-    (argc, argv, ACE_DEFAULT_LOGGER_KEY, 0);
+    (argc, argv, ACE_DEFAULT_LOGGER_KEY, false);
 
   ACE_Reactor::instance ()->run_reactor_event_loop ();
   return 0;

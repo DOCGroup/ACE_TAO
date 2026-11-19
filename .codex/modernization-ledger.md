@@ -13845,3 +13845,18 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   call sites had already been migrated. Kept the implementation and tests so
   ACE's API behavior remains covered. No source changes/builds/tests were
   needed.
+
+## 2026-11-19 ACE examples Boolean-argument modernization
+
+- Reused the repository compilation database with paths redirected to this
+  worktree and a temporary include overlay for the absent local `ace/config.h`.
+  A broad pass over 400 existing ACE example sources encountered unrelated
+  missing generated headers/legacy parse errors, so findings were rechecked on
+  the 16 unique warned sources with C++17 explicitly enabled; that targeted
+  clang-tidy scan completed without errors.
+- Replaced 23 integer literals passed to Boolean parameters in 15 ACE example
+  files, across Timer_Queue, C++NPv2, APG, Web_Crawler, Service_Configurator,
+  and Reactor/Proactor. The follow-up targeted scan has no remaining
+  Boolean-argument findings; only two pre-existing `while (1)` condition
+  warnings remain, outside this call-site task. `git diff --check` passed. No
+  builds or tests were run.

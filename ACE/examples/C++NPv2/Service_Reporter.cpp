@@ -41,7 +41,7 @@ int Service_Reporter::handle_input (ACE_HANDLE) {
   acceptor_.accept (peer_stream);
 
   ACE_Service_Repository_Iterator iterator
-    (*ACE_Service_Repository::instance (), 0);
+    (*ACE_Service_Repository::instance (), false);
 
   for (const ACE_Service_Type *st;
        iterator.next (st) != 0;

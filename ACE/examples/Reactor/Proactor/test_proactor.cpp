@@ -671,7 +671,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
    {
      if (acceptor.open (ACE_INET_Addr (port),
                         initial_read_size,
-                        1) == -1)
+                        true) == -1)
      {
        return -1;
      }

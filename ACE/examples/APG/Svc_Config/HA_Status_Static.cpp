@@ -54,7 +54,7 @@ HA_Status::init (int argc, ACE_TCHAR *argv[])
   ACE_Configuration_Section_Key status_section {};
   if (config.open_section (config.root_section (),
                            ACE_TEXT ("HAStatus"),
-                           0,
+                           false,
                            status_section) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),

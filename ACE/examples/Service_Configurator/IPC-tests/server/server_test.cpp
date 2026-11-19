@@ -19,7 +19,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (ACE_Service_Config::open (argc,
                                 argv,
                                 ACE_DEFAULT_LOGGER_KEY,
-                                0) == -1)
+                                false) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("ACE_Service_Config::open")),
