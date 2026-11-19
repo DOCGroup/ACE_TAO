@@ -16,11 +16,13 @@ ace_url_wstring (ACE_UINT16 const *value)
 {
   ACE_NS_WString result;
   if (value != nullptr)
-    while (*value != 0)
-      {
-        result += static_cast<ACE_WSTRING_TYPE> (*value);
-        ++value;
-      }
+    {
+      while (*value != 0)
+        {
+          result += static_cast<ACE_WSTRING_TYPE> (*value);
+          ++value;
+        }
+    }
   return result;
 }
 
@@ -34,7 +36,9 @@ ace_url_wstring_from_buffer (char const *buffer)
     {
       std::memcpy (std::addressof (value), buffer + offset, sizeof (value));
       if (value != 0)
-        result += static_cast<ACE_WSTRING_TYPE> (value);
+        {
+          result += static_cast<ACE_WSTRING_TYPE> (value);
+        }
       offset += sizeof (value);
     }
   while (value != 0);
@@ -133,7 +137,9 @@ ACE_URL_Property::dump () const
                   name.get ()));
     }
   else
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n   name_:  \"\"\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n   name_:  \"\"\n")));
+    }
 
   if (this->value_.length () > 0)
     {
@@ -142,7 +148,9 @@ ACE_URL_Property::dump () const
                   value.get ()));
     }
   else
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("   value_:  \"\"\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("   value_:  \"\"\n")));
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -203,10 +211,14 @@ ACE_URL_Offer::dump () const
                   url.get ()));
     }
   else
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n url_:  \"\"\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n url_:  \"\"\n")));
+    }
 
   for (size_t i = 0; i < this->prop_.size (); ++i)
-    this->prop_[i].dump ();
+    {
+      this->prop_[i].dump ();
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
