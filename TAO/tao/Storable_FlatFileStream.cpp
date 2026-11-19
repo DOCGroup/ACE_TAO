@@ -181,37 +181,45 @@ TAO::Storable_FlatFileStream::open()
   // For now, three flags exist "r", "w",  and "c"
   int flags {};
   const char *fdmode {};
-  if( std::strchr(mode_.c_str(), 'r') )
-    if( std::strchr(mode_.c_str(), 'w') )
-      flags = O_RDWR, fdmode = "w+";
-    else
+  if (std::strchr (mode_.c_str (), 'r'))
     {
-      flags = O_RDONLY, fdmode = "r";
+      if (std::strchr (mode_.c_str (), 'w'))
+        {
+          flags = O_RDWR, fdmode = "w+";
+        }
+      else
+        {
+          flags = O_RDONLY, fdmode = "r";
+        }
     }
   else
-  {
-    flags = O_WRONLY, fdmode = "w";
-  }
-  if( std::strchr(mode_.c_str(), 'c') )
-  {
-    flags |= O_CREAT;
-  }
+    {
+      flags = O_WRONLY, fdmode = "w";
+    }
+  if (std::strchr (mode_.c_str (), 'c'))
+    {
+      flags |= O_CREAT;
+    }
 
 #ifndef ACE_WIN32
-  if( ACE_OS::flock_init (std::addressof (filelock_), flags,
-                          ACE_TEXT_CHAR_TO_TCHAR (file_.c_str()), 0666) != 0 )
-    TAOLIB_ERROR_RETURN ((LM_ERROR,
-                          ACE_TEXT ("(%P|%t) Storable_FFS::open ")
-                          ACE_TEXT ("Cannot open file %s for mode %s: %p\n"),
-                          file_.c_str(), mode_.c_str(), ACE_TEXT ("ACE_OS::flock_init")),
-                         -1);
+  if (ACE_OS::flock_init (std::addressof (filelock_), flags,
+                          ACE_TEXT_CHAR_TO_TCHAR (file_.c_str ()), 0666) != 0)
+    {
+      TAOLIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("(%P|%t) Storable_FFS::open ")
+                            ACE_TEXT ("Cannot open file %s for mode %s: %p\n"),
+                            file_.c_str (), mode_.c_str (), ACE_TEXT ("ACE_OS::flock_init")),
+                           -1);
+    }
 #else
-  if( (filelock_.handle_= ACE_OS::open (file_.c_str(), flags, 0)) == ACE_INVALID_HANDLE )
-    TAOLIB_ERROR_RETURN ((LM_ERROR,
-                          ACE_TEXT ("(%P|%t) Storable_FFS::open ")
-                          ACE_TEXT ("Cannot open file %s for mode %s: %p\n"),
-                          file_.c_str(), mode_.c_str(), ACE_TEXT ("ACE_OS::open")),
-                         -1);
+  if ((filelock_.handle_ = ACE_OS::open (file_.c_str (), flags, 0)) == ACE_INVALID_HANDLE)
+    {
+      TAOLIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("(%P|%t) Storable_FFS::open ")
+                            ACE_TEXT ("Cannot open file %s for mode %s: %p\n"),
+                            file_.c_str (), mode_.c_str (), ACE_TEXT ("ACE_OS::open")),
+                           -1);
+    }
 #endif
 
   this->fl_ = nullptr;
@@ -364,7 +372,9 @@ TAO::Storable_FlatFileStream::last_changed ()
           ACE_stat st;
           result = ACE_OS::fstat (filelock_.handle_, std::addressof (st));
           if (result == 0)
-            mtime = st.st_mtime;
+            {
+              mtime = st.st_mtime;
+            }
           else
             {
               if (TAO_debug_level > 0)
