@@ -13735,3 +13735,17 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   limit now uses `%B`, Timeprobe's `u_long` count uses `%Q` with an
   `ACE_UINT64` conversion, and the VxWorks message queue now formats its
   `tail_` pointer with `%@` and labels it accurately.
+
+
+## 2026-11-19 ACE and TAO core Boolean-argument scan
+
+- Ran `clang-tidy` with `modernize-use-bool-literals` over the available ACE
+  core compile database (307 translation units) and TAO core compile database.
+  The ACE scan produced one warning in generated `Svc_Conf_y.cpp` skeleton
+  output; no hand-written ACE core diagnostics appeared.
+- Filtered the TAO database to the 202 source files present in this checkout;
+  the scan completed without diagnostics or parse errors. The other 38 entries
+  name generated source files absent from the checkout.
+- Recorded both directory tasks as `needs-work`: compile-database coverage is
+  useful evidence but does not cover files outside those databases. No build or
+  tests were run.
