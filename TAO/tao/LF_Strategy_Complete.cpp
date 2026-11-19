@@ -30,16 +30,18 @@ TAO_LF_Strategy_Complete::reset_event_loop_thread (int call_reset,
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, lf.lock ());
 
   if (call_reset)
-  {
-    lf.reset_event_loop_thread ();
-  }
+    {
+      lf.reset_event_loop_thread ();
+    }
 
   int const result = lf.elect_new_leader ();
 
   if (result == -1)
-    TAOLIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("TAO (%P|%t) - Failed to wake up ")
-                ACE_TEXT ("a follower thread\n")));
+    {
+      TAOLIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("TAO (%P|%t) - Failed to wake up ")
+                     ACE_TEXT ("a follower thread\n")));
+    }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
