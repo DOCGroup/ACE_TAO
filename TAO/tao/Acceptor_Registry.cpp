@@ -800,7 +800,9 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
                                         factory,
                                         std::move (acceptor),
                                         options) == 0)
-                continue;
+                {
+                  continue;
+                }
 
               // Could not open a default endpoint, nor an explicit
               // one.
