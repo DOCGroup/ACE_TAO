@@ -13403,3 +13403,10 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 
 - Removed one redundant blank line in `Sequence_Unit_Tests.mpc`; the existing `valuetype` base and `after += Valuetype` dependency are retained. `git diff --check` passed. No build was run.
 - Commit `b139d08a293`.
+
+
+## 2026-11-19 ACE SSL and utility braces
+
+- Added Allman braces around ten single-statement control-flow bodies in `SSL_Asynch_BIO.cpp`, `SSL_Context.cpp`, `SSL_SOCK_Acceptor.cpp`, `TTY_IO.cpp`, and `XML_Utils/XercesString.cpp`. Focused clang-tidy checks and `git diff --check` passed.
+- A fresh scan of the 342 existing ACE/ace translation units present in the root compile database found 19 remaining warnings in generated `ETCL_l.cpp`, `ETCL_y.cpp`, and `Svc_Conf_y.cpp`; there were zero parse errors. Another 104 ACE/ace `.cpp` files have no compile-database entry and remain unscanned. The generated parser outputs were left untouched.
+- No build or runtime test was run. Commit `c883d988712`.
