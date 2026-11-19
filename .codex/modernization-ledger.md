@@ -13837,3 +13837,11 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   Three TAO retry-test checks compare `ACE_TString` with `ACE_TCHAR` prefixes,
   so they also retain the wrapper for wide-character builds. No eligible
   narrow `const char *` conversion was found; no source changes were needed.
+
+## 2026-11-19 ACE_OS::itoa call-site review
+
+- Repository search found only the ACE_OS::itoa narrow/wide implementations
+  and explicit wrapper tests in `ACE/tests/OS_Test.cpp`; all application
+  call sites had already been migrated. Kept the implementation and tests so
+  ACE's API behavior remains covered. No source changes/builds/tests were
+  needed.
