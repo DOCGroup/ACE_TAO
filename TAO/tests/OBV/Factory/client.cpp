@@ -155,6 +155,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       value2 = value2_factory->create (1, data);
 
+      value2->some_data (3);
+      CORBA::ValueBase_var value2_copy_base (value2->_copy_value ());
+      OBV_FactoryTest::Value2 * const value2_copy =
+        OBV_FactoryTest::Value2::_downcast (value2_copy_base.in ());
+      if (value2_copy == nullptr
+          || value2_copy->some_data () != 3
+          || value2_copy->id () != 1
+          || value2_copy->data ().value != 2)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Application-factory valuetype copy failed\n"),
+                            1);
+        }
+
       ApplicationFactoryValue_init_impl application_factory;
       OBV_FactoryTest::ApplicationFactoryValue_var application_value =
         application_factory.create ();

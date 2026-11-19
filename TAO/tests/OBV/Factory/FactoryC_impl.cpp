@@ -1,5 +1,18 @@
 #include "FactoryC_impl.h"
 
+CORBA::ValueBase *
+Value2_impl::_copy_value ()
+{
+  Value2_impl *ret_val {};
+  ACE_NEW_THROW_EX (ret_val, Value2_impl, CORBA::NO_MEMORY ());
+
+  ret_val->some_data (this->some_data ());
+  ret_val->id (this->id ());
+  ret_val->data (this->data ());
+
+  return ret_val;
+}
+
 OBV_FactoryTest::Value2 *
 Value2_init_impl::create_default (CORBA::ULong id)
 {
