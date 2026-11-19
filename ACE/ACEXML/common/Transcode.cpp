@@ -358,7 +358,9 @@ ACEXML_Transcoder::utf16s2utf8s (const ACEXML_UTF16 *src,
 
   size_t src_len = 1;
   for (const ACEXML_UTF16 *p = src; *p++ != 0; ++src_len)
-    ;
+    {
+      ;
+    }
 
   size_t total_len = 0;
   int forward;

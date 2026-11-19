@@ -31,7 +31,9 @@ ACEXML_URL_Addr::addr_to_string (ACEXML_Char *s,
 {
   size_t total_len = this->calculate_length (ipaddr_format);
   if (size < total_len)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       ACE_OS::sprintf (s, ACE_TEXT ("%s:%d/%s"),
@@ -101,7 +103,9 @@ ACEXML_URL_Addr::string_to_addr (const ACEXML_Char* s,
   ACEXML_Char const *url {};
   // Get the host name
   for (url = s + http_len; *url != '\0' && *url != ':' && *url != '/'; ++url)
-    ;
+    {
+      ;
+    }
 
   size_t host_len = url - s;
   host_len -= http_len;
@@ -122,7 +126,9 @@ ACEXML_URL_Addr::string_to_addr (const ACEXML_Char* s,
     {
       port = (unsigned short) ACE_OS::strtol (++url, 0, 10); // Skip over ':'
       while ( *url != '\0' && *url != '/' )
-        ++url;
+        {
+          ++url;
+        }
     }
 
   // Set the addr
@@ -136,7 +142,9 @@ ACEXML_URL_Addr::string_to_addr (const ACEXML_Char* s,
   // Get the path name
   ACEXML_Char const *path_name {};
   if (*url == '\0')
-    path_name = ACE_TEXT ("/");
+    {
+      path_name = ACE_TEXT ("/");
+    }
   else
   {
     path_name = url;
@@ -157,9 +165,11 @@ ACEXML_URL_Addr::ACEXML_URL_Addr (const ACEXML_URL_Addr &addr)
     addr_string_len_ (0)
 {
   if (this->set (addr) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACEXML_URL_Addr::ACEXML_URL_Addr")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("ACEXML_URL_Addr::ACEXML_URL_Addr")));
+    }
 }
 
 int
@@ -174,7 +184,9 @@ ACEXML_URL_Addr::set (const ACEXML_URL_Addr &addr)
   this->addr_string_.reset ();
   this->addr_string_len_ = 0;
   if (this->ACE_INET_Addr::set (addr) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       if (addr.path_name_ != nullptr)

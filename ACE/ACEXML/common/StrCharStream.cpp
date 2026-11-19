@@ -67,10 +67,14 @@ ACEXML_StrCharStream::determine_encoding ()
   char* sptr  = (char*)this->start_.get ();
   int i = 0;
   for ( ; i < 4 && sptr != (char*)this->end_; ++sptr, ++i)
-    input[i] = *sptr;
+    {
+      input[i] = *sptr;
+    }
   const ACEXML_Char* temp = ACEXML_Encoding::get_encoding (input);
   if (temp == nullptr)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       this->encoding_.reset (ACE::strnew (temp));
