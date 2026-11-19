@@ -35,31 +35,41 @@ File_Manager::get_login_and_real_name (const char *&login_name, const char *&rea
   // Skip to the end of the login name.
 
   while (ACE_OS::ace_isalnum (*buf_ptr))
-    ++buf_ptr;
+    {
+      ++buf_ptr;
+    }
 
   *buf_ptr++ = '\0';
 
   // Now skip over white space to *start* of real name!
 
   while (ACE_OS::ace_isspace (*buf_ptr) || *buf_ptr == '\0')
-    ++buf_ptr;
+    {
+      ++buf_ptr;
+    }
 
   real_name = buf_ptr;
 
   while (*buf_ptr++ != '\n')
-    continue;
+    {
+      continue;
+    }
 
   // Clear the trailing blanks and junk.
 
   for (char *tmp_ptr = buf_ptr - 1;
        ACE_OS::ace_isspace (*tmp_ptr);
        --tmp_ptr)
-    *tmp_ptr = '\0';
+    {
+      *tmp_ptr = '\0';
+    }
 
   // Skip over consecutive blank lines.
 
   while (*buf_ptr == '\n')
-    ++buf_ptr;
+    {
+      ++buf_ptr;
+    }
 
   this->current_ptr = buf_ptr;
 }
@@ -90,7 +100,8 @@ File_Manager::open_passwd_file ()
 
     for (ACE_OS::setpwent ();
          (pwent = ACE_OS::getpwent ()) != nullptr; )
-      if (*pwent->pw_gecos != '\0')
+      {
+        if (*pwent->pw_gecos != '\0')
         {
           char *cp = std::strchr (pwent->pw_gecos, ',');
 
@@ -105,6 +116,7 @@ File_Manager::open_passwd_file ()
                         pwent->pw_gecos);
           ++this->number_of_friends;
         }
+      }
 
     ACE_OS::endpwent ();
   }
@@ -133,8 +145,10 @@ File_Manager::open_friends_file (const char *filename)
   // See if we've got a filename or a pathname (i.e., directory/filename).
 
   if (std::strrchr (filename, '/') != nullptr)
-    // We've got a complete pathname.
-    pathname = filename;
+    {
+      // We've got a complete pathname.
+      pathname = filename;
+    }
   else
     {
       char const * const home = std::getenv ("HOME");
@@ -164,14 +178,18 @@ File_Manager::open_friends_file (const char *filename)
   for (char *cp = this->buffer_ptr + this->buffer_size;
        cp > this->buffer_ptr
        ;)
-    if (*--cp == '\n')
-      {
-        ++this->number_of_friends;
+    {
+      if (*--cp == '\n')
+        {
+          ++this->number_of_friends;
 
-        // Skip consecutive newlines.
-        while (cp[-1] == '\n')
-          --cp;
-      }
+          // Skip consecutive newlines.
+          while (cp[-1] == '\n')
+            {
+              --cp;
+            }
+        }
+    }
 
   return this->number_of_friends;
 }
