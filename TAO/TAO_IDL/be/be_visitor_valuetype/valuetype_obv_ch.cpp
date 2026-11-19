@@ -195,7 +195,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
           *os << be_uidt_nl << be_nl << "public:" << be_idt_nl
               << "::CORBA::ValueBase *_copy_value () override;";
         }
-      else if (node->have_operation () && node->inherits_obv_copy_value ())
+      else if (node->inherits_obv_copy_value ())
         {
           *os << be_uidt_nl << be_nl << "public:" << be_idt_nl
               << "::CORBA::ValueBase *_copy_value () override = 0;";

@@ -1895,10 +1895,10 @@ BE_GlobalData::ccmobject ()
 
       if (scoped_name_owner == nullptr)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_global::ccmobject - "
-                             "allocation of CCMObject name failed\n"),
-                            nullptr);
+          ACE_ERROR ((LM_ERROR,
+                      "(%N:%l) be_global::ccmobject - "
+                      "allocation of CCMObject name failed\n"));
+          return nullptr;
         }
 
       AST_Decl *d =
@@ -1908,10 +1908,10 @@ BE_GlobalData::ccmobject ()
 
       if (nullptr == d)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_global::ccmobject - "
-                             "lookup of CCMObject failed\n"),
-                            0);
+          ACE_ERROR ((LM_ERROR,
+                      "(%N:%l) be_global::ccmobject - "
+                      "lookup of CCMObject failed\n"));
+          return nullptr;
         }
 
       this->ccmobject_ = dynamic_cast<be_interface*> (d);

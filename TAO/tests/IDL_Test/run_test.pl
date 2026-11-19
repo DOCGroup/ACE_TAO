@@ -74,6 +74,16 @@ if ($status == 0) {
         $status = 1;
     }
 
+    foreach my $class_name ("OBV_Copy_Factory_Derived",
+                            "OBV_Copy_Factory_Operation_Derived") {
+        my $class_body = generated_class_body ($valuetype_header, $class_name);
+        if (!defined $class_body
+            || $class_body !~ /_copy_value\s*\(\)\s*override\s*=\s*0/) {
+            print STDERR "ERROR: $class_name does not require a non-slicing copy\n";
+            $status = 1;
+        }
+    }
+
     my $application_factory_decl = generated_class_body (
       $valuetype_header, "OBV_Application_Factory_Value");
     if (!defined $application_factory_decl) {
@@ -216,7 +226,9 @@ if ($status == 0) {
     my ($optimized_derived_copy) = $optimized_source =~
       /Accessor_Optimized_Derived::_copy_value\s*\(\)\s*\{([\s\S]*?)^\}/m;
     if (!defined $optimized_derived_copy
-        || $optimized_derived_copy !~ /Accessor_Optimized_Leaf::_downcast/) {
+        || $optimized_derived_copy !~ /Accessor_Optimized_Leaf::_downcast/
+        || $optimized_derived_copy !~ /CORBA::ValueBase_var\s+ret_val_guard/
+        || $optimized_derived_copy !~ /return\s+ret_val_guard\._retn\s*\(\)/) {
         print STDERR "ERROR: missing deep copy of an optimized direct valuetype member\n";
         $status = 1;
     }

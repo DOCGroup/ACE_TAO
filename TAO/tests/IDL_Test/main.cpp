@@ -34,6 +34,10 @@ static_assert (!std::is_abstract<OBV_Copy_Derived>::value,
                "A concrete derived valuetype gets its own copy implementation");
 static_assert (std::is_abstract<OBV_Copy_Operation_Derived>::value,
                "A derived operation-bearing valuetype requires its own copy");
+static_assert (std::is_abstract<OBV_Copy_Factory_Derived>::value,
+               "A factory-bearing derived valuetype must provide its own copy");
+static_assert (std::is_abstract<OBV_Copy_Factory_Operation_Derived>::value,
+               "A derived valuetype must not inherit a sliced copy through a factory base");
 static_assert (std::is_base_of<CORBA::ValueFactoryBase,
                                Accessor_Optimized_Derived_init>::value,
                "An optimized derived valuetype retains its concrete factory");

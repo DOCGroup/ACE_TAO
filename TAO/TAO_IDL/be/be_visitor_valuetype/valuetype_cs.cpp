@@ -171,7 +171,8 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << "ACE_NEW_THROW_EX (" << be_idt_nl
           << "ret_val," << be_nl
           << node->local_name () << " ()," << be_nl
-          << "::CORBA::NO_MEMORY ());" << be_uidt_nl;
+          << "::CORBA::NO_MEMORY ());" << be_uidt_nl
+          << "::CORBA::ValueBase_var ret_val_guard (ret_val);" << be_nl;
 
       for (be_valuetype *current = node;
            current != nullptr;
@@ -223,7 +224,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
             }
         }
 
-      *os << "return ret_val;" << be_uidt_nl
+      *os << "return ret_val_guard._retn ();" << be_uidt_nl
           << "}" << be_nl_2;
     }
 
