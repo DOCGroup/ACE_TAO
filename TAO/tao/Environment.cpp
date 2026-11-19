@@ -140,11 +140,13 @@ CORBA::Environment::exception_type () const
        && std::strncmp (id + sizeof sysex_prefix - 1,
                         typecode_extra,
                         sizeof typecode_extra - 1) != 0))
-    return CORBA::SYSTEM_EXCEPTION;
+    {
+      return CORBA::SYSTEM_EXCEPTION;
+    }
   else
-  {
-    return CORBA::USER_EXCEPTION;
-  }
+    {
+      return CORBA::USER_EXCEPTION;
+    }
 }
 
 char const *
@@ -177,18 +179,24 @@ CORBA::Environment::print_exception (char const *info,
         CORBA::SystemException::_downcast (this->exception_.get ());
 
       if (x2 != nullptr)
-        x2->_tao_print_system_exception ();
+        {
+          x2->_tao_print_system_exception ();
+        }
       else
-        // @@ we can use the exception's typecode to dump all the data
-        // held within it ...
+        {
+          // @@ we can use the exception's typecode to dump all the data
+          // held within it ...
 
-        TAOLIB_ERROR ((LM_ERROR,
-                    ACE_TEXT ("TAO: (%P|%t) user exception, ID '%C'\n"),
-                    id));
+          TAOLIB_ERROR ((LM_ERROR,
+                         ACE_TEXT ("TAO: (%P|%t) user exception, ID '%C'\n"),
+                         id));
+        }
     }
   else
-    TAOLIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("TAO: (%P|%t) no exception, %C\n"), info));
+    {
+      TAOLIB_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO: (%P|%t) no exception, %C\n"), info));
+    }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
