@@ -28,9 +28,9 @@ CORBA::string_dup (const char *str)
 
 #ifndef TAO_NO_SHARED_NULL_CORBA_STRING
   if (!*str)
-  {
-    return null_char;
-  }
+    {
+      return null_char;
+    }
 #endif /* TAO_NO_SHARED_NULL_CORBA_STRING */
 
   size_t const len = std::strlen (str);
@@ -64,8 +64,12 @@ CORBA::string_free (char *str)
 {
 #ifndef TAO_NO_SHARED_NULL_CORBA_STRING
   if (null_char != str)
-#endif /* TAO_NO_SHARED_NULL_CORBA_STRING */
+    {
+      delete [] str;
+    }
+#else
   delete [] str;
+#endif /* TAO_NO_SHARED_NULL_CORBA_STRING */
 }
 
 // ****************************************************************
@@ -81,9 +85,9 @@ CORBA::wstring_dup (const WChar *const str)
 
 #ifndef TAO_NO_SHARED_NULL_CORBA_STRING
   if (!*str)
-  {
-    return null_wchar;
-  }
+    {
+      return null_wchar;
+    }
 #endif /* TAO_NO_SHARED_NULL_CORBA_STRING */
 
   CORBA::WChar* retval =
@@ -112,8 +116,12 @@ CORBA::wstring_free (CORBA::WChar *const str)
 {
 #ifndef TAO_NO_SHARED_NULL_CORBA_STRING
   if (null_wchar != str)
-#endif /* TAO_NO_SHARED_NULL_CORBA_STRING */
+    {
+      delete [] str;
+    }
+#else
   delete [] str;
+#endif /* TAO_NO_SHARED_NULL_CORBA_STRING */
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
