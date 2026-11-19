@@ -30,9 +30,9 @@ TAO_GIOP_Message_Generator_Parser_12::write_request_header (
 {
   // First the request id
   if (!(msg << opdetails.request_id ()))
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 
   CORBA::Octet const response_flags = opdetails.response_flags ();
 
@@ -48,25 +48,35 @@ TAO_GIOP_Message_Generator_Parser_12::write_request_header (
   //
   // We have not implemented the policy INV_NO_RESPONSE for DII.
   if (response_flags == TAO_TWOWAY_RESPONSE_FLAG)
-    msg << ACE_OutputCDR::from_octet (3);
+    {
+      msg << ACE_OutputCDR::from_octet (3);
+    }
   // Second the response flags
   // Sync scope - ignored by server if request is not oneway.
   else if (response_flags == CORBA::Octet (Messaging::SYNC_NONE)
            || response_flags == CORBA::Octet (Messaging::SYNC_WITH_TRANSPORT)
            || response_flags == CORBA::Octet (TAO::SYNC_DELAYED_BUFFERING))
-    // No response required.
-    msg << ACE_OutputCDR::from_octet (0);
+    {
+      // No response required.
+      msg << ACE_OutputCDR::from_octet (0);
+    }
 
   else if (response_flags == CORBA::Octet (Messaging::SYNC_WITH_SERVER))
-    // Return before dispatching to the servant
-    msg << ACE_OutputCDR::from_octet (1);
+    {
+      // Return before dispatching to the servant
+      msg << ACE_OutputCDR::from_octet (1);
+    }
 
   else if (response_flags == CORBA::Octet (Messaging::SYNC_WITH_TARGET))
-    // Return after dispatching servant.
-    msg << ACE_OutputCDR::from_octet (3);
+    {
+      // Return after dispatching servant.
+      msg << ACE_OutputCDR::from_octet (3);
+    }
   else
-    // Until more flags are defined by the OMG.
-    return false;
+    {
+      // Until more flags are defined by the OMG.
+      return false;
+    }
 
   // The reserved field
   CORBA::Octet reserved[3] {};
@@ -74,9 +84,9 @@ TAO_GIOP_Message_Generator_Parser_12::write_request_header (
   msg.write_octet_array (reserved, 3);
 
   if (!this->marshall_target_spec (spec, msg))
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 
   // Write the operation name
   msg.write_string (opdetails.opname_len (),
