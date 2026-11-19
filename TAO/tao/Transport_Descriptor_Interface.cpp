@@ -28,16 +28,17 @@ TAO_Transport_Descriptor_Interface::reset_endpoint (TAO_Endpoint *ep)
 {
   // calling on a dynamically allocation descriptor is not allowed.
   if (this->owned_endpoint_ != nullptr)
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 
   for (TAO_Endpoint *ptr = this->endpoint_; ptr != nullptr; ptr = ptr->next())
-
-    if (ptr == ep)
       {
-        this->endpoint_ = ep;
-        return true;
+        if (ptr == ep)
+          {
+            this->endpoint_ = ep;
+            return true;
+          }
       }
   return false;
 }
