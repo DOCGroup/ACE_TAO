@@ -308,10 +308,10 @@ Routing_Slip::forward (TAO_Notify_ProxySupplier* ps, bool filter)
       guard.release ();
       if (DEBUG_LEVEL > 8)
         ORBSVCS_DEBUG ((LM_DEBUG,
-                    "(%P|%t) Routing Slip #%d: dispatching Delivery_Request %d to "
+                    "(%P|%t) Routing Slip #%d: dispatching Delivery_Request %B to "
                     "proxy supplier %d\n",
                     this->sequence_,
-                    static_cast<int> (request_id),
+                    request_id,
                     ps->id()));
       ps->worker_task()->execute (method);
     }
@@ -319,10 +319,10 @@ Routing_Slip::forward (TAO_Notify_ProxySupplier* ps, bool filter)
     {
       if (DEBUG_LEVEL > 5)
         ORBSVCS_DEBUG ((LM_DEBUG,
-                    "(%P|%t) Routing Slip #%d: not dispatching Delivery_Request %d to "
+                    "(%P|%t) Routing Slip #%d: not dispatching Delivery_Request %B to "
                     "proxy supplier %d; already shut down\n",
                     this->sequence_,
-                    static_cast<int> (request_id),
+                    request_id,
                     ps->id()));
     }
 }

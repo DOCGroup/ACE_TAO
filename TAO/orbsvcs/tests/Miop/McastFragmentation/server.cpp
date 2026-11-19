@@ -196,8 +196,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (problem_count)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("\nServer finished with *Possibly* %u PROBLEMS.\n"),
-                  problem_count));
+                  ACE_TEXT ("\nServer finished with *Possibly* %Q PROBLEMS.\n"),
+                  static_cast<ACE_UINT64> (problem_count)));
       return 1;
     }
 

@@ -550,24 +550,24 @@ test_unique_timer_heap_ids ()
           continue;
         }
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Schedule timer %d. Timer id = %d\n"),
+                  ACE_TEXT ("Schedule timer %d. Timer id = %q\n"),
                   i,
-                  timer_id));
+                  static_cast<ACE_INT64> (timer_id)));
       if (1 == timer_ids.insert (timer_id))
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("Pass %d, id %d is not unique\n"),
+                      ACE_TEXT ("Pass %d, id %q is not unique\n"),
                       i,
-                      timer_id));
+                      static_cast<ACE_INT64> (timer_id)));
           all_unique = false;
         }
 
       if (i == 0 || i == 1 || i == 47 || i == 48)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("Free Timer %d. Timer Id = %d\n"),
+                      ACE_TEXT ("Free Timer %d. Timer Id = %q\n"),
                       i,
-                      timer_id));
+                      static_cast<ACE_INT64> (timer_id)));
           timer_heap.cancel (timer_id);
           if (timer_id == -1)
             ACE_ERROR ((LM_ERROR,

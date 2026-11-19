@@ -208,8 +208,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               end = ACE_OS::gettimeofday ();
 
               ACE_DEBUG ((LM_DEBUG,
-                          "client:\t%d took\t%dms\n",
-                          i, (end - start).msec ()));
+                          "client:\t%d took\t%Qms\n",
+                          i, static_cast<ACE_UINT64> ((end - start).msec ())));
 
               // Interval between successive calls.
               ACE_Time_Value sleep_interval (0, interval * 1000);

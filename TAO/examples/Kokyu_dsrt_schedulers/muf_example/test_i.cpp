@@ -105,8 +105,8 @@ Simple_Server_i::test_method (CORBA::Long exec_duration)
 
   ACE_DEBUG ((LM_DEBUG,
               "Request processing in thread %t done, "
-              "prio = %d, load = %d, elapsed time = %umsec\n",
-              prio, exec_duration, elapsed_time.msec () ));
+              "prio = %d, load = %d, elapsed time = %Qmsec\n",
+              prio, exec_duration, static_cast<ACE_UINT64> (elapsed_time.msec ()) ));
 
   return exec_duration;
 }

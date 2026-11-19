@@ -67,7 +67,7 @@ Sequence::init (int argc,
                   , consumer_batch_size_
                   , pacing_));
 
-      ACE_DEBUG ((LM_DEBUG, "consumer delay = %d\n", consumer_delay_.sec ()));
+      ACE_DEBUG ((LM_DEBUG, "consumer delay = %:\n", consumer_delay_.sec ()));
     }
 
   // Initialize the base class.

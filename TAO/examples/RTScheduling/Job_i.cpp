@@ -53,7 +53,7 @@ Job_i::work (CORBA::ULong work,
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-    "Job_i::work: %d units of work\n",
+    "Job_i::work: %u units of work\n",
     work));
 
   CORBA::Object_var object =
@@ -69,7 +69,7 @@ Job_i::work (CORBA::ULong work,
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-    "%t Guid is %d, Importance is %d\n",
+    "%t Guid is %B, Importance is %d\n",
     guid_,
     importance));
 

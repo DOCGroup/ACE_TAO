@@ -375,9 +375,9 @@ mutex_test_try_lock_thread (void *args)
           ACE_Time_Value measured {};
           timer.elapsed_time (measured);
           ACE_DEBUG ((LM_DEBUG,
-                      "try_lock returned after %u secs, %u usecs\n",
-                      measured.sec(),
-                      measured.usec()));
+                      "try_lock returned after %: secs, %q usecs\n",
+                      measured.sec (),
+                      static_cast<ACE_INT64> (measured.usec ())));
 
           if ((measured.sec() == 4 && measured.usec() >= 500000)
               || (measured.sec() == 5 && measured.usec() <= 500000))

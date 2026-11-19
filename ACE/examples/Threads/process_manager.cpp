@@ -122,7 +122,7 @@ worker (size_t iterations)
     if (i && (i % 100) == 0)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t@%B) worker spinning furiously... (%u)\n",
+                    "(%P|%t) worker spinning furiously... (%B)\n",
                     i));
         ACE_OS::sleep (1);
       }
@@ -294,11 +294,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   result = ACE_Reactor::run_event_loop (briefly);
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t@%T) Test parent: finished (%d) %d.%d.  Close"
+              "(%P|%t@%T) Test parent: finished (%d) %:.%q.  Close"
               "Process_Manager...\n",
               result,
               briefly.sec (),
-              briefly.usec ()));
+              static_cast<ACE_INT64> (briefly.usec ())));
 
   ACE_Process_Manager::instance ()->close ();
 

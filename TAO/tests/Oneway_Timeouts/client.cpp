@@ -435,8 +435,8 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
               (after - before).msec () > max_request_time)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "note: test() took %d ms, max is %d ms\n",
-                          (after - before).msec (), max_request_time));
+                          "note: test() took %Q ms, max is %u ms\n",
+                          static_cast<ACE_UINT64> ((after - before).msec ()), max_request_time));
             }
 
           ACE_DEBUG ((LM_DEBUG, "c%d\n", i));
@@ -526,7 +526,8 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
               if (ms > TIME_THRESHOLD)
                 {
                   ACE_DEBUG ((LM_DEBUG,
-                              "note: Buffered request took %dms\n", ms));
+                              "note: Buffered request took %qms\n",
+                              static_cast<ACE_INT64> (ms)));
                 }
 
               ms = num_requests_sent * request_interval;
@@ -537,7 +538,8 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
             {
               ACE_DEBUG ((LM_DEBUG,
                           "note: Timeout expected in %d ms, "
-                          "but took %d ms\n", connect_timeout, ms));
+                          "but took %q ms\n", connect_timeout,
+                          static_cast<ACE_INT64> (ms)));
             }
 
           return 0;
@@ -565,8 +567,8 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
               if (ms > TIME_THRESHOLD)
                 {
                   ACE_DEBUG ((LM_DEBUG,
-                              "note: Buffered request took %d ms\n",
-                              ms));
+                              "note: Buffered request took %q ms\n",
+                              static_cast<ACE_INT64> (ms)));
                 }
 
               ms = num_requests_sent * request_interval;
@@ -577,7 +579,8 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
             {
               ACE_DEBUG ((LM_DEBUG,
                           "note: Timeout expected in %d ms, "
-                          "but took %d ms\n", connect_timeout, ms));
+                          "but took %q ms\n", connect_timeout,
+                          static_cast<ACE_INT64> (ms)));
             }
 
           return 0;
@@ -590,9 +593,9 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
     }
   catch (Exception const &ex)
     {
-      ACE_ERROR ((LM_ERROR, "client: %s\n\nLast operation took %d ms.\n",
+      ACE_ERROR ((LM_ERROR, "client: %s\n\nLast operation took %Q ms.\n",
                   ex._name(),
-                  (ACE_High_Res_Timer::gettimeofday_hr () - before).msec ()));
+                  static_cast<ACE_UINT64> ((ACE_High_Res_Timer::gettimeofday_hr () - before).msec ())));
     }
 
   return 1;

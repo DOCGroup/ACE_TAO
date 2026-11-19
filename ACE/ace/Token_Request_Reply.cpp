@@ -121,8 +121,9 @@ ACE_Token_Request::dump () const
     ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("blocking forever\n")));
   else
     {
-      ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("waiting for %d secs and %d usecs\n"),
-                 this->options ().timeout ().sec (), this->options ().timeout ().usec ()));
+      ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("waiting for %: secs and %q usecs\n"),
+                     this->options ().timeout ().sec (),
+                     static_cast<ACE_INT64> (this->options ().timeout ().usec ())));
     }
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */

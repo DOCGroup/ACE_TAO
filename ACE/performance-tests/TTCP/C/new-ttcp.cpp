@@ -475,7 +475,8 @@ main (int argc, char *argv[])
                               -1);
 
           if (ack != data_buf_len)
-            ACE_DEBUG ((LM_DEBUG, "received ack for only %d bytes\n", ack));
+            ACE_DEBUG ((LM_DEBUG, "received ack for only %q bytes\n",
+                        static_cast<ACE_INT64> (ack)));
         }
     }
   else

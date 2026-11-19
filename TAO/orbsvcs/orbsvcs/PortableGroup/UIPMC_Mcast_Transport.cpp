@@ -347,12 +347,12 @@ TAO_UIPMC_Mcast_Transport::recv_all (TAO_Resume_Handle &rh)
               ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("TAO (%P|%t) - UIPMC_Mcast_Transport[%B]::")
                           ACE_TEXT ("recv, received %d bytes from <%C:%u> ")
-                          ACE_TEXT ("(hash %d)\n"),
+                          ACE_TEXT ("(hash %Q)\n"),
                           this->id (),
                           packet_length,
                           tmp,
                           from_addr.get_port_number (),
-                          id_hash));
+                          static_cast<ACE_UINT64> (id_hash)));
             }
 
           TAO_PG::UIPMC_Recv_Packet *packet {};

@@ -72,12 +72,12 @@ Timer_Service_1::handle_timeout (const ACE_Time_Value &tv,
                                  const void *)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%x) in %s::handle_timeout sec = %d, usec = %d")
+              ACE_TEXT ("(%x) in %s::handle_timeout sec = %:, usec = %q")
               ACE_TEXT (" cur_timeouts = %d, max_timeouts = %d\n"),
               this,
               this->name_.c_str (),
               tv.sec (),
-              tv.usec (),
+              static_cast<ACE_INT64> (tv.usec ()),
               this->cur_timeouts_,
               this->max_timeouts_));
 

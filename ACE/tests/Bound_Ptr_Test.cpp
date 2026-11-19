@@ -363,7 +363,7 @@ run_main (int, ACE_TCHAR *[])
     p->child_->do_something ();
   }
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Parent instance count is %d, expecting 0\n"),
+              ACE_TEXT ("(%t) Parent instance count is %B, expecting 0\n"),
               Parent::instance_count_));
   if (Parent::instance_count_ != 0)
     {
@@ -372,7 +372,7 @@ run_main (int, ACE_TCHAR *[])
                          -1);
     }
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Child instance count is %d, expecting 0\n"),
+              ACE_TEXT ("(%t) Child instance count is %B, expecting 0\n"),
               Child::instance_count_));
   if (Child::instance_count_ != 0)
     {
@@ -407,7 +407,7 @@ run_main (int, ACE_TCHAR *[])
     r9->print ();
   }
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Printer instance count is %d, expecting 0\n"),
+              ACE_TEXT ("(%t) Printer instance count is %B, expecting 0\n"),
               Printer::instance_count_));
   if (Printer::instance_count_ != 0)
     {
@@ -468,7 +468,7 @@ run_main (int, ACE_TCHAR *[])
   scheduler->wait ();
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Printer instance count is %d, expecting 0\n"),
+              ACE_TEXT ("(%t) Printer instance count is %B, expecting 0\n"),
               Printer::instance_count_));
   if (Printer::instance_count_ != 0)
   {

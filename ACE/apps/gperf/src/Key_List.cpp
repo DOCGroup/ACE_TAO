@@ -791,7 +791,7 @@ Key_List::output_switch (int use_keyword_table)
                                         generated_address_prefix (), temp->slot,
                                         generated_address_suffix ());
                       else if (use_keyword_table)
-                        ACE_OS::printf ("                  resword = wordlist[%d];", temp->slot);
+                        ACE_OS::printf ("                  resword = wordlist[%d];\n", temp->slot);
                       else
                         {
                           ACE_OS::printf ("                  resword = \"%s\";\n", temp->key.c_str ());
@@ -807,7 +807,7 @@ Key_List::output_switch (int use_keyword_table)
                                     generated_address_prefix (), temp->slot,
                                     generated_address_suffix ());
                   else if (use_keyword_table)
-                    ACE_OS::printf ("                  resword = wordlist[%d];", temp->slot);
+                    ACE_OS::printf ("                  resword = wordlist[%d];\n", temp->slot);
                   else
                     {
                       ACE_OS::printf ("                  resword = \"%s\";\n", temp->key.c_str ());
@@ -820,20 +820,20 @@ Key_List::output_switch (int use_keyword_table)
               else
                 {
                   if (pointer_and_type_enabled)
-                    ACE_OS::printf ("                  resword = %swordlist[%d]%s;",
+                    ACE_OS::printf ("                  resword = %swordlist[%d]%s;\n",
                                     generated_address_prefix (), temp->slot,
                                     generated_address_suffix ());
                   else if (use_keyword_table)
-                    ACE_OS::printf ("                  resword = wordlist[%d];", temp->slot);
+                    ACE_OS::printf ("                  resword = wordlist[%d];\n", temp->slot);
                   else
                     {
                       ACE_OS::printf ("                  resword = \"%s\";", temp->key.c_str ());
                     }
                   if (option[LENTABLE] && !option[DUP])
                     {
-                      ACE_OS::printf (" key_len = %d;", temp->length);
+                      ACE_OS::printf ("                  key_len = %d;\n", temp->length);
                     }
-                  ACE_OS::printf (" break;\n");
+                  ACE_OS::printf ("                  break;\n");
                 }
             }
           ACE_OS::printf ("                default: return %s;\n                }\n",
@@ -1892,7 +1892,12 @@ Key_List::output_lookup_function ()
                   option[TYPE] && option[POINTER] ? "wordlist[key]" : "s",
                   option[TYPE] && option[POINTER] ? generated_address_suffix () : "");
         }
-      ACE_OS::printf (";\n            }\n        }\n    %s\n}\n", option[OPTIMIZE] ? "" : generated_null_return ());
+      ACE_OS::printf (";");
+      if (!option[OPTIMIZE])
+        {
+          ACE_OS::printf ("\n            }");
+        }
+      ACE_OS::printf ("\n        }\n    %s\n}\n", option[OPTIMIZE] ? "" : generated_null_return ());
     }
 }
 

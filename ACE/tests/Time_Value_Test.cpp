@@ -37,13 +37,15 @@ int timeval_test_func (ACE_Time_Value const *timeout)
   if (timeval_test.tv_sec != 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("timeval.tv_sec should be zero not %d\n"), timeval_test.tv_sec));
+                  ACE_TEXT ("timeval.tv_sec should be zero not %:\n"),
+                  timeval_test.tv_sec));
       ++ret;
     }
   if (timeval_test.tv_usec != 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("timeval.tv_usec should be zero not %d\n"), timeval_test.tv_usec));
+                  ACE_TEXT ("timeval.tv_usec should be zero not %q\n"),
+                  static_cast<ACE_INT64> (timeval_test.tv_usec)));
       ++ret;
     }
 
@@ -62,24 +64,30 @@ int test_year_month (ACE_Time_Value const &time, long year, long month)
   if (dt.year () != year)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("time year should be %d not %d\n"), year, dt.year ()));
+                  ACE_TEXT ("time year should be %q not %q\n"),
+                  static_cast<ACE_INT64> (year),
+                  static_cast<ACE_INT64> (dt.year ())));
       ++ret;
     }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("time year is correct, it is %d\n"), dt.year ()));
+                  ACE_TEXT ("time year is correct, it is %q\n"),
+                  static_cast<ACE_INT64> (dt.year ())));
     }
   if (dt.month () != month)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("time month should be %d not %d\n"), month, dt.month ()));
+                  ACE_TEXT ("time month should be %q not %q\n"),
+                  static_cast<ACE_INT64> (month),
+                  static_cast<ACE_INT64> (dt.month ())));
       ++ret;
     }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("time month is correct, it is %d\n"), dt.month ()));
+                  ACE_TEXT ("time month is correct, it is %q\n"),
+                  static_cast<ACE_INT64> (dt.month ())));
     }
 
   return ret;
@@ -241,15 +249,15 @@ run_main (int, ACE_TCHAR *[])
   if (msec_test3.sec () != 42)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("set_msec test failed: %d secs should be 42\n"),
+                  ACE_TEXT ("set_msec test failed: %: secs should be 42\n"),
                   msec_test3.sec ()));
       ++ret;
     }
   if (msec_test3.usec () != 555000)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("set_msec test failed: %d usecs should be 555000\n"),
-                  msec_test3.usec ()));
+                  ACE_TEXT ("set_msec test failed: %q usecs should be 555000\n"),
+                  static_cast<ACE_INT64> (msec_test3.usec ())));
       ++ret;
     }
 

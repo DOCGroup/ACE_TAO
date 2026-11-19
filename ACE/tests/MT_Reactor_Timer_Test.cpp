@@ -126,9 +126,9 @@ Time_Handler::handle_timeout (const ACE_Time_Value &tv,
   ACE_GUARD_RETURN (ACE_Thread_Mutex, id_lock, this->lock_, 0);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("%T (%t): Timer #%d (id #%d) expired\n"),
-              time_tag,
-              this->timer_id_[time_tag]));
+              ACE_TEXT ("%T (%t): Timer #%q (id #%q) expired\n"),
+              static_cast<ACE_INT64> (time_tag),
+              static_cast<ACE_INT64> (this->timer_id_[time_tag])));
 
   ACE_TEST_ASSERT (time_tag > this->prev_timer_);
   ACE_TEST_ASSERT (this->timer_id_[time_tag] != Time_Handler::TIMER_NOTSET);
@@ -235,8 +235,8 @@ Dispatch_Count_Handler::handle_timeout (const ACE_Time_Value &tv,
   // This case just tests to make sure the Reactor is counting timer
   // expiration correctly.
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("%T (%t): expiration %d\n"),
-              value));
+              ACE_TEXT ("%T (%t): expiration %q\n"),
+              static_cast<ACE_INT64> (value)));
   return 0;
 }
 

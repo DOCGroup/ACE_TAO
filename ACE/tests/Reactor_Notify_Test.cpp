@@ -396,7 +396,7 @@ run_test (int disable_notify_pipe,
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) starting handle_events() on iteration %d")
-                  ACE_TEXT (" with time-out = %d seconds\n"),
+                  ACE_TEXT (" with time-out = %: seconds\n"),
                   iteration,
                   timeout.sec ()));
 
@@ -555,13 +555,13 @@ run_main (int, ACE_TCHAR *[])
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) running tests with notify pipe enabled")
-              ACE_TEXT (" and time-out = %d seconds\n"),
+              ACE_TEXT (" and time-out = %: seconds\n"),
               timeout.sec ()));
   run_test (0, timeout);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) running tests with notify pipe disabled")
-              ACE_TEXT (" and time-out = %d seconds\n"),
+              ACE_TEXT (" and time-out = %: seconds\n"),
               timeout.sec ()));
   run_test (1, timeout);
 
@@ -569,7 +569,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) running tests with reactor notification ")
               ACE_TEXT ("pipe enabled\n")
-              ACE_TEXT (" and time-out = %d seconds\n"),
+              ACE_TEXT (" and time-out = %: seconds\n"),
               timeout.sec ()));
   run_test (0, timeout);
 

@@ -43,8 +43,8 @@ static int run_tests (std::array<ACEXML_String, NUM_TEST_STRS> const& test_strin
       return 1;
     }
   }
-  ACE_DEBUG ((LM_DEBUG, "Test1 took %dms\n",
-              (ACE_OS::gettimeofday () - start).msec ()));
+  ACE_DEBUG ((LM_DEBUG, "Test1 took %Qms\n",
+              static_cast<ACE_UINT64> ((ACE_OS::gettimeofday () - start).msec ())));
 
   // Test 2 - Escape the strings using a shared temporary string. This shouldn't
   // be any faster than Test 1 as long as the compiler has return value optimization.
@@ -59,8 +59,8 @@ static int run_tests (std::array<ACEXML_String, NUM_TEST_STRS> const& test_strin
       return 1;
     }
   }
-  ACE_DEBUG ((LM_DEBUG, "Test2 took %dms\n",
-              (ACE_OS::gettimeofday () - start).msec ()));
+  ACE_DEBUG ((LM_DEBUG, "Test2 took %Qms\n",
+              static_cast<ACE_UINT64> ((ACE_OS::gettimeofday () - start).msec ())));
 
   // Test 3 - Escape the strings using a shared temporary string. This time, we use
   // the alternate form of ACEXML_escape_string() so that our temporary buffer is reused.
@@ -75,8 +75,8 @@ static int run_tests (std::array<ACEXML_String, NUM_TEST_STRS> const& test_strin
       return 1;
     }
   }
-  ACE_DEBUG ((LM_DEBUG, "Test3 took %dms\n",
-              (ACE_OS::gettimeofday () - start).msec ()));
+  ACE_DEBUG ((LM_DEBUG, "Test3 took %Qms\n",
+              static_cast<ACE_UINT64> ((ACE_OS::gettimeofday () - start).msec ())));
 
   // Test 4 - Same as Test 3, except that the tmp buffer shouldn't have to resize.
   start = ACE_OS::gettimeofday ();
@@ -89,8 +89,8 @@ static int run_tests (std::array<ACEXML_String, NUM_TEST_STRS> const& test_strin
       return 1;
     }
   }
-  ACE_DEBUG ((LM_DEBUG, "Test4 took %dms\n",
-              (ACE_OS::gettimeofday () - start).msec ()));
+  ACE_DEBUG ((LM_DEBUG, "Test4 took %Qms\n",
+              static_cast<ACE_UINT64> ((ACE_OS::gettimeofday () - start).msec ())));
   return 0;
 }
 

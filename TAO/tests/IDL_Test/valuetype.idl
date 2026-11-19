@@ -105,6 +105,19 @@ valuetype Copy_Operation_Derived : Copy_Base
   void op ();
 };
 
+/// A factory-bearing derived valuetype must provide its own copy operation.
+valuetype Copy_Factory_Derived : Copy_Base
+{
+  public long derived_value;
+  factory create ();
+};
+
+/// Copy inheritance must be found beyond an intermediate factory valuetype.
+valuetype Copy_Factory_Operation_Derived : Copy_Factory_Derived
+{
+  void op ();
+};
+
 valuetype Copy_Leaf
 {
   public long leaf_value;

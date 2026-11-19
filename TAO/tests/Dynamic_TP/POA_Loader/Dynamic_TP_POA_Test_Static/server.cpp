@@ -130,7 +130,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   ACE_TEXT ("TAO (%P|%t) - Server : stack_size_ = %B\n"),
                   dtp_config.stack_size_));
       ACE_DEBUG ((LM_INFO,
-                  ACE_TEXT ("TAO (%P|%t) - Server : timeout_ = %d\n"),
+                  ACE_TEXT ("TAO (%P|%t) - Server : timeout_ = %:\n"),
                   dtp_config.timeout_.sec()));
       ACE_DEBUG ((LM_INFO,
                   ACE_TEXT ("TAO (%P|%t) - Server : queue_depth_ = %d\n"),

@@ -233,8 +233,8 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::print_times ()
                                           : this->current_size_;
 
   ACELIB_DEBUG ((LM_DEBUG,
-              "\nACE_Timeprobe_Ex; %u timestamps were recorded:\n",
-              size));
+              "\nACE_Timeprobe_Ex; %Q timestamps were recorded:\n",
+              static_cast<ACE_UINT64> (size)));
 
   if (size == 0)
     return;
@@ -339,11 +339,10 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::print_absolute_times ()
       ACE_High_Res_Timer::hrtime_to_tv (tv, this->timeprobes_ [i].time_);
 
       ACELIB_DEBUG ((LM_DEBUG,
-                  "%-50.50s %8.8x %12.12u\n",
+                  "%-50.50s %8.8x %12.12q\n",
                   this->find_description_i (i),
                   this->timeprobes_ [i].thread_,
-                  tv.sec () * 1000000
-                   + tv.usec ()));
+                  static_cast<ACE_INT64> (tv.sec () * 1000000 + tv.usec ())));
 
       // Modulus increment: loops around at the end.
       i = (i + 1) % this->max_size_;

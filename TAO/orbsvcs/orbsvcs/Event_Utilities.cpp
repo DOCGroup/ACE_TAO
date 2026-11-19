@@ -143,8 +143,10 @@ void event_debug (char const* p,
   ORBSVCS_DEBUG ((LM_DEBUG,
               "%*.*s - event.source: %d (0x%x)\n"
               "%*.*s   event.type: %d (0x%x)\n",
-              l, l, p, event.header.source, event.header.source,
-              l, l, p, event.header.type, event.header.type));
+              static_cast<int> (l), static_cast<int> (l), p,
+              event.header.source, event.header.source,
+              static_cast<int> (l), static_cast<int> (l), p,
+              event.header.type, event.header.type));
 }
 
 void

@@ -99,8 +99,8 @@ int
 Common_Task::close (u_long exit_status)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) thread is exiting with status %d in module %s\n"),
-             exit_status,
+              ACE_TEXT ("(%t) thread is exiting with status %Q in module %s\n"),
+              static_cast<ACE_UINT64> (exit_status),
               this->name ()));
 
   // Can do anything here that is required when a thread exits, e.g.,

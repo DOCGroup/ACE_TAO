@@ -204,8 +204,8 @@ Sender::pace_data ()
               if (TAO_debug_level > 0)
                 {
                   ACE_DEBUG ((LM_DEBUG,
-                              "Elapsed Time = %d\n",
-                              elapsed_time.msec ()));
+                              "Elapsed Time = %Q\n",
+                              static_cast<ACE_UINT64> (elapsed_time.msec ())));
                 }
 
               // Check to see if the inter frame time has elapsed.
@@ -219,8 +219,8 @@ Sender::pace_data ()
                   if (TAO_debug_level > 0)
                     {
                       ACE_DEBUG ((LM_DEBUG,
-                                  "Wait Time = %d\n",
-                                  wait_time.msec ()));
+                                  "Wait Time = %Q\n",
+                                  static_cast<ACE_UINT64> (wait_time.msec ())));
                     }
 
                   // Run the orb for the wait time so the sender can

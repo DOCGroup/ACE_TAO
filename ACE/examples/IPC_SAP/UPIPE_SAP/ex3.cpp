@@ -115,7 +115,7 @@ consumer (void *)
 
   ACE_DEBUG ((LM_DEBUG,
               "(%t) Transferred %d blocks of size %d\n"
-              "The program ran %d seconds\n",
+              "The program ran %: seconds\n",
               blocks,
               size,
               secs));

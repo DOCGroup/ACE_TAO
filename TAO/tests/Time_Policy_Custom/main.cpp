@@ -99,7 +99,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (tv_diff.sec () != 10)
       {
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Incorrect time offset (%us). Time policy doesn't seem to be loaded\n", tv_diff.sec ()),
+                           "Incorrect time offset (%:s). Time policy doesn't seem to be loaded\n", tv_diff.sec ()),
                           1);
       }
 

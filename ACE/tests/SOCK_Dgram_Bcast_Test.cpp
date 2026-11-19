@@ -94,8 +94,8 @@ int run_receiver ()
 {
   ACE_DEBUG
     ((LM_INFO,
-      ACE_TEXT ("Receiving datagrams from port %d with timeout %d ms\n"),
-      dgram_port, dgram_recv_timeout.msec ()));
+      ACE_TEXT ("Receiving datagrams from port %d with timeout %Q ms\n"),
+      dgram_port, static_cast<ACE_UINT64> (dgram_recv_timeout.msec ())));
 
   ACE_SOCK_Dgram socket;
   ACE_INET_Addr  remote ;

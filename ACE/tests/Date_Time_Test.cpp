@@ -26,50 +26,53 @@ run_main (int, ACE_TCHAR *[])
   long const usec    = dt.microsec ();
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("ACE_Date_Time (m/d/y, h:m:s.u): %d/%d/%d, %d:%d:%d.%d\n"),
-              month, day, year, hour, minute, seconds, usec));
+              static_cast<int> (month), static_cast<int> (day),
+              static_cast<int> (year), static_cast<int> (hour),
+              static_cast<int> (minute), static_cast<int> (seconds),
+              static_cast<int> (usec)));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE_Log thinks it is: %D\n")));
 
   if (month < 1 || month > 12)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Month (%d) out of range (1-12)\n"),
-                  month));
+                  static_cast<int> (month)));
       error = 1;
     }
   if (day < 1 || day > 31)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Day (%d) out of range (1-31)\n"),
-                  day));
+                  static_cast<int> (day)));
       error = 1;
     }
   if (year < 1900 || year > 2100)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Year (%d) out of range (1900-2100)\n"),
-                  year));
+                  static_cast<int> (year)));
       error = 1;
     }
   if (hour < 0 || hour > 23)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Hour (%d) out of range (0-23)\n"),
-                  hour));
+                  static_cast<int> (hour)));
       error = 1;
     }
   if (minute < 0 || minute > 59)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Minute (%d) out of range (0-59)\n"),
-                  minute));
+                  static_cast<int> (minute)));
       error = 1;
     }
   if (seconds < 0 || seconds > 59)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Seconds (%d) out of range (0-59)\n"),
-                  seconds));
+                  static_cast<int> (seconds)));
       error = 1;
     }
   if (usec < 0 || usec > 999999)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Microseconds (%d) out of range (0-999999)\n"),
-                  usec));
+                  static_cast<int> (usec)));
       error = 1;
     }
 
@@ -80,28 +83,28 @@ run_main (int, ACE_TCHAR *[])
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Static month (%d) doesn't match %d\n"),
-                  static_dt.month (), month));
+                  static_cast<int> (static_dt.month ()), static_cast<int> (month)));
       error = 1;
     }
   if (static_dt.day () != day)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Static day (%d) doesn't match %d\n"),
-                  static_dt.day (), day));
+                  static_cast<int> (static_dt.day ()), static_cast<int> (day)));
       error = 1;
     }
   if (static_dt.year () != year)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Static year (%d) doesn't match %d\n"),
-                  static_dt.year (), year));
+                  static_cast<int> (static_dt.year ()), static_cast<int> (year)));
       error = 1;
     }
   if (static_dt.hour () != hour)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Static hour (%d) doesn't match %d\n"),
-                  static_dt.hour (), hour));
+                  static_cast<int> (static_dt.hour ()), static_cast<int> (hour)));
       error = 1;
     }
 
@@ -112,7 +115,7 @@ run_main (int, ACE_TCHAR *[])
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Static minute (%d) doesn't match %d\n"),
-                  static_dt.minute (), minute));
+                  static_cast<int> (static_dt.minute ()), static_cast<int> (minute)));
       error = 1;
     }
   ACE_END_TEST;

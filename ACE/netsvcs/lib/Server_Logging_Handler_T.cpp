@@ -196,8 +196,8 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
 
         u_long count = this->request_count_;
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("request count = %d, length = %d\n"),
-                    count,
+                    ACE_TEXT ("request count = %Q, length = %d\n"),
+                    static_cast<ACE_UINT64> (count),
                     length));
 
         // Perform the actual <recv> this time.

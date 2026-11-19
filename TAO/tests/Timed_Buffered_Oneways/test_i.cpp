@@ -15,9 +15,9 @@ test_i::method (CORBA::ULong request_number, CORBA::Long start_time,
   ACE_Time_Value start (0);
   start.msec (static_cast<long> (start_time));
   ACE_DEBUG ((LM_DEBUG,
-              "server:\t%d took\t%dms\n",
+              "server:\t%d took\t%Qms\n",
               request_number,
-              (ACE_OS::gettimeofday () - start).msec ()));
+              static_cast<ACE_UINT64> ((ACE_OS::gettimeofday () - start).msec ())));
 
   // Time required to process this request. <work> is time units in
   // milli seconds.
@@ -37,7 +37,7 @@ test_i::shutdown (CORBA::Long start_time)
 {
   ACE_Time_Value start (0);
   start.msec (static_cast<long> (start_time));
-  ACE_DEBUG ((LM_DEBUG, "server: Shutting down... (%dms)\n",
-              (ACE_OS::gettimeofday () - start).msec ()));
+  ACE_DEBUG ((LM_DEBUG, "server: Shutting down... (%Qms)\n",
+              static_cast<ACE_UINT64> ((ACE_OS::gettimeofday () - start).msec ())));
   this->orb_->shutdown (false);
 }

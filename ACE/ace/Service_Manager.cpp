@@ -201,7 +201,7 @@ ACE_Service_Manager::list_services ()
       if (this->debug_)
         {
           ACELIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("len = %d, info = %s%s"),
+                      ACE_TEXT ("len = %b, info = %s%s"),
                       len,
                       buf,
                       buf[len - 1] == '\n' ? ACE_TEXT ("") : ACE_TEXT ("\n")));

@@ -401,7 +401,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::dump () const
 
   for (size_t i = 0; i < this->table_size_; ++i)
     if (!this->table_[i]->is_empty ())
-      ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nBucket %d contains nodes"), i));
+      ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nBucket %B contains nodes"), i));
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));

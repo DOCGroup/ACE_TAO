@@ -140,7 +140,7 @@ Test_Task::handle_input (ACE_HANDLE)
       ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, Lock, -1);
       ++Test_Task::done_cnt_;
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT (" (%t) Test_Task: handle_input done_cnt_ = %d.\n"),
+                  ACE_TEXT (" (%t) Test_Task: handle_input done_cnt_ = %B.\n"),
                   Test_Task::done_cnt_));
     }
 

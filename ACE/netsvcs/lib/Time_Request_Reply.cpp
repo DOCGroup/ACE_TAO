@@ -186,11 +186,11 @@ ACE_Time_Request::dump () const
 #if !defined (ACE_NLOGGING)
       ACE_Time_Value tv = this->timeout ();
 #endif /* ! ACE_NLOGGING */
-      ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("waiting for %d secs and %d usecs\n"),
-                  (int)(tv.sec ()), tv.usec ()));
+      ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("waiting for %: secs and %q usecs\n"),
+                  tv.sec (), static_cast<ACE_INT64> (tv.usec ())));
     }
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("*******\ntime = %d\n"),
-              (int)(this->time ())));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("*******\ntime = %:\n"),
+              this->time ()));
   ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("+++++++\n")));
 #endif /* ACE_HAS_DUMP */
 }

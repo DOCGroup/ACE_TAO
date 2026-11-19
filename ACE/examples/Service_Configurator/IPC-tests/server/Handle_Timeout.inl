@@ -77,13 +77,11 @@ Handle_Timeout::handle_timeout (const ACE_Time_Value &tv,
     return -1; // Automatically cancel periodic timer...
   ++this->count;
 
-  // Cast arg to a long, first, because a pointer is the same
-  // size as a long on all current ACE platforms.
   ACE_DEBUG ((LM_INFO,
-              ACE_TEXT ("time for this(%u) expired at (%d, %d) with arg = %d\n"),
+              ACE_TEXT ("time for this(%@) expired at (%:, %q) with arg = %@\n"),
               this,
               tv.sec (),
-              tv.usec (),
-              (int) (ptrdiff_t) arg));
+              static_cast<ACE_INT64> (tv.usec ()),
+              const_cast<void *> (arg)));
   return 0;
 }

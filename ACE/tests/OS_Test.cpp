@@ -1027,8 +1027,8 @@ cpu_info_test ()
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("This system has %d processors\n"),
-                  number_processors));
+                  ACE_TEXT ("This system has %q processors\n"),
+                  static_cast<ACE_INT64> (number_processors)));
     }
 
   if (number_processors_online == -1)
@@ -1040,16 +1040,16 @@ cpu_info_test ()
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("This system has %d processors online\n"),
-                  number_processors_online));
+                  ACE_TEXT ("This system has %q processors online\n"),
+                  static_cast<ACE_INT64> (number_processors_online)));
     }
 
   if ((number_processors_online != -1 && number_processors != -1) &&
       number_processors_online > number_processors)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%d online processors; should be <= %d\n"),
-                       number_processors_online,
-                       number_processors),
+                       ACE_TEXT ("%q online processors; should be <= %q\n"),
+                       static_cast<ACE_INT64> (number_processors_online),
+                       static_cast<ACE_INT64> (number_processors)),
                       -1);
 
   return 0;
@@ -1086,14 +1086,15 @@ pagesize_test ()
   if (pagesize <= 0)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error, pagesize should return a value bigger ")
-                            ACE_TEXT ("then zero, it returned %d\n"), pagesize));
+                            ACE_TEXT ("then zero, it returned %q\n"),
+                            static_cast<ACE_INT64> (pagesize)));
       return 1;
     }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Pagesize returned %d\n"),
-                  pagesize));
+                  ACE_TEXT ("Pagesize returned %q\n"),
+                  static_cast<ACE_INT64> (pagesize)));
     }
   return 0;
 }

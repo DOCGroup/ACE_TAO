@@ -167,8 +167,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             u_long const log_flags = ACE_LOG_MSG->flags ();
 
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("log flags %d verbose: %d\n"),
-                        log_flags, verbose));
+                        ACE_TEXT ("log flags %Q verbose: %d\n"),
+                        static_cast<ACE_UINT64> (log_flags), verbose));
 
             result += check_flags (log_flags, verbose);
 

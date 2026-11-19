@@ -135,7 +135,7 @@ consumer (void *)
 
   ACE_DEBUG ((LM_DEBUG,
               "(%t) Transferred %d blocks of size %d\n"
-              "The program ran %d seconds\n",
+              "The program ran %: seconds\n",
               received_messages, size, secs));
   c_stream.close ();
   return ACE_THR_FUNC_RETURN_NULL;

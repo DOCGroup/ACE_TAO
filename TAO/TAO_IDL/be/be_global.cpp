@@ -1890,32 +1890,16 @@ BE_GlobalData::ccmobject ()
 {
   if (nullptr == this->ccmobject_)
     {
-      Identifier *local_id {};
-      ACE_NEW_RETURN (local_id,
-                      Identifier ("CCMObject"),
-                      nullptr);
-      std::unique_ptr<Identifier> local_id_owner (local_id);
+      FE_Utils::Scoped_Name_Owner scoped_name_owner =
+        FE_Utils::string_to_scoped_name_owner ("Components::CCMObject");
 
-      UTL_ScopedName *local_name {};
-      ACE_NEW_RETURN (local_name,
-                      UTL_ScopedName (local_id, nullptr),
-                      nullptr);
-      local_id_owner.release ();
-      FE_Utils::Scoped_Name_Owner local_name_owner (local_name);
-
-      Identifier *module_id {};
-      ACE_NEW_RETURN (module_id,
-                      Identifier ("Components"),
-                      nullptr);
-      std::unique_ptr<Identifier> module_id_owner (module_id);
-
-      UTL_ScopedName *scoped_name {};
-      ACE_NEW_RETURN (scoped_name,
-                      UTL_ScopedName (module_id, local_name),
-                      nullptr);
-      module_id_owner.release ();
-      local_name_owner.release ();
-      FE_Utils::Scoped_Name_Owner scoped_name_owner (scoped_name);
+      if (scoped_name_owner == nullptr)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%N:%l) be_global::ccmobject - "
+                      "allocation of CCMObject name failed\n"));
+          return nullptr;
+        }
 
       AST_Decl *d =
         idl_global->scopes ().top_non_null ()->lookup_by_name (
@@ -1924,10 +1908,10 @@ BE_GlobalData::ccmobject ()
 
       if (nullptr == d)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_global::ccmobject - "
-                             "lookup of CCMObject failed\n"),
-                            0);
+          ACE_ERROR ((LM_ERROR,
+                      "(%N:%l) be_global::ccmobject - "
+                      "lookup of CCMObject failed\n"));
+          return nullptr;
         }
 
       this->ccmobject_ = dynamic_cast<be_interface*> (d);

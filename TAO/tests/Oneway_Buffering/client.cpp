@@ -660,9 +660,9 @@ run_timeout (CORBA::ORB_ptr orb,
                   ACE_ERROR ((LM_ERROR,
                               "ERROR: Iteration %d flush before "
                               "timeout expired. "
-                              "Elapsed = %d, Timeout = %d msecs\n",
+                              "Elapsed = %Q, Timeout = %u msecs\n",
                               i,
-                              elapsed.msec (), TIMEOUT_MILLISECONDS));
+                              static_cast<ACE_UINT64> (elapsed.msec ()), TIMEOUT_MILLISECONDS));
                 }
               // terminate the while loop.
               break;
@@ -674,9 +674,9 @@ run_timeout (CORBA::ORB_ptr orb,
               ACE_ERROR ((LM_ERROR,
                           "ERROR: Iteration %d no flush past "
                           "timeout threshold. "
-                          "Elapsed = %d, Timeout = %d msecs\n",
+                          "Elapsed = %Q, Timeout = %u msecs\n",
                           i,
-                          elapsed.msec (), TIMEOUT_MILLISECONDS));
+                          static_cast<ACE_UINT64> (elapsed.msec ()), TIMEOUT_MILLISECONDS));
               break;
             }
         }
@@ -766,9 +766,9 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
                   ACE_DEBUG ((LM_DEBUG,
                               "DEBUG: Iteration %d flush before "
                               "timeout expired. "
-                              "Elapsed = %d, Timeout = %d msecs\n",
+                              "Elapsed = %Q, Timeout = %u msecs\n",
                               i,
-                              elapsed.msec (), TIMEOUT_MILLISECONDS));
+                              static_cast<ACE_UINT64> (elapsed.msec ()), TIMEOUT_MILLISECONDS));
                 }
               // terminate the while loop.
               break;
@@ -780,9 +780,9 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
               ACE_DEBUG ((LM_DEBUG,
                           "DEBUG: Iteration %d no flush past "
                           "timeout threshold. "
-                          "Elapsed = %d, Timeout = %d msecs\n",
+                          "Elapsed = %Q, Timeout = %u msecs\n",
                           i,
-                          elapsed.msec (), TIMEOUT_MILLISECONDS));
+                          static_cast<ACE_UINT64> (elapsed.msec ()), TIMEOUT_MILLISECONDS));
               break;
             }
         }

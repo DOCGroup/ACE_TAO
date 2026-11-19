@@ -227,7 +227,7 @@ test_streamers ()
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) unexpected value after streaming an ")
                 ACE_TEXT ("ACE_Time_Value <sec=%:,usec=%q> into ")
-                ACE_TEXT ("std::chrono::seconds. Expected <%d> - got <%q>.\n"),
+                ACE_TEXT ("std::chrono::seconds. Expected <%:> - got <%q>.\n"),
                 test_sec.sec (), static_cast<ACE_INT64> (test_sec.usec ()),
                 test_sec.sec (), static_cast<ACE_INT64> (s.count ())));
     ++errors;
@@ -241,7 +241,7 @@ test_streamers ()
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) unexpected value after streaming an ")
                 ACE_TEXT ("ACE_Time_Value <sec=%:,usec=%q> into ")
-                ACE_TEXT ("std::chrono::seconds. Expected <%d> - got <%q>.\n"),
+                ACE_TEXT ("std::chrono::seconds. Expected <%:> - got <%q>.\n"),
                 test_sec2.sec (), static_cast<ACE_INT64> (test_sec2.usec ()),
                 test_sec2.sec (), static_cast<ACE_INT64> (s2.count ())));
     ++errors;
@@ -280,7 +280,7 @@ test_streamers ()
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) unexpected value after streaming an ")
                 ACE_TEXT ("ACE_Time_Value <sec=%:,usec=%q> into ")
-                ACE_TEXT ("std::chrono::microseconds. Expected <%d> - got <%q>.\n"),
+                ACE_TEXT ("std::chrono::microseconds. Expected <%:> - got <%q>.\n"),
                 test_sec.sec (), static_cast<ACE_INT64> (test_sec.usec ()),
                 test_sec.sec (), static_cast<ACE_INT64> (us.count ())));
     ++errors;
@@ -293,7 +293,7 @@ test_streamers ()
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) unexpected value after streaming an ")
                 ACE_TEXT ("ACE_Time_Value <sec=%:,usec=%q> into ")
-                ACE_TEXT ("std::chrono::microseconds. Expected <%d> - got <%q>.\n"),
+                ACE_TEXT ("std::chrono::microseconds. Expected <%:> - got <%q>.\n"),
                 test_sec2.sec (), static_cast<ACE_INT64> (test_sec2.usec ()),
                 test_sec2.sec (), static_cast<ACE_INT64> (us2.count ())));
     ++errors;

@@ -665,8 +665,9 @@ LC_TimeoutGuard::~LC_TimeoutGuard ()
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) LC_TimeoutGuard(%d)::dtor, ")
-                          ACE_TEXT ("scheduling new timeout(%d), delay = %d,%d\n"),
-                          this->token_, owner_->token_, delay.sec(), delay.usec()));
+                          ACE_TEXT ("scheduling new timeout(%d), delay = %:,%q\n"),
+                          this->token_, owner_->token_, delay.sec (),
+                          static_cast<ACE_INT64> (delay.usec ())));
         }
       owner_->reactor()->schedule_timer (owner_,
                                          reinterpret_cast<void *>(owner_->token_),
@@ -1214,8 +1215,9 @@ LiveCheck::schedule_ping (LiveEntry *entry)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) LiveCheck::schedule_ping (%d),")
-                          ACE_TEXT (" delay <%d,%d>\n"),
-                          this->token_, delay.sec(), delay.usec()));
+                          ACE_TEXT (" delay <%:,%q>\n"),
+                          this->token_, delay.sec (),
+                          static_cast<ACE_INT64> (delay.usec ())));
         }
       this->reactor()->schedule_timer (this,
                                        reinterpret_cast<void *>(this->token_),

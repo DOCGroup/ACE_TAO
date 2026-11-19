@@ -1005,8 +1005,8 @@ run_main (int argc, ACE_TCHAR *argv[])
         {
           if (errno == ETIME)
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("maximum wait time of %d msec exceeded\n"),
-                        max_wait.msec ()));
+                        ACE_TEXT ("maximum wait time of %Q msec exceeded\n"),
+                        static_cast<ACE_UINT64> (max_wait.msec ())));
           else
             ACE_OS::perror (ACE_TEXT ("wait"));
 

@@ -219,7 +219,8 @@ Receiver::Receiver ()
 {
   ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, mutex_);
   ++sessions_;
-  ACE_DEBUG ((LM_DEBUG, "Receiver Ctor sessions_=%d\n", sessions_));
+  ACE_DEBUG ((LM_DEBUG, "Receiver Ctor sessions_=%q\n",
+              static_cast<ACE_INT64> (sessions_)));
 }
 
 Receiver::~Receiver ()
@@ -227,7 +228,8 @@ Receiver::~Receiver ()
   ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, mutex_);
   --sessions_;
   ACE_OS::closesocket (this->handle_);
-  ACE_DEBUG ((LM_DEBUG, "~Receiver Dtor sessions_=%d\n", sessions_));
+  ACE_DEBUG ((LM_DEBUG, "~Receiver Dtor sessions_=%q\n",
+              static_cast<ACE_INT64> (sessions_)));
 }
 
 //  return true if we alive, false  we commited suicide

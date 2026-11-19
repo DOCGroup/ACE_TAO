@@ -114,12 +114,12 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       }
 
     ACE_DEBUG ((LM_DEBUG,
-                "lost      : %d\n"
-                "damaged   : %d\n"
-                "duplicate : %d\n",
-                lost_count,
-                damaged_count,
-                duplicate_count));
+                "lost      : %Q\n"
+                "damaged   : %Q\n"
+                "duplicate : %Q\n",
+                static_cast<ACE_UINT64> (lost_count),
+                static_cast<ACE_UINT64> (damaged_count),
+                static_cast<ACE_UINT64> (duplicate_count)));
 
     if (damaged_count != 0 || duplicate_count != 0)
     {

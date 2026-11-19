@@ -132,12 +132,12 @@ Baseline_Test_Options::print_result ()
   this->timer.elapsed_time_incr (tv);
   this->timer.elapsed_time_incr (nsec);
   ACE_DEBUG ((LM_DEBUG,
-              "Total Time: %d sec %d usec for a "
+              "Total Time: %: sec %q usec for a "
               "total of %B iterations\n"
-              "Average time: %d nanoseconds.\n",
-              tv.sec (), tv.usec (),
+              "Average time: %Q nanoseconds.\n",
+              tv.sec (), static_cast<ACE_INT64> (tv.usec ()),
               this->current_iteration_,
-              (int) (nsec / this->current_iteration_)));
+              static_cast<ACE_UINT64> (nsec / this->current_iteration_)));
 }
 
 Baseline_Test::Baseline_Test ()

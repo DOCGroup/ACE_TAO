@@ -90,11 +90,11 @@ Priority_Task::open (void *arg)
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) task activation at priority %d with ")
-                  ACE_TEXT ("flags %Q failed; retry at priority %d with ")
+                  ACE_TEXT ("flags %Q failed; retry at priority %q with ")
                   ACE_TEXT ("flags %Q (errno is %d%p)\n"),
                   this->priority_,
                   static_cast<ACE_UINT64> (flags),
-                  fallback_priority,
+                  static_cast<ACE_INT64> (fallback_priority),
                   static_cast<ACE_UINT64> (THR_NEW_LWP),
                   ACE_ERRNO_GET,
                   ACE_TEXT ("")));

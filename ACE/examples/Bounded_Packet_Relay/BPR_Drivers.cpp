@@ -403,20 +403,20 @@ Bounded_Packet_Relay::report_statistics ()
 
   // Report transmission statistics.
   ACE_DEBUG ((LM_DEBUG,
-              "\n\nStatisics for transmission %u:\n\n"
+              "\n\nStatisics for transmission %Q:\n\n"
               "Transmission status: %s\n"
-              "Start time:          %d (sec) %d (usec)\n"
-              "End time:            %d (sec) %d (usec)\n"
-              "Duration:            %d (sec) %d (usec)\n"
-              "Packets relayed:     %u\n\n",
-              transmission_number_, status_msg (),
+              "Start time:          %: (sec) %q (usec)\n"
+              "End time:            %: (sec) %q (usec)\n"
+              "Duration:            %: (sec) %q (usec)\n"
+              "Packets relayed:     %Q\n\n",
+              static_cast<ACE_UINT64> (transmission_number_), status_msg (),
               transmission_start_.sec (),
-              transmission_start_.usec (),
+              static_cast<ACE_INT64> (transmission_start_.usec ()),
               transmission_end_.sec (),
-              transmission_end_.usec (),
+              static_cast<ACE_INT64> (transmission_end_.usec ()),
               duration.sec (),
-              duration.usec (),
-              packets_sent_));
+              static_cast<ACE_INT64> (duration.usec ()),
+              static_cast<ACE_UINT64> (packets_sent_)));
   return 0;
 }
 

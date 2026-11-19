@@ -16,8 +16,8 @@ Simple_Server_i::echo (CORBA::Long x,
 {
   ACE_Time_Value const tv (msecs / 1000, (msecs % 1000) * 1000);
 
-  ACE_DEBUG ((LM_DEBUG, "server (%P) will request sleep for %d sec and %d msecs.\n",
-              tv.sec(), tv.msec ()));
+  ACE_DEBUG ((LM_DEBUG, "server (%P) will request sleep for %: sec and %q msecs.\n",
+              tv.sec (), static_cast<ACE_INT64> (tv.msec ())));
 
   sleep_duration.reset ();
   sleep_duration.start ();
@@ -25,8 +25,9 @@ Simple_Server_i::echo (CORBA::Long x,
   sleep_duration.stop ();
   ACE_hrtime_t usec {};
   sleep_duration.elapsed_microseconds (usec);
-  ACE_DEBUG ((LM_DEBUG, "server (%P) actually slept for %d sec and %d msecs.\n",
-              usec / 1000000, (usec % 1000000) / 1000));
+  ACE_DEBUG ((LM_DEBUG, "server (%P) actually slept for %Q sec and %Q msecs.\n",
+              static_cast<ACE_UINT64> (usec / 1000000),
+              static_cast<ACE_UINT64> ((usec % 1000000) / 1000)));
 
   return x;
 }

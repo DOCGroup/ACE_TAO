@@ -15,8 +15,8 @@ Simple_Server_i::echo (CORBA::Long x, CORBA::Long msecs)
 {
   ACE_Time_Value const tv (msecs / 1000, (msecs % 1000) * 1000);
 
-  ACE_DEBUG ((LM_DEBUG, "server (%P) will request sleep for %d sec and %d msecs.\n",
-              tv.sec (), tv.msec ()));
+  ACE_DEBUG ((LM_DEBUG, "server (%P) will request sleep for %: sec and %q msecs.\n",
+              tv.sec (), static_cast<ACE_INT64> (tv.msec ())));
 
   sleep_duration.reset ();
   sleep_duration.start ();
