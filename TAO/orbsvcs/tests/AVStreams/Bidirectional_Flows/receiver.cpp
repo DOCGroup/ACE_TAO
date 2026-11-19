@@ -57,9 +57,11 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
                                               output_file);
 
       if (result != frame->length ())
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Receiver_Callback::fwrite failed\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Receiver_Callback::fwrite failed\n"),
+                            -1);
+        }
 
       frame = frame->cont ();
     }
@@ -84,8 +86,10 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
         RECEIVER::instance ()->protocol_object ()->send_frame (&this->mb_);
 
       if (result < 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Send Frame Failed\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Send Frame Failed\n"));
+        }
 
       // Reset the message block.
       this->mb_.reset ();
@@ -180,13 +184,17 @@ Receiver::init (int argc,
   this->input_file_.reset (std::fopen (this->options_.filename.c_str (), "rb"));
 
   if (!this->input_file_)
-    ACE_ERROR_RETURN ((LM_DEBUG,
-                       "Cannot open input file %C\n",
-                       this->options_.filename.c_str ()),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_DEBUG,
+                         "Cannot open input file %C\n",
+                         this->options_.filename.c_str ()),
+                        -1);
+    }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                "Input File opened successfully\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Input File opened successfully\n"));
+    }
 
   // Register the receiver mmdevice object with the ORB
   TAO_MMDevice *mmdevice_servant {};
@@ -209,10 +217,12 @@ Receiver::init (int argc,
 
   // Initialize the naming services
   if (this->naming_client_.init (TAO_AV_CORE::instance ()->orb ()) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to initialize "
-                       "the TAO_Naming_Client\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Unable to initialize "
+                         "the TAO_Naming_Client\n"),
+                        -1);
+    }
 
   // Register the receiver object with the naming server.
   this->naming_client_->rebind (name,
@@ -265,14 +275,18 @@ ACE_TMAIN (int argc,
       output_file_owner.reset (ACE_OS::fopen (output_file_name, "wb"));
       output_file = output_file_owner.get ();
       if (!output_file_owner)
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           "Cannot open output file %s\n",
-                           output_file_name),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             "Cannot open output file %s\n",
+                             output_file_name),
+                            -1);
+        }
 
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    "Output File Opened Successfully\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Output File Opened Successfully\n"));
+        }
 
       int const result = RECEIVER::instance ()->init (argc, argv);
 
