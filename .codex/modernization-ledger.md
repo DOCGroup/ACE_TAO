@@ -13423,3 +13423,9 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 
 - Added Allman braces around single-statement control-flow bodies in `Collocated_Invocation.cpp`, `Exclusive_TMS.cpp`, `GIOP_Message_State.cpp`, and `Connection_Handler.cpp`; normalized affected log-call indentation. Focused clang-tidy checks for all four files and `git diff --check` passed. No build or runtime test was run.
 - Commit `d20e4ff5b40`. The wider TAO/tao brace audit remains open.
+
+
+## 2026-11-19 TAO LocalObject braces
+
+- Added Allman braces around 13 debug-only logging branches in `LocalObject.cpp`, aligning log-call indentation. Focused clang-tidy and `git diff --check` passed. No build or runtime test was run.
+- Commit `db506955fc2`. The broader TAO/tao brace audit remains open.
