@@ -54,22 +54,30 @@ Parse_HTTP_Request::init (const char *request)
       char *p = this->request_;
 
       while (*p == ' ' || *p == '\t')
-        ++p;
+        {
+          ++p;
+        }
 
       method = p++;
 
       while (*p != ' ' && *p != '\t')
-        ++p;
+        {
+          ++p;
+        }
 
       *p++ = '\0';
 
       while (*p == ' ' || *p == '\t')
-        ++p;
+        {
+          ++p;
+        }
 
       this->url_ = p;
 
       while (*p && !std::strchr (" \t\r\n", *p))
-        ++p;
+        {
+          ++p;
+        }
 
       *p++ = '\0';
 
@@ -81,26 +89,40 @@ Parse_HTTP_Request::init (const char *request)
       else
         {
           while (*p == ' ' || *p == '\t')
-            ++p;
+            {
+              ++p;
+            }
 
           this->version_ = p;
 
           while (*p && !std::strchr (" \t\r\n", *p))
-            ++p;
+            {
+              ++p;
+            }
 
           *p++ = '\0';
         }
 
       if (std::strcmp (method, "GET") == 0)
-        this->method_ = &GET;
+        {
+          this->method_ = &GET;
+        }
       else if (std::strcmp (method, "HEAD") == 0)
-        this->method_ = &HEAD;
+        {
+          this->method_ = &HEAD;
+        }
       else if (std::strcmp (method, "POST") == 0)
-        this->method_ = &POST;
+        {
+          this->method_ = &POST;
+        }
       else if (std::strcmp (method, "PUT") == 0)
-        this->method_ = &PUT;
+        {
+          this->method_ = &PUT;
+        }
       else if (std::strcmp (method, "QUIT") == 0)
-        this->method_ = &QUIT;
+        {
+          this->method_ = &QUIT;
+        }
       else
         {
           this->method_ = &DUNNO;
