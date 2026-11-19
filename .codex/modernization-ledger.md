@@ -13821,3 +13821,9 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   ends. No moved-from misuse or ownership error was found. No source changes,
   builds, or tests were run. `TAO/TAO_IDL` remains excluded from source changes
   per the release-branch boundary.
+
+- Audit-only check of the two remaining `std::move` sites in
+  `TAO/TAO_IDL/driver/drv_preproc.cpp` and `TAO/TAO_IDL/tao_idl.cpp`: the
+  modified preprocessor argument is stored in the destination vector slot,
+  and generator ownership is transferred to `idl_global`; neither source is
+  subsequently read. No IDL compiler source files were changed.
