@@ -148,7 +148,9 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *ts_db)
       result = task->put (mb);
 
       if (result == 0 || result == -3)
-        handler = mb->io_handler ();
+        {
+          handler = mb->io_handler ();
+        }
       else
       {
         handler = nullptr;
@@ -257,8 +259,10 @@ JAWS_Thread_Pool_Task::make (long flags, int nthreads, int maxthreads)
                       nullptr,    // stack
                       nullptr,    // stack size
                       thr_names.data ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "JAWS_Thread_Pool_Task::activate"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "JAWS_Thread_Pool_Task::activate"),
+                        -1);
+    }
 
   for (int i = 0; i < nthreads; ++i)
     {
@@ -271,8 +275,10 @@ JAWS_Thread_Pool_Task::make (long flags, int nthreads, int maxthreads)
   this->thr_mgr_->resume_all ();
 
   if (this->reaper_->open () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "JAWS_Reaper::open"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "JAWS_Reaper::open"),
+                        -1);
+    }
 
   return 0;
 }
@@ -318,8 +324,10 @@ JAWS_Thread_Per_Task::activate_hook ()
                       nullptr,    // stack
                       nullptr,    // stack size
                       &thr_name) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "JAWS_Thread_Pool_Task::activate"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "JAWS_Thread_Pool_Task::activate"),
+                        -1);
+    }
 
   JAWS_Thread_ID thr_id (thr_name);
   JAWS_IO_Handler *dummy {};
@@ -332,8 +340,10 @@ JAWS_Thread_Per_Task::activate_hook ()
   this->thr_mgr_->resume (thr_name);
 
   if (this->reaper_->open () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "JAWS_Reaper::open"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "JAWS_Reaper::open"),
+                        -1);
+    }
 
   return 0;
 }
