@@ -13783,3 +13783,14 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   non-owning observer is used only while the widget owns the object. URL
   command construction consumes its unique pointer. No moved-from reads or
   ownership errors were found. No source changes/builds/tests were needed.
+
+## 2026-11-19 ACE performance tests std::move call-site audit
+
+- Reviewed the `std::move` sites in ACE performance tests under SCTP and the
+  adaptive-lock benchmark.
+- SCTP streams/buffers transfer through `unique_ptr` into their owning
+  destination and are accessed through that destination. Histogram values
+  move into a `std::list`, whose element addresses remain stable for returned
+  observers. Benchmark `set_lock` moves its parameter into `lock_` and checks
+  only the destination. No moved-from reads or ownership issues were found.
+  No source changes/builds/tests were needed.
