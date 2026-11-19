@@ -153,15 +153,17 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
       if (ACE_OS::strcasecmp (service_name,
                               "NameService") == 0
           && mde.length () != 0)
-        if (multicast_addr.set (mde.c_str()) == -1)
-          {
-            TAOLIB_ERROR ((LM_ERROR,
-                        ACE_TEXT("ORB.cpp: Multicast address setting failed\n")));
-            stream.close ();
-            dgram.close ();
-            acceptor.close ();
-            return -1;
-          }
+        {
+          if (multicast_addr.set (mde.c_str ()) == -1)
+            {
+              TAOLIB_ERROR ((LM_ERROR,
+                             ACE_TEXT ("ORB.cpp: Multicast address setting failed\n")));
+              stream.close ();
+              dgram.close ();
+              acceptor.close ();
+              return -1;
+            }
+        }
 
       // Open the datagram.
       if (dgram.open (ACE_Addr::sap_any, multicast_addr.get_type ()) == -1)
@@ -187,7 +189,9 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
                     IPV6_MULTICAST_HOPS,
                     std::addressof (mcast_ttl_optval),
                     sizeof (mcast_ttl_optval)) != 0)
-                return -1;
+                {
+                  return -1;
+                }
             }
           else
 #endif  /* ACE_HAS_IPV6 */
@@ -235,21 +239,27 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
                                multicast_addr);
 
           if (TAO_debug_level > 0)
-            TAOLIB_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("\nsent multicast request.")));
+            {
+              TAOLIB_DEBUG ((LM_DEBUG,
+                             ACE_TEXT ("\nsent multicast request.")));
+            }
 
           // Check for errors.
           if (result == -1)
-            TAOLIB_ERROR ((LM_ERROR,
-                        ACE_TEXT ("%p\n"),
-                        ACE_TEXT ("error sending IIOP multicast")));
+            {
+              TAOLIB_ERROR ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("error sending IIOP multicast")));
+            }
           else
             {
               if (TAO_debug_level > 0)
-                TAOLIB_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("\n%N; Sent multicast.")
-                            ACE_TEXT ("# of bytes sent is %b.\n"),
-                            result));
+                {
+                  TAOLIB_DEBUG ((LM_DEBUG,
+                                 ACE_TEXT ("\n%N; Sent multicast.")
+                                 ACE_TEXT ("# of bytes sent is %b.\n"),
+                                 result));
+                }
               // Wait for response until timeout.
               ACE_Time_Value tv (
                 timeout == nullptr
@@ -319,13 +329,17 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
                                                   0,
                                                   std::addressof (tv));
                           if (result == -1)
-                            TAOLIB_ERROR ((LM_ERROR,
-                                        ACE_TEXT ( "%p\n"),
-                                        ACE_TEXT ("error reading ior")));
+                            {
+                              TAOLIB_ERROR ((LM_ERROR,
+                                             ACE_TEXT ( "%p\n"),
+                                             ACE_TEXT ("error reading ior")));
+                            }
                           else if (TAO_debug_level > 0)
-                            TAOLIB_DEBUG ((LM_DEBUG,
-                                        ACE_TEXT ("%N: service resolved to IOR <%C>\n"),
-                                        buf));
+                            {
+                              TAOLIB_DEBUG ((LM_DEBUG,
+                                             ACE_TEXT ("%N: service resolved to IOR <%C>\n"),
+                                             buf));
+                            }
                         }
                     }
                 }
@@ -392,9 +406,13 @@ TAO_MCAST_Parser::assign_to_variables (char const * mcast_name)
       else
         {
           if (mcast_name_cstring[cp_pos + 1] == ':')    // Look for a port
-            pos_colon1 = cp_pos + 1;
+            {
+              pos_colon1 = cp_pos + 1;
+            }
           else
-            pos_colon1 = cp_pos;
+            {
+              pos_colon1 = cp_pos;
+            }
           ipv6_in_host = true; // host string contains full IPv6 numeric address
         }
     }
@@ -413,14 +431,18 @@ TAO_MCAST_Parser::assign_to_variables (char const * mcast_name)
     {
 #if defined (ACE_HAS_IPV6)
       if (ipv6_in_host)
-        this->mcast_address_ =
-          mcast_name_cstring.substring (1,
-                                        pos_colon1 - 2).c_str ();
+        {
+          this->mcast_address_ =
+            mcast_name_cstring.substring (1,
+                                          pos_colon1 - 2).c_str ();
+        }
       else
 #endif  /* ACE_HAS_IPV6 */
-      this->mcast_address_ =
-        mcast_name_cstring.substring (0,
-                                      pos_colon1).c_str ();
+        {
+          this->mcast_address_ =
+            mcast_name_cstring.substring (0,
+                                          pos_colon1).c_str ();
+        }
     }
   mcast_name_cstring =
     mcast_name_cstring.substring (pos_colon1 + 1,
@@ -478,7 +500,9 @@ TAO_MCAST_Parser::assign_to_variables (char const * mcast_name)
         std::atoi (mcast_name_cstring.substring (0, pos_colon4).c_str ());
 
       if (the_ttl > 0 && the_ttl <= 255)  // Valid TTLs: (0, 255]
-        this->mcast_ttl_ = the_ttl;
+        {
+          this->mcast_ttl_ = the_ttl;
+        }
     }
 
   mcast_name_cstring =
