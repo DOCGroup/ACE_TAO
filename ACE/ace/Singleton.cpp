@@ -103,7 +103,7 @@ ACE_Singleton<TYPE, ACE_LOCK>::instance ()
         }
     }
 
-  return &singleton->instance_;
+  return std::addressof (singleton->instance_);
 }
 
 template <class TYPE, class ACE_LOCK> void
@@ -216,7 +216,7 @@ ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::instance ()
         }
     }
 
-  return &singleton->instance_;
+  return std::addressof (singleton->instance_);
 }
 
 template <class TYPE, class ACE_LOCK> void
@@ -306,7 +306,7 @@ ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance ()
         }
     }
 
-  return ACE_TSS_GET (&singleton->instance_, TYPE);
+  return ACE_TSS_GET (std::addressof (singleton->instance_), TYPE);
 }
 
 template <class TYPE, class ACE_LOCK> void
@@ -389,7 +389,7 @@ ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::instance ()
         }
     }
 
-  return ACE_TSS_GET (&singleton->instance_, TYPE);
+  return ACE_TSS_GET (std::addressof (singleton->instance_), TYPE);
 }
 
 template <class TYPE, class ACE_LOCK> void
@@ -495,7 +495,7 @@ ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::instance ()
         (new ACE_Framework_Component_T<ACE_DLL_Singleton_T<TYPE, ACE_LOCK> > (singleton));
     }
 
-  return &singleton->instance_;
+  return std::addressof (singleton->instance_);
 }
 
 template <class TYPE, class ACE_LOCK> void
