@@ -186,7 +186,9 @@ TAO_UIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
        endp = endp->next_)
     {
       if (endp->is_equivalent (other_endp))
-        other_endp = other_endp->next_;
+        {
+          other_endp = other_endp->next_;
+        }
       else
       {
         return false;
@@ -322,7 +324,9 @@ TAO_UIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
 
   // OCTET SEQUENCE for object key
   if (this->ref_object_key_)
-    encap << this->ref_object_key_->object_key ();
+    {
+      encap << this->ref_object_key_->object_key ();
+    }
   else
     {
       TAOLIB_ERROR ((LM_ERROR,
