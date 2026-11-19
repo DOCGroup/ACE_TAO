@@ -133,6 +133,13 @@ public:
   /// Does a base valuetype provide a generated _copy_value()?
   bool inherits_obv_copy_value ();
 
+  /// Does opt-accessor code generate or inherit _copy_value()?
+  bool opt_accessor_generates_copy_value ();
+  bool opt_accessor_inherits_copy_value ();
+
+  /// Does opt-accessor code add its own reference counter?
+  bool opt_accessor_needs_ref_counter ();
+
   /// Recurse down the inheritance tree to determine
   /// if valuetype has at least one operation/attribute.
   bool have_operation ();

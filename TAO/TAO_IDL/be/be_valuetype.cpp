@@ -252,7 +252,7 @@ be_valuetype::has_concrete_factory ()
 bool
 be_valuetype::generates_obv_copy_value ()
 {
-  return !this->have_operation () && this->has_concrete_factory ();
+  return this->has_concrete_factory ();
 }
 
 bool
@@ -262,13 +262,39 @@ be_valuetype::inherits_obv_copy_value ()
     {
       be_valuetype * const vt =
         dynamic_cast<be_valuetype *> (this->inherits ()[i]);
-      if (vt != nullptr && vt->generates_obv_copy_value ())
+      if (vt != nullptr
+          && (vt->generates_obv_copy_value ()
+              || vt->inherits_obv_copy_value ()))
         {
           return true;
         }
     }
 
   return false;
+}
+
+bool
+be_valuetype::opt_accessor_generates_copy_value ()
+{
+  return this->opt_accessor ()
+    && this->generates_obv_copy_value ()
+    && !this->is_amh_excep_holder ();
+}
+
+bool
+be_valuetype::opt_accessor_inherits_copy_value ()
+{
+  return this->opt_accessor ()
+    && this->inherits_obv_copy_value ()
+    && !this->is_amh_excep_holder ();
+}
+
+bool
+be_valuetype::opt_accessor_needs_ref_counter ()
+{
+  return this->opt_accessor ()
+    && this->obv_need_ref_counter ()
+    && !this->is_amh_excep_holder ();
 }
 
 bool

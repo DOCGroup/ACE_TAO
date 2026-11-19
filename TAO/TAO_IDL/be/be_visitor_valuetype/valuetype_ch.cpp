@@ -161,9 +161,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
           << node->supports ()[i]->name ();
     }
 
-  if (node->opt_accessor ()
-      && node->obv_need_ref_counter ()
-      && !is_an_amh_exception_holder)
+  if (node->opt_accessor_needs_ref_counter ())
     {
       *os << "," << be_nl
           << "public virtual ::CORBA::DefaultValueRefCountBase";
@@ -176,12 +174,15 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
 
   node->gen_stub_decls (os);
 
-  if (node->opt_accessor ()
-      && node->generates_obv_copy_value ()
-      && !is_an_amh_exception_holder)
+  if (node->opt_accessor_generates_copy_value ())
     {
       *os << be_nl_2
           << "::CORBA::ValueBase *_copy_value () override;";
+    }
+  else if (node->opt_accessor_inherits_copy_value ())
+    {
+      *os << be_nl_2
+          << "::CORBA::ValueBase *_copy_value () override = 0;";
     }
 
   if (is_an_amh_exception_holder)

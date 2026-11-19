@@ -20,6 +20,57 @@ be_visitor_valuetype::be_visitor_valuetype (be_visitor_context *ctx)
 
 be_visitor_valuetype::~be_visitor_valuetype () = default;
 
+void
+be_visitor_valuetype::gen_valuetype_field_copy_expression (
+  be_field *field,
+  char const *accessor_prefix,
+  char const *null_pointer,
+  bool multiline)
+{
+  be_type *field_type = dynamic_cast<be_type *> (field->field_type ());
+  be_typedef *field_typedef = dynamic_cast<be_typedef *> (field_type);
+  if (field_typedef != nullptr)
+    {
+      field_type = field_typedef->primitive_base_type ();
+    }
+
+  TAO_OutStream *os = this->ctx_->stream ();
+  if (dynamic_cast<be_valuetype_fwd *> (field_type) == nullptr
+      && dynamic_cast<be_valuetype *> (field_type) == nullptr
+      && dynamic_cast<be_valuebox *> (field_type) == nullptr)
+    {
+      *os << accessor_prefix << field->local_name () << " ()";
+      return;
+    }
+
+  *os << "(" << accessor_prefix << field->local_name () << " () ?";
+  if (multiline)
+    {
+      *os << be_idt_nl;
+    }
+  else
+    {
+      *os << " ";
+    }
+  *os << field_type->full_name ()
+      << "::_downcast (::CORBA::ValueBase_var ("
+      << accessor_prefix << field->local_name ()
+      << " ()->_copy_value ()).in ())";
+  if (multiline)
+    {
+      *os << be_nl;
+    }
+  else
+    {
+      *os << " ";
+    }
+  *os << ": " << null_pointer << ")";
+  if (multiline)
+    {
+      *os << be_uidt;
+    }
+}
+
 int
 be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
 {
