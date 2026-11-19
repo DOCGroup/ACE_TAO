@@ -3204,6 +3204,7 @@ TAO/tao/Utils	CONST	done	b20d9a3b315	Const-qualified ORB_Manager's read-only acc
 TAO/tao/Utils	C_STRING	done	7c52bb1d7b0	Server_Main owns the server identity in std::string instead of retaining caller-owned char const *
 TAO/tao/Utils	NULLPTR	done	1dbbefd1348	Changed the error return to nullptr and corrected null-pointer references in ORB_Manager documentation
 TAO/tao/Utils	OWNERSHIP	done	7c52bb1d7b0	Server_Main stores a value copy of its identity string
+TAO/tao/Utils	SCOPE_REDUCTION	not-applicable	c2c19f5e8c4	Reviewed the Utils sources and headers; local lifetimes are already constrained by ownership, cleanup, or subsequent use, with no safe scope reduction identified.
 TAO/tao/Utils	SPECIAL_MEMBER_COMMENTS	done	234445fa7d7	Removed the standalone destructor label; realclean build and link passed without warnings
 TAO/tao/Utils	UNUSED_INCLUDES	done	1dbbefd1348	Removed the unused stdexcept include from RIR_Narrow.cpp
 TAO/tao/Valuetype	BRACES	needs-work	c7f66075c02	Added Allman braces in AbstractBase_T.cpp; targeted clang-tidy found no further diagnostics in all 11 translation units. Headers and the complete directory checklist remain open.

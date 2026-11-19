@@ -9,7 +9,7 @@ Scope: **1268 directories**; **1230** differ from the base; **1281** have task-l
 | Task | Reviewed | Done | Not applicable | Needs work |
 | --- | ---: | ---: | ---: | ---: |
 | `CONST` — East-side const and immutable locals/handles | 242 | 241 | 1 | 0 |
-| `SCOPE_REDUCTION` — Keep variables and declarations in the narrowest useful scope | 15 | 15 | 0 | 0 |
+| `SCOPE_REDUCTION` — Keep variables and declarations in the narrowest useful scope | 16 | 15 | 1 | 0 |
 | `VALUE_INIT` — Value initialization and simpler constructors | 228 | 226 | 2 | 0 |
 | `BOOL_ARGUMENTS` — Use Boolean literals for Boolean arguments | 2 | 0 | 2 | 0 |
 | `NULLPTR` — Eligible nullptr modernization | 81 | 64 | 17 | 0 |

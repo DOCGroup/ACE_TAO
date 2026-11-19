@@ -13649,3 +13649,7 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   Utils brace audit remains open.
 - `git diff --check` passed. No build or runtime test was run for this
   formatting-only change.
+- Reviewed local lifetimes across the TAO Utils implementation and headers
+  for `SCOPE_REDUCTION`. Existing locals already stay inside their necessary
+  blocks; ownership guards retain references until cleanup and ORB/POA locals
+  remain alive through teardown. No safe scope changes were identified.
