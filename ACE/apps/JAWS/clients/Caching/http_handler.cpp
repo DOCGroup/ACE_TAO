@@ -133,8 +133,10 @@ HTTP_Handler::svc ()
           contentlength = std::strstr (buf, "\nContent-length:");
 
           if (contentlength == nullptr)
-            contentlength =
-              std::strstr (buf, "\nContent-Length:");
+            {
+              contentlength =
+                std::strstr (buf, "\nContent-Length:");
+            }
         }
 
     }
@@ -149,11 +151,15 @@ HTTP_Handler::svc ()
         {
           ++value;
           while (*value == ' ' || *value == '\t')
-            ++value;
+            {
+              ++value;
+            }
 
           char const *value_end = std::strpbrk (value, "\r\n");
           if (value_end == nullptr)
-            value_end = value + std::strlen (value);
+            {
+              value_end = value + std::strlen (value);
+            }
 
           std::from_chars_result const parsed =
             std::from_chars (value, value_end, response_size);
@@ -162,7 +168,9 @@ HTTP_Handler::svc ()
               char const *trailing = parsed.ptr;
               while (trailing != value_end &&
                      (*trailing == ' ' || *trailing == '\t'))
-                ++trailing;
+                {
+                  ++trailing;
+                }
               has_content_length = trailing == value_end;
             }
         }
