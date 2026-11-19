@@ -122,9 +122,11 @@ Sender::bind_to_receiver ()
     AVStreams::MMDevice::_narrow (receiver_mmdevice_obj.in ());
 
   if (CORBA::is_nil (this->receiver_mmdevice_.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Could not resolve Receiver_MMdevice in Naming service\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Could not resolve Receiver_MMdevice in Naming service\n"),
+                        -1);
+    }
 
   return 0;
 }
@@ -164,21 +166,27 @@ Sender::init (int argc,
                                           "r"));
 
   if (!this->input_file_)
-    ACE_ERROR_RETURN ((LM_DEBUG,
-                       "Cannot open input file %C\n",
-                       this->options_.filename.c_str ()),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_DEBUG,
+                         "Cannot open input file %C\n",
+                         this->options_.filename.c_str ()),
+                        -1);
+    }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                "File opened successfully\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "File opened successfully\n"));
+    }
 
   // Resolve the object reference of the receiver from the Naming Service.
   result = this->bind_to_receiver ();
 
   if (result != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) Error binding to the naming service\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%P|%t) Error binding to the naming service\n"),
+                        -1);
+    }
   // Initialize the  QoS
   AVStreams::streamQoS_var the_qos (new AVStreams::streamQoS);
 
@@ -221,9 +229,11 @@ Sender::init (int argc,
                                   flow_spec);
 
   if (!bind_result)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "streamctrl::bind_devs failed\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "streamctrl::bind_devs failed\n"),
+                        -1);
+    }
 
   return 0;
 }
@@ -236,11 +246,13 @@ Sender::pace_data ()
   inter_frame_time.set (1 / (double) this->options_.frame_rate);
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "Frame Rate = %d / second\n"
-                "Inter Frame Time = %d (msec)\n",
-                this->options_.frame_rate,
-                inter_frame_time.msec ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Frame Rate = %d / second\n"
+                  "Inter Frame Time = %d (msec)\n",
+                  this->options_.frame_rate,
+                  inter_frame_time.msec ()));
+    }
 
   try
     {
@@ -282,9 +294,11 @@ Sender::pace_data ()
               elapsed_timer.elapsed_time (elapsed_time);
 
               if (TAO_debug_level > 0)
-                ACE_DEBUG ((LM_DEBUG,
-                            "Elapsed Time = %d\n",
-                            elapsed_time.msec ()));
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "Elapsed Time = %d\n",
+                              elapsed_time.msec ()));
+                }
 
               // Check to see if the inter frame time has elapsed.
               if (elapsed_time < inter_frame_time)
@@ -295,9 +309,11 @@ Sender::pace_data ()
                   ACE_Time_Value wait_time (inter_frame_time - elapsed_time);
 
                   if (TAO_debug_level > 0)
-                    ACE_DEBUG ((LM_DEBUG,
-                                "Wait Time = %d\n",
-                                wait_time.msec ()));
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                  "Wait Time = %d\n",
+                                  wait_time.msec ()));
+                    }
 
                   // Run the orb for the wait time so the sender can
                   // continue other orb requests.
@@ -313,10 +329,12 @@ Sender::pace_data ()
             this->protocol_object_->send_frame (&this->mb_);
 
           if (result < 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "send failed:%p",
-                               "Sender::pace_data send\n"),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "send failed:%p",
+                                 "Sender::pace_data send\n"),
+                                -1);
+            }
 
           ACE_DEBUG ((LM_DEBUG,
                       "Sender::pace_data frame %B was sent successfully\n",
@@ -372,9 +390,11 @@ ACE_TMAIN (int argc,
                                           argv);
 
       if (result < 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Sender::init failed\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Sender::init failed\n"),
+                            -1);
+        }
 
       // Start sending data.
       result = SENDER::instance ()->pace_data ();

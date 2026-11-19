@@ -95,8 +95,11 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
                       "Stream Ctrl available....Modify QoS called\n"));
         }
     }
-  else ACE_DEBUG ((LM_DEBUG,
-                   "No Stream Ctrl\n"));
+  else
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "No Stream Ctrl\n"));
+    }
 
   while (frame != nullptr)
     {
@@ -108,9 +111,11 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
                      output_file.get ());
 
       if (written != 1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Receiver_Callback::fwrite failed\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Receiver_Callback::fwrite failed\n"),
+                            -1);
+        }
 
       frame = frame->cont ();
     }
@@ -171,10 +176,12 @@ Receiver::init (int,
 
   // Initialize the naming services
   if (this->naming_client_.init (TAO_AV_CORE::instance ()->orb ()) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to initialize "
-                       "the TAO_Naming_Client\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Unable to initialize "
+                         "the TAO_Naming_Client\n"),
+                        -1);
+    }
 
   // Register the receiver object with the naming server.
   this->naming_client_->rebind (name,
@@ -249,14 +256,18 @@ ACE_TMAIN (int argc,
       output_file.reset (ACE_OS::fopen (output_file_name,
                                         "w"));
       if (!output_file)
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           "Cannot open output file %s\n",
-                           output_file_name),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             "Cannot open output file %s\n",
+                             output_file_name),
+                            -1);
+        }
 
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    "File Opened Successfully\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "File Opened Successfully\n"));
+        }
 
       Receiver receiver;
       result =
