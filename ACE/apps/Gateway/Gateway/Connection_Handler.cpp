@@ -50,7 +50,9 @@ Connection_Handler::Connection_Handler (Connection_Config_Info const &pci)
     event_channel_ (pci.event_channel_)
 {
   if (pci.host_[0] != '\0')
-    this->remote_addr_.set (pci.remote_port_, pci.host_);
+    {
+      this->remote_addr_.set (pci.remote_port_, pci.host_);
+    }
   else
   {
     this->remote_addr_.set (pci.remote_port_, ACE_DEFAULT_SERVER_HOST);
@@ -182,16 +184,22 @@ Connection_Handler::open (void *)
 
   // Call back to the <Event_Channel> to complete our initialization.
   if (this->event_channel_->complete_connection_connection (this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "complete_connection_connection"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "complete_connection_connection"), -1);
+    }
 
   // Turn on non-blocking I/O.
   else if (this->peer ().enable (ACE_NONBLOCK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "enable"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "enable"), -1);
+    }
 
   // Register ourselves to receive input events.
   else if (ACE_Reactor::instance ()->register_handler
       (this, ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "register_handler"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "register_handler"), -1);
+    }
   else
   {
     return 0;
@@ -239,30 +247,38 @@ Connection_Handler_Factory::make_connection_handler (Connection_Config_Info cons
       // Create a threaded Consumer_Handler.
       if (ACE_BIT_ENABLED (Options::instance ()->threading_strategy (),
                            Options::OUTPUT_MT))
-        ACE_NEW_RETURN (connection_handler,
-                        Thr_Consumer_Handler (pci),
-                        nullptr);
+        {
+          ACE_NEW_RETURN (connection_handler,
+                          Thr_Consumer_Handler (pci),
+                          nullptr);
+        }
 
       // Create a reactive Consumer_Handler.
       else
-        ACE_NEW_RETURN (connection_handler,
-                        Consumer_Handler (pci),
-                        nullptr);
+        {
+          ACE_NEW_RETURN (connection_handler,
+                          Consumer_Handler (pci),
+                          nullptr);
+        }
     }
   else // connection_role == 'S', so configure a Supplier_Handler.
     {
       // Create a threaded Supplier_Handler.
       if (ACE_BIT_ENABLED (Options::instance ()->threading_strategy (),
                            Options::INPUT_MT))
-        ACE_NEW_RETURN (connection_handler,
-                        Thr_Supplier_Handler (pci),
-                        nullptr);
+        {
+          ACE_NEW_RETURN (connection_handler,
+                          Thr_Supplier_Handler (pci),
+                          nullptr);
+        }
 
       // Create a reactive Supplier_Handler.
       else
-        ACE_NEW_RETURN (connection_handler,
-                        Supplier_Handler (pci),
-                        nullptr);
+        {
+          ACE_NEW_RETURN (connection_handler,
+                          Supplier_Handler (pci),
+                          nullptr);
+        }
     }
 
   return connection_handler;
