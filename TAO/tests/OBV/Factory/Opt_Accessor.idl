@@ -1,7 +1,21 @@
 module OBV_FactoryTest
 {
+  interface Opt_Accessor_Interface
+  {
+  };
+
   valuetype Opt_Accessor_Value
   {
     public unsigned long value;
+  };
+
+  valuetype Opt_Accessor_Base
+  {
+    public unsigned long base_value;
+  };
+
+  valuetype Opt_Accessor_Derived : Opt_Accessor_Base supports Opt_Accessor_Interface
+  {
+    public unsigned long derived_value;
   };
 };

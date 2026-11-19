@@ -223,6 +223,37 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             1);
         }
 
+      OBV_FactoryTest::Opt_Accessor_Derived_init * const derived_factory =
+        new OBV_FactoryTest::Opt_Accessor_Derived_init;
+      CORBA::ValueBase_var derived_value_base (
+        derived_factory->create_for_unmarshal ());
+      OBV_FactoryTest::Opt_Accessor_Derived * const derived_value =
+        OBV_FactoryTest::Opt_Accessor_Derived::_downcast (
+          derived_value_base.in ());
+      if (derived_value == nullptr)
+        {
+          derived_factory->_remove_ref ();
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Optimized-accessor derived factory failed\n"),
+                            1);
+        }
+      derived_value->base_value (61);
+      derived_value->derived_value (67);
+      CORBA::ValueBase_var derived_copy_base (
+        derived_value->_copy_value ());
+      OBV_FactoryTest::Opt_Accessor_Derived * const derived_copy =
+        OBV_FactoryTest::Opt_Accessor_Derived::_downcast (
+          derived_copy_base.in ());
+      derived_factory->_remove_ref ();
+      if (derived_copy == nullptr
+          || derived_copy->base_value () != 61
+          || derived_copy->derived_value () != 67)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Inherited optimized-accessor factory or copy failed\n"),
+                            1);
+        }
+
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - test finished\n"));
 
       test->shutdown ();
