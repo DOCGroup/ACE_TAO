@@ -600,9 +600,13 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
           // BEGIN COMMENTS FROM IIOP-1.4
           const ACE_TCHAR *opt = current_arg;
           if (ACE_OS::strcasecmp (opt, ACE_TEXT("URL")) == 0)
-            use_ior = false;
+            {
+              use_ior = false;
+            }
           else if (ACE_OS::strcasecmp (opt, ACE_TEXT("IOR")) == 0)
-            use_ior = true;
+            {
+              use_ior = true;
+            }
 
           arg_shifter.consume_arg ();
         }
@@ -677,11 +681,13 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
         {
           if (this->orb_params ()->preferred_interfaces (
                 ACE_TEXT_ALWAYS_CHAR (current_arg)) == false)
-            throw ::CORBA::INTERNAL (
-              CORBA::SystemException::_tao_minor_code (
-                TAO_ORB_CORE_INIT_LOCATION_CODE,
-                0),
-              CORBA::COMPLETED_NO);
+            {
+              throw ::CORBA::INTERNAL (
+                CORBA::SystemException::_tao_minor_code (
+                  TAO_ORB_CORE_INIT_LOCATION_CODE,
+                  0),
+                CORBA::COMPLETED_NO);
+            }
 
           arg_shifter.consume_arg ();
         }
@@ -787,7 +793,9 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
         {
           int const ami_collocation = ACE_OS::atoi (current_arg);
           if (ami_collocation)
-            this->orb_params ()->ami_collication (true);
+            {
+              this->orb_params ()->ami_collication (true);
+            }
           else
           {
             this->orb_params ()->ami_collication (false);
@@ -1063,7 +1071,9 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
         {
           int disable_rt_collocation = ACE_OS::atoi (current_arg);
           if (disable_rt_collocation)
-            this->orb_params ()->disable_rt_collocation_resolver (true);
+            {
+              this->orb_params ()->disable_rt_collocation_resolver (true);
+            }
           else
           {
             this->orb_params ()->disable_rt_collocation_resolver (false);
@@ -1097,7 +1107,9 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
         {
           int const forward = ACE_OS::atoi (current_arg);
           if (forward)
-            this->orb_params_.forward_invocation_on_object_not_exist (true);
+            {
+              this->orb_params_.forward_invocation_on_object_not_exist (true);
+            }
           else
           {
             this->orb_params_.forward_invocation_on_object_not_exist (false);
@@ -1435,23 +1447,31 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
   this->orb_params ()->negotiate_codesets (negotiate_codesets);
 
   if (this->codeset_manager())
-    this->codeset_manager_->open(*this);
+    {
+      this->codeset_manager_->open(*this);
+    }
   else
-    if  (TAO_debug_level > 0)
+    {
+      if  (TAO_debug_level > 0)
+        {
         TAOLIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("TAO (%P|%t) - ORB_Core: ")
-                    ACE_TEXT("Codeset Manager not available\n")));
+                       ACE_TEXT("TAO (%P|%t) - ORB_Core: ")
+                       ACE_TEXT("Codeset Manager not available\n")));
+        }
+    }
 
   // Set up the pluggable protocol infrastructure.  First get a
   // pointer to the protocol factories set, then obtain pointers to
   // all factories loaded by the service configurator.
   // Load all protocol factories!
   if (trf->init_protocol_factories () == -1)
-    throw ::CORBA::INITIALIZE (
-      CORBA::SystemException::_tao_minor_code (
-        TAO_ORB_CORE_INIT_LOCATION_CODE,
-        0),
-      CORBA::COMPLETED_NO);
+    {
+      throw ::CORBA::INITIALIZE (
+        CORBA::SystemException::_tao_minor_code (
+          TAO_ORB_CORE_INIT_LOCATION_CODE,
+          0),
+        CORBA::COMPLETED_NO);
+    }
 
   // init the ORB core's pointer
   this->protocol_factories_ = trf->get_protocol_factories ();
@@ -2304,7 +2324,9 @@ TAO_ORB_Core::run (ACE_Time_Value *tv, int perform_work)
       if (result != 0)
         {
           if (errno == ETIME)
-            return 0;
+            {
+              return 0;
+            }
           else
           {
             return result;
@@ -2962,7 +2984,9 @@ TAO_ORB_Core::list_initial_references ()
 
   // Iterate over the registered initial references.
   for (; index < initial_services_size; ++index)
-    list[index] = initial_services[index];
+    {
+      list[index] = initial_services[index];
+    }
 
   // Now iterate over the initial references created by the user and
   // add them to the sequence.
@@ -2975,7 +2999,9 @@ TAO_ORB_Core::list_initial_references ()
   for (TAO_Object_Ref_Table::iterator i = this->object_ref_table_.begin ();
        i != obj_ref_end;
        ++i, ++index)
-    list[index] = CORBA::string_dup ((*i).first.in ());
+    {
+      list[index] = CORBA::string_dup ((*i).first.in ());
+    }
 
   // References registered via INS.
   InitRefMap::iterator const end = this->init_ref_map_.end ();
@@ -2983,7 +3009,9 @@ TAO_ORB_Core::list_initial_references ()
   for (InitRefMap::iterator j = this-> init_ref_map_.begin ();
        j != end;
        ++j, ++index)
-    list[index] = (*j).first.c_str ();
+    {
+      list[index] = (*j).first.c_str ();
+    }
 
   return list._retn ();
 }
