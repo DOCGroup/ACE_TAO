@@ -13429,3 +13429,9 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 
 - Added Allman braces around 13 debug-only logging branches in `LocalObject.cpp`, aligning log-call indentation. Focused clang-tidy and `git diff --check` passed. No build or runtime test was run.
 - Commit `db506955fc2`. The broader TAO/tao brace audit remains open.
+
+
+## 2026-11-19 TAO CORBANAME parser braces
+
+- Added Allman braces around the nil-reference error branch in `CORBANAME_Parser.cpp` and aligned the logging macro arguments. Focused clang-tidy and `git diff --check` passed. No build or runtime test was run.
+- Commit `be422f7f9bf`. The broader TAO/tao brace audit remains open.
