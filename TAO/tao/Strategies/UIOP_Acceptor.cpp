@@ -46,13 +46,17 @@ TAO_UIOP_Acceptor::create_profile (const TAO::ObjectKey &object_key,
   // Check if multiple endpoints should be put in one profile or
   // if they should be spread across multiple profiles.
   if (priority == TAO_INVALID_PRIORITY)
-    return this->create_new_profile (object_key,
-                                     mprofile,
-                                     priority);
+    {
+      return this->create_new_profile (object_key,
+                                       mprofile,
+                                       priority);
+    }
   else
-    return this->create_shared_profile (object_key,
-                                        mprofile,
-                                        priority);
+    {
+      return this->create_shared_profile (object_key,
+                                          mprofile,
+                                          priority);
+    }
 }
 
 int
@@ -213,14 +217,20 @@ TAO_UIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   }
 
   if (major >= 0 && minor >= 0)
-    this->version_.set_version (static_cast<CORBA::Octet> (major),
-                                static_cast<CORBA::Octet> (minor));
+    {
+      this->version_.set_version (static_cast<CORBA::Octet> (major),
+                                  static_cast<CORBA::Octet> (minor));
+    }
   // Parse options
   if (this->parse_options (options) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return this->open_i (address,
-                         reactor);
+    {
+      return this->open_i (address,
+                           reactor);
+    }
 }
 
 int
@@ -233,8 +243,10 @@ TAO_UIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
   this->orb_core_ = orb_core;
 
   if (major >= 0 && minor >= 0)
-    this->version_.set_version (static_cast<CORBA::Octet> (major),
-                                static_cast<CORBA::Octet> (minor));
+    {
+      this->version_.set_version (static_cast<CORBA::Octet> (major),
+                                  static_cast<CORBA::Octet> (minor));
+    }
 
   // Parse options
   if (this->parse_options (options) == -1)
@@ -304,10 +316,12 @@ TAO_UIOP_Acceptor::open_i (const char *rendezvous,
   //    rendezvous point here
 
   if (TAO_debug_level > 5)
-    TAOLIB_DEBUG ((LM_DEBUG,
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
                 "\nTAO (%P|%t) - UIOP_Acceptor::open_i - "
                 "listening on: <%C>\n",
                 addr.get_path_name ()));
+    }
 
   // In the event that an accept() fails, we can examine the reason.  If
   // the reason warrants it, we can try accepting again at a later time.
@@ -354,11 +368,13 @@ TAO_UIOP_Acceptor::rendezvous_point (ACE_UNIX_Addr &addr,
   // most UNIX domain socket rendezvous points can only be less than
   // 108 characters long.
   if (length < std::strlen (rendezvous))
-    TAOLIB_DEBUG ((LM_WARNING,
+    {
+      TAOLIB_DEBUG ((LM_WARNING,
                 "TAO (%P|%t) - UIOP rendezvous point was truncated to <%s>\n"
                 "since it was longer than %B characters long.\n",
                 addr.get_path_name (),
                 length));
+    }
 }
 
 CORBA::ULong
@@ -444,9 +460,11 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
   // Only check for endpoints after the protocol specification and
   // before the object key.
   for (size_t i {}; i < len; ++i)
-    if (options[i] == option_delimiter)
     {
-      ++option_count;
+      if (options[i] == option_delimiter)
+        {
+          ++option_count;
+        }
     }
 
   // The idea behind the following loop is to split the options into
@@ -463,16 +481,20 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
   for (CORBA::ULong j {}; j < option_count; ++j)
     {
       if (j < option_count - 1)
-        end = options.find (option_delimiter, begin);
+        {
+          end = options.find (option_delimiter, begin);
+        }
       else
       {
         end = len;
       }
 
       if (end == begin)
-        TAOLIB_ERROR_RETURN ((LM_ERROR,
-                           "TAO (%P|%t) Zero length UIOP option.\n"),
-                          -1);
+        {
+          TAOLIB_ERROR_RETURN ((LM_ERROR,
+                             "TAO (%P|%t) Zero length UIOP option.\n"),
+                            -1);
+        }
       else if (end != ACE_CString::npos)
         {
           ACE_CString const opt =
@@ -482,11 +504,13 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
 
           if (slot == len - 1
               || slot == ACE_CString::npos)
-            TAOLIB_ERROR_RETURN ((LM_ERROR,
-                               "TAO (%P|%t) - UIOP option <%C> is "
-                               "missing a value.\n",
-                               opt.c_str ()),
-                              -1);
+            {
+              TAOLIB_ERROR_RETURN ((LM_ERROR,
+                                 "TAO (%P|%t) - UIOP option <%C> is "
+                                 "missing a value.\n",
+                                 opt.c_str ()),
+                                -1);
+            }
 
           const ACE_CString name (opt.substring (0, slot));
           ACE_CString const value = opt.substring (slot + 1);
@@ -494,10 +518,12 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
           begin = end + 1;
 
           if (name.length () == 0)
-            TAOLIB_ERROR_RETURN ((LM_ERROR,
-                               "TAO (%P|%t) - Zero length UIOP "
-                               "option name.\n"),
-                              -1);
+            {
+              TAOLIB_ERROR_RETURN ((LM_ERROR,
+                                 "TAO (%P|%t) - Zero length UIOP "
+                                 "option name.\n"),
+                                -1);
+            }
 
           if (name == "priority")
             {
@@ -507,10 +533,12 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
                                 -1);
             }
           else
-            TAOLIB_ERROR_RETURN ((LM_ERROR,
-                               "TAO (%P|%t) - Invalid UIOP option: <%C>\n",
-                               name.c_str ()),
-                              -1);
+            {
+              TAOLIB_ERROR_RETURN ((LM_ERROR,
+                                 "TAO (%P|%t) - Invalid UIOP option: <%C>\n",
+                                 name.c_str ()),
+                                -1);
+            }
         }
       else
       {
