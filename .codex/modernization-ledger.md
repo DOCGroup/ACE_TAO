@@ -13640,3 +13640,12 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Recorded `MOVE_SITES` as done. No source changes, builds, or runtime tests
   were needed for this audit.
 - Source evidence commit: `5467e71c2bd`.
+
+
+## 2026-11-19 TAO Utils brace formatting follow-up
+
+- Corrected the Allman indentation of the nil-checked ORB destroy branch in
+  `TAO/tao/Utils/ORB_Manager.cpp`. This was a local formatting fix; the full
+  Utils brace audit remains open.
+- `git diff --check` passed. No build or runtime test was run for this
+  formatting-only change.

@@ -213,9 +213,9 @@ TAO_ORB_Manager::fini ()
     }
 
   if (!CORBA::is_nil (orb.in ()))
-  {
-    orb->destroy ();
-  }
+    {
+      orb->destroy ();
+    }
 
   return 0;
 }
