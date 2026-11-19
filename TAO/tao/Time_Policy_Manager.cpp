@@ -49,10 +49,14 @@ TAO_Time_Policy_Manager::parse_args (int argc, ACE_TCHAR* argv[])
 
               if (ACE_OS::strcasecmp (name,
                                       ACE_TEXT("OS")) == 0)
-                this->time_policy_setting_ = Time_Policy_Setting::OS;
+                {
+                  this->time_policy_setting_ = Time_Policy_Setting::OS;
+                }
               else if (ACE_OS::strcasecmp (name,
                                            ACE_TEXT("HR")) == 0)
-                this->time_policy_setting_ = Time_Policy_Setting::High_Resolution;
+                {
+                  this->time_policy_setting_ = Time_Policy_Setting::High_Resolution;
+                }
               else
                 {
                   this->time_policy_setting_ = Time_Policy_Setting::Dynamic;
