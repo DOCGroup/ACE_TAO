@@ -106,11 +106,13 @@ ClientSvcHandler::open (void* factory)
 
       size_t send_len = ACE_OS::strlen (ClientSvcHandler::send_str);
       if (-1 == this->peer().send_n (ClientSvcHandler::send_str, send_len))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%t: client h %@, %p\n"),
-                           reinterpret_cast<void *> (this->peer ().get_handle ()),
-                           ACE_TEXT ("send")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%t: client h %@, %p\n"),
+                             reinterpret_cast<void *> (this->peer ().get_handle ()),
+                             ACE_TEXT ("send")),
+                            -1);
+        }
       return 0;
     }
 
@@ -154,9 +156,11 @@ ClientSvcHandler::handle_input (ACE_HANDLE handle)
         // Not done yet; send more data and resched timer.
         size_t send_len = ACE_OS::strlen (ClientSvcHandler::send_str);
         if (-1 == this->peer().send_n (ClientSvcHandler::send_str, send_len))
-          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%t: client h %d: %p\n"),
-                             ACE_TEXT ("resending")),
-                            -1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%t: client h %d: %p\n"),
+                               ACE_TEXT ("resending")),
+                              -1);
+          }
         this->timer_ = reactor ()->schedule_timer (this, nullptr, MAX_CLIENT_TIMEOUT);
       }
     else if (bc == 0) // Socket was closed by server
@@ -174,11 +178,13 @@ ClientSvcHandler::handle_input (ACE_HANDLE handle)
                           0);
       }
     else
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%t: client h %@: %p\n"),
-                         reinterpret_cast<void *> (handle),
-                         ACE_TEXT ("send")),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%t: client h %@: %p\n"),
+                           reinterpret_cast<void *> (handle),
+                           ACE_TEXT ("send")),
+                          -1);
+      }
 
     return 0;
 }
@@ -203,8 +209,10 @@ ClientSvcHandler::handle_close (ACE_HANDLE handle, ACE_Reactor_Mask mask)
   // If not done iterating, just close the socket and reopen the connection.
   // Else shut down and delete.
   if (this->iter_ >= ACE_MAX_ITERATIONS)
-    return ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::handle_close(handle,
-                                                                          mask);
+    {
+      return ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::handle_close (handle,
+                                                                             mask);
+    }
   this->shutdown ();
   ClientSvcHandler *p = const_cast<ClientSvcHandler *>(this);
   ACE_Connector<ClientSvcHandler, ACE_SOCK_CONNECTOR>
@@ -239,10 +247,12 @@ ServerSvcHandler::handle_input (ACE_HANDLE handle)
                   reinterpret_cast<void *> (handle),
                   bc));
       if (-1 == this->peer ().send_n (buffer, bc))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%t: server h %@: send failed %p\n"),
-                           reinterpret_cast<void *> (handle)),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%t: server h %@: send failed %p\n"),
+                             reinterpret_cast<void *> (handle)),
+                            -1);
+        }
     }
   else if (bc == 0 || errno == ECONNRESET) // Socket was closed by client
     {
@@ -261,9 +271,11 @@ ServerSvcHandler::handle_input (ACE_HANDLE handle)
                         0);
     }
   else
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%t: server h %@: recv failed %p\n"),
-                       reinterpret_cast<void *> (handle)),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%t: server h %@: recv failed %p\n"),
+                         reinterpret_cast<void *> (handle)),
+                        -1);
+    }
 
   return 0;
 }
@@ -283,12 +295,16 @@ disable_signal (int sigmin, int sigmax)
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
   sigset_t signal_set;
   if (ACE_OS::sigemptyset (&signal_set) == - 1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Error: (%P|%t):%p\n"),
-                ACE_TEXT ("sigemptyset failed")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Error: (%P|%t):%p\n"),
+                  ACE_TEXT ("sigemptyset failed")));
+    }
 
   for (int i = sigmin; i <= sigmax; ++i)
-    ACE_OS::sigaddset (&signal_set, i);
+    {
+      ACE_OS::sigaddset (&signal_set, i);
+    }
 
   // Put the <signal_set>.
 # if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
@@ -298,10 +314,12 @@ disable_signal (int sigmin, int sigmax)
 # else
   if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, nullptr) != 0)
 # endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Error: (%P|%t): %p\n"),
-                       ACE_TEXT ("SIG_BLOCK failed")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Error: (%P|%t): %p\n"),
+                         ACE_TEXT ("SIG_BLOCK failed")),
+                        -1);
+    }
 #else
   ACE_UNUSED_ARG (sigmin);
   ACE_UNUSED_ARG (sigmax);
