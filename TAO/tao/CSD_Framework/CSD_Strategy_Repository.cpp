@@ -48,7 +48,9 @@ TAO_CSD_Strategy_Repository::add_strategy (std::string const &name,
   std::unique_ptr<Strategy_Node> node_owner (node);
   std::unique_ptr<Strategy_Node> *tail = std::addressof (this->strategy_list_head_);
   while (*tail != nullptr)
-    tail = std::addressof ((*tail)->next_);
+    {
+      tail = std::addressof ((*tail)->next_);
+    }
   *tail = std::move (node_owner);
 
   if (TAO_debug_level > 3)

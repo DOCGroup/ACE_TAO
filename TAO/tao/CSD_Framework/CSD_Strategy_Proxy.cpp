@@ -18,9 +18,11 @@ TAO::CSD::Strategy_Proxy::custom_strategy
   if (this->strategy_impl_ != nullptr)
     {
       if (TAO_debug_level > 0)
-        TAOLIB_ERROR((LM_ERROR,
+        {
+          TAOLIB_ERROR((LM_ERROR,
                    ACE_TEXT("(%P|%t) Error - TAO::CSD::Strategy_Proxy ")
                    ACE_TEXT("object already has a custom strategy.\n")));
+        }
 
       return false;
     }
@@ -28,9 +30,11 @@ TAO::CSD::Strategy_Proxy::custom_strategy
   if (CORBA::is_nil(strategy))
     {
       if (TAO_debug_level > 0)
-        TAOLIB_ERROR((LM_ERROR,
+        {
+          TAOLIB_ERROR((LM_ERROR,
                    ACE_TEXT("(%P|%t) Error - TAO::CSD::Strategy_Proxy ")
                    ACE_TEXT("supplied with a NIL custom strategy.\n")));
+        }
 
       return false;
     }
