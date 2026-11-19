@@ -187,7 +187,9 @@ JAWS_Parse_Headers::parse_header_value (JAWS_Header_Info *info,
           // Move the rd_ptr back one character if the last thing we
           // see is a carriage return.  Assert: wr_ptr > rd_ptr.
           if (q[-1] == '\r')
-            mb.rd_ptr (q-1);
+            {
+              mb.rd_ptr (q-1);
+            }
 
           return 1;
         }
@@ -226,14 +228,18 @@ JAWS_Parse_Headers::parse_header_value (JAWS_Header_Info *info,
             }
 
           if (*q != '\n')
-            info->append_last_header_value (' ');
+            {
+              info->append_last_header_value (' ');
+            }
         }
 
       // Append to last header value character by character
       while (q < mb.wr_ptr ())
         {
           if (*q == '\n')
-            break;
+            {
+              break;
+            }
           info->append_last_header_value (*q);
           ++q;
         }
@@ -251,7 +257,9 @@ JAWS_Parse_Headers::parse_header_value (JAWS_Header_Info *info,
         {
           // Reduce by one character if line discipline is "\r\n"
           if (info->append_last_header_value () == '\r')
-            info->reduce_last_header_value ();
+            {
+              info->reduce_last_header_value ();
+            }
 
           // Move past newline, set end of line flag
           mb.rd_ptr (q+1);
@@ -300,9 +308,11 @@ JAWS_Header_Info::dump ()
       JAWS_Header_Data *data;
       data = iter.next ();
       if (data != 0)
-        ACE_DEBUG ((LM_DEBUG,
+        {
+          ACE_DEBUG ((LM_DEBUG,
                     "%s -- %s\n",
                     data->header_name (), data->header_value ()));
+        }
       else
       {
         ACE_DEBUG ((LM_DEBUG, "NULL ENTRY\n"));
@@ -326,7 +336,9 @@ JAWS_Header_Info::append_last_header_value (char c)
   }
 
   if (this->last_header_length_ == 0 && (c == ' ' || c == '\t'))
-    return;
+    {
+      return;
+    }
 
   if (this->last_header_length_ < MAX_HEADER_LENGTH-1)
     {
@@ -430,7 +442,9 @@ JAWS_Header_Info::finish_last_header_value ()
       // The above performs a strdup.
 
       if (this->status () == JAWS_Header_Info::STATUS_CODE_OK)
-        this->table_.insert (this->last_header_data_);
+        {
+          this->table_.insert (this->last_header_data_);
+        }
       else
       {
         delete this->last_header_data_;
