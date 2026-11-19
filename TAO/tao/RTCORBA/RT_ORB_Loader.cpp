@@ -65,21 +65,29 @@ TAO_RT_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
           ACE_TCHAR const * const name = current_arg;
           if (ACE_OS::strcasecmp (name,
                                   ACE_TEXT("continuous")) == 0)
-            priority_mapping_type =
-              TAO_RT_ORBInitializer::TAO_PRIORITY_MAPPING_CONTINUOUS;
+            {
+              priority_mapping_type =
+                TAO_RT_ORBInitializer::TAO_PRIORITY_MAPPING_CONTINUOUS;
+            }
           else if (ACE_OS::strcasecmp (name,
                                        ACE_TEXT("linear")) == 0)
-            priority_mapping_type =
-              TAO_RT_ORBInitializer::TAO_PRIORITY_MAPPING_LINEAR;
+            {
+              priority_mapping_type =
+                TAO_RT_ORBInitializer::TAO_PRIORITY_MAPPING_LINEAR;
+            }
           else if (ACE_OS::strcasecmp (name,
                                        ACE_TEXT("direct")) == 0)
-            priority_mapping_type =
-              TAO_RT_ORBInitializer::TAO_PRIORITY_MAPPING_DIRECT;
+            {
+              priority_mapping_type =
+                TAO_RT_ORBInitializer::TAO_PRIORITY_MAPPING_DIRECT;
+            }
           else
-            TAOLIB_DEBUG ((LM_DEBUG,
+            {
+              TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT("RT_ORB_Loader - unknown argument")
                         ACE_TEXT(" <%s> for -ORBPriorityMapping\n"),
                         name));
+            }
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter
@@ -105,10 +113,12 @@ TAO_RT_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
               sched_policy = THR_SCHED_RR;
             }
           else
-            TAOLIB_DEBUG ((LM_DEBUG,
+            {
+              TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT("RT_ORB_Loader - unknown argument")
                         ACE_TEXT(" <%s> for -ORBSchedPolicy\n"),
                         name));
+            }
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter
@@ -117,15 +127,21 @@ TAO_RT_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
           ACE_TCHAR const * const name = current_arg;
           if (ACE_OS::strcasecmp (name,
                                   ACE_TEXT("SYSTEM")) == 0)
-            scope_policy = THR_SCOPE_SYSTEM;
+            {
+              scope_policy = THR_SCOPE_SYSTEM;
+            }
           else if (ACE_OS::strcasecmp (name,
                                        ACE_TEXT("PROCESS")) == 0)
-            scope_policy = THR_SCOPE_PROCESS;
+            {
+              scope_policy = THR_SCOPE_PROCESS;
+            }
           else
-            TAOLIB_DEBUG ((LM_DEBUG,
+            {
+              TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT("RT_ORB_Loader - unknown argument")
                         ACE_TEXT(" <%s> for -ORBScopePolicy\n"),
                         name));
+            }
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter
@@ -134,8 +150,10 @@ TAO_RT_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
           ACE_TCHAR const * const name = current_arg;
           if (ACE_OS::strcasecmp (name,
                                   ACE_TEXT("linear")) == 0)
+            {
               network_priority_mapping_type =
                 TAO_RT_ORBInitializer::TAO_NETWORK_PRIORITY_MAPPING_LINEAR;
+            }
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter
