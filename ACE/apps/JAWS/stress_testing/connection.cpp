@@ -8,13 +8,17 @@
 int connection::connect (char const *hostname_opt_port, int tcp_nodelay, int sockbufsiz)
 {
   if (hostname_opt_port == nullptr)
-    return 1;
+    {
+      return 1;
+    }
 
   std::string hostname_with_port (hostname_opt_port);
   // Check to see if portnumber is specified in the hostnameport
   // If not, append :80
   if (hostname_with_port.find (':') == std::string::npos)
-    hostname_with_port += ":80";
+    {
+      hostname_with_port += ":80";
+    }
 
   // Beyond this point, hostname_with_port is of the form hostname:port
 
@@ -77,7 +81,9 @@ int connection::write_n (void const *buffer, size_t len, unsigned int timeout_se
 {
   ACE_UNUSED_ARG (timeout_seconds);
   if (stream_.send_n (buffer, len) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "Write failed\n"), 1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "Write failed\n"), 1);
+    }
   return 0;
 }
 
@@ -85,7 +91,9 @@ int connection::read_n (void *buffer, size_t maxlen, unsigned int timeout_second
 {
   ACE_UNUSED_ARG (timeout_seconds);
   if (stream_.recv_n (buffer, maxlen) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "Read failed\n"), 1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "Read failed\n"), 1);
+    }
   return 1;
 }
 
