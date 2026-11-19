@@ -909,16 +909,22 @@ Key_List::output_switch (int use_keyword_table)
 
           ACE_OS::printf ("                default: return %s;\n                }\n              ",
                           generated_null_pointer ());
-          if (option[COMP])
-            ACE_OS::printf ("return %s == *s && !%s%s;\n            }\n",
-                    option[STRCASECMP] ? "charmap[*str]" : "*str",
-                    string_compare_prefix (option[STRCASECMP]),
-                    option[STRCASECMP] ? "strncasecmp (s + 1, str + 1, len - 1)" : "strcmp (s + 1, str + 1)");
-          else
-            ACE_OS::printf ("return %s == *s && !%s%s;\n            }\n",
-                    option[STRCASECMP] ? "charmap[*str]" : "*str",
-                    string_compare_prefix (option[STRCASECMP]),
-                    option[STRCASECMP] ? "strcasecmp (s + 1, str + 1, len - 1)" : "strcmp (s + 1, str + 1)");
+          char const *comparison = option[STRCASECMP]
+            ? (option[COMP]
+               ? "strncasecmp (s + 1, str + 1, len - 1)"
+               : "strcasecmp (s + 1, str + 1)")
+            : (option[COMP]
+               ? "strncmp (s + 1, str + 1, len - 1)"
+               : "strcmp (s + 1, str + 1)");
+          ACE_OS::printf ("if (%s == *s && !%s%s)\n"
+                          "  {\n"
+                          "    return s;\n"
+                          "  }\n"
+                          "return %s;\n            }\n",
+                          option[STRCASECMP] ? "charmap[*str]" : "*str",
+                          string_compare_prefix (option[STRCASECMP]),
+                          comparison,
+                          generated_null_pointer ());
           curr = temp;
         }
     }

@@ -493,7 +493,7 @@ be_valuetype::have_supported_op (be_interface * node)
           be_interface * intf =
             dynamic_cast<be_interface*> (inherits[i]);
 
-          if (intf != nullptr)
+          if (intf != nullptr && !intf->is_abstract ())
             {
               have_supported_op =
                 be_valuetype::have_supported_op (intf);

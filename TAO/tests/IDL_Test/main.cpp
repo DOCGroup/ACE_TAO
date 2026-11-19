@@ -30,6 +30,11 @@
 
 static_assert (std::is_abstract<OBV_Supports_Inherited_Operation>::value,
                "A valuetype that supports an inherited operation is abstract");
+static_assert (!std::is_abstract<OBV_Supports_Abstract_Inherited_Operation>::value,
+               "An inherited abstract-interface operation keeps a concrete valuetype concrete");
+static_assert (std::is_base_of<CORBA::ValueFactoryBase,
+                               Supports_Abstract_Inherited_Operation_init>::value,
+               "An inherited abstract-interface operation keeps the concrete factory");
 static_assert (!std::is_abstract<OBV_Copy_Derived>::value,
                "A concrete derived valuetype gets its own copy implementation");
 static_assert (std::is_abstract<OBV_Copy_Operation_Derived>::value,
