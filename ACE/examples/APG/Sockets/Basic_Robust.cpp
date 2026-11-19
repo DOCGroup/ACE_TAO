@@ -43,9 +43,11 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_OS::last_error (0);
   ACE_SOCK_Connector statusConnector (status, addr);
   if (ACE_OS::last_error ())
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("status")), 100);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("status")), 100);
+    }
   // Listing 3
 
   addr.set (ACE_TEXT ("HALog"), ACE_LOCALHOST);

@@ -13,10 +13,12 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_SOCK_Acceptor acceptor;
 
   if (acceptor.open (port_to_listen, 1) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("acceptor.open")),
-                      100);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("acceptor.open")),
+                        100);
+    }
   // Listing 1
 
   //FUZZ: disable check_for_lack_ACE_OS
@@ -57,14 +59,18 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       if (acceptor.accept (peer, &peer_addr, &timeout, 0) == -1)
         {
           if (ACE_OS::last_error () == EINTR)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%P|%t) Interrupted while ")
-                        ACE_TEXT ("waiting for connection\n")));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) Interrupted while ")
+                          ACE_TEXT ("waiting for connection\n")));
+            }
           else
             if (ACE_OS::last_error () == ETIMEDOUT)
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) Timeout while ")
-                          ACE_TEXT ("waiting for connection\n")));
+              {
+                ACE_DEBUG ((LM_DEBUG,
+                            ACE_TEXT ("(%P|%t) Timeout while ")
+                            ACE_TEXT ("waiting for connection\n")));
+              }
         }
       // Listing 4
       // Listing 5 code/ch06
