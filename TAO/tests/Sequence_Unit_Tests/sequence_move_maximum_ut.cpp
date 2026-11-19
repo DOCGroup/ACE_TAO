@@ -32,15 +32,22 @@ int test_move_maximum (CORBA::ULong expected_maximum)
 {
   Sequence source {};
   CHECK_EQUAL (expected_maximum, source.maximum ());
+  CORBA::ULong const default_maximum = source.maximum ();
+
+  source.length (1);
+  CORBA::ULong const allocated_maximum = source.maximum ();
+  CHECK_EQUAL (true, source.release ());
 
   Sequence moved (std::move (source));
-  CHECK_EQUAL (expected_maximum, moved.maximum ());
-  CHECK_EQUAL (expected_maximum, source.maximum ());
+  CHECK_EQUAL (allocated_maximum, moved.maximum ());
+  CHECK_EQUAL (default_maximum, source.maximum ());
 
   Sequence assigned {};
+  assigned.length (1);
+  CHECK_EQUAL (true, assigned.release ());
   assigned = std::move (moved);
-  CHECK_EQUAL (expected_maximum, assigned.maximum ());
-  CHECK_EQUAL (expected_maximum, moved.maximum ());
+  CHECK_EQUAL (allocated_maximum, assigned.maximum ());
+  CHECK_EQUAL (default_maximum, moved.maximum ());
   return 0;
 }
 

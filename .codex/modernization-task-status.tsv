@@ -3771,8 +3771,10 @@ TAO/tests/Reliable_Oneways	SPECIAL_MEMBER_COMMENTS	not-applicable	e814e00fb1a	Wh
 TAO/tests/SHMIOP	SPECIAL_MEMBER_COMMENTS	not-applicable	e814e00fb1a	Whole-tree tracked-source scan found no standalone special-member label comments; no source edits were needed.
 TAO/tests/Sequence_Unit_Tests	BUILD_TEST	done	-	Migrated from existing inventory; see modernization-ledger.md
 TAO/tests/Sequence_Unit_Tests	COPY_MOVE	done	-	Migrated from existing inventory; see modernization-ledger.md
+TAO/tests/Sequence_Unit_Tests	MOVE_SITES	done	6f1692d80f0	Reviewed all 23 move sites. Tests deliberately inspect the moved-from values to check the sequence reset/borrowed-buffer contract.
 TAO/tests/Sequence_Unit_Tests	SPECIAL_MEMBER_COMMENTS	not-applicable	e814e00fb1a	Whole-tree tracked-source scan found no standalone special-member label comments; no source edits were needed.
 TAO/tests/Sequence_Unit_Tests	STYLE	done	b139d08a293	Removed a redundant blank line from Sequence_Unit_Tests.mpc; git diff --check passed.
+TAO/tests/Sequence_Unit_Tests	TEST_ASSERTIONS	done	6f1692d80f0	sequence_move_maximum_ut now allocates owned buffers before both move construction and assignment, covering the owning-buffer transfer path for every sequence type.
 TAO/tests/Servant_To_Reference_Test	SPECIAL_MEMBER_COMMENTS	not-applicable	e814e00fb1a	Whole-tree tracked-source scan found no standalone special-member label comments; no source edits were needed.
 TAO/tests/Server_Connection_Purging	SPECIAL_MEMBER_COMMENTS	not-applicable	e814e00fb1a	Whole-tree tracked-source scan found no standalone special-member label comments; no source edits were needed.
 TAO/tests/Server_Leaks	SPECIAL_MEMBER_COMMENTS	not-applicable	e814e00fb1a	Whole-tree tracked-source scan found no standalone special-member label comments; no source edits were needed.

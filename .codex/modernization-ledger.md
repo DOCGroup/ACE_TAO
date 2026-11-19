@@ -13610,3 +13610,20 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Recorded `MOVE_SITES` as done. No source changes, builds, or runtime tests
   were needed for this audit.
 - Source evidence commit: `e7acdabbb94`.
+
+
+## 2026-11-19 Sequence move-test ownership coverage
+
+- Audited all 23 `std::move` sites in `TAO/tests/Sequence_Unit_Tests`. The
+  tests exercise owned and borrowed buffers, and the moved-from inspections are
+  contract assertions. Confirmed `sequence_move_maximum_ut` is built and listed
+  by `run_test.pl`.
+- Found that its maximum assertions moved only default-constructed sequences,
+  bypassing the owning-buffer transfer branch. Updated it to allocate a buffer
+  before move construction and move assignment, then check the destination's
+  maximum and the moved-from sequence's default maximum. This covers all listed
+  bounded/unbounded sequence types.
+- C++17 `-Wall -Wextra -Wpointer-arith` syntax check passed. Runtime execution
+  was unavailable because this clone has no built TAO libraries. `git diff
+  --check` passed; no full build was run.
+- Source evidence commit: `6f1692d80f0`.
