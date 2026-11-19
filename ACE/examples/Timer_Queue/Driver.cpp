@@ -48,7 +48,9 @@ Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::get_next_request ()
 
   // reads input from the user
   if (this->read_input (buf, sizeof buf) <= 0)
-    return -1;
+    {
+      return -1;
+    }
 
   // Parse and run the command.
   return this->parse_commands (buf);
@@ -60,11 +62,17 @@ template <class TQ, class RECEIVER, class ACTION> int
 Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::run_test ()
 {
   if (this->init () == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   for (;;)
-    if (this->get_next_request () == -1)
-      return -1;
+    {
+      if (this->get_next_request () == -1)
+        {
+          return -1;
+        }
+    }
 
   ACE_NOTREACHED (return 0);
 }
@@ -75,13 +83,17 @@ template <class TQ, class RECEIVER, class ACTION> ssize_t
 Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::read_input (char *buf, size_t bufsiz)
 {
   if (bufsiz == 0)
-    return 0;
+    {
+      return 0;
+    }
 
   // Wait for user to type commands.  This call is automatically
   // restarted when SIGINT or SIGALRM signals occur.
   ssize_t const bytes_read = ACE_OS::read (ACE_STDIN, buf, bufsiz - 1);
   if (bytes_read > 0)
-    buf[bytes_read] = '\0';
+    {
+      buf[bytes_read] = '\0';
+    }
   return bytes_read;
 }
 
@@ -93,8 +105,10 @@ Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::parse_commands (char const *buf)
   int option {};
 
   if (std::sscanf (buf, "%d", &option) <= 0)
-    // If there was an error reading the option simply try on the next line.
-    return 0;
+    {
+      // If there was an error reading the option simply try on the next line.
+      return 0;
+    }
 
   switch (option)
     {
@@ -104,7 +118,9 @@ Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::parse_commands (char const *buf)
         // We just reread the option, this simplies parsing (since
         // sscanf can do it for us.)
         if (std::sscanf (buf, "%d %u", &option, &useconds) < 2)
-          return 0;
+          {
+            return 0;
+          }
 
         if (schedule_cmd_->execute (&useconds) == -1)
           ACE_ERROR_RETURN ((LM_ERROR, "%t %p\n", "new timer failed"), -1);
@@ -117,7 +133,9 @@ Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::parse_commands (char const *buf)
         // We just reread the option, this simplies parsing (since
         // sscanf can do it for us.)
         if (std::sscanf (buf, "%d %ld", &option, &id) < 2)
-          return 0;
+          {
+            return 0;
+          }
 
         if (cancel_cmd_->execute (&id) == -1)
           ACE_DEBUG ((LM_DEBUG,
