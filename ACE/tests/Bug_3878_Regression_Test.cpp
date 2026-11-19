@@ -123,7 +123,9 @@ public:
                             worker_mon, this->workers_lock_, -1);
 
           while (this->workers_.is_empty ())
-            workers_cond_.wait ();
+            {
+              workers_cond_.wait ();
+            }
 
           this->workers_.dequeue_head (worker);
         }
