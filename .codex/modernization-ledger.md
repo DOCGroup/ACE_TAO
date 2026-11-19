@@ -13463,3 +13463,10 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Added Allman braces around 16 protocol-proxy returns and debug/error diagnostics in `Object.cpp`, aligning ACE log macro indentation.
 - Focused `clang-tidy -p TAO/tao --checks=-*,readability-braces-around-statements` reported no diagnostics; `git diff --check` passed. No build or runtime test was run.
 - Commit `043ba9d10b4`. The wider TAO/tao brace audit remains open.
+
+
+## 2026-11-19 TAO leader-follower braces
+
+- Added Allman braces around 16 wait, diagnostic, and leadership branches in `Leader_Follower.cpp`; corrected the indentation of the newly braced spurious-wakeup loop.
+- Focused `clang-tidy -p TAO/tao --checks=-*,readability-braces-around-statements` reported no diagnostics; `git diff --check` passed. No build or runtime test was run.
+- Commit `9f48d31497c`. The wider TAO/tao brace audit remains open.
