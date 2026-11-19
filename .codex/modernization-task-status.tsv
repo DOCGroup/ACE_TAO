@@ -2868,7 +2868,7 @@ TAO/tao	MOVE_SEMANTICS	done	96dbf8ae851	Audited all 53 move sites across 27 sour
 TAO/tao	MOVE_SITES	done	1482cda66ec	Reviewed all 32 std::move sites in the top-level TAO/tao sources; ownership transfers and sequence moves have no moved-from reads.
 TAO/tao	SPECIAL_MEMBER_COMMENTS	done	ff815715436	Rechecked the root TAO/tao sources after the earlier sweep and removed the remaining standalone `// Constructors.` label in TAO_Server_Request.h; explanatory comments retained
 TAO/tao/AnyTypeCode	BOOL_ARGUMENTS	not-applicable	862f1da9be3	clang-tidy modernize-use-bool-literals scanned all 50 translation units with no diagnostics or parse errors; no numeric literals passed to Boolean parameters.
-TAO/tao/AnyTypeCode	BRACES	needs-work	e6fa5d72aa1	Added Allman braces to six branches across Any_Array_Impl_T.cpp, Any_Basic_Impl_T.cpp, Any_Dual_Impl_T.cpp, Any_Impl_T.cpp, and Any_Special_Impl_T.cpp, plus True_RefCount_Policy.inl; focused clang-tidy checks and git diff --check passed. Other AnyTypeCode sources remain to audit.
+TAO/tao/AnyTypeCode	BRACES	done	pending	Focused clang-tidy readability-braces-around-statements audit completed across all 78 AnyTypeCode translation units with no user-source diagnostics; git diff --check passed.
 TAO/tao/AnyTypeCode	BUILD_TEST	done	9252d151c90	AnyTypeCode realclean-built with make -j 8; Recursive Any run_test.pl passed against the rebuilt library without compiler warnings
 TAO/tao/AnyTypeCode	CONST	done	pending	Migrated from existing inventory; see modernization-ledger.md
 TAO/tao/AnyTypeCode	CONST_GUARD_MACROS	done	3b46834200d	Replaced direct ACE_Guard spellings with const guard macros; targeted fuzz check passed and AnyTypeCode realclean build/link passed
