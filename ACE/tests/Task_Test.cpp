@@ -135,10 +135,12 @@ run_main (int, ACE_TCHAR *[])
 
   // Only one of the threads should see a cleanup...
   if (close_cleanups != 1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%d threads saw cleanup indication; ")
-                ACE_TEXT ("should be 1\n"),
-                close_cleanups.value ()));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%d threads saw cleanup indication; ")
+                  ACE_TEXT ("should be 1\n"),
+                  close_cleanups.value ()));
+    }
 
   // Cleanup the thread hook so it doesn't leak.
   delete ACE_Thread_Hook::thread_hook ();

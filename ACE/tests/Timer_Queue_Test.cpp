@@ -570,9 +570,11 @@ test_unique_timer_heap_ids ()
                       static_cast<ACE_INT64> (timer_id)));
           timer_heap.cancel (timer_id);
           if (timer_id == -1)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("%p\n"),
-                        ACE_TEXT ("Failed to cancel timer")));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("%p\n"),
+                          ACE_TEXT ("Failed to cancel timer")));
+            }
 
           timer_ids.remove (timer_id);
         }

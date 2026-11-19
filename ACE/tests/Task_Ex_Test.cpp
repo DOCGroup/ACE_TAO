@@ -122,8 +122,11 @@ run_main (int, ACE_TCHAR *[])
 
   Consumer c;
   if(c.open (nullptr)==-1)
-    ACE_ERROR_RETURN((LM_ERROR,
-                      ACE_TEXT ("main Error opening consumer\n")),-1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("main Error opening consumer\n")),
+                        -1);
+    }
 
   int result=ACE_Thread_Manager::instance()->spawn_n (PRODUCER_THREADS_NO,
                                                       ACE_THR_FUNC(producer),

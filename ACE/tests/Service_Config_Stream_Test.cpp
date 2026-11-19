@@ -110,10 +110,12 @@ run_main (int, ACE_TCHAR *argv[])
                                           ACE_DEFAULT_LOGGER_KEY,
                                           false,
                                           true /*ignore def svc.conf*/)) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("open"),
-                1));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("open"),
+                  1));
+    }
 
   ACE_END_TEST;
   return status;
