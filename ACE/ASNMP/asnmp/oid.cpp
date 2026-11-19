@@ -573,9 +573,7 @@ int Oid::suboid(Oid& new_oid, size_t start, size_t how_many)
   ACE_NEW_RETURN(new_oid.smival.value.oid.ptr,
         SmiUINT32 [ new_oid.smival.value.oid.len], -1);
   // copy source to destination
-  std::memcpy (new_oid.smival.value.oid.ptr,
-               smival.value.oid.ptr + start,
-               new_size * sizeof (SmiUINT32));
+  std::memcpy (new_oid.smival.value.oid.ptr, smival.value.oid.ptr + start, new_size * sizeof (SmiUINT32));
   return 0;
 }
 

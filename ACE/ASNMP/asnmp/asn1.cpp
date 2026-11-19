@@ -1107,9 +1107,7 @@ void cmu_snmp::add_var(struct snmp_pdu *pdu,
         ACE_NEW(vars->val.string,
                 u_char[(unsigned)smival->value.string.len]);
         vars->val_len = (int) smival->value.string.len;
-        std::memcpy (vars->val.string,
-                     smival->value.string.ptr,
-                     static_cast<unsigned> (smival->value.string.len));
+        std::memcpy (vars->val.string, smival->value.string.ptr, static_cast<unsigned> (smival->value.string.len));
       }
       break;
 
@@ -1154,9 +1152,7 @@ void cmu_snmp::add_var(struct snmp_pdu *pdu,
         vars->type = ( u_char) smival->syntax;
         ACE_NEW(vars->val.counter64, counter64);
         vars->val_len = sizeof(struct counter64);
-        std::memcpy (vars->val.counter64,
-                     &smival->value.hNumber,
-                     sizeof (SmiCNTR64));
+        std::memcpy (vars->val.counter64, &smival->value.hNumber, sizeof (SmiCNTR64));
       }
       break;
     } // end switch

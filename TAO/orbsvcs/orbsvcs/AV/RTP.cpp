@@ -95,9 +95,7 @@ RTP_Packet::RTP_Packet(char* buffer, int length)
           ACE_UINT16 network_payload {};
           std::memcpy (std::addressof (network_payload), this->packet_.data () + index, sizeof (network_payload));
           ACE_UINT16 const host_payload = ntohs (network_payload);
-          std::memcpy (this->host_byte_order_payload_.data () + i,
-                       std::addressof (host_payload),
-                       sizeof (host_payload));
+          std::memcpy (this->host_byte_order_payload_.data () + i, std::addressof (host_payload), sizeof (host_payload));
           index+=2;
         }
     }
