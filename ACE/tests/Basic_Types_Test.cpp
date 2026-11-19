@@ -127,7 +127,9 @@ run_main (int, ACE_TCHAR *[])
 
   // ACE assumes sizeof (ptrdiff_t) == sizeof (void*)
   if (sizeof (ptrdiff_t) == sizeof (void *))
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("sizeof (ptrdiff_t) == sizeof (void*)\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("sizeof (ptrdiff_t) == sizeof (void*)\n")));
+    }
   else
     {
       ACE_ERROR ((LM_ERROR,
@@ -137,8 +139,10 @@ run_main (int, ACE_TCHAR *[])
 
   // ACE assumes sizeof (ptrdiff_t) >= sizeof (a_function_pointer)
   if (sizeof (ptrdiff_t) >= sizeof (a_function_pointer))
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("sizeof (ptrdiff_t) >= sizeof (a_function_pointer)\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("sizeof (ptrdiff_t) >= sizeof (a_function_pointer)\n")));
+    }
   else
     {
       ACE_ERROR ((LM_ERROR,
@@ -150,15 +154,19 @@ run_main (int, ACE_TCHAR *[])
 #if defined (ACE_LITTLE_ENDIAN)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("little endian\n")));
   if (ACE_HTONS (test_val) == test_val)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Endian test: %d == %d but should be different\n"),
-                ACE_HTONS (test_val), test_val));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Endian test: %d == %d but should be different\n"),
+                  ACE_HTONS (test_val), test_val));
+    }
 #elif defined (ACE_BIG_ENDIAN)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("big endian\n")));
   if (ACE_HTONS (test_val) != test_val)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Endian test: %d != %d but should be equal\n"),
-                ACE_HTONS (test_val), test_val));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Endian test: %d != %d but should be equal\n"),
+                  ACE_HTONS (test_val), test_val));
+    }
 #else
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("assertion failed: no ACE_*_ENDIAN definition!\n")));

@@ -137,8 +137,10 @@ Supplier::svc ()
       mb->wr_ptr (2);
 
       if (this->put_next (mb) == -1)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
-                    ACE_TEXT ("put_next")));
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                      ACE_TEXT ("put_next")));
+        }
     }
 
   ACE_NEW_RETURN(mb, ACE_Message_Block, -1);
@@ -228,9 +230,13 @@ run_main (int, ACE_TCHAR *[])
   // Stream.  All processing is performed in the Stream.
 
   if (stream.push (cm) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("push")), 1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("push")), 1);
+    }
   else if (stream.push (sm) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("push")), 1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("push")), 1);
+    }
 
   // Barrier synchronization: wait for the threads to exit, then exit
   // ourselves.
