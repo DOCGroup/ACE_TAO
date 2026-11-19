@@ -63,9 +63,11 @@ ACE_SSL_SOCK_Stream::send_i (const void *buf,
 
     case SSL_ERROR_SYSCALL:
       if (bytes_sent == 0)
-        // An EOF occurred but the SSL "close_notify" message was not
-        // sent.  This is a protocol error, but we ignore it.
-        return 0;
+        {
+          // An EOF occurred but the SSL "close_notify" message was not
+          // sent.  This is a protocol error, but we ignore it.
+          return 0;
+        }
 
       // If not an EOF, then fall through to "default" case.
 
@@ -112,8 +114,10 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
   int val {};
 
   if (timeout != nullptr)
-    ACE::record_and_set_non_blocking_mode (handle,
-                                           val);
+    {
+      ACE::record_and_set_non_blocking_mode (handle,
+                                             val);
+    }
 
   // Only block to wait for I/O ready with a timeout if all on-hand data
   // has been consumed. If there is remaining data in the SSL buffers
@@ -176,7 +180,9 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
             }
           bytes_read = -1;
           if (substat == 0)
-            errno = ETIME;
+            {
+              errno = ETIME;
+            }
           break;
 
         case SSL_ERROR_ZERO_RETURN:
@@ -190,9 +196,11 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
 
         case SSL_ERROR_SYSCALL:
           if (bytes_read == 0)
-            // An EOF occurred but the SSL "close_notify" message was not
-            // sent.  This is a protocol error, but we ignore it.
-            break;
+            {
+              // An EOF occurred but the SSL "close_notify" message was not
+              // sent.  This is a protocol error, but we ignore it.
+              break;
+            }
 
           // On some platforms (e.g. MS Windows) OpenSSL does not store
           // the last error in errno so explicitly do so.
@@ -213,7 +221,9 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
     } while (retry);
 
   if (timeout != nullptr)
-    ACE::restore_non_blocking_mode (handle, val);
+    {
+      ACE::restore_non_blocking_mode (handle, val);
+    }
   return bytes_read;
 }
 
@@ -315,7 +325,9 @@ ACE_SSL_SOCK_Stream::close ()
   ACE_TRACE ("ACE_SSL_SOCK_Stream::close");
 
   if (!this->ssl_ || this->get_handle () == ACE_INVALID_HANDLE)
-    return 0;  // SSL_SOCK_Stream was never opened.
+    {
+      return 0;  // SSL_SOCK_Stream was never opened.
+    }
 
   // SSL_shutdown() returns 1 on successful shutdown of the SSL
   // connection, not 0.
