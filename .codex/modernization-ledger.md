@@ -13596,3 +13596,17 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Recorded `MOVE_SITES` as done. No source changes, builds, or runtime tests
   were needed for this audit.
 - Source evidence commit: `1482cda66ec`.
+
+
+## 2026-11-19 ACE ASNMP move-site audit
+
+- Reviewed 14 `std::move` sites in `octet.cpp`, `oid.cpp`, `pdu.cpp`, and
+  `vb.cpp`. Formatting-buffer owners move into their output members immediately
+  before the member buffer is used/returned. PDU construction and replacement
+  move newly copied VBs into their slots; replacement arrays transfer into the
+  PDU, and deletion shifts each next VB into the prior slot before resetting
+  the final slot. Vb assignment transfers a cloned `SnmpSyntax` only after the
+  clone succeeds. No moved-from object is read.
+- Recorded `MOVE_SITES` as done. No source changes, builds, or runtime tests
+  were needed for this audit.
+- Source evidence commit: `e7acdabbb94`.

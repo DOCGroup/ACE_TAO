@@ -30,7 +30,7 @@ Scope: **1268 directories**; **1230** differ from the base; **1281** have task-l
 | `PREFIX_INC` — Prefer prefix increment and decrement when equivalent | 47 | 45 | 2 | 0 |
 | `BRACES` — Consistent braces around control-flow bodies | 8 | 2 | 0 | 6 |
 | `CONST_GUARD_MACROS` — Const guard macro usage while preserving ACE_GUARD conventions | 2 | 2 | 0 | 0 |
-| `MOVE_SITES` — Audit std::move sites for moved-from use and ownership correctness | 12 | 11 | 1 | 0 |
+| `MOVE_SITES` — Audit std::move sites for moved-from use and ownership correctness | 13 | 12 | 1 | 0 |
 | `MOVE_SEMANTICS` — Copy/move semantics and moved-from object safety | 6 | 6 | 0 | 0 |
 | `SIZE_TYPES` — Count and size types | 58 | 34 | 15 | 9 |
 | `IDL_GENERATION` — tao_idl/gperf inputs and generated output | 36 | 6 | 30 | 0 |
@@ -62,7 +62,7 @@ Scope: **1268 directories**; **1230** differ from the base; **1281** have task-l
 | `ACE/ACEXML/tests` | CONST; VALUE_INIT; NULLPTR; OVERRIDE_DEFAULT_DELETE; COPY_MOVE; OWNERSHIP; C_STRING; SIZE_TYPES; TEST_ASSERTIONS; CLEANUP; SPECIAL_MEMBER_COMMENTS=n/a; STYLE; BUILD_TEST | HTTP test opens external URLs; both return HTTP 400 and its legacy test still exits 0 | audited | `e3789237083` |
 | `ACE/ACEXML/tests/util` | CONST; VALUE_INIT; NULLPTR=n/a; OVERRIDE_DEFAULT_DELETE=n/a; EXPLICIT=n/a; COPY_MOVE=n/a; USING=n/a; CONSTEXPR; OWNERSHIP=n/a; CONTAINERS; C_STRING=n/a; SIZE_TYPES; IDL_GENERATION=n/a; LOG_FORMAT; TEST_ASSERTIONS; CLEANUP; SPECIAL_MEMBER_COMMENTS=n/a; STYLE; BUILD_TEST | None | audited | `5abbcc58e88` |
 | `ACE/ASNMP/agent` | CONST; VALUE_INIT; NULLPTR=n/a; OVERRIDE_DEFAULT_DELETE; EXPLICIT=n/a; COPY_MOVE; USING=n/a; CONSTEXPR; OWNERSHIP; CONTAINERS=n/a; C_STRING=n/a; SIZE_TYPES=n/a; IDL_GENERATION=n/a; CLI_OPTIONS; LOG_FORMAT=n/a; TEST_ASSERTIONS=n/a; CLEANUP; SPECIAL_MEMBER_COMMENTS=n/a; STYLE; BUILD_TEST | None | audited | `3d48f70f611` |
-| `ACE/ASNMP/asnmp` | OVERRIDE_DEFAULT_DELETE; EXPLICIT; C_STRING; PREFIX_INC; MOVE_SEMANTICS; CLEANUP; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Broader modernization audit remains; narrow ACE_OS::strncmp calls in three test directories are tracked in the ledger | partial | `9e6b539544e` |
+| `ACE/ASNMP/asnmp` | OVERRIDE_DEFAULT_DELETE; EXPLICIT; C_STRING; PREFIX_INC; MOVE_SITES; MOVE_SEMANTICS; CLEANUP; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Broader modernization audit remains; narrow ACE_OS::strncmp calls in three test directories are tracked in the ledger | partial | `9e6b539544e` |
 | `ACE/ASNMP/examples/get` | CONST; VALUE_INIT; NULLPTR=n/a; OVERRIDE_DEFAULT_DELETE; EXPLICIT=n/a; COPY_MOVE; USING=n/a; CONSTEXPR=n/a; OWNERSHIP=n/a; CONTAINERS=n/a; C_STRING=n/a; SIZE_TYPES=n/a; IDL_GENERATION=n/a; CLI_OPTIONS; LOG_FORMAT=n/a; TEST_ASSERTIONS=n/a; CLEANUP; SPECIAL_MEMBER_COMMENTS=n/a; STYLE; BUILD_TEST | None | audited | `19728040202` |
 | `ACE/ASNMP/examples/next` | CONST; VALUE_INIT; NULLPTR=n/a; OVERRIDE_DEFAULT_DELETE=n/a; EXPLICIT=n/a; COPY_MOVE; USING=n/a; CONSTEXPR=n/a; OWNERSHIP=n/a; CONTAINERS=n/a; C_STRING=n/a; SIZE_TYPES=n/a; IDL_GENERATION=n/a; CLI_OPTIONS; LOG_FORMAT=n/a; TEST_ASSERTIONS=n/a; CLEANUP; SPECIAL_MEMBER_COMMENTS=n/a; STYLE; BUILD_TEST | None | audited | `66ccb87bb8b` |
 | `ACE/ASNMP/examples/set` | CONST; VALUE_INIT; NULLPTR=n/a; OVERRIDE_DEFAULT_DELETE=n/a; EXPLICIT=n/a; COPY_MOVE; USING=n/a; CONSTEXPR=n/a; OWNERSHIP=n/a; CONTAINERS=n/a; C_STRING=n/a; SIZE_TYPES=n/a; IDL_GENERATION=n/a; CLI_OPTIONS; LOG_FORMAT=n/a; TEST_ASSERTIONS=n/a; CLEANUP; SPECIAL_MEMBER_COMMENTS=n/a; STYLE; BUILD_TEST | None | audited | `2dd54c18ae1` |
