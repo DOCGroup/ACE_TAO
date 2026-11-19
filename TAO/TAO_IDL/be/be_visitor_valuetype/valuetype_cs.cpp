@@ -172,33 +172,16 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << "::CORBA::NO_MEMORY ());" << be_uidt_nl
           << "::CORBA::ValueBase_var ret_val_guard (ret_val);" << be_nl;
 
-      for (be_valuetype *current = node;
-           current != nullptr;
-           current = dynamic_cast<be_valuetype *> (
-             current->inherits_concrete ()))
+      this->for_each_valuetype_field (node,
+        [this, os] (be_field *field)
         {
-          for (UTL_ScopeActiveIterator si (current,
-                                           UTL_Scope::IK_decls);
-               !si.is_done ();
-               si.next ())
-            {
-              AST_Decl * const decl = si.item ();
-              if (decl != nullptr && decl->node_type () == AST_Decl::NT_field)
-                {
-                  be_field * const field = dynamic_cast<be_field *> (decl);
-                  if (field != nullptr)
-                    {
-                      *os << "ret_val->" << decl->local_name ()
-                          << " (";
-                      this->gen_valuetype_field_copy_expression (field,
-                                                                 "this->",
-                                                                 "nullptr",
-                                                                 false);
-                      *os << ");" << be_nl;
-                    }
-                }
-            }
-        }
+          *os << "ret_val->" << field->local_name () << " (";
+          this->gen_valuetype_field_copy_expression (field,
+                                                     "this->",
+                                                     "nullptr",
+                                                     false);
+          *os << ");" << be_nl;
+        });
 
       *os << "return ret_val_guard._retn ();" << be_uidt_nl
           << "}" << be_nl_2;

@@ -199,6 +199,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
         }
 
       /// If we are using std::vector, we can't implement this
+      /// constructor.
       if (!be_global->alt_mapping () || !node->unbounded ())
         {
           *os << be_nl

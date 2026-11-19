@@ -21,6 +21,31 @@ be_visitor_valuetype::be_visitor_valuetype (be_visitor_context *ctx)
 be_visitor_valuetype::~be_visitor_valuetype () = default;
 
 void
+be_visitor_valuetype::for_each_valuetype_field (
+  be_valuetype *node,
+  std::function<void (be_field *)> const& visitor)
+{
+  be_valuetype *parent =
+    dynamic_cast<be_valuetype *> (node->inherits_concrete ());
+  if (parent != nullptr)
+    {
+      this->for_each_valuetype_field (parent, visitor);
+    }
+
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
+    {
+      AST_Decl * const decl = si.item ();
+      be_field * const field = dynamic_cast<be_field *> (decl);
+      if (field != nullptr && dynamic_cast<be_attribute *> (decl) == nullptr)
+        {
+          visitor (field);
+        }
+    }
+}
+
+void
 be_visitor_valuetype::gen_valuetype_field_copy_expression (
   be_field *field,
   char const *accessor_prefix,

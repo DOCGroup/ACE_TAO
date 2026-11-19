@@ -260,56 +260,21 @@ be_visitor_valuetype_obv_cs::gen_obv_call_base_constructor_args (
   unsigned long &index)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  auto const is_valuetype_or_valuebox = [] (be_type *type)
+  this->for_each_valuetype_field (node,
+    [this, os, &index] (be_field *field)
     {
-      return dynamic_cast<be_valuetype_fwd*> (type) != nullptr
-        || dynamic_cast<be_valuetype*> (type) != nullptr
-        || dynamic_cast<be_valuebox*> (type) != nullptr;
-    };
-
-  // Generate for inherited members first.
-  AST_Type *parent = node->inherits_concrete ();
-  if (parent != nullptr)
-    {
-      be_valuetype *be_parent =
-        dynamic_cast<be_valuetype*> (parent);
-      this->gen_obv_call_base_constructor_args (be_parent, index);
-    }
-
-  // Now generate for each "derived" added members
-  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
-       !si.is_done ();
-       si.next())
-    {
-      // be_attribute inherits from be_field
-      // so we have to also screen out attributes
-      be_field *f = dynamic_cast<be_field*> (si.item ());
-      if (f && !dynamic_cast<be_attribute*> (si.item ()))
+      if (index++) // comma before 2nd onwards
         {
-          if (index++) // comma before 2nd onwards
-            *os << ",";
-
-          // output each accessor on new line
-          *os << be_nl;
-
-          // Check the member type for nested valuetypes
-          be_type *t = dynamic_cast<be_type*> (f->field_type ());
-          be_typedef *td = dynamic_cast<be_typedef*> (t);
-          if (td != nullptr)
-            {
-              t = td->primitive_base_type ();
-            }
-
-          if (is_valuetype_or_valuebox (t))
-            {
-              *os << "(" << f->local_name () << " () ?" << be_idt_nl
-                  << t->full_name () << "::_downcast ("
-                  << "::CORBA::ValueBase_var (" << f->local_name ()
-                  << " ()->_copy_value ()).in ())" << be_nl
-                  << ": 0)" << be_uidt;
-            }
-          else // Simple non-nested type
-            *os << f->local_name () << " ()";
+          *os << ",";
         }
-    }
+
+      // Output each accessor on a new line.
+      *os << be_nl;
+
+      // Check the member type for nested valuetypes.
+      this->gen_valuetype_field_copy_expression (field,
+                                                 "",
+                                                 "0",
+                                                 true);
+    });
 }

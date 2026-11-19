@@ -63,6 +63,13 @@
             concrete path includes the required reference-count base; valuetype
             factories remain available with <CODE>-Wb,obv_opt_accessor</CODE>.</p>
         </li>
+        <li><p>A generated OBV class may provide
+            <CODE>CORBA::DefaultValueRefCountBase</CODE> when it inherits
+            supported interfaces through an abstract valuetype base.
+            Application implementation classes must not add a second
+            <CODE>CORBA::DefaultValueRefCountBase</CODE> base when the generated
+            OBV class already provides one.</p>
+        </li>
         <li><p>Generated <CODE>_copy_value()</CODE> copies direct valuetype
             fields. Valuetypes nested in other members are shared, matching
             their normal copy behavior. It does not recursively traverse

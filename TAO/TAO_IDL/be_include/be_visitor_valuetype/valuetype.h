@@ -14,6 +14,8 @@
 #ifndef _BE_VALUETYPE_VALUETYPE_H_
 #define _BE_VALUETYPE_VALUETYPE_H_
 
+#include <functional>
+
 /**
  * @class be_visitor_valuetype
  *
@@ -91,6 +93,17 @@ public:
   /// @}
 
 protected:
+  /// Visit fields declared by this valuetype and its concrete bases.
+  void for_each_valuetype_field (
+    be_valuetype *node,
+    std::function<void (be_field *)> const& visitor);
+
+  /// Generate a deep-copy expression for a valuetype or valuebox field.
+  void gen_valuetype_field_copy_expression (be_field *field,
+                                           char const *accessor_prefix,
+                                           char const *null_pointer,
+                                           bool multiline);
+
   /// Predicate common to _ch and _cs visitors.
   bool is_amh_exception_holder (be_valuetype *node);
 };
