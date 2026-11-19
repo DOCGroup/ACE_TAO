@@ -3203,7 +3203,7 @@ TAO/tao/TypeCodeFactory	USING	done	2bd176959a2	C++ implementation aliases alread
 TAO/tao/TypeCodeFactory	VALUE_INIT	done	5ebf1987c75	Value-initialized all local TypeCode result pointers and the discriminator label accumulator.
 TAO/tao/Utils	ADDRESSOF	not-applicable	3fef3971ec9	Reviewed object address-taking in Utils; no expressions take the address of an object, so std::addressof is not applicable here.
 TAO/tao/Utils	BUILD_TEST	done	b20d9a3b315	Realclean-built GNUmakefile.TAO_Utils and GNUmakefile.Fault_Detector with make -j 8; both linked without compiler warnings.
-TAO/tao/Utils	BRACES	needs-work	20199830a3b	Corrected Allman indentation of the ORB destroy nil-check; the full Utils brace audit remains open.
+TAO/tao/Utils	BRACES	done	20199830a3b	Reviewed all seven Utils translation units with clang-tidy readability-braces-around-statements and a Utils header filter; no remaining user-code diagnostics. The Allman ORB destroy nil-check indentation is corrected.
 TAO/tao/Utils	CLEANUP	done	28bb5cc8f03	Removed redundant constructor/destructor labels and one duplicate blank line
 TAO/tao/Utils	CONST	done	b20d9a3b315	Const-qualified ORB_Manager's read-only accessors, Server_Main::run, and the stateless ORB/servant cleanup functors.
 TAO/tao/Utils	C_STRING	done	7c52bb1d7b0	Server_Main owns the server identity in std::string instead of retaining caller-owned char const *

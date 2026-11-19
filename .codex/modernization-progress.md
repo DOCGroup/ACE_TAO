@@ -29,7 +29,7 @@ Scope: **1268 directories**; **1230** differ from the base; **1281** have task-l
 | `C_STRING` — Plain C-string handling | 85 | 60 | 25 | 0 |
 | `STD_NARROW_STRING` — Use std string functions for narrow C strings | 10 | 10 | 0 | 0 |
 | `PREFIX_INC` — Prefer prefix increment and decrement when equivalent | 47 | 45 | 2 | 0 |
-| `BRACES` — Consistent braces around control-flow bodies | 12 | 3 | 0 | 9 |
+| `BRACES` — Consistent braces around control-flow bodies | 12 | 4 | 0 | 8 |
 | `CONST_GUARD_MACROS` — Const guard macro usage while preserving ACE_GUARD conventions | 2 | 2 | 0 | 0 |
 | `MOVE_SITES` — Audit std::move sites for moved-from use and ownership correctness | 15 | 14 | 1 | 0 |
 | `MOVE_SEMANTICS` — Copy/move semantics and moved-from object safety | 6 | 6 | 0 | 0 |
@@ -285,7 +285,7 @@ Scope: **1268 directories**; **1230** differ from the base; **1281** have task-l
 | `TAO/tao/SmartProxies` | CONST=n/a; VALUE_INIT=n/a; NULLPTR=n/a; OVERRIDE_DEFAULT_DELETE; EXPORTED_DESTRUCTORS; EXPLICIT; COPY_MOVE; ATOMIC=n/a; THREAD_SAFETY=n/a; USING=n/a; CONSTEXPR=n/a; OWNERSHIP; CONTAINERS=n/a; C_STRING=n/a; PREFIX_INC=n/a; SIZE_TYPES=n/a; IDL_GENERATION=n/a; CLI_OPTIONS=n/a; LOG_FORMAT=n/a; TEST_ASSERTIONS=n/a; CLEANUP; UNUSED_INCLUDES; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST; TEXT_API=n/a; DIRECTORY_PASS |  | audited | `ab6126aaa8a` |
 | `TAO/tao/TransportCurrent` | CONST; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Remaining modernization categories are not yet audited | partial | `159588586e0` |
 | `TAO/tao/TypeCodeFactory` | CONST; VALUE_INIT; NULLPTR; OVERRIDE_DEFAULT_DELETE; COPY_MOVE; USING; OWNERSHIP; CONTAINERS; C_STRING; PREFIX_INC; SIZE_TYPES; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Other applicable modernization categories still need review | partial | `2bd176959a2` |
-| `TAO/tao/Utils` | CONST; NULLPTR; OWNERSHIP; C_STRING; CLEANUP; UNUSED_INCLUDES; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Remaining modernization categories are not yet audited | partial | `7c52bb1d7b0` |
+| `TAO/tao/Utils` | BRACES; CONST; NULLPTR; OWNERSHIP; C_STRING; CLEANUP; UNUSED_INCLUDES; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Remaining modernization categories are not yet audited | partial | `20199830a3b` |
 | `TAO/tao/Valuetype` | CONST; VALUE_INIT; NULLPTR; EXPORTED_DESTRUCTORS; OWNERSHIP; CLEANUP; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Remaining modernization categories are not yet audited | partial | `1858bb7d0c0` |
 | `TAO/tao/ZIOP` | CONST; VALUE_INIT; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Remaining modernization categories are not yet audited | partial | `b3a2e83a74c` |
 | `TAO/tests/CSD_Strategy_Tests/TP_Foo_B` | C_STRING; PREFIX_INC; SPECIAL_MEMBER_COMMENTS=n/a; BUILD_TEST | Other directory modernization categories remain unreviewed | partial | `5452e6d15aa` |

@@ -13676,3 +13676,14 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - `git diff --check` passed. No build or test was run. The repository-wide
   `ADDRESSOF` task remains open in directories without a review record.
 - Source evidence commits: `53a4497f473`, `8bb17b28249`.
+
+
+## 2026-11-19 TAO Utils brace audit
+
+- Ran `clang-tidy` with `readability-braces-around-statements` on all seven
+  `TAO/tao/Utils` translation units using the TAO core compile database. A
+  second pass filtered diagnostics to Utils headers. Both completed without
+  user-code brace diagnostics; warnings were confined to non-user headers.
+- Recorded `BRACES` as done for Utils. The prior Allman indentation fix in
+  `ORB_Manager.cpp` is in commit `20199830a3b`.
+- No source changes or build/runtime tests were needed for this audit.
