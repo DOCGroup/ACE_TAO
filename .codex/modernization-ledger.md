@@ -13435,3 +13435,10 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 
 - Added Allman braces around the nil-reference error branch in `CORBANAME_Parser.cpp` and aligned the logging macro arguments. Focused clang-tidy and `git diff --check` passed. No build or runtime test was run.
 - Commit `be422f7f9bf`. The broader TAO/tao brace audit remains open.
+
+
+## 2026-11-19 TAO CORBALOC parser brace cleanup
+
+- Added Allman braces and corrected indentation for endpoint parsing, profile ownership, diagnostics, IPv6 separator handling, and canonical-hostname logging in `CORBALOC_Parser.cpp`.
+- Focused `clang-tidy -p TAO/tao --checks=-*,readability-braces-around-statements` reported no diagnostics; `git diff --check` passed. No build or runtime test was run.
+- Commit `83355e84a2f`. The wider TAO/tao brace audit remains open.
