@@ -59,10 +59,12 @@ Server::init (int argc,
 
   this->output_file_.reset (ACE_OS::fopen (this->options_.filename.c_str (), "wb"));
   if (!this->output_file_)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Cannot open output file %s\n",
-                       ACE_TEXT_ALWAYS_CHAR (this->options_.filename.c_str ())),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Cannot open output file %s\n",
+                         ACE_TEXT_ALWAYS_CHAR (this->options_.filename.c_str ())),
+                        -1);
+    }
 
   if (this->reactive_strategy_.init (TAO_AV_CORE::instance ()->orb (),
                                      TAO_AV_CORE::instance ()->poa ()) != 0)
@@ -85,9 +87,11 @@ Server::init (int argc,
 
   CORBA::Object_var mmdevice = this->mmdevice_->_this ();
   if (this->my_naming_client_.init (TAO_AV_CORE::instance ()->orb ()) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to initialize the TAO_Naming_Client\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Unable to initialize the TAO_Naming_Client\n"),
+                        -1);
+    }
 
   this->my_naming_client_->rebind (server_mmdevice_name, mmdevice.in ());
   return 0;
@@ -123,9 +127,11 @@ Server::run ()
 {
   CORBA::ORB_ptr const orb = TAO_AV_CORE::instance ()->orb ();
   while (!this->done_)
-    if (orb->work_pending ())
     {
-      orb->perform_work ();
+      if (orb->work_pending ())
+        {
+          orb->perform_work ();
+        }
     }
   orb->shutdown (true);
   return 0;

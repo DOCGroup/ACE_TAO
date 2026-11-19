@@ -78,9 +78,11 @@ int
 Client::bind_to_server ()
 {
   if (this->my_naming_client_.init (TAO_AV_CORE::instance ()->orb ()) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       " (%P|%t) Unable to initialize the TAO_Naming_Client.\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         " (%P|%t) Unable to initialize the TAO_Naming_Client.\n"),
+                        -1);
+    }
 
   CosNaming::Name server_mmdevice_name (1);
   server_mmdevice_name.length (1);
@@ -91,9 +93,11 @@ Client::bind_to_server ()
   this->server_mmdevice_ = AVStreams::MMDevice::_narrow (server_mmdevice_obj.in ());
 
   if (CORBA::is_nil (this->server_mmdevice_.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Could not resolve Server_MMdevice in Naming service\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Could not resolve Server_MMdevice in Naming service\n"),
+                        -1);
+    }
 
   return 0;
 }
@@ -112,15 +116,19 @@ Client::init (int argc,
 
   this->fp_.reset (ACE_OS::fopen (this->options_.filename.c_str (), "rb"));
   if (!this->fp_)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Cannot open input file %s\n",
-                       ACE_TEXT_ALWAYS_CHAR (this->options_.filename.c_str ())),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Cannot open input file %s\n",
+                         ACE_TEXT_ALWAYS_CHAR (this->options_.filename.c_str ())),
+                        -1);
+    }
 
   if (this->bind_to_server () != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) Error binding to the naming service\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%P|%t) Error binding to the naming service\n"),
+                        -1);
+    }
 
   std::string const flow_protocol = this->options_.use_sfp ? "sfp:1.0" : "";
   AVStreams::streamQoS_var the_qos (new AVStreams::streamQoS);
@@ -205,10 +213,12 @@ Client::pace_data ()
   ACE_High_Res_Timer last_frame_sent_time;
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "Frame Time = %f\nFrame Rate = %d\n",
-                frame_time,
-                this->options_.frame_rate));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Frame Time = %f\nFrame Rate = %d\n",
+                  frame_time,
+                  this->options_.frame_rate));
+    }
 
   try
     {
@@ -243,10 +253,12 @@ Client::pace_data ()
 
           last_frame_sent_time.start ();
           if (this->protocol_object_->send_frame (&this->mb_) < 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "send failed:%p",
-                               "FTP_Client_Flow_Handler::send\n"),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "send failed:%p",
+                                 "FTP_Client_Flow_Handler::send\n"),
+                                -1);
+            }
 
           ++this->count_;
           if (TAO_debug_level > 0)
