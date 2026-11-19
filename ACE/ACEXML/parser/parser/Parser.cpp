@@ -349,7 +349,9 @@ ACEXML_Parser::parse_external_subset ()
               case '!':
                 nextch = this->peek();
                 if (nextch == '[')
-                  this->parse_conditional_section ();
+                  {
+                    this->parse_conditional_section ();
+                  }
                 else
                 {
                   this->parse_markup_decl ();
@@ -358,7 +360,9 @@ ACEXML_Parser::parse_external_subset ()
               case '?':
                 nextch = this->peek();
                 if (nextch == 'x')
-                  this->parse_text_decl ();
+                  {
+                    this->parse_text_decl ();
+                  }
                 else
                 {
                   this->parse_processing_instruction ();
@@ -441,7 +445,9 @@ ACEXML_Parser::parse_conditional_section ()
       this->fatal_error (ACE_TEXT ("Expecting '[' in conditionalSect"));
     }
   if (include)
-    this->parse_includesect ();
+    {
+      this->parse_includesect ();
+    }
   else
   {
     this->parse_ignoresect ();
@@ -518,7 +524,9 @@ ACEXML_Parser::parse_includesect ()
               case '!':
                 nextch = this->peek();
                 if (nextch == '[')
-                  this->parse_conditional_section ();
+                  {
+                    this->parse_conditional_section ();
+                  }
                 else
                 {
                   this->parse_markup_decl ();
@@ -658,7 +666,9 @@ ACEXML_Parser::normalize_systemid (ACEXML_Char const *systemId)
   if (ACE_OS::strstr (systemId, ACE_TEXT("ftp://")) != nullptr ||
       ACE_OS::strstr (systemId, ACE_TEXT ("http://")) != nullptr ||
       ACE_OS::strstr (systemId, ACE_TEXT ("file://")) != nullptr)
-    return {};
+    {
+      return {};
+    }
   else
     {
       ACEXML_Char *normalized_uri {};
@@ -945,7 +955,9 @@ ACEXML_Parser::parse_content (ACEXML_Char const *startname,
                       }
                   } while (buf[0] == '&' && this->peek() == '#');
                   for (size_t j = 0; j < len; ++j)
-                    this->obstack_.grow (buf[j]);
+                    {
+                      this->obstack_.grow (buf[j]);
+                    }
                 cdata_length += len;
               }
             else
@@ -1084,11 +1096,15 @@ ACEXML_Parser::parse_entity_decl ()
           this->fatal_error(ACE_TEXT ("Invalid EntityValue"));
         }
       if (is_GEDecl)
-        retval = this->internal_GE_.add_entity (entity_name,
-                                                entity_value);
+        {
+          retval = this->internal_GE_.add_entity (entity_name,
+                                                  entity_value);
+        }
       else
-        retval = this->internal_PE_.add_entity (entity_name,
-                                                entity_value);
+        {
+          retval = this->internal_PE_.add_entity (entity_name,
+                                                  entity_value);
+        }
       if (retval < 0)
         {
           this->fatal_error (ACE_TEXT ("Internal Parser Error in adding")
@@ -1137,7 +1153,9 @@ ACEXML_Parser::parse_entity_decl ()
       else
         {
           if (is_GEDecl)
-            retval = this->external_GE_.add_entity (entity_name, systemid);
+            {
+              retval = this->external_GE_.add_entity (entity_name, systemid);
+            }
           else
           {
             retval = this->external_PE_.add_entity (entity_name, systemid);
@@ -1147,9 +1165,13 @@ ACEXML_Parser::parse_entity_decl ()
               this->fatal_error(ACE_TEXT ("Internal Parser Error"));
             }
           else if (retval == 1)
-            this->warning(ACE_TEXT ("Duplicate external entity"));
+            {
+              this->warning(ACE_TEXT ("Duplicate external entity"));
+            }
           if (is_GEDecl)
-            retval = this->external_GE_.add_entity (entity_name, publicid);
+            {
+              retval = this->external_GE_.add_entity (entity_name, publicid);
+            }
           else
           {
             retval = this->external_PE_.add_entity (entity_name, publicid);
@@ -1159,7 +1181,9 @@ ACEXML_Parser::parse_entity_decl ()
               this->fatal_error(ACE_TEXT ("Internal Parser Error"));
             }
           else if (retval == 1)
-            this->warning (ACE_TEXT ("Duplicate entity definition"));
+            {
+              this->warning (ACE_TEXT ("Duplicate entity definition"));
+            }
         }
     }
 
@@ -1197,8 +1221,10 @@ ACEXML_Parser::parse_attlist_decl ()
     {
       if (!this->check_for_PE_reference ()
           && !count)
-        this->fatal_error(ACE_TEXT ("Expecting space between element ")
-                          ACE_TEXT ("name and AttDef"));
+        {
+          this->fatal_error(ACE_TEXT ("Expecting space between element ")
+                            ACE_TEXT ("name and AttDef"));
+        }
       this->skip_whitespace_count (&fwd);
       if (fwd == '>')
       {
@@ -1825,7 +1851,9 @@ ACEXML_Parser::parse_child (bool skip_open_paren)
       }
     nextch = this->get();  // Consume the `,' or `|' or `)'
     if (nextch == ')')
-      break;
+      {
+        break;
+      }
     this->check_for_PE_reference ();
     this->skip_whitespace_count (&nextch);
   } while (nextch != ')');
@@ -1857,10 +1885,14 @@ int
 ACEXML_Parser::parse_char_reference (ACEXML_Char *buf, size_t& len)
 {
   if (len < 7)   // Max size of a CharRef plus terminating '\0'
-    return -1;
+    {
+      return -1;
+    }
   ACEXML_Char ch = this->get();
   if (ch != '#')      // Internal error.
-    return -1;
+    {
+      return -1;
+    }
   bool hex {};
   ch = this->peek();
   if (ch == 'x')
@@ -1942,7 +1974,9 @@ ACEXML_Parser::parse_attvalue (ACEXML_Char *&str)
 {
   ACEXML_Char quote = this->get ();
   if (quote != '\'' && quote != '"')  // Not a quoted string.
-    return -1;
+    {
+      return -1;
+    }
   ACEXML_Char ch = this->get ();
   while (1)
     {
@@ -1987,7 +2021,9 @@ ACEXML_Parser::parse_attvalue (ACEXML_Char *&str)
                     this->fatal_error (ACE_TEXT ("Invalid CharacterRef"));
                   }
                 for (size_t j = 0; j < len; ++j)
-                  this->obstack_.grow (buf[j]);
+                  {
+                    this->obstack_.grow (buf[j]);
+                  }
               }
             else
               {
@@ -2089,7 +2125,9 @@ ACEXML_Parser::parse_entity_reference ()
   if (present == 1 || present == -1)
     {
       while (this->GE_reference_.pop(ref_name) != -1)
-        ;
+        {
+          ;
+        }
       this->fatal_error (ACE_TEXT ("Recursion in resolving entity"));
     }
 
@@ -2177,7 +2215,9 @@ ACEXML_Parser::parse_PE_reference ()
   if (present == 1 || present == -1)
     {
       while (this->PE_reference_.pop(ref_name) != -1)
-        ;
+        {
+          ;
+        }
       this->fatal_error (ACE_TEXT ("Recursion in resolving entity"));
     }
 
@@ -2265,7 +2305,9 @@ ACEXML_Parser::parse_entity_value (ACEXML_Char *&str)
   ACEXML_ParserInt::ReferenceState temp = this->ref_state_;
   ACEXML_Char quote = this->get ();
   if (quote != '\'' && quote != '"')  // Not a quoted string.
-    return -1;
+    {
+      return -1;
+    }
   ACEXML_Char ch = this->get ();
   while (1)
     {
@@ -2292,7 +2334,9 @@ ACEXML_Parser::parse_entity_value (ACEXML_Char *&str)
                         return -1;
                       }
                     for (size_t j = 0; j < len; ++j)
-                      this->obstack_.grow (buf[j]);
+                      {
+                        this->obstack_.grow (buf[j]);
+                      }
                     break;
                   }
               }
@@ -2369,13 +2413,17 @@ ACEXML_Parser::parse_version_num (ACEXML_Char*& str)
 {
   ACEXML_Char quote = this->get ();
   if (quote != '\'' && quote != '"')  // Not a quoted string.
-    return -1;
+    {
+      return -1;
+    }
   int numchars {};
   while (1)
     {
       ACEXML_Char ch = this->get ();
       if (ch == quote && !numchars)
-        return -1;
+        {
+          return -1;
+        }
       else if (ch == quote)
         {
           str = this->obstack_.freeze ();
@@ -2402,7 +2450,9 @@ ACEXML_Parser::parse_system_literal (ACEXML_Char*& str)
 {
   const ACEXML_Char quote = this->get();
   if (quote != '\'' && quote != '"')  // Not a quoted string.
-    return -1;
+    {
+      return -1;
+    }
   while (1)
     {
       ACEXML_Char ch = this->get ();
@@ -2435,7 +2485,9 @@ ACEXML_Parser::parse_pubid_literal (ACEXML_Char*& str)
 {
   const ACEXML_Char quote = this->get();
   if (quote != '\'' && quote != '"')  // Not a quoted string.
-    return -1;
+    {
+      return -1;
+    }
   while (1)
     {
       ACEXML_Char ch = this->get ();
@@ -2445,7 +2497,9 @@ ACEXML_Parser::parse_pubid_literal (ACEXML_Char*& str)
           return 0;
         }
       else if (this->isPubidChar (ch))
-        this->obstack_.grow (ch);
+        {
+          this->obstack_.grow (ch);
+        }
       else
       {
         return -1;
@@ -2458,13 +2512,17 @@ ACEXML_Parser::parse_encname (ACEXML_Char*& str)
 {
   const ACEXML_Char quote = this->get ();
   if (quote != '\'' && quote != '"')  // Not a quoted string.
-    return -1;
+    {
+      return -1;
+    }
   int numchars {};
   while (1)
     {
       ACEXML_Char ch = this->get ();
       if (ch == quote && !numchars)
-        return -1;
+        {
+          return -1;
+        }
       else if (ch == quote)
         {
           str = this->obstack_.freeze ();
@@ -2496,13 +2554,17 @@ ACEXML_Parser::parse_sddecl (ACEXML_Char*& str)
 {
   ACEXML_Char quote = this->get ();
   if (quote != '\'' && quote != '"')  // Not a quoted string.
-    return -1;
+    {
+      return -1;
+    }
   int numchars {};
   while (1)
     {
       ACEXML_Char ch = this->get ();
       if (ch == quote && numchars < 2)
-        return -1;
+        {
+          return -1;
+        }
       else if (ch == quote)
         {
           str = this->obstack_.freeze ();
@@ -2706,7 +2768,9 @@ ACEXML_Parser::error (ACEXML_Char const *msg)
 {
   ACEXML_SAXParseException exception(msg);
   if (this->error_handler_)
+    {
       this->error_handler_->error (exception);
+    }
   else
   {
     throw exception;
@@ -2868,7 +2932,9 @@ ACEXML_Parser::parse_comment ()
   if (this->get () != '-' ||    // Skip the opening "<!--"
       this->get () != '-' ||    // completely.
       this->get () == '-')      // and at least something not '-'.
-    return -1;
+    {
+      return -1;
+    }
 
   while (state < 3)
     // Waiting for the trailing three character '-->'. Notice that
@@ -2878,7 +2944,9 @@ ACEXML_Parser::parse_comment ()
       ACEXML_Char fwd = this->get ();
       if ((fwd == '-' && state < 2) ||
           (fwd == '>' && state == 2))
-        ++state;
+        {
+          ++state;
+        }
       else
       {
         state = 0;              // Reset parse state.
@@ -2942,8 +3010,10 @@ ACEXML_Parser::reset ()
 {
   this->doctype_ = nullptr;
   if (this->ctx_stack_.pop (this->current_) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Mismatched push/pop of Context stack")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Mismatched push/pop of Context stack")));
+    }
   if (this->current_)
     {
       std::unique_ptr<ACEXML_Parser_Context> context_owner (this->current_);
@@ -2954,9 +3024,13 @@ ACEXML_Parser::reset ()
 
   ACEXML_Char *temp {};
   while (this->GE_reference_.pop (temp) != -1)
-    ;
+    {
+      ;
+    }
   while (this->PE_reference_.pop (temp) != -1)
-    ;
+    {
+      ;
+    }
   this->obstack_.release();
   this->alt_stack_.release();
   this->xml_namespace_.reset();
