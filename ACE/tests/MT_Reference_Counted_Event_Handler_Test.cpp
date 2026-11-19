@@ -106,12 +106,16 @@ disable_signal (int sigmin, int sigmax)
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
   sigset_t signal_set;
   if (ACE_OS::sigemptyset (&signal_set) == - 1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Error: (%P|%t):%p\n"),
-                ACE_TEXT ("sigemptyset failed")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Error: (%P|%t):%p\n"),
+                  ACE_TEXT ("sigemptyset failed")));
+    }
 
   for (int i = sigmin; i <= sigmax; ++i)
-    ACE_OS::sigaddset (&signal_set, i);
+    {
+      ACE_OS::sigaddset (&signal_set, i);
+    }
 
   // Put the <signal_set>.
 # if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
@@ -121,10 +125,12 @@ disable_signal (int sigmin, int sigmax)
 # else
   if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, nullptr) != 0)
 # endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Error: (%P|%t): %p\n"),
-                       ACE_TEXT ("SIG_BLOCK failed")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Error: (%P|%t): %p\n"),
+                         ACE_TEXT ("SIG_BLOCK failed")),
+                        -1);
+    }
 #else
   ACE_UNUSED_ARG (sigmin);
   ACE_UNUSED_ARG (sigmax);
@@ -167,14 +173,18 @@ Pipe::open ()
   // Bind listener to any port and then find out what the port was.
   if (acceptor.open (ACE_Addr::sap_any) == -1
       || acceptor.get_local_addr (my_addr) == -1)
-    result = -1;
+    {
+      result = -1;
+    }
   else
     {
       int af = my_addr.get_type ();
       const ACE_TCHAR *local = ACE_LOCALHOST;
 #if defined (ACE_HAS_IPV6)
       if (af == AF_INET6)
-        local = ACE_IPV6_LOCALHOST;
+        {
+          local = ACE_IPV6_LOCALHOST;
+        }
 #endif /* ACE_HAS_IPV6 */
       ACE_INET_Addr sv_addr (my_addr.get_port_number (),
                              local,
@@ -182,7 +192,9 @@ Pipe::open ()
 
       // Establish a connection within the same process.
       if (connector.connect (writer, sv_addr) == -1)
-        result = -1;
+        {
+          result = -1;
+        }
       else if (acceptor.accept (reader) == -1)
         {
           writer.close ();
@@ -294,17 +306,21 @@ Sender::Sender (ACE_HANDLE handle,
     (ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
 
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) Reference count in Sender::Sender() is %q\n"),
-                static_cast<ACE_INT64> (this->reference_count_.load ())));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) Reference count in Sender::Sender() is %q\n"),
+                  static_cast<ACE_INT64> (this->reference_count_.load ())));
+    }
 }
 
 Sender::~Sender ()
 {
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) Reference count in ~Sender::Sender() is %q\n"),
-                static_cast<ACE_INT64> (this->reference_count_.load ())));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) Reference count in ~Sender::Sender() is %q\n"),
+                  static_cast<ACE_INT64> (this->reference_count_.load ())));
+    }
 
   // Close the socket that we are responsible for.
   ACE_OS::closesocket (this->handle_);
@@ -314,9 +330,11 @@ int
 Sender::handle_input (ACE_HANDLE)
 {
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) Reference count in Sender::handle_input() is %q\n"),
-                static_cast<ACE_INT64> (this->reference_count_.load ())));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) Reference count in Sender::handle_input() is %q\n"),
+                  static_cast<ACE_INT64> (this->reference_count_.load ())));
+    }
 
   //
   // In this test, this method is only called when the connection has
@@ -339,8 +357,10 @@ Sender::close ()
   // Remove socket from Reactor (may fail if another thread has already
   // removed the handle from the Reactor).
   if (this->reactor() != nullptr)
-    this->reactor ()->remove_handler (this->handle_,
-                                      ACE_Event_Handler::ALL_EVENTS_MASK);
+    {
+      this->reactor ()->remove_handler (this->handle_,
+                                        ACE_Event_Handler::ALL_EVENTS_MASK);
+    }
 
   // Remove self from connection cache (may fail if another thread has
   // already removed "this" from the cache).
@@ -411,17 +431,21 @@ Receiver::Receiver (ACE_Thread_Manager &thread_manager,
     (ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
 
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) Reference count in Receiver::Receiver() is %q\n"),
-                static_cast<ACE_INT64> (this->reference_count_.load ())));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) Reference count in Receiver::Receiver() is %q\n"),
+                  static_cast<ACE_INT64> (this->reference_count_.load ())));
+    }
 }
 
 Receiver::~Receiver ()
 {
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) Reference count in ~Receiver::Receiver() is %q\n"),
-                static_cast<ACE_INT64> (this->reference_count_.load ())));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) Reference count in ~Receiver::Receiver() is %q\n"),
+                  static_cast<ACE_INT64> (this->reference_count_.load ())));
+    }
 
   // Close the socket that we are responsible for.
   ACE_OS::closesocket (this->handle_);
@@ -468,23 +492,27 @@ Receiver::handle_input (ACE_HANDLE handle)
                  &timeout);
 
   if (debug && result < 1)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT("(%t) Receiver::handle input, ")
-                ACE_TEXT("h = %d, result = %b %p\n"),
-                handle_, result, ACE_TEXT("ACE::recv_n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT("(%t) Receiver::handle input, ")
+                  ACE_TEXT("h = %d, result = %b %p\n"),
+                  handle_, result, ACE_TEXT("ACE::recv_n")));
+    }
 
   if (this->reactor ())
-  {
-    this->reactor ()->resume_handler (handle);
-  }
+    {
+      this->reactor ()->resume_handler (handle);
+    }
 
   if (result == message_size)
     {
       if (debug)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%t) Message %d received on handle %@\n"),
-                    this->counter_++,
-                    reinterpret_cast<void *> (handle)));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%t) Message %d received on handle %@\n"),
+                      this->counter_++,
+                      reinterpret_cast<void *> (handle)));
+        }
 
       if (this->thr_count () == 0 &&
           this->nested_upcalls_)
@@ -492,32 +520,36 @@ Receiver::handle_input (ACE_HANDLE handle)
           ++this->nested_upcalls_level_;
 
           if (debug)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%t) Nesting level %d\n"),
-                        this->nested_upcalls_level_));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%t) Nesting level %d\n"),
+                          this->nested_upcalls_level_));
+            }
 
           if ((this->nested_upcalls_level_ != max_nested_upcall_level) &&
             (global_event_loop_thread_variable != nullptr))
-          {
-            global_event_loop_thread_variable->svc ();
-          }
+            {
+              global_event_loop_thread_variable->svc ();
+            }
 
           --this->nested_upcalls_level_;
           return 0;
         }
       else
-      {
-        return 0;
-      }
+        {
+          return 0;
+        }
     }
   else
     {
       if (debug)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%t) /*** Problem in receiving message %d on handle")
-                    ACE_TEXT (" %@: shutting down receiving thread ***/\n"),
-                    this->counter_,
-                    reinterpret_cast<void *> (handle)));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%t) /*** Problem in receiving message %d on handle")
+                      ACE_TEXT (" %@: shutting down receiving thread ***/\n"),
+                      this->counter_,
+                      reinterpret_cast<void *> (handle)));
+        }
 
       return -1;
     }
@@ -608,8 +640,10 @@ Connector::connect (ACE_HANDLE &client_handle,
 
   // Either the receiver is threaded or register it with the Reactor.
   if (run_receiver_thread)
-    result =
-      receiver->activate ();
+    {
+      result =
+        receiver->activate ();
+    }
   else
     {
       result =
@@ -632,11 +666,13 @@ Connector::connect (ACE_HANDLE &client_handle,
     pipe.write_handle ();
 
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) New connection: client handle = %@, ")
-                ACE_TEXT ("server handle = %@\n"),
-                reinterpret_cast<void *> (client_handle),
-                reinterpret_cast<void *> (server_handle)));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) New connection: client handle = %@, ")
+                  ACE_TEXT ("server handle = %@\n"),
+                  reinterpret_cast<void *> (client_handle),
+                  reinterpret_cast<void *> (server_handle)));
+    }
 
   return 0;
 }
@@ -869,9 +905,11 @@ Invocation_Thread::create_connection ()
   ACE_UNUSED_ARG (result);
 #else
   if (result != 0)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) create_connection h %@, %p\n"),
-                reinterpret_cast<void *> (client_handle),
-                ACE_TEXT ("register_handler")));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) create_connection h %@, %p\n"),
+                  reinterpret_cast<void *> (client_handle),
+                  ACE_TEXT ("register_handler")));
+    }
 #endif
   return sender;
 }
@@ -909,9 +947,11 @@ Invocation_Thread::svc ()
               message_counter = 1;
             }
           else
-            // Stop the thread, if the maximum number of connections
-            // for the test has been reached.
-            break;
+            {
+              // Stop the thread, if the maximum number of connections
+              // for the test has been reached.
+              break;
+            }
         }
 
       // The reference count on the sender was increased by the cache
@@ -937,11 +977,13 @@ Invocation_Thread::svc ()
           if (result == message_size)
             {
               if (debug)
-                ACE_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("(%t) Message %d:%d delivered on handle %@\n"),
-                            connection_counter,
-                            message_counter,
-                            reinterpret_cast<void *> (sender->handle_)));
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("(%t) Message %d:%d delivered on handle %@\n"),
+                              connection_counter,
+                              message_counter,
+                              reinterpret_cast<void *> (sender->handle_)));
+                }
 
               this->connection_cache_.release_connection (sender);
             }
@@ -949,13 +991,15 @@ Invocation_Thread::svc ()
             {
               // If failure in making invocation, close the sender.
               if (debug)
-                ACE_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("(%t) /*** Problem in delivering message ")
-                            ACE_TEXT ("%d:%d on handle %@: shutting down ")
-                            ACE_TEXT ("invocation thread ***/\n"),
-                            connection_counter,
-                            message_counter,
-                            reinterpret_cast<void *> (sender->handle_)));
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("(%t) /*** Problem in delivering message ")
+                              ACE_TEXT ("%d:%d on handle %@: shutting down ")
+                              ACE_TEXT ("invocation thread ***/\n"),
+                              connection_counter,
+                              message_counter,
+                              reinterpret_cast<void *> (sender->handle_)));
+                }
 
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%t) Invocation thread calling ")
@@ -1044,25 +1088,33 @@ Close_Socket_Thread::svc ()
       // receiver is threaded, either socket can be closed.
       if (this->make_invocations_ &&
           this->run_receiver_thread_)
-        // Randomize which socket to close.
-        close_client = ACE_OS::rand_r (&seed) % 2;
+        {
+          // Randomize which socket to close.
+          close_client = ACE_OS::rand_r (&seed) % 2;
+        }
 
       // If the invocation thread is making invocations, only close
       // the client socket.
       else if (this->make_invocations_)
-        close_client = 1;
+        {
+          close_client = 1;
+        }
       else
-        // If the receiver is threaded, only close the server socket.
-        close_client = 0;
+        {
+          // If the receiver is threaded, only close the server socket.
+          close_client = 0;
+        }
 
       if (close_client)
         {
           // Close the client socket.
           if (debug)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%t) Close socket thread closing client ")
-                        ACE_TEXT ("handle %@\n"),
-                        reinterpret_cast<void *> (client_handle)));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%t) Close socket thread closing client ")
+                          ACE_TEXT ("handle %@\n"),
+                          reinterpret_cast<void *> (client_handle)));
+            }
 
           ACE_OS::shutdown (client_handle, ACE_SHUTDOWN_BOTH);
           ACE_OS::closesocket (client_handle);
@@ -1071,10 +1123,12 @@ Close_Socket_Thread::svc ()
         {
           // Close the server socket.
           if (debug)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%t) Close socket thread closing server ")
-                        ACE_TEXT ("handle %@\n"),
-                        reinterpret_cast<void *> (server_handle)));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%t) Close socket thread closing server ")
+                          ACE_TEXT ("handle %@\n"),
+                          reinterpret_cast<void *> (server_handle)));
+            }
           ACE_OS::shutdown (server_handle, ACE_SHUTDOWN_BOTH);
           ACE_OS::closesocket (server_handle);
         }
@@ -1151,7 +1205,9 @@ Purger_Thread::svc ()
 
       // If no connection is available in the cache, sleep for a while.
       if (sender == nullptr)
-        ACE_OS::sleep (ACE_Time_Value (0, 10 * 1000));
+        {
+          ACE_OS::sleep (ACE_Time_Value (0, 10 * 1000));
+        }
       else
         {
           // The reference count on the sender was increased by the
