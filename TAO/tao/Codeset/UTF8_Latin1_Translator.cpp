@@ -46,7 +46,9 @@ TAO_UTF8_Latin1_Translator::read_char_i (ACE_InputCDR &cdr, ACE_CDR::Char &x)
       if ( upper >= 0xC4) // Anything with a leading char > 110001xx converts
                           // to a codepoint value > 0x00FF, thus won't fit in
                           // a single char.
-        return 0;
+        {
+          return 0;
+        }
       if ( upper < 0xC0 )
         {
           x = static_cast<ACE_CDR::Char>(upper);
@@ -174,9 +176,11 @@ TAO_UTF8_Latin1_Translator::read_char_array (ACE_InputCDR & cdr,
   }
 
   for (size_t i {}; i < length; ++i)
-    if (!this->read_char(cdr,x[i]))
     {
-      return false;
+      if (!this->read_char(cdr,x[i]))
+        {
+          return false;
+        }
     }
 
   return true;
@@ -188,7 +192,9 @@ TAO_UTF8_Latin1_Translator::write_char (ACE_OutputCDR &cdr,
 {
   ACE_CDR::Octet ox = x;
   if (ox < 0xC0)
-    return this->write_1 (cdr,&ox);
+    {
+      return this->write_1 (cdr,&ox);
+    }
   else
     { // character cannot be represented in a single octet
       errno = EINVAL;
@@ -206,7 +212,9 @@ TAO_UTF8_Latin1_Translator::write_char_i (ACE_OutputCDR &cdr,
 
   ACE_CDR::Octet ox = x;
   if (ox < 0xC0)
-    return this->write_1 (cdr,&ox);
+    {
+      return this->write_1 (cdr,&ox);
+    }
   else
     { // character cannot be represented in a single octet
       // Since the source will never be > 0xFF, we don't have to worry about
@@ -235,9 +243,11 @@ TAO_UTF8_Latin1_Translator::write_string (ACE_OutputCDR & cdr,
   ACE_CDR::ULong l = len;
   // Compute the real buffer size by adding in multi-byte codepoints.
   for (ACE_CDR::ULong i {}; i < len; ++i)
-    if (static_cast<ACE_CDR::Octet>(x[i]) > 0xbf)
     {
-      ++l;
+      if (static_cast<ACE_CDR::Octet>(x[i]) > 0xbf)
+        {
+          ++l;
+        }
     }
 
   // Always add one for the nul
@@ -268,11 +278,13 @@ TAO_UTF8_Latin1_Translator::write_char_array (ACE_OutputCDR & cdr,
   }
 
   for (size_t i {}; i < length; ++i)
-    // We still have to write each char individually, as any translated
-    // value may fail to fit in a single octet.
-    if (!this->write_char (cdr, x[i]))
     {
-      return false;
+      // We still have to write each char individually, as any translated
+      // value may fail to fit in a single octet.
+      if (!this->write_char (cdr, x[i]))
+        {
+          return false;
+        }
     }
 
   return true;

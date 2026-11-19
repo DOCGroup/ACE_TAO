@@ -72,9 +72,11 @@ TAO_UTF8_Latin1_Factory::create_translator () const
       if (!this->translator_)
         {
           if (TAO_debug_level)
-            TAOLIB_ERROR ((LM_ERROR,
+            {
+              TAOLIB_ERROR ((LM_ERROR,
                            ACE_TEXT ("(%P|%t) TAO_UTF8_Latin1_Factory cannot ")
                            ACE_TEXT ("create TAO_UTF8_Latin1_Translator\n")));
+            }
         }
     }
 

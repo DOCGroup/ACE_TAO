@@ -31,9 +31,11 @@ TAO_UTF16_BOM_Translator::TAO_UTF16_BOM_Translator (bool forceBE)
   : forceBE_ (forceBE)
 {
   if (TAO_debug_level > 1)
-    TAOLIB_DEBUG ((LM_DEBUG,
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
                    ACE_TEXT ("TAO (%P|%t) - UTF16_BOM_Translator: ")
                    ACE_TEXT ("forceBE %d\n"), this->forceBE_ ? 1 : 0));
+    }
 }
 
 ACE_CDR::Boolean
@@ -73,7 +75,9 @@ TAO_UTF16_BOM_Translator::read_wchar (ACE_InputCDR &cdr, ACE_CDR::WChar &x)
       if (len != 4 || !this->read_array (cdr,
                                          reinterpret_cast<char *> (buf),
                                          1, 1, 4)) // get BO & payload
-        return false;
+        {
+          return false;
+        }
       // Check for byte order mark, if found, consume and honor it.
       if (buf[0] == ACE_UNICODE_BOM_CORRECT ||
           buf[0] == ACE_UNICODE_BOM_SWAPPED)
@@ -280,20 +284,22 @@ TAO_UTF16_BOM_Translator::read_wchar_array_i (ACE_InputCDR & cdr,
         }
 
       for (size_t i {}; i < length; ++i)
+        {
 #if defined (ACE_DISABLE_SWAP_ON_READ)
-        x[i] = static_cast<ACE_CDR::WChar> (sb[i]);
-#else
-      if (!must_swap)
-        {
           x[i] = static_cast<ACE_CDR::WChar> (sb[i]);
-        }
-      else
-        {
-          ACE_CDR::UShort sx;
-          ACE_CDR::swap_2 (&buf[i*2], reinterpret_cast<char *> (&sx));
-          x[i] = static_cast<ACE_CDR::WChar> (sx);
-        }
+#else
+          if (!must_swap)
+            {
+              x[i] = static_cast<ACE_CDR::WChar> (sb[i]);
+            }
+          else
+            {
+              ACE_CDR::UShort sx;
+              ACE_CDR::swap_2 (&buf[i*2], reinterpret_cast<char *> (&sx));
+              x[i] = static_cast<ACE_CDR::WChar> (sx);
+            }
 #endif /* ACE_DISABLE_SWAP_ON_READ */
+        }
 
       if (has_bom && !adjust_len)
         {
@@ -310,17 +316,19 @@ TAO_UTF16_BOM_Translator::read_wchar_array (ACE_InputCDR & cdr,
                                             ACE_CDR::ULong length)
 {
   if (length == 0)
-  {
-    return true;
-  }
+    {
+      return true;
+    }
 
   if (static_cast<ACE_CDR::Short> (this->major_version (cdr)) == 1
       && static_cast<ACE_CDR::Short> (this->minor_version (cdr)) > 1)
     {
       for (size_t i {}; i < length; ++i)
-        if (!this->read_wchar (cdr, x[i]))
         {
-          return false;
+          if (!this->read_wchar (cdr, x[i]))
+            {
+              return false;
+            }
         }
 
       return true;
@@ -374,8 +382,10 @@ TAO_UTF16_BOM_Translator::write_wchar_i (ACE_OutputCDR &cdr,
           // force it to be big endian w/o BOM
           len = 1;
           if (cdr.byte_order ())
-            ACE_CDR::swap_2 (reinterpret_cast<char const *> (&x),
+            {
+              ACE_CDR::swap_2 (reinterpret_cast<char const *> (&x),
                              reinterpret_cast<char *> (buffer));
+            }
           else
           {
             buffer[0] = static_cast<ACE_CDR::Short> (x);
@@ -386,7 +396,9 @@ TAO_UTF16_BOM_Translator::write_wchar_i (ACE_OutputCDR &cdr,
         static_cast<ACE_CDR::Octet> (len * ACE_UTF16_CODEPOINT_SIZE);
 
       if (this->write_1 (cdr, &tcsize))
-        return this->write_array (cdr, &buffer, tcsize, 1, 1);
+        {
+          return this->write_array (cdr, &buffer, tcsize, 1, 1);
+        }
       else
       {
         return false;
@@ -418,7 +430,9 @@ TAO_UTF16_BOM_Translator::write_wstring (ACE_OutputCDR & cdr,
     {
       if (len == 0) // for zero length strings, only write a length of
                     // zero. The BOM is not needed in this case.
-        return this->write_4 (cdr, &len);
+        {
+          return this->write_4 (cdr, &len);
+        }
 
       if (this->forceBE_ && cdr.byte_order ())
         {
@@ -472,9 +486,11 @@ TAO_UTF16_BOM_Translator::write_wchar_array (ACE_OutputCDR & cdr,
       && static_cast<ACE_CDR::Short> (this->minor_version (cdr)) > 1)
     {
       for (size_t i {}; i < length; ++i)
-        if (!this->write_wchar_i (cdr, x[i], false))
         {
-          return false;
+          if (!this->write_wchar_i (cdr, x[i], false))
+            {
+              return false;
+            }
         }
 
       return true;
