@@ -66,7 +66,9 @@ client_thread (void *data)
           first_time = false;
         }
       if (num_read <= 0)
-        break;
+        {
+          break;
+        }
       total_read += num_read;
     }
   cp->stats->i_am_done (cp->id);
@@ -74,7 +76,9 @@ client_thread (void *data)
   throughput_timer.stop();
   throughput_timer.elapsed_time(et);
   if (et.real_time > 0)
-    throughput = (8 * total_read / et.real_time) / (1000 * 1000);
+    {
+      throughput = (8 * total_read / et.real_time) / (1000 * 1000);
+    }
   cp->stats->log (cp->id, throughput, latency);
   return nullptr;
 }
@@ -102,7 +106,9 @@ driver (char const *id, int total_num, float requests_sec,
     {
       ACE_Profile_Timer timer;
       if (sleep_time < delta)
-        ++missed_deadlines;
+        {
+          ++missed_deadlines;
+        }
       else
         {
           ACE_Time_Value const tv (0, static_cast<long> (sleep_time - delta));
@@ -113,13 +119,21 @@ driver (char const *id, int total_num, float requests_sec,
 
       double const r = static_cast<double> (ACE_OS::rand ()) / RAND_MAX;
       if (r <= p1)
-        cp->url = std::make_unique<URL> (url1);
+        {
+          cp->url = std::make_unique<URL> (url1);
+        }
       else if (r <= p1 + p2)
-        cp->url = std::make_unique<URL> (url2);
+        {
+          cp->url = std::make_unique<URL> (url2);
+        }
       else if (r <= p1 + p2 + p3)
-        cp->url = std::make_unique<URL> (url3);
+        {
+          cp->url = std::make_unique<URL> (url3);
+        }
       else
-        cp->url = std::make_unique<URL> (url1);
+        {
+          cp->url = std::make_unique<URL> (url1);
+        }
 
       if (ACE_Thread_Manager::instance ()->spawn (client_thread, cp.get ()) == -1)
         {
@@ -127,7 +141,9 @@ driver (char const *id, int total_num, float requests_sec,
           Client_Parameters::stats->i_am_done (i);
         }
       else
-        cp.release ();
+        {
+          cp.release ();
+        }
       timer.stop ();
       ACE_Profile_Timer::ACE_Elapsed_Time et;
       timer.elapsed_time (et);
@@ -198,7 +214,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       float p3 {};
 
       if (line.empty () || line[0] == '#')
-        continue;
+        {
+          continue;
+        }
       if (!(line_stream >> id >> total_num >> rate >> url1 >> p1
             >> url2 >> p2 >> url3 >> p3 >> tcp >> sock))
         {
