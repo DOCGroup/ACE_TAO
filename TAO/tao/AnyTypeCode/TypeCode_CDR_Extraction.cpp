@@ -165,7 +165,9 @@ namespace
             // list and then compare the others.
             size_t const old_size = tcs.size ();
             if (tcs.size (old_size + 1) == -1)  // Incremental growth -- *sigh*
-              return false;
+              {
+                return false;
+              }
 
             TAO::TypeCodeFactory::TC_Info & new_info = tcs[old_size];
             new_info.type = info.type;
@@ -403,7 +405,9 @@ TAO::TypeCodeFactory::tc_objref_factory (CORBA::TCKind kind,
                       tc_constant_id) == 0)
     {
       if (!cdr.skip_string ())  // No need to demarshal the name.
-        return false;
+        {
+          return false;
+        }
 
       CORBA::TypeCode_ptr tc_constant = CORBA::TypeCode::_nil ();
       switch (kind)
@@ -587,7 +591,9 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
   if (!(cdr >> TAO_InputCDR::to_string (id.out (), 0)
         && cdr >> TAO_InputCDR::to_string (name.out (), 0)
         && cdr >> discriminant_type.out ())) // No need to use tc_demarshal()
-    return false;
+    {
+      return false;
+    }
 
   CORBA::TCKind const discriminant_kind =
     discriminant_type->kind ();
@@ -941,9 +947,13 @@ TAO::TypeCodeFactory::tc_string_factory (CORBA::TCKind kind,
     {
       // Just use the TypeCode constant.
       if (kind == CORBA::tk_string)
-        tc = CORBA::TypeCode::_duplicate (CORBA::_tc_string);
+        {
+          tc = CORBA::TypeCode::_duplicate (CORBA::_tc_string);
+        }
       else if (kind == CORBA::tk_wstring)
-        tc = CORBA::TypeCode::_duplicate (CORBA::_tc_wstring);
+        {
+          tc = CORBA::TypeCode::_duplicate (CORBA::_tc_wstring);
+        }
       else
       {
         return false;
