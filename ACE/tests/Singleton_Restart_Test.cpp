@@ -9,11 +9,15 @@ int restart_test_logging (const ACE_TCHAR *program)
 {
   if (ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM |
                          ACE_Log_Msg::VERBOSE_LITE) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("open log_msg failed")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("open log_msg failed")), -1);
+    }
   if (ace_file_stream::instance()->set_output (program, 1) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("set_output failed")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("set_output failed")), -1);
+    }
   return 0;
 }
 
@@ -41,7 +45,9 @@ int main ()
   ACE::fini ();
   ACE::init ();
   if (restart_test_logging (program) != 0) // program defined in ACE_START_TEST
-    return -1;
+    {
+      return -1;
+    }
 
   int *i1 = Singleton1::instance ();
   if (!i1)

@@ -41,7 +41,9 @@ siglistset (sigset_t x, int *sigset, int can_miss = 0)
     }
 
   if (empty)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Empty!!\n\n"))) ;
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Empty!!\n\n"))) ;
+    }
   else
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n\n"))) ;
@@ -74,7 +76,9 @@ run_main (int, ACE_TCHAR *[])
 
   // fill the comparison set
   for (i = 0 ; i < ACE_NSIG ; ++i)
-    sigset [i] = 1 ;
+    {
+      sigset [i] = 1 ;
+    }
 
   // There's no guarantee that the valid signals are sequential without
   // missed spots. For example, Red Hat Enterprise Linux 3 (any version
@@ -89,7 +93,9 @@ run_main (int, ACE_TCHAR *[])
 
   // empty the comparison set
   for (i = 0 ; i < ACE_NSIG ; ++i)
-    sigset [i] = 0 ;
+    {
+      sigset [i] = 0 ;
+    }
 
   siglistset (x, sigset) ;
 
