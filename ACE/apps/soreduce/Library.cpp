@@ -157,11 +157,17 @@ Library::Library (ACE_TCHAR const *name)
     exported_ (0)
 {
   if (name_ == "ACE")
-    mpcfile_ = std::make_unique<MPC_Generator> (name_);
+    {
+      mpcfile_ = std::make_unique<MPC_Generator> (name_);
+    }
   else if (name_.find ("ACE_") == 0)
-    mpcfile_ = std::make_unique<MPC_ACE_Dep_Lib> (name_);
+    {
+      mpcfile_ = std::make_unique<MPC_ACE_Dep_Lib> (name_);
+    }
   else if (name_ == "TAO")
-    mpcfile_ = std::make_unique<MPC_TAO_Lib> (name_);
+    {
+      mpcfile_ = std::make_unique<MPC_TAO_Lib> (name_);
+    }
   else
   {
     mpcfile_ = std::make_unique<MPC_TAO_Dep_Lib> (name_);
@@ -256,23 +262,29 @@ Library::resolve (Sig_List &undefs)
       undefs.remove_current ();
     }
     else
-      for (size_t i = 0; i < modules_.size (); ++i)
-        if (modules_[i]->extref () == 0 &&
-            modules_[i]->exports ().find_and_mark_used (uname))
+      {
+        for (size_t i = 0; i < modules_.size (); ++i)
           {
-            undefs.remove_current ();
-            exported_.add (modules_[i]->exports ());
-            for (Signature const *needed = modules_[i]->imports ().first ();
-                 modules_[i]->imports ().hasmore ();
-                 needed = modules_[i]->imports ().next ())
-              if (!exported_.find_and_mark_used (needed))
+            if (modules_[i]->extref () == 0 &&
+                modules_[i]->exports ().find_and_mark_used (uname))
               {
-                undefs.add (needed->name ());
+                undefs.remove_current ();
+                exported_.add (modules_[i]->exports ());
+                for (Signature const *needed = modules_[i]->imports ().first ();
+                     modules_[i]->imports ().hasmore ();
+                     needed = modules_[i]->imports ().next ())
+                  {
+                    if (!exported_.find_and_mark_used (needed))
+                      {
+                        undefs.add (needed->name ());
+                      }
+                  }
+                modules_[i]->add_extref ();
+                ++num_extrefs_;
+                break;
               }
-            modules_[i]->add_extref ();
-            ++num_extrefs_;
-            break;
           }
+      }
   }
 }
 
@@ -307,29 +319,37 @@ Library::write_export_list (bool show_ref_counts)
   mpcfile_->write_prolog (path_);
 
   for (size_t i = 0; i < modules_.size (); ++i)
-    if (modules_[i]->extref ()) {
-      if (show_ref_counts) {
-        ACE_CString const fname = rcpath + "/" + modules_[i]->name ();
-        ofstream countfile (fname.c_str ());
-        countfile << "Exported symbols:" << endl;
-        for (Signature const *sig = modules_[i]->exports ().first ();
-             modules_[i]->exports ().hasmore ();
-             sig = modules_[i]->exports ().next ())
-          {
-            countfile.width (5);
-            countfile << sig->used_count () << " " << sig->name () << endl;
-          }
-        countfile << "\nImported symbols:" << endl;
-        for (Signature const *n_sig = modules_[i]->imports ().first ();
-             modules_[i]->imports ().hasmore ();
-             n_sig = modules_[i]->imports ().next ())
-          countfile << n_sig->name () << endl;
-      }
-      mpcfile_->write_file (modules_[i]->name ().substring (0, modules_[i]->name ().length () - 2));
-    } else {
-      exclusions
-        << modules_[i]->name ().substring (0, modules_[i]->name ().length () - 2)
-        << endl;
+    {
+      if (modules_[i]->extref ())
+        {
+          if (show_ref_counts)
+            {
+              ACE_CString const fname = rcpath + "/" + modules_[i]->name ();
+              ofstream countfile (fname.c_str ());
+              countfile << "Exported symbols:" << endl;
+              for (Signature const *sig = modules_[i]->exports ().first ();
+                   modules_[i]->exports ().hasmore ();
+                   sig = modules_[i]->exports ().next ())
+                {
+                  countfile.width (5);
+                  countfile << sig->used_count () << " " << sig->name () << endl;
+                }
+              countfile << "\nImported symbols:" << endl;
+              for (Signature const *n_sig = modules_[i]->imports ().first ();
+                   modules_[i]->imports ().hasmore ();
+                   n_sig = modules_[i]->imports ().next ())
+                {
+                  countfile << n_sig->name () << endl;
+                }
+            }
+          mpcfile_->write_file (modules_[i]->name ().substring (0, modules_[i]->name ().length () - 2));
+        }
+      else
+        {
+          exclusions
+            << modules_[i]->name ().substring (0, modules_[i]->name ().length () - 2)
+            << endl;
+        }
     }
 
   mpcfile_->write_epilog ();
