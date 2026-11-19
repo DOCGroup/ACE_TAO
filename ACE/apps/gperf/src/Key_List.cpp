@@ -797,7 +797,11 @@ Key_List::output_switch (int use_keyword_table)
                         {
                           ACE_OS::printf ("                  resword = \"%s\";\n", links->key.c_str ());
                         }
-                      ACE_OS::printf ("                  if (%s) return resword;\n", comp_buffer.c_str ());
+                      ACE_OS::printf ("                  if (%s)\n"
+                                      "                    {\n"
+                                      "                      return resword;\n"
+                                      "                    }\n",
+                                      comp_buffer.c_str ());
                     }
                 }
 
@@ -821,7 +825,11 @@ Key_List::output_switch (int use_keyword_table)
                         {
                           ACE_OS::printf ("                  resword = \"%s\";\n", temp->key.c_str ());
                         }
-                      ACE_OS::printf ("                  if (%s) return resword;\n", comp_buffer.c_str ());
+                      ACE_OS::printf ("                  if (%s)\n"
+                                      "                    {\n"
+                                      "                      return resword;\n"
+                                      "                    }\n",
+                                      comp_buffer.c_str ());
                     }
                   if (pointer_and_type_enabled)
                     ACE_OS::printf ("                  resword = %swordlist[%d]%s;\n",
