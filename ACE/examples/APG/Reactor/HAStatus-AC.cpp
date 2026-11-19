@@ -26,9 +26,11 @@ ClientService::open (void *p)
   ACE_INET_Addr peer_addr {};
   if (this->peer ().get_remote_addr (peer_addr) == 0 &&
       peer_addr.addr_to_string (peer_name, MAXHOSTNAMELEN) == 0)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P|%t) Connection from %s\n"),
-                peer_name));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) Connection from %s\n"),
+                  peer_name));
+    }
   return 0;
 }
 // Listing 4
@@ -58,10 +60,12 @@ ClientService::handle_input (ACE_HANDLE)
     return 0;
   }
   if (send_cnt == -1 && ACE_OS::last_error () != EWOULDBLOCK)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) %p\n"),
-                       ACE_TEXT ("send")),
-                      0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) %p\n"),
+                         ACE_TEXT ("send")),
+                        0);
+    }
   if (send_cnt == -1)
   {
     send_cnt = 0;
@@ -83,8 +87,10 @@ ClientService::handle_input (ACE_HANDLE)
     }
   message_block.release ();
   if (output_off)
-    return this->reactor ()->register_handler
-      (this, ACE_Event_Handler::WRITE_MASK);
+    {
+      return this->reactor ()->register_handler
+        (this, ACE_Event_Handler::WRITE_MASK);
+    }
   return 0;
 }
 // Listing 5
@@ -102,9 +108,11 @@ ClientService::handle_output (ACE_HANDLE)
         this->peer ().send (message_block->rd_ptr (),
                             message_block->length ());
       if (send_cnt == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) %p\n"),
-                    ACE_TEXT ("send")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) %p\n"),
+                      ACE_TEXT ("send")));
+        }
       else
       {
         message_block->rd_ptr (static_cast<size_t> (send_cnt));
