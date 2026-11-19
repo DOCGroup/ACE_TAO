@@ -105,17 +105,23 @@ void print_till_death ()
       }
 
       if (i == 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    " (%t) (%D) message\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      " (%t) (%D) message\n"));
+        }
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    " (%t) %d message\n",
-                    i));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      " (%t) %d message\n",
+                      i));
+        }
     }
 
   if (ACE_Reactor::instance ()->end_reactor_event_loop () == -1)
-    ACE_ERROR ((LM_ERROR,
-                "Error ending reactor.\n"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Error ending reactor.\n"));
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "-< generating messages finished \n\n"));
@@ -136,18 +142,24 @@ count_files ()
   do
     {
       if (i == 0)
-        ACE_OS::snprintf (backup_ct, MAXPATHLEN + 1,
-                         ACE_TEXT ("%s"),
-                         file_name);
+        {
+          ACE_OS::snprintf (backup_ct, MAXPATHLEN + 1,
+                           ACE_TEXT ("%s"),
+                           file_name);
+        }
       else
-        ACE_OS::snprintf (backup_ct, MAXPATHLEN + 1,
-                         ACE_TEXT ("%s.%d"),
-                         file_name,
-                         i);
+        {
+          ACE_OS::snprintf (backup_ct, MAXPATHLEN + 1,
+                           ACE_TEXT ("%s.%d"),
+                           file_name,
+                           i);
+        }
 
       stream = ACE_OS::fopen (backup_ct, ACE_TEXT ("r"));
       if (stream == nullptr)
-        error = 1;
+        {
+          error = 1;
+        }
       else
         {
           ++i;
@@ -162,22 +174,28 @@ count_files ()
   if (max_num_files !=0)
     {
       if (max_num_files != num_files)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Creating files...Failed!")
-                    ACE_TEXT (" Input value=%d, Checked value=%d"),
-                    max_num_files,
-                    num_files));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Creating files...Failed!")
+                      ACE_TEXT (" Input value=%d, Checked value=%d"),
+                      max_num_files,
+                      num_files));
+        }
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("      Creating files...OK!")
-                    ACE_TEXT (" Input value=%d, Checked value=%d"),
-                    max_num_files,
-                    num_files));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("      Creating files...OK!")
+                      ACE_TEXT (" Input value=%d, Checked value=%d"),
+                      max_num_files,
+                      num_files));
+        }
     }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("      The number of files generated is: %d"),
-                num_files));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("      The number of files generated is: %d"),
+                  num_files));
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "\n-< counting finished...\n"));
@@ -195,7 +213,9 @@ get_statistics (ACE_TCHAR *f_name)
 
   // Check if statistics are valid:
   if (result != 0)
-    ACE_OS::perror (ACE_TEXT ("\nProblem getting information"));
+    {
+      ACE_OS::perror (ACE_TEXT ("\nProblem getting information"));
+    }
   else
     {
       // Output some of the statistics:
@@ -271,9 +291,11 @@ order ()
                           ACE_TEXT ("      Ordering...OK!")));
             }
           else
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("      Ordering...FAILED!")
-                        ACE_TEXT ("- The files are disorderly")));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("      Ordering...FAILED!")
+                          ACE_TEXT ("- The files are disorderly")));
+            }
         }
     }
 
@@ -398,9 +420,11 @@ int run_main (int argc, ACE_TCHAR *argv [])
   if (argc > 1)
     {
       if (parse_args (argc, argv) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Invalid command-line parameters.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Invalid command-line parameters.\n"),
+                            1);
+        }
     }
   else
     {
@@ -414,9 +438,11 @@ int run_main (int argc, ACE_TCHAR *argv [])
       l_argv[3] = nullptr;
 
       if (parse_args (3, l_argv) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Invalid command-line parameters.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Invalid command-line parameters.\n"),
+                            1);
+        }
       argv = l_argv;
       argc = 3;
     }
@@ -452,9 +478,11 @@ int run_main (int argc, ACE_TCHAR *argv [])
   ACE_OS::strcat (arg_str, ACE_TEXT ("\""));
 
   if (ACE_Service_Config::process_directive (arg_str) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error opening _make_ACE_Log_Strategy.\n"),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Error opening _make_ACE_Log_Strategy.\n"),
+                        1);
+    }
 #else // Platform doesn't support DLLs, or configured to link
       // statically
   ACE_Logging_Strategy logging_strategy;
@@ -474,9 +502,11 @@ int run_main (int argc, ACE_TCHAR *argv [])
   // launch a new Thread
   if (ACE_Thread_Manager::instance ()->spawn
       (ACE_THR_FUNC (run_reactor)) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Spawning Reactor.\n"),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Spawning Reactor.\n"),
+                        1);
+    }
 
   // Function to print the message
   print_till_death ();
