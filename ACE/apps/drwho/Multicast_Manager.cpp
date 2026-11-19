@@ -27,7 +27,9 @@ Multicast_Manager::insert_default_hosts ()
   for (const char **np = host_names;
        *np != nullptr;
        ++np)
-    Multicast_Manager::add_host (*np);
+    {
+      Multicast_Manager::add_host (*np);
+    }
 }
 
 // Inserts all the names in FILENAME into the list of hosts to
@@ -43,7 +45,9 @@ Multicast_Manager::insert_hosts_from_file (const char *filename)
   char *host_ptr = (char *) mmap.addr ();
 
   if (host_ptr == nullptr)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       for (char *end_ptr = host_ptr + mmap.size ();
@@ -53,7 +57,9 @@ Multicast_Manager::insert_hosts_from_file (const char *filename)
           Multicast_Manager::add_host (host_ptr);
 
           while (*host_ptr != '\n')
-            ++host_ptr;
+            {
+              ++host_ptr;
+            }
 
           *host_ptr++ = '\0';
         }
@@ -112,15 +118,21 @@ Multicast_Manager::get_host_entry (const char *host)
       u_long ia = ACE_OS::inet_addr (host);
 
       if (ia == (u_long) -1)
-        hp = nullptr;
+        {
+          hp = nullptr;
+        }
       else
-        hp = ACE_OS::gethostbyaddr ((char *) &ia,
-                                    sizeof ia,
-                                    AF_INET);
+        {
+          hp = ACE_OS::gethostbyaddr ((char *) &ia,
+                                      sizeof ia,
+                                      AF_INET);
+        }
     }
   else
     // Host name.
-    hp = ACE_OS::gethostbyname (host);
+    {
+      hp = ACE_OS::gethostbyname (host);
+    }
 
   return hp == nullptr ? nullptr
     : static_cast<hostent *> (std::memcpy (&host_entry, hp, sizeof *hp));
@@ -142,13 +154,15 @@ Multicast_Manager::checkoff_host (in_addr host_addr)
   for (Host_Elem *tmp = Multicast_Manager::drwho_list;
        tmp != nullptr;
        tmp = tmp->next)
-    if (std::memcmp (&tmp->host_addr.s_addr,
-                     &host_addr.s_addr,
-                     sizeof host_addr.s_addr) == 0)
       {
-        tmp->checked_off = true;
-        --Multicast_Manager::received_host_count;
-        return;
+        if (std::memcmp (&tmp->host_addr.s_addr,
+                         &host_addr.s_addr,
+                         sizeof host_addr.s_addr) == 0)
+          {
+            tmp->checked_off = true;
+            --Multicast_Manager::received_host_count;
+            return;
+          }
       }
 }
 
@@ -161,10 +175,12 @@ Multicast_Manager::get_next_non_responding_host (const char *&host_name)
            : Multicast_Manager::current_ptr->next;
        Multicast_Manager::current_ptr != nullptr;
        Multicast_Manager::current_ptr = Multicast_Manager::current_ptr->next)
-    if (!Multicast_Manager::current_ptr->checked_off)
       {
-        host_name = Multicast_Manager::current_ptr->host_name;
-        return 1;
+        if (!Multicast_Manager::current_ptr->checked_off)
+          {
+            host_name = Multicast_Manager::current_ptr->host_name;
+            return 1;
+          }
       }
 
   return 0;
