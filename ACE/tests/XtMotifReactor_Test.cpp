@@ -98,24 +98,29 @@ client (void *)
   if (connector.connect (stream,
                          ACE_INET_Addr (SERV_TCP_PORT,
                                         ACE_DEFAULT_SERVER_HOST)) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "(%P) %p\n",
-                "Socket open"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%P) %p\n",
+                  "Socket open"));
+    }
 
   if (stream.send (4,
                    (void *) &mes_len,
                    sizeof (size_t),
                    (void *)buf,
                    ACE_OS::strlen (buf) + 1) == -1)
-
-    ACE_ERROR ((LM_ERROR,
-                "(%P) %p\n",
-                "Socket send"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%P) %p\n",
+                  "Socket send"));
+    }
 
   if (stream.close () == -1)
-    ACE_ERROR ((LM_ERROR,
-                "(%P) %p\n",
-                "Socket close"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%P) %p\n",
+                  "Socket close"));
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P) Client: Message has been sent, about to exit...\n"));
@@ -143,7 +148,9 @@ inc_tmo (void *w, XtIntervalId *)
   char new_string[80];
 
   if (count2 > 10)
-    ACE_OS::exit (0);
+    {
+      ACE_OS::exit (0);
+    }
   ACE_OS::snprintf (new_string, 80, "Events: [%d] [%d] [%d]",
                     count1, count2++, count3);
 
@@ -181,19 +188,23 @@ public:
     ssize_t ret = this->peer ().recv_n ((char *) &head,
                                         sizeof (int));
     if (ret != sizeof (int))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%P) %p\n",
-                         "read header"),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P) %p\n",
+                           "read header"),
+                          -1);
+      }
 
     ret = this->peer ().recv_n (buf,
                                 (int) ntohl (head));
 
     if (ret != (int) ntohl (head))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%P) %p\n",
-                         "read message"),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P) %p\n",
+                           "read message"),
+                          -1);
+      }
     ACE_DEBUG ((LM_DEBUG,
                 " (%P)Server (ACE_SOCKET channel message): [%s]\n",
                 buf));
@@ -286,18 +297,22 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   if (acceptor.open (ACE_INET_Addr ((u_short) SERV_TCP_PORT),
                      &r) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "open"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "open"),
+                        -1);
+    }
 
   if (reactor.schedule_timer (&evh,
                               (const void *) lbl,
                               ACE_Time_Value (2),
                               ACE_Time_Value (2))==-1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       " (%P|%t) can't register with reactor\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         " (%P|%t) can't register with reactor\n"),
+                        -1);
+    }
 
   ACE_Thread_Manager::instance ()->spawn ((ACE_THR_FUNC) client,
                                           nullptr,
