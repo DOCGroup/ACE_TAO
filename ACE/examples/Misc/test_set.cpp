@@ -30,25 +30,33 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   for (ACE_Unbounded_Set_Iterator<int> iter1 (s1);
        iter1.next (ip) != 0;
        iter1.advance ())
-    ACE_DEBUG ((LM_DEBUG, "item = %d\n", *ip));
+    {
+      ACE_DEBUG ((LM_DEBUG, "item = %d\n", *ip));
+    }
 
   ACE_DEBUG ((LM_DEBUG, "dumping s2\n"));
   for (ACE_Unbounded_Set_Iterator<int> iter2 (s2);
        iter2.next (ip) != 0;
        iter2.advance ())
-    ACE_DEBUG ((LM_DEBUG, "item = %d\n", *ip));
+    {
+      ACE_DEBUG ((LM_DEBUG, "item = %d\n", *ip));
+    }
 
   ACE_DEBUG ((LM_DEBUG, "dumping s3\n"));
   for (ACE_Unbounded_Set_Iterator<int> iter3 (s3);
        iter3.next (ip) != 0;
        iter3.advance ())
-    ACE_DEBUG ((LM_DEBUG, "item = %d\n", *ip));
+    {
+      ACE_DEBUG ((LM_DEBUG, "item = %d\n", *ip));
+    }
 
   ACE_DEBUG ((LM_DEBUG, "dumping s4\n"));
   for (ACE_Unbounded_Set_Iterator<int> iter4 (s4);
        iter4.next (ip) != 0;
        iter4.advance ())
-    ACE_DEBUG ((LM_DEBUG, "item = %d\n", *ip));
+    {
+      ACE_DEBUG ((LM_DEBUG, "item = %d\n", *ip));
+    }
 
   return 0;
 }
