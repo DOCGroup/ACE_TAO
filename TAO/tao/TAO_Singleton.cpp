@@ -71,8 +71,10 @@ TAO_Singleton<TYPE, ACE_LOCK>::instance ()
           // instantiation.
           static ACE_LOCK *lock {};
           if (ACE_Object_Manager::get_singleton_lock (lock) != 0)
-            // Failed to acquire the lock!
-            return 0;
+            {
+              // Failed to acquire the lock!
+              return 0;
+            }
 
           ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *lock, 0);
 
@@ -166,8 +168,10 @@ TAO_TSS_Singleton<TYPE, ACE_LOCK>::instance ()
           // instantiation.
           static ACE_LOCK *lock {};
           if (ACE_Object_Manager::get_singleton_lock (lock) != 0)
-            // Failed to acquire the lock!
-            return 0;
+            {
+              // Failed to acquire the lock!
+              return 0;
+            }
 
           ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *lock, 0);
 

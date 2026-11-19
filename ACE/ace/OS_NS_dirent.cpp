@@ -169,10 +169,14 @@ ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
   ACE_DIR *dirp = ACE_OS::opendir (dirname);
 
   if (dirp == 0)
-    return -1;
+    {
+      return -1;
+    }
   // A sanity check here.  "namelist" had better not be zero.
   else if (namelist == 0)
-    return -1;
+    {
+      return -1;
+    }
 
   ACE_DIRENT **vector {};
   ACE_DIRENT *dp {};
@@ -185,7 +189,9 @@ ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
        dp = ACE_OS::readdir (dirp))
     {
       if (selector && (*selector)(dp) == 0)
-        continue;
+        {
+          continue;
+        }
 
       // If we get here, we have a dirent that the user likes.
       if (nfiles == arena_size)
@@ -193,9 +199,13 @@ ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
           ACE_DIRENT **newv {};
           int new_arena_size;
           if (arena_size == 0)
-            new_arena_size = 10;
+            {
+              new_arena_size = 10;
+            }
           else
-            new_arena_size = arena_size * 2;
+            {
+              new_arena_size = arena_size * 2;
+            }
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
           newv = (ACE_DIRENT **) ACE_Allocator::instance()->malloc (new_arena_size * sizeof (ACE_DIRENT *));

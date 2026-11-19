@@ -114,11 +114,17 @@ ACE_XtReactor::InputCallbackProc (XtPointer closure,
 
   // - read which kind of event
   if (self->wait_set_.rd_mask_.is_set (handle))
-    wait_set.rd_mask_.set_bit (handle);
+    {
+      wait_set.rd_mask_.set_bit (handle);
+    }
   if (self->wait_set_.wr_mask_.is_set (handle))
-    wait_set.wr_mask_.set_bit (handle);
+    {
+      wait_set.wr_mask_.set_bit (handle);
+    }
   if (self->wait_set_.ex_mask_.is_set (handle))
-    wait_set.ex_mask_.set_bit (handle);
+    {
+      wait_set.ex_mask_.set_bit (handle);
+    }
 
   ACE_Select_Reactor_Handle_Set dispatch_set;
 
@@ -130,11 +136,17 @@ ACE_XtReactor::InputCallbackProc (XtPointer closure,
                       std::addressof (zero)) > 0)
     {
       if (wait_set.rd_mask_.is_set (handle))
-        dispatch_set.rd_mask_.set_bit (handle);
+        {
+          dispatch_set.rd_mask_.set_bit (handle);
+        }
       if (wait_set.wr_mask_.is_set (handle))
-        dispatch_set.wr_mask_.set_bit (handle);
+        {
+          dispatch_set.wr_mask_.set_bit (handle);
+        }
       if (wait_set.ex_mask_.is_set (handle))
-        dispatch_set.ex_mask_.set_bit (handle);
+        {
+          dispatch_set.ex_mask_.set_bit (handle);
+        }
 
       self->dispatch (1, dispatch_set);
     }
@@ -156,7 +168,9 @@ ACE_XtReactor::XtWaitForMultipleEvents (int width,
                       temp_set.wr_mask_,
                       temp_set.ex_mask_,
                       std::addressof (ACE_Time_Value::zero)) == -1)
-    return -1; // Bad file arguments...
+    {
+      return -1; // Bad file arguments...
+    }
 
   // Instead of waiting using <select>, just use the Xt mechanism to
   // wait for a single event.
@@ -207,7 +221,9 @@ ACE_XtReactor::register_handler_i (ACE_HANDLE handle,
   if (ACE_Select_Reactor::register_handler_i (handle,
                                                handler,
                                                mask) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   this->synchronize_XtInput (handle);
   return 0;
@@ -231,7 +247,9 @@ ACE_XtReactor::remove_handler_i (ACE_HANDLE handle,
 
   if (ACE_Select_Reactor::remove_handler_i (handle,
                                              mask) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   this->synchronize_XtInput (handle);
   return 0;
@@ -251,7 +269,9 @@ ACE_XtReactor::suspend_i (ACE_HANDLE handle)
   ACE_TRACE ("ACE_XtReactor::suspend_i");
 
   if (ACE_Select_Reactor::suspend_i (handle) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   this->synchronize_XtInput (handle);
   return 0;
@@ -263,7 +283,9 @@ ACE_XtReactor::resume_i (ACE_HANDLE handle)
   ACE_TRACE ("ACE_XtReactor::resume_i");
 
   if (ACE_Select_Reactor::resume_i (handle) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   this->synchronize_XtInput (handle);
   return 0;
@@ -282,7 +304,9 @@ ACE_XtReactor::synchronize_XtInput (ACE_HANDLE handle)
   ACE_XtReactorID **xt_id = std::addressof (this->ids_);
 
   while (*xt_id && (*xt_id)->handle_ != handle)
-    xt_id = std::addressof ((*xt_id)->next_);
+    {
+      xt_id = std::addressof ((*xt_id)->next_);
+    }
 
   // Remove existing input handler.
   if (*xt_id)
@@ -336,7 +360,9 @@ ACE_XtReactor::compute_Xt_condition (ACE_HANDLE handle)
                                   ACE_Reactor::GET_MASK);
 
   if (mask == -1) // No active mask.
-    return 0;
+    {
+      return 0;
+    }
 
   int condition {};
 
@@ -394,7 +420,9 @@ ACE_XtReactor::reset_timer_interval
      interval);
 
   if (result == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   this->reset_timeout ();
   return result;
@@ -414,7 +442,9 @@ ACE_XtReactor::schedule_timer (ACE_Event_Handler *event_handler,
                                                           delay,
                                                           interval);
   if (result == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   this->reset_timeout ();
   return result;
@@ -428,7 +458,9 @@ ACE_XtReactor::cancel_timer (ACE_Event_Handler *handler,
 
   if (ACE_Select_Reactor::cancel_timer (handler,
                                         dont_call_handle_close) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   this->reset_timeout ();
   return 0;
@@ -444,7 +476,9 @@ ACE_XtReactor::cancel_timer (long timer_id,
   if (ACE_Select_Reactor::cancel_timer (timer_id,
                                         arg,
                                         dont_call_handle_close) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   this->reset_timeout ();
   return 0;
