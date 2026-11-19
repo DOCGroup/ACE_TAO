@@ -19,6 +19,7 @@ interface Accessor_Optimized_Interface
 };
 
 interface Accessor_Optimized_Second_Interface
+  : Accessor_Optimized_Interface
 {
 };
 
