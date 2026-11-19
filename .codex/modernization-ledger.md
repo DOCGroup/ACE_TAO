@@ -13496,3 +13496,10 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Added Allman braces around 16 single-statement branches in `TAO/tao/AnyTypeCode/Value_TypeCode.cpp`.
 - Focused `clang-tidy -p TAO/tao -checks=-*,readability-braces-around-statements` reported no remaining brace diagnostics in that translation unit; `git diff --check` passed. No build or runtime test was run.
 - Commit `0561b416bbf`. The wider AnyTypeCode and TAO/tao modernization audits remain open.
+
+
+## 2026-11-19 TAO AnyTypeCode TypeCode comparison braces
+
+- Added Allman braces to 29 single-statement return and bounds-check branches in `Struct_TypeCode.cpp`, `Union_TypeCode.cpp`, `Enum_TypeCode.cpp`, `Sequence_TypeCode.cpp`, and `TypeCode_Case_Base_T.cpp`. Together with `Value_TypeCode.cpp`, six TypeCode translation units now pass the focused check.
+- Focused `clang-tidy -p TAO/tao -checks=-*,readability-braces-around-statements` reported no remaining brace diagnostics in the five changed translation units; `git diff --check` passed. No build or runtime test was run.
+- Commit `8816e630776`. Other AnyTypeCode sources and the wider TAO/tao modernization audits remain open.
