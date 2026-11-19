@@ -120,10 +120,12 @@ int
 MyTask::start (int num_threads)
 {
   if (this->activate (THR_NEW_LWP, num_threads) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p.\n"),
-                       ACE_TEXT ("unable to activate thread pool")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p.\n"),
+                         ACE_TEXT ("unable to activate thread pool")),
+                        -1);
+    }
 
   return 0;
 }
@@ -140,14 +142,18 @@ MyTask::stop ()
     }
 
   if (this->wait () == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p.\n"),
-                ACE_TEXT ("unable to stop thread pool")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p.\n"),
+                  ACE_TEXT ("unable to stop thread pool")));
+    }
 
   if (this->delete_reactor () == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p.\n"),
-                ACE_TEXT ("unable to delete reactor")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p.\n"),
+                  ACE_TEXT ("unable to delete reactor")));
+    }
 
   return 0;
 }
@@ -158,7 +164,9 @@ MyTask::svc ()
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%P|%t) MyTask started\n")));
 
   while (this->my_reactor_->reactor_event_loop_done () == 0)
-    this->my_reactor_->run_reactor_event_loop ();
+    {
+      this->my_reactor_->run_reactor_event_loop ();
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%t) MyTask finished\n")));
   return 0;
@@ -215,9 +223,11 @@ bool test_timer (ACE_Condition_Thread_Mutex& condition_, ACE_Time_Value& waittim
   // seconds and the condition in 3 seconds, independent of any time change
   // meaning that the timeout should trigger
   if (!test_handler.trigger_in (ACE_Time_Value (5, 0)))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                        "(%P|%t) Unable to schedule trigger.\n"),
-                      false);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                          "(%P|%t) Unable to schedule trigger.\n"),
+                        false);
+    }
 
   waittime += ACE_Time_Value (3,0);
 
@@ -265,8 +275,10 @@ bool test_timer (ACE_Condition_Thread_Mutex& condition_, ACE_Time_Value& waittim
               status = false;
             }
           else
-            ACE_DEBUG ((LM_INFO, "(%P|%t) timer handler "
-            "triggered because we used non-monotonic condition timing!\n"));
+            {
+              ACE_DEBUG ((LM_INFO, "(%P|%t) timer handler "
+              "triggered because we used non-monotonic condition timing!\n"));
+            }
         }
       else
         {
@@ -277,8 +289,10 @@ bool test_timer (ACE_Condition_Thread_Mutex& condition_, ACE_Time_Value& waittim
               status = false;
             }
           else
-            ACE_DEBUG ((LM_INFO, "(%P|%t) timer handler has not "
-            "triggered because we used monotonic condition timing!\n"));
+            {
+              ACE_DEBUG ((LM_INFO, "(%P|%t) timer handler has not "
+              "triggered because we used monotonic condition timing!\n"));
+            }
         }
 
       // reset system clock to correct time
