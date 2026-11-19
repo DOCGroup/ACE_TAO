@@ -433,10 +433,10 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
   // called "TAO_USE_IMR". Do it here so that it can be overridden by
   // the "-ORBUseIMR" command line argument.
   //
-  char* const use_IMR_env_var_value = ACE_OS::getenv  ("TAO_USE_IMR") ;
-  if  (use_IMR_env_var_value != nullptr)
+  char * const use_IMR_env_var_value = ACE_OS::getenv ("TAO_USE_IMR");
+  if (use_IMR_env_var_value != nullptr)
     {
-      this->use_implrepo_ = ACE_OS::atoi  (use_IMR_env_var_value) ;
+      this->use_implrepo_ = ACE_OS::atoi (use_IMR_env_var_value);
     }
 
   while (arg_shifter.is_anything_left ())
@@ -1446,17 +1446,17 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
 
   this->orb_params ()->negotiate_codesets (negotiate_codesets);
 
-  if (this->codeset_manager())
+  if (this->codeset_manager ())
     {
-      this->codeset_manager_->open(*this);
+      this->codeset_manager_->open (*this);
     }
   else
     {
-      if  (TAO_debug_level > 0)
+      if (TAO_debug_level > 0)
         {
-        TAOLIB_DEBUG ((LM_DEBUG,
-                       ACE_TEXT("TAO (%P|%t) - ORB_Core: ")
-                       ACE_TEXT("Codeset Manager not available\n")));
+          TAOLIB_DEBUG ((LM_DEBUG,
+                         ACE_TEXT ("TAO (%P|%t) - ORB_Core: ")
+                         ACE_TEXT ("Codeset Manager not available\n")));
         }
     }
 

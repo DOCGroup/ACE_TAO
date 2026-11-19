@@ -1160,7 +1160,7 @@ namespace TAO
 
       // Need a local repo? Make one which typically should not be as
       // big as the default repository
-      if  (ACE_OS::strcasecmp (arg, ACE_TEXT("LOCAL")) == 0)
+      if (ACE_OS::strcasecmp (arg, ACE_TEXT ("LOCAL")) == 0)
         {
           ACE_Service_Gestalt* gestalt {};
           ACE_NEW_THROW_EX (gestalt,
@@ -1173,14 +1173,15 @@ namespace TAO
           return ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> (gestalt);
         }
 
-      if  (ACE_OS::strcasecmp (arg, ACE_TEXT("CURRENT")) == 0)
+      if (ACE_OS::strcasecmp (arg, ACE_TEXT ("CURRENT")) == 0)
         {
           return ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> {
             ACE_Service_Config::current ()};
         }
 
       // Explicit global case?
-      if  (orbconfig_string.is_empty () || ACE_OS::strcasecmp (arg, ACE_TEXT("GLOBAL")) == 0)
+      if (orbconfig_string.is_empty ()
+          || ACE_OS::strcasecmp (arg, ACE_TEXT ("GLOBAL")) == 0)
         {
           return ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> {
             ACE_Service_Config::global ()};
