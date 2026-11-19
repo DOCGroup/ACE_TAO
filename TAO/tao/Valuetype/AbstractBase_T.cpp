@@ -58,7 +58,9 @@ namespace TAO
           {
             proxy = dynamic_cast<T *> (obj);
             if (proxy != nullptr)
-              proxy->_add_ref ();
+              {
+                proxy->_add_ref ();
+              }
           }
       }
     catch (::CORBA::Exception const &)
