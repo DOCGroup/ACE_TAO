@@ -30,7 +30,7 @@ Scope: **1268 directories**; **1230** differ from the base; **1281** have task-l
 | `PREFIX_INC` — Prefer prefix increment and decrement when equivalent | 47 | 45 | 2 | 0 |
 | `BRACES` — Consistent braces around control-flow bodies | 8 | 2 | 0 | 6 |
 | `CONST_GUARD_MACROS` — Const guard macro usage while preserving ACE_GUARD conventions | 2 | 2 | 0 | 0 |
-| `MOVE_SITES` — Audit std::move sites for moved-from use and ownership correctness | 4 | 3 | 1 | 0 |
+| `MOVE_SITES` — Audit std::move sites for moved-from use and ownership correctness | 5 | 4 | 1 | 0 |
 | `MOVE_SEMANTICS` — Copy/move semantics and moved-from object safety | 6 | 6 | 0 | 0 |
 | `SIZE_TYPES` — Count and size types | 58 | 34 | 15 | 9 |
 | `IDL_GENERATION` — tao_idl/gperf inputs and generated output | 36 | 6 | 30 | 0 |
@@ -278,7 +278,7 @@ Scope: **1268 directories**; **1230** differ from the base; **1281** have task-l
 | `TAO/tao/ObjRefTemplate` | CONST; VALUE_INIT; OWNERSHIP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Audited implementation ownership: POA/reference-counted objects follow their CORBA var/factory contracts; generated raw sequence and Any APIs are intentionally unchanged. Fixed constructor and macro-call indentation, if-block brace style, and redundant whitespace in ObjectReferenceTemplate_i.cpp. | complete | `cfaea119b8d` |
 | `TAO/tao/PI` | VALUE_INIT; OWNERSHIP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Retained ACE_Array_Base because failure uses status returns and std::vector would require exception translation. Checked all size(new_len) returns and now raise CORBA::NO_MEMORY; documented PICurrent stack back-link ownership and ORB_Core ownership of interceptor adapters; normalized pointer checks, braces, and formatting in touched handwritten code. | complete | `af5483475d4` |
 | `TAO/tao/PI_Server` | VALUE_INIT; OWNERSHIP; CONTAINERS; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Directory checklist still needs broader review | partial | `c56d73bc10c` |
-| `TAO/tao/PortableServer` | CONST; VALUE_INIT; ATOMIC; OWNERSHIP; C_STRING; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | PortableServer ownership audit remains incomplete; other applicable modernization categories still need review | partial | `0ba18368694` |
+| `TAO/tao/PortableServer` | CONST; VALUE_INIT; ATOMIC; OWNERSHIP; C_STRING; MOVE_SITES; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | PortableServer ownership audit remains incomplete; other applicable modernization categories still need review | partial | `0ba18368694` |
 | `TAO/tao/RTCORBA` | VALUE_INIT; CLEANUP; SPECIAL_MEMBER_COMMENTS; BUILD_TEST; DIRECTORY_PASS | Remaining modernization categories are not yet audited | partial | `cfbc78f6654` |
 | `TAO/tao/RTScheduling` | CONST; LOG_FORMAT; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Remaining modernization categories are not yet audited | partial | `aa144353486` |
 | `TAO/tao/SmartProxies` | CONST=n/a; VALUE_INIT=n/a; NULLPTR=n/a; OVERRIDE_DEFAULT_DELETE; EXPORTED_DESTRUCTORS; EXPLICIT; COPY_MOVE; ATOMIC=n/a; THREAD_SAFETY=n/a; USING=n/a; CONSTEXPR=n/a; OWNERSHIP; CONTAINERS=n/a; C_STRING=n/a; PREFIX_INC=n/a; SIZE_TYPES=n/a; IDL_GENERATION=n/a; CLI_OPTIONS=n/a; LOG_FORMAT=n/a; TEST_ASSERTIONS=n/a; CLEANUP; UNUSED_INCLUDES; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST; TEXT_API=n/a; DIRECTORY_PASS |  | audited | `ab6126aaa8a` |

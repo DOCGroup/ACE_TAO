@@ -13547,3 +13547,10 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Ran `clang-tidy` with `modernize-use-bool-literals` across all 50 `TAO/tao/AnyTypeCode` and all 14 `TAO/tao/DynamicAny` translation units. Both focused scans completed without parse errors and produced no Boolean-literal diagnostics. Reviewed numeric argument occurrences; they are not Boolean parameters.
 - Recorded `BOOL_ARGUMENTS` as not applicable in both directories. The broader TAO core scan remains partial because 151 compile-database entries fail on stale paths or missing generated headers. No source edits, builds, or runtime tests were made.
 - Evidence commit: `862f1da9be3`.
+
+
+## 2026-11-19 TAO PortableServer move-site audit
+
+- Reviewed all 12 `std::move` sites in `TAO/tao/PortableServer`: six Active Object Map strategy/map owners transfer into the object, the ObjectId sequence is moved into its output owner and never read again, and Object Adapter moves hint/map owners plus root POA and manager factory ownership for teardown. No moved-from object is read.
+- `clang-tidy` `bugprone-use-after-move` on `Active_Object_Map.cpp` and `Object_Adapter.cpp` produced no findings. No source edits were needed; no build or runtime test was run.
+- Evidence commit: `59014ce2761`.
