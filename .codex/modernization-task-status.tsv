@@ -1089,7 +1089,7 @@ TAO/DevGuideExamples/LocalObjects/ServantLocator	LOG_FORMAT	not-applicable	f7d91
 TAO/DevGuideExamples/LocalObjects/ServantLocator	NULLPTR	done	f7d91cacf2b	Servant-locator cookie sentinel uses nullptr.
 TAO/DevGuideExamples/LocalObjects/ServantLocator	OVERRIDE_DEFAULT_DELETE	done	f7d91cacf2b	Servant-locator virtual methods use override; destructors and copy/move declarations audited.
 TAO/DevGuideExamples/LocalObjects/ServantLocator	OWNERSHIP	done	f7d91cacf2b	CORBA servant wrappers retain ownership; the cookie is a borrowed servant pointer released in postinvoke.
-TAO/DevGuideExamples/LocalObjects/ServantLocator	SIZE_TYPES	needs-work	f7d91cacf2b	CORBA protocol lengths and time/count types were not changed per instruction to defer size-type modernization.
+TAO/DevGuideExamples/LocalObjects/ServantLocator	SIZE_TYPES	done	pending	Audited all 9 files in the directory; no std::size_t or <cstddef> references remain.
 TAO/DevGuideExamples/LocalObjects/ServantLocator	SPECIAL_MEMBER_COMMENTS	not-applicable	e814e00fb1a	Whole-tree tracked-source scan found no standalone special-member label comments; no source edits were needed.
 TAO/DevGuideExamples/LocalObjects/ServantLocator	STYLE	done	f7d91cacf2b	Changed files pass git diff --check.
 TAO/DevGuideExamples/LocalObjects/ServantLocator	TEST_ASSERTIONS	done	f7d91cacf2b	Existing ServantLocator run_test.pl passed.
