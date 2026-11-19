@@ -13561,3 +13561,10 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Reviewed both `std::move` sites in `TAO/tao/RTScheduling/Current.cpp`. `current_owner` transfers into `DTTask` and then its `current_` unique_ptr member. In `svc()`, ownership is released to thread-specific storage before the pointer is used; the moved-from owners are not read.
 - Recorded `MOVE_SITES` as done. `bugprone-use-after-move` could not parse `Current.cpp` because generated `RTSchedulerC.h` is absent in this checkout. No source edits, build, or runtime test were made.
 - Evidence commit: `ec07082e9cd`.
+
+
+## 2026-11-19 TAO CSD move-site audit
+
+- Reviewed three `std::move` sites in `TAO/tao/CSD_Framework`: iterative list destruction safely transfers each `unique_ptr`, and insertion transfers the new node into the list tail. `bugprone-use-after-move` on `CSD_Strategy_Repository.cpp` reported no findings.
+- Reviewed `TAO/tao/CSD_ThreadPool` exception transfer: the moved owner raises the exception, and no later read accesses the moved-from member. Recorded both directories as done. No source edits, build, or runtime test was run.
+- Evidence commit: `de632b1ca42`.

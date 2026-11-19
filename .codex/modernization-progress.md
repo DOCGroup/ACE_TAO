@@ -30,7 +30,7 @@ Scope: **1268 directories**; **1230** differ from the base; **1281** have task-l
 | `PREFIX_INC` — Prefer prefix increment and decrement when equivalent | 47 | 45 | 2 | 0 |
 | `BRACES` — Consistent braces around control-flow bodies | 8 | 2 | 0 | 6 |
 | `CONST_GUARD_MACROS` — Const guard macro usage while preserving ACE_GUARD conventions | 2 | 2 | 0 | 0 |
-| `MOVE_SITES` — Audit std::move sites for moved-from use and ownership correctness | 6 | 5 | 1 | 0 |
+| `MOVE_SITES` — Audit std::move sites for moved-from use and ownership correctness | 8 | 7 | 1 | 0 |
 | `MOVE_SEMANTICS` — Copy/move semantics and moved-from object safety | 6 | 6 | 0 | 0 |
 | `SIZE_TYPES` — Count and size types | 58 | 34 | 15 | 9 |
 | `IDL_GENERATION` — tao_idl/gperf inputs and generated output | 36 | 6 | 30 | 0 |
@@ -254,8 +254,8 @@ Scope: **1268 directories**; **1230** differ from the base; **1281** have task-l
 | `TAO/orbsvcs/tests/Notify/Structured_Filter` | VALUE_INIT; OVERRIDE_DEFAULT_DELETE; COPY_MOVE; OWNERSHIP; CLEANUP; SPECIAL_MEMBER_COMMENTS=n/a; BUILD_TEST | Broader directory checklist remains | partial | `d57eccb57a4` |
 | `TAO/tao/AnyTypeCode` | CONST; VALUE_INIT; BOOL_ARGUMENTS=n/a; OVERRIDE_DEFAULT_DELETE; PREFIX_INC; CONST_GUARD_MACROS; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | BRACES partially reviewed; 11 AnyTypeCode translation units and True_RefCount_Policy.inl complete, remainder open; remaining modernization categories are not yet audited | partial | `e6fa5d72aa1` |
 | `TAO/tao/BiDir_GIOP` | CONST; VALUE_INIT; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Remaining modernization categories still need audit | partial | `1e6aa561e2a` |
-| `TAO/tao/CSD_Framework` | CONST; OWNERSHIP; PREFIX_INC; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Manual request clone cleanup retained for ownership-sensitive APIs; remaining modernization categories still need audit | partial | `4ffd1cb1be6` |
-| `TAO/tao/CSD_ThreadPool` | CONST; VALUE_INIT; NULLPTR; OVERRIDE_DEFAULT_DELETE; EXPLICIT; COPY_MOVE; OWNERSHIP; PREFIX_INC; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Retained intrusive reference-count handles and non-owning queue links; SIZE_TYPES intentionally deferred | audited | `5f20df0c422` |
+| `TAO/tao/CSD_Framework` | CONST; OWNERSHIP; PREFIX_INC; MOVE_SITES; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Manual request clone cleanup retained for ownership-sensitive APIs; remaining modernization categories still need audit | partial | `4ffd1cb1be6` |
+| `TAO/tao/CSD_ThreadPool` | CONST; VALUE_INIT; NULLPTR; OVERRIDE_DEFAULT_DELETE; EXPLICIT; COPY_MOVE; OWNERSHIP; PREFIX_INC; MOVE_SITES; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Retained intrusive reference-count handles and non-owning queue links; SIZE_TYPES intentionally deferred | audited | `5f20df0c422` |
 | `TAO/tao/CodecFactory` | CONST; VALUE_INIT; OVERRIDE_DEFAULT_DELETE; EXPLICIT; COPY_MOVE; OWNERSHIP; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | No additional ownership conversion justified; CORBA var ownership matches API | audited | `b1c8c9e85d8` |
 | `TAO/tao/Codeset` | CONST; VALUE_INIT; NULLPTR; OVERRIDE_DEFAULT_DELETE; OWNERSHIP; PREFIX_INC; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | SIZE_TYPES deferred by instruction; other checklist categories remain to be audited; ACE_CString remains required by registry API | partial | `8a4f7a90837` |
 | `TAO/tao/Compression` | CONST; VALUE_INIT; OVERRIDE_DEFAULT_DELETE; SPECIAL_MEMBER_COMMENTS=n/a; STYLE; BUILD_TEST | Root library and RLE/zlib/bzip2 ownership and cleanup reviewed; LZO dependency/build validation remains unavailable | partial | `pending` |

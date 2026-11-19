@@ -2876,6 +2876,7 @@ TAO/tao/BiDir_GIOP	VALUE_INIT	done	1e6aa561e2a	Value-initialized initializer poi
 TAO/tao/CSD_Framework	BUILD_TEST	done	07d26650f71	Clean library and ThreadPool client/server builds; run_test.pl passed
 TAO/tao/CSD_Framework	CLEANUP	done	27b0f74a9e0	Removed initialization flags with no work beyond setting them
 TAO/tao/CSD_Framework	CONST	done	07d26650f71	Const-qualified temporary pointers and made strategy lookup const
+TAO/tao/CSD_Framework	MOVE_SITES	done	de632b1ca42	Reviewed all three unique_ptr moves: iterative list teardown transfers head and next ownership without later source reads; insertion transfers node_owner into the tail. Focused bugprone-use-after-move scan of CSD_Strategy_Repository.cpp found no findings.
 TAO/tao/CSD_Framework	OWNERSHIP	done	07d26650f71	Protected CDR initial buffer with unique_ptr until ownership remains with wrapper
 TAO/tao/CSD_Framework	PREFIX_INC	done	07d26650f71	Changed side-effect-free clone argument loop to prefix increment
 TAO/tao/CSD_Framework	SPECIAL_MEMBER_COMMENTS	done	5fb330eed32	Removed 11 standalone constructor/destructor labels; realclean build and link passed without warnings
@@ -2885,6 +2886,7 @@ TAO/tao/CSD_ThreadPool	CLEANUP	done	5f20df0c422	Migrated from existing inventory
 TAO/tao/CSD_ThreadPool	CONST	done	5f20df0c422	Const-qualified request/state handles and immutable queue traversal values; realclean library build passed without warnings
 TAO/tao/CSD_ThreadPool	COPY_MOVE	done	5f20df0c422	Migrated from existing inventory; see modernization-ledger.md
 TAO/tao/CSD_ThreadPool	EXPLICIT	done	5f20df0c422	Migrated from existing inventory; see modernization-ledger.md
+TAO/tao/CSD_ThreadPool	MOVE_SITES	done	de632b1ca42	Reviewed the exception unique_ptr move in TP_Collocated_Synch_Request::wait; ownership is transferred to ex_holder, which raises and destroys it during unwinding. The moved-from member is not read afterward.
 TAO/tao/CSD_ThreadPool	NULLPTR	done	5f20df0c422	Migrated from existing inventory; see modernization-ledger.md
 TAO/tao/CSD_ThreadPool	OVERRIDE_DEFAULT_DELETE	done	5f20df0c422	Migrated from existing inventory; see modernization-ledger.md
 TAO/tao/CSD_ThreadPool	OWNERSHIP	done	5f20df0c422	Migrated from existing inventory; see modernization-ledger.md
