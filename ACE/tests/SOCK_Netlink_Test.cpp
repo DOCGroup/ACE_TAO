@@ -134,11 +134,13 @@ get_if_index (const char*const interface,
   ACE_HANDLE s = ACE_OS::socket (AF_INET,SOCK_DGRAM,0);
 
   if (s == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("get_if_index - failed on\n")
-                       ACE_TEXT ("ACE_OS::socket")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("get_if_index - failed on\n")
+                         ACE_TEXT ("ACE_OS::socket")),
+                        -1);
+    }
 
   int result = ACE_OS::ioctl (s,
                               SIOCGIFINDEX,
@@ -355,10 +357,12 @@ Secondary_Ipaddr_Handler::open (ACE_Reactor *const reactor,
   if (!reactor ||
       !ip_slash_mask || !ACE_OS::strlen (ip_slash_mask) ||
       !if_name || !ACE_OS::strlen (if_name))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("(%P) Secondary_Ipaddr_Handler::open: error ")
-                       ACE_TEXT("zero pointers or zero length strings used as input.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("(%P) Secondary_Ipaddr_Handler::open: error ")
+                         ACE_TEXT("zero pointers or zero length strings used as input.\n")),
+                        -1);
+    }
 
   this->reactor (reactor);
 
@@ -370,28 +374,34 @@ Secondary_Ipaddr_Handler::open (ACE_Reactor *const reactor,
   if (this->socket ().open (this->address_,
                             ACE_PROTOCOL_FAMILY_NETLINK,
                             NETLINK_ROUTE) == -1)
-    //FUZZ: disable check_for_lack_ACE_OS
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("(%P|%t) Secondary_Ipaddr_Handler::open: - failed\n")
-                       ACE_TEXT("to initialize netlink socket bu open ().\n")),
-                      -1);
-    //FUZZ: enable check_for_lack_ACE_OS
+    {
+      //FUZZ: disable check_for_lack_ACE_OS
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("(%P|%t) Secondary_Ipaddr_Handler::open: - failed\n")
+                         ACE_TEXT("to initialize netlink socket bu open ().\n")),
+                        -1);
+      //FUZZ: enable check_for_lack_ACE_OS
+    }
 
   // register with the reactor for input
   if (this->reactor ()->register_handler (this,
                                           ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("(%P|%t) Secondary_Ipaddr_Handler::open - ")
-                       ACE_TEXT("can't register with reactor for handling input.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("(%P|%t) Secondary_Ipaddr_Handler::open - ")
+                         ACE_TEXT("can't register with reactor for handling input.\n")),
+                        -1);
+    }
 
   if (this->reactor ()->schedule_timer (this,
                                         nullptr,
                                         ACE_Time_Value::zero) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("(%P) Secondary_Ipaddr_Handler::open - ")
-                       ACE_TEXT("can't schedule timer with reactor.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("(%P) Secondary_Ipaddr_Handler::open - ")
+                         ACE_TEXT("can't schedule timer with reactor.\n")),
+                        -1);
+    }
 
   this->seq_ = ACE_OS::time (nullptr);
 
@@ -466,10 +476,12 @@ Secondary_Ipaddr_Handler::handle_input (ACE_HANDLE)
         }
 
       if (static_cast <int> (hdr->nlmsg_pid) != this->address_.get_pid () || hdr->nlmsg_seq != this->seq_)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT("(%P) Secondary_Ipaddr_Handler::handle_input - ")
-                           ACE_TEXT("process id or message sequence is different\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT("(%P) Secondary_Ipaddr_Handler::handle_input - ")
+                             ACE_TEXT("process id or message sequence is different\n")),
+                            -1);
+        }
 
       if (hdr->nlmsg_type == NLMSG_ERROR)
         {
@@ -611,10 +623,12 @@ Secondary_Ipaddr_Handler::schedule_one_sec_timer ()
   if (this->reactor ()->schedule_timer (this,
                                         nullptr,
                                         one_sec) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("(%P) Secondary_Ipaddr_Handler::schedule_one_sec_timer - ")
-                       ACE_TEXT("can't schedule timer with reactor.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("(%P) Secondary_Ipaddr_Handler::schedule_one_sec_timer - ")
+                         ACE_TEXT("can't schedule timer with reactor.\n")),
+                        -1);
+    }
   return 0;
 }
 
@@ -651,7 +665,9 @@ Secondary_Ipaddr_Handler::fill_inet_prefix (
         {
           dot = ACE_OS::strchr (to_search,  '.');
           if (!dot || !ACE_OS::strlen (to_search))
-            return -1;
+            {
+              return -1;
+            }
           else
           {
             *dot = '\0';
@@ -659,7 +675,9 @@ Secondary_Ipaddr_Handler::fill_inet_prefix (
         }
       int num = ACE_OS::atoi (to_search);
       if (num < 0 || num > 255)
-        return -1;
+        {
+          return -1;
+        }
       else
       {
         ((u_char *) &inet_prefix.data)[i] = (u_char)num;
@@ -712,10 +730,12 @@ Secondary_Ipaddr_Handler::dispatch_ip_operation (
                                   if_name,
                                   this->netlink_request_,
                                   action) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Secondary_Ipaddr_Handler::ip_operation - "
-                       "init_netlink_request () failed.\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Secondary_Ipaddr_Handler::ip_operation - "
+                         "init_netlink_request () failed.\n"),
+                        -1);
+    }
 
   this->netlink_request_.nhdr_.nlmsg_seq = ++this->seq_;
   this->netlink_request_.nhdr_.nlmsg_flags |= NLM_F_ACK;
@@ -732,11 +752,13 @@ Secondary_Ipaddr_Handler::dispatch_ip_operation (
   if (this->socket ().send (&iov_send,
                             1,
                             addr_send) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("Secondary_Ipaddr_Handler::ip_operation - ")
-                       ACE_TEXT("send of request failed with errno %d.\n"),
-                       errno),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("Secondary_Ipaddr_Handler::ip_operation - ")
+                         ACE_TEXT("send of request failed with errno %d.\n"),
+                         errno),
+                        -1);
+    }
   return 0;
 }
 
@@ -749,10 +771,12 @@ Secondary_Ipaddr_Handler::delete_ip (
                                    ip_slash_mask,
                                    if_name,
                                    false) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("(%P) Secondary_Ipaddr_Handler::delete_ip - ")
-                       ACE_TEXT("dispatch_ip_operation() failed.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("(%P) Secondary_Ipaddr_Handler::delete_ip - ")
+                         ACE_TEXT("dispatch_ip_operation() failed.\n")),
+                        -1);
+    }
   return 0;
 }
 
@@ -764,10 +788,12 @@ Secondary_Ipaddr_Handler::add_ip (
   if (this->dispatch_ip_operation (ip_slash_mask,
                                    if_name,
                                    true) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("(%P) Secondary_Ipaddr_Handler::add_ip - ")
-                       ACE_TEXT("dispatch_ip_operation() failed.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("(%P) Secondary_Ipaddr_Handler::add_ip - ")
+                         ACE_TEXT("dispatch_ip_operation() failed.\n")),
+                        -1);
+    }
   return 0;
 }
 
@@ -825,10 +851,12 @@ static int run_test (char*const ip_slash_netmask,
                            ip_slash_netmask,
                            if_name)
       == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("(%P) SOCK_Netlink_Test - run_test () failed ")
-                       ACE_TEXT("due to sec_ip_handler.open () error.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("(%P) SOCK_Netlink_Test - run_test () failed ")
+                         ACE_TEXT("due to sec_ip_handler.open () error.\n")),
+                        -1);
+    }
 
   ACE_Time_Value wait_time (4, 0);
 
