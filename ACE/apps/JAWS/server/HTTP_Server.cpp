@@ -40,7 +40,8 @@ HTTP_Server::parse_args (int argc, ACE_TCHAR *argv[])
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("p:n:t:i:b:c:"));
 
   while ((c = get_opt ()) != -1)
-    switch (c)
+    {
+      switch (c)
       {
       case 'p':
         this->port_ = ACE_OS::atoi (get_opt.opt_arg ());
@@ -53,7 +54,9 @@ HTTP_Server::parse_args (int argc, ACE_TCHAR *argv[])
         // PER_REQUEST -> thread per request
         // THROTTLE    -> thread per request with throttling
         if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("POOL")) == 0)
-          thr_strategy = JAWS::JAWS_POOL;
+          {
+            thr_strategy = JAWS::JAWS_POOL;
+          }
         else if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("PER_REQUEST")) == 0)
           {
             thr_strategy = JAWS::JAWS_PER_REQUEST;
@@ -81,24 +84,31 @@ HTTP_Server::parse_args (int argc, ACE_TCHAR *argv[])
         // SYNCH  -> synchronous I/O
         // ASYNCH -> asynchronous I/O
         if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("SYNCH")) == 0)
-          io_strategy = JAWS::JAWS_SYNCH;
+          {
+            io_strategy = JAWS::JAWS_SYNCH;
+          }
         else if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("ASYNCH")) == 0)
-          io_strategy = JAWS::JAWS_ASYNCH;
+          {
+            io_strategy = JAWS::JAWS_ASYNCH;
+          }
         break;
       case 'b':
         this->backlog_ = ACE_OS::atoi (get_opt.opt_arg ());
         break;
       case 'c':
         if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("NO_CACHE")) == 0)
-          this->caching_ = false;
+          {
+            this->caching_ = false;
+          }
         else
-        {
-          this->caching_ = true;
-        }
+          {
+            this->caching_ = true;
+          }
         break;
         default:
         break;
       }
+    }
 
   // No magic numbers.
   if (this->port_ <= 0)
@@ -184,8 +194,10 @@ HTTP_Server::synch_thread_pool (HTTP_Handler_Factory &factory)
   // Main thread opens the acceptor
   if (this->acceptor_.open (ACE_INET_Addr (this->port_), 1,
                             PF_INET, this->backlog_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("HTTP_Acceptor::open")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("HTTP_Acceptor::open")), -1);
+    }
 
   // Create a pool of threads to handle incoming connections.
   Synch_Thread_Pool_Task t (this->acceptor_, this->tm_, this->threads_, factory);
@@ -203,8 +215,10 @@ Synch_Thread_Pool_Task::Synch_Thread_Pool_Task (HTTP_Acceptor &acceptor,
     factory_ (factory)
 {
   if (this->activate (THR_DETACHED | THR_NEW_LWP, threads) == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
-                ACE_TEXT ("Synch_Thread_Pool_Task::open")));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("Synch_Thread_Pool_Task::open")));
+    }
 }
 
 int
@@ -219,8 +233,10 @@ Synch_Thread_Pool_Task::svc ()
 
       // Lock in this accept.  When it returns, we have a connection.
       if (this->acceptor_.accept (stream) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT("%p\n"),
-                           ACE_TEXT ("HTTP_Acceptor::accept")), -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT("%p\n"),
+                             ACE_TEXT ("HTTP_Acceptor::accept")), -1);
+        }
 
       ACE_Message_Block *mb {};
       ACE_NEW_RETURN (mb,
@@ -250,8 +266,10 @@ HTTP_Server::thread_per_request (HTTP_Handler_Factory &factory)
   // Main thread opens the acceptor
   if (this->acceptor_.open (ACE_INET_Addr (this->port_), 1,
                             PF_INET, this->backlog_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("HTTP_Acceptor::open")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("HTTP_Acceptor::open")), -1);
+    }
 
   ACE_SOCK_Stream stream;
 
@@ -262,8 +280,10 @@ HTTP_Server::thread_per_request (HTTP_Handler_Factory &factory)
   for (;;)
     {
       if (this->acceptor_.accept (stream) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("HTTP_Acceptor::accept")), -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("HTTP_Acceptor::accept")), -1);
+        }
 
       Thread_Per_Request_Task *t;
       // Pass grp_id as a constructor param instead of into open.
@@ -274,20 +294,24 @@ HTTP_Server::thread_per_request (HTTP_Handler_Factory &factory)
                       -1);
 
       if (t->open () != 0)
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("Thread_Per_Request_Task::open")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("Thread_Per_Request_Task::open")),
+                            -1);
+        }
 
       // Throttling is not allowing too many threads to run away.
       // Should really use some sort of condition variable here.
       if (!this->throttle_)
-      {
-        continue;
-      }
+        {
+          continue;
+        }
 
       // This works because each task has only one thread.
       while (this->tm_.num_tasks_in_group (grp_id) > this->threads_)
-        this->tm_.wait (&wait_time);
+        {
+          this->tm_.wait (&wait_time);
+        }
     }
 
   ACE_NOTREACHED(return 0);
@@ -313,15 +337,21 @@ Thread_Per_Request_Task::open (void *)
   int status = -1;
 
   if (this->grp_id_ == -1)
-    status = this->grp_id_ = this->activate (THR_DETACHED | THR_NEW_LWP);
+    {
+      status = this->grp_id_ = this->activate (THR_DETACHED | THR_NEW_LWP);
+    }
   else
-    status = this->activate (THR_DETACHED | THR_NEW_LWP,
-                             1, 0, -1, this->grp_id_, 0);
+    {
+      status = this->activate (THR_DETACHED | THR_NEW_LWP,
+                               1, 0, -1, this->grp_id_, 0);
+    }
 
   if (status == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("Thread_Per_Request_Task::open")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("Thread_Per_Request_Task::open")),
+                        -1);
+    }
   return 0;
 }
 
