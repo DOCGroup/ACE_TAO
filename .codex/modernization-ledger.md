@@ -13417,3 +13417,9 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Scanned 776 existing translation units from `TAO/tao/compile_commands.json`. The scan found missing braces in handwritten TAO core code; several optional subdirectories could not be parsed because generated headers are absent in this checkout.
 - Added Allman braces in `Asynch_Queued_Message.cpp`, `Storable_Base.cpp`, `Object_Ref_Table.cpp`, `On_Demand_Fragmentation_Strategy.cpp`, `Wait_On_LF_No_Upcall.cpp`, and `Wait_On_Read.cpp`, correcting surrounding indentation in the affected blocks. Focused clang-tidy checks for all six files and `git diff --check` passed. No build or runtime test was run.
 - Commit `645b9f612b2`. The broader TAO/tao brace audit remains open.
+
+
+## 2026-11-19 TAO core invocation and connection braces
+
+- Added Allman braces around single-statement control-flow bodies in `Collocated_Invocation.cpp`, `Exclusive_TMS.cpp`, `GIOP_Message_State.cpp`, and `Connection_Handler.cpp`; normalized affected log-call indentation. Focused clang-tidy checks for all four files and `git diff --check` passed. No build or runtime test was run.
+- Commit `d20e4ff5b40`. The wider TAO/tao brace audit remains open.
