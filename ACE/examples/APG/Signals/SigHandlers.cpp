@@ -44,10 +44,14 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   while ((time = ACE_OS::sleep (time)) == -1)
     {
       if (errno == EINTR)
-        continue;
+        {
+          continue;
+        }
       else
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("sleep")), -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("sleep")), -1);
+        }
     }
   return 0;
 }
