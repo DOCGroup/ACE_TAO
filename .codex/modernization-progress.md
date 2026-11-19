@@ -11,7 +11,7 @@ Scope: **1268 directories**; **1230** differ from the base; **1281** have task-l
 | `CONST` — East-side const and immutable locals/handles | 242 | 241 | 1 | 0 |
 | `SCOPE_REDUCTION` — Keep variables and declarations in the narrowest useful scope | 15 | 15 | 0 | 0 |
 | `VALUE_INIT` — Value initialization and simpler constructors | 228 | 226 | 2 | 0 |
-| `BOOL_ARGUMENTS` — Use Boolean literals for Boolean arguments | 1 | 0 | 0 | 1 |
+| `BOOL_ARGUMENTS` — Use Boolean literals for Boolean arguments | 2 | 0 | 2 | 0 |
 | `NULLPTR` — Eligible nullptr modernization | 81 | 64 | 17 | 0 |
 | `OVERRIDE_DEFAULT_DELETE` — override/default/delete and exported destructor placement | 122 | 112 | 10 | 0 |
 | `OVERRIDE` — Missing override specifiers | 6 | 6 | 0 | 0 |
@@ -252,7 +252,7 @@ Scope: **1268 directories**; **1230** differ from the base; **1281** have task-l
 | `TAO/orbsvcs/tests/Notify/Reconnecting` | CONST; VALUE_INIT; NULLPTR; C_STRING; SPECIAL_MEMBER_COMMENTS=n/a; BUILD_TEST | Other checklist modernization categories remain unaudited; ACE_TCHAR parsing and file-I/O wrappers retained | partial | `d7686e313eb` |
 | `TAO/orbsvcs/tests/Notify/Sequence_Multi_Filter` | CONST; VALUE_INIT; COPY_MOVE; OWNERSHIP; CLEANUP; SPECIAL_MEMBER_COMMENTS=n/a; STYLE; BUILD_TEST | Other checklist modernization categories remain unaudited | partial | `4ffe44273f1` |
 | `TAO/orbsvcs/tests/Notify/Structured_Filter` | VALUE_INIT; OVERRIDE_DEFAULT_DELETE; COPY_MOVE; OWNERSHIP; CLEANUP; SPECIAL_MEMBER_COMMENTS=n/a; BUILD_TEST | Broader directory checklist remains | partial | `d57eccb57a4` |
-| `TAO/tao/AnyTypeCode` | CONST; VALUE_INIT; OVERRIDE_DEFAULT_DELETE; PREFIX_INC; CONST_GUARD_MACROS; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | BRACES partially reviewed; 11 AnyTypeCode translation units and True_RefCount_Policy.inl complete, remainder open; remaining modernization categories are not yet audited | partial | `e6fa5d72aa1` |
+| `TAO/tao/AnyTypeCode` | CONST; VALUE_INIT; BOOL_ARGUMENTS=n/a; OVERRIDE_DEFAULT_DELETE; PREFIX_INC; CONST_GUARD_MACROS; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | BRACES partially reviewed; 11 AnyTypeCode translation units and True_RefCount_Policy.inl complete, remainder open; remaining modernization categories are not yet audited | partial | `e6fa5d72aa1` |
 | `TAO/tao/BiDir_GIOP` | CONST; VALUE_INIT; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Remaining modernization categories still need audit | partial | `1e6aa561e2a` |
 | `TAO/tao/CSD_Framework` | CONST; OWNERSHIP; PREFIX_INC; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Manual request clone cleanup retained for ownership-sensitive APIs; remaining modernization categories still need audit | partial | `4ffd1cb1be6` |
 | `TAO/tao/CSD_ThreadPool` | CONST; VALUE_INIT; NULLPTR; OVERRIDE_DEFAULT_DELETE; EXPLICIT; COPY_MOVE; OWNERSHIP; PREFIX_INC; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Retained intrusive reference-count handles and non-owning queue links; SIZE_TYPES intentionally deferred | audited | `5f20df0c422` |
@@ -263,7 +263,7 @@ Scope: **1268 directories**; **1230** differ from the base; **1281** have task-l
 | `TAO/tao/Compression/rle` | OWNERSHIP; SPECIAL_MEMBER_COMMENTS=n/a; STYLE; BUILD_TEST | CORBA var owns returned sequence references; no manual heap cleanup left | audited | `pending` |
 | `TAO/tao/Compression/zlib` | OWNERSHIP; CLEANUP; SPECIAL_MEMBER_COMMENTS=n/a; STYLE; BUILD_TEST | CORBA var and map references are balanced; catch translates allocation/container failures | audited | `pending` |
 | `TAO/tao/DiffServPolicy` | CONST; VALUE_INIT; OWNERSHIP; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Remaining modernization categories are not yet audited | partial | `pending` |
-| `TAO/tao/DynamicAny` | CONST; SCOPE_REDUCTION; VALUE_INIT; BRACES; MOVE_SITES=n/a; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Boolean-argument audit remains open; other modernization categories are not yet audited | partial | `e6fa5d72aa1` |
+| `TAO/tao/DynamicAny` | CONST; SCOPE_REDUCTION; VALUE_INIT; BOOL_ARGUMENTS=n/a; BRACES; MOVE_SITES=n/a; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Boolean-argument audit remains open; other modernization categories are not yet audited | partial | `e6fa5d72aa1` |
 | `TAO/tao/DynamicInterface` | CONST; VALUE_INIT; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Other modernization categories are not yet audited | partial | `cedc97e8a3a` |
 | `TAO/tao/Dynamic_TP` | CONST; VALUE_INIT; OWNERSHIP; SIZE_TYPES; LOG_FORMAT; CLEANUP; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Directory checklist not yet fully audited | partial | `1b9c885d3a2` |
 | `TAO/tao/ETCL` | CONST; OWNERSHIP; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Other applicable modernization categories still need review | partial | `de8d1936b55` |

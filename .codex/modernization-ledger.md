@@ -13540,3 +13540,10 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Searched all tracked files under `ACE/` and `TAO/` for standalone comments that only label constructors, destructors, copy/move operations, or assignment operators, including old `// = CONSTRUCTOR` and `// = DESTRUCTOR` labels. No matches were found, so no source edits were needed.
 - Recorded `SPECIAL_MEMBER_COMMENTS` as not applicable for all previously unrecorded source/project directories. This records the current-tree audit; continue checking newly touched directories in future batches. No build or runtime test was run.
 - Evidence commit: `e814e00fb1a`.
+
+
+## 2026-11-19 TAO AnyTypeCode and DynamicAny Boolean argument audit
+
+- Ran `clang-tidy` with `modernize-use-bool-literals` across all 50 `TAO/tao/AnyTypeCode` and all 14 `TAO/tao/DynamicAny` translation units. Both focused scans completed without parse errors and produced no Boolean-literal diagnostics. Reviewed numeric argument occurrences; they are not Boolean parameters.
+- Recorded `BOOL_ARGUMENTS` as not applicable in both directories. The broader TAO core scan remains partial because 151 compile-database entries fail on stale paths or missing generated headers. No source edits, builds, or runtime tests were made.
+- Evidence commit: `862f1da9be3`.
