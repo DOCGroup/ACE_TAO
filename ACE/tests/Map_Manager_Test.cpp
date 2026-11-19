@@ -63,7 +63,9 @@ test_cache_map_manager (size_t table_size,
   ssize_t k;
 
   for (i = 0; i < iterations; ++i)
-    ACE_TEST_ASSERT (map.bind (i, i) != -1);
+    {
+      ACE_TEST_ASSERT (map.bind (i, i) != -1);
+    }
 
   if (test_iterators)
     {
@@ -187,7 +189,9 @@ test_hash_cache_map_manager (size_t table_size,
   ssize_t k;
 
   for (i = 0; i < iterations; ++i)
-    ACE_TEST_ASSERT (map.bind (i, i) != -1);
+    {
+      ACE_TEST_ASSERT (map.bind (i, i) != -1);
+    }
 
   if (test_iterators)
     {
@@ -318,7 +322,9 @@ test_active_map_manager (size_t table_size,
   for (i = 0;
        i < iterations;
        ++i)
-    ACE_TEST_ASSERT (map.bind (i, active_keys[i]) != -1);
+    {
+      ACE_TEST_ASSERT (map.bind (i, active_keys[i]) != -1);
+    }
 
   if (test_iterators)
     {
@@ -400,7 +406,9 @@ test_hash_map_manager (size_t table_size,
   ssize_t k;
 
   for (i = 0; i < iterations; ++i)
-    ACE_TEST_ASSERT (map.bind (i, i) != -1);
+    {
+      ACE_TEST_ASSERT (map.bind (i, i) != -1);
+    }
 
   if (test_iterators)
     {
@@ -605,7 +613,9 @@ test_map_manager (size_t table_size,
   ssize_t k;
 
   for (i = 0; i < iterations; ++i)
-    ACE_TEST_ASSERT (map.bind (i, i) != -1);
+    {
+      ACE_TEST_ASSERT (map.bind (i, i) != -1);
+    }
 
   if (test_iterators)
     {
@@ -800,14 +810,18 @@ test_map_manager (size_t table_size,
   // This is extra for the map manager.
   //
   for (i = 0; i < iterations; ++i)
-    ACE_TEST_ASSERT (map.bind (i, i) != -1);
+    {
+      ACE_TEST_ASSERT (map.bind (i, i) != -1);
+    }
 
   // Unbind in one swoop.
   map.unbind_all ();
   ACE_TEST_ASSERT (map.current_size () == 0);
 
   for (i = 0; i < iterations; ++i)
-    ACE_TEST_ASSERT (map.bind (i, i) != -1);
+    {
+      ACE_TEST_ASSERT (map.bind (i, i) != -1);
+    }
 
   // Unbind one at a time.
   MAP_MANAGER::iterator end = map.end ();
@@ -847,11 +861,15 @@ run_test (int (*ptf) (size_t, size_t, int),
   ACE_TCHAR *test_iterators_string {};
 
   if (test_iterators)
-    test_iterators_string =
-      const_cast<ACE_TCHAR*> (ACE_TEXT ( "includes executing iterators"));
+    {
+      test_iterators_string =
+        const_cast<ACE_TCHAR*> (ACE_TEXT ( "includes executing iterators"));
+    }
   else
-    test_iterators_string =
-      const_cast<ACE_TCHAR*> (ACE_TEXT ("doesn't include executing iterators"));
+    {
+      test_iterators_string =
+        const_cast<ACE_TCHAR*> (ACE_TEXT ("doesn't include executing iterators"));
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("time to test a map of size %B for %B iterations using %s (%s)\n"),
