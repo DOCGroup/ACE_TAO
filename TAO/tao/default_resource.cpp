@@ -73,11 +73,13 @@ void
 TAO_Codeset_Parameters::native (const ACE_TCHAR* n)
 {
   if (n == nullptr)
-    this->native_.clear ();
+    {
+      this->native_.clear ();
+    }
   else
-  {
-    this->native_ = n;
-  }
+    {
+      this->native_ = n;
+    }
 
   this->native_set_ = n != nullptr;
 }
@@ -152,7 +154,9 @@ TAO_Default_Resource_Factory::~TAO_Default_Resource_Factory ()
   this->protocol_factories_.reset ();
 
   for (int i {}; i < this->parser_names_count_; ++i)
-    CORBA::string_free (this->parser_names_[i]);
+    {
+      CORBA::string_free (this->parser_names_[i]);
+    }
 
   delete [] this->parser_names_;
 }
@@ -198,7 +202,9 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
         for (int i {};
              i < this->parser_names_count_;
              ++i)
-          this->parser_names_[i] = nullptr;
+          {
+            this->parser_names_[i] = nullptr;
+          }
 
         this->index_ = 0;
       }
@@ -215,13 +221,17 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
             ACE_TCHAR* name = argv[curarg];
 
             if (ACE_OS::strcasecmp (name, ACE_TEXT("0")) == 0)
-              this->reactor_mask_signals_ = 0;
+              {
+                this->reactor_mask_signals_ = 0;
+              }
             else if (ACE_OS::strcasecmp (name, ACE_TEXT("1")) == 0)
-              this->reactor_mask_signals_= 1;
+              {
+                this->reactor_mask_signals_= 1;
+              }
             else
-            {
-              this->report_option_value_error (ACE_TEXT("-ORBReactorMaskSignals"), name);
-            }
+              {
+                this->report_option_value_error (ACE_TEXT("-ORBReactorMaskSignals"), name);
+              }
           }
       }
 
@@ -303,24 +313,32 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
 
             if (ACE_OS::strcasecmp (name,
                                     ACE_TEXT("lru")) == 0)
-              this->connection_purging_type_ =
-                TAO_Resource_Factory::LRU;
+              {
+                this->connection_purging_type_ =
+                  TAO_Resource_Factory::LRU;
+              }
             else if (ACE_OS::strcasecmp (name,
                                          ACE_TEXT("lfu")) == 0)
-              this->connection_purging_type_ =
-                TAO_Resource_Factory::LFU;
+              {
+                this->connection_purging_type_ =
+                  TAO_Resource_Factory::LFU;
+              }
             else if (ACE_OS::strcasecmp (name,
                                          ACE_TEXT("fifo")) == 0)
-              this->connection_purging_type_ =
-                TAO_Resource_Factory::FIFO;
+              {
+                this->connection_purging_type_ =
+                  TAO_Resource_Factory::FIFO;
+              }
             else if (ACE_OS::strcasecmp (name,
                                          ACE_TEXT("null")) == 0)
-              this->connection_purging_type_ =
+              {
+                this->connection_purging_type_ =
                   TAO_Resource_Factory::NOOP;
+              }
             else
-            {
-              this->report_option_value_error (ACE_TEXT("-ORBConnectionPurgingStrategy"), name);
-            }
+              {
+                this->report_option_value_error (ACE_TEXT("-ORBConnectionPurgingStrategy"), name);
+              }
           }
       }
    else if (ACE_OS::strcasecmp (argv[curarg],
@@ -328,21 +346,27 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
       {
         ++curarg;
         if (curarg < argc)
+          {
             this->cache_maximum_ = ACE_OS::atoi (argv[curarg]);
+          }
         else
-        {
-          this->report_option_value_error (ACE_TEXT("-ORBConnectionCacheMax"), argv[curarg]);
-        }
+          {
+            this->report_option_value_error (ACE_TEXT("-ORBConnectionCacheMax"), argv[curarg]);
+          }
       }
    else if (ACE_OS::strcasecmp (argv[curarg],
                                 ACE_TEXT("-ORBConnectionCachePurgePercentage")) == 0)
       {
         ++curarg;
         if (curarg < argc)
+          {
             this->purge_percentage_ = ACE_OS::atoi (argv[curarg]);
+          }
         else
-          this->report_option_value_error (ACE_TEXT("-ORBConnectionCachePurgePercentage"),
-                                           argv[curarg]);
+          {
+            this->report_option_value_error (ACE_TEXT("-ORBConnectionCachePurgePercentage"),
+                                             argv[curarg]);
+          }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_TEXT("-ORBIORParser")) == 0)
@@ -365,7 +389,9 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
 
             if (ACE_OS::strcasecmp (name,
                                     ACE_TEXT("thread")) == 0)
-              this->cached_connection_lock_type_ = TAO_THREAD_LOCK;
+              {
+                this->cached_connection_lock_type_ = TAO_THREAD_LOCK;
+              }
             else if (ACE_OS::strcasecmp (name,
                                          ACE_TEXT("null")) == 0)
               {
@@ -376,9 +402,9 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                 this->cached_connection_lock_type_ = TAO_NULL_LOCK;
               }
             else
-            {
-              this->report_option_value_error (ACE_TEXT("-ORBConnectionCacheLock"), name);
-            }
+              {
+                this->report_option_value_error (ACE_TEXT("-ORBConnectionCacheLock"), name);
+              }
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -391,16 +417,18 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
 
             if (ACE_OS::strcasecmp (name,
                                     ACE_TEXT("eager")) == 0)
-              this->resource_usage_strategy_ = TAO_EAGER;
+              {
+                this->resource_usage_strategy_ = TAO_EAGER;
+              }
             else if (ACE_OS::strcasecmp (name,
                                          ACE_TEXT("lazy")) == 0)
               {
                 this->resource_usage_strategy_ = TAO_LAZY;
               }
             else
-            {
-              this->report_option_value_error (ACE_TEXT("-ORBResourceUsage"), name);
-            }
+              {
+                this->report_option_value_error (ACE_TEXT("-ORBResourceUsage"), name);
+              }
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -413,17 +441,23 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
 
             if (ACE_OS::strcasecmp (name,
                                     ACE_TEXT("leader_follower")) == 0)
-              this->flushing_strategy_type_ = TAO_LEADER_FOLLOWER_FLUSHING;
+              {
+                this->flushing_strategy_type_ = TAO_LEADER_FOLLOWER_FLUSHING;
+              }
             else if (ACE_OS::strcasecmp (name,
                                          ACE_TEXT("reactive")) == 0)
-              this->flushing_strategy_type_ = TAO_REACTIVE_FLUSHING;
+              {
+                this->flushing_strategy_type_ = TAO_REACTIVE_FLUSHING;
+              }
             else if (ACE_OS::strcasecmp (name,
                                          ACE_TEXT("blocking")) == 0)
-              this->flushing_strategy_type_ = TAO_BLOCKING_FLUSHING;
+              {
+                this->flushing_strategy_type_ = TAO_BLOCKING_FLUSHING;
+              }
             else
-            {
-              this->report_option_value_error (ACE_TEXT("-ORBFlushingStrategy"), name);
-            }
+              {
+                this->report_option_value_error (ACE_TEXT("-ORBFlushingStrategy"), name);
+              }
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -431,11 +465,15 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
       {
         ++curarg;
         if (curarg < argc)
+          {
             this->max_muxed_connections_ =
               ACE_OS::atoi (argv[curarg]);
+          }
         else
-          this->report_option_value_error (ACE_TEXT("-ORBMuxedConnectionMax"),
-                                           argv[curarg]);
+          {
+            this->report_option_value_error (ACE_TEXT("-ORBMuxedConnectionMax"),
+                                             argv[curarg]);
+          }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_TEXT("-ORBDropRepliesDuringShutdown")) == 0)
@@ -446,15 +484,19 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
             int const tmp = ACE_OS::atoi (argv[curarg]);
 
             if (tmp == 0)
-              this->drop_replies_ = false;
+              {
+                this->drop_replies_ = false;
+              }
             else
             {
               this->drop_replies_ = true;
             }
           }
         else
-          this->report_option_value_error (ACE_TEXT("-ORBDropRepliesDuringShutdown"),
-                                           argv[curarg]);
+          {
+            this->report_option_value_error (ACE_TEXT("-ORBDropRepliesDuringShutdown"),
+                                             argv[curarg]);
+          }
       }
     else if (0 == ACE_OS::strcasecmp (argv[curarg],
                                       ACE_TEXT("-ORBOutputCDRAllocator")))
@@ -520,11 +562,13 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
       {
         ++curarg;
         if (curarg < argc)
+          {
             this->transport_idle_timeout_ = ACE_OS::atoi (argv[curarg]);
+          }
         else
-        {
-          this->report_option_value_error (ACE_TEXT("-ORBTransportIdleTimeout"), argv[curarg]);
-        }
+          {
+            this->report_option_value_error (ACE_TEXT("-ORBTransportIdleTimeout"), argv[curarg]);
+          }
       }
     else if (ACE_OS::strncmp (argv[curarg],
                               ACE_TEXT ("-ORB"),
@@ -1066,13 +1110,17 @@ TAO_Default_Resource_Factory::create_cached_connection_lock ()
   ACE_Lock *the_lock {};
 
   if (this->cached_connection_lock_type_ == TAO_NULL_LOCK)
-    ACE_NEW_RETURN (the_lock,
-                    ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX>,
-                    nullptr);
+    {
+      ACE_NEW_RETURN (the_lock,
+                      ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX>,
+                      nullptr);
+    }
   else
-    ACE_NEW_RETURN (the_lock,
-                    ACE_Lock_Adapter<TAO_SYNCH_MUTEX>,
-                    nullptr);
+    {
+      ACE_NEW_RETURN (the_lock,
+                      ACE_Lock_Adapter<TAO_SYNCH_MUTEX>,
+                      nullptr);
+    }
 
   return the_lock;
 }
@@ -1081,9 +1129,9 @@ int
 TAO_Default_Resource_Factory::locked_transport_cache ()
 {
   if (this->cached_connection_lock_type_ == TAO_NULL_LOCK)
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
 
   return 1;
 }
@@ -1093,17 +1141,23 @@ TAO_Default_Resource_Factory::create_flushing_strategy ()
 {
   TAO_Flushing_Strategy *strategy {};
   if (this->flushing_strategy_type_ == TAO_LEADER_FOLLOWER_FLUSHING)
-    ACE_NEW_RETURN (strategy,
-                    TAO_Leader_Follower_Flushing_Strategy,
-                    nullptr);
+    {
+      ACE_NEW_RETURN (strategy,
+                      TAO_Leader_Follower_Flushing_Strategy,
+                      nullptr);
+    }
   else if (this->flushing_strategy_type_ == TAO_REACTIVE_FLUSHING)
-    ACE_NEW_RETURN (strategy,
-                    TAO_Reactive_Flushing_Strategy,
-                    nullptr);
+    {
+      ACE_NEW_RETURN (strategy,
+                      TAO_Reactive_Flushing_Strategy,
+                      nullptr);
+    }
   else
-    ACE_NEW_RETURN (strategy,
-                    TAO_Block_Flushing_Strategy,
-                    nullptr);
+    {
+      ACE_NEW_RETURN (strategy,
+                      TAO_Block_Flushing_Strategy,
+                      nullptr);
+    }
   return strategy;
 }
 
@@ -1214,9 +1268,11 @@ TAO_Default_Resource_Factory::codeset_manager()
   if (factory == nullptr)
     {
       if (TAO_debug_level >= 2)
-        TAOLIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - Default_Resource_Factory")
-                    ACE_TEXT (" - unable to find codeset manager factory.\n")));
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
+                         ACE_TEXT ("TAO (%P|%t) - Default_Resource_Factory")
+                         ACE_TEXT (" - unable to find codeset manager factory.\n")));
+        }
       return nullptr;
     }
 
@@ -1225,18 +1281,22 @@ TAO_Default_Resource_Factory::codeset_manager()
   if (mgr == nullptr)
     {
       if (TAO_debug_level >= 2)
-        TAOLIB_DEBUG ((LM_INFO,
-                    ACE_TEXT ("TAO (%P|%t) - Default_Resource_Factory")
-                    ACE_TEXT (" - unable to create codeset manager.\n")));
+        {
+          TAOLIB_DEBUG ((LM_INFO,
+                         ACE_TEXT ("TAO (%P|%t) - Default_Resource_Factory")
+                         ACE_TEXT (" - unable to create codeset manager.\n")));
+        }
       return nullptr;
     }
 
   std::unique_ptr<TAO_Codeset_Manager> safemgr (mgr);
 
   if (TAO_debug_level >= 1)
-    TAOLIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) - Default_Resource_Factory - codeset manager=%@\n"),
-                mgr));
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("TAO (%P|%t) - Default_Resource_Factory - codeset manager=%@\n"),
+                     mgr));
+    }
 
   this->char_codeset_parameters_.apply_to (mgr->char_codeset_descriptor());
   this->wchar_codeset_parameters_.apply_to (mgr->wchar_codeset_descriptor());
