@@ -106,19 +106,23 @@ TAO_Queued_Data::make_queued_data (ACE_Allocator *message_buffer_alloc,
     {
       ACE_Message_Block *mb {};
       if (input_cdr_alloc == nullptr)
-        ACE_NEW_RETURN (mb,
-                        ACE_Message_Block (db,
-                                           0,
-                                           input_cdr_alloc),
-                        nullptr);
+        {
+          ACE_NEW_RETURN (mb,
+                          ACE_Message_Block (db,
+                                             0,
+                                             input_cdr_alloc),
+                          nullptr);
+        }
       else
-        ACE_NEW_MALLOC_RETURN (mb,
-                               static_cast<ACE_Message_Block*> (
-                                 input_cdr_alloc->malloc (sizeof (ACE_Message_Block))),
-                               ACE_Message_Block (db,
-                                                  0,
-                                                  input_cdr_alloc),
-                               nullptr);
+        {
+          ACE_NEW_MALLOC_RETURN (mb,
+                                 static_cast<ACE_Message_Block*> (
+                                   input_cdr_alloc->malloc (sizeof (ACE_Message_Block))),
+                                 ACE_Message_Block (db,
+                                                    0,
+                                                    input_cdr_alloc),
+                                 nullptr);
+        }
 
       ACE_Message_Block_Unique_Ptr mb_guard {mb};
       ACE_CDR::mb_align (mb_guard.get ());
