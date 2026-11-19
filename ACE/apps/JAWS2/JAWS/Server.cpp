@@ -117,7 +117,9 @@ JAWS_Server::open (JAWS_Pipeline_Handler *protocol,
       }
 
       for (int i = 0; i < n * this->ratio_ - n; ++i)
-        db->task ()->put (db.get ());
+        {
+          db->task ()->put (db.get ());
+        }
 
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
     }
@@ -140,9 +142,10 @@ JAWS_Server::parse_args (int argc, ACE_TCHAR *argv[])
 
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT("t" "p:c:d:n:m:f:r:"));
-  while ((c = getopt ()) != -1)
   //FUZZ: enable check_for_lack_ACE_OS
-    switch (c)
+  while ((c = getopt ()) != -1)
+    {
+      switch (c)
       {
       case 't':
         t = !t;
@@ -152,7 +155,9 @@ JAWS_Server::parse_args (int argc, ACE_TCHAR *argv[])
         break;
       case 'c':
         if (std::strcmp (getopt.opt_arg (), "PER_REQUEST") == 0)
-          this->concurrency_ = 1;
+          {
+            this->concurrency_ = 1;
+          }
         else
         {
           this->concurrency_ = 0;
@@ -160,7 +165,9 @@ JAWS_Server::parse_args (int argc, ACE_TCHAR *argv[])
         break;
       case 'd':
         if (std::strcmp (getopt.opt_arg (), "ASYNCH") == 0)
-          this->dispatch_ = 1;
+          {
+            this->dispatch_ = 1;
+          }
         else
         {
           this->dispatch_ = 0;
@@ -174,16 +181,23 @@ JAWS_Server::parse_args (int argc, ACE_TCHAR *argv[])
         break;
       case 'f':
         if (std::strcmp (getopt.opt_arg (), "THR_BOUND") == 0)
-          this->flags_ |= THR_BOUND;
+          {
+            this->flags_ |= THR_BOUND;
+          }
         else if (std::strcmp (getopt.opt_arg (), "THR_DAEMON") == 0)
-          this->flags_ |= THR_DAEMON;
+          {
+            this->flags_ |= THR_DAEMON;
+          }
         else if (std::strcmp (getopt.opt_arg (), "THR_DETACHED") == 0)
-          this->flags_ |= THR_DETACHED;
+          {
+            this->flags_ |= THR_DETACHED;
+          }
         break;
       case 'r':
         this->ratio_ = ACE_OS::atoi (getopt.opt_arg ());
         break;
       }
+    }
 
 #if (ACE_NTRACE != 1)
   if (t)
