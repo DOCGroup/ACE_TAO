@@ -139,7 +139,9 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
       if (TAO_debug_level > 0)
         {
           if (thread_pool == nullptr)
-            thread_pool_id = "default thread pool";
+            {
+              thread_pool_id = "default thread pool";
+            }
           else
             {
             thread_pool_id = "thread pool " + std::to_string (thread_pool->id ());
@@ -158,8 +160,10 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
               if (tph->get_thread_CORBA_and_native_priority (
                     pre_invoke_state.original_CORBA_priority_,
                     pre_invoke_state.original_native_priority_) == -1)
-                throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
-                                                CORBA::COMPLETED_NO);
+                {
+                  throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
+                                                  CORBA::COMPLETED_NO);
+                }
 
               TAOLIB_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t): %C processing using %C ")
@@ -192,16 +196,20 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
           if (tph->get_thread_CORBA_and_native_priority (
                 pre_invoke_state.original_CORBA_priority_,
                 pre_invoke_state.original_native_priority_) == -1)
-            throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
-                                            CORBA::COMPLETED_NO);
+            {
+              throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
+                                              CORBA::COMPLETED_NO);
+            }
 
           // Priority needs to be temporarily changed for the
           // duration of request.
           if (target_priority != pre_invoke_state.original_CORBA_priority_)
             {
               if (tph->set_thread_CORBA_priority (target_priority) == -1)
-                throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
-                                                CORBA::COMPLETED_NO);
+                {
+                  throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
+                                                  CORBA::COMPLETED_NO);
+                }
 
               pre_invoke_state.state_ =
                 TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State::PRIORITY_RESET_REQUIRED;
@@ -343,8 +351,10 @@ TAO_RT_Servant_Dispatcher::post_invoke (TAO_Root_POA &poa,
               if (tph->restore_thread_CORBA_and_native_priority (
                        pre_invoke_state.original_CORBA_priority_,
                        pre_invoke_state.original_native_priority_) == -1)
-                throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
-                                                CORBA::COMPLETED_NO);
+                {
+                  throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
+                                                  CORBA::COMPLETED_NO);
+                }
             }
         }
       catch (::CORBA::Exception const &ex)

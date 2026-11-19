@@ -362,21 +362,25 @@ TAO_RT_POA::create_stub_object (TAO::ObjectKey const &object_key,
   }
 
   if (error)
-    throw ::CORBA::INTERNAL (
-      CORBA::SystemException::_tao_minor_code (
-        TAO_MPROFILE_CREATION_ERROR,
-        0),
-      CORBA::COMPLETED_NO);
+    {
+      throw ::CORBA::INTERNAL (
+        CORBA::SystemException::_tao_minor_code (
+          TAO_MPROFILE_CREATION_ERROR,
+          0),
+        CORBA::COMPLETED_NO);
+    }
 
   // Make sure we have at least one profile.  <mp> may end up being
   // empty if none of the acceptor endpoints have the right priority
   // for this object, for example.
   if (mprofile.profile_count () == 0)
-    throw ::CORBA::BAD_PARAM (
-      CORBA::SystemException::_tao_minor_code (
-        TAO_MPROFILE_CREATION_ERROR,
-        0),
-      CORBA::COMPLETED_NO);
+    {
+      throw ::CORBA::BAD_PARAM (
+        CORBA::SystemException::_tao_minor_code (
+          TAO_MPROFILE_CREATION_ERROR,
+          0),
+        CORBA::COMPLETED_NO);
+    }
 
   return
     this->orb_core_.create_stub_object (mprofile, type_id, policy_list);
@@ -450,7 +454,9 @@ TAO_RT_POA::client_exposed_policies (CORBA::Short object_priority)
       // servant's priority.
       CORBA::Short priority;
       if (priority_model == TAO::Portable_Server::Cached_Policies::CLIENT_PROPAGATED)
-        priority = poa_priority;
+        {
+          priority = poa_priority;
+        }
       else
         {
         priority = object_priority;

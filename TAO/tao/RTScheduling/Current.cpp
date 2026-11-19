@@ -125,7 +125,9 @@ TAO_RTScheduler_Current::lookup(const RTScheduling::Current::IdType & id)
   int const result = this->dt_hash_.find (id,
                                           DT);
   if (result == 0)
-    return DT._retn ();
+    {
+      return DT._retn ();
+    }
   else
   {
     return RTScheduling::DistributableThread::_nil ();
@@ -330,8 +332,10 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(
                                                       implicit_sched_param);
 
       if (CORBA::is_nil (this->dt_.in ()))
-        //Create new DT.
-        this->dt_ = TAO_DistributableThread_Factory::create_DT ();
+        {
+          //Create new DT.
+          this->dt_ = TAO_DistributableThread_Factory::create_DT ();
+        }
 
       //Add new DT to map
       int const result = this->dt_hash_->bind (this->guid_,
@@ -545,8 +549,10 @@ DTTask::activate_task (RTCORBA::Priority base_priority,
                       ) == -1)
     {
       if (ACE_OS::last_error () == EPERM)
-        TAOLIB_ERROR ((LM_ERROR,
+        {
+          TAOLIB_ERROR ((LM_ERROR,
                        ACE_TEXT ("Insufficient privilege to run this test.\n")));
+        }
       return -1;
     }
   return 0;
