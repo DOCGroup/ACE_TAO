@@ -24,7 +24,9 @@ ace_url_wstring_from_buffer (char const *buffer)
     {
       std::memcpy (std::addressof (value), buffer + offset, sizeof (value));
       if (value != 0)
-        result += static_cast<ACE_WSTRING_TYPE> (value);
+        {
+          result += static_cast<ACE_WSTRING_TYPE> (value);
+        }
       offset += sizeof (value);
     }
   while (value != 0);
@@ -39,7 +41,9 @@ ACE_URL_Locator_Request::url_query (const int how,
   ACE_TRACE ("ACE_URL_Locator_Request::url_query");
 
   if (how >= ACE_URL_Locator::INVALID_SELECTION)
-    return -1;
+    {
+      return -1;
+    }
   ACE_URL_Property_Seq *seq {};
   ACE_NEW_RETURN (seq, ACE_URL_Property_Seq (pseq), -1);
   this->seq1_.reset (seq);
@@ -99,7 +103,9 @@ ACE_URL_Locator_Request::modify_offer (const ACE_WString &offer_id,
   this->seq2_ = std::move (seq2_owner);
 
   if (url != nullptr)
-    static_cast<ACE_WString &> (this->url_) = *url;
+    {
+      static_cast<ACE_WString &> (this->url_) = *url;
+    }
 
   static_cast<ACE_WString &> (this->id_) = offer_id;
   this->code_ = ACE_URL_Locator::MODIFY;
@@ -163,7 +169,9 @@ ACE_URL_Locator_Request::encode ()
       total_length += ace_array_encode (this->buffer_.get () + total_length, *this->seq2_);
     }
   if (this->offer_ != nullptr)
-    total_length += this->offer_->encode (this->buffer_.get () + total_length);
+    {
+      total_length += this->offer_->encode (this->buffer_.get () + total_length);
+    }
 
   total_length += ACE_WString_Helper::encode (this->buffer_.get () + total_length,
                                               this->id_);
@@ -171,7 +179,9 @@ ACE_URL_Locator_Request::encode ()
                                               this->url_);
 
   if (total_length != buf_size)
-    return 0;
+    {
+      return 0;
+    }
   return total_length;
 }
 
@@ -181,7 +191,9 @@ ACE_URL_Locator_Request::decode (void *buffer)
   ACE_TRACE ("ACE_URL_Locator_Request::decode");
 
   if (buffer == nullptr)
-    return 0;
+    {
+      return 0;
+    }
   // Check if we have a valid buffer available.
 
   char * const cbuffer = static_cast<char *> (buffer);
@@ -238,7 +250,9 @@ ACE_URL_Locator_Request::decode (void *buffer)
   total_length += url_length;
 
   if (total_length != buf_size)
-    return 0;
+    {
+      return 0;
+    }
   return total_length;
 }
 
@@ -285,14 +299,22 @@ ACE_URL_Locator_Request::dump () const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
   if (this->code_ < ACE_URL_Locator::INVALID_OPERATION)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%C Request:\n"), ACE_URL_Locator::opname[this->code_]));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%C Request:\n"), ACE_URL_Locator::opname[this->code_]));
+    }
   else
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Invalid Operation: %u\n"), this->code_));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Invalid Operation: %u\n"), this->code_));
+    }
 
   if (this->how_ < ACE_URL_Locator::INVALID_SELECTION)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Select: %C\n"), ACE_URL_Locator::selection_name[this->how_]));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Select: %C\n"), ACE_URL_Locator::selection_name[this->how_]));
+    }
   else
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Invalid selection method: %d\n"), this->how_));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Invalid selection method: %d\n"), this->how_));
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("At most %d reply.\n"), this->how_many_));
 
@@ -301,31 +323,49 @@ ACE_URL_Locator_Request::dump () const
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Property sequence 1: %@\n"),
               static_cast<void *> (this->seq1_.get ())));
   if (this->seq1_ != nullptr)
-    for (size_t i = 0; i < this->seq1_->size (); ++i)
-      (*this->seq1_)[i].dump ();
+    {
+      for (size_t i = 0; i < this->seq1_->size (); ++i)
+        {
+          (*this->seq1_)[i].dump ();
+        }
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Property sequence 2: %@\n"),
               static_cast<void *> (this->seq2_.get ())));
   if (this->seq2_ != nullptr)
-    for (size_t i = 0; i < this->seq2_->size (); ++i)
-      (*this->seq2_)[i].dump ();
+    {
+      for (size_t i = 0; i < this->seq2_->size (); ++i)
+        {
+          (*this->seq2_)[i].dump ();
+        }
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Offer: %@\n"),
               static_cast<void *> (this->offer_.get ())));
   if (this->offer_ != nullptr)
-    this->offer_->dump ();
+    {
+      this->offer_->dump ();
+    }
 
   if (this->id_.length () > 0)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Offer ID: %C\n"),
-                std::unique_ptr<char[]> (this->id_.char_rep ()).get ()));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Offer ID: %C\n"),
+                  std::unique_ptr<char[]> (this->id_.char_rep ()).get ()));
+    }
   else
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Offer ID: \"\"\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Offer ID: \"\"\n")));
+    }
 
   if (this->url_.length () > 0)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("URL: %C\n"),
-                std::unique_ptr<char[]> (this->url_.char_rep ()).get ()));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("URL: %C\n"),
+                  std::unique_ptr<char[]> (this->url_.char_rep ()).get ()));
+    }
   else
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("URL: \"\"\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("URL: \"\"\n")));
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -397,7 +437,9 @@ ACE_URL_Locator_Reply::encode ()
   // Encode valid pointers mask.
 
   if (this->offer_ != nullptr)
-    total_length += this->offer_->encode (this->buffer_.get () + total_length);
+    {
+      total_length += this->offer_->encode (this->buffer_.get () + total_length);
+    }
 
   if (this->offers_ != nullptr)
     {
@@ -406,7 +448,9 @@ ACE_URL_Locator_Reply::encode ()
     }
 
   if (total_length != buf_size)
-    return 0;
+    {
+      return 0;
+    }
   return total_length;
 }
 
@@ -416,7 +460,9 @@ ACE_URL_Locator_Reply::decode (void *buffer)
   ACE_TRACE ("ACE_URL_Locator_Reply::decode");
 
   if (buffer == nullptr)
-    return 0;
+    {
+      return 0;
+    }
   // Check if we have a buffer available.
 
   char * const cbuffer = static_cast<char *> (buffer);
@@ -458,7 +504,9 @@ ACE_URL_Locator_Reply::decode (void *buffer)
     }
 
   if (total_length != buf_size)
-    return 0;
+    {
+      return 0;
+    }
   return total_length;
 }
 
@@ -493,14 +541,22 @@ ACE_URL_Locator_Reply::dump () const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
   if (this->code_ < ACE_URL_Locator::INVALID_OPERATION)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Original request: %C\n"), ACE_URL_Locator::opname[this->code_]));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Original request: %C\n"), ACE_URL_Locator::opname[this->code_]));
+    }
   else
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Invalid Original Request: %u\n"), this->code_));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Invalid Original Request: %u\n"), this->code_));
+    }
 
   if (this->status_ < ACE_URL_Locator::MAX_URL_ERROR)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Reply status: %C\n"), ACE_URL_Locator::err_name[this->status_]));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Reply status: %C\n"), ACE_URL_Locator::err_name[this->status_]));
+    }
   else
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Invalid reply status: %d\n"), this->status_));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Invalid reply status: %d\n"), this->status_));
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Number of offers: %B\n"), this->num_offers_));
 
@@ -509,13 +565,19 @@ ACE_URL_Locator_Reply::dump () const
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Offer: %@\n"),
               static_cast<void *> (this->offer_.get ())));
   if (this->offer_ != nullptr)
-    this->offer_->dump ();
+    {
+      this->offer_->dump ();
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Offer sequence: %@\n"),
               static_cast<void *> (this->offers_.get ())));
   if (this->offers_ != nullptr)
-    for (size_t i = 0; i < this->offers_->size (); ++i)
-      (*this->offers_)[i].dump();
+    {
+      for (size_t i = 0; i < this->offers_->size (); ++i)
+        {
+          (*this->offers_)[i].dump ();
+        }
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
