@@ -71,6 +71,31 @@ project(cppinset): gperf_test {
   }
 }
 
+project(optinset): gperf_test {
+  exename = optout
+
+  verbatim(gnuace, bottom) {
+    all: runtests
+
+    runtests: optout$(EXEEXT)
+    "	@echo "Testing optout"
+    "	./optout -v < optimize.gperf > optout.out
+    "	diff -b optimize.exp optout.out"
+
+    endif # CROSS-COMPILE
+  }
+
+  GPERF_Files {
+    commandflags += -O
+    optimize.gperf
+  }
+
+  Source_Files {
+    optimize.cpp
+    test.cpp
+  }
+}
+
 project(preinset): gperf_test {
   exename = preout
 

@@ -1939,7 +1939,12 @@ Key_List::output_lookup_function ()
                   option[TYPE] && option[POINTER] ? "wordlist[key]" : "s",
                   option[TYPE] && option[POINTER] ? generated_address_suffix () : "");
         }
-      ACE_OS::printf (";\n            }\n        }\n    %s\n}\n", option[OPTIMIZE] ? "" : generated_null_return ());
+      ACE_OS::printf (";");
+      if (!option[OPTIMIZE])
+        {
+          ACE_OS::printf ("\n            }");
+        }
+      ACE_OS::printf ("\n        }\n    %s\n}\n", option[OPTIMIZE] ? "" : generated_null_return ());
     }
 }
 

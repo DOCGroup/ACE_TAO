@@ -252,7 +252,7 @@ be_valuetype::has_concrete_factory ()
 bool
 be_valuetype::generates_obv_copy_value ()
 {
-  return !this->have_operation () && this->has_concrete_factory ();
+  return this->has_concrete_factory ();
 }
 
 bool
