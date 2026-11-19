@@ -223,7 +223,9 @@ int run_main (int, ACE_TCHAR *[])
     }
 
   if (!check_both_families())
-    status = 1;
+    {
+      status = 1;
+    }
 
 #endif /* ACE_HAS_IPV6 */
 

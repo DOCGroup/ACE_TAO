@@ -125,7 +125,9 @@ client (void *arg)
   int connected_port = server_addr.get_port_number ();
 
   if (connected_port > max_connected_port)
-    max_connected_port = connected_port;
+    {
+      max_connected_port = connected_port;
+    }
 
   cli_stream.close ();
 
@@ -172,11 +174,12 @@ run_main (int argc, ACE_TCHAR *argv[])
            ACE_THR_FUNC (client),
            reinterpret_cast<void *> (&addr),
            THR_NEW_LWP | THR_DETACHED) == -1)
-
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) %p\n"),
-                           ACE_TEXT ("thread create failed")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) %p\n"),
+                             ACE_TEXT ("thread create failed")),
+                            1);
+        }
 
       ACE_Thread_Manager::instance ()->wait ();
 
@@ -198,7 +201,9 @@ run_main (int argc, ACE_TCHAR *argv[])
       if (eh->port () == idx)
         {
           if (idx > max_listened_port)
-            max_listened_port = idx;
+            {
+              max_listened_port = idx;
+            }
         }
       else
         {

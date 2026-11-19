@@ -153,7 +153,9 @@ static bool test_multiple ()
     }
   while (ntp6.next ());
   if (count <= 1)
-    success = false;
+    {
+      success = false;
+    }
 #endif /* ACE_HAS_IPV6 */
 
   return success;
@@ -524,11 +526,13 @@ int run_main (int, ACE_TCHAR *[])
               if (alias_check.set (80, addr.get_host_name ()) == 0)
                 {
                   if (addr != alias_check)
-                    ACE_ERROR ((LM_WARNING,
-                                ACE_TEXT ("IPv6 name mismatch: %s (%s) != %s\n"),
-                                addr.get_host_name (),
-                                addr.get_host_addr (),
-                                ipv6_names[i]));
+                        {
+                          ACE_ERROR ((LM_WARNING,
+                                      ACE_TEXT ("IPv6 name mismatch: %s (%s) != %s\n"),
+                                      addr.get_host_name (),
+                                      addr.get_host_addr (),
+                                      ipv6_names[i]));
+                        }
                 }
               else
                 {
