@@ -70,19 +70,23 @@ run_test (int argc, ACE_TCHAR *argv[])
 
   ACE_Service_Repository *asr = ACE_Service_Repository::instance ();
   if (asr == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("run_test, no service repository\n")),
-                       -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("run_test, no service repository\n")),
+                        -1);
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Finding close test module\n")));
 
   const ACE_Service_Type* st {};
   status = asr->find (ACE_TEXT ("Close_Test_Module"), &st);
   if (status != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("run_test, %p on Close_Test_Module\n")
-                       ACE_TEXT ("ACE_Service_Repository::find")),
-                       status);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("run_test, %p on Close_Test_Module\n")
+                         ACE_TEXT ("ACE_Service_Repository::find")),
+                        status);
+    }
 
   //
   // Put our Close_Handler Task into the Module
@@ -91,9 +95,11 @@ run_test (int argc, ACE_TCHAR *argv[])
     static_cast <MT_Module *> (st->type()->object ());
 
   if (close_test_module == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("run_test, no close test module\n")),
-                       -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("run_test, no close test module\n")),
+                        -1);
+    }
   close_test_module->reader (close_handler);
 
   //

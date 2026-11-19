@@ -45,9 +45,11 @@ int handle_test (ACE_DLL &dll)
   if (handle != ACE_SHLIB_INVALID_HANDLE)
     {
       if (local_dll.set_handle (handle) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Error setting handle.\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Error setting handle.\n")),
+                            -1);
+        }
       return 0;
     }
   ACE_ERROR_RETURN ((LM_ERROR,
@@ -88,10 +90,12 @@ int basic_test (ACE_DLL &dll)
   ptrdiff_t tmp = reinterpret_cast<ptrdiff_t> (foo);
   Hello_Factory factory = reinterpret_cast<Hello_Factory> (tmp);
   if (factory == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       dll.error ()),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         dll.error ()),
+                        -1);
+    }
 
   std::unique_ptr<Hello> my_hello (factory ());
 
@@ -125,10 +129,12 @@ int dynamic_cast_test (ACE_DLL &dll)
   ptrdiff_t tmp = reinterpret_cast<ptrdiff_t> (foo);
   PFN pfnAcquire = reinterpret_cast<PFN> (tmp);
   if (pfnAcquire == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       dll.error ()),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         dll.error ()),
+                        -1);
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("before %@ %@\n"),
               static_cast<void *> (&child),
