@@ -298,11 +298,13 @@ TAO_IIOP_Connection_Handler::open (void*)
   }
 
   if (TAO_debug_level > 2)
-    TAOLIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler::open, ")
-                ACE_TEXT("The local addr is <%C:%d>\n"),
-                local_addr.get_host_addr (),
-                local_addr.get_port_number()));
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler::open, ")
+                     ACE_TEXT("The local addr is <%C:%d>\n"),
+                     local_addr.get_host_addr (),
+                     local_addr.get_port_number()));
+    }
 
   if (local_addr == remote_addr)
     {
@@ -599,32 +601,42 @@ TAO_IIOP_Connection_Handler::set_tos (int tos)
 #if defined (ACE_HAS_IPV6)
       ACE_INET_Addr local_addr;
       if (this->peer ().get_local_addr (local_addr) == -1)
-        return -1;
-      else if (local_addr.get_type () == AF_INET6)
-# if !defined (IPV6_TCLASS)
-      // IPv6 defines option IPV6_TCLASS for specifying traffic class/priority
-      // but not many implementations yet (very new;-).
         {
+          return -1;
+        }
+
+      if (local_addr.get_type () == AF_INET6)
+        {
+# if !defined (IPV6_TCLASS)
+          // IPv6 defines option IPV6_TCLASS for specifying traffic class/priority
+          // but not many implementations yet (very new;-).
           if (TAO_debug_level)
             {
               TAOLIB_DEBUG ((LM_DEBUG,
-                          ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler::")
-                          ACE_TEXT("set_dscp_codepoint -> IPV6_TCLASS not supported yet\n")));
+                             ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler::")
+                             ACE_TEXT("set_dscp_codepoint -> IPV6_TCLASS not supported yet\n")));
             }
           return 0;
-        }
 # else /* !IPV6_TCLASS */
-        result = this->peer ().set_option (IPPROTO_IPV6,
-                                           IPV6_TCLASS,
-                                           (int *) &tos ,
-                                           (int) sizeof (tos));
-      else
+          result = this->peer ().set_option (IPPROTO_IPV6,
+                                             IPV6_TCLASS,
+                                             (int *) &tos ,
+                                             (int) sizeof (tos));
 # endif /* IPV6_TCLASS */
-#endif /* ACE_HAS_IPV6 */
+        }
+      else
+        {
+          result = this->peer ().set_option (IPPROTO_IP,
+                                             IP_TOS,
+                                             (int *) &tos ,
+                                             (int) sizeof (tos));
+        }
+#else
       result = this->peer ().set_option (IPPROTO_IP,
                                          IP_TOS,
                                          (int *) &tos ,
                                          (int) sizeof (tos));
+#endif /* ACE_HAS_IPV6 */
 
       if (TAO_debug_level)
         {
