@@ -349,16 +349,14 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
 
   this->is_closed_ = true;
 
-  // Save the ID for debugging messages
   ACE_HANDLE const handle = eh->get_handle ();
-
   size_t const id = this->transport ()->id ();
   if (TAO_debug_level)
     {
       TAOLIB_DEBUG  ((LM_DEBUG,
                    "TAO (%P|%t) - Connection_Handler[%B]::"
                    "close_connection_eh, purging entry from cache\n",
-                   handle));
+                   id));
     }
 
   this->transport ()->pre_close ();
@@ -388,7 +386,7 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
           TAOLIB_DEBUG  ((LM_DEBUG,
                        "TAO (%P|%t) - Connection_Handler[%B]::"
                        "close_connection_eh, removing from the reactor\n",
-                       handle));
+                       id));
         }
 
       // Use id instead of handle. Why? "handle" may be invalid for RW
@@ -414,7 +412,7 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
           TAOLIB_DEBUG  ((LM_DEBUG,
                        "TAO (%P|%t) - Connection_Handler[%B]::"
                        "close_connection_eh, cancel all timers\n",
-                       handle));
+                       id));
         }
 
       eh_reactor->cancel_timer (eh);

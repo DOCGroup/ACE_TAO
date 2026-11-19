@@ -123,13 +123,13 @@ TAO_DTP_Thread_Pool_Threads::run (TAO_ORB_Core &orb_core)
   if (TAO_debug_level > 7)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - DTP Pool %d - ")
-                  ACE_TEXT ("Starting worker, count = %d; ")
-                  ACE_TEXT ("setting timeout for %d sec, %d usec\n"),
-                  this->pool_.id (),
+                  ACE_TEXT ("TAO (%P|%t) - DTP Pool %u - ")
+                  ACE_TEXT ("Starting worker, count = %B; ")
+                  ACE_TEXT ("setting timeout for %: sec, %q usec\n"),
+                  static_cast<unsigned int> (this->pool_.id ()),
                   this->thr_count (),
                   this->pool_.dynamic_thread_time().sec(),
-                  this->pool_.dynamic_thread_time().usec()));
+                  static_cast<ACE_INT64> (this->pool_.dynamic_thread_time().usec())));
     }
 
   ACE_Time_Value tv;
@@ -143,9 +143,11 @@ TAO_DTP_Thread_Pool_Threads::run (TAO_ORB_Core &orb_core)
       if (TAO_debug_level > 7)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - DTP Pool %d ")
+                      ACE_TEXT ("TAO (%P|%t) - DTP Pool %u ")
                       ACE_TEXT ("run: above_min = %d, timeout = %d\n"),
-                      this->pool_.id(), this->pool_.above_minimum(), timeout));
+                      static_cast<unsigned int> (this->pool_.id ()),
+                      this->pool_.above_minimum (),
+                      timeout));
         }
       if (timeout && this->pool_.remove_active (false))
         {
@@ -162,9 +164,9 @@ TAO_DTP_Thread_Pool_Threads::run (TAO_ORB_Core &orb_core)
   if (TAO_debug_level > 7)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - DTP Pool %d ")
-                  ACE_TEXT ("Terminating worker, remaining pool thread count = %d\n"),
-                  this->pool_.id (),
+                  ACE_TEXT ("TAO (%P|%t) - DTP Pool %u ")
+                  ACE_TEXT ("Terminating worker, remaining pool thread count = %B\n"),
+                  static_cast<unsigned int> (this->pool_.id ()),
                   this->thr_count () - 1));
     }
 
@@ -246,9 +248,10 @@ TAO_DTP_Thread_Pool::new_dynamic_thread ()
   if (TAO_debug_level > 0)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-                     ACE_TEXT ("TAO (%P|%t) DTP Pool %d new_dynamic_thread, ")
+                     ACE_TEXT ("TAO (%P|%t) DTP Pool %u new_dynamic_thread, ")
                      ACE_TEXT ("max = %d, current = %d\n"),
-                     this->id_, this->definition_.max_threads_,
+                     static_cast<unsigned int> (this->id_),
+                     this->definition_.max_threads_,
                      (int)this->threads_.thr_count ()));
     }
 
@@ -270,10 +273,10 @@ TAO_DTP_Thread_Pool::new_dynamic_thread ()
       if (TAO_debug_level > 7)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) DTP Pool %d new_dynamic_thread, ")
-                    ACE_TEXT ("count = %B, creating new thread\n"),
-                    this->id_,
-                    this->active_count_));
+                    ACE_TEXT ("TAO (%P|%t) DTP Pool %u new_dynamic_thread, ")
+                    ACE_TEXT ("count = %u, creating new thread\n"),
+                    static_cast<unsigned int> (this->id_),
+                    static_cast<unsigned int> (this->active_count_)));
         }
 
       if (this->create_threads_i (1))

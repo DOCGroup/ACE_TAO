@@ -592,11 +592,12 @@ TAO_Transport::handle_output (TAO::Transport::Drain_Constraints const & dc)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Transport[%B]::handle_output")
-                  ACE_TEXT (" - block_on_io=%d, timeout=%d.%06d\n"),
+                  ACE_TEXT (" - block_on_io=%d, timeout=%:.%06q\n"),
                   this->id (),
                   dc.block_on_io(),
                   dc.timeout() ? dc.timeout()->sec() : static_cast<time_t> (-1),
-                  dc.timeout() ? dc.timeout()->usec() : -1 ));
+                  static_cast<ACE_INT64> (
+                    dc.timeout() ? dc.timeout()->usec() : -1)));
     }
 
   // The flushing strategy (potentially via the Reactor) wants to send
@@ -1434,8 +1435,10 @@ TAO_Transport::report_invalid_event_handler (const char *caller)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
          ACE_TEXT ("TAO (%P|%t) - Transport[%B]::report_invalid_event_handler")
-         ACE_TEXT ("(%C) no longer associated with handler [tag=%d]\n"),
-         this->id (), caller, this->tag_));
+         ACE_TEXT ("(%C) no longer associated with handler [tag=%u]\n"),
+         this->id (),
+         caller,
+         static_cast<unsigned int> (this->tag_)));
     }
 }
 
@@ -2004,7 +2007,7 @@ TAO_Transport::handle_input_missing_data (TAO_Resume_Handle &rh,
     {
       TAOLIB_DEBUG ((LM_DEBUG,
          ACE_TEXT ("TAO (%P|%t) - Transport[%B]::handle_input_missing_data_message, ")
-         ACE_TEXT ("enter (missing data == %d)\n"),
+         ACE_TEXT ("enter (missing data == %B)\n"),
          this->id (), q_data->missing_data ()));
     }
 
@@ -2560,7 +2563,7 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
     {
       TAOLIB_DEBUG ((LM_DEBUG,
          ACE_TEXT ("TAO (%P|%t) - Transport[%B]::process_parsed_messages, ")
-         ACE_TEXT ("entering (missing data == %d)\n"),
+         ACE_TEXT ("entering (missing data == %B)\n"),
          this->id(), qd->missing_data ()));
     }
 
@@ -2676,7 +2679,8 @@ TAO_Transport::process_queue_head (TAO_Resume_Handle &rh)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
          ACE_TEXT ("TAO (%P|%t) - Transport[%B]::process_queue_head, %u enqueued\n"),
-         this->id (), this->incoming_message_queue_.queue_length () ));
+         this->id (),
+         static_cast<unsigned int> (this->incoming_message_queue_.queue_length ())));
     }
 
   // See if  message in queue ...
@@ -2692,7 +2696,7 @@ TAO_Transport::process_queue_head (TAO_Resume_Handle &rh)
              ACE_TEXT ("TAO (%P|%t) - Transport[%B]::process_queue_head, ")
              ACE_TEXT ("the size of the queue is [%u]\n"),
              this->id (),
-             this->incoming_message_queue_.queue_length()));
+             static_cast<unsigned int> (this->incoming_message_queue_.queue_length ())));
         }
       // Now that we have pulled out out one message out of the queue,
       // check whether we have one more message in the queue...

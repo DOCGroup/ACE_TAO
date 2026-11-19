@@ -439,8 +439,8 @@ TAO_IIOP_Transport::get_listen_point (
       if (TAO_debug_level >= 5)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT("TAO (%P|%t) - Listen_Point_List[%d] = <%C:%d>\n"),
-                      len,
+                      ACE_TEXT("TAO (%P|%t) - Listen_Point_List[%u] = <%C:%d>\n"),
+                      static_cast<unsigned int> (len),
                       point.host.in (),
                       point.port));
         }

@@ -400,7 +400,7 @@ TAO_DTP_Task::svc ()
                   TAOLIB_DEBUG ((LM_DEBUG,
                                  ACE_TEXT ("TAO (%P|%t) - DTP_Task::svc() ")
                                  ACE_TEXT ("Growing threadcount. ")
-                                 ACE_TEXT ("New thread count:%d\n"),
+                                 ACE_TEXT ("New thread count:%B\n"),
                                  this->thr_count ()));
                 }
             }
