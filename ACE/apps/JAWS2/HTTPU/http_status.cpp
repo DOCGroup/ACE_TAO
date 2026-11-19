@@ -66,7 +66,9 @@ void
 HTTP_SCode::dump ()
 {
   for (int i = 0; i < SC_TABLE_SIZE; ++i)
-    ACE_DEBUG ((LM_DEBUG, "%s\n", this->table_[i]));
+    {
+      ACE_DEBUG ((LM_DEBUG, "%s\n", this->table_[i]));
+    }
 }
 
 HTTP_SCode::HTTP_SCode ()

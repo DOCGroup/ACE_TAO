@@ -24,13 +24,18 @@ JAWS_HTTP_10_Parse_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
 
   JAWS_IO_Handler *handler = data->io_handler ();
   JAWS_Dispatch_Policy *policy = this->policy ();
-  if (policy == 0) policy = data->policy ();
+  if (policy == 0)
+    {
+      policy = data->policy ();
+    }
   JAWS_IO *io = policy->io ();
 
   JAWS_HTTP_10_Request *info;
 
   if (data->payload ())
-    info = reinterpret_cast<JAWS_HTTP_10_Request *> (data->payload ());
+    {
+      info = reinterpret_cast<JAWS_HTTP_10_Request *> (data->payload ());
+    }
   else
     {
       info = new JAWS_HTTP_10_Request;

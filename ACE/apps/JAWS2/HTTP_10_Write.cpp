@@ -26,7 +26,10 @@ JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
   JAWS_IO_Handler *handler = data->io_handler ();
 
   JAWS_Dispatch_Policy *policy = this->policy ();
-  if (policy == 0) policy = data->policy ();
+  if (policy == 0)
+    {
+      policy = data->policy ();
+    }
 
   JAWS_IO *io = policy->io ();
 
@@ -47,10 +50,14 @@ JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
 #endif
 
   if (info->type () != (int) JAWS_HTTP_10_Request::GET)
-    info->set_status (JAWS_HTTP_10_Request::STATUS_NOT_IMPLEMENTED);
+    {
+      info->set_status (JAWS_HTTP_10_Request::STATUS_NOT_IMPLEMENTED);
+    }
 
   if (info->type () == (int) JAWS_HTTP_10_Request::QUIT)
-    info->set_status (JAWS_HTTP_10_Request::STATUS_QUIT);
+    {
+      info->set_status (JAWS_HTTP_10_Request::STATUS_QUIT);
+    }
 
   if (info->status () != (int) JAWS_HTTP_10_Request::STATUS_OK)
     {
@@ -92,19 +99,23 @@ JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
   else
     {
       if (std::strcmp (info->version (), "HTTP/0.9") == 0)
-        io->transmit_file (handler,
-                           info->path (),
-                           "",
-                           0,
-                           "",
-                           0);
+        {
+          io->transmit_file (handler,
+                             info->path (),
+                             "",
+                             0,
+                             "",
+                             0);
+        }
       else
-        io->transmit_file (handler,
-                           info->path (),
-                           "HTTP/1.0 200 Ok\r\n\r\n",
-                           19,
-                           "",
-                           0);
+        {
+          io->transmit_file (handler,
+                             info->path (),
+                             "HTTP/1.0 200 Ok\r\n\r\n",
+                             19,
+                             "",
+                             0);
+        }
 
       switch (handler->status ())
         {

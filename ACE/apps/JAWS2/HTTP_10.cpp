@@ -19,7 +19,9 @@ JAWS_HTTP_10_Helper::HTTP_decode_string (char *path)
           path[j] = (char) ACE_OS::strtol (percentcode, (char **) 0, 16);
         }
       else
-        path[j] = path[i];
+        {
+          path[j] = path[i];
+        }
     }
 
   path[j] = path[i];

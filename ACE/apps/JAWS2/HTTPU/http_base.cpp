@@ -122,8 +122,10 @@ HTTP_Base::receive_payload (ACE_Message_Block &mb)
   int result = 0;
 
   if (this->payload_.space () < mb.length ())
-    result = this->payload_.size (this->payload_.size () +
-                                  mb.length () - this->payload_.space ());
+    {
+      result = this->payload_.size (this->payload_.size () +
+                                    mb.length () - this->payload_.space ());
+    }
 
   if (result == 0)
     {
@@ -206,7 +208,9 @@ HTTP_Base::build_headers (JAWS_Headers *new_headers)
         }
 
       if (data->header_type () == HTTP_HCodes::REPLACE_HEADER)
-        this->headers ()->remove_all (data->header_name ());
+        {
+          this->headers ()->remove_all (data->header_name ());
+        }
       else if (data->header_type () == HTTP_HCodes::INSERT_HEADER
                || data->header_type () == HTTP_HCodes::APPENDTO_HEADER)
         {
@@ -310,11 +314,15 @@ HTTP_Base::extract_line (ACE_Message_Block &mb)
 
   *p = '\0';
   if (p[-1] == '\r')
-    p[-1] = '\0';
+    {
+      p[-1] = '\0';
+    }
 
   char * const line = ACE_OS::strdup (mb.rd_ptr ());
   if (line == nullptr)
-    this->status_ = STATUS_INTERNAL_SERVER_ERROR;
+    {
+      this->status_ = STATUS_INTERNAL_SERVER_ERROR;
+    }
   else
     {
       if (this->line_ != nullptr)

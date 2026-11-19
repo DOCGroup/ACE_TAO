@@ -42,11 +42,13 @@ JAWS_Waiter::wait_for_completion (int i)
     (i >= 0) ? this->find_by_index (i) : this->find_by_index (this->index ());
 
   while (*iohptr == nullptr)
-    if (ACE_Proactor::instance ()->handle_events () == -1)
-      {
-        ACE_ERROR ((LM_ERROR, "%p\n", "JAWS_Waiter::wait_for_completion"));
-        return nullptr;
-      }
+    {
+      if (ACE_Proactor::instance ()->handle_events () == -1)
+        {
+          ACE_ERROR ((LM_ERROR, "%p\n", "JAWS_Waiter::wait_for_completion"));
+          return nullptr;
+        }
+    }
 
   JAWS_IO_Handler * const ioh = *iohptr;
   *iohptr = nullptr;
