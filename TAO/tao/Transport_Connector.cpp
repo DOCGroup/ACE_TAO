@@ -79,9 +79,9 @@ TAO_Profile *
 TAO_Connector::corbaloc_scan (const char *str, size_t &len)
 {
   if (this->check_prefix (str) != 0)
-  {
-    return nullptr;
-  }
+    {
+      return nullptr;
+    }
   const char *comma_pos = std::strchr (str,',');
   const char *slash_pos = std::strchr (str,'/');
   if (comma_pos == nullptr && slash_pos == nullptr)
@@ -89,12 +89,14 @@ TAO_Connector::corbaloc_scan (const char *str, size_t &len)
       len = std::strlen (str);
     }
   else if (comma_pos == nullptr || comma_pos > slash_pos)
-    len = (slash_pos - str);
+    {
+      len = (slash_pos - str);
+    }
   else
-  {
-    len = comma_pos - str;
-  }
-  return this->make_profile();
+    {
+      len = comma_pos - str;
+    }
+  return this->make_profile ();
 }
 
 int
@@ -180,9 +182,9 @@ TAO_Connector::make_mprofile (const char *string, TAO_MProfile &mprofile)
   for (ACE_CString::size_type i = ior_index; i < objkey_index; ++i)
     {
       if (ior[i] == endpoint_delimiter)
-      {
-        ++profile_count;
-      }
+        {
+          ++profile_count;
+        }
     }
 
   // Tell the MProfile object how many Profiles it should hold.
@@ -338,15 +340,17 @@ TAO_Connector::parallel_connect (TAO::Profile_Transport_Resolver *r,
   for (TAO_Endpoint *ep = root_ep->next_filtered (this->orb_core(),nullptr);
        ep != nullptr;
        ep = ep->next_filtered(this->orb_core(),root_ep))
-    if (this->set_validate_endpoint (ep) == 0)
     {
-      ++endpoint_count;
+      if (this->set_validate_endpoint (ep) == 0)
+        {
+          ++endpoint_count;
+        }
     }
   if (endpoint_count == 0)
-  {
-    return nullptr;
-  }
-  return this->make_parallel_connection (r,*desc,timeout);
+    {
+      return nullptr;
+    }
+  return this->make_parallel_connection (r, *desc, timeout);
 }
 
 bool
@@ -933,9 +937,11 @@ TAO_Connector::wait_for_connection_completion (
                   ACE_TEXT("%d transports, ["),
                   count));
       for (unsigned int i {}; i < count; ++i)
-        TAOLIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("%B%C"),transport[i]->id (),
-                    (i < (count -1) ? ", " : "]\n")));
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
+                         ACE_TEXT("%B%C"), transport[i]->id (),
+                         (i < (count - 1) ? ", " : "]\n")));
+        }
     }
 
   int result = -1;
@@ -969,11 +975,13 @@ TAO_Connector::wait_for_connection_completion (
       // Of course, this shouldn't happen in any case, since the wait
       // strategy is called with a timeout value of 0.
       for (unsigned int i {}; i < count; ++i)
-        if (!transport[i]->connection_handler()->is_closed())
-          {
-            the_winner = transport[i];
-            break;
-          }
+        {
+          if (!transport[i]->connection_handler()->is_closed())
+            {
+              the_winner = transport[i];
+              break;
+            }
+        }
     }
 
   this->cleanup_pending (the_winner, transport, count);
