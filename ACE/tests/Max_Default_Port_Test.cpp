@@ -215,11 +215,12 @@ run_main (int argc, ACE_TCHAR *argv[])
            ACE_THR_FUNC (client),
            reinterpret_cast <void *> (&addr),
            THR_NEW_LWP | THR_DETACHED) == -1)
-
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) %p\n"),
-                           ACE_TEXT ("thread create failed")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) %p\n"),
+                             ACE_TEXT ("thread create failed")),
+                            1);
+        }
 
       ACE_Thread_Manager::instance ()->wait ();
 

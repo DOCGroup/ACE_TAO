@@ -42,8 +42,10 @@ run_main (int, ACE_TCHAR* [])
 
       ACE_Env_Value<int> unbound;
       if (unbound.varname () != nullptr || static_cast<int> (unbound) != 0)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Default Env_Value state was not initialized\n")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Default Env_Value state was not initialized\n")));
+        }
 
       TEST_THIS (int, ACE_TEXT ("TEST_VALUE_POSITIVE"), 4, 10);
       TEST_THIS (double, ACE_TEXT ("TEST_VALUE_POSITIVE"), -1.0, 10.2);
