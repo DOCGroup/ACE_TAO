@@ -18,10 +18,12 @@ TextListenerAcceptor::TextListenerAcceptor ()
 int TextListenerAcceptor::open (ACE_INET_Addr &addr)
 {
   if (this->acceptor_.open (addr, 1) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("acceptor open")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("acceptor open")),
+                        -1);
+    }
   return 0;
 }
 
@@ -52,10 +54,12 @@ int TextListenerAcceptor::init (int argc, ACE_TCHAR *argv[])
   ACE_INET_Addr addr (argv[1]);
 
   if (this->open (addr) < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("TextListener - open")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("TextListener - open")),
+                        -1);
+    }
   return 0;
 }
 
@@ -161,13 +165,19 @@ int TextListener::play_message (ACE_FILE_Addr &addr)
   ACE_FILE_Addr temp (ACE_TEXT ("/tmp/outgoing_message.text"));
   std::unique_ptr<ACE_FILE_IO> file;
   if (type.is_audio ())
-    file = Util::audio_to_text (addr, temp);
+    {
+      file = Util::audio_to_text (addr, temp);
+    }
   else if (type.is_video ())
-    file = Util::video_to_text (addr, temp);
+    {
+      file = Util::video_to_text (addr, temp);
+    }
   else
-    ACE_ERROR_RETURN
-      ((LM_ERROR, ACE_TEXT ("Invalid message type %d\n"),
-        type.get_codec ()), -1);
+    {
+      ACE_ERROR_RETURN
+        ((LM_ERROR, ACE_TEXT ("Invalid message type %d\n"),
+          type.get_codec ()), -1);
+    }
   if (!file)
   {
     return -1;
