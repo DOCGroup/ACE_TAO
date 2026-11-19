@@ -834,7 +834,9 @@ CORBA::ORB::resolve_service (TAO::MCAST_SERVICEID mcast_service_id)
             ACE_OS::getenv (env_service_port[mcast_service_id]);
 
           if (port_number != nullptr)
-            port = static_cast<unsigned short> (std::atoi (port_number));
+            {
+              port = static_cast<unsigned short> (std::atoi (port_number));
+            }
           else
           {
             port = default_service_port[mcast_service_id];
@@ -1135,7 +1137,9 @@ namespace TAO
             // The rest of the argument is the ORB id...
             // but we should skip an optional space...
             if (current_arg[opt_len] == ' ')
-              opt_arg = current_arg + opt_len + 1;
+              {
+                opt_arg = current_arg + opt_len + 1;
+              }
             else
             {
               opt_arg = current_arg + opt_len;
@@ -1193,14 +1197,18 @@ namespace TAO
           TAO_ORB_Core_Auto_Ptr oc (TAO::ORB_Table::instance ()->find (
             ACE_TEXT_ALWAYS_CHAR(orbid.c_str ())));
           if (oc.get () != nullptr)
+            {
               return ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> {
                 oc->configuration ()};
+            }
 
           if (TAO_debug_level > 0)
+            {
               TAOLIB_ERROR ((LM_ERROR,
               ACE_TEXT ("ERROR: Unable to find ORB: %s. Invalid shared ")
               ACE_TEXT ("configuration argument \"%s\"\n"),
                 orbid.c_str (), arg));
+            }
 
           throw ::CORBA::BAD_PARAM
             (CORBA::SystemException::_tao_minor_code
@@ -1211,9 +1219,11 @@ namespace TAO
 
       // Unknown value
       if (TAO_debug_level > 0)
-            TAOLIB_ERROR ((LM_ERROR,
+        {
+          TAOLIB_ERROR ((LM_ERROR,
                         ACE_TEXT ("ERROR: -ORBGestalt unknown value <%s>\n"),
                         orbconfig_string.c_str()));
+        }
 
       throw ::CORBA::BAD_PARAM
           (CORBA::SystemException::_tao_minor_code
@@ -1522,10 +1532,12 @@ CORBA::ORB::object_to_string (CORBA::Object_ptr obj)
       if (CORBA::is_nil (obj) || obj->_stubobj () == nullptr)
         {
           if (TAO_debug_level > 0)
-            TAOLIB_ERROR ((LM_ERROR,
+            {
+              TAOLIB_ERROR ((LM_ERROR,
                         ACE_TEXT ("Nil object reference or TAO_Stub ")
                         ACE_TEXT ("pointer is zero when converting\n")
                         ACE_TEXT ("object reference to URL IOR.\n")));
+            }
 
           throw ::CORBA::MARSHAL (
             CORBA::SystemException::_tao_minor_code (
@@ -1547,9 +1559,11 @@ CORBA::ORB::object_to_string (CORBA::Object_ptr obj)
         }
 
       if (TAO_debug_level > 0)
-        TAOLIB_ERROR ((LM_ERROR,
+        {
+          TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - Cannot stringify given ")
                     ACE_TEXT ("object. No or only unknown profiles.\n")));
+        }
 
       throw ::CORBA::MARSHAL (
         CORBA::SystemException::_tao_minor_code (
@@ -1569,11 +1583,13 @@ CORBA::ORB::string_to_object (const char *str)
 
   // Check for NULL pointer
   if (str == nullptr)
-    throw ::CORBA::INV_OBJREF (
-      CORBA::SystemException::_tao_minor_code (
-        0,
-        EINVAL),
-      CORBA::COMPLETED_NO);
+    {
+      throw ::CORBA::INV_OBJREF (
+        CORBA::SystemException::_tao_minor_code (
+          0,
+          EINVAL),
+        CORBA::COMPLETED_NO);
+    }
 
   TAO_IOR_Parser *ior_parser =
     this->orb_core_->parser_registry ()->match_parser (str);
@@ -1584,7 +1600,9 @@ CORBA::ORB::string_to_object (const char *str)
     }
 
   if (std::strncmp (str, ior_prefix, sizeof ior_prefix - 1) == 0)
-    return this->ior_string_to_object (str + sizeof ior_prefix - 1);
+    {
+      return this->ior_string_to_object (str + sizeof ior_prefix - 1);
+    }
   else
   {
     return this->url_ior_string_to_object (str);

@@ -347,9 +347,11 @@ TAO_ClientRequestInfo::request_id ()
 
   // 32 bit address
   if (sizeof (this) == 4)
-    id =
-      static_cast<CORBA::ULong> (
-        reinterpret_cast<ptrdiff_t> (this->invocation_));
+    {
+      id =
+        static_cast<CORBA::ULong> (
+          reinterpret_cast<ptrdiff_t> (this->invocation_));
+    }
 
   // 64 bit address -- bits 8 through 39  (see notes above!)
   // In this case, we make sure this object is large enough to safely
@@ -357,15 +359,19 @@ TAO_ClientRequestInfo::request_id ()
   // buffer that makes this object is configurable.
   else if (sizeof (this) == 8
            && sizeof (*(this->invocation_)) > 256 /* 2 << 8 */)
-    id =
-      (static_cast<CORBA::ULong> (
-         reinterpret_cast<ptrdiff_t> (this->invocation_)) >> 8) & 0xFFFFFFFFu;
+    {
+      id =
+        (static_cast<CORBA::ULong> (
+           reinterpret_cast<ptrdiff_t> (this->invocation_)) >> 8) & 0xFFFFFFFFu;
+    }
 
   // 64 bit address -- lower 32 bits
   else if (sizeof (this) == 8)
-    id =
-      static_cast<CORBA::ULong> (
-        reinterpret_cast<ptrdiff_t> (this->invocation_)) & 0xFFFFFFFFu;
+    {
+      id =
+        static_cast<CORBA::ULong> (
+          reinterpret_cast<ptrdiff_t> (this->invocation_)) & 0xFFFFFFFFu;
+    }
 
   // @@ The following request ID generator prevents the
   //    PortableInterceptor::ClientRequestInterceptor::send_request()
@@ -384,10 +390,12 @@ TAO_ClientRequestInfo::request_id ()
   else
     {
       if (TAO_debug_level > 0)
-        TAOLIB_ERROR ((LM_ERROR,
+        {
+          TAOLIB_ERROR ((LM_ERROR,
                     "(%P|%t) ClientRequestInfo::request_id() failed\n"
                     "(%P|%t) since its request ID generator is not\n"
                     "(%P|%t) supported on this platform.\n"));
+        }
 
       throw ::CORBA::INTERNAL ();
     }

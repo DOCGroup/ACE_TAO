@@ -33,11 +33,13 @@ namespace TAO
     TAO_Stub * const stub =
       this->target_->_stubobj ();
     if (stub == nullptr)
-      throw ::CORBA::INTERNAL (
+      {
+        throw ::CORBA::INTERNAL (
                      CORBA::SystemException::_tao_minor_code (
                        0,
                          EINVAL),
                         CORBA::COMPLETED_NO);
+      }
 
     // The invocation has got to be within the context of the
     // corresponding ORB's configuration. Otherwise things like
@@ -133,31 +135,37 @@ namespace TAO
 
     bool nil_forward_ref {};
     if (CORBA::is_nil (effective_target.in ()))
-      nil_forward_ref = true;
+      {
+        nil_forward_ref = true;
+      }
     else
       {
         stubobj =
           effective_target->_stubobj ();
 
         if (stubobj && stubobj->base_profiles ().size () == 0)
-        {
-          nil_forward_ref = true;
-        }
+          {
+            nil_forward_ref = true;
+          }
       }
 
     if (nil_forward_ref)
-      throw ::CORBA::TRANSIENT (
-        CORBA::SystemException::_tao_minor_code (
-          TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
-          0),
-        CORBA::COMPLETED_NO);
+      {
+        throw ::CORBA::TRANSIENT (
+          CORBA::SystemException::_tao_minor_code (
+            TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
+            0),
+          CORBA::COMPLETED_NO);
+      }
 
     if (stubobj == nullptr)
-      throw ::CORBA::INTERNAL (
-        CORBA::SystemException::_tao_minor_code (
-          TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
-          EINVAL),
-        CORBA::COMPLETED_NO);
+      {
+        throw ::CORBA::INTERNAL (
+          CORBA::SystemException::_tao_minor_code (
+            TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
+            EINVAL),
+          CORBA::COMPLETED_NO);
+      }
 
     // Reset the profile in the stubs
     stub->add_forward_profiles (stubobj->base_profiles (), permanent_forward);

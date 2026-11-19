@@ -107,11 +107,13 @@ TAO::PICurrent::initialize (PortableInterceptor::SlotId sc)
     // It MUST be called BEFORE we attempt to get/set any
     // PICurrent slot data.
     if (0 != orb_core_.add_tss_cleanup_func (CleanUpPICurrent, this->tss_slot_))
-      throw ::CORBA::NO_MEMORY (
+      {
+        throw ::CORBA::NO_MEMORY (
                    CORBA::SystemException::_tao_minor_code (
                      TAO::VMCID,
                      ENOMEM),
                    CORBA::COMPLETED_NO);
+      }
 
     this->slot_count_ = sc;
   }

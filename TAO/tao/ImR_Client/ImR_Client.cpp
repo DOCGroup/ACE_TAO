@@ -60,7 +60,9 @@ namespace
     char * const pos = find_delimiter (profile_str.inout (),
                                        profile.object_key_delimiter ());
     if (pos != nullptr)
-      pos[1] = '\0';  // Crop the string.
+      {
+        pos[1] = '\0';  // Crop the string.
+      }
     else
       {
         if (TAO_debug_level > 0)

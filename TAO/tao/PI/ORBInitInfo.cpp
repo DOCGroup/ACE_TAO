@@ -323,11 +323,13 @@ TAO_ORBInitInfo::allocate_tss_slot_id (ACE_CLEANUP_FUNC cleanup)
   int const result = this->orb_core_->add_tss_cleanup_func (cleanup, slot_id);
 
   if (result != 0)
-    throw ::CORBA::INTERNAL (
-      CORBA::SystemException::_tao_minor_code (
-        0,
-        errno),
-      CORBA::COMPLETED_NO);
+    {
+      throw ::CORBA::INTERNAL (
+        CORBA::SystemException::_tao_minor_code (
+          0,
+          errno),
+        CORBA::COMPLETED_NO);
+    }
 
   return slot_id;
 }
