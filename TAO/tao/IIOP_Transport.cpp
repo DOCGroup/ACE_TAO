@@ -53,7 +53,9 @@ TAO_IIOP_Transport::send (iovec *iov, int iovcnt,
                                               iovcnt,
                                               max_wait_time);
   if (retval > 0)
-    bytes_transferred = retval;
+    {
+      bytes_transferred = retval;
+    }
   else
     {
       if (TAO_debug_level > 4)
@@ -83,9 +85,9 @@ TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator *allocator,
   // If we don't have an allocator, fallback to the regular way of sending
   // data
   if (allocator == nullptr)
-  {
-    return this->send (iov, iovcnt, bytes_transferred, this->io_timeout(dc));
-  }
+    {
+      return this->send (iov, iovcnt, bytes_transferred, this->io_timeout(dc));
+    }
 
   // We can only use sendfile when all data is coming from the mmap allocator,
   // if not, we just fallback to to the regular way of sending data
@@ -94,8 +96,10 @@ TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator *allocator,
   for (iovec * index = off_check_begin; index != off_check_end; ++index)
     {
       if (-1 == allocator->offset (index->iov_base))
-        return this->send (iov, iovcnt, bytes_transferred,
-                           this->io_timeout(dc));
+        {
+          return this->send (iov, iovcnt, bytes_transferred,
+                             this->io_timeout (dc));
+        }
     }
 
   ssize_t retval = -1;
@@ -103,9 +107,9 @@ TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator *allocator,
   ACE_HANDLE const in_fd = allocator->handle ();
 
   if (in_fd == ACE_INVALID_HANDLE)
-  {
-    return retval;
-  }
+    {
+      return retval;
+    }
 
   ACE_HANDLE const out_fd =
     this->connection_handler_->peer ().get_handle ();
@@ -121,7 +125,9 @@ TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator *allocator,
           int val {};
           if (ACE::enter_send_timedwait (out_fd,
                                          this->io_timeout(dc), val) == -1)
-            return retval;
+            {
+              return retval;
+            }
           else
             {
               retval =
@@ -135,7 +141,9 @@ TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator *allocator,
         }
 
       if (retval <= 0)  // Report errors below.
-        break;
+        {
+          break;
+        }
 
       bytes_transferred += static_cast<size_t> (retval);
     }
@@ -304,9 +312,11 @@ TAO_IIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
           if (this->get_listen_point (listen_point_list, acceptor.get ()) == -1)
             {
               if (TAO_debug_level > 0)
-                TAOLIB_ERROR ((LM_ERROR,
-                            "TAO (%P|%t) - IIOP_Transport::set_bidir_context_info, "
-                            "error getting listen_point\n"));
+                {
+                  TAOLIB_ERROR ((LM_ERROR,
+                                 "TAO (%P|%t) - IIOP_Transport::set_bidir_context_info, "
+                                 "error getting listen_point\n"));
+                }
 
               return;
             }
@@ -316,10 +326,12 @@ TAO_IIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
   if (listen_point_list.length () == 0)
     {
       if (TAO_debug_level > 0)
-        TAOLIB_ERROR ((LM_ERROR,
-                    "TAO (%P|%t) - IIOP_Transport::set_bidir_context_info, "
-                    "listen_point list is empty, client should send a list "
-                    "with at least one point\n"));
+        {
+          TAOLIB_ERROR ((LM_ERROR,
+                         "TAO (%P|%t) - IIOP_Transport::set_bidir_context_info, "
+                         "listen_point list is empty, client should send a list "
+                         "with at least one point\n"));
+        }
 
       return;
     }
