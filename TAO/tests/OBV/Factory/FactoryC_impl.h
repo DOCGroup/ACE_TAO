@@ -32,6 +32,8 @@ public:
   Value2_impl (Value2_impl&&) = delete;
   Value2_impl& operator= (Value2_impl const&) = delete;
   Value2_impl& operator= (Value2_impl&&) = delete;
+
+  CORBA::ValueBase *_copy_value () override;
 };
 
 /**
