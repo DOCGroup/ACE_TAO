@@ -36,8 +36,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
 #if defined (GPERF_SWITCH_TEST)
-  char const bounded_prefix[] = {'i', 'f', 'x'};
-  if (Perfect_Hash::in_word_set (bounded_prefix, 2) == nullptr)
+  char const bounded_prefix[] = {'g', 'o', 't'};
+  if (Perfect_Hash::in_word_set (bounded_prefix, 2) != nullptr)
     {
       return 1;
     }

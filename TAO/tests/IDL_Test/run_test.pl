@@ -35,13 +35,13 @@ if ($status == 0) {
     }
     my $valuetype_header = $generated_contents{"valuetypeC.h"};
 
-    my $copy_base_decl = generated_class_body (
+    my $copy_base_body = generated_class_body (
       $valuetype_header, "OBV_Copy_Base");
-    if (!defined $copy_base_decl) {
+    if (!defined $copy_base_body) {
         print STDERR "ERROR: cannot find generated OBV_Copy_Base declaration\n";
         $status = 1;
     }
-    elsif ($copy_base_decl !~ /DefaultValueRefCountBase/) {
+    elsif ($copy_base_body !~ /DefaultValueRefCountBase/) {
         print STDERR "ERROR: OBV_Copy_Base does not provide the valuetype reference counter\n";
         $status = 1;
     }
@@ -61,8 +61,6 @@ if ($status == 0) {
         $status = 1;
     }
 
-    my $copy_base_body = generated_class_body (
-      $valuetype_header, "OBV_Copy_Base");
     if (!defined $copy_base_body || $copy_base_body !~ /_copy_value\s*\(/) {
         print STDERR "ERROR: concrete OBV_Copy_Base does not declare _copy_value\n";
         $status = 1;
