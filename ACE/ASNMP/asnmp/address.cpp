@@ -65,11 +65,15 @@ void Address::trim_white_space( char * ptr)
 {
   char *source = ptr;
   while (*source == ' ')
-    ++source;
+    {
+      ++source;
+    }
 
   char *destination = ptr;
   while (*source != ' ' && *source != '\0')
-    *destination++ = *source++;
+    {
+      *destination++ = *source++;
+    }
   *destination = '\0';
 }
 
@@ -78,11 +82,13 @@ void Address::trim_white_space( char * ptr)
 unsigned char& Address::operator[]( const int position)
 {
   if ( position < MAX_ADDR_SZ)
-    return  address_buffer[ position];
+    {
+      return  address_buffer[ position];
+    }
   else
-  {
-    return address_buffer[0];
-  }
+    {
+      return address_buffer[0];
+    }
 }
 
 //-----------------------------------------------------------------------
@@ -112,22 +118,26 @@ bool operator>( const Address &lhs, const Address &rhs)
 bool operator>=( const Address &lhs,const Address &rhs)
 {
   if (( lhs > rhs) || ( lhs == rhs))
-    return true;
+    {
+      return true;
+    }
   else
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 }
 
 // overloaded < operator, is a1 <= a2
 bool operator<=( const Address &lhs,const Address &rhs)
 {
   if (( lhs < rhs) || ( lhs == rhs))
-    return true;
+    {
+      return true;
+    }
   else
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 }
 
 //-----------------------------------------------------------------
@@ -438,7 +448,9 @@ int IpAddress::parse_dotted_ipstring( const char *inaddr)
     {
       char const *token_end = token;
       while (*token_end != '.' && *token_end != '\0')
-        ++token_end;
+        {
+          ++token_end;
+        }
 
       if (token_end == token || token_end - token > 3)
       {
@@ -456,7 +468,9 @@ int IpAddress::parse_dotted_ipstring( const char *inaddr)
       if (index + 1 == IPV4LEN)
         {
           if (*token_end != '\0')
-            return 0;
+            {
+              return 0;
+            }
         }
       else
         {
@@ -609,15 +623,17 @@ void IpAddress::format_output()
 {
   // if valid format else null it
   if ( valid_flag)
-    std::snprintf (output_buffer, sizeof output_buffer, "%u.%u.%u.%u",
-                   static_cast<unsigned int> (address_buffer[0]),
-                   static_cast<unsigned int> (address_buffer[1]),
-                   static_cast<unsigned int> (address_buffer[2]),
-                   static_cast<unsigned int> (address_buffer[3]));
+    {
+      std::snprintf (output_buffer, sizeof output_buffer, "%u.%u.%u.%u",
+                     static_cast<unsigned int> (address_buffer[0]),
+                     static_cast<unsigned int> (address_buffer[1]),
+                     static_cast<unsigned int> (address_buffer[2]),
+                     static_cast<unsigned int> (address_buffer[3]));
+    }
   else
-  {
-    output_buffer[0] = 0;
-  }
+    {
+      output_buffer[0] = 0;
+    }
 }
 
 //------[ return the type ]----------------------------------
@@ -884,11 +900,14 @@ int UdpAddress::parse_address( const char *inaddr)
 
   unsigned short port = 0;
   if (inaddr && (std::strlen (inaddr) < MAXHOSTNAMELEN + 1))
-    std::strcpy (buffer, inaddr);
-  else {
-    valid_flag = 0;
-    return 0;
-  }
+    {
+      std::strcpy (buffer, inaddr);
+    }
+  else
+    {
+      valid_flag = 0;
+      return 0;
+    }
   // look for port info @ the end of the string
   // port can be delineated by a ':' or a '/'
   // if neither are present then just treat it
@@ -982,11 +1001,13 @@ void UdpAddress::format_output()
 void NetbiosAddress::format_output()
 {
   if ( valid_flag)
-    std::memcpy (output_buffer, address_buffer, NETBIOSLEN);
+    {
+      std::memcpy (output_buffer, address_buffer, NETBIOSLEN);
+    }
   else
-  {
-    output_buffer[0] = 0;
-  }
+    {
+      output_buffer[0] = 0;
+    }
 }
 
 void NetbiosAddress::InitNBAddr(const char *inaddr)
@@ -1362,14 +1383,18 @@ int IpxAddress::parse_address( const char *inaddr)
   // convert the string to all lower case
   // this allows hex values to be in upper or lower
   for (z=0;z< tmplen;++z)
-    temp[z] = ACE_OS::ace_tolower(temp[z]);
+    {
+      temp[z] = ACE_OS::ace_tolower(temp[z]);
+    }
 
   // check for separated nodeid
   // if found remove it
   if (temp[15] == '-')
   {
      for(z=16;z<tmplen;++z)
-        temp[z-1] = temp[z];
+       {
+         temp[z-1] = temp[z];
+       }
      temp[tmplen-1] = 0;
   }
 
@@ -1385,7 +1410,10 @@ int IpxAddress::parse_address( const char *inaddr)
 
   // separate the strings
   str1 = ( unsigned char *) temp;
-  while( *str1 != separator) str1++;
+  while( *str1 != separator)
+    {
+      str1++;
+    }
   str2 = str1 + 1;
   *str1 = 0;
   str1= ( unsigned char *) temp;
@@ -1406,36 +1434,46 @@ int IpxAddress::parse_address( const char *inaddr)
   // check out the net id
   tmp = str1;
   while( *tmp != 0)
-    if (((*tmp >= '0') && (*tmp <= '9'))||   // good 0-9
-        ((*tmp >= 'a') && (*tmp <= 'f')))    // or a-f
-      ++tmp;
-    else
     {
-      return 0;
+      if (((*tmp >= '0') && (*tmp <= '9'))||   // good 0-9
+          ((*tmp >= 'a') && (*tmp <= 'f')))    // or a-f
+        {
+          ++tmp;
+        }
+      else
+        {
+          return 0;
+        }
     }
 
   // check out the MAC address
   tmp = str2;
   while( *tmp != 0)
-    if (((*tmp >= '0') && (*tmp <= '9'))||   // good 0-9
-        ((*tmp >= 'a') && (*tmp <= 'f')))    // or a-f
-      ++tmp;
-    else
     {
-      return 0;
+      if (((*tmp >= '0') && (*tmp <= '9'))||   // good 0-9
+          ((*tmp >= 'a') && (*tmp <= 'f')))    // or a-f
+        {
+          ++tmp;
+        }
+      else
+        {
+          return 0;
+        }
     }
 
   // convert to target string
   tmp = str1;
   while ( *tmp != 0)
   {
-  if (( *tmp >= '0') && ( *tmp <= '9'))
-    *tmp = *tmp - (char unsigned )'0';
-  else
-  {
-    *tmp = *tmp - (char unsigned) 'a' + (char unsigned) 10;
-  }
-  ++tmp;
+    if (( *tmp >= '0') && ( *tmp <= '9'))
+      {
+        *tmp = *tmp - (char unsigned )'0';
+      }
+    else
+      {
+        *tmp = *tmp - (char unsigned) 'a' + (char unsigned) 10;
+      }
+    ++tmp;
   }
 
   // network id portion
@@ -1447,13 +1485,15 @@ int IpxAddress::parse_address( const char *inaddr)
   tmp = str2;
   while ( *tmp != 0)
   {
-  if (( *tmp >= '0') && ( *tmp <= '9'))
-    *tmp = *tmp - (char unsigned) '0';
-  else
-  {
-    *tmp = *tmp - (char unsigned) 'a'+ (char unsigned) 10;
-  }
-  ++tmp;
+    if (( *tmp >= '0') && ( *tmp <= '9'))
+      {
+        *tmp = *tmp - (char unsigned) '0';
+      }
+    else
+      {
+        *tmp = *tmp - (char unsigned) 'a'+ (char unsigned) 10;
+      }
+    ++tmp;
   }
 
   address_buffer[4] = (str2[0]*16)  + str2[1];
@@ -1482,22 +1522,24 @@ const char * IpxAddress::to_string()
 void IpxAddress::format_output()
 {
   if ( valid_flag)
-    std::snprintf (output_buffer, sizeof output_buffer,
-                   "%02x%02x%02x%02x-%02x%02x%02x%02x%02x%02x",
-                   static_cast<unsigned int> (address_buffer[0]),
-                   static_cast<unsigned int> (address_buffer[1]),
-                   static_cast<unsigned int> (address_buffer[2]),
-                   static_cast<unsigned int> (address_buffer[3]),
-                   static_cast<unsigned int> (address_buffer[4]),
-                   static_cast<unsigned int> (address_buffer[5]),
-                   static_cast<unsigned int> (address_buffer[6]),
-                   static_cast<unsigned int> (address_buffer[7]),
-                   static_cast<unsigned int> (address_buffer[8]),
-                   static_cast<unsigned int> (address_buffer[9]));
+    {
+      std::snprintf (output_buffer, sizeof output_buffer,
+                     "%02x%02x%02x%02x-%02x%02x%02x%02x%02x%02x",
+                     static_cast<unsigned int> (address_buffer[0]),
+                     static_cast<unsigned int> (address_buffer[1]),
+                     static_cast<unsigned int> (address_buffer[2]),
+                     static_cast<unsigned int> (address_buffer[3]),
+                     static_cast<unsigned int> (address_buffer[4]),
+                     static_cast<unsigned int> (address_buffer[5]),
+                     static_cast<unsigned int> (address_buffer[6]),
+                     static_cast<unsigned int> (address_buffer[7]),
+                     static_cast<unsigned int> (address_buffer[8]),
+                     static_cast<unsigned int> (address_buffer[9]));
+    }
   else
-  {
-    output_buffer[0] = 0;
-  }
+    {
+      output_buffer[0] = 0;
+    }
 }
 
 // get the host id portion of an ipx address
@@ -1517,11 +1559,13 @@ int IpxAddress::get_hostid( MacAddress& mac)
        // mac = (SnmpSyntax&) temp;
        mac = temp;
        if ( mac.valid())
-          return 1;
+         {
+           return 1;
+         }
        else
-       {
-         return 0;
-       }
+         {
+           return 0;
+         }
    }
    else
    {
@@ -1730,7 +1774,9 @@ int IpxSockAddress::parse_address( const char *inaddr)
    unsigned short socketid=0;
 
    if (inaddr && (std::strlen (inaddr) < MAXHOSTNAMELEN))
-     std::strcpy (buffer, inaddr);
+     {
+       std::strcpy (buffer, inaddr);
+     }
    else
    {
      valid_flag = 0;
@@ -1961,30 +2007,38 @@ int MacAddress::parse_address( const char *inaddr)
 
   // convert to lower
   for(z=0;z<std::strlen (temp);++z)
-    temp[z] = ACE_OS::ace_tolower( temp[z]);
+    {
+      temp[z] = ACE_OS::ace_tolower( temp[z]);
+    }
 
   // check out the MAC address
   tmp = ( unsigned char *) temp;
   while( *tmp != 0)
-    if (((*tmp >= '0') && (*tmp <= '9'))||   // good 0-9
-        ((*tmp >= 'a') && (*tmp <= 'f')))    // or a-f
-      ++tmp;
-    else
     {
-      return 0;
+      if (((*tmp >= '0') && (*tmp <= '9'))||   // good 0-9
+          ((*tmp >= 'a') && (*tmp <= 'f')))    // or a-f
+        {
+          ++tmp;
+        }
+      else
+        {
+          return 0;
+        }
     }
 
   // convert to target string
   tmp = (unsigned char *) temp;
   while ( *tmp != 0)
   {
-  if (( *tmp >= '0') && ( *tmp <= '9'))
-    *tmp = *tmp - (char unsigned )'0';
-  else
-  {
-    *tmp = *tmp - (char unsigned) 'a' + (char unsigned) 10;
-  }
-  ++tmp;
+    if (( *tmp >= '0') && ( *tmp <= '9'))
+      {
+        *tmp = *tmp - (char unsigned )'0';
+      }
+    else
+      {
+        *tmp = *tmp - (char unsigned) 'a' + (char unsigned) 10;
+      }
+    ++tmp;
   }
 
   address_buffer[0] =  (temp[0]*16) + temp[1];
@@ -2012,13 +2066,15 @@ const char * MacAddress::to_string()
 void MacAddress::format_output()
 {
   if ( valid_flag)
-    std::snprintf (output_buffer, sizeof output_buffer, "%02x:%02x:%02x:%02x:%02x:%02x",
-                   static_cast<unsigned int> (address_buffer[0]),
-                   static_cast<unsigned int> (address_buffer[1]),
-                   static_cast<unsigned int> (address_buffer[2]),
-                   static_cast<unsigned int> (address_buffer[3]),
-                   static_cast<unsigned int> (address_buffer[4]),
-                   static_cast<unsigned int> (address_buffer[5]));
+    {
+      std::snprintf (output_buffer, sizeof output_buffer, "%02x:%02x:%02x:%02x:%02x:%02x",
+                     static_cast<unsigned int> (address_buffer[0]),
+                     static_cast<unsigned int> (address_buffer[1]),
+                     static_cast<unsigned int> (address_buffer[2]),
+                     static_cast<unsigned int> (address_buffer[3]),
+                     static_cast<unsigned int> (address_buffer[4]),
+                     static_cast<unsigned int> (address_buffer[5]));
+    }
   else
   {
     output_buffer[0] = 0;
@@ -2274,21 +2330,37 @@ SnmpSyntax& GenAddress::operator= (SnmpSyntax& val)
         }
 
       if (val_len == UDPIPV4LEN)
-        address = create_address<UdpAddress> ();
+        {
+          address = create_address<UdpAddress> ();
+        }
       else if (val_len == IPV4LEN)
-        address = create_address<IpAddress> ();
+        {
+          address = create_address<IpAddress> ();
+        }
       else if (val_len == IPXLEN)
-        address = create_address<IpxAddress> ();
+        {
+          address = create_address<IpxAddress> ();
+        }
       else if (val_len == IPXSOCKLEN)
-        address = create_address<IpxSockAddress> ();
+        {
+          address = create_address<IpxSockAddress> ();
+        }
       else if (val_len == MACLEN)
-        address = create_address<MacAddress> ();
+        {
+          address = create_address<MacAddress> ();
+        }
       else if (val_len == APPLETKLEN)
-        address = create_address<AppleTalkAddress> ();
+        {
+          address = create_address<AppleTalkAddress> ();
+        }
       else if (val_len == DECNETLEN)
-        address = create_address<DecNetAddress> ();
+        {
+          address = create_address<DecNetAddress> ();
+        }
       else if (val_len == NETBIOSLEN)
-        address = create_address<DecNetAddress> ();
+        {
+          address = create_address<DecNetAddress> ();
+        }
 
       if (address)
       {
@@ -2453,7 +2525,9 @@ int GenAddress::parse_address (char const *addr)
 GenAddress::operator char const *() const
 {
   if (address)
-    return static_cast<char const *> (*address);      // pass thru
+    {
+      return static_cast<char const *> (*address);      // pass thru
+    }
   else
   {
     return output_buffer;
@@ -2464,7 +2538,9 @@ GenAddress::operator char const *() const
 char const * GenAddress::to_string()
 {
   if (address)
-    return address->to_string();        // pass thru
+    {
+      return address->to_string();        // pass thru
+    }
   else
   {
     return output_buffer;
@@ -2481,7 +2557,9 @@ void GenAddress::format_output()
 addr_type GenAddress::get_type() const
 {
   if (!valid())
-    return type_invalid;
+    {
+      return type_invalid;
+    }
   else
   {
     return address->get_type();
@@ -2622,9 +2700,11 @@ void DecNetAddress::format_output()
 {
   // if valid format else null it
   if ( valid_flag)
-    std::snprintf (output_buffer, sizeof output_buffer, "%u.%u",
-                   static_cast<unsigned int> (address_buffer[0]),
-                   static_cast<unsigned int> (address_buffer[1]));
+    {
+      std::snprintf (output_buffer, sizeof output_buffer, "%u.%u",
+                     static_cast<unsigned int> (address_buffer[0]),
+                     static_cast<unsigned int> (address_buffer[1]));
+    }
   else
   {
     output_buffer[0] = 0;
@@ -2766,10 +2846,12 @@ void AppleTalkAddress::format_output()
 {
   // if valid format else null it
   if ( valid_flag)
-    std::snprintf (output_buffer, sizeof output_buffer, "%u.%u.%u",
-                   static_cast<unsigned int> (address_buffer[0]),
-                   static_cast<unsigned int> (address_buffer[1]),
-                   static_cast<unsigned int> (address_buffer[2]));
+    {
+      std::snprintf (output_buffer, sizeof output_buffer, "%u.%u.%u",
+                     static_cast<unsigned int> (address_buffer[0]),
+                     static_cast<unsigned int> (address_buffer[1]),
+                     static_cast<unsigned int> (address_buffer[2]));
+    }
   else
   {
     output_buffer[0] = 0;
