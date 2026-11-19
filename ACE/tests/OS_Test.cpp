@@ -44,9 +44,11 @@ access_test ()
   if (status == -1)
     {
       if (errno == ENOTSUP)
-        ACE_ERROR_RETURN ((LM_INFO,
-                           ACE_TEXT ("ACE_OS::access() not supported\n")),
-                          0);
+        {
+          ACE_ERROR_RETURN ((LM_INFO,
+                             ACE_TEXT ("ACE_OS::access() not supported\n")),
+                            0);
+        }
     }
   else
     {
@@ -80,11 +82,13 @@ rename_test ()
   // is verified.
   FILE *f = ACE_OS::fopen (old_file, ACE_TEXT ("w+"));
   if (f == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%s: %p\n"),
-                       old_file,
-                       ACE_TEXT ("fopen")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%s: %p\n"),
+                         old_file,
+                         ACE_TEXT ("fopen")),
+                        -1);
+    }
   // Write something in the old_file so it has non-zero length
   ACE_OS::fwrite (ACE_TEXT ("this is a test\n"), sizeof (ACE_TCHAR), 15, f);
   ACE_OS::fclose (f);
@@ -163,7 +167,9 @@ rename_test ()
 
   // Test 3: It should fail... there are no files.
   if (ACE_OS::rename (old_file, new_file) == -1)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Rename test 3 should bomb, and did.\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Rename test 3 should bomb, and did.\n")));
+    }
   else
     {
       result = -1;
@@ -1046,11 +1052,13 @@ cpu_info_test ()
 
   if ((number_processors_online != -1 && number_processors != -1) &&
       number_processors_online > number_processors)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%q online processors; should be <= %q\n"),
-                       static_cast<ACE_INT64> (number_processors_online),
-                       static_cast<ACE_INT64> (number_processors)),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%q online processors; should be <= %q\n"),
+                         static_cast<ACE_INT64> (number_processors_online),
+                         static_cast<ACE_INT64> (number_processors)),
+                        -1);
+    }
 
   return 0;
 }
