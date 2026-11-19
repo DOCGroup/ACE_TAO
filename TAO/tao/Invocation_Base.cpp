@@ -233,9 +233,13 @@ namespace TAO
   Invocation_Base::exception (CORBA::Exception *exception)
   {
     if (CORBA::SystemException::_downcast (exception) != nullptr)
-      this->invoke_status_ = TAO::TAO_INVOKE_SYSTEM_EXCEPTION;
+      {
+        this->invoke_status_ = TAO::TAO_INVOKE_SYSTEM_EXCEPTION;
+      }
     else if (CORBA::UserException::_downcast (exception) != nullptr)
-      this->invoke_status_ = TAO::TAO_INVOKE_USER_EXCEPTION;
+      {
+        this->invoke_status_ = TAO::TAO_INVOKE_USER_EXCEPTION;
+      }
 
     this->forwarded_to_ = CORBA::Object::_nil ();
     this->reply_status_ = GIOP::NO_EXCEPTION;
