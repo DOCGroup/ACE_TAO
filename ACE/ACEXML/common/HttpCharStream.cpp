@@ -263,7 +263,9 @@ ACEXML_HttpCharStream::get_url (size_t& len)
   // Get all of the data. Since this is backed by file store, we won't lose
   // any of the data.
   while ((buf = this->stream_->recv (buflen)) != nullptr)
-    ;
+    {
+      ;
+    }
 
   // Length of data in the URL.
   len = this->stream_->recv() - data_beg;
@@ -359,7 +361,9 @@ ACEXML_HttpCharStream::determine_encoding ()
 
   size_t i {};
   for (; i < len && input[i] != static_cast<char> (EOF); ++i)
-    input[i] = static_cast<char> (this->stream_->peek_char (i));
+    {
+      input[i] = static_cast<char> (this->stream_->peek_char (i));
+    }
 
   if (i < len)
   {
@@ -369,7 +373,9 @@ ACEXML_HttpCharStream::determine_encoding ()
   ACEXML_Char const * const temp = ACEXML_Encoding::get_encoding (input);
 
   if (temp == nullptr)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       this->encoding_.reset (ACE::strnew (temp));
