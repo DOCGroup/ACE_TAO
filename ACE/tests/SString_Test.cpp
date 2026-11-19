@@ -63,42 +63,54 @@ int testIterator()
   // Use the advance () method to count number of characters.
   size_t count = 0;
   for (ACE_CString::ITERATOR iter (s1); !iter.done (); iter.advance ())
-    ++ count;
+    {
+      ++ count;
+    }
 
   if (count != s1.length ())
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("advance () failed")),
-                       1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("advance () failed")),
+                         1);
+    }
 
   // Use the prefix operator to count number of characters.
   count = 0;
   for (ACE_CString::ITERATOR iter (s1); !iter.done (); ++ iter)
-    ++ count;
+    {
+      ++ count;
+    }
 
   if (count != s1.length ())
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("++ operator failed")),
-                       1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("++ operator failed")),
+                         1);
+    }
 
   count = 0;
 
   for (ACE_CString::iterator iter = s1.begin (), iter_end = s1.end ();
        iter != iter_end; ++iter)
-  {
-    ++ count;
-  }
+    {
+      ++ count;
+    }
 
   if (count != s1.length ())
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("end () failed")),
-                       1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("end () failed")),
+                         1);
+    }
 
   ACE_CString::iterator iter1 (s1);
 
   if (*iter1 != s1[0])
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("dereference operator failed")),
-                       1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("dereference operator failed")),
+                         1);
+    }
 
   return 0;
 }
@@ -110,42 +122,54 @@ int testConstIterator()
   // Use the advance () method to count number of characters.
   size_t count = 0;
   for (ACE_CString::CONST_ITERATOR iter (s1); !iter.done (); iter.advance ())
-    ++count;
+    {
+      ++count;
+    }
 
   if (count != s1.length ())
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("advance () failed")),
-                       1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("advance () failed")),
+                         1);
+    }
 
   // Use the prefix operator to count number of characters.
   count = 0;
   for (ACE_CString::CONST_ITERATOR iter (s1); !iter.done (); ++ iter)
-    ++ count;
+    {
+      ++ count;
+    }
 
   if (count != s1.length ())
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("++ operator failed")),
-                       1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("++ operator failed")),
+                         1);
+    }
 
   count = 0;
 
   for (ACE_CString::const_iterator iter = s1.begin (), iter_end = s1.end ();
        iter != iter_end; ++iter)
-  {
-    ++ count;
-  }
+    {
+      ++ count;
+    }
 
   if (count != s1.length ())
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("end () failed")),
-                       1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("end () failed")),
+                         1);
+    }
 
   ACE_CString::const_iterator iter1 (s1);
 
   if (*iter1 != s1[0])
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("dereference operator failed")),
-                       1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("dereference operator failed")),
+                         1);
+    }
 
   return 0;
 }
