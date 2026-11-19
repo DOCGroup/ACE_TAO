@@ -190,9 +190,11 @@ int Counter64::valid() const
 char const *Counter64::to_string ()
 {
   if ( high() != 0 )
-    std::snprintf (output_buffer, sizeof output_buffer, "0x%X%08X",
-                    static_cast<unsigned int> (high()),
-                    static_cast<unsigned int> (low()));
+    {
+      std::snprintf (output_buffer, sizeof output_buffer, "0x%X%08X",
+                     static_cast<unsigned int> (high()),
+                     static_cast<unsigned int> (low()));
+    }
   else
   {
     std::snprintf (output_buffer, sizeof output_buffer, "%lu", low());

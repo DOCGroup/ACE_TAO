@@ -68,7 +68,9 @@ Gauge32 &Gauge32::operator= (unsigned long i)
 SnmpSyntax& Gauge32::operator=( SnmpSyntax &in_val)
 {
   if (this == std::addressof (in_val))        // handle assignment from itself
+    {
       return *this;
+    }
 
   valid_flag = 0;               // will get set true if really valid
   if (in_val.valid())

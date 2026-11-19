@@ -51,7 +51,9 @@ SmiUINT32 Counter32::get_syntax()
 // general assignment from any Value
 SnmpSyntax& Counter32::operator=( SnmpSyntax &in_val){
   if (this == std::addressof (in_val))        // handle assignment from itself
+    {
       return *this;
+    }
 
   valid_flag = 0;               // will get set true if really valid
   if (in_val.valid())

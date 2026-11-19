@@ -261,7 +261,9 @@ int Snmp::trap (Pdu &pdu, UdpTarget &target)
   // 2. write request to agent
   transaction trans (pdu, target, iv_snmp_session_);
   if (trans.send () > 0) // expect number of bytes sent on
-    return 0;
+    {
+      return 0;
+    }
 
   last_transaction_status_ = SNMP_CLASS_INTERNAL_ERROR;
   return -1;

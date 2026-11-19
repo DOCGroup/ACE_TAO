@@ -69,7 +69,9 @@ SnmpUInt32 &SnmpUInt32::operator= (unsigned long const i)
 SnmpSyntax& SnmpUInt32::operator=( SnmpSyntax &in_val)
 {
   if (this == std::addressof (in_val))        // handle assignment from itself
+    {
       return *this;
+    }
 
   valid_flag = false;
   if (in_val.valid())
@@ -167,7 +169,9 @@ SnmpInt32 &SnmpInt32::operator= (SnmpInt32 const &uli)
 SnmpSyntax& SnmpInt32::operator=( SnmpSyntax &in_val)
 {
   if (this == std::addressof (in_val))        // handle assignment from itself
+    {
       return *this;
+    }
 
   valid_flag = false;
   if (in_val.valid())
