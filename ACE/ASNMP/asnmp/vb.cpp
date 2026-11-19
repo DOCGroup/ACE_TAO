@@ -310,7 +310,9 @@ int Vb::get_value (SnmpSyntax &val)
   if (iv_vb_value_ != nullptr) {
     val = *iv_vb_value_;
     if (val.valid())
+      {
         return SNMP_CLASS_SUCCESS;
+      }
     else
     {
       return SNMP_CLASS_INVALID;
@@ -332,7 +334,9 @@ int Vb::get_value (SnmpSyntax &val)
 SmiUINT32 Vb::get_syntax ()
 {
   if ( exception_status_ != SNMP_CLASS_SUCCESS)
-    return exception_status_;
+    {
+      return exception_status_;
+    }
   else
   {
     return iv_vb_value_ != nullptr ? iv_vb_value_->get_syntax() : sNMP_SYNTAX_NULL;
@@ -343,7 +347,9 @@ SmiUINT32 Vb::get_syntax ()
 char const *Vb::to_string_value ()
 {
   if (iv_vb_value_ != nullptr)
-    return iv_vb_value_->to_string();
+    {
+      return iv_vb_value_->to_string();
+    }
   else
   {
     return "";

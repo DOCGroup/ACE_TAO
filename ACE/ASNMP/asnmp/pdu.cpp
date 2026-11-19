@@ -157,7 +157,9 @@ char const *Pdu::to_string ()
   size_t size = HEADER_STR; // header takes up this much room
 
    for (int z = 0; z < vb_count_; ++z)
+     {
        size += std::strlen (vbs_[z]->to_string ()) + 2;
+     }
 
   std::unique_ptr<char[]> buffer {new (std::nothrow) char[size]};
   if (!buffer)
@@ -195,7 +197,9 @@ int Pdu::get_vblist (Vb *pvbs, int pvb_count)
    // loop through all vbs_ and assign to params
    int z;
    for (z = 0; z < pvb_count; ++z)
-      pvbs[z] = *vbs_[z];
+     {
+       pvbs[z] = *vbs_[z];
+     }
 
    return 1;
 }
@@ -310,7 +314,9 @@ char const *Pdu::agent_error_reason ()
 {
     int const pdu_err = get_error_status ();
     if (pdu_err == 0) // any real error?
-        return "not in error state";
+        {
+            return "not in error state";
+        }
 
     int const n_vbs = get_vb_count ();
     Vb bad;
@@ -459,7 +465,9 @@ int Pdu::delete_vb (int p)
 void Pdu::delete_all_vbs ()
 {
   for (int z = 0; z < vb_count_; ++z)
-    vbs_[z].reset ();
+    {
+      vbs_[z].reset ();
+    }
    vb_count_ = 0;
 }
 
