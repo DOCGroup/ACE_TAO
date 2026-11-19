@@ -73,15 +73,19 @@ HA_Proactive_Service::handle_read_stream
           ACE_Message_Block *raw_message_block {};
           ACE_NEW_NORETURN (raw_message_block, ACE_Message_Block (1024));
           if (raw_message_block == nullptr)
-            ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
-                        ACE_TEXT ("allocating read block")));
+            {
+              ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
+                          ACE_TEXT ("allocating read block")));
+            }
           else
             {
               ACE_Message_Block_Unique_Ptr new_message_block {raw_message_block};
               if (this->reader_.read (*new_message_block,
                                       new_message_block->space ()) != 0)
-                ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
-                            ACE_TEXT ("starting read")));
+                {
+                  ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
+                              ACE_TEXT ("starting read")));
+                }
               else
               {
                 new_message_block.release ();
@@ -150,8 +154,10 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                          true,  // reuse_addr
                          nullptr, // proactor
                          true) != 0) // validate_new_connection
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("acceptor open")), 1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("acceptor open")), 1);
+    }
   // Listing 5
 
 #if 0
