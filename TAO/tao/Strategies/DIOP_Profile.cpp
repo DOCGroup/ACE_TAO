@@ -91,9 +91,11 @@ TAO_DIOP_Profile::decode_profile (TAO_InputCDR& cdr)
       || cdr.read_ushort (this->endpoint_.port_) == 0)
     {
       if (TAO_debug_level > 0)
-        TAOLIB_DEBUG ((LM_DEBUG,
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - DIOP_Profile::decode_profile, ")
                     ACE_TEXT ("error while decoding host/port\n")));
+        }
       return -1;
     }
 
@@ -161,9 +163,13 @@ TAO_DIOP_Profile::parse_string_i (const char *ior)
       else
         {
           if (cp_pos_a[1] == ':')    // Look for a port
-            cp_pos = cp_pos_a + 1;
+            {
+              cp_pos = cp_pos_a + 1;
+            }
           else
-            cp_pos = nullptr;
+            {
+              cp_pos = nullptr;
+            }
           ipv6_in_host = true; // host string contains full IPv6 numeric address
         }
     }
@@ -225,18 +231,24 @@ TAO_DIOP_Profile::parse_string_i (const char *ior)
 
 #if defined (ACE_HAS_IPV6)
   if (ipv6_in_host)
-    length_host -= 2; // don't store '[' and ']'
+    {
+      length_host -= 2; // don't store '[' and ']'
+    }
 #endif /* ACE_HAS_IPV6 */
 
   CORBA::String_var tmp = CORBA::string_alloc (length_host);
 
 #if defined (ACE_HAS_IPV6)
   if (ipv6_in_host)
-    std::strncpy (tmp.inout (), ior + 1, length_host);
+    {
+      std::strncpy (tmp.inout (), ior + 1, length_host);
+    }
   else
 #endif /* ACE_HAS_IPV6 */
-  // Skip the trailing '/'
-  std::strncpy (tmp.inout (), ior, length_host);
+    {
+      // Skip the trailing '/'
+      std::strncpy (tmp.inout (), ior, length_host);
+    }
   tmp[length_host] = '\0';
 
   this->endpoint_.host_ = tmp._retn ();
@@ -259,11 +271,13 @@ TAO_DIOP_Profile::parse_string_i (const char *ior)
           // initialized.  Just throw an exception.
 
           if (TAO_debug_level > 0)
-            TAOLIB_DEBUG ((LM_DEBUG,
+            {
+              TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - ")
                         ACE_TEXT ("DIOP_Profile::parse_string_i, ")
                         ACE_TEXT ("%p\n\n"),
                         ACE_TEXT ("cannot determine hostname")));
+            }
 
           // @@ What's the right exception to throw here?
           throw ::CORBA::INV_OBJREF (
@@ -305,11 +319,13 @@ TAO_DIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
        endp = endp->next_)
     {
       if (endp->is_equivalent (other_endp))
-        other_endp = other_endp->next_;
+        {
+          other_endp = other_endp->next_;
+        }
       else
-      {
-        return false;
-      }
+        {
+          return false;
+        }
     }
 
   return true;
@@ -398,7 +414,9 @@ TAO_DIOP_Profile::to_string () const
           1 /* comma */);
 #if defined (ACE_HAS_IPV6)
       if (endp->is_ipv6_decimal_)
-        buflen += 2; // room for '[' and ']'
+        {
+          buflen += 2; // room for '[' and ']'
+        }
 #endif /* ACE_HAS_IPV6 */
    }
 
@@ -436,13 +454,15 @@ TAO_DIOP_Profile::to_string () const
         }
       else
 #endif
-      std::sprintf (buf + std::strlen (buf),
+        {
+          std::sprintf (buf + std::strlen (buf),
               "%s:%c.%c@%s:%d",
               ::the_prefix,
               digits [this->version_.major],
               digits [this->version_.minor],
               endp->host (),
               endp->port ());
+        }
   }
   std::sprintf (buf + std::strlen (buf),
                    "%c%s",
@@ -483,14 +503,18 @@ TAO_DIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
     }
   else
 #endif /* ACE_HAS_IPV6 */
-  encap.write_string (this->endpoint_.host ());
+    {
+      encap.write_string (this->endpoint_.host ());
+    }
 
   // UNSIGNED SHORT port number
   encap.write_ushort (this->endpoint_.port ());
 
   // OCTET SEQUENCE for object key
   if (this->ref_object_key_)
-    encap << this->ref_object_key_->object_key ();
+    {
+      encap << this->ref_object_key_->object_key ();
+    }
   else
     {
       TAOLIB_ERROR ((LM_ERROR,
@@ -536,11 +560,15 @@ TAO_DIOP_Profile::encode_endpoints ()
               endpoints[i].host = tmp.c_str ();
             }
           else
-            endpoints[i].host = tmp.c_str ();
+            {
+              endpoints[i].host = tmp.c_str ();
+            }
         }
       else
 #endif /* ACE_HAS_IPV6 */
-      endpoints[i].host = endpoint->host ();
+        {
+          endpoints[i].host = endpoint->host ();
+        }
       endpoints[i].port = endpoint->port ();
       endpoints[i].priority = endpoint->priority ();
 
