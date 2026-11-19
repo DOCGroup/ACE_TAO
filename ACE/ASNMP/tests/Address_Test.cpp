@@ -380,7 +380,6 @@ static void TestIpxAddress()
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) IpxAddress:xa7(\"01234567-012345-6789AB\") [%s]\n",
     xa7.to_string()));
 
-  // assignment
   xa1 = xa3;
   ACE_TEST_ASSERT(xa1 == xa3);
   MacAddress mac;
@@ -540,7 +539,6 @@ static void TestUdpAddress()
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) UdpAddress:ua7()(\"localhost/162\") [%s]\n",
     ua7.to_string()));
 
-  // assignment tests.
   ua1 = ua2;
   ACE_TEST_ASSERT(ua1 == ua2);
   ACE_TEST_ASSERT(ua1.valid() == 1);

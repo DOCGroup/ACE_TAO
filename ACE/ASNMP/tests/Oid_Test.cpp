@@ -136,7 +136,6 @@ static void OidTest()
   ACE_TEST_ASSERT (d4.right_comparison (2, d10) == -1);
   ACE_TEST_ASSERT (d10.right_comparison (2, d4) == 1);
 
-  // assignment
   d1 = d4;
   ACE_TEST_ASSERT(d1.valid() == 1);
   ACE_TEST_ASSERT(d1 == d4);

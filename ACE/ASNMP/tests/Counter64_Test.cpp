@@ -129,7 +129,6 @@ static void TestCounter64()
    c1.set_high(2);
    ACE_TEST_ASSERT(c1.low() == 1);
    ACE_TEST_ASSERT(c1.high() == 2);
-  // assignment
   c5 = c4;
   ACE_TEST_ASSERT(c5 == c4);
   c4 = c4;
