@@ -31,8 +31,8 @@ if ($status == 0) {
     }
     close $generated;
 
-    my ($copy_base_decl) = $valuetype_header =~
-      /(class TAO_IDL_TEST_STUB_Export OBV_Copy_Base[\s\S]*?\{)/;
+    my $copy_base_decl = generated_class_body (
+      $valuetype_header, "OBV_Copy_Base");
     if (!defined $copy_base_decl) {
         print STDERR "ERROR: cannot find generated OBV_Copy_Base declaration\n";
         $status = 1;
@@ -41,8 +41,8 @@ if ($status == 0) {
         print STDERR "ERROR: OBV_Copy_Base does not provide the valuetype reference counter\n";
         $status = 1;
     }
-    my ($copy_derived_decl) = $valuetype_header =~
-      /(class TAO_IDL_TEST_STUB_Export OBV_Copy_Derived[\s\S]*?\{)/;
+    my $copy_derived_decl = generated_class_body (
+      $valuetype_header, "OBV_Copy_Derived");
     if (!defined $copy_derived_decl) {
         print STDERR "ERROR: cannot find generated OBV_Copy_Derived declaration\n";
         $status = 1;
@@ -52,30 +52,30 @@ if ($status == 0) {
         $status = 1;
     }
 
-    my ($copy_derived_body) = $valuetype_header =~
-      /(class TAO_IDL_TEST_STUB_Export OBV_Copy_Derived[\s\S]*?\n\s*};)/;
+    my $copy_derived_body = generated_class_body (
+      $valuetype_header, "OBV_Copy_Derived");
     if (!defined $copy_derived_body || $copy_derived_body !~ /_copy_value\s*\(/) {
         print STDERR "ERROR: concrete OBV_Copy_Derived does not declare _copy_value\n";
         $status = 1;
     }
 
-    my ($copy_base_body) = $valuetype_header =~
-      /(class TAO_IDL_TEST_STUB_Export OBV_Copy_Base[\s\S]*?\n\s*};)/;
+    my $copy_base_body = generated_class_body (
+      $valuetype_header, "OBV_Copy_Base");
     if (!defined $copy_base_body || $copy_base_body !~ /_copy_value\s*\(/) {
         print STDERR "ERROR: concrete OBV_Copy_Base does not declare _copy_value\n";
         $status = 1;
     }
 
-    my ($copy_operation_derived_body) = $valuetype_header =~
-      /(class TAO_IDL_TEST_STUB_Export OBV_Copy_Operation_Derived[\s\S]*?\n\s*};)/;
+    my $copy_operation_derived_body = generated_class_body (
+      $valuetype_header, "OBV_Copy_Operation_Derived");
     if (!defined $copy_operation_derived_body
         || $copy_operation_derived_body !~ /_copy_value\s*\(\)\s*override\s*=\s*0/) {
         print STDERR "ERROR: operation-bearing derived OBV does not require its own copy\n";
         $status = 1;
     }
 
-    my ($application_factory_decl) = $valuetype_header =~
-      /(class TAO_IDL_TEST_STUB_Export OBV_Application_Factory_Value[\s\S]*?\n\s*};)/;
+    my $application_factory_decl = generated_class_body (
+      $valuetype_header, "OBV_Application_Factory_Value");
     if (!defined $application_factory_decl) {
         print STDERR "ERROR: cannot find generated OBV_Application_Factory_Value declaration\n";
         $status = 1;
@@ -85,8 +85,8 @@ if ($status == 0) {
         $status = 1;
     }
 
-    my ($supported_value_decl) = $valuetype_header =~
-      /(class TAO_IDL_TEST_STUB_Export OBV_Supported_Interface_Value[\s\S]*?\n\s*};)/;
+    my $supported_value_decl = generated_class_body (
+      $valuetype_header, "OBV_Supported_Interface_Value");
     if (!defined $supported_value_decl
         || $supported_value_decl !~ /DefaultValueRefCountBase/
         || $supported_value_decl !~ /_add_ref\s*\(\)\s*override/)
