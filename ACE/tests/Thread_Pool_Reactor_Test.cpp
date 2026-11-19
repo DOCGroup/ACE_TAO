@@ -143,15 +143,17 @@ Request_Handler::handle_input (ACE_HANDLE fd)
                   reinterpret_cast<void *> (fd),
                   buffer));
       if (ACE_OS::strcmp (buffer, ACE_TEXT ("shutdown")) == 0)
-      {
-        ACE_Reactor::instance()->end_reactor_event_loop ();
-      }
+        {
+          ACE_Reactor::instance()->end_reactor_event_loop ();
+        }
       return 0;
     }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                "(%t) Request_Handler: %@ peer closed (%@)\n",
-                static_cast<void *> (this), reinterpret_cast<void *> (fd)));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%t) Request_Handler: %@ peer closed (%@)\n",
+                  static_cast<void *> (this), reinterpret_cast<void *> (fd)));
+    }
   return -1;
 }
 
@@ -163,11 +165,13 @@ Request_Handler::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask)
               reinterpret_cast<void *> (fd),
               this->nr_msgs_rcvd_));
   if (this->nr_msgs_rcvd_ != cli_req_no)
-    ACE_ERROR((LM_ERROR,
-               "(%t) Handler %@: Expected %B messages; got %B\n",
-               static_cast<void *> (this),
-               cli_req_no,
-               this->nr_msgs_rcvd_));
+    {
+      ACE_ERROR((LM_ERROR,
+                 "(%t) Handler %@: Expected %B messages; got %B\n",
+                 static_cast<void *> (this),
+                 cli_req_no,
+                 this->nr_msgs_rcvd_));
+    }
   this->destroy ();
   return 0;
 }
@@ -189,9 +193,11 @@ svr_worker (void *)
     ACE_Reactor::instance ()->run_reactor_event_loop (&reactor_event_hook);
 
   if (result == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%t) Error handling events: %p\n"),
-                      0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%t) Error handling events: %p\n"),
+                        0);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "(%t) I am done handling events. Bye, bye\n"));
@@ -267,8 +273,10 @@ worker (void *)
   ACE_SOCK_Connector connect;
 
   if (connect.connect (stream, addr) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "(%t) Error while connecting: %p\n"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%t) Error while connecting: %p\n"));
+    }
 
   const ACE_TCHAR *sbuf = ACE_TEXT ("\011shutdown");
 
@@ -277,8 +285,10 @@ worker (void *)
               reinterpret_cast<void *> (stream.get_handle ())));
 
   if (stream.send_n (sbuf, (ACE_OS::strlen (sbuf) + 1) * sizeof (ACE_TCHAR)) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "(%t) send_n: %p\n"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%t) send_n: %p\n"));
+    }
 
   stream.close ();
 
@@ -300,9 +310,11 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_INET_Addr accept_addr (rendezvous);
 
   if (acceptor.open (accept_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("open: %p\n")),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("open: %p\n")),
+                        1);
+    }
 
   ACE_DEBUG((LM_DEBUG,
              ACE_TEXT ("(%t) Spawning %B server threads...\n"),
