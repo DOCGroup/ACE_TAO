@@ -195,17 +195,19 @@ run_reverse_iterator_cache (MAP_CACHE &cache)
 
       // Debugging info.
       if (debug)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%B|%B)"),
-                    (*iter).first (),
-                    (*iter).second ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%B|%B)"),
+                      (*iter).first (),
+                      (*iter).second ()));
+        }
       --counter;
     }
 
   if (debug)
-  {
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
-  }
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
+    }
 
   ACE_TEST_ASSERT (counter == 0);
 }
@@ -224,17 +226,19 @@ run_reverse_iterator_hash_cache (HASH_MAP_CACHE &cache)
 
       // Debugging info.
       if (debug)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%B|%B)"),
-                    (*iter).first (),
-                    (*iter).second ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%B|%B)"),
+                      (*iter).first (),
+                      (*iter).second ()));
+        }
       --counter;
     }
 
   if (debug)
-  {
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
-  }
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
+    }
 
   ACE_TEST_ASSERT (counter == 0);
 }
@@ -312,11 +316,13 @@ purge_test_cache (MAP_CACHE &cache)
 
   size_t resultant_size = 0;
   if (caching_strategy_type == ACE_NULL)
-    resultant_size = current_map_size;
+    {
+      resultant_size = current_map_size;
+    }
   else
-  {
-    resultant_size = current_map_size - entries_to_remove;
-  }
+    {
+      resultant_size = current_map_size - entries_to_remove;
+    }
 
   // Make sure the purge took out the appropriate number of entries.
   ACE_TEST_ASSERT (cache.current_size () == resultant_size);
@@ -342,11 +348,13 @@ purge_test_hash_cache (HASH_MAP_CACHE &cache)
 
   size_t resultant_size = 0;
   if (caching_strategy_type == ACE_NULL)
-    resultant_size = current_map_size;
+    {
+      resultant_size = current_map_size;
+    }
   else
-  {
-    resultant_size = current_map_size - entries_to_remove;
-  }
+    {
+      resultant_size = current_map_size - entries_to_remove;
+    }
 
   // Make sure the purge took out the appropriate number of entries.
   ACE_TEST_ASSERT (cache.current_size () == resultant_size);
@@ -370,8 +378,10 @@ functionality_test_cache (MAP_CACHING_STRATEGY &caching_strategy)
       ACE_UNUSED_ARG (result);
 
       if (debug)
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("keys[%B]=%B value=[%B]=%B\n"),
-                    i, i, j, j));
+        {
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("keys[%B]=%B value=[%B]=%B\n"),
+                      i, i, j, j));
+        }
       ++counter;
       ACE_TEST_ASSERT (cache.current_size () == counter);
     }
@@ -412,9 +422,11 @@ functionality_test_hash_cache (HASH_MAP_CACHING_STRATEGY &caching_strategy)
       ACE_UNUSED_ARG (result);
 
       if (debug)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("keys[%B]=%B value=[%B]=%B\n"),
-                    i, i, j, j));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("keys[%B]=%B value=[%B]=%B\n"),
+                      i, i, j, j));
+        }
       ++counter;
       ACE_TEST_ASSERT (cache.current_size () == counter);
     }
@@ -591,11 +603,13 @@ run_main (int argc, ACE_TCHAR *argv[])
        ++k)
     {
       if (randomize_lookups != 0)
-        lookup_array[k] = ACE_OS::rand () % iterations;
+        {
+          lookup_array[k] = ACE_OS::rand () % iterations;
+        }
       else
-      {
-        lookup_array[k] = k % iterations;
-      }
+        {
+          lookup_array[k] = k % iterations;
+        }
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("%B  "),
