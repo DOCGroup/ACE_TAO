@@ -3197,6 +3197,7 @@ TAO/tao/TypeCodeFactory	SPECIAL_MEMBER_COMMENTS	done	f1730a57ff9	Removed generic
 TAO/tao/TypeCodeFactory	STYLE	done	5ebf1987c75	Reviewed the full diff, git diff --check, and 120-column line limit.
 TAO/tao/TypeCodeFactory	USING	done	2bd176959a2	C++ implementation aliases already use using; typedefs in TypeCodeFactory.pidl are IDL declarations and remain typedef.
 TAO/tao/TypeCodeFactory	VALUE_INIT	done	5ebf1987c75	Value-initialized all local TypeCode result pointers and the discriminator label accumulator.
+TAO/tao/Utils	ADDRESSOF	not-applicable	3fef3971ec9	Reviewed object address-taking in Utils; no expressions take the address of an object, so std::addressof is not applicable here.
 TAO/tao/Utils	BUILD_TEST	done	b20d9a3b315	Realclean-built GNUmakefile.TAO_Utils and GNUmakefile.Fault_Detector with make -j 8; both linked without compiler warnings.
 TAO/tao/Utils	BRACES	needs-work	20199830a3b	Corrected Allman indentation of the ORB destroy nil-check; the full Utils brace audit remains open.
 TAO/tao/Utils	CLEANUP	done	28bb5cc8f03	Removed redundant constructor/destructor labels and one duplicate blank line

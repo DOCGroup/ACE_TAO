@@ -78,6 +78,11 @@ task has been reviewed and no follow-up remains.
   `bool` or `CORBA::Boolean`, pass `true`/`false` instead of `1`/`0`. Revisit
   directories already modernized as well as new changes; track this as
   `BOOL_ARGUMENTS`.
+- TODO for the full ACE/TAO tree: use `std::addressof` when taking an object's
+  address could call an overloaded `operator&`, including generic code where
+  the operand type is not constrained. Keep ordinary built-in address-taking
+  where the type cannot overload the operator. Track this as `ADDRESSOF` per
+  directory; missing rows remain open work.
 
 ## Inventory columns
 
@@ -102,6 +107,7 @@ Task codes for the task-status file and its `tasks_done` summary:
 | `CONST` | East-side const, const locals, and immutable handles |
 | `VALUE_INIT` | Value-initialize scalar/member state; simplify constructors |
 | `BOOL_ARGUMENTS` | Use Boolean literals for Boolean arguments |
+| `ADDRESSOF` | Use `std::addressof` where overloaded `operator&` is possible |
 | `NULLPTR` | Replace eligible null pointer constants with `nullptr` |
 | `OVERRIDE_DEFAULT_DELETE` | Review override/default/delete and exported destructor placement |
 | `EXPLICIT` | Review single-argument constructors for `explicit` |

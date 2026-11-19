@@ -13653,3 +13653,6 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   for `SCOPE_REDUCTION`. Existing locals already stay inside their necessary
   blocks; ownership guards retain references until cleanup and ORB/POA locals
   remain alive through teardown. No safe scope changes were identified.
+- Reviewed the Utils directory for `ADDRESSOF`; it contains no object-address
+  expressions, only reference declarations and operators. The whole-tree audit
+  remains open.
