@@ -50,7 +50,9 @@ Headers::parse_header_line (char * const header_line)
   if (header != nullptr && this->map_.mapped (header))
     {
       while (ACE_OS::ace_isspace (*value))
-        ++value;
+        {
+          ++value;
+        }
 
       this->map_[header] = value;
 
@@ -106,11 +108,13 @@ Headers::complete_header_line (char *const header_line)
 
         default:
           if (ACE_OS::ace_isalpha (ptr[offset]))
-            return 1;
+            {
+              return 1;
+            }
           else
-          {
-            return -1;
-          }
+            {
+              return -1;
+            }
         }
     }
   while (this->end_of_line (ptr, offset) != 0);
@@ -276,11 +280,13 @@ Headers_Map::find (const char * const header) const
     {
       int k = (i+j)/2;
       if (Headers_Map::compare (&this->garbage_, this->map_+k) < 0)
-        j = k;
+        {
+          j = k;
+        }
       else
-      {
-        i = k;
-      }
+        {
+          i = k;
+        }
     }
 
   Headers_Map_Item *mi_ptr = mutable_this->map_ + i;
@@ -344,13 +350,17 @@ Headers_Map::compare (const void *item1,
   if (a->header_ == nullptr || b->header_ == nullptr)
     {
       if (a->header_ == nullptr && b->header_ == nullptr)
-        result = 0;
+        {
+          result = 0;
+        }
       else if (a->header_ == nullptr)
-        result = 1;
+        {
+          result = 1;
+        }
       else
-      {
-        result = -1;
-      }
+        {
+          result = -1;
+        }
     }
   else
   {
