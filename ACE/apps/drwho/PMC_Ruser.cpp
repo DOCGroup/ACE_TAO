@@ -17,8 +17,10 @@ int
 PMC_Ruser::encode (char *packet, int &packet_length)
 {
   if (Options::get_opt (Options::DEBUGGING) != 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "in PMC_Ruser::encode\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "in PMC_Ruser::encode\n"));
+    }
 
   Search_Struct *lookup {};
   ACE_NEW_RETURN (lookup, HT_Client, -1);
@@ -67,7 +69,9 @@ PMC_Ruser::decode (char *packet, int &packet_length)
 
       for (cp = (char *) ACE::strend (cp);
            *(cp = this->handle_protocol_entries (cp, host_name)) != '\t'; )
-        continue;
+        {
+          continue;
+        }
     }
 
   return 1;
@@ -128,7 +132,9 @@ PMC_Ruser::process ()
   const char *(Drwho_Node::*get_name)();
 
   if (Options::get_opt (Options::PRINT_LOGIN_NAME))
-    get_name = &Drwho_Node::get_login_name;
+    {
+      get_name = &Drwho_Node::get_login_name;
+    }
   else
   {
     get_name = &Drwho_Node::get_real_name;
@@ -152,27 +158,39 @@ PMC_Ruser::process ()
           if (np->get_inactive_count () != 0)
             {
               if (np->get_active_count () != 0)
-                ACE_DEBUG ((LM_DEBUG,
-                            "*(%d)",
-                            np->get_active_count ()));
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "*(%d)",
+                              np->get_active_count ()));
+                }
             }
           else if (np->get_active_count () > 1)
-            ACE_DEBUG ((LM_DEBUG,
-                        "*(%d)",
-                        np->get_active_count ()));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "*(%d)",
+                          np->get_active_count ()));
+            }
           else if (np->get_active_count () == 1)
-            ACE_DEBUG ((LM_DEBUG,
-                        "*"));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "*"));
+            }
 
           np = np->next_;
           if (np == nullptr)
-            break;
+            {
+              break;
+            }
           else if (Options::get_opt (Options::PRINT_LOGIN_NAME))
-            ACE_DEBUG ((LM_DEBUG,
-                        " "));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          " "));
+            }
           else
-            ACE_DEBUG ((LM_DEBUG,
-                        ", "));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ", "));
+            }
         }
 
       ACE_DEBUG ((LM_DEBUG,
