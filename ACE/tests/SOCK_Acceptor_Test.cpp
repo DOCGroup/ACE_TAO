@@ -70,11 +70,17 @@ test_accept (ACE_Addr listen_addr, int v6_only)
   v6_stream.close();
 
   if (v6_only && v4_ok)
-    status = 1;
+    {
+      status = 1;
+    }
   if (!v6_only && !v4_ok)
-    status = 1;
+    {
+      status = 1;
+    }
   if (!v6_ok)
-    status = 1;
+    {
+      status = 1;
+    }
 #else
   status = v4_ok ? 0 : 1;
 #endif /* ACE_HAS_IPV6 */
