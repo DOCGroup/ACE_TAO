@@ -91,6 +91,12 @@ public:
   /// @}
 
 protected:
+  /// Generate a deep-copy expression for a valuetype or valuebox field.
+  void gen_valuetype_field_copy_expression (be_field *field,
+                                           char const *accessor_prefix,
+                                           char const *null_pointer,
+                                           bool multiline);
+
   /// Predicate common to _ch and _cs visitors.
   bool is_amh_exception_holder (be_valuetype *node);
 };

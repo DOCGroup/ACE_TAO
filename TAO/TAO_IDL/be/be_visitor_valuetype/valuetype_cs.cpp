@@ -188,37 +188,15 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
               if (decl != nullptr && decl->node_type () == AST_Decl::NT_field)
                 {
                   be_field * const field = dynamic_cast<be_field *> (decl);
-                  be_type *field_type =
-                    field == nullptr
-                    ? nullptr
-                    : dynamic_cast<be_type *> (field->field_type ());
-                  be_typedef * const field_typedef =
-                    dynamic_cast<be_typedef *> (field_type);
-                  if (field_typedef != nullptr)
-                    {
-                      field_type = field_typedef->primitive_base_type ();
-                    }
-
-                  bool const is_valuetype_or_valuebox =
-                    dynamic_cast<be_valuetype_fwd *> (field_type) != nullptr
-                    || dynamic_cast<be_valuetype *> (field_type) != nullptr
-                    || dynamic_cast<be_valuebox *> (field_type) != nullptr;
-
-                  if (is_valuetype_or_valuebox)
+                  if (field != nullptr)
                     {
                       *os << "ret_val->" << decl->local_name ()
-                          << " (this->" << decl->local_name () << " () ? "
-                          << field_type->full_name ()
-                          << "::_downcast (::CORBA::ValueBase_var (this->"
-                          << decl->local_name ()
-                          << " ()->_copy_value ()).in ()) : nullptr);"
-                          << be_nl;
-                    }
-                  else
-                    {
-                      *os << "ret_val->" << decl->local_name ()
-                          << " (this->" << decl->local_name () << " ());"
-                          << be_nl;
+                          << " (";
+                      this->gen_valuetype_field_copy_expression (field,
+                                                                 "this->",
+                                                                 "nullptr",
+                                                                 false);
+                      *os << ");" << be_nl;
                     }
                 }
             }
