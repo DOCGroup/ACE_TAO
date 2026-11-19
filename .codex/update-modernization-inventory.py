@@ -49,6 +49,7 @@ TASKS = {
     "MOVE_SITES": "Audit std::move sites for moved-from use and ownership correctness",
     "MOVE_SEMANTICS": "Copy/move semantics and moved-from object safety",
     "SIZE_TYPES": "Count and size types",
+    "ADDRESSOF": "Use std::addressof where operator& may be overloaded",
     "IDL_GENERATION": "tao_idl/gperf inputs and generated output",
     "CLI_OPTIONS": "Grouped command-line settings",
     "LOG_FORMAT": "ACE logging format specifiers",
