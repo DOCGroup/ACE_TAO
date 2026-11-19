@@ -1109,7 +1109,7 @@ TAO/DevGuideExamples/Messaging/AMIcallback	LOG_FORMAT	not-applicable	7d7c8e45f22
 TAO/DevGuideExamples/Messaging/AMIcallback	NULLPTR	not-applicable	7d7c8e45f22	No raw nullable pointer state in handwritten source.
 TAO/DevGuideExamples/Messaging/AMIcallback	OVERRIDE_DEFAULT_DELETE	done	7d7c8e45f22	Servant and reply-handler virtual declarations, destructors, and copy/move restrictions audited.
 TAO/DevGuideExamples/Messaging/AMIcallback	OWNERSHIP	done	7d7c8e45f22	CORBA servant/reference wrappers retain their API-managed ownership; option filename pointers are documented as borrowed.
-TAO/DevGuideExamples/Messaging/AMIcallback	SIZE_TYPES	needs-work	7d7c8e45f22	Integer and unsigned count/time types were left unchanged per instruction to defer size-type modernization.
+TAO/DevGuideExamples/Messaging/AMIcallback	SIZE_TYPES	not-applicable	pending	No size_t candidates found. argc and ACE_Get_Opt interfaces retain int; no count/length arithmetic is present.
 TAO/DevGuideExamples/Messaging/AMIcallback	SPECIAL_MEMBER_COMMENTS	not-applicable	e814e00fb1a	Whole-tree tracked-source scan found no standalone special-member label comments; no source edits were needed.
 TAO/DevGuideExamples/Messaging/AMIcallback	STYLE	done	7d7c8e45f22	Changed files pass diff whitespace and 120-column checks.
 TAO/DevGuideExamples/Messaging/AMIcallback	TEST_ASSERTIONS	not-applicable	7d7c8e45f22	No unit test source; the existing run_test.pl integration test passed.
@@ -1129,7 +1129,7 @@ TAO/DevGuideExamples/Messaging/RelativeRoundtripTimeout	LOG_FORMAT	not-applicabl
 TAO/DevGuideExamples/Messaging/RelativeRoundtripTimeout	NULLPTR	not-applicable	bee915139c2	No raw nullable pointer state in handwritten sources.
 TAO/DevGuideExamples/Messaging/RelativeRoundtripTimeout	OVERRIDE_DEFAULT_DELETE	done	bee915139c2	Servant virtual declarations/destructor and copy/move restrictions audited.
 TAO/DevGuideExamples/Messaging/RelativeRoundtripTimeout	OWNERSHIP	done	bee915139c2	CORBA var wrappers preserve API-owned references; no manual allocation cleanup found.
-TAO/DevGuideExamples/Messaging/RelativeRoundtripTimeout	SIZE_TYPES	needs-work	bee915139c2	Timeout arithmetic type was left unchanged per instruction to defer size-type modernization.
+TAO/DevGuideExamples/Messaging/RelativeRoundtripTimeout	SIZE_TYPES	not-applicable	pending	No size_t candidates found. argc and ACE_Get_Opt retain int, CORBA sequence length is API-defined, and timeout values use protocol time types.
 TAO/DevGuideExamples/Messaging/RelativeRoundtripTimeout	SPECIAL_MEMBER_COMMENTS	not-applicable	e814e00fb1a	Whole-tree tracked-source scan found no standalone special-member label comments; no source edits were needed.
 TAO/DevGuideExamples/Messaging/RelativeRoundtripTimeout	STYLE	done	bee915139c2	Changed code passed git diff --check and 120-column validation.
 TAO/DevGuideExamples/Messaging/RelativeRoundtripTimeout	TEST_ASSERTIONS	done	bee915139c2	Existing run_test.pl passed after clean builds.
