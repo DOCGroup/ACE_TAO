@@ -54,7 +54,9 @@ int transaction::run ()
     {
       int const send_result = this->send ();
       if (send_result < 0) // send pkt to agent
-        return send_result;
+        {
+          return send_result;
+        }
       if (retry_counter++ > params_.get_retry ())
       {
         return SNMP_CLASS_TIMEOUT;
@@ -63,9 +65,13 @@ int transaction::run ()
       // 2. wait for events (timeout, returned msg)
       int const rc = reactor->handle_events (to);
       if (rc == 1) // one handler registered
-        return 0;
+        {
+          return 0;
+        }
       if (rc == 0)
-        to.set (params_.get_timeout (), 0);
+        {
+          to.set (params_.get_timeout (), 0);
+        }
       else
       {
         return SNMP_CLASS_INTERNAL_ERROR;
@@ -98,7 +104,9 @@ int transaction::run (transaction_result *r)
 
     int const rc = this->send ();
     if (rc < 0) // send pkt to agent
+      {
         return rc;
+      }
     return 0;
 }
 
@@ -131,7 +139,9 @@ int transaction::handle_timeout (ACE_Time_Value const &,
                                  void const *)
 {
     if (this->send () < 0) // send pkt to agent
+      {
         result_->result (this, 0);
+      }
     else
         if (retry_counter_++ > params_.get_retry())
         {

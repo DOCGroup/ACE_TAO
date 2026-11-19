@@ -59,7 +59,9 @@ wpdu::wpdu (Pdu const &pdu, UdpTarget const &target)
      case sNMP_PDU_V1TRAP:
        target.get_read_community(comm_str);
        if (set_trap_info(raw_pdu, pdu)) // will free raw_pdu
-          return;
+         {
+           return;
+         }
        break;
      case sNMP_PDU_RESPONSE:
        break;
@@ -118,17 +120,29 @@ int wpdu::set_trap_info (snmp_pdu *raw_pdu, Pdu const &pdu) const
 
   // TODO: object should emit numeric instead of this kind of mess...
   if ( trapid == coldStart)
-    raw_pdu->trap_type = V1_COLD_START;  // cold start
+    {
+      raw_pdu->trap_type = V1_COLD_START;  // cold start
+    }
   else if ( trapid == warmStart)
-    raw_pdu->trap_type = V1_WARM_START;  // warm start
+    {
+      raw_pdu->trap_type = V1_WARM_START;  // warm start
+    }
   else if( trapid == linkDown)
-    raw_pdu->trap_type = V1_LINK_DOWN;  // link down
+    {
+      raw_pdu->trap_type = V1_LINK_DOWN;  // link down
+    }
   else if ( trapid == linkUp)
-    raw_pdu->trap_type = V1_LINK_UP;  // link up
+    {
+      raw_pdu->trap_type = V1_LINK_UP;  // link up
+    }
   else if ( trapid == authenticationFailure )
-    raw_pdu->trap_type = V1_AUTH_FAILURE;  // authentication failure
+    {
+      raw_pdu->trap_type = V1_AUTH_FAILURE;  // authentication failure
+    }
   else if ( trapid == egpNeighborLoss)
-    raw_pdu->trap_type = V1_EGP_NEIGHBOR_LOSS;  // egp neighbor loss
+    {
+      raw_pdu->trap_type = V1_EGP_NEIGHBOR_LOSS;  // egp neighbor loss
+    }
   else {
     raw_pdu->trap_type = V1_ENT_SPECIFIC;     // enterprise specific
                                // last oid subid is the specific value
@@ -316,7 +330,9 @@ int wpdu::convert_vb_to_smival (Vb &tempvb, SmiVALUE *smival)
                 SmiBYTE [smival->value.string.len], 1);
         if ( smival->value.string.ptr )  {
           for (int i=0; i<(int) smival->value.string.len ; ++i)
-            smival->value.string.ptr[i] = os[i];
+            {
+              smival->value.string.ptr[i] = os[i];
+            }
         }
         else   {
           smival->syntax = sNMP_SYNTAX_NULL;  // invalidate the smival
