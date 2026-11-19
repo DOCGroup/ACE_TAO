@@ -67,7 +67,9 @@ TAO_SHMIOP_Connector::open (TAO_ORB_Core *orb_core)
   this->concurrency_strategy_.reset (concurrency_strategy_owner.release ());
 
   if (result == -1)
-    return -1;
+    {
+      return -1;
+    }
   // We can take advantage of the multithreaded shared-memory transport
   // if the client will block on read (i.e., will not allow callback.)
   else if (orb_core->client_factory ()->allow_callback () == 0)
@@ -137,9 +139,11 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                                        ACE_Time_Value *timeout)
 {
   if (TAO_debug_level > 0)
+    {
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - SHMIOP_Connector::make_connection, ")
                   ACE_TEXT ("looking for SHMIOP connection.\n")));
+    }
 
   TAO_SHMIOP_Endpoint *shmiop_endpoint =
     this->remote_endpoint (desc.endpoint ());
@@ -153,11 +157,13 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
     shmiop_endpoint->object_addr ();
 
   if (TAO_debug_level > 2)
-    TAOLIB_DEBUG ((LM_DEBUG,
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - SHMIOP_Connector::make_connection, "
                 "making a new connection to <%C:%d>\n",
                 shmiop_endpoint->host (),
                 shmiop_endpoint->port ()));
+    }
 
   // Get the right synch options
   ACE_Synch_Options synch_options;
@@ -209,13 +215,15 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   // At this point, the connection has be successfully connected.
   // #REFCOUNT# is one.
   if (TAO_debug_level > 2)
-    TAOLIB_DEBUG ((LM_DEBUG,
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - SHMIOP_Connector::make_connection, "
                 "new %C connection to <%C:%d> on handle [%@]\n",
                 transport->is_connected() ? "connected" : "not connected",
                 shmiop_endpoint->host (),
                 shmiop_endpoint->port (),
                 reinterpret_cast<void *> (svc_handler->peer ().get_handle ())));
+    }
 
   // Add the handler to Cache
   int const retval =
@@ -258,10 +266,12 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
       (void) transport->close_connection ();
 
       if (TAO_debug_level > 0)
-        TAOLIB_ERROR ((LM_ERROR,
+        {
+          TAOLIB_ERROR ((LM_ERROR,
                     "TAO (%P|%t) - SHMIOP_Connector [%B]::make_connection, "
                     "could not register the transport in the reactor.\n",
                     transport->id ()));
+        }
 
       return 0;
     }
@@ -328,10 +338,14 @@ TAO_SHMIOP_Connector::check_prefix (const char *endpoint)
   // isn't in the IOR then it is not an IOR we can use.
   if (slot == len0
       && ACE_OS::strncasecmp (endpoint, protocol[0], len0) == 0)
-    return 0;
+    {
+      return 0;
+    }
   else if (slot == len1
            && ACE_OS::strncasecmp (endpoint, protocol[1], len1) == 0)
-    return 0;
+    {
+      return 0;
+    }
 
   return -1;
   // Failure: not an SHMIOP IOR
@@ -370,8 +384,10 @@ TAO_SHMIOP_Connector::cancel_svc_handler (
     dynamic_cast<TAO_SHMIOP_Connection_Handler*>(svc_handler);
 
   if (handler)
-    // Cancel from the connector
-    return this->base_connector_.cancel (handler);
+    {
+      // Cancel from the connector
+      return this->base_connector_.cancel (handler);
+    }
 
   return -1;
 }
