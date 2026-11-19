@@ -75,7 +75,9 @@ TAO_CORBALOC_Parser::parse_string_rir_helper (const char * ior,
   const char *objkey = ior + rir_token_len;
   if (*objkey == '/') // there is an explicit object key, which may
                       // validly be null.
-    ++objkey;
+    {
+      ++objkey;
+    }
 
   CORBA::Object_var rir_obj =
     orb->resolve_initial_references (*objkey == '\0' ? "NameService" : objkey);
@@ -111,9 +113,9 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
 
   //  First check for rir
   if (std::strncmp (ior, rir_token, rir_token_len) == 0)
-  {
-    return this->parse_string_rir_helper (ior,orb);
-  }
+    {
+      return this->parse_string_rir_helper (ior,orb);
+    }
 
   // set up space for parsed endpoints. there will be at least 1, and
   // most likely commas will separate endpoints, although they could be
@@ -122,7 +124,9 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
   for (const char *comma = std::strchr (ior,',');
        comma;
        comma = std::strchr (comma+1,','))
-    ++max_endpoint_count;
+    {
+      ++max_endpoint_count;
+    }
 
   ACE_Array<parsed_endpoint> endpoints(max_endpoint_count);
   endpoints.size (0);
@@ -131,70 +135,78 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
   TAO_Connector_Registry *conn_reg =
     orb->orb_core ()->connector_registry();
 
-  while (true) { // will loop on comma only.
-    size_t len {};
-    size_t ndx = endpoints.size();
-    endpoints.size(ndx+1);
-    bool uiop_compatible {};
-    for (std::unique_ptr<TAO_Connector> const& connector : *conn_reg)
-      {
-        if (endpoints[ndx].profile_ != nullptr)
+  // Loop over comma-separated endpoints.
+  while (true)
+    {
+      size_t len {};
+      size_t ndx = endpoints.size();
+      endpoints.size(ndx+1);
+      bool uiop_compatible {};
+      for (std::unique_ptr<TAO_Connector> const& connector : *conn_reg)
+        {
+          if (endpoints[ndx].profile_ != nullptr)
+          {
+            break;
+          }
+
+          endpoints[ndx].profile_ =
+            connector->corbaloc_scan(ior,len);
+
+          if (endpoints[ndx].profile_)
+            {
+              endpoints[ndx].obj_key_sep_ = connector->object_key_delimiter();
+              uiop_compatible = (endpoints[ndx].obj_key_sep_ == '|');
+              this->make_canonical (ior,len,endpoints[ndx].prot_addr_);
+              ior += len;
+              break;
+            }
+        }
+
+      if (endpoints[ndx].profile_ == nullptr)
+        {
+          if (TAO_debug_level)
+            {
+              TAOLIB_ERROR ((LM_ERROR,
+                             ACE_TEXT("TAO (%P|%t) - TAO_CORBALOC_Parser::parse_string ")
+                             ACE_TEXT("could not parse from %C\n"),
+                             ior));
+            }
+          throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 10, CORBA::COMPLETED_NO);
+        }
+      if (*ior == ',') // more endpoints follow
+        {
+          ++ior;
+          continue;
+        }
+
+      if (*ior == endpoints[ndx].obj_key_sep_) // found key separator
+        {
+          ++ior;
+          break;
+        }
+
+      if (*ior == '\0') // no key separator appended, use default key
         {
           break;
         }
 
-        endpoints[ndx].profile_ =
-          connector->corbaloc_scan(ior,len);
+      if (uiop_compatible && *(ior - 1) == '|')
+        {
+          // Assume this is an old uiop style corbaloc. No need to warn here,
+          // the UIOP_Connector::corbaloc_scan already did.
+          break;
+        }
 
-        if (endpoints[ndx].profile_)
-          {
-            endpoints[ndx].obj_key_sep_ = connector->object_key_delimiter();
-            uiop_compatible = (endpoints[ndx].obj_key_sep_ == '|');
-            this->make_canonical (ior,len,endpoints[ndx].prot_addr_);
-            ior += len;
-            break;
-          }
-      }
-
-    if (endpoints[ndx].profile_ == nullptr)
-      {
-        if (TAO_debug_level)
+      // anything else is a violation.
+      if (TAO_debug_level)
+        {
           TAOLIB_ERROR ((LM_ERROR,
-                      ACE_TEXT("TAO (%P|%t) - TAO_CORBALOC_Parser::parse_string ")
-                      ACE_TEXT("could not parse from %C\n"),
-                      ior));
-        throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 10, CORBA::COMPLETED_NO);
-      }
-    if (*ior == ',') // more endpoints follow
-      {
-        ++ior;
-        continue;
-      }
-
-    if (*ior == endpoints[ndx].obj_key_sep_) // found key separator
-      {
-        ++ior;
-        break;
-      }
-
-    if (*ior == '\0') // no key separator appended, use default key
-      {
-        break;
-      }
-
-    if (uiop_compatible && *(ior - 1) == '|')
-      // Assume this is an old uiop style corbaloc. No need to warn here,
-      // the UIOP_Connector::corbaloc_scan already did.
-      break;
-
-    // anything else is a violation.
-    if (TAO_debug_level)
-      TAOLIB_ERROR ((LM_ERROR,
-                  ACE_TEXT("TAO (%P|%t) - TAO_CORBALOC_Parser::parse_string ")
-                  ACE_TEXT("could not parse from <%C>\n"),
-                  ior));
-    throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 10, CORBA::COMPLETED_NO);
-  } // end of while
+                         ACE_TEXT("TAO (%P|%t) - TAO_CORBALOC_Parser::parse_string ")
+                         ACE_TEXT("could not parse from <%C>\n"),
+                         ior));
+        }
+      throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 10, CORBA::COMPLETED_NO);
+    } // end of while
 
   // At this point, ior points at the start of the object key
   ACE_CString obj_key (*ior ? ior : (const char *)"NameService");
@@ -212,7 +224,9 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
       endpoints[i].profile_->parse_string (str);
       int const share = orb->orb_core()->orb_params()->shared_profile();
       if (mprofile.give_profile(endpoints[i].profile_, share) != -1)
-        endpoints[i].profile_ = nullptr;
+        {
+          endpoints[i].profile_ = nullptr;
+        }
       else
         {
           // Although this ought never happen, we want to make some
@@ -221,10 +235,12 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
           // insufficient heap to allocate the mprofile, hence the
           // mprofile's size is 0, and give_profile fails.
           if (TAO_debug_level)
-            TAOLIB_ERROR ((LM_ERROR,
-                        ACE_TEXT("TAO (%P|%t) - TAO_CORBALOC_Parser::parse_string ")
-                        ACE_TEXT("mprofile.give_profile failed for i = %B\n"),
-                        i));
+            {
+              TAOLIB_ERROR ((LM_ERROR,
+                             ACE_TEXT("TAO (%P|%t) - TAO_CORBALOC_Parser::parse_string ")
+                             ACE_TEXT("mprofile.give_profile failed for i = %B\n"),
+                             i));
+            }
           throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 10, CORBA::COMPLETED_NO);
         }
     }
@@ -288,9 +304,13 @@ TAO_CORBALOC_Parser::make_canonical (const char *ior,
       else
         {
           if (cp_pos[1] == ':')    // Look for a port
-            separator = cp_pos + 1;
+            {
+              separator = cp_pos + 1;
+            }
           else
-            separator = 0;
+            {
+              separator = 0;
+            }
         }
     }
 #endif /* ACE_HAS_IPV6 */
@@ -305,9 +325,9 @@ TAO_CORBALOC_Parser::make_canonical (const char *ior,
     {
       // we must default port #
       if (addr_base < addr_tail)
-      {
-        raw_host.set (addr_base, (addr_tail - addr_base), true);
-      }
+        {
+          raw_host.set (addr_base, (addr_tail - addr_base), true);
+        }
       raw_port.set (":2809");
     }
 
@@ -326,9 +346,11 @@ TAO_CORBALOC_Parser::make_canonical (const char *ior,
           // initialized.  Just throw an exception.
 
           if (TAO_debug_level > 0)
-            TAOLIB_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("TAO (%P|%t) - ")
-                        ACE_TEXT ("Cannot determine hostname.\n")));
+            {
+              TAOLIB_DEBUG ((LM_DEBUG,
+                             ACE_TEXT ("TAO (%P|%t) - ")
+                             ACE_TEXT ("Cannot determine hostname.\n")));
+            }
 
           throw ::CORBA::INV_OBJREF
                      (CORBA::SystemException::_tao_minor_code
