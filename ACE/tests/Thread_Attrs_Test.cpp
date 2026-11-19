@@ -112,10 +112,12 @@ Cancel_Check::open (void *)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Flags after cancels: %Q\n"),
               static_cast<ACE_UINT64> (flags)));
   if (this->activate (flags) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("Cancel_Check activate failed")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("Cancel_Check activate failed")),
+                        -1);
+    }
   return 0;
 }
 
@@ -186,9 +188,11 @@ Stack_Size_Check::svc ()
       this->failed_ = true;
     }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("%t: My stack size attr %B; correct.\n"),
-                my_size));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("%t: My stack size attr %B; correct.\n"),
+                  my_size));
+    }
   return 0;
 }
 
@@ -207,10 +211,12 @@ Stack_Size_Check::open (void *)
                       &stack_size_,
                       nullptr,
                       names) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("Stack_Size_Check activate failed")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("Stack_Size_Check activate failed")),
+                        -1);
+    }
 
   return 0;
 }
@@ -229,14 +235,16 @@ run_main (int, ACE_TCHAR *[])
   if (status == 0)
     {
       if (size_checker.wait () == -1)
+        {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("size_checker %p\n"),
                              ACE_TEXT ("wait")),
                             1);
+        }
       if (!size_checker)
-      {
-        status = 1;
-      }
+        {
+          status = 1;
+        }
     }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Cancel flags sanity check:\n")
