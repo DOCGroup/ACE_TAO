@@ -28,13 +28,17 @@ TimeStamp_Protocol_Object::handle_input ()
   ssize_t const bytes_received = this->transport_->recv (this->frame_->wr_ptr (),
                                                          this->frame_->size ());
   if (bytes_received < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "TimeStamp_Protocol_Object::handle_input recv failed\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "TimeStamp_Protocol_Object::handle_input recv failed\n"),
+                        -1);
+    }
   if (bytes_received == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "TimeStamp_Protocol_Object::handle_input connection closed\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "TimeStamp_Protocol_Object::handle_input connection closed\n"),
+                        -1);
+    }
 
   this->frame_->wr_ptr (bytes_received);
   return this->callback_->receive_frame (this->frame_.get ());
