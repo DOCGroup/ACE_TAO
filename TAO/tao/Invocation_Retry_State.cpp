@@ -34,20 +34,28 @@ namespace
   // Retry delay
   if (command_line_params.init_retry_delay_ !=
       result.init_retry_delay_)
-    result.init_retry_delay_ = command_line_params.init_retry_delay_;
+    {
+      result.init_retry_delay_ = command_line_params.init_retry_delay_;
+    }
   else if (client_factory_params.init_retry_delay_ !=
       result.init_retry_delay_)
-    result.init_retry_delay_ = client_factory_params.init_retry_delay_;
+    {
+      result.init_retry_delay_ = client_factory_params.init_retry_delay_;
+    }
 
   // Retry on reply closed limit
   if (command_line_params.forward_on_reply_closed_limit_ !=
       result.forward_on_reply_closed_limit_)
-    result.forward_on_reply_closed_limit_ =
-      command_line_params.forward_on_reply_closed_limit_;
+    {
+      result.forward_on_reply_closed_limit_ =
+        command_line_params.forward_on_reply_closed_limit_;
+    }
   else if (client_factory_params.forward_on_reply_closed_limit_ !=
            result.forward_on_reply_closed_limit_)
-    result.forward_on_reply_closed_limit_ =
-      client_factory_params.forward_on_reply_closed_limit_;
+    {
+      result.forward_on_reply_closed_limit_ =
+        client_factory_params.forward_on_reply_closed_limit_;
+    }
 
   // Forward on exception limits
   retry_limit_calc (TAO::FOE_OBJECT_NOT_EXIST,
