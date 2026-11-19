@@ -168,11 +168,13 @@ namespace TAO
     else if (has_con_timeout)
       {
         if (timeout == nullptr || connection_timeout < *timeout)
-          timeout = std::addressof (connection_timeout);
+          {
+            timeout = std::addressof (connection_timeout);
+          }
         else
-        {
-          has_con_timeout = false;
-        }
+          {
+            has_con_timeout = false;
+          }
       }
     else if (!this->blocked_)
       {
