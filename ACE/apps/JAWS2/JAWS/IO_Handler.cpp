@@ -396,7 +396,9 @@ JAWS_Asynch_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result
         {
           if (result.message_block ().length ()
               == result.message_block ().size ())
-            code = ACE_Filecache_Handle::ACE_SUCCESS;
+            {
+              code = ACE_Filecache_Handle::ACE_SUCCESS;
+            }
           else
             {
               ACE_Asynch_Read_Stream ar;
@@ -405,11 +407,13 @@ JAWS_Asynch_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result
                               result.message_block ().size ()
                               - result.message_block ().length (),
                               result.act ()) == -1)
-                code = -1;
+                {
+                  code = -1;
+                }
               else
-              {
-                return;
-              }
+                {
+                  return;
+                }
             }
         }
       else
@@ -418,7 +422,9 @@ JAWS_Asynch_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result
       }
 
       if (code == ACE_Filecache_Handle::ACE_SUCCESS)
-        this->handler ()->receive_file_complete ();
+        {
+          this->handler ()->receive_file_complete ();
+        }
       else
       {
         this->handler ()->receive_file_error (code);
@@ -434,7 +440,9 @@ JAWS_Asynch_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result
 
       if (result.success ()
           && result.bytes_transferred () != 0)
-        this->handler ()->read_complete (&result.message_block ());
+        {
+          this->handler ()->read_complete (&result.message_block ());
+        }
       else
       {
         this->handler ()->read_error ();
@@ -451,7 +459,9 @@ JAWS_Asynch_Handler::handle_write_stream (const ACE_Asynch_Write_Stream::Result
   result.message_block ().release ();
 
   if (result.act () == (void *) JAWS_Asynch_IO::CONFIRMATION)
-    this->handler ()->confirmation_message_complete ();
+    {
+      this->handler ()->confirmation_message_complete ();
+    }
   else
   {
     this->handler ()->error_message_complete ();
@@ -466,7 +476,9 @@ JAWS_Asynch_Handler::handle_transmit_file (const
   this->dispatch_handler ();
 
   if (result.success ())
-    this->handler ()->transmit_file_complete ();
+    {
+      this->handler ()->transmit_file_complete ();
+    }
   else
   {
     this->handler ()->transmit_file_error (-1);
