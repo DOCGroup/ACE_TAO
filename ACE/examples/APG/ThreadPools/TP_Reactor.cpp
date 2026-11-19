@@ -73,9 +73,11 @@ Request_Handler::handle_input (ACE_HANDLE fd)
       return 0;
     }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) Request_Handler: %@ peer closed (%@)\n"),
-                this, reinterpret_cast<void *> (fd)));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) Request_Handler: %@ peer closed (%@)\n"),
+                  this, reinterpret_cast<void *> (fd)));
+    }
   return -1;
 }
 
@@ -88,11 +90,13 @@ Request_Handler::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask)
               this->nr_msgs_rcvd_));
 
   if (this->nr_msgs_rcvd_ != cli_req_no)
-    ACE_ERROR ((LM_ERROR,
-               ACE_TEXT ("(%t) Handler %@: Expected %B messages; got %B\n"),
-               this,
-               cli_req_no,
-               this->nr_msgs_rcvd_));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%t) Handler %@: Expected %B messages; got %B\n"),
+                  this,
+                  cli_req_no,
+                  this->nr_msgs_rcvd_));
+    }
 
   // The acceptor's service-handler lifecycle owns this and calls handle_close once.
   this->destroy ();
@@ -128,10 +132,12 @@ public:
         (&reactor_event_hook);
 
     if (result == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%t) %p\n"),
-                         ACE_TEXT ("Error handling events")),
-                        0);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("(%t) %p\n"),
+                           ACE_TEXT ("Error handling events")),
+                          0);
+      }
 
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%t) Done handling events.\n")));
@@ -161,7 +167,9 @@ public:
     ACE_OS::strcpy (&buf[1], msg);
 
     for (size_t i = 0; i < cli_runs; ++i)
-      this->send_work_to_server (buf.data ());
+      {
+        this->send_work_to_server (buf.data ());
+      }
 
     this->shut_down ();
 
@@ -213,9 +221,11 @@ private:
       ACE_SOCK_Connector connect;
 
       if (connect.connect (stream, addr_) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%t) %p Error while connecting\n"),
-                    ACE_TEXT ("connect")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%t) %p Error while connecting\n"),
+                      ACE_TEXT ("connect")));
+        }
 
       ACE_TCHAR const *const sbuf = ACE_TEXT ("\011shutdown");
 
@@ -224,9 +234,11 @@ private:
                   reinterpret_cast<void *> (stream.get_handle ())));
 
       if (stream.send_n (sbuf, (ACE_OS::strlen (sbuf) + 1) * sizeof (ACE_TCHAR)) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%t) %p\n"),
-                    ACE_TEXT ("send_n")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%t) %p\n"),
+                      ACE_TEXT ("send_n")));
+        }
 
       stream.close ();
   }
@@ -245,10 +257,12 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_INET_Addr accept_addr (rendezvous);
 
   if (acceptor.open (accept_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("open")),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("open")),
+                        1);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Spawning %B server threads...\n"),
