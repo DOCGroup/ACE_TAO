@@ -56,7 +56,9 @@ JAWS_Synch_IO::read (ACE_Message_Block &mb,
   int result = stream.recv (mb.wr_ptr (), size);
 
   if (result <= 0)
-    this->handler_->read_error ();
+    {
+      this->handler_->read_error ();
+    }
   else
     {
       mb.wr_ptr (result);
@@ -87,11 +89,13 @@ JAWS_Synch_IO::receive_file (const char *filename,
       int bytes = stream.recv_n ((char *) handle.address () + initial_data_length,
                                  bytes_to_read);
       if (bytes == bytes_to_read)
-        this->handler_->receive_file_complete ();
+        {
+          this->handler_->receive_file_complete ();
+        }
       else
-      {
-        result = -1;
-      }
+        {
+          result = -1;
+        }
     }
 
   if (result != ACE_Filecache_Handle::ACE_SUCCESS)
@@ -148,11 +152,13 @@ JAWS_Synch_IO::transmit_file (const char *filename,
           ++iovcnt;
         }
       if (ACE_OS::writev (this->handle_, iov, iovcnt) < 0)
-        result = -1;
+        {
+          result = -1;
+        }
       else
-      {
-        this->handler_->transmit_file_complete ();
-      }
+        {
+          this->handler_->transmit_file_complete ();
+        }
 #endif /* ACE_JAWS_BASELINE */
     }
 
@@ -445,7 +451,9 @@ JAWS_Synch_IO_No_Cache::read (ACE_Message_Block &mb, int size)
   int result = stream.recv (mb.wr_ptr (), size);
 
   if (result <= 0)
-    this->handler_->read_error ();
+    {
+      this->handler_->read_error ();
+    }
   else
     {
       mb.wr_ptr (result);
