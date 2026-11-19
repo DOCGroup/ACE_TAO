@@ -46,7 +46,9 @@ JAWS_Synch_IO::accept (JAWS_IO_Handler *ioh,
   ACE_SOCK_Stream new_stream;
   new_stream.set_handle (ACE_INVALID_HANDLE);
   if (this->acceptor_->accept (new_stream) == -1)
-    ioh->accept_error ();
+    {
+      ioh->accept_error ();
+    }
   else
   {
     ioh->accept_complete (new_stream.get_handle ());
@@ -66,7 +68,9 @@ JAWS_Synch_IO::read (JAWS_IO_Handler *ioh,
   int result = stream.recv (mb->wr_ptr (), size);
 
   if (result <= 0)
-    ioh->read_error ();
+    {
+      ioh->read_error ();
+    }
   else
     {
       JAWS_TRACE ("JAWS_Synch_IO::read success");
@@ -101,7 +105,9 @@ JAWS_Synch_IO::receive_file (JAWS_IO_Handler *ioh,
                                  handle.address () + initial_data_length,
                                  bytes_to_read);
       if (bytes == bytes_to_read)
-        ioh->receive_file_complete ();
+        {
+          ioh->receive_file_complete ();
+        }
       else
       {
         result = -1;
@@ -162,7 +168,9 @@ JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
     }
 
   if (result == 0)
-    ioh->transmit_file_complete ();
+    {
+      ioh->transmit_file_complete ();
+    }
   else
   {
     ioh->transmit_file_error (result);
@@ -565,7 +573,9 @@ JAWS_Asynch_IO::send_message (JAWS_IO_Handler *ioh,
       mb->release ();
 
       if (act == CONFIRMATION)
-        ioh->confirmation_message_complete ();
+        {
+          ioh->confirmation_message_complete ();
+        }
       else
       {
         ioh->error_message_complete ();
