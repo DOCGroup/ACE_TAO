@@ -89,10 +89,12 @@ TAO_UIOP_Connector::corbaloc_scan (const char *str, size_t &len)
   if (separator == nullptr)
     {
       if (TAO_debug_level)
-        TAOLIB_DEBUG ((LM_DEBUG,
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - TAO_UIOP_CONNECTOR::corbaloc_scan error: "
                     "explicit terminating charactor '|' is missing from <%C>",
                     str));
+        }
       return 0;
     }
   len = separator - str;
@@ -138,9 +140,11 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
                                      ACE_Time_Value *max_wait_time)
 {
   if (TAO_debug_level > 0)
-    TAOLIB_DEBUG ((LM_DEBUG,
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO (%P|%t) - UIUP_Connector::make_connection, ")
                 ACE_TEXT ("looking for UIOP connection.\n")));
+    }
 
   TAO_UIOP_Endpoint *uiop_endpoint =
     this->remote_endpoint (desc.endpoint ());
@@ -154,9 +158,11 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
     uiop_endpoint->object_addr ();
 
   if (TAO_debug_level > 2)
-    TAOLIB_DEBUG ((LM_DEBUG,
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO (%P|%t) - UIUP_Connector::make_connection, ")
                 ACE_TEXT ("making a new connection\n")));
+    }
 
   // Get the right synch options
   ACE_Synch_Options synch_options;
@@ -196,9 +202,11 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
                                                      max_wait_time))
             {
               if (TAO_debug_level > 2)
-                TAOLIB_ERROR ((LM_ERROR, "TAO (%P|%t) - UIOP_Connector::"
+                {
+                  TAOLIB_ERROR ((LM_ERROR, "TAO (%P|%t) - UIOP_Connector::"
                                       "make_connection, "
                                       "wait for completion failed\n"));
+                }
             }
         }
       else
@@ -213,11 +221,13 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
     {
       // Give users a clue to the problem.
       if (TAO_debug_level > 3)
+        {
           TAOLIB_ERROR ((LM_ERROR,
                       "TAO (%P|%t) - UIOP_Connector::make_connection, "
                       "connection to <%C> failed (%p)\n",
                       uiop_endpoint->rendezvous_point (),
                       ACE_TEXT("errno")));
+        }
 
       return 0;
     }
@@ -237,12 +247,14 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   // At this point, the connection has be successfully created
   // connected or not connected, but we have a connection.
   if (TAO_debug_level > 2)
-    TAOLIB_DEBUG ((LM_DEBUG,
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - UIOP_Connector::make_connection, "
                 "new %C connection to <%C> on handle [%@]\n",
                 transport->is_connected() ? "connected" : "not connected",
                 uiop_endpoint->rendezvous_point (),
                 reinterpret_cast<void *> (svc_handler->peer ().get_handle ())));
+    }
 
   // Add the handler to Cache
   int const retval =
@@ -284,11 +296,13 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
       (void) transport->close_connection ();
 
       if (TAO_debug_level > 0)
-        TAOLIB_ERROR ((LM_ERROR,
+        {
+          TAOLIB_ERROR ((LM_ERROR,
                     "TAO (%P|%t) - UIOP_Connector [%B]::make_connection, "
                     "could not register the transport "
                     "in the reactor.\n",
                     transport->id ()));
+        }
 
       return 0;
     }
@@ -352,12 +366,16 @@ TAO_UIOP_Connector::check_prefix (const char *endpoint)
       && ACE_OS::strncasecmp (endpoint,
                               protocol[0],
                               len0) == 0)
-    return 0;
+    {
+      return 0;
+    }
   else if (slot == len1
            && ACE_OS::strncasecmp (endpoint,
                                    protocol[1],
                                    len1) == 0)
-    return 0;
+    {
+      return 0;
+    }
 
   return -1;
   // Failure: not an UIOP IOR DO NOT throw an exception here.
@@ -396,8 +414,10 @@ TAO_UIOP_Connector::cancel_svc_handler (
     dynamic_cast<TAO_UIOP_Connection_Handler*> (svc_handler);
 
   if (handler)
-    // Cancel from the connector
-    return this->base_connector_.cancel (handler);
+    {
+      // Cancel from the connector
+      return this->base_connector_.cancel (handler);
+    }
 
   return -1;
 }
