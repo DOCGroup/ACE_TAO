@@ -451,11 +451,15 @@ run_main (int, ACE_TCHAR *[])
   std::for_each (factories, factories + factory_count, Run_Test ());
 
   if (overall_result != 0)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Test failed.\n")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Test failed.\n")));
+    }
   else
-    ACE_ERROR ((LM_INFO,
-                ACE_TEXT ("Test passed.\n")));
+    {
+      ACE_ERROR ((LM_INFO,
+                  ACE_TEXT ("Test passed.\n")));
+    }
 
   ACE_Event_Handler_var nullvar;
   if (!nullvar)

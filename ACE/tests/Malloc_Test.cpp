@@ -362,18 +362,22 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_Process p;
       pid_t pid = p.spawn (options);
       if (pid == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("spawn")), 1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("spawn")), 1);
+        }
 
       parent (data);
 
       // Synchronize on the exit of the child.
       result = p.wait ();
       if (result == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("wait")), 1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("wait")), 1);
+        }
       ACE_TEST_ASSERT (myalloc->ref_counter () == 1);
       myalloc->remove ();
       ACE_Process_Mutex::unlink (MUTEX_NAME);

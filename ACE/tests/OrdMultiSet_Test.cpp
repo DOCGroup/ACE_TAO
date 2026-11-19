@@ -33,11 +33,15 @@ run_main (int, ACE_TCHAR *[])
   // Put in a range of odd ints, without an iterator.
   int i;
   for (i = -10; i < 10; ++i)
-    set.insert (2 * i + 1);
+    {
+      set.insert (2 * i + 1);
+    }
 
   // Put in an interleaved range of even ints, using an iterator.
   for (i = -10; i <= 10; ++i)
-    set.insert (2 * i, iter);
+    {
+      set.insert (2 * i, iter);
+    }
 
   // Remove the first and last elements of range.
   while (set.remove (-20) == 0)
