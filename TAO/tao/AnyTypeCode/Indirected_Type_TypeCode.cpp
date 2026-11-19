@@ -68,7 +68,9 @@ TAO::TypeCode::Indirected_Type::set_recursive_tc (CORBA::TypeCode_ptr tc)
     ACE_GUARD_CONST (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
 
     if (tc == nullptr)  // should never happen
-      return;
+      {
+        return;
+      }
 
     // make sure we are the right kind
     CORBA::TCKind & mutable_kind = const_cast<CORBA::TCKind &> (this->kind_);
