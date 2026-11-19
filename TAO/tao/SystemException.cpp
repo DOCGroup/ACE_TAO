@@ -408,14 +408,16 @@ CORBA::SystemException::_info () const
       const char *minor_description {};
 
       if (minor_code > 0)
+        {
           minor_description =
             CORBA::SystemException::_tao_get_omg_exception_description (
               *this,
               minor_code);
+        }
       else
-      {
-        minor_description = "*unknown description*";
-      }
+        {
+          minor_description = "*unknown description*";
+        }
 
       char buffer[BUFSIZ];
       std::sprintf (buffer,
