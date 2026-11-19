@@ -113,10 +113,12 @@ int singleton_test ()
     Get_Bp_Repository_Inst const get_bp_repository_inst =
        reinterpret_cast<Get_Bp_Repository_Inst> (tmp);
     if (get_bp_repository_inst == nullptr)
-       ACE_ERROR_RETURN ((LM_ERROR,
-                          ACE_TEXT ("%p\n"),
-                          dll.error ()),
-                         -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"),
+                           dll.error ()),
+                          -1);
+      }
 
     void * const baddr_dll = get_bp_repository_inst ();
 
