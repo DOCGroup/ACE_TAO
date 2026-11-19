@@ -70,9 +70,11 @@ Sender::parse_args (int argc,
                               -1);
 #else
           if (this->options_.protocol == "QoS_UDP")
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "When rapi=0 protocol must not be QoS_UDP\n"),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "When rapi=0 protocol must not be QoS_UDP\n"),
+                                -1);
+            }
 #endif
           break;
         case 'r':
@@ -147,9 +149,11 @@ Sender::bind_to_receiver ()
   CORBA::Object_var receiver_mmdevice_obj = this->naming_client_->resolve (name);
   this->receiver_mmdevice_ = AVStreams::MMDevice::_narrow (receiver_mmdevice_obj.in ());
   if (CORBA::is_nil (this->receiver_mmdevice_.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Could not resolve Receiver_MMdevice in Naming service\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Could not resolve Receiver_MMdevice in Naming service\n"),
+                        -1);
+    }
   return 0;
 }
 
@@ -171,10 +175,12 @@ Sender::init (int argc,
 
   this->input_file_.reset (ACE_OS::fopen (this->options_.filename.c_str (), "rb"));
   if (!this->input_file_)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Cannot open input file %s\n"),
-                       this->options_.filename.c_str ()),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Cannot open input file %s\n"),
+                         this->options_.filename.c_str ()),
+                        -1);
+    }
 
   if (this->bind_to_receiver () != 0)
   {
@@ -191,23 +197,27 @@ Sender::init (int argc,
   if (this->options_.address.empty ())
     {
       if (local_address.set (5000, hostname, 1, AF_INET) != 0)
-      {
-        ACE_ERROR_RETURN ((LM_ERROR, "Unable to set local address\n"), -1);
-      }
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "Unable to set local address\n"), -1);
+        }
     }
   else if (local_address.set (this->options_.address.c_str ()) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "Invalid local address\n"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "Invalid local address\n"), -1);
+    }
 
   ACE_INET_Addr peer_address;
   if (this->options_.peer_address.empty ())
     {
       if (peer_address.set (5050, hostname, 1, AF_INET) != 0)
-      {
-        ACE_ERROR_RETURN ((LM_ERROR, "Unable to set peer address\n"), -1);
-      }
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "Unable to set peer address\n"), -1);
+        }
     }
   else if (peer_address.set (this->options_.peer_address.c_str ()) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "Invalid peer address\n"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "Invalid peer address\n"), -1);
+    }
 
   // The flow entry borrows both addresses until bind_devs has serialized it.
   char const * const flowname = "Data_Receiver";
@@ -255,10 +265,12 @@ Sender::pace_data ()
 {
   this->inter_frame_time_.set (1.0 / this->options_.frame_rate);
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "Frame Rate = %f / second\nInter Frame Time = %d (msec)\n",
-                this->options_.frame_rate,
-                this->inter_frame_time_.msec ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Frame Rate = %f / second\nInter Frame Time = %d (msec)\n",
+                  this->options_.frame_rate,
+                  this->inter_frame_time_.msec ()));
+    }
 
   try
     {

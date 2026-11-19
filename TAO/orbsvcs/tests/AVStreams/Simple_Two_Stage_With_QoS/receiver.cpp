@@ -45,7 +45,9 @@ Receiver::parse_args (int argc,
   while ((option = opts ()) != -1)
     {
       if (option == 'f')
-        this->options_.filename = opts.opt_arg ();
+        {
+          this->options_.filename = opts.opt_arg ();
+        }
       else
       {
         ACE_ERROR_RETURN ((LM_ERROR, "Usage: receiver -f filename\n"), -1);
@@ -65,10 +67,12 @@ Receiver::init (int argc,
 
   this->output_file_.reset (ACE_OS::fopen (this->options_.filename.c_str (), "wb"));
   if (!this->output_file_)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Cannot open output file %s\n"),
-                       this->options_.filename.c_str ()),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Cannot open output file %s\n"),
+                         this->options_.filename.c_str ()),
+                        -1);
+    }
 
   if (this->reactive_strategy_.init (TAO_AV_CORE::instance ()->orb (),
                                      TAO_AV_CORE::instance ()->poa ()) != 0)
@@ -90,9 +94,11 @@ Receiver::init (int argc,
   name[0].id = CORBA::string_dup ("Receiver");
 
   if (this->naming_client_.init (TAO_AV_CORE::instance ()->orb ()) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to initialize the TAO_Naming_Client\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Unable to initialize the TAO_Naming_Client\n"),
+                        -1);
+    }
 
   this->naming_client_->rebind (name, mmdevice_object.in ());
   return 0;
