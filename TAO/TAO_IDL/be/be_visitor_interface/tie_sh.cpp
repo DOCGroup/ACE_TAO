@@ -64,7 +64,7 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
       << "public:" << be_idt_nl
       << "explicit " << tiename << " (T &t);" << be_nl
       << tiename << " (T &t, PortableServer::POA_ptr poa);" << be_nl
-      << tiename << " (T *tp, ::CORBA::Boolean release = true);" << be_nl
+      << "explicit " << tiename << " (T *tp, ::CORBA::Boolean release = true);" << be_nl
       << tiename << " (" << be_idt << be_idt_nl
       << "T *tp," << be_nl
       << "PortableServer::POA_ptr poa," << be_nl

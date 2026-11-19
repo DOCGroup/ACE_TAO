@@ -226,6 +226,8 @@ project(switch_ci_comp_inset): gperf_test {
 project(hash_prefix_inset): gperf_test {
   exename = hash_prefix_out
 
+  macros += GPERF_SWITCH_TEST
+
   verbatim(gnuace, bottom) {
     all: runtests
 

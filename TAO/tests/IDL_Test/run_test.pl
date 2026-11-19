@@ -22,14 +22,18 @@ if ($status != 0) {
 }
 
 if ($status == 0) {
-    my $valuetype_header;
-    open my $generated, "<", "valuetypeC.h"
-      or die "ERROR: cannot open generated file <valuetypeC.h>: $!\n";
-    {
-        local $/;
-        $valuetype_header = <$generated>;
+    my %generated_contents;
+    foreach my $file ("valuetypeC.h", "valuetype_opt_accessorC.h",
+                      "valuetype_opt_accessorC.cpp") {
+        open my $generated, "<", $file
+          or die "ERROR: cannot open generated file <$file>: $!\n";
+        {
+            local $/;
+            $generated_contents{$file} = <$generated>;
+        }
+        close $generated;
     }
-    close $generated;
+    my $valuetype_header = $generated_contents{"valuetypeC.h"};
 
     my $copy_base_decl = generated_class_body (
       $valuetype_header, "OBV_Copy_Base");
@@ -41,19 +45,17 @@ if ($status == 0) {
         print STDERR "ERROR: OBV_Copy_Base does not provide the valuetype reference counter\n";
         $status = 1;
     }
-    my $copy_derived_decl = generated_class_body (
+    my $copy_derived_body = generated_class_body (
       $valuetype_header, "OBV_Copy_Derived");
-    if (!defined $copy_derived_decl) {
+    if (!defined $copy_derived_body) {
         print STDERR "ERROR: cannot find generated OBV_Copy_Derived declaration\n";
         $status = 1;
     }
-    elsif ($copy_derived_decl =~ /DefaultValueRefCountBase/) {
+    elsif ($copy_derived_body =~ /DefaultValueRefCountBase/) {
         print STDERR "ERROR: OBV_Copy_Derived redundantly provides the valuetype reference counter\n";
         $status = 1;
     }
 
-    my $copy_derived_body = generated_class_body (
-      $valuetype_header, "OBV_Copy_Derived");
     if (!defined $copy_derived_body || $copy_derived_body !~ /_copy_value\s*\(/) {
         print STDERR "ERROR: concrete OBV_Copy_Derived does not declare _copy_value\n";
         $status = 1;
@@ -135,34 +137,20 @@ if ($status == 0) {
          "missing base concrete _init factory implementation"],
         ["valuetype_opt_accessorC.cpp", qr/Accessor_Optimized_Derived_init::create_for_unmarshal\s*\(/,
          "missing derived concrete _init factory implementation"],
-        ["valuetype_opt_accessorC.cpp", qr/Accessor_Optimized_Base_init::create_for_unmarshal\s*\(/,
-         "missing explicit factory _init implementation"],
         ["valuetype_opt_accessorC.cpp", qr/Accessor_Optimized_Value::_copy_value\s*\(/,
          "missing optimized base _copy_value implementation"],
     );
 
     foreach my $check (@checks) {
         my ($file, $unexpected_pattern, $diagnostic) = @{$check};
-        open my $generated, "<", $file
-          or die "ERROR: cannot open generated file <$file>: $!\n";
-        local $/;
-        my $contents = <$generated>;
-        close $generated;
-
+        my $contents = $generated_contents{$file};
         if ($contents !~ $unexpected_pattern) {
             print STDERR "ERROR: $diagnostic in <$file>\n";
             $status = 1;
         }
     }
 
-    my $optimized_header;
-    open my $generated, "<", "valuetype_opt_accessorC.h"
-      or die "ERROR: cannot open generated file <valuetype_opt_accessorC.h>: $!\n";
-    {
-        local $/;
-        $optimized_header = <$generated>;
-    }
-    close $generated;
+    my $optimized_header = $generated_contents{"valuetype_opt_accessorC.h"};
 
     foreach my $class_check (
         ["Accessor_Optimized_Value", qr/_copy_value\s*\(\)\s*override/,
@@ -217,14 +205,7 @@ if ($status == 0) {
         $status = 1;
       }
 
-    my $optimized_source;
-    open $generated, "<", "valuetype_opt_accessorC.cpp"
-      or die "ERROR: cannot open generated file <valuetype_opt_accessorC.cpp>: $!\n";
-    {
-        local $/;
-        $optimized_source = <$generated>;
-    }
-    close $generated;
+    my $optimized_source = $generated_contents{"valuetype_opt_accessorC.cpp"};
 
     my ($optimized_derived_copy) = $optimized_source =~
       /Accessor_Optimized_Derived::_copy_value\s*\(\)\s*\{([\s\S]*?)^\}/m;

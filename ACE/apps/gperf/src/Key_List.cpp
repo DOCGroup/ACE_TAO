@@ -65,11 +65,6 @@ string_comparison_expression (bool const case_insensitive,
       expression = "*" + input + " == *" + keyword + " && ";
     }
 
-  if (compare_length && !keyword_length_verified)
-    {
-      expression += "len == std::strlen (" + keyword + ") && ";
-    }
-
   expression += "!";
   expression += string_compare_prefix (case_insensitive);
   expression += case_insensitive
@@ -81,7 +76,25 @@ string_comparison_expression (bool const case_insensitive,
       expression += ", len";
     }
   expression += ")";
+  if (compare_length && !keyword_length_verified)
+    {
+      expression += " && " + keyword + "[len] == '\\0'";
+    }
   return expression;
+}
+
+void
+output_charmap ()
+{
+  ACE_OS::printf ("static constexpr std::array<unsigned char, 256> charmap = {\n");
+  for (size_t i = 0; i < 256; ++i)
+    {
+      unsigned char const mapped =
+        i >= 0x41 && i <= 0x5a ? static_cast<unsigned char> (i + 0x20)
+                             : static_cast<unsigned char> (i);
+      ACE_OS::printf ("  0%03o,%s", mapped, (i % 8 == 7) ? "\n" : " ");
+    }
+  ACE_OS::printf ("};\n\n");
 }
 
 char const *
@@ -708,12 +721,12 @@ Key_List::output_switch (int use_keyword_table)
       std::string const key_name = option.key_name ();
       std::string const keyword = "resword->" + key_name;
       comp_buffer = string_comparison_expression (
-        option[STRCASECMP], option[COMP], "str", keyword);
+        option[STRCASECMP], option[COMP], "str", keyword, option[LENTABLE]);
     }
   else
     {
       comp_buffer = string_comparison_expression (
-        option[STRCASECMP], option[COMP], "str", "resword");
+        option[STRCASECMP], option[COMP], "str", "resword", option[LENTABLE]);
     }
   if (!option[OPTIMIZE])
     {
@@ -924,7 +937,7 @@ Key_List::output_switch (int use_keyword_table)
           ACE_OS::printf ("                default: return %s;\n                }\n              ",
                           generated_null_pointer ());
           std::string const comparison = string_comparison_expression (
-            option[STRCASECMP], option[COMP], "str", "s");
+            option[STRCASECMP], option[COMP], "str", "s", option[LENTABLE]);
           ACE_OS::printf ("if (%s)\n"
                           "  {\n"
                           "    return s;\n"
@@ -1970,6 +1983,11 @@ Key_List::output ()
         {
           ACE_OS::printf ("%s;\n",
                           this->array_type_.c_str ());
+        }
+
+      if (option[STRCASECMP])
+        {
+          output_charmap ();
         }
 
       output_min_max ();

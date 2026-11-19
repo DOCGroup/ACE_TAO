@@ -3,7 +3,7 @@
 
 /* C++ code produced by ACE gperf version 8.0.8 */
 /* Command-line: ace_gperf -M -J -Q -c -C -D -E -T -f 0 -o -t -p
- * -K keyword_ -Z TAO_IDL_CPP_Keyword_Table -N lookup -k1,2,$ TAO/TAO_IDL/fe/keywords.dat */
+ * -K keyword_ -Z TAO_IDL_CPP_Keyword_Table -N lookup -k1,2,$ fe/keywords.dat */
 
 #include <array>
 #include <cstddef>
@@ -305,7 +305,7 @@ TAO_IDL_CPP_Keyword_Table::lookup (char const *str, size_t len)
         {
           char const *s = wordlist[key].keyword_;
 
-          if (len == std::strlen (s) && !std::strncmp (str, s, len))
+          if (*str == *s && !std::strncmp (str, s, len) && s[len] == '\0')
             {
               return std::addressof (wordlist[key]);
             }
