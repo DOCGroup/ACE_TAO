@@ -47,8 +47,8 @@ worker (void *)
 
     // Wait according to the number of threads inside the previous
     // section...
-      ACE_Time_Value pause (current_threads_in_first_section.value (),
-                            0);
+    ACE_Time_Value pause (current_threads_in_first_section.value (),
+                          0);
     ACE_OS::sleep (pause);
   }
 
@@ -78,10 +78,12 @@ run_main (int, ACE_TCHAR *[])
        ACE_THR_FUNC (worker),
        nullptr,
        THR_NEW_LWP) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("spawn_n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("spawn_n")),
+                        -1);
+    }
   // Make sure at least one thread is started...
   ACE_Thread::yield ();
 

@@ -73,16 +73,19 @@ run_main (int, ACE_TCHAR *[])
                     static_cast<void *> (nodes[i].node), static_cast<void *> (node)));
         result = 3;
       }
-      else for (size_t j= i+1u; j < sizeof(nodes)/sizeof(Nodes); ++j)
-      {
-        if (nodes[i].node == nodes[j].node)
+      else
         {
-          ACE_DEBUG ((LM_ERROR, ": Duplicate Binding (%@) for %c=%d and %c=%d\n",
-                      static_cast<void *> (nodes[i].node), nodes[i].key, nodes[i].value,
-                      nodes[j].key, nodes[j].value));
-          result = 4;
-       }
-      }
+          for (size_t j= i+1u; j < sizeof(nodes)/sizeof(Nodes); ++j)
+            {
+              if (nodes[i].node == nodes[j].node)
+                {
+                  ACE_DEBUG ((LM_ERROR, ": Duplicate Binding (%@) for %c=%d and %c=%d\n",
+                              static_cast<void *> (nodes[i].node), nodes[i].key, nodes[i].value,
+                              nodes[j].key, nodes[j].value));
+                  result = 4;
+                }
+            }
+        }
     }}
 
     if (!result)
