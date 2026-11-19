@@ -455,8 +455,9 @@ TAO_GIOP_Message_Generator_Parser_10::parse_locate_reply (
 {
   if (TAO_GIOP_Message_Generator_Parser::parse_locate_reply (cdr,
                                                              params) == -1)
-
-    return -1;
+    {
+      return -1;
+    }
 
   return 0;
 }
