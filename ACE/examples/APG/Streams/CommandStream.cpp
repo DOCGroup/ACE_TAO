@@ -16,9 +16,11 @@ int CommandStream::open (void *arg,
   ACE_TRACE ("CommandStream::open(peer)");
 
   if (this->inherited::open (arg, head, tail) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("Failed to open superclass")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("Failed to open superclass")),
+                        -1);
+    }
   // Listing 01
 
   // Listing 02 code/ch18
@@ -45,28 +47,36 @@ int CommandStream::open (void *arg,
 
   // Listing 03 code/ch18
   if (this->push (answerCallModule) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Failed to push %p\n"),
-                       answerCallModule->name()),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Failed to push %p\n"),
+                         answerCallModule->name()),
+                        -1);
+    }
 
   if (this->push (retrieveCallerIdModule) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Failed to push %p\n"),
-                       retrieveCallerIdModule->name()),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Failed to push %p\n"),
+                         retrieveCallerIdModule->name()),
+                        -1);
+    }
 
   if (this->push (playMessageModule) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Failed to push %p\n"),
-                       playMessageModule->name()),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Failed to push %p\n"),
+                         playMessageModule->name()),
+                        -1);
+    }
 
   if (this->push (recordMessageModule) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Failed to push %p\n"),
-                       recordMessageModule->name()),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Failed to push %p\n"),
+                         recordMessageModule->name()),
+                        -1);
+    }
   // Listing 03
   return 0;
 }
@@ -77,11 +87,13 @@ Command *CommandStream::execute (Command *command)
   ACE_Message_Block *mb {};
   ACE_NEW_RETURN (mb, ACE_Message_Block (command), nullptr);
   if (this->put (mb) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Fail on put command %d: %p\n"),
-                       command->command_,
-                       ACE_TEXT ("")),
-                      0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Fail on put command %d: %p\n"),
+                         command->command_,
+                         ACE_TEXT ("")),
+                        0);
+    }
 
   this->get (mb);
   command = (Command *)mb->data_block ();
