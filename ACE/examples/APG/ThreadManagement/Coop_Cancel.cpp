@@ -34,7 +34,9 @@ public:
         tv += ACE_OS::time (nullptr);
         int const result = this->getq (mb, &tv);
         if (result == -1 && errno == EWOULDBLOCK)
-          continue;
+          {
+            continue;
+          }
         else
           {
             // Do real work.
