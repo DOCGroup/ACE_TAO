@@ -184,22 +184,28 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
             for (ACE_TCHAR *flag = ACE_OS::strtok (get_opt.opt_arg (), ACE_TEXT("|"));
                  flag != nullptr;
                  flag = ACE_OS::strtok (nullptr, ACE_TEXT("|")))
-              if (ACE_OS::strncasecmp (flag, ACE_TEXT("C"), 1) == 0)
-                {
-                  ACE_SET_BITS (this->options_,
-                                Options::CONSUMER_ACCEPTOR);
-                  if (ACE_OS::strlen (flag) > 1)
-                    // Set the Consumer Acceptor port number.
-                    this->consumer_acceptor_port_ = ACE_OS::atoi (flag + 2);
-                }
-              else if (ACE_OS::strncasecmp (flag, ACE_TEXT("S"), 1) == 0)
-                {
-                  ACE_SET_BITS (this->options_,
-                                Options::SUPPLIER_ACCEPTOR);
-                  if (ACE_OS::strlen (flag) > 1)
-                    // Set the Supplier Acceptor port number.
-                    this->supplier_acceptor_port_ = ACE_OS::atoi (flag + 2);
-                }
+              {
+                if (ACE_OS::strncasecmp (flag, ACE_TEXT("C"), 1) == 0)
+                  {
+                    ACE_SET_BITS (this->options_,
+                                  Options::CONSUMER_ACCEPTOR);
+                    if (ACE_OS::strlen (flag) > 1)
+                      {
+                        // Set the Consumer Acceptor port number.
+                        this->consumer_acceptor_port_ = ACE_OS::atoi (flag + 2);
+                      }
+                  }
+                else if (ACE_OS::strncasecmp (flag, ACE_TEXT("S"), 1) == 0)
+                  {
+                    ACE_SET_BITS (this->options_,
+                                  Options::SUPPLIER_ACCEPTOR);
+                    if (ACE_OS::strlen (flag) > 1)
+                      {
+                        // Set the Supplier Acceptor port number.
+                        this->supplier_acceptor_port_ = ACE_OS::atoi (flag + 2);
+                      }
+                  }
+              }
           }
           break;
           /* NOTREACHED */
@@ -219,22 +225,28 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
             for (ACE_TCHAR *flag = ACE_OS::strtok (get_opt.opt_arg (), ACE_TEXT("|"));
                  flag != nullptr;
                  flag = ACE_OS::strtok (nullptr, ACE_TEXT("|")))
-              if (ACE_OS::strncasecmp (flag, ACE_TEXT("C"), 1) == 0)
-                {
-                  ACE_SET_BITS (this->options_,
-                                Options::CONSUMER_CONNECTOR);
-                  if (ACE_OS::strlen (flag) > 1)
-                    // Set the Consumer Connector port number.
-                    this->consumer_connector_port_ = ACE_OS::atoi (flag + 2);
-                }
-              else if (ACE_OS::strncasecmp (flag, ACE_TEXT("S"), 1) == 0)
-                {
-                  ACE_SET_BITS (this->options_,
-                                Options::SUPPLIER_CONNECTOR);
-                  if (ACE_OS::strlen (flag) > 1)
-                    // Set the Supplier Connector port number.
-                    this->supplier_connector_port_ = ACE_OS::atoi (flag + 2);
-                }
+              {
+                if (ACE_OS::strncasecmp (flag, ACE_TEXT("C"), 1) == 0)
+                  {
+                    ACE_SET_BITS (this->options_,
+                                  Options::CONSUMER_CONNECTOR);
+                    if (ACE_OS::strlen (flag) > 1)
+                      {
+                        // Set the Consumer Connector port number.
+                        this->consumer_connector_port_ = ACE_OS::atoi (flag + 2);
+                      }
+                  }
+                else if (ACE_OS::strncasecmp (flag, ACE_TEXT("S"), 1) == 0)
+                  {
+                    ACE_SET_BITS (this->options_,
+                                  Options::SUPPLIER_CONNECTOR);
+                    if (ACE_OS::strlen (flag) > 1)
+                      {
+                        // Set the Supplier Connector port number.
+                        this->supplier_connector_port_ = ACE_OS::atoi (flag + 2);
+                      }
+                  }
+              }
           }
           break;
           /* NOTREACHED */
@@ -255,12 +267,18 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
             for (ACE_TCHAR *flag = ACE_OS::strtok (get_opt.opt_arg (), ACE_TEXT("|"));
                  flag != nullptr;
                  flag = ACE_OS::strtok (nullptr, ACE_TEXT("|")))
-              if (ACE_OS::strcmp (flag, ACE_TEXT("OUTPUT_MT")) == 0)
-                ACE_SET_BITS (this->threading_strategy_,
-                              Options::OUTPUT_MT);
-              else if (ACE_OS::strcmp (flag, ACE_TEXT("INPUT_MT")) == 0)
-                ACE_SET_BITS (this->threading_strategy_,
-                              Options::INPUT_MT);
+              {
+                if (ACE_OS::strcmp (flag, ACE_TEXT("OUTPUT_MT")) == 0)
+                  {
+                    ACE_SET_BITS (this->threading_strategy_,
+                                  Options::OUTPUT_MT);
+                  }
+                else if (ACE_OS::strcmp (flag, ACE_TEXT("INPUT_MT")) == 0)
+                  {
+                    ACE_SET_BITS (this->threading_strategy_,
+                                  Options::INPUT_MT);
+                  }
+              }
             break;
           }
         case 'v': // Verbose mode.
