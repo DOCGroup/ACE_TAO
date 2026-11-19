@@ -40,14 +40,18 @@ TAO_Endpoint_Acceptor_Filter_Factory::create_object (TAO_POA_Manager& poamanager
     }
 
   if (endpoints.length () > 0)
-    ACE_NEW_RETURN (filter,
+    {
+      ACE_NEW_RETURN (filter,
                     TAO_Endpoint_Acceptor_Filter (endpoints),
                     nullptr);
+    }
   else
-    // no policy was in force, just return a default filter
-    ACE_NEW_RETURN (filter,
+    {
+      // no policy was in force, just return a default filter
+      ACE_NEW_RETURN (filter,
                     TAO_Default_Acceptor_Filter (),
                     nullptr);
+    }
 
   return filter;
 }
