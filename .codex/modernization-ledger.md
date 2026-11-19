@@ -13827,3 +13827,13 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   modified preprocessor argument is stored in the destination vector slot,
   and generator ownership is transferred to `idl_global`; neither source is
   subsequently read. No IDL compiler source files were changed.
+
+## 2026-11-19 ACE_OS::strncmp conversion candidate review
+
+- Reviewed every `ACE_OS::strncmp` occurrence in ACE and TAO (47 source
+  matches). The ACEXML, Dgram, Log_Msg, configuration, option parsing, and ORB
+  argument cases operate on ACEXML_Char/ACE_TCHAR strings and must retain the
+  ACE wrapper. ACE/tests OS_Test intentionally exercises ACE_OS wrappers.
+  Three TAO retry-test checks compare `ACE_TString` with `ACE_TCHAR` prefixes,
+  so they also retain the wrapper for wide-character builds. No eligible
+  narrow `const char *` conversion was found; no source changes were needed.

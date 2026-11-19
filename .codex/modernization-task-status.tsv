@@ -1,4 +1,9 @@
 directory	task	status	evidence_commit	notes
+ACE/ACEXML/common	C_STRING	not-applicable	-	The URL prefix comparison uses ACEXML_Char, which can be wide; retain ACE_OS::strncmp for character-width portability.
+ACE/examples/Reactor/Dgram	C_STRING	not-applicable	-	Peer names use ACE_TCHAR and ACE_TEXT literals; retain ACE_OS::strncmp for wide-character builds.
+TAO/tests/ForwardOnceUponException	C_STRING	not-applicable	-	IOR and corbaloc prefix are ACE_TString/ACE_TCHAR; retain the ACE wrapper for wide-character builds.
+TAO/tests/ForwardUponObjectNotExist	C_STRING	not-applicable	-	IOR and corbaloc prefix are ACE_TString/ACE_TCHAR; retain the ACE wrapper for wide-character builds.
+TAO/tests/Multiple_Retry_Tests/Retry_On_Reply_Failure	C_STRING	not-applicable	-	IOR and corbaloc prefix are ACE_TString/ACE_TCHAR; retain the ACE wrapper for wide-character builds.
 TAO/DevGuideExamples/PortableInterceptors/IOR	MOVE_SITES	done	-	Reviewed ServiceContext sequence transfer; the _var source is not used after its contents move into the destination.
 TAO/DevGuideExamples/PortableInterceptors/SimpleCodec	MOVE_SITES	done	-	Reviewed ServiceContext sequence transfer; the _var source is not used after its contents move into the destination.
 TAO/examples/Advanced/ch_12	MOVE_SITES	done	-	Reviewed device-state insertion into the map; the local state is not read after it is moved.
