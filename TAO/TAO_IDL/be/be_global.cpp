@@ -1893,6 +1893,14 @@ BE_GlobalData::ccmobject ()
       FE_Utils::Scoped_Name_Owner scoped_name_owner =
         FE_Utils::string_to_scoped_name_owner ("Components::CCMObject");
 
+      if (scoped_name_owner == nullptr)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_global::ccmobject - "
+                             "allocation of CCMObject name failed\n"),
+                            nullptr);
+        }
+
       AST_Decl *d =
         idl_global->scopes ().top_non_null ()->lookup_by_name (
           scoped_name_owner.get (),
