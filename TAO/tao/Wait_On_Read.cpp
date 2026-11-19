@@ -81,17 +81,17 @@ TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
       // If we got our reply, no need to run the loop any
       // further.
       if (!rd.keep_waiting (leader_follower))
-      {
-        break;
-      }
+        {
+          break;
+        }
 
       // @@ We are not checking for timeouts here...
 
       // If we got an error just break
       if (retval == -1)
-      {
-        break;
-      }
+        {
+          break;
+        }
     }
 
   if (rd.error_detected (leader_follower) || retval == -1)
@@ -100,49 +100,53 @@ TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
     }
 
   if (rd.successful (leader_follower))
-     {
-       TAO_ORB_Core * const oc =
-         this->transport_->orb_core ();
+    {
+      TAO_ORB_Core * const oc =
+        this->transport_->orb_core ();
 
-       if (!oc->client_factory ()->use_cleanup_options ())
-       {
-         return 0;
-       }
+      if (!oc->client_factory ()->use_cleanup_options ())
+        {
+          return 0;
+        }
 
-       if (TAO_debug_level > 0)
-         TAOLIB_DEBUG ((LM_DEBUG,
-                     ACE_TEXT ("TAO (%P|%t) - Wait_On_Read[%B]::wait (), ")
-                     ACE_TEXT ("registering handle for cleanup\n"),
-                     this->transport_->id ()));
-
-       ACE_Event_Handler * const eh =
-         this->transport_->event_handler_i ();
-
-       ACE_Reactor * const r =
-         this->transport_->orb_core ()->reactor ();
-
-       if (r->register_handler (eh,
-                                ACE_Event_Handler::READ_MASK) == -1)
-         {
-           if (TAO_debug_level > 0)
-             TAOLIB_ERROR ((LM_ERROR,
+      if (TAO_debug_level > 0)
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
                          ACE_TEXT ("TAO (%P|%t) - Wait_On_Read[%B]::wait (), ")
-                         ACE_TEXT ("registration with reactor returned an error\n"),
+                         ACE_TEXT ("registering handle for cleanup\n"),
                          this->transport_->id ()));
         }
-       else
+
+      ACE_Event_Handler * const eh =
+        this->transport_->event_handler_i ();
+
+      ACE_Reactor * const r =
+        this->transport_->orb_core ()->reactor ();
+
+      if (r->register_handler (eh,
+                               ACE_Event_Handler::READ_MASK) == -1)
+        {
+          if (TAO_debug_level > 0)
+            {
+              TAOLIB_ERROR ((LM_ERROR,
+                             ACE_TEXT ("TAO (%P|%t) - Wait_On_Read[%B]::wait (), ")
+                             ACE_TEXT ("registration with reactor returned an error\n"),
+                             this->transport_->id ()));
+            }
+        }
+      else
         {
           // Only set this flag when registration succeeds
           this->is_registered_ = true;
         }
 
-       return 0;
-     }
+      return 0;
+    }
 
   if (rd.error_detected (leader_follower))
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   return 1;
 }

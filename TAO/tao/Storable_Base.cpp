@@ -42,21 +42,23 @@ TAO::Storable_Base::state_as_string (Storable_State state)
 {
   std::string state_string;
   if (state == goodbit)
-    state_string = "goodbit";
+    {
+      state_string = "goodbit";
+    }
   else
     {
       if (state & badbit)
-      {
-        state_string = "badbit ";
-      }
+        {
+          state_string = "badbit ";
+        }
       if (state & eofbit)
-      {
-        state_string += "eofbit ";
-      }
+        {
+          state_string += "eofbit ";
+        }
       if (state & failbit)
-      {
-        state_string += "failbit";
-      }
+        {
+          state_string += "failbit";
+        }
     }
   return state_string;
 }

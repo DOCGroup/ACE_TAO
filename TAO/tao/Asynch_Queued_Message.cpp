@@ -101,8 +101,10 @@ TAO_Asynch_Queued_Message::bytes_transferred (size_t &byte_count)
   byte_count = 0;
 
   if (this->all_data_sent ())
-    this->state_changed (TAO_LF_Event::LFS_SUCCESS,
-                         this->orb_core_->leader_follower ());
+    {
+      this->state_changed (TAO_LF_Event::LFS_SUCCESS,
+                           this->orb_core_->leader_follower ());
+    }
 }
 
 TAO_Queued_Message *
