@@ -87,7 +87,9 @@ Time_Handler::handle_timeout (const ACE_Time_Value &tv,
               tv.sec ()));
 
   if (current_count == long (ACE_MAX_TIMERS - 1))
-    done = 1;
+    {
+      done = 1;
+    }
   else if (the_count == long (ACE_MAX_TIMERS - 1))
     {
       done = 1;
@@ -98,8 +100,10 @@ Time_Handler::handle_timeout (const ACE_Time_Value &tv,
       int result = ACE_Reactor::instance ()->reset_timer_interval (this->timer_id (),
                                                                    std::chrono::seconds {the_count + 1});
       if (result == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Error resetting timer interval\n")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Error resetting timer interval\n")));
+        }
     }
   the_count += (1 + odd);
   return 0;
@@ -137,7 +141,9 @@ test_registering_all_handlers ()
     }
 
   while (!done)
-    ACE_Reactor::instance ()->handle_events ();
+    {
+      ACE_Reactor::instance ()->handle_events ();
+    }
 }
 
 static void
@@ -162,7 +168,9 @@ test_registering_one_handler ()
     }
 
   while (!done)
-    ACE_Reactor::instance ()->handle_events ();
+    {
+      ACE_Reactor::instance ()->handle_events ();
+    }
 }
 
 static void
@@ -188,18 +196,24 @@ test_canceling_odd_timers ()
     }
 
   for (size_t j = 0; (u_long) j < ACE_MAX_TIMERS; ++j)
-    // Cancel handlers with odd numbered timer ids.
-    if (ACE_ODD (rt[j].timer_id ()))
       {
-        int result =
-          ACE_Reactor::instance ()->cancel_timer (rt[j].timer_id ());
-        if (result == -1)
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("Error cancelling timer\n")));
+        // Cancel handlers with odd numbered timer ids.
+        if (ACE_ODD (rt[j].timer_id ()))
+          {
+            int result =
+              ACE_Reactor::instance ()->cancel_timer (rt[j].timer_id ());
+            if (result == -1)
+              {
+                ACE_ERROR ((LM_ERROR,
+                            ACE_TEXT ("Error cancelling timer\n")));
+              }
+          }
       }
 
   while (!done)
-    ACE_Reactor::instance ()->handle_events ();
+    {
+      ACE_Reactor::instance ()->handle_events ();
+    }
 }
 
 static void
@@ -227,7 +241,9 @@ test_resetting_timer_intervals ()
   rt.timer_id (t_id);
 
   while (!done)
-    ACE_Reactor::instance ()->handle_events ();
+    {
+      ACE_Reactor::instance ()->handle_events ();
+    }
 }
 
 // If any command line arg is given, run the test with high res timer
