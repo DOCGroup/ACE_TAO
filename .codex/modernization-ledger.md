@@ -13483,3 +13483,9 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Added Allman braces to the null-check body in `AbstractBase_T.cpp`.
 - Ran `clang-tidy -p TAO/tao -checks=-*,readability-braces-around-statements` over all 11 `.cpp` files in `TAO/tao/Valuetype`; no diagnostics remained. `git diff --check` passed. No build or runtime test was run.
 - Commit `c7f66075c02`. The wider directory checklist remains partial.
+
+## 2026-11-19 TAO sequence-header braces
+
+- Added Allman braces to two single-statement range checks in `Range_Checking_T.h` and the `release_` check in `Unbounded_Octet_Sequence_T.h`.
+- Focused clang-tidy brace checks and `git diff --check` passed. The Sequence_Unit_Tests compile database failed with stale C++17/overload diagnostics unrelated to these brace edits; no build is claimed.
+- Commit `cfb671e72d8`. The wider TAO/tao brace audit remains open.
