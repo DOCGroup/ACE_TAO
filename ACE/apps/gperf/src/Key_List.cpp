@@ -1812,7 +1812,9 @@ Key_List::output_lookup_function ()
             }
 
           ACE_OS::printf (";\n\n              if (%s%s == *s && !%s%s)\n"
-                         "                return %s%s%s;\n            }\n",
+                         "                {\n"
+                         "                  return %s%s%s;\n"
+                         "                }\n            }\n",
                   option[LENTABLE] ? "len == lengthtable[key]\n              && " : "",
                   option[STRCASECMP] ? "charmap[*str]" : "*str",
                   string_compare_prefix (option[STRCASECMP]),
@@ -1824,7 +1826,10 @@ Key_List::output_lookup_function ()
                   pointer_and_type_enabled ? "wordlist[slot]" : "s",
                   pointer_and_type_enabled ? generated_address_suffix () : "");
           ACE_OS::printf ("          else if (slot < 0 && slot >= -MAX_HASH_VALUE)\n"
-                  "            return %s;\n", generated_null_pointer ());
+                          "            {\n"
+                          "              return %s;\n"
+                          "            }\n",
+                          generated_null_pointer ());
         }
       ACE_OS::printf ("          else\n            {\n");
       ACE_OS::printf ("              size_t const offset = slot > 0\n"
@@ -1840,7 +1845,9 @@ Key_List::output_lookup_function ()
             : pointer_and_type_enabled ? "char **" : "char const **";
           ACE_OS::printf ("              %s base = %swordlist[-lookup[offset]]%s;\n"
                           "              %s ptr = base + -lookup[offset + 1];\n\n"
-                          "              while (--ptr >= base)\n                ",
+                          "              while (--ptr >= base)\n"
+                          "                {\n"
+                          "                  ",
                           base_type,
                           generated_address_prefix (),
                           generated_address_suffix (),
@@ -1852,7 +1859,9 @@ Key_List::output_lookup_function ()
             ? "const " : "";
           ACE_OS::printf ("              %s%s* const base = %swordlist[-lookup[offset]]%s;\n"
                           "              %s%s*ptr = base + -lookup[offset + 1];\n\n"
-                          "              while (--ptr >= base)\n                ",
+                          "              while (--ptr >= base)\n"
+                          "                {\n"
+                          "                  ",
                           this->struct_tag.c_str (),
                           element_const,
                           generated_address_prefix (),
@@ -1889,8 +1898,12 @@ Key_List::output_lookup_function ()
                                  ? "strcasecmp (str + 1, *ptr + 1"
                                  : "strcmp (str + 1, *ptr + 1"));
         }
-      ACE_OS::printf ("))\n                  return %sptr;"
-              "\n            }\n        }\n    %s\n}\n", this->array_type_ ==
+      ACE_OS::printf ("))\n"
+                      "                  {\n"
+                      "                    return %sptr;\n"
+                      "                  }\n"
+                      "                }\n"
+                      "            }\n        }\n    %s\n}\n", this->array_type_ ==
               Key_List::default_array_type ? "*" : "",
               option[OPTIMIZE] ? "" : generated_null_return ());
     }
