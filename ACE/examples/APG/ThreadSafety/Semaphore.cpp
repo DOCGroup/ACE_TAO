@@ -22,7 +22,9 @@ public:
   int svc () override
   {
     while (!is_closed ())
-      consume_item ();
+      {
+        consume_item ();
+      }
     return 0;
   }
 
@@ -96,9 +98,11 @@ public:
   int svc () override
   {
     for (int i = 0; i <= MAX_PROD; ++i)
-      if (produce_item (i) == -1)
       {
-        return -1;
+        if (produce_item (i) == -1)
+          {
+            return -1;
+          }
       }
     return hang_up ();
   }
