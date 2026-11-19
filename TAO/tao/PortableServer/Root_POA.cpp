@@ -1133,7 +1133,9 @@ TAO_Root_POA::activate_object (PortableServer::Servant servant)
       // may have changed while we are waiting.  Therefore, we need to
       // restart this call.
       if (wait_occurred_restart_call)
-        continue;
+        {
+          continue;
+        }
       else
       {
         return result;
@@ -1161,7 +1163,9 @@ TAO_Root_POA::activate_object_with_id (const PortableServer::ObjectId &id,
       // may have changed while we are waiting.  Therefore, we need to
       // restart this call.
       if (wait_occurred_restart_call)
-        continue;
+        {
+          continue;
+        }
       else
       {
         return;
@@ -2121,21 +2125,25 @@ TAO_Root_POA::create_stub_object (const TAO::ObjectKey &object_key,
   }
 
   if (error)
-    throw ::CORBA::INTERNAL (
-      CORBA::SystemException::_tao_minor_code (
-        TAO_MPROFILE_CREATION_ERROR,
-        0),
-      CORBA::COMPLETED_NO);
+    {
+      throw ::CORBA::INTERNAL (
+        CORBA::SystemException::_tao_minor_code (
+          TAO_MPROFILE_CREATION_ERROR,
+          0),
+        CORBA::COMPLETED_NO);
+    }
 
   // Make sure we have at least one profile.  <mp> may end up being
   // empty if none of the acceptor endpoints have the right priority
   // for this object, for example.
   if (mprofile.profile_count () == 0)
-    throw ::CORBA::BAD_PARAM (
-      CORBA::SystemException::_tao_minor_code (
-        TAO_MPROFILE_CREATION_ERROR,
-        0),
-      CORBA::COMPLETED_NO);
+    {
+      throw ::CORBA::BAD_PARAM (
+        CORBA::SystemException::_tao_minor_code (
+          TAO_MPROFILE_CREATION_ERROR,
+          0),
+        CORBA::COMPLETED_NO);
+    }
 
   TAO_Stub *stub =
     this->orb_core_.create_stub_object (mprofile, type_id, policy_list);

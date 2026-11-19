@@ -12,12 +12,14 @@ namespace TAO
       : guard_ (poa.lock ())
     {
       if (!this->guard_.locked ())
-        throw
-          CORBA::INTERNAL (
-            CORBA::SystemException::_tao_minor_code (
-              TAO_GUARD_FAILURE,
-              0),
-            CORBA::COMPLETED_NO);
+        {
+          throw
+            CORBA::INTERNAL (
+              CORBA::SystemException::_tao_minor_code (
+                TAO_GUARD_FAILURE,
+                0),
+              CORBA::COMPLETED_NO);
+        }
 
       // Check if a non-servant upcall is in progress.  If a non-servant
       // upcall is in progress, wait for it to complete.  Unless of

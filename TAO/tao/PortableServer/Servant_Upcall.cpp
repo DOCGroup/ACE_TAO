@@ -75,8 +75,10 @@ namespace TAO
       // Acquire the object adapter lock first.
       int const result = this->object_adapter_->lock ().acquire ();
       if (result == -1)
-        // Locking error.
-        throw ::CORBA::OBJ_ADAPTER ();
+        {
+          // Locking error.
+          throw ::CORBA::OBJ_ADAPTER ();
+        }
 
       // We have acquired the object adapter lock.  Record this for later
       // use.
@@ -195,8 +197,10 @@ namespace TAO
     {
       // Acquire the object adapter lock first.
       if (this->object_adapter_->lock ().acquire () == -1)
-        // Locking error.
-        throw ::CORBA::OBJ_ADAPTER ();
+        {
+          // Locking error.
+          throw ::CORBA::OBJ_ADAPTER ();
+        }
 
       // We have acquired the object adapter lock.  Record this for later
       // use.
@@ -299,8 +303,10 @@ namespace TAO
       // not be able to do so since it can't acquire the object adapterx
       // lock.
       if (this->poa_->enter() == -1)
-        // Locking error.
-        throw ::CORBA::OBJ_ADAPTER ();
+        {
+          // Locking error.
+          throw ::CORBA::OBJ_ADAPTER ();
+        }
 #endif /* !TAO_HAS_MINIMUM_POA == 0 */
     }
 

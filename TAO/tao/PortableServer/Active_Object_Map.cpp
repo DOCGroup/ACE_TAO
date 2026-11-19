@@ -487,7 +487,9 @@ TAO_Unique_Id_Strategy::bind_using_user_id (
   if (entry_owner)
     {
       if (result == 0)
-        entry_owner.release ();
+        {
+          entry_owner.release ();
+        }
       else
       {
         entry = nullptr;
@@ -687,7 +689,9 @@ TAO_Multiple_Id_Strategy::bind_using_user_id (
   if (entry_owner)
     {
       if (result == 0)
-        entry_owner.release ();
+        {
+          entry_owner.release ();
+        }
       else
       {
         entry = nullptr;
@@ -981,7 +985,9 @@ TAO_System_Id_With_Unique_Id_Strategy::bind_using_system_id (
     }
 
   if (result == 0)
-    entry_owner.release ();
+    {
+      entry_owner.release ();
+    }
   else
   {
     entry = nullptr;
@@ -1042,7 +1048,9 @@ TAO_System_Id_With_Multiple_Id_Strategy::bind_using_system_id (
     }
 
   if (result == 0)
-    entry_owner.release ();
+    {
+      entry_owner.release ();
+    }
   else
   {
     entry = nullptr;

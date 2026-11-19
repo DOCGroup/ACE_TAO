@@ -353,8 +353,10 @@ namespace TAO
           if (deactivated)
             {
               if (TAO_debug_level > 0)
-                TAOLIB_DEBUG ((LM_DEBUG,
+                {
+                  TAOLIB_DEBUG ((LM_DEBUG,
                             ACE_TEXT ("(%t) TAO_Root_POA::is_servant_in_map: waiting for servant to deactivate\n")));
+                }
 
               // We are going to wait on this condition variable; the POA
               // state may change by the time we get the lock again.
@@ -400,8 +402,10 @@ namespace TAO
           if (deactivated)
             {
               if (TAO_debug_level > 0)
-                TAOLIB_DEBUG ((LM_DEBUG,
+                {
+                  TAOLIB_DEBUG ((LM_DEBUG,
                             ACE_TEXT ("(%t) TAO_Root_POA::is_user_id_in_map: waiting for servant to deactivate\n")));
+                }
 
               // We are going to wait on this condition variable; the POA
               // state may change by the time we get the lock again.
