@@ -40,7 +40,9 @@ Waiter_Task::svc()
 
   // wait until canceled
   while (!ACE_Task_Base::thr_mgr ()->testcancel (ACE_OS::thr_self ()))
-    ACE_OS::sleep (0);
+    {
+      ACE_OS::sleep (0);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t|grp_id=%d) thread cancelled.\n"), this->grp_id ()));
@@ -97,7 +99,9 @@ run_main (int, ACE_TCHAR *[])
   waiter_task.thr_mgr ()->cancel_all ();
   // wait for threads to exit cleanly
   while (waiter_task.thr_mgr ()->num_threads_in_task (&waiter_task) > 0)
-    ACE_OS::sleep (0);
+    {
+      ACE_OS::sleep (0);
+    }
 
   // restart 2 threads reusing the group id
   if (waiter_task.activate (THR_NEW_LWP | THR_DETACHED, 2) != 0)
@@ -132,7 +136,9 @@ run_main (int, ACE_TCHAR *[])
 
   // wait till the threads actually started up
   while (run_count != 4)
-    ACE_OS::sleep (0);
+    {
+      ACE_OS::sleep (0);
+    }
 
   // change the group id of all threads of the task
   group_id += 1;
@@ -149,7 +155,9 @@ run_main (int, ACE_TCHAR *[])
   waiter_task.thr_mgr ()->cancel_all ();
   // wait for threads to exit cleanly
   while (waiter_task.thr_mgr ()->num_threads_in_task (&waiter_task) > 0)
-    ACE_OS::sleep (0);
+    {
+      ACE_OS::sleep (0);
+    }
 
   // restart 3 threads using explicit new group id
   group_id = 33;
@@ -187,7 +195,9 @@ run_main (int, ACE_TCHAR *[])
   waiter_task.thr_mgr ()->cancel_all ();
   // wait for threads to exit cleanly
   while (waiter_task.thr_mgr ()->num_threads_in_task (&waiter_task) > 0)
-    ACE_OS::sleep (0);
+    {
+      ACE_OS::sleep (0);
+    }
 
 #else
   ACE_ERROR ((LM_INFO,
