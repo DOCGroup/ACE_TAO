@@ -63,9 +63,11 @@ TAO_RT_Service_Context_Handler::generate_service_context (
               else
                 {
                   if (TAO_debug_level > 0)
-                    TAOLIB_ERROR ((LM_ERROR, "ERROR: TAO_RT_Protocols_Hooks::rt_service_context. "
+                    {
+                      TAOLIB_ERROR ((LM_ERROR, "ERROR: TAO_RT_Protocols_Hooks::rt_service_context. "
                                 "Unable to access RT CORBA Priority in client thread "
                                 "accessing object with CLIENT_PROPAGATED priority model.\n"));
+                    }
                   throw CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
                 }
 

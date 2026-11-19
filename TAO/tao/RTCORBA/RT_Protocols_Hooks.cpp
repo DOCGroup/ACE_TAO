@@ -441,8 +441,10 @@ CORBA::Long
 TAO_RT_Protocols_Hooks::get_dscp_codepoint ()
 {
   if (TAO_debug_level)
-    TAOLIB_DEBUG ((LM_DEBUG,
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
                 "TAO_RT_Protocols_Hooks::get_dscp_codepoint\n"));
+    }
 
   CORBA::Long codepoint {};
 
