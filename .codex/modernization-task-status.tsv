@@ -430,6 +430,7 @@ ACE/apps/Gateway/Gateway	BUILD_TEST	done	5143cca248b	Realclean-built and linked 
 ACE/apps/Gateway/Gateway	CLEANUP	done	1e7c01cc30d	Removed redundant pointer cast and constructor initialization after member defaults
 ACE/apps/Gateway/Gateway	CONST	done	1e7c01cc30d	Applied east-side const consistently to immutable references and returned pointers
 ACE/apps/Gateway/Gateway	OWNERSHIP	done	5143cca248b	File_Parser owns its FILE handle with a custom-deleter unique_ptr; dispatch-set ownership transfers to the discriminator only after successful bind.
+ACE/apps/Gateway/Gateway	MOVE_SITES	done	-	Reviewed Gateway.cpp dispatch-set transfer; subscribe receives ownership and dispatch_set is not read afterward.
 ACE/apps/Gateway/Gateway	PREFIX_INC	done	5143cca248b	Changed discarded postfix increments in Gateway, config parsing, event encoding, and file parsing to prefix increments; reverse debug output no longer mutates the stored consumer count.
 ACE/apps/Gateway/Gateway	SPECIAL_MEMBER_COMMENTS	not-applicable	e814e00fb1a	Whole-tree tracked-source scan found no standalone special-member label comments; no source edits were needed.
 ACE/apps/Gateway/Gateway	STYLE	done	5143cca248b	Removed repeated blank lines in touched files; git diff --check and 120-column scan passed.
@@ -461,6 +462,7 @@ ACE/apps/JAWS/clients/Caching	CONST	done	995219e5742	Made request/filename forma
 ACE/apps/JAWS/clients/Caching	DIRECTORY_PASS	needs-work	4c736a038fa	Serialization and active client changes validated; full Caching directory remains incomplete because Local_Locator contains pre-existing compile errors and size-type review is deferred.
 ACE/apps/JAWS/clients/Caching	EXPLICIT	done	995219e5742	Marked ACE_URL_Record(ACE_URL_Offer*) explicit; use is direct-initialization.
 ACE/apps/JAWS/clients/Caching	NULLPTR	done	4c736a038fa	Modernized pointer null values in locator and request/reply code.
+ACE/apps/JAWS/clients/Caching	MOVE_SITES	done	-	Reviewed Locator_Request_Reply.cpp; sequence values are copied into unique_ptr owners, then moved into members and not reused.
 ACE/apps/JAWS/clients/Caching	PREFIX_INC	done	995219e5742	Used prefix increments in URL property and request/reply loops.
 ACE/apps/JAWS/clients/Caching	SIZE_TYPES	needs-work	995219e5742	Size-type modernization is deferred per instruction; existing size declarations were left as-is.
 ACE/apps/JAWS/clients/Caching	SPECIAL_MEMBER_COMMENTS	done	995219e5742	Removed generic constructor, copy-constructor, assignment, and destructor label comments from touched headers.
@@ -884,6 +886,7 @@ ACE/netsvcs/clients/Tokens/collection	SPECIAL_MEMBER_COMMENTS	not-applicable	e81
 ACE/netsvcs/clients/Tokens/deadlock	SPECIAL_MEMBER_COMMENTS	not-applicable	e814e00fb1a	Whole-tree tracked-source scan found no standalone special-member label comments; no source edits were needed.
 ACE/netsvcs/clients/Tokens/invariant	SPECIAL_MEMBER_COMMENTS	not-applicable	e814e00fb1a	Whole-tree tracked-source scan found no standalone special-member label comments; no source edits were needed.
 ACE/netsvcs/clients/Tokens/manual	SPECIAL_MEMBER_COMMENTS	not-applicable	e814e00fb1a	Whole-tree tracked-source scan found no standalone special-member label comments; no source edits were needed.
+ACE/netsvcs/clients/Tokens/manual	MOVE_SITES	done	-	Reviewed the collection owner transfer; if the non-owning lookup map bind fails, the matching vector owner is popped and destroyed. No moved-from value is read.
 ACE/netsvcs/clients/Tokens/mutex	SPECIAL_MEMBER_COMMENTS	not-applicable	e814e00fb1a	Whole-tree tracked-source scan found no standalone special-member label comments; no source edits were needed.
 ACE/netsvcs/clients/Tokens/rw_lock	SPECIAL_MEMBER_COMMENTS	not-applicable	e814e00fb1a	Whole-tree tracked-source scan found no standalone special-member label comments; no source edits were needed.
 ACE/netsvcs/lib	SPECIAL_MEMBER_COMMENTS	done	8c0f5e8a09b	Removed five default-constructor labels from library implementation; realclean-built and linked netsvcs without warnings

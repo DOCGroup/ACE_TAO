@@ -13794,3 +13794,17 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   observers. Benchmark `set_lock` moves its parameter into `lock_` and checks
   only the destination. No moved-from reads or ownership issues were found.
   No source changes/builds/tests were needed.
+
+## 2026-11-19 ACE application, ASNMP, and protocol move-site review
+
+- Reviewed outstanding ACE move-site groups in Gateway, JAWS Caching, the
+  Tokens manual, ASNMP, and INet protocols. Existing task records already
+  cover ASNMP, INet, JAWS2, soreduce, and websvcs/lib; recorded the previously
+  untracked Gateway, JAWS Caching, and Tokens manual call sites.
+- Gateway subscription and JAWS sequence ownership transfers are consumed by
+  their destinations. Tokens collection ownership is rolled back from the
+  owner vector if the lookup-map bind fails. ASNMP string buffers return the
+  new member buffer; PDU/Vb unique owners move into destination slots, and
+  delete_vb shifts owners then resets the final slot. INet policies and cache
+  key duplicates move into their destination objects. No moved-from reads or
+  ownership errors were found. No source changes/builds/tests were needed.
