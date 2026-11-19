@@ -531,9 +531,13 @@ void
 TAO_ServerRequest::caught_exception (CORBA::Exception *exception)
 {
   if (CORBA::SystemException::_downcast (exception) != nullptr)
-    this->pi_reply_status_ = PortableInterceptor::SYSTEM_EXCEPTION;
+    {
+      this->pi_reply_status_ = PortableInterceptor::SYSTEM_EXCEPTION;
+    }
   else if (CORBA::UserException::_downcast (exception) != nullptr)
-    this->pi_reply_status_ = PortableInterceptor::USER_EXCEPTION;
+    {
+      this->pi_reply_status_ = PortableInterceptor::USER_EXCEPTION;
+    }
 
   this->caught_exception_ = exception;
 }
