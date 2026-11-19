@@ -434,7 +434,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
   // the "-ORBUseIMR" command line argument.
   //
   char* const use_IMR_env_var_value = ACE_OS::getenv  ("TAO_USE_IMR") ;
-  if  (use_IMR_env_var_value != nullptr)
+  if (use_IMR_env_var_value != nullptr)
     {
       this->use_implrepo_ = ACE_OS::atoi  (use_IMR_env_var_value) ;
     }
@@ -1452,7 +1452,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
     }
   else
     {
-      if  (TAO_debug_level > 0)
+      if (TAO_debug_level > 0)
         {
         TAOLIB_DEBUG ((LM_DEBUG,
                        ACE_TEXT("TAO (%P|%t) - ORB_Core: ")
