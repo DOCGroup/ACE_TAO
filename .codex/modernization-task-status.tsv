@@ -279,7 +279,7 @@ ACE/ace	BUILD_TEST	done	47ead510b06	ACE/ace make realclean && make -j 8 succeede
 ACE/ace	CLEANUP	done	46b21c52a7d	Removed redundant special member labels from eight core files; retained explanatory Thread_Exit wording
 ACE/ace	CONST	done	47ead510b06	Normalized DEV_Addr parameter and return pointer const placement
 ACE/ace	CONST_GUARD_MACROS	done	3b46834200d	Added const guard macro variants without changing existing ACE_GUARD behavior; targeted fuzz check passed
-ACE/ace	MOVE_SITES	done	-	Reviewed all 7 std::move sites in Process.cpp, Monitor_Control/Constraint_Interpreter.cpp, and WFMO_Reactor.cpp; transferred owners remain valid at their destinations and moved-from locals are not read
+ACE/ace	MOVE_SITES	done	-	Reviewed all std::move sites across 7 files: Process.cpp, Monitor_Control/Constraint_Interpreter.cpp, WFMO_Reactor.cpp, XML_Schema_Resolver.cpp, XercesString.cpp, XSCRT/XML.hpp, and XMLSchema/TypeInfo.tpp; moved-from locals are not read, and ownership transfer destinations remain valid
 ACE/ace	NULLPTR	done	84ebf146d46	Replaced remaining active pointer zero sentinels in ACE.cpp, ATM_Addr.cpp, ATM_Stream.cpp, Local_Tokens.inl, Mem_Map.inl, OS_NS_arpa_inet.cpp, and OS_NS_stropts.inl; realclean ACE core build passed
 ACE/ace	PREFIX_INC	done	5496213dbbe	Changed discarded postfix operations to prefix across 76 files; retained cases where old value is used; ACE core realclean build passed This follow-up changed the discarded rw->num_waiting_writers_++ increment to prefix; ACE realclean build linked successfully.
 ACE/ace	SPECIAL_MEMBER_COMMENTS	done	aa2a8921a2e	Removed 424 standalone constructor/destructor labels from 151 tracked source files; realclean core build passed; existing override and tempnam/mktemp linker warnings remain

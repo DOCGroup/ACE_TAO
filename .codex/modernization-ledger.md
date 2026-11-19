@@ -13749,3 +13749,15 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Recorded both directory tasks as `needs-work`: compile-database coverage is
   useful evidence but does not cover files outside those databases. No build or
   tests were run.
+
+## 2026-11-19 ACE core std::move call-site audit
+
+- Reviewed every `std::move` call under `ACE/ace` (seven files): Process,
+  Monitor_Control/Constraint_Interpreter, WFMO_Reactor, XML_Schema_Resolver,
+  XercesString, XSCRT/XML, and XMLSchema/TypeInfo.
+- Process conversion buffers and environment strings transfer ownership into
+  vectors; the source pointers remain owned by those vectors and the moved
+  locals are not reused. The resolver, Xerces string, constraint root, WFMO
+  event, and type-info map transfers likewise use the destination afterward.
+- No moved-from read, borrowed-buffer transfer, or invalid ownership transition
+  was found. No source changes were needed. No build or tests were run.
