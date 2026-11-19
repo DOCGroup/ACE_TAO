@@ -42,7 +42,9 @@ TAO_SHMIOP_Acceptor::create_profile (const TAO::ObjectKey &object_key,
   // Check if multiple endpoints should be put in one profile or
   // if they should be spread across multiple profiles.
   if (priority == TAO_INVALID_PRIORITY)
-    return this->create_new_profile (object_key, mprofile, priority);
+    {
+      return this->create_new_profile (object_key, mprofile, priority);
+    }
   else
   {
     return this->create_shared_profile (object_key, mprofile, priority);
@@ -176,8 +178,10 @@ TAO_SHMIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                            const char *options)
 {
   if (major >=0 && minor >= 0)
-    this->version_.set_version (static_cast <CORBA::Octet>(major),
-                                static_cast <CORBA::Octet>(minor));
+    {
+      this->version_.set_version (static_cast <CORBA::Octet>(major),
+                                  static_cast <CORBA::Octet>(minor));
+    }
   // Parse options
   if (this->parse_options (options) == -1)
   {
@@ -205,8 +209,10 @@ TAO_SHMIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
                                    const char *options)
 {
   if (major >=0 && minor >= 0)
-    this->version_.set_version (static_cast <CORBA::Octet>(major),
-                                static_cast <CORBA::Octet>(minor));
+    {
+      this->version_.set_version (static_cast <CORBA::Octet>(major),
+                                  static_cast <CORBA::Octet>(minor));
+    }
 
   // Parse options
   if (this->parse_options (options) == -1)
@@ -262,9 +268,11 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core, ACE_Reactor *reactor)
                                  this->concurrency_strategy_.get ()) == -1)
     {
       if (TAO_debug_level > 0)
-        TAOLIB_ERROR ((LM_ERROR,
+        {
+          TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - SHMIOP_Acceptor::open_i, %p\n\n"),
                     ACE_TEXT ("cannot open acceptor")));
+        }
       return -1;
     }
 
@@ -280,9 +288,11 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core, ACE_Reactor *reactor)
   if (this->base_acceptor_.acceptor ().get_local_addr (this->address_) != 0)
     {
       if (TAO_debug_level > 0)
-        TAOLIB_ERROR ((LM_ERROR,
+        {
+          TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - SHMIOP_Acceptor::open_i, %p\n\n"),
                     ACE_TEXT ("cannot get local addr\n")));
+        }
       return -1;
     }
 
@@ -298,11 +308,13 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core, ACE_Reactor *reactor)
       if (tmp == nullptr)
         {
           if (TAO_debug_level > 0)
-            TAOLIB_ERROR ((LM_ERROR,
+            {
+              TAOLIB_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - ")
                         ACE_TEXT ("SHMIOP_Acceptor::open_i, ")
                         ACE_TEXT ("- %p, "),
                         ACE_TEXT ("cannot determine hostname\n")));
+            }
           return -1;
         }
 
@@ -316,9 +328,11 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core, ACE_Reactor *reactor)
       if (this->address_.get_host_name (tmp_host, sizeof tmp_host) != 0)
         {
           if (TAO_debug_level > 0)
-            TAOLIB_ERROR ((LM_ERROR,
+            {
+              TAOLIB_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - SHMIOP_Acceptor::open_i, - %p\n"),
                         ACE_TEXT ("cannot cache hostname\n")));
+            }
           return -1;
         }
       this->host_ = ACE_TEXT_ALWAYS_CHAR(tmp_host);
@@ -439,18 +453,22 @@ TAO_SHMIOP_Acceptor::parse_options (const char *str)
   // Only check for endpoints after the protocol specification and
   // before the object key.
   for (size_t i {}; i < len; ++i)
-    if (options[i] == option_delimiter)
     {
-      ++option_count;
+      if (options[i] == option_delimiter)
+        {
+          ++option_count;
+        }
     }
 
   ACE_CString::size_type const begin {};
   ACE_CString::size_type const end = (option_count > 1) ? options.find (option_delimiter, begin) : len;
 
   if (end == begin)
-    TAOLIB_ERROR_RETURN ((LM_ERROR,
-                          ACE_TEXT ("TAO (%P|%t) Zero length SHMIOP option.\n")),
-                         -1);
+    {
+      TAOLIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("TAO (%P|%t) Zero length SHMIOP option.\n")),
+                           -1);
+    }
   else if (end != ACE_CString::npos)
     {
       ACE_CString const opt = options.substring (begin, end - begin);
@@ -459,25 +477,31 @@ TAO_SHMIOP_Acceptor::parse_options (const char *str)
 
       if (slot == len - 1
           || slot == ACE_CString::npos)
-        TAOLIB_ERROR_RETURN ((LM_ERROR,
-                              ACE_TEXT ("TAO (%P|%t) SHMIOP option <%C> is ")
-                              ACE_TEXT ("missing a value.\n"),
-                              opt.c_str ()),
-                             -1);
+        {
+          TAOLIB_ERROR_RETURN ((LM_ERROR,
+                                ACE_TEXT ("TAO (%P|%t) SHMIOP option <%C> is ")
+                                ACE_TEXT ("missing a value.\n"),
+                                opt.c_str ()),
+                               -1);
+        }
 
       ACE_CString const name = opt.substring (0, slot);
 
       if (name.length () == 0)
-        TAOLIB_ERROR_RETURN ((LM_ERROR,
-                              ACE_TEXT ("TAO (%P|%t) Zero length SHMIOP ")
-                              ACE_TEXT ("option name.\n")),
-                             -1);
+        {
+          TAOLIB_ERROR_RETURN ((LM_ERROR,
+                                ACE_TEXT ("TAO (%P|%t) Zero length SHMIOP ")
+                                ACE_TEXT ("option name.\n")),
+                               -1);
+        }
 
       if (name == "priority")
-        TAOLIB_ERROR_RETURN ((LM_ERROR,
-                              ACE_TEXT ("TAO (%P|%t) Invalid SHMIOP endpoint format: ")
-                              ACE_TEXT ("endpoint priorities no longer supported.\n")),
-                             -1);
+        {
+          TAOLIB_ERROR_RETURN ((LM_ERROR,
+                                ACE_TEXT ("TAO (%P|%t) Invalid SHMIOP endpoint format: ")
+                                ACE_TEXT ("endpoint priorities no longer supported.\n")),
+                               -1);
+        }
 
       TAOLIB_ERROR_RETURN ((LM_ERROR,
                             ACE_TEXT ("TAO (%P|%t) Invalid SHMIOP option: <%C>\n"),
