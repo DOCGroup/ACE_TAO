@@ -85,19 +85,29 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
 
               if (ACE_OS::strcasecmp (name,
                                       ACE_TEXT("MT")) == 0)
-                this->wait_strategy_ = TAO_WAIT_ON_LEADER_FOLLOWER;
+                {
+                  this->wait_strategy_ = TAO_WAIT_ON_LEADER_FOLLOWER;
+                }
               else if (ACE_OS::strcasecmp (name,
                                            ACE_TEXT("ST")) == 0)
-                this->wait_strategy_ = TAO_WAIT_ON_REACTOR;
+                {
+                  this->wait_strategy_ = TAO_WAIT_ON_REACTOR;
+                }
               else if (ACE_OS::strcasecmp (name,
                                            ACE_TEXT("RW")) == 0)
-                this->wait_strategy_ = TAO_WAIT_ON_READ;
+                {
+                  this->wait_strategy_ = TAO_WAIT_ON_READ;
+                }
               else if (ACE_OS::strcasecmp (name,
                                            ACE_TEXT("MT_NOUPCALL")) == 0)
-                this->wait_strategy_ = TAO_WAIT_ON_LF_NO_UPCALL;
+                {
+                  this->wait_strategy_ = TAO_WAIT_ON_LF_NO_UPCALL;
+                }
               else
-                this->report_option_value_error (
-                  ACE_TEXT("-ORBClientConnectionHandler"), name);
+                {
+                  this->report_option_value_error (
+                    ACE_TEXT("-ORBClientConnectionHandler"), name);
+                }
             }
         }
       else if (ACE_OS::strcasecmp (argv[curarg],
@@ -111,13 +121,19 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
 
               if (ACE_OS::strcasecmp (name,
                                       ACE_TEXT("MUXED")) == 0)
-                this->transport_mux_strategy_ = TAO_MUXED_TMS;
+                {
+                  this->transport_mux_strategy_ = TAO_MUXED_TMS;
+                }
               else if (ACE_OS::strcasecmp (name,
                                            ACE_TEXT("EXCLUSIVE")) == 0)
-                this->transport_mux_strategy_ = TAO_EXCLUSIVE_TMS;
+                {
+                  this->transport_mux_strategy_ = TAO_EXCLUSIVE_TMS;
+                }
               else
-                this->report_option_value_error (
-                  ACE_TEXT("-ORBTransportMuxStrategy"), name);
+                {
+                  this->report_option_value_error (
+                    ACE_TEXT("-ORBTransportMuxStrategy"), name);
+                }
             }
         }
       else if (ACE_OS::strcasecmp (argv[curarg],
@@ -131,13 +147,19 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
 
               if (ACE_OS::strcasecmp (name,
                                       ACE_TEXT("null")) == 0)
-                this->muxed_strategy_lock_type_ = TAO_NULL_LOCK;
+                {
+                  this->muxed_strategy_lock_type_ = TAO_NULL_LOCK;
+                }
               else if (ACE_OS::strcasecmp (name,
                                            ACE_TEXT("thread")) == 0)
-                this->muxed_strategy_lock_type_ = TAO_THREAD_LOCK;
+                {
+                  this->muxed_strategy_lock_type_ = TAO_THREAD_LOCK;
+                }
               else
-                this->report_option_value_error (
-                  ACE_TEXT("-ORBTransportMuxStrategyLock"), name);
+                {
+                  this->report_option_value_error (
+                    ACE_TEXT("-ORBTransportMuxStrategyLock"), name);
+                }
             }
         }
       else if (ACE_OS::strcasecmp (argv[curarg],
@@ -150,17 +172,25 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
 
               if (ACE_OS::strcasecmp (name,
                                       ACE_TEXT("Blocked")) == 0)
-                this->connect_strategy_ = TAO_BLOCKED_CONNECT;
+                {
+                  this->connect_strategy_ = TAO_BLOCKED_CONNECT;
+                }
               else if (ACE_OS::strcasecmp (name,
                                            ACE_TEXT("Reactive")) == 0)
-                this->connect_strategy_ = TAO_REACTIVE_CONNECT;
+                {
+                  this->connect_strategy_ = TAO_REACTIVE_CONNECT;
+                }
               else if (ACE_OS::strcasecmp (name,
                                            ACE_TEXT("LF")) == 0)
-                this->connect_strategy_ = TAO_LEADER_FOLLOWER_CONNECT;
+                {
+                  this->connect_strategy_ = TAO_LEADER_FOLLOWER_CONNECT;
+                }
               else
-                this->report_option_value_error (
-                  ACE_TEXT("-ORBConnectStrategy"),
-                  name);
+                {
+                  this->report_option_value_error (
+                    ACE_TEXT("-ORBConnectStrategy"),
+                    name);
+                }
             }
         }
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -220,13 +250,19 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
 
                if (ACE_OS::strcmp (name, ACE_TEXT("0")) == 0 ||
                    ACE_OS::strcasecmp (name, ACE_TEXT("false")) == 0)
-                 this->use_cleanup_options_ = false;
+                 {
+                   this->use_cleanup_options_ = false;
+                 }
                else if (ACE_OS::strcmp (name, ACE_TEXT("1")) == 0 ||
                         ACE_OS::strcasecmp (name, ACE_TEXT("true")) == 0)
-                 this->use_cleanup_options_ = true;
+                 {
+                   this->use_cleanup_options_ = true;
+                 }
                else
-                 this->report_option_value_error (
-                   ACE_TEXT("-ORBConnectionHandlerCleanup"), name);
+                 {
+                   this->report_option_value_error (
+                     ACE_TEXT("-ORBConnectionHandlerCleanup"), name);
+                 }
              }
          }
       else if (ACE_OS::strcmp (argv[curarg],
@@ -247,9 +283,11 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                      name);
                  }
                else
-                 this->invocation_retry_params_
-                   .forward_on_exception_limit_[TAO::FOE_COMM_FAILURE] =
-                   limit;
+                 {
+                   this->invocation_retry_params_
+                     .forward_on_exception_limit_[TAO::FOE_COMM_FAILURE] =
+                     limit;
+                 }
              }
          }
       else if (ACE_OS::strcmp (argv[curarg],
@@ -269,9 +307,11 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                      name);
                  }
                else
-                 this->invocation_retry_params_
-                   .forward_on_exception_limit_[TAO::FOE_TRANSIENT] =
-                   limit;
+                 {
+                   this->invocation_retry_params_
+                     .forward_on_exception_limit_[TAO::FOE_TRANSIENT] =
+                     limit;
+                 }
              }
          }
       else if (ACE_OS::strcmp (argv[curarg],
@@ -292,9 +332,11 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                      name);
                  }
                else
-                 this->invocation_retry_params_
-                   .forward_on_exception_limit_[TAO::FOE_OBJECT_NOT_EXIST] =
-                   limit;
+                 {
+                   this->invocation_retry_params_
+                     .forward_on_exception_limit_[TAO::FOE_OBJECT_NOT_EXIST] =
+                     limit;
+                 }
              }
          }
       else if (ACE_OS::strcmp (argv[curarg],
@@ -313,9 +355,11 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                      ACE_TEXT("-ORBForwardOnInvObjrefLimit"), name);
                  }
                else
-                 this->invocation_retry_params_
-                   .forward_on_exception_limit_[TAO::FOE_INV_OBJREF] =
-                   limit;
+                 {
+                   this->invocation_retry_params_
+                     .forward_on_exception_limit_[TAO::FOE_INV_OBJREF] =
+                     limit;
+                 }
              }
          }
       else if (ACE_OS::strcmp (argv[curarg],
@@ -335,8 +379,10 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                      ACE_TEXT("-ORBForwardOnReplyClosedLimit"), name);
                  }
                else
-                 this->invocation_retry_params_
-                   .forward_on_reply_closed_limit_ = limit;
+                 {
+                   this->invocation_retry_params_
+                     .forward_on_reply_closed_limit_ = limit;
+                 }
              }
          }
       else if (ACE_OS::strncmp (argv[curarg], ACE_TEXT("-ORB"), 4) == 0)
