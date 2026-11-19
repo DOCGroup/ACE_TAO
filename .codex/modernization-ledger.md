@@ -13687,3 +13687,13 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Recorded `BRACES` as done for Utils. The prior Allman indentation fix in
   `ORB_Manager.cpp` is in commit `20199830a3b`.
 - No source changes or build/runtime tests were needed for this audit.
+
+
+## 2026-11-19 Repository-wide size type and cstddef audit
+
+- Scanned tracked ACE and TAO C/C++ headers and sources: no `std::size_t`
+  uses remain. Reviewed `<cstddef>` includes for direct size-related names and
+  removed seven stale includes from Pdu, the Bug_2925 regression, AVStreams
+  send/receive code, and DII_Deferred_Transient. The remaining includes all
+  accompany a use of a standard size-related declaration.
+- `git diff --check` passed. No build or tests were run.

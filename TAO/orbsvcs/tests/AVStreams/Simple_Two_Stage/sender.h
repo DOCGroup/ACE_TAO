@@ -18,7 +18,6 @@
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
-#include <cstddef>
 #include <cstdio>
 #include <memory>
 #include <string>

@@ -1,6 +1,5 @@
 #include "HelloS.h"
 #include "ace/Mutex.h"
-#include <cstddef>
 #include <vector>
 
 class MessageLog
