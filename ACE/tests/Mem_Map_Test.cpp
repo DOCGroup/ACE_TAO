@@ -39,7 +39,9 @@ reverse_file (ACE_HANDLE file_handle,
   --i;
 
   if (array[i] == '\0')
-    array[i] = '\n';
+    {
+      array[i] = '\n';
+    }
 
   while (i-- > 0)
     {
@@ -149,9 +151,11 @@ run_main (int, ACE_TCHAR *[])
   // Get the temporary directory
   // - 18 is for the filenames, ace_mem_map_temp_1 is the longest
   if (ACE::get_temp_dir (test_file, MAXPATHLEN - 18) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Temporary path too long\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Temporary path too long\n")),
+                        -1);
+    }
 
   // Copy the temp directory to the other variables
   ACE_OS::strcpy (temp_file1, test_file);
@@ -167,18 +171,22 @@ run_main (int, ACE_TCHAR *[])
 
   // First create a test file to work on
   if (create_test_file (test_file, LINE_LENGTH, NUM_LINES) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Create test file failed\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Create test file failed\n")),
+                        -1);
+    }
   ACE_Mem_Map mmap;
 
   // First memory map the test file
   if (mmap.map (test_file) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%n: %p %s\n%a"),
-                       ACE_TEXT ("mmap"),
-                       test_file),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%n: %p %s\n%a"),
+                         ACE_TEXT ("mmap"),
+                         test_file),
+                        -1);
+    }
 
   // Now create a temporary file for intermediate processing
 #if defined (__QNXNTO__) || (defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x670))
@@ -194,9 +202,11 @@ run_main (int, ACE_TCHAR *[])
 #endif
 
   if (temp_file_handle == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Open failed\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Open failed\n")),
+                        -1);
+    }
 
   // Reverse the original file and write the output to the temporary
   // file.
@@ -213,11 +223,13 @@ run_main (int, ACE_TCHAR *[])
 
   // Now memory map the temporary file
   if (temp_mmap.map (temp_file1) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%n: %p %s\n%a"),
-                       ACE_TEXT ("mmap"),
-                       temp_file1),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%n: %p %s\n%a"),
+                         ACE_TEXT ("mmap"),
+                         temp_file1),
+                        -1);
+    }
 #if defined (__QNXNTO__) || (defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x670))
   mmap_4_open.open(temp_file2,
                    O_RDWR | O_TRUNC | O_CREAT,
@@ -229,8 +241,9 @@ run_main (int, ACE_TCHAR *[])
                                    ACE_DEFAULT_FILE_PERMS);
 #endif
   if ( temp_file_handle == ACE_INVALID_HANDLE)
-
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Open failed\n")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Open failed\n")), -1);
+    }
 
   // Now reverse the temporary file and write everything to the second
   // temporary file.
@@ -247,11 +260,13 @@ run_main (int, ACE_TCHAR *[])
   ACE_Mem_Map temp_mmap2;
 
   if (temp_mmap2.map (temp_file2) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%n: %p %s\n%a"),
-                       ACE_TEXT ("mmap"),
-                       temp_file2),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%n: %p %s\n%a"),
+                         ACE_TEXT ("mmap"),
+                         temp_file2),
+                        -1);
+    }
 
   // Now do a memcmp -- the orig file and the second temporary file
   // should be identical.
