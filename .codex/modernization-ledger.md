@@ -13568,3 +13568,15 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Reviewed three `std::move` sites in `TAO/tao/CSD_Framework`: iterative list destruction safely transfers each `unique_ptr`, and insertion transfers the new node into the list tail. `bugprone-use-after-move` on `CSD_Strategy_Repository.cpp` reported no findings.
 - Reviewed `TAO/tao/CSD_ThreadPool` exception transfer: the moved owner raises the exception, and no later read accesses the moved-from member. Recorded both directories as done. No source edits, build, or runtime test was run.
 - Evidence commit: `de632b1ca42`.
+
+
+## 2026-11-19 TAO core move-site audit follow-up
+
+- Reviewed the remaining `std::move` sites in `TAO/tao/Codeset`,
+  `TAO/tao/Dynamic_TP`, and `TAO/tao/ETCL`. Codeset transfers a local
+  translator node into its vector; Dynamic_TP transfers the by-value config
+  name into an immutable member; ETCL transfers its deep-copied literal
+  variant into `op_`. No moved-from object is read.
+- Recorded `MOVE_SITES` as done for all three directories. No source changes,
+  builds, or runtime tests were needed for this audit.
+- Source evidence commit: `9ce214b363f`.

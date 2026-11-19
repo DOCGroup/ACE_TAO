@@ -30,7 +30,7 @@ Scope: **1268 directories**; **1230** differ from the base; **1281** have task-l
 | `PREFIX_INC` — Prefer prefix increment and decrement when equivalent | 47 | 45 | 2 | 0 |
 | `BRACES` — Consistent braces around control-flow bodies | 8 | 2 | 0 | 6 |
 | `CONST_GUARD_MACROS` — Const guard macro usage while preserving ACE_GUARD conventions | 2 | 2 | 0 | 0 |
-| `MOVE_SITES` — Audit std::move sites for moved-from use and ownership correctness | 8 | 7 | 1 | 0 |
+| `MOVE_SITES` — Audit std::move sites for moved-from use and ownership correctness | 11 | 10 | 1 | 0 |
 | `MOVE_SEMANTICS` — Copy/move semantics and moved-from object safety | 6 | 6 | 0 | 0 |
 | `SIZE_TYPES` — Count and size types | 58 | 34 | 15 | 9 |
 | `IDL_GENERATION` — tao_idl/gperf inputs and generated output | 36 | 6 | 30 | 0 |
@@ -257,7 +257,7 @@ Scope: **1268 directories**; **1230** differ from the base; **1281** have task-l
 | `TAO/tao/CSD_Framework` | CONST; OWNERSHIP; PREFIX_INC; MOVE_SITES; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Manual request clone cleanup retained for ownership-sensitive APIs; remaining modernization categories still need audit | partial | `4ffd1cb1be6` |
 | `TAO/tao/CSD_ThreadPool` | CONST; VALUE_INIT; NULLPTR; OVERRIDE_DEFAULT_DELETE; EXPLICIT; COPY_MOVE; OWNERSHIP; PREFIX_INC; MOVE_SITES; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Retained intrusive reference-count handles and non-owning queue links; SIZE_TYPES intentionally deferred | audited | `5f20df0c422` |
 | `TAO/tao/CodecFactory` | CONST; VALUE_INIT; OVERRIDE_DEFAULT_DELETE; EXPLICIT; COPY_MOVE; OWNERSHIP; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | No additional ownership conversion justified; CORBA var ownership matches API | audited | `b1c8c9e85d8` |
-| `TAO/tao/Codeset` | CONST; VALUE_INIT; NULLPTR; OVERRIDE_DEFAULT_DELETE; OWNERSHIP; PREFIX_INC; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | SIZE_TYPES deferred by instruction; other checklist categories remain to be audited; ACE_CString remains required by registry API | partial | `8a4f7a90837` |
+| `TAO/tao/Codeset` | CONST; VALUE_INIT; NULLPTR; OVERRIDE_DEFAULT_DELETE; OWNERSHIP; PREFIX_INC; MOVE_SITES; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | SIZE_TYPES deferred by instruction; other checklist categories remain to be audited; ACE_CString remains required by registry API | partial | `8a4f7a90837` |
 | `TAO/tao/Compression` | CONST; VALUE_INIT; OVERRIDE_DEFAULT_DELETE; SPECIAL_MEMBER_COMMENTS=n/a; STYLE; BUILD_TEST | Root library and RLE/zlib/bzip2 ownership and cleanup reviewed; LZO dependency/build validation remains unavailable | partial | `pending` |
 | `TAO/tao/Compression/bzip2` | CONST; CLEANUP; SPECIAL_MEMBER_COMMENTS=n/a; STYLE; BUILD_TEST | No additional ownership change justified | audited | `pending` |
 | `TAO/tao/Compression/rle` | OWNERSHIP; SPECIAL_MEMBER_COMMENTS=n/a; STYLE; BUILD_TEST | CORBA var owns returned sequence references; no manual heap cleanup left | audited | `pending` |
@@ -265,8 +265,8 @@ Scope: **1268 directories**; **1230** differ from the base; **1281** have task-l
 | `TAO/tao/DiffServPolicy` | CONST; VALUE_INIT; OWNERSHIP; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Remaining modernization categories are not yet audited | partial | `pending` |
 | `TAO/tao/DynamicAny` | CONST; SCOPE_REDUCTION; VALUE_INIT; BOOL_ARGUMENTS=n/a; BRACES; MOVE_SITES=n/a; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Boolean-argument audit remains open; other modernization categories are not yet audited | partial | `e6fa5d72aa1` |
 | `TAO/tao/DynamicInterface` | CONST; VALUE_INIT; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Other modernization categories are not yet audited | partial | `cedc97e8a3a` |
-| `TAO/tao/Dynamic_TP` | CONST; VALUE_INIT; OWNERSHIP; SIZE_TYPES; LOG_FORMAT; CLEANUP; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Directory checklist not yet fully audited | partial | `1b9c885d3a2` |
-| `TAO/tao/ETCL` | CONST; OWNERSHIP; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Other applicable modernization categories still need review | partial | `de8d1936b55` |
+| `TAO/tao/Dynamic_TP` | CONST; VALUE_INIT; OWNERSHIP; MOVE_SITES; SIZE_TYPES; LOG_FORMAT; CLEANUP; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Directory checklist not yet fully audited | partial | `1b9c885d3a2` |
+| `TAO/tao/ETCL` | CONST; OWNERSHIP; MOVE_SITES; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Other applicable modernization categories still need review | partial | `de8d1936b55` |
 | `TAO/tao/EndpointPolicy` | CONST; VALUE_INIT; OVERRIDE_DEFAULT_DELETE; EXPLICIT; COPY_MOVE; CLEANUP; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Other modernization categories are not yet audited; EndpointPolicy policy remains copyable for clone and explicitly disallows moves | partial | `784f58e6aa2` |
 | `TAO/tao/IFR_Client` | CONST; OVERRIDE_DEFAULT_DELETE; COPY_MOVE; OWNERSHIP; CONTAINERS=n/a; SPECIAL_MEMBER_COMMENTS=n/a; STYLE; BUILD_TEST | Adapter uses CORBA ownership handles; operation argument array is fixed-size; generated stubs/skeletons regenerated from checked-in PIDL inputs | audited | `pending` |
 | `TAO/tao/IORInterceptor` | CONST; OWNERSHIP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | CORBA object references use `_var` ownership; IORInfo holds a documented non-owning POA pointer; adapter self-destruction is its documented lifecycle hook | audited | `pending` |

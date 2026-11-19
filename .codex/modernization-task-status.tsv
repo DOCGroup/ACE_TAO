@@ -2906,6 +2906,7 @@ TAO/tao/CodecFactory	STYLE	done	8f944a68e1e	Fixed over-indented byte_order decla
 TAO/tao/CodecFactory	VALUE_INIT	done	a28dfe8854f	Value-initialized the codec output pointer; it is nullptr-equivalent for the generated CORBA object pointer type
 TAO/tao/Codeset	BUILD_TEST	done	8a4f7a90837	GNUmakefile.Codeset realclean build and link passed without warnings
 TAO/tao/Codeset	CONST	done	8a4f7a90837	Const-corrected codeset helper inputs and translator lookup
+TAO/tao/Codeset	MOVE_SITES	done	9ce214b363f	Reviewed Translator_Node transfer into translators_; no moved-from read.
 TAO/tao/Codeset	NULLPTR	done	8a4f7a90837	Used nullptr for absent translator and strtoul end pointer
 TAO/tao/Codeset	OVERRIDE_DEFAULT_DELETE	done	8a4f7a90837	Defaulted empty destructors in declarations; retained implementation translation units
 TAO/tao/Codeset	OWNERSHIP	done	8a4f7a90837	Used unique_ptr until service-context handler ownership transfers to registry
@@ -2955,6 +2956,7 @@ TAO/tao/Dynamic_TP	BUILD_TEST	done	1b9c885d3a2	Dynamic_TP passed realclean build
 TAO/tao/Dynamic_TP	CLEANUP	done	bf522b29a7a	Removed unreachable return and simplified the registry bind/rebind branch
 TAO/tao/Dynamic_TP	CONST	done	1b9c885d3a2	Also const-qualified read-only thread, status, configuration, servant-state, and request-result locals
 TAO/tao/Dynamic_TP	LOG_FORMAT	done	bf522b29a7a	Corrected size_t and time_t ACE log format specifiers
+TAO/tao/Dynamic_TP	MOVE_SITES	done	9ce214b363f	Reviewed constructor string transfer into the const dynamic_tp_config_name_ member; no moved-from read.
 TAO/tao/Dynamic_TP	OWNERSHIP	done	bf522b29a7a	Used make_unique for the owned thread stack-size array
 TAO/tao/Dynamic_TP	SIZE_TYPES	done	bf522b29a7a	Used size_t for busy-thread count to match the other thread counts
 TAO/tao/Dynamic_TP	SPECIAL_MEMBER_COMMENTS	done	ddbeb4e6c42	Removed 15 standalone constructor/destructor labels; realclean build and link passed without warnings
@@ -2962,6 +2964,7 @@ TAO/tao/Dynamic_TP	VALUE_INIT	done	bf522b29a7a	Value-initialized the configurati
 TAO/tao/ETCL	BUILD_TEST	done	de8d1936b55	Realclean-built GNUmakefile.TAO_ETCL and dependent GNUmakefile.DsLogAdmin_Serv with make -j 8; both linked without warnings
 TAO/tao/ETCL	CLEANUP	done	de8d1936b55	Removed a constructor grouping label and obsolete MysteryOperand comment; retained explanatory operator grouping comments
 TAO/tao/ETCL	CONST	done	5b01a054772	Normalized east-side const for references, catch parameters, and local pointers
+TAO/tao/ETCL	MOVE_SITES	done	9ce214b363f	Reviewed transfer of copy_value() result into op_; the deep-copied variant local is not read afterward.
 TAO/tao/ETCL	OWNERSHIP	done	de8d1936b55	Documented that any_ owns one Any_Impl intrusive reference; it is paired through _add_ref/_remove_ref in construction, copying, and destruction
 TAO/tao/ETCL	SPECIAL_MEMBER_COMMENTS	done	900a530a05a	Removed the standalone destructor label; realclean build and link passed without warnings
 TAO/tao/ETCL	STYLE	done	de8d1936b55	Removed extra vertical whitespace after deleted labels; git diff --check and 120-column checks passed
