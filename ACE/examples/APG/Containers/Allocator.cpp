@@ -54,10 +54,12 @@ int StackExample::runUnboundedStack (ACE_Allocator* allocator)
       DataElement elem (m);
       int const result = ustack.push (elem);
       if (result == -1)
-        ACE_ERROR_RETURN
-          ((LM_ERROR, ACE_TEXT ("%p\n"),
-            ACE_TEXT ("Push Next Element")),
-           -1);
+        {
+          ACE_ERROR_RETURN
+            ((LM_ERROR, ACE_TEXT ("%p\n"),
+              ACE_TEXT ("Push Next Element")),
+             -1);
+        }
     }
 
   void *further_memory = allocator->malloc (sizeof (ACE_Node<DataElement>));

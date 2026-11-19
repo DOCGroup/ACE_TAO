@@ -16,8 +16,10 @@ int send_broadcast (u_short const to_port)
   ssize_t const sent = udp.send (message, sizeof (message), to_port);
   udp.close ();
   if (sent == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("send")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("send")), -1);
+    }
   return 0;
 }
 // Listing 1
