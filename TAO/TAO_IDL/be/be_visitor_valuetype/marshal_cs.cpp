@@ -36,8 +36,10 @@ be_visitor_valuetype_marshal_cs::marshal_state (be_valuetype *node)
 
   if (inh)
     {
-      *os << "if (! ci.start_chunk (strm))" << be_idt_nl;
-      *os << "return false;" << be_uidt_nl << be_nl;
+      *os << "if (! ci.start_chunk (strm))" << be_nl
+          << "{" << be_idt_nl
+          << "return false;" << be_uidt_nl
+          << "}" << be_nl_2;
 
       if (inh->opt_accessor ())
         {
@@ -77,8 +79,10 @@ be_visitor_valuetype_marshal_cs::marshal_state (be_valuetype *node)
 
   if (node->data_members_count () > 0)
     {
-      *os << "if (! ci.start_chunk (strm))" << be_idt_nl;
-      *os << "return false;" << be_uidt << be_nl_2;
+      *os << "if (! ci.start_chunk (strm))" << be_nl
+          << "{" << be_idt_nl
+          << "return false;" << be_uidt_nl
+          << "}" << be_nl_2;
       *os << "CORBA::Boolean const ret =" << be_idt << be_idt_nl;
 
       // All we have to do is to visit the scope and generate code.
@@ -86,16 +90,22 @@ be_visitor_valuetype_marshal_cs::marshal_state (be_valuetype *node)
 
       *os << ";" << be_uidt << be_uidt_nl;
 
-      *os << "if (!ret)" << be_idt_nl;
-      *os << "return false;" << be_uidt << be_nl_2;
-      *os << "if (! ci.end_chunk (strm))" << be_idt_nl;
-      *os << "return false;" << be_uidt << be_nl_2;
+      *os << "if (!ret)" << be_nl
+          << "{" << be_idt_nl
+          << "return false;" << be_uidt_nl
+          << "}" << be_nl_2;
+      *os << "if (! ci.end_chunk (strm))" << be_nl
+          << "{" << be_idt_nl
+          << "return false;" << be_uidt_nl
+          << "}" << be_nl_2;
     }
 
   if (inh)
     {
-      *os << "if (! ci.end_chunk (strm))" << be_idt_nl;
-      *os << "return false;" << be_uidt << be_nl_2;
+      *os << "if (! ci.end_chunk (strm))" << be_nl
+          << "{" << be_idt_nl
+          << "return false;" << be_uidt_nl
+          << "}" << be_nl_2;
     }
 
   *os << "return true;" << be_uidt_nl;
@@ -117,8 +127,10 @@ be_visitor_valuetype_marshal_cs::unmarshal_state (be_valuetype *node)
 
   if (inh)
     {
-      *os << "if (!ci.handle_chunking (strm))" << be_idt_nl;
-      *os << "return false;" << be_uidt << be_nl_2;
+      *os << "if (!ci.handle_chunking (strm))" << be_nl
+          << "{" << be_idt_nl
+          << "return false;" << be_uidt_nl
+          << "}" << be_nl_2;
 
       if (inh->opt_accessor ())
         {
@@ -157,8 +169,10 @@ be_visitor_valuetype_marshal_cs::unmarshal_state (be_valuetype *node)
 
   if (node->data_members_count () > 0)
     {
-      *os << "if (!ci.handle_chunking (strm))" << be_idt_nl;
-      *os << "return false;" << be_uidt << be_nl_2;
+      *os << "if (!ci.handle_chunking (strm))" << be_nl
+          << "{" << be_idt_nl
+          << "return false;" << be_uidt_nl
+          << "}" << be_nl_2;
       *os << "CORBA::Boolean const ret =" << be_idt << be_idt_nl;
 
       // All we have to do is to visit the scope and generate code.
@@ -166,12 +180,18 @@ be_visitor_valuetype_marshal_cs::unmarshal_state (be_valuetype *node)
 
       *os << ";" << be_uidt << be_uidt_nl;
 
-      *os << "if (!ret)" << be_idt_nl;
-      *os << "return false;" << be_uidt << be_nl_2;
-      *os << "if (this->require_truncation_)" << be_idt_nl;
-      *os << "return ci.skip_chunks (strm);" << be_uidt << be_nl_2;
-      *os << "else" << be_idt_nl;
-      *os << "return ci.handle_chunking (strm);" << be_uidt << be_nl_2;
+      *os << "if (!ret)" << be_nl
+          << "{" << be_idt_nl
+          << "return false;" << be_uidt_nl
+          << "}" << be_nl_2;
+      *os << "if (this->require_truncation_)" << be_nl
+          << "{" << be_idt_nl
+          << "return ci.skip_chunks (strm);" << be_uidt_nl
+          << "}" << be_nl
+          << "else" << be_nl
+          << "{" << be_idt_nl
+          << "return ci.handle_chunking (strm);" << be_uidt_nl
+          << "}" << be_nl_2;
     }
     else
     {

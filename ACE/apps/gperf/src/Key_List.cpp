@@ -1850,7 +1850,9 @@ Key_List::output_lookup_function ()
               ACE_OS::printf (".%s", option.key_name ().c_str ());
             }
 
-          ACE_OS::printf (";\n\n          if (%s%s == *s && !%s%s)\n            return %s%s%s",
+          ACE_OS::printf (";\n\n          if (%s%s == *s && !%s%s)\n"
+                          "            {\n"
+                          "              return %s%s%s",
                   option[LENTABLE] ? "len == lengthtable[key]\n              && " : "",
                   option[STRCASECMP] ? "charmap[*str]" : "*str",
                   string_compare_prefix (option[STRCASECMP]),
@@ -1861,7 +1863,7 @@ Key_List::output_lookup_function ()
                   option[TYPE] && option[POINTER] ? "wordlist[key]" : "s",
                   option[TYPE] && option[POINTER] ? generated_address_suffix () : "");
         }
-      ACE_OS::printf (";\n        }\n    %s\n}\n", option[OPTIMIZE] ? "" : generated_null_return ());
+      ACE_OS::printf (";\n            }\n        }\n    %s\n}\n", option[OPTIMIZE] ? "" : generated_null_return ());
     }
 }
 
