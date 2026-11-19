@@ -77,7 +77,9 @@ Test_Window::incr_sides ()
 {
   ++this->sides_;
   if (this->sides_ > 10)
-    this->sides_ = 3;
+    {
+      this->sides_ = 3;
+    }
   this->redraw ();
 }
 
@@ -190,7 +192,9 @@ Connection_Handler::handle_input (ACE_HANDLE)
 {
   char buf[BUFSIZ];
   if (this->peer ().recv (buf, BUFSIZ) <= 0)
-    return -1;
+    {
+      return -1;
+    }
   return 0;
 }
 
@@ -240,10 +244,12 @@ int run_main (int argc, ACE_TCHAR *argv[])
   ACE_INET_Addr address;
 
   if (acceptor.open (address, &r) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "open acceptor"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "open acceptor"),
+                        -1);
+    }
 
   acceptor.acceptor ().get_local_addr (address);
 
