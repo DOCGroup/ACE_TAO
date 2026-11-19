@@ -75,13 +75,17 @@ int processRecords (HASH_MAP *map, ALLOCATOR *shmem_allocator)
       Record record;
       int result = map->find (key, record, shmem_allocator);
       if (result == -1)
-        ACE_DEBUG ((LM_ERROR,
-                    ACE_TEXT ("Could not find record for %d\n"),
-                    key));
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      ACE_TEXT ("Could not find record for %d\n"),
+                      key));
+        }
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Record name: %C|id1:%d|id2:%d\n"),
-                    record.name (), record.id1(), record.id2()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Record name: %C|id1:%d|id2:%d\n"),
+                      record.name (), record.id1(), record.id2()));
+        }
     }
 
   // Delete everything we processed.
@@ -90,15 +94,19 @@ int processRecords (HASH_MAP *map, ALLOCATOR *shmem_allocator)
       int result = map->unbind (todelete[j],
                                 shmem_allocator);
       if (result == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Failed on key %d: %p\n"),
-                           ACE_TEXT ("unbind"),
-                           todelete[j]),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Failed on key %d: %p\n"),
+                             ACE_TEXT ("unbind"),
+                             todelete[j]),
+                            -1);
+        }
       else
-        ACE_DEBUG ((LM_INFO,
-                    ACE_TEXT ("Fully processed and removed %d\n"),
-                    j));
+        {
+          ACE_DEBUG ((LM_INFO,
+                      ACE_TEXT ("Fully processed and removed %d\n"),
+                      j));
+        }
     }
 
   return 0;
@@ -126,8 +134,10 @@ int addRecords(HASH_MAP *map, ALLOCATOR *shmem_allocator)
 
       int result = map->bind (i, newRecord, shmem_allocator);
       if (result == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("bind failed")), -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("bind failed")), -1);
+        }
     }
 
   return 0;
@@ -239,7 +249,9 @@ int handle_parent (ACE_TCHAR *cmdLine)
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (argc == 1) // parent
-    ACE_ASSERT (handle_parent (argv[0]) == 0);
+    {
+      ACE_ASSERT (handle_parent (argv[0]) == 0);
+    }
   else
   {
     ACE_ASSERT (handle_child () == 0);
