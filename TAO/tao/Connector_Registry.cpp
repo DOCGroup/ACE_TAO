@@ -113,12 +113,14 @@ TAO_Connector_Registry::make_mprofile (const char *ior,
                                        TAO_MProfile &mprofile)
 {
   if (!ior)
-    // Failure: Null IOR string pointer
-    throw ::CORBA::INV_OBJREF (
-      CORBA::SystemException::_tao_minor_code (
-        0,
-        EINVAL),
-      CORBA::COMPLETED_NO);
+    {
+      // Failure: Null IOR string pointer
+      throw ::CORBA::INV_OBJREF (
+        CORBA::SystemException::_tao_minor_code (
+          0,
+          EINVAL),
+        CORBA::COMPLETED_NO);
+    }
 
   for (std::unique_ptr<TAO_Connector> const& connector : this->connectors_)
     {
@@ -129,17 +131,19 @@ TAO_Connector_Registry::make_mprofile (const char *ior,
                                       mprofile);
 
           if (mp_result == 0)
-          {
-            return 0;  // Success
-          }
+            {
+              return 0;  // Success
+            }
         }
       else
-        // Failure: Null pointer to connector in connector registry.
-        throw ::CORBA::INV_OBJREF (
-          CORBA::SystemException::_tao_minor_code (
-            0,
-            EINVAL),
-          CORBA::COMPLETED_NO);
+        {
+          // Failure: Null pointer to connector in connector registry.
+          throw ::CORBA::INV_OBJREF (
+            CORBA::SystemException::_tao_minor_code (
+              0,
+              EINVAL),
+            CORBA::COMPLETED_NO);
+        }
     }
 
   // Failure: None of the connectors were able to parse the URL style
