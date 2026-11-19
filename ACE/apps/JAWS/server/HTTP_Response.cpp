@@ -148,7 +148,9 @@ HTTP_Response::error_response (int status_code, const char *log_message)
 
   if (this->request_.version () == nullptr
       || std::strcmp ("HTTP/0.9", this->request_.version ()) == 0)
-    buf = buf2;
+    {
+      buf = buf2;
+    }
   else
     {
       length = std::snprintf (buf1,
@@ -217,12 +219,16 @@ HTTP_Response::normal_response ()
       // deny it
       hv = this->request_.headers ()["Authorization"].value ();
       if (hv == nullptr || *hv == '\0')
-        this->error_response (HTTP_Status_Code::STATUS_UNAUTHORIZED,
-                              "Unauthorized to use PUT method");
+        {
+          this->error_response (HTTP_Status_Code::STATUS_UNAUTHORIZED,
+                                "Unauthorized to use PUT method");
+        }
       else if (std::strncmp (hv, "Basic ", 6) != 0)
-        // ``6'' is the length of the string "Basic "
-        this->error_response (HTTP_Status_Code::STATUS_UNAUTHORIZED,
-                              "Unknown authorization method");
+        {
+          // ``6'' is the length of the string "Basic "
+          this->error_response (HTTP_Status_Code::STATUS_UNAUTHORIZED,
+                                "Unknown authorization method");
+        }
       else
         {
           ACE_Mem_Map mmapfile;
@@ -236,13 +242,17 @@ HTTP_Response::normal_response ()
               && auth != nullptr
               && std::strstr (static_cast<char const *> (mmapfile.addr ()), auth)
                 != nullptr)
-            this->io_.receive_file (this->request_.path (),
-                                    this->request_.data (),
-                                    this->request_.data_length (),
-                                    this->request_.content_length ());
+            {
+              this->io_.receive_file (this->request_.path (),
+                                      this->request_.data (),
+                                      this->request_.data_length (),
+                                      this->request_.content_length ());
+            }
           else
-            this->error_response (HTTP_Status_Code::STATUS_UNAUTHORIZED,
-                                  "Invalid authorization attempt");
+            {
+              this->error_response (HTTP_Status_Code::STATUS_UNAUTHORIZED,
+                                    "Invalid authorization attempt");
+            }
         }
       break;
 
@@ -258,9 +268,11 @@ HTTP_Response::cgi_response ()
   ACE_Process_Options cgi_options;
 
   if (this->request_.cgi_args ())
-    cgi_options.command_line ("%s %s",
-                              this->request_.path (),
-                              this->request_.cgi_args ());
+    {
+      cgi_options.command_line ("%s %s",
+                                this->request_.path (),
+                                this->request_.cgi_args ());
+    }
   else
   {
     cgi_options.command_line ("%s", this->request_.path ());
@@ -294,15 +306,21 @@ HTTP_Response::cgi_response ()
                       this->request_.uri ());
 
   if (this->request_.query_string ())
-    cgi_options.setenv (ACE_TEXT ("QUERY_STRING"),
-                        ACE_TEXT ("%s"),
-                        this->request_.query_string ());
+    {
+      cgi_options.setenv (ACE_TEXT ("QUERY_STRING"),
+                          ACE_TEXT ("%s"),
+                          this->request_.query_string ());
+    }
 
   if (this->request_.cgi_env ())
-    for (size_t i = 0; this->request_.cgi_env ()[i] != nullptr; i += 2)
-      cgi_options.setenv (ACE_TEXT_CHAR_TO_TCHAR (this->request_.cgi_env ()[i]),
-                          ACE_TEXT ("%s"),
-                          ACE_TEXT_CHAR_TO_TCHAR (this->request_.cgi_env ()[i+1]));
+    {
+      for (size_t i = 0; this->request_.cgi_env ()[i] != nullptr; i += 2)
+        {
+          cgi_options.setenv (ACE_TEXT_CHAR_TO_TCHAR (this->request_.cgi_env ()[i]),
+                              ACE_TEXT ("%s"),
+                              ACE_TEXT_CHAR_TO_TCHAR (this->request_.cgi_env ()[i+1]));
+        }
+    }
 
   ACE_TCHAR buf[BUFSIZ];
   ACE_TCHAR *p {}, *q {};
@@ -314,13 +332,19 @@ HTTP_Response::cgi_response ()
       int j = 0;
 
       for (char c; (c = this->request_.header_strings (i)[j++]) != '\0'; )
-        if (ACE_OS::ace_isalpha (c))
-          *q++ = ACE_OS::ace_toupper (c);
-        else if (c == '-')
-          *q++ = '_';
-        else
         {
-          *q++ = c;
+          if (ACE_OS::ace_isalpha (c))
+            {
+              *q++ = ACE_OS::ace_toupper (c);
+            }
+          else if (c == '-')
+            {
+              *q++ = '_';
+            }
+          else
+            {
+              *q++ = c;
+            }
         }
 
       *q = '\0';
@@ -407,8 +431,10 @@ HTTP_Response::build_headers ()
       }
 #else
       if (! this->request_.cgi ())
-        HTTP_HEADER = "HTTP/1.0 200 OK\r\n"
-          "Content-type: text/html\r\n\r\n";
+        {
+          HTTP_HEADER = "HTTP/1.0 200 OK\r\n"
+            "Content-type: text/html\r\n\r\n";
+        }
       else
       {
         HTTP_HEADER = "HTTP/1.0 200 OK\r\n";
