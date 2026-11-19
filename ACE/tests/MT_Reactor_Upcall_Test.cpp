@@ -86,7 +86,9 @@ Handler::Handler (ACE_Reactor &reactor)
   // Create the pipe.
   int result = this->pipe_.open ();
   if (result != 0)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("pipe open")));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("pipe open")));
+    }
   else
     {
       // Register for input events.
@@ -95,13 +97,15 @@ Handler::Handler (ACE_Reactor &reactor)
                                             this,
                                             ACE_Event_Handler::READ_MASK);
       if (result != 0)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("%p\n"),
-                    ACE_TEXT ("Can't register pipe for READ")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("Can't register pipe for READ")));
+        }
       else
-      {
-        this->shutdown_ = 0;
-      }
+        {
+          this->shutdown_ = 0;
+        }
     }
 }
 
@@ -123,17 +127,21 @@ Handler::handle_input (ACE_HANDLE fd)
                  &message.type_,
                  sizeof (message.type_));
   if (result != static_cast<ssize_t> (sizeof (message.type_)))
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t): read %b, %p\n"),
-                result,
-                ACE_TEXT ("recv 1")));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t): read %b, %p\n"),
+                  result,
+                  ACE_TEXT ("recv 1")));
+    }
   result =
     ACE::recv_n (fd,
                  &message.size_,
                  sizeof (message.size_));
   if (result != static_cast<ssize_t> (sizeof (message.size_)))
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t): read %b, %p\n"),
-                result,
-                ACE_TEXT ("recv 2")));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t): read %b, %p\n"),
+                  result,
+                  ACE_TEXT ("recv 2")));
+    }
 
   // On shutdown message, stop the event loop.
   if (message.type_ == Message::SHUTDOWN)
@@ -154,9 +162,11 @@ Handler::handle_input (ACE_HANDLE fd)
                  &message.data_,
                  message.size_);
   if (result != static_cast<ssize_t> (message.size_))
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t): read %b, %p\n"),
-                result,
-                ACE_TEXT ("recv 3")));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t): read %b, %p\n"),
+                  result,
+                  ACE_TEXT ("recv 3")));
+    }
   else
     {
       message.data_[result] = '\0';
@@ -218,9 +228,11 @@ test_reactor_upcall (ACE_Reactor &reactor)
     event_loop_task.activate (THR_NEW_LWP | THR_JOINABLE,
                               number_of_event_loop_threads);
   if (result != 0)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("test_reactor_upcall, activate")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("test_reactor_upcall, activate")));
+    }
 
   // Data message.
   Message data_message;
@@ -297,40 +309,42 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opt ()) != -1)
-    switch (c)
-      {
-      case 't':
-        number_of_event_loop_threads =
-          ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      case 'm':
-        number_of_messages =
-          ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      case 's':
-        sleep_time_in_msec =
-          ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      case 'l':
-        lock_upcall =
-          ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      default:
-        ACE_ERROR_RETURN
-          ((LM_ERROR,
-            ACE_TEXT ("usage:  %s\n")
-            ACE_TEXT ("\t-m <number of messages> (defaults to %d)\n")
-            ACE_TEXT ("\t-t <number of event loop threads> (defaults to %d)\n")
-            ACE_TEXT ("\t-s <sleep time in msec> (defaults to %d)\n")
-            ACE_TEXT ("\t-l <lock upcall> (defaults to %d)\n")
-            ACE_TEXT ("\n"),
-            argv [0],
-            number_of_messages,
-            number_of_event_loop_threads,
-            sleep_time_in_msec,
-            lock_upcall),
-           -1);
-      }
+    {
+      switch (c)
+        {
+        case 't':
+          number_of_event_loop_threads =
+            ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'm':
+          number_of_messages =
+            ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 's':
+          sleep_time_in_msec =
+            ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'l':
+          lock_upcall =
+            ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        default:
+          ACE_ERROR_RETURN
+            ((LM_ERROR,
+              ACE_TEXT ("usage:  %s\n")
+              ACE_TEXT ("\t-m <number of messages> (defaults to %d)\n")
+              ACE_TEXT ("\t-t <number of event loop threads> (defaults to %d)\n")
+              ACE_TEXT ("\t-s <sleep time in msec> (defaults to %d)\n")
+              ACE_TEXT ("\t-l <lock upcall> (defaults to %d)\n")
+              ACE_TEXT ("\n"),
+              argv [0],
+              number_of_messages,
+              number_of_event_loop_threads,
+              sleep_time_in_msec,
+              lock_upcall),
+             -1);
+        }
+    }
 
   return 0;
 }
