@@ -98,8 +98,10 @@ worker (void *c)
   ACE_NEW_RETURN (ip, int, nullptr);
 
   if (ACE_Thread::setspecific (key, (void *) ip) == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
-                ACE_TEXT ("ACE_Thread::setspecific")));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                  ACE_TEXT ("ACE_Thread::setspecific")));
+    }
 
   for (int i = 0; i < count; ++i)
     {
@@ -120,16 +122,22 @@ worker (void *c)
       void *v_ip (reinterpret_cast <void *> (ip));
 
       if (ACE_Thread::setspecific (key, v_ip) == -1)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
-                    ACE_TEXT ("ACE_Thread::setspecific")));
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                      ACE_TEXT ("ACE_Thread::setspecific")));
+        }
 
       if (ACE_Thread::getspecific (key, &v_ip) == -1)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
-                    ACE_TEXT ("ACE_Thread::getspecific")));
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                      ACE_TEXT ("ACE_Thread::getspecific")));
+        }
 
       if (ACE_Thread::setspecific (key, (void *) nullptr) == -1)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
-                    ACE_TEXT ("ACE_Thread::setspecific")));
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                      ACE_TEXT ("ACE_Thread::setspecific")));
+        }
 
       // See comment in cleanup () above.
       delete ip;
@@ -252,8 +260,10 @@ run_main (int, ACE_TCHAR *[])
        ACE_THR_FUNC (worker),
        &iterations,
        THR_BOUND) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n")), 1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n")), 1);
+    }
 
   ACE_Thread_Manager::instance ()->wait ();
 
