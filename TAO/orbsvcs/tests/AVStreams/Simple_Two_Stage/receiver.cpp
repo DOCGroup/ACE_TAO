@@ -48,9 +48,11 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
       ACE_Time_Value const elapsed_time =
         ACE_OS::gettimeofday () - this->previous_sample_time_;
       if (this->samples_count_ == this->samples_.size ())
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Receiver statistics capacity exceeded\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Receiver statistics capacity exceeded\n"),
+                            -1);
+        }
       this->samples_ [this->samples_count_++] = elapsed_time.msec ();
       this->previous_sample_time_ = ACE_OS::gettimeofday ();
     }
@@ -65,9 +67,11 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
                         output_file);
 
       if (result != frame->length ())
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Receiver_Callback::fwrite failed\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Receiver_Callback::fwrite failed\n"),
+                            -1);
+        }
 
       this->bytes_received_ += result;
       frame = frame->cont ();
@@ -86,18 +90,24 @@ Receiver_Callback::dump_samples (ACE_TCHAR const *file)
     ACE_OS::fopen (file, ACE_TEXT ("wb")), ACE_OS::fclose);
 
   if (!stats_file)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Stats file cannot be opened\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Stats file cannot be opened\n")),
+                        -1);
+    }
 
   for (size_t i = 0; i < this->samples_count_; ++i)
-    this->stats_.sample (static_cast<ACE_UINT64> (this->samples_ [i]));
+    {
+      this->stats_.sample (static_cast<ACE_UINT64> (this->samples_ [i]));
+    }
 
   this->stats_.dump_results (
     ACE_TEXT ("Inter Frame Arrival Time Statistics "), stats_file.get (), 1);
 
   for (size_t i = 0; i < this->samples_count_; ++i)
-    std::fprintf (stats_file.get (), "%d\n", this->samples_ [i]);
+    {
+      std::fprintf (stats_file.get (), "%d\n", this->samples_ [i]);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "Done\n"));
@@ -111,9 +121,11 @@ Receiver_Callback::handle_destroy ()
   ACE_DEBUG ((LM_DEBUG,
               "Receiver_Callback::end_stream\n"));
   if (ACE_OS::fflush (output_file) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Receiver_Callback::fflush failed\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Receiver_Callback::fflush failed\n"),
+                        -1);
+    }
   ACE_DEBUG ((LM_DEBUG,
               "Receiver_Callback received %B bytes\n",
               this->bytes_received_));
@@ -169,10 +181,12 @@ Receiver::init (int,
 
   // Initialize the naming services
   if (this->naming_client_.init (TAO_AV_CORE::instance ()->orb ()) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to initialize "
-                       "the TAO_Naming_Client\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Unable to initialize "
+                         "the TAO_Naming_Client\n"),
+                        -1);
+    }
 
   // Register the receiver object with the naming server.
   this->naming_client_->rebind (name,
@@ -252,10 +266,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ACE_OS::fclose);
       output_file = output_file_owner.get ();
       if (!output_file)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Cannot open output file %s\n"),
-                           receiver_options.output_file_name.c_str ()),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot open output file %s\n"),
+                             receiver_options.output_file_name.c_str ()),
+                            -1);
+        }
 
       ACE_DEBUG ((LM_DEBUG,
                   "File Opened Successfully\n"));

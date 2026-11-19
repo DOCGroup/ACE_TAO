@@ -77,9 +77,11 @@ Sender::parse_args (int argc,
           {
             this->options_.max_frame_count = ACE_OS::atoi (opts.opt_arg ());
             if (this->options_.max_frame_count > 1000000)
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "Max Frame Count should be < 10^6\n"),
-                                -1);
+              {
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "Max Frame Count should be < 10^6\n"),
+                                  -1);
+              }
             break;
           }
         case 'l':
@@ -137,9 +139,11 @@ Sender::bind_to_receiver ()
     AVStreams::MMDevice::_narrow (receiver_mmdevice_obj.in ());
 
   if (CORBA::is_nil (this->receiver_mmdevice_.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Could not resolve Receiver_MMdevice in Naming service\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Could not resolve Receiver_MMdevice in Naming service\n"),
+                        -1);
+    }
 
   return 0;
 }
@@ -186,21 +190,27 @@ Sender::init (int argc,
     ACE_OS::fopen (this->options_.filename.c_str (), ACE_TEXT ("rb")));
 
   if (!this->input_file_)
-    ACE_ERROR_RETURN ((LM_DEBUG,
-                       ACE_TEXT ("Cannot open input file %s\n"),
-                       this->options_.filename.c_str ()),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_DEBUG,
+                         ACE_TEXT ("Cannot open input file %s\n"),
+                         this->options_.filename.c_str ()),
+                        -1);
+    }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                "File opened successfully\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "File opened successfully\n"));
+    }
 
   // Resolve the object reference of the receiver from the Naming Service.
   result = this->bind_to_receiver ();
 
   if (result != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) Error binding to the naming service\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%P|%t) Error binding to the naming service\n"),
+                        -1);
+    }
 
   // Initialize the  QoS
   AVStreams::streamQoS_var the_qos (new AVStreams::streamQoS);
@@ -210,7 +220,9 @@ Sender::init (int argc,
   char buf [BUFSIZ] {};
 
   if (!this->options_.address.empty ())
-    addr.set (this->options_.address.c_str ());
+    {
+      addr.set (this->options_.address.c_str ());
+    }
   else
     {
       ACE_OS::hostname (buf,
@@ -229,7 +241,9 @@ Sender::init (int argc,
 
   ACE_INET_Addr peer_addr;
   if (!this->options_.peer_address.empty ())
-    peer_addr.set (this->options_.peer_address.c_str ());
+    {
+      peer_addr.set (this->options_.peer_address.c_str ());
+    }
   else
     {
       ACE_OS::hostname (buf,
@@ -274,9 +288,11 @@ Sender::init (int argc,
                                   flow_spec);
 
   if (!bind_result)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "streamctrl::bind_devs failed\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "streamctrl::bind_devs failed\n"),
+                        -1);
+    }
 
   return 0;
 }
@@ -292,11 +308,13 @@ Sender::pace_data ()
   inter_frame_time.set (1.0 / this->options_.frame_rate);
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "Frame Rate = %f / second\n"
-                "Inter Frame Time = %d (msec)\n",
-                this->options_.frame_rate,
-                inter_frame_time.msec ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Frame Rate = %f / second\n"
+                  "Inter Frame Time = %d (msec)\n",
+                  this->options_.frame_rate,
+                  inter_frame_time.msec ()));
+    }
 
   try
     {
@@ -313,9 +331,11 @@ Sender::pace_data ()
                                                this->input_file_.get ());
 
           if (std::ferror (this->input_file_.get ()))
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Sender::pace_data fread failed\n"),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Sender::pace_data fread failed\n"),
+                                -1);
+            }
 
           if (n == 0)
             {
@@ -343,9 +363,11 @@ Sender::pace_data ()
               elapsed_timer.elapsed_time (elapsed_time);
 
               if (TAO_debug_level > 0)
-                ACE_DEBUG ((LM_DEBUG,
-                            "Elapsed Time = %d\n",
-                            elapsed_time.msec ()));
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "Elapsed Time = %d\n",
+                              elapsed_time.msec ()));
+                }
 
               // Check to see if the inter frame time has elapsed.
               if (elapsed_time < inter_frame_time)
@@ -356,9 +378,11 @@ Sender::pace_data ()
                   ACE_Time_Value wait_time (inter_frame_time - elapsed_time);
 
                   if (TAO_debug_level > 0)
-                    ACE_DEBUG ((LM_DEBUG,
-                                "Wait Time = %d\n",
-                                wait_time.msec ()));
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                  "Wait Time = %d\n",
+                                  wait_time.msec ()));
+                    }
 
                   // Run the orb for the wait time so the sender can
                   // continue other orb requests.
@@ -436,11 +460,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                           argv);
 
       if (result < 0)
-        ACE_ERROR ((LM_ERROR,
-                    "Sender::init failed\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "Sender::init failed\n"));
+        }
       else
-        // Start sending data.
-        result = SENDER::instance ()->pace_data ();
+        {
+          // Start sending data.
+          result = SENDER::instance ()->pace_data ();
+        }
 
     }
   catch (CORBA::Exception const &ex)
