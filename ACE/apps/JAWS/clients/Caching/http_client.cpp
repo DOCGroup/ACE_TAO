@@ -38,15 +38,21 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       size_t const len = std::strlen (s);
 
       if (len > 0 && s[len - 1] == '\n')
-        s[len - 1] = 0;
+        {
+          s[len - 1] = 0;
+        }
 
       while (ACE_OS::ace_isspace (*s))
-        ++s;
+        {
+          ++s;
+        }
 
       if (*s == '!')
         {
           do
-            ++s;
+            {
+              ++s;
+            }
           while (ACE_OS::ace_isspace (*s));
 
           // Shell command.
