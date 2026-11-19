@@ -13661,3 +13661,18 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   `std::addressof`, so user-defined `operator&` cannot redirect these results.
   `RB_Tree.h` already includes `<memory>`. `git diff --check` passed; no test
   was run. The ACE/ace and repository-wide audits remain open.
+
+
+## 2026-11-19 ACE core addressof audit
+
+- Completed the `ADDRESSOF` audit for `ACE/ace` generic object access. The
+  existing `RB_Tree.inl` conversions were retained, and remaining key/item
+  address operations in `RB_Tree.cpp` and generic singleton accessors in
+  `Singleton.cpp` now use `std::addressof`. This includes the TSS macro path,
+  where the non-threaded expansion takes the address of the user-supplied type.
+- Inspected remaining address-return expressions and the directory's
+  `operator&` declarations; no other generic address-taking required changes.
+  `<memory>` is already included where needed.
+- `git diff --check` passed. No build or test was run. The repository-wide
+  `ADDRESSOF` task remains open in directories without a review record.
+- Source evidence commits: `53a4497f473`, `8bb17b28249`.
