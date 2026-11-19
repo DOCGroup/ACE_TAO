@@ -87,24 +87,29 @@ client (void *)
   if (connector.connect (stream,
                          ACE_INET_Addr (SERV_TCP_PORT,
                                         ACE_DEFAULT_SERVER_HOST)) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "(%P) %p\n",
-                "Socket open"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%P) %p\n",
+                  "Socket open"));
+    }
 
   if (stream.send (4,
                    (void *) &mes_len,
                    sizeof (size_t),
                    (void *)buf,
                    ACE_OS::strlen (buf) + 1) == -1)
-
-    ACE_ERROR ((LM_ERROR,
-                "(%P) %p\n",
-                "Socket send"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%P) %p\n",
+                  "Socket send"));
+    }
 
   if (stream.close () == -1)
-    ACE_ERROR ((LM_ERROR,
-                "(%P) %p\n",
-                "Socket close"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%P) %p\n",
+                  "Socket close"));
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P) Client: Message has been sent, about to exit...\n"));
@@ -130,7 +135,9 @@ inc_count (ClientData client_data, Tcl_Interp *interp,int, char **)
   // eval (command);
   const char *varValue = Tcl_SetVar (interp,(char *)client_data,new_string,TCL_LEAVE_ERR_MSG);
   if (varValue == nullptr)
-    return TCL_ERROR;
+    {
+      return TCL_ERROR;
+    }
   return TCL_OK;
 }
 
@@ -142,7 +149,9 @@ inc_tmo (ClientData client_data)
   char new_string[80];
 
   if (count2 > 10)
-    ACE_OS::exit (0);
+    {
+      ACE_OS::exit (0);
+    }
   ACE_OS::snprintf (new_string, 80, "Events: [%d] [%d] [%d]",
                     count1, count2++, count3);
 
@@ -150,7 +159,9 @@ inc_tmo (ClientData client_data)
   //  eval (command);
   const char *varValue = Tcl_SetVar (tcl_interp,(char *)client_data,new_string,TCL_LEAVE_ERR_MSG);
   if (varValue == nullptr)
-    ACE_ERROR ((LM_ERROR,"Tcl_SetVar failed in inc_tmo\n"));
+    {
+      ACE_ERROR ((LM_ERROR,"Tcl_SetVar failed in inc_tmo\n"));
+    }
 
   (void) Tk_CreateTimerHandler (1000,
                                 inc_tmo,
@@ -171,7 +182,9 @@ public:
     //    eval (command);
     const char *varValue = Tcl_SetVar (tcl_interp,(char *)arg,new_string,TCL_LEAVE_ERR_MSG);
     if (varValue == nullptr)
-      ACE_ERROR_RETURN ((LM_ERROR,"Tcl_SetVar failed in handle_timeout\n"),-1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,"Tcl_SetVar failed in handle_timeout\n"),-1);
+      }
 
     return 0;
   }
@@ -189,19 +202,23 @@ public:
     ssize_t ret = this->peer ().recv_n ((char *) &head,
                                         sizeof (int));
     if (ret != sizeof (int))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%P) %p\n",
-                         "read header"),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P) %p\n",
+                           "read header"),
+                          -1);
+      }
 
     ret = this->peer ().recv_n (buf,
                                 (int) ntohl (head));
 
     if (ret != (int) ntohl (head))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%P) %p\n",
-                         "read message"),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P) %p\n",
+                           "read message"),
+                          -1);
+      }
     ACE_DEBUG ((LM_DEBUG,
                 " (%P)Server (ACE_SOCKET channel message): [%s]\n",
                 buf));
@@ -213,9 +230,13 @@ int
 init (Tcl_Interp *interp)
 {
   if (Tcl_Init (interp) == TCL_ERROR)
-    return TCL_ERROR;
+    {
+      return TCL_ERROR;
+    }
   if (Tk_Init (interp) == TCL_ERROR)
-    return TCL_ERROR;
+    {
+      return TCL_ERROR;
+    }
   return TCL_OK;
 }
 
@@ -266,18 +287,22 @@ run_main (int, ACE_TCHAR *[])
 
   if (acceptor.open (ACE_INET_Addr ((u_short) SERV_TCP_PORT),
                      &r) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "open"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "open"),
+                        -1);
+    }
 
   if (reactor.schedule_timer (&evh,
                               (const void *) "label_var",
                               ACE_Time_Value (2),
                               ACE_Time_Value (2))==-1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       " (%P|%t) can't register with reactor\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         " (%P|%t) can't register with reactor\n"),
+                        -1);
+    }
 
   ACE_Thread_Manager::instance ()->spawn ((ACE_THR_FUNC) client,
                                           nullptr,
