@@ -27,10 +27,12 @@ TAO_LF_Multi_Event::bind (TAO_LF_Follower *follower)
     }
 
   for (Event_Node *n = this->events_.get (); n != nullptr; n = n->next_.get ())
-    if (n->ptr_->bind (follower) == -1)
-      {
-        return -1;
-      }
+    {
+      if (n->ptr_->bind (follower) == -1)
+        {
+          return -1;
+        }
+    }
   return 0;
 }
 
@@ -43,10 +45,12 @@ TAO_LF_Multi_Event::unbind (TAO_LF_Follower *follower)
     }
 
   for (Event_Node *n = this->events_.get (); n != nullptr; n = n->next_.get ())
-    if (n->ptr_->unbind (follower) == -1)
-      {
-        return -1;
-      }
+    {
+      if (n->ptr_->unbind (follower) == -1)
+        {
+          return -1;
+        }
+    }
   return 0;
 }
 
@@ -82,11 +86,13 @@ bool
 TAO_LF_Multi_Event::successful_i () const
 {
   for (Event_Node *n = this->events_.get (); n != nullptr; n = n->next_.get ())
-    if (n->ptr_->successful_i ())
-      {
-        this->winner_ = n->ptr_;
-        return true;
-      }
+    {
+      if (n->ptr_->successful_i ())
+        {
+          this->winner_ = n->ptr_;
+          return true;
+        }
+    }
   return false;
 }
 
