@@ -13627,3 +13627,16 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   was unavailable because this clone has no built TAO libraries. `git diff
   --check` passed; no full build was run.
 - Source evidence commit: `6f1692d80f0`.
+
+
+## 2026-11-19 ACE INet move-site audit
+
+- Reviewed all 11 `std::move` sites in `ConnectionCache.cpp`,
+  `HTTP_IOStream.cpp`, and `HTTP_SessionBase.cpp`. The connection-key copy
+  assignment moves its duplicated key owner into the destination; HTTP stream
+  constructors forward unique-owned policies through their bases to the stream
+  buffer; session request/response setup transfers policies into the selected
+  stream objects. The moved-from locals are not read afterward.
+- Recorded `MOVE_SITES` as done. No source changes, builds, or runtime tests
+  were needed for this audit.
+- Source evidence commit: `5467e71c2bd`.

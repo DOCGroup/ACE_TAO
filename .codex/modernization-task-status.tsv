@@ -977,6 +977,7 @@ ACE/performance-tests/UDP	SPECIAL_MEMBER_COMMENTS	not-applicable	e814e00fb1a	Who
 ACE/protocols/ace/HTBP	SPECIAL_MEMBER_COMMENTS	done	7bddc338681	Removed 18 standalone constructor/destructor labels from handwritten headers and definitions; realclean build and link passed without warnings
 ACE/protocols/ace/INet	CONST	done	-	Migrated from existing inventory; see modernization-ledger.md
 ACE/protocols/ace/INet	COPY_MOVE	done	-	Reviewed all 10 std::move sites in HTTP_SessionBase.cpp, HTTP_IOStream.cpp, and ConnectionCache.cpp; transferred stream policies and cloned cache keys have no moved-from reads
+ACE/protocols/ace/INet	MOVE_SITES	done	5467e71c2bd	Reviewed all 11 std::move sites in ConnectionCache, HTTP_IOStream, and HTTP_SessionBase; destination members/constructors take ownership and moved-from owners are not read.
 ACE/protocols/ace/INet	SPECIAL_MEMBER_COMMENTS	done	6ea0f6686c1	Removed 20 standalone constructor/destructor labels from handwritten headers; realclean build and link passed without warnings
 ACE/protocols/ace/RMCast	SPECIAL_MEMBER_COMMENTS	not-applicable	e814e00fb1a	Whole-tree tracked-source scan found no standalone special-member label comments; no source edits were needed.
 ACE/protocols/ace/TMCast	PREFIX_INC	done	2c2bc272119	Changed the discarded current_.id++ statement to prefix increment; TMCast realclean build and link passed without warnings.
