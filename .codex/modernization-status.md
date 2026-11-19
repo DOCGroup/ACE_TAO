@@ -117,6 +117,7 @@ Task codes for the task-status file and its `tasks_done` summary:
 | `CLEANUP` | Remove unused helpers and stale commented-out code |
 | `SCOPE_REDUCTION` | Declare locals at their point of use and narrow their lifetime |
 | `SPECIAL_MEMBER_COMMENTS` | Across every directory, remove comments that only label constructors, destructors, copy/move operations, or assignments; review generated output through its generator inputs |
+| `BRACES` | Add consistent braces around control-flow bodies |
 | `STYLE` | Review blank lines, generated layout, line length, and formatting |
 | `BUILD_TEST` | Regenerate as needed, realclean before build, and validate focused tests |
 

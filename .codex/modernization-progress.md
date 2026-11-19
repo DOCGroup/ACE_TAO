@@ -27,7 +27,7 @@ Scope: **1268 directories**; **1230** differ from the base; **387** have task-le
 | `C_STRING` — Plain C-string handling | 85 | 60 | 25 | 0 |
 | `STD_NARROW_STRING` — Use std string functions for narrow C strings | 10 | 10 | 0 | 0 |
 | `PREFIX_INC` — Prefer prefix increment and decrement when equivalent | 47 | 45 | 2 | 0 |
-| `BRACES` — Consistent braces around control-flow bodies | 6 | 1 | 0 | 5 |
+| `BRACES` — Consistent braces around control-flow bodies | 7 | 1 | 0 | 6 |
 | `CONST_GUARD_MACROS` — Const guard macro usage while preserving ACE_GUARD conventions | 2 | 2 | 0 | 0 |
 | `MOVE_SITES` — Audit std::move sites for moved-from use and ownership correctness | 3 | 3 | 0 | 0 |
 | `MOVE_SEMANTICS` — Copy/move semantics and moved-from object safety | 6 | 6 | 0 | 0 |
@@ -251,7 +251,7 @@ Scope: **1268 directories**; **1230** differ from the base; **387** have task-le
 | `TAO/orbsvcs/tests/Notify/Reconnecting` | CONST; VALUE_INIT; NULLPTR; C_STRING; BUILD_TEST | Other checklist modernization categories remain unaudited; ACE_TCHAR parsing and file-I/O wrappers retained | partial | `d7686e313eb` |
 | `TAO/orbsvcs/tests/Notify/Sequence_Multi_Filter` | CONST; VALUE_INIT; COPY_MOVE; OWNERSHIP; CLEANUP; STYLE; BUILD_TEST | Other checklist modernization categories remain unaudited | partial | `4ffe44273f1` |
 | `TAO/orbsvcs/tests/Notify/Structured_Filter` | VALUE_INIT; OVERRIDE_DEFAULT_DELETE; COPY_MOVE; OWNERSHIP; CLEANUP; BUILD_TEST | Broader directory checklist remains | partial | `d57eccb57a4` |
-| `TAO/tao/AnyTypeCode` | CONST; VALUE_INIT; OVERRIDE_DEFAULT_DELETE; PREFIX_INC; CONST_GUARD_MACROS; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Remaining modernization categories are not yet audited | partial | `pending` |
+| `TAO/tao/AnyTypeCode` | CONST; VALUE_INIT; OVERRIDE_DEFAULT_DELETE; PREFIX_INC; CONST_GUARD_MACROS; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | BRACES partially reviewed; Value_TypeCode.cpp complete, remainder open; remaining modernization categories are not yet audited | partial | `0561b416bbf` |
 | `TAO/tao/BiDir_GIOP` | CONST; VALUE_INIT; SPECIAL_MEMBER_COMMENTS; BUILD_TEST | Remaining modernization categories still need audit | partial | `1e6aa561e2a` |
 | `TAO/tao/CSD_Framework` | CONST; OWNERSHIP; PREFIX_INC; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Manual request clone cleanup retained for ownership-sensitive APIs; remaining modernization categories still need audit | partial | `4ffd1cb1be6` |
 | `TAO/tao/CSD_ThreadPool` | CONST; VALUE_INIT; NULLPTR; OVERRIDE_DEFAULT_DELETE; EXPLICIT; COPY_MOVE; OWNERSHIP; PREFIX_INC; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Retained intrusive reference-count handles and non-owning queue links; SIZE_TYPES intentionally deferred | audited | `5f20df0c422` |
