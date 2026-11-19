@@ -13727,3 +13727,7 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   `git diff --check` passed. No build or tests were run.
 - The repository-wide formatter audit remains open; this batch covers the
   confirmed ACE core and TAO ZIOP sites found during the current scan.
+
+- Follow-up review of Proactor IPv6 diagnostics found server/client byte totals
+  still using `%d`; those values are `size_t`. Changed both byte-count fields
+  to `%B`, retaining `%d` for the integer operation counts.
