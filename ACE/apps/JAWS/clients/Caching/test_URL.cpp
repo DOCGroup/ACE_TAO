@@ -29,7 +29,9 @@ int ACE_TMAIN (int , ACE_TCHAR *[])
   ACE_TEST_ASSERT (derived.seq () != nullptr);
   ACE_TEST_ASSERT (derived.seq ()->size () == ouch1.size ());
   for (size_t i = 0; i < ouch1.size (); ++i)
-    ACE_TEST_ASSERT ((*derived.seq ())[i] == ouch1[i]);
+    {
+      ACE_TEST_ASSERT ((*derived.seq ())[i] == ouch1[i]);
+    }
 
   ACE_URL_Offer original_offer (ouch1.size (), "http://example.test/resource");
   original_offer.url_properties (ouch1);
