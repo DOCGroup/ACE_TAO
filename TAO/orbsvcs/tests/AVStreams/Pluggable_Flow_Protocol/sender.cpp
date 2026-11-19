@@ -71,9 +71,11 @@ Sender::bind_to_receiver ()
   this->receiver_mmdevice_ =
     AVStreams::MMDevice::_narrow (receiver_mmdevice_obj.in ());
   if (CORBA::is_nil (this->receiver_mmdevice_.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Could not resolve Receiver_MMdevice in Naming service\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Could not resolve Receiver_MMdevice in Naming service\n"),
+                        -1);
+    }
   return 0;
 }
 
@@ -95,15 +97,19 @@ Sender::init (int argc,
 
   this->input_file_.reset (ACE_OS::fopen (this->options_.filename.c_str (), "rb"));
   if (!this->input_file_)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Cannot open input file %s\n"),
-                       this->options_.filename.c_str ()),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Cannot open input file %s\n"),
+                         this->options_.filename.c_str ()),
+                        -1);
+    }
 
   if (this->bind_to_receiver () != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) Error binding to the naming service\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%P|%t) Error binding to the naming service\n"),
+                        -1);
+    }
 
   AVStreams::streamQoS_var the_qos (new AVStreams::streamQoS);
   TAO_Forward_FlowSpec_Entry entry ("Data_Receiver",
@@ -155,10 +161,12 @@ Sender::pace_data ()
   ACE_Time_Value inter_frame_time;
   inter_frame_time.set (1.0 / this->options_.frame_rate);
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "Frame Rate = %d / second\nInter Frame Time = %d (msec)\n",
-                this->options_.frame_rate,
-                inter_frame_time.msec ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Frame Rate = %d / second\nInter Frame Time = %d (msec)\n",
+                  this->options_.frame_rate,
+                  inter_frame_time.msec ()));
+    }
 
   try
     {
@@ -194,16 +202,20 @@ Sender::pace_data ()
 
           elapsed_timer.start ();
           if (this->protocol_object_->send_frame (&this->mb_) < 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "send failed:%p",
-                               "Sender::pace_data send\n"),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "send failed:%p",
+                                 "Sender::pace_data send\n"),
+                                -1);
+            }
 
           ++this->frame_count_;
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        "Sender::pace_data frame %B was sent successfully\n",
-                        this->frame_count_));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "Sender::pace_data frame %B was sent successfully\n",
+                          this->frame_count_));
+            }
         }
 
       AVStreams::flowSpec stop_spec;
