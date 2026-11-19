@@ -13410,3 +13410,10 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Added Allman braces around ten single-statement control-flow bodies in `SSL_Asynch_BIO.cpp`, `SSL_Context.cpp`, `SSL_SOCK_Acceptor.cpp`, `TTY_IO.cpp`, and `XML_Utils/XercesString.cpp`. Focused clang-tidy checks and `git diff --check` passed.
 - A fresh scan of the 342 existing ACE/ace translation units present in the root compile database found 19 remaining warnings in generated `ETCL_l.cpp`, `ETCL_y.cpp`, and `Svc_Conf_y.cpp`; there were zero parse errors. Another 104 ACE/ace `.cpp` files have no compile-database entry and remain unscanned. The generated parser outputs were left untouched.
 - No build or runtime test was run. Commit `c883d988712`.
+
+
+## 2026-11-19 TAO core brace scan and fixes
+
+- Scanned 776 existing translation units from `TAO/tao/compile_commands.json`. The scan found missing braces in handwritten TAO core code; several optional subdirectories could not be parsed because generated headers are absent in this checkout.
+- Added Allman braces in `Asynch_Queued_Message.cpp`, `Storable_Base.cpp`, `Object_Ref_Table.cpp`, `On_Demand_Fragmentation_Strategy.cpp`, `Wait_On_LF_No_Upcall.cpp`, and `Wait_On_Read.cpp`, correcting surrounding indentation in the affected blocks. Focused clang-tidy checks for all six files and `git diff --check` passed. No build or runtime test was run.
+- Commit `645b9f612b2`. The broader TAO/tao brace audit remains open.

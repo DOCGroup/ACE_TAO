@@ -27,7 +27,7 @@ Scope: **1268 directories**; **1230** differ from the base; **387** have task-le
 | `C_STRING` — Plain C-string handling | 85 | 60 | 25 | 0 |
 | `STD_NARROW_STRING` — Use std string functions for narrow C strings | 10 | 10 | 0 | 0 |
 | `PREFIX_INC` — Prefer prefix increment and decrement when equivalent | 47 | 45 | 2 | 0 |
-| `BRACES` — Consistent braces around control-flow bodies | 3 | 1 | 0 | 2 |
+| `BRACES` — Consistent braces around control-flow bodies | 4 | 1 | 0 | 3 |
 | `CONST_GUARD_MACROS` — Const guard macro usage while preserving ACE_GUARD conventions | 2 | 2 | 0 | 0 |
 | `MOVE_SITES` — Audit std::move sites for moved-from use and ownership correctness | 3 | 3 | 0 | 0 |
 | `MOVE_SEMANTICS` — Copy/move semantics and moved-from object safety | 6 | 6 | 0 | 0 |
