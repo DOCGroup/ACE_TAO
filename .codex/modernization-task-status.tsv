@@ -1753,6 +1753,7 @@ TAO/orbsvcs/tests/AVStreams/Bidirectional_Flows	SPECIAL_MEMBER_COMMENTS	done	0bb
 TAO/orbsvcs/tests/AVStreams/Bidirectional_Flows	STYLE	done	0bb7c1c298d	Reviewed east-side const, blank lines, 120-column limit, and git diff --check
 TAO/orbsvcs/tests/AVStreams/Bidirectional_Flows	TEST_ASSERTIONS	done	0bb7c1c298d	run_test.pl now compares both sender and receiver output against the generated input file
 TAO/orbsvcs/tests/AVStreams/Bidirectional_Flows	VALUE_INIT	done	0bb7c1c298d	Value-initialized counters, pointers, and message blocks; represented EOF as bool
+TAO/orbsvcs/tests/AVStreams/Component_Switching	BRACES	done	1e0b43e30fc	Applied Allman braces in four translation units; focused scan across all 36 AVStreams compilation units found no remaining missing-brace warnings.
 TAO/orbsvcs/tests/AVStreams/Component_Switching	BUILD_TEST	done	543ac61c60d	Regenerated MPC; realclean build linked all three targets without warnings; perl run_test.pl passed
 TAO/orbsvcs/tests/AVStreams/Component_Switching	CLEANUP	done	543ac61c60d	Removed dead signal/stream-count code and fixed run_test.pl cleanup variable typo
 TAO/orbsvcs/tests/AVStreams/Component_Switching	CONST	done	543ac61c60d	Applied east-side const to parameters and immutable locals
@@ -1763,7 +1764,7 @@ TAO/orbsvcs/tests/AVStreams/Component_Switching	OVERRIDE_DEFAULT_DELETE	done	543
 TAO/orbsvcs/tests/AVStreams/Component_Switching	OWNERSHIP	done	543ac61c60d	Used unique_ptr for file handles, documented borrowed pointers, and retained StreamCtrl reference in a var
 TAO/orbsvcs/tests/AVStreams/Component_Switching	SIZE_TYPES	done	543ac61c60d	Changed frame and byte counts to std::size_t and checked write byte counts
 TAO/orbsvcs/tests/AVStreams/Component_Switching	SPECIAL_MEMBER_COMMENTS	done	543ac61c60d	Rechecked all source files; no standalone special-member label comments remain
-TAO/orbsvcs/tests/AVStreams/Component_Switching	STYLE	done	543ac61c60d	Removed duplicate blank lines and checked 120-column limit
+TAO/orbsvcs/tests/AVStreams/Component_Switching	STYLE	done	1e0b43e30fc	Removed duplicate blank lines and checked 120-column limit; brace style checked with clang-tidy and git diff --check.
 TAO/orbsvcs/tests/AVStreams/Component_Switching	USING	done	543ac61c60d	Replaced the singleton typedef with a using alias
 TAO/orbsvcs/tests/AVStreams/Component_Switching	VALUE_INIT	done	543ac61c60d	Value-initialized scalar/pointer state and moved stable defaults to members
 TAO/orbsvcs/tests/AVStreams/Full_Profile	ATOMIC	not-applicable	45a53d9e662	No atomic state
@@ -2675,6 +2676,7 @@ TAO/tests/POA/TIE	BUILD_TEST	done	247e85f653d	Regenerated TIE IDL; realclean-bui
 TAO/tests/POA/TIE	SPECIAL_MEMBER_COMMENTS	done	247e85f653d	Removed four constructor-only labels from the TIE servant implementations
 TAO/tests/Sequence_Unit_Tests	BUILD_TEST	done	-	Migrated from existing inventory; see modernization-ledger.md
 TAO/tests/Sequence_Unit_Tests	COPY_MOVE	done	-	Migrated from existing inventory; see modernization-ledger.md
+TAO/tests/Sequence_Unit_Tests	STYLE	done	b139d08a293	Removed a redundant blank line from Sequence_Unit_Tests.mpc; git diff --check passed.
 TAO/tests/Smart_Proxies	BUILD_TEST	done	525e09f2968	Regenerated IDL after realclean, then realclean-built and linked client and server; generated headers include tao/TAO_Singleton.h
 TAO/tests/objref_comparison_test	BUILD_TEST	done	a0a2c04028f	Built and linked after rebuilding ACE core, TAO core, and PortableServer; runtime exited 0. The output reproduces the IOR mismatch this diagnostic test was created to expose.
 TAO/tests/objref_comparison_test	CONST	done	a0a2c04028f	Const-qualified CORBA var locals that are not reassigned.

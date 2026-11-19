@@ -27,7 +27,7 @@ Scope: **1268 directories**; **1230** differ from the base; **387** have task-le
 | `C_STRING` — Plain C-string handling | 85 | 60 | 25 | 0 |
 | `STD_NARROW_STRING` — Use std string functions for narrow C strings | 10 | 10 | 0 | 0 |
 | `PREFIX_INC` — Prefer prefix increment and decrement when equivalent | 47 | 45 | 2 | 0 |
-| `BRACES` — Consistent braces around control-flow bodies | 2 | 0 | 0 | 2 |
+| `BRACES` — Consistent braces around control-flow bodies | 3 | 1 | 0 | 2 |
 | `CONST_GUARD_MACROS` — Const guard macro usage while preserving ACE_GUARD conventions | 2 | 2 | 0 | 0 |
 | `MOVE_SITES` — Audit std::move sites for moved-from use and ownership correctness | 3 | 3 | 0 | 0 |
 | `MOVE_SEMANTICS` — Copy/move semantics and moved-from object safety | 6 | 6 | 0 | 0 |
@@ -41,7 +41,7 @@ Scope: **1268 directories**; **1230** differ from the base; **387** have task-le
 | `CLEANUP` — Unused helpers and stale commented code | 244 | 244 | 0 | 0 |
 | `UNUSED_INCLUDES` — Unused include removal | 11 | 11 | 0 | 0 |
 | `SPECIAL_MEMBER_COMMENTS` — Tree-wide removal of special-member label comments | 151 | 144 | 7 | 0 |
-| `STYLE` — Blank lines, layout, line length, formatting | 195 | 195 | 0 | 0 |
+| `STYLE` — Blank lines, layout, line length, formatting | 196 | 196 | 0 | 0 |
 | `BUILD_TEST` — Regeneration, realclean, focused build/test | 309 | 296 | 0 | 13 |
 | `TEXT_API` — ACE_TCHAR and text-aware API usage | 10 | 8 | 2 | 0 |
 | `WINDOWS_RESOURCE_LIFETIME` — Windows system resource and platform handle lifetime | 1 | 1 | 0 | 0 |
@@ -204,7 +204,7 @@ Scope: **1268 directories**; **1230** differ from the base; **387** have task-le
 | `TAO/orbsvcs/orbsvcs/Trader` | CONST; VALUE_INIT; EXPLICIT; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Remaining modernization categories have not been audited | partial | `434c09850dd` |
 | `TAO/orbsvcs/tests/AVStreams/Asynch_Three_Stage` | CONST; VALUE_INIT; NULLPTR; OVERRIDE_DEFAULT_DELETE; COPY_MOVE; USING; OWNERSHIP; SIZE_TYPES; CLI_OPTIONS; TEST_ASSERTIONS; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | TEST_ASSERTIONS: run_test.pl does not compare output payloads | partial | `b046090f4d0` |
 | `TAO/orbsvcs/tests/AVStreams/Bidirectional_Flows` | CONST; VALUE_INIT; NULLPTR; OVERRIDE_DEFAULT_DELETE; COPY_MOVE; OWNERSHIP; C_STRING; SIZE_TYPES; CLI_OPTIONS; TEST_ASSERTIONS; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Other modernization categories remain unreviewed | partial | `0bb7c1c298d` |
-| `TAO/orbsvcs/tests/AVStreams/Component_Switching` | CONST; VALUE_INIT; NULLPTR; OVERRIDE_DEFAULT_DELETE; COPY_MOVE; USING; OWNERSHIP; SIZE_TYPES; LOG_FORMAT; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Other modernization categories remain unreviewed | partial | `2cb7b185fd4` |
+| `TAO/orbsvcs/tests/AVStreams/Component_Switching` | CONST; VALUE_INIT; NULLPTR; OVERRIDE_DEFAULT_DELETE; COPY_MOVE; USING; OWNERSHIP; BRACES; SIZE_TYPES; LOG_FORMAT; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Other modernization categories remain unreviewed | partial | `1e0b43e30fc` |
 | `TAO/orbsvcs/tests/AVStreams/Full_Profile` | CONST; VALUE_INIT; NULLPTR; OVERRIDE_DEFAULT_DELETE; EXPLICIT=n/a; COPY_MOVE; ATOMIC=n/a; USING; OWNERSHIP; CONTAINERS; C_STRING; SIZE_TYPES; IDL_GENERATION=n/a; CLI_OPTIONS; LOG_FORMAT; TEST_ASSERTIONS; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Other modernization categories remain unreviewed | partial | `a6f0bc6f705` |
 | `TAO/orbsvcs/tests/AVStreams/Latency` | CONST; VALUE_INIT; OVERRIDE_DEFAULT_DELETE; COPY_MOVE; C_STRING; SIZE_TYPES; CLI_OPTIONS; CLEANUP; SPECIAL_MEMBER_COMMENTS=n/a; STYLE; BUILD_TEST | Ownership, thread-safety, and remaining modernization categories still need review | partial | `3db2ea9c94a` |
 | `TAO/orbsvcs/tests/AVStreams/Modify_QoS` | CONST; VALUE_INIT; NULLPTR; OVERRIDE_DEFAULT_DELETE; EXPLICIT=n/a; COPY_MOVE; OWNERSHIP; C_STRING; SIZE_TYPES; CLI_OPTIONS; CLEANUP; SPECIAL_MEMBER_COMMENTS; STYLE; BUILD_TEST | Remaining modernization categories still need review | partial | `952d0749e89` |
@@ -294,7 +294,7 @@ Scope: **1268 directories**; **1230** differ from the base; **387** have task-le
 | `TAO/tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static` | CONST; VALUE_INIT; CONSTEXPR; OWNERSHIP; CLI_OPTIONS; LOG_FORMAT; CLEANUP; STYLE; BUILD_TEST; TEXT_API | Audit other applicable cleanup categories for this directory | partial | `443e0276d5b` |
 | `TAO/tests/Monitor/Marshal_Buffer` | NULLPTR; OWNERSHIP; BUILD_TEST | Full directory checklist remains open; runtime monitor scenario needs a configuration with ACE_HAS_MONITOR_FRAMEWORK enabled. | partial | `3fbef1afadd` |
 | `TAO/tests/Multiple_Inheritance` | CONST; VALUE_INIT; NULLPTR; OVERRIDE_DEFAULT_DELETE; COPY_MOVE; OWNERSHIP; CLI_OPTIONS; CLEANUP; STYLE; BUILD_TEST; TEXT_API | Other applicable modernization categories remain unreviewed | partial | `363e9ccec21` |
-| `TAO/tests/Sequence_Unit_Tests` | COPY_MOVE; BUILD_TEST | Full directory checklist remains open | partial | `` |
+| `TAO/tests/Sequence_Unit_Tests` | COPY_MOVE; STYLE; BUILD_TEST | Full directory checklist remains open | partial | `b139d08a293` |
 | `TAO/tests/objref_comparison_test` | CONST; OWNERSHIP; C_STRING; TEST_ASSERTIONS=n/a; SPECIAL_MEMBER_COMMENTS=n/a; STYLE; BUILD_TEST | Full directory checklist remains open | partial | `a0a2c04028f` |
 | `TAO/utils/catior` | CONST; OWNERSHIP; C_STRING; BUILD_TEST | Full directory checklist remains open; review parser locals, size/count types, stale comments, unused code/includes, and runtime fixtures. | partial | `fd9669231f3` |
 | `TAO/utils/monitor` | CONST; VALUE_INIT; SPECIAL_MEMBER_COMMENTS=n/a; STYLE; BUILD_TEST | Full directory checklist remains open | partial | `c8849a7fb45` |

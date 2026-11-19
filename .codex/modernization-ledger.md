@@ -13391,3 +13391,15 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Added Allman braces around four single-statement branches in `ACE/ace/Asynch_Pseudo_Task.cpp`; focused `clang-tidy -checks=-*,readability-braces-around-statements` and `git diff --check` passed.
 - A follow-up focused scan of all 446 `ACE/ace/*.cpp` files reports 1,769 brace diagnostics in 153 files, with no parse errors. Broader ACE/TAO coverage remains open.
 - No build or runtime test was run.
+
+
+## 2026-11-19 TAO AVStreams Component Switching braces
+
+- Added Allman braces around 28 single-statement control-flow bodies in `Connection_Manager.cpp`, `distributer.cpp`, `receiver.cpp`, and `sender.cpp`.
+- A focused `clang-tidy` scan across all 36 AVStreams translation units reported zero remaining missing-brace warnings. `git diff --check` passed. No build or runtime test was run.
+- Commit `1e0b43e30fc`.
+
+## 2026-11-19 TAO sequence test project spacing
+
+- Removed one redundant blank line in `Sequence_Unit_Tests.mpc`; the existing `valuetype` base and `after += Valuetype` dependency are retained. `git diff --check` passed. No build was run.
+- Commit `b139d08a293`.
