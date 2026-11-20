@@ -13513,3 +13513,9 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Added Allman braces to `CPP-connector.cpp`, `CPP-acceptor.cpp`, `test_dll.cpp`, `Logging_Handler.cpp`, and `Service_Reporter.cpp`. The two nonblocking examples include preprocessor-controlled code inside the newly braced branches.
 - Focused clang-tidy checks and `git diff --check` passed for each edited file. A rescan of all 400 translation units in `ACE/examples/compile_commands.json`, with C++17 and the ACE include root supplied, reports 423 remaining brace warnings and zero parse errors (down from 452 warnings). No build or runtime tests were run.
 - Commits: `2e732f1b4b4`, `bbed980d787`, `bbfbed44c3a`, `88251a10a82`, and `53178af02cb`. The full ACE/TAO brace audit remains open.
+
+## 2026-11-20 ACE UPIPE example brace follow-up
+
+- Added Allman braces to single-statement bodies in `ACE/examples/IPC_SAP/UPIPE_SAP/ex1.cpp`, `ex2.cpp`, and `ex3.cpp`.
+- Focused clang-tidy brace checks and `git diff --check` passed for all three files. No build or runtime test was run.
+- Commits: `2c7a0067e73`, `b7e4b31095e`, and `9f6131cc9c6`. The full ACE/TAO brace audit remains open.
