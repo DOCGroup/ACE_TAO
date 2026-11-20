@@ -259,11 +259,13 @@ Catior_i::catior (char const * str)
 
   buffer_ += "The Byte Order:\t";
   if (byteOrder == 1)
-    buffer_ += "Little Endian\n";
+    {
+      buffer_ += "Little Endian\n";
+    }
   else
-  {
-    buffer_ += "Big Endian\n";
-  }
+    {
+      buffer_ += "Big Endian\n";
+    }
 
   // First, read the type hint. This will be the type_id encoded in an
   // object reference.
