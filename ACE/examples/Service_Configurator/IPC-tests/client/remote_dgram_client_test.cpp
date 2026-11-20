@@ -36,7 +36,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("f:h:p:"));
 
   for (int c; (c = get_opt ()) != -1; )
-    switch (c)
+    {
+      switch (c)
       {
         case 'f':
           file_name = get_opt.opt_arg ();
@@ -51,6 +52,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
           print_usage_and_die ();
           break;
       }
+    }
 }
 
 int
@@ -66,10 +68,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_Mem_Map mmap (file_name);
 
   if (mmap (cp) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "mmap"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "mmap"),
+                        -1);
+    }
   //FUZZ: enable check_for_lack_ACE_OS
 
   // Next, send the file's contents.
@@ -77,14 +81,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ssize_t const cc = sd.send (cp, mmap.size (), sa);
 
   if (cc == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "send"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "send"),
+                        -1);
+    }
   else if (cc != static_cast<ssize_t> (mmap.size ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "Not all the contents of mmap file are sent."),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "Not all the contents of mmap file are sent."),
+                        -1);
+    }
   return 0;
 }
