@@ -828,10 +828,14 @@ namespace { // helpers for vsnprintf_emulation
     {
       const int used = static_cast<int> (n);
       if (!flags.has (SNPRINTF_LEFT) && width > used)
-        this->fill (' ', width - used);
+        {
+          this->fill (' ', width - used);
+        }
       this->out (s, n);
       if (flags.has (SNPRINTF_LEFT) && width > used)
-        this->fill (' ', width - used);
+        {
+          this->fill (' ', width - used);
+        }
     }
 
     void conv_int (ACE_UINT64 val, Snprintf_Flags flags,
@@ -840,14 +844,20 @@ namespace { // helpers for vsnprintf_emulation
       if (val == 0 && precision == 0)
         {
           if (flags.has (SNPRINTF_SPACE) && !flags.has (SNPRINTF_UNSIGNED))
-            this->fill (' ', 1);
+            {
+              this->fill (' ', 1);
+            }
           if (flags.has (SNPRINTF_ALT) && base == 8)
-            this->fill ('0', 1);
+            {
+              this->fill ('0', 1);
+            }
           return;
         }
 
       if (precision >= 0)
-        flags.remove (SNPRINTF_ZERO);
+        {
+          flags.remove (SNPRINTF_ZERO);
+        }
       if (precision == -1)
         {
           precision = 1;
@@ -867,7 +877,9 @@ namespace { // helpers for vsnprintf_emulation
 #endif
 
       if (base != 10)
-        flags.remove (SNPRINTF_GROUP);
+        {
+          flags.remove (SNPRINTF_GROUP);
+        }
       Snprintf_Digit_Grouping dg (flags, grouping, thousands_sep);
 
       char buf[100];
@@ -878,7 +890,9 @@ namespace { // helpers for vsnprintf_emulation
       for (ACE_UINT64 v = val; v; v /= base)
         {
           if (dg.next (it))
-            ++sep_chars;
+            {
+              ++sep_chars;
+            }
           *--it = static_cast<char> (v % base < 10 ?
                                      '0' + v % base : a + v % base - 10);
         }
@@ -891,11 +905,17 @@ namespace { // helpers for vsnprintf_emulation
         }
 
       if (flags.has (SNPRINTF_NEGATIVE))
-        *--it = '-';
+        {
+          *--it = '-';
+        }
       else if (flags.has (SNPRINTF_SPACE) && !flags.has (SNPRINTF_UNSIGNED))
-        *--it = ' ';
+        {
+          *--it = ' ';
+        }
       else if (flags.has (SNPRINTF_SIGN) && !flags.has (SNPRINTF_UNSIGNED))
-        *--it = '+';
+        {
+          *--it = '+';
+        }
 
       const bool has_sign = it < buf + sizeof buf - digits - sep_chars;
       bool has_0x = false;
@@ -971,9 +991,13 @@ namespace { // helpers for vsnprintf_emulation
             && val <= (std::numeric_limits<long double>::max)()))
         {
           if (val != val)
-            std::strcpy (it, flags.has (SNPRINTF_UCASE) ? "NAN" : "nan");
+            {
+              std::strcpy (it, flags.has (SNPRINTF_UCASE) ? "NAN" : "nan");
+            }
           else
-            std::strcpy (it, flags.has (SNPRINTF_UCASE) ? "INF" : "inf");
+            {
+              std::strcpy (it, flags.has (SNPRINTF_UCASE) ? "INF" : "inf");
+            }
           this->conv_str (buf, flags, width, -1);
           return;
         }
@@ -998,9 +1022,13 @@ namespace { // helpers for vsnprintf_emulation
           const int p = precision > 0 ? precision : (precision < 0 ? 6 : 1);
           precision = p - 1;
           if (exp < p && exp >= -4)
-            precision -= exp;
+            {
+              precision -= exp;
+            }
           else
-            flags.add (SNPRINTF_EXPONENT);
+            {
+              flags.add (SNPRINTF_EXPONENT);
+            }
         }
 
       if (flags.has (SNPRINTF_EXPONENT))
@@ -1015,11 +1043,15 @@ namespace { // helpers for vsnprintf_emulation
           *it++ = flags.has (SNPRINTF_UCASE) ? 'X' : 'x';
           long double mant = std::frexp (val, &exp);
           if (mant != 0)
-            exp -= 4;
+            {
+              exp -= 4;
+            }
           const char a = flags.has (SNPRINTF_UCASE) ? 'A' : 'a';
           *it++ = hex_digit (mant, a);
           if (precision >= 0 || flags.has (SNPRINTF_ALT) || mant > 0)
-            *it++ = radix;
+            {
+              *it++ = radix;
+            }
           for (int i = 0; i < precision || precision == -1; ++i)
             {
               if ((precision == -1 && mant == 0) || it == buf + sizeof buf - 8)
@@ -1092,7 +1124,9 @@ namespace { // helpers for vsnprintf_emulation
       if (flags.has (SNPRINTF_EXPONENT))
         {
           if (!flags.has (SNPRINTF_HEXPONENT))
-            *it++ = flags.has (SNPRINTF_UCASE) ? 'E' : 'e';
+            {
+              *it++ = flags.has (SNPRINTF_UCASE) ? 'E' : 'e';
+            }
           Snprintf_Buffer sb (it, buf + sizeof buf - it);
           Snprintf_Flags exp_flags;
           exp_flags.add (SNPRINTF_SIGN);
@@ -1108,11 +1142,17 @@ namespace { // helpers for vsnprintf_emulation
       if (flags.has (SNPRINTF_ZERO) && used < width)
         {
           if (has_sign)
-            this->fill (*it++, 1);
+            {
+              this->fill (*it++, 1);
+            }
           if (flags.has (SNPRINTF_HEXPONENT))
-            this->out (it, 2), it += 2;
+            {
+              this->out (it, 2), it += 2;
+            }
           if (width > used)
-            this->fill ('0', width - used);
+            {
+              this->fill ('0', width - used);
+            }
           width = -1;
         }
 
