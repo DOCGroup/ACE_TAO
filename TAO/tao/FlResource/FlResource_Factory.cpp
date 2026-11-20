@@ -26,8 +26,10 @@ namespace TAO
           }
 
         if (TAO_debug_level > 0)
-          TAOLIB_DEBUG ((LM_DEBUG,
-                         "TAO (%P|%t) - ACE_FlReactor created\n"));
+          {
+            TAOLIB_DEBUG ((LM_DEBUG,
+                           "TAO (%P|%t) - ACE_FlReactor created\n"));
+          }
 
         this->reactor_impl_ = reactor_impl.release ();
       }
