@@ -18,19 +18,21 @@ parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
   int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'o':
-        options.ior_output_file = get_opts.opt_arg ();
-        break;
+    {
+      switch (c)
+        {
+        case 'o':
+          options.ior_output_file = get_opts.opt_arg ();
+          break;
 
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("usage: %s -o <iorfile>\n"),
-                           argv [0]),
-                          -1);
-      }
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("usage: %s -o <iorfile>\n"),
+                             argv [0]),
+                            -1);
+        }
+    }
   return 0;
 }
 
@@ -66,10 +68,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         File_Ptr output_file (ACE_OS::fopen (options.ior_output_file.c_str (), ACE_TEXT ("w")),
                               ACE_OS::fclose);
         if (!output_file)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("Cannot open output file for writing IOR: %s"),
-                             options.ior_output_file.c_str ()),
-                            1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                               options.ior_output_file.c_str ()),
+                              1);
+          }
         if (std::fprintf (output_file.get (), "%s", ior.in ()) < 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot write IOR to output file\n")), 1);

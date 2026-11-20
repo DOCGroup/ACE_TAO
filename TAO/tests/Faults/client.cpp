@@ -21,47 +21,49 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
   int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'a':
-        options.abort_server = true;
-        break;
+    {
+      switch (c)
+        {
+        case 'a':
+          options.abort_server = true;
+          break;
 
-      case 'c':
-        options.crash_server = true;
-        break;
+        case 'c':
+          options.crash_server = true;
+          break;
 
-      case 'x':
-        options.shutdown = true;
-        break;
+        case 'x':
+          options.shutdown = true;
+          break;
 
-      case 's':
-        options.suicide = true;
-        break;
+        case 's':
+          options.suicide = true;
+          break;
 
-      case 'z':
-        options.self_shutdown = true;
-        break;
+        case 'z':
+          options.self_shutdown = true;
+          break;
 
-      case 'k':
-        options.ior = get_opts.opt_arg ();
-        break;
+        case 'k':
+          options.ior = get_opts.opt_arg ();
+          break;
 
-      case 'i':
-        options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
+        case 'i':
+          options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
 
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "[-a] [-c] [-x] [-s] [-z] "
-                           "-k <ior> "
-                           "-i <niterations> "
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage:  %s "
+                             "[-a] [-c] [-x] [-s] [-z] "
+                             "-k <ior> "
+                             "-i <niterations> "
+                             "\n",
+                             argv [0]),
+                            -1);
+        }
+    }
   // Indicates successful parsing of the command line
   return 0;
 }
@@ -79,9 +81,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            1);
+        }
 
       PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());

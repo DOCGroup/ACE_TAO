@@ -119,26 +119,28 @@ parse_args (int argc, ACE_TCHAR **argv, Server_Options &options)
   int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 's':
-        options.server_priority = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
+    {
+      switch (c)
+        {
+        case 's':
+          options.server_priority = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
 
-      case 'c':
-        options.client_priority = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
+        case 'c':
+          options.client_priority = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
 
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-s server priority "
-                           "-c client priority "
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage:  %s "
+                             "-s server priority "
+                             "-c client priority "
+                             "\n",
+                             argv [0]),
+                            -1);
+        }
+    }
 
   return 0;
 }
@@ -842,8 +844,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                 2);
             }
           else
-            // Unexpected error.
-            ACE_ASSERT (0);
+            {
+              // Unexpected error.
+              ACE_ASSERT (0);
+            }
         }
 
       // Wait for task to exit.

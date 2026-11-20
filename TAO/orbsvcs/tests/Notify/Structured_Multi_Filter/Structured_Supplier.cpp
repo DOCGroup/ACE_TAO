@@ -94,28 +94,30 @@ Supplier_Client::parse_args (int argc, ACE_TCHAR *argv[])
   int option {};
 
   while ((option = get_opts ()) != -1)
-    switch (option)
-      {
-      case 'f':
-        this->options_.use_filter = true;
-        this->options_.use_or_operator =
-          ACE_OS::strcasecmp (ACE_TEXT ("OR"), get_opts.optarg) == 0;
-        break;
+    {
+      switch (option)
+        {
+        case 'f':
+          this->options_.use_filter = true;
+          this->options_.use_or_operator =
+            ACE_OS::strcasecmp (ACE_TEXT ("OR"), get_opts.optarg) == 0;
+          break;
 
-      case 'e':
-        this->options_.event_count = ACE_OS::atoi (get_opts.optarg);
-        break;
+        case 'e':
+          this->options_.event_count = ACE_OS::atoi (get_opts.optarg);
+          break;
 
-      case 'o':
-        this->options_.ior_output_file = get_opts.opt_arg ();
-        break;
+        case 'o':
+          this->options_.ior_output_file = get_opts.opt_arg ();
+          break;
 
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("usage: %s [-f <AND|OR>] [-e num_events] -o <ior_output_file>\n"),
-                           argv [0]),
-                          -1);
-      }
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("usage: %s [-f <AND|OR>] [-e num_events] -o <ior_output_file>\n"),
+                             argv [0]),
+                            -1);
+        }
+    }
 
   return 0;
 }
@@ -242,9 +244,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Supplier sending %d events...\n", options.event_count));
       for (int i {}; i < options.event_count; ++i)
-        if (send_event (*supplier, i) != 0)
         {
-          return 1;
+          if (send_event (*supplier, i) != 0)
+            {
+              return 1;
+            }
         }
       ACE_DEBUG ((LM_DEBUG, "\nSupplier sent %d events.\n", options.event_count));
 

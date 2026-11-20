@@ -154,9 +154,11 @@ int DllOrb::fini ()
   TAO_Singleton_Manager * const tsm = TAO_Singleton_Manager::instance ();
   int const result = tsm->fini ();
   if (result == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) fini failed to destroy TAO_Singleton_Manager\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) fini failed to destroy TAO_Singleton_Manager\n")),
+                        -1);
+    }
 
   return 0;
 }
@@ -176,9 +178,11 @@ int DllOrb::svc ()
       CORBA::ULong const vmcid = ex.minor () & 0xFFFFF000U;
       CORBA::ULong const minor_code = ex.minor () & 0xFFFU;
       if (vmcid != CORBA::OMGVMCID || minor_code != 4)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) svc exits (-1)\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) svc exits (-1)\n")),
+                            -1);
+        }
     }
   catch (CORBA::Exception const &ex)
     {

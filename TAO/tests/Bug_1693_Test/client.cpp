@@ -48,16 +48,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         Foo::type_ulong check {};
 
         if (!(decoded_data >>= check))
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "ERROR: Unable to extract typedefed decoded "
-                             "data from Any\n"),
-                            -1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "ERROR: Unable to extract typedefed decoded "
+                               "data from Any\n"),
+                              -1);
+          }
 
         if (check != l)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "ERROR: Extracted value not equal "
-                             "to the encoded value\n"),
-                            -1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "ERROR: Extracted value not equal "
+                               "to the encoded value\n"),
+                              -1);
+          }
       }
 
       ACE_DEBUG ((LM_DEBUG,

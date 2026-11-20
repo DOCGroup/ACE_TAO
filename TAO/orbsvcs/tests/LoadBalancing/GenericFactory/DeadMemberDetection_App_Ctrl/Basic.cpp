@@ -26,13 +26,17 @@ CORBA::Boolean
 Basic::_non_existent ()
 {
   if (this->pong_delay_ > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P|%t)%T Basic::_non_existent server %d sleep %d seconds ...\n"),
-                this->server_id_,
-                this->pong_delay_));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t)%T Basic::_non_existent server %d sleep %d seconds ...\n"),
+                  this->server_id_,
+                  this->pong_delay_));
+    }
 
   for (int i {}; i < this->pong_delay_; ++i)
-    ACE_OS::sleep (1);
+    {
+      ACE_OS::sleep (1);
+    }
 
   return false;
 }
