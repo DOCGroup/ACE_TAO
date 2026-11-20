@@ -12,7 +12,9 @@ ACE_Reactor::run_event_loop ()
   ACE_Reactor *r = ACE_Reactor::instance ();
 
   if (r == 0)
-    return -1;
+    {
+      return -1;
+    }
 
   return r->run_reactor_event_loop (ACE_Reactor::check_reconfiguration);
 }
@@ -28,7 +30,9 @@ ACE_Reactor::run_event_loop (ACE_Time_Value &tv)
   ACE_Reactor *r = ACE_Reactor::instance ();
 
   if (r == 0)
-    return -1;
+    {
+      return -1;
+    }
 
   return r->run_reactor_event_loop
     (tv, ACE_Reactor::check_reconfiguration);
@@ -44,7 +48,9 @@ ACE_Reactor::run_alertable_event_loop ()
   ACE_Reactor *r = ACE_Reactor::instance ();
 
   if (r == 0)
-    return -1;
+    {
+      return -1;
+    }
 
   return r->run_alertable_reactor_event_loop (ACE_Reactor::check_reconfiguration);
 }
@@ -60,7 +66,9 @@ ACE_Reactor::run_alertable_event_loop (ACE_Time_Value &tv)
   ACE_Reactor *r = ACE_Reactor::instance ();
 
   if (r == 0)
-    return -1;
+    {
+      return -1;
+    }
 
   return r->run_alertable_reactor_event_loop
     (tv, ACE_Reactor::check_reconfiguration);

@@ -12,7 +12,9 @@ ACE_INLINE void
 ACE_Recyclable::recycle_state (ACE_Recyclable_State new_state)
 {
   if (this->recycle_state_ != ACE_RECYCLABLE_CLOSED)
-    this->recycle_state_ = new_state;
+    {
+      this->recycle_state_ = new_state;
+    }
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

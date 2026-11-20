@@ -22,7 +22,9 @@ int
 ACE_Tokenizer_T<ACE_CHAR_T>::delimiter (ACE_CHAR_T d)
 {
   if (delimiter_index_ == MAX_DELIMITERS)
-    return -1;
+    {
+      return -1;
+    }
 
   delimiters_[delimiter_index_].delimiter_ = d;
   delimiters_[delimiter_index_].replace_ = 0;
@@ -47,7 +49,9 @@ ACE_Tokenizer_T<ACE_CHAR_T>::delimiter_replace (ACE_CHAR_T d,
       }
 
   if (delimiter_index_ >= MAX_DELIMITERS)
-    return -1;
+    {
+      return -1;
+    }
 
   delimiters_[delimiter_index_].delimiter_ = d;
   delimiters_[delimiter_index_].replacement_ = replacement;
@@ -63,7 +67,9 @@ ACE_Tokenizer_T<ACE_CHAR_T>::preserve_designators (ACE_CHAR_T start,
                                      int strip)
 {
   if (preserves_index_ == MAX_PRESERVES)
-    return -1;
+    {
+      return -1;
+    }
 
   preserves_[preserves_index_].start_ = start;
   preserves_[preserves_index_].stop_ = stop;
@@ -146,9 +152,13 @@ ACE_Tokenizer_T<ACE_CHAR_T>::next ()
       if (this->is_delimiter (buffer_[index_],
                               replace,
                               replacement))
-        ++index_;
+        {
+          ++index_;
+        }
       else
-        break;
+        {
+          break;
+        }
     }
 
   // When we reach this point, buffer_[index_] is a non-delimiter and
@@ -171,7 +181,9 @@ ACE_Tokenizer_T<ACE_CHAR_T>::next ()
             }
 
           if (buffer_[index_] == stop)
-            break;
+            {
+              break;
+            }
         }
 
       if (strip)
@@ -200,7 +212,9 @@ ACE_Tokenizer_T<ACE_CHAR_T>::next ()
         {
           // Replace the delimiter.
           if (replace != 0)
-            buffer_[index_] = replacement;
+            {
+              buffer_[index_] = replacement;
+            }
 
           // Move the pointer up and return.
           ++index_;

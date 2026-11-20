@@ -235,12 +235,18 @@ operator > (ACE_Time_Value const &tv1,
 {
   // ACE_OS_TRACE ("operator >");
   if (tv1.sec () > tv2.sec ())
-    return 1;
+    {
+      return 1;
+    }
   else if (tv1.sec () == tv2.sec ()
            && tv1.usec () > tv2.usec ())
-    return 1;
+    {
+      return 1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 /// True if tv1 >= tv2.
@@ -250,12 +256,18 @@ operator >= (ACE_Time_Value const &tv1,
 {
   // ACE_OS_TRACE ("operator >=");
   if (tv1.sec () > tv2.sec ())
-    return 1;
+    {
+      return 1;
+    }
   else if (tv1.sec () == tv2.sec ()
            && tv1.usec () >= tv2.usec ())
-    return 1;
+    {
+      return 1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 /// Returns the value of the object as a timespec_t.
