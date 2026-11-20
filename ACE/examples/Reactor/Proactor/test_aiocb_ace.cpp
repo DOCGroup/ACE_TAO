@@ -89,9 +89,11 @@ Test_Aio::init ()
                                 O_RDWR | O_CREAT | O_TRUNC,
                                 0666);
   if (this->out_fd_ == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error: Opening file\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Error: Opening file\n"),
+                        -1);
+    }
 
   // Init the buffers.
   this->buffer_write_ = ACE::strnew ("Welcome to the world of AIO... AIO Rules !!!");
@@ -129,10 +131,12 @@ Test_Aio::do_aio ()
 
   // Fire off the aio write.
   if (aio_write (this->aiocb_write_) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "aio_write"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "aio_write"),
+                        -1);
+    }
 
   // Read from that file.
 
@@ -150,10 +154,12 @@ Test_Aio::do_aio ()
   // Fire off the aio write. If it doesnt get queued, carry on to get
   // the completion for the first one.
   if (aio_read (this->aiocb_read_) < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "aio_read"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "aio_read"),
+                        -1);
+    }
 
   // Wait for the completion on aio_suspend.
   struct aiocb *list_aiocb[2];
@@ -178,10 +184,12 @@ Test_Aio::do_aio ()
           if (aio_error (list_aiocb [1]) != EINPROGRESS)
             {
               if (aio_return (list_aiocb [1]) == -1)
-                ACE_ERROR_RETURN ((LM_ERROR,
-                                   "%p\n",
-                                   "aio_return, item 1"),
-                                  -1);
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     "%p\n",
+                                     "aio_return, item 1"),
+                                    -1);
+                }
               else
                 {
                   // Successful. Remember we have one less thing to finish.
@@ -190,17 +198,21 @@ Test_Aio::do_aio ()
                 }
             }
           else
-            ACE_DEBUG ((LM_DEBUG,
-                        "aio_error says aio 1 is in progress\n"));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "aio_error says aio 1 is in progress\n"));
+            }
         }
 
       if (aio_error (list_aiocb [0]) != EINPROGRESS)
         {
           if (aio_return (list_aiocb [0]) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "%p\n",
-                               "aio_return, item 0"),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "%p\n",
+                                 "aio_return, item 0"),
+                                -1);
+            }
           else
             {
               // Successful. Store the pointer somewhere and bump the
@@ -210,8 +222,10 @@ Test_Aio::do_aio ()
             }
         }
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    "aio_error says aio 0 is in progress\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "aio_error says aio 0 is in progress\n"));
+        }
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -231,16 +245,20 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   Test_Aio test_aio;
 
   if (test_aio.init () != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "AIOCB test failed:\n"
-                       "ACE_POSIX_AIOCB_PROACTOR may not work in this platform\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "AIOCB test failed:\n"
+                         "ACE_POSIX_AIOCB_PROACTOR may not work in this platform\n"),
+                        -1);
+    }
 
   if (test_aio.do_aio () != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "AIOCB test failed:\n"
-                       "ACE_POSIX_AIOCB_PROACTOR may not work in this platform\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "AIOCB test failed:\n"
+                         "ACE_POSIX_AIOCB_PROACTOR may not work in this platform\n"),
+                        -1);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "AIOCB test successful:\n"
