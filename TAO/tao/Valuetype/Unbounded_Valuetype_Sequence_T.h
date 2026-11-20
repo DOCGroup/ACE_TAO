@@ -105,13 +105,15 @@ private:
     TAO::unbounded_valuetype_sequence<object_t, object_t_var> const &source)
   {
     ::CORBA::ULong const length = source.length ();
-    if (!(strm << length)) {
-      return false;
-    }
-    for(CORBA::ULong i {}; i < length; ++i) {
-      if (!(strm << source[i])) {
+    if (!(strm << length))
+      {
         return false;
       }
+    for(CORBA::ULong i {}; i < length; ++i) {
+      if (!(strm << source[i]))
+        {
+          return false;
+        }
     }
     return true;
   }
@@ -121,20 +123,23 @@ private:
     using sequence = TAO::unbounded_valuetype_sequence<object_t, object_t_var>;
     using sequence_allocation_traits = typename sequence::allocation_traits;
     ::CORBA::ULong new_length {};
-    if (!(strm >> new_length)) {
-      return false;
-    }
-    if (new_length > strm.length()) {
+    if (!(strm >> new_length))
+      {
         return false;
-    }
+      }
+    if (new_length > strm.length())
+      {
+        return false;
+      }
     sequence tmp(new_length, new_length,
                  sequence_allocation_traits::allocbuf_noinit(new_length),
                  true);
     typename sequence::value_type * buffer = tmp.get_buffer();
     for(CORBA::ULong i {}; i < new_length; ++i) {
-      if (!(strm >> buffer[i])) {
-        return false;
-      }
+      if (!(strm >> buffer[i]))
+        {
+          return false;
+        }
     }
     tmp.swap(target);
     return true;
