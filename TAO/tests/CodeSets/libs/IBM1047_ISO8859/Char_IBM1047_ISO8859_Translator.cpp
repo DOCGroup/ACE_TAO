@@ -128,7 +128,7 @@ IBM1047_ISO8859::write_char_array (ACE_OutputCDR &out,
       return true;
     }
 
-  this->good_bit(out, 0);
+  this->good_bit(out, false);
   return false;
 }
 

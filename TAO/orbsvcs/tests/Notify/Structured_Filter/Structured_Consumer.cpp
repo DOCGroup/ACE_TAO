@@ -101,7 +101,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
     CosNotifyChannelAdmin::EventChannel_var ec =
-      client.create_event_channel ("MyEventChannel", 1);
+      client.create_event_channel ("MyEventChannel", true);
 
     CosNotifyChannelAdmin::AdminID admin_id {};
     CosNotifyChannelAdmin::ConsumerAdmin_var consumer_admin =

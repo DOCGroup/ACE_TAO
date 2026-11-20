@@ -168,7 +168,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       if (status == 0)
         {
           CosNotifyChannelAdmin::EventChannel_var ec =
-            client.create_event_channel ("MyEventChannel", 0);
+            client.create_event_channel ("MyEventChannel", false);
 
           sig_i* sig_impl {};
           ACE_NEW_THROW_EX (sig_impl, sig_i (client.orb ()), CORBA::NO_MEMORY ());

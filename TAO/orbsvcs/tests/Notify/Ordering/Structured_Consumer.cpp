@@ -132,7 +132,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       }
 
       CosNotifyChannelAdmin::EventChannel_var const ec =
-        client.create_event_channel ("MyEventChannel", 1);
+        client.create_event_channel ("MyEventChannel", true);
       CORBA::Object_var const object = client.orb ()->string_to_object (client.options ().ior);
       sig_var const sig = sig::_narrow (object.in ());
       ACE_ASSERT (!CORBA::is_nil (sig.in ()));

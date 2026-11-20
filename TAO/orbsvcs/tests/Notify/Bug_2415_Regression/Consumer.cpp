@@ -128,7 +128,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (status == 0)
         {
           CosNotifyChannelAdmin::EventChannel_var ec =
-            client.create_event_channel ("MyEventChannel", 1);
+            client.create_event_channel ("MyEventChannel", true);
 
           CORBA::Object_var object =
             client.orb ()->string_to_object (client.options ().ior);

@@ -202,7 +202,7 @@ ACE_IBM1047_ISO8859::write_char_array (ACE_OutputCDR& out,
       return 1;
     }
 
-  this->good_bit(out, 0);
+  this->good_bit(out, false);
   return 0;
 }
 
@@ -351,7 +351,7 @@ ACE_ISO8859_IBM1047::write_char_array (ACE_OutputCDR &out,
       return 1;
     }
 
-  this->good_bit (out, 0);
+  this->good_bit (out, false);
   return 0;
 }
 

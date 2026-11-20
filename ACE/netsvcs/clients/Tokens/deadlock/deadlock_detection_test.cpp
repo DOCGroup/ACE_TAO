@@ -265,7 +265,7 @@ mutex_test (Options const &options)
   two.second_ = two.second_owner_.get ();
 
   // Tell the token manager to be verbose when reporting deadlock.
-  ACE_Token_Manager::instance ()->debug (1);
+  ACE_Token_Manager::instance ()->debug (true);
 
   if (thr_mgr.spawn (two_token_thread, &one, THR_BOUND) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "first spawn"), -1);
@@ -317,7 +317,7 @@ rwlock_test (Options const &options)
   writer.second_ = writer.second_owner_.get ();
 
   // Tell the token manager to be verbose when reporting deadlock.
-  ACE_Token_Manager::instance ()->debug (1);
+  ACE_Token_Manager::instance ()->debug (true);
 
   for (Two_Tokens &reader : readers)
     if (thr_mgr.spawn (two_token_thread, &reader, THR_BOUND) == -1)

@@ -222,7 +222,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (status == 0)
         {
           CosNotifyChannelAdmin::EventChannel_var ec =
-            client.create_event_channel ("MyEventChannel", 0);
+            client.create_event_channel ("MyEventChannel", false);
 
           if (client.options ().use_deadline_ordering)
             {

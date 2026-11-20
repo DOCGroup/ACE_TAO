@@ -91,7 +91,7 @@ DSI_Simple_Server::invoke (CORBA::ServerRequest_ptr request,
                                   target_request.inout (),
                                   0);
 
-  target_request->_tao_lazy_evaluation (1);
+  target_request->_tao_lazy_evaluation (true);
 
   // Outgoing request must have the same byte order as the incoming one.
   target_request->_tao_byte_order (request->_tao_incoming_byte_order ());

@@ -201,7 +201,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       Supplier_Options const& options = client.options ();
 
       CosNotifyChannelAdmin::EventChannel_var const ec =
-        client.create_event_channel ("MyEventChannel", 0);
+        client.create_event_channel ("MyEventChannel", false);
       CosNotification::QoSProperties qos (1);
       qos.length (1);
       qos[0].name = CORBA::string_dup (CosNotification::OrderPolicy);

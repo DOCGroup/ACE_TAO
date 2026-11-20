@@ -109,7 +109,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Consumer_Options const& options = client.options ();
       CosNotifyChannelAdmin::EventChannel_var ec =
-        client.create_event_channel ("Struct_Multi_Filter", 1);
+        client.create_event_channel ("Struct_Multi_Filter", true);
 
       CosNotifyChannelAdmin::AdminID admin_id {};
       CosNotifyChannelAdmin::ConsumerAdmin_var consumer_admin =

@@ -212,7 +212,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Supplier_Options const& options = client.options ();
       CosNotifyChannelAdmin::EventChannel_var ec =
-        client.create_event_channel ("Struct_Multi_Filter", 0);
+        client.create_event_channel ("Struct_Multi_Filter", false);
       ACE_ASSERT (!CORBA::is_nil (ec.in ()));
 
       CORBA::ORB_ptr const orb = client.orb ();
