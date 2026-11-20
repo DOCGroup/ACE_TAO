@@ -59,11 +59,17 @@ TAO_ECG_Mcast_Gateway::init (int argc, ACE_TCHAR* argv[])
             {
               ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT ("receiver")) == 0)
-                this->service_type_ = ECG_MCAST_RECEIVER;
+                {
+                  this->service_type_ = ECG_MCAST_RECEIVER;
+                }
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT ("sender")) == 0)
-                this->service_type_ = ECG_MCAST_SENDER;
+                {
+                  this->service_type_ = ECG_MCAST_SENDER;
+                }
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT ("two_way")) == 0)
-                this->service_type_ = ECG_MCAST_TWO_WAY;
+                {
+                  this->service_type_ = ECG_MCAST_TWO_WAY;
+                }
               else
                 {
                   ORBSVCS_ERROR ((LM_ERROR,
@@ -85,11 +91,17 @@ TAO_ECG_Mcast_Gateway::init (int argc, ACE_TCHAR* argv[])
             {
               ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT ("basic")) == 0)
-                this->address_server_type_ = ECG_ADDRESS_SERVER_BASIC;
+                {
+                  this->address_server_type_ = ECG_ADDRESS_SERVER_BASIC;
+                }
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT ("source")) == 0)
-                this->address_server_type_ = ECG_ADDRESS_SERVER_SOURCE;
+                {
+                  this->address_server_type_ = ECG_ADDRESS_SERVER_SOURCE;
+                }
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT ("type")) == 0)
-                this->address_server_type_ = ECG_ADDRESS_SERVER_TYPE;
+                {
+                  this->address_server_type_ = ECG_ADDRESS_SERVER_TYPE;
+                }
               else
                 {
                   ORBSVCS_ERROR ((LM_ERROR,
@@ -122,11 +134,17 @@ TAO_ECG_Mcast_Gateway::init (int argc, ACE_TCHAR* argv[])
             {
               ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT ("basic")) == 0)
-                this->handler_type_ = ECG_HANDLER_BASIC;
+                {
+                  this->handler_type_ = ECG_HANDLER_BASIC;
+                }
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT ("complex")) == 0)
-                this->handler_type_ = ECG_HANDLER_COMPLEX;
+                {
+                  this->handler_type_ = ECG_HANDLER_COMPLEX;
+                }
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT ("udp")) == 0)
-                this->handler_type_ = ECG_HANDLER_UDP;
+                {
+                  this->handler_type_ = ECG_HANDLER_UDP;
+                }
               else
                 {
                   ORBSVCS_ERROR ((LM_ERROR,
@@ -200,7 +218,9 @@ TAO_ECG_Mcast_Gateway::init (int argc, ACE_TCHAR* argv[])
     }
 
   if (this->validate_configuration () == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
   {
     return result;
