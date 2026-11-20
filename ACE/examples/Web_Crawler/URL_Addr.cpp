@@ -135,9 +135,11 @@ ACE_URL_Addr::ACE_URL_Addr (const ACE_URL_Addr &addr)
     addr_string_ {}
 {
   if (this->set (addr) == -1)
+  {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("ACE_URL_Addr::ACE_URL_Addr")));
+  }
 }
 
 int
@@ -165,9 +167,11 @@ void
 ACE_URL_Addr::operator= (const ACE_URL_Addr &addr)
 {
   if (this->set (addr) == -1)
+  {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("ACE_URL_Addr::ACE_URL_Addr")));
+  }
 }
 
 u_long

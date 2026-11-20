@@ -32,14 +32,20 @@ parent (char * const shm)
   // This is a critical section, which is protected by the mutex
   // semaphore.
   for (char c = 'a'; c <= 'z'; ++c)
+  {
     *current++ = c;
+  }
 
   *current = '\0';
 
   if (mutex.release () == -1)
+  {
     ACE_ERROR ((LM_ERROR, "%p", "parent mutex.release"));
+  }
   else if (synch.acquire () == -1)
+  {
     ACE_ERROR ((LM_ERROR, "%p", "parent synch.acquire"));
+  }
 
   if (my_alloc.remove () == -1)
   {
@@ -69,15 +75,21 @@ child (char const * const shm)
   // can do non-blocking acquire() calls with the ACE System V
   // semaphore wrappers.
   while (mutex.tryacquire () == -1)
+  {
     if (errno == EAGAIN)
+    {
       ACE_DEBUG ((LM_DEBUG, "spinning in child!\n"));
+    }
     else
     {
       ACE_ERROR_RETURN ((LM_ERROR, "child mutex.tryacquire"), 1);
     }
+  }
 
   for (char const *s = shm; *s != '\0'; ++s)
+  {
     ACE_DEBUG ((LM_DEBUG, "%c", *s));
+  }
 
   ACE_DEBUG ((LM_DEBUG, "\n"));
 

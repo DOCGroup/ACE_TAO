@@ -170,9 +170,11 @@ dispatch (void *arg)
       result = r->handle_events ();
 
       if (result <= 0)
+      {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("Dispatch: handle_events (): %d"),
                     result));
+      }
     }
 
   ACE_NOTREACHED (return ACE_THR_FUNC_RETURN_NULL);
@@ -240,9 +242,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *[])
               break;
             }
           else
+          {
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("%p error handling events\n"),
                         ACE_TEXT ("main")));
+          }
         }
     }
 

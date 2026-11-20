@@ -62,17 +62,21 @@ Input_Handler::schedule_timer (void *argument)
   std::unique_ptr<Reactor_Timer_Handler> handler (
     new (std::nothrow) Reactor_Timer_Handler);
   if (!handler)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        "not enough memory?\n"),
                       -1);
+  }
 
   long const tid = this->reactor ()->schedule_timer (handler.get (),
                                                      handler.get (),
                                                      ACE_Time_Value (0, delay));
   if (tid == -1)
+  {
     ACE_ERROR_RETURN ((LM_DEBUG,
                        "Unable to schedule timer\n"),
                       -1);
+  }
 
   handler->set_timer_id (tid);
   handler.release ();
@@ -216,7 +220,9 @@ Reactor_Timer_Queue_Test_Driver::run_test ()
 
   // Run until we say stop.
   while (!thandler_.done ())
+  {
     ACE_Reactor::instance ()->handle_events ();
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               "TIMER TEST ENDED\n"));

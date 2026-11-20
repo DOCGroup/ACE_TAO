@@ -32,10 +32,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   IPC_SERVER peer_acceptor;
 
   if (peer_acceptor.init (argc, argv) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("init")),
                       -1);
+  }
   return peer_acceptor.svc ();
 }
 

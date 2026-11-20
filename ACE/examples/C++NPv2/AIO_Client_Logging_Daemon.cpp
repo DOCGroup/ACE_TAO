@@ -219,7 +219,9 @@ void AIO_CLD_Acceptor::close () {
     iter (clients_.begin ());
   AIO_Input_Handler **ih;
   for (; iter.next (ih); ++iter)
+  {
     delete *ih;
+  }
 }
 
 AIO_Input_Handler * AIO_CLD_Acceptor::make_handler () {
@@ -325,6 +327,7 @@ int AIO_Client_Logging_Daemon::init
                        ACE_Get_Opt::ARG_REQUIRED);
 
   for (int c; (c = get_opt ()) != -1;)
+  {
     switch (c) {
     case 'p': // Client logging daemon acceptor port number.
       cld_port = static_cast<u_short> (ACE_OS::atoi (get_opt.opt_arg ()));
@@ -337,6 +340,7 @@ int AIO_Client_Logging_Daemon::init
         (sld_host, get_opt.opt_arg (), MAXHOSTNAMELEN);
       break;
     }
+  }
 
   if (cld_addr_.set (cld_port) == -1 ||
       sld_addr_.set (sld_port, sld_host) == -1)

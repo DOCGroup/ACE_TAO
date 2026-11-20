@@ -62,10 +62,12 @@ do_parent (ACE_TCHAR const fifo_name[],
   // Read from input file and write into input end of the fifo.
 
   while ((len = ACE_OS::read (inputfd, buf, sizeof buf)) > 0)
+  {
     if (fifo_sender.send (buf, len) != len)
     {
       return -1;
     }
+  }
 
   if (len == -1)
   {
@@ -131,10 +133,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // wait for child to ACE_OS::exit.
       if (ACE_OS::waitpid (child_pid, nullptr, 0) == -1)
+      {
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("%n: %p\n%a"),
                     ACE_TEXT ("waitpid"),
                     1));
+      }
     }
 
   return 0;

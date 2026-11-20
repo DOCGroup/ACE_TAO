@@ -41,9 +41,11 @@ int
 Event_Analyzer::put (ACE_Message_Block *mb, ACE_Time_Value *)
 {
   if (Options::instance ().debug ())
+  {
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%t) passing through Event_Analyser::put() (%s)\n"),
                 this->is_reader () ? ACE_TEXT ("reader") : ACE_TEXT ("writer")));
+  }
 
   if (mb->msg_type () == ACE_Message_Block::MB_IOCTL)
   {
@@ -74,7 +76,9 @@ Event_Analyzer::info (ACE_TCHAR **strp, size_t length) const
   ACE_TCHAR const * const module_name = this->name ();
 
   if (*strp == nullptr && (*strp = ACE_OS::strdup (module_name)) == nullptr)
+  {
     return -1;
+  }
   else
   {
     ACE_OS::strncpy (*strp, module_name, length);

@@ -17,10 +17,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   if (peer_acceptor.init (argc,
                           argv) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("init")),
                       -1);
+  }
 
   return peer_acceptor.svc ();
 }

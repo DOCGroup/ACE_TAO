@@ -90,7 +90,9 @@ producer (void *arg)
           Message_Block_Owner message {mb};
 
           if (msg_queue->enqueue_tail (mb) == -1)
+          {
             ACE_ERROR ((LM_ERROR, "(%t) %p\n", "put_next"));
+          }
           else
           {
             message.release ();
@@ -119,7 +121,9 @@ producer (void *arg)
 
           // Enqueue in priority order.
           if (msg_queue->enqueue_prio (mb) == -1)
+          {
             ACE_ERROR ((LM_ERROR, "(%t) %p\n", "put_next"));
+          }
           else
             {
               message.release ();

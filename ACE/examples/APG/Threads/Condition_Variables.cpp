@@ -67,7 +67,9 @@ HA_CommandHandler::svc ()
     {
       this->mutex_.acquire ();
       while (!this->rep_.is_free ())
+      {
         this->waitCond_.wait ();
+      }
       this->rep_.set_owner (this);
       this->mutex_.release ();
 

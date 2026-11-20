@@ -15,7 +15,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   timer.start ();
 
   for (int i = 0; i < iterations; ++i)
+  {
     ACE_OS::getpid ();
+  }
 
   timer.stop ();
 

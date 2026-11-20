@@ -45,22 +45,33 @@ Malloc::instance ()
       Options const *const options = Options::instance ();
 
       if (options->child ())
+      {
         return std::make_unique<ACE_Allocator_Adapter<M_ALLOCATOR>> ();
+      }
       else if (options->spawn_threads ())
         {
           if (options->use_sbrk ())
+          {
             return std::make_unique<ACE_Allocator_Adapter<SB_ALLOCATOR>> ();
+          }
           else if (options->use_shmem ())
+          {
             return std::make_unique<ACE_Allocator_Adapter<ST_ALLOCATOR>> ();
+          }
           else
           {
             return std::make_unique<ACE_Allocator_Adapter<L_ALLOCATOR>> ();
           }
         }
       else if (options->use_mmap ())
+      {
         return std::make_unique<ACE_Allocator_Adapter<M_ALLOCATOR>> ();
-      else // Use Shared_Memory_Pool.
+      }
+      else
+      {
+        // Use Shared_Memory_Pool.
         return std::make_unique<ACE_Allocator_Adapter<SP_ALLOCATOR>> ();
+      }
     } ();
 
   return instance.get ();

@@ -81,7 +81,9 @@ My_Task::recursive (size_t depth)
   ACE_TRACE ("My_Task::recursive");
 
   if (depth > 0)
+  {
     return recursive (depth - 1);
+  }
   else
   {
     return 0;
@@ -124,10 +126,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   int const n_threads = argc > 3 ? ACE_OS::atoi (argv[3]) : 4;
 
   if (task.activate (THR_BOUND | THR_DETACHED, n_threads) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "activate"),
                       -1);
+  }
 
   // Wait for all the threads to exit.
   ACE_Thread_Manager::instance ()->wait ();

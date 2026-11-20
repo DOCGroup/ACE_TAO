@@ -199,9 +199,11 @@ Mem_Map_Stream::grow_file_and_remap ()
   if (n == -1)
     {
       if (OPTIONS::instance ()->debug ())
+      {
         ACE_ERROR ((LM_ERROR,
                     "%p\n",
                     "recv"));
+      }
       return -1;
     }
   else if (n == 0)

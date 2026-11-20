@@ -87,14 +87,18 @@ Server_Events::Server_Events (u_short port,
 
   if (ACE_OS::hostname (this->hostname_,
                         MAXHOSTNAMELEN) == -1)
+  {
     ACE_ERROR ((LM_ERROR,
                 "%p\n",
                 "hostname"));
 
+  }
   else if (this->mcast_dgram_.join (this->mcast_addr_) == -1)
+  {
     ACE_ERROR ((LM_ERROR,
                 "%p\n",
                 "join"));
+  }
   else
     {
       // A null wait time blocks in the beginning.
@@ -198,10 +202,12 @@ Server_Events::handle_input (ACE_HANDLE)
                                          this->hostname_,
                                          ACE_Time_Value::zero,
                                          ACE_Time_Value (DURATION)) == -1)
+          {
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%p\n",
                                "schedule_timer"),
                               -1);
+          }
           this->initialized_ = 1;
         }
 
@@ -227,16 +233,20 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   if (reactor.register_handler (&server_events,
                                 ACE_Event_Handler::READ_MASK) == -1)
+  {
     ACE_ERROR ((LM_ERROR,
                 "%p\n%a",
                 "register_handler",
                 1));
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               "starting up server\n"));
 
   for (;;)
+  {
     reactor.handle_events (server_events.wait_time ());
+  }
 
   ACE_NOTREACHED (return 0;)
 }

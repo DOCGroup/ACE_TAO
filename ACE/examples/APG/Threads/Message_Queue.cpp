@@ -56,9 +56,11 @@ Message_Receiver::read_header (DeviceCommandHeader &header)
 {
   ssize_t const result = this->peer ().recv_n (&header, sizeof (header));
   if (result <= 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                        ACE_TEXT ("Receive failure")),
                       -1);
+  }
   return 0;
 }
 // Listing 3 code/ch12
@@ -94,8 +96,10 @@ Message_Receiver::handle_input (ACE_HANDLE)
       ACE_Message_Block_Unique_Ptr shutdown_message {this->shut_down_message ()};
       if (!shutdown_message
           || this->handler_->putq (shutdown_message.get ()) == -1)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Failed to enqueue shutdown\n")),
                           -1);
+      }
       shutdown_message.release ();
       return -1;
     }
@@ -108,8 +112,10 @@ Message_Receiver::handle_input (ACE_HANDLE)
   message_block->copy (reinterpret_cast<char const *> (&dch), sizeof dch);
   // Copy the payload.
   if (this->copy_payload (*message_block, dch.length_) < 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                        ACE_TEXT ("Receive failure")), -1);
+  }
   // Pass it off to the handler thread.
   if (this->handler_->putq (message_block.get ()) == -1)
   {
@@ -164,8 +170,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   Acceptor acceptor (&handler);
   ACE_INET_Addr addr (port);
   if (acceptor.open (addr) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                        ACE_TEXT ("Failed to open connection")), -1);
+  }
 
   ACE_Reactor::instance ()->run_reactor_event_loop ();
   //run the reactive event loop

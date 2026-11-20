@@ -129,7 +129,9 @@ Supplier_Router::info (ACE_TCHAR **strp, size_t length) const
                    ACE_TEXT ("# supplier router\n"));
 
   if (*strp == nullptr && (*strp = ACE_OS::strdup (module_name)) == nullptr)
+  {
     return -1;
+  }
   else
   {
     ACE_OS::strncpy (*strp, module_name, length);

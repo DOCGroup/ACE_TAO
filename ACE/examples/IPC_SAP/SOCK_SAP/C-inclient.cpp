@@ -74,12 +74,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // flow control).
 
   while ((r_bytes = ACE_OS::read (ACE_STDIN, buf, sizeof buf)) > 0)
+  {
     for (w_bytes = 0; w_bytes < r_bytes; w_bytes += n)
+    {
       if ((n = ACE_OS::send (s_handle, buf + w_bytes,
                       r_bytes - w_bytes)) < 0)
       {
         ACE_OS::perror (ACE_TEXT("write")), ACE_OS::exit (1);
       }
+    }
+  }
 
   if (ACE_OS::recv (s_handle, buf, 1) == 1)
   {

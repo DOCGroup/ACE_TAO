@@ -13581,3 +13581,9 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Focused clang-tidy brace checks and `git diff --check` passed for each edited file. No build or runtime test was run.
 - Re-scanned all 400 translation units in `ACE/examples/compile_commands.json`: 199 brace warnings remain, down from 216. Five translation units still report the unrelated clang `-Wnon-pod-varargs` error at `APG/Naming/Thermometer.h:41`.
 - Commits: `a73716069cf`, `08cc76f9413`, `346bddbfd31`, and `dc695191b7c`. The full ACE/TAO brace audit remains open.
+
+## 2026-11-20 ACE examples brace follow-up
+
+- Added Allman braces to the 171 single-statement bodies reported across 59 files in `ACE/examples`. Also recorded the immediately preceding focused edits in `test_hash_map_manager.cpp`, `SC_Server.cpp`, `Connection_Handler.cpp`, `test_upipe.cpp`, and `bounded_buffer.cpp`.
+- Re-scanned all 400 translation units in `ACE/examples/compile_commands.json` with C++17 and the ACE include root: zero brace warnings remain. The scan still reports the pre-existing `Thermometer.h:41` `-Wnon-pod-varargs` error in five translation units; it is unrelated to these brace edits. `git diff --check` passed. No build or runtime tests were run.
+- Commits: `86e53df860d`, `a54c40acea1`, `4391b09f518`, `0425002d452`, `6bf64db4806`, and the current brace batch. The full ACE/TAO brace audit remains open.

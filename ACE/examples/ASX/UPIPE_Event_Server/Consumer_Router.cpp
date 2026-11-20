@@ -68,16 +68,20 @@ Consumer_Router::svc ()
   ACE_ASSERT (this->is_reader ());
 
   if (options.debug ())
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) starting svc in %s\n"),
                 this->name ()));
+  }
 
   ACE_Message_Block *mb {};
   while (this->getq (mb) > 0)
     {
       UPIPE_Event_Server::Message_Block_Owner message {mb};
       if (this->put_next (mb) == -1)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%t) put_next failed in %s\n"),
                            this->name ()), -1);
+      }
       message.release ();
     }
 
@@ -127,7 +131,9 @@ Consumer_Router::info (ACE_TCHAR **strp, size_t length) const
                    ACE_TEXT ("# consumer router\n"));
 
   if (*strp == nullptr && (*strp = ACE_OS::strdup (module_name)) == nullptr)
+  {
     return -1;
+  }
   else
   {
     ACE_OS::strncpy (*strp, module_name, length);

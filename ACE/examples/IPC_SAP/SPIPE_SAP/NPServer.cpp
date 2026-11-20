@@ -22,9 +22,11 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
   // Initialize named pipe listener.
 
   if (acceptor.open (ACE_SPIPE_Addr (rendezvous)) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("open")), 1);
+  }
 
   for (;;)
     {
@@ -33,10 +35,12 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
 
       // Accept a client connection.
       if (acceptor.accept (new_stream, nullptr) == -1)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"),
                            ACE_TEXT ("accept")),
                           1);
+      }
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Accepted connection\n")));

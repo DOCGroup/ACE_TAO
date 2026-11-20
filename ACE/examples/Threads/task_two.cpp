@@ -79,12 +79,16 @@ Task_Test::svc ()
   ACE_DEBUG ((LM_DEBUG, "(%t) svc: waiting\n"));
 
   for (;;)
+  {
     if (max_count.load (std::memory_order_relaxed) >= n_threads)
+    {
       break;
+    }
     else
     {
       ACE_Thread::yield ();
     }
+  }
 
   ACE_DEBUG ((LM_DEBUG, "(%t) svc: finished waiting\n"));
   return 0;
@@ -131,14 +135,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Wait for initialization to kick in.
       while (max_count.load (std::memory_order_relaxed) == 0)
+      {
         ACE_Thread::yield ();
+      }
 
       ACE_DEBUG ((LM_DEBUG, "(%t) waiting for threads to finish\n"));
 
       // Wait for the threads to finish this iteration.
       while (max_count.load (std::memory_order_relaxed) != n_threads
              && wait_count.load (std::memory_order_relaxed) != 0)
+      {
         ACE_Thread::yield ();
+      }
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) iteration %d finished, max_count %d, wait_count %d, waiting for tasks to exit\n",
@@ -151,7 +159,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Release the completed tasks before creating the next iteration's tasks.
       for (int k = 0; k < n_threads; ++k)
+      {
         task_array[k].reset ();
+      }
     }
 
   ACE_DEBUG ((LM_DEBUG, "(%t) shutting down the test\n"));

@@ -55,29 +55,35 @@ malloc_recurse (int count)
       void *const ptr = Malloc::instance ()->malloc (alloc_size);
 
       if (ptr == nullptr)
+      {
         ACE_ERROR ((LM_ERROR,
                     "(%P|%t) *** malloc of size %d failed, %p\n%a",
                    "malloc",
                     alloc_size));
+      }
       else
         {
           unsigned char const fill_value = default_char.fetch_add (1);
           std::memset (ptr, fill_value, alloc_size);
 
           if (Options::instance ()->debug ())
+          {
             ACE_DEBUG ((LM_INFO,
                         "(%P|%t) %p (alloc), size = %d\n",
                         ptr,
                         alloc_size));
+          }
 
           // Call ourselves recursively
           malloc_recurse (count - 1);
 
           if (Options::instance ()->debug ())
+          {
             ACE_DEBUG ((LM_INFO,
                         "(%P|%t) %p (free), size = %d\n",
                         ptr,
                         alloc_size));
+          }
           Malloc::instance ()->free (ptr);
         }
     }
@@ -190,7 +196,9 @@ wait_for_children ()
       pid_t pid;
 
       while ((pid = ACE_OS::wait (0)) != -1)
+      {
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) reaped pid = %d\n", pid));
+      }
     }
 #endif /* ACE_WIN32 */
 }
@@ -229,7 +237,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       for (size_t i = 0;
            i < options->spawn_count ();
            ++i)
+      {
         spawn ();
+      }
 
       wait_for_children ();
       Malloc::instance ()->remove ();

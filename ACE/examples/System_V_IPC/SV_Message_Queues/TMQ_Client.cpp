@@ -31,12 +31,16 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                                                recv_msg (pid);
 
   if (msgque.send (send_msg) < 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                        ACE_TEXT ("msgque.send")), 1);
+  }
 
   if (msgque.recv (recv_msg) < 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                        ACE_TEXT ("msgque.recv")), 1);
+  }
 
   Message_Data const &recv_msg_data = recv_msg.data ();
 

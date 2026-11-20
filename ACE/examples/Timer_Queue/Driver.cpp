@@ -123,7 +123,9 @@ Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::parse_commands (char const *buf)
           }
 
         if (schedule_cmd_->execute (&useconds) == -1)
+        {
           ACE_ERROR_RETURN ((LM_ERROR, "%t %p\n", "new timer failed"), -1);
+        }
       }
       break; // Cancel an existing timer.
       /* NOTREACHED */
@@ -138,9 +140,11 @@ Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::parse_commands (char const *buf)
           }
 
         if (cancel_cmd_->execute (&id) == -1)
+        {
           ACE_DEBUG ((LM_DEBUG,
                       "Timer #%q is not valid\n",
                       static_cast<ACE_INT64> (id)));
+        }
       }
       break;
       /* NOTREACHED */

@@ -121,7 +121,9 @@ Process_Per_Connection_Logging_Server::handle_data (ACE_SOCK_Stream *client)
   Logging_Handler logging_handler (log_file, *client);
 
   while (logging_handler.log_record () != -1)
+  {
     continue;
+  }
 
   log_file.close ();
   return 0;
@@ -134,7 +136,9 @@ Process_Per_Connection_Logging_Server::run (int argc, char *argv[])
   // If there are 2 command line arguments after prog_name_, this
   // is a spawned worker process. Else run as the master.
   if (argc == 3)
+  {
     return run_worker (argc, argv);  // Only on Win32.
+  }
   else
   {
     return run_master (argc, argv);
@@ -151,10 +155,12 @@ Process_Per_Connection_Logging_Server::run_master (int argc, char *argv[])
   }
 
   for (;;)
+  {
     if (handle_connections () == -1)
     {
       return -1;
     }
+  }
 
   ACE_NOTREACHED (return 0;)
 }

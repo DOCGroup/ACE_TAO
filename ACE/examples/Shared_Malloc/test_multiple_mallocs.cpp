@@ -80,10 +80,12 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
       if (shmem_request->bind ("foo",
                                data) == -1)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
                            "bind"),
                           1);
+      }
     }
   data = nullptr;
 
@@ -111,12 +113,16 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
       if (shmem_response->bind ("foo",
                                 data) == -1)
+      {
         ACE_ERROR ((LM_ERROR,
                     "%p\n",
                     "bind"));
+      }
       else
+      {
         ACE_DEBUG ((LM_DEBUG,
                     "Run again to see results and release resources.\n"));
+      }
     }
 
   return 0;

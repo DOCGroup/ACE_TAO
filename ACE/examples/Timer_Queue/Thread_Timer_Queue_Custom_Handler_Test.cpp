@@ -130,9 +130,11 @@ Custom_Handler_Input_Task::shutdown_timer (void *)
 #else
   // Cancel the thread timer queue task "preemptively."
   if (ACE_Thread::cancel (this->queue_->thr_id ()) == -1)
+  {
     ACE_ERROR ((LM_ERROR,
                 "%p\n",
                 "cancel"));
+  }
 #endif /* ACE_LACKS_PTHREAD_CANCEL */
 
   // -1 indicates we are shutting down the application.
@@ -218,16 +220,22 @@ Thread_Timer_Queue_Custom_Handler_Test::init ()
   shutdown_cmd_.reset (raw_shutdown_cmd);
 
   if (this->input_task_.activate () == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        "cannot activate input task"),
                       -1);
+  }
   else if (this->timer_queue_.activate () == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        "cannot activate timer queue"),
                       -1);
+  }
   else if (ACE_Thread_Manager::instance ()->wait () == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        "wait on Thread_Manager failed"),
                       -1);
+  }
   return 0;
 }

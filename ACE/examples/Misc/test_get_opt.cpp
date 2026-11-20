@@ -10,6 +10,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("ab:cd:ef:gh:"));
 
   for (int option = get_opt (); option != EOF; option = get_opt ())
+  {
     switch (option)
       {
       case 'a':
@@ -40,10 +41,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ACE_DEBUG ((LM_DEBUG, "got %c, which is unrecognized!\n", option));
         break;
       }
+  }
 
   for (int i = get_opt.opt_ind (); i < argc; ++i)
+  {
     ACE_DEBUG ((LM_DEBUG, "optind = %d, argv[optind] = %s\n",
                 i, argv[i]));
+  }
 
   return 0;
 }

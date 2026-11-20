@@ -112,9 +112,11 @@ Input_Task::add_timer (void *argument)
     std::make_shared<std::atomic<long>> (-1));
   std::unique_ptr<Handler> handler (new (std::nothrow) Handler (expire_at, timer_id));
   if (!handler)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        "handler allocation failed"),
                       -1);
+  }
 
   Handler *const raw_handler = handler.release ();
   long const id = queue_->schedule (raw_handler, raw_handler, expire_at);
@@ -176,9 +178,11 @@ Input_Task::shutdown_timer (void *)
 #else
   // Cancel the thread timer queue task "preemptively."
   if (ACE_Thread::cancel (this->queue_->thr_id ()) == -1)
+  {
     ACE_ERROR ((LM_ERROR,
                 "%p\n",
                 "cancel"));
+  }
 #endif /* ACE_LACKS_PTHREAD_CANCEL */
 
   // -1 indicates we are shutting down the application.
@@ -263,16 +267,22 @@ Thread_Timer_Queue_Test_Driver::init ()
   shutdown_cmd_.reset (raw_shutdown_cmd);
 
   if (this->input_task_.activate () == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        "cannot activate input task"),
                       -1);
+  }
   else if (this->timer_queue_.activate () == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        "cannot activate timer queue"),
                       -1);
+  }
   else if (ACE_Thread_Manager::instance ()->wait () == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        "wait on Thread_Manager failed"),
                       -1);
+  }
   return 0;
 }

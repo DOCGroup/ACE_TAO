@@ -140,12 +140,16 @@ int
 IPC_Client::init (int argc, ACE_TCHAR *argv[])
 {
   if (this->parse_args (argc, argv) == -1)
+  {
     return -1;
   // Handle signals through the ACE_Reactor.
+  }
   else if (ACE_Reactor::instance ()->register_handler
            (SIGINT,
             &this->done_handler_) == -1)
+  {
     return -1;
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Opening %s\n"),
@@ -166,10 +170,12 @@ IPC_Client::init (int argc, ACE_TCHAR *argv[])
                      0,
                      O_RDWR | FILE_FLAG_OVERLAPPED,
                      0) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("connect")),
                       -1);
+  }
 
   return 0;
 }

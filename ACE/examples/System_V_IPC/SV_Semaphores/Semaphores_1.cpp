@@ -21,14 +21,20 @@ parent (char * const shm)
   ACE_SV_Semaphore_Complex sem (SEM_KEY, ACE_SV_Semaphore_Complex::ACE_CREATE, 0, 2);
 
   for (char c = 'a'; c <= 'z'; ++c)
+  {
     *current++ = c;
+  }
 
   *current = '\0';
 
   if (sem.release (0) == -1)
+  {
     ACE_ERROR ((LM_ERROR, "%p", "parent sem.release(0)"));
+  }
   else if (sem.acquire (1) == -1)
+  {
     ACE_ERROR ((LM_ERROR, "%p", "parent sem.acquire(1)"));
+  }
 
   if (alloc.remove () == -1)
   {
@@ -47,15 +53,21 @@ child (char const * const shm)
   ACE_SV_Semaphore_Complex sem (SEM_KEY, ACE_SV_Semaphore_Complex::ACE_CREATE, 0, 2);
 
   while (sem.tryacquire (0) == -1)
+  {
     if (errno == EAGAIN)
+    {
       ACE_DEBUG ((LM_DEBUG, "spinning in client!\n"));
+    }
     else
     {
       ACE_ERROR_RETURN ((LM_ERROR, "client mutex.tryacquire(0)"), 1);
     }
+  }
 
   for (char const *s = shm; *s != '\0'; ++s)
+  {
     ACE_DEBUG ((LM_DEBUG, "%c", *s));
+  }
 
   ACE_DEBUG ((LM_DEBUG, "\n"));
 

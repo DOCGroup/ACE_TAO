@@ -44,6 +44,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("p:"));
 
   for (int c {}; (c = get_opt ()) != -1; )
+  {
     switch (c)
       {
       case 'p':
@@ -52,17 +53,22 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       default:
         break;
       }
+  }
 
   if (peer_acceptor->open (addr) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("open")),
                       -1);
+  }
   else if (REACTOR::instance ()->register_handler (peer_acceptor.get (),
                                                    ACE_Event_Handler::ACCEPT_MASK) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("registering service with ACE_Reactor\n")),
                       -1);
+  }
   peer_acceptor.release ();
 
   // Run forever, performing the logging service.
@@ -71,7 +77,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               ACE_TEXT ("(%P|%t) starting up server logging daemon\n")));
 
   while (!finished)
+  {
      REACTOR::instance ()->handle_events ();
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) shutting down server logging daemon\n")));

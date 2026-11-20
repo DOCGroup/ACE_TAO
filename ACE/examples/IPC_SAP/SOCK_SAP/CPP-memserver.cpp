@@ -18,15 +18,19 @@ run_event_loop (u_short port)
 
   // Create acceptors, reuse the address.
   if (acceptor.open (server_addr, 1) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "open"),
                       1);
+  }
   else if (acceptor.get_local_addr (server_addr) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "get_local_addr"),
                       1);
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) starting server at port %d\n",
@@ -38,10 +42,12 @@ run_event_loop (u_short port)
 
   // blocking wait on accept.
   if (acceptor.accept (new_stream) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "accept"),
                       -1);
+  }
 
   char buf[MAXPATHLEN];
   int len = 0;

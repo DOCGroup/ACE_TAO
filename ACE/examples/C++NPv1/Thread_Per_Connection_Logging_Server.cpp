@@ -74,7 +74,9 @@ Thread_Per_Connection_Logging_Server::handle_data (ACE_SOCK_Stream *client)
   ACE_thread_t const me = ACE_Thread::self ();
   while (!mgr->testcancel (me) &&
          logging_handler.log_record () != -1)
+  {
     continue;
+  }
 
   log_file.close ();
   return 0;

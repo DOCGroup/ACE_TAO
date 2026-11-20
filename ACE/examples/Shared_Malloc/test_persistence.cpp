@@ -167,7 +167,9 @@ public:
         std::cout << "unrecognized command" << std::endl;
       }
     if (result == 0)
+    {
       std::cout << "Last operation was successful!!" << std::endl;
+    }
     else
     {
       std::cout << "Last operation failed!! " << std::endl;
@@ -207,9 +209,11 @@ GUI_Handler::insert_employee (std::string const &name,
                               u_long id)
 {
   if (find_employee (name) == 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Employee already exists\n"),
                       -1);
+  }
 
   Employee *new_employee {};
 
@@ -220,9 +224,11 @@ GUI_Handler::insert_employee (std::string const &name,
 
   if (shmem_allocator->bind (name.c_str (),
                              employee.get ()) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        "bind failed\n"),
                       -1);
+  }
   employee.release ();
   return 0;
 }
@@ -368,12 +374,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   GUI_Handler handler {};
 
   for (;;)
+  {
     if (handler.service () == -1)
       {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("closing down ....\n")));
         break;
       }
+  }
 
   return 0;
 }

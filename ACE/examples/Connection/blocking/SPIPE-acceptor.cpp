@@ -86,14 +86,18 @@ IPC_Server::init (int argc, ACE_TCHAR *argv[])
 
   // Initialize named pipe listener.
   if (this->open (ACE_SPIPE_Addr (this->rendezvous_.c_str ())) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("open")), 1);
 
+  }
   // Register to receive shutdowns using this handler.
   else if (ACE_Reactor::instance ()->register_handler
       (SIGINT, this) == -1)
+  {
     return -1;
+  }
   else
   {
     return 0;
@@ -162,6 +166,7 @@ IPC_Server::svc ()
       // its open() method (note no automatic restart if errno ==
       // EINTR).
       if (this->accept (&sh, nullptr) == -1)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"),
                            ACE_TEXT ("accept")),
@@ -169,11 +174,14 @@ IPC_Server::svc ()
 
       // SH's destructor closes the stream implicitly but the
       // listening endpoint stays open.
+      }
       else
         {
           // Run single-threaded.
           if (this->n_threads_ <= 1)
+          {
             run_reactor_event_loop (nullptr);
+          }
           else
             {
               if (ACE_Thread_Manager::instance ()->spawn_n
@@ -181,10 +189,12 @@ IPC_Server::svc ()
                     run_reactor_event_loop,
                     nullptr,
                     THR_NEW_LWP) == -1)
+              {
                 ACE_ERROR_RETURN ((LM_ERROR,
                                    ACE_TEXT ("%p\n"),
                                    ACE_TEXT ("spawn_n")),
                                   1);
+              }
 
               ACE_Thread_Manager::instance ()->wait ();
             }

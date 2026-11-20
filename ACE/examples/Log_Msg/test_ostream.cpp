@@ -79,7 +79,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   char line[BUFSIZ] {};
 
   while (infile.getline (line, BUFSIZ, '\n'))
+  {
     std::cout << line << '\n';
+  }
 
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
   return 0;

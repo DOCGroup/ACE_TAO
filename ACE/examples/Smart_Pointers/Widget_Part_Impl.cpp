@@ -53,7 +53,9 @@ std::unique_ptr<Widget_Part> Widget_Part_Impl::remove_from_owner ()
         break;
       }
       if (part.get () == this)
+      {
         detached_part = std::move (part);
+      }
       else
         {
           if (parts.enqueue_tail (part.get ()) == -1)

@@ -64,7 +64,9 @@ Event_Analyzer::info (ACE_TCHAR **strp, size_t length) const
   ACE_TCHAR const * const module_name = this->name ();
 
   if (*strp == nullptr && (*strp = ACE_OS::strdup (module_name)) == nullptr)
+  {
     return -1;
+  }
   else
   {
     ACE_OS::strncpy (*strp, module_name, length);

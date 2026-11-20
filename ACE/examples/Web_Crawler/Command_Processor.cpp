@@ -127,16 +127,20 @@ Command_Processor::insert (Command *command)
   if (ACE_OS::strcmp (order, ACE_TEXT ("FIFO")) == 0)
     {
       if (this->url_queue_.enqueue_tail (command) != 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"), ACE_TEXT ("enqueue_tail")),
                           -1);
+      }
     }
   else if (ACE_OS::strcmp (order, ACE_TEXT ("LIFO")) == 0)
     {
       if (this->url_queue_.enqueue_head (command) != 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"), ACE_TEXT ("enqueue_head")),
                           -1);
+      }
     }
   else
     {

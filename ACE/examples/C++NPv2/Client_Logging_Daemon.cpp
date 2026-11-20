@@ -226,13 +226,17 @@ int CLD_Handler::send (
       ACE_Utils::truncate_cast<u_long> (chunk[iov_size]->length ());
   }
   while (peer ().sendv_n (iov, ACE_Utils::truncate_cast<int> (iov_size)) == -1)
+  {
     if (connector_->reconnect () == -1) {
       result = -1;
       break;
     }
+  }
 
   for (size_t i = 0; i < count; ++i)
+  {
     chunk[i].reset ();
+  }
   count = 0;
   return result;
 }
@@ -330,8 +334,11 @@ int CLD_Connector::reconnect () {
     }
     if (connector.connect (handler_->peer (), remote_addr_,
                            &timeout) == -1)
+    {
       timeout *= 2; // Exponential backoff.
-    else {
+    }
+    else
+    {
       int bufsiz = ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
       handler_->peer ().set_option (SOL_SOCKET, SO_SNDBUF,
                                     &bufsiz, sizeof bufsiz);
@@ -383,6 +390,7 @@ int Client_Logging_Daemon::init (int argc, ACE_TCHAR *argv[]) {
                        ACE_Get_Opt::ARG_REQUIRED);
 
   for (int c; (c = get_opt ()) != -1;)
+  {
     switch (c) {
     case 'p': // Client logging daemon acceptor port number.
       cld_port = static_cast<u_short> (ACE_OS::atoi (get_opt.opt_arg ()));
@@ -395,6 +403,7 @@ int Client_Logging_Daemon::init (int argc, ACE_TCHAR *argv[]) {
         (sld_host, get_opt.opt_arg (), MAXHOSTNAMELEN);
       break;
     }
+  }
 
   ACE_INET_Addr cld_addr (cld_port);
   ACE_INET_Addr sld_addr (sld_port, sld_host);

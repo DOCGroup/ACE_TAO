@@ -33,7 +33,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // rather than the svc.conf file.
 
   for (int i = 0; i < argc; ++i)
+  {
     args.add (argv[i]);
+  }
 
   args.add (ACE_TEXT ("-y"));
   args.add (ACE_TEXT ("-d"));
@@ -52,20 +54,24 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Print the contents of the combined <ACE_ARGV>.
   int const arg_count = args.argc ();
   for (int i = 0; i < arg_count; ++i)
+  {
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%d) %s\n"),
                 i,
                 args.argv ()[i]));
+  }
 
   const int result = ACE_Service_Config::open (args.argc (),
                                                args.argv (),
                                                ACE_DEFAULT_LOGGER_KEY,
                                                0);
   if (result != 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("open")),
                       1);
+  }
 
   // Run the configured services until they shut down.
   ACE_Reactor::run_event_loop ();

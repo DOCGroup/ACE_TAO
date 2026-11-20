@@ -12,9 +12,11 @@ Timer_Service_1::init (int argc, ACE_TCHAR *argv[])
 
   // Printout the <argv> values for sanity's sake.
   for (int i = 0; i < argc; ++i)
+  {
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("argv[%d] = %s\n"),
                 i, argv[i]));
+  }
 
   int interval = Timer_Service_1::TIMEOUT;
 
@@ -84,8 +86,10 @@ Timer_Service_1::handle_timeout (const ACE_Time_Value &tv,
   ++this->cur_timeouts_;
 
   if (this->cur_timeouts_ == this->max_timeouts_)
+  {
     // Shutdown the test.
     return -1;
+  }
   return 0;
 }
 

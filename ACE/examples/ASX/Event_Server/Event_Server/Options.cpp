@@ -85,6 +85,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
   int c {};
 
   while ((c = get_opt ()) != EOF)
+  {
   //FUZZ: enable check_for_lack_ACE_OS
     switch (c)
       {
@@ -151,8 +152,10 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         /* NOTREACHED */
         break;
       }
+  }
 
   if (this->verbose ())
+  {
     ACE_OS::printf ("%8d = initial concurrency hint\n"
                     ACE_SIZE_T_FORMAT_SPECIFIER_ASCII " = total iterations\n"
                     ACE_SIZE_T_FORMAT_SPECIFIER_ASCII " = thread count\n"
@@ -171,4 +174,5 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                     this->initial_queue_length (),
                     (this->t_flags () & THR_BOUND) != 0,
                     (this->t_flags () & THR_NEW_LWP) != 0);
+  }
 }

@@ -35,25 +35,33 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   if (con.connect (cli_stream,
                    ACE_SPIPE_Addr (rendezvous)) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        rendezvous),
                       -1);
+  }
 
   std::strcpy (buf, "hello");
   size = ACE_Utils::truncate_cast<int> (std::strlen (buf) + 1);
 
   for (i = 0; i < iterations; ++i)
+  {
     if (cli_stream.send (buf, size) != size)
+    {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),
                          ACE_TEXT ("putmsg")),
                         -1);
+    }
+  }
 
   if (cli_stream.close () == -1)
+  {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),
                          ACE_TEXT ("close")),
                         -1);
+  }
   return 0;
 }

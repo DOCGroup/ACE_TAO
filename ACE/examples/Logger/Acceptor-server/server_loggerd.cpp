@@ -41,6 +41,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("p:"));
 
   for (int c {}; (c = get_opt ()) != -1; )
+  {
     switch (c)
       {
       case 'p':
@@ -49,6 +50,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
       default:
         break;
       }
+  }
 }
 
 // ----------------------------------------
@@ -199,9 +201,11 @@ Logging_Handler::open (void *)
   if (REACTOR::instance ()->schedule_timer
       (this, static_cast<void const *> (this),
        ACE_Time_Value (2), ACE_Time_Value (2)) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%P|%t) can't register with reactor\n")),
                       -1);
+  }
 
   if (REACTOR::instance ()->register_handler (this, READ_MASK) == -1)
     {
@@ -231,16 +235,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (peer_acceptor.open
       (ACE_INET_Addr (OPTIONS::instance ()->port ()),
        REACTOR::instance ()) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")), -1);
 
   // Register QUIT_HANDLER to receive SIGINT commands.  When received,
   // QUIT_HANDLER becomes "set" and thus, the event loop below will
   // exit.
+  }
   else if (REACTOR::instance ()->register_handler
            (SIGINT, QUIT_HANDLER::instance ()) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("registering service with ACE_Reactor\n")),
                       -1);
+  }
 
   // Run forever, performing logging service.
 
@@ -249,7 +257,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // Perform logging service until QUIT_HANDLER receives SIGINT.
   while (QUIT_HANDLER::instance ()->is_set () == 0)
+  {
     REACTOR::instance ()->handle_events ();
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) shutting down server logging daemon\n")));

@@ -29,12 +29,16 @@ RT_Thread_Per_Connection_Logging_Server::open (u_short port)
 
   if (ACE_OS::sched_params (fifo_sched_params) != 0) {
     if (errno == EPERM || errno == ENOTSUP)
+    {
       ACE_DEBUG ((LM_DEBUG,
                   "Warning: user's not superuser, so "
                   "we're running in time-shared class\n"));
+    }
     else
+    {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p\n", "ACE_OS::sched_params()"), -1);
+    }
   }
   // Initialize the parent classes.
   return Thread_Per_Connection_Logging_Server::open (port);
@@ -111,7 +115,9 @@ Thread_Per_Connection_Logging_Server::handle_data (ACE_SOCK_Stream *client)
   ACE_thread_t const me = ACE_Thread::self ();
   while (!mgr->testcancel (me) &&
          logging_handler.log_record () != -1)
+  {
     continue;
+  }
 
   log_file.close ();
   return 0;

@@ -17,7 +17,9 @@ client ()
   char *const shm = static_cast<char *> (shm_client.malloc ());
 
   for (char const *character = shm; *character != '\0'; ++character)
+  {
     std::putchar (*character);
+  }
 
   std::putchar ('\n');
   *shm = '*';
@@ -33,12 +35,16 @@ server ()
   char *cursor = shm;
 
   for (char character = 'a'; character <= 'z'; ++character)
+  {
     *cursor++ = character;
+  }
 
   *cursor = '\0';
 
   while (*shm != '*')
+  {
     ACE_OS::sleep (1);
+  }
 
   if (shm_server.remove () < 0)
   {
