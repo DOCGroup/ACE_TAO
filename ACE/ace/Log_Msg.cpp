@@ -2244,6 +2244,27 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   ACE_UPDATE_COUNT (bspace, this_len);
                   break;
 
+                case 'H':
+                  {
+                    ACE_HANDLE const handle = va_arg (argp, ACE_HANDLE);
+#if defined (ACE_WIN32)
+                    ACE_OS::strcpy (fp, ACE_TEXT ("p"));
+#else
+                    ACE_OS::strcpy (fp, ACE_TEXT ("d"));
+#endif
+                    if (can_check)
+                      {
+                        this_len = ACE_OS::snprintf (bp, bspace, format,
+                                                     handle);
+                      }
+                    else
+                      {
+                        this_len = ACE_OS::sprintf (bp, format, handle);
+                      }
+                    ACE_UPDATE_COUNT (bspace, this_len);
+                  }
+                  break;
+
                 case ':':
                   {
                     // Assume a 32 bit time_t and change if needed.
@@ -2707,6 +2728,14 @@ bool ACE_Log_Formatter::process_conversion ()
       return false;
     case 'B':
       ACE_OS::strcpy (this->fp_, ACE_SIZE_T_FORMAT_SPECIFIER + 1); // skip %
+      return false;
+
+    case 'H':
+#if defined (ACE_WIN32)
+      ACE_OS::strcpy (this->fp_, "p");
+#else
+      ACE_OS::strcpy (this->fp_, "d");
+#endif
       return false;
 
     case 'C': case 'p': case 'S':
