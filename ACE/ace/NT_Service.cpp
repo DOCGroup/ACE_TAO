@@ -143,7 +143,9 @@ ACE_NT_Service::name (const ACE_TCHAR *name, const ACE_TCHAR *desc)
   delete [] this->name_;
 
   if (desc == 0)
-    desc = name;
+    {
+      desc = name;
+    }
 
   this->name_ = ACE::strnew (name);
   this->desc_ = ACE::strnew (desc);
@@ -189,7 +191,9 @@ ACE_NT_Service::insert (DWORD start_type,
   if (exe_path == 0)
     {
       if (ACE_TEXT_GetModuleFileName (0, this_exe + 1, MAXPATHLEN) == 0)
-        return -1;
+        {
+          return -1;
+        }
       // Make sure that this_exe is quoted
       this_exe[0] = ACE_TEXT ('\"');
       ACE_OS::strcat (this_exe, ACE_TEXT ("\""));
@@ -221,15 +225,21 @@ ACE_NT_Service::insert (DWORD start_type,
   // If there was an error, stash GetLastError before CloseServiceHandle
   // smashes it. ACE_OS::last_error will find the saved error value.
   if (sh == 0)
-    ACE_OS::set_errno_to_last_error ();
+    {
+      ACE_OS::set_errno_to_last_error ();
+    }
 
   CloseServiceHandle (sc_mgr);
 
   if (sh == 0)
-    return -1;
+    {
+      return -1;
+    }
 
   if (this->svc_sc_handle_ != 0)
-    CloseServiceHandle (this->svc_sc_handle_);
+    {
+      CloseServiceHandle (this->svc_sc_handle_);
+    }
   this->svc_sc_handle_ = sh;
 
   return 0;
@@ -239,11 +249,15 @@ int
 ACE_NT_Service::remove ()
 {
   if (this->svc_sc_handle () == 0)
-    return -1;
+    {
+      return -1;
+    }
 
   if (DeleteService (this->svc_sc_handle()) == 0
       && GetLastError () != ERROR_SERVICE_MARKED_FOR_DELETE)
-    return -1;
+    {
+      return -1;
+    }
 
   return 0;
 }
@@ -255,7 +269,9 @@ ACE_NT_Service::startup (DWORD startup)
 {
   SC_HANDLE svc = this->svc_sc_handle ();
   if (svc == 0)
-    return -1;
+    {
+      return -1;
+    }
 
   BOOL ok =
     ChangeServiceConfig (svc,
@@ -296,7 +312,9 @@ ACE_NT_Service::startup ()
   cfg = (LPQUERY_SERVICE_CONFIG) cfgbuff;
   BOOL ok = QueryServiceConfig (svc, cfg, cfgsize, &needed_size);
   if (ok)
-    return cfg->dwStartType;
+    {
+      return cfg->dwStartType;
+    }
   // Zero is a valid return value for QueryServiceConfig, so if
   // QueryServiceConfig fails, return the DWORD equivalent of -1.
   return MAXDWORD;
@@ -323,14 +341,20 @@ ACE_NT_Service::start_svc (ACE_Time_Value *wait_time,
 {
   SC_HANDLE svc = this->svc_sc_handle ();
   if (svc == 0)
-    return -1;
+    {
+      return -1;
+    }
 
   if (!ACE_TEXT_StartService (svc, argc, argv))
-    return -1;
+    {
+      return -1;
+    }
 
   this->wait_for_service_state (SERVICE_RUNNING, wait_time);
   if (svc_state != 0)
-    *svc_state = this->svc_status_.dwCurrentState;
+    {
+      *svc_state = this->svc_status_.dwCurrentState;
+    }
 
   return 0;
 }
@@ -341,17 +365,23 @@ ACE_NT_Service::stop_svc (ACE_Time_Value *wait_time,
 {
   SC_HANDLE svc = this->svc_sc_handle ();
   if (svc == 0)
-    return -1;
+    {
+      return -1;
+    }
 
   if (!ControlService (svc,
                        SERVICE_CONTROL_STOP,
                        &this->svc_status_))
-    return -1;
+    {
+      return -1;
+    }
 
   this->wait_for_service_state (SERVICE_STOPPED,
                                 wait_time);
   if (svc_state != 0)
-    *svc_state = this->svc_status_.dwCurrentState;
+    {
+      *svc_state = this->svc_status_.dwCurrentState;
+    }
 
   return 0;
 }
@@ -362,17 +392,23 @@ ACE_NT_Service::pause_svc (ACE_Time_Value *wait_time,
 {
   SC_HANDLE svc = this->svc_sc_handle ();
   if (svc == 0)
-    return -1;
+    {
+      return -1;
+    }
 
   if (!ControlService (svc,
                        SERVICE_CONTROL_PAUSE,
                        &this->svc_status_))
-    return -1;
+    {
+      return -1;
+    }
 
   this->wait_for_service_state (SERVICE_PAUSED,
                                 wait_time);
   if (svc_state != 0)
-    *svc_state = this->svc_status_.dwCurrentState;
+    {
+      *svc_state = this->svc_status_.dwCurrentState;
+    }
 
   return 0;
 }
@@ -383,17 +419,23 @@ ACE_NT_Service::continue_svc (ACE_Time_Value *wait_time,
 {
   SC_HANDLE svc = this->svc_sc_handle ();
   if (svc == 0)
-    return -1;
+    {
+      return -1;
+    }
 
   if (!ControlService (svc,
                        SERVICE_CONTROL_CONTINUE,
                        &this->svc_status_))
-    return -1;
+    {
+      return -1;
+    }
 
   this->wait_for_service_state (SERVICE_RUNNING,
                                 wait_time);
   if (svc_state != 0)
-    *svc_state = this->svc_status_.dwCurrentState;
+    {
+      *svc_state = this->svc_status_.dwCurrentState;
+    }
 
   return 0;
 }
@@ -405,7 +447,9 @@ ACE_NT_Service::state (ACE_Time_Value *wait_hint)
 
   if (this->state (&curr_state,
                    wait_hint) == -1)
-    return 0;
+    {
+      return 0;
+    }
   return curr_state;
 }
 
@@ -416,7 +460,9 @@ ACE_NT_Service::state (DWORD *pstate,
   SC_HANDLE svc = this->svc_sc_handle ();
 
   if (svc == 0)
-    return -1;
+    {
+      return -1;
+    }
 
   // Need to create a temporary copy of this variable since the
   // QueryServiceStatus call will modify the setting depending on the
@@ -426,10 +472,14 @@ ACE_NT_Service::state (DWORD *pstate,
 
   if (QueryServiceStatus (svc,
                           &this->svc_status_) == 0)
-    return -1;
+    {
+      return -1;
+    }
 
   if (wait_hint != 0)
-    wait_hint->msec (static_cast<long> (this->svc_status_.dwWaitHint));
+    {
+      wait_hint->msec (static_cast<long> (this->svc_status_.dwWaitHint));
+    }
 
   *pstate = this->svc_status_.dwCurrentState;
   this->svc_status_.dwControlsAccepted = controls_accepted;
@@ -485,7 +535,9 @@ ACE_NT_Service::report_status (DWORD new_status,
   DWORD save_controls = 0;
 
   if (new_status != 0)
-    this->svc_status_.dwCurrentState = new_status;
+    {
+      this->svc_status_.dwCurrentState = new_status;
+    }
   switch (this->svc_status_.dwCurrentState)
     {
   case SERVICE_START_PENDING:
@@ -507,10 +559,14 @@ ACE_NT_Service::report_status (DWORD new_status,
                              &this->svc_status_) ? 0 : -1;
 
   if (save_controls != 0)
-    this->svc_status_.dwControlsAccepted = save_controls;
+    {
+      this->svc_status_.dwControlsAccepted = save_controls;
+    }
 
   if (bump_checkpoint)
-    ++this->svc_status_.dwCheckPoint;
+    {
+      ++this->svc_status_.dwCheckPoint;
+    }
 
   return retval;
 }
@@ -529,11 +585,15 @@ ACE_NT_Service::svc_sc_handle ()
                                                        this->name (),
                                                        SERVICE_ALL_ACCESS);
           if (this->svc_sc_handle_ == 0)
-            ACE_OS::set_errno_to_last_error ();
+            {
+              ACE_OS::set_errno_to_last_error ();
+            }
           CloseServiceHandle (sc_mgr);
         }
       else
-        ACE_OS::set_errno_to_last_error ();
+        {
+          ACE_OS::set_errno_to_last_error ();
+        }
     }
 
   return this->svc_sc_handle_;
@@ -550,7 +610,9 @@ ACE_NT_Service::wait_for_service_state (DWORD desired_state,
 
   ACE_Time_Value time_out = ACE_OS::gettimeofday ();
   if (wait_time != 0)
-    time_out += *wait_time;
+    {
+      time_out += *wait_time;
+    }
 
   // Poll until the service reaches the desired state.
   for (;;)
@@ -560,11 +622,15 @@ ACE_NT_Service::wait_for_service_state (DWORD desired_state,
 
       // If we cannot query the service, we are done.
       if (!service_ok)
-        break;
+        {
+          break;
+        }
 
       // If the service has the desired state, we are done.
       if (desired_state == this->svc_status_.dwCurrentState)
-        break;
+        {
+          break;
+        }
 
       // If we time-out, we are done
       if (wait_time != 0 && ACE_OS::gettimeofday () > time_out )
@@ -592,7 +658,9 @@ ACE_NT_Service::wait_for_service_state (DWORD desired_state,
             {
               // The check-point should have increased
               if (this->svc_status_.dwCheckPoint > last_check_point)
-                last_check_point = this->svc_status_.dwCheckPoint;
+                {
+                  last_check_point = this->svc_status_.dwCheckPoint;
+                }
               else
                 {
                   // Service control failure, we are done.
