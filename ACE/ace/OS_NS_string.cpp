@@ -26,7 +26,9 @@ ACE_OS::strdup_emulation (const char *s)
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
   if (t == 0)
-    return 0;
+    {
+      return 0;
+    }
 
   return ACE_OS::strcpy (t, s);
 }
@@ -112,13 +114,17 @@ ACE_OS::strerror (int errnum)
   ACE_SECURECRTCALL (strerror_s (ret_errortext, sizeof(ret_errortext), errnum),
                      char *, 0, errmsg);
   if (errnum < 0 || errnum >= _sys_nerr)
-    g = EINVAL;
+    {
+      g = EINVAL;
+    }
 
   return errmsg;
 # else
 #  if defined (ACE_WIN32)
   if (errnum < 0 || errnum >= _sys_nerr)
-    errno = EINVAL;
+    {
+      errno = EINVAL;
+    }
 #  endif /* ACE_WIN32 */
   errmsg = ::strerror (errnum);
 
@@ -153,7 +159,9 @@ ACE_OS::strsignal (int signum)
 
 # if defined (ACE_NEEDS_STRSIGNAL_RANGE_CHECK)
   if (signum < 0 || signum >= ACE_NSIG)
-    ret_val = nullptr;
+    {
+      ret_val = nullptr;
+    }
   else
 # endif /* (ACE_NEEDS_STRSIGNAL_RANGE_CHECK */
   ret_val = ::strsignal (signum);
@@ -185,7 +193,9 @@ ACE_OS::strerror_r (int errnum, char *buf, size_t buflen)
 #ifdef ACE_HAS_STRERROR_R
 # ifdef ACE_HAS_STRERROR_R_XSI
   if (::strerror_r (errnum, buf, buflen) == 0)
-    return buf;
+    {
+      return buf;
+    }
   return const_cast <char*> ("Unknown Error");
 # else
   return ::strerror_r (errnum, buf, buflen);
@@ -334,20 +344,32 @@ char *
 ACE_OS::strtok_r_emulation (char *s, const char *tokens, char **lasts)
 {
   if (s == 0)
-    s = *lasts;
+    {
+      s = *lasts;
+    }
   else
-    *lasts = s;
+    {
+      *lasts = s;
+    }
   if (*s == 0)                  // We have reached the end
-    return 0;
+    {
+      return 0;
+    }
   size_t const l_org = ACE_OS::strlen (s);
   s = ::strtok (s, tokens);
   if (s == 0)
-    return 0;
+    {
+      return 0;
+    }
   size_t const l_sub = ACE_OS::strlen (s);
   if (s + l_sub < *lasts + l_org)
-    *lasts = s + l_sub + 1;
+    {
+      *lasts = s + l_sub + 1;
+    }
   else
-    *lasts = s + l_sub;
+    {
+      *lasts = s + l_sub;
+    }
   return s ;
 }
 #endif /* ACE_LACKS_STRTOK_R */
@@ -368,7 +390,9 @@ ACE_OS::strtok_r_emulation (ACE_WCHAR_T *s,
   }
   ACE_WCHAR_T*send = sbegin + ACE_OS::strcspn(sbegin, tokens);
   if (*send != 0)
+    {
       *send++ = 0;
+    }
   *lasts = send;
   return sbegin;
 }
