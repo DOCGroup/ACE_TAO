@@ -97,9 +97,15 @@ ACE_SOCK_Dgram_SC<STREAM>::recv (char *buf,
   int rval = STREAM::recv (buf, len, peer_, flags);
 #if defined (ACE_WIN32)
   if (rval == SOCKET_ERROR)
-    if (::WSAGetLastError () == WSAEMSGSIZE)
-      if (ACE_BIT_ENABLED (flags, MSG_PEEK))
-        rval = len;
+    {
+      if (::WSAGetLastError () == WSAEMSGSIZE)
+        {
+          if (ACE_BIT_ENABLED (flags, MSG_PEEK))
+            {
+              rval = len;
+            }
+        }
+    }
 #endif /* ACE_WIN32 */
   return rval < len ? rval : len;
 }

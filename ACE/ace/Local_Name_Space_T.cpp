@@ -708,7 +708,9 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types_i (
     }
 #if defined (ACE_HAS_REGEX)
   if (compiled_regexp)
-    ACE_OS::free ((void *) compiled_regexp);
+    {
+      ACE_OS::free ((void *) compiled_regexp);
+    }
 #endif /* ACE_HAS_REGEX */
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_Allocator::instance()->free(pattern_rep);
@@ -852,7 +854,9 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries_i (
     }
 #if defined (ACE_HAS_REGEX)
   if (compiled_regexp)
-    ACE_OS::free ((void *) compiled_regexp);
+    {
+      ACE_OS::free ((void *) compiled_regexp);
+    }
 #endif /* ACE_HAS_REGEX */
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_Allocator::instance()->free(pattern_rep);
