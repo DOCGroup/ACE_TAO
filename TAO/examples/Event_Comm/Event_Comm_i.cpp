@@ -75,8 +75,10 @@ Consumer_Entry::Consumer_Entry (Event_Comm::Consumer *consumer,
 
   // Check for wildcard case first.
   if (*filtering_criteria == '\0')
-    ACE_ALLOCATOR (compile_buffer,
-                   ACE_OS::strdup (""));
+    {
+      ACE_ALLOCATOR (compile_buffer,
+                     ACE_OS::strdup (""));
+    }
   else
   {
 #if defined (ACE_HAS_REGEX)
@@ -218,8 +220,10 @@ Notifier_i::unsubscribe (Event_Comm::Consumer_ptr consumer_ref,
           // @@ This is a hack, we need a better approach!
           if (this->map_.unbind (me->ext_id_,
                                  nr_entry) == -1)
-            throw Event_Comm::Notifier::CannotUnsubscribe (
-              "Internal map unbind failed.");
+            {
+              throw Event_Comm::Notifier::CannotUnsubscribe (
+                "Internal map unbind failed.");
+            }
           else
             {
               found = true;
@@ -229,8 +233,10 @@ Notifier_i::unsubscribe (Event_Comm::Consumer_ptr consumer_ref,
     }
 
   if (!found)
-    throw Event_Comm::Notifier::CannotUnsubscribe (
-      "The Consumer and filtering criteria were not found.");
+    {
+      throw Event_Comm::Notifier::CannotUnsubscribe (
+        "The Consumer and filtering criteria were not found.");
+    }
 }
 
 /// Disconnects all consumers, giving them the @a reason.
@@ -275,12 +281,16 @@ Notifier_i::disconnect (char const *reason)
   this->map_.close ();
 
   if (count == 1)
-    ACE_DEBUG ((LM_DEBUG,
-                "there was 1 consumer\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "there was 1 consumer\n"));
+    }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                "there were %d consumers\n",
-                count));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "there were %d consumers\n",
+                  count));
+    }
 }
 
 /// Notifies all consumers whose filtering criteria match the @a event.
@@ -332,12 +342,16 @@ Notifier_i::push (Event_Comm::Event const &event)
     }
 
   if (count == 1)
-    ACE_DEBUG ((LM_DEBUG,
-                "there was 1 consumer\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "there was 1 consumer\n"));
+    }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                "there were %d consumers\n",
-                count));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "there were %d consumers\n",
+                  count));
+    }
 }
 
 /// Informs the @a Consumer that the @a event has occurred.
