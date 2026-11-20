@@ -14298,3 +14298,9 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Added Allman braces to single-statement control bodies in `TAO/tests/Bug_3384_Regression/server.cpp`, `TAO/tests/IPV6/server.cpp`, and `TAO/tests/Server_Port_Zero/server.cpp`.
 - Focused clang-tidy reported no remaining brace warnings in the edited files; `git diff --check` passed. No build or runtime tests were run.
 - The broader tracked-source brace audit remains open.
+
+## 2026-11-20 TAO callback and inherited operation test braces
+
+- Added Allman braces to single-statement control bodies in `TAO/tests/CallbackTest/client.cpp`, `TAO/tests/Crashed_Callback/client.cpp`, and `TAO/tests/IDL_Inherited_Operation/server.cpp`.
+- Focused clang-tidy reported no remaining brace warnings in the edited files; `git diff --check` passed. No build or runtime tests were run.
+- The broader tracked-source brace audit remains open.

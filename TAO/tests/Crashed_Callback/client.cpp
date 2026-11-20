@@ -12,20 +12,22 @@ parse_args (int argc, ACE_TCHAR *argv[], ACE_TString &ior)
   int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'k':
-        ior = get_opts.opt_arg ();
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior>"
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
+    {
+      switch (c)
+        {
+        case 'k':
+          ior = get_opts.opt_arg ();
+          break;
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage:  %s "
+                             "-k <ior>"
+                             "\n",
+                             argv [0]),
+                            -1);
+        }
+    }
   // Indicates successful parsing of the command line
   return 0;
 }
@@ -45,9 +47,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Panic: nil RootPOA\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Panic: nil RootPOA\n"),
+                            1);
+        }
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
@@ -60,9 +64,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           CORBA::PolicyManager::_narrow(manager_object.in());
 
         if (CORBA::is_nil (policy_manager.in ()))
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             " (%P|%t) Panic: nil PolicyManager\n"),
-                            1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               " (%P|%t) Panic: nil PolicyManager\n"),
+                              1);
+          }
         CORBA::Any policy_value;
         policy_value <<= Messaging::SYNC_WITH_SERVER;
         CORBA::PolicyList policies(1);
