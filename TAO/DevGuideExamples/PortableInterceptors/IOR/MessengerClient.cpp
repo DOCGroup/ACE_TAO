@@ -48,23 +48,25 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init( argc, argv );
 
       if (parse_args (argc, argv) != 0)
-      {
-        return 1;
-      }
+        {
+          return 1;
+        }
 
       // Destringify ior
       CORBA::Object_var obj = orb->string_to_object( ior );
-      if( CORBA::is_nil( obj.in() ) ) {
-        std::cerr << "Nil Messenger reference" << std::endl;
-        return 1;
-      }
+      if( CORBA::is_nil( obj.in() ) )
+        {
+          std::cerr << "Nil Messenger reference" << std::endl;
+          return 1;
+        }
 
       // Narrow
       Messenger_var messenger = Messenger::_narrow( obj.in() );
-      if( CORBA::is_nil( messenger.in() ) ) {
-        std::cerr << "Argument is not a Messenger reference" << std::endl;
-        return 1;
-      }
+      if( CORBA::is_nil( messenger.in() ) )
+        {
+          std::cerr << "Argument is not a Messenger reference" << std::endl;
+          return 1;
+        }
 
       // Obtain a reference to the CodecFactory.
       CORBA::Object_var obj2 =
