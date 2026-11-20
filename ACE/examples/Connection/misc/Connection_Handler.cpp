@@ -72,21 +72,25 @@ Connection_Handler::svc ()
   // blocking.
   if (this->reactor ()->register_handler
       (this, ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("can' (%P|%t) t register with reactor\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("can' (%P|%t) t register with reactor\n")),
+                        -1);
+    }
   // Schedule a timer.
   else if (this->reactor ()->schedule_timer (this,
                                              this,
                                              ACE_Time_Value (2),
                                              ACE_Time_Value (2)) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) can't register with reactor\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) can't register with reactor\n")),
+                        -1);
+    }
   else
-  {
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) connected with client\n")));
-  }
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) connected with client\n")));
+    }
 
   // Keep looping until we receive SIGQUIT or the client shutsdown.
 
@@ -145,14 +149,16 @@ Connection_Handler::handle_input (ACE_HANDLE)
     default:
       buf[n] = '\0';
       if (buf[0] == static_cast<char> (EOF))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) closing log daemon (fd = %@)\n"),
-                           reinterpret_cast<void *> (this->get_handle ())),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) closing log daemon (fd = %@)\n"),
+                             reinterpret_cast<void *> (this->get_handle ())),
+                            -1);
+        }
       else
-      {
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) from client: %s"), buf));
-      }
+        {
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) from client: %s"), buf));
+        }
     }
 
   return 0;
@@ -205,18 +211,22 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // Register the signal handler adapter.
   if (ACE_Reactor::instance ()->register_handler (SIGINT, &sa) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("register_handler")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("register_handler")),
+                        -1);
+    }
 
   // Open the Acceptor.
   else if (peer_acceptor.open (ACE_INET_Addr (port),
                                ACE_Reactor::instance ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("open")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("open")),
+                        -1);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) starting up connection server\n")));
@@ -224,7 +234,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Perform connection service until we receive SIGINT.
 
   while (!ACE_Reactor::event_loop_done ())
-    ACE_Reactor::run_event_loop ();
+    {
+      ACE_Reactor::run_event_loop ();
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) shutting down connection server\n")));
