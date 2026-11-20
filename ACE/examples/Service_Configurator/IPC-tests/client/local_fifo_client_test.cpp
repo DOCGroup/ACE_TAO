@@ -38,25 +38,29 @@ parse_arguments (int argc, ACE_TCHAR *argv[])
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("df:"));
 
   for (int c; (c = get_opt ()) != -1; )
-    switch (c)
     {
-    case 'd':
-      debug = true;
-      break;
-    case 'f':
-      rendezvous_fifo = get_opt.opt_arg ();
-      break;
-    default:
-      print_usage_and_die ();
-      break;
-  }
+      switch (c)
+        {
+        case 'd':
+          debug = true;
+          break;
+        case 'f':
+          rendezvous_fifo = get_opt.opt_arg ();
+          break;
+        default:
+          print_usage_and_die ();
+          break;
+        }
+    }
 
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                "rendezvous_fifo = %s\n"
-                "trace = %s\n",
-                rendezvous_fifo,
-                tracing ? "on" : "off"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "rendezvous_fifo = %s\n"
+                  "trace = %s\n",
+                  rendezvous_fifo,
+                  tracing ? "on" : "off"));
+    }
 }
 
 int
@@ -69,21 +73,25 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (fifo.open (rendezvous_fifo,
                  O_WRONLY,
                  0666) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Cannot open %s for requesting a new communication channel"
-                       "in local_fifo_client_test\n",
-                       rendezvous_fifo),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Cannot open %s for requesting a new communication channel"
+                         "in local_fifo_client_test\n",
+                         rendezvous_fifo),
+                        -1);
+    }
   void *cp {};
 
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_Mem_Map mmap (file_name);
 
   if (mmap (cp) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "mmap"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "mmap"),
+                        -1);
+    }
   //FUZZ: enable check_for_lack_ACE_OS
 
   // Next, send the file's contents.
@@ -92,9 +100,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                    static_cast<int> (mmap.size ()));
 
   if (fifo.send (msg) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "send"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "send"),
+                        -1);
+    }
   return 0;
 }
