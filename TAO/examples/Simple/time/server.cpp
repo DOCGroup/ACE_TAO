@@ -14,7 +14,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   try
     {
       if (server.init ("Time", argc, argv) == -1)
-        return 1;
+        {
+          return 1;
+        }
       else
         {
           server.run ();

@@ -11,9 +11,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
               ACE_TEXT ("\n\tTime and date client\n\n")));
 
   if (client.run ("Time", argc, argv) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
 }

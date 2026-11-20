@@ -121,7 +121,9 @@ Server<Servant>::init (char const *servant_name,
   int retval = this->parse_args ();
 
   if (retval != 0)
-    return retval;
+    {
+      return retval;
+    }
 
   CORBA::ORB_var orb = this->orb_manager_.orb ();
 
@@ -338,7 +340,9 @@ Client<ServerInterface>::init (char const *name,
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
-        return -1;
+        {
+          return -1;
+        }
 
       if (this->ior_.length () != 0)
         {
@@ -365,7 +369,9 @@ Client<ServerInterface>::init (char const *name,
                      ACE_TEXT ("Using the Naming Service\n")));
           int retv = this->obtain_initial_references (name);
           if (retv ==-1)
-            return -1;
+            {
+              return -1;
+            }
         }
       else
         ACE_ERROR_RETURN ((LM_ERROR,
