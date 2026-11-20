@@ -106,13 +106,17 @@ Dgram_Endpoint::handle_input (ACE_HANDLE)
   ssize_t const n = this->endpoint_.recv (buf, sizeof buf);
 
   if (n == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "handle_input"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n",
+                  "handle_input"));
+    }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) buf of size %b = %*s\n",
-                n, static_cast<int> (n), buf));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) buf of size %b = %*s\n",
+                  n, static_cast<int> (n), buf));
+    }
   return 0;
 }
 
@@ -140,9 +144,11 @@ run_test (u_short localport,
   if (ACE_Reactor::instance ()->register_handler
       (&endpoint,
        ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "ACE_Reactor::register_handler"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "ACE_Reactor::register_handler"),
+                        -1);
+    }
   char const buf[] = "Data to transmit";
   size_t const len = sizeof (buf) - 1;
 
@@ -166,10 +172,12 @@ run_test (u_short localport,
       ACE_Time_Value tv (10, 0);
 
       if (ACE_Reactor::instance ()->handle_events (tv) <= 0)
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           "(%P|%t) %p\n",
-                           "handle_events"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             "(%P|%t) %p\n",
+                             "handle_events"),
+                            -1);
+        }
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) return from handle events\n"));
 
@@ -182,9 +190,11 @@ run_test (u_short localport,
   if (ACE_Reactor::instance ()->remove_handler
       (&endpoint,
        ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "ACE_Reactor::remove_handler"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "ACE_Reactor::remove_handler"),
+                        -1);
+    }
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) exiting\n"));
   return 0;
@@ -203,10 +213,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // want to spawn a new process.  On Win32, we use this to exec the
   // new program.
   if (argc > 4)
-    run_test (port1,
-              remotehost,
-              port2,
-              argv[4]);
+    {
+      run_test (port1,
+                remotehost,
+                port2,
+                argv[4]);
+    }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
