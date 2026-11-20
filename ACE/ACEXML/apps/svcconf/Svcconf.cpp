@@ -40,16 +40,20 @@ int
 ACEXML_Svcconf_Parser::parse_file (ACE_TCHAR const file[])
 {
   if (file == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR, "ACEXML_Svcconf_Parser: No filename specified\n"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "ACEXML_Svcconf_Parser: No filename specified\n"), -1);
+    }
 
   std::unique_ptr<ACEXML_FileCharStream> fstm =
     std::make_unique<ACEXML_FileCharStream> ();
 
   if (fstm->open (file) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("ACEXML_Svcconf_Parser: Fail to open XML file: %s\n"),
-                       file),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("ACEXML_Svcconf_Parser: Fail to open XML file: %s\n"),
+                         file),
+                        -1);
+    }
 
   this->input_stream_.setCharStream (fstm.release ());
 
@@ -69,13 +73,17 @@ int
 ACEXML_Svcconf_Parser::parse_string (ACE_TCHAR const str[])
 {
   if (str == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR, "ACEXML_Svcconf_Parser: Can't parse a null string\n"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "ACEXML_Svcconf_Parser: Can't parse a null string\n"), -1);
+    }
 
   std::unique_ptr<ACEXML_StrCharStream> stm =
     std::make_unique<ACEXML_StrCharStream> ();
   if (stm->open (str, ACE_TEXT ("Svcconf")) < 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "ACEXML_Svcconf_Parser: Unable to create "
-                       "input stream.\n"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "ACEXML_Svcconf_Parser: Unable to create "
+                         "input stream.\n"), -1);
+    }
 
   this->input_stream_.setCharStream (stm.release ());
   try

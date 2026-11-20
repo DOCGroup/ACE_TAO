@@ -538,24 +538,26 @@ int
 ACEXML_Svcconf_Handler::get_stream_id (ACEXML_Attributes *alist)
 {
   if (alist != nullptr)
-    for (size_t i = 0; i < alist->getLength (); ++i)
-      {
-        if (ACE_OS::strcmp (alist->getQName (i), ACE_TEXT ("id")) == 0)
-          {
-            this->stream_info_.name (alist->getValue (i));
-          }
-        else
-          {
-            // build the error message
-            ACE_TString msg (ACE_TEXT ("Invalid stream attribute '"));
-            msg += ACE_TString (alist->getQName (i));
-            msg += ACE_TString (ACE_TEXT ("' for entity '"));
-            msg += ACE_TString (this->stream_info_.name ());
-            msg += ACE_TString (ACE_TEXT ("'\n"));
+    {
+      for (size_t i = 0; i < alist->getLength (); ++i)
+        {
+          if (ACE_OS::strcmp (alist->getQName (i), ACE_TEXT ("id")) == 0)
+            {
+              this->stream_info_.name (alist->getValue (i));
+            }
+          else
+            {
+              // build the error message
+              ACE_TString msg (ACE_TEXT ("Invalid stream attribute '"));
+              msg += ACE_TString (alist->getQName (i));
+              msg += ACE_TString (ACE_TEXT ("' for entity '"));
+              msg += ACE_TString (this->stream_info_.name ());
+              msg += ACE_TString (ACE_TEXT ("'\n"));
 
-            throw ACEXML_SAXException (msg.c_str ());
-          }
-      }
+              throw ACEXML_SAXException (msg.c_str ());
+            }
+        }
+    }
   return 0;
 }
 
@@ -563,25 +565,27 @@ int
 ACEXML_Svcconf_Handler::get_id (ACEXML_Attributes *alist)
 {
   if (alist != nullptr)
-    for (size_t i = 0; i < alist->getLength (); ++i)
-      {
-        if (ACE_OS::strcmp (alist->getQName (i), ACE_TEXT ("id")) == 0)
-          {
-            this->parsed_info_.name (alist->getValue (i));
-          }
-        else
-          {
-            // build the error message
-            ACE_TString msg (ACE_TEXT ("Invalid attribute '"));
-            msg += ACE_TString (alist->getQName (i));
-            msg += ACE_TString (ACE_TEXT ("', expecting 'id'"));
-            msg += ACE_TString (ACE_TEXT (" for entity '"));
-            msg += ACE_TString (this->parsed_info_.name ());
-            msg += ACE_TString (ACE_TEXT ("'\n"));
+    {
+      for (size_t i = 0; i < alist->getLength (); ++i)
+        {
+          if (ACE_OS::strcmp (alist->getQName (i), ACE_TEXT ("id")) == 0)
+            {
+              this->parsed_info_.name (alist->getValue (i));
+            }
+          else
+            {
+              // build the error message
+              ACE_TString msg (ACE_TEXT ("Invalid attribute '"));
+              msg += ACE_TString (alist->getQName (i));
+              msg += ACE_TString (ACE_TEXT ("', expecting 'id'"));
+              msg += ACE_TString (ACE_TEXT (" for entity '"));
+              msg += ACE_TString (this->parsed_info_.name ());
+              msg += ACE_TString (ACE_TEXT ("'\n"));
 
-            throw ACEXML_SAXException (msg.c_str ());
-          }
-      }
+              throw ACEXML_SAXException (msg.c_str ());
+            }
+        }
+    }
   return 0;
 }
 
