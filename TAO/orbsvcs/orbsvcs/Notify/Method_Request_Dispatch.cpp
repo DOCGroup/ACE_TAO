@@ -71,10 +71,12 @@ int TAO_Notify_Method_Request_Dispatch::execute_i ()
                                                                   parent.filter_operator ());
 
       if (TAO_debug_level > 1)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Notify (%P|%t) Proxysupplier %@ filter ")
-                    ACE_TEXT ("eval result = %d\n"),
-          std::addressof (this->proxy_supplier_), val));
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("Notify (%P|%t) Proxysupplier %@ filter ")
+                          ACE_TEXT ("eval result = %d\n"),
+                          std::addressof (this->proxy_supplier_), val));
+        }
 
       // Filter failed - do nothing.
       if (!val)
@@ -95,9 +97,11 @@ int TAO_Notify_Method_Request_Dispatch::execute_i ()
   catch (const CORBA::Exception& ex)
     {
       if (TAO_debug_level > 0)
-        ex._tao_print_exception (
-          ACE_TEXT (
-            "TAO_Notify_Method_Request_Dispatch::: error sending event.\n"));
+        {
+          ex._tao_print_exception (
+            ACE_TEXT (
+              "TAO_Notify_Method_Request_Dispatch::: error sending event.\n"));
+        }
     }
 
   return 0;
@@ -140,10 +144,12 @@ TAO_Notify_Method_Request_Dispatch::unmarshal (
       if (proxy_supplier != nullptr)
       {
         if (DEBUG_LEVEL > 6)
-          ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) TAO_Notify_Method_Request_Dispatch")
-                      ACE_TEXT (" reload event for %C\n"),
-                      textpath.c_str()));
+          {
+            ORBSVCS_DEBUG ((LM_DEBUG,
+                            ACE_TEXT ("(%P|%t) TAO_Notify_Method_Request_Dispatch")
+                            ACE_TEXT (" reload event for %C\n"),
+                            textpath.c_str()));
+          }
         ACE_NEW_NORETURN (result,
           TAO_Notify_Method_Request_Dispatch_Queueable (delivery_request, proxy_supplier, true));
       }

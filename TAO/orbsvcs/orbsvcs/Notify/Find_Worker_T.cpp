@@ -35,7 +35,9 @@ TAO_Notify_Find_Worker_T<TYPE,INTERFACE,INTERFACE_PTR,EXCEPTION>::resolve (
   this->find (id, container);
 
   if (this->result_ == nullptr)
-    throw EXCEPTION ();
+    {
+      throw EXCEPTION ();
+    }
 
   CORBA::Object_var object = this->result_->ref ();
 
