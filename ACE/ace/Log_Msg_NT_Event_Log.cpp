@@ -87,7 +87,9 @@ ACE_Log_Msg_NT_Event_Log::close ()
       return 0;
     }
   else
-    return -1;
+    {
+      return -1;
+    }
 }
 
 ssize_t
@@ -102,7 +104,9 @@ ACE_Log_Msg_NT_Event_Log::log (ACE_Log_Record &log_record)
 
   size_t maxlen = ACE_Log_Record::MAXLOGMSGLEN;
   if (ACE_Log_Record::MAXLOGMSGLEN > log_record.msg_data_len ())
-    maxlen = log_record.msg_data_len ();
+    {
+      maxlen = log_record.msg_data_len ();
+    }
 
   size_t end = 0;
   for (size_t i = 0, j = 0;
@@ -115,7 +119,9 @@ ACE_Log_Msg_NT_Event_Log::log (ACE_Log_Record &log_record)
           msg_data[j++] = '\n';
         }
       else
-        msg_data[j++] = src_msg_data[i];
+        {
+          msg_data[j++] = src_msg_data[i];
+        }
 
       end = j;
     }
@@ -151,9 +157,13 @@ ACE_Log_Msg_NT_Event_Log::log (ACE_Log_Record &log_record)
 
   if (ACE_TEXT_ReportEvent (this->evlog_handle_,
                             event_type, 0, 0, 0, 1, 0, msgs, 0) == 0)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

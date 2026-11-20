@@ -411,7 +411,9 @@ ACE_Logging_Strategy::init (int argc, ACE_TCHAR *argv[])
                                          ACE_TEXT ("at"));
 
           if (output_file == 0)
-            return -1;
+            {
+              return -1;
+            }
 #else
           ostream *output_file = this->log_msg_->msg_ostream ();
           // Create a new ofstream to direct output to the file.
@@ -511,7 +513,9 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &, const void *)
               output_file = ACE_OS::fopen (this->filename_, ACE_TEXT ("wt"));
 
               if (output_file == nullptr)
-                return -1;
+                {
+                  return -1;
+                }
 
               this->log_msg_->msg_ostream (output_file);
 #else
@@ -599,7 +603,9 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &, const void *)
       output_file = ACE_OS::fopen (this->filename_, ACE_TEXT ("wt"));
 
       if (output_file == nullptr)
-        return -1;
+        {
+          return -1;
+        }
 
       this->log_msg_->msg_ostream (output_file);
 #else
