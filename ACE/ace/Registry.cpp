@@ -9,14 +9,17 @@
 // Funky macro to deal with strange error passing semantics
 // of Win32 Reg*() functions
 #define ACE_REGISTRY_CALL_RETURN(X) \
-  do { \
-    if (X != ERROR_SUCCESS) \
+  do \
     { \
-      errno = X; \
-      return -1; \
-    } \
+    if (X != ERROR_SUCCESS) \
+      { \
+        errno = X; \
+        return -1; \
+      } \
     else \
-      return 0; \
+      { \
+        return 0; \
+      } \
     } while (0)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -740,9 +743,13 @@ ACE_Registry::Naming_Context::list (Binding_List &list)
       ACE_Registry::Binding binding;
       result = iterator.next_one (binding);
       if (result == 0)
-        list.insert (binding);
+        {
+          list.insert (binding);
+        }
       else
-        break;
+        {
+          break;
+        }
     }
   return 0;
 }
@@ -894,9 +901,13 @@ ACE_Registry::Binding_Iterator::Object_Iteration::next_n (u_long how_many,
                                                                  list);
           // If we were able to add objects
           if (requested != how_many)
-            return 0;
+            {
+              return 0;
+            }
           else
-            return result;
+            {
+              return result;
+            }
 
         default:
           // Strange error
@@ -967,9 +978,13 @@ ACE_Registry::Binding_Iterator::Context_Iteration::next_n (u_long how_many,
 
           // If we were able to add contexts
           if (requested != how_many)
-            return 0;
+            {
+              return 0;
+            }
           else
-            return -1;
+            {
+              return -1;
+            }
         }
     }
   // If we reach here, all of <how_many> pairs were added to the list
@@ -1002,7 +1017,9 @@ ACE_Predefined_Naming_Contexts::connect (ACE_Registry::Naming_Context &naming_co
   long result = -1;
 
   if (machine_name != 0 && ACE_OS::strcmp (ACE_TEXT ("localhost"), machine_name) == 0)
-    machine_name = 0;
+    {
+      machine_name = 0;
+    }
 
   if (predefined == HKEY_LOCAL_MACHINE || predefined == HKEY_USERS)
     result =
@@ -1011,15 +1028,17 @@ ACE_Predefined_Naming_Contexts::connect (ACE_Registry::Naming_Context &naming_co
                                    &naming_context.key_);
   if (predefined == HKEY_CURRENT_USER || predefined == HKEY_CLASSES_ROOT)
     {
-    // Make sure that for these types, the machine is local
-    if (machine_name == 0 ||
-        ACE_Predefined_Naming_Contexts::is_local_host (machine_name))
-      {
-        naming_context.key_ = predefined;
-        result = 0;
-      }
-    else
-      result = -1;
+      // Make sure that for these types, the machine is local
+      if (machine_name == 0 ||
+          ACE_Predefined_Naming_Contexts::is_local_host (machine_name))
+        {
+          naming_context.key_ = predefined;
+          result = 0;
+        }
+      else
+        {
+          result = -1;
+        }
     }
 
   ACE_REGISTRY_CALL_RETURN (result);
@@ -1032,7 +1051,9 @@ ACE_Predefined_Naming_Contexts::is_local_host (const ACE_TCHAR *machine_name)
 {
   ACE_TCHAR local_host[MAXHOSTNAMELEN];
   if (ACE_OS::hostname (local_host, sizeof local_host / sizeof (ACE_TCHAR)) == 0)
-    return ACE_OS::strcmp (local_host, machine_name) == 0;
+    {
+      return ACE_OS::strcmp (local_host, machine_name) == 0;
+    }
 
   return false;
 }
