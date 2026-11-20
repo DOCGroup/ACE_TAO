@@ -155,7 +155,9 @@ public:
     X* new_ptr = dynamic_cast<X*> (r.ptr_);
     COUNTER::attach_strong (new_counter);
     if (COUNTER::detach_strong (this->counter_) == 0)
-      delete this->ptr_;
+      {
+        delete this->ptr_;
+      }
     this->counter_ = new_counter;
     this->ptr_ = new_ptr;
 

@@ -97,7 +97,9 @@ ACE_Active_Map_Manager<T>::find (const ACE_Active_Map_Manager_Key &key,
                            internal_value);
 
   if (result == 0)
-    value = *internal_value;
+    {
+      value = *internal_value;
+    }
 
   return result;
 }

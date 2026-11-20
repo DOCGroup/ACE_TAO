@@ -32,7 +32,9 @@ ACE_ARGV_T<CHAR_TYPE>::buf ()
   ACE_TRACE ("ACE_ARGV_T::buf");
 
   if (this->buf_ == nullptr && this->iterative_)
-    this->create_buf_from_queue ();
+    {
+      this->create_buf_from_queue ();
+    }
 
   return this->buf_;
 }
@@ -69,7 +71,9 @@ ACE_ARGV_T<CHAR_TYPE>::operator[] (size_t i)
 
   // Don't go out of bounds.
   if (i >= static_cast<size_t> (this->argc_))
-    return nullptr;
+    {
+      return nullptr;
+    }
 
   return this->argv ()[i];
 }

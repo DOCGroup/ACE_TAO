@@ -59,9 +59,13 @@ ACE_Based_Pointer_Basic<CONCRETE>::addr () const
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::addr");
 
   if (this->target_ == -1)
-    return 0;
+    {
+      return 0;
+    }
   else
-    return const_cast<CONCRETE *> (ACE_Based_Pointer_Basic::based (this));
+    {
+      return const_cast<CONCRETE *> (ACE_Based_Pointer_Basic::based (this));
+    }
 }
 
 template <class CONCRETE> ACE_INLINE

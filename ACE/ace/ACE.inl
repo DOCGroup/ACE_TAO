@@ -322,11 +322,17 @@ ACE_INLINE u_char
 ACE::hex2byte (ACE_TCHAR c)
 {
   if (ACE_OS::ace_isdigit (c))
-    return (u_char) (c - ACE_TEXT ('0'));
+    {
+      return (u_char) (c - ACE_TEXT ('0'));
+    }
   else if (ACE_OS::ace_islower (c))
-    return (u_char) (10 + c - ACE_TEXT ('a'));
+    {
+      return (u_char) (10 + c - ACE_TEXT ('a'));
+    }
   else
-    return (u_char) (10 + c - ACE_TEXT ('A'));
+    {
+      return (u_char) (10 + c - ACE_TEXT ('A'));
+    }
 }
 
 // Close versioned namespace, if enabled by the user.
