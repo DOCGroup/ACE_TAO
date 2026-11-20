@@ -90,10 +90,12 @@ Time_Handler::handle_time_out (const ACE_Time_Value &, const void *arg)
 {
   size_t current_counter = *(reinterpret_cast<const size_t *> (arg));
   if (current_counter != counter)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Expected timer %B, not %B\n"),
-                counter,
-                current_counter));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Expected timer %B, not %B\n"),
+                  counter,
+                  current_counter));
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("[%@] Timer id %q with counter #%B|%B expired.\n"),
@@ -103,7 +105,9 @@ Time_Handler::handle_time_out (const ACE_Time_Value &, const void *arg)
               current_counter));
 
   if (current_counter == (ACE_MAX_TIMERS - 1))
-    done = 1;
+    {
+      done = 1;
+    }
   else if (counter == ACE_MAX_TIMERS - 1)
     {
       done = 1;
@@ -128,11 +132,15 @@ Time_Handler::timer_id (long t)
 Repeat_Timer_Handler::~Repeat_Timer_Handler ()
 {
   if (this->expirations_ == 2)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Repeater expired twice; correct\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Repeater expired twice; correct\n")));
+    }
   else
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Repeater expired %d times; should be 2\n"),
-                this->expirations_));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Repeater expired %d times; should be 2\n"),
+                  this->expirations_));
+    }
 }
 
 void
@@ -190,7 +198,9 @@ test_registering_all_handlers ()
     }
 
   while (!done)
-    ACE_Proactor::instance ()->handle_events ();
+    {
+      ACE_Proactor::instance ()->handle_events ();
+    }
 }
 
 static void
@@ -220,7 +230,9 @@ test_registering_one_handler ()
     }
 
   while (!done)
-    ACE_Proactor::instance ()->handle_events ();
+    {
+      ACE_Proactor::instance ()->handle_events ();
+    }
 }
 
 static void
@@ -251,17 +263,21 @@ test_canceling_odd_timers ()
     }
 
   for (i = 0; i < ACE_MAX_TIMERS; ++i)
-    // Cancel handlers with odd numbered timer ids.
-    if (ACE_ODD (rt[i].timer_id ()))
-      {
-        if (ACE_Proactor::instance ()->cancel_timer (rt[i].timer_id ()) == -1)
+    {
+      // Cancel handlers with odd numbered timer ids.
+      if (ACE_ODD (rt[i].timer_id ()))
         {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("cancel_timer")));
+          if (ACE_Proactor::instance ()->cancel_timer (rt[i].timer_id ()) == -1)
+            {
+              ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("cancel_timer")));
+            }
         }
-      }
+    }
 
   while (!done)
-    ACE_Proactor::instance ()->handle_events ();
+    {
+      ACE_Proactor::instance ()->handle_events ();
+    }
 }
 
 static void
