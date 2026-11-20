@@ -13,20 +13,22 @@ parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior_output_file)
   int option {};
 
   while ((option = get_opts ()) != -1)
-    switch (option)
-      {
-      case 'o':
-        ior_output_file = get_opts.opt_arg ();
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("usage:  %s ")
-                           ACE_TEXT ("-o <iorfile>")
-                           ACE_TEXT ("\n"),
-                           argv [0]),
-                          -1);
-      }
+    {
+      switch (option)
+        {
+        case 'o':
+          ior_output_file = get_opts.opt_arg ();
+          break;
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("usage:  %s ")
+                             ACE_TEXT ("-o <iorfile>")
+                             ACE_TEXT ("\n"),
+                             argv [0]),
+                            -1);
+        }
+    }
   // Indicates successful parsing of the command line
   return 0;
 }
@@ -58,9 +60,11 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
         orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Unable to initialize the POA.\n")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Unable to initialize the POA.\n")),
+                            1);
+        }
 
       PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -98,11 +102,13 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
         std::unique_ptr<FILE, int (*) (FILE *)> output_file (
           ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
         if (!output_file)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("Cannot open output file ")
-                             ACE_TEXT ("for writing IOR: %s"),
-                             ior_output_file),
-                            1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("Cannot open output file ")
+                               ACE_TEXT ("for writing IOR: %s"),
+                               ior_output_file),
+                              1);
+          }
         ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
       }
 
