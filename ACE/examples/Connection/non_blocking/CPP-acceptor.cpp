@@ -36,21 +36,27 @@ Svc_Handler<PEER_STREAM>::open (void *)
   ACE_TCHAR buf[BUFSIZ] {};
 
   if (this->peer ().get_remote_addr (client_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("get_remote_addr")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("get_remote_addr")),
+                        -1);
+    }
   else if (client_addr.addr_to_string (buf,
                                        sizeof buf) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("addr_to_string")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("addr_to_string")),
+                        -1);
+    }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("client addr %s on handle %@\n"),
-                buf,
-                reinterpret_cast<void *> (this->peer ().get_handle ())));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("client addr %s on handle %@\n"),
+                  buf,
+                  reinterpret_cast<void *> (this->peer ().get_handle ())));
+    }
 
   // Process the connection immediately since we are an interative
   // server.
@@ -72,21 +78,27 @@ Svc_Handler<PEER_STREAM>::handle_input (ACE_HANDLE)
     {
       ssize_t const r_bytes = this->peer ().recv (buf, sizeof buf);
       if (r_bytes <= 0)
-        break;
+        {
+          break;
+        }
 
       if (ACE_OS::write (ACE_STDOUT, buf, r_bytes) != r_bytes)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("ACE::send_n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("ACE::send_n")),
+                            -1);
+        }
     }
   // Send back ack.
   if (this->peer ().send_n ("",
                             1) != 1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("send_n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("send_n")),
+                        -1);
+    }
   return 0;
 }
 
@@ -115,40 +127,50 @@ IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::init (int argc, ACE_TCHAR *argv[])
                       timeout);
 
   if (this->server_addr_.set (local_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("set")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("set")),
+                        -1);
+    }
   // Call down to the ACCEPTOR's <open> method to do the
   // initialization.
   if (this->inherited::open (this->server_addr_,
                              use_reactor
                              ? ACE_Reactor::instance ()
                              : nullptr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("open")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("open")),
+                        -1);
+    }
   // Handle the SIGINT signal through the <ACE_Reactor>.
   else if (ACE_Reactor::instance ()->register_handler
            (SIGINT,
             &this->done_handler_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("register_handler")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("register_handler")),
+                        -1);
+    }
 #if !defined (ACE_WIN32)
   // Handle the SIGPIPE signal through the <ACE_Reactor>.
   else if (ACE_Reactor::instance ()->register_handler
            (SIGPIPE,
             &this->done_handler_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("register_handler")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("register_handler")),
+                        -1);
+    }
 #endif /* ACE_WIN32 */
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR>
@@ -184,15 +206,19 @@ IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::svc ()
 
   if (this->server_addr_.addr_to_string (buf,
                                          sizeof buf) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("addr_to_string")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("addr_to_string")),
+                        -1);
+    }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("starting server addr %s on handle %@\n"),
-                buf,
-                reinterpret_cast<void *> (this->get_handle ())));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("starting server addr %s on handle %@\n"),
+                  buf,
+                  reinterpret_cast<void *> (this->get_handle ())));
+    }
 
   // Performs the iterative server activities.
 
@@ -211,14 +237,18 @@ IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::svc ()
         {
           if (errno == EWOULDBLOCK
               && this->reactor ())
-            // Handle the accept asynchronously if necessary.
-            this->reactor ()->handle_events ();
+            {
+              // Handle the accept asynchronously if necessary.
+              this->reactor ()->handle_events ();
+            }
           else
-            // We've probably timed out...
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("%p on handle %@\n"),
-                        ACE_TEXT ("accept"),
-                        reinterpret_cast<void *> (this->acceptor ().get_handle ())));
+            {
+              // We've probably timed out...
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("%p on handle %@\n"),
+                          ACE_TEXT ("accept"),
+                          reinterpret_cast<void *> (this->acceptor ().get_handle ())));
+            }
         }
 
       // <SVC_HANDLER>'s destructor closes the stream implicitly but the
