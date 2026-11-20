@@ -16,28 +16,33 @@ Quoter_Stock_Factory_Locator_i::preinvoke (PortableServer::ObjectId const &oid,
                                            void *&cookie)
 {
   // Check to see if the object ID is valid
-  try {
-    // Get the ObjectID in string format
-    CORBA::String_var oid_str =
-      PortableServer::ObjectId_to_string (oid);
+  try
+    {
+      // Get the ObjectID in string format
+      CORBA::String_var oid_str =
+        PortableServer::ObjectId_to_string (oid);
 
-    // Check if the ObjectId is valid
-    if (std::strcmp (oid_str.in (), "Quoter/Stock_Factory") != 0) {
-      // Create the required servant
-      PortableServer::ServantBase_var servant_owner =
-        new Quoter_Stock_Factory_i ();
-      PortableServer::Servant servant = servant_owner.in ();
-      cookie = servant;
+      // Check if the ObjectId is valid
+      if (std::strcmp (oid_str.in (), "Quoter/Stock_Factory") != 0)
+        {
+          // Create the required servant
+          PortableServer::ServantBase_var servant_owner =
+            new Quoter_Stock_Factory_i ();
+          PortableServer::Servant servant = servant_owner.in ();
+          cookie = servant;
 
-      return servant_owner._retn ();
+          return servant_owner._retn ();
+        }
+      else
+        {
+          throw CORBA::OBJECT_NOT_EXIST ();
+        }
+
     }
-    else {
+  catch (CORBA::BAD_PARAM const &)
+    {
       throw CORBA::OBJECT_NOT_EXIST ();
     }
-
-  } catch (CORBA::BAD_PARAM const &) {
-    throw CORBA::OBJECT_NOT_EXIST ();
-  }
 }
 
 void

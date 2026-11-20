@@ -73,7 +73,9 @@ StockDistributor_i::unsubscribe_notifier (::Stock::Cookie *ck)
 
   // Verify we have located the <cookie>.
   if (iter == this->subscribers_list_.end ())
-    throw ::Stock::Invalid_Subscription ();
+    {
+      throw ::Stock::Invalid_Subscription ();
+    }
 
   // Erase the mapping from the <subscribers_list_>.
   Stock::StockNameConsumer_var consumer (iter->second.first._retn ());
@@ -95,7 +97,9 @@ StockDistributor_i::provide_quoter_info (::Stock::Cookie *ck)
       ACE_DEBUG ((LM_DEBUG, "Looking up cookie %s\n", ck->cookie_id ()));
 
       if (iter == this->subscribers_list_.end ())
-        throw ::Stock::Invalid_Subscription ();
+        {
+          throw ::Stock::Invalid_Subscription ();
+        }
 
       StockQuoter_i *const quoter = new StockQuoter_i;
       PortableServer::ServantBase_var owner_transfer (quoter);
