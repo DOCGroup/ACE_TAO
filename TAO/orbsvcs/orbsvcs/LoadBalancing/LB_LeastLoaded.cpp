@@ -486,7 +486,9 @@ TAO_LB_LeastLoaded::get_location (
         location = locations[location_index];
       }
       else if (!ACE::is_equal (this->reject_threshold_, 0.0f))
-        throw CORBA::TRANSIENT ();
+        {
+          throw CORBA::TRANSIENT ();
+        }
 
 //       ORBSVCS_DEBUG ((LM_DEBUG, "LOCATION ID == %s\n", location[0].id.in ()));
     }

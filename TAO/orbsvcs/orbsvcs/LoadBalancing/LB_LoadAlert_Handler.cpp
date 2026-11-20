@@ -16,9 +16,11 @@ TAO_LB_LoadAlert_Handler::enable_alert_excep (
     ::Messaging::ExceptionHolder *)
 {
   if (TAO_debug_level > 0)
-    ORBSVCS_ERROR ((LM_ERROR,
-                ACE_TEXT ("Exception caught when invoking ")
-                ACE_TEXT ("LoadAlert::enable_alert()\n")));
+    {
+      ORBSVCS_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Exception caught when invoking ")
+                      ACE_TEXT ("LoadAlert::enable_alert()\n")));
+    }
 }
 
 void
@@ -30,9 +32,11 @@ void
 TAO_LB_LoadAlert_Handler::disable_alert_excep (::Messaging::ExceptionHolder *)
 {
   if (TAO_debug_level > 0)
-    ORBSVCS_ERROR ((LM_ERROR,
-                ACE_TEXT ("Exception caught when invoking ")
-                ACE_TEXT ("LoadAlert::disable_alert()\n")));
+    {
+      ORBSVCS_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Exception caught when invoking ")
+                      ACE_TEXT ("LoadAlert::disable_alert()\n")));
+    }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

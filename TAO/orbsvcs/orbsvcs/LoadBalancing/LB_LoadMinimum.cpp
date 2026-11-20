@@ -134,9 +134,11 @@ TAO_LB_LoadMinimum::push_loads (
           if (this->load_map_->bind (the_location, eff_load) != 0)
             {
               if (TAO_debug_level > 0)
-                ORBSVCS_ERROR ((LM_ERROR,
-                            "ERROR: TAO_LB_LoadMinimum - "
-                            "Unable to push loads\n"));
+                {
+                  ORBSVCS_ERROR ((LM_ERROR,
+                                  "ERROR: TAO_LB_LoadMinimum - "
+                                  "Unable to push loads\n"));
+                }
 
               throw CORBA::INTERNAL ();
             }
