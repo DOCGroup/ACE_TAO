@@ -92,7 +92,9 @@ ACE_FoxReactor::FoxWaitForMultipleEvents (int width,
                       temp_set.wr_mask_,
                       temp_set.ex_mask_,
                       &zero) == -1)
-    return -1; // Bad file arguments...
+    {
+      return -1; // Bad file arguments...
+    }
 
   // Fox processing.
   this->fxapp->runOneEvent () ;
@@ -134,7 +136,9 @@ long ACE_FoxReactor::onFileEvents (FXObject * /* ob */, FXSelector se, void *han
     }
 
   if (recognized)
-    this->dispatch (1, dispatch_set);
+    {
+      this->dispatch (1, dispatch_set);
+    }
 
   return 1;
 }
@@ -163,18 +167,28 @@ ACE_FoxReactor::register_handler_i (ACE_HANDLE handle,
   int const result = ACE_Select_Reactor::register_handler_i (handle,
                                                              handler, mask);
   if (result == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   unsigned long condition {};
 
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::READ_MASK))
-    ACE_SET_BITS (condition, FX::INPUT_READ);
+    {
+      ACE_SET_BITS (condition, FX::INPUT_READ);
+    }
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::WRITE_MASK))
-    ACE_SET_BITS (condition, FX::INPUT_WRITE);
+    {
+      ACE_SET_BITS (condition, FX::INPUT_WRITE);
+    }
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::EXCEPT_MASK))
-    ACE_SET_BITS (condition, FX::INPUT_EXCEPT);
+    {
+      ACE_SET_BITS (condition, FX::INPUT_EXCEPT);
+    }
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::ACCEPT_MASK))
-    ACE_SET_BITS (condition, FX::INPUT_READ);
+    {
+      ACE_SET_BITS (condition, FX::INPUT_READ);
+    }
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::CONNECT_MASK))
     {
       ACE_SET_BITS (condition, FX::INPUT_WRITE); // connected, you may write
@@ -208,13 +222,21 @@ ACE_FoxReactor::remove_handler_i (ACE_HANDLE handle, ACE_Reactor_Mask mask)
   int condition {};
 
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::READ_MASK))
-    ACE_SET_BITS (condition, FX::INPUT_READ);
+    {
+      ACE_SET_BITS (condition, FX::INPUT_READ);
+    }
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::WRITE_MASK))
-    ACE_SET_BITS (condition, FX::INPUT_WRITE);
+    {
+      ACE_SET_BITS (condition, FX::INPUT_WRITE);
+    }
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::EXCEPT_MASK))
-    ACE_SET_BITS (condition, FX::INPUT_EXCEPT);
+    {
+      ACE_SET_BITS (condition, FX::INPUT_EXCEPT);
+    }
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::ACCEPT_MASK))
-    ACE_SET_BITS (condition, FX::INPUT_READ);
+    {
+      ACE_SET_BITS (condition, FX::INPUT_READ);
+    }
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::CONNECT_MASK))
     {
       ACE_SET_BITS (condition, FX::INPUT_WRITE); // connected, you may write
@@ -265,7 +287,9 @@ ACE_FoxReactor::reset_timer_interval
                                               interval);
 
   if (result == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       this->reset_timeout ();
@@ -287,7 +311,9 @@ ACE_FoxReactor::schedule_timer (ACE_Event_Handler *event_handler,
                                                           delay,
                                                           interval);
   if (result == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       this->reset_timeout ();
@@ -303,7 +329,9 @@ ACE_FoxReactor::cancel_timer (ACE_Event_Handler *handler,
 
   if (ACE_Select_Reactor::cancel_timer (handler,
                                         dont_call_handle_close) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       this->reset_timeout ();
@@ -321,7 +349,9 @@ ACE_FoxReactor::cancel_timer (long timer_id,
   if (ACE_Select_Reactor::cancel_timer (timer_id,
                                         arg,
                                         dont_call_handle_close) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       this->reset_timeout ();

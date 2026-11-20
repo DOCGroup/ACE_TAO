@@ -37,9 +37,13 @@ ACE_Future_Rep<T>::dump () const
  (int) this->ref_count_));
   ACELIB_DEBUG ((LM_INFO,"value_:\n"));
   if (this->value_)
-    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT (" (non-nullptr)\n")));
+    {
+      ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT (" (non-nullptr)\n")));
+    }
   else
-    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT (" (nullptr)\n")));
+    {
+      ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT (" (nullptr)\n")));
+    }
 
   ACELIB_DEBUG ((LM_INFO,"value_ready_:\n"));
   this->value_ready_.dump ();
@@ -399,7 +403,9 @@ ACE_Future<T>::dump () const
               ACE_BEGIN_DUMP, this));
 
   if (this->future_rep_)
-    this->future_rep_->dump ();
+    {
+      this->future_rep_->dump ();
+    }
 
   ACELIB_DEBUG ((LM_DEBUG,
               ACE_END_DUMP));

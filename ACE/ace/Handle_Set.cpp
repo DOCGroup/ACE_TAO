@@ -52,7 +52,9 @@ ACE_Handle_Set::dump () const
 #else /* !ACE_HANDLE_SET_USES_FD_ARRAY */
   for (ACE_HANDLE i {}; i < this->max_handle_ + 1; ++i)
     if (this->is_set (i))
-      ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT (" %@ "), reinterpret_cast<void *> (i)));
+      {
+        ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT (" %@ "), reinterpret_cast<void *> (i)));
+      }
 #endif /* ACE_HANDLE_SET_USES_FD_ARRAY */
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT (" ]\n")));
@@ -274,10 +276,14 @@ ACE_Handle_Set_Iterator::operator () ()
   ACE_TRACE ("ACE_Handle_Set_Iterator::operator");
 #if defined (ACE_HANDLE_SET_USES_FD_ARRAY)
   if (this->handle_index_ < this->handles_.mask_.fd_count)
-    // Return the handle and advance the iterator.
-    return (ACE_HANDLE) this->handles_.mask_.fd_array[this->handle_index_++];
+    {
+      // Return the handle and advance the iterator.
+      return (ACE_HANDLE) this->handles_.mask_.fd_array[this->handle_index_++];
+    }
   else
-    return ACE_INVALID_HANDLE;
+    {
+      return ACE_INVALID_HANDLE;
+    }
 
 #elif !defined (ACE_HAS_BIG_FD_SET) /* !ACE_HANDLE_SET_USES_FD_ARRAY */
   // No sense searching further than the max_handle_ + 1;
@@ -444,7 +450,9 @@ ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator (ACE_Handle_Set const &hs)
   // maxhandlep1, which will cause <operator()> to return
   // <ACE_INVALID_HANDLE> immediately.
   if (this->handle_index_ >= maxhandlep1)
-    this->handle_index_ = maxhandlep1;
+    {
+      this->handle_index_ = maxhandlep1;
+    }
   else
     // Loop until we get <word_val_> to have its least significant bit
     // enabled, keeping track of which <handle_index> this represents
@@ -500,7 +508,9 @@ ACE_Handle_Set_Iterator::reset_state ()
   // maxhandlep1, which will cause <operator()> to return
   // <ACE_INVALID_HANDLE> immediately.
   if (this->handle_index_ >= maxhandlep1)
-    this->handle_index_ = maxhandlep1;
+    {
+      this->handle_index_ = maxhandlep1;
+    }
   else
     // Loop until we get <word_val_> to have its least significant bit
     // enabled, keeping track of which <handle_index> this represents
