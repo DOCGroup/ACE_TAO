@@ -113,9 +113,13 @@ prof_ace_process (size_t iteration)
           ptimer.stop ();
 
           if (result == -1)
-            ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "process.spawn"), -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "process.spawn"), -1);
+            }
           else if (!do_exec_after_fork && result == 0)
-            ACE_OS::exit (0) ;
+            {
+              ACE_OS::exit (0) ;
+            }
           else
             {
               ptimer.elapsed_time (et);
@@ -232,12 +236,14 @@ prof_ace_os_thread (size_t iteration)
           ptimer.start ();
 
           for (size_t j = 0; j < multiply_factor; ++j)
-            if (ACE_OS::thr_create (ace_empty,
-                                    nullptr,
-                                    THR_SUSPENDED,
-                                    nullptr) == -1)
             {
-              ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "CreateThread"), -1);
+              if (ACE_OS::thr_create (ace_empty,
+                                      nullptr,
+                                      THR_SUSPENDED,
+                                      nullptr) == -1)
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "CreateThread"), -1);
+                }
             }
 
           ptimer.stop ();
@@ -405,16 +411,22 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     }
 
   if (profiler == nullptr || profile_name == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR, "Usage: childbirth_time {-p|-f|-t|-a|-m|-x} [-n ###] [-l ###] [-h] [-e]\n"), 1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "Usage: childbirth_time {-p|-f|-t|-a|-m|-x} [-n ###] [-l ###] [-h] [-e]\n"), 1);
+    }
   else if (iteration > MAX_NO_ITERATION / multiply_factor)
-    ACE_ERROR_RETURN ((LM_ERROR, "Requested iteration count exceeds the supported maximum.\n"), 1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "Requested iteration count exceeds the supported maximum.\n"), 1);
+    }
   else
     {
       double time = profiler (iteration);
       if (time > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Average performance of %B iterations of %s: %.0f usec\n",
-                    iteration * multiply_factor, profile_name, time * 1e6));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Average performance of %B iterations of %s: %.0f usec\n",
+                      iteration * multiply_factor, profile_name, time * 1e6));
+        }
     }
   return 0;
 }
