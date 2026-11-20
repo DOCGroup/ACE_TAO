@@ -358,7 +358,9 @@ PeerProcess::dump_summary (ostream &strm)
   size_t num_transports = this->transports_.size();
 
   if (this->remote_)
-    strm << "  " << remote_->proc_name();
+    {
+      strm << "  " << remote_->proc_name();
+    }
   else
     {
       strm << "  peer process " << this->ident_;
@@ -412,17 +414,21 @@ PeerProcess::dump_object_detail (ostream &strm)
   strm << this->objects_.current_size()
        << " Objects referenced";
   if (this->is_server_role_)
-    strm << " in ";
+    {
+      strm << " in ";
+    }
   else
-  {
-    strm << " by ";
-  }
+    {
+      strm << " by ";
+    }
   if (this->remote_)
-    strm << remote_->proc_name();
+    {
+      strm << remote_->proc_name();
+    }
   else
-  {
-    strm << "peer process " << this->ident_;
-  }
+    {
+      strm << "peer process " << this->ident_;
+    }
   strm << ":" << endl;
   size_t count_inv {};
   for (ObjectByIndex::ITERATOR i = this->object_by_index_.begin();
@@ -444,11 +450,13 @@ PeerProcess::dump_invocation_detail (ostream &strm)
   strm << "\n " << this->invocations_.size() << " Invocations ";
   strm << (this->is_server_role_ ? "to " : "from ");
   if (this->remote_)
-    strm << remote_->proc_name();
+    {
+      strm << remote_->proc_name();
+    }
   else
-  {
-    strm << "peer process " << this->ident_;
-  }
+    {
+      strm << "peer process " << this->ident_;
+    }
   strm << ":" << endl;
   Invocation *inv {};
   bool show_handle = this->transports_.size() > 1;
