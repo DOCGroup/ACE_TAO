@@ -620,9 +620,13 @@ ACE_OS::strtol_emulation (const char *nptr, char **endptr, int base)
     else if (ACE_OS::ace_isalpha(c))
       c -= ACE_OS::ace_isupper(c) ? 'A' - 10 : 'a' - 10;
     else
-      break;
+      {
+        break;
+      }
     if (c >= base)
-      break;
+      {
+        break;
+      }
     if (any < 0 || acc > cutoff || acc == cutoff && c > cutlim)
       any = -1;
     else {
@@ -688,9 +692,13 @@ ACE_OS::wcstol_emulation (const wchar_t *nptr,
     else if (ACE_OS::ace_isalpha(c))
       c -= ACE_OS::ace_isupper(c) ? L'A' - 10 : L'a' - 10;
     else
-      break;
+      {
+        break;
+      }
     if (c >= base)
-      break;
+      {
+        break;
+      }
     if (any < 0 || acc > cutoff || acc == cutoff && c > cutlim)
       any = -1;
     else {
@@ -754,9 +762,13 @@ ACE_OS::strtoul_emulation (const char *nptr,
       else if (ACE_OS::ace_isalpha(c))
         c -= ACE_OS::ace_isupper(c) ? 'A' - 10 : 'a' - 10;
       else
-        break;
+        {
+          break;
+        }
       if (c >= base)
-        break;
+        {
+          break;
+        }
       if (any < 0 || acc > cutoff || acc == cutoff && c > cutlim)
         any = -1;
       else
@@ -823,9 +835,13 @@ ACE_OS::wcstoul_emulation (const wchar_t *nptr,
       else if (ACE_OS::ace_isalpha(c))
         c -= ACE_OS::ace_isupper(c) ? L'A' - 10 : L'a' - 10;
       else
-        break;
+        {
+          break;
+        }
       if (c >= base)
-        break;
+        {
+          break;
+        }
       if (any < 0 || acc > cutoff || acc == cutoff && c > cutlim)
         any = -1;
       else
@@ -894,9 +910,13 @@ ACE_OS::strtoll_emulation (const char *nptr,
     else if (ACE_OS::ace_isalpha(c))
       c -= ACE_OS::ace_isupper(c) ? 'A' - 10 : 'a' - 10;
     else
-      break;
+      {
+        break;
+      }
     if (c >= base)
-      break;
+      {
+        break;
+      }
     if (any < 0 || acc > cutoff || (acc == cutoff && c > cutlim))
       any = -1;
     else {
@@ -962,9 +982,13 @@ ACE_OS::wcstoll_emulation (const wchar_t *nptr,
     else if (ACE_OS::ace_isalpha(c))
       c -= ACE_OS::ace_isupper(c) ? L'A' - 10 : L'a' - 10;
     else
-      break;
+      {
+        break;
+      }
     if (c >= base)
-      break;
+      {
+        break;
+      }
     if (any < 0 || acc > cutoff || (acc == cutoff && c > cutlim))
       any = -1;
     else {
@@ -1029,9 +1053,13 @@ ACE_OS::strtoull_emulation (const char *nptr,
       else if (ACE_OS::ace_isalpha(c))
         c -= ACE_OS::ace_isupper(c) ? 'A' - 10 : 'a' - 10;
       else
-        break;
+        {
+          break;
+        }
       if (c >= base)
-        break;
+        {
+          break;
+        }
       if (any < 0 || acc > cutoff || (acc == cutoff && c > cutlim))
         any = -1;
       else
@@ -1099,9 +1127,13 @@ ACE_OS::wcstoull_emulation (const wchar_t *nptr,
       else if (ACE_OS::ace_isalpha(c))
         c -= ACE_OS::ace_isupper(c) ? L'A' - 10 : L'a' - 10;
       else
-        break;
+        {
+          break;
+        }
       if (c >= base)
-        break;
+        {
+          break;
+        }
       if (any < 0 || acc > cutoff || (acc == cutoff && c > cutlim))
         any = -1;
       else
@@ -1228,7 +1260,9 @@ ACE_OS::mkstemp_emulation (ACE_TCHAR * s)
                                               perms);
 
       if (handle != ACE_INVALID_HANDLE)
-        return handle;
+        {
+          return handle;
+        }
     }
 
   errno = EEXIST;  // Couldn't create a unique temporary file.
