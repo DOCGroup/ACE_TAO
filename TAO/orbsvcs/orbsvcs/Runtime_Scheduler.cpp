@@ -117,9 +117,11 @@ ACE_Runtime_Scheduler::set (::RtecScheduler::handle_t handle,
       || rt_info_[handle - 1].quantum != quantum
       || rt_info_[handle - 1].info_type != info_type
       || rt_info_[handle - 1].threads != static_cast<CORBA::Long> (threads))
-    ORBSVCS_ERROR ((LM_ERROR,
-                "invalid data for RT_Info: %s\n",
-                (const char*)rt_info_[handle - 1].entry_point));
+    {
+      ORBSVCS_ERROR ((LM_ERROR,
+                      "invalid data for RT_Info: %s\n",
+                      (const char*)rt_info_[handle - 1].entry_point));
+    }
   // TODO: throw something here.
 }
 
@@ -217,8 +219,10 @@ ACE_Runtime_Scheduler::entry_point_priority (const char * entry_point,
   RtecScheduler::handle_t handle = lookup (entry_point);
 
   if (handle < -1)
-    // The exception was thrown or is in already.
-    return;
+    {
+      // The exception was thrown or is in already.
+      return;
+    }
   this->priority (handle,
                   priority,
                   subpriority,
@@ -423,7 +427,9 @@ ACE_Runtime_Scheduler::last_scheduled_priority ()
 {
   // throw an exception if a valid schedule has not been loaded
   if (config_count_ <= 0)
-    throw RtecScheduler::NOT_SCHEDULED();
+    {
+      throw RtecScheduler::NOT_SCHEDULED();
+    }
   else
   {
     return (RtecScheduler::Preemption_Priority_t) (config_count_ - 1);
