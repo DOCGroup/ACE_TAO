@@ -40,9 +40,13 @@ Latency_Stats::sample (ACE_hrtime_t const sample)
       this->max_ = sample;
     }
   if (this->min_ > sample)
-    this->min_ = sample;
+    {
+      this->min_ = sample;
+    }
   if (this->max_ < sample)
-    this->max_ = sample;
+    {
+      this->max_ = sample;
+    }
   ++this->n_;
 }
 
@@ -51,7 +55,9 @@ Latency_Stats::dump_results (ACE_TCHAR const *test_name,
                              ACE_TCHAR const *sub_test) const
 {
   if (this->n_ < 1)
-    return;
+    {
+      return;
+    }
 
   ACE_hrtime_t const avg {this->sum_ / this->n_};
   ACE_hrtime_t const dev {this->sum2_ / this->n_ - avg * avg};
@@ -75,7 +81,9 @@ inline void
 Latency_Stats::accumulate (Latency_Stats const &rhs)
 {
   if (rhs.n_ == 0)
-    return;
+    {
+      return;
+    }
 
   if (this->n_ == 0)
     {
@@ -88,9 +96,13 @@ Latency_Stats::accumulate (Latency_Stats const &rhs)
     }
 
   if (this->min_ > rhs.min_)
-    this->min_ = rhs.min_;
+    {
+      this->min_ = rhs.min_;
+    }
   if (this->max_ < rhs.max_)
-    this->max_ = rhs.max_;
+    {
+      this->max_ = rhs.max_;
+    }
 
   this->sum_  += rhs.sum_;
   this->sum2_ += rhs.sum2_;
@@ -121,7 +133,9 @@ inline void
 Throughput_Stats::accumulate (Throughput_Stats const &rhs)
 {
   if (rhs.n_ == 0)
-    return;
+    {
+      return;
+    }
 
   if (this->n_ == 0)
     {
@@ -132,10 +146,14 @@ Throughput_Stats::accumulate (Throughput_Stats const &rhs)
     }
 
   if (this->start_ > rhs.start_)
-    this->start_ = rhs.start_;
+    {
+      this->start_ = rhs.start_;
+    }
 
   if (this->stop_ < rhs.stop_)
-    this->stop_ = rhs.stop_;
+    {
+      this->stop_ = rhs.stop_;
+    }
 
   this->n_ += rhs.n_;
 }
