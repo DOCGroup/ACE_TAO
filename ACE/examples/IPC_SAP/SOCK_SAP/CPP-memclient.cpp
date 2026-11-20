@@ -20,8 +20,10 @@ run_client ()
   ACE_MEM_Addr server_addr (ACE_DEFAULT_SERVER_PORT);
 
   if (connector.connect (stream, server_addr.get_remote_addr ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("connect")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("connect")), -1);
+    }
 
   char buf [MAXPATHLEN];
   while (ACE_OS::fgets (buf, MAXPATHLEN, stdin) != nullptr)

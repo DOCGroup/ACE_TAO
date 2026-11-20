@@ -41,9 +41,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       int const parsed_iterations = ACE_OS::atoi (argv[3]);
       if (parsed_iterations < 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("iterations must not be negative\n")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("iterations must not be negative\n")),
+                            1);
+        }
       options.max_iterations = static_cast<size_t> (parsed_iterations);
     }
 
