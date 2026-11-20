@@ -287,19 +287,23 @@ static bool expect (const ACE_TCHAR *name,
   if (ptr.null () != expect_null)
     {
       if (expect_null)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Expecting: %s null:: ")
-                    ACE_TEXT ("Actual: Printer: %u; Count %d\n"),
-                    name,
-                    ptr->which_,
-                    ptr.count ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Expecting: %s null:: ")
+                      ACE_TEXT ("Actual: Printer: %u; Count %d\n"),
+                      name,
+                      ptr->which_,
+                      ptr.count ()));
+        }
       else
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Expecting: %s Printer: %u; Count %d:: ")
-                    ACE_TEXT ("Actual: Null.\n"),
-                    name,
-                    expect_which,
-                    expect_count));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Expecting: %s Printer: %u; Count %d:: ")
+                      ACE_TEXT ("Actual: Null.\n"),
+                      name,
+                      expect_which,
+                      expect_count));
+        }
       return false;
     }
   if (ptr.null ())
@@ -488,8 +492,10 @@ run_main (int, ACE_TCHAR *[])
     ACE_Refcounted_Auto_Ptr<Printer, ACE_Null_Mutex> r6 = r1;
   }
   if (Printer::instance_count_ == 0)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) Printer instance count is 0; correct\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) Printer instance count is 0; correct\n")));
+    }
   else
     {
       ACE_ERROR ((LM_ERROR,
@@ -517,10 +523,12 @@ run_main (int, ACE_TCHAR *[])
   std::unique_ptr<Scheduler> scheduler(scheduler_ptr);
 
   if (scheduler->open () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("Error opening scheduler")),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("Error opening scheduler")),
+                        1);
+    }
 
   {
     ACE_NEW_RETURN (printer1,
@@ -530,9 +538,11 @@ run_main (int, ACE_TCHAR *[])
     Printer_var r (printer1);
 
     for (int i = 0; i < n_loops; ++i)
-      // Spawn off the methods, which run in a separate thread as
-      // active object invocations.
-      scheduler->print (r);
+      {
+        // Spawn off the methods, which run in a separate thread as
+        // active object invocations.
+        scheduler->print (r);
+      }
   }
 
   // Close things down.
@@ -541,8 +551,10 @@ run_main (int, ACE_TCHAR *[])
   scheduler->wait ();
 
   if (Printer::instance_count_ == 0)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) Printer instance count is 0; correct\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) Printer instance count is 0; correct\n")));
+    }
   else
     {
       ACE_ERROR ((LM_ERROR,
