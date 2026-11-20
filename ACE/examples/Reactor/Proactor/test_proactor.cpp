@@ -169,10 +169,12 @@ Receiver::initiate_read_stream ()
   // Inititiate read
   if (this->rs_.read (*mb,
                       mb->size () - 1) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ACE_Asynch_Read_Stream::read"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "ACE_Asynch_Read_Stream::read"),
+                        -1);
+    }
   return 0;
 }
 
@@ -256,9 +258,11 @@ Receiver::handle_write_file (const ACE_Asynch_Write_File::Result &result)
   result.message_block ().release ();
 
   if (result.success ())
-    // Write successful:  Increment file offset
-    this->file_offset_ +=
-      ACE_Utils::truncate_cast<u_long> (result.bytes_transferred ());
+    {
+      // Write successful:  Increment file offset
+      this->file_offset_ +=
+        ACE_Utils::truncate_cast<u_long> (result.bytes_transferred ());
+    }
 
   // This code is not robust enough to deal with short file writes
   // (which hardly ever happen) ;-)
@@ -378,9 +382,11 @@ Sender::open (const ACE_TCHAR *host,
   this->input_file_ =
     ACE_OS::open (file, GENERIC_READ | FILE_FLAG_OVERLAPPED);
   if (this->input_file_ == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ACE_OS::open"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "ACE_OS::open"), -1);
+    }
 
   // Find file size
   this->file_size_ =
@@ -391,24 +397,30 @@ Sender::open (const ACE_TCHAR *host,
   ACE_SOCK_Connector connector;
   if (connector.connect (this->stream_,
                          address) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ACE_SOCK_Connector::connect"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "ACE_SOCK_Connector::connect"),
+                        -1);
+    }
 
   // Open ACE_Asynch_Write_Stream
   if (this->ws_.open (*this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ACE_Asynch_Write_Stream::open"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "ACE_Asynch_Write_Stream::open"),
+                        -1);
+    }
 
   // Open ACE_Asynch_Read_File
   if (this->rf_.open (*this, this->input_file_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ACE_Asynch_Read_File::open"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "ACE_Asynch_Read_File::open"),
+                        -1);
+    }
 
   // Start an asynchronous transmit file
   if (this->transmit_file () == -1)
@@ -432,17 +444,21 @@ Sender::transmit_file ()
   ACE_HANDLE file_handle =
     ACE_OS::open (file, GENERIC_READ | FILE_FLAG_SEQUENTIAL_SCAN);
   if (file_handle == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ACE_OS::open"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "ACE_OS::open"),
+                        -1);
+    }
 
   // Open ACE_Asynch_Transmit_File
   if (this->tf_.open (*this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ACE_Asynch_Transmit_File::open"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "ACE_Asynch_Transmit_File::open"),
+                        -1);
+    }
 
   // Header and trailer data for the file.
   // @@ What happens if header and trailer are the same?
@@ -454,10 +470,12 @@ Sender::transmit_file ()
   // Send the entire file in one fell swoop!
   if (this->tf_.transmit_file (file_handle,
                                &this->header_and_trailer_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ACE_Asynch_Transmit_File::transmit_file"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "ACE_Asynch_Transmit_File::transmit_file"),
+                        -1);
+    }
 
   return 0;
 }
@@ -506,10 +524,12 @@ Sender::initiate_read_file ()
   if (this->rf_.read (*mb,
                       mb->size () - 1,
                       this->file_offset_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ACE_Asynch_Read_File::read"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "ACE_Asynch_Read_File::read"),
+                        -1);
+    }
   return 0;
 }
 
@@ -627,28 +647,30 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opt ()) != EOF)
-    switch (c)
-      {
-      case 'h':
-        host = get_opt.opt_arg ();
-        break;
-      case 'p':
-        port = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      case 'f':
-        file = get_opt.opt_arg ();
-        break;
-      case 'd':
-        dump_file = get_opt.opt_arg ();
-        break;
-      default:
-        ACE_ERROR ((LM_ERROR, "%p.\n",
-                    "usage :\n"
-                    "-h <host>\n"
-                    "-p <port>\n"
-                    "-f <file>\n"));
-        return -1;
-      }
+    {
+      switch (c)
+        {
+        case 'h':
+          host = get_opt.opt_arg ();
+          break;
+        case 'p':
+          port = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'f':
+          file = get_opt.opt_arg ();
+          break;
+        case 'd':
+          dump_file = get_opt.opt_arg ();
+          break;
+        default:
+          ACE_ERROR ((LM_ERROR, "%p.\n",
+                      "usage :\n"
+                      "-h <host>\n"
+                      "-p <port>\n"
+                      "-f <file>\n"));
+          return -1;
+        }
+    }
 
   return 0;
 }
@@ -678,13 +700,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
    }
   // If active side
   else if (sender.open (host, port) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   int success = 1;
 
   while (success > 0  && !done)
-    // Dispatch events via Proactor singleton.
-    success = ACE_Proactor::instance ()->handle_events ();
+    {
+      // Dispatch events via Proactor singleton.
+      success = ACE_Proactor::instance ()->handle_events ();
+    }
 
   return 0;
 }
