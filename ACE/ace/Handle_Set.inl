@@ -103,10 +103,14 @@ ACE_Handle_Set::set_bit (ACE_HANDLE handle)
 #else /* ACE_HANDLE_SET_USES_FD_ARRAY */
 #if defined (ACE_HAS_BIG_FD_SET)
       if (this->size_ == 0)
-        FD_ZERO (std::addressof (this->mask_));
+        {
+          FD_ZERO (std::addressof (this->mask_));
+        }
 
       if (handle < this->min_handle_)
-        this->min_handle_ = handle;
+        {
+          this->min_handle_ = handle;
+        }
 #endif /* ACE_HAS_BIG_FD_SET */
 
       FD_SET (handle,
@@ -114,7 +118,9 @@ ACE_Handle_Set::set_bit (ACE_HANDLE handle)
       ++this->size_;
 
       if (handle > this->max_handle_)
-        this->max_handle_ = handle;
+        {
+          this->max_handle_ = handle;
+        }
 #endif /* ACE_HANDLE_SET_USES_FD_ARRAY */
     }
 }
@@ -134,7 +140,9 @@ ACE_Handle_Set::clr_bit (ACE_HANDLE handle)
 
 #if !defined (ACE_HANDLE_SET_USES_FD_ARRAY)
       if (handle == this->max_handle_)
-        this->set_max (this->max_handle_);
+        {
+          this->set_max (this->max_handle_);
+        }
 #endif /* !ACE_HANDLE_SET_USES_FD_ARRAY */
     }
 }
@@ -158,9 +166,13 @@ ACE_Handle_Set::operator fd_set *()
   ACE_TRACE ("ACE_Handle_Set::operator fd_set *");
 
   if (this->size_ > 0)
-    return std::addressof (this->mask_);
+    {
+      return std::addressof (this->mask_);
+    }
   else
-    return nullptr;
+    {
+      return nullptr;
+    }
 }
 
 /// Returns a pointer to the underlying fd_set.
@@ -170,9 +182,13 @@ ACE_Handle_Set::fdset ()
   ACE_TRACE ("ACE_Handle_Set::fdset");
 
   if (this->size_ > 0)
-    return std::addressof (this->mask_);
+    {
+      return std::addressof (this->mask_);
+    }
   else
-    return nullptr;
+    {
+      return nullptr;
+    }
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

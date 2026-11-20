@@ -847,7 +847,9 @@ ACE_InputCDR::read_fixed (ACE_CDR::Fixed &x)
   for (int i = 0; i < 16; ++i)
     {
       if (!this->read_1 (a + i))
-        return false;
+        {
+          return false;
+        }
       const unsigned low = a[i] & 0xf;
       if (low == ACE_CDR::Fixed::POSITIVE ||
           low == ACE_CDR::Fixed::NEGATIVE)
@@ -1213,7 +1215,9 @@ ACE_InputCDR::skip_fixed ()
     {
       ACE_CDR::Octet x;
       if (!this->read_1 (&x))
-        return false;
+        {
+          return false;
+        }
       const unsigned low = x & 0xf;
       if (low == 0xc || low == 0xd)
         return true;

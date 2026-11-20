@@ -26,7 +26,9 @@ ACE_Bounded_Stack<T>::push (const T &new_item)
       return 0;
     }
   else
-    return -1;
+    {
+      return -1;
+    }
 }
 
 template <class T> ACE_INLINE int
@@ -39,7 +41,9 @@ ACE_Bounded_Stack<T>::pop (T &item)
       return 0;
     }
   else
-    return -1;
+    {
+      return -1;
+    }
 }
 
 template <class T> ACE_INLINE int
@@ -52,7 +56,9 @@ ACE_Bounded_Stack<T>::top (T &item) const
       return 0;
     }
   else
-    return -1;
+    {
+      return -1;
+    }
 }
 
 template <class T> ACE_INLINE size_t
@@ -87,7 +93,9 @@ ACE_Fixed_Stack<T, ACE_SIZE>::push (const T &new_item)
       return 0;
     }
   else
-    return -1;
+    {
+      return -1;
+    }
 }
 
 template <class T, size_t ACE_SIZE> ACE_INLINE int
@@ -100,7 +108,9 @@ ACE_Fixed_Stack<T, ACE_SIZE>::pop (T &item)
       return 0;
     }
   else
-    return -1;
+    {
+      return -1;
+    }
 }
 
 template <class T, size_t ACE_SIZE> ACE_INLINE int
@@ -113,7 +123,9 @@ ACE_Fixed_Stack<T, ACE_SIZE>::top (T &item) const
       return 0;
     }
   else
-    return -1;
+    {
+      return -1;
+    }
 }
 
 template <class T, size_t ACE_SIZE> ACE_INLINE size_t
@@ -139,7 +151,9 @@ ACE_Unbounded_Stack<T>::top (T &item) const
       return 0;
     }
   else
-    return -1;
+    {
+      return -1;
+    }
 }
 
 template <class T> ACE_INLINE bool
@@ -290,7 +304,9 @@ ACE_Array<T>::operator= (const ACE_Array<T> &s)
   // Check for "self-assignment".
 
   if (this != std::addressof (s))
-    this->ACE_Array_Base<T>::operator= (s);
+    {
+      this->ACE_Array_Base<T>::operator= (s);
+    }
 }
 
 // Compare this array with <s> for inequality.
@@ -317,7 +333,9 @@ ACE_DLList<T>::get (T *&item, size_t index)
   ACE_DLList_Node *node;
   int result = ACE_DLList_Base::get (node, index);
   if (result != -1)
-    item = (T *) node->item_;
+    {
+      item = (T *) node->item_;
+    }
   return result;
 }
 
@@ -385,7 +403,9 @@ ACE_DLList_Iterator<T>::next (T *&ptr)
   ACE_DLList_Node *temp =
     ACE_Double_Linked_List_Iterator <ACE_DLList_Node>::next ();
   if (temp)
-    ptr = (T *) temp->item_;
+    {
+      ptr = (T *) temp->item_;
+    }
   return temp ? 1 : 0;
 }
 
@@ -444,7 +464,9 @@ ACE_DLList_Reverse_Iterator<T>::next (T *&ptr)
   ACE_DLList_Node *temp =
     ACE_Double_Linked_List_Reverse_Iterator <ACE_DLList_Node>::next ();
   if (temp == 0)
-    return 0;
+    {
+      return 0;
+    }
   ptr = (T *) temp->item_;
   return 1;
 }
