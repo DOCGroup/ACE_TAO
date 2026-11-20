@@ -25,30 +25,34 @@ parse_args (int argc, ACE_TCHAR **argv, Client_Options &options)
   int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'k':
-        options.ior = get_opts.opt_arg ();
-        break;
+    {
+      switch (c)
+        {
+        case 'k':
+          options.ior = get_opts.opt_arg ();
+          break;
 
-      case 'x':
-        options.shutdown_server = true;
-        break;
+        case 'x':
+          options.shutdown_server = true;
+          break;
 
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("usage:  %s ")
-                           ACE_TEXT ("-k IOR ")
-                           ACE_TEXT ("-x shutdown server ")
-                           ACE_TEXT ("\n"),
-                           argv [0]),
-                          -1);
-      }
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("usage:  %s ")
+                             ACE_TEXT ("-k IOR ")
+                             ACE_TEXT ("-x shutdown server ")
+                             ACE_TEXT ("\n"),
+                             argv [0]),
+                            -1);
+        }
+    }
 
   if (options.ior == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Please specify the IOR\n")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Please specify the IOR\n")), -1);
+    }
 
   return 0;
 }

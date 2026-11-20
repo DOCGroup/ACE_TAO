@@ -40,9 +40,11 @@ Service_Config_ORB_DLL::init (int argc, ACE_TCHAR *argv[])
     }
 
   if (this->worker_type_ == Worker_Type::unspecified)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) You must specify -c(lient) or -s(erver).\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) You must specify -c(lient) or -s(erver).\n")),
+                        -1);
+    }
 
   // ACE_NEW_RETURN needs a raw output pointer; argv_ takes ownership below.
   ACE_ARGV *tmp {};
@@ -52,11 +54,13 @@ Service_Config_ORB_DLL::init (int argc, ACE_TCHAR *argv[])
   // ACE_NEW_RETURN needs a raw output pointer; worker_ takes ownership below.
   Abstract_Worker *worker {};
   if (this->worker_type_ == Worker_Type::server)
-    ACE_NEW_RETURN (worker, Server_Worker, -1);
+    {
+      ACE_NEW_RETURN (worker, Server_Worker, -1);
+    }
   else
-  {
-    ACE_NEW_RETURN (worker, Client_Worker, -1);
-  }
+    {
+      ACE_NEW_RETURN (worker, Client_Worker, -1);
+    }
   this->worker_.reset (worker);
 
 #if defined (ACE_HAS_THREADS)
