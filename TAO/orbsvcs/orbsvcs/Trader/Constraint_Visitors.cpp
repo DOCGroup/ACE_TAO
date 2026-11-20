@@ -508,28 +508,6 @@ visit_property (TAO_Property_Constraint* literal)
   // A derived class decides how to do this.
 }
 
-/*@@ pradeep: where is this used?
-
-CORBA::Boolean
-TAO_find_string (CosTradingSequences::StringSeq& sequence,
-                 const char* element)
-{
- int length = sequence.length (),
-    return_value = 0;
-
-  for (int i {}; i < length; ++i)
-    {
-      if (std::strcmp (sequence[i], element) == 0)
-        {
-          return_value = 1;
-          break;
-        }
-    }
-
-  return static_cast<CORBA::Boolean> (return_value);
-}
-*/
-
 CORBA::Boolean
 TAO_Constraint_Evaluator::
 sequence_does_contain (CORBA::Any* sequence,
