@@ -46,9 +46,11 @@ worker (void *c)
   // we'll have something to cleanup!
 
   if (ACE_Thread::keycreate (&key, cleanup) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "(%t) %p\n",
-                "ACE_Thread::keycreate"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%t) %p\n",
+                  "ACE_Thread::keycreate"));
+    }
 
   ACE_NEW_RETURN (ip,
                   int,
@@ -56,9 +58,11 @@ worker (void *c)
   std::unique_ptr<int> owned_ip {ip};
 
   if (ACE_Thread::setspecific (key, ip) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "(%t) %p\n",
-                "ACE_Thread::setspecific"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%t) %p\n",
+                  "ACE_Thread::setspecific"));
+    }
   else
   {
     owned_ip.release ();
@@ -67,9 +71,11 @@ worker (void *c)
   for (intptr_t i = 0; i < count; ++i)
     {
       if (ACE_Thread::keycreate (&key, cleanup) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    "(%t) %p\n",
-                    "ACE_Thread::keycreate"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%t) %p\n",
+                      "ACE_Thread::keycreate"));
+        }
 
       ACE_NEW_RETURN (ip,
                       int,
@@ -86,19 +92,25 @@ worker (void *c)
         void *tmp = ip;
 
         if (ACE_Thread::setspecific (key, tmp) == -1)
-          ACE_ERROR ((LM_ERROR,
-                      "(%t) %p\n",
-                      "ACE_Thread::setspecific"));
+          {
+            ACE_ERROR ((LM_ERROR,
+                        "(%t) %p\n",
+                        "ACE_Thread::setspecific"));
+          }
 
         if (ACE_Thread::getspecific (key, &tmp) == -1)
-          ACE_ERROR ((LM_ERROR,
-                      "(%t) %p\n",
-                      "ACE_Thread::setspecific"));
+          {
+            ACE_ERROR ((LM_ERROR,
+                        "(%t) %p\n",
+                        "ACE_Thread::setspecific"));
+          }
 
         if (ACE_Thread::setspecific (key, nullptr) == -1)
-          ACE_ERROR ((LM_ERROR,
-                      "(%t) %p\n",
-                      "ACE_Thread::setspecific"));
+          {
+            ACE_ERROR ((LM_ERROR,
+                        "(%t) %p\n",
+                        "ACE_Thread::setspecific"));
+          }
         else
         {
           owned_ip.reset ();
@@ -106,9 +118,11 @@ worker (void *c)
       }
 
       if (ACE_Thread::keyfree (key) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    "(%t) %p\n",
-                    "ACE_Thread::keyfree"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%t) %p\n",
+                      "ACE_Thread::keyfree"));
+        }
 
       // Cause an error.
       ACE_OS::read (ACE_INVALID_HANDLE, nullptr, 0);
@@ -135,9 +149,11 @@ worker (void *c)
       key = ACE_OS::NULL_key;
 
       if (ACE_Thread::keycreate (&key, cleanup) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    "(%t) %p\n",
-                    "ACE_Thread::keycreate"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%t) %p\n",
+                      "ACE_Thread::keycreate"));
+        }
 
       ACE_NEW_RETURN (ip,
                       int,
@@ -154,19 +170,25 @@ worker (void *c)
         void *tmp (ip);
 
         if (ACE_Thread::setspecific (key, tmp) == -1)
-          ACE_ERROR ((LM_ERROR,
-                      "(%t) %p\n",
-                      "ACE_Thread::setspecific"));
+          {
+            ACE_ERROR ((LM_ERROR,
+                        "(%t) %p\n",
+                        "ACE_Thread::setspecific"));
+          }
 
         if (ACE_Thread::getspecific (key, &tmp) == -1)
-          ACE_ERROR ((LM_ERROR,
-                      "(%t) %p\n",
-                      "ACE_Thread::setspecific"));
+          {
+            ACE_ERROR ((LM_ERROR,
+                        "(%t) %p\n",
+                        "ACE_Thread::setspecific"));
+          }
 
         if (ACE_Thread::setspecific (key, nullptr) == -1)
-          ACE_ERROR ((LM_ERROR,
-                      "(%t) %p\n",
-                      "ACE_Thread::setspecific"));
+          {
+            ACE_ERROR ((LM_ERROR,
+                        "(%t) %p\n",
+                        "ACE_Thread::setspecific"));
+          }
         else
         {
           owned_ip_second.reset ();
@@ -174,9 +196,11 @@ worker (void *c)
       }
 
       if (ACE_Thread::keyfree (key) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    "(%t) %p\n",
-                    "ACE_Thread::keyfree"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%t) %p\n",
+                      "ACE_Thread::keyfree"));
+        }
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -210,10 +234,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                                worker,
                                                reinterpret_cast<void *> (count),
                                                THR_BOUND | THR_DETACHED) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ACE_Thread_Manager::spawn_n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "ACE_Thread_Manager::spawn_n"),
+                        -1);
+    }
 
   ACE_Thread_Manager::instance ()->wait ();
 #else
