@@ -29,11 +29,13 @@ TAO::Security::PolicyFactory::create_policy (
       // Extract the desired Quality-of-Protection value from the
       // given Any.
       if (!(value >>= qop))
-        throw CORBA::BAD_PARAM (
-          CORBA::SystemException::_tao_minor_code (
-            TAO::VMCID,
-            EINVAL),
-          CORBA::COMPLETED_NO);
+        {
+          throw CORBA::BAD_PARAM (
+            CORBA::SystemException::_tao_minor_code (
+              TAO::VMCID,
+              EINVAL),
+            CORBA::COMPLETED_NO);
+        }
 
       TAO::Security::QOPPolicy * qop_policy {};
       ACE_NEW_THROW_EX (qop_policy,
@@ -54,11 +56,13 @@ TAO::Security::PolicyFactory::create_policy (
       // Extract the desired establishing of trust value from the
       // given Any.
       if (!(value >>= trust))
-        throw CORBA::BAD_PARAM (
-          CORBA::SystemException::_tao_minor_code (
-            TAO::VMCID,
-            EINVAL),
-          CORBA::COMPLETED_NO);
+        {
+          throw CORBA::BAD_PARAM (
+            CORBA::SystemException::_tao_minor_code (
+              TAO::VMCID,
+              EINVAL),
+            CORBA::COMPLETED_NO);
+        }
 
       TAO::Security::EstablishTrustPolicy * trust_policy {};
       ACE_NEW_THROW_EX (trust_policy,
@@ -79,11 +83,13 @@ TAO::Security::PolicyFactory::create_policy (
       // Extract the desired establishing of trust value from the
       // given Any.
       if (!(value >>= args))
-        throw CORBA::BAD_PARAM (
-          CORBA::SystemException::_tao_minor_code (
-            TAO::VMCID,
-            EINVAL),
-          CORBA::COMPLETED_NO);
+        {
+          throw CORBA::BAD_PARAM (
+            CORBA::SystemException::_tao_minor_code (
+              TAO::VMCID,
+              EINVAL),
+            CORBA::COMPLETED_NO);
+        }
 
       TAO::SL3::ContextEstablishmentPolicy * policy {};
       ACE_NEW_THROW_EX (policy,
@@ -110,11 +116,13 @@ TAO::Security::PolicyFactory::create_policy (
       // Extract the desired establishing of trust value from the
       // given Any.
       if (!(value >>= creds))
-        throw CORBA::BAD_PARAM (
-          CORBA::SystemException::_tao_minor_code (
-            TAO::VMCID,
-            EINVAL),
-          CORBA::COMPLETED_NO);
+        {
+          throw CORBA::BAD_PARAM (
+            CORBA::SystemException::_tao_minor_code (
+              TAO::VMCID,
+              EINVAL),
+            CORBA::COMPLETED_NO);
+        }
 
       TAO::SL3::ObjectCredentialsPolicy * policy {};
       ACE_NEW_THROW_EX (policy,
@@ -132,7 +140,9 @@ TAO::Security::PolicyFactory::create_policy (
            || type == ::Security::SecMechanismsPolicy
            || type == ::Security::SecFeaturePolicy             // Deprecated.
            || type == ::Security::SecDelegationDirectivePolicy)
-    throw CORBA::PolicyError (CORBA::UNSUPPORTED_POLICY);
+    {
+      throw CORBA::PolicyError (CORBA::UNSUPPORTED_POLICY);
+    }
   else
   {
     throw CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);

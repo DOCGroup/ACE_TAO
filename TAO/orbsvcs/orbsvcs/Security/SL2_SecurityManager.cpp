@@ -97,11 +97,13 @@ TAO::Security::AccessDecision::ReferenceKeyType::operator==
 
   if (olen == other.oid_->length() &&
       alen == other.adapter_id_->length())
-    return (std::memcmp (this->oid_->get_buffer(),
-                            other.oid_->get_buffer(),olen) == 0 &&
-            std::memcmp (this->adapter_id_->get_buffer(),
-                            other.adapter_id_->get_buffer(),alen) == 0 &&
-            std::strcmp (this->orbid_.in(), other.orbid_.in()) == 0);
+    {
+      return (std::memcmp (this->oid_->get_buffer(),
+                           other.oid_->get_buffer(),olen) == 0 &&
+              std::memcmp (this->adapter_id_->get_buffer(),
+                           other.adapter_id_->get_buffer(),alen) == 0 &&
+              std::strcmp (this->orbid_.in(), other.orbid_.in()) == 0);
+    }
   return false;
 }
 
@@ -144,15 +146,17 @@ TAO::Security::AccessDecision::access_allowed_i (OBJECT_KEY &key,
       access_decision = this->default_allowance_decision_;
       // When collocated is enabled, this overrides the global value
       if (this->default_collocated_decision_)
-      {
-        access_decision = true;
-      }
+        {
+          access_decision = true;
+        }
       if (TAO_debug_level >= 3)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) SL2_AccessDecision::access_decision(%x,%C)"
-                    " collocated %d NOT FOUND using default %d\n",
-                    hash.operator()(key),
-                    operation_name, collocated, access_decision));
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          "TAO (%P|%t) SL2_AccessDecision::access_decision(%x,%C)"
+                          " collocated %d NOT FOUND using default %d\n",
+                          hash.operator()(key),
+                          operation_name, collocated, access_decision));
+        }
     }
   else if (TAO_debug_level >= 3)
     {
@@ -229,12 +233,14 @@ TAO::Security::AccessDecision::add_object
     {
       // rebind shouldn't fail under normal circumstances
       if (TAO_debug_level > 1)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t): SL2_AccessDecision::add_object(%x,%d) "
-                    "unexpectedly failed (errno=%d)\n",
-                    hash.operator()(key),
-                    allow_insecure_access,
-                    ACE_ERRNO_GET));
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          "TAO (%P|%t): SL2_AccessDecision::add_object(%x,%d) "
+                          "unexpectedly failed (errno=%d)\n",
+                          hash.operator()(key),
+                          allow_insecure_access,
+                          ACE_ERRNO_GET));
+        }
       throw
         CORBA::NO_MEMORY(CORBA::SystemException::_tao_minor_code (TAO::VMCID,
                                                                   errno),
@@ -243,10 +249,12 @@ TAO::Security::AccessDecision::add_object
   else
     {
       if (TAO_debug_level >= 3)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t): SL2_AccessDecision::add_object(%x,%d) okay\n",
-                    hash.operator()(key),
-                    allow_insecure_access));
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          "TAO (%P|%t): SL2_AccessDecision::add_object(%x,%d) okay\n",
+                          hash.operator()(key),
+                          allow_insecure_access));
+        }
     }
 }
 
@@ -275,19 +283,23 @@ TAO::Security::AccessDecision::remove_object
         {
           // ignore b/c we don't care...maybe log a debug message for info
           if (TAO_debug_level >= 3)
-            ORBSVCS_DEBUG ((LM_DEBUG,
-                        "TAO (%P|%t): SL2_AccessDecision::remove_object(%x) "
-                        "object not found in access map\n",
-                        hash.operator()(key)));
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                              "TAO (%P|%t): SL2_AccessDecision::remove_object(%x) "
+                              "object not found in access map\n",
+                              hash.operator()(key)));
+            }
         }
       else
         {
           if (TAO_debug_level > 0)
-            ORBSVCS_DEBUG ((LM_DEBUG,
-                        "TAO (%P|%t): SL2_AccessDecision::remove_object(%x) "
-                        " unexpected error during unbind from map (errno=%d\n)",
-                        hash.operator()(key),
-                        ACE_ERRNO_GET));
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                              "TAO (%P|%t): SL2_AccessDecision::remove_object(%x) "
+                              " unexpected error during unbind from map (errno=%d\n)",
+                              hash.operator()(key),
+                              ACE_ERRNO_GET));
+            }
 
           throw CORBA::UNKNOWN (CORBA::SystemException::_tao_minor_code (TAO::VMCID,
                                                                          errno),
