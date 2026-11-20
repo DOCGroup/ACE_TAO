@@ -28,16 +28,20 @@ Peer_Handler::open (void *a)
   // Call down to the base class to activate and register this handler
   // with an <ACE_Reactor>.
   if (this->inherited::open (a) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("open")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("open")),
+                        -1);
+    }
 
   if (this->peer ().enable (ACE_NONBLOCK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("enable")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("enable")),
+                        -1);
+    }
 
   ACE_Time_Value const timeout (Options::instance ()->timeout ());
 
@@ -45,19 +49,23 @@ Peer_Handler::open (void *a)
   // "tunable" parameter.
   if (ACE_Reactor::instance ()->schedule_timer
       (this, nullptr, timeout) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("schedule_timer")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("schedule_timer")));
+    }
 
   // If there are events left in the queue, make sure we enable the
   // <ACE_Reactor> appropriately to get them sent out.
   if (this->msg_queue ()->is_empty () == 0
       && ACE_Reactor::instance ()->schedule_wakeup
           (this, ACE_Event_Handler::WRITE_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("schedule_wakeup")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("schedule_wakeup")),
+                        -1);
+    }
 
   // First action is to wait to be notified of our connection id.
   this->do_action_ = &Peer_Handler::await_connection_id;
@@ -85,14 +93,19 @@ Peer_Handler::transmit (ACE_Message_Block *mb,
 
   if (this->put (mb) == -1)
     {
-      if (errno == EWOULDBLOCK) // The queue has filled up!
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("%p\n"),
-                    ACE_TEXT ("gateway is flow controlled, so we're dropping events")));
+      if (errno == EWOULDBLOCK)
+        {
+          // The queue has filled up!
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("gateway is flow controlled, so we're dropping events")));
+        }
       else
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("%p\n"),
-                    ACE_TEXT ("transmission failure in transmit()")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("transmission failure in transmit()")));
+        }
       // transmit() owns mb and releases it if queuing fails.
       mb->release ();
       return -1;
@@ -193,17 +206,21 @@ Peer_Handler::nonblk_put (ACE_Message_Block *mb)
       // Re-queue in *front* of the list to preserve order.
       ACE_Time_Value timeout (ACE_Time_Value::zero);
       if (this->msg_queue ()->enqueue_head (mb, std::addressof (timeout)) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("enqueue_head")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("enqueue_head")),
+                            -1);
+        }
       // Tell ACE_Reactor to call us back when we can send again.
       if (ACE_Reactor::instance ()->schedule_wakeup
           (this, ACE_Event_Handler::WRITE_MASK) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("schedule_wakeup")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("schedule_wakeup")),
+                            -1);
+        }
       return 0;
     }
   return n;
@@ -254,9 +271,11 @@ Peer_Handler::handle_output (ACE_HANDLE)
 
               if (ACE_Reactor::instance ()->cancel_wakeup
                   (this, ACE_Event_Handler::WRITE_MASK) == -1)
-                ACE_ERROR ((LM_ERROR,
-                            ACE_TEXT ("%p\n"),
-                            ACE_TEXT ("cancel_wakeup")));
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              ACE_TEXT ("%p\n"),
+                              ACE_TEXT ("cancel_wakeup")));
+                }
             }
         }
       return 0;
@@ -298,7 +317,9 @@ Peer_Handler::send (ACE_Message_Block *mb)
   ssize_t const n = this->peer ().send (mb->rd_ptr (), len);
 
   if (n <= 0)
-    return errno == EWOULDBLOCK ? 0 : n;
+    {
+      return errno == EWOULDBLOCK ? 0 : n;
+    }
   else if (static_cast<size_t> (n) < len)
     {
       // Re-adjust pointer to skip over the part we did send.
@@ -453,10 +474,12 @@ Peer_Handler::recv (ACE_Message_Block *&mb)
                   event->header_.len_,
                   data_received + header_received));
       if (Options::instance ()->enabled (Options::VERBOSE))
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("data_ = %*C\n"),
-                    event->header_.len_ - 2,
-                    event->data_));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("data_ = %*C\n"),
+                      event->header_.len_ - 2,
+                      event->data_));
+        }
       return data_received + header_received;
     }
 }
@@ -490,16 +513,20 @@ Peer_Handler::await_connection_id ()
   if (n != static_cast<ssize_t> (sizeof this->connection_id_))
     {
       if (n == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("gatewayd has closed down unexpectedly\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("gatewayd has closed down unexpectedly\n")),
+                            -1);
+        }
       else
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p, bytes received on handle %@ = %b\n"),
-                           ACE_TEXT ("recv"),
-                           reinterpret_cast<void *> (this->get_handle ()),
-                           n),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p, bytes received on handle %@ = %b\n"),
+                             ACE_TEXT ("recv"),
+                             reinterpret_cast<void *> (this->get_handle ()),
+                             n),
+                            -1);
+        }
     }
   else
     {
@@ -532,10 +559,12 @@ Peer_Handler::await_connection_id ()
           (this,
            ACE_Reactor::instance (),
            ACE_Thread_Manager::instance ()) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%t) %p\n"),
-                           ACE_TEXT ("register_stdin_handler")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%t) %p\n"),
+                             ACE_TEXT ("register_stdin_handler")),
+                            -1);
+        }
 
       // Next time in await_connection_id(), I'll don't call
       // register_stdin_handler().
@@ -588,10 +617,12 @@ Peer_Handler::await_events ()
           return 0;
         }
       else
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("recv")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("recv")),
+                            -1);
+        }
       /* NOTREACHED */
     default:
       {
@@ -607,10 +638,12 @@ Peer_Handler::await_events ()
                     event->header_.len_,
                     this->total_bytes_));
         if (Options::instance ()->enabled (Options::VERBOSE))
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("data_ = %*C\n"),
-                      event->header_.len_ - 2,
-                      event->data_));
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("data_ = %*C\n"),
+                        event->header_.len_ - 2,
+                        event->data_));
+          }
         return 0;
       }
     }
@@ -657,11 +690,13 @@ Peer_Handler::handle_close (ACE_HANDLE,
       // Deregister this handler with the ACE_Reactor.
       if (ACE_Reactor::instance ()->remove_handler
           (this, mask) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("handle = %@: %p\n"),
-                           reinterpret_cast<void *> (this->get_handle ()),
-                           ACE_TEXT ("remove_handler")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("handle = %@: %p\n"),
+                             reinterpret_cast<void *> (this->get_handle ()),
+                             ACE_TEXT ("remove_handler")),
+                            -1);
+        }
       // Close down the peer.
       this->peer ().close ();
     }
@@ -888,10 +923,12 @@ Peer_Factory::init (int argc, ACE_TCHAR *argv[])
 
   if (ACE_Reactor::instance ()->register_handler (sig_set,
                                                   this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("register_handler")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("register_handler")),
+                        -1);
+    }
 
   if (Options::instance ()->enabled (Options::SUPPLIER_ACCEPTOR)
       && this->supplier_acceptor_.start (Options::instance ()->supplier_acceptor_port ()) == -1)
