@@ -162,11 +162,13 @@ TAO_LB_LoadManager::get_loads (const PortableGroup::Location & the_location)
                     0);
 
   if (this->load_map_.find (the_location, *tmp) == 0)
-    return loads._retn ();
+    {
+      return loads._retn ();
+    }
   else
-  {
-    throw CosLoadBalancing::LocationNotFound ();
-  }
+    {
+      throw CosLoadBalancing::LocationNotFound ();
+    }
 }
 
 void
@@ -390,9 +392,11 @@ TAO_LB_LoadManager::register_load_monitor (
       if (this->timer_id_ == -1)
         {
           if (TAO_debug_level > 0)
-            ORBSVCS_ERROR ((LM_ERROR,
-                        "TAO_LB_LoadManager::register_load_monitor: "
-                        "Unable to schedule timer.\n"));
+            {
+              ORBSVCS_ERROR ((LM_ERROR,
+                              "TAO_LB_LoadManager::register_load_monitor: "
+                              "Unable to schedule timer.\n"));
+            }
 
           (void) this->monitor_map_.unbind (the_location);
 
@@ -406,9 +410,11 @@ TAO_LB_LoadManager::register_load_monitor (
   else if (result != 0)
     {
       if (TAO_debug_level > 0)
-        ORBSVCS_ERROR ((LM_ERROR,
-                    "TAO_LB_LoadManager::register_load_monitor: "
-                    "Unable to register load monitor.\n"));
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          "TAO_LB_LoadManager::register_load_monitor: "
+                          "Unable to register load monitor.\n"));
+        }
 
       throw CORBA::INTERNAL ();
     }
@@ -454,9 +460,11 @@ TAO_LB_LoadManager::remove_load_monitor (
       if (this->reactor_->cancel_timer (this->timer_id_) == 0)
         {
           if (TAO_debug_level > 0)
-            ORBSVCS_ERROR ((LM_ERROR,
-                        "TAO_LB_LoadManager::remove_load_monitor: "
-                        "Unable to cancel timer.\n"));
+            {
+              ORBSVCS_ERROR ((LM_ERROR,
+                              "TAO_LB_LoadManager::remove_load_monitor: "
+                              "Unable to cancel timer.\n"));
+            }
 
           throw CORBA::INTERNAL ();
         }
@@ -721,11 +729,13 @@ TAO_LB_LoadManager::next_member (const PortableServer::ObjectId & oid)
       }
 
       if (CORBA::is_nil (obj.in ()))
-        throw CORBA::OBJECT_NOT_EXIST ();
+        {
+          throw CORBA::OBJECT_NOT_EXIST ();
+        }
       else
-      {
-        return obj._retn ();
-      }
+        {
+          return obj._retn ();
+        }
     }
   else
   {
@@ -917,9 +927,11 @@ TAO_LB_LoadManager::preprocess_properties (PortableGroup::Properties & props)
                   property.val <<= strategy.in ();
                 }
               else
-                throw PortableGroup::InvalidProperty (
-                  property.nam,
-                  property.val);
+                {
+                  throw PortableGroup::InvalidProperty (
+                    property.nam,
+                    property.val);
+                }
             }
           else
           {
