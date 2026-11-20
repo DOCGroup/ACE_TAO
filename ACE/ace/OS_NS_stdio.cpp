@@ -1245,7 +1245,9 @@ namespace { // helpers for vsnprintf_emulation
     ~Snprintf_Positional_Args ()
     {
       if (this->pos_arg_ != this->pos_storage_)
-        ACE_Allocator::instance ()->free (this->pos_arg_);
+        {
+          ACE_Allocator::instance ()->free (this->pos_arg_);
+        }
     }
 
     struct Positional_Arg
@@ -1313,9 +1315,11 @@ namespace { // helpers for vsnprintf_emulation
 
       if (size_t (storage_needed) >
           sizeof this->pos_storage_ / sizeof (Positional_Arg))
-        this->pos_arg_ = static_cast<Positional_Arg *> (
-          ACE_Allocator::instance ()->calloc (
-            sizeof (Positional_Arg) * storage_needed));
+        {
+          this->pos_arg_ = static_cast<Positional_Arg *> (
+            ACE_Allocator::instance ()->calloc (
+              sizeof (Positional_Arg) * storage_needed));
+        }
 
       f = fmt;
       while (true)
@@ -1323,9 +1327,13 @@ namespace { // helpers for vsnprintf_emulation
           static const char digits[] = "0123456789";
           f += std::strspn (f, "-+ #0'");
           if (*f == '*')
-            (*this)[snprintf_positional (++f)].type_ = Positional_Arg::PA_INT;
+            {
+              (*this)[snprintf_positional (++f)].type_ = Positional_Arg::PA_INT;
+            }
           else
-            f += std::strspn (f, digits);
+            {
+              f += std::strspn (f, digits);
+            }
 
           if (f[0] == '.' && f[1] == '*')
             {
@@ -1345,31 +1353,55 @@ namespace { // helpers for vsnprintf_emulation
             {
             case 'd': case 'i':
               if (flags.has (SNPRINTF_LONG))
-                (*this)[n].type_ = Positional_Arg::PA_LONG;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_LONG;
+                }
               else if (flags.has (SNPRINTF_LONGLONG))
-                (*this)[n].type_ = Positional_Arg::PA_LONGLONG;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_LONGLONG;
+                }
               else if (flags.has (SNPRINTF_INTMAX))
-                (*this)[n].type_ = Positional_Arg::PA_INTMAX;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_INTMAX;
+                }
               else if (flags.has (SNPRINTF_SIZET))
-                (*this)[n].type_ = Positional_Arg::PA_SSIZE;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_SSIZE;
+                }
               else if (flags.has (SNPRINTF_PTRDIFF))
-                (*this)[n].type_ = Positional_Arg::PA_PTRDIFF;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_PTRDIFF;
+                }
               else
-                (*this)[n].type_ = Positional_Arg::PA_INT;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_INT;
+                }
               break;
             case 'o': case 'u': case 'x': case 'X':
               if (flags.has (SNPRINTF_LONG))
-                (*this)[n].type_ = Positional_Arg::PA_ULONG;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_ULONG;
+                }
               else if (flags.has (SNPRINTF_LONGLONG))
-                (*this)[n].type_ = Positional_Arg::PA_ULONGLONG;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_ULONGLONG;
+                }
               else if (flags.has (SNPRINTF_INTMAX))
-                (*this)[n].type_ = Positional_Arg::PA_UINTMAX;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_UINTMAX;
+                }
               else if (flags.has (SNPRINTF_SIZET))
-                (*this)[n].type_ = Positional_Arg::PA_SIZE;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_SIZE;
+                }
               else if (flags.has (SNPRINTF_PTRDIFF))
-                (*this)[n].type_ = Positional_Arg::PA_UPTRDIFF;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_UPTRDIFF;
+                }
               else
-                (*this)[n].type_ = Positional_Arg::PA_UINT;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_UINT;
+                }
               break;
             case 'f': case 'F': case 'e': case 'E': case 'g': case 'G':
             case 'a': case 'A':
@@ -1395,21 +1427,37 @@ namespace { // helpers for vsnprintf_emulation
               break;
             case 'n':
               if (flags.has (SNPRINTF_LONG))
-                (*this)[n].type_ = Positional_Arg::PA_PLONG;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_PLONG;
+                }
               else if (flags.has (SNPRINTF_LONGLONG))
-                (*this)[n].type_ = Positional_Arg::PA_PLONGLONG;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_PLONGLONG;
+                }
               else if (flags.has (SNPRINTF_INTMAX))
-                (*this)[n].type_ = Positional_Arg::PA_PINTMAX;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_PINTMAX;
+                }
               else if (flags.has (SNPRINTF_SIZET))
-                (*this)[n].type_ = Positional_Arg::PA_PSSIZE;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_PSSIZE;
+                }
               else if (flags.has (SNPRINTF_PTRDIFF))
-                (*this)[n].type_ = Positional_Arg::PA_PPTRDIFF;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_PPTRDIFF;
+                }
               else if (flags.has (SNPRINTF_SHORT))
-                (*this)[n].type_ = Positional_Arg::PA_PSHORT;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_PSHORT;
+                }
               else if (flags.has (SNPRINTF_CHAR))
-                (*this)[n].type_ = Positional_Arg::PA_PSCHAR;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_PSCHAR;
+                }
               else
-                (*this)[n].type_ = Positional_Arg::PA_PINT;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_PINT;
+                }
               break;
             default:
               break;
