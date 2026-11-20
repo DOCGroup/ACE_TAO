@@ -37,9 +37,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
     CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
     if (parse_args (argc, argv) != 0)
-    {
-      return 1;
-    }
+      {
+        return 1;
+      }
     // Normally we wouldn't have to register the factory in the client, but
     // in this case the valuetype will be returned as an inout parameter, and
     // we'll need the factory to support this.
@@ -51,13 +51,16 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 
     Message_var msg = new MessageImpl ("Son", "Mom", "Dinner's Ready.", "Hurry home.");
 
-    if (tst->send_message(msg)) {
-      std::cout << "Message sent successfully.\n";
-      msg->print();
-      std::cout << std::endl;
-    } else {
-      std::cout << "Message refused." << std::endl;
-    }
+    if (tst->send_message(msg))
+      {
+        std::cout << "Message sent successfully.\n";
+        msg->print();
+        std::cout << std::endl;
+      }
+    else
+      {
+        std::cout << "Message refused." << std::endl;
+      }
 
     while (orb->work_pending()) {
       orb->perform_work();

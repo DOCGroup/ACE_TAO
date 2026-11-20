@@ -44,11 +44,14 @@ void Messenger_i::send_message (CORBA::OctetSeq const& user_name)
       uid_as_any = *(codec->decode(user_name));
 
       CORBA::Long uid {};
-      if (uid_as_any >>= uid) {
-        std::cout << "UID: " << uid << std::endl;
-      } else {
-        std::cerr << "Could not extract UID from any." << std::endl;
-      }
+      if (uid_as_any >>= uid)
+        {
+          std::cout << "UID: " << uid << std::endl;
+        }
+      else
+        {
+          std::cerr << "Could not extract UID from any." << std::endl;
+        }
 
     }
   catch(...)
