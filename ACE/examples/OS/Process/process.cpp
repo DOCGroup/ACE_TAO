@@ -496,8 +496,10 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (ACE_LOG_MSG->open (argv[0]) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("cannot open logger!!!\n")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("cannot open logger!!!\n")));
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("starting...\n")));
 
@@ -512,10 +514,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       options.command_line (ACE_TEXT ("%") ACE_TEXT_PRIs ACE_TEXT (" -d -l -s -w"), argv[0]);
       ACE_Process process;
       if (process.spawn (options) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p.\n"),
-                           ACE_TEXT ("main")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p.\n"),
+                             ACE_TEXT ("main")),
+                            -1);
+        }
       ACE_exitcode status {};
       process.wait (&status);
       ACE_DEBUG ((LM_DEBUG,
