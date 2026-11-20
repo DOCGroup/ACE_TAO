@@ -84,9 +84,13 @@ namespace ACE
             // parse value
             ch = this->read_field (str, value, MAX_VALUE_LENGTH, '\r');
             if (ch == '\r')
-              ch = str.get (); // get lf
+              {
+                ch = str.get (); // get lf
+              }
             if (ch != '\n')
-              return false; // value too long/no crlf found; cannot continue
+              {
+                return false; // value too long/no crlf found; cannot continue
+              }
 
             // followup lines starting with ws are continuations of the value
             // and must be appended
@@ -95,9 +99,13 @@ namespace ACE
             {
               ch = this->read_field (str, value, MAX_VALUE_LENGTH, '\r');
               if (ch == '\r')
-                ch = str.get (); // get lf
+                {
+                  ch = str.get (); // get lf
+                }
               if (ch != '\n')
-                return false; // multiline value too long/no crlf; cannot continue
+                {
+                  return false; // multiline value too long/no crlf; cannot continue
+                }
 
               ch = str.peek ();
             }
