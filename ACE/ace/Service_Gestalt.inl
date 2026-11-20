@@ -60,7 +60,9 @@ ACE_Service_Gestalt::find (const ACE_TCHAR name[],
   // will also have been destroyed - so just check for repo_ before
   // doing anything with it.
   if (this->repo_ != 0)
-    return this->repo_->find (name, srp, ignore_suspended);
+    {
+      return this->repo_->find (name, srp, ignore_suspended);
+    }
 
   return 0;
 }

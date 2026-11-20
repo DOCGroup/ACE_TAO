@@ -119,7 +119,9 @@ ACE_INLINE void
 ACE_Sched_Priority_Iterator::next ()
 {
   if (this->done_)
-    return;
+    {
+      return;
+    }
 
   int old_priority = this->priority_;
   priority_ = ACE_Sched_Params::next_priority (this->policy (),

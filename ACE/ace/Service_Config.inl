@@ -38,7 +38,9 @@ ACE_Service_Config::open (int argc,
   ACE_TRACE ("ACE_Service_Config::open");
 
   if (singleton()->parse_args_i(argc, argv) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   if (singleton()->open_i (argv[0],
                            logger_key,

@@ -87,7 +87,9 @@ ACE_Select_Reactor_Handler_Repository::open (size_type size)
 
 #if defined (ACE_SELECT_REACTOR_BASE_USES_HASH_MAP)
   if (this->event_handlers_.open (size) == -1)
-    return -1;
+    {
+      return -1;
+    }
 #else
   if (this->event_handlers_.size (size) == -1)
   {
@@ -351,7 +353,9 @@ ACE_Select_Reactor_Handler_Repository::unbind (
     {
 #if defined (ACE_SELECT_REACTOR_BASE_USES_HASH_MAP)
       if (event_handler != nullptr && this->event_handlers_.unbind (pos) == -1)
-        return -1;  // Should not happen!
+        {
+          return -1;  // Should not happen!
+        }
 #else
       this->event_handlers_[handle] = nullptr;
 

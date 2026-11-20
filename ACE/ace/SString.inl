@@ -160,9 +160,13 @@ ACE_SString::find (const char *s, size_type pos) const
   char *substr = this->rep_ + pos;
   char *pointer = std::strstr (substr, s);
   if (pointer == nullptr)
-    return ACE_SString::npos;
+    {
+      return ACE_SString::npos;
+    }
   else
-    return static_cast<ACE_SString::size_type> (pointer - this->rep_);
+    {
+      return static_cast<ACE_SString::size_type> (pointer - this->rep_);
+    }
 }
 
 ACE_INLINE ACE_SString::size_type
@@ -171,9 +175,13 @@ ACE_SString::find (char c, size_type pos) const
   char *substr = this->rep_ + pos;
   char *pointer = std::strchr (substr, c);
   if (pointer == nullptr)
-    return ACE_SString::npos;
+    {
+      return ACE_SString::npos;
+    }
   else
-    return static_cast<ACE_SString::size_type> (pointer - this->rep_);
+    {
+      return static_cast<ACE_SString::size_type> (pointer - this->rep_);
+    }
 }
 
 ACE_INLINE ACE_SString::size_type
@@ -194,13 +202,17 @@ ACE_INLINE ACE_SString::size_type
 ACE_SString::rfind (char c, size_type pos) const
 {
   if (pos == ACE_SString::npos)
-    pos = this->len_;
+    {
+      pos = this->len_;
+    }
 
   // Do not change to prefix operator!  Proper operation of this loop
   // depends on postfix decrement behavior.
   for (size_type i = pos; i-- != 0; )
     if (this->rep_[i] == c)
-      return i;
+      {
+        return i;
+      }
 
   return ACE_SString::npos;
 }

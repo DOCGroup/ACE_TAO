@@ -24,8 +24,12 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::resume_handler (const ACE_Handle
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
 
   while ((h = handle_iter ()) != ACE_INVALID_HANDLE)
-    if (this->resume_i (h) == -1)
-      return -1;
+    {
+      if (this->resume_i (h) == -1)
+        {
+          return -1;
+        }
+    }
 
   return 0;
 }
@@ -49,8 +53,12 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::suspend_handler (const ACE_Handl
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
 
   while ((h = handle_iter ()) != ACE_INVALID_HANDLE)
-    if (this->suspend_i (h) == -1)
-      return -1;
+    {
+      if (this->suspend_i (h) == -1)
+        {
+          return -1;
+        }
+    }
 
   return 0;
 }

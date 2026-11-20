@@ -961,7 +961,9 @@ ACE_Service_Gestalt::process_file (const ACE_TCHAR file[])
   std::unique_ptr<ACE_XML_Svc_Conf> xml_svc_conf (this->get_xml_svc_conf (dll));
 
   if (xml_svc_conf.get () == 0)
-    return -1;
+    {
+      return -1;
+    }
 
   return xml_svc_conf->parse_file (file);
 #endif /* ACE_USES_CLASSIC_SVC_CONF == 1 */
@@ -994,7 +996,9 @@ ACE_Service_Gestalt::process_directive (const ACE_TCHAR directive[])
   std::unique_ptr<ACE_XML_Svc_Conf> xml_svc_conf (this->get_xml_svc_conf (dll));
 
   if (xml_svc_conf.get () == 0)
-    return -1;
+    {
+      return -1;
+    }
 
   // Temporarily (for the duration of this call) make sure that *any* static
   // service registrations will happen with this instance. Such registrations
