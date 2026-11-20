@@ -25,7 +25,9 @@ namespace ACE
         [] (void *memory)
         {
           if (memory != nullptr)
-            GlobalFree (static_cast<HGLOBAL> (memory));
+            {
+              GlobalFree (static_cast<HGLOBAL> (memory));
+            }
         });
 
       if (paths == nullptr)
@@ -73,10 +75,14 @@ namespace ACE
           };
 
           if (this->instances_.enqueue_tail (instance.get ()) == -1)
-            ACELIB_ERROR ((LM_ERROR,
-                           ACE_TEXT ("Failed to queue Windows monitor instance\n")));
+            {
+              ACELIB_ERROR ((LM_ERROR,
+                             ACE_TEXT ("Failed to queue Windows monitor instance\n")));
+            }
           else
-            instance.release ();
+            {
+              instance.release ();
+            }
 
           path += ACE_OS::strlen (path) + 1;
         }

@@ -19,7 +19,9 @@ namespace ACE
     Windows_Monitor::~Windows_Monitor ()
     {
       if (this->query_ != nullptr)
-        PdhCloseQuery (this->query_);
+        {
+          PdhCloseQuery (this->query_);
+        }
     }
 
     void
