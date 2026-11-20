@@ -192,7 +192,9 @@ Stream_Handler::handle_input (ACE_HANDLE h)
 
   char const * const tok_loc = ACE_OS::strstr (buffer, "goodbye");
   if (tok_loc != nullptr)
-    this->reactor()->end_event_loop();
+    {
+      this->reactor()->end_event_loop();
+    }
   else
     {
       ACE::HTBP::Channel * const ch = stream_.session()->outbound();

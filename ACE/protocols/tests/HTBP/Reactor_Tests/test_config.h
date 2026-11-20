@@ -183,7 +183,9 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
   ACE_TCHAR const *test_dir = ACE_OS::getenv (ACE_TEXT ("ACE_TEST_DIR"));
 
   if (test_dir == nullptr)
-    test_dir = ACE_TEXT ("");
+    {
+      test_dir = ACE_TEXT ("");
+    }
 
   ACE_OS::sprintf (temp,
                    ACE_TEXT ("%s%s%s%s"),
@@ -217,13 +219,19 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
   this->output_file_->open (ACE_TEXT_ALWAYS_CHAR (temp),
                             ios::out | (append ? ios::app : ios::trunc));
   if (this->output_file_->bad ())
-    return -1;
+    {
+      return -1;
+    }
 #else /* when ACE_LACKS_IOSTREAM_TOTALLY */
   ACE_TCHAR const *fmode {};
   if (append)
-    fmode = ACE_TEXT ("a");
+    {
+      fmode = ACE_TEXT ("a");
+    }
   else
-    fmode = ACE_TEXT ("w");
+    {
+      fmode = ACE_TEXT ("w");
+    }
   this->output_file_ = ACE_OS::fopen (temp, fmode);
 # endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 
