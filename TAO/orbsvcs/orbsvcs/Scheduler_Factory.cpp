@@ -124,10 +124,12 @@ int ACE_Scheduler_Factory::use_runtime (int cc,
                                         POD_RT_Info rti[])
 {
   if (server_ != nullptr || TAO_SF_entry_count != -1)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("ACE_Scheduler_Factory::use_runtime - ")
-                       ACE_TEXT("server already configured\n")),
-                      -1);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT("ACE_Scheduler_Factory::use_runtime - ")
+                             ACE_TEXT("server already configured\n")),
+                            -1);
+    }
   TAO_SF_config_count = cc;
   TAO_SF_config_info = cfgi;
   TAO_SF_entry_count = ec;
@@ -183,9 +185,11 @@ ACE_Scheduler_Factory::use_config (CosNaming::NamingContext_ptr naming,
                                    const char* name)
 {
   if (server_ != nullptr || TAO_SF_entry_count != -1)
-    // No errors, runtime execution simply takes precedence over
-    // config runs.
-    return 0;
+    {
+      // No errors, runtime execution simply takes precedence over
+      // config runs.
+      return 0;
+    }
 
   try
     {
@@ -231,10 +235,12 @@ ACE_Scheduler_Factory::server ()
   }
 
   if (server_ == nullptr)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("ACE_Scheduler_Factor::server - ")
-                       ACE_TEXT("no scheduling service configured\n")),
-                      0);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT("ACE_Scheduler_Factor::server - ")
+                             ACE_TEXT("no scheduling service configured\n")),
+                            0);
+    }
   return server_;
 }
 
@@ -309,32 +315,38 @@ int ACE_Scheduler_Factory::dump_schedule
 
   // Default format for printing RT_Info output.
   if (rt_info_format == nullptr)
-    rt_info_format = "{%20s, /* entry_point */\n"
-                     "%10d, /* handle */\n"
-                     "%10d, /* worst_case_execution_time */,\n"
-                     "%10d, /* typical_execution_time */,\n"
-                     "%10d, /* cached_execution_time */,\n"
-                     "%10d, /* period */\n"
-                     "(RtecScheduler::Criticality_t) %d, /* [ VL_C = 0, L_C = 1, M_C = 2, H_C = 3, VH_C = 4] */\n"
-                     "(RtecScheduler::Importance_t) %d, /* [ VL_I = 0, L_I = 1, M_I = 2, H_I = 3, VH_I = 4] */\n"
-                     "%10d, /* quantum */\n"
-                     "%10d, /* threads */\n"
-                     "%10d, /* priority */\n"
-                     "%10d, /* preemption_subpriority */\n"
-                     "%10d, /* preemption_priority */\n"
-                     "(RtecScheduler::Info_Type_t) %d, /* [OPERATION = 0, CONJUNCTION = 1, DISJUNCTION = 2, REMOTE_DEPENDANT = 3] */\n"
-                     "(RtecScheduler::RT_Info_Enabled_Type_t) %d } /* [RT_INFO_DISABLED = 0, RT_INFO_ENABLED = 1, RT_INFO_NON_VOLATILE = 2] */\n";
+    {
+      rt_info_format = "{%20s, /* entry_point */\n"
+                       "%10d, /* handle */\n"
+                       "%10d, /* worst_case_execution_time */,\n"
+                       "%10d, /* typical_execution_time */,\n"
+                       "%10d, /* cached_execution_time */,\n"
+                       "%10d, /* period */\n"
+                       "(RtecScheduler::Criticality_t) %d, /* [ VL_C = 0, L_C = 1, M_C = 2, H_C = 3, VH_C = 4] */\n"
+                       "(RtecScheduler::Importance_t) %d, /* [ VL_I = 0, L_I = 1, M_I = 2, H_I = 3, VH_I = 4] */\n"
+                       "%10d, /* quantum */\n"
+                       "%10d, /* threads */\n"
+                       "%10d, /* priority */\n"
+                       "%10d, /* preemption_subpriority */\n"
+                       "%10d, /* preemption_priority */\n"
+                       "(RtecScheduler::Info_Type_t) %d, /* [OPERATION = 0, CONJUNCTION = 1, DISJUNCTION = 2, REMOTE_DEPENDANT = 3] */\n"
+                       "(RtecScheduler::RT_Info_Enabled_Type_t) %d } /* [RT_INFO_DISABLED = 0, RT_INFO_ENABLED = 1, RT_INFO_NON_VOLATILE = 2] */\n";
+    }
 
   // Default format for printing dependency output.
   if (dependency_format == nullptr)
+    {
       dependency_format = "  { (RtecScheduler::Dependency_Type_t) %d, %10d, "
                           "%10d, %10d,"
                           "(RtecScheduler::Dependency_Enabled_Type_t) %d }";
+    }
 
   // Default format for printing Config_Info output.
   if (config_info_format == nullptr)
-    config_info_format = "  { %10d, %10d, "
-                         "(RtecScheduler::Dispatching_Type_t) %d }";
+    {
+      config_info_format = "  { %10d, %10d, "
+                           "(RtecScheduler::Dispatching_Type_t) %d }";
+    }
 
   FILE* file = stdout;
   if (file_name != nullptr)
@@ -404,8 +416,10 @@ int ACE_Scheduler_Factory::dump_schedule
           || info.enabled == RtecScheduler::RT_INFO_NON_VOLATILE)
         {
       if (i != 0)
-        // Finish previous line.
-        ACE_OS::fprintf(file, ",\n");
+        {
+          // Finish previous line.
+          ACE_OS::fprintf(file, ",\n");
+        }
 
       const RtecScheduler::RT_Info& info = infos[i];
 
@@ -440,7 +454,9 @@ int ACE_Scheduler_Factory::dump_schedule
   ACE_OS::fprintf(file, "\n");
 
   if (infos.length () > 0)
-    ACE_OS::fprintf (file, "%s", end_infos);
+    {
+      ACE_OS::fprintf (file, "%s", end_infos);
+    }
   else
   {
     ACE_OS::fprintf (file, "%s", end_infos_empty);
@@ -489,7 +505,9 @@ int ACE_Scheduler_Factory::dump_schedule
   ACE_OS::fprintf (file, "\n");
 
   if (dependencies.length () > 0)
-    ACE_OS::fprintf (file, "%s", end_dependencies);
+    {
+      ACE_OS::fprintf (file, "%s", end_dependencies);
+    }
   else
   {
     ACE_OS::fprintf (file, "%s", end_dependencies_empty);
@@ -503,8 +521,10 @@ int ACE_Scheduler_Factory::dump_schedule
        ++i)
     {
       if (i != 0)
-        // Finish previous line.
-        ACE_OS::fprintf (file, ",\n");
+        {
+          // Finish previous line.
+          ACE_OS::fprintf (file, ",\n");
+        }
 
       const RtecScheduler::Config_Info& config = configs[i];
       ACE_OS::fprintf (file,
@@ -518,7 +538,9 @@ int ACE_Scheduler_Factory::dump_schedule
   ACE_OS::fprintf (file, "\n");
 
   if (configs.length () > 0)
-    ACE_OS::fprintf (file, "%s", end_configs);
+    {
+      ACE_OS::fprintf (file, "%s", end_configs);
+    }
   else
   {
     ACE_OS::fprintf (file, "%s", end_configs_empty);

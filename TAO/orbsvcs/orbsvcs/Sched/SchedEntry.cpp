@@ -400,9 +400,13 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
 
           // If there are no entries in the virtual set, we're done.
           if (proxy_ptr->done ())
-            return 0;
+            {
+              return 0;
+            }
           else if (conj_set.insert (proxy_ptr, conj_set_iter) < 0)
-            return -1;
+            {
+              return -1;
+            }
           proxy_owner.release ();
         }
     }
@@ -534,11 +538,15 @@ Task_Entry::reframe (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries,
       // make sure the new period is greater than the current
       // set period, and that they are harmonically related
       if (new_period <= set_period)
-        // return an error if they're not harmonically related,
-        // do nothing if set's frame is a multiple of the new frame
-        return (set_period % new_period) ? -1 : 0;
+        {
+          // return an error if they're not harmonically related,
+          // do nothing if set's frame is a multiple of the new frame
+          return (set_period % new_period) ? -1 : 0;
+        }
       else if (new_period % set_period)
-        return -1;
+        {
+          return -1;
+        }
 
       // make a shallow copy of the set in a new ordered multiset
       // using the Dispatch_Entry_Link smart pointers
@@ -551,9 +559,13 @@ Task_Entry::reframe (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries,
           Dispatch_Entry_Link *link {};
 
           if (set_iter.next (link) == 0)
-            return -1;
+            {
+              return -1;
+            }
           else if (new_set.insert (*link, new_iter) < 0)
-            return -1;
+            {
+              return -1;
+            }
         }
 
       // Do a deep copy merge back into the set using the new period
@@ -824,10 +836,14 @@ Dispatch_Proxy_Iterator::advance ()
   int result = 1;
 
   if (iter_.done ())
-    result = 0; // cannot retreat if we're out of bounds
+    {
+      result = 0; // cannot retreat if we're out of bounds
+    }
   else if (current_call_ < number_of_calls_ - 1)
-    // if we're still in the same set of calls, increment the call counter
-    ++current_call_;
+    {
+      // if we're still in the same set of calls, increment the call counter
+      ++current_call_;
+    }
   else
     {
       // roll over the call counter
@@ -865,10 +881,14 @@ Dispatch_Proxy_Iterator::retreat ()
   int result = 1;
 
   if (iter_.done ())
-    result = 0; // cannot retreat if we're out of bounds
+    {
+      result = 0; // cannot retreat if we're out of bounds
+    }
   else if (current_call_ > 0)
-    // if we're still in the same set of calls, decrement the call counter
-    --current_call_;
+    {
+      // if we're still in the same set of calls, decrement the call counter
+      --current_call_;
+    }
   else
     {
       // roll over the call counter
