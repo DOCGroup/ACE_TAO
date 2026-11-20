@@ -39,8 +39,14 @@ public:
   {
     typename Map_::const_iterator const i = map_.find (ri);
 
-    if (i != map_.end ()) return i->second;
-    else throw NotFound ();
+    if (i != map_.end ())
+      {
+        return i->second;
+      }
+    else
+      {
+        throw NotFound ();
+      }
   }
 
 private:

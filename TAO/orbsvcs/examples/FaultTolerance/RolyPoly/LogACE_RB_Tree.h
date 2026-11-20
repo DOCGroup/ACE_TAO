@@ -26,7 +26,10 @@ public:
   void
   insert (RecordIdType const &ri, RecordValueType const &rv)
   {
-    if (map_.bind (ri, rv) != 0) throw Duplicate ();
+    if (map_.bind (ri, rv) != 0)
+      {
+        throw Duplicate ();
+      }
   }
 
   bool
@@ -48,7 +51,10 @@ public:
 
     typename Map_::ENTRY *entry {};
 
-    if (m.find (ri, entry) != 0) throw NotFound ();
+    if (m.find (ri, entry) != 0)
+      {
+        throw NotFound ();
+      }
 
     return entry->item ();
   }
