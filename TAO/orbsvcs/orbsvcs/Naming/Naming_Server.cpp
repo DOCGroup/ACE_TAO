@@ -78,9 +78,11 @@ TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_ptr orb,
                   use_storable_context,
                   round_trip_timeout,
                   use_round_trip_timeout) == -1)
-    ORBSVCS_ERROR ((LM_ERROR,
-                "(%P|%t) %p\n",
-                "TAO_Naming_Server::init"));
+    {
+      ORBSVCS_ERROR ((LM_ERROR,
+                      "(%P|%t) %p\n",
+                      "TAO_Naming_Server::init"));
+    }
 }
 
 int
@@ -119,8 +121,10 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
               // Success in finding a Naming Service.
               //
               if (TAO_debug_level > 0)
-                ORBSVCS_DEBUG ((LM_DEBUG,
-                                "\nNameService found!\n"));
+                {
+                  ORBSVCS_DEBUG ((LM_DEBUG,
+                                  "\nNameService found!\n"));
+                }
 
               this->assign (size_t(ROOT), false, naming_obj);
               return 0;
@@ -133,8 +137,10 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
     }
 
   if (TAO_debug_level > 0)
-    ORBSVCS_DEBUG ((LM_DEBUG,
-                "\nWe'll become a NameService\n"));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      "\nWe'll become a NameService\n"));
+    }
 
   // Become a Naming Service.
   return this->init_new_naming (orb,
@@ -210,9 +216,11 @@ TAO_Naming_Server::parse_args (int argc,
 #endif /* ACE_SIZEOF_VOID_P */
                            &address);
         if (result == 0 || result == EOF)
-          ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                             "Unable to process <-b> option"),
-                            -1);
+          {
+            ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                   "Unable to process <-b> option"),
+                                  -1);
+          }
         this->base_address_ = (void *) address;
         break;
       case 'f':
@@ -269,10 +277,12 @@ TAO_Naming_Server::parse_args (int argc,
       }
 
   if ((f_opt_used && (u_opt_used || r_opt_used)) || (u_opt_used && r_opt_used))
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Only one persistence option can be passed")
-                       ACE_TEXT ("\n")),
-                      -1);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Only one persistence option can be passed")
+                             ACE_TEXT ("\n")),
+                            -1);
+    }
 
   return 0;
 }
@@ -579,8 +589,10 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
               || this->context_index_->init (context_size) == -1)
             {
               if (TAO_debug_level >0)
-                ORBSVCS_DEBUG ((LM_DEBUG,
-                            "TAO_Naming_Server: context_index initialization failed\n"));
+                {
+                  ORBSVCS_DEBUG ((LM_DEBUG,
+                                  "TAO_Naming_Server: context_index initialization failed\n"));
+                }
               return -1;
             }
 
@@ -697,14 +709,18 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
                                          ACE_Event_Handler::READ_MASK) == -1)
             {
               if (TAO_debug_level > 0)
-                ORBSVCS_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("TAO_Naming_Server: cannot register Event handler\n")));
+                {
+                  ORBSVCS_DEBUG ((LM_DEBUG,
+                                  ACE_TEXT ("TAO_Naming_Server: cannot register Event handler\n")));
+                }
               return -1;
             }
 
           if (TAO_debug_level > 0)
-            ORBSVCS_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("TAO_Naming_Server: The multicast server setup is done.\n")));
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("TAO_Naming_Server: The multicast server setup is done.\n")));
+            }
         }
 #else
   ACE_UNUSED_ARG (enable_multicast);

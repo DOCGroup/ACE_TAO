@@ -64,11 +64,13 @@ TAO_Naming_Loader::fini ()
 {
   // Remove the Naming Service.
   if (this->naming_server_ == nullptr)
-    return 0;
+    {
+      return 0;
+    }
   else
-  {
-    return this->naming_server_->fini ();
-  }
+    {
+      return this->naming_server_->fini ();
+    }
 }
 
 CORBA::Object_ptr

@@ -147,11 +147,15 @@ TAO_Hash_Naming_Context::bind (CosNaming::Name const &n, CORBA::Object_ptr obj)
                                         obj,
                                         CosNaming::nobject);
       if (result == 1)
-        throw CosNaming::NamingContext::AlreadyBound();
+        {
+          throw CosNaming::NamingContext::AlreadyBound();
+        }
 
       // Something went wrong with the internal structure
       else if (result == -1)
-        throw CORBA::INTERNAL ();
+        {
+          throw CORBA::INTERNAL ();
+        }
     }
 }
 
@@ -209,11 +213,15 @@ TAO_Hash_Naming_Context::rebind (CosNaming::Name const &n,
                                            CosNaming::nobject);
       // Check for error conditions.
       if (result == -1)
-        throw CORBA::INTERNAL ();
+        {
+          throw CORBA::INTERNAL ();
+        }
 
       else if (result == -2)
-        throw CosNaming::NamingContext::NotFound(
-          CosNaming::NamingContext::not_object, n);
+        {
+          throw CosNaming::NamingContext::NotFound(
+            CosNaming::NamingContext::not_object, n);
+        }
     }
 }
 
@@ -276,11 +284,15 @@ TAO_Hash_Naming_Context::bind_context (CosNaming::Name const &n,
                                         nc,
                                         CosNaming::ncontext);
       if (result == 1)
-        throw CosNaming::NamingContext::AlreadyBound();
+        {
+          throw CosNaming::NamingContext::AlreadyBound();
+        }
 
       // Something went wrong with the internal structure
       else if (result == -1)
-        throw CORBA::INTERNAL ();
+        {
+          throw CORBA::INTERNAL ();
+        }
     }
 }
 
@@ -338,12 +350,16 @@ TAO_Hash_Naming_Context::rebind_context (CosNaming::Name const &n,
                                            CosNaming::ncontext);
       // Check for error conditions.
       if (result == -1)
-        throw CORBA::INTERNAL ();
+        {
+          throw CORBA::INTERNAL ();
+        }
 
       else if (result == -2)
-        throw CosNaming::NamingContext::NotFound(
-          CosNaming::NamingContext::not_context,
-          n);
+        {
+          throw CosNaming::NamingContext::NotFound(
+            CosNaming::NamingContext::not_context,
+            n);
+        }
     }
 }
 
@@ -381,8 +397,10 @@ TAO_Hash_Naming_Context::resolve (CosNaming::Name const &n)
                               n[0].kind,
                               result.out (),
                               type) == -1)
-      throw CosNaming::NamingContext::NotFound
-        (CosNaming::NamingContext::missing_node, n);
+      {
+        throw CosNaming::NamingContext::NotFound
+          (CosNaming::NamingContext::missing_node, n);
+      }
   }
   // If the name we have to resolve is a compound name, we need to
   // resolve it recursively.
@@ -397,16 +415,20 @@ TAO_Hash_Naming_Context::resolve (CosNaming::Name const &n)
           context = CosNaming::NamingContext::_narrow (result.in ());
         }
       else
-        // The first name component wasn't bound to a NamingContext.
-        throw CosNaming::NamingContext::NotFound(
-          CosNaming::NamingContext::not_context,
-          n);
+        {
+          // The first name component wasn't bound to a NamingContext.
+          throw CosNaming::NamingContext::NotFound(
+            CosNaming::NamingContext::not_context,
+            n);
+        }
 
       // If narrow failed...
       if (CORBA::is_nil (context.in ()))
-        throw CosNaming::NamingContext::NotFound(
-          CosNaming::NamingContext::not_context,
-          n);
+        {
+          throw CosNaming::NamingContext::NotFound(
+            CosNaming::NamingContext::not_context,
+            n);
+        }
       else
         {
           // Successfully resolved the first name component, need to
@@ -446,8 +468,10 @@ TAO_Hash_Naming_Context::resolve (CosNaming::Name const &n)
                                 n[0].kind,
                                 result.out (),
                                 type) == -1)
-        throw CosNaming::NamingContext::NotFound
-          (CosNaming::NamingContext::missing_node, n);
+        {
+          throw CosNaming::NamingContext::NotFound
+            (CosNaming::NamingContext::missing_node, n);
+        }
     }
 
   // If the name we had to resolve was simple, we just need to return
@@ -504,8 +528,10 @@ TAO_Hash_Naming_Context::unbind (CosNaming::Name const &n)
 
       if (this->context_->unbind (n[0].id,
                                   n[0].kind) == -1)
-        throw CosNaming::NamingContext::NotFound
-          (CosNaming::NamingContext::missing_node, n);
+        {
+          throw CosNaming::NamingContext::NotFound
+            (CosNaming::NamingContext::missing_node, n);
+        }
     }
 }
 
@@ -580,18 +606,20 @@ TAO_Hash_Naming_Context::destroy ()
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
   if (this->destroyed_)
-  {
-    throw CORBA::OBJECT_NOT_EXIST ();
-  }
+    {
+      throw CORBA::OBJECT_NOT_EXIST ();
+    }
 
   if (this->context_->current_size () != 0)
-  {
-    throw CosNaming::NamingContext::NotEmpty();
-  }
+    {
+      throw CosNaming::NamingContext::NotEmpty();
+    }
 
   // Destroy is a no-op on a root context.
   if (root ())
-    return;
+    {
+      return;
+    }
 
   else
     {
