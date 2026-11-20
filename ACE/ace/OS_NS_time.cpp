@@ -78,7 +78,9 @@ ACE_OS::strptime_emulation (const char *buf, const char *format, struct tm *tm)
                   ++bi;
                 }
               else
-                return const_cast<char*> (buf + bi);
+                {
+                  return const_cast<char*> (buf + bi);
+                }
               break;
 
               /* not supported yet: weekday via locale long/short names
@@ -179,7 +181,9 @@ ACE_OS::strptime_emulation (const char *buf, const char *format, struct tm *tm)
             case 'j':                        /* day of year (0-366) */
               if (!ACE_OS::strptime_getnum
                      (buf + bi, &tm->tm_yday, &bi, &fi, 1, 366))
-                return const_cast<char*> (buf + bi);
+                {
+                  return const_cast<char*> (buf + bi);
+                }
 
               --tm->tm_yday;
               break;
@@ -187,7 +191,9 @@ ACE_OS::strptime_emulation (const char *buf, const char *format, struct tm *tm)
             case 'm':                        /* an escaped % */
               if (!ACE_OS::strptime_getnum
                      (buf + bi, &tm->tm_mon, &bi, &fi, 1, 12))
-                return const_cast<char*> (buf + bi);
+                {
+                  return const_cast<char*> (buf + bi);
+                }
 
               --tm->tm_mon;
               break;
@@ -195,7 +201,9 @@ ACE_OS::strptime_emulation (const char *buf, const char *format, struct tm *tm)
             case 'M':                        /* minute (0-59) */
               if (!ACE_OS::strptime_getnum
                      (buf + bi, &tm->tm_min, &bi, &fi, 0, 59))
-                return const_cast<char*> (buf + bi);
+                {
+                  return const_cast<char*> (buf + bi);
+                }
 
               break;
 
@@ -274,7 +282,9 @@ ACE_OS::strptime_emulation (const char *buf, const char *format, struct tm *tm)
             case 'w':                        /* day of week (0=Sun-6) */
               if (!ACE_OS::strptime_getnum
                      (buf + bi, &tm->tm_wday, &bi, &fi, 0, 6))
-                return const_cast<char*> (buf + bi);
+                {
+                  return const_cast<char*> (buf + bi);
+                }
 
               break;
 
@@ -331,7 +341,9 @@ ACE_OS::strptime_emulation (const char *buf, const char *format, struct tm *tm)
                   ++bi;
                 }
               else
-                return const_cast<char*> (buf + bi);
+                {
+                  return const_cast<char*> (buf + bi);
+                }
             }
         } /* if (percent) */
     } /* while (format[fi] */
