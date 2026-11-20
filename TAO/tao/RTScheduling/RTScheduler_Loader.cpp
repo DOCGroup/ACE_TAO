@@ -15,8 +15,10 @@ TAO_RTScheduler_Loader::init (int, ACE_TCHAR* [])
   ACE_TRACE ("TAO_RTScheduler_Loader::init");
 
   if (TAO_debug_level > 0)
-    TAOLIB_DEBUG ((LM_DEBUG,
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
                 "In RTScheduler_Loader::init\n"));
+    }
 
   // Only allow initialization once.
   if (this->initialized_)

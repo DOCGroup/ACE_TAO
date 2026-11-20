@@ -33,8 +33,10 @@ TAO_RT_Current::the_priority ()
   if (result == -1)
     {
       if (TAO_debug_level > 0)
-        TAOLIB_DEBUG ((LM_DEBUG, "ERROR: TAO_RT_Current::the_priority. "
+        {
+          TAOLIB_DEBUG ((LM_DEBUG, "ERROR: TAO_RT_Current::the_priority. "
                     "RT CORBA Priority accessed in a thread where it has not been set.\n"));
+        }
       // Spec does not define a minor code
       throw CORBA::INITIALIZE ();
     }

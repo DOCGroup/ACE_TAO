@@ -587,13 +587,17 @@ TAO_ClientProtocolPolicy::_tao_decode (TAO_InputCDR &in_cdr)
 
       if (is_read_ok
           && (this->protocols_[i].orb_protocol_properties.ptr () != nullptr))
-        is_read_ok =
-          this->protocols_[i].orb_protocol_properties->_tao_decode (in_cdr);
+        {
+          is_read_ok =
+            this->protocols_[i].orb_protocol_properties->_tao_decode (in_cdr);
+        }
 
       if (is_read_ok
           && (this->protocols_[i].transport_protocol_properties.ptr () != nullptr))
-        is_read_ok =
-          this->protocols_[i].transport_protocol_properties->_tao_decode (in_cdr);
+        {
+          is_read_ok =
+            this->protocols_[i].transport_protocol_properties->_tao_decode (in_cdr);
+        }
     }
 
   return is_read_ok;
@@ -1204,9 +1208,11 @@ TAO_Protocol_Properties_Factory::create_orb_protocol_property (IOP::ProfileId id
   RTCORBA::ProtocolProperties* property {};
 
   if (id == IOP::TAG_INTERNET_IOP)
-    ACE_NEW_RETURN (property,
-                    TAO_GIOP_Protocol_Properties,
-                    nullptr);
+    {
+      ACE_NEW_RETURN (property,
+                      TAO_GIOP_Protocol_Properties,
+                      nullptr);
+    }
 
   // Right now the only supported ORB protocol is GIOP
   // so we couple this with every protocol property.
@@ -1215,9 +1221,11 @@ TAO_Protocol_Properties_Factory::create_orb_protocol_property (IOP::ProfileId id
   // new ORB protocol are supported other case
   // should be considered.
   else
-    ACE_NEW_RETURN (property,
-                    TAO_GIOP_Protocol_Properties,
-                    nullptr);
+    {
+      ACE_NEW_RETURN (property,
+                      TAO_GIOP_Protocol_Properties,
+                      nullptr);
+    }
   return property;
 }
 

@@ -270,11 +270,13 @@ TAO_RT_POA::key_to_stub_i (TAO::ObjectKey const &object_key,
       for (std::unique_ptr<TAO_Thread_Lane> const &lane : this->thread_pool_->lanes ())
         {
           if (lane->lane_priority () == priority)
-            return this->TAO_Regular_POA::create_stub_object (object_key,
-                                                      type_id,
-                                                      client_exposed_policies._retn (),
-                                                      &filter,
-                                                      lane->resources ().acceptor_registry ());
+            {
+              return this->TAO_Regular_POA::create_stub_object (object_key,
+                                                                type_id,
+                                                                client_exposed_policies._retn (),
+                                                                &filter,
+                                                                lane->resources ().acceptor_registry ());
+            }
         }
 
       ACE_ASSERT (false);

@@ -232,12 +232,14 @@ TAO_ZIOP_Loader::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
 
               if (mb.copy ((char*)myout.get_buffer (false),
                            static_cast<size_t> (data.original_length)) != 0)
-                TAOLIB_ERROR_RETURN((LM_ERROR,
-                                  ACE_TEXT ("ZIOP (%P|%t) ")
-                                  ACE_TEXT ("TAO_ZIOP_Loader::decompress, ")
-                                  ACE_TEXT ("failed to copy decompressed data, ")
-                                  ACE_TEXT ("Buffer too small\n")),
-                                  false);
+                {
+                  TAOLIB_ERROR_RETURN((LM_ERROR,
+                                    ACE_TEXT ("ZIOP (%P|%t) ")
+                                    ACE_TEXT ("TAO_ZIOP_Loader::decompress, ")
+                                    ACE_TEXT ("failed to copy decompressed data, ")
+                                    ACE_TEXT ("Buffer too small\n")),
+                                    false);
+                }
               // change it into a GIOP message..
               mb.base ()[0] = 0x47;
               ACE_CDR::mb_align (std::addressof (mb));

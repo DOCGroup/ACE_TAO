@@ -21,8 +21,10 @@ void
 Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
 {
   if (TAO_debug_level > 0)
-    TAOLIB_DEBUG ((LM_DEBUG,
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
                 "Client_Interceptor::send_request\n"));
+    }
 
   // Temporary current.
   TAO_RTScheduler_Current_i *new_current {};
@@ -48,11 +50,13 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
           std::memcpy (&id, guid.get_buffer (), guid.length ());
 
           if (TAO_debug_level > 0)
-            TAOLIB_DEBUG ((LM_DEBUG,
+            {
+              TAOLIB_DEBUG ((LM_DEBUG,
                         "The Guid is %B %q\n",
                         id,
                         static_cast<ACE_INT64> (
                           TAO_RTScheduler_Current::guid_counter.load ())));
+            }
 
           // Create new DT.
           RTScheduling::DistributableThread_var const dt =
@@ -184,9 +188,11 @@ Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_pt
       const char * id = type->id ();
 
       if (TAO_debug_level > 0)
-        TAOLIB_DEBUG ((LM_DEBUG,
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
                     "Received Exception %C\n",
                     id));
+        }
 
       // If the remote host threw a THREAD_CANCELLED
       // exception, make sure to take the appropriate
@@ -277,14 +283,18 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
   catch (const ::CORBA::Exception&)
     {
       if (TAO_debug_level > 0)
-        TAOLIB_DEBUG ((LM_DEBUG,
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
                     "Invalid Service Request\n"));
+        }
       return;
     }
 
   if (TAO_debug_level > 0)
-    TAOLIB_DEBUG ((LM_DEBUG,
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
                 "Request from Distributable Thread\n"));
+    }
 
   RTScheduling::Current::IdType_var guid_var;
   CORBA::String_var name;
@@ -327,9 +337,11 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
   std::memcpy (&id, guid.get_buffer (), guid.length ());
 
   if (TAO_debug_level > 0)
-    TAOLIB_DEBUG ((LM_DEBUG,
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
                 "The Guid is %B\n",
                 id));
+    }
 
   // Create new DT.
   RTScheduling::DistributableThread_var const dt = TAO_DistributableThread_Factory::create_DT ();
