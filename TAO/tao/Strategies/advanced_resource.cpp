@@ -385,13 +385,17 @@ TAO_Advanced_Resource_Factory::init_protocol_factories ()
 #if defined (TAO_HAS_SCIOP) && (TAO_HAS_SCIOP != 0)
       if (TAO::details::load_protocol_factory <TAO_SCIOP_Protocol_Factory> (
           this->protocol_factories_, "SCIOP_Factory") == -1)
-        return -1;
+        {
+          return -1;
+        }
 #endif /* TAO_HAS_SCIOP && TAO_HAS_SCIOP != 0 */
 
 #if defined (TAO_HAS_COIOP) && (TAO_HAS_COIOP != 0)
       if (TAO::details::load_protocol_factory <TAO_COIOP_Protocol_Factory> (
           this->protocol_factories_, "COIOP_Factory") == -1)
-        return -1;
+        {
+          return -1;
+        }
 #endif /* TAO_HAS_COIOP && TAO_HAS_COIOP != 0 */
 
       return 0;

@@ -881,9 +881,13 @@ TAO_DIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
     orb_core->orb_params ()->connect_ipv6_only ();
 #if defined (ACE_WIN32)
   if (this->default_address_.get_type () == AF_INET)
-    ipv4_only = true;
+    {
+      ipv4_only = true;
+    }
   else
-    ipv6_only = true;
+    {
+      ipv6_only = true;
+    }
 #endif /* ACE_WIN32 */
   // If the loopback interface is the only interface then include it
   // in the list of interfaces to query for a hostname, otherwise
@@ -941,7 +945,9 @@ TAO_DIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
   bool ignore_lo;
   ignore_lo = if_cnt != lo_cnt;
   if (!ignore_lo)
-    this->endpoint_count_ = static_cast<CORBA::ULong> (if_cnt);
+    {
+      this->endpoint_count_ = static_cast<CORBA::ULong> (if_cnt);
+    }
   else
   {
     this->endpoint_count_ = static_cast<CORBA::ULong> (if_cnt - lo_cnt);

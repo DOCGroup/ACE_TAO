@@ -49,7 +49,9 @@ TAO_SCIOP_Transport::send (iovec *iov, int iovcnt,
   ssize_t const retval = this->connection_handler_->peer ().sendv (iov, iovcnt,
                                                                    max_wait_time);
   if (retval > 0)
-    bytes_transferred = retval;
+    {
+      bytes_transferred = retval;
+    }
 
   return retval;
 }
@@ -79,7 +81,9 @@ TAO_SCIOP_Transport::recv (char *buf,
   if (n == -1)
     {
       if (errno == EWOULDBLOCK)
-        return 0;
+        {
+          return 0;
+        }
 
       return -1;
     }
@@ -105,15 +109,18 @@ TAO_SCIOP_Transport::send_request (TAO_Stub *stub,
 {
   if (this->ws_->sending_request (orb_core,
                                   message_semantics) == -1)
-
-    return -1;
+    {
+      return -1;
+    }
 
   if (this->send_message (stream,
                           stub,
                           nullptr,
                           message_semantics,
                           max_wait_time) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   this->first_request_sent();
 
@@ -142,10 +149,12 @@ TAO_SCIOP_Transport::send_message (TAO_OutputCDR &stream,
   if (n == -1)
     {
       if (TAO_debug_level)
-        TAOLIB_ERROR ((LM_ERROR,
+        {
+          TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - SCIOP_Transport[%B]::send_message, ")
                     ACE_TEXT (" write failure - %m\n"),
                     this->id ()));
+        }
       return -1;
     }
 
@@ -157,13 +166,17 @@ TAO_SCIOP_Transport::tear_listen_point_list (TAO_InputCDR &cdr)
 {
   CORBA::Boolean byte_order;
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-    return -1;
+    {
+      return -1;
+    }
 
   cdr.reset_byte_order (static_cast<int> (byte_order));
 
   IIOP::ListenPointList listen_list;
   if (!(cdr >> listen_list))
-    return -1;
+    {
+      return -1;
+    }
 
   // As we have received a bidirectional information, set the flag to
   // 1 (i.e., non-originating side)
@@ -205,7 +218,9 @@ TAO_SCIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
   // Marshall the information into the stream
   if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER) == 0)
       || (cdr << listen_point_list) == 0)
-    return;
+    {
+      return;
+    }
 
   // Add this info in to the svc_list
   opdetails.request_service_context ().set_context (IOP::BI_DIR_IIOP, cdr);

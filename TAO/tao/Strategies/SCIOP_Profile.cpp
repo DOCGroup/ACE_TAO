@@ -88,9 +88,11 @@ TAO_SCIOP_Profile::decode_profile (TAO_InputCDR& cdr)
   if (cdr.read_ushort (this->endpoint_.port_) == 0)
     {
       if (TAO_debug_level > 0)
-        TAOLIB_DEBUG ((LM_DEBUG,
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) SCIOP_Profile::decode - ")
                     ACE_TEXT ("error while decoding host/port")));
+        }
       return -1;
     }
 
@@ -178,7 +180,9 @@ TAO_SCIOP_Profile::parse_string_i (const char *ior)
       length_host = cp_pos - ior;
     }
   else
-    length_host = okd - ior;
+    {
+      length_host = okd - ior;
+    }
 
   CORBA::String_var tmp = CORBA::string_alloc (length_host);
 
@@ -203,11 +207,13 @@ TAO_SCIOP_Profile::parse_string_i (const char *ior)
           // initialized.  Just throw an exception.
 
           if (TAO_debug_level > 0)
-            TAOLIB_DEBUG ((LM_DEBUG,
+            {
+              TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("\n\nTAO (%P|%t) ")
                         ACE_TEXT ("SCIOP_Profile::parse_string ")
                         ACE_TEXT ("- %p\n\n"),
                         ACE_TEXT ("cannot determine hostname")));
+            }
 
           // @@ What's the right exception to throw here?
           throw ::CORBA::INV_OBJREF (
@@ -237,7 +243,9 @@ TAO_SCIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
     dynamic_cast<const TAO_SCIOP_Profile *> (other_profile);
 
   if (op == nullptr)
-    return false;
+    {
+      return false;
+    }
 
   // Check endpoints equivalence.
   const TAO_SCIOP_Endpoint *other_endp = std::addressof (op->endpoint_);
@@ -246,9 +254,13 @@ TAO_SCIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
        endp = endp->next_)
     {
       if (endp->is_equivalent (other_endp))
-        other_endp = other_endp->next_;
+        {
+          other_endp = other_endp->next_;
+        }
       else
-        return false;
+        {
+          return false;
+        }
     }
 
   return true;
@@ -383,7 +395,9 @@ TAO_SCIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
 
   // OCTET SEQUENCE for object key
   if (this->ref_object_key_)
-    encap << this->ref_object_key_->object_key ();
+    {
+      encap << this->ref_object_key_->object_key ();
+    }
   else
     {
       TAOLIB_ERROR ((LM_ERROR,
@@ -444,7 +458,9 @@ TAO_SCIOP_Profile::encode_endpoints ()
   if ((out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)
        == 0)
       || (out_cdr << endpoints) == 0)
-    return -1;
+    {
+      return -1;
+    }
 
   this->set_tagged_components (out_cdr);
 
@@ -468,14 +484,18 @@ TAO_SCIOP_Profile::decode_endpoints ()
       // Extract the Byte Order.
       CORBA::Boolean byte_order;
       if ((in_cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-        return -1;
+        {
+          return -1;
+        }
       in_cdr.reset_byte_order (static_cast<int> (byte_order));
 
       // Extract endpoints sequence.
       TAO_SCIOPEndpointSequence endpoints;
 
       if ((in_cdr >> endpoints) == 0)
-        return -1;
+        {
+          return -1;
+        }
 
       // Get the priority of the first endpoint (head of the list.
       // It's other data is extracted as part of the standard profile
