@@ -246,23 +246,26 @@ TAO_ECG_Mcast_EH::add_new_subscriptions (Address_Set& multicast_addresses)
 
       ACE_TCHAR const *net_if = this->net_if_ ? this->net_if_->c_str () : nullptr;
 
-      if (socket->open (multicast_addr, net_if, 1) == -1) {
-        ORBSVCS_ERROR ((LM_ERROR,
-                    "Error: %d - Unable to open multicast socket\n",
-                    ACE_ERRNO_GET));
-      }
+      if (socket->open (multicast_addr, net_if, 1) == -1)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          "Error: %d - Unable to open multicast socket\n",
+                          ACE_ERRNO_GET));
+        }
 
-      if ( socket->enable (ACE_NONBLOCK) != 0 ) {
-        ORBSVCS_ERROR ((LM_ERROR,
-                    "Error: %d - Unable to enable nonblocking on mcast_eh\n",
-                    ACE_ERRNO_GET));
-      }
+      if (socket->enable (ACE_NONBLOCK) != 0)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          "Error: %d - Unable to enable nonblocking on mcast_eh\n",
+                          ACE_ERRNO_GET));
+        }
 
-      if (socket->join (multicast_addr, 1, net_if) == -1) {
-        ORBSVCS_ERROR ((LM_ERROR,
-                    "Error: %d - Unable to join multicast group\n",
-                    ACE_ERRNO_GET));
-      }
+      if (socket->join (multicast_addr, 1, net_if) == -1)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          "Error: %d - Unable to join multicast group\n",
+                          ACE_ERRNO_GET));
+        }
 
       if (this->recvbuf_size_ != 0
           && (((ACE_SOCK_Dgram *)socket)->set_option(SOL_SOCKET,
