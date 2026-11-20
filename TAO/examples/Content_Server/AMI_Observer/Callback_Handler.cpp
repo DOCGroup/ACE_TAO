@@ -38,12 +38,16 @@ Callback_Handler::next_chunk ()
     &Web_Server::Chunk_Type::freebuf);
 
   if (!buf)
-    throw CORBA::NO_MEMORY ();
+    {
+      throw CORBA::NO_MEMORY ();
+    }
 
   ssize_t const bytes_read = this->file_io_.recv (buf.get (),
                                                   BUFSIZ);
   if (bytes_read == -1)
-    throw CORBA::INTERNAL ();
+    {
+      throw CORBA::INTERNAL ();
+    }
   else if (bytes_read == 0)
     {
       this->last_chunk_ = true;

@@ -48,9 +48,9 @@ Logger_Factory_i::make_logger (char const *name)
   // @@ Matt, this code doesn't seem right.  Can you please check with
   // Irfan and Carlos about whether this is the right thing to do?
   if (!result)
-  {
-    return Logger::_nil ();
-  }
+    {
+      return Logger::_nil ();
+    }
 
   return result->_this ();
 }
@@ -65,7 +65,9 @@ ACE_Log_Priority
 Logger_i::priority_conversion (Logger::Log_Priority priority)
 {
   if (priority == Logger::LM_MAX)
-    return LM_MAX;
+    {
+      return LM_MAX;
+    }
   else
     {
       int const pval = static_cast<int> (priority);

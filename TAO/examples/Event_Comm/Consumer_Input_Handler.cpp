@@ -86,11 +86,13 @@ Consumer_Input_Handler::handle_input (ACE_HANDLE h)
     {
       // Null terminate the buffer, replacing the '\n' with '\0'.
       if (buf[n - 1] == '\n')
-        buf[n - 1] = '\0';
+        {
+          buf[n - 1] = '\0';
+        }
       else
-      {
-        buf[n] = '\0';
-      }
+        {
+          buf[n] = '\0';
+        }
       ACE_DEBUG ((LM_DEBUG,
                   "notifying for event %s\n",
                   buf));

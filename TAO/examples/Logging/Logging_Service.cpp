@@ -14,7 +14,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       int const ret = log_server.init (argc, argv);
       if (ret == -1)
-        return 1;
+        {
+          return 1;
+        }
       else
         {
           log_server.run ();
