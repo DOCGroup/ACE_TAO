@@ -55,7 +55,9 @@ ACE_OS::exit (int status)
   // With ACE_HAS_NONSTATIC_OBJECT_MANAGER, the ACE_Object_Manager is
   // instantiated on the main's stack.  ::exit () doesn't destroy it.
   if (exit_hook_)
-    (*exit_hook_) ();
+    {
+      (*exit_hook_) ();
+    }
 #endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER && !ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
 
 #if defined (ACE_WIN32)
@@ -472,7 +474,9 @@ ACE_OS::realpath (const char *file_name,
       if (start == dest) // Are we done?
         {
           if (dest - rpath > 1)
-            --dest; // Remove trailing separator if not at root
+            {
+              --dest; // Remove trailing separator if not at root
+            }
           break;
         }
       else if (dest - start == 1 && *start == '.')
@@ -483,8 +487,10 @@ ACE_OS::realpath (const char *file_name,
         {
           dest -= 3; // Remove "../"
           if (dest > rpath) // Remove the last path component if not at root
-            while (*--dest != '/')
-              ;
+            {
+              while (*--dest != '/')
+                ;
+            }
         }
 #  if !defined (ACE_LACKS_SYMLINKS)
       else
@@ -580,19 +586,26 @@ ACE_OS::strtol_emulation (const char *nptr, char **endptr, int base)
   do {
     c = *s++;
   } while (ACE_OS::ace_isspace(c));
-  if (c == '-') {
-    neg = 1;
-    c = *s++;
-  } else if (c == '+')
-    c = *s++;
+  if (c == '-')
+    {
+      neg = 1;
+      c = *s++;
+    }
+  else if (c == '+')
+    {
+      c = *s++;
+    }
   if ((base == 0 || base == 16) &&
-    c == '0' && (*s == 'x' || *s == 'X')) {
-    c = s[1];
-    s += 2;
-    base = 16;
-  }
+    c == '0' && (*s == 'x' || *s == 'X'))
+    {
+      c = s[1];
+      s += 2;
+      base = 16;
+    }
   if (base == 0)
-    base = c == '0' ? 8 : 10;
+    {
+      base = c == '0' ? 8 : 10;
+    }
 
   /*
    * Compute the cutoff value between legal numbers and illegal
@@ -616,9 +629,13 @@ ACE_OS::strtol_emulation (const char *nptr, char **endptr, int base)
   cutoff /= (unsigned long)base;
   for (acc = 0, any = 0;; c = *s++) {
     if (ACE_OS::ace_isdigit(c))
-      c -= '0';
+      {
+        c -= '0';
+      }
     else if (ACE_OS::ace_isalpha(c))
-      c -= ACE_OS::ace_isupper(c) ? 'A' - 10 : 'a' - 10;
+      {
+        c -= ACE_OS::ace_isupper(c) ? 'A' - 10 : 'a' - 10;
+      }
     else
       {
         break;
@@ -628,20 +645,29 @@ ACE_OS::strtol_emulation (const char *nptr, char **endptr, int base)
         break;
       }
     if (any < 0 || acc > cutoff || acc == cutoff && c > cutlim)
-      any = -1;
-    else {
-      any = 1;
-      acc *= base;
-      acc += c;
-    }
+      {
+        any = -1;
+      }
+    else
+      {
+        any = 1;
+        acc *= base;
+        acc += c;
+      }
   }
-  if (any < 0) {
-    acc = neg ? LONG_MIN : LONG_MAX;
-    errno = ERANGE;
-  } else if (neg)
-    acc = -acc;
+  if (any < 0)
+    {
+      acc = neg ? LONG_MIN : LONG_MAX;
+      errno = ERANGE;
+    }
+  else if (neg)
+    {
+      acc = -acc;
+    }
   if (endptr != 0)
-    *endptr = any ? (char *)s - 1 : (char *)nptr;
+    {
+      *endptr = any ? (char *)s - 1 : (char *)nptr;
+    }
   return (acc);
 }
 #endif /* ACE_LACKS_STRTOL */
