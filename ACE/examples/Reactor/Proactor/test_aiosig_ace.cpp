@@ -272,23 +272,29 @@ query_aio_completions ()
           // corresponding to aiocb_ptr.
           int error_code = aio_error (aiocb_ptr);
           if (error_code == -1)
-            ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
-                               "Invalid control block was sent to <aio_error> for completion querying"),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
+                                 "Invalid control block was sent to <aio_error> for completion querying"),
+                                -1);
+            }
 
           if (error_code != 0)
-            // Error occurred in the <aio_>call. Return the errno
-            // corresponding to that <aio_> call.
-            ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
-                               "An AIO call has failed"),
-                              error_code);
+            {
+              // Error occurred in the <aio_>call. Return the errno
+              // corresponding to that <aio_> call.
+              ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
+                                 "An AIO call has failed"),
+                                error_code);
+            }
 
           // No error occurred in the AIO operation.
           int nbytes = aio_return (aiocb_ptr);
           if (nbytes == -1)
-            ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
-                               "Invalid control block was send to <aio_return>"),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
+                                 "Invalid control block was send to <aio_return>"),
+                                -1);
+            }
           if (number_of_compleions == 0)
             {
               // Print the buffer.
@@ -327,19 +333,27 @@ test_aio_calls ()
                               O_RDONLY);
 
   if (file_handle == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ACE_OS::open"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "ACE_OS::open"),
+                        -1);
+    }
 
   if (setup_signal_delivery () == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   if (issue_aio_calls () == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   if (query_aio_completions () == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   return 0;
 }
@@ -360,10 +374,14 @@ int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
   if (test_aio_calls () == 0)
-    ACE_OS::printf ("RT SIG test successful:\n"
-                    "ACE_POSIX_SIG_PROACTOR should work in this platform\n");
+    {
+      ACE_OS::printf ("RT SIG test successful:\n"
+                      "ACE_POSIX_SIG_PROACTOR should work in this platform\n");
+    }
   else
-    ACE_OS::printf ("RT SIG test failed:\n"
-                    "ACE_POSIX_SIG_PROACTOR may not work in this platform\n");
+    {
+      ACE_OS::printf ("RT SIG test failed:\n"
+                      "ACE_POSIX_SIG_PROACTOR may not work in this platform\n");
+    }
   return 0;
 }
