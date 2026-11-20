@@ -51,7 +51,9 @@ Invocation::init (const char * text, size_t offset, Thread *thread)
   }
 
   if (std::strstr (text, "Request") == nullptr)
-    this->repl_octets_ = new GIOP_Buffer(text, offset, thread, this);
+    {
+      this->repl_octets_ = new GIOP_Buffer(text, offset, thread, this);
+    }
   else
   {
     this->req_octets_  = new GIOP_Buffer(text, offset, thread, this);
@@ -118,7 +120,9 @@ Invocation::give_octets (bool request)
   GIOP_Buffer *result = request ? this->req_octets_ : this->repl_octets_ ;
 
   if (request)
-    this->req_octets_ = nullptr;
+    {
+      this->req_octets_ = nullptr;
+    }
   else
   {
     this->repl_octets_ = nullptr;
@@ -250,7 +254,9 @@ Invocation::new_line (ostream &strm, size_t indent, int offset, bool add_nl, boo
 
   extra += offset;
   while (extra-- > 0)
-    strm << " ";
+    {
+      strm << " ";
+    }
 }
 
 void
@@ -310,7 +316,9 @@ Invocation::dump_start_line (ostream &strm, size_t indent, const ACE_Time_Value&
 
   strm << dir_1;
   if (this->target_ == nullptr)
-    strm << "<unknown object>" ;
+    {
+      strm << "<unknown object>" ;
+    }
   else
   {
     strm << this->target_->name();
@@ -318,9 +326,13 @@ Invocation::dump_start_line (ostream &strm, size_t indent, const ACE_Time_Value&
   strm << dir_2 << this->peer_->id() << ", req " << this->req_id_;
   strm << " [" << opname << "]";
   if (this->is_oneway())
-    strm << " oneway";
+    {
+      strm << " oneway";
+    }
   else if (this->repl_octets_ == nullptr)
-    strm << " <no reply found>";
+    {
+      strm << " <no reply found>";
+    }
   strm << endl;
 }
 
@@ -413,7 +425,9 @@ Invocation::dump_detail (ostream &strm,
 
   strm << dir_1;
   if (this->target_ == nullptr)
-    strm << "<unknown object>" ;
+    {
+      strm << "<unknown object>" ;
+    }
   else
   {
     strm << this->target_->name();
@@ -466,15 +480,19 @@ Invocation::dump_detail (ostream &strm,
     strm << " <no request found>";
   }
   if (this->is_oneway())
-    strm << " oneway";
+    {
+      strm << " oneway";
+    }
   else
     {
       if (this->repl_octets_ != nullptr)
         {
           strm << " Reply, ";
           if (this->repl_octets_->num_contexts() > 0)
-            strm << "with " << this->repl_octets_->num_contexts()
-                 << " contexts, ";
+            {
+              strm << "with " << this->repl_octets_->num_contexts()
+                   << " contexts, ";
+            }
           strm << "size " << this->repl_octets_->expected_size() << " ";
           strm << "line " << this->repl_octets_->log_posn();
 #if defined (SHOW_THREAD_ID)
@@ -631,11 +649,17 @@ Invocation::dump_special_details (ostream &strm, size_t indent, const char *opna
         {
           this->new_line (strm, indent, 8, true, false);
           if (this->repl_octets_ == nullptr)
-            strm << "<nrf> ";
+            {
+              strm << "<nrf> ";
+            }
           else if (std::strcmp (opname, "server_is_running") == 0)
-            strm << "<sir> ";
+            {
+              strm << "<sir> ";
+            }
           else if (std::strcmp (opname, "server_is_shutting_down") == 0)
-            strm << "<ssd> ";
+            {
+              strm << "<ssd> ";
+            }
           strm << "name ( len = " << len << ") " << cdr.rd_ptr();
         }
     }
