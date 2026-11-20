@@ -30,6 +30,7 @@ parse_args (int argc, ACE_TCHAR *argv[], Test_Context &context)
   int option {};
 
   while ((option = get_opts ()) != -1)
+    {
     switch (option)
       {
       case 'k':
@@ -65,6 +66,7 @@ parse_args (int argc, ACE_TCHAR *argv[], Test_Context &context)
                            argv [0]),
                           -1);
       }
+    }
   return 0;
 }
 
@@ -95,10 +97,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         Test::Oneway_Receiver::_narrow (tmp.in ());
 
       if (CORBA::is_nil (oneway_receiver.in ()))
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           "Nil oneway receiver reference <%s>\n",
-                           context.ior.c_str ()),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             "Nil oneway receiver reference <%s>\n",
+                             context.ior.c_str ()),
+                            1);
+        }
 
       if (context.sync_with_target)
         {
@@ -135,15 +139,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       }
 
       if (context.failed_calls != 0)
-        ACE_ERROR ((LM_ERROR, "ERROR: At least %d requests failed\n",
-                    context.failed_calls));
+        {
+          ACE_ERROR ((LM_ERROR, "ERROR: At least %d requests failed\n",
+                      context.failed_calls));
+        }
 
       if (context.failed_calls + context.successful_calls != context.iterations)
-        ACE_ERROR ((LM_ERROR,
-                    "ERROR: Mismatched number of calls (%d + %d != %d)\n",
-                    context.successful_calls,
-                    context.failed_calls,
-                    context.iterations));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: Mismatched number of calls (%d + %d != %d)\n",
+                      context.successful_calls,
+                      context.failed_calls,
+                      context.iterations));
+        }
 
       orb->destroy ();
     }
@@ -241,7 +249,9 @@ run_test_sync_with_target (Test::Oneway_Receiver_ptr oneway_receiver,
       catch (CORBA::NO_PERMISSION const &ex)
         {
           if (context.server_status == Server_Status::alive)
-            ++context.successful_calls;
+            {
+              ++context.successful_calls;
+            }
           else
           {
             call_failed (ex, context);
@@ -250,7 +260,9 @@ run_test_sync_with_target (Test::Oneway_Receiver_ptr oneway_receiver,
       catch (CORBA::OBJECT_NOT_EXIST const &ex)
         {
           if (context.server_status == Server_Status::destroyed)
-            ++context.successful_calls;
+            {
+              ++context.successful_calls;
+            }
           else
           {
             call_failed (ex, context);
@@ -259,7 +271,9 @@ run_test_sync_with_target (Test::Oneway_Receiver_ptr oneway_receiver,
       catch (CORBA::COMM_FAILURE const &ex)
         {
           if (context.server_status == Server_Status::shutdown && !had_comm_failure)
-            ++context.successful_calls;
+            {
+              ++context.successful_calls;
+            }
           else
           {
             call_failed (ex, context);
@@ -269,7 +283,9 @@ run_test_sync_with_target (Test::Oneway_Receiver_ptr oneway_receiver,
       catch (CORBA::TRANSIENT const &ex)
         {
           if (context.server_status == Server_Status::shutdown)
-            ++context.successful_calls;
+            {
+              ++context.successful_calls;
+            }
           else
           {
             call_failed (ex, context);
@@ -301,7 +317,9 @@ run_test_sync_with_server (Test::Oneway_Receiver_ptr oneway_receiver,
                              context);
           if (context.server_status == Server_Status::destroyed
               || context.server_status == Server_Status::shutdown)
-            ++context.failed_calls;
+            {
+              ++context.failed_calls;
+            }
           else
           {
             ++context.successful_calls;
@@ -314,7 +332,9 @@ run_test_sync_with_server (Test::Oneway_Receiver_ptr oneway_receiver,
       catch (CORBA::OBJECT_NOT_EXIST const &ex)
         {
           if (context.server_status == Server_Status::destroyed)
-            ++context.successful_calls;
+            {
+              ++context.successful_calls;
+            }
           else
           {
             call_failed (ex, context);
@@ -323,7 +343,9 @@ run_test_sync_with_server (Test::Oneway_Receiver_ptr oneway_receiver,
       catch (CORBA::COMM_FAILURE const &ex)
         {
           if (context.server_status == Server_Status::shutdown && !had_comm_failure)
-            ++context.successful_calls;
+            {
+              ++context.successful_calls;
+            }
           else
           {
             call_failed (ex, context);
@@ -333,7 +355,9 @@ run_test_sync_with_server (Test::Oneway_Receiver_ptr oneway_receiver,
       catch (CORBA::TRANSIENT const &ex)
         {
           if (context.server_status == Server_Status::shutdown)
-            ++context.successful_calls;
+            {
+              ++context.successful_calls;
+            }
           else
           {
             call_failed (ex, context);
@@ -392,7 +416,9 @@ run_test_unreliable (Test::Oneway_Receiver_ptr oneway_receiver,
 
           // Once a TRANSIENT is raised all future calls should fail.
           if (had_transient)
-            ++context.failed_calls;
+            {
+              ++context.failed_calls;
+            }
           else
           {
             ++context.successful_calls;
@@ -413,7 +439,9 @@ run_test_unreliable (Test::Oneway_Receiver_ptr oneway_receiver,
       catch (CORBA::TRANSIENT const &ex)
         {
           if (context.server_status == Server_Status::shutdown)
-            ++context.successful_calls;
+            {
+              ++context.successful_calls;
+            }
           else
           {
             call_failed (ex, context);
