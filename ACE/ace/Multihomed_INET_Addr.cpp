@@ -33,17 +33,20 @@ ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr(u_short port_number,
   ACE_INET_Addr::set(port_number, host_name, encode, address_family);
 
   // check for secondary INET addrs
-  if (secondary_host_names && size){
+  if (secondary_host_names && size)
+  {
     // we have a non-zero pointer and size
     this->secondaries_.size(size); // size the array
 
     size_t next_empty_slot = 0;
-    for (size_t i = 0; i < size; ++i) {
+    for (size_t i = 0; i < size; ++i)
+    {
       int ret = this->secondaries_[next_empty_slot].set(port_number,
                                                        secondary_host_names[i],
                                                        encode,
                                                        address_family);
-      if (ret) {
+      if (ret)
+      {
         ACELIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("Invalid INET addr (%C:%u) will be ignored\n"),
                     secondary_host_names[i], port_number));
@@ -70,17 +73,20 @@ ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr(u_short port_number,
   ACE_INET_Addr::set(port_number, host_name, encode, address_family);
 
   // check for secondary INET addrs
-  if (secondary_host_names && size){
+  if (secondary_host_names && size)
+  {
     // we have a non-zero pointer and size
     this->secondaries_.size(size); // size the array
 
     size_t next_empty_slot = 0;
-    for (size_t i = 0; i < size; ++i) {
+    for (size_t i = 0; i < size; ++i)
+    {
       int ret = this->secondaries_[next_empty_slot].set(port_number,
                                                        secondary_host_names[i],
                                                        encode,
                                                        address_family);
-      if (ret) {
+      if (ret)
+      {
         ACELIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("Invalid INET addr (%s:%u) will be ignored\n"),
                     ACE_TEXT_WCHAR_TO_TCHAR (secondary_host_names[i]), port_number));
@@ -106,17 +112,20 @@ ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr(u_short port_number,
   ACE_INET_Addr::set(port_number, primary_ip_addr, encode);
 
   // check for secondary INET addrs
-  if (secondary_ip_addrs && size){
+  if (secondary_ip_addrs && size)
+  {
     // we have a non-zero pointer and size
     this->secondaries_.size(size); // size the array
 
     size_t next_empty_slot = 0;
-    for (size_t i = 0; i < size; ++i) {
+    for (size_t i = 0; i < size; ++i)
+    {
       int const ret = this->secondaries_[next_empty_slot].set(port_number,
                                                               secondary_ip_addrs[i],
                                                               encode);
 
-      if (ret) {
+      if (ret)
+      {
         ACELIB_DEBUG ((LM_DEBUG,
                     "Invalid INET addr (%u:%u) will be ignored\n",
                     secondary_ip_addrs[i], port_number));
@@ -143,12 +152,14 @@ ACE_Multihomed_INET_Addr::set (u_short port_number,
 {
   this->secondaries_.size(size);
 
-  for (size_t i = 0; i < size; ++i) {
+  for (size_t i = 0; i < size; ++i)
+  {
     int const ret = this->secondaries_[i].set(port_number,
                                               secondary_host_names[i],
                                               encode,
                                               address_family);
-    if (ret) {
+    if (ret)
+    {
       return ret;
     }
   }
@@ -170,12 +181,14 @@ ACE_Multihomed_INET_Addr::set (u_short port_number,
 {
   this->secondaries_.size(size);
 
-  for (size_t i = 0; i < size; ++i) {
+  for (size_t i = 0; i < size; ++i)
+  {
     int ret = this->secondaries_[i].set(port_number,
                                        secondary_host_names[i],
                                        encode,
                                        address_family);
-    if (ret) {
+    if (ret)
+    {
       return ret;
     }
   }
@@ -193,12 +206,14 @@ ACE_Multihomed_INET_Addr::set (u_short port_number,
 {
   this->secondaries_.size(size);
 
-  for (size_t i = 0; i < size; ++i) {
+  for (size_t i = 0; i < size; ++i)
+  {
     int ret = this->secondaries_[i].set(port_number,
                                        secondary_ip_addrs[i],
                                        encode);
 
-    if (ret) {
+    if (ret)
+    {
       return ret;
     }
   }
