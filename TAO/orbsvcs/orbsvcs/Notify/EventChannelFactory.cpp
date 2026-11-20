@@ -370,10 +370,13 @@ TAO_Notify_EventChannelFactory::load_child (ACE_CString const &type,
   TAO_Notify::Topology_Object * result = this;
   if (type == "channel")
   {
-    if (DEBUG_LEVEL) ORBSVCS_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("(%P|%t) EventChannelFactory reload channel %d\n")
-      , static_cast<int> (id)
-      ));
+    if (DEBUG_LEVEL)
+      {
+        ORBSVCS_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("(%P|%t) EventChannelFactory reload channel %d\n")
+                        , static_cast<int> (id)
+                        ));
+      }
 
     TAO_Notify_Builder* bld = TAO_Notify_PROPERTIES::instance()->builder();
     TAO_Notify_EventChannel * ec = bld->build_event_channel(

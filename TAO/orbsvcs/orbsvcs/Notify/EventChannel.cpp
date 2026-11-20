@@ -506,10 +506,12 @@ TAO_Notify_EventChannel::load_child (ACE_CString const &type,
   else if (type == "consumer_admin")
   {
     if (DEBUG_LEVEL)
-      ORBSVCS_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) EventChannel reload consumer_admin %d\n")
-                  , static_cast<int> (id)
-                  ));
+      {
+        ORBSVCS_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("(%P|%t) EventChannel reload consumer_admin %d\n")
+                        , static_cast<int> (id)
+                        ));
+      }
 
     // call special builder method to reload
     TAO_Notify_Builder* bld = TAO_Notify_PROPERTIES::instance()->builder();
@@ -529,10 +531,12 @@ TAO_Notify_EventChannel::load_child (ACE_CString const &type,
   else if (type == "supplier_admin")
   {
     if (DEBUG_LEVEL)
-      ORBSVCS_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) EventChannel reload supplier_admin %d\n")
-                  , static_cast<int> (id)
-                  ));
+      {
+        ORBSVCS_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("(%P|%t) EventChannel reload supplier_admin %d\n")
+                        , static_cast<int> (id)
+                        ));
+      }
     TAO_Notify_Builder* bld = TAO_Notify_PROPERTIES::instance()->builder();
 
     TAO_Notify_SupplierAdmin * sa = bld->build_supplier_admin (

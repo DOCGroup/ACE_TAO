@@ -80,10 +80,14 @@ TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::insert (PROXY* proxy, const TAO_Notify_
     ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
 
     if (map_.bind (event_type, entry) == -1)
-      throw CORBA::NO_MEMORY ();
+      {
+        throw CORBA::NO_MEMORY ();
+      }
 
     if (this->event_types_.add (event_type) == -1)
-      return -1;
+      {
+        return -1;
+      }
 
     return 1;
   }
@@ -133,10 +137,14 @@ TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::remove (PROXY* proxy, const TAO_Notify_
               this->map_.unbind (event_type);
 
               if (entry->_decr_refcnt () == 0)
-                delete entry;
+                {
+                  delete entry;
+                }
 
               if (this->event_types_.erase (event_type) == -1)
-                return -1;
+                {
+                  return -1;
+                }
 
               return 1;
             }
