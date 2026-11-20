@@ -418,7 +418,9 @@ GIOP_Buffer::parse_svc_contexts ()
   while (num_svc_cont > 0)
     {
       if (!(*this->cdr_ >> temp))  // tag really
-        return false;
+        {
+          return false;
+        }
       if (!(*this->cdr_ >> temp))
       {
         return false;
