@@ -13554,3 +13554,10 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Added Allman braces to single-statement bodies in `ACE/examples/ASX/Event_Server/Event_Server/event_server.cpp`, `Consumer_Router.cpp`, and `ACE/examples/IPC_SAP/FILE_SAP/client.cpp`.
 - Focused clang-tidy brace checks and `git diff --check` passed for all three edited files. No build or runtime test was run.
 - Commits: `3b0943e0a7d`, `1466ccebdde`, and `be1b0672ed0`. The full ACE/TAO brace audit remains open.
+
+## 2026-11-20 ACE Message Queue and Event Server brace follow-up
+
+- Added Allman braces to the reported single-statement bodies in `ACE/examples/ASX/Message_Queue/buffer_stream.cpp`, `ACE/examples/ASX/Event_Server/Transceiver/transceiver.cpp`, and `ACE/examples/ASX/Event_Server/Event_Server/Supplier_Router.cpp`.
+- Focused clang-tidy brace checks and `git diff --check` passed for all three files. No build or runtime test was run.
+- Re-scanned all 400 translation units in `ACE/examples/compile_commands.json`: 253 brace warnings remain. Five translation units still report the unrelated clang `-Wnon-pod-varargs` error at `APG/Naming/Thermometer.h:41`.
+- Commits: `5fda606217a`, `817f1a535e2`, and `d78934f8949`. The full ACE/TAO brace audit remains open.
