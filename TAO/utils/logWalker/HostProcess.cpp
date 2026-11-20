@@ -419,15 +419,17 @@ HostProcess::dump_peer_summary (ostream &strm)
       }
       PeerProcess *pp = entry->item();
       if (pp == nullptr)
-      {
-        break;
-      }
+        {
+          break;
+        }
       if (pp->is_server())
-        ++num_servers;
+        {
+          ++num_servers;
+        }
       else
-      {
-        ++num_clients;
-      }
+        {
+          ++num_clients;
+        }
     }
 
   strm << " from " << num_clients << " clients" << endl;

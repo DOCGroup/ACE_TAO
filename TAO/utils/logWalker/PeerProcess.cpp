@@ -238,7 +238,9 @@ PeerProcess::match_hosts (Session *session)
   // then this wants to find the remote based on the Transport
   // instance
   if (this->is_server_role_)
-    this->remote_ = session->find_host(this->server_ep_, true);
+    {
+      this->remote_ = session->find_host(this->server_ep_, true);
+    }
   else
     {
       Transport *t {};
@@ -358,20 +360,22 @@ PeerProcess::dump_summary (ostream &strm)
   if (this->remote_)
     strm << "  " << remote_->proc_name();
   else
-  {
-    strm << "  peer process " << this->ident_;
-  }
+    {
+      strm << "  peer process " << this->ident_;
+    }
   strm << " is a ";
   if (this->ssl_)
-  {
-    strm << "secure ";
-  }
+    {
+      strm << "secure ";
+    }
   if (this->is_server_role_)
-    strm << "server at ";
+    {
+      strm << "server at ";
+    }
   else
-  {
-    strm << "client to ";
-  }
+    {
+      strm << "client to ";
+    }
   strm << this->server_ep_.host_ << ":" << this->server_ep_.port_ << endl;
   strm << "   ";
   if (this->first_time_.length())
