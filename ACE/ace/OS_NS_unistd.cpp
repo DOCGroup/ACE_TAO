@@ -294,7 +294,9 @@ ACE_OS::fork (const ACE_TCHAR *program_name)
   // will not be updated.
 
   if (pid == 0)
-    ACE_Base_Thread_Adapter::sync_log_msg (program_name);
+    {
+      ACE_Base_Thread_Adapter::sync_log_msg (program_name);
+    }
 
 #else
 
@@ -369,7 +371,9 @@ ACE_OS::fork_exec (ACE_TCHAR *argv[])
           ++arg_count;    // Need a 0-pointer end-of-array marker
           ACE_NEW_NORETURN (cargv, char*[arg_count]);
           if (cargv == 0)
-            ACE_OS::exit (errno);
+            {
+              ACE_OS::exit (errno);
+            }
           --arg_count;    // Back to 0-indexed
           cargv[arg_count] = 0;
           while (--arg_count >= 0)
@@ -377,7 +381,9 @@ ACE_OS::fork_exec (ACE_TCHAR *argv[])
           // Don't worry about freeing the cargv or the strings it points to.
           // Either the process will be replaced, or we'll exit.
           if (ACE_OS::execv (cargv[0], cargv) == -1)
-            ACE_OS::exit (errno);
+            {
+              ACE_OS::exit (errno);
+            }
 #   else
           if (ACE_OS::execv (argv[0], argv) == -1)
             {
@@ -415,9 +421,13 @@ ACE_OS::num_processors ()
   int mib[2] = { CTL_HW, HW_NCPU };
   size_t len = sizeof (num_processors);
   if (::sysctl (mib, 2, &num_processors, &len, 0, 0) != -1)
-    return num_processors;
+    {
+      return num_processors;
+    }
   else
-    return -1;
+    {
+      return -1;
+    }
 #else
   ACE_NOTSUP_RETURN (-1);
 #endif
@@ -436,7 +446,9 @@ ACE_OS::num_processors_online ()
   while (mask != 0)
     {
       if (mask & 1)
-        ++active_processors;
+        {
+          ++active_processors;
+        }
       mask >>= 1;
     }
   return active_processors;
@@ -461,9 +473,13 @@ ACE_OS::num_processors_online ()
   int mib[2] = { CTL_HW, HW_NCPU };
   size_t len = sizeof (num_processors);
   if (::sysctl (mib, 2, &num_processors, &len, 0, 0) != -1)
-    return num_processors;
+    {
+      return num_processors;
+    }
   else
-    return -1;
+    {
+      return -1;
+    }
 #else
   ACE_NOTSUP_RETURN (-1);
 #endif
@@ -555,7 +571,9 @@ ACE_OS::pread (ACE_HANDLE handle,
   if (result == FALSE)
     {
       if (::GetLastError () != ERROR_IO_PENDING)
-        return -1;
+        {
+          return -1;
+        }
 
       else
         {
@@ -564,7 +582,9 @@ ACE_OS::pread (ACE_HANDLE handle,
                                           &bytes_read,
                                           TRUE);
           if (result == FALSE)
-            return -1;
+            {
+              return -1;
+            }
         }
     }
 
@@ -576,7 +596,9 @@ ACE_OS::pread (ACE_HANDLE handle,
                             &bytes_read,
                             0);
   if (result == FALSE)
-    return -1;
+    {
+      return -1;
+    }
 
 #     endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
 
@@ -609,18 +631,24 @@ ACE_OS::pread (ACE_HANDLE handle,
                                                SEEK_CUR);
 
   if (original_position == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   // Go to the correct position
   ACE_OFF_T altered_position = ACE_OS::lseek (handle, offset, SEEK_SET);
 
   if (altered_position == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   ssize_t const bytes_read = ACE_OS::read (handle, buf, nbytes);
 
   if (bytes_read == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   if (ACE_OS::lseek (handle,
                      original_position,
@@ -689,7 +717,9 @@ ACE_OS::pwrite (ACE_HANDLE handle,
                                           &bytes_written,
                                           TRUE);
           if (result == FALSE)
-            return -1;
+            {
+              return -1;
+            }
         }
     }
 
@@ -711,7 +741,9 @@ ACE_OS::pwrite (ACE_HANDLE handle,
                              &bytes_written,
                              0);
   if (result == FALSE)
-    return -1;
+    {
+      return -1;
+    }
 
 #     endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
 
@@ -744,20 +776,26 @@ ACE_OS::pwrite (ACE_HANDLE handle,
                                                0,
                                                SEEK_CUR);
   if (original_position == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   // Go to the correct position
   ACE_OFF_T altered_position = ACE_OS::lseek (handle,
                                               offset,
                                               SEEK_SET);
   if (altered_position == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   ssize_t const bytes_written = ACE_OS::write (handle,
                                                buf,
                                                nbytes);
   if (bytes_written == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   if (ACE_OS::lseek (handle,
                      original_position,
