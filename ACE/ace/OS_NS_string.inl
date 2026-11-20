@@ -272,7 +272,9 @@ ACE_OS::strnlen (const char *s, size_t maxlen)
   size_t i;
   for (i = 0; i < maxlen; ++i)
     if (s[i] == '\0')
-      break;
+      {
+        break;
+      }
   return i;
 #endif /* ACE_HAS_STRNLEN */
 }
@@ -286,7 +288,9 @@ ACE_OS::strnlen (const ACE_WCHAR_T *s, size_t maxlen)
   size_t i;
   for (i = 0; i < maxlen; ++i)
     if (s[i] == '\0')
-      break;
+      {
+        break;
+      }
   return i;
 #endif /* ACE_HAS_WCSNLEN */
 }

@@ -54,10 +54,11 @@ ACE_Log_Category::~ACE_Log_Category()
         {
           return; // This should not happen!
         }
-      if (temp != nullptr) {
-        delete static_cast <ACE_Log_Category_TSS *> (temp);
-        ACE_OS::thr_setspecific (this->key_, nullptr);
-      }
+      if (temp != nullptr)
+        {
+          delete static_cast <ACE_Log_Category_TSS *> (temp);
+          ACE_OS::thr_setspecific (this->key_, nullptr);
+        }
       ACE_OS::thr_keyfree (this->key_);
     }
 #endif
@@ -118,11 +119,12 @@ ACE_Log_Category::per_thr_obj()
 
   return result;
 #else // defined (ACE_HAS_THREADS)
-  if (this->id_ == 0) {
-    static unsigned int log_category_id_assigner = 0;
-    id_ = log_category_id_assigner++;
-    per_thr_obj_.logger_ = ACE_Log_Msg::instance();
-  }
+  if (this->id_ == 0)
+    {
+      static unsigned int log_category_id_assigner = 0;
+      id_ = log_category_id_assigner++;
+      per_thr_obj_.logger_ = ACE_Log_Msg::instance();
+    }
   return &per_thr_obj_;
 #endif // defined (ACE_HAS_THREADS)
 }

@@ -664,9 +664,13 @@ ACE_Name_Options::parse_args (int argc, ACE_TCHAR *argv[])
         case 'T':
 #if defined (ACE_HAS_TRACE)
           if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT ("ON")) == 0)
-            ACE_Trace::start_tracing ();
+            {
+              ACE_Trace::start_tracing ();
+            }
           else if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT ("OFF")) == 0)
-            ACE_Trace::stop_tracing ();
+            {
+              ACE_Trace::stop_tracing ();
+            }
 #endif /* ACE_HAS_TRACE */
           break;
         case 'v':
