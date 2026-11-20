@@ -19,7 +19,9 @@ client ()
 
   char * const segment = static_cast<char *> (shm_client.get_segment_ptr ());
   for (char const *current = segment; *current != '\0'; ++current)
-    std::putchar (*current);
+    {
+      std::putchar (*current);
+    }
 
   std::putchar ('\n');
   segment[0] = '*';
@@ -41,12 +43,16 @@ server ()
   char *current = segment;
 
   for (char c = 'a'; c <= 'z'; ++c)
-    *current++ = c;
+    {
+      *current++ = c;
+    }
 
   *current = '\0';
 
   while (segment[0] != '*')
-    ACE_OS::sleep (1);
+    {
+      ACE_OS::sleep (1);
+    }
 
   if (shm_server.remove () < 0)
     {
