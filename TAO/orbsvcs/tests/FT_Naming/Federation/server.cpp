@@ -39,15 +39,17 @@ TestTask::parse_args (int argc, ACE_TCHAR** argv)
   int c;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 's':
-        shutdown_ns_ = true;
-        break;
-      case 'o':
-        ior_output_file = get_opts.opt_arg ();
-        break;
-      }
+    {
+      switch (c)
+        {
+        case 's':
+          shutdown_ns_ = true;
+          break;
+        case 'o':
+          ior_output_file = get_opts.opt_arg ();
+          break;
+        }
+    }
   // Indicates successful parsing of the command line
   return 0;
 }
@@ -126,12 +128,14 @@ int TestTask::svc()
     // Output the IOR to the <ior_output_file>
     FILE* output_file= ACE_OS::fopen (ior_output_file, "w");
     if (output_file == nullptr)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Cannot open output file %s for writing ")
-                         ACE_TEXT ("IOR: %C\n"),
-                         ior_output_file,
-                         ior.in ()),
-                         1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Cannot open output file %s for writing ")
+                           ACE_TEXT ("IOR: %C\n"),
+                           ior_output_file,
+                           ior.in ()),
+                          1);
+      }
     ACE_OS::fprintf (output_file, ACE_TEXT ("%s"), ior.in ());
     ACE_OS::fclose (output_file);
 

@@ -24,8 +24,10 @@ Client_Worker::validate_connection ()
           this->server_->test_method (j);
           this->another_->test_method (j);
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                         "******** VALIDATED *******\n"));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "******** VALIDATED *******\n"));
+            }
         }
       catch (CORBA::Exception const &)
         {
@@ -47,9 +49,11 @@ Client_Worker::svc ()
           this->another_->test_method (i);
 
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        " (%P|%t) iteration = %d\n",
-                        i));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          " (%P|%t) iteration = %d\n",
+                          i));
+            }
         }
     }
   catch (CORBA::Exception const &ex)

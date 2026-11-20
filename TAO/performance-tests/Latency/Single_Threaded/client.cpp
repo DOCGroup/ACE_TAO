@@ -24,31 +24,33 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
   int c;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'h':
-        options.dump_history = true;
-        break;
+    {
+      switch (c)
+        {
+        case 'h':
+          options.dump_history = true;
+          break;
 
-      case 'x':
-        options.shutdown = false;
-        break;
+        case 'x':
+          options.shutdown = false;
+          break;
 
-      case 'k':
-        options.ior = get_opts.opt_arg ();
-        break;
+        case 'k':
+          options.ior = get_opts.opt_arg ();
+          break;
 
-      case 'i':
-        options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
+        case 'i':
+          options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
 
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT("usage: %s -k <ior> -i <niterations> -x -h\n"),
-                           argv [0]),
-                          -1);
-      }
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT("usage: %s -k <ior> -i <niterations> -x -h\n"),
+                             argv [0]),
+                            -1);
+        }
+    }
   // Indicates successful parsing of the command line
   return 0;
 }
@@ -72,8 +74,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       "test runs in time-shared class\n"));
         }
       else
-        ACE_ERROR ((LM_ERROR,
-                    "client (%P|%t): sched_params failed\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "client (%P|%t): sched_params failed\n"));
+        }
     }
 
   try
