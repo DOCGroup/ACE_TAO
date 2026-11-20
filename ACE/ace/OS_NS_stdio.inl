@@ -61,7 +61,9 @@ ACE_OS::flock_adjust_params (ACE_OS::ace_flock_t *lock,
       {
         ACE_OFF_T const size = ACE_OS::filesize (lock->handle_);
         if (size == -1)
-          return;
+          {
+            return;
+          }
 
         start += size;
       }
@@ -73,7 +75,9 @@ ACE_OS::flock_adjust_params (ACE_OS::ace_flock_t *lock,
     {
       ACE_OFF_T const tlen = ACE_OS::filesize (lock->handle_);
       if (tlen != -1)
-        len = tlen - start;
+        {
+          len = tlen - start;
+        }
     }
 }
 #endif /* ACE_WIN32 */
@@ -99,11 +103,15 @@ ACE_OS::flock_init (ACE_OS::ace_flock_t *lock,
     {
       ACE_OSCALL (ACE_OS::open (name, flags, perms), ACE_HANDLE, lock->handle_);
       if (lock->handle_ != ACE_INVALID_HANDLE)
-        lock->lockname_ = ACE_OS::strdup (name);
+        {
+          lock->lockname_ = ACE_OS::strdup (name);
+        }
       return lock->handle_ == ACE_INVALID_HANDLE ? -1 : 0;
     }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 ACE_INLINE int
@@ -155,7 +163,9 @@ ACE_OS::flock_destroy (ACE_OS::ace_flock_t *lock,
       if (lock->lockname_ != 0)
         {
           if (unlink_file)
-            ACE_OS::unlink (lock->lockname_);
+            {
+              ACE_OS::unlink (lock->lockname_);
+            }
 #if defined (ACE_HAS_ALLOC_HOOKS)
           ACE_Allocator::instance()->free (
             static_cast<void *> (const_cast<ACE_TCHAR *> (lock->lockname_)));
@@ -241,7 +251,9 @@ ACE_OS::flock_tryrdlock (ACE_OS::ace_flock_t *lock,
               int, result);
 
   if (result == -1 && (errno == EACCES || errno == EAGAIN))
-    errno = EBUSY;
+    {
+      errno = EBUSY;
+    }
 
   return result;
 #endif /* ACE_WIN32 */
@@ -286,7 +298,9 @@ ACE_OS::flock_trywrlock (ACE_OS::ace_flock_t *lock,
               int, result);
 
   if (result == -1 && (errno == EACCES || errno == EAGAIN))
-    errno = EBUSY;
+    {
+      errno = EBUSY;
+    }
 
   return result;
 #endif /* ACE_WIN32 */
@@ -354,9 +368,13 @@ ACE_OS::cuserid (char *user, size_t maxlen)
 #elif defined (ACE_WIN32)
   BOOL const result = GetUserNameA (user, (u_long *) &maxlen);
   if (result == FALSE)
-    ACE_FAIL_RETURN (0);
+    {
+      ACE_FAIL_RETURN (0);
+    }
   else
-    return user;
+    {
+      return user;
+    }
 #elif defined (ACE_HAS_ALT_CUSERID)
 #  if defined (ACE_LACKS_PWD_FUNCTIONS)
   ACE_UNUSED_ARG (user);
@@ -444,9 +462,13 @@ ACE_OS::cuserid (wchar_t *user, size_t maxlen)
 # if defined (ACE_WIN32)
   BOOL const result = GetUserNameW (user, (u_long *) &maxlen);
   if (result == FALSE)
-    ACE_FAIL_RETURN (0);
+    {
+      ACE_FAIL_RETURN (0);
+    }
   else
-    return user;
+    {
+      return user;
+    }
 # else /* ACE_WIN32 */
   char *char_user;
   wchar_t *result {};
@@ -557,7 +579,9 @@ ACE_OS::fgets (char *buf, int size, FILE *fp)
     {
       c = std::fgetc (fp);
       if (c != EOF)
-        *iter++ = static_cast<char> (c);
+        {
+          *iter++ = static_cast<char> (c);
+        }
     }
   *iter = '\0';
   return c == EOF ? 0 : buf;
@@ -830,9 +854,13 @@ ACE_OS::rename (const char *old_name,
   // <new_name> it is removed before the file is renamed/moved. The
   // MOVEFILE_COPY_ALLOWED is specified to allow such a rename across drives.
   if (flags == -1)
-    flags = MOVEFILE_COPY_ALLOWED | MOVEFILE_REPLACE_EXISTING;
+    {
+      flags = MOVEFILE_COPY_ALLOWED | MOVEFILE_REPLACE_EXISTING;
+    }
   if (::MoveFileExA (old_name, new_name, flags) == 0)
-    ACE_FAIL_RETURN (-1);
+    {
+      ACE_FAIL_RETURN (-1);
+    }
   return 0;
 #elif defined (ACE_RENAME_EQUIVALENT)
   return ACE_RENAME_EQUIVALENT (old_name, new_name);
@@ -859,9 +887,13 @@ ACE_OS::rename (const wchar_t *old_name,
   // <new_name> it is removed before the file is renamed/moved. The
   // MOVEFILE_COPY_ALLOWED is specified to allow such a rename across drives.
   if (flags == -1)
-    flags = MOVEFILE_COPY_ALLOWED | MOVEFILE_REPLACE_EXISTING;
+    {
+      flags = MOVEFILE_COPY_ALLOWED | MOVEFILE_REPLACE_EXISTING;
+    }
   if (::MoveFileExW (old_name, new_name, flags) == 0)
-    ACE_FAIL_RETURN (-1);
+    {
+      ACE_FAIL_RETURN (-1);
+    }
   return 0;
 # elif defined (ACE_WIN32)
   ACE_UNUSED_ARG (flags);
@@ -1018,11 +1050,15 @@ ACE_OS::vsnprintf (char *buffer, size_t maxlen, const char *format, va_list ap)
 
   // Win32 doesn't regard a full buffer with no 0-terminate as an overrun.
   if (result == static_cast<int> (maxlen) && maxlen > 0)
-    buffer[maxlen-1] = '\0';
+    {
+      buffer[maxlen-1] = '\0';
+    }
 
   // Win32 doesn't 0-terminate the string if it overruns maxlen.
   if (result == -1 && maxlen > 0)
-    buffer[maxlen-1] = '\0';
+    {
+      buffer[maxlen-1] = '\0';
+    }
 # else
   result = ::vsnprintf (buffer, maxlen, format, ap);
 # endif
@@ -1067,11 +1103,15 @@ ACE_OS::vsnprintf (wchar_t *buffer, size_t maxlen, const wchar_t *format, va_lis
 
   // Win32 doesn't regard a full buffer with no 0-terminate as an overrun.
   if (result == static_cast<int> (maxlen) && maxlen > 0)
-    buffer[maxlen-1] = '\0';
+    {
+      buffer[maxlen-1] = '\0';
+    }
 
   // Win32 doesn't 0-terminate the string if it overruns maxlen.
   if (result == -1 && maxlen > 0)
-    buffer[maxlen-1] = '\0';
+    {
+      buffer[maxlen-1] = '\0';
+    }
 # else
   result = vswprintf (buffer, maxlen, format, ap);
 #endif
@@ -1084,7 +1124,9 @@ ACE_OS::vsnprintf (wchar_t *buffer, size_t maxlen, const wchar_t *format, va_lis
   // Note that a formatting failure also returns -1. On RHEL this is
   // errno EINVAL. Don't indicate a simple memory shortage for that.
   if (result == -1 && errno != EINVAL)
-    result = static_cast <int> (maxlen + 1);
+    {
+      result = static_cast <int> (maxlen + 1);
+    }
 
   return result;
 # else
