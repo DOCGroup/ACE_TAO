@@ -91,13 +91,19 @@ ACE_Token_Request::dump () const
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("type = ")));
 
   if (this->token_type () == ACE_Tokens::MUTEX)
-    ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("MUTEX\n")));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("MUTEX\n")));
+    }
   else // == ACE_Tokens::RWLOCK
     {
       if (this->proxy_type () == ACE_RW_Token::READER)
-        ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("RLOCK\n")));
+        {
+          ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("RLOCK\n")));
+        }
       else // == WRITER
-        ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("WLOCK\n")));
+        {
+          ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("WLOCK\n")));
+        }
     }
 
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("operation = ")));
@@ -118,7 +124,9 @@ ACE_Token_Request::dump () const
     }
 
   if (this->options ()[ACE_Synch_Options::USE_TIMEOUT] == 0)
-    ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("blocking forever\n")));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("blocking forever\n")));
+    }
   else
     {
       ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("waiting for %: secs and %q usecs\n"),
