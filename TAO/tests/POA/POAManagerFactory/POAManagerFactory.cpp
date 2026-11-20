@@ -40,20 +40,22 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'v':
-        verbose = true;
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-v "
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
+    {
+      switch (c)
+        {
+        case 'v':
+          verbose = true;
+          break;
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage:  %s "
+                             "-v "
+                             "\n",
+                             argv [0]),
+                            -1);
+        }
+    }
   // Indicates successful parsing of the command line
   return 0;
 }
@@ -83,8 +85,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         PortableServer::POA::_narrow (obj.in ());
 
       if (verbose)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("Obtain PoaManagerFactory reference: ")));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT("Obtain PoaManagerFactory reference: ")));
+        }
       pretest = fail;
 
       // Obtain the POAManagerFactory.
@@ -93,8 +97,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       VERIFY_CONDITION (!CORBA::is_nil (poa_manager_factory.in ()));
       if (verbose)
-        ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("%s\n"),
-                    (pretest == fail) ? ACE_TEXT ("passed") : ACE_TEXT ("failed")));
+        {
+          ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("%s\n"),
+                      (pretest == fail) ? ACE_TEXT ("passed") : ACE_TEXT ("failed")));
+        }
       if (CORBA::is_nil (poa_manager_factory.in ()))
       {
         return 1;
@@ -103,8 +109,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::PolicyList const policies;
 
       if (verbose)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("Create a POAManager: ")));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT("Create a POAManager: ")));
+        }
       pretest = fail;
 
       // Explicitly create a POAManager - "POAManager1" .
@@ -114,8 +122,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       VERIFY_CONDITION (!CORBA::is_nil (poa_manager_1.in ()));
       if (verbose)
-        ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("%s\n"),
-                    (pretest == fail) ? ACE_TEXT ("passed") : ACE_TEXT ("failed")));
+        {
+          ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("%s\n"),
+                      (pretest == fail) ? ACE_TEXT ("passed") : ACE_TEXT ("failed")));
+        }
       if (CORBA::is_nil (poa_manager_1.in ()))
       {
         return 1;
@@ -123,8 +133,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Creating a POAManager with an exiting POAManager name raises exception.
       if (verbose)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("Prevent duplicated POAManagers: ")));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT("Prevent duplicated POAManagers: ")));
+        }
       pretest = fail;
       CORBA::Boolean got_expected_exception {};
       try
@@ -140,8 +152,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       VERIFY_CONDITION (got_expected_exception);
       if (verbose)
-        ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("%s\n"),
-                    (pretest == fail) ? ACE_TEXT ("passed") : ACE_TEXT ("failed")));
+        {
+          ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("%s\n"),
+                      (pretest == fail) ? ACE_TEXT ("passed") : ACE_TEXT ("failed")));
+        }
 
       if (!got_expected_exception)
       {
@@ -150,8 +164,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       {
         if (verbose)
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT("Implicitly create a POAManagers: ")));
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT("Implicitly create a POAManagers: ")));
+          }
         pretest = fail;
         // Implicitly create a POAManager instance which has an automatically
         // assigned name.
@@ -165,8 +181,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
         VERIFY_CONDITION (!CORBA::is_nil (poa_manager_2.in ()));
         if (verbose)
-          ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("%s\n"),
-                      (pretest == fail) ? ACE_TEXT ("passed") : ACE_TEXT ("failed")));
+          {
+            ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("%s\n"),
+                        (pretest == fail) ? ACE_TEXT ("passed") : ACE_TEXT ("failed")));
+          }
 
         if (CORBA::is_nil (poa_manager_2.in ()))
         {
@@ -176,9 +194,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::String_var const poa_manager_2_name
           = poa_manager_2->get_id ();
         if (verbose)
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT("Implicitly created POAManager's ID: [%C]\n"),
-                      poa_manager_2_name.in()));
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT("Implicitly created POAManager's ID: [%C]\n"),
+                        poa_manager_2_name.in()));
+          }
 
         if (std::strlen (poa_manager_2_name.in ()) == 0)
         {
@@ -196,8 +216,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
         VERIFY_CONDITION (managers->length () == 3);
         if (verbose)
-          ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("%s\n"),
-                      (pretest == fail) ? ACE_TEXT ("passed") : ACE_TEXT ("failed")));
+          {
+            ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("%s\n"),
+                        (pretest == fail) ? ACE_TEXT ("passed") : ACE_TEXT ("failed")));
+          }
 
         PortableServer::POAManager_var const root_poa_manager
           = root_poa->the_POAManager ();
@@ -206,9 +228,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           {
             CORBA::String_var const name = managers[i]->get_id ();
             if (verbose)
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT("Validate listed POAManager [%C]: "),
-                          name.in()));
+              {
+                ACE_DEBUG ((LM_DEBUG,
+                            ACE_TEXT("Validate listed POAManager [%C]: "),
+                            name.in()));
+              }
             pretest = fail;
 
             PortableServer::POAManager_ptr const tmp_pm = managers[i];
@@ -237,8 +261,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       {
         // Find a specific POAManager.
         if (verbose)
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT("Find a POAManager: ")));
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT("Find a POAManager: ")));
+          }
         pretest = fail;
 
         PortableServer::POAManager_var const manager
@@ -250,15 +276,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                            && manager.in () == poa_manager_1.in ()));
 
         if (verbose)
-          ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("%s\n"),
-                      (pretest == fail) ? ACE_TEXT ("passed") : ACE_TEXT ("failed")));
+          {
+            ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("%s\n"),
+                        (pretest == fail) ? ACE_TEXT ("passed") : ACE_TEXT ("failed")));
+          }
       }
 
       // Create a child poa that associates with the explicitly
       // created POAManager.
       if (verbose)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("Create A POA with explicit  POAManager: ")));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT("Create A POA with explicit  POAManager: ")));
+        }
       pretest = fail;
       PortableServer::POA_var const child_poa =
         root_poa->create_POA ("childPOA",
