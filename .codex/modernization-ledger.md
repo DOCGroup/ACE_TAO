@@ -13531,3 +13531,9 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Re-scanned all 400 translation units in `ACE/examples/compile_commands.json` with C++17 and the ACE include root. The scan found 364 remaining brace warnings before the subsequent `Peer_Router.cpp` cleanup; five translation units reported an unrelated clang error in `APG/Naming/Thermometer.h:41` for passing `std::string` through ACE's variadic logging API.
 - Added Allman braces to the 13 reported single-statement bodies in `ACE/examples/ASX/Event_Server/Event_Server/Peer_Router.cpp`; the focused clang-tidy brace check and `git diff --check` passed.
 - Commit: `ec93d24849d`. The full ACE/TAO brace audit remains open.
+
+## 2026-11-20 ACE UPIPE Event Server brace follow-up
+
+- Added Allman braces to the single-statement bodies reported in `Peer_Router.cpp`, `event_server.cpp`, and `Options.cpp` under `ACE/examples/ASX/UPIPE_Event_Server`.
+- Focused clang-tidy brace checks and `git diff --check` passed for all three edited files. No build or runtime test was run.
+- Commits: `80427407e0f`, `07602b4fe08`, and `66a9ea9045d`. The full ACE/TAO brace audit remains open.
