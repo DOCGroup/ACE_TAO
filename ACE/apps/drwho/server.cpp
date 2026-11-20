@@ -64,14 +64,18 @@ static void
 do_drwho (SMR_Server &smr_server)
 {
   if (smr_server.receive () == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                Options::program_name));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n",
+                  Options::program_name));
+    }
 
   if (smr_server.send () == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                Options::program_name));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n",
+                  Options::program_name));
+    }
 }
 
 // If the server is started with any argument at all then it doesn't
@@ -98,11 +102,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   SMR_Server smr_server (Options::port_number);
 
   if (inetd_controlled)
-    do_drwho (smr_server);
+    {
+      do_drwho (smr_server);
+    }
   else
     {
       for (;;)
-        do_drwho (smr_server);
+        {
+          do_drwho (smr_server);
+        }
 
       /* NOTREACHED */
     }
