@@ -156,13 +156,13 @@ void ACE_Scheduler::export_to_file (RT_Info* info, FILE* file)
 void ACE_Scheduler::export_to_file (RT_Info& info, FILE* file)
 {
   (void) std::fprintf (file,
-                          ACE_TEXT("%s\n%d\n")
-                          ACE_UINT64_FORMAT_SPECIFIER ACE_TEXT("\n")
-                          ACE_UINT64_FORMAT_SPECIFIER ACE_TEXT("\n")
-                          ACE_UINT64_FORMAT_SPECIFIER ACE_TEXT("\n")
-                          ACE_TEXT("%d\n%d\n")
-                          ACE_UINT64_FORMAT_SPECIFIER ACE_TEXT("\n")
-                          ACE_TEXT("%u\n# begin dependencies\n%d\n"),
+                          "%s\n%d\n"
+                          ACE_UINT64_FORMAT_SPECIFIER_ASCII "\n"
+                          ACE_UINT64_FORMAT_SPECIFIER_ASCII "\n"
+                          ACE_UINT64_FORMAT_SPECIFIER_ASCII "\n"
+                          "%d\n%d\n"
+                          ACE_UINT64_FORMAT_SPECIFIER_ASCII "\n"
+                          "%u\n# begin dependencies\n%d\n",
                           static_cast<char const *> (info.entry_point),
                           info.handle,
                           ORBSVCS_Time::to_hrtime (info.worst_case_execution_time) / 1,
