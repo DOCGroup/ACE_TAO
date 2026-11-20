@@ -284,11 +284,13 @@ be_visitor_valuetype_marshal_cs::class_name (be_valuetype *node,
 {
   if (node->opt_accessor ())
     {
-      be_decl *scope =
-        dynamic_cast<be_scope*> (node->defined_in ())->decl ();
+      std::string name = node->full_name ();
+      if (name.compare (0, 2, "::") == 0)
+        {
+          name.erase (0, 2);
+        }
 
-      *os << scope->name () << "::"
-          << node->local_name ();
+      *os << name;
     }
   else
     {
