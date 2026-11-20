@@ -8,8 +8,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_Registry_Name_Space::ACE_Registry_Name_Space (ACE_Name_Options *name_options)
 {
   if (this->open (name_options) != 0)
-    ACELIB_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Registry_Name_Space::open")));
+    {
+      ACELIB_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_Registry_Name_Space::open")));
+    }
 }
 
 int
