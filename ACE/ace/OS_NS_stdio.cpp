@@ -614,9 +614,13 @@ namespace { // helpers for vsnprintf_emulation
     {
       this->parse_flags (fmt);
       if (this->has (SNPRINTF_LEFT))
-        this->remove (SNPRINTF_ZERO);
+        {
+          this->remove (SNPRINTF_ZERO);
+        }
       if (this->has (SNPRINTF_SIGN))
-        this->remove (SNPRINTF_SPACE);
+        {
+          this->remove (SNPRINTF_SPACE);
+        }
     }
 
     void parse_flags (const char *&fmt)
@@ -640,21 +644,37 @@ namespace { // helpers for vsnprintf_emulation
     void parse_length (const char *&fmt)
     {
       if (fmt[0] == 'h' && fmt[1] == 'h')
-        this->add (SNPRINTF_CHAR), fmt += 2;
+        {
+          this->add (SNPRINTF_CHAR), fmt += 2;
+        }
       else if (fmt[0] == 'h')
-        this->add (SNPRINTF_SHORT), ++fmt;
+        {
+          this->add (SNPRINTF_SHORT), ++fmt;
+        }
       else if (fmt[0] == 'l' && fmt[1] == 'l')
-        this->add (SNPRINTF_LONGLONG), fmt += 2;
+        {
+          this->add (SNPRINTF_LONGLONG), fmt += 2;
+        }
       else if (fmt[0] == 'l')
-        this->add (SNPRINTF_LONG), ++fmt;
+        {
+          this->add (SNPRINTF_LONG), ++fmt;
+        }
       else if (fmt[0] == 'j')
-        this->add (SNPRINTF_INTMAX), ++fmt;
+        {
+          this->add (SNPRINTF_INTMAX), ++fmt;
+        }
       else if (fmt[0] == 'z')
-        this->add (SNPRINTF_SIZET), ++fmt;
+        {
+          this->add (SNPRINTF_SIZET), ++fmt;
+        }
       else if (fmt[0] == 't')
-        this->add (SNPRINTF_PTRDIFF), ++fmt;
+        {
+          this->add (SNPRINTF_PTRDIFF), ++fmt;
+        }
       else if (fmt[0] == 'L')
-        this->add (SNPRINTF_LONGDOUBLE), ++fmt;
+        {
+          this->add (SNPRINTF_LONGDOUBLE), ++fmt;
+        }
     }
 
     void width (int &w)
@@ -681,9 +701,13 @@ namespace { // helpers for vsnprintf_emulation
       if (std::isupper (c))
         {
           if (c == 'C' || c == 'S') // C,S specs are POSIX extensions
-            this->add (SNPRINTF_LONG);
+            {
+              this->add (SNPRINTF_LONG);
+            }
           else
-            this->add (SNPRINTF_UCASE);
+            {
+              this->add (SNPRINTF_UCASE);
+            }
           c = std::tolower (c);
         }
 
@@ -749,11 +773,15 @@ namespace { // helpers for vsnprintf_emulation
         {
           *--buf = this->thousands_;
           if (this->grouping_[1])
-            this->separator_ = *++this->grouping_;
+            {
+              this->separator_ = *++this->grouping_;
+            }
           this->next_sep_ = this->separator_;
         }
       if (this->next_sep_ > 0 && this->next_sep_ < CHAR_MAX)
-        --this->next_sep_;
+        {
+          --this->next_sep_;
+        }
       return separate;
     }
 
