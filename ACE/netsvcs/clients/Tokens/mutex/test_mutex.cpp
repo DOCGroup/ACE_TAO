@@ -104,7 +104,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   Test_Options options {};
 
   if (parse_args (argc, argv, options) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   if (options.remote_mutexes)
     {
