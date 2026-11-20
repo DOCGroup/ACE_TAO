@@ -270,7 +270,9 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
           ptr += sizeof(ifr->ifr_addr);
         }
       else
-        ptr += ifr->ifr_addr.sa_len;
+        {
+          ptr += ifr->ifr_addr.sa_len;
+        }
     }
 
   ACE_OS::close (handle);
