@@ -33,9 +33,9 @@ Thread::add_time (const ACE_CString &time)
     {
       last_time_ = time;
       if (first_time_.length() == 0)
-      {
-        first_time_ = time;
-      }
+        {
+          first_time_ = time;
+        }
     }
 }
 

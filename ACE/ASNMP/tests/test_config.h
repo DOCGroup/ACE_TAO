@@ -100,7 +100,9 @@ ACE_Test_Output::set_output (ACE_TCHAR const *filename, bool append)
   this->output_file_.open (temp,
                            std::ios::out | (append ? std::ios::app : std::ios::trunc));
   if (this->output_file_.bad ())
-    return -1;
+    {
+      return -1;
+    }
 
   ACE_LOG_MSG->msg_ostream (ace_file_stream.output_file ());
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER);
