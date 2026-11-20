@@ -53,7 +53,9 @@ class File_Parser
     void operator() (FILE *file) const
     {
       if (file != nullptr)
-        ACE_OS::fclose (file);
+        {
+          ACE_OS::fclose (file);
+        }
     }
   };
 
