@@ -235,20 +235,21 @@ ACE_CDR::swap_2_array (char const * orig, char* target, size_t n)
     }
 
   // (n & 3) == (n % 4).
-  switch (n&3) {
-  case 3:
-    ACE_CDR::swap_2 (orig, target);
-    orig += 2;
-    target += 2;
-    ACE_FALLTHROUGH;
-  case 2:
-    ACE_CDR::swap_2 (orig, target);
-    orig += 2;
-    target += 2;
-    ACE_FALLTHROUGH;
-  case 1:
-    ACE_CDR::swap_2 (orig, target);
-  }
+  switch (n & 3)
+    {
+    case 3:
+      ACE_CDR::swap_2 (orig, target);
+      orig += 2;
+      target += 2;
+      ACE_FALLTHROUGH;
+    case 2:
+      ACE_CDR::swap_2 (orig, target);
+      orig += 2;
+      target += 2;
+      ACE_FALLTHROUGH;
+    case 1:
+      ACE_CDR::swap_2 (orig, target);
+    }
 }
 
 void
@@ -431,20 +432,21 @@ ACE_CDR::swap_4_array (char const * orig, char* target, size_t n)
 #endif /* ACE_SIZEOF_LONG == 8 */
 
   // (n & 3) == (n % 4).
-  switch (n & 3) {
-  case 3:
-    ACE_CDR::swap_4 (orig, target);
-    orig += 4;
-    target += 4;
-    ACE_FALLTHROUGH;
-  case 2:
-    ACE_CDR::swap_4 (orig, target);
-    orig += 4;
-    target += 4;
-    ACE_FALLTHROUGH;
-  case 1:
-    ACE_CDR::swap_4 (orig, target);
-  }
+  switch (n & 3)
+    {
+    case 3:
+      ACE_CDR::swap_4 (orig, target);
+      orig += 4;
+      target += 4;
+      ACE_FALLTHROUGH;
+    case 2:
+      ACE_CDR::swap_4 (orig, target);
+      orig += 4;
+      target += 4;
+      ACE_FALLTHROUGH;
+    case 1:
+      ACE_CDR::swap_4 (orig, target);
+    }
 }
 
 //
@@ -736,20 +738,21 @@ ACE_CDR::LongDouble::operator ACE_CDR::LongDouble::NativeImpl () const
       // we have to shift and or the rhs to get the right bytes.
       size_t li = 1;
       bool direction = true;
-      for (size_t ri = 2; li < sizeof (ret);) {
-        if (direction)
-          {
-            lhs_ptr[li] |= ((copy[ri] >> 4) & 0xf);
-            direction = false;
-            ++li;
-          }
-        else
-          {
-            lhs_ptr[li] |= ((copy[ri] & 0xf) << 4);
-            direction = true;
-            ++ri;
-          }
-      }
+      for (size_t ri = 2; li < sizeof (ret);)
+        {
+          if (direction)
+            {
+              lhs_ptr[li] |= ((copy[ri] >> 4) & 0xf);
+              direction = false;
+              ++li;
+            }
+          else
+            {
+              lhs_ptr[li] |= ((copy[ri] & 0xf) << 4);
+              direction = true;
+              ++ri;
+            }
+        }
 
 #if defined (ACE_LITTLE_ENDIAN)
       ACE_CDR::swap_8 (lhs_ptr, lhs_ptr);
@@ -1587,11 +1590,12 @@ ACE_CDR::Fixed &ACE_CDR::Fixed::operator/= (const Fixed &rhs)
   Fixed q = this->div_helper2 (rhs_no_scale, r);
   q.scale_ = this->scale_;
 
-  if (!r) {
-    *this = neg ? -q : q;
-    this->normalize ();
-    return *this;
-  }
+  if (!r)
+    {
+      *this = neg ? -q : q;
+      this->normalize ();
+      return *this;
+    }
 
   const int shift = q.lshift (MAX_DIGITS);
   if (shift)
