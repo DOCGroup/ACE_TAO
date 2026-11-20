@@ -48,12 +48,16 @@ Sender_QoS_Event_Handler::handle_qos (ACE_HANDLE)
   // Win2K example.
 
   if (this->qos_session_->update_qos () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error in updating QoS\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Error in updating QoS\n"),
+                        -1);
+    }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                " Updating QOS succeeds.\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  " Updating QOS succeeds.\n"));
+    }
 
   // Now proactively query the QoS object for QoS.
   ACE_QoS const ace_get_qos = this->qos_session_->qos ();
@@ -102,12 +106,16 @@ Sender_QoS_Event_Handler::handle_qos (ACE_HANDLE)
                                    this->qos_session_->dest_addr (),
                                    nullptr,
                                    nullptr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error in dgram_mcast.send ()\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Error in dgram_mcast.send ()\n"),
+                        -1);
+    }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                "Using ACE_OS::sendto () : Bytes sent : %B",
-                bytes_sent));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Using ACE_OS::sendto () : Bytes sent : %B",
+                  bytes_sent));
+    }
   return 0;
 }
