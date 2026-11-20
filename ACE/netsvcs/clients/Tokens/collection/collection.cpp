@@ -61,7 +61,9 @@ run_thread (void *vp)
       if (collection->renew () == -1)
         {
           if (ACE_OS::last_error () == EDEADLK)
-            ACE_DEBUG ((LM_DEBUG, "deadlock detected"));
+            {
+              ACE_DEBUG ((LM_DEBUG, "deadlock detected"));
+            }
           else
             {
               ACE_ERROR ((LM_ERROR, "(%t) %p renew failed\n", "run_thread"));
@@ -69,7 +71,9 @@ run_thread (void *vp)
             }
         }
       else
-        ACE_DEBUG ((LM_DEBUG, "(%t) %s renewed.\n", collection->name ()));
+        {
+          ACE_DEBUG ((LM_DEBUG, "(%t) %s renewed.\n", collection->name ()));
+        }
 
       if (collection->release () == -1)
         {
@@ -79,7 +83,9 @@ run_thread (void *vp)
 
       ACE_DEBUG ((LM_DEBUG, "(%t) %s released.\n", collection->name ()));
       if (renew_error)
-        return ACE_THR_FUNC_RETURN_NULL;
+        {
+          return ACE_THR_FUNC_RETURN_NULL;
+        }
     }
 
   ACE_DEBUG ((LM_DEBUG, "(%t) thread exiting.\n"));
@@ -126,7 +132,9 @@ parse_args (int argc, ACE_TCHAR *argv[], Options &options)
     }
 
   if (options.iterations < 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "iterations cannot be negative\n"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "iterations cannot be negative\n"), -1);
+    }
   return 0;
 }
 
@@ -135,7 +143,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Options options;
   if (parse_args (argc, argv, options) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   std::unique_ptr<ACE_Token_Proxy> A;  // Mutex *A*.
   std::unique_ptr<ACE_Token_Proxy> B;  // Mutex *B*.
@@ -186,17 +196,25 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_Thread_Manager *mgr = ACE_Thread_Manager::instance ();
 
   if (mgr->spawn (run_thread, &thread_options_ar, THR_BOUND | THR_SUSPENDED) == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "spawn 1 failed"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "spawn 1 failed"), -1);
+    }
 
   if (mgr->spawn (run_thread, &thread_options_aw, THR_BOUND | THR_SUSPENDED) == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "spawn 2 failed"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "spawn 2 failed"), -1);
+    }
 
   if (mgr->spawn (run_thread, &thread_options_br, THR_BOUND | THR_SUSPENDED) == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "spawn 3 failed"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "spawn 3 failed"), -1);
+    }
 
 #if ! defined (ACE_HAS_PTHREADS)
   if (mgr->resume_all () == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "resume failed"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "resume failed"), -1);
+    }
 #endif
 
   // Wait for all threads to exit.
