@@ -165,7 +165,9 @@ MyTask::svc ()
   disable_signal (ACE_SIGRTMIN, ACE_SIGRTMAX);
 
   while (ACE_Proactor::event_loop_done () == 0)
-    ACE_Proactor::run_event_loop ();
+    {
+      ACE_Proactor::run_event_loop ();
+    }
 
   delete_proactor ();
 
@@ -240,7 +242,9 @@ Receiver::check_destroy ()
     ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, mutex_, -1);
 
     if (io_count_ > 0)
-      return 1;
+      {
+        return 1;
+      }
   }
 
   delete this;
@@ -257,15 +261,21 @@ Receiver::open (ACE_HANDLE handle,
   this->handle_ = handle;
 
   if (this->ws_.open (*this, this->handle_) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "ACE_Asynch_Write_Stream::open"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n",
+                  "ACE_Asynch_Write_Stream::open"));
+    }
   else if (this->rs_.open (*this, this->handle_) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "ACE_Asynch_Read_Stream::open"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n",
+                  "ACE_Asynch_Read_Stream::open"));
+    }
   else
-    initiate_read_stream ();
+    {
+      initiate_read_stream ();
+    }
 
   check_destroy ();
 }
@@ -397,7 +407,9 @@ Receiver::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
       // ACE_ASSERT (result.bytes_to_write () == result.bytes_transferred ());
 
       if (duplex == 0)
-        initiate_read_stream ();
+        {
+          initiate_read_stream ();
+        }
     }
 
   {
@@ -501,26 +513,36 @@ int Sender::open (const ACE_TCHAR *host, u_short port)
 
   // Open ACE_Asynch_Write_Stream
   if (this->ws_.open (*this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ACE_Asynch_Write_Stream::open"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "ACE_Asynch_Write_Stream::open"),
+                        -1);
+    }
 
   // Open ACE_Asynch_Read_Stream
   if (this->rs_.open (*this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ACE_Asynch_Read_Stream::open"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "ACE_Asynch_Read_Stream::open"),
+                        -1);
+    }
 
   // Start an asynchronous transmit file
   if (this->initiate_write_stream () == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   if (duplex != 0)
-    // Start an asynchronous read file
-    if (this->initiate_read_stream () == -1)
-      return -1;
+    {
+      // Start an asynchronous read file
+      if (this->initiate_read_stream () == -1)
+        {
+          return -1;
+        }
+    }
 
   return 0;
 }
@@ -536,10 +558,12 @@ Sender::initiate_write_stream ()
 
   if (this->ws_.write (welcome_message_,
                        welcome_message_.length ()) == -1)
-    ACE_ERROR_RETURN((LM_ERROR,
-                      "%p\n",
-                      "ACE_Asynch_Write_Stream::write"),
-                     -1);
+    {
+      ACE_ERROR_RETURN((LM_ERROR,
+                        "%p\n",
+                        "ACE_Asynch_Write_Stream::write"),
+                       -1);
+    }
   ++io_count_;
   return 0;
 }
@@ -600,9 +624,13 @@ Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
   if (result.success () && result.bytes_transferred () != 0)
     {
       if (duplex != 0)  // full duplex, continue write
-        initiate_write_stream ();
+        {
+          initiate_write_stream ();
+        }
       else  // half-duplex   read reply, after read we will start write
-        initiate_read_stream ();
+        {
+          initiate_read_stream ();
+        }
     }
 
   {
@@ -644,9 +672,13 @@ Sender::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
       // in <handle_write_stream>.
 
       if (duplex != 0)  // full duplex, continue read
-        initiate_read_stream ();
+        {
+          initiate_read_stream ();
+        }
       else  // half-duplex  writey, after write we will start read
-        initiate_write_stream ();
+        {
+          initiate_write_stream ();
+        }
     }
 
   {
@@ -659,7 +691,9 @@ static int
 set_proactor_type (const char *ptype)
 {
   if (!ptype)
-    return false;
+    {
+      return false;
+    }
 
   switch (ACE_OS::ace_toupper (*ptype))
     {
@@ -677,7 +711,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opt ()) != EOF)
-    switch (c)
+    {
+      switch (c)
       {
       case 'd': // duplex
         duplex = ACE_OS::atoi (get_opt.opt_arg ());
@@ -694,14 +729,18 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case 's': // number of senders
         senders = ACE_OS::atoi (get_opt.opt_arg ());
         if (senders > MaxSenders)
-          senders = MaxSenders;
+          {
+            senders = MaxSenders;
+          }
         break;
       case 'o': // max number of aio for proactor
         max_aio_operations = ACE_OS::atoi (get_opt.opt_arg ());
         break;
       case 't': //  Proactor Type
         if (set_proactor_type (get_opt.opt_arg ()))
-          break;
+          {
+            break;
+          }
       case 'u':
       default:
         ACE_ERROR ((LM_ERROR, "%p.",
@@ -722,6 +761,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
         return -1;
       }
+    }
 
   return 0;
 }
@@ -730,17 +770,21 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (parse_args (argc, argv) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   disable_signal (ACE_SIGRTMIN, ACE_SIGRTMAX);
 
   MyTask task1;
 
   if (task1.activate (THR_NEW_LWP, threads) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p.\n",
-                       "main"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p.\n",
+                         "main"),
+                        -1);
+    }
 
   // wait for creation of Proactor
   task1.waitready ();
@@ -757,16 +801,24 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       // Simplify, initial read with  zero size
       if (acceptor.open (ACE_INET_Addr (port),0,1) == 0)
-        rc = 1;
+        {
+          rc = 1;
+        }
     }
   else
     {
       for (i = 0; i < senders; ++i)
-        send_list[i] = new Sender;
+        {
+          send_list[i] = new Sender;
+        }
 
       for (i = 0; i < senders; ++i)
-        if (send_list[i]->open (host, port) == 0)
-          ++rc;
+        {
+          if (send_list[i]->open (host, port) == 0)
+          {
+            ++rc;
+          }
+        }
     }
 
   if (rc > 0)
@@ -781,7 +833,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (host != 0) // we are sender
     {
       for (i = 0; i < senders; ++i)
-        send_list[i]->close ();
+        {
+          send_list[i]->close ();
+        }
     }
 
   ACE_Thread_Manager *tm =
@@ -809,18 +863,24 @@ disable_signal (int sigmin, int sigmax)
 
   sigset_t signal_set;
   if (ACE_OS::sigemptyset (&signal_set) == - 1)
-    ACE_ERROR ((LM_ERROR,
-                "Error:(%P | %t):%p\n",
-                "sigemptyset failed"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Error:(%P | %t):%p\n",
+                  "sigemptyset failed"));
+    }
 
   for (int i = sigmin; i <= sigmax; ++i)
-    ACE_OS::sigaddset (&signal_set, i);
+    {
+      ACE_OS::sigaddset (&signal_set, i);
+    }
 
   //  Put the <signal_set>.
   if (ACE_OS::pthread_sigmask (SIG_BLOCK, &signal_set, 0) != 0)
-    ACE_ERROR ((LM_ERROR,
-                "Error:(%P | %t):%p\n",
-                "pthread_sigmask failed"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Error:(%P | %t):%p\n",
+                  "pthread_sigmask failed"));
+    }
 #else
   ACE_UNUSED_ARG (sigmin);
   ACE_UNUSED_ARG (sigmax);
