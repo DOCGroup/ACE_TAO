@@ -23,43 +23,53 @@ QoS_Util::parse_args ()
   int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'm': // multicast session address.
-        this->multicast_flag_ = true;
-        this->mult_session_addr_.set (get_opts.opt_arg ());
-        break;
-      case 'n': // to be used by Senders only to specify the destination.
-        this->dest_addr_.set (get_opts.opt_arg ());
-        break;
-      case 'p': // protocol.
-        if (ACE_OS::strcasecmp (get_opts.opt_arg (), ACE_TEXT ("tcp")) == 0)
-          this->protocol_ = IPPROTO_TCP;
-        else
-          if (ACE_OS::strcasecmp (get_opts.opt_arg (), ACE_TEXT ("udp")) == 0)
-            this->protocol_ = IPPROTO_UDP;
-          else
-            ACE_DEBUG ((LM_DEBUG,
-                        "Unknown protocol specified\n"
-                        "UDP assumed\n"));
-        break;
-      case 'P': // sender source port.
-        this->source_port_ = ACE_OS::atoi (get_opts.opt_arg ());
+    {
+      switch (c)
+        {
+        case 'm': // multicast session address.
+          this->multicast_flag_ = true;
+          this->mult_session_addr_.set (get_opts.opt_arg ());
           break;
-      case 'h':  // display help for different options.
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s"
-                           " [-m host:port] QoS multicast session address"
-                           " Overrides the receiver address specified in the -n option"
-                           " [-n host:port] Use for a unicast sender. "
-                           " Follow by receiver addr"
-                           " [-p tcp|udp] specify protocol to be used"
-                           " [-P port] source sender port"
-                           " [-h] <help>"
-                           "\n",
-                           argv_ [0]),
-                          -1);
+        case 'n': // to be used by Senders only to specify the destination.
+          this->dest_addr_.set (get_opts.opt_arg ());
+          break;
+        case 'p': // protocol.
+          if (ACE_OS::strcasecmp (get_opts.opt_arg (), ACE_TEXT ("tcp")) == 0)
+            {
+              this->protocol_ = IPPROTO_TCP;
+            }
+          else
+            {
+              if (ACE_OS::strcasecmp (get_opts.opt_arg (), ACE_TEXT ("udp")) == 0)
+                {
+                  this->protocol_ = IPPROTO_UDP;
+                }
+              else
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "Unknown protocol specified\n"
+                              "UDP assumed\n"));
+                }
+            }
+          break;
+        case 'P': // sender source port.
+          this->source_port_ = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
+        case 'h':  // display help for different options.
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage:  %s"
+                             " [-m host:port] QoS multicast session address"
+                             " Overrides the receiver address specified in the -n option"
+                             " [-n host:port] Use for a unicast sender. "
+                             " Follow by receiver addr"
+                             " [-p tcp|udp] specify protocol to be used"
+                             " [-P port] source sender port"
+                             " [-h] <help>"
+                             "\n",
+                             argv_ [0]),
+                            -1);
+        }
       }
 
   // If multicast address is specified then ignore the unicast sender
