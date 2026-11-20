@@ -327,9 +327,13 @@ TAO_COIOP_Acceptor::parse_options (const char *str)
   for (CORBA::ULong j {}; j < option_count; ++j)
     {
       if (j < option_count - 1)
-        end = options.find (option_delimiter, begin);
+        {
+          end = options.find (option_delimiter, begin);
+        }
       else
-        end = len;
+        {
+          end = len;
+        }
 
       if (end == begin)
         {
