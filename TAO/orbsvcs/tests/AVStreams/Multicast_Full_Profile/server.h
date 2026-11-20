@@ -3,7 +3,6 @@
 #define TAO_AV_MULTICAST_FULL_PROFILE_SERVER_H
 
 #include <cstdio>
-#include <cstddef>
 #include <memory>
 
 #include "ace/Get_Opt.h"

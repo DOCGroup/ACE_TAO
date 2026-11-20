@@ -216,7 +216,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Listening passively.
   if (acceptor.open (ACE_INET_Addr (port),
                      read_size,
-                     1) == -1)
+                     true) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "ACE:acceptor::open failed\n"),

@@ -26,7 +26,7 @@ ACE_WFMO_Reactor_Handler_Repository::open (size_t size)
 {
   if (size > MAXIMUM_WAIT_OBJECTS)
     ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%d exceeds MAXIMUM_WAIT_OBJECTS (%d)\n"),
+                       ACE_TEXT ("%B exceeds MAXIMUM_WAIT_OBJECTS (%d)\n"),
                        size,
                        MAXIMUM_WAIT_OBJECTS),
                       -1);

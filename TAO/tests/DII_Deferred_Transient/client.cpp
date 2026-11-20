@@ -5,7 +5,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/SString.h"
-#include <cstddef>
 
 struct Client_Options
 {

@@ -44,7 +44,7 @@ ACE_Message_Queue_Vx::dump () const
               ACE_TEXT ("cur_length = %B\n")
               ACE_TEXT ("cur_count = %B\n")
               ACE_TEXT ("head_ = %@\n")
-              ACE_TEXT ("MSG_Q_ID = %d\n"),
+              ACE_TEXT ("tail_ = %@\n"),
               this->low_water_mark_,
               this->high_water_mark_,
               this->cur_bytes_,

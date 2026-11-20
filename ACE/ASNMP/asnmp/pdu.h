@@ -35,7 +35,6 @@
 #define MAX_VBS 25
 #include "asnmp/vb.h"         // include Vb class definition
 #include <array>
-#include <cstddef>
 #include <memory>
 
 /**

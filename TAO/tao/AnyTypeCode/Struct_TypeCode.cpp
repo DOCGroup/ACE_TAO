@@ -56,7 +56,9 @@ TAO::TypeCode::Struct<StringType,
     && (enc << this->nfields_);
 
   if (!success)
-    return false;
+    {
+      return false;
+    }
 
   for (CORBA::ULong i {}; i < this->nfields_; ++i)
     {
@@ -68,7 +70,9 @@ TAO::TypeCode::Struct<StringType,
                        Traits<StringType>::get_typecode (field.type),
                        ACE_Utils::truncate_cast<CORBA::ULong> (
                            offset + enc.total_length ())))
-        return false;
+        {
+          return false;
+        }
     }
 
   return
@@ -133,7 +137,9 @@ TAO::TypeCode::Struct<StringType,
     tc->member_count ();
 
   if (tc_nfields != this->nfields_)
-    return false;
+    {
+      return false;
+    }
 
   for (CORBA::ULong i {}; i < this->nfields_; ++i)
     {
@@ -145,7 +151,9 @@ TAO::TypeCode::Struct<StringType,
       char const * const rhs_name = tc->member_name (i);
 
       if (std::strcmp (lhs_name, rhs_name) != 0)
-        return false;
+        {
+          return false;
+        }
 
       CORBA::TypeCode_ptr const lhs_tc =
         Traits<StringType>::get_typecode (lhs_field.type);
@@ -156,7 +164,9 @@ TAO::TypeCode::Struct<StringType,
         lhs_tc->equal (rhs_tc.in ());
 
       if (!equal_members)
-        return false;
+        {
+          return false;
+        }
     }
 
   return true;
@@ -180,7 +190,9 @@ TAO::TypeCode::Struct<StringType,
     tc->member_count ();
 
   if (tc_nfields != this->nfields_)
-    return false;
+    {
+      return false;
+    }
 
   for (CORBA::ULong i {}; i < this->nfields_; ++i)
     {
@@ -193,7 +205,9 @@ TAO::TypeCode::Struct<StringType,
         lhs->equivalent (rhs.in ());
 
       if (!equiv_members)
-        return false;
+        {
+          return false;
+        }
     }
 
   return true;
@@ -304,7 +318,9 @@ TAO::TypeCode::Struct<StringType,
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
   if (index >= this->nfields_)
-    throw ::CORBA::TypeCode::Bounds ();
+    {
+      throw ::CORBA::TypeCode::Bounds ();
+    }
 
   return Traits<StringType>::get_string (this->fields_[index].name);
 }
@@ -320,7 +336,9 @@ TAO::TypeCode::Struct<StringType,
                       RefCountPolicy>::member_type_i (CORBA::ULong index) const
 {
   if (index >= this->nfields_)
-    throw ::CORBA::TypeCode::Bounds ();
+    {
+      throw ::CORBA::TypeCode::Bounds ();
+    }
 
   return
     CORBA::TypeCode::_duplicate (

@@ -93,7 +93,9 @@ TAO::Any_Impl_T<T>::extract (CORBA::Any const & any,
         dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
       if (!unk)
-        return false;
+        {
+          return false;
+        }
 
       // We don't want the rd_ptr of unk to move, in case it is
       // shared by another Any. This copies the state, not the buffer.

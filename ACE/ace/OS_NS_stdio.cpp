@@ -522,7 +522,9 @@ ACE_OS::vasprintf_emulation(char **bufp, const char *format, va_list argptr)
     {
       char *buf = reinterpret_cast<char*>(ACE_OS::malloc(size + 1));
       if (!buf)
-        return -1;
+        {
+          return -1;
+        }
 
       va_list aq;
       va_copy (aq, argptr);
@@ -530,7 +532,9 @@ ACE_OS::vasprintf_emulation(char **bufp, const char *format, va_list argptr)
       va_end (aq);
 
       if (size != -1)
-        *bufp = buf;
+        {
+          *bufp = buf;
+        }
     }
 
   return size;

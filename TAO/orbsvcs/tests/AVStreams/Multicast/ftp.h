@@ -3,7 +3,6 @@
 #define TAO_AV_FTP_H
 
 #include <cstdio>
-#include <cstddef>
 #include <memory>
 #include <string>
 

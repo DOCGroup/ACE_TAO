@@ -21,7 +21,9 @@ TAO::TypeCode::Case<StringType, TypeCodeType>::equal (CORBA::ULong index,
   char const * const rhs_name = tc->member_name (index);
 
   if (std::strcmp (lhs_name, rhs_name) != 0)
-    return false;
+    {
+      return false;
+    }
 
   // Check case TypeCodes.
   CORBA::TypeCode_ptr const lhs_tc = this->type ();
@@ -32,7 +34,9 @@ TAO::TypeCode::Case<StringType, TypeCodeType>::equal (CORBA::ULong index,
     lhs_tc->equal (rhs_tc.in ());
 
   if (!equal_members)
-    return false;
+    {
+      return false;
+    }
 
   // Check case label.
   return this->equal_label (index, tc);
@@ -55,7 +59,9 @@ TAO::TypeCode::Case<StringType, TypeCodeType>::equivalent (
     lhs_tc->equivalent (rhs_tc.in ());
 
   if (!equivalent_members)
-    return false;
+    {
+      return false;
+    }
 
   // Check case label.
   // The label must be equal when determining equivalence, too.

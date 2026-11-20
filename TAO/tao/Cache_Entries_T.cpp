@@ -19,17 +19,21 @@ namespace TAO
     this->is_connected_ = transport->is_connected();
     transport->add_reference ();
     if (TAO_debug_level > 9)
-      TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Cache_IntId_T::Cache_IntId_T, ")
-                  ACE_TEXT ("this=%@ Transport[%B] is%Cconnected\n"),
-                  this, transport->id (), (is_connected_ ? " " : " not ")));
+      {
+        TAOLIB_DEBUG ((LM_DEBUG,
+                       ACE_TEXT ("TAO (%P|%t) - Cache_IntId_T::Cache_IntId_T, ")
+                       ACE_TEXT ("this=%@ Transport[%B] is%Cconnected\n"),
+                       this, transport->id (), (is_connected_ ? " " : " not ")));
+      }
   }
 
   template <typename TRANSPORT_TYPE>
   Cache_IntId_T<TRANSPORT_TYPE>::~Cache_IntId_T ()
   {
     if (this->transport_)
-      this->transport_->remove_reference ();
+      {
+        this->transport_->remove_reference ();
+      }
   }
 
   template <typename TRANSPORT_TYPE>
@@ -44,9 +48,13 @@ namespace TAO
         transport_type *old_transport = this->transport_;
         this->transport_ = rhs.transport_;
         if (this->transport_)
-          this->transport_->add_reference ();
+          {
+            this->transport_->add_reference ();
+          }
         if (old_transport)
-          old_transport->remove_reference ();
+          {
+            old_transport->remove_reference ();
+          }
       }
 
     return *this;
@@ -57,10 +65,12 @@ namespace TAO
   Cache_IntId_T<TRANSPORT_TYPE>::recycle_state (Cache_Entries_State st)
   {
     if (TAO_debug_level > 9)
-      TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Cache_IntId_T::")
-                  ACE_TEXT ("recycle_state, %C->%C Transport[%B] IntId=%@\n"),
-                  state_name (recycle_state_), state_name (st),
-                  transport_ ? transport_->id() : 0, this));
+      {
+        TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Cache_IntId_T::")
+                       ACE_TEXT ("recycle_state, %C->%C Transport[%B] IntId=%@\n"),
+                       state_name (recycle_state_), state_name (st),
+                       transport_ ? transport_->id() : 0, this));
+      }
     this->recycle_state_ = st;
   }
 }

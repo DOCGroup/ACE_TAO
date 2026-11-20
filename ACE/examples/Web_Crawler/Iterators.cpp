@@ -29,7 +29,7 @@ HTML_Body_Iterator::next (ACE_CString &url)
        buf != nullptr;
        buf = this->url_.stream ().recv (len))
     {
-      buffer.set (buf, BUFSIZ, 1);
+      buffer.set (buf, BUFSIZ, true);
 
       href_index = ACE_Utils::truncate_cast<int> (buffer.find ("HREF"));
 
@@ -71,7 +71,7 @@ HTML_Body_Iterator::next (ACE_CString &url)
 
           ACE_CString temp = buffer.substring (start_index + 1,
                                                url_len);
-          url.set (temp.c_str (), len, 1);
+          url.set (temp.c_str (), len, true);
 
           this->url_.stream ().seek (end_index + 1);
 
@@ -105,7 +105,7 @@ HTTP_Header_Iterator::next (ACE_CString &line)
             {
               line.set (this->url_.stream ().recv (),
                         this->url_.stream ().recv_len () - 1,
-                        1);
+                        true);
 
               // Check to see if we're at the end of the header.
               if (this->url_.stream ().peek_char (1) == '\r'
@@ -129,7 +129,7 @@ HTTP_Header_Iterator::next (ACE_CString &line)
             {
               line.set (this->url_.stream ().recv (),
                         (this->url_.stream ().recv_len ()),
-                        1);
+                        true);
 
               // Check to see if we're at the end of the header.
               if (this->url_.stream ().peek_char (0) == '\n')
@@ -165,7 +165,7 @@ URL_Download_Iterator::next (ACE_CString &buffer)
     }
   else
     {
-      buffer.set (buf, len, 1);
+      buffer.set (buf, len, true);
       return 1;
     }
 }

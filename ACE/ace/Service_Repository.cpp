@@ -132,7 +132,7 @@ ACE_Service_Repository::fini ()
       if (s == nullptr)
         {
           ACELIB_DEBUG ((LM_DEBUG,
-                         ACE_TEXT ("ACE (%P|%t) SR::fini, repo=%@ [%d] -> 0\n"),
+                         ACE_TEXT ("ACE (%P|%t) SR::fini, repo=%@ [%B] -> 0\n"),
                          this,
                          i));
         }
@@ -156,7 +156,7 @@ ACE_Service_Repository::fini ()
       if (ACE::debug ())
       {
         ACELIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("ACE (%P|%t) SR::fini, repo=%@ [%d], ")
+                    ACE_TEXT ("ACE (%P|%t) SR::fini, repo=%@ [%B], ")
                     ACE_TEXT ("name=%s, type=%@, object=%@, active=%d\n"),
                     this,
                     i,
@@ -188,7 +188,7 @@ ACE_Service_Repository::fini ()
       if (ACE::debug ())
       {
         ACELIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("ACE (%P|%t) SR::fini, repo=%@ [%d], ")
+                    ACE_TEXT ("ACE (%P|%t) SR::fini, repo=%@ [%B], ")
                     ACE_TEXT ("name=%s, type=%@, object=%@, active=%d\n"),
                     this,
                     i,
@@ -236,14 +236,14 @@ ACE_Service_Repository::close ()
           if (s == nullptr)
             {
               ACELIB_DEBUG ((LM_DEBUG,
-                             ACE_TEXT ("ACE (%P|%t) SR::close - repo=%@ [%d] -> 0\n"),
+                             ACE_TEXT ("ACE (%P|%t) SR::close - repo=%@ [%B] -> 0\n"),
                              this,
                              i));
             }
           else
             {
               ACELIB_DEBUG ((LM_DEBUG,
-                             ACE_TEXT ("ACE (%P|%t) SR::close - repo=%@ [%d], name=%s, object=%@\n"),
+                             ACE_TEXT ("ACE (%P|%t) SR::close - repo=%@ [%B], name=%s, object=%@\n"),
                              this,
                              i,
                              s->name (),
@@ -352,7 +352,7 @@ ACE_Service_Repository::relocate_i (size_t begin,
           if (type == nullptr)
             {
               ACELIB_DEBUG ((LM_DEBUG,
-                             ACE_TEXT ("ACE (%P|%t) SR::relocate_i - repo=%@ [%d]")
+                             ACE_TEXT ("ACE (%P|%t) SR::relocate_i - repo=%@ [%B]")
                              ACE_TEXT (": skipping empty slot\n"),
                              this,
                              i));
@@ -360,7 +360,7 @@ ACE_Service_Repository::relocate_i (size_t begin,
           else
             {
               ACELIB_DEBUG ((LM_DEBUG,
-                             ACE_TEXT ("ACE (%P|%t) SR::relocate_i - repo=%@ [%d]")
+                             ACE_TEXT ("ACE (%P|%t) SR::relocate_i - repo=%@ [%B]")
                              ACE_TEXT (": trying name=%s, handle: %@ -> %@\n"),
                              this,
                              i,
@@ -379,7 +379,7 @@ ACE_Service_Repository::relocate_i (size_t begin,
           if (ACE::debug ())
             {
               ACELIB_DEBUG ((LM_DEBUG,
-                             ACE_TEXT ("ACE (%P|%t) SR::relocate_i - repo=%@ [%d]")
+                             ACE_TEXT ("ACE (%P|%t) SR::relocate_i - repo=%@ [%B]")
                              ACE_TEXT (": relocating name=%s, handle: %@ -> %@\n"),
                              this,
                              i,
@@ -456,7 +456,7 @@ ACE_Service_Repository::insert (ACE_Service_Type const *sr)
   if (ACE::debug ())
     {
       ACELIB_DEBUG ((LM_DEBUG,
-                     ACE_TEXT ("ACE (%P|%t) SR::insert - repo=%@ [%d],")
+                     ACE_TEXT ("ACE (%P|%t) SR::insert - repo=%@ [%B],")
                      ACE_TEXT (" name=%s (%C) (type=%@, object=%@, active=%d)\n"),
                      this,
                      i,
@@ -577,7 +577,7 @@ ACE_Service_Repository::remove_i (ACE_TCHAR const name[], ACE_Service_Type **ps)
   if (ACE::debug ())
     {
       ACELIB_DEBUG ((LM_DEBUG,
-                     ACE_TEXT ("ACE (%P|%t) SR::remove_i - repo=%@ [%d],")
+                     ACE_TEXT ("ACE (%P|%t) SR::remove_i - repo=%@ [%B],")
                      ACE_TEXT (" name=%s (removed) (type=%@, active=%d)\n"),
                      this,
                      i,

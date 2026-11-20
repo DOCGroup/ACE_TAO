@@ -13922,3 +13922,373 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Added Allman braces to four single-statement control bodies in `ACE/apps/drwho/PMS_Ruser.cpp`.
 - Focused clang-tidy reported no remaining brace warnings; `git diff --check` passed. No build or runtime tests were run.
 - The full tracked-source brace audit remains open.
+
+## 2026-11-19 TAO AnyTypeCode Value TypeCode braces
+
+- Added Allman braces around 16 single-statement branches in `TAO/tao/AnyTypeCode/Value_TypeCode.cpp`.
+- Focused `clang-tidy -p TAO/tao -checks=-*,readability-braces-around-statements` reported no remaining brace diagnostics in that translation unit; `git diff --check` passed. No build or runtime test was run.
+- Commit `0561b416bbf`. The wider AnyTypeCode and TAO/tao modernization audits remain open.
+
+
+## 2026-11-19 TAO AnyTypeCode TypeCode comparison braces
+
+- Added Allman braces to 29 single-statement return and bounds-check branches in `Struct_TypeCode.cpp`, `Union_TypeCode.cpp`, `Enum_TypeCode.cpp`, `Sequence_TypeCode.cpp`, and `TypeCode_Case_Base_T.cpp`. Together with `Value_TypeCode.cpp`, six TypeCode translation units now pass the focused check.
+- Focused `clang-tidy -p TAO/tao -checks=-*,readability-braces-around-statements` reported no remaining brace diagnostics in the five changed translation units; `git diff --check` passed. No build or runtime test was run.
+- Commit `8816e630776`. Other AnyTypeCode sources and the wider TAO/tao modernization audits remain open.
+
+
+## 2026-11-19 TAO AnyTypeCode Any implementation braces
+
+- Added Allman braces to six return branches in `Any_Array_Impl_T.cpp`, `Any_Basic_Impl_T.cpp`, `Any_Dual_Impl_T.cpp`, `Any_Impl_T.cpp`, and `Any_Special_Impl_T.cpp`.
+- Focused `clang-tidy -p TAO/tao -checks=-*,readability-braces-around-statements` reported no remaining brace diagnostics in these five translation units; `git diff --check` passed. No build or runtime test was run.
+- Commit `edb35c58c99`. The AnyTypeCode brace audit and wider TAO/tao modernization audits remain open.
+
+
+## 2026-11-19 TAO AnyTypeCode reference-count policy braces
+
+- Added Allman braces around the zero-reference deletion branch in `True_RefCount_Policy.inl`.
+- Focused `clang-tidy` brace checks through the including translation unit reported no remaining diagnostics for the AnyTypeCode header/inl; `git diff --check` passed. No build or runtime test was run.
+- Commit `e6fa5d72aa1`. The AnyTypeCode brace audit and wider TAO/tao modernization audits remain open.
+
+## 2026-11-19 PR #2642 factory-copy CI correction carried to modernization branch
+
+- Added the application-owned `_copy_value()` implementation to the OBV Factory test's `Value2_impl` and a client check that verifies both inherited and derived state are copied. PR #2642 commit `da74bd747b` was carried here as `af59f0fb86`.
+- This corrects the CI compile failure where generated `Value2` correctly redeclared `_copy_value()` as pure for an application factory implementation.
+
+## 2026-11-19 TAO DynamicAny brace audit
+
+- Scanned all 15 `TAO/tao/DynamicAny/*.cpp` translation units and their directory headers with `clang-tidy`'s `readability-braces-around-statements` check. No missing-brace diagnostics were reported. `git diff --check` passed; no build or runtime test was run.
+- Recorded `BRACES` as complete for DynamicAny; the directory's other modernization categories remain open.
+
+## 2026-11-19 Boolean-argument modernization follow-up
+
+- Added `BOOL_ARGUMENTS` to the task catalog and recorded the tree-wide requirement to pass `true`/`false` to Boolean parameters instead of `1`/`0`.
+- In DynamicAny, reviewed numeric literal arguments and Boolean declarations. `write_ulong(0/1)`, sequence `size(0)`, `seek(0)`, string offsets, and the `CORBA::Long` chunk level are numeric values, not Boolean parameters. No confirmed misuse was found; signature-aware review remains open.
+- `rg -n 'std::move\\s*\\(' TAO/tao/DynamicAny` found no move sites, recorded as not applicable.
+
+
+## 2026-11-19 Repository-wide special-member comment audit
+
+- Searched all tracked files under `ACE/` and `TAO/` for standalone comments that only label constructors, destructors, copy/move operations, or assignment operators, including old `// = CONSTRUCTOR` and `// = DESTRUCTOR` labels. No matches were found, so no source edits were needed.
+- Recorded `SPECIAL_MEMBER_COMMENTS` as not applicable for all previously unrecorded source/project directories. This records the current-tree audit; continue checking newly touched directories in future batches. No build or runtime test was run.
+- Evidence commit: `e814e00fb1a`.
+
+
+## 2026-11-19 TAO AnyTypeCode and DynamicAny Boolean argument audit
+
+- Ran `clang-tidy` with `modernize-use-bool-literals` across all 50 `TAO/tao/AnyTypeCode` and all 14 `TAO/tao/DynamicAny` translation units. Both focused scans completed without parse errors and produced no Boolean-literal diagnostics. Reviewed numeric argument occurrences; they are not Boolean parameters.
+- Recorded `BOOL_ARGUMENTS` as not applicable in both directories. The broader TAO core scan remains partial because 151 compile-database entries fail on stale paths or missing generated headers. No source edits, builds, or runtime tests were made.
+- Evidence commit: `862f1da9be3`.
+
+
+## 2026-11-19 TAO PortableServer move-site audit
+
+- Reviewed all 12 `std::move` sites in `TAO/tao/PortableServer`: six Active Object Map strategy/map owners transfer into the object, the ObjectId sequence is moved into its output owner and never read again, and Object Adapter moves hint/map owners plus root POA and manager factory ownership for teardown. No moved-from object is read.
+- `clang-tidy` `bugprone-use-after-move` on `Active_Object_Map.cpp` and `Object_Adapter.cpp` produced no findings. No source edits were needed; no build or runtime test was run.
+- Evidence commit: `59014ce2761`.
+
+
+## 2026-11-19 TAO RTScheduling move-site audit
+
+- Reviewed both `std::move` sites in `TAO/tao/RTScheduling/Current.cpp`. `current_owner` transfers into `DTTask` and then its `current_` unique_ptr member. In `svc()`, ownership is released to thread-specific storage before the pointer is used; the moved-from owners are not read.
+- Recorded `MOVE_SITES` as done. `bugprone-use-after-move` could not parse `Current.cpp` because generated `RTSchedulerC.h` is absent in this checkout. No source edits, build, or runtime test were made.
+- Evidence commit: `ec07082e9cd`.
+
+
+## 2026-11-19 TAO CSD move-site audit
+
+- Reviewed three `std::move` sites in `TAO/tao/CSD_Framework`: iterative list destruction safely transfers each `unique_ptr`, and insertion transfers the new node into the list tail. `bugprone-use-after-move` on `CSD_Strategy_Repository.cpp` reported no findings.
+- Reviewed `TAO/tao/CSD_ThreadPool` exception transfer: the moved owner raises the exception, and no later read accesses the moved-from member. Recorded both directories as done. No source edits, build, or runtime test was run.
+- Evidence commit: `de632b1ca42`.
+
+
+## 2026-11-19 TAO core move-site audit follow-up
+
+- Reviewed the remaining `std::move` sites in `TAO/tao/Codeset`,
+  `TAO/tao/Dynamic_TP`, and `TAO/tao/ETCL`. Codeset transfers a local
+  translator node into its vector; Dynamic_TP transfers the by-value config
+  name into an immutable member; ETCL transfers its deep-copied literal
+  variant into `op_`. No moved-from object is read.
+- Recorded `MOVE_SITES` as done for all three directories. No source changes,
+  builds, or runtime tests were needed for this audit.
+- Source evidence commit: `9ce214b363f`.
+
+
+## 2026-11-19 TAO core top-level move-site audit
+
+- Reviewed all 32 `std::move` sites in top-level `TAO/tao` sources. The
+  acceptor and connector/adapter registry moves transfer owners into their
+  final containers; acceptor raw pointers used after transfer remain valid on
+  successful registration, and failure paths return before dereferencing them.
+  Argument clone helpers transfer local buffer/value owners into clone objects;
+  asynchronous-message, policy, and connector-registry moves transfer locals to
+  their destination members or constructors. Sequence move assignment uses a
+  temporary and swap, preserving the borrowed-buffer copy behavior. No moved-from
+  object is read.
+- Recorded `MOVE_SITES` as done. No source changes, builds, or runtime tests
+  were needed for this audit.
+- Source evidence commit: `1482cda66ec`.
+
+
+## 2026-11-19 ACE ASNMP move-site audit
+
+- Reviewed 14 `std::move` sites in `octet.cpp`, `oid.cpp`, `pdu.cpp`, and
+  `vb.cpp`. Formatting-buffer owners move into their output members immediately
+  before the member buffer is used/returned. PDU construction and replacement
+  move newly copied VBs into their slots; replacement arrays transfer into the
+  PDU, and deletion shifts each next VB into the prior slot before resetting
+  the final slot. Vb assignment transfers a cloned `SnmpSyntax` only after the
+  clone succeeds. No moved-from object is read.
+- Recorded `MOVE_SITES` as done. No source changes, builds, or runtime tests
+  were needed for this audit.
+- Source evidence commit: `e7acdabbb94`.
+
+
+## 2026-11-19 Sequence move-test ownership coverage
+
+- Audited all 23 `std::move` sites in `TAO/tests/Sequence_Unit_Tests`. The
+  tests exercise owned and borrowed buffers, and the moved-from inspections are
+  contract assertions. Confirmed `sequence_move_maximum_ut` is built and listed
+  by `run_test.pl`.
+- Found that its maximum assertions moved only default-constructed sequences,
+  bypassing the owning-buffer transfer branch. Updated it to allocate a buffer
+  before move construction and move assignment, then check the destination's
+  maximum and the moved-from sequence's default maximum. This covers all listed
+  bounded/unbounded sequence types.
+- C++17 `-Wall -Wextra -Wpointer-arith` syntax check passed. Runtime execution
+  was unavailable because this clone has no built TAO libraries. `git diff
+  --check` passed; no full build was run.
+- Source evidence commit: `6f1692d80f0`.
+
+
+## 2026-11-19 ACE INet move-site audit
+
+- Reviewed all 11 `std::move` sites in `ConnectionCache.cpp`,
+  `HTTP_IOStream.cpp`, and `HTTP_SessionBase.cpp`. The connection-key copy
+  assignment moves its duplicated key owner into the destination; HTTP stream
+  constructors forward unique-owned policies through their bases to the stream
+  buffer; session request/response setup transfers policies into the selected
+  stream objects. The moved-from locals are not read afterward.
+- Recorded `MOVE_SITES` as done. No source changes, builds, or runtime tests
+  were needed for this audit.
+- Source evidence commit: `5467e71c2bd`.
+
+
+## 2026-11-19 TAO Utils brace formatting follow-up
+
+- Corrected the Allman indentation of the nil-checked ORB destroy branch in
+  `TAO/tao/Utils/ORB_Manager.cpp`. This was a local formatting fix; the full
+  Utils brace audit remains open.
+- `git diff --check` passed. No build or runtime test was run for this
+  formatting-only change.
+- Reviewed local lifetimes across the TAO Utils implementation and headers
+  for `SCOPE_REDUCTION`. Existing locals already stay inside their necessary
+  blocks; ownership guards retain references until cleanup and ORB/POA locals
+  remain alive through teardown. No safe scope changes were identified.
+- Reviewed the Utils directory for `ADDRESSOF`; it contains no object-address
+  expressions, only reference declarations and operators. The whole-tree audit
+  remains open.
+- In `ACE/ace/RB_Tree.inl`, changed the three addresses taken from generic
+  key/item references in deprecated tree and iterator accessors to
+  `std::addressof`, so user-defined `operator&` cannot redirect these results.
+  `RB_Tree.h` already includes `<memory>`. `git diff --check` passed; no test
+  was run. The ACE/ace and repository-wide audits remain open.
+
+
+## 2026-11-19 ACE core addressof audit
+
+- Completed the `ADDRESSOF` audit for `ACE/ace` generic object access. The
+  existing `RB_Tree.inl` conversions were retained, and remaining key/item
+  address operations in `RB_Tree.cpp` and generic singleton accessors in
+  `Singleton.cpp` now use `std::addressof`. This includes the TSS macro path,
+  where the non-threaded expansion takes the address of the user-supplied type.
+- Inspected remaining address-return expressions and the directory's
+  `operator&` declarations; no other generic address-taking required changes.
+  `<memory>` is already included where needed.
+- `git diff --check` passed. No build or test was run. The repository-wide
+  `ADDRESSOF` task remains open in directories without a review record.
+- Source evidence commits: `53a4497f473`, `8bb17b28249`.
+
+
+## 2026-11-19 TAO Utils brace audit
+
+- Ran `clang-tidy` with `readability-braces-around-statements` on all seven
+  `TAO/tao/Utils` translation units using the TAO core compile database. A
+  second pass filtered diagnostics to Utils headers. Both completed without
+  user-code brace diagnostics; warnings were confined to non-user headers.
+- Recorded `BRACES` as done for Utils. The prior Allman indentation fix in
+  `ORB_Manager.cpp` is in commit `20199830a3b`.
+- No source changes or build/runtime tests were needed for this audit.
+
+
+## 2026-11-19 Repository-wide size type and cstddef audit
+
+- Scanned tracked ACE and TAO C/C++ headers and sources: no `std::size_t`
+  uses remain. Reviewed `<cstddef>` includes for direct size-related names and
+  removed seven stale includes from Pdu, the Bug_2925 regression, AVStreams
+  send/receive code, and DII_Deferred_Transient. The remaining includes all
+  accompany a use of a standard size-related declaration.
+- `git diff --check` passed. No build or tests were run.
+
+
+## 2026-11-19 C string and ACE logging formatter audit
+
+- Scanned all ACE/TAO C++ sources for `ACE_OS::strncmp`. Remaining call sites
+  are ACE_TCHAR/ACEXML_Char-width-generic operations or tests that exercise
+  the ACE wrapper itself; no production narrow `const char *` replacement
+  with `std::strncmp` was appropriate.
+- Scanned for `itoa`: production code has no call sites. Remaining calls are
+  in `ACE/tests/OS_Test.cpp`, which directly tests ACE_OS::itoa, so they stay.
+- Parsed ACE/TAO logging macro invocations and found zero uses of
+  `ACE_*_FORMAT_SPECIFIER` macros inside ACE logging calls. Their remaining
+  uses are C printf/output or generated-code formatting contexts.
+- No code changes or tests were needed; repository state was unchanged by the
+  scans.
+
+
+## 2026-11-19 ACE and TAO size_t logging format corrections
+
+- Corrected active ACE logging calls that passed `size_t` values to `%d` in
+  WFMO_Reactor, Service_Repository, and Service_Gestalt. Updated the shared
+  memory segment count to `%B`, and corrected its base pointer (`%@`) and
+  64-bit file offset (`%q`) formatting to avoid truncation.
+- Corrected TAO's ZIOP low-value diagnostic to log the full `size_t`
+  original length with `%B` instead of narrowing it to `unsigned int` for
+  `%u`.
+- Verified the relevant declarations and ACE logger formatter definitions;
+  `git diff --check` passed. No build or tests were run.
+- The repository-wide formatter audit remains open; this batch covers the
+  confirmed ACE core and TAO ZIOP sites found during the current scan.
+
+- Follow-up review of Proactor IPv6 diagnostics found server/client byte totals
+  still using `%d`; those values are `size_t`. Changed both byte-count fields
+  to `%B`, retaining `%d` for the integer operation counts.
+- Corrected three more ACE core diagnostics: POSIX Proactor's `size_t` AIO
+  limit now uses `%B`, Timeprobe's `u_long` count uses `%Q` with an
+  `ACE_UINT64` conversion, and the VxWorks message queue now formats its
+  `tail_` pointer with `%@` and labels it accurately.
+
+
+## 2026-11-19 ACE and TAO core Boolean-argument scan
+
+- Ran `clang-tidy` with `modernize-use-bool-literals` over the available ACE
+  core compile database (307 translation units) and TAO core compile database.
+  The ACE scan produced one warning in generated `Svc_Conf_y.cpp` skeleton
+  output; no hand-written ACE core diagnostics appeared.
+- Filtered the TAO database to the 202 source files present in this checkout;
+  the scan completed without diagnostics or parse errors. The other 38 entries
+  name generated source files absent from the checkout.
+- Recorded both directory tasks as `needs-work`: compile-database coverage is
+  useful evidence but does not cover files outside those databases. No build or
+  tests were run.
+
+## 2026-11-19 ACE core std::move call-site audit
+
+- Reviewed every `std::move` call under `ACE/ace` (seven files): Process,
+  Monitor_Control/Constraint_Interpreter, WFMO_Reactor, XML_Schema_Resolver,
+  XercesString, XSCRT/XML, and XMLSchema/TypeInfo.
+- Process conversion buffers and environment strings transfer ownership into
+  vectors; the source pointers remain owned by those vectors and the moved
+  locals are not reused. The resolver, Xerces string, constraint root, WFMO
+  event, and type-info map transfers likewise use the destination afterward.
+- No moved-from read, borrowed-buffer transfer, or invalid ownership transition
+  was found. No source changes were needed. No build or tests were run.
+
+## 2026-11-19 ACE tests std::move call-site audit
+
+- Reviewed all `std::move` sites in the eight matching ACE test files:
+  Config_Test, DLL_Test_Impl, Handle_Set_Test, Compiler_Features_09_Test,
+  Compiler_Features_27_Test, Priority_Reactor_Test, Notify_Performance_Test,
+  and Reactor_Performance_Test.
+- The ownership transfers are consumed at their destinations, and test cases
+  do not read moved-from objects. The `std::move` of a string literal in the
+  compiler feature probe is intentional overload/forwarding coverage. No
+  source changes were needed. No build or tests were run.
+
+## 2026-11-19 ACE examples std::move call-site audit
+
+- Reviewed all `std::move` sites under ACE/examples (13 files) in APG Naming
+  and Reactor, three QoS examples, Smart_Pointers, Web_Crawler, and Threads.
+- String constructor/member transfers are not reused after the move. QoS
+  examples retain valid raw observers because the pointee is owned by the
+  destination vector. Widget parts transfer between unique owners; the
+  non-owning observer is used only while the widget owns the object. URL
+  command construction consumes its unique pointer. No moved-from reads or
+  ownership errors were found. No source changes/builds/tests were needed.
+
+## 2026-11-19 ACE performance tests std::move call-site audit
+
+- Reviewed the `std::move` sites in ACE performance tests under SCTP and the
+  adaptive-lock benchmark.
+- SCTP streams/buffers transfer through `unique_ptr` into their owning
+  destination and are accessed through that destination. Histogram values
+  move into a `std::list`, whose element addresses remain stable for returned
+  observers. Benchmark `set_lock` moves its parameter into `lock_` and checks
+  only the destination. No moved-from reads or ownership issues were found.
+  No source changes/builds/tests were needed.
+
+## 2026-11-19 ACE application, ASNMP, and protocol move-site review
+
+- Reviewed outstanding ACE move-site groups in Gateway, JAWS Caching, the
+  Tokens manual, ASNMP, and INet protocols. Existing task records already
+  cover ASNMP, INet, JAWS2, soreduce, and websvcs/lib; recorded the previously
+  untracked Gateway, JAWS Caching, and Tokens manual call sites.
+- Gateway subscription and JAWS sequence ownership transfers are consumed by
+  their destinations. Tokens collection ownership is rolled back from the
+  owner vector if the lookup-map bind fails. ASNMP string buffers return the
+  new member buffer; PDU/Vb unique owners move into destination slots, and
+  delete_vb shifts owners then resets the final slot. INet policies and cache
+  key duplicates move into their destination objects. No moved-from reads or
+  ownership errors were found. No source changes/builds/tests were needed.
+
+## 2026-11-19 TAO examples and tests std::move call-site audit
+
+- Reviewed previously untracked move sites across TAO examples, the two
+  Portable Interceptor DevGuide examples, and TAO tests. The ownership moves
+  are consumed by destination members/containers, and code continues through
+  destination owners rather than moved-from locals.
+- Checked the OctetSeq tests specifically: they assert moved-from lengths,
+  verify transferred contents, and verify that a move of a borrowed
+  Message_Block-backed sequence remains valid after the message block scope
+  ends. No moved-from misuse or ownership error was found. No source changes,
+  builds, or tests were run. `TAO/TAO_IDL` remains excluded from source changes
+  per the release-branch boundary.
+
+- Audit-only check of the two remaining `std::move` sites in
+  `TAO/TAO_IDL/driver/drv_preproc.cpp` and `TAO/TAO_IDL/tao_idl.cpp`: the
+  modified preprocessor argument is stored in the destination vector slot,
+  and generator ownership is transferred to `idl_global`; neither source is
+  subsequently read. No IDL compiler source files were changed.
+
+## 2026-11-19 ACE_OS::strncmp conversion candidate review
+
+- Reviewed every `ACE_OS::strncmp` occurrence in ACE and TAO (47 source
+  matches). The ACEXML, Dgram, Log_Msg, configuration, option parsing, and ORB
+  argument cases operate on ACEXML_Char/ACE_TCHAR strings and must retain the
+  ACE wrapper. ACE/tests OS_Test intentionally exercises ACE_OS wrappers.
+  Three TAO retry-test checks compare `ACE_TString` with `ACE_TCHAR` prefixes,
+  so they also retain the wrapper for wide-character builds. No eligible
+  narrow `const char *` conversion was found; no source changes were needed.
+
+## 2026-11-19 ACE_OS::itoa call-site review
+
+- Repository search found only the ACE_OS::itoa narrow/wide implementations
+  and explicit wrapper tests in `ACE/tests/OS_Test.cpp`; all application
+  call sites had already been migrated. Kept the implementation and tests so
+  ACE's API behavior remains covered. No source changes/builds/tests were
+  needed.
+
+## 2026-11-19 ACE examples Boolean-argument modernization
+
+- Reused the repository compilation database with paths redirected to this
+  worktree and a temporary include overlay for the absent local `ace/config.h`.
+  A broad pass over 400 existing ACE example sources encountered unrelated
+  missing generated headers/legacy parse errors, so findings were rechecked on
+  the 16 unique warned sources with C++17 explicitly enabled; that targeted
+  clang-tidy scan completed without errors.
+- Replaced 23 integer literals passed to Boolean parameters in 15 ACE example
+  files, across Timer_Queue, C++NPv2, APG, Web_Crawler, Service_Configurator,
+  and Reactor/Proactor. The follow-up targeted scan has no remaining
+  Boolean-argument findings; only two pre-existing `while (1)` condition
+  warnings remain, outside this call-site task. `git diff --check` passed. No
+  builds or tests were run.

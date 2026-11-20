@@ -14,7 +14,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[]) {
   ACE_Reactor *reactor;
   ACE_NEW_RETURN (reactor, ACE_Reactor (select_reactor, 1), 1);
   ACE_Reactor::close_singleton ();
-  ACE_Reactor::instance (reactor, 1);
+  ACE_Reactor::instance (reactor, true);
 
   ACE_Service_Config::open (argc, argv);
 

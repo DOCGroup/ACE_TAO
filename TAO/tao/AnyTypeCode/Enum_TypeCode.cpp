@@ -41,7 +41,9 @@ TAO::TypeCode::Enum<StringType,
     && (enc << this->nenumerators_);
 
   if (!success)
-    return false;
+    {
+      return false;
+    }
 
   StringType const * const begin = std::addressof (this->enumerators_[0]);
   StringType const * const end   = begin + this->nenumerators_;
@@ -52,7 +54,9 @@ TAO::TypeCode::Enum<StringType,
 
       if (!(enc << TAO_OutputCDR::from_string (
               Traits<StringType>::get_string (enumerator), 0)))
-        return false;
+        {
+          return false;
+        }
     }
 
   return
@@ -92,7 +96,9 @@ TAO::TypeCode::Enum<StringType,
     tc->member_count ();
 
   if (tc_nenumerators != this->nenumerators_)
-    return false;
+    {
+      return false;
+    }
 
   for (CORBA::ULong i {}; i < this->nenumerators_; ++i)
     {
@@ -103,7 +109,9 @@ TAO::TypeCode::Enum<StringType,
       char const * const rhs_name = tc->member_name (i);
 
       if (std::strcmp (lhs_name, rhs_name) != 0)
-        return false;
+        {
+          return false;
+        }
     }
 
   return true;
@@ -122,7 +130,9 @@ TAO::TypeCode::Enum<StringType,
     tc->member_count ();
 
   if (tc_nenumerators != this->nenumerators_)
-    return false;
+    {
+      return false;
+    }
 
   return true;
 }
@@ -200,7 +210,9 @@ TAO::TypeCode::Enum<StringType,
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
   if (index >= this->nenumerators_)
-    throw ::CORBA::TypeCode::Bounds ();
+    {
+      throw ::CORBA::TypeCode::Bounds ();
+    }
 
   return Traits<StringType>::get_string (this->enumerators_[index]);
 }

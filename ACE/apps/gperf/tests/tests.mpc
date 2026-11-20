@@ -96,6 +96,134 @@ project(optinset): gperf_test {
   }
 }
 
+project(opt_d_inset): gperf_test {
+  exename = opt_d_out
+
+  verbatim(gnuace, bottom) {
+    all: runtests
+
+    runtests: opt_d_out$(EXEEXT)
+    "	@echo "Testing optimized duplicate output""
+    "	./opt_d_out -v < optimize.gperf > opt_d.out"
+    "	diff -b optimize.exp opt_d.out"
+
+    endif # CROSS-COMPILE
+  }
+
+  GPERF_Files {
+    gendir = opt_d_gen
+    commandflags += -O -D
+    optimize.gperf
+  }
+
+  Source_Files {
+    opt_d_gen/optimize.cpp
+  }
+}
+
+project(switchinset): gperf_test {
+  exename = switchout
+
+  verbatim(gnuace, bottom) {
+    all: runtests
+
+    runtests: switchout$(EXEEXT)
+    "	@echo "Testing switch output (-S1)""
+    "	./switchout -v < switch.in > switch.out"
+    "	diff -b switch.exp switch.out"
+
+    endif # CROSS-COMPILE
+  }
+
+  GPERF_Files {
+    commandflags += -S1
+    switch.gperf
+  }
+
+  Source_Files {
+    switch.cpp
+  }
+}
+
+project(switch_ci_inset): gperf_test {
+  exename = switch_ci_out
+
+  verbatim(gnuace, bottom) {
+    all: runtests
+
+    runtests: switch_ci_out$(EXEEXT)
+    "	@echo "Testing switch output (-S1 -I)""
+    "	./switch_ci_out -v < switch.in > switch_ci.out"
+    "	diff -b switch_ci.exp switch_ci.out"
+
+    endif # CROSS-COMPILE
+  }
+
+  GPERF_Files {
+    gendir = switch_ci_gen
+    commandflags += -S1 -I
+    switch.gperf
+  }
+
+  Source_Files {
+    switch_ci_gen/switch.cpp
+  }
+}
+
+project(switch_comp_inset): gperf_test {
+  exename = switch_comp_out
+
+  verbatim(gnuace, bottom) {
+    all: runtests
+
+    runtests: switch_comp_out$(EXEEXT)
+    "	@echo "Testing switch output (-S1 -c)""
+    "	./switch_comp_out -v < switch.in > switch_comp.out"
+    "	diff -b switch.exp switch_comp.out"
+
+    endif # CROSS-COMPILE
+  }
+
+  GPERF_Files {
+    gendir = switch_comp_gen
+    commandflags += -S1 -c
+    switch.gperf
+  }
+
+  defines += GPERF_SWITCH_TEST
+
+  Source_Files {
+    switch_comp_gen/switch.cpp
+  }
+}
+
+project(switch_ci_comp_inset): gperf_test {
+  exename = switch_ci_comp_out
+
+  verbatim(gnuace, bottom) {
+    all: runtests
+
+    runtests: switch_ci_comp_out$(EXEEXT)
+    "	@echo "Testing switch output (-S1 -I -c)""
+    "	./switch_ci_comp_out -v < switch.in > switch_ci_comp.out"
+    "	diff -b switch_ci_comp.exp switch_ci_comp.out"
+
+    endif # CROSS-COMPILE
+  }
+
+  GPERF_Files {
+    gendir = switch_ci_comp_gen
+    commandflags += -S1 -I -c
+    switch.gperf
+  }
+
+  defines += GPERF_SWITCH_TEST
+
+  Source_Files {
+    switch_ci_comp_gen/switch.cpp
+  }
+}
+
 project(preinset): gperf_test {
   exename = preout
 

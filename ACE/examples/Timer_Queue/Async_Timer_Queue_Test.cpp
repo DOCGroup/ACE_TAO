@@ -44,7 +44,7 @@ Async_Timer_Queue::instance ()
 {
   static ACE_Sig_Set signal_mask = [] ()
     {
-      ACE_Sig_Set result (1);
+      ACE_Sig_Set result (true);
       result.sig_del (SIGQUIT);
       return result;
     } ();

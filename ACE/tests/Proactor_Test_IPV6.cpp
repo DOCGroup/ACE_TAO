@@ -692,8 +692,8 @@ Server::Server (TestData *tester, int id)
 Server::~Server ()
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Server %d dtor; %d sends (%d bytes); ")
-              ACE_TEXT ("%d recvs (%d bytes)\n"),
+              ACE_TEXT ("(%t) Server %d dtor; %d sends (%B bytes); ")
+              ACE_TEXT ("%d recvs (%B bytes)\n"),
               this->id_,
               this->total_w_, this->total_snd_,
               this->total_r_, this->total_rcv_));
@@ -1222,8 +1222,8 @@ Client::Client (TestData *tester, int id)
 Client::~Client ()
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Client %d dtor; %d sends (%d bytes); ")
-              ACE_TEXT ("%d recvs (%d bytes)\n"),
+              ACE_TEXT ("(%t) Client %d dtor; %d sends (%B bytes); ")
+              ACE_TEXT ("%d recvs (%B bytes)\n"),
               this->id_,
               this->total_w_, this->total_snd_,
               this->total_r_, this->total_rcv_));

@@ -34,9 +34,11 @@ template <class MUTEX>
 TAO_Condition<MUTEX>::~TAO_Condition ()
 {
   if (this->cond_ && this->remove () == -1)
-    TAOLIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("TAO_Condition::~TAO_Condition")));
+    {
+      TAOLIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("TAO_Condition::~TAO_Condition")));
+    }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

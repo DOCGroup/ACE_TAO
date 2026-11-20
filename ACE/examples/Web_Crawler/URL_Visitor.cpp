@@ -116,7 +116,7 @@ HTML_Body_Validation_Strategy::execute ()
 {
   char host_name_buf[BUFSIZ + 1] {};
   ACE_CString host_name (host_name_buf);
-  host_name.set (url_.url_addr ().get_host_name (),1);
+  host_name.set (url_.url_addr ().get_host_name (), true);
 
   // All to facilitate relative paths
   char temp[BUFSIZ + 1] {};
@@ -124,12 +124,12 @@ HTML_Body_Validation_Strategy::execute ()
 
   prev_location.set (ACE_TEXT_ALWAYS_CHAR (this->url_.url_addr ().get_path_name ()),
                      ACE_OS::strlen (this->url_.url_addr ().get_path_name ()),
-                     1);
+                     true);
   int index =
     ACE_Utils::truncate_cast<int> (
       prev_location.rfind ('/', prev_location.length ()));
   ACE_CString str = prev_location.substring (0, index + 1);
-  prev_location.set (str.c_str (), 1);
+  prev_location.set (str.c_str (), true);
 
   // Note: prev_location always ends with '/'
   if (prev_location[0] != '/')

@@ -675,7 +675,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k, 
       // If the keys match, just return a pointer to the node's item.
       if (result == EXACT)
         {
-          return &current->item ();
+          return std::addressof (current->item ());
         }
 
       // Otherwise if we're to the left of the insertion point, insert
@@ -764,7 +764,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k, 
          0);
       this->root_->color (ACE_RB_Tree_Node_Base::BLACK);
       ++current_size_;
-      return &this->root_->item ();
+      return std::addressof (this->root_->item ());
     }
 }
 

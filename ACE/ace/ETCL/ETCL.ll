@@ -120,15 +120,25 @@ extract_string(char* str)
         {
           ++i;
           if (*i == 0)
-            return 0;
+            {
+              return 0;
+            }
           else if (*i == 't')
-            *t = '\t';
+            {
+              *t = '\t';
+            }
           else if (*i == 'n')
-            *t = '\n';
+            {
+              *t = '\n';
+            }
           else if (*i == '\\')
-            *t = '\\';
+            {
+              *t = '\\';
+            }
           else
-            *t = *i;
+            {
+              *t = *i;
+            }
           continue;
         }
 

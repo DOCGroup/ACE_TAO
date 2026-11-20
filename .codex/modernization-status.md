@@ -74,6 +74,15 @@ task has been reviewed and no follow-up remains.
   `ACE/websvcs/lib/URL_Addr.cpp`, TAO Naming, `Active_Object_Map.cpp`, and
   `Object_Adapter.cpp` were reviewed without finding moved-from use. A
   repository-wide audit remains open.
+- TODO for the full ACE/TAO tree: when calling an operation whose parameter is
+  `bool` or `CORBA::Boolean`, pass `true`/`false` instead of `1`/`0`. Revisit
+  directories already modernized as well as new changes; track this as
+  `BOOL_ARGUMENTS`.
+- TODO for the full ACE/TAO tree: use `std::addressof` when taking an object's
+  address could call an overloaded `operator&`, including generic code where
+  the operand type is not constrained. Keep ordinary built-in address-taking
+  where the type cannot overload the operator. Track this as `ADDRESSOF` per
+  directory; missing rows remain open work.
 
 ## Inventory columns
 
@@ -97,6 +106,8 @@ Task codes for the task-status file and its `tasks_done` summary:
 | --- | --- |
 | `CONST` | East-side const, const locals, and immutable handles |
 | `VALUE_INIT` | Value-initialize scalar/member state; simplify constructors |
+| `BOOL_ARGUMENTS` | Use Boolean literals for Boolean arguments |
+| `ADDRESSOF` | Use `std::addressof` where overloaded `operator&` is possible |
 | `NULLPTR` | Replace eligible null pointer constants with `nullptr` |
 | `OVERRIDE_DEFAULT_DELETE` | Review override/default/delete and exported destructor placement |
 | `EXPLICIT` | Review single-argument constructors for `explicit` |
@@ -117,6 +128,7 @@ Task codes for the task-status file and its `tasks_done` summary:
 | `CLEANUP` | Remove unused helpers and stale commented-out code |
 | `SCOPE_REDUCTION` | Declare locals at their point of use and narrow their lifetime |
 | `SPECIAL_MEMBER_COMMENTS` | Across every directory, remove comments that only label constructors, destructors, copy/move operations, or assignments; review generated output through its generator inputs |
+| `BRACES` | Add consistent braces around control-flow bodies |
 | `STYLE` | Review blank lines, generated layout, line length, and formatting |
 | `BUILD_TEST` | Regenerate as needed, realclean before build, and validate focused tests |
 
@@ -159,7 +171,7 @@ ledger remains the detailed evidence for the work itself.
 ## Current snapshot
 
 <!-- generated-snapshot:start -->
-The inventory was generated against `upstream/master`. It contains 1,268 source/project directories, 1,161 MPC files, and 2,957 MPC project declarations. The branch differs from the base in 1,230 directories, containing 2,945 project declarations. These describe touched scope, not completion.
+The inventory was generated against `upstream/master`. It contains 1,268 source/project directories, 1,161 MPC files, and 2,963 MPC project declarations. The branch differs from the base in 1,230 directories, containing 2,951 project declarations. These describe touched scope, not completion.
 
-Task-level tracking currently has 2706 reviewed task records across 387 directories; 246 scoped batches are marked validated, and 54 directories have a full checklist audit. There are 124 directories with no branch delta. Earlier work remains preserved in the ledger and Git history; no overall modernization percentage is claimed because applicability has not been reviewed for every directory/task pair.
+Task-level tracking currently has 3842 reviewed task records across 1281 directories; 246 scoped batches are marked validated, and 54 directories have a full checklist audit. There are 124 directories with no branch delta. Earlier work remains preserved in the ledger and Git history; no overall modernization percentage is claimed because applicability has not been reviewed for every directory/task pair.
 <!-- generated-snapshot:end -->

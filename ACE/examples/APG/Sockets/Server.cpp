@@ -56,7 +56,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 #endif /* 0 */
 
       // Listing 4 code/ch06
-      if (acceptor.accept (peer, &peer_addr, &timeout, 0) == -1)
+      if (acceptor.accept (peer, &peer_addr, &timeout, false) == -1)
         {
           if (ACE_OS::last_error () == EINTR)
             {
