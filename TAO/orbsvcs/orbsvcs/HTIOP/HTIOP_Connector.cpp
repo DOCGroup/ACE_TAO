@@ -211,10 +211,12 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *,
                       0);
       ACE_NEW_RETURN (session, ACE::HTBP::Session (session_id,proxy, 1), 0);
       if (ACE::HTBP::Session::add_session (session) == -1)
-        ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                           "ACE::HTBP::Initial_Filter::recv_data_header %p",
-                           "add_session"),
-                          0);
+        {
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                 "ACE::HTBP::Initial_Filter::recv_data_header %p",
+                                 "add_session"),
+                                0);
+        }
     }
 
   // Make the svc_handler
@@ -254,11 +256,13 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *,
     }
 
   if (TAO_debug_level > 2)
-    ORBSVCS_DEBUG ((LM_DEBUG,
-                ACE_TEXT("(%P|%t) - TAO::HTIOP::Connector::make_connection, ")
-                ACE_TEXT("new connection to <%s:%d> on handle %@\n"),
-                htiop_endpoint->host (), htiop_endpoint->port (),
-                reinterpret_cast<void *> (svc_handler->peer ().get_handle ())));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT("(%P|%t) - TAO::HTIOP::Connector::make_connection, ")
+                      ACE_TEXT("new connection to <%s:%d> on handle %@\n"),
+                      htiop_endpoint->host (), htiop_endpoint->port (),
+                      reinterpret_cast<void *> (svc_handler->peer ().get_handle ())));
+    }
 
   TAO_Transport *transport = svc_handler->transport ();
 
@@ -314,9 +318,11 @@ TAO::HTIOP::Connector::cancel_svc_handler (
     dynamic_cast<TAO::HTIOP::Connection_Handler*> (svc_handler);
 
   if (handler)
+    {
       // Cancel from the connector
       //      this->base_connector_.cancel (handler);
-    return 0;
+      return 0;
+    }
 
   return -1;
 }

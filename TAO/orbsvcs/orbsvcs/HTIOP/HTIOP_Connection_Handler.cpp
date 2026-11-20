@@ -177,10 +177,12 @@ TAO::HTIOP::Connection_Handler::handle_input (ACE_HANDLE h)
       if (result != -1 && peer().session())
         {
           if (TAO_debug_level > 2)
-            ORBSVCS_DEBUG ((LM_DEBUG,
-                        ACE_TEXT("TAO::HTIOP::Connection_Handler::handle_input: ")
-                        ACE_TEXT("now binding to %@\n"),
-                        reinterpret_cast<void *> (peer().get_handle())));
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                              ACE_TEXT("TAO::HTIOP::Connection_Handler::handle_input: ")
+                              ACE_TEXT("now binding to %@\n"),
+                              reinterpret_cast<void *> (peer().get_handle())));
+            }
         }
       return result;
     }
@@ -264,12 +266,14 @@ TAO::HTIOP::Connection_Handler::process_listen_point_list
       ::HTIOP::ListenPoint listen_point = listen_list[i];
       ACE::HTBP::Addr addr;
       if (listen_point.port)
-        addr.ACE_INET_Addr::set (listen_point.port,
-                  listen_point.host.in ());
+        {
+          addr.ACE_INET_Addr::set (listen_point.port,
+                                   listen_point.host.in ());
+        }
       else
-      {
-        addr.set_htid (listen_point.htid);
-      }
+        {
+          addr.set_htid (listen_point.htid);
+        }
 
       if (TAO_debug_level > 0)
         {
