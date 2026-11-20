@@ -23,10 +23,12 @@ Clerk_i::read_ior (ACE_TCHAR const * filename)
     ACE_OS::fopen (filename, ACE_TEXT ("r")), ACE_OS::fclose);
 
   if (!ior_file)
+  {
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("[CLIENT] Process/Thread Id : (%P/%t) Unable to open %s for reading: %p\n"),
                        filename),
                       -1);
+  }
   this->ior_file_provided_ = true;
 
   ACE_Read_Buffer ior_buffer (ior_file.get ());
@@ -34,9 +36,11 @@ Clerk_i::read_ior (ACE_TCHAR const * filename)
   ACE_Read_Buffer_Unique_Ptr data (
     ior_buffer.read (EOF, '\n', '\n'), {ior_buffer.alloc ()});
   if (!data)
+  {
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("[CLIENT] Process/Thread Id : (%P/%t) Unable to read ior: %p\n")),
                       -1);
+  }
 
   int result {};
 
@@ -86,6 +90,7 @@ Clerk_i::parse_args (int argc,
 
   int c {};
   while ((c = get_opts ()) != -1)
+  {
     switch (c)
       {
       case 'd':  // debug flag.
@@ -106,10 +111,12 @@ Clerk_i::parse_args (int argc,
         {
           int const result = this->read_ior (get_opts.opt_arg ());
           if (result < 0)
+          {
             ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT("[CLERK] Process/Thread Id : (%P/%t) Unable to read ior from %s : %p\n"),
                                get_opts.opt_arg ()),
                               -1);
+          }
         }
         break;
 
@@ -118,9 +125,11 @@ Clerk_i::parse_args (int argc,
           ACE_OS::fopen (get_opts.opt_arg (), ACE_TEXT ("w")));
 
         if (!this->ior_output_file_)
+        {
           ORBSVCS_ERROR_RETURN ((LM_ERROR,
                             ACE_TEXT("[SERVER] Process/Thread Id : (%P/%t)Unable to open %s for writing: %\n"),
                             get_opts.opt_arg ()), -1);
+        }
         break;
 
       case '?':  // display help for use of the server.
@@ -138,6 +147,7 @@ Clerk_i::parse_args (int argc,
                            argv[0]),
                           1);
       }
+  }
 
   // Indicates successful parsing of command line.
   return 0;
@@ -167,9 +177,11 @@ Clerk_i::get_first_IOR ()
         CosNaming::NamingContext::_narrow (temp_object.in ());
 
       if (CORBA::is_nil (server_context.in ()))
+      {
         ORBSVCS_DEBUG ((LM_DEBUG,
                     ACE_TEXT("TAO_Time_Service_Clerk::get_server_IORs:")
                     ACE_TEXT("No Active Servers in the Network\n")));
+      }
 
       // Get the first element and an iterator over the other
       // elements.
@@ -187,10 +199,12 @@ Clerk_i::get_first_IOR ()
         CosTime::TimeService::_narrow (temp_object.in ());
 
       if (CORBA::is_nil (obj.in ()))
+      {
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT("[CLERK] Process/Thread Id : (%P/%t) Unable to Resolve ")
                            ACE_TEXT("Server Reference\n")),
                           -1);
+      }
 
       // Insert the first server IOR into the unbounded set of server
       // IORs.
@@ -200,9 +214,11 @@ Clerk_i::get_first_IOR ()
       // Iterate over the server context to get the next N IORs.
       if (this->next_n_IORs (iter,
                               server_context) != 0)
+      {
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT("[CLERK] Process/Thread Id : (%P/%t) Unable to get next N IORs ")),
                           -1);
+      }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -385,10 +401,12 @@ Clerk_i::init (int argc,
       if (this->orb_manager_.init_child_poa (command.get_argc(),
                                              command.get_TCHAR_argv(),
                                              "child_poa") == -1)
+      {
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT("%p\n"),
                            ACE_TEXT("init_child_poa")),
                           -1);
+      }
 
       // Get the ORB.
       this->orb_ = this->orb_manager_.orb ();
@@ -456,9 +474,11 @@ Clerk_i::run ()
       int const result = this->orb_manager_.run ();
 
       if (result == -1)
+      {
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT("[SERVER] Process/Thread Id : (%P/%t) Clerk_i::run")),
                           -1);
+      }
     }
   catch (CORBA::Exception const &ex)
     {
