@@ -92,21 +92,31 @@ print_params ()
     {
       const char *one_way_style {};
       if (sync_scope == Messaging::SYNC_NONE)
-        one_way_style = "SYNC_NONE";
+        {
+          one_way_style = "SYNC_NONE";
+        }
       else if (sync_scope == Messaging::SYNC_WITH_TRANSPORT)
-        one_way_style = "SYNC_WITH_TRANSPORT";
+        {
+          one_way_style = "SYNC_WITH_TRANSPORT";
+        }
       else if (sync_scope == Messaging::SYNC_WITH_SERVER)
-        one_way_style = "SYNC_WITH_SERVER";
+        {
+          one_way_style = "SYNC_WITH_SERVER";
+        }
       else if (sync_scope == Messaging::SYNC_WITH_TARGET)
-        one_way_style = "SYNC_WITH_TARGET";
+        {
+          one_way_style = "SYNC_WITH_TARGET";
+        }
 
       const char *payload_style {};
       if (payload_test)
-        payload_style = "Payload based";
+        {
+          payload_style = "Payload based";
+        }
       else
-      {
-        payload_style = "Work based";
-      }
+        {
+          payload_style = "Work based";
+        }
 
       ACE_DEBUG ((LM_DEBUG,
                   "\nTesting oneway requests: %C : %C\n",
@@ -270,82 +280,101 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 's':
-        payload_size = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
-
-      case 'p':
-        payload_test = 1;
-        break;
-
-      case 'i':
-        iterations = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
-
-      case 'k':
-        ior = get_opts.opt_arg ();
-        break;
-
-      case 't':
+    {
+      switch (c)
         {
-          ACE_TCHAR *tmp = get_opts.opt_arg ();
+        case 's':
+          payload_size = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
 
-          if (!ACE_OS::strcmp (tmp, ACE_TEXT("none")))
-            sync_scope = Messaging::SYNC_NONE;
-          else if (!ACE_OS::strcmp (tmp, ACE_TEXT("transport")))
-            sync_scope = Messaging::SYNC_WITH_TRANSPORT;
-          else if (!ACE_OS::strcmp (tmp, ACE_TEXT("server")))
-            sync_scope = Messaging::SYNC_WITH_SERVER;
-          else if (!ACE_OS::strcmp (tmp, ACE_TEXT("target")))
-            sync_scope = Messaging::SYNC_WITH_TARGET;
-          else if (!ACE_OS::strcmp (tmp, ACE_TEXT("twoway")))
-            test_twoway = 1;
-          else
+        case 'p':
+          payload_test = 1;
+          break;
+
+        case 'i':
+          iterations = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
+
+        case 'k':
+          ior = get_opts.opt_arg ();
+          break;
+
+        case 't':
           {
-            error = 1;
+            ACE_TCHAR *tmp = get_opts.opt_arg ();
+
+            if (!ACE_OS::strcmp (tmp, ACE_TEXT("none")))
+              {
+                sync_scope = Messaging::SYNC_NONE;
+              }
+            else if (!ACE_OS::strcmp (tmp, ACE_TEXT("transport")))
+              {
+                sync_scope = Messaging::SYNC_WITH_TRANSPORT;
+              }
+            else if (!ACE_OS::strcmp (tmp, ACE_TEXT("server")))
+              {
+                sync_scope = Messaging::SYNC_WITH_SERVER;
+              }
+            else if (!ACE_OS::strcmp (tmp, ACE_TEXT("target")))
+              {
+                sync_scope = Messaging::SYNC_WITH_TARGET;
+              }
+            else if (!ACE_OS::strcmp (tmp, ACE_TEXT("twoway")))
+              {
+                test_twoway = 1;
+              }
+            else
+              {
+                error = 1;
+              }
+            break;
           }
+
+        case 'l':
+          {
+            ACE_TCHAR *tmp = get_opts.opt_arg ();
+
+            if (!ACE_OS::strcmp (tmp, ACE_TEXT("orb")))
+              {
+                level = ORB_LEVEL;
+              }
+            else if (!ACE_OS::strcmp (tmp, ACE_TEXT("thread")))
+              {
+                level = THREAD_LEVEL;
+              }
+            else if (!ACE_OS::strcmp (tmp, ACE_TEXT("object")))
+              {
+                level = OBJECT_LEVEL;
+              }
+            else
+              {
+                error = 1;
+              }
+            break;
+          }
+
+        case 'm':
+          buffering_queue_size = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
+
+        case 'w':
+          work = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
+
+        case 'x':
+          shutdown_server = 1;
+          break;
+
+        case '?':
+        default:
+          error = 1;
           break;
         }
-
-      case 'l':
-        {
-          ACE_TCHAR *tmp = get_opts.opt_arg ();
-
-          if (!ACE_OS::strcmp (tmp, ACE_TEXT("orb")))
-            level = ORB_LEVEL;
-          else if (!ACE_OS::strcmp (tmp, ACE_TEXT("thread")))
-            level = THREAD_LEVEL;
-          else if (!ACE_OS::strcmp (tmp, ACE_TEXT("object")))
-            level = OBJECT_LEVEL;
-          else
-          {
-            error = 1;
-          }
-          break;
-        }
-
-      case 'm':
-        buffering_queue_size = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
-
-      case 'w':
-        work = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
-
-      case 'x':
-        shutdown_server = 1;
-        break;
-
-      case '?':
-      default:
-        error = 1;
-        break;
-      }
+    }
 
   if (error)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
                        "usage:  %s "
                        "-k <ior> "
                        "-s <payload size> "
@@ -357,8 +386,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
                        "-w <# of server loops> "
                        "-x shutdown server "
                        "\n",
-                       argv [0]),
-                      -1);
+                         argv [0]),
+                        -1);
+    }
 
   // Indicates successful parsing of the command line
   return 0;
@@ -386,9 +416,11 @@ set_rt_mode ()
                       "test runs in time-shared class\n"));
         }
       else
-        ACE_ERROR ((LM_ERROR,
-                    "client (%P|%t): sched_params failed %p\n",
-                    "set_rt_mode"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "client (%P|%t): sched_params failed %p\n",
+                      "set_rt_mode"));
+        }
     }
 
   // Get our thread handle.
@@ -397,15 +429,19 @@ set_rt_mode ()
 
   // Set our thread priority.
   if (ACE_OS::thr_setprio (self, priority) != 0)
-    ACE_ERROR ((LM_ERROR,
-                "server (%P|%t):thr_setprio failed %p\n",
-                "set_rt_mode"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "server (%P|%t):thr_setprio failed %p\n",
+                  "set_rt_mode"));
+    }
 
   // Do a sanity check.
   if (ACE_OS::thr_getprio (self, priority) == 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "client (%P|%t): thread priority = %d.\n",
-                priority));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "client (%P|%t): thread priority = %d.\n",
+                  priority));
+    }
 
   return 0;
 }
@@ -540,11 +576,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
           // Run the oneway test.
           if (payload_test)
-            oneway_payload_test (server.in ());
+            {
+              oneway_payload_test (server.in ());
+            }
           else
-          {
-            oneway_work_test (server.in ());
-          }
+            {
+              oneway_work_test (server.in ());
+            }
         }
 
       if (shutdown_server)
