@@ -27,9 +27,11 @@ Supplier_Router::svc ()
       // to Consumers)!
 
       if (this->context ()->send_peers (mb) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%t) send_peers failed in Supplier_Router\n"),
-                      -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%t) send_peers failed in Supplier_Router\n"),
+                            -1);
+        }
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -79,8 +81,10 @@ Supplier_Router::close (u_long)
               this->is_reader () ? "reader" : "writer"));
 
   if (this->is_writer ())
-    // Inform the thread to shut down.
-    this->msg_queue ()->deactivate ();
+    {
+      // Inform the thread to shut down.
+      this->msg_queue ()->deactivate ();
+    }
 
   // Both writer and reader call release(), so the context knows when
   // to clean itself up.
@@ -109,7 +113,9 @@ Supplier_Router::put (ACE_Message_Block *mb,
   // information that was in the message, e.g., in order to figure out
   // what operation it was and what it's "parameters" where, etc.
   else if (this->is_reader ())
-    return this->put_next (mb);
+    {
+      return this->put_next (mb);
+    }
 
   else // if (this->is_writer ())
     {
@@ -155,11 +161,13 @@ Supplier_Router::info (ACE_TCHAR **strp, size_t length) const
                    this->is_reader () ?
                      ACE_TEXT ("reader") : ACE_TEXT ("writer"));
   if (*strp == nullptr && (*strp = ACE_OS::strdup (module_name)) == nullptr)
-    return -1;
+    {
+      return -1;
+    }
   else
-  {
-    ACE_OS::strncpy (*strp, module_name, length);
-  }
+    {
+      ACE_OS::strncpy (*strp, module_name, length);
+    }
 
   return ACE_Utils::truncate_cast<int> (ACE_OS::strlen (module_name));
 }
