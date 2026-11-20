@@ -55,13 +55,15 @@ init_buffer (size_t index)
 {
   ACE_INT32 len;
 
- if (ACE::recv_n (poll_array[index].fd,
-                  (void *) &len,
-                  sizeof (ACE_INT32)) != sizeof (ACE_INT32))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) %p\n",
-                       "recv_n failed"),
-                      -1);
+  if (ACE::recv_n (poll_array[index].fd,
+                   (void *) &len,
+                   sizeof (ACE_INT32)) != sizeof (ACE_INT32))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%P|%t) %p\n",
+                         "recv_n failed"),
+                        -1);
+    }
   else
     {
       len = ntohl (len);
@@ -106,9 +108,11 @@ handle_data (size_t &n_handles)
           // <recv> will not block in this case!
 
           if (n == -1)
-            ACE_ERROR ((LM_ERROR,
-                        "%p\n",
-                        "read failed"));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "%p\n",
+                          "read failed"));
+            }
           else if (n == 0)
             {
               ACE_DEBUG ((LM_DEBUG,
@@ -124,10 +128,12 @@ handle_data (size_t &n_handles)
               buffer_array[index].len_ = 0;
             }
           else if (verbose)
-            ACE_DEBUG ((LM_DEBUG,
-                        "(%P|%t) %*s",
-                        static_cast<int> (n),
-                        buffer_array[index].buf_));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "(%P|%t) %*s",
+                          static_cast<int> (n),
+                          buffer_array[index].buf_));
+            }
         }
     }
 }
@@ -147,18 +153,22 @@ handle_connections (ACE_SSL_SOCK_Acceptor &peer_acceptor,
       // feature that doesn't block).
 
       while (ACE_OS::poll (poll_array, 1, nonblock) > 0)
-        if (peer_acceptor.accept (new_stream, &client) == -1)
-          ACE_OS::perror ("accept");
-        else
-          {
-            const char *s = client.get_host_name ();
+        {
+          if (peer_acceptor.accept (new_stream, &client) == -1)
+            {
+              ACE_OS::perror ("accept");
+            }
+          else
+            {
+              const char *s = client.get_host_name ();
 
-            ACE_ASSERT (s != nullptr);
-            ACE_DEBUG ((LM_DEBUG,
-                        "(%P|%t) client %s\n",
-                        s));
-            poll_array[n_handles++].fd = new_stream.get_handle ();
-          }
+              ACE_ASSERT (s != nullptr);
+              ACE_DEBUG ((LM_DEBUG,
+                          "(%P|%t) client %s\n",
+                          s));
+              poll_array[n_handles++].fd = new_stream.get_handle ();
+            }
+        }
     }
 }
 
@@ -186,7 +196,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       // Wait for client I/O events (handle interrupts).
       while (ACE_OS::poll (poll_array, n_handles) == -1
              && errno == EINTR)
-        continue;
+        {
+          continue;
+        }
 
       handle_data (n_handles);
       handle_connections (peer_acceptor, n_handles);
