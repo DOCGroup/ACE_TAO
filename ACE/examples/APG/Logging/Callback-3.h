@@ -23,7 +23,9 @@ public:
     ACE_INET_Addr const addr (LOGGER_PORT, ACE_DEFAULT_SERVER_HOST);
 
     if (connector.connect (*(this->logger_), addr) == -1)
-      this->logger_.reset ();
+      {
+        this->logger_.reset ();
+      }
   }
 
   Callback (Callback const &) = delete;
@@ -34,7 +36,9 @@ public:
   ~Callback () override
   {
     if (this->logger_)
-      this->logger_->close ();
+      {
+        this->logger_->close ();
+      }
   }
 
   void log (ACE_Log_Record &log_record) override
@@ -52,7 +56,9 @@ public:
     ACE_OutputCDR cdr;
     cdr << log_record;
     if (this->logger_->send_n (cdr.begin ()) == -1)
-      this->logger_.reset ();
+      {
+        this->logger_.reset ();
+      }
   }
 
 private:

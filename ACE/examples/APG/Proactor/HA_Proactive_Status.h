@@ -27,7 +27,9 @@ public:
   ~HA_Proactive_Service () override
   {
     if (this->handle () != ACE_INVALID_HANDLE)
-      ACE_OS::closesocket (this->handle ());
+      {
+        ACE_OS::closesocket (this->handle ());
+      }
   }
 
   void open (ACE_HANDLE h, ACE_Message_Block &) override;

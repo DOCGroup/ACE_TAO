@@ -133,22 +133,24 @@ namespace ACE_RMCast
       time += params_.tick ();
 
       while (!stop_)
-      {
-        if (cond_.wait (&time) == -1)
         {
-          if (errno != ETIME)
-            ACE_OS::abort ();
-          else
-          {
-            break;
-          }
+          if (cond_.wait (&time) == -1)
+            {
+              if (errno != ETIME)
+                {
+                  ACE_OS::abort ();
+                }
+              else
+                {
+                  break;
+                }
+            }
         }
-      }
 
       if (stop_)
-      {
-        break;
-      }
+        {
+          break;
+        }
     }
   }
 }

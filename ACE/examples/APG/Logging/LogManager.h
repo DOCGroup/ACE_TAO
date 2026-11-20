@@ -79,9 +79,13 @@ LogManager::redirectToCallback (ACE_Log_Msg_Callback *callback)
   ACE_Log_Msg_Callback *previous =
     ACE_LOG_MSG->msg_callback (callback);
   if (callback == nullptr)
-    ACE_LOG_MSG->clr_flags (ACE_Log_Msg::MSG_CALLBACK);
+    {
+      ACE_LOG_MSG->clr_flags (ACE_Log_Msg::MSG_CALLBACK);
+    }
   else
-    ACE_LOG_MSG->set_flags (ACE_Log_Msg::MSG_CALLBACK);
+    {
+      ACE_LOG_MSG->set_flags (ACE_Log_Msg::MSG_CALLBACK);
+    }
   return previous;
 }
 // Listing 2

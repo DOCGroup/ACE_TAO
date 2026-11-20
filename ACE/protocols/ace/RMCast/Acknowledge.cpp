@@ -152,22 +152,24 @@ namespace ACE_RMCast
         Lock l (mutex_);
 
         while (!stop_)
-        {
-          if (cond_.wait (&time) == -1)
           {
-            if (errno != ETIME)
-              ACE_OS::abort ();
-            else
-            {
-              break;
-            }
+            if (cond_.wait (&time) == -1)
+              {
+                if (errno != ETIME)
+                  {
+                    ACE_OS::abort ();
+                  }
+                else
+                  {
+                    break;
+                  }
+              }
           }
-        }
 
         if (stop_)
-        {
-          break;
-        }
+          {
+            break;
+          }
       }
     }
   }
@@ -378,18 +380,20 @@ namespace ACE_RMCast
         nrtm->insert (addr, q.sn ());
 
         if (--max_elem == 0)
-        {
-          break;
-        }
+          {
+            break;
+          }
       }
     }
 
     if (nrtm->empty ())
-      return Profile_ptr (nullptr);
+      {
+        return Profile_ptr (nullptr);
+      }
     else
-    {
-      return Profile_ptr (nrtm.release ());
-    }
+      {
+        return Profile_ptr (nrtm.release ());
+      }
   }
 
   ACE_THR_FUNC_RETURN Acknowledge::
