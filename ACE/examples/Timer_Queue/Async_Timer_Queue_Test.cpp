@@ -73,7 +73,9 @@ Async_Timer_Queue::dump ()
   for (ACE_Timer_Heap_Iterator iter (this->tq_.timer_queue ());
        iter.item () != nullptr;
        iter.next ())
-    iter.item ()->dump ();
+    {
+      iter.item ()->dump ();
+    }
 
   ACE_DEBUG ((LM_DEBUG, "end dumping timer queue\n"));
 }

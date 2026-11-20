@@ -79,11 +79,13 @@ int
 Input_Task::svc ()
 {
   for (;;)
-    // call back to the driver's implementation on how to read and
-    // parse input.
-    if (this->driver_.get_next_request () == -1)
     {
-      break;
+      // call back to the driver's implementation on how to read and
+      // parse input.
+      if (this->driver_.get_next_request () == -1)
+        {
+          break;
+        }
     }
 
   // we are done.
@@ -194,7 +196,9 @@ Input_Task::dump ()
   for (Timer_Heap_Iterator i (*this->queue_->timer_queue ());
        i.item () != nullptr;
        i.next ())
-    i.item ()->dump ();
+    {
+      i.item ()->dump ();
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "end dumping timer queue\n"));
