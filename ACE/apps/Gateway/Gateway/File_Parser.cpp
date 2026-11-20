@@ -17,16 +17,22 @@ File_Parser<ENTRY>::open (const ACE_TCHAR filename[])
 {
   this->infile_.reset (ACE_OS::fopen (filename, ACE_TEXT ("r")));
   if (this->infile_ == nullptr)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 template <class ENTRY> int
 File_Parser<ENTRY>::close ()
 {
   if (!this->infile_)
-    return -1;
+    {
+      return -1;
+    }
 
   FILE * const file = this->infile_.release ();
   return ACE_OS::fclose (file);
@@ -51,7 +57,9 @@ File_Parser<ENTRY>::getint (ACE_INT32 &value)
     {
       // Check to see if this is the "use the default value" symbol?
       if (buf[0] == '*')
-        return FPRT::RT_DEFAULT;
+        {
+          return FPRT::RT_DEFAULT;
+        }
       else
         {
           // ptr is used for error checking with ACE_OS::strtol.
@@ -62,13 +70,19 @@ File_Parser<ENTRY>::getint (ACE_INT32 &value)
 
           // check if the buf is a decimal or not
           if (value == 0 && ptr == buf)
-            return FPRT::RT_PARSE_ERROR;
+            {
+              return FPRT::RT_PARSE_ERROR;
+            }
           else
-            return FPRT::RT_SUCCESS;
+            {
+              return FPRT::RT_SUCCESS;
+            }
         }
     }
   else
-    return read_result;
+    {
+      return read_result;
+    }
 }
 
 template <class ENTRY> FP_RETURN_TYPE
@@ -84,7 +98,9 @@ File_Parser<ENTRY>::readword (char buf[])
       {
         // We've reached the end of a "word".
         if (wordlength > 0)
-          break;
+          {
+            break;
+          }
       }
     else
       {
@@ -94,38 +110,51 @@ File_Parser<ENTRY>::readword (char buf[])
 
   buf[wordlength] = '\0';
 
-  if (c == EOF) {
-    // If EOF is just a delimiter, don't return EOF so that the word
-    // gets processed.
-    if (wordlength > 0)
-      {
-        ACE_OS::ungetc (c, this->infile_.get ());
-        return FPRT::RT_SUCCESS;
-      }
-    else
-      // else return EOF so that read loops stop
-      return FPRT::RT_EOFILE;
-  }
+  if (c == EOF)
+    {
+      // If EOF is just a delimiter, don't return EOF so that the word
+      // gets processed.
+      if (wordlength > 0)
+        {
+          ACE_OS::ungetc (c, this->infile_.get ());
+          return FPRT::RT_SUCCESS;
+        }
+      else
+        {
+          // else return EOF so that read loops stop
+          return FPRT::RT_EOFILE;
+        }
+    }
   else if (c == '\n')
     {
       // if the EOLINE is just a delimiter, don't return EOLINE
       // so that the word gets processed
       if (wordlength > 0)
-        ACE_OS::ungetc (c, this->infile_.get ());
+        {
+          ACE_OS::ungetc (c, this->infile_.get ());
+        }
       else
-        return FPRT::RT_EOLINE;
+        {
+          return FPRT::RT_EOLINE;
+        }
     }
 
   // Skip comments.
   if (this->comments (buf[0]))
     {
       if (this->skipline () == EOF)
-        return FPRT::RT_EOFILE;
+        {
+          return FPRT::RT_EOFILE;
+        }
       else
-        return FPRT::RT_COMMENT;
+        {
+          return FPRT::RT_COMMENT;
+        }
     }
   else
-    return FPRT::RT_SUCCESS;
+    {
+      return FPRT::RT_SUCCESS;
+    }
 }
 
 template <class ENTRY> int
