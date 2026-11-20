@@ -22,11 +22,15 @@ ACE_IOStream<STREAM>::eof () const
 
   // Timeout, not an eof
   if (this->streambuf_->timeout())
-    return 0;
+    {
+      return 0;
+    }
 
   // No timeout, got enough data:  not eof
   if (rval == sizeof(char))
-    return 0;
+    {
+      return 0;
+    }
 
   // No timeout, not enough data:  definately eof
   return 1;

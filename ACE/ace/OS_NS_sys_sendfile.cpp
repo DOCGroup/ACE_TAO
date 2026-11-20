@@ -45,10 +45,14 @@ ACE_OS::sendfile_emulation (ACE_HANDLE out_fd,
       prev_pos = ACE_OS::lseek (in_fd, 0, SEEK_CUR);
       if (ACE_OS::lseek (in_fd, *offset, SEEK_SET) == -1
           || ACE_OS::read (in_fd, buf, count) == -1)
-        return -1;
+        {
+          return -1;
+        }
     }
   else if (buf == MAP_FAILED)
-    return -1;
+    {
+      return -1;
+    }
 
 #if defined (ACE_WIN32)
   ssize_t const r =
@@ -67,10 +71,14 @@ ACE_OS::sendfile_emulation (ACE_HANDLE out_fd,
 # endif
     }
   else
-    (void) ACE_OS::munmap (buf, count);
+    {
+      (void) ACE_OS::munmap (buf, count);
+    }
 
   if (r > 0)
-    *offset += static_cast<off_t> (r);
+    {
+      *offset += static_cast<off_t> (r);
+    }
 
   return r;
 }
