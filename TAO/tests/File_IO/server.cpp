@@ -44,24 +44,26 @@ parse_args (int argc, ACE_TCHAR **argv, Server_Options &options)
   int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'o':
-        options.ior_output_file = get_opts.opt_arg ();
-        break;
-      case 'd':
-        ++TAO_debug_level;
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "[-oior_output_file]"
-                           "[-d]"
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
+    {
+      switch (c)
+        {
+          case 'o':
+            options.ior_output_file = get_opts.opt_arg ();
+            break;
+          case 'd':
+            ++TAO_debug_level;
+            break;
+          case '?':
+          default:
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "usage:  %s "
+                               "[-oior_output_file]"
+                               "[-d]"
+                               "\n",
+                               argv [0]),
+                              -1);
+        }
+    }
 
   // Indicates successful parsing of command line.
   return 0;
@@ -75,10 +77,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                           O_RDWR | O_CREAT,
                                           ACE_DEFAULT_FILE_PERMS);
   if (handle == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Cannot create test file: %p\n"),
-                       ACE_TEXT ("big.txt")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Cannot create test file: %p\n"),
+                         ACE_TEXT ("big.txt")),
+                        -1);
+    }
 
   if (ACE_OS::lseek (handle, 1024 * 1024 * 10, SEEK_SET) == -1 ||
       ACE_OS::write (handle, "", 1) != 1)
@@ -174,10 +178,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_OS::fopen (options.ior_output_file.c_str (), ACE_TEXT ("w")),
           ACE_OS::fclose);
         if (!output_file)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("Cannot open output file for writing IOR: %s"),
-                             options.ior_output_file.c_str ()),
-                            -1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                               options.ior_output_file.c_str ()),
+                              -1);
+          }
         ACE_OS::fprintf (output_file.get (), "%s", file_system_ior.in ());
       }
 
@@ -188,9 +194,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Worker worker (orb.in ());
       if (worker.activate (THR_NEW_LWP | THR_JOINABLE,
                            nthreads) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot activate client threads\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot activate client threads\n"),
+                            1);
+        }
 
       worker.thr_mgr ()->wait ();
 
