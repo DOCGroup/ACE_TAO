@@ -39,6 +39,7 @@
 #include "asnmp/transaction.h" // synchronous transaction processor
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_time.h"
+#include <algorithm>
 #include <cstring>
 #include <memory>
 
@@ -277,8 +278,10 @@ void Snmp::override_host_name (char const *name)
 {
   if (name != nullptr)
     {
-      std::strncpy (host_name_, name, MAXHOSTNAMELEN);
-      host_name_[MAXHOSTNAMELEN-1] = 0;
+      size_t const copy_length =
+        std::min (std::strlen (name), sizeof host_name_ - 1);
+      std::memcpy (host_name_, name, copy_length);
+      host_name_[copy_length] = '\0';
     }
   else
     {
@@ -289,19 +292,24 @@ void Snmp::override_host_name (char const *name)
 // Returns the current host name in the supplied string.
 void Snmp::get_host_name (char *name, int len)
 {
-  if (name != nullptr)
+  if (name != nullptr && len > 0)
     {
-      if (std::strlen (host_name_) > 0)
+      size_t const max_name_length = static_cast<size_t> (len - 1);
+      if (host_name_[0] != '\0')
         {
-          std::strncpy (name, host_name_, len);
-          name[len-1] = 0;
+          size_t const copy_length =
+            std::min (std::strlen (host_name_), max_name_length);
+          std::memcpy (name, host_name_, copy_length);
+          name[copy_length] = '\0';
+        }
+      else if (max_name_length == 0
+               || ACE_OS::hostname (name, max_name_length) == -1)
+        {
+          name[0] = '\0';
         }
       else
         {
-          if (ACE_OS::hostname(name, len-1) == -1)
-            {
-              name[0] = 0;
-            }
+          name[max_name_length] = '\0';
         }
     }
 }
