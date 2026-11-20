@@ -50,7 +50,9 @@ TAO_EC_Thread_Flags::parse_symbols (const char* syms)
 
   // short-circuit on the trivial case
   if (syms == nullptr || *syms == '\0')
-    return;
+    {
+      return;
+    }
 
   constexpr size_t num_flags = sizeof(supported_flags_)/sizeof(Supported_Flag);
   std::string s (syms);
