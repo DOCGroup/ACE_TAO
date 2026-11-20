@@ -34,9 +34,11 @@ Peer_Router_Context::send_peers (ACE_Message_Block *mb)
        map_iter.advance ())
     {
       if (Options::instance ().debug ())
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%t) sending to peer via handle %@\n"),
-                    reinterpret_cast<void *> (ss->ext_id_)));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%t) sending to peer via handle %@\n"),
+                      reinterpret_cast<void *> (ss->ext_id_)));
+        }
 
       ++iterations;
 
@@ -78,9 +80,9 @@ Peer_Router_Context::release ()
   --this->reference_count_;
 
   if (this->reference_count_ == 0)
-  {
-    delete this;
-  }
+    {
+      delete this;
+    }
 }
 
 Peer_Router_Context::Peer_Router_Context (u_short port)
@@ -88,31 +90,39 @@ Peer_Router_Context::Peer_Router_Context (u_short port)
   // Initialize the Acceptor's "listen-mode" socket.
   ACE_INET_Addr endpoint (port);
   if (this->open (endpoint) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("Acceptor::open")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("Acceptor::open")));
+    }
 
   // Initialize the connection map.
   else if (this->peer_map_.open () == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("Map_Manager::open")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("Map_Manager::open")));
+    }
   else
     {
       ACE_INET_Addr addr;
 
       if (this->acceptor ().get_local_addr (addr) != -1)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%t) initializing %C on port = %d, handle = %@, this = %@\n"),
-                    addr.get_port_number () == Options::instance ().supplier_port ()
-                      ? "Supplier_Handler" : "Consumer_Handler",
-                    addr.get_port_number (),
-                    reinterpret_cast<void *> (this->acceptor ().get_handle ()),
-                    static_cast<void *> (this)));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%t) initializing %C on port = %d, handle = %@, this = %@\n"),
+                      addr.get_port_number () == Options::instance ().supplier_port ()
+                        ? "Supplier_Handler" : "Consumer_Handler",
+                      addr.get_port_number (),
+                      reinterpret_cast<void *> (this->acceptor ().get_handle ()),
+                      static_cast<void *> (this)));
+        }
       else
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("%p\n"),
-                    ACE_TEXT ("get_local_addr")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("get_local_addr")));
+        }
     }
 }
 
@@ -135,15 +145,19 @@ Peer_Router_Context::~Peer_Router_Context ()
        map_iter.advance ())
     {
       if (Options::instance ().debug ())
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%t) closing down peer on handle %@\n"),
-                    reinterpret_cast<void *> (ss->ext_id_)));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%t) closing down peer on handle %@\n"),
+                      reinterpret_cast<void *> (ss->ext_id_)));
+        }
 
       if (ACE_Reactor::instance ()->remove_handler (ss->ext_id_,
                                                    ACE_Event_Handler::READ_MASK) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%t) p\n"),
-                    ACE_TEXT ("remove_handle")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%t) p\n"),
+                      ACE_TEXT ("remove_handle")));
+        }
     }
 
   // Close down the map.
@@ -213,15 +227,19 @@ Peer_Handler::open (void *)
 
   if (this->peer_router_context_->peer_router ()->info (&p,
                                                         sizeof buf) != -1)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) creating handler for %s, handle = %@\n"),
-                buf,
-                reinterpret_cast<void *> (this->get_handle ())));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) creating handler for %s, handle = %@\n"),
+                  buf,
+                  reinterpret_cast<void *> (this->get_handle ())));
+    }
   else
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("info")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("info")),
+                        -1);
+    }
 #if 0
   // If we're running as an Active Object activate the Peer_Handler
   // here.
@@ -237,23 +255,27 @@ Peer_Handler::open (void *)
   // Register with the Reactor to receive messages from our Peer.
   if (ACE_Reactor::instance ()->register_handler
       (this, ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("register_handler")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("register_handler")),
+                        -1);
+    }
 #endif /* 0 */
 
   // Insert outselves into the routing map.
   else if (this->peer_router_context_->bind_peer (this->get_handle (),
                                                   this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("bind_peer")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("bind_peer")),
+                        -1);
+    }
   else
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
 }
 
 // Receive a message from a Peer.
@@ -283,17 +305,21 @@ Peer_Handler::handle_input (ACE_HANDLE h)
                                         db->size ());
 
   if (n == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p"),
-                       ACE_TEXT ("recv failed")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p"),
+                         ACE_TEXT ("recv failed")),
+                        -1);
+    }
   else if (n == 0) // Client has closed down the connection.
     {
       if (this->peer_router_context_->unbind_peer (this->get_handle ()) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p"),
-                           ACE_TEXT ("unbind failed")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p"),
+                             ACE_TEXT ("unbind failed")),
+                            -1);
+        }
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) shutting down handle %@\n"),
