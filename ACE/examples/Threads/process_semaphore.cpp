@@ -31,7 +31,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) = acquiring\n"));
       if (pm.acquire () == -1)
-        ACE_DEBUG ((LM_DEBUG, "(%P|%t) = %p\n", "acquire failed"));
+        {
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) = %p\n", "acquire failed"));
+        }
       else
       {
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) = acquired\n"));
@@ -40,21 +42,27 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_OS::sleep (3);
 
       if (pm.release () == -1)
-        ACE_DEBUG ((LM_DEBUG, "(%P|%t) = %p\n", "release failed"));
+        {
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) = %p\n", "release failed"));
+        }
       else
       {
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) = released\n"));
       }
 
       if (pm.tryacquire () == -1)
-        ACE_DEBUG ((LM_DEBUG, "(%P|%t) = %p\n", "tryacquire failed"));
+        {
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) = %p\n", "tryacquire failed"));
+        }
       else
       {
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) = tryacquire\n"));
       }
 
       if (pm.release () == -1)
-        ACE_DEBUG ((LM_DEBUG, "(%P|%t) = %p\n", "release failed"));
+        {
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) = %p\n", "release failed"));
+        }
       else
       {
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) = released\n"));
