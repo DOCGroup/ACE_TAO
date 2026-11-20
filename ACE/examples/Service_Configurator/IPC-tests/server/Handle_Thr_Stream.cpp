@@ -61,7 +61,8 @@ Handle_Thr_Acceptor<SVH, PR_AC_2>::init (int argc, ACE_TCHAR *argv[])
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("p:t:"), 0);
 
   for (int c; (c = get_opt ()) != -1; )
-    switch (c)
+    {
+      switch (c)
       {
       case 'p':
         local_addr.set (ACE_OS::atoi (get_opt.opt_arg ()));
@@ -72,12 +73,15 @@ Handle_Thr_Acceptor<SVH, PR_AC_2>::init (int argc, ACE_TCHAR *argv[])
       default:
         break;
       }
+    }
 
   // Initialize the threading strategy.
   if (this->thr_strategy_.open (&this->thr_mgr_,
                                 this->thr_flags_,
                                 n_threads) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")), -1);
+    }
 
   // Initialize the Acceptor base class, passing in the desired
   // concurrency strategy.
@@ -86,11 +90,13 @@ Handle_Thr_Acceptor<SVH, PR_AC_2>::init (int argc, ACE_TCHAR *argv[])
                        nullptr,
                        nullptr,
                        &this->thr_strategy_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")), -1);
+    }
   else
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
 }
 
 template <class SVH, PR_AC_1> int
@@ -148,7 +154,9 @@ CLI_Stream<PR_ST_2>::svc ()
   ACE_OS::puts ("----------------------------------------");
 
   while ((bytes = this->peer ().recv (buf, sizeof buf)) > 0)
-    ACE_OS::write (ACE_STDOUT, buf, bytes);
+    {
+      ACE_OS::write (ACE_STDOUT, buf, bytes);
+    }
 
   ACE_OS::puts ("----------------------------------------");
   ACE_OS::fflush (stdout);
