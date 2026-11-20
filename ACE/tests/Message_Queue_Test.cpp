@@ -228,19 +228,23 @@ Counting_Test_Consumer::svc ()
       if (this->getq (b, &block) == -1)
         {
           if (errno == EWOULDBLOCK)
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Consumer timed out\n")));
+            {
+              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Consumer timed out\n")));
+            }
           else
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%t) Consumer %p\n"),
-                        ACE_TEXT ("getq")));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%t) Consumer %p\n"),
+                          ACE_TEXT ("getq")));
+            }
           break;
         }
       ++consumed;
       b->release ();
       if (delay_ms)
-      {
-        ACE_OS::sleep (delay);
-      }
+        {
+          ACE_OS::sleep (delay);
+        }
     }
   this->consumed_ += consumed;
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Consumer done\n")));
@@ -258,10 +262,12 @@ counting_test ()
   // Activate consumers first; if the producers fail to start, consumers will
   // stop quicker.
   if (c.activate (THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED, 5) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Consumers %p\n"),
-                       ACE_TEXT ("activate")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Consumers %p\n"),
+                         ACE_TEXT ("activate")),
+                        -1);
+    }
   if (p.activate (THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED, 5) == -1)
     {
       ACE_ERROR ((LM_ERROR,
@@ -334,15 +340,19 @@ iterator_test ()
                       -1);
 
       if (queue.is_full ())
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("QUEUE:: the message queue is full on iteration %d!\n"),
-                           i + 1),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("QUEUE:: the message queue is full on iteration %d!\n"),
+                             i + 1),
+                            -1);
+        }
 
       if (queue.enqueue (entry) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("QUEUE::enqueue\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("QUEUE::enqueue\n")),
+                            -1);
+        }
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -353,9 +363,11 @@ iterator_test ()
     for (ACE_Message_Block *entry {};
          iterator.next (entry) != 0;
          iterator.advance ())
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("%s\n"),
-                  entry->base ()));
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("%s\n"),
+                    entry->base ()));
+      }
   }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -366,9 +378,11 @@ iterator_test ()
     for (ACE_Message_Block *entry {};
          iterator.next (entry) != 0;
          iterator.advance ())
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("%s\n"),
-                  entry->base ()));
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("%s\n"),
+                    entry->base ()));
+      }
   }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -379,9 +393,11 @@ iterator_test ()
     for (ACE_Message_Block *entry {};
          iterator.next (entry) != 0;
          iterator.advance ())
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("%s\n"),
-                  entry->base ()));
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("%s\n"),
+                    entry->base ()));
+      }
   }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -392,9 +408,11 @@ iterator_test ()
     for (ACE_Message_Block *entry {};
          iterator.next (entry) != 0;
          iterator.advance ())
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("%s\n"),
-                  entry->base ()));
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("%s\n"),
+                    entry->base ()));
+      }
   }
 
   return 0;
@@ -508,9 +526,11 @@ single_thread_performance_test (int queue_type = 0)
   ACE_Message_Queue_Base *msgq {};
 
   if (queue_type == 0)
-    ACE_NEW_RETURN (msgq,
-                    QUEUE,
-                    -1);
+    {
+      ACE_NEW_RETURN (msgq,
+                      QUEUE,
+                      -1);
+    }
 #if defined (ACE_VXWORKS)
   else
     {
@@ -538,10 +558,12 @@ single_thread_performance_test (int queue_type = 0)
                   -1);
 
   for (i = 0; i < max_messages; ++i)
-    ACE_NEW_RETURN (send_block[i],
-                    ACE_Message_Block (test_message,
-                                       MAX_MESSAGE_SIZE),
-                    -1);
+    {
+      ACE_NEW_RETURN (send_block[i],
+                      ACE_Message_Block (test_message,
+                                         MAX_MESSAGE_SIZE),
+                      -1);
+    }
 
   ACE_Message_Block **receive_block_p {};
   ACE_NEW_RETURN (receive_block_p,
@@ -573,16 +595,20 @@ single_thread_performance_test (int queue_type = 0)
   for (i = 0; i < max_messages; ++i)
     {
       if (msgq->enqueue_tail (send_block[i]) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("enqueue")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("enqueue")),
+                            -1);
+        }
 
       if (msgq->dequeue_head (receive_block_p[i]) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("dequeue_head")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("dequeue_head")),
+                            -1);
+        }
     }
 
   timer->stop ();
@@ -603,7 +629,9 @@ single_thread_performance_test (int queue_type = 0)
 #endif /* ACE_VXWORKS */
 
   for (i = 0; i < max_messages; ++i)
-    delete send_block[i];
+    {
+      delete send_block[i];
+    }
   delete [] send_block;
   delete msgq;
 
@@ -642,11 +670,15 @@ receiver (void *arg)
 #endif /* ACE_VXWORKS */
 
   for (i = 0; i < max_messages; ++i)
-    if (queue_wrapper->q_->dequeue_head (receive_block_p[i]) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p\n"),
-                         ACE_TEXT ("dequeue_head")),
-                        0);
+    {
+      if (queue_wrapper->q_->dequeue_head (receive_block_p[i]) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("dequeue_head")),
+                            0);
+        }
+    }
   timer->stop ();
 
   delete [] receive_block_p;
@@ -668,12 +700,16 @@ sender (void *arg)
 
   // Send the messages.
   for (i = 0; i < max_messages; ++i)
-    if (queue_wrapper->q_->
-        enqueue_tail (queue_wrapper->send_block_[i]) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p\n"),
-                         ACE_TEXT ("enqueue")),
-                        0);
+    {
+      if (queue_wrapper->q_->
+          enqueue_tail (queue_wrapper->send_block_[i]) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("enqueue")),
+                            0);
+        }
+    }
   return nullptr;
 }
 
@@ -696,17 +732,21 @@ performance_test (int queue_type = 0)
                   -1);
 
   for (i = 0; i < max_messages; ++i)
-    ACE_NEW_RETURN (send_block[i],
-                    ACE_Message_Block (test_message,
-                                       MAX_MESSAGE_SIZE),
-                    -1);
+    {
+      ACE_NEW_RETURN (send_block[i],
+                      ACE_Message_Block (test_message,
+                                         MAX_MESSAGE_SIZE),
+                      -1);
+    }
 
   queue_wrapper.send_block_ = send_block;
 
   if (queue_type == 0)
-    ACE_NEW_RETURN (queue_wrapper.q_,
-                    SYNCH_QUEUE,
-                    -1);
+    {
+      ACE_NEW_RETURN (queue_wrapper.q_,
+                      SYNCH_QUEUE,
+                      -1);
+    }
 #if defined (ACE_VXWORKS)
   else
     {
@@ -729,18 +769,22 @@ performance_test (int queue_type = 0)
   if (ACE_Thread_Manager::instance ()->spawn ((ACE_THR_FUNC) sender,
                                               &queue_wrapper,
                                               THR_BOUND) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("spawning sender thread")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("spawning sender thread")),
+                        -1);
+    }
 
   if (ACE_Thread_Manager::instance ()->spawn ((ACE_THR_FUNC) receiver,
                                               &queue_wrapper,
                                               THR_BOUND) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("spawning receiver thread")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("spawning receiver thread")),
+                        -1);
+    }
 
   ACE_Thread_Manager::instance ()->wait ();
   ACE_Time_Value tv;
@@ -756,7 +800,9 @@ performance_test (int queue_type = 0)
   queue_wrapper.q_ = nullptr;
 
   for (i = 0; i < max_messages; ++i)
-    delete send_block[i];
+    {
+      delete send_block[i];
+    }
   delete [] send_block;
 
   return 0;
@@ -837,11 +883,13 @@ prio_test ()
 
   if (std::strcmp (mb1p->rd_ptr (), S1) == 0
       && std::strcmp (mb2p->rd_ptr (), S2) == 0)
-    status = 0;
+    {
+      status = 0;
+    }
   else
-  {
-    status = 1;
-  }
+    {
+      status = 1;
+    }
 
   return status;
 }
@@ -959,15 +1007,17 @@ run_main (int argc, ACE_TCHAR *argv[])
 # endif /* ACE_VXWORKS */
 
   if (counting_test () != 0)
-  {
-    status = -1;
-  }
+    {
+      status = -1;
+    }
 #endif /* ACE_HAS_THREADS */
 
   if (status != 0)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("test failed")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("test failed")));
+    }
   delete timer;
   timer = nullptr;
 
