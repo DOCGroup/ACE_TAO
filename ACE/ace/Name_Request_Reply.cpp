@@ -361,8 +361,10 @@ ACE_Name_Request::dump () const
     }
 
   if (this->block_forever ())
-    ACELIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("blocking forever\n")));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("blocking forever\n")));
+    }
   else
     {
 #if !defined (ACE_NLOGGING)
