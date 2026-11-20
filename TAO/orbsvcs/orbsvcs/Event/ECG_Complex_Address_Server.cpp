@@ -82,10 +82,12 @@ TAO_ECG_Complex_Address_Server::add_entry (char const *key,
       && *key == '*')
     {
       if (this->default_addr_.set (mcast_addr) == -1)
-        ORBSVCS_ERROR_RETURN ((LM_ERROR, "Unable to initialize: invalid "
-                                     "mcast address specified: %s.\n",
-                           mcast_addr),
-                          -1);
+        {
+          ORBSVCS_ERROR_RETURN ((LM_ERROR, "Unable to initialize: invalid "
+                                       "mcast address specified: %s.\n",
+                                 mcast_addr),
+                                -1);
+        }
       return 0;
     }
 
@@ -126,7 +128,9 @@ TAO_ECG_Complex_Address_Server::get_addr (
 {
   CORBA::Long key;
   if (this->is_source_mapping_)
-    key = header.source;
+    {
+      key = header.source;
+    }
   else
   {
     key = header.type;
@@ -161,7 +165,9 @@ TAO_ECG_Complex_Address_Server::get_address (
 {
   CORBA::Long key;
   if (this->is_source_mapping_)
-    key = header.source;
+    {
+      key = header.source;
+    }
   else
   {
     key = header.type;
