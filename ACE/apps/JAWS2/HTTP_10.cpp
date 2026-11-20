@@ -9,7 +9,7 @@ JAWS_HTTP_10_Helper::HTTP_decode_string (char *path)
   int i, j;
   char percentcode[3];
 
-  for (i = j = 0; path[i] != '\0'; i++, j++)
+  for (i = j = 0; path[i] != '\0'; ++i, ++j)
     {
       if (path[i] == '%')
         {
