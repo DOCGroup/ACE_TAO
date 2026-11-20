@@ -47,7 +47,9 @@ TAO_ECG_UDP_Request_Entry (CORBA::Boolean byte_order,
     }
 
   for (CORBA::ULong i {}; i < this->received_fragments_size_; ++i)
-    this->received_fragments_[i] = 0;
+    {
+      this->received_fragments_[i] = 0;
+    }
   CORBA::ULong idx = this->fragment_count_ / bits_per_ulong;
   CORBA::ULong bit = this->fragment_count_ % bits_per_ulong;
   this->received_fragments_[idx] = (0xFFFFFFFF << bit);
@@ -361,7 +363,9 @@ TAO_ECG_CDR_Message_Receiver::handle_input (
 
       TAO_InputCDR cdr (data_buf, header.request_size, header.byte_order);
       if (cdr_processor->decode (cdr) == -1)
-        return -1;
+        {
+          return -1;
+        }
       else
       {
         return 1;
