@@ -178,10 +178,12 @@ DII_Cubit_Client::init (int argc, ACE_TCHAR **argv)
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
-                           "DII_Cubit_Client::parse_args failed"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "%p\n",
+                             "DII_Cubit_Client::parse_args failed"),
+                            -1);
+        }
 
       // Get a factory object reference from the factory IOR.
       this->factory_var_ =
@@ -206,9 +208,11 @@ DII_Cubit_Client::init (int argc, ACE_TCHAR **argv)
       mc_req->return_value () >>= CORBA::Any::to_object (this->obj_var_.out ());
 
       if (CORBA::is_nil (this->obj_var_.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " could not obtain Cubit object from Cubit factory <%s>\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " could not obtain Cubit object from Cubit factory <%s>\n"),
+                            -1);
+        }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -229,41 +233,45 @@ DII_Cubit_Client::parse_args ()
   int result {};
 
   while ((c = opts ()) != -1)
-    switch (c)
-      {
-      case 'd':   // debug flag
-        ++TAO_debug_level;
-        break;
-      case 'n':   // loop count
-        this->loop_count_ = ACE_OS::atoi (opts.opt_arg ());
-        break;
-      case 'i':   // Get the IOR from the command line.
-        this->factory_IOR_ = ACE_TEXT_ALWAYS_CHAR(opts.opt_arg ());
-        break;
-      case 'f':   // Read the IOR from the file.
-        result = this->read_ior (opts.opt_arg ());
-        if (result < 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to read ior from %s : %p\n",
-                             opts.opt_arg ()),
-                            -1);
-        break;
-      case 'x':   // Shut down server after test run.
-        this->shutdown_ = true;
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage: %s"
-                           " [-d]"
-                           " [-n calls/loop]"
-                           " [-i cubit-factory-IOR]"
-                           " [-f filename]"
-                           " [-x]"
-                           "\n",
-                           this->argv_ [0]),
-                          -1);
-      }
+    {
+      switch (c)
+        {
+          case 'd':   // debug flag
+            ++TAO_debug_level;
+            break;
+          case 'n':   // loop count
+            this->loop_count_ = ACE_OS::atoi (opts.opt_arg ());
+            break;
+          case 'i':   // Get the IOR from the command line.
+            this->factory_IOR_ = ACE_TEXT_ALWAYS_CHAR(opts.opt_arg ());
+            break;
+          case 'f':   // Read the IOR from the file.
+            result = this->read_ior (opts.opt_arg ());
+            if (result < 0)
+              {
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "Unable to read ior from %s : %p\n",
+                                   opts.opt_arg ()),
+                                  -1);
+              }
+            break;
+          case 'x':   // Shut down server after test run.
+            this->shutdown_ = true;
+            break;
+          case '?':
+          default:
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "usage: %s"
+                               " [-d]"
+                               " [-n calls/loop]"
+                               " [-i cubit-factory-IOR]"
+                               " [-f filename]"
+                               " [-x]"
+                               "\n",
+                               this->argv_ [0]),
+                              -1);
+        }
+    }
   return 0;  // Indicates successful parsing of command line.
 }
 
@@ -275,20 +283,24 @@ DII_Cubit_Client::read_ior (ACE_TCHAR const *filename)
   ACE_HANDLE const file_handle = ACE_OS::open (filename, 0);
 
   if (file_handle == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to open %s for reading: %p\n",
-                       filename),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Unable to open %s for reading: %p\n",
+                         filename),
+                        -1);
+    }
 
   ACE_Read_Buffer ior_buffer (file_handle, true);
   ACE_Read_Buffer_Unique_Ptr ior_data (
     ior_buffer.read (), {ior_buffer.alloc ()});
 
   if (!ior_data)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Unable to allocate memory to read ior (%p)\n"),
-                       ACE_TEXT ("read")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Unable to allocate memory to read ior (%p)\n"),
+                         ACE_TEXT ("read")),
+                        -1);
+    }
 
   this->factory_IOR_ = ior_data.get ();
   return 0;
@@ -326,9 +338,11 @@ DII_Cubit_Client::print_stats (char const *call_name,
                   calls_per_sec < 0.0 ? 0.0 : calls_per_sec));
     }
   else
-    ACE_ERROR ((LM_ERROR,
-                "\tNo time stats printed.  "
-                "Call count zero or error occurred.\n"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "\tNo time stats printed.  "
+                  "Call count zero or error occurred.\n"));
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "\t%d calls, %d errors\n",
@@ -716,7 +730,9 @@ DII_Cubit_Client::run ()
       dii_timer.start ();
 
       for (CORBA::ULong i = 0; i < this->loop_count_; ++i)
-        (this->*op_array_[j]) ();
+        {
+          (this->*op_array_[j]) ();
+        }
 
       dii_timer.stop ();
 
