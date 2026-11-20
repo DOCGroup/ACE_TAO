@@ -4046,11 +4046,20 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   // ::taskInit ()/::taskActivate() are used.
 
   // If called with thr_create() defaults, use same default values as ::sp ():
-  if (priority == ACE_DEFAULT_THREAD_PRIORITY) priority = 100;
+  if (priority == ACE_DEFAULT_THREAD_PRIORITY)
+    {
+      priority = 100;
+    }
   // Assumes that there is a floating point coprocessor.  As noted
   // above, ::sp () hardcodes this, so we should be safe with it.
-  if (flags == 0) flags = VX_FP_TASK;
-  if (stacksize == 0) stacksize = 20000;
+  if (flags == 0)
+    {
+      flags = VX_FP_TASK;
+    }
+  if (stacksize == 0)
+    {
+      stacksize = 20000;
+    }
 
   ACE_thread_t tid;
 #   if 0 /* Don't support setting of stack, because it doesn't seem to work. */

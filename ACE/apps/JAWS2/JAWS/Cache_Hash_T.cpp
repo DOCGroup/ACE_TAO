@@ -15,13 +15,22 @@ JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::isprime (size_t number) const
 {
   size_t d = 3;
 
-  if (number <= 2) return number == 2;
+  if (number <= 2)
+    {
+      return number == 2;
+    }
 
-  if (number % 2 == 0) return false;
+  if (number % 2 == 0)
+    {
+      return false;
+    }
 
   while (d <= number/d)
     {
-      if (number % d == 0) return false;
+      if (number % d == 0)
+        {
+          return false;
+        }
       d += 2;
     }
 

@@ -68,7 +68,10 @@ namespace ACE
         sos << this->status_;
         sos.put (ch);
         ch = this->read_line (str, sos);
-        if (ch == '\r') ch = str.get ();
+        if (ch == '\r')
+          {
+            ch = str.get ();
+          }
         sos.close (); // close the stream before resizing the array invalidates the string reference
 
         INET_DEBUG (6, (LM_DEBUG, DLINFO

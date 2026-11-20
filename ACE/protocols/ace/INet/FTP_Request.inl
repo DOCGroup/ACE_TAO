@@ -38,7 +38,10 @@ namespace ACE
       {
         if (!arg.empty ())
           {
-            if (!this->args_.empty ())  this->args_ += ' ' ;
+            if (!this->args_.empty ())
+              {
+                this->args_ += ' ';
+              }
             this->args_ += arg;
           }
         return *this;

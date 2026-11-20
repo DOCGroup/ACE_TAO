@@ -2522,8 +2522,14 @@ bool ACE_Log_Formatter::process_conversion ()
 
   // when copying to fmt_out_, convert L (used by ACE) to l (used by std)
   for (size_t i = 0; i < n; ++i)
-    if (this->format_[i] == 'L') this->fp_[i] = 'l';
-    else this->fp_[i] = this->format_[i];
+    if (this->format_[i] == 'L')
+      {
+        this->fp_[i] = 'l';
+      }
+    else
+      {
+        this->fp_[i] = this->format_[i];
+      }
 
   this->fp_ += n;
   *this->fp_ = 0;

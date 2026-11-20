@@ -57,8 +57,14 @@ int TestClient::parseCommands (int argc, ACE_TCHAR *argv[])
         ACE_TCHAR const *opt = get_opts.opt_arg ();
         while (opt && *opt != '\0')
         {
-          if (*opt == 'h') options_.expect_holding = true;
-          else if (*opt == 'n') options_.expect_no_profile = true;
+          if (*opt == 'h')
+            {
+              options_.expect_holding = true;
+            }
+          else if (*opt == 'n')
+            {
+              options_.expect_no_profile = true;
+            }
           ++opt;
         }
         break;

@@ -32,7 +32,10 @@ namespace ACE
           if (this->count_ + length > this->length_)
             length = this->length_ - this->count_;
           n = this->read_from_stream_i (buf, length);
-          if (n > 0) this->count_ += n;
+          if (n > 0)
+            {
+              this->count_ += n;
+            }
         }
         return n;
       }
@@ -48,7 +51,10 @@ namespace ACE
           if ((this->count_ + length) > this->length_)
             length = this->length_ - this->count_;
           n = this->write_to_stream_i (buf, length);
-          if (n > 0) this->count_ += n;
+          if (n > 0)
+            {
+              this->count_ += n;
+            }
         }
         return n;
       }
