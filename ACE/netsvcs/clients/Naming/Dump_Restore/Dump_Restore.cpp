@@ -28,9 +28,11 @@ Dump_Restore::Dump_Restore (int argc, ACE_TCHAR *argv[])
                       ACE_TEXT ("localhost")) == 0)
     {
       if (ns_context_->open (ACE_Naming_Context::PROC_LOCAL) == -1)
+      {
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("%p\n"),
                     ACE_TEXT ("ns_context_->open")));
+      }
     }
   else
     {
@@ -40,9 +42,11 @@ Dump_Restore::Dump_Restore (int argc, ACE_TCHAR *argv[])
         this->name_options_->nameserver_port ();
 
       if (this->ns_context_->open (ACE_Naming_Context::NET_LOCAL) == -1)
+      {
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("%p\n"),
                     ACE_TEXT ("ns_context_->open")));
+      }
     }
 
   this->display_menu ();
@@ -50,9 +54,11 @@ Dump_Restore::Dump_Restore (int argc, ACE_TCHAR *argv[])
   if (ACE_Event_Handler::register_stdin_handler (this,
                                                  ACE_Reactor::instance (),
                                                  ACE_Thread_Manager::instance ()) == -1)
+  {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("register_stdin_handler")));
+  }
 }
 
 Dump_Restore::~Dump_Restore ()
@@ -98,8 +104,10 @@ Dump_Restore::handle_input (ACE_HANDLE)
         unsigned int port {};
         if (input >> hostname >> port
             && port <= (std::numeric_limits<u_short>::max) ())
+        {
           this->set_host (ACE_TEXT_CHAR_TO_TCHAR (hostname.c_str ()),
                           static_cast<u_short> (port));
+        }
         break;
       }
     case 'f':
@@ -111,9 +119,11 @@ Dump_Restore::handle_input (ACE_HANDLE)
         this->infile_.reset (ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR (this->filename_.c_str ()),
                                             ACE_TEXT ("r")));
         if (!this->infile_)
+        {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Unable to open input file %C\n"),
                       this->filename_.c_str ()));
+        }
         break;
       }
     case 'b':
@@ -157,11 +167,15 @@ Dump_Restore::display_menu ()
                       ACE_TEXT ("localhost")) == 0)
     {
       if (this->ns_scope_ == ACE_Naming_Context::PROC_LOCAL)
+      {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("  *** Using Process Local Database ***\n\n")));
+      }
       else
+      {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("  *** Using Node Local Database ***\n\n")));
+      }
     }
   else
     {
@@ -174,12 +188,16 @@ Dump_Restore::display_menu ()
     }
 
   if (this->infile_)
+  {
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("Input File: %C\n"),
                 this->filename_.c_str ()));
+  }
   else
+  {
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("** No Input File Specified **\n")));
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("<P> Use Process Local Database\n")));
@@ -216,10 +234,12 @@ Dump_Restore::set_proc_local ()
   this->name_options_->context (ACE_Naming_Context::PROC_LOCAL);
 
   if (this->ns_context_->open (ACE_Naming_Context::PROC_LOCAL) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("ns_context_->open")),
                       -1);
+  }
 
   return 0;
 }
@@ -238,10 +258,12 @@ Dump_Restore::set_node_local ()
   this->name_options_->context (ACE_Naming_Context::NODE_LOCAL);
 
   if (ns_context_->open (ACE_Naming_Context::NODE_LOCAL) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("ns_context_->open")),
                       -1);
+  }
   return 0;
 }
 
@@ -262,10 +284,12 @@ Dump_Restore::set_host (ACE_TCHAR const *hostname,
 
   // assume net_local context
   if (ns_context_->open (ACE_Naming_Context::NET_LOCAL) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("ns_context_->open")),
                       -1);
+  }
   return 0;
 }
 
@@ -311,14 +335,18 @@ Dump_Restore::populate (Dump_Restore::Operation_Type op)
           };
           std::string line_text {line_owner.get ()};
           if (!line_text.empty () && line_text.back () == '\r')
+          {
             line_text.pop_back ();
+          }
 
           std::string::size_type const separator = line_text.find ('=');
           if (separator == std::string::npos)
+          {
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("Invalid input line: %C\n"),
                                line_text.c_str ()),
                               -1);
+          }
 
           std::string const field = line_text.substr (0, separator);
           std::string const field_value = line_text.substr (separator + 1);
@@ -327,28 +355,34 @@ Dump_Restore::populate (Dump_Restore::Operation_Type op)
             {
             case State::NAME:
               if (field != "name")
+              {
                 ACE_ERROR_RETURN ((LM_ERROR,
                                    ACE_TEXT ("Expected name field, got %C\n"),
                                    field.c_str ()),
                                   -1);
+              }
               name = field_value;
               state = State::VALUE;
               break;
             case State::VALUE:
               if (field != "value")
+              {
                 ACE_ERROR_RETURN ((LM_ERROR,
                                    ACE_TEXT ("Expected value field, got %C\n"),
                                    field.c_str ()),
                                   -1);
+              }
               value = field_value;
               state = State::TYPE;
               break;
             case State::TYPE:
               if (field != "type")
+              {
                 ACE_ERROR_RETURN ((LM_ERROR,
                                    ACE_TEXT ("Expected type field, got %C\n"),
                                    field.c_str ()),
                                   -1);
+              }
               type = field_value;
               if (this->doit (op, name, value, type) != 0)
               {
@@ -363,9 +397,11 @@ Dump_Restore::populate (Dump_Restore::Operation_Type op)
         }
 
       if (state != State::NAME)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("Incomplete name binding in input file\n")),
                           -1);
+      }
       return 0;
     }
   return -1;
@@ -380,17 +416,21 @@ Dump_Restore::bind (std::string const &key,
                                               value.c_str (),
                                               type.c_str ());
   if (result == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("ns_context_->bind")),
                       -1);
+  }
   else if (result == 1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%s%s%s\n"),
                        ACE_TEXT ("key <"),
                        ACE_TEXT_CHAR_TO_TCHAR (key.c_str ()),
                        ACE_TEXT ("> already bound")),
                       1);
+  }
   return 0;
 }
 
@@ -400,10 +440,12 @@ Dump_Restore::unbind (std::string const &key)
   int const result = this->ns_context_->unbind (key.c_str ());
 
   if (result == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("ns_context_->unbind")),
                       -1);
+  }
   return 0;
 }
 
@@ -415,10 +457,12 @@ Dump_Restore::rebind (std::string const &key,
   if (this->ns_context_->rebind (key.c_str (),
                                  value.c_str (),
                                  type.c_str ()) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("ns_context_->rebind")),
                       -1);
+  }
   return 0;
 }
 

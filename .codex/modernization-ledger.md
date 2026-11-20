@@ -13658,3 +13658,9 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Added Allman braces to ten single-statement control bodies in `TAO/examples/Load_Balancing/Load_Balancer_i.cpp`.
 - Focused clang-tidy reported no remaining brace warnings; `git diff --check` passed. No build or runtime tests were run.
 - The full tracked-source brace audit remains open.
+
+## 2026-11-20 Naming Dump/Restore brace follow-up
+
+- Added Allman braces to 22 single-statement control bodies in `ACE/netsvcs/clients/Naming/Dump_Restore/Dump_Restore.cpp`.
+- Focused clang-tidy reported no remaining brace warnings; `git diff --check` passed. No build or runtime tests were run.
+- The full tracked-source brace audit remains open.
