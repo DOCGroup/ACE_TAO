@@ -99,7 +99,7 @@ Test_Task::close (u_long)
 {
   ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, recursive_lock, -1);
 
-  Test_Task::task_count_--;
+  --Test_Task::task_count_;
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) close Test_Task::task_count_ = %d\n"),

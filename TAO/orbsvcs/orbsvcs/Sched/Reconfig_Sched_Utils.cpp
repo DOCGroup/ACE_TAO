@@ -981,14 +981,6 @@ TAO_MUF_FAIR_Reconfig_Sched_Strategy::total_admission_comp (void const *s,
       return -1;
     }
 
-  TAO_Reconfig_Scheduler_Entry * first_entry =
-    ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
-                         (*first)->volatile_token);
-
-  TAO_Reconfig_Scheduler_Entry * second_entry =
-    ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
-                         (*second)->volatile_token);
-
   // sort disabled tuples to the end
   if ((*first)->enabled_state () == RtecScheduler::RT_INFO_DISABLED)
     {
@@ -1020,6 +1012,14 @@ TAO_MUF_FAIR_Reconfig_Sched_Strategy::total_admission_comp (void const *s,
     }
 
   // Then compare by subpriority.
+
+  TAO_Reconfig_Scheduler_Entry * first_entry =
+    ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
+                         (*first)->volatile_token);
+
+  TAO_Reconfig_Scheduler_Entry * second_entry =
+    ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
+                         (*second)->volatile_token);
 
   result = TAO_Reconfig_Sched_Strategy_Base::compare_subpriority (*first_entry,
                                                                   *second_entry);
@@ -1172,14 +1172,6 @@ TAO_RMS_FAIR_Reconfig_Sched_Strategy::total_admission_comp (void const *s,
       return -1;
     }
 
-  TAO_Reconfig_Scheduler_Entry * first_entry =
-    ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
-                         (*first)->volatile_token);
-
-  TAO_Reconfig_Scheduler_Entry * second_entry =
-    ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
-                         (*second)->volatile_token);
-
   // sort disabled tuples to the end
   if ((*first)->enabled_state () == RtecScheduler::RT_INFO_DISABLED)
     {
@@ -1212,6 +1204,14 @@ TAO_RMS_FAIR_Reconfig_Sched_Strategy::total_admission_comp (void const *s,
     }
 
   // Then compare by subpriority.
+
+  TAO_Reconfig_Scheduler_Entry * first_entry =
+    ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
+                         (*first)->volatile_token);
+
+  TAO_Reconfig_Scheduler_Entry * second_entry =
+    ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
+                         (*second)->volatile_token);
 
   result = TAO_Reconfig_Sched_Strategy_Base::compare_subpriority (*first_entry,
                                                                   *second_entry);
@@ -1385,14 +1385,6 @@ TAO_RMS_MLF_Reconfig_Sched_Strategy::total_admission_comp (void const *s,
       return -1;
     }
 
-  TAO_Reconfig_Scheduler_Entry * first_entry =
-    ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
-                         (*first)->volatile_token);
-
-  TAO_Reconfig_Scheduler_Entry * second_entry =
-    ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
-                         (*second)->volatile_token);
-
   // sort disabled tuples to the end
   if ((*first)->enabled_state () == RtecScheduler::RT_INFO_DISABLED)
     {
@@ -1425,6 +1417,14 @@ TAO_RMS_MLF_Reconfig_Sched_Strategy::total_admission_comp (void const *s,
     }
 
   // Then compare by subpriority.
+
+  TAO_Reconfig_Scheduler_Entry * first_entry =
+    ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
+                         (*first)->volatile_token);
+
+  TAO_Reconfig_Scheduler_Entry * second_entry =
+    ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
+                         (*second)->volatile_token);
 
   result = TAO_Reconfig_Sched_Strategy_Base::compare_subpriority (*first_entry,
                                                                   *second_entry);
