@@ -820,27 +820,35 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_tree_insertion ()
 
       // Test the new stable ACE_Hash_Map_Manager_Ex compliant interface.
       if (0 != stable_tree_.bind (key_array_ [k], item_array_ [k]))
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Stable bind %p\n"),
-                    ACE_TEXT ("failure")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Stable bind %p\n"),
+                      ACE_TEXT ("failure")));
+        }
 
       if (0 != stable_tree_.find (key_array_ [k], item) ||
           item != item_array_ [k])
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Stable find %p\n"),
-                    ACE_TEXT ("failure")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Stable find %p\n"),
+                      ACE_TEXT ("failure")));
+        }
 
       // Test the deprecated interface.
       if (nullptr == deprecated_tree_.insert (key_array_ [k], item_array_ [k]))
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Deprecated insert %p\n"),
-                    ACE_TEXT ("failure")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Deprecated insert %p\n"),
+                      ACE_TEXT ("failure")));
+        }
 
       if (nullptr == deprecated_tree_.find (key_array_ [k]) ||
           *deprecated_tree_.find (key_array_ [k]) != item_array_ [k])
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Deprecated find %p\n"),
-                    ACE_TEXT ("failure")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Deprecated find %p\n"),
+                      ACE_TEXT ("failure")));
+        }
    }
 }
 
@@ -865,31 +873,39 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_post_insertion_it
 
       item = (*stable_fwd_iter_).item ();
       if (item != item_array_ [i])
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Stable fwd iter, pass %d %p\n"),
-                    i,
-                    ACE_TEXT ("failure")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Stable fwd iter, pass %d %p\n"),
+                      i,
+                      ACE_TEXT ("failure")));
+        }
 
       item = (*stable_rev_iter_).item ();
       if (item != item_array_ [entry_count_ - i - 1])
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Stable rev iter, pass %d %p\n"),
-                    i,
-                    ACE_TEXT ("failure")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Stable rev iter, pass %d %p\n"),
+                      i,
+                      ACE_TEXT ("failure")));
+        }
 
       item = (*deprecated_fwd_iter_).item ();
       if (item != item_array_ [i])
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Deprecated fwd iter, pass %d %p\n"),
-                    i,
-                    ACE_TEXT ("failure")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Deprecated fwd iter, pass %d %p\n"),
+                      i,
+                      ACE_TEXT ("failure")));
+        }
 
       item = (*deprecated_rev_iter_).item ();
       if (item != item_array_ [entry_count_ - i - 1])
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Deprecated rev iter, pass %d %p\n"),
-                    i,
-                    ACE_TEXT ("failure")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Deprecated rev iter, pass %d %p\n"),
+                      i,
+                      ACE_TEXT ("failure")));
+        }
 
       // Advance each iterator.
       ++stable_fwd_iter_;
@@ -906,17 +922,25 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_post_insertion_it
 
   // Make sure each item in each tree has been visited
   if (stable_fwd_iter_.done () != 1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Stable fwd iter not done but should be\n")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Stable fwd iter not done but should be\n")));
+    }
   if (stable_rev_iter_.done () != 1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Stable fwd iter not done but should be\n")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Stable fwd iter not done but should be\n")));
+    }
   if (deprecated_fwd_iter_.done () != 1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Stable fwd iter not done but should be\n")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Stable fwd iter not done but should be\n")));
+    }
   if (deprecated_rev_iter_.done () != 1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Stable fwd iter not done but should be\n")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Stable fwd iter not done but should be\n")));
+    }
 }
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> void
@@ -932,10 +956,12 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_partial_iteration
 
       item = (*part_rev_iter_).item ();
       if (item != item_array_ [i])
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Partial rev iter, pass %d %p\n"),
-                    i,
-                    ACE_TEXT ("failure")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Partial rev iter, pass %d %p\n"),
+                      i,
+                      ACE_TEXT ("failure")));
+        }
       ++part_rev_iter_;
     }
 
@@ -946,10 +972,12 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_partial_iteration
 
       item = (*part_fwd_iter_).item ();
       if (item != item_array_ [k])
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Partial fwd iter, pass %d %p\n"),
-                    k,
-                    ACE_TEXT ("failure")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Partial fwd iter, pass %d %p\n"),
+                      k,
+                      ACE_TEXT ("failure")));
+        }
       ++part_fwd_iter_;
     }
 }
@@ -966,17 +994,21 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_tree_deletion ()
       // Test the new stable ACE_Hash_Map_Manager_Ex compliant
       // interface.
       if (stable_tree_.unbind (key_array_ [i]) != 0)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Stable tree, failure pass %d %p\n"),
-                    i,
-                    ACE_TEXT ("unbind")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Stable tree, failure pass %d %p\n"),
+                      i,
+                      ACE_TEXT ("unbind")));
+        }
 
       // Test the deprecated interface.
       if (deprecated_tree_.remove (key_array_ [i]) != 1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Deprecated tree, failure pass %d %p\n"),
-                    i,
-                    ACE_TEXT ("remove")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Deprecated tree, failure pass %d %p\n"),
+                      i,
+                      ACE_TEXT ("remove")));
+        }
     }
 }
 
@@ -1002,31 +1034,39 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_post_deletion_ite
 
       item = (*stable_fwd_iter_).item ();
       if (item != item_array_ [i])
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Stable fwd iter, pass %d %p\n"),
-                    i,
-                    ACE_TEXT ("failure")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Stable fwd iter, pass %d %p\n"),
+                      i,
+                      ACE_TEXT ("failure")));
+        }
 
       item = (*stable_rev_iter_).item ();
       if (item != item_array_ [entry_count_ - i])
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Stable rev iter, pass %d %p\n"),
-                    i,
-                    ACE_TEXT ("failure")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Stable rev iter, pass %d %p\n"),
+                      i,
+                      ACE_TEXT ("failure")));
+        }
 
       item = (*deprecated_fwd_iter_).item ();
       if (item != item_array_ [i])
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Deprecated fwd iter, pass %d %p\n"),
-                    i,
-                    ACE_TEXT ("failure")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Deprecated fwd iter, pass %d %p\n"),
+                      i,
+                      ACE_TEXT ("failure")));
+        }
 
       item = (*deprecated_rev_iter_).item ();
       if (item != item_array_ [entry_count_ - i])
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Deprecated rev iter, pass %d %p\n"),
-                    i,
-                    ACE_TEXT ("failure")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Deprecated rev iter, pass %d %p\n"),
+                      i,
+                      ACE_TEXT ("failure")));
+        }
 
       // Advance each iterator via postfix increment.
       ++stable_fwd_iter_;
@@ -1037,16 +1077,24 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_post_deletion_ite
 
   // Make sure each item in each tree has been visited a second time.
   if (stable_fwd_iter_.done () != 1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Stable fwd iter not done but should be\n")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Stable fwd iter not done but should be\n")));
+    }
   if (stable_rev_iter_.done () != 1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Stable rev iter not done but should be\n")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Stable rev iter not done but should be\n")));
+    }
   if (deprecated_fwd_iter_.done () != 1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Deprecated fwd iter not done but should be\n")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Deprecated fwd iter not done but should be\n")));
+    }
   if (deprecated_rev_iter_.done () != 1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Deprecated rev iter not done but should be\n")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Deprecated rev iter not done but should be\n")));
+    }
 }
 
