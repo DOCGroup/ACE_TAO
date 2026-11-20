@@ -73,17 +73,23 @@ ACE_QtReactor::~ACE_QtReactor ()
   for (MAP::ITERATOR iter = this->read_notifier_.begin ();
        iter != this->read_notifier_.end ();
        ++iter)
-    delete (*iter).int_id_;
+    {
+      delete (*iter).int_id_;
+    }
 
   for (MAP::ITERATOR iter = this->write_notifier_.begin ();
        iter != this->write_notifier_.end ();
        ++iter)
-    delete (*iter).int_id_;
+    {
+      delete (*iter).int_id_;
+    }
 
   for (MAP::ITERATOR iter = this->exception_notifier_.begin ();
        iter != this->exception_notifier_.end ();
        ++iter)
-    delete (*iter).int_id_;
+    {
+      delete (*iter).int_id_;
+    }
 
   delete this->qtime_;
 }
@@ -234,7 +240,9 @@ ACE_QtReactor::set_enable_flag_by_mask (int flag_value,
       // Find the current notifier
       qs_not = nullptr;
       if ((this->read_notifier_.find (handle, qs_not) == -1))
-        return -1;
+        {
+          return -1;
+        }
 
       qs_not->setEnabled (flag_value);
     }
@@ -245,7 +253,9 @@ ACE_QtReactor::set_enable_flag_by_mask (int flag_value,
     {
       qs_not = nullptr;
       if ((this->write_notifier_.find (handle, qs_not) == -1))
-        return -1;
+        {
+          return -1;
+        }
 
       qs_not->setEnabled (flag_value);
     }
@@ -255,7 +265,9 @@ ACE_QtReactor::set_enable_flag_by_mask (int flag_value,
     {
       qs_not = nullptr;
       if ((this->exception_notifier_.find (handle, qs_not) == -1))
-        return -1;
+        {
+          return -1;
+        }
 
       qs_not->setEnabled (flag_value);
     }
@@ -274,7 +286,9 @@ ACE_QtReactor::bit_ops (ACE_HANDLE handle,
   // Call regular bit_ops
   int const result = ACE_Select_Reactor::bit_ops (handle, mask, handle_set, ops);
   if (result == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   // disable or enable the notifiers based on handle_set and mask
   int const enable_flag = std::addressof (handle_set)
@@ -284,8 +298,10 @@ ACE_QtReactor::bit_ops (ACE_HANDLE handle,
       ? 1
       : -1;
   if (enable_flag == -1)
-    // We have no work to do here, so just return
-    return result;
+    {
+      // We have no work to do here, so just return
+      return result;
+    }
 
   switch (ops)
     {
@@ -449,7 +465,9 @@ ACE_QtReactor::register_handler_i (ACE_HANDLE handle,
     {
       // Destroy notifiers only when there is no handler for the handle.
       if (!ACE_Select_Reactor::find_handler (handle))
-        this->destroy_notifiers_for_handle (handle);
+        {
+          this->destroy_notifiers_for_handle (handle);
+        }
       return -1;
     }
 
@@ -475,7 +493,9 @@ ACE_QtReactor::remove_handler_i (ACE_HANDLE handle,
   int const result = ACE_Select_Reactor::remove_handler_i (handle, mask);
   // Destroy notifiers only when there is no handler for the handle.
   if (!ACE_Select_Reactor::find_handler (handle))
-    this->destroy_notifiers_for_handle (handle);
+    {
+      this->destroy_notifiers_for_handle (handle);
+    }
   return result;
 }
 
@@ -535,7 +555,9 @@ ACE_QtReactor::schedule_timer (ACE_Event_Handler *handler,
                                                           delay_time,
                                                           interval);
   if (result == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   this->reset_timeout ();
   return result;
@@ -549,7 +571,9 @@ ACE_QtReactor::cancel_timer (ACE_Event_Handler *handler,
 
   if (ACE_Select_Reactor::cancel_timer (handler,
                                         dont_call_handle_close) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   this->reset_timeout ();
   return 0;
@@ -565,7 +589,9 @@ ACE_QtReactor::cancel_timer (long timer_id,
   if (ACE_Select_Reactor::cancel_timer (timer_id,
                                         arg,
                                         dont_call_handle_close) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   this->reset_timeout ();
   return 0;
@@ -592,7 +618,9 @@ ACE_QtReactor::QtWaitForMultipleEvents (int width,
                       temp_set.wr_mask_,
                       temp_set.ex_mask_,
                       &zero) == -1)
-    return -1; // Bad file arguments...
+    {
+      return -1; // Bad file arguments...
+    }
 
   // Qt processing.
 #if QT_VERSION >= 0x040000

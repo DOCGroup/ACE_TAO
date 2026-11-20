@@ -60,7 +60,9 @@ ACE_SOCK_Dgram_Mcast_QoS::open (ACE_INET_Addr const &addr,
                       g,
                       flags,
                       reuse_addr) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   return this->open_i (addr, nullptr, reuse_addr);
 }
@@ -199,7 +201,9 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe (ACE_INET_Addr const &mcast_addr,
                   g,
                   flags,
                   reuse_addr) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   // The following method call only applies to Win32 currently.
   int const result = this->subscribe_ifs (mcast_addr,
