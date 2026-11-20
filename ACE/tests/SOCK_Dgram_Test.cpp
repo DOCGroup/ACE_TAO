@@ -179,25 +179,33 @@ client (void *arg)
             {
               buf[rcv_siz/sizeof (ACE_TCHAR)] = '\0';
               if (ACE_OS::strncmp (buf, TEST_DATA, ACE_OS::strlen (TEST_DATA)))
-                ACE_ERROR ((LM_ERROR,
-                            ACE_TEXT ("(%P|%t) recv string should be %s; ")
-                            ACE_TEXT (" but is %s\n"),
-                            TEST_DATA, buf));
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              ACE_TEXT ("(%P|%t) recv string should be %s; ")
+                              ACE_TEXT (" but is %s\n"),
+                              TEST_DATA, buf));
+                }
             }
           if (peer_addr.get_type () != server_addr.get_type ())
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) recv addr type %d; should be %d\n"),
-                        peer_addr.get_type (),
-                        server_addr.get_type ()));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%P|%t) recv addr type %d; should be %d\n"),
+                          peer_addr.get_type (),
+                          server_addr.get_type ()));
+            }
           if (peer_addr.get_size () != server_addr.get_size ())
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) recv addr size %d; should be %d\n"),
-                        peer_addr.get_size (),
-                        server_addr.get_size ()));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%P|%t) recv addr size %d; should be %d\n"),
+                          peer_addr.get_size (),
+                          server_addr.get_size ()));
+            }
 #if (defined ACE_RECVPKTINFO6 || defined ACE_RECVPKTINFO) && !defined ACE_FACE_SAFETY_EXTENDED
           if (local_addr != to_addr)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) local addr is not equal to sent-to addr\n")));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%P|%t) local addr is not equal to sent-to addr\n")));
+            }
 #endif
         }
     }
@@ -236,21 +244,27 @@ server (void *arg)
         {
           buf[rcv_siz / sizeof (ACE_TCHAR)] = '\0';
           if (ACE_OS::strncmp (buf, TEST_DATA, ACE_OS::strlen (TEST_DATA)))
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) recv string should be %s; ")
-                        ACE_TEXT (" but is %s\n"),
-                        TEST_DATA, buf));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%P|%t) recv string should be %s; ")
+                          ACE_TEXT (" but is %s\n"),
+                          TEST_DATA, buf));
+            }
         }
 
       if (0 == peer_addr.addr_to_string (hostname_string,
           sizeof (hostname_string)))
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) Echoing data to %s\n"),
-                    hostname_string));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) Echoing data to %s\n"),
+                      hostname_string));
+        }
       else
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) %p\n"),
-                    ACE_TEXT ("addr_to_string")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) %p\n"),
+                      ACE_TEXT ("addr_to_string")));
+        }
       if (server_dgram->send (TEST_DATA, sizeof (TEST_DATA),
                               peer_addr, 0) == -1)
         {
