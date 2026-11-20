@@ -143,14 +143,16 @@ Thread_Pool::svc ()
       size_t length = mb->length ();
 
       if (length > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%t) in iteration %d, queue len = %B, ")
-                    ACE_TEXT ("length = %B, text = \"%*s\"\n"),
-                    count,
-                    this->msg_queue ()->message_count (),
-                    length,
-                    static_cast<int> (length - 1),
-                    mb->rd_ptr ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%t) in iteration %d, queue len = %B, ")
+                      ACE_TEXT ("length = %B, text = \"%*s\"\n"),
+                      count,
+                      this->msg_queue ()->message_count (),
+                      length,
+                      static_cast<int> (length - 1),
+                      mb->rd_ptr ()));
+        }
 
       // We're responsible for deallocating this.
       mb->release ();
@@ -181,10 +183,12 @@ Thread_Pool::open (void *)
   // Create a pool of worker threads.
   if (this->activate (THR_NEW_LWP,
                       this->n_threads_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("activate failed")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("activate failed")),
+                        -1);
+    }
   return 0;
 }
 
@@ -238,7 +242,9 @@ Thread_Pool::test_queue_deactivation_shutdown ()
           n = ACE_OS::strlen (mb->rd_ptr ());
 
           if (count == n_iterations)
-            n = 1; // Indicate that we need to shut down.
+            {
+              n = 1; // Indicate that we need to shut down.
+            }
           else
           {
             ++count;
@@ -258,9 +264,11 @@ Thread_Pool::test_queue_deactivation_shutdown ()
 
           // Pass the message to the Thread_Pool.
           if (this->put (mb) == -1)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT (" (%t) %p\n"),
-                        ACE_TEXT ("put")));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT (" (%t) %p\n"),
+                          ACE_TEXT ("put")));
+            }
         }
       else
         {
@@ -331,7 +339,9 @@ Thread_Pool::test_empty_message_shutdown ()
           n = ACE_OS::strlen (mb->rd_ptr ());
 
           if (count == n_iterations)
-            n = 1; // Indicate that we need to shut down.
+            {
+              n = 1; // Indicate that we need to shut down.
+            }
           else
           {
             ++count;
@@ -351,9 +361,11 @@ Thread_Pool::test_empty_message_shutdown ()
 
           // Pass the message to the Thread_Pool.
           if (this->put (mb) == -1)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT (" (%t) %p\n"),
-                        ACE_TEXT ("put")));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT (" (%t) %p\n"),
+                          ACE_TEXT ("put")));
+            }
         }
       else
         {
@@ -382,9 +394,11 @@ Thread_Pool::test_empty_message_shutdown ()
               ACE_Message_Block *dup = mb->duplicate ();
 
               if (this->put (dup) == -1)
-                ACE_ERROR ((LM_ERROR,
-                            ACE_TEXT (" (%t) %p\n"),
-                            ACE_TEXT ("put")));
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              ACE_TEXT (" (%t) %p\n"),
+                              ACE_TEXT ("put")));
+                }
             }
 
           mb->release ();
