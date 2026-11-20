@@ -195,7 +195,9 @@ ACE_Process::spawn (ACE_Process_Options &options)
     ACE_NOTSUP_RETURN (ACE_INVALID_PID);
 
   if (options.working_directory () != 0)
-    ACE_NOTSUP_RETURN (ACE_INVALID_PID);
+    {
+      ACE_NOTSUP_RETURN (ACE_INVALID_PID);
+    }
 
   int saved_stdin = ACE_STDIN;
   int saved_stdout = ACE_STDOUT;
@@ -203,21 +205,33 @@ ACE_Process::spawn (ACE_Process_Options &options)
   // Save STD file descriptors and redirect
   if (options.get_stdin () != ACE_INVALID_HANDLE) {
     if ((saved_stdin = ACE_OS::dup (ACE_STDIN)) == -1 && errno != EBADF)
-      ACE_OS::exit (errno);
+      {
+        ACE_OS::exit (errno);
+      }
     if (ACE_OS::dup2 (options.get_stdin (), ACE_STDIN) == -1)
-      ACE_OS::exit (errno);
+      {
+        ACE_OS::exit (errno);
+      }
   }
   if (options.get_stdout () != ACE_INVALID_HANDLE) {
     if ((saved_stdout = ACE_OS::dup (ACE_STDOUT)) == -1 && errno != EBADF)
-      ACE_OS::exit (errno);
+      {
+        ACE_OS::exit (errno);
+      }
     if (ACE_OS::dup2 (options.get_stdout (), ACE_STDOUT) == -1)
-      ACE_OS::exit (errno);
+      {
+        ACE_OS::exit (errno);
+      }
   }
   if (options.get_stderr () != ACE_INVALID_HANDLE) {
     if ((saved_stderr = ACE_OS::dup (ACE_STDERR)) == -1 && errno != EBADF)
-      ACE_OS::exit (errno);
+      {
+        ACE_OS::exit (errno);
+      }
     if (ACE_OS::dup2 (options.get_stderr (), ACE_STDERR) == -1)
-      ACE_OS::exit (errno);
+      {
+        ACE_OS::exit (errno);
+      }
   }
 
   // Wide-char builds need narrow-char strings for commandline and
@@ -279,21 +293,33 @@ ACE_Process::spawn (ACE_Process_Options &options)
   // restore STD file descriptors (if necessary)
   if (options.get_stdin () != ACE_INVALID_HANDLE) {
     if (saved_stdin == -1)
-      ACE_OS::close (ACE_STDIN);
+      {
+        ACE_OS::close (ACE_STDIN);
+      }
     else
-      ACE_OS::dup2 (saved_stdin, ACE_STDIN);
+      {
+        ACE_OS::dup2 (saved_stdin, ACE_STDIN);
+      }
   }
   if (options.get_stdout () != ACE_INVALID_HANDLE) {
     if (saved_stdout == -1)
-      ACE_OS::close (ACE_STDOUT);
+      {
+        ACE_OS::close (ACE_STDOUT);
+      }
     else
-      ACE_OS::dup2 (saved_stdout, ACE_STDOUT);
+      {
+        ACE_OS::dup2 (saved_stdout, ACE_STDOUT);
+      }
   }
   if (options.get_stderr () != ACE_INVALID_HANDLE) {
     if (saved_stderr == -1)
-      ACE_OS::close (ACE_STDERR);
+      {
+        ACE_OS::close (ACE_STDERR);
+      }
     else
-      ACE_OS::dup2 (saved_stderr, ACE_STDERR);
+      {
+        ACE_OS::dup2 (saved_stderr, ACE_STDERR);
+      }
   }
 
   if (this->child_id_ == ACE_INVALID_PID)
@@ -580,7 +606,9 @@ ACE_Process::wait (const ACE_Time_Value &tv,
         ::GetExitCodeProcess (process_info_.hProcess,
                               &this->exit_code_);
       if (status != 0)
-        *status = this->exit_code_;
+        {
+          *status = this->exit_code_;
+        }
       return this->getpid ();
     case WAIT_TIMEOUT:
       errno = ETIME;
@@ -597,7 +625,9 @@ ACE_Process::wait (const ACE_Time_Value &tv,
                          &this->exit_code_,
                          WNOHANG);
       if (status != 0)
-        *status = this->exit_code_;
+        {
+          *status = this->exit_code_;
+        }
 
       return retv;
     }
@@ -616,7 +646,9 @@ ACE_Process::wait (const ACE_Time_Value &tv,
   pid_t pid = 0;
   ACE_Time_Value sleeptm (1);    // 1 msec
   if (sleeptm > tv)              // if sleeptime > waittime
+    {
       sleeptm = tv;
+    }
   ACE_Time_Value tmo (tv);       // Need one we can change
   for (ACE_Countdown_Time time_left (&tmo); tmo > ACE_Time_Value::zero ; time_left.update ())
     {
@@ -624,10 +656,14 @@ ACE_Process::wait (const ACE_Time_Value &tv,
                              &this->exit_code_,
                              WNOHANG);
       if (status != 0)
-        *status = this->exit_code_;
+        {
+          *status = this->exit_code_;
+        }
 
       if (pid > 0 || pid == ACE_INVALID_PID)
-        break;          // Got a child or an error - all done
+        {
+          break;          // Got a child or an error - all done
+        }
 
       // pid 0, nothing is ready yet, so wait.
       // Do a (very) short sleep (only this thread sleeps).
@@ -765,7 +801,9 @@ ACE_Process::convert_env_buffer (const char* env) const
           buffer.push_back (std::move (str));
           start = ++i;
           if (env[start] == '\0')
-            break;
+            {
+              break;
+            }
         }
       else
         {
@@ -847,7 +885,9 @@ ACE_Process_Options::inherit_environment ()
 {
   // Ensure only once execution.
   if (environment_inherited_)
-    return;
+    {
+      return;
+    }
   environment_inherited_ = true;
 
   // Get the existing environment.
@@ -895,7 +935,9 @@ ACE_Process_Options::inherit_environment ()
 
 #if defined (ACE_HAS_WCHAR) && !defined (ACE_USES_WCHAR)
   if (this->use_unicode_environment_)
-    ::FreeEnvironmentStringsW (existing_wide_env);
+    {
+      ::FreeEnvironmentStringsW (existing_wide_env);
+    }
   else
 #endif
   ACE_TEXT_FreeEnvironmentStrings (existing_environment);
@@ -925,7 +967,9 @@ ACE_Process_Options::setenv (ACE_TCHAR *envp[])
 
 #if defined (ACE_WIN32)
   if (inherit_environment_)
-    this->inherit_environment ();
+    {
+      this->inherit_environment ();
+    }
 #endif /* ACE_WIN32 */
 
   return 0;
@@ -959,7 +1003,9 @@ ACE_Process_Options::setenv (const ACE_TCHAR *format, ...)
 
 #if defined (ACE_WIN32)
   if (inherit_environment_)
-    this->inherit_environment ();
+    {
+      this->inherit_environment ();
+    }
 #endif /* ACE_WIN32 */
 
   return 0;
@@ -1053,7 +1099,9 @@ ACE_Process_Options::setenv (const ACE_TCHAR *variable_name,
 
 #if defined (ACE_WIN32)
   if (inherit_environment_)
-    this->inherit_environment ();
+    {
+      this->inherit_environment ();
+    }
 #endif /* ACE_WIN32 */
 
   return 0;
@@ -1102,11 +1150,17 @@ ACE_Process_Options::set_handles (ACE_HANDLE std_in,
   this->startup_info_.dwFlags = STARTF_USESTDHANDLES;
 
   if (std_in == ACE_INVALID_HANDLE)
-    std_in = ACE_STDIN;
+    {
+      std_in = ACE_STDIN;
+    }
   if (std_out == ACE_INVALID_HANDLE)
-    std_out = ACE_STDOUT;
+    {
+      std_out = ACE_STDOUT;
+    }
   if (std_err == ACE_INVALID_HANDLE)
-    std_err = ACE_STDERR;
+    {
+      std_err = ACE_STDERR;
+    }
 
   // STD handles may have value 0 (not ACE_INVALID_HANDLE) if there is no such
   // handle in the process.  This was observed to occur for stdin in console
