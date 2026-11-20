@@ -88,7 +88,9 @@ Timer_Helper::handle_timeout (ACE_Time_Value const &,
 
       // Set the inaccuracy.
       if (highest_time > lowest_time)
+      {
         clerk_->inaccuracy (highest_time - lowest_time);
+      }
       else
       {
         clerk_->inaccuracy (0);
