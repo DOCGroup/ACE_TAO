@@ -407,7 +407,9 @@ Logging_Supplier::get_options (int argc, ACE_TCHAR *argv [])
           this->input_file_name_ = get_opt.opt_arg ();
 
           if (!this->input_file_name_ || std::strlen (this->input_file_name_) > 0)
-            ACE_DEBUG ((LM_DEBUG,"Reading file!\n"));
+            {
+              ACE_DEBUG ((LM_DEBUG,"Reading file!\n"));
+            }
           else
             {
               this->input_file_name_ = nullptr;
@@ -421,7 +423,9 @@ Logging_Supplier::get_options (int argc, ACE_TCHAR *argv [])
           this->schedule_file_name_ = get_opt.opt_arg ();
 
           if (!this->schedule_file_name_ || std::strlen (this->schedule_file_name_) > 0)
-            ACE_DEBUG ((LM_DEBUG,"Dumping file!\n"));
+            {
+              ACE_DEBUG ((LM_DEBUG,"Dumping file!\n"));
+            }
           else
             {
               this->input_file_name_ = nullptr;
