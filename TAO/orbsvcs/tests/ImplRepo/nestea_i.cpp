@@ -45,7 +45,9 @@ Nestea_i::crush (CORBA::Long cans)
   }
 
   if (static_cast<ACE_UINT32> (cans) > this->cans_)
-    this->cans_ = 0;
+    {
+      this->cans_ = 0;
+    }
   else
   {
     this->cans_ -= cans;
@@ -78,13 +80,21 @@ Nestea_i::get_praise ()
   }
 
   if (this->cans_ > 500)
-    return CORBA::string_dup ("Man, that is one excellent Nestea Collection!");
+    {
+      return CORBA::string_dup ("Man, that is one excellent Nestea Collection!");
+    }
   else if (this->cans_ > 250)
-    return CORBA::string_dup ("We are getting into the big leagues now!");
+    {
+      return CORBA::string_dup ("We are getting into the big leagues now!");
+    }
   else if (this->cans_ > 100)
-    return CORBA::string_dup ("Things are looking up!");
+    {
+      return CORBA::string_dup ("Things are looking up!");
+    }
   else if (this->cans_ > 0)
-    return CORBA::string_dup ("Well, it is a start. Drink more Nestea!");
+    {
+      return CORBA::string_dup ("Well, it is a start. Drink more Nestea!");
+    }
   else
   {
     return CORBA::string_dup ("No cans, no praise.");
@@ -114,11 +124,13 @@ Nestea_i::save_data ()
                          ACE_FILE_Addr (this->data_filename_.c_str ()),
                          0,
                          ACE_Addr::sap_any) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n to %s",
-                       "connect",
-                       this->data_filename_.c_str ()),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n to %s",
+                         "connect",
+                         this->data_filename_.c_str ()),
+                        -1);
+    }
 
   char str[MAX_UINT32_STR_LEN];
 
@@ -139,11 +151,13 @@ Nestea_i::load_data ()
                          ACE_FILE_Addr (this->data_filename_.c_str ()),
                          0,
                          ACE_Addr::sap_any) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n to %s",
-                       "connect",
-                       this->data_filename_.c_str ()),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n to %s",
+                         "connect",
+                         this->data_filename_.c_str ()),
+                        -1);
+    }
 
   char str[MAX_UINT32_STR_LEN + 1] {};
 
