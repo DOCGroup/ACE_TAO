@@ -17,7 +17,9 @@ ACE_Token_Collection::ACE_Token_Collection (bool debug,
   ACE_TRACE ("ACE_Token_Collection::ACE_Token_Collection");
 
   if (name == nullptr)
-    name = ACE_TEXT ("no name");
+    {
+      name = ACE_TEXT ("no name");
+    }
 
   ACE_OS::strsncpy (this->name_,
                     const_cast<ACE_TCHAR *> (name),
@@ -33,14 +35,18 @@ ACE_Token_Collection::insert (ACE_Token_Proxy &new_token)
 
   // Check if the new_proxy is already in the list.
   if (collection_.find (name) == 1)
-    // One already exists, so fail.
-    return -1;
+    {
+      // One already exists, so fail.
+      return -1;
+    }
 
   // Clone the new token.
   std::unique_ptr<ACE_Token_Proxy> temp {new_token.clone ()};
 
   if (collection_.bind (name, temp.get ()) == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("bind failed\n")), -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("bind failed\n")), -1);
+    }
 
   temp.release ();
   return 0;
@@ -86,9 +92,11 @@ ACE_Token_Collection::acquire (int notify,
        iterator.advance ())
     {
       if (debug_)
-        ACELIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("collection acquiring %s\n"),
-                    temp->int_id_->name ()));
+        {
+          ACELIB_DEBUG ((LM_DEBUG,
+                         ACE_TEXT ("collection acquiring %s\n"),
+                         temp->int_id_->name ()));
+        }
       if (temp->int_id_->acquire (notify,
                                   sleep_hook,
                                   options) == -1)
@@ -116,7 +124,9 @@ ACE_Token_Collection::acquire (const ACE_TCHAR *token_name,
   int const result = collection_.find (name, temp);
   // did we find it?
   if (result == -1)
-    return result;
+    {
+      return result;
+    }
   // perform the operation
   return temp->acquire (notify, sleep_hook, options);
 }
@@ -132,7 +142,9 @@ ACE_Token_Collection::tryacquire (const ACE_TCHAR *token_name,
   int const result = collection_.find (name, temp);
   // did we find it?
   if (result == -1)
-    return result;
+    {
+      return result;
+    }
 
   // perform the operation
   return temp->tryacquire (sleep_hook);
@@ -150,11 +162,15 @@ ACE_Token_Collection::tryacquire (void (*sleep_hook)(void *))
        iterator.advance ())
     {
       if (debug_)
-        ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("collection acquiring %s\n"),
-                    temp->int_id_->name ()));
+        {
+          ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("collection acquiring %s\n"),
+                         temp->int_id_->name ()));
+        }
       // We will fail if _any_ token is not free.
       if (temp->int_id_->tryacquire (sleep_hook) == -1)
-        return -1;
+        {
+          return -1;
+        }
     }
 
   return 0;
@@ -173,10 +189,14 @@ ACE_Token_Collection::renew (int requeue_position,
        iterator.advance ())
     {
       if (debug_)
-        ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("collection renewing %s\n"),
-                    temp->int_id_->name ()));
+        {
+          ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("collection renewing %s\n"),
+                         temp->int_id_->name ()));
+        }
       if (temp->int_id_->renew (requeue_position, options) == -1)
-        return -1;
+        {
+          return -1;
+        }
     }
 
   return 0;
@@ -196,9 +216,11 @@ ACE_Token_Collection::renew (const ACE_TCHAR *token_name,
 
   // Did we find it?
   if (result == -1)
-    ACELIB_ERROR_RETURN ((LM_DEBUG, ACE_TEXT ("%p %s\n"),
-                       ACE_TEXT ("not in collection "),
-                       token_name), -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_DEBUG, ACE_TEXT ("%p %s\n"),
+                            ACE_TEXT ("not in collection "),
+                            token_name), -1);
+    }
   // perform the operation
   return temp->renew (requeue_position, options);
 }
@@ -215,8 +237,10 @@ ACE_Token_Collection::release (ACE_Synch_Options &)
        iterator.advance ())
     {
       if (debug_)
-        ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("collection releasing %s\n"),
-                    temp->int_id_->name ()));
+        {
+          ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("collection releasing %s\n"),
+                         temp->int_id_->name ()));
+        }
       temp->int_id_->release ();
     }
 
@@ -234,7 +258,9 @@ ACE_Token_Collection::release (const ACE_TCHAR *token_name,
   int const result = collection_.find (name, temp);
   // did we find it?
   if (result != 0)
-    return result;
+    {
+      return result;
+    }
   // perform the operation
   return temp->release (options);
 }
