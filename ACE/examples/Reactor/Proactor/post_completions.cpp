@@ -187,17 +187,21 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // Clear the signal set.
   if (ACE_OS::sigemptyset (&signal_set) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error:%p\n",
-                       "sigemptyset failed"),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Error:%p\n",
+                         "sigemptyset failed"),
+                        1);
+    }
 
   // Add the SIGRTMAX to the signal set.
   if (ACE_OS::sigaddset (&signal_set, ACE_SIGRTMAX) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error:%p\n",
-                       "sigaddset failed"),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Error:%p\n",
+                         "sigaddset failed"),
+                        1);
+    }
 
   // Make the POSIX Proactor.
   ACE_POSIX_SIG_Proactor posix_proactor (signal_set);
@@ -230,7 +234,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Use RTMIN and RTMAX proactor alternatively, to post
       // completions.
       if (ri % 2)
-        signal_number = ACE_SIGRTMIN;
+        {
+          signal_number = ACE_SIGRTMIN;
+        }
       else
       {
         signal_number = ACE_SIGRTMAX;
@@ -251,16 +257,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Use RTMIN and RTMAX Proactor alternatively, to post
       // completions.
       if (ri % 2)
-        proactor = &proactor1;
+        {
+          proactor = &proactor1;
+        }
       else
       {
         proactor = &proactor2;
       }
       if (result_objects [ri]->post_completion (proactor->implementation ())
           == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Test failed\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Test failed\n"),
+                            1);
+        }
     }
 
   ACE_Thread_Manager::instance ()->wait ();
