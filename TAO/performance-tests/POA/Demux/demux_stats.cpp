@@ -91,7 +91,11 @@ Demux_Stats::calculate_avg_latency ()
       ACE_UNUSED_ARG (ignored);
       if (std::strcmp (str1, "POA::locate_poa_i") == 0 && std::strcmp (str3, "end") == 0)
         {
-          if (items < 1) { items = items + 1; ++counter; }
+          if (items < 1)
+            {
+              items = items + 1;
+              ++counter;
+            }
           else
             {
               sum_poa += time;
@@ -103,7 +107,11 @@ Demux_Stats::calculate_avg_latency ()
 
       if (std::strcmp (str1, "POA::find_servant") == 0 && std::strcmp (str3, "end") == 0)
         {
-          if (items < 1) { items = items + 1; ++counter; }
+          if (items < 1)
+            {
+              items = items + 1;
+              ++counter;
+            }
           else
             {
               sum_servant += time;
@@ -115,12 +123,17 @@ Demux_Stats::calculate_avg_latency ()
 
       if (std::strcmp (str1, "Servant::_dispatch") == 0 && std::strcmp (str3, "end") == 0)
         {
-          if (items < 1) { ++items; ++counter; }
+          if (items < 1)
+            {
+              ++items;
+              ++counter;
+            }
           else
             {
               sum_dispatch += time;
               last_dispatch_time = time;
-              ++items;++items;
+              ++items;
+              ++items;
               ++counter;
             }
         }
@@ -128,7 +141,11 @@ Demux_Stats::calculate_avg_latency ()
       if (std::strcmp (str1, "TAO_Dynamic_Hash_OpTable::find") == 0 &&
           std::strcmp (str3, "end") == 0)
         {
-          if (items < 1) { ++items; ++counter; }
+          if (items < 1)
+            {
+              ++items;
+              ++counter;
+            }
           else
             {
               sum_dynamic += time;
@@ -141,7 +158,11 @@ Demux_Stats::calculate_avg_latency ()
       if (std::strcmp (str1, "TAO_Linear_Search_OpTable::find") == 0 &&
           std::strcmp (str3, "end") == 0)
         {
-          if (items < 1) { ++items; ++counter; }
+          if (items < 1)
+            {
+              ++items;
+              ++counter;
+            }
           else
             {
               sum_linear += time;
@@ -154,7 +175,11 @@ Demux_Stats::calculate_avg_latency ()
       if (std::strcmp (str1, "TAO_Perfect_Hash_OpTable::find") == 0 &&
           std::strcmp (str3, "end") == 0)
         {
-          if (items < 1) { ++items; ++counter; }
+          if (items < 1)
+            {
+              ++items;
+              ++counter;
+            }
           else
             {
               sum_perfect += time;
@@ -167,7 +192,11 @@ Demux_Stats::calculate_avg_latency ()
       if (std::strcmp (str1, "TAO_Binary_Search_OpTable::find") == 0 &&
           std::strcmp (str3, "end") == 0)
         {
-          if (items < 1) { ++items; ++counter; }
+          if (items < 1)
+            {
+              ++items;
+              ++counter;
+            }
           else
             {
               sum_binary += time;
@@ -179,7 +208,11 @@ Demux_Stats::calculate_avg_latency ()
 
       if (std::strcmp (str1, "POA::parse_key") == 0 && std::strcmp (str3, "end") == 0)
         {
-          if (items < 1) { ++items; ++counter; }
+          if (items < 1)
+            {
+              ++items;
+              ++counter;
+            }
           else
             {
               sum_parse += time;
