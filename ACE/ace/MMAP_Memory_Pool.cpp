@@ -131,10 +131,14 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (
       // For plaforms that do NOT give the faulting address, let the
       // options decide whether to guess or not.
       if (options)
-        guess_on_fault_ = options->guess_on_fault_;
+        {
+          guess_on_fault_ = options->guess_on_fault_;
+        }
       else
-        // If no options are specified, default to true.
-        guess_on_fault_ = true;
+        {
+          // If no options are specified, default to true.
+          guess_on_fault_ = true;
+        }
 #endif /* (defined (ACE_HAS_SIGINFO_T) && !defined (ACE_LACKS_SI_ADDR)) || defined (ACE_WIN32) */
 
   // Only change the defaults if <options> != 0.
@@ -454,7 +458,9 @@ ACE_MMAP_Memory_Pool::seh_selector (void *ep)
         ((EXCEPTION_POINTERS *) ep)->ExceptionRecord->ExceptionInformation[1];
 
       if (this->remap (fault_addr) == 0)
-        return 1;
+        {
+          return 1;
+        }
     }
 
   return 0;

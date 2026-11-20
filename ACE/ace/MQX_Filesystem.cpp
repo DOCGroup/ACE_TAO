@@ -82,11 +82,17 @@ MQX_Filesystem::update_fs (MQX_FILE_PTR fs)
   current_fs_ = fs;
   bool invalid = false;
   if (fs == 0)
-    invalid = true;
+    {
+      invalid = true;
+    }
   else if (_io_get_fs_name (fs, current_fs_name_, IOCFG_FS_MAX_DEVLEN) != MQX_OK)
-    invalid = true;
+    {
+      invalid = true;
+    }
   else
-    current_fs_name_len_ = strlen (current_fs_name_);
+    {
+      current_fs_name_len_ = strlen (current_fs_name_);
+    }
 
   if (invalid)
     {

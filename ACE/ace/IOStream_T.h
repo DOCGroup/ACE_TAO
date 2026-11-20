@@ -160,17 +160,23 @@ public:
       if (good ())
         {
           if (tie () != 0)
-             tie ()->flush ();
+            {
+              tie ()->flush ();
+            }
           if (!noskip && flags () & skipws)
             {
               int ch;
               while (isspace (ch = rdbuf ()->sbumpc ()))
                 continue;
               if (ch != EOF)
+                {
                   rdbuf ()->sputbackc (ch);
+                }
             }
           if (good ())
+            {
               return 1;
+            }
         }
       setstate (failbit);
       return (0);
@@ -182,9 +188,13 @@ public:
       if (good ())
         {
           if (tie () != 0)
-             tie ()->flush ();
+            {
+              tie ()->flush ();
+            }
           if (good ())
+            {
               return 1;
+            }
         }
       setstate (failbit);
       return (0);
@@ -193,7 +203,9 @@ public:
   virtual int opfx ()
     {
       if (good () && tie () != 0)
-        tie ()->flush ();
+        {
+          tie ()->flush ();
+        }
       return good ();
     }
   virtual void osfx () {  if (flags () & unitbuf) flush (); }
