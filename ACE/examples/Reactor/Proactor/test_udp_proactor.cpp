@@ -82,18 +82,22 @@ Receiver::open_addr (const ACE_INET_Addr &localAddr)
 
   // Create a local UDP socket to receive datagrams.
   if (this->sock_dgram_.open (localAddr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ACE_SOCK_Dgram::open"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "ACE_SOCK_Dgram::open"), -1);
+    }
 
   // Initialize the asynchronous read.
   if (this->rd_.open (*this,
                       this->sock_dgram_.get_handle (),
                       this->completion_key_,
                       ACE_Proactor::instance ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ACE_Asynch_Read_Dgram::open"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "ACE_Asynch_Read_Dgram::open"), -1);
+    }
 
   // Create a buffer to read into.  We are using scatter/gather to
   // read the message header and message body into 2 buffers
@@ -192,8 +196,10 @@ Receiver::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
           // block.
           ACE_DEBUG ((LM_DEBUG, "Buf=[size=<%B>", msg->length ()));
           for (u_long i = 0; i < msg->length (); ++i)
-            ACE_DEBUG ((LM_DEBUG,
-                        "%c", (msg->rd_ptr ())[i]));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "%c", (msg->rd_ptr ())[i]));
+            }
           ACE_DEBUG ((LM_DEBUG, "]\n"));
         }
     }
@@ -259,18 +265,22 @@ Sender::open (const ACE_TCHAR *host,
   // Initialize stuff
 
   if (this->sock_dgram_.open (ACE_INET_Addr::sap_any) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ACE_SOCK_Dgram::open"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "ACE_SOCK_Dgram::open"), -1);
+    }
 
   // Initialize the asynchronous read.
   if (this->wd_.open (*this,
                       this->sock_dgram_.get_handle (),
                       this->completion_key_,
                       ACE_Proactor::instance ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ACE_Asynch_Write_Dgram::open"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "ACE_Asynch_Write_Dgram::open"), -1);
+    }
 
   // We are using scatter/gather to send the message header and
   // message body using 2 buffers
@@ -368,19 +378,21 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opt ()) != EOF)
-    switch (c)
-      {
-      case 'h':
-        host = get_opt.opt_arg ();
-        break;
-      case 'p':
-        port = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR, "%p.\n",
-                           "usage :\n"
-                           "-h <host>\n"), -1);
-      }
+    {
+      switch (c)
+        {
+        case 'h':
+          host = get_opt.opt_arg ();
+          break;
+        case 'p':
+          port = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR, "%p.\n",
+                             "usage :\n"
+                             "-h <host>\n"), -1);
+        }
+    }
 
   return 0;
 }
@@ -407,13 +419,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   // If active side
   else if (sender.open (host, port) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   for (int success = 1;
        success > 0  && !done;
        )
-    // Dispatch events via Proactor singleton.
-    success = ACE_Proactor::instance ()->handle_events ();
+    {
+      // Dispatch events via Proactor singleton.
+      success = ACE_Proactor::instance ()->handle_events ();
+    }
 
   return 0;
 }
