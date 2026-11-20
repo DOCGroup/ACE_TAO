@@ -44,9 +44,13 @@ TAO_EC_Simple_Queue_Full_Action::init (int argc, ACE_TCHAR* argv[])
     }
 
     if (ACE_OS::strcasecmp (ACE_TEXT("wait"), argv[0]) == 0)
-      this->queue_full_action_return_value_ = WAIT_TO_EMPTY;
+      {
+        this->queue_full_action_return_value_ = WAIT_TO_EMPTY;
+      }
     else if (ACE_OS::strcasecmp (ACE_TEXT("discard"), argv[0]) == 0)
-      this->queue_full_action_return_value_ = SILENTLY_DISCARD;
+      {
+        this->queue_full_action_return_value_ = SILENTLY_DISCARD;
+      }
 #if 0
     else
       ;
