@@ -15,11 +15,12 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 't':
-        nr_threads = ACE_OS::atoi(get_opts.opt_arg ());
-        break;
+    {
+      switch (c)
+        {
+        case 't':
+          nr_threads = ACE_OS::atoi(get_opts.opt_arg ());
+          break;
 
       case '?':
       default:
@@ -29,7 +30,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            "\n",
                            argv [0]),
                           -1);
-      }
+        }
+    }
   // Indicates successful parsing of the command line
   return 0;
 }
@@ -85,10 +87,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     // Output the IOR to the <ior_output_file>
     FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
     if (output_file == nullptr)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                          "Cannot open output file for writing IOR: %s\n",
-                          ior_output_file),
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Cannot open output file for writing IOR: %s\n",
+                           ior_output_file),
                           1);
+      }
     ACE_OS::fprintf (output_file, "%s", intfString_var.in ());
     ACE_OS::fclose (output_file);
 

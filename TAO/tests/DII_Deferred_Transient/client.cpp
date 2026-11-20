@@ -18,11 +18,12 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
   int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'k':
-        options.ior = get_opts.opt_arg ();
-        break;
+    {
+      switch (c)
+        {
+        case 'k':
+          options.ior = get_opts.opt_arg ();
+          break;
 
       case '?':
       default:
@@ -30,7 +31,8 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
                            ACE_TEXT ("usage: %s -k <ior>\n"),
                            argv[0]),
                           -1);
-      }
+        }
+    }
   return 0;
 }
 
@@ -63,9 +65,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_INFO, "(%P|%t) - Get response...\n"));
       req->get_response ();
       if (!(req->return_value () >>= the_string))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) - Could not extract the string return value\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%P|%t) - Could not extract the string return value\n"),
+                            1);
+        }
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
                   the_string));
