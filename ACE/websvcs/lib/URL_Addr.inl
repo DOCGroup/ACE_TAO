@@ -15,7 +15,9 @@ ACE_INLINE ACE_URL_Addr&
 ACE_URL_Addr::operator= (const ACE_URL_Addr& address)
 {
   if (this == std::addressof (address))
-    return *this;
+    {
+      return *this;
+    }
 
   this->set (address);
   return *this;
@@ -45,7 +47,9 @@ ACE_INLINE ACE_HTTP_Addr&
 ACE_HTTP_Addr::operator= (const ACE_HTTP_Addr& rhs)
 {
   if (this == std::addressof (rhs))
-    return *this;
+    {
+      return *this;
+    }
 
   this->set (rhs);
   return *this;
@@ -87,7 +91,9 @@ ACE_INLINE ACE_FTP_Addr&
 ACE_FTP_Addr::operator= (const ACE_FTP_Addr& rhs)
 {
   if (this == std::addressof (rhs))
-    return *this;
+    {
+      return *this;
+    }
 
   this->set (rhs);
   return *this;
@@ -129,7 +135,9 @@ ACE_INLINE ACE_Mailto_Addr&
 ACE_Mailto_Addr::operator= (const ACE_Mailto_Addr& rhs)
 {
   if (this == std::addressof (rhs))
-    return *this;
+    {
+      return *this;
+    }
 
   this->set (rhs);
   return *this;
