@@ -60,17 +60,29 @@ bool
 Session::set_tao_version (ACE_TCHAR const *str)
 {
   if (ACE_OS::strcmp (str, ACE_TEXT ("1.5")) == 0)
-    tao_version_ = 150;
+    {
+      tao_version_ = 150;
+    }
   else if (ACE_OS::strcmp (str, ACE_TEXT ("1.6")) == 0)
-    tao_version_ = 160;
+    {
+      tao_version_ = 160;
+    }
   else if (ACE_OS::strcmp (str, ACE_TEXT ("1.7")) == 0)
-    tao_version_ = 170;
+    {
+      tao_version_ = 170;
+    }
   else if (ACE_OS::strcmp (str, ACE_TEXT ("1.8")) == 0)
-    tao_version_ = 180;
+    {
+      tao_version_ = 180;
+    }
   else if (ACE_OS::strcmp (str, ACE_TEXT ("2.0")) == 0)
-    tao_version_ = 200;
+    {
+      tao_version_ = 200;
+    }
   else if (ACE_OS::strcmp (str, ACE_TEXT ("2.2")) == 0)
-    tao_version_ = 220;
+    {
+      tao_version_ = 220;
+    }
   else
   {
     return false;
@@ -88,13 +100,17 @@ void
 Session::add_process (HostProcess *proc)
 {
   if (processes_.bind(proc->pid(),proc) != 0)
-    ACE_ERROR ((LM_ERROR,
-                "Session::add_process could not bind pid %q\n",
-                static_cast<ACE_INT64> (proc->pid())));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Session::add_process could not bind pid %q\n",
+                  static_cast<ACE_INT64> (proc->pid())));
+    }
   if (procs_by_name_.bind(proc->proc_name(), proc) != 0)
-    ACE_ERROR ((LM_ERROR,
-                "Session::add_process could not bind procname %s\n",
-                proc->proc_name().c_str()));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Session::add_process could not bind procname %s\n",
+                  proc->proc_name().c_str()));
+    }
 }
 
 void
@@ -148,7 +164,9 @@ Session::find_process (long pid)
 {
   Processes::ENTRY *entry {};
   if (this->processes_.find(pid,entry) == 0)
-    return entry->item();
+    {
+      return entry->item();
+    }
   else
   {
     return nullptr;
@@ -230,18 +248,22 @@ Session::stream_for (Output_Stream oldstream,
       if (oldstream.get () == nullptr && hp == nullptr)
         {
           if (ACE_OS::mkdir(outname.c_str()) != 0 && errno != EEXIST)
-            ACE_ERROR ((LM_ERROR,
-                        "Session::stream_for unable to make dir %C, %p\n",
-                        outname.c_str(), "mkdir"));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "Session::stream_for unable to make dir %C, %p\n",
+                          outname.c_str(), "mkdir"));
+            }
         }
       outname += ACE_DIRECTORY_SEPARATOR_CHAR;
       if (hp != nullptr)
         {
           outname += hp->proc_name();
           if (ACE_OS::mkdir(outname.c_str()) != 0 && errno != EEXIST)
-            ACE_ERROR ((LM_ERROR,
-                        "Session::stream_for unable to make dir %C, %p\n",
-                        outname.c_str(), "mkdir"));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "Session::stream_for unable to make dir %C, %p\n",
+                          outname.c_str(), "mkdir"));
+            }
 
           outname += ACE_DIRECTORY_SEPARATOR_CHAR;
         }
@@ -249,9 +271,11 @@ Session::stream_for (Output_Stream oldstream,
       if (detail != nullptr)
         {
           if (ACE_OS::mkdir(outname.c_str()) != 0 && errno != EEXIST)
-            ACE_ERROR ((LM_ERROR,
-                        "Session::stream_for unable to make dir %C, %p\n",
-                        outname.c_str(), "mkdir"));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "Session::stream_for unable to make dir %C, %p\n",
+                          outname.c_str(), "mkdir"));
+            }
 
           outname += ACE_DIRECTORY_SEPARATOR_CHAR;
           outname += detail;
@@ -264,7 +288,9 @@ Session::stream_for (Output_Stream oldstream,
     return oldstream;
   }
   if (this->has_outfile())
-    return Output_Stream (std::make_unique<std::ofstream> (this->outfile_.c_str()));
+    {
+      return Output_Stream (std::make_unique<std::ofstream> (this->outfile_.c_str()));
+    }
   else
   {
     return Output_Stream (&std::cout);
