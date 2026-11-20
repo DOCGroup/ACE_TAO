@@ -136,11 +136,13 @@ Ping_Pong::handle_input (ACE_HANDLE)
                          this->buf_,
                          this->buflen_);
   if (n == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("[%@] %p\n"),
-                       reinterpret_cast<void *> (handle_),
-                       ACE_TEXT ("read")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("[%@] %p\n"),
+                         reinterpret_cast<void *> (handle_),
+                         ACE_TEXT ("read")),
+                        -1);
+    }
   char const *buf = this->buf_ + (2 * sizeof (int));
 
   ACE_DEBUG ((LM_DEBUG,
@@ -163,7 +165,9 @@ Ping_Pong::handle_output (ACE_HANDLE)
   if (ACE::send (this->handle_,
                  this->buf_,
                  this->buflen_) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -176,7 +180,9 @@ Ping_Pong::handle_output (ACE_HANDLE)
   if (ACE::send (this->handle_,
                  this->buf_,
                  this->buflen_) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -232,10 +238,14 @@ run_svc (ACE_HANDLE handle)
   // Main event loop (one per process).
 
   while (callback->is_set () == 0)
-    if (reactor.handle_events () == -1)
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("%p\n"),
-                  ACE_TEXT ("handle_events")));
+    {
+      if (reactor.handle_events () == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("handle_events")));
+        }
+    }
 }
 
 #if defined (ACE_WIN32)
@@ -261,9 +271,11 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (argc != 2)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("usage: pingpong <string>\n")),
-                       -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("usage: pingpong <string>\n")),
+                         -1);
+    }
 
   ACE_LOG_MSG->open (argv[0]);
 
@@ -292,10 +304,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   pid_t pid = ACE_OS::fork (argv[0]);
 
   if (pid == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n%a"),
-                ACE_TEXT ("fork"),
-                1));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n%a"),
+                  ACE_TEXT ("fork"),
+                  1));
+    }
   run_svc (handles[pid == 0]);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -303,8 +317,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 #endif /* ACE_WIN32 */
 
   if (pipe.close () == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("close")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("close")));
+    }
   return 0;
 }

@@ -123,22 +123,28 @@ Thread_Handler::Thread_Handler (
   if (ACE_Event_Handler::register_stdin_handler (this,
                                                  ACE_Reactor::instance (),
                                                  ACE_Thread_Manager::instance ()) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "register_stdin_handler"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n",
+                  "register_stdin_handler"));
+    }
   else if (ACE_Reactor::instance ()->register_handler (sig_set,
                                                        this) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "(%t) %p\n",
-                "register_handler"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%t) %p\n",
+                  "register_handler"));
+    }
   else if (ACE_Reactor::instance ()->schedule_timer
            (this,
             nullptr,
             Thread_Handler::delay_,
             Thread_Handler::interval_) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "(%t) %p\n",
-                "schedule_timer"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%t) %p\n",
+                  "schedule_timer"));
+    }
 
   // Set up this thread's signal mask to block all the signal in the
   // <sig_set>, which is inherited by the threads it spawns.
@@ -156,9 +162,11 @@ Thread_Handler::Thread_Handler (
       if (ACE_Thread::spawn (reinterpret_cast<ACE_THR_FUNC> (&Thread_Handler::svc_run),
                              static_cast<void *> (th.get ()),
                              THR_NEW_LWP | THR_DETACHED) != 0)
-        ACE_ERROR ((LM_ERROR,
-                    "%p\n",
-                    "ACE_Thread::spawn"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%p\n",
+                      "ACE_Thread::spawn"));
+        }
       else
         {
           th.release ();
@@ -179,18 +187,22 @@ Thread_Handler::notify (ACE_Time_Value *timeout)
       (this,
        ACE_Event_Handler::EXCEPT_MASK,
        timeout) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%t) %p\n",
-                       "notification::notify:exception"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%t) %p\n",
+                         "notification::notify:exception"),
+                        -1);
+    }
   else if (ACE_Reactor::instance ()->notify
             (this,
             ACE_Event_Handler::WRITE_MASK,
             timeout) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%t) %p\n",
-                       "notification::notify:write"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%t) %p\n",
+                         "notification::notify:write"),
+                        -1);
+    }
   return 0;
 }
 
@@ -219,9 +231,11 @@ Thread_Handler::handle_input (ACE_HANDLE handle)
                               10 * 1000);
 
       if (this->notify (&timeout) == -1)
-        ACE_ERROR ((LM_DEBUG,
-                    "(%t), %p\n",
-                    "notification::handle_input:notify"));
+        {
+          ACE_ERROR ((LM_DEBUG,
+                      "(%t), %p\n",
+                      "notification::handle_input:notify"));
+        }
       return 0;
     }
   else
@@ -254,9 +268,11 @@ Thread_Handler::svc ()
       ACE_Time_Value timeout (0,
                               10 * 1000);
       if (this->notify (&timeout) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    "(%t) %p\n",
-                    "notify"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%t) %p\n",
+                      "notify"));
+        }
     }
 
   ACE_Reactor::instance ()->remove_handler (this,
@@ -347,7 +363,9 @@ Thread_Handler::svc_run (void *eh)
     static_cast<Thread_Handler *> (eh));
 
   if (this_handler->svc () == 0)
-    return nullptr;
+    {
+      return nullptr;
+    }
   else
   {
     return reinterpret_cast<void *> (-1);
