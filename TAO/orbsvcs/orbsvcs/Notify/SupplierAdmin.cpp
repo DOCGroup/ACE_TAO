@@ -82,26 +82,32 @@ TAO_Notify_SupplierAdmin::load_child (ACE_CString const &type,
   TAO_Notify::Topology_Object* result = this;
   if (type == "proxy_push_consumer")
   {
-    if (DEBUG_LEVEL) ORBSVCS_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("(%P|%t) Admin reload proxy %d\n")
-      , static_cast<int> (id)
-      ));
+    if (DEBUG_LEVEL)
+      {
+        ORBSVCS_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("(%P|%t) Admin reload proxy %d\n"),
+                        static_cast<int> (id)));
+      }
     result = this->load_proxy(id, CosNotifyChannelAdmin::ANY_EVENT, attrs);
   }
   else if (type == "structured_proxy_push_consumer")
   {
-    if (DEBUG_LEVEL) ORBSVCS_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("(%P|%t) Admin reload proxy %d\n")
-      , static_cast<int> (id)
-      ));
+    if (DEBUG_LEVEL)
+      {
+        ORBSVCS_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("(%P|%t) Admin reload proxy %d\n"),
+                        static_cast<int> (id)));
+      }
     result = this->load_proxy(id, CosNotifyChannelAdmin::STRUCTURED_EVENT, attrs);
   }
   else if (type == "sequence_proxy_push_consumer")
   {
-    if (DEBUG_LEVEL) ORBSVCS_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("(%P|%t) Admin reload proxy %d\n")
-      , static_cast<int> (id)
-      ));
+    if (DEBUG_LEVEL)
+      {
+        ORBSVCS_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("(%P|%t) Admin reload proxy %d\n"),
+                        static_cast<int> (id)));
+      }
     result = this->load_proxy(id, CosNotifyChannelAdmin::SEQUENCE_EVENT, attrs);
   }
   else
