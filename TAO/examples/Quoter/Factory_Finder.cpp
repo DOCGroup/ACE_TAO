@@ -45,10 +45,12 @@ Quoter_Factory_Finder_Server::init (int argc,
                                                      argv);
 
       if (initvalue == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
-                           "init"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "%p\n",
+                             "init"),
+                            -1);
+        }
 
       // ORB_init removes ORB options, so preserve the remaining app args.
       this->argc_ = argc;
@@ -56,7 +58,9 @@ Quoter_Factory_Finder_Server::init (int argc,
       ACE_NEW_RETURN (argv_copy, ACE_TCHAR *[argc], -1);
       this->argv_.reset (argv_copy);
       for (int i = 0; i < argc; ++i)
-        this->argv_[i] = argv[i];
+        {
+          this->argv_[i] = argv[i];
+        }
 
       // Activate the POA manager
       exception_message = "While activating the POA manager";
@@ -101,8 +105,10 @@ Quoter_Factory_Finder_Server::init (int argc,
         orb_manager_.orb()->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (namingObj_var.in ()))
-        ACE_ERROR ((LM_ERROR,
-                    " (%P|%t) Unable get the Naming Service.\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      " (%P|%t) Unable get the Naming Service.\n"));
+        }
 
       // Narrow the object reference to a Naming Context.
       exception_message = "While narrowing the Naming Context";
@@ -123,8 +129,10 @@ Quoter_Factory_Finder_Server::init (int argc,
         CosNaming::NamingContext::_narrow (quoterNamingObj_var.in ());
 
       if (this->debug_level_ >= 2)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Factory Finder: Have a proper reference to the Quoter Naming Context.\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Factory Finder: Have a proper reference to the Quoter Naming Context.\n"));
+        }
 
       // Bind the QuoterFactory Finder to the IDL_Quoter naming
       // context.
@@ -140,8 +148,10 @@ Quoter_Factory_Finder_Server::init (int argc,
                                       ff_obj.in ());
 
       if (this->debug_level_ >= 2)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Factory_Finder: Bound the Quoter Factory Finder to the Quoter Naming Context.\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Factory_Finder: Bound the Quoter Factory Finder to the Quoter Naming Context.\n"));
+        }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -157,8 +167,10 @@ int
 Quoter_Factory_Finder_Server::run ()
 {
   if (this->debug_level_ >= 1)
-    ACE_DEBUG ((LM_DEBUG,
-                "\nQuoter Example: Quoter_Factory_Finder_Server is running\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "\nQuoter Example: Quoter_Factory_Finder_Server is running\n"));
+    }
 
   orb_manager_.orb()->run ();
 
@@ -175,27 +187,29 @@ Quoter_Factory_Finder_Server::parse_args ()
   int exit_code {};
 
   while ((opt = get_opt ()) != EOF)
-    switch (opt)
-      {
-      case 'd':  // debug flag.
-        this->debug_level_ = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      default:
-        exit_code = 1;
-        ACE_ERROR ((LM_ERROR,
-                    "%s: unknown arg, -%c\n",
-                    this->argv_[0], char(opt)));
-        ACE_FALLTHROUGH;
-      case '?':
-        ACE_DEBUG ((LM_DEBUG,
-                    "usage:  %s"
-                    " [-d] <debug level> - Set the debug level\n"
-                    " [-?]               - Prints this message\n"
-                    "\n",
-                    this->argv_[0]));
-        ACE_OS::exit (exit_code);
-        break;
-      }
+    {
+      switch (opt)
+        {
+          case 'd':  // debug flag.
+            this->debug_level_ = ACE_OS::atoi (get_opt.opt_arg ());
+            break;
+          default:
+            exit_code = 1;
+            ACE_ERROR ((LM_ERROR,
+                        "%s: unknown arg, -%c\n",
+                        this->argv_[0], char(opt)));
+            ACE_FALLTHROUGH;
+          case '?':
+            ACE_DEBUG ((LM_DEBUG,
+                        "usage:  %s"
+                        " [-d] <debug level> - Set the debug level\n"
+                        " [-?]               - Prints this message\n"
+                        "\n",
+                        this->argv_[0]));
+            ACE_OS::exit (exit_code);
+            break;
+        }
+    }
   return 0;
 }
 
@@ -211,7 +225,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       int const result = quoter_Factory_Finder_Server.init (argc, argv);
 
       if (result == -1)
-        return 1;
+        {
+          return 1;
+        }
       else
         {
           quoter_Factory_Finder_Server.run ();
