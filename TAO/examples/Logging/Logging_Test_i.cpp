@@ -18,16 +18,20 @@ Logger_Client::init (int argc, ACE_TCHAR *argv[])
   try
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "\nTrying to initialize orb\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "\nTrying to initialize orb\n"));
+        }
       // Initialize the ORB
       orb_ = CORBA::ORB_init (argc,
                               argv,
                               "internet");
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "\nOrb initialized successfully\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "\nOrb initialized successfully\n"));
+        }
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -38,17 +42,21 @@ Logger_Client::init (int argc, ACE_TCHAR *argv[])
       // Initialize the naming service
       int ret = this->init_naming_service ();
       if (ret != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize naming"
-                           "services.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize naming"
+                             "services.\n"),
+                            -1);
+        }
       // Create the logger instances
       ret = this->init_loggers ();
       if (ret != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize logger"
-                           "instances.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize logger"
+                             "instances.\n"),
+                            -1);
+        }
     }
   catch (CORBA::Exception const& ex)
     {
@@ -64,10 +72,12 @@ Logger_Client::init_naming_service ()
 {
   // Initialize the naming services
   if (my_name_client_.init (orb_.in ()) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       " (%P|%t) Unable to initialize "
-                       "the TAO_Naming_Client.\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         " (%P|%t) Unable to initialize "
+                         "the TAO_Naming_Client.\n"),
+                        -1);
+    }
 
   // Resolve an instance of the Logger_Factory
   CosNaming::Name factory_name (1);
@@ -77,39 +87,53 @@ Logger_Client::init_naming_service ()
   CORBA::Object_var factory_ref =
     my_name_client_->resolve (factory_name);
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "\nFactory_ref resolved\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "\nFactory_ref resolved\n"));
+    }
 
   if (CORBA::is_nil (factory_ref.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "resolved to nil object"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "resolved to nil object"),
+                        -1);
+    }
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "\nLogger_Factory resolved\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "\nLogger_Factory resolved\n"));
+    }
 
   // Narrow the factory and check the success
   factory_ =
     Logger_Factory::_narrow (factory_ref.in ());
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "\nFactory narrowed\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "\nFactory narrowed\n"));
+    }
   if (CORBA::is_nil (factory_.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "narrow returned nil"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "narrow returned nil"),
+                        -1);
+    }
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "\nLogger_Factory narrowed\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "\nLogger_Factory narrowed\n"));
+    }
 
   // If debugging, get the factory's IOR
   CORBA::String_var str =
     orb_->object_to_string (factory_.in ());
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "The factory IOR is <%s>\n",
-                str.in ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "The factory IOR is <%s>\n",
+                  str.in ()));
+    }
   return 0;
 }
 
@@ -125,18 +149,24 @@ Logger_Client::init_loggers ()
       this->logger_2_ = factory_->make_logger ("key2");
 
       if (CORBA::is_nil (this->logger_1_.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "nil logger1"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "nil logger1"),
+                            -1);
+        }
 
       if (CORBA::is_nil (this->logger_2_.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "nil logger2"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "nil logger2"),
+                            -1);
+        }
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Created two loggers\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Created two loggers\n"));
+        }
 
       if (TAO_debug_level > 0)
         {
@@ -145,11 +175,15 @@ Logger_Client::init_loggers ()
           Logger_var logger_3 = factory_->make_logger ("key1");
 
           if (CORBA::is_nil (logger_3.in ()))
-            ACE_DEBUG ((LM_DEBUG,
-                        "\nResolution failed."));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "\nResolution failed."));
+            }
           else
-            ACE_DEBUG ((LM_DEBUG,
-                        "\nResolution succeeded."));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "\nResolution succeeded."));
+            }
         }
     }
   catch (CORBA::Exception const& ex)
@@ -255,21 +289,23 @@ Logger_Client::parse_args ()
   int c;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'd':  // debug flag
-        ++TAO_debug_level;
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s"
-                           " [-d]"
-                           "\n"
-                           "    -d: increase debug level\n",
-                           this->argv_ [0]),
-                          -1);
-      }
+    {
+      switch (c)
+        {
+        case 'd':  // debug flag
+          ++TAO_debug_level;
+          break;
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage:  %s"
+                             " [-d]"
+                             "\n"
+                             "    -d: increase debug level\n",
+                             this->argv_ [0]),
+                            -1);
+        }
+    }
 
   // Indicates successful parsing of command line.
   return 0;
