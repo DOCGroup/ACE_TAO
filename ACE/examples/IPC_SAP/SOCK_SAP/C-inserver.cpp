@@ -76,10 +76,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       /* Create a new endpoint of communication */
       do
-        n_handle =
-          ACE_OS::accept (s_handle,
-                          reinterpret_cast<struct sockaddr *> (&cli_addr),
-                          &cli_addr_len);
+        {
+          n_handle =
+            ACE_OS::accept (s_handle,
+                            reinterpret_cast<struct sockaddr *> (&cli_addr),
+                            &cli_addr_len);
+        }
       while (n_handle == ACE_INVALID_HANDLE && errno == EINTR);
 
       if (n_handle == ACE_INVALID_HANDLE)
@@ -93,7 +95,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                   addr_len, AF_INET);
 
       if (hp != nullptr)
-        ACE_OS::printf ("client %s\n", hp->h_name), ACE_OS::fflush (stdout);
+        {
+          ACE_OS::printf ("client %s\n", hp->h_name), ACE_OS::fflush (stdout);
+        }
       else
       {
         ACE_OS::perror (ACE_TEXT("gethostbyaddr"));
@@ -102,9 +106,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       /* Read data from client (terminate on error) */
 
       while ((r_bytes = ACE_OS::recv (n_handle, buf, sizeof buf)) > 0)
-        if (ACE_OS::write (ACE_STDOUT, buf, r_bytes) != r_bytes)
         {
-          ACE_OS::perror (ACE_TEXT("write")), ACE_OS::exit (1);
+          if (ACE_OS::write (ACE_STDOUT, buf, r_bytes) != r_bytes)
+            {
+              ACE_OS::perror (ACE_TEXT("write")), ACE_OS::exit (1);
+            }
         }
 
       if (ACE_OS::send (n_handle, "", 1) != 1)
