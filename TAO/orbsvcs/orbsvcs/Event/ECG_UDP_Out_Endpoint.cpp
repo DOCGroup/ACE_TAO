@@ -82,7 +82,9 @@ TAO_ECG_UDP_Out_Endpoint::operator= (TAO_ECG_UDP_Out_Endpoint const &rhs)
           this->ifs_.reset (ifs);
           this->if_count_ = rhs.if_count_;
           for (size_t i {}; i < this->if_count_; ++i)
-            this->ifs_[i] = rhs.ifs_[i];
+            {
+              this->ifs_[i] = rhs.ifs_[i];
+            }
         }
     }
 
