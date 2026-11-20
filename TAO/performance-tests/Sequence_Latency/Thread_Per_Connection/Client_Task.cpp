@@ -20,17 +20,29 @@ Client_Task::svc ()
       this->validate_connection ();
 
       if (ACE_OS::strcmp (this->data_type_, ACE_TEXT("octet")) == 0)
+      {
         this->test_sequence<Test::octet_load> (&Test::Roundtrip::test_octet_method);
+      }
       else if (ACE_OS::strcmp (this->data_type_, ACE_TEXT("long")) == 0)
+      {
         this->test_sequence<Test::long_load> (&Test::Roundtrip::test_long_method);
+      }
       else if (ACE_OS::strcmp (this->data_type_, ACE_TEXT("short")) == 0)
+      {
         this->test_sequence<Test::short_load> (&Test::Roundtrip::test_short_method);
+      }
       else if (ACE_OS::strcmp (this->data_type_, ACE_TEXT("char")) == 0)
+      {
         this->test_sequence<Test::char_load> (&Test::Roundtrip::test_char_method);
+      }
       else if (ACE_OS::strcmp (this->data_type_, ACE_TEXT("longlong")) == 0)
+      {
         this->test_sequence<Test::longlong_load> (&Test::Roundtrip::test_longlong_method);
+      }
       else if (ACE_OS::strcmp (this->data_type_, ACE_TEXT("double")) == 0)
+      {
         this->test_sequence<Test::double_load> (&Test::Roundtrip::test_double_method);
+      }
     }
   catch (CORBA::Exception const &)
     {

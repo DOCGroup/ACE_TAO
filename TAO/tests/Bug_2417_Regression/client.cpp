@@ -10,6 +10,7 @@ parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior)
   int c {};
 
   while ((c = get_opts ()) != -1)
+  {
     switch (c)
       {
       case 'k':
@@ -25,6 +26,7 @@ parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior)
                            argv [0]),
                           -1);
       }
+  }
   // Indicates successful parsing of the command line
   return 0;
 }
@@ -59,9 +61,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Object_var const poa_object = orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
+      }
 
       PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -85,9 +89,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ThreadPool pool (orb.in ());
       if (pool.activate (THR_NEW_LWP | THR_JOINABLE, 5) != 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot activate client threads\n"),
                           1);
+      }
 
       pool.thr_mgr ()->wait ();
 

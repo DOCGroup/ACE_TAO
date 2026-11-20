@@ -14,6 +14,7 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
   int c {};
 
   while ((c = get_opts ()) != -1)
+  {
     switch (c)
       {
       case 'k':
@@ -32,6 +33,7 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
                            argv [0]),
                           -1);
       }
+  }
   return 0;
 }
 

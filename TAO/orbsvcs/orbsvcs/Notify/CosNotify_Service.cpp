@@ -143,9 +143,13 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
                       (ACE_TEXT("-DefaultConsumerAdminFilterOp"));
         CosNotifyChannelAdmin::InterFilterGroupOperator op = CosNotifyChannelAdmin::OR_OP;
         if (current_arg != nullptr && (ACE_OS::strcmp(ACE_TEXT ("AND"), current_arg) == 0))
+        {
                       op = CosNotifyChannelAdmin::AND_OP;
+        }
         else if (current_arg != nullptr && (ACE_OS::strcmp(ACE_TEXT ("OR"), current_arg) == 0))
+        {
                       op = CosNotifyChannelAdmin::OR_OP;
+        }
         else
           {
             ORBSVCS_DEBUG ((LM_DEBUG,
@@ -163,9 +167,13 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
                       (ACE_TEXT("-DefaultSupplierAdminFilterOp"));
         CosNotifyChannelAdmin::InterFilterGroupOperator op = CosNotifyChannelAdmin::OR_OP;
         if (current_arg != nullptr && (ACE_OS::strcmp(ACE_TEXT ("AND"), current_arg) == 0))
+        {
                       op = CosNotifyChannelAdmin::AND_OP;
+        }
         else if (current_arg != nullptr && (ACE_OS::strcmp(ACE_TEXT ("OR"), current_arg) == 0))
+        {
                       op = CosNotifyChannelAdmin::OR_OP;
+        }
         else
           {
             ORBSVCS_DEBUG ((LM_DEBUG,
@@ -415,8 +423,10 @@ TAO_CosNotify_Service::init_i (CORBA::ORB_ptr orb)
     orb->resolve_initial_references("RootPOA");
 
   if (CORBA::is_nil (object.in ()))
+  {
     ORBSVCS_ERROR ((LM_ERROR,
                 " (%P|%t) Unable to resolve the RootPOA.\n"));
+  }
 
   PortableServer::POA_var default_poa = PortableServer::POA::_narrow (object.in ());
 

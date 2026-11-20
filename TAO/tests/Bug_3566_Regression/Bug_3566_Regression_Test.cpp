@@ -33,11 +33,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       std::vector<ACE_TCHAR *> largv (argc + extra_argc + 1, nullptr);
       for (int index {}; index < argc; ++index)
+      {
         largv[index] = argv[index];
+      }
 
       std::vector<ACE_TCHAR *> second_largv (argc + second_extra_argc + 1, nullptr);
       for (int index {}; index < argc; ++index)
+      {
         second_largv[index] = argv[index];
+      }
 
       for (size_t index {}; index < extra_argc; ++index)
         {
@@ -80,11 +84,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
   if (result == 0)
+  {
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("Test passed!")));
+  }
   else
+  {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("Test failed. Result: %d\n"),
                 result));
+  }
   return result;
 }
