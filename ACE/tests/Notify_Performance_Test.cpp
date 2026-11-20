@@ -72,14 +72,18 @@ client (void *arg)
   // To pass or not to pass is the question
   Handler *handler {};
   if (!opt_pass_notify_data)
-    handler = nullptr;
+    {
+      handler = nullptr;
+    }
   else
   {
     handler = (Handler *) arg;
   }
 
   for (int i = 0; i < opt_nloops; ++i)
-    ACE_Reactor::instance ()->notify (handler);
+    {
+      ACE_Reactor::instance ()->notify (handler);
+    }
 
   if (--thread_counter == 0)
   {
@@ -122,11 +126,17 @@ print_results (ACE_Profile_Timer::ACE_Elapsed_Time &et)
 {
   const ACE_TCHAR *reactor_type {};
   if (opt_wfmo_reactor)
-    reactor_type = ACE_TEXT ("WFMO_Reactor");
+    {
+      reactor_type = ACE_TEXT ("WFMO_Reactor");
+    }
   else if (opt_select_reactor)
-    reactor_type = ACE_TEXT ("Select_Reactor");
+    {
+      reactor_type = ACE_TEXT ("Select_Reactor");
+    }
   else if (opt_dev_poll_reactor)
-    reactor_type = ACE_TEXT ("Dev_Poll_Reactor");
+    {
+      reactor_type = ACE_TEXT ("Dev_Poll_Reactor");
+    }
   else
   {
     reactor_type = ACE_TEXT ("Platform's default Reactor");
@@ -144,11 +154,15 @@ print_results (ACE_Profile_Timer::ACE_Elapsed_Time &et)
               ACE_TEXT ("\tIteration per thread: %d\n"),
               opt_nloops));
   if (opt_pass_notify_data)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("\tData was passed in the notify() call\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("\tData was passed in the notify() call\n")));
+    }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("\tNo data was passed in the notify() call\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("\tNo data was passed in the notify() call\n")));
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\n\tTiming results notify() call:\n")));
@@ -168,28 +182,30 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("pswdc:l:"));
 
   for (int c; (c = getopt ()) != -1; )
-    switch (c)
-      {
-  //FUZZ: enable check_for_lack_ACE_OS
-      case 'p':
-        opt_dev_poll_reactor = 1;
-        break;
-      case 's':
-        opt_select_reactor = 1;
-        break;
-      case 'w':
-        opt_wfmo_reactor = 1;
-        break;
-      case 'c':
-        opt_nthreads = ACE_OS::atoi (getopt.opt_arg ());
-        break;
-      case 'l':
-        opt_nloops = ACE_OS::atoi (getopt.opt_arg ());
-        break;
-      case 'd':
-        opt_pass_notify_data = 1;
-        break;
-      }
+    {
+      switch (c)
+        {
+        //FUZZ: enable check_for_lack_ACE_OS
+        case 'p':
+          opt_dev_poll_reactor = 1;
+          break;
+        case 's':
+          opt_select_reactor = 1;
+          break;
+        case 'w':
+          opt_wfmo_reactor = 1;
+          break;
+        case 'c':
+          opt_nthreads = ACE_OS::atoi (getopt.opt_arg ());
+          break;
+        case 'l':
+          opt_nloops = ACE_OS::atoi (getopt.opt_arg ());
+          break;
+        case 'd':
+          opt_pass_notify_data = 1;
+          break;
+        }
+    }
 
   // Sets up the correct reactor (based on platform and options)
   create_reactor ();
