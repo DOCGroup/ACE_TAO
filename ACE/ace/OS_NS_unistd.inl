@@ -194,9 +194,13 @@ ACE_OS::dup (ACE_HANDLE handle)
                         0,
                         TRUE,
                         DUPLICATE_SAME_ACCESS))
-    return new_fd;
+    {
+      return new_fd;
+    }
   else
-    ACE_FAIL_RETURN (ACE_INVALID_HANDLE);
+    {
+      ACE_FAIL_RETURN (ACE_INVALID_HANDLE);
+    }
   /* NOTREACHED */
 #else
   return ::dup (handle);
@@ -228,7 +232,9 @@ ACE_OS::dup(ACE_HANDLE handle, pid_t pid)
       return new_fd;
     }
   else
-    ACE_FAIL_RETURN (ACE_INVALID_HANDLE);
+    {
+      ACE_FAIL_RETURN (ACE_INVALID_HANDLE);
+    }
   /*NOTREACHED*/
 #else
   ACE_UNUSED_ARG (pid);
@@ -369,9 +375,13 @@ ACE_OS::ftruncate (ACE_HANDLE handle, ACE_OFF_T offset)
   LARGE_INTEGER loff;
   loff.QuadPart = offset;
   if (::SetFilePointerEx (handle, loff, 0, FILE_BEGIN))
-    ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::SetEndOfFile (handle), ace_result_), int, -1);
+    {
+      ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::SetEndOfFile (handle), ace_result_), int, -1);
+    }
   else
-    ACE_FAIL_RETURN (-1);
+    {
+      ACE_FAIL_RETURN (-1);
+    }
 #elif defined (ACE_LACKS_FTRUNCATE)
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (offset);
@@ -548,7 +558,9 @@ ACE_OS::hostname (char name[], size_t maxnamelen)
   ACE_utsname host_info;
 
   if (ACE_OS::uname (&host_info) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       ACE_OS::strsncpy (name, host_info.nodename, maxnamelen);
@@ -643,9 +655,13 @@ ACE_OS::lseek (ACE_HANDLE handle, ACE_OFF_T offset, int whence)
   DWORD const result =
     ::SetFilePointer (handle, low_offset, &high_offset, whence);
   if (result == INVALID_SET_FILE_POINTER && GetLastError() != NO_ERROR)
-    ACE_FAIL_RETURN (static_cast<ACE_OFF_T> (-1));
+    {
+      ACE_FAIL_RETURN (static_cast<ACE_OFF_T> (-1));
+    }
   else
-    return result;
+    {
+      return result;
+    }
 #elif defined (ACE_MQX)
   switch (whence)
     {
