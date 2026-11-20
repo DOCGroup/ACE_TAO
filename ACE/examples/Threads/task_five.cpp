@@ -74,8 +74,10 @@ int
 Test_Task::svc ()
 {
   while (thr_mgr_->testcancel (ACE_OS::thr_self ()) == 0)
-    // Sleep for 350 msecs.
-    ACE_OS::sleep (ACE_Time_Value (0, 350000));
+    {
+      // Sleep for 350 msecs.
+      ACE_OS::sleep (ACE_Time_Value (0, 350000));
+    }
 
   return 0;
 }
@@ -117,7 +119,9 @@ work (ACE_Thread_Manager *thr_mgr,
   for (i = 0;
        i < n_tasks;
        ++i)
-    task_array[i].open ();
+    {
+      task_array[i].open ();
+    }
 
   ACE_OS::sleep (1);
 
@@ -127,7 +131,9 @@ work (ACE_Thread_Manager *thr_mgr,
               error_count));
 
   for (i = 0; i < n_tasks; ++i)
-    task_array[i].shutdown ();
+    {
+      task_array[i].shutdown ();
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "Synching Tasks, loop count = %d, error count = %d\n",
@@ -137,14 +143,16 @@ work (ACE_Thread_Manager *thr_mgr,
   for (i = 0;
 
        i < n_tasks; ++i)
-    if (-1 == task_array[i].synch ())
-      {
-        ACE_ERROR ((LM_ERROR,
-                    "Error in synch! loop count = %d, error count = %d\n",
-                    loop_count,
-                    error_count));
-        ++error_count;
-      }
+    {
+      if (-1 == task_array[i].synch ())
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "Error in synch! loop count = %d, error count = %d\n",
+                      loop_count,
+                      error_count));
+          ++error_count;
+        }
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "thr_mgr->wait ();! loop count = %d, error count = %d\n",
@@ -165,9 +173,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   u_int iterations = argc > 3 ? ACE_OS::atoi (argv[3]) : DEFAULT_ITERATIONS;
 
   for (u_int i = 0; i < iterations; ++i)
-    work (ACE_Thread_Manager::instance (),
-          n_tasks,
-          stack_size);
+    {
+      work (ACE_Thread_Manager::instance (),
+            n_tasks,
+            stack_size);
+    }
 
   return 0;
 }

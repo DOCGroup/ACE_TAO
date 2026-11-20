@@ -289,8 +289,10 @@ ACE_Future<std::string>
 Scheduler::name ()
 {
   if (this->scheduler_)
-    // Delegate to the Scheduler.
-    return this->scheduler_->name ();
+    {
+      // Delegate to the Scheduler.
+      return this->scheduler_->name ();
+    }
   else
     {
       ACE_Future<std::string> new_future;

@@ -55,24 +55,26 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opt ()) != -1)
-    switch (c)
     {
-    case 'r':
-      n_readers = ACE_OS::atoi (get_opt.opt_arg ());
-      break;
-    case 'w':
-      n_writers = ACE_OS::atoi (get_opt.opt_arg ());
-      break;
-    case 'n':
-      n_iterations = ACE_OS::atoi (get_opt.opt_arg ());
-      break;
-    case 'l':
-      n_loops = ACE_OS::atoi (get_opt.opt_arg ());
-      break;
-    default:
-      print_usage_and_die ();
-      break;
-  }
+      switch (c)
+        {
+        case 'r':
+          n_readers = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'w':
+          n_writers = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'n':
+          n_iterations = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'l':
+          n_loops = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        default:
+          print_usage_and_die ();
+          break;
+        }
+    }
 }
 
 // Iterate <n_iterations> each time checking that nobody modifies the
@@ -102,8 +104,10 @@ reader (void *)
           ACE_Thread::yield();
 
           if (ACE_OS::thr_equal (shared_thr_id, thr_id) == 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        "(%t) somebody changed the shared thread id\n"));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "(%t) somebody changed the shared thread id\n"));
+            }
         }
 
       current_readers.fetch_sub (1, std::memory_order_relaxed);
@@ -147,8 +151,10 @@ writer (void *)
           ACE_Thread::yield();
 
           if (ACE_OS::thr_equal (shared_thr_id, self) == 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        "(%t) somebody wrote while a different thread id was recorded\n"));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "(%t) somebody wrote while a different thread id was recorded\n"));
+            }
         }
 
       current_writers.fetch_sub (1, std::memory_order_relaxed);

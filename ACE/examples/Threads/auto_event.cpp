@@ -97,7 +97,9 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
 
   // Wait for both.
   if (tm.wait () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "thread wait failed"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "thread wait failed"), -1);
+    }
   else
   {
     ACE_DEBUG ((LM_ERROR, "graceful exit\n"));

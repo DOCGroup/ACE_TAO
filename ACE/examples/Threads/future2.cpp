@@ -292,8 +292,10 @@ ACE_Future<std::string>
 Scheduler::name ()
 {
   if (this->scheduler_)
-    // Delegate to the other scheduler
-    return this->scheduler_->name ();
+    {
+      // Delegate to the other scheduler
+      return this->scheduler_->name ();
+    }
   else
     {
       ACE_Future<std::string> new_future;
@@ -324,7 +326,9 @@ ACE_Future<u_long>
 Scheduler::work (u_long newparam, int newcount)
 {
   if (this->scheduler_)
-    return this->scheduler_->work (newparam, newcount);
+    {
+      return this->scheduler_->work (newparam, newcount);
+    }
   else
     {
       ACE_Future<u_long> new_future;
@@ -526,7 +530,9 @@ test_timeout (int n_iterations)
   fresulta.get (resulta, &delay);
 
   if (fresulta.ready ())
-    ACE_DEBUG ((LM_DEBUG," (%t) ERROR: future A is should not be ready!!!\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG," (%t) ERROR: future A is should not be ready!!!\n"));
+    }
   else
   {
     ACE_DEBUG ((LM_DEBUG," (%t) timed out on future A\n"));

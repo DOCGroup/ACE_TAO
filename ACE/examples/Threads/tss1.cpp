@@ -60,11 +60,15 @@ Tester<ACE_SYNCH_USE>::svc ()
   TSS_Error->error (1);
 
   for (int i = 0; i < iterations; ++i)
-    // Print out every tenth iteration.
-    if ((i % 10) == 1)
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%t) error = %d\n",
-                  TSS_Error->error ()));
+    {
+      // Print out every tenth iteration.
+      if ((i % 10) == 1)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%t) error = %d\n",
+                      TSS_Error->error ()));
+        }
+    }
   this->close ();
 
   return 0;
@@ -126,9 +130,11 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   // Keep looping until <Tester::close> finishes.
   while (close_started != 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "(%t) error = %d\n",
-                TSS_Error->error ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%t) error = %d\n",
+                  TSS_Error->error ()));
+    }
   return 0;
 }
 #else
