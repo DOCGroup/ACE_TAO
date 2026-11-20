@@ -34,8 +34,12 @@ TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const char* 
     RTCORBA::CLIENT_PROPAGATED : RTCORBA::SERVER_DECLARED;
 
   if (TAO_debug_level > 0)
-    ORBSVCS_DEBUG ((LM_DEBUG, "Priority Model = %d, Server prio = %d\n"
-                , tp_params.priority_model, tp_params.server_priority));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      "Priority Model = %d, Server prio = %d\n",
+                      tp_params.priority_model,
+                      tp_params.server_priority));
+    }
 
   policy_list.length (3);
   policy_list[2] =
@@ -43,8 +47,12 @@ TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const char* 
                                           tp_params.server_priority);
 
   if (TAO_debug_level > 0)
-    ORBSVCS_DEBUG ((LM_DEBUG, "Creating threadpool: static threads = %d, def. prio = %d\n"
-                , tp_params.static_threads, tp_params.default_priority));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      "Creating threadpool: static threads = %d, def. prio = %d\n",
+                      tp_params.static_threads,
+                      tp_params.default_priority));
+    }
 
   // Create the thread-pool.
   RTCORBA::ThreadpoolId threadpool_id =

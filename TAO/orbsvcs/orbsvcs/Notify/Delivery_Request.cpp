@@ -27,16 +27,22 @@ Delivery_Request::Delivery_Request (const Routing_Slip_Ptr & routing_slip, size_
   : routing_slip_ (routing_slip)
   , request_id_ (request_id)
 {
-  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("(%P|%t) Delivery_Request:: constructor\n")
-      ));
+  if (DEBUG_LEVEL > 8)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) Delivery_Request:: constructor\n")
+                      ));
+    }
 }
 
 Delivery_Request::~Delivery_Request ()
 {
-  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("(%P|%t) Delivery_Request:: destructor\n")
-      ));
+  if (DEBUG_LEVEL > 8)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) Delivery_Request:: destructor\n")
+                      ));
+    }
 }
 
 // DO NOT INLINE THIS.  It uses the Routing_Slip_Ptr which cannot be declared at

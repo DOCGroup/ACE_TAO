@@ -189,10 +189,12 @@ TAO_Notify_Admin::load_child (ACE_CString const &type,
   if (type == "subscriptions")
     {
       if (DEBUG_LEVEL)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) Admin reload subscription %d\n"),
-                    static_cast<int> (id)
-                    ));
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) Admin reload subscription %d\n"),
+                          static_cast<int> (id)
+                          ));
+        }
       // since we initialized our subscribed types to everything
       // in the constructor. we have to clear it out first.
       this->subscribed_types_.clear ();
@@ -201,10 +203,12 @@ TAO_Notify_Admin::load_child (ACE_CString const &type,
   else if (type == "filter_admin")
     {
       if (DEBUG_LEVEL)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) Admin reload filter_admin %d\n"),
-                    static_cast<int> (id)
-                    ));
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) Admin reload filter_admin %d\n"),
+                          static_cast<int> (id)
+                          ));
+        }
       result = std::addressof (this->filter_admin_);
     }
   return result;

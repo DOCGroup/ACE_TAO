@@ -8,7 +8,9 @@ ACE_INLINE TAO_Notify_Property_Boolean&
 TAO_Notify_Property_Boolean::operator= (const TAO_Notify_Property_Boolean& rhs)
 {
   if (this == std::addressof (rhs))
-    return *this;
+    {
+      return *this;
+    }
 
   if (rhs.is_valid ())
     {
