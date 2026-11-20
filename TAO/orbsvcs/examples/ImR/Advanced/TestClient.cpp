@@ -40,7 +40,11 @@ int TestClient::parseCommands (int argc, ACE_TCHAR *argv[])
     case 'r':
       {
         ACE_TCHAR const *opt = get_opts.opt_arg ();
-        if (opt[0] == 'r') { options_.random_requests = true; opt++; }
+        if (opt[0] == 'r')
+          {
+            options_.random_requests = true;
+            ++opt;
+          }
         options_.request_count = ACE_OS::atoi (opt);
         break;
       }
