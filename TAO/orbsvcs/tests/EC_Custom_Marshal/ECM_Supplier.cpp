@@ -40,9 +40,11 @@ ECMS_Driver::run (int argc, ACE_TCHAR* argv[])
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            1);
+        }
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -96,12 +98,16 @@ ECMS_Driver::run (int argc, ACE_TCHAR* argv[])
                                                   ACE_SCOPE_PROCESS)) != 0)
         {
           if (ACE_OS::last_error () == EPERM)
-            ACE_DEBUG ((LM_DEBUG,
-                        "%s: user is not superuser, "
-                        "so remain in time-sharing class\n", argv[0]));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "%s: user is not superuser, "
+                          "so remain in time-sharing class\n", argv[0]));
+            }
           else
-            ACE_ERROR ((LM_ERROR,
-                        "%s: ACE_OS::sched_params failed\n", argv[0]));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "%s: ACE_OS::sched_params failed\n", argv[0]));
+            }
         }
 
       if (ACE_OS::thr_setprio (min_priority) == -1)
@@ -113,9 +119,11 @@ ECMS_Driver::run (int argc, ACE_TCHAR* argv[])
       CORBA::Object_var naming_obj =
         orb->resolve_initial_references ("NameService");
       if (CORBA::is_nil (naming_obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to get the Naming Service.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to get the Naming Service.\n"),
+                            1);
+        }
 
       CosNaming::NamingContext_var naming_context =
         CosNaming::NamingContext::_narrow (naming_obj.in ());
@@ -129,7 +137,9 @@ ECMS_Driver::run (int argc, ACE_TCHAR* argv[])
 
       RtecEventChannelAdmin::EventChannel_var channel;
       if (CORBA::is_nil (ec_obj.in ()))
-        channel = RtecEventChannelAdmin::EventChannel::_nil ();
+        {
+          channel = RtecEventChannelAdmin::EventChannel::_nil ();
+        }
       else
       {
         channel = RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in ());
@@ -237,9 +247,13 @@ ECMS_Driver::supplier_task (Test_Supplier& supplier)
           ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time, t);
 
           if (i == static_cast<CORBA::Long> (this->event_count_) - 1)
-            event[0].header.type = ACE_ES_EVENT_SHUTDOWN;
+            {
+              event[0].header.type = ACE_ES_EVENT_SHUTDOWN;
+            }
           else if (i % 2 == 0)
-            event[0].header.type = this->event_a_;
+            {
+              event[0].header.type = this->event_a_;
+            }
           else
           {
             event[0].header.type = this->event_b_;
@@ -350,9 +364,11 @@ ECMS_Driver::parse_args (int argc, ACE_TCHAR *argv [])
             char* second = ACE_OS::strtok_r (nullptr, ",", &state);
             char* extra = ACE_OS::strtok_r (nullptr, ",", &state);
             if (first == nullptr || second == nullptr || extra != nullptr)
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "Expected two comma-separated event types\n"),
-                                -1);
+              {
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "Expected two comma-separated event types\n"),
+                                  -1);
+              }
 
             this->event_a_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (first);
             this->event_b_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (second);
