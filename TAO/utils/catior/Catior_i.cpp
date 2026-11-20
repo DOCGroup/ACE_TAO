@@ -53,7 +53,6 @@ Catior_i::decode (const ACE_CString& aString, ACE_CString& output)
   constexpr char iiop_prefix[] = "iiop:";
   constexpr char poop_prefix[] = ":IR:";
 
-  std::unique_ptr<char[]> str;
   CORBA::Boolean b {};
   if (aString.find (ior_prefix) == 0)
     {
@@ -65,7 +64,7 @@ Catior_i::decode (const ACE_CString& aString, ACE_CString& output)
         aString.substring (prefix_length,
                            aString.length () - prefix_length);
       subString[subString.length ()] = '\0';
-      str.reset (subString.rep ());
+      std::unique_ptr<char[]> str (subString.rep ());
       b = catior (str.get ());
     }
   else if (aString.find (iiop_prefix) == 0)
@@ -76,14 +75,14 @@ Catior_i::decode (const ACE_CString& aString, ACE_CString& output)
       ACE_CString subString =
         aString.substring (prefix_length,
                            aString.length () - prefix_length);
-      str.reset (subString.rep ());
+      std::unique_ptr<char[]> str (subString.rep ());
       b = catiiop (str.get ());
     }
   else if (aString.find (poop_prefix) != ACE_CString::npos)
     {
       buffer_ += "Decoding a POOP IOR\n";
 
-      str.reset (aString.rep ());
+      std::unique_ptr<char[]> str (aString.rep ());
       b = catpoop (str.get ());
     }
   else
