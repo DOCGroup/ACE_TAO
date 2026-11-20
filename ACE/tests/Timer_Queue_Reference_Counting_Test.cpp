@@ -64,21 +64,27 @@ Reference_Counted_Event_Handler::Reference_Counted_Event_Handler (int expected_n
     (ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
 
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                "Reference count in Reference_Counted_Event_Handler() is %q\n",
-                static_cast<ACE_INT64> (this->reference_count_.load ())));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Reference count in Reference_Counted_Event_Handler() is %q\n",
+                  static_cast<ACE_INT64> (this->reference_count_.load ())));
+    }
 }
 
 Reference_Counted_Event_Handler::~Reference_Counted_Event_Handler ()
 {
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                "Reference count in ~Reference_Counted_Event_Handler() is %q\n",
-                static_cast<ACE_INT64> (this->reference_count_.load ())));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Reference count in ~Reference_Counted_Event_Handler() is %q\n",
+                  static_cast<ACE_INT64> (this->reference_count_.load ())));
+    }
 
   if (this->expected_number_of_handle_close_calls_ != -1)
-    ACE_TEST_ASSERT (this->number_of_handle_close_calls_ ==
-                this->expected_number_of_handle_close_calls_);
+    {
+      ACE_TEST_ASSERT (this->number_of_handle_close_calls_ ==
+                       this->expected_number_of_handle_close_calls_);
+    }
 }
 
 int
@@ -86,10 +92,12 @@ Reference_Counted_Event_Handler::handle_timeout (const ACE_Time_Value &,
                                                  const void *arg)
 {
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                "Reference count in Reference_Counted_Event_Handler::handle_timeout() for arg = %C is %q\n",
-                (const char *) arg,
-                static_cast<ACE_INT64> (this->reference_count_.load ())));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Reference count in Reference_Counted_Event_Handler::handle_timeout() for arg = %C is %q\n",
+                  (const char *) arg,
+                  static_cast<ACE_INT64> (this->reference_count_.load ())));
+    }
 
   return 0;
 }
@@ -99,12 +107,14 @@ Reference_Counted_Event_Handler::handle_close (ACE_HANDLE handle,
                                                ACE_Reactor_Mask masks)
 {
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                "Reference_Counted_Event_Handler::handle_close() called with handle = %@ and masks = %Q. "
-                "Reference count is %q\n",
-                reinterpret_cast<void *> (handle),
-                static_cast<ACE_UINT64> (masks),
-                static_cast<ACE_INT64> (this->reference_count_.load ())));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Reference_Counted_Event_Handler::handle_close() called with handle = %@ and masks = %Q. "
+                  "Reference count is %q\n",
+                  reinterpret_cast<void *> (handle),
+                  static_cast<ACE_UINT64> (masks),
+                  static_cast<ACE_INT64> (this->reference_count_.load ())));
+    }
 
   ++this->number_of_handle_close_calls_;
 
@@ -125,9 +135,13 @@ cancellation (ACE_Timer_Queue &timer_queue,
   if (!dont_call_handle_close)
     {
       if (cancel_handler)
-        expected_number_of_handle_close_calls = 1;
+        {
+          expected_number_of_handle_close_calls = 1;
+        }
       else if (second_timer)
-        expected_number_of_handle_close_calls = 2;
+        {
+          expected_number_of_handle_close_calls = 2;
+        }
       else
       {
         expected_number_of_handle_close_calls = 1;
@@ -177,7 +191,9 @@ cancellation (ACE_Timer_Queue &timer_queue,
                             dont_call_handle_close);
 
       if (second_timer)
-        ACE_TEST_ASSERT (result == 2);
+        {
+          ACE_TEST_ASSERT (result == 2);
+        }
       else
       {
         ACE_TEST_ASSERT (result == 1);
@@ -363,15 +379,19 @@ public:
 Simple_Event_Handler::Simple_Event_Handler ()
 {
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                "Simple_Event_Handler()\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Simple_Event_Handler()\n"));
+    }
 }
 
 Simple_Event_Handler::~Simple_Event_Handler ()
 {
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                "~Simple_Event_Handler()\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "~Simple_Event_Handler()\n"));
+    }
 }
 
 int
@@ -379,9 +399,11 @@ Simple_Event_Handler::handle_timeout (const ACE_Time_Value &,
                                       const void *arg)
 {
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                "Simple_Event_Handler::handle_timeout() for arg = %C\n",
-                (const char *) arg));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Simple_Event_Handler::handle_timeout() for arg = %C\n",
+                  (const char *) arg));
+    }
   return 0;
 }
 
@@ -390,10 +412,12 @@ Simple_Event_Handler::handle_close (ACE_HANDLE handle,
                                     ACE_Reactor_Mask masks)
 {
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                "Simple_Event_Handler::handle_close() called with handle = %@ and masks = %Q.\n",
-                reinterpret_cast<void *> (handle),
-                static_cast<ACE_UINT64> (masks)));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Simple_Event_Handler::handle_close() called with handle = %@ and masks = %Q.\n",
+                  reinterpret_cast<void *> (handle),
+                  static_cast<ACE_UINT64> (masks)));
+    }
 
   delete this;
 
