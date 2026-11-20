@@ -13,10 +13,14 @@ Fault_Detector_T<ACCEPTOR, CONNECTOR, DETECTION_HANDLER>::init_acceptor()
 {
   typename CONNECTOR::PEER_ADDR listen_addr;
   if (acceptor_.open(listen_addr, std::addressof (reactor_task_.reactor_)) != 0)
-    ORBSVCS_ERROR_RETURN((LM_ERROR, "Connot open acceptor\n"), -1);
+    {
+      ORBSVCS_ERROR_RETURN((LM_ERROR, "Connot open acceptor\n"), -1);
+    }
 
   if (acceptor_.acceptor().get_local_addr(listen_addr) !=0)
-    ORBSVCS_ERROR_RETURN((LM_ERROR, "Connot get local addr\n"), -1);
+    {
+      ORBSVCS_ERROR_RETURN((LM_ERROR, "Connot get local addr\n"), -1);
+    }
 
   ORBSVCS_DEBUG((LM_DEBUG, "listening at %s:%d\n", listen_addr.get_host_name(),
                                                listen_addr.get_port_number()));
@@ -34,7 +38,9 @@ Fault_Detector_T<ACCEPTOR, CONNECTOR, DETECTION_HANDLER>::connect(
   FTRT::Location const& location)
 {
     if (location.length() == 0)
-      return -1;
+      {
+        return -1;
+      }
 
     typename CONNECTOR::PEER_ADDR prev_addr(location[0].id);
 
@@ -47,9 +53,13 @@ Fault_Detector_T<ACCEPTOR, CONNECTOR, DETECTION_HANDLER>::connect(
     int result = connector_.connect(handler->peer(), prev_addr);
 
     if (result == 0)
-      handler->open(this);
+      {
+        handler->open(this);
+      }
     else
-      handler->close();
+      {
+        handler->close();
+      }
 
     return result ;
 }
