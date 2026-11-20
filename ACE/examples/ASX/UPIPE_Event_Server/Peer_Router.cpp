@@ -27,7 +27,8 @@ Acceptor_Factory<PH, PK>::init (int argc, ACE_TCHAR *argv[])
   ACE_UPIPE_Addr addr;
 
   for (int c {}; (c = get_opt ()) != -1; )
-    switch (c)
+    {
+      switch (c)
       {
       case 'f':
         addr.set (get_opt.opt_arg ());
@@ -37,9 +38,12 @@ Acceptor_Factory<PH, PK>::init (int argc, ACE_TCHAR *argv[])
       default:
         break;
       }
+    }
 
   if (this->open (addr, ACE_Reactor::instance ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")), -1);
+    }
   return 0;
 }
 
@@ -82,13 +86,17 @@ Peer_Handler<ROUTER, KEY>::svc ()
       ssize_t const n = this->peer ().recv (db->rd_ptr (), db->size ());
 
       if (n == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("recv failed")), -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("recv failed")), -1);
+        }
       else if (n == 0) // Client has closed down the connection.
         {
           if (this->router_task_->unbind_peer (this->get_handle ()) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                               ACE_TEXT ("unbind failed")), -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                                 ACE_TEXT ("unbind failed")), -1);
+            }
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) shutting down\n")));
           return -1; // We do not need to be deregistered by reactor
           // as we were not registered at all
@@ -128,18 +136,26 @@ Peer_Handler<ROUTER, KEY>::open (void *a)
   ACE_TCHAR buf[BUFSIZ], *p = buf;
 
   if (this->router_task_->info (&p, sizeof buf) != -1)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) creating handler for %s, fd = %@, this = %@\n"),
-                buf, reinterpret_cast<void *> (this->get_handle ()), a));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) creating handler for %s, fd = %@, this = %@\n"),
+                  buf, reinterpret_cast<void *> (this->get_handle ()), a));
+    }
   else
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("info")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("info")), -1);
+    }
 
   if ( this->activate (options.t_flags ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("activation of thread failed")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("activation of thread failed")), -1);
+    }
   else if (this->router_task_->bind_peer (this->get_handle (), this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("bind_peer")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("bind_peer")), -1);
+    }
   return 0;
 }
 
@@ -178,8 +194,10 @@ Peer_Router<PH, PK>::send_peers (ACE_Message_Block *mb)
        map_iter.advance ())
     {
       if (options.debug ())
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) sending to peer via sd %d\n"),
-                    ss->ext_id_));
+        {
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) sending to peer via sd %d\n"),
+                      ss->ext_id_));
+        }
 
       ++iterations;
       bytes += ss->int_id_->put (data_block);
@@ -234,21 +252,27 @@ Peer_Router<PH, PK>::init (int argc, ACE_TCHAR *argv[])
 
   if (this->acceptor_->init (argc, argv) == -1
       || this->peer_map_.open () == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       ACE_UPIPE_Addr addr;
       ACE_UPIPE_Acceptor &pa = this->acceptor_->acceptor ();
 
       if (pa.get_local_addr (addr) != -1)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%t) initializing %s, file = %s, fd = %@, this = %@\n"),
-                    this->name (), addr.get_path_name (),
-                    reinterpret_cast<void *> (pa.get_handle ()),
-                    static_cast<void *> (this)));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%t) initializing %s, file = %s, fd = %@, this = %@\n"),
+                      this->name (), addr.get_path_name (),
+                      reinterpret_cast<void *> (pa.get_handle ()),
+                      static_cast<void *> (this)));
+        }
       else
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("get_local_addr")), -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("get_local_addr")), -1);
+        }
     }
   return 0;
 }
