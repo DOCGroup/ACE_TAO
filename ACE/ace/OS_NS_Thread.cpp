@@ -1179,10 +1179,14 @@ ACE_OS::cond_destroy (ACE_cond_t *cv)
 #   endif /* ACE_VXWORKS */
   int result = 0;
   if (ACE_OS::thread_mutex_destroy (&cv->waiters_lock_) != 0)
-    result = -1;
+    {
+      result = -1;
+    }
 
   if (ACE_OS::sema_destroy (&cv->sema_) != 0)
-    result = -1;
+    {
+      result = -1;
+    }
 
   return result;
 # else
@@ -1283,15 +1287,23 @@ ACE_OS::cond_signal (ACE_cond_t *cv)
   // value is not in an inconsistent internal state while being
   // updated by another thread.
   if (ACE_OS::thread_mutex_lock (&cv->waiters_lock_) != 0)
-    return -1;
+    {
+      return -1;
+    }
   bool const have_waiters = cv->waiters_ > 0;
   if (ACE_OS::thread_mutex_unlock (&cv->waiters_lock_) != 0)
-    return -1;
+    {
+      return -1;
+    }
 
   if (have_waiters)
-    return ACE_OS::sema_post (&cv->sema_);
+    {
+      return ACE_OS::sema_post (&cv->sema_);
+    }
   else
-    return 0; // No-op
+    {
+      return 0; // No-op
+    }
 # else
   ACE_UNUSED_ARG (cv);
   ACE_NOTSUP_RETURN (-1);
