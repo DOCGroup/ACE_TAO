@@ -239,7 +239,9 @@ TAO_NT_Notify_Service::svc ()
   try
     {
       if (notify_service.init (argc_, argv_) == -1)
-        return -1;
+        {
+          return -1;
+        }
 
       report_status (SERVICE_RUNNING);
       notify_service.run ();

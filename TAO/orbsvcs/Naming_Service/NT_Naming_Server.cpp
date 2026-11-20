@@ -122,7 +122,9 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         opt_install = true;
         opt_startup = ACE_OS::atoi (get_opt.opt_arg ());
         if (opt_startup <= 0)
-          print_usage_and_die ();
+          {
+            print_usage_and_die ();
+          }
         break;
       case 'r':
         opt_remove = true;
@@ -137,7 +139,9 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         opt_type = true;
         opt_startup = ACE_OS::atoi (get_opt.opt_arg ());
         if (opt_startup <= 0)
-          print_usage_and_die ();
+          {
+            print_usage_and_die ();
+          }
         break;
       case 'd':
         //opt_debug = 1;
@@ -184,25 +188,39 @@ Options::run (int argc, ACE_TCHAR* argv[])
   this->parse_args (argc, argv);
 
   if (opt_install && !opt_remove)
-    return SERVICE::instance ()->insert (opt_startup);
+    {
+      return SERVICE::instance ()->insert (opt_startup);
+    }
 
   if (opt_remove && !opt_install)
-    return SERVICE::instance ()->remove ();
+    {
+      return SERVICE::instance ()->remove ();
+    }
 
   if (opt_start && opt_kill)
-    print_usage_and_die ();
+    {
+      print_usage_and_die ();
+    }
 
   if (opt_setargs)
-    return SERVICE::instance ()->set_args (opt_args);
+    {
+      return SERVICE::instance ()->set_args (opt_args);
+    }
 
   if (opt_start)
-    return SERVICE::instance ()->start_svc ();
+    {
+      return SERVICE::instance ()->start_svc ();
+    }
 
   if (opt_kill)
-    return SERVICE::instance ()->stop_svc ();
+    {
+      return SERVICE::instance ()->stop_svc ();
+    }
 
   if (opt_type)
-    return SERVICE::instance ()->startup (opt_startup);
+    {
+      return SERVICE::instance ()->startup (opt_startup);
+    }
 
   // If we get here, we either run the app in debug mode (-d) or are
   // being called from the service manager to start the service.
