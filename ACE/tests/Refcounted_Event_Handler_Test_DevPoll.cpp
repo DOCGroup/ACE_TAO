@@ -65,7 +65,9 @@ Handler::Handler (ACE_Reactor &reactor)
 {
   // Create the pipe.
   if (0 != this->pipe_.open ())
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("pipe")));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("pipe")));
+    }
   else
     {
       // Register for all events.
@@ -73,7 +75,9 @@ Handler::Handler (ACE_Reactor &reactor)
                  (this->pipe_.read_handle (),
                   this,
                   ACE_Event_Handler::READ_MASK | ACE_Event_Handler::WRITE_MASK))
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("register")));
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("register")));
+        }
       else
       {
         this->ok_ = true;
@@ -98,9 +102,11 @@ Handler::handle_timeout (const ACE_Time_Value &,
 {
   int me = this->dispatch_order_++;
   if (me != 1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("handle_timeout should be #1; it's %d\n"),
-                me));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("handle_timeout should be #1; it's %d\n"),
+                  me));
+    }
   else
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Handler::handle_timeout\n")));
@@ -114,9 +120,11 @@ Handler::handle_output (ACE_HANDLE)
 {
   int me = this->dispatch_order_++;
   if (me != 2)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("handle_output should be #2; it's %d\n"),
-                me));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("handle_output should be #2; it's %d\n"),
+                  me));
+    }
   else
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Handler::handle_output\n")));
@@ -135,24 +143,30 @@ Handler::handle_input (ACE_HANDLE fd)
 {
   int me = this->dispatch_order_++;
   if (me != 3)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("handle_input should be #3; it's %d\n"),
-                me));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("handle_input should be #3; it's %d\n"),
+                  me));
+    }
 
   char buffer[BUFSIZ];
   ssize_t result = ACE::recv (fd, buffer, sizeof buffer);
   if (result != ssize_t (std::strlen (message)))
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Handler recv'd %b bytes; expected %B\n"),
-                result, std::strlen (message)));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Handler recv'd %b bytes; expected %B\n"),
+                  result, std::strlen (message)));
+    }
   buffer[result] = '\0';
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Handler::handle_input: %C\n"), buffer));
 
   if (std::strcmp (buffer, message) != 0)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Handler text mismatch; received \"%C\"; ")
-                ACE_TEXT ("expected \"%C\"\n"),
-                buffer, message));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Handler text mismatch; received \"%C\"; ")
+                  ACE_TEXT ("expected \"%C\"\n"),
+                  buffer, message));
+    }
 
   this->reactor ()->end_reactor_event_loop ();
 
@@ -226,9 +240,11 @@ test_reactor_dispatch_order (ACE_Reactor &reactor)
   if (0 != reactor.remove_handler (handler.pipe_.read_handle (),
                                    ACE_Event_Handler::ALL_EVENTS_MASK |
                                    ACE_Event_Handler::DONT_CALL))
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("remover_handler pipe")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("remover_handler pipe")));
+    }
 
   if (handler.dispatch_order_ != 4)
     {
