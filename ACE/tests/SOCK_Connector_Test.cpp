@@ -86,10 +86,14 @@ find_another_host (ACE_TCHAR other_host[])
       h = ACE_OS::gethostbyname (un.nodename);
 
       if (h == nullptr)
-        ACE_OS::strcpy (other_host, ACE_LOCALHOST);
+        {
+          ACE_OS::strcpy (other_host, ACE_LOCALHOST);
+        }
       else
-        // Use me if can't find another
-        ACE_OS::strcpy (other_host, ACE_TEXT_CHAR_TO_TCHAR (h->h_name));
+        {
+          // Use me if can't find another
+          ACE_OS::strcpy (other_host, ACE_TEXT_CHAR_TO_TCHAR (h->h_name));
+        }
 
       // @@ We really need to add wrappers for these hostent methods.
 
@@ -130,11 +134,13 @@ find_another_host (ACE_TCHAR other_host[])
 
       // Now try to connect to candidates
       for (int i = 0; i < candidate_count; ++i)
-        if (host_is_up (candidate[i].host_name))
+        {
+          if (host_is_up (candidate[i].host_name))
           {
             ACE_OS::strcpy (other_host, candidate[i].host_name);
             break;
           }
+        }
 
       sethostent (0);
       endhostent ();
@@ -296,8 +302,10 @@ succeed_nonblocking ()
             }
         }
       else
-        ACE_DEBUG((LM_DEBUG,
-                   ACE_TEXT("Connect which should succeed, did\n")));
+        {
+          ACE_DEBUG((LM_DEBUG,
+                     ACE_TEXT("Connect which should succeed, did\n")));
+        }
     }
 
   // Just in case.
