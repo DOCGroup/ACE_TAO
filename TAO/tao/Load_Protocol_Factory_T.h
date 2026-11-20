@@ -49,10 +49,12 @@ namespace TAO
       if (protocol_factory == nullptr)
         {
           if (TAO_debug_level > 0)
-            TAOLIB_ERROR ((LM_WARNING,
-                        ACE_TEXT("(%P|%t) WARNING - No <%C> found in Service")
-                        ACE_TEXT(" Repository. Using default instance.\n"),
-                        name));
+            {
+              TAOLIB_ERROR ((LM_WARNING,
+                             ACE_TEXT("(%P|%t) WARNING - No <%C> found in Service")
+                             ACE_TEXT(" Repository. Using default instance.\n"),
+                             name));
+            }
 
           ACE_NEW_RETURN (protocol_factory,
                           T,

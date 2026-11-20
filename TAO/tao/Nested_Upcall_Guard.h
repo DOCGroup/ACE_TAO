@@ -55,9 +55,11 @@ namespace TAO
       tss->upcalls_temporarily_suspended_on_this_thread_ = true;
 
       if (TAO_debug_level > 6)
-        TAOLIB_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - Wait_On_LF_No_Upcall[%B]::wait, "
-                    "disabling upcalls\n", t->id ()));
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
+                         "TAO (%P|%t) - Wait_On_LF_No_Upcall[%B]::wait, "
+                         "disabling upcalls\n", t->id ()));
+        }
     }
 
     ~Nested_Upcall_Guard ()
