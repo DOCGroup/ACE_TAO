@@ -19,7 +19,9 @@ Object_Group_Factory_i::remove_group (std::string const &id,
 {
   // Remove the entry from the appropriate map of groups.
   if (random)
+  {
     random_groups_.unbind (id);
+  }
   else
   {
     rr_groups_.unbind (id);
@@ -50,7 +52,9 @@ Object_Group_Factory_i::make_group (bool random,
   // <id>.
   if (rr_groups_.find (group_id) == 0
       || random_groups_.find (group_id) == 0)
+  {
     throw Load_Balancer::duplicate_group ();
+  }
   else
     {
       // Store our result here for return.
@@ -59,13 +63,17 @@ Object_Group_Factory_i::make_group (bool random,
       // Create an appropriate servant.
       Object_Group_i *group_servant {};
       if (random)
+      {
         ACE_NEW_THROW_EX (group_servant,
                           Random_Object_Group (id, this),
                           CORBA::NO_MEMORY ());
+      }
       else
+      {
         ACE_NEW_THROW_EX (group_servant,
                           RR_Object_Group (id, this),
                           CORBA::NO_MEMORY ());
+      }
 
       // Temporarily keep ownership of the servant in a unique_ptr.
       std::unique_ptr<Object_Group_i> temp (group_servant);
@@ -111,7 +119,9 @@ Object_Group_Factory_i::resolve (char const * id)
 
   if (rr_groups_.find (group_id, group) == -1
       && random_groups_.find (group_id, group) == -1)
+  {
     throw Load_Balancer::no_such_group ();
+  }
   else
   {
     return group._retn ();
@@ -201,9 +211,13 @@ Object_Group_i::bind (Load_Balancer::Member const & member)
   // Insert new member into <members_> and check for duplicates/failures.
   int result = members_.trybind (member_id, obj);
   if (result == 1)
+  {
     throw Load_Balancer::duplicate_member ();
+  }
   else if (result == -1)
+  {
     throw CORBA::INTERNAL ();
+  }
 
   // Insert new member's id into <member_id_list_>.
   std::string *new_id {};
@@ -247,7 +261,9 @@ Object_Group_i::unbind (char const * id)
 
   Object_Group_i::ITERATOR iter (member_id_list_);
   while (member_id != *(iter.next ()))
+  {
     iter.advance ();
+  }
   std::unique_ptr<std::string> const removed_id (iter.next ());
   iter.remove ();
 
@@ -435,10 +451,14 @@ RR_Object_Group::unbind (char const *id)
 
   // Update <next_> if necessary to reflect the deletion.
   if (position < next_)
+  {
     --next_;
+  }
 
   else if (position == next_)
+  {
     next_ = next_ % (members_.current_size ());
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               "Load_Balancer: Removed member with id <%C>"
