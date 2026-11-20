@@ -90,11 +90,13 @@ namespace {
           }
         }
       if ((max_chunks - min_chunks) > max_chunks / 10)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Too much unfairness (max %u, min %u)\n"),
-                           max_chunks,
-                           min_chunks),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Too much unfairness (max %u, min %u)\n"),
+                             max_chunks,
+                             min_chunks),
+                            1);
+        }
       return 0;
     }
   };
@@ -108,9 +110,11 @@ Read_Handler::handle_input (ACE_HANDLE h)
   char buf[BUFSIZ];
   ssize_t result = this->peer ().recv (buf, ACE_OS::strlen(ACE_ALPHABET));
   if (opt_debug)
-    ACE_DEBUG((LM_DEBUG,
-               ACE_TEXT ("(%t) Read_Handler::handle_input h %@, result %b\n"),
-               reinterpret_cast<void *> (h), result));
+    {
+      ACE_DEBUG((LM_DEBUG,
+                 ACE_TEXT ("(%t) Read_Handler::handle_input h %@, result %b\n"),
+                 reinterpret_cast<void *> (h), result));
+    }
   if (result > 0)
     {
       if (opt_debug)
@@ -126,7 +130,9 @@ Read_Handler::handle_input (ACE_HANDLE h)
   else if (result < 0)
     {
       if (errno == EWOULDBLOCK)
-        return 0;
+        {
+          return 0;
+        }
       else
         {
           ACE_ERROR ((LM_ERROR,
@@ -203,7 +209,9 @@ sender (void *arg)
                           ACE_TEXT ("(%t) conn %d %p\n"),
                           ACE_TEXT ("connect")));
               while (--i >= 0)
-                socks[i].close ();
+                {
+                  socks[i].close ();
+                }
               break;
             }
         }
@@ -228,10 +236,12 @@ sender (void *arg)
         {
           ssize_t cnt = socks[i].send (ACE_ALPHABET, send_cnt);
           if (opt_debug)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%t) h %@ sent %b\n"),
-                        reinterpret_cast<void *> (socks[i].get_handle ()),
-                        cnt));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%t) h %@ sent %b\n"),
+                          reinterpret_cast<void *> (socks[i].get_handle ()),
+                          cnt));
+            }
           if (cnt > 0)
             {
               sent_something = true;
@@ -258,7 +268,9 @@ sender (void *arg)
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Done sending.\n")));
   for (i = 0; i < opt_nconnections; ++i)
-    socks[i].close ();
+    {
+      socks[i].close ();
+    }
   return ACE_THR_FUNC_RETURN_NULL;
 }
 
@@ -273,7 +285,9 @@ reactor_loop (void *p)
     r->owner (ACE_Thread::self ());
   }
   if (r->run_reactor_event_loop () == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"), ACE_TEXT ("reactor")));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"), ACE_TEXT ("reactor")));
+    }
   else
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) reactor thread %d ending\n"), me));
@@ -344,22 +358,24 @@ run_main (int argc, ACE_TCHAR *argv[])
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("c:s:t:d"), 1);
   for (int c; (c = getopt ()) != -1; )
-  //FUZZ: enble check_for_lack_ACE_OS
-    switch (c)
-      {
-      case 'c':
-        opt_nconnections = ACE_OS::atoi (getopt.opt_arg ());
-        break;
-      case 's':
-        opt_secs = ACE_OS::atoi (getopt.opt_arg ());
-        break;
-      case 't':
-        opt_reactor_threads = ACE_OS::atoi (getopt.opt_arg ());
-        break;
-      case 'd':
-        opt_debug = 1;
-        break;
-      }
+    {
+      //FUZZ: enble check_for_lack_ACE_OS
+      switch (c)
+        {
+        case 'c':
+          opt_nconnections = ACE_OS::atoi (getopt.opt_arg ());
+          break;
+        case 's':
+          opt_secs = ACE_OS::atoi (getopt.opt_arg ());
+          break;
+        case 't':
+          opt_reactor_threads = ACE_OS::atoi (getopt.opt_arg ());
+          break;
+        case 'd':
+          opt_debug = 1;
+          break;
+        }
+    }
 
   // Run the test once for each reactor type available.
   int fails = 0;
