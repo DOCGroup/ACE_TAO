@@ -46,7 +46,9 @@ public:
       {
         Monitor_Control_Types::NameList list;
         if (this->is_supplier_)
+        {
           this->interf_->get_suppliers (&list);
+        }
         else
         {
           this->interf_->get_consumers (&list);
@@ -56,7 +58,9 @@ public:
     else
       {
         if (this->is_supplier_)
+        {
           this->receive (this->interf_->get_suppliers (nullptr));
+        }
         else
         {
           this->receive (this->interf_->get_consumers (nullptr));

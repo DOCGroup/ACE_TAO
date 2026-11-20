@@ -33,9 +33,11 @@ TAO_MC_Notify_Service::init_i (CORBA::ORB_ptr orb)
   if (monitor == nullptr)
     {
       if (TAO_debug_level > 0)
+      {
         ORBSVCS_DEBUG ((LM_DEBUG, "%s must be loaded via "
                               "the Service Configurator\n",
                               TAO_NOTIFY_MONITOR_CONTROL_MANAGER));
+      }
     }
   else
     {
@@ -55,9 +57,11 @@ TAO_MC_Notify_Service::init_i2 (CORBA::ORB_ptr orb,
   if (monitor == nullptr)
     {
       if (TAO_debug_level > 0)
+      {
         ORBSVCS_DEBUG ((LM_DEBUG, "%s must be loaded via "
                               "the Service Configurator\n",
                               TAO_NOTIFY_MONITOR_CONTROL_MANAGER));
+      }
     }
   else
     {

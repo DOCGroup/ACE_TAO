@@ -31,8 +31,10 @@ void
 Notify_Service_Shutdown_Functor::operator() (int which_signal)
 {
   if (TAO_debug_level > 0)
+  {
     ORBSVCS_DEBUG ((LM_DEBUG,
                 "shutting down on signal %d\n", which_signal));
+  }
   (void) this->svc_.fini ();
 }
 
@@ -49,9 +51,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
       if (notify_service.init (argc, argv) == -1)
+      {
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT("Failed to initialize the Notification Service.\n")),
                           1);
+      }
 
       notify_service.run ();
     }

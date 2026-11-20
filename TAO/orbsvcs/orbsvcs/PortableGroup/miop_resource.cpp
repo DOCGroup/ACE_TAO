@@ -60,25 +60,33 @@ TAO_MIOP_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                     TAO_MIOP_CLEANUP_MEMORY_BOUND;
                 }
               else
+              {
                 ORBSVCS_DEBUG ((LM_ERROR,
                             ACE_TEXT ("TAO (%P|%t) - MIOP_Resource_Factory ")
                             ACE_TEXT ("-ORBFragmentsCleanupStrategy %s is unknown.\n"),
                             name));
+              }
             }
           else
+          {
             ORBSVCS_DEBUG ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - MIOP_Resource_Factory ")
                         ACE_TEXT ("-ORBFragmentsCleanupStrategy missing type.\n")));
+          }
         }
       else if (ACE_OS::strcasecmp (argv[curarg],
                                    ACE_TEXT ("-ORBFragmentsCleanupBound")) == 0)
         {
           if (++curarg < argc)
+          {
             this->fragments_cleanup_bound_ = ACE_OS::atoi (argv[curarg]);
+          }
           else
+          {
             ORBSVCS_DEBUG ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - MIOP_Resource_Factory ")
                         ACE_TEXT ("-ORBFragmentsCleanupBound missing value.\n")));
+          }
         }
       else if (ACE_OS::strcasecmp (argv[curarg],
                                    ACE_TEXT ("-ORBMaxFragments")) == 0)
@@ -102,9 +110,11 @@ TAO_MIOP_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
               }
             }
           else
+          {
             ORBSVCS_DEBUG ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - MIOP_Resource_Factory ")
                         ACE_TEXT ("-ORBMaxFragments missing limit.\n")));
+          }
         }
       else if (ACE_OS::strcasecmp (argv[curarg],
                                    ACE_TEXT ("-ORBMaxFragmentSize")) == 0)
@@ -131,9 +141,11 @@ TAO_MIOP_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
               }
             }
           else
+          {
             ORBSVCS_DEBUG ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - MIOP_Resource_Factory ")
                         ACE_TEXT ("-ORBMaxFragmentSize missing limit.\n")));
+          }
         }
       else if (ACE_OS::strcasecmp (argv[curarg],
                                    ACE_TEXT ("-ORBMaxFragmentRate")) == 0)
@@ -156,9 +168,11 @@ TAO_MIOP_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
               }
             }
           else
+          {
             ORBSVCS_DEBUG ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - MIOP_Resource_Factory ")
                         ACE_TEXT ("-ORBMaxFragmentRate missing micro-seconds.\n")));
+          }
         }
       else if (ACE_OS::strcasecmp (argv[curarg],
                                    ACE_TEXT ("-ORBSendHighWaterMark")) == 0 ||
@@ -193,10 +207,12 @@ TAO_MIOP_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
               }
             }
           else
+          {
             ORBSVCS_DEBUG ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - MIOP_Resource_Factory ")
                         ACE_TEXT ("%s missing limit.\n"),
                         argv[curarg-1]));
+          }
         }
       else if (ACE_OS::strcasecmp (argv[curarg],
                                    ACE_TEXT ("-ORBSndSock")) == 0)
@@ -218,9 +234,11 @@ TAO_MIOP_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
               }
             }
           else
+          {
             ORBSVCS_DEBUG ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - MIOP_Resource_Factory ")
                         ACE_TEXT ("-ORBSndSock missing size in bytes.\n")));
+          }
         }
       else if (ACE_OS::strcasecmp (argv[curarg],
                                    ACE_TEXT ("-ORBRcvSock")) == 0)
@@ -242,9 +260,11 @@ TAO_MIOP_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
               }
             }
           else
+          {
             ORBSVCS_DEBUG ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - MIOP_Resource_Factory ")
                         ACE_TEXT ("-ORBRcvSock missing size in bytes.\n")));
+          }
         }
       else if (ACE_OS::strcasecmp (argv[curarg],
                                    ACE_TEXT ("-ORBSendThrottling")) == 0 ||
@@ -252,12 +272,16 @@ TAO_MIOP_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                                    ACE_TEXT ("-ORBSendThrottle")) == 0)
         {
           if (++curarg < argc)
+          {
             this->enable_throttling_ = ACE_OS::atoi (argv[curarg]) != 0;
+          }
           else
+          {
             ORBSVCS_DEBUG ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - MIOP_Resource_Factory ")
                         ACE_TEXT ("%s missing 0 or 1 parameter.\n"),
                         argv[curarg-1]));
+          }
         }
       else if (ACE_OS::strcasecmp (argv[curarg],
                                    ACE_TEXT ("-ORBEagerDequeueing")) == 0 ||
@@ -265,12 +289,16 @@ TAO_MIOP_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                                    ACE_TEXT ("-ORBEagerDequeue")) == 0)
         {
           if (++curarg < argc)
+          {
             this->enable_eager_dequeue_ = ACE_OS::atoi (argv[curarg]) != 0;
+          }
           else
+          {
             ORBSVCS_DEBUG ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - MIOP_Resource_Factory ")
                         ACE_TEXT ("%s missing 0 or 1 parameter.\n"),
                         argv[curarg-1]));
+          }
         }
       else if (ACE_OS::strncmp (argv[curarg], ACE_TEXT ("-ORB"), 4) == 0)
         {

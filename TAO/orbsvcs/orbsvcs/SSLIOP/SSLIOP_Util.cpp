@@ -33,8 +33,10 @@ TAO::SSLIOP::Util::current (TAO_ORB_Core *orb_core)
   catch (CORBA::Exception const& ex)
     {
       if (TAO_debug_level > 0)
+      {
         ex._tao_print_exception (
           "Could not resolve \"SSLIOPCurrent\" object");
+      }
 
       return nullptr;
     }

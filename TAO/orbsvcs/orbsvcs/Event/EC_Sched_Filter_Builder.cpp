@@ -220,7 +220,9 @@ TAO_EC_Sched_Filter_Builder:: recursive_name (
                                 child_name);
 
           if (i == 0)
+          {
             name += "(";
+          }
           else
           {
             name += "&&";
@@ -245,7 +247,9 @@ TAO_EC_Sched_Filter_Builder:: recursive_name (
                                 child_name);
 
           if (i == 0)
+          {
             name += "(";
+          }
           else
           {
             name += "||";

@@ -101,7 +101,9 @@ TAO_SSLIOP_Profile::decode (TAO_InputCDR & cdr)
       cdr_component.reset_byte_order (static_cast<int> (byte_order));
 
       if (cdr_component >> this->ssl_endpoint_.ssl_component_)
+      {
         ssl_component_found = true;
+      }
       else
       {
         return -1;
@@ -189,7 +191,9 @@ TAO_SSLIOP_Profile::do_is_equivalent (TAO_Profile const * other_profile)
        endp = endp->next_)
     {
       if (endp->is_equivalent (other_endp))
+      {
         other_endp = other_endp->next_;
+      }
       else
       {
         return false;

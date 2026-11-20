@@ -81,8 +81,10 @@ TAO_EC_Priority_Dispatching::activate ()
           priority = ACE_Sched_Params::priority_min (ACE_SCHED_OTHER,
                                                      ACE_SCOPE_THREAD);
           if (this->tasks_[i]->activate (flags, 1, 1, priority) == -1)
+          {
             ORBSVCS_ERROR ((LM_ERROR,
                         "EC (%P|%t) cannot activate queue %d", i));
+          }
         }
     }
 }
@@ -96,7 +98,9 @@ TAO_EC_Priority_Dispatching::shutdown ()
   }
 
   for (int i {}; i < this->ntasks_; ++i)
+  {
     this->tasks_[i]->putq (new TAO_EC_Shutdown_Task_Command);
+  }
 
   this->thread_manager_.wait ();
 

@@ -177,15 +177,23 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   int result = opts.init (argc, argv);
   if (result < 0)
+  {
     return 1;  // Error
+  }
   else if (result > 0)
+  {
     return 0;  // No error, but we should exit anyway.
+  }
 
   result = run_service_command(opts);
   if (result < 0)
+  {
     return 1;  // Error
+  }
   else if (result > 0)
+  {
     return 0;  // No error, but we should exit anyway.
+  }
 
   if (opts.service ())
   {

@@ -55,9 +55,11 @@ TAO_Notify_Service_Driver::init_ORB (int & argc, ACE_TCHAR * argv [])
     this->orb_->resolve_initial_references("RootPOA");
 
   if (CORBA::is_nil (object.in ()))
+  {
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        " (%P|%t) Unable to resolve the RootPOA.\n"),
                       -1);
+  }
 
   this->poa_ =
     PortableServer::POA::_narrow (object.in ());
@@ -341,9 +343,11 @@ TAO_Notify_Service_Driver::resolve_naming_service ()
 
       // Need to check return value for errors.
       if (CORBA::is_nil (naming_obj.in ()))
+      {
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to resolve the Naming Service.\n"),
                           -1);
+      }
 
       this->naming_ = CosNaming::NamingContextExt::_narrow (naming_obj.in ());
     }
@@ -366,9 +370,11 @@ int
 TAO_Notify_Service_Driver::run ()
 {
   if (TAO_debug_level > 0 )
+  {
     ORBSVCS_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("%C: Running the Notification Service\n"),
                 __FILE__));
+  }
 
   if (this->nthreads_ > 0)
     {

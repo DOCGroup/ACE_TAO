@@ -26,9 +26,11 @@ Notify_Logging_Service::init_ORB (int & argc, ACE_TCHAR * argv [])
     this->orb_->resolve_initial_references ("RootPOA");
 
   if (CORBA::is_nil (poa_object.in ()))
+  {
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        " (%P|%t) Unable to resolve the RootPOA.\n"),
                       -1);
+  }
 
   this->poa_ =
     PortableServer::POA::_narrow (poa_object.in ());

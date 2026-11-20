@@ -131,8 +131,10 @@ TAO::SSLIOP::Transport::send_request (TAO_Stub *stub,
                           0,
                           message_semantics,
                           max_wait_time) == -1)
+  {
 
     return -1;
+  }
 
   return 0;
 }
@@ -163,11 +165,13 @@ TAO::SSLIOP::Transport::send_message (TAO_OutputCDR &stream,
   if (n == -1)
     {
       if (TAO_debug_level)
+      {
         ORBSVCS_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - SSLIOP_Transport::send_message, ")
                     ACE_TEXT ("closing transport %B after fault %p\n"),
                     this->id (),
                     ACE_TEXT ("send_message ()\n")));
+      }
 
       return -1;
     }

@@ -61,6 +61,7 @@ namespace TAO_PG
     this->data_length_ += len;
 
     if (TAO_debug_level >= 10)
+    {
       ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - TAO_PG::UIPMC_Recv_Packet::")
                   ACE_TEXT ("add_fragment, adding fragment %d with %d out ")
@@ -68,6 +69,7 @@ namespace TAO_PG
                   id,
                   len,
                   this->data_length_));
+    }
 
     if (this->fragments_.bind (id, new_data) != 0)
       {

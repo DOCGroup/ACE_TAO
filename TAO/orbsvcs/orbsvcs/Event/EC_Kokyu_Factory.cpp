@@ -210,9 +210,11 @@ TAO_EC_Dispatching*
 TAO_EC_Kokyu_Factory::create_dispatching (TAO_EC_Event_Channel_Base *ec)
 {
   if (this->dispatching_ == 2)
+  {
     return new TAO_EC_Kokyu_Dispatching (ec,
                                          this->disp_sched_policy_,
                                          this->disp_sched_scope_);
+  }
   return this->TAO_EC_Default_Factory::create_dispatching (ec);
 }
 

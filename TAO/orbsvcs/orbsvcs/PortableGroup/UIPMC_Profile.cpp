@@ -137,9 +137,11 @@ TAO_UIPMC_Profile::decode_profile (TAO_InputCDR& cdr)
       !cdr.read_ushort (port))
     {
       if (TAO_debug_level)
+      {
         ORBSVCS_DEBUG ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - UIPMC_Profile::decode, ")
                     ACE_TEXT ("Couldn't unmarshal address and port!\n")));
+      }
       return -1;
     }
 
@@ -684,10 +686,12 @@ TAO_UIPMC_Profile::update_cached_group_component ()
   if ((out_cdr << group) == 0)
     {
       if (TAO_debug_level)
+      {
         ORBSVCS_DEBUG ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - UIPMC_Profile::")
                     ACE_TEXT ("update_cached_group_component, Error ")
                     ACE_TEXT ("marshaling group component!")));
+      }
       return;
     }
 
@@ -802,9 +806,11 @@ TAO_UIPMC_Profile::extract_group_component (
       !cdr.read_octet (minor))
     {
       if (TAO_debug_level)
+      {
         ORBSVCS_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - UIPMC_Profile::")
                     ACE_TEXT ("extract_group_component, couldn't unmarshal version\n")));
+      }
       return -1;
     }
 
@@ -816,10 +822,12 @@ TAO_UIPMC_Profile::extract_group_component (
       !cdr.read_ushort (port))
     {
       if (TAO_debug_level)
+      {
         ORBSVCS_DEBUG ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - UIPMC_Profile::")
                     ACE_TEXT ("extract_group_component, Couldn't ")
                     ACE_TEXT ("unmarshal address and port!\n")));
+      }
       return -1;
     }
 

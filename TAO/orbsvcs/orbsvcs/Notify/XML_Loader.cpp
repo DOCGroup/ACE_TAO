@@ -186,10 +186,11 @@ namespace TAO_Notify
               NVPList attrs;
               CORBA::Long id = makeNVPList (attrs, xml_attrs);
 
-              if (DEBUG_LEVEL > 5) ORBSVCS_DEBUG ((LM_INFO,
+              if (DEBUG_LEVEL > 5) { ORBSVCS_DEBUG ((LM_INFO,
                 ACE_TEXT("(%P|%t) XML_Loader: Element %s\n"),
                 name
                 ));
+}
 
               ACE_CString cname (ACE_TEXT_ALWAYS_CHAR(name));
               Topology_Object* next = cur->load_child (cname, id, attrs);

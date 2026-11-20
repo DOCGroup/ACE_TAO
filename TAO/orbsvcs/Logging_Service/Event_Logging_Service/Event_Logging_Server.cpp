@@ -30,9 +30,11 @@ void
 Logging_Svc_Shutdown::operator() (int which_signal)
 {
   if (TAO_debug_level > 0)
+  {
     ORBSVCS_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("Event_Logging_Service: shutting down on signal %d\n"),
                 which_signal));
+  }
 
   this->svc_.shutdown ();
 }
@@ -53,15 +55,19 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
     {
       int const init_result = service.init (argc, argv);
       if (init_result == -1)
+      {
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("Failed to initialize the Telecom Log Service.\n")),
                           1);
+      }
 
       int const run_result = service.run ();
       if (run_result == -1)
+      {
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("Failed to start the Telecom Log Service.\n")),
                           1);
+      }
     }
   catch (CORBA::Exception const &ex)
     {

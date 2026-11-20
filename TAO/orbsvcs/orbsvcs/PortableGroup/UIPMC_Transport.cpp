@@ -107,6 +107,7 @@ TAO_UIPMC_Transport::throttle_send_rate (
       if (this->total_bytes_outstanding_ <= octets_processed)
         {
           if (2 <= TAO_debug_level)
+          {
             ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - UIPMC_Transport[%B]::")
                         ACE_TEXT ("throttle_send_rate, Previous data ")
@@ -117,11 +118,13 @@ TAO_UIPMC_Transport::throttle_send_rate (
                         static_cast<ACE_UINT64> (this->total_bytes_outstanding_),
                         octets_processed,
                         how_long_in_micro_seconds));
+          }
           this->total_bytes_outstanding_ = 0u;
         }
       else
         {
           if (2 <= TAO_debug_level)
+          {
             ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - UIPMC_Transport[%B]::")
                         ACE_TEXT ("throttle_send_rate, Previous data ")
@@ -131,6 +134,7 @@ TAO_UIPMC_Transport::throttle_send_rate (
                         static_cast<ACE_UINT64> (this->total_bytes_outstanding_),
                         octets_processed,
                         how_long_in_micro_seconds));
+          }
           this->total_bytes_outstanding_ -=
             static_cast<u_long> (octets_processed);
         }
@@ -172,6 +176,7 @@ TAO_UIPMC_Transport::throttle_send_rate (
             static_cast <suseconds_t> (delay_in_micro_seconds % ACE_ONE_SECOND_IN_USECS));
 
           if (TAO_debug_level)
+          {
             ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - UIPMC_Transport[%B]::")
                         ACE_TEXT ("throttle_send_rate, SendHighWaterMark ")
@@ -181,6 +186,7 @@ TAO_UIPMC_Transport::throttle_send_rate (
                         static_cast<ACE_UINT64> (hwm),
                         static_cast<ACE_UINT64> (bytes_over_by),
                         delay_in_micro_seconds));
+          }
 
           ACE_OS::sleep (delay);
         }
@@ -199,7 +205,9 @@ TAO_UIPMC_Transport::send (
   // Calculate the total number of bytes being sent.
   u_long bytes_to_send {};
   for (int i {}; i < iovcnt; ++i)
+  {
     bytes_to_send += iov[i].iov_len;
+  }
   if (!bytes_to_send)
   {
     return 0; // Nothing to send, we are done.
@@ -240,9 +248,11 @@ TAO_UIPMC_Transport::send (
                       static_cast<ACE_UINT64> (factory->max_fragments ())));
 
           if (max_fragment_size < MIOP_MAX_DGRAM_SIZE)
+          {
             ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT (" or -ORBMaxFragmentSize %Q\n"),
                         static_cast<ACE_UINT64> (max_fragment_size)));
+          }
           else
           {
             ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
@@ -340,14 +350,17 @@ TAO_UIPMC_Transport::send (
         {
           // Make sure we don't send our fragments too quickly
           if (factory->enable_throttling ())
+          {
             this->throttle_send_rate (
               factory->max_fragment_rate (),
               max_fragment_size,
               this_fragment_size);
+          }
 
           // Haven't sent some of the data yet, we need to adjust the fragments iov's
           // to skip the data we have actually manage to send so far.
           while (already_sent)
+          {
             if (static_cast<u_long> (current_iov->iov_len) <= static_cast<u_long> (already_sent))
               {
                 // This whole iov has been sent, simply skip over it
@@ -364,6 +377,7 @@ TAO_UIPMC_Transport::send (
                   &static_cast<char *> (current_iov->iov_base)[already_sent];
                 break; // already_sent= 0;
               }
+          }
 
           // Ok now we attempt to actually send the fragment.
           already_sent =
@@ -491,11 +505,13 @@ TAO_UIPMC_Transport::send_message (
   if (n == -1)
     {
       if (TAO_debug_level)
+      {
         ORBSVCS_DEBUG ((LM_ERROR,
                     ACE_TEXT ("TAO: (%P|%t) - UIPMC_Transport[%B]::")
                     ACE_TEXT ("send_message, closing transport %B after ")
                     ACE_TEXT ("fault (Errno: '%m')\n"),
                     this->id ()));
+      }
       return -1;
     }
 
