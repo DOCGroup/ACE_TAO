@@ -57,9 +57,11 @@ AccountManager_i::open (char const *name,
     }
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("[SERVER] Process/Thread Id : (%P/%t) Account already exists for %C\n"),
-                name));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("[SERVER] Process/Thread Id : (%P/%t) Account already exists for %C\n"),
+                  name));
+    }
   // Generate an IOR for the result object and register it with the
   // POA.  In case the object already exists then the previously
   // generated IOR is returned.
@@ -83,8 +85,10 @@ AccountManager_i::close (Bank::Account_ptr account)
       if (hash_map_.unbind (name.in (), account) == -1)
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG((LM_DEBUG,
-                       ACE_TEXT ("Unable to close account\n")));
+            {
+              ACE_DEBUG((LM_DEBUG,
+                         ACE_TEXT ("Unable to close account\n")));
+            }
         }
 
       if (!account.is_nil ())

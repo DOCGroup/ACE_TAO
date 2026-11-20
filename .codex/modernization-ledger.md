@@ -14365,6 +14365,12 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Focused clang-tidy reported no remaining brace warnings in the edited files; `git diff --check` passed. No build or runtime tests were run.
 - The broader tracked-source brace audit remains open.
 
+## 2026-11-20 Allman braces in examples
+
+- Added Allman braces around scheduling selection, stock lookup, service registration failures, and account-manager diagnostics.
+- Focused clang-tidy reported no remaining brace warnings in the edited files. The Kokyu example reports a missing generated RTScheduling header in the local compile database; `git diff --check` passed. No build or runtime tests were run.
+- The broader tracked-source brace audit remains open.
+
 ## 2026-11-20 TAO timeout and typedef test server braces
 
 - Added Allman braces to option parsing and error branches in `TAO/tests/Typedef_String_Array/server.cpp`, `TAO/tests/MT_Timeout/server.cpp`, and `TAO/tests/Timeout/server.cpp`.

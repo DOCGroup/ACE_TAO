@@ -17,9 +17,13 @@ StockFactory::get_stock (char const *symbol)
   std::cout << "Server Number is " << number_ << std::endl;
 
   if (std::strcmp (symbol, "RHAT") == 0)
-    return this->rhat_._this ();
+    {
+      return this->rhat_._this ();
+    }
   else if (std::strcmp (symbol, "MSFT") == 0)
-    return this->msft_._this ();
+    {
+      return this->msft_._this ();
+    }
 
   throw Test::Invalid_Stock_Symbol ();
 }

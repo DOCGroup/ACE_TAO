@@ -7,15 +7,19 @@ Trading_Shutdown::Trading_Shutdown (Trading_Service &trader)
 {
   if (this->shutdown_.register_handler (SIGINT,
                                         this) == -1)
-    ORBSVCS_ERROR ((LM_ERROR,
-                ACE_TEXT("%p\n"),
-                ACE_TEXT("register_handler")));
+    {
+      ORBSVCS_ERROR ((LM_ERROR,
+                      ACE_TEXT("%p\n"),
+                      ACE_TEXT("register_handler")));
+    }
 
   if (this->shutdown_.register_handler (SIGTERM,
                                         this) == -1)
-    ORBSVCS_ERROR ((LM_ERROR,
-                ACE_TEXT("%p\n"),
-                ACE_TEXT("register_handler")));
+    {
+      ORBSVCS_ERROR ((LM_ERROR,
+                      ACE_TEXT("%p\n"),
+                      ACE_TEXT("register_handler")));
+    }
 }
 
 int
