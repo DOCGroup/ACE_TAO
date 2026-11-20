@@ -16,10 +16,12 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   int retval {dll.open (ACE_DLL_PREFIX ACE_TEXT("DLL_Today"))};
 
   if (retval != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p",
-                       "dll.open"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p",
+                         "dll.open"),
+                        -1);
+    }
   Magazine_Creator mc {};
 
   // Cast the void* to non-pointer type first - it's not legal to
