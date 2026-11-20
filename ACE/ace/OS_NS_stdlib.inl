@@ -370,7 +370,9 @@ ACE_OS::rand_r (unsigned int *seed)
 #if defined (ACE_LACKS_RAND_R)
   long new_seed = (long) *seed;
   if (new_seed == 0)
-    new_seed = 0x12345987;
+    {
+      new_seed = 0x12345987;
+    }
   long temp = new_seed / 127773;
   new_seed = 16807 * (new_seed - temp * 127773) - 2836 * temp;
   if (new_seed < 0)

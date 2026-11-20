@@ -408,10 +408,12 @@ ACE_OutputCDR::write_char_array (const ACE_CDR::Char *x,
                                  ACE_CDR::ULong length)
 {
   if (this->char_translator_ == 0)
-    return this->write_array (x,
-                              ACE_CDR::OCTET_SIZE,
-                              ACE_CDR::OCTET_ALIGN,
-                              length);
+    {
+      return this->write_array (x,
+                                ACE_CDR::OCTET_SIZE,
+                                ACE_CDR::OCTET_ALIGN,
+                                length);
+    }
   return this->char_translator_->write_char_array (*this, x, length);
 }
 
@@ -431,12 +433,14 @@ ACE_OutputCDR::write_wchar_array (const ACE_CDR::WChar* x,
     }
 
   if (ACE_OutputCDR::wchar_maxbytes_ == sizeof (ACE_CDR::WChar))
-    return this->write_array (x,
-                              sizeof (ACE_CDR::WChar),
-                              sizeof (ACE_CDR::WChar) == 2
-                              ? ACE_CDR::SHORT_ALIGN
-                              : ACE_CDR::LONG_ALIGN,
-                              length);
+    {
+      return this->write_array (x,
+                                sizeof (ACE_CDR::WChar),
+                                sizeof (ACE_CDR::WChar) == 2
+                                ? ACE_CDR::SHORT_ALIGN
+                                : ACE_CDR::LONG_ALIGN,
+                                length);
+    }
   return this->write_wchar_array_i (x,length);
 }
 
@@ -893,10 +897,12 @@ ACE_InputCDR::read_char_array (ACE_CDR::Char* x,
     }
 
   if (this->char_translator_ == 0)
-    return this->read_array (x,
-                             ACE_CDR::OCTET_SIZE,
-                             ACE_CDR::OCTET_ALIGN,
-                             length);
+    {
+      return this->read_array (x,
+                               ACE_CDR::OCTET_SIZE,
+                               ACE_CDR::OCTET_ALIGN,
+                               length);
+    }
   return this->char_translator_->read_char_array (*this, x, length);
 }
 
@@ -1220,7 +1226,9 @@ ACE_InputCDR::skip_fixed ()
         }
       const unsigned low = x & 0xf;
       if (low == 0xc || low == 0xd)
-        return true;
+        {
+          return true;
+        }
     }
   return false;
 }
