@@ -37,9 +37,13 @@ TAO_COIOP_Acceptor::create_profile (const TAO::ObjectKey & object_key,
   // Check if multiple endpoints should be put in one profile or if
   // they should be spread across multiple profiles.
   if (priority == TAO_INVALID_PRIORITY)
-    return this->create_new_profile (object_key, mprofile, priority);
+    {
+      return this->create_new_profile (object_key, mprofile, priority);
+    }
   else
-    return this->create_shared_profile (object_key, mprofile, priority);
+    {
+      return this->create_shared_profile (object_key, mprofile, priority);
+    }
 }
 
 int
@@ -49,7 +53,9 @@ TAO_COIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
 {
   // Adding this->endpoint_count_ to the TAO_MProfile.
   if (mprofile.grow (1) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   TAO_COIOP_Profile *pfile {};
   ACE_NEW_RETURN (pfile,
@@ -77,7 +83,9 @@ TAO_COIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
 
       TAO_Codeset_Manager *csm = this->orb_core_->codeset_manager();
       if (csm)
-        csm->set_codeset(pfile->tagged_components());
+        {
+          csm->set_codeset(pfile->tagged_components());
+        }
     }
 
   return 0;
@@ -127,7 +135,9 @@ TAO_COIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
           coiop_profile->tagged_components ().set_orb_type (TAO_ORB_TYPE);
           TAO_Codeset_Manager *csm = this->orb_core_->codeset_manager();
           if (csm)
-            csm->set_codeset(pfile->tagged_components());
+            {
+              csm->set_codeset(pfile->tagged_components());
+            }
         }
     }
 
@@ -149,7 +159,9 @@ TAO_COIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 
   // Make sure the dynamically cast pointer is valid.
   if (endp == nullptr)
-    return false;
+    {
+      return false;
+    }
 
   return (endp->uuid() == uuid_);
 }
@@ -171,11 +183,15 @@ TAO_COIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   this->orb_core_ = orb_core;
 
   if (major >=0 && minor >= 0)
-    this->version_.set_version (static_cast<CORBA::Octet> (major),
-                                static_cast<CORBA::Octet> (minor));
+    {
+      this->version_.set_version (static_cast<CORBA::Octet> (major),
+                                  static_cast<CORBA::Octet> (minor));
+    }
   // Parse options
   if (this->parse_options (options) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   uuid_.from_string (address);
 
@@ -192,12 +208,16 @@ TAO_COIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
   this->orb_core_ = orb_core;
 
   if (major >=0 && minor >= 0)
-    this->version_.set_version (static_cast<CORBA::Octet> (major),
-                                static_cast<CORBA::Octet> (minor));
+    {
+      this->version_.set_version (static_cast<CORBA::Octet> (major),
+                                  static_cast<CORBA::Octet> (minor));
+    }
 
   // Parse options
   if (this->parse_options (options) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   return 0;
 }
@@ -253,7 +273,9 @@ TAO_COIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
 
   // ... and object key.
   if ((cdr >> object_key) == 0)
-    return -1;
+    {
+      return -1;
+    }
 
   // We are NOT bothered about the rest.
 
@@ -264,7 +286,9 @@ int
 TAO_COIOP_Acceptor::parse_options (const char *str)
 {
   if (str == nullptr)
-    return 0;  // No options to parse.  Not a problem.
+    {
+      return 0;  // No options to parse.  Not a problem.
+    }
 
   // Use an option format similar to the one used for CGI scripts in
   // HTTP URLs.
@@ -285,7 +309,9 @@ TAO_COIOP_Acceptor::parse_options (const char *str)
   // before the object key.
   for (size_t i {}; i < len; ++i)
     if (options[i] == option_delimiter)
-      ++option_count;
+      {
+        ++option_count;
+      }
 
   // The idea behind the following loop is to split the options into
   // (option, name) pairs.
@@ -319,11 +345,13 @@ TAO_COIOP_Acceptor::parse_options (const char *str)
 
           if (slot == len - 1
               || slot == ACE_CString::npos)
-            TAOLIB_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("TAO (%P|%t) COIOP option <%C> is ")
-                               ACE_TEXT ("missing a value.\n"),
-                               opt.c_str ()),
-                              -1);
+            {
+              TAOLIB_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("TAO (%P|%t) COIOP option <%C> is ")
+                                 ACE_TEXT ("missing a value.\n"),
+                                 opt.c_str ()),
+                                -1);
+            }
 
           ACE_CString name = opt.substring (0, slot);
           ACE_CString value = opt.substring (slot + 1);
@@ -331,10 +359,12 @@ TAO_COIOP_Acceptor::parse_options (const char *str)
           begin = end + 1;
 
           if (name.length () == 0)
-            TAOLIB_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("TAO (%P|%t) Zero length COIOP ")
-                               ACE_TEXT ("option name.\n")),
-                              -1);
+            {
+              TAOLIB_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("TAO (%P|%t) Zero length COIOP ")
+                                 ACE_TEXT ("option name.\n")),
+                                -1);
+            }
 
           if (name == "priority")
             {

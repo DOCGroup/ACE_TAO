@@ -25,7 +25,9 @@ TAO_COIOP_Connector::open (TAO_ORB_Core *orb_core)
 
   // Create our connect strategy
   if (this->create_connect_strategy () == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   return 0;
 }
@@ -43,7 +45,9 @@ TAO_COIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
     this->remote_endpoint (endpoint);
 
   if (COIOP_endpoint == nullptr)
-    return -1;
+    {
+      return -1;
+    }
 
   return 0;
 }
@@ -100,7 +104,9 @@ TAO_COIOP_Connector::check_prefix (const char *endpoint)
 {
   // Check for a valid string
   if (!endpoint || !*endpoint)
-    return -1;  // Failure
+    {
+      return -1;  // Failure
+    }
 
   const char *protocol[] = { "COIOP", "COIOPloc" };
 
@@ -113,10 +119,14 @@ TAO_COIOP_Connector::check_prefix (const char *endpoint)
   // isn't in the IOR then it is not an IOR we can use.
   if (slot == len0
       && ACE_OS::strncasecmp (endpoint, protocol[0], len0) == 0)
-    return 0;
+    {
+      return 0;
+    }
   else if (slot == len1
            && ACE_OS::strncasecmp (endpoint, protocol[1], len1) == 0)
-    return 0;
+    {
+      return 0;
+    }
 
   return -1;
   // Failure: not an COIOP IOR
@@ -133,7 +143,9 @@ TAO_COIOP_Endpoint *
 TAO_COIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
 {
   if (endpoint->tag () != TAO_TAG_COIOP_PROFILE)
-    return 0;
+    {
+      return 0;
+    }
 
   TAO_COIOP_Endpoint *COIOP_endpoint =
     dynamic_cast<TAO_COIOP_Endpoint *> (endpoint );

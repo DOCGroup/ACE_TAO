@@ -82,7 +82,9 @@ CORBA::ULong
 TAO_COIOP_Endpoint::hash ()
 {
   if (this->hash_val_ != 0)
-    return this->hash_val_;
+    {
+      return this->hash_val_;
+    }
 
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
@@ -91,7 +93,9 @@ TAO_COIOP_Endpoint::hash ()
                       this->hash_val_);
     // .. DCL
     if (this->hash_val_ != 0)
-      return this->hash_val_;
+      {
+        return this->hash_val_;
+      }
 
     const ACE_CString *stringval = this->uuid_.to_string ();
     this->hash_val_ =
