@@ -119,7 +119,9 @@ namespace TAO
   Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::~Cache_ExtId_T ()
   {
     if (this->is_delete_)
-      delete this->transport_property_;
+      {
+        delete this->transport_property_;
+      }
   }
 
   template <typename TRANSPORT_DESCRIPTOR_TYPE> ACE_INLINE
@@ -187,11 +189,15 @@ namespace TAO
     prop = this->transport_property_->duplicate ();
 
     if (prop == 0)
-      return;
+      {
+        return;
+      }
 
     // Release memory if there was some allocated in the first place
     if (this->is_delete_)
-      delete this->transport_property_;
+      {
+        delete this->transport_property_;
+      }
 
     this->is_delete_ = true;
     this->transport_property_ = prop;

@@ -23,9 +23,13 @@ namespace TAO
 
       // If it has already connected, go directly to the IDLE_BNP state
       if (int_id.is_connected () && state == ENTRY_CONNECTING)
-        int_id.recycle_state (ENTRY_IDLE_AND_PURGABLE);
+        {
+          int_id.recycle_state (ENTRY_IDLE_AND_PURGABLE);
+        }
       else
-        int_id.recycle_state (state);
+        {
+          int_id.recycle_state (state);
+        }
 
       retval = this->bind_i (ext_id, int_id);
       if (retval == 0)
@@ -126,7 +130,9 @@ namespace TAO
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Lock, guard, *this->cache_lock_, -1));
     if (!entry) // in case someone beat us to it (entry is reference to transport member)
-      return -1;
+      {
+        return -1;
+      }
 
     return this->make_idle_i (entry);
   }
@@ -155,7 +161,9 @@ namespace TAO
     // only one thread opens the Transport_Cache_Manager_T at any given
     // time, so it is safe to check for a non-null lock pointer.
     if (this->cache_lock_ == nullptr)
-      return -1;
+      {
+        return -1;
+      }
 
     long timer_id = -1;
     int result = -1;

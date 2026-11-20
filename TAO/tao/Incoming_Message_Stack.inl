@@ -31,7 +31,9 @@ ACE_INLINE int
 Incoming_Message_Stack::pop (TAO_Queued_Data *&data)
 {
   if (this->top_ == nullptr)
-    return -1;
+    {
+      return -1;
+    }
 
   data = this->top_;
   this->top_ = data->next ();
@@ -43,7 +45,9 @@ ACE_INLINE int
 Incoming_Message_Stack::top (TAO_Queued_Data *&data) const
 {
   if (this->top_ == nullptr)
-    return -1;
+    {
+      return -1;
+    }
 
   data = this->top_;
 

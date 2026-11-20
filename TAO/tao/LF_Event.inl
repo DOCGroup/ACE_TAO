@@ -5,7 +5,9 @@ ACE_INLINE int
 TAO_LF_Event::bind (TAO_LF_Follower *follower)
 {
   if (this->follower_ != 0)
-    return -1;
+    {
+      return -1;
+    }
   this->follower_ = follower;
   return 0;
 }
@@ -14,7 +16,9 @@ ACE_INLINE int
 TAO_LF_Event::unbind (TAO_LF_Follower *)
 {
   if (this->follower_ == 0)
-    return -1;
+    {
+      return -1;
+    }
   this->follower_ = 0;
   return 0;
 }

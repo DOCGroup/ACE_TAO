@@ -26,7 +26,9 @@ ACE_INLINE TAO_MProfile&
 TAO_MProfile::operator= (const TAO_MProfile& rhs)
 {
   if (this == std::addressof (rhs))
-    return *this;
+    {
+      return *this;
+    }
 
   this->set (rhs);
   return *this;
@@ -37,10 +39,14 @@ ACE_INLINE TAO_Profile *
 TAO_MProfile::get_cnext ()
 {
   if (last_ == 0)
-    return nullptr;
+    {
+      return nullptr;
+    }
 
   if (current_ == last_)
-    current_ = 0;
+    {
+      current_ = 0;
+    }
 
   return pfiles_[current_++];
 }
@@ -52,22 +58,34 @@ TAO_MProfile::get_next ()
 {
   // Nolist or EndOfList
   if (last_ == 0 || current_ == last_)
-    return nullptr;
+    {
+      return nullptr;
+    }
   else
-    return pfiles_[current_++];
+    {
+      return pfiles_[current_++];
+    }
 }
 
 ACE_INLINE TAO_Profile *
 TAO_MProfile::get_cprev ()
 {
   if (last_ == 0)
-    return nullptr;
+    {
+      return nullptr;
+    }
   else if (last_ == 1)
-    current_=1;
+    {
+      current_=1;
+    }
   else if (current_ > 1)
-    --current_;
+    {
+      --current_;
+    }
   else // current_ == 0 or 1, 0 => list never read before and == 1
-    current_ = last_;
+    {
+      current_ = last_;
+    }
 
   return pfiles_[current_ - 1];
 }
@@ -76,10 +94,14 @@ ACE_INLINE TAO_Profile *
 TAO_MProfile::get_prev ()
 {
   if (last_ == 0 || current_ <= 1)
-    // No List of BeginningOfList
-    return nullptr;
+    {
+      // No List of BeginningOfList
+      return nullptr;
+    }
   if (current_ > 1)
-    --current_;
+    {
+      --current_;
+    }
 
   return pfiles_[current_ - 1];
 }
@@ -89,19 +111,27 @@ ACE_INLINE TAO_Profile *
 TAO_MProfile::get_profile (TAO_PHandle handle)
 {
   if (handle < last_)
-    return pfiles_[handle];
+    {
+      return pfiles_[handle];
+    }
   else
-    return nullptr;
+    {
+      return nullptr;
+    }
 }
 
 ACE_INLINE TAO_Profile *
 TAO_MProfile::get_current_profile ()
 {
   if (last_ == 0)
-    return nullptr;
+    {
+      return nullptr;
+    }
   if (current_ == 0)
-    // means list has not been read before.
-    current_ = 1;
+    {
+      // means list has not been read before.
+      current_ = 1;
+    }
 
   return pfiles_[current_ - 1];
 }
@@ -110,18 +140,26 @@ ACE_INLINE TAO_PHandle
 TAO_MProfile::get_current_handle ()
 {
   if (current_ > 0)
-    return current_ - 1;
+    {
+      return current_ - 1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 ACE_INLINE TAO_PHandle
 TAO_MProfile::get_current_handle () const
 {
   if (current_ > 0)
-    return current_ - 1;
+    {
+      return current_ - 1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 ACE_INLINE void
@@ -134,10 +172,14 @@ ACE_INLINE int
 TAO_MProfile::give_profile (TAO_Profile *pfile, int share)
 {
   if (share)
-    return this->give_shared_profile(pfile);
+    {
+      return this->give_shared_profile(pfile);
+    }
   // skip by the used slots
   if (last_ == this->pfiles_.size ()) // full!
-    return -1;
+    {
+      return -1;
+    }
 
   pfiles_[last_++] = pfile;
 
@@ -174,7 +216,9 @@ ACE_INLINE const TAO_Profile*
 TAO_MProfile::get_profile (CORBA::ULong slot) const
 {
   if (slot >= this->last_)
-    return nullptr;
+    {
+      return nullptr;
+    }
   return this->pfiles_[slot];
 }
 

@@ -38,7 +38,9 @@ ACE_INLINE bool
 TAO_Leader_Follower::no_leaders_available ()
 {
   if (this->new_leader_generator_)
-    return this->new_leader_generator_->no_leaders_available ();
+    {
+      return this->new_leader_generator_->no_leaders_available ();
+    }
   return false;
 }
 
@@ -77,7 +79,9 @@ TAO_Leader_Follower::set_event_loop_thread (ACE_Time_Value *max_wait_time)
         this->wait_for_client_leader_to_complete (max_wait_time);
 
       if (result != 0)
-        return result;
+        {
+          return result;
+        }
     }
 
   // If <event_loop_thread_> == 0 and <client_leader_thread_> == 0, we
@@ -89,7 +93,9 @@ TAO_Leader_Follower::set_event_loop_thread (ACE_Time_Value *max_wait_time)
   // while we are a client leader.
   if (tss->event_loop_thread_ == 0 &&
       tss->client_leader_thread_ == 0)
-    ++this->leaders_;
+    {
+      ++this->leaders_;
+    }
 
   ++tss->event_loop_thread_;
 
@@ -109,7 +115,9 @@ TAO_Leader_Follower::reset_event_loop_thread_i (TAO_ORB_Core_TSS_Resources *tss)
 
   if (tss->event_loop_thread_ == 0 &&
       tss->client_leader_thread_ == 0)
-    --this->leaders_;
+    {
+      --this->leaders_;
+    }
 }
 
 ACE_INLINE void
@@ -117,7 +125,9 @@ TAO_Leader_Follower::reset_event_loop_thread ()
 {
   TAO_ORB_Core_TSS_Resources * const tss = this->get_tss_resources ();
   if (tss->event_loop_thread_ > 0)
-    this->reset_event_loop_thread_i (tss);
+    {
+      this->reset_event_loop_thread_i (tss);
+    }
 }
 
 ACE_INLINE TAO_SYNCH_MUTEX &
