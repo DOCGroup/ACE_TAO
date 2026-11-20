@@ -43,35 +43,47 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       if (ACE_LOG_MSG->open (argv[0],
                              ACE_Log_Msg::OSTREAM) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    "cannot open logger!!!\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "cannot open logger!!!\n"));
+        }
 
       cause_error ();
       // Check to see what happened.
       if (ACE_LOG_MSG->op_status () == -1
           && ACE_LOG_MSG->errnum () == EWOULDBLOCK)
-        ACE_DEBUG ((LM_DEBUG,
-                    "op_status and errnum work!\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "op_status and errnum work!\n"));
+        }
       else
-        ACE_ERROR ((LM_ERROR,
-                    "op_status and errnum failed!\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "op_status and errnum failed!\n"));
+        }
     }
   else   // The default behavior is to log to STDERR...
     {
       if (ACE_LOG_MSG->open (argv[0]) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    "cannot open logger!!!\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "cannot open logger!!!\n"));
+        }
 
       cause_error ();
 
       // Check to see what happened.
       if (ACE_LOG_MSG->op_status () == -1
           && ACE_LOG_MSG->errnum () == EWOULDBLOCK)
-        ACE_DEBUG ((LM_DEBUG,
-                    "op_status and errnum work!\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "op_status and errnum work!\n"));
+        }
       else
-        ACE_ERROR ((LM_ERROR,
-                    "op_status and errnum failed!\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "op_status and errnum failed!\n"));
+        }
 
       // Exercise many different combinations of STDERR and OSTREAM.
 
