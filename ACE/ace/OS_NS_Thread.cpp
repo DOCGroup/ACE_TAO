@@ -154,7 +154,9 @@ ACE_TSS_Emulation::tss_base (void* ts_storage[], u_int *ts_created)
   if (old_ts_storage == 0)
     {
       if (ts_created)
-        *ts_created = 1u;
+        {
+          *ts_created = 1u;
+        }
 
       // Use the ts_storage passed as argument, if non-zero.  It is
       // possible that this has been implemented in the stack. At the
@@ -196,8 +198,12 @@ ACE_TSS_Emulation::tss_base (void* ts_storage[], u_int *ts_created)
           }
     }
   else
-    if (ts_created)
-      ts_created = 0;
+    {
+      if (ts_created)
+        {
+          ts_created = 0;
+        }
+    }
 
   return ts_storage  ?  ts_storage  :  old_ts_storage;
 }
@@ -696,7 +702,9 @@ TSS_Cleanup_Instance::~TSS_Cleanup_Instance ()
             ACE_ASSERT (reference_count_ > 0);
             --reference_count_;
             if (reference_count_ == 0 && instance_ == 0)
-              condition_->signal ();
+              {
+                condition_->signal ();
+              }
           }
       }
   }// end of guard scope
@@ -909,7 +917,9 @@ ACE_TSS_Cleanup::thread_detach_key (ACE_thread_key_t key)
     // If this entry was never set, just bug out. If it is set, but is the
     // wrong key, assert.
     if (this->table_[key_index].key_ == 0)
-      return 0;
+      {
+        return 0;
+      }
     ACE_ASSERT (this->table_[key_index].key_ == key);
     ACE_TSS_Info &info = this->table_ [key_index];
 
@@ -990,7 +1000,9 @@ bool
 ACE_TSS_Cleanup::find_tss_keys (ACE_TSS_Keys *& tss_keys) const
 {
   if (this->in_use_ == ACE_OS::NULL_key)
-    return false;
+    {
+      return false;
+    }
   if (ACE_OS::thr_getspecific (in_use_,
           reinterpret_cast<void **> (&tss_keys)) == -1)
     {
