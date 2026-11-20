@@ -21,23 +21,25 @@ parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
   int c;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'o':
-        options.ior_output_file = get_opts.opt_arg ();
-        break;
+    {
+      switch (c)
+        {
+          case 'o':
+            options.ior_output_file = get_opts.opt_arg ();
+            break;
 
-      case 'n':
-        options.nthreads = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
+          case 'n':
+            options.nthreads = ACE_OS::atoi (get_opts.opt_arg ());
+            break;
 
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT("usage: %s -o <iorfile> -n <nthreads>\n"),
-                           argv[0]),
-                          -1);
-      }
+          case '?':
+          default:
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT("usage: %s -o <iorfile> -n <nthreads>\n"),
+                               argv[0]),
+                              -1);
+        }
+    }
   return 0;
 }
 
@@ -66,8 +68,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       "test runs in time-shared class\n"));
         }
       else
-        ACE_ERROR ((LM_ERROR,
-                    "server (%P|%t): sched_params failed\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "server (%P|%t): sched_params failed\n"));
+        }
     }
 
   try
@@ -85,9 +89,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            1);
+        }
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -111,10 +117,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         std::unique_ptr<FILE, int (*) (FILE *)> output_file (
           ACE_OS::fopen (options.ior_output_file, "w"), ACE_OS::fclose);
         if (!output_file)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT("Cannot open output file for writing IOR: %s"),
-                             options.ior_output_file),
-                            1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT("Cannot open output file for writing IOR: %s"),
+                               options.ior_output_file),
+                              1);
+          }
         ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
       }
 
@@ -123,9 +131,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Server_Task server_task (orb.in ());
       if (server_task.activate (THR_NEW_LWP | THR_JOINABLE,
                                 options.nthreads) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot activate server threads\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot activate server threads\n"),
+                            1);
+        }
 
       server_task.thr_mgr ()->wait ();
 
