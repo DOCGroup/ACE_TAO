@@ -13,33 +13,33 @@ const ACE_TCHAR *done_file = ACE_TEXT("export_test_ready");
 int
 parse_args_spec (int argc, ACE_TCHAR *argv[], bool help)
 {
-  if (help!=0)
-  {
-    ACE_DEBUG ((LM_INFO,
-                "\nUsage: export_test <options>\n"
-                "Test the trader's exporter role, the options are:\n"
-                "-ORBInitRef <orb_options> E.g. '-ORBInitRef TradingService=iiop://localhost:8901/TradingService'\n"
-                "-quiet or -q              (optional) Run the tests in quiet mode, don't show the query and list results.\n"
-                "-federate or -f           (optional) Setup for federated trader tests.\n"
-                "-iorfile or -i            (optional) Get TradingService reference through IOR instead of resolve.\n"
-                "-d <done_file>            (optional) Filename for signalling that we are ready for serving dynamic properties (for import_test).\n"
-                "\n"
-                "This test needs an external TradingServer running, example:\n"
-                "   Trading_Service -ORBEndpoint iiop://:8901 -TSdumpior trading.ior\n"
-                "See also TAO/docs/releasenotes/trader.html.\n\n"));
-    return -1;
-  }
-  else
-  {
-    ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("d:"));
-    for (int opt; (opt = get_opts()) != -1;)
+  if (help)
     {
-      if (opt == 'd')
-      {
-        done_file = get_opts.opt_arg ();
-      };
-    };
-  };
+      ACE_DEBUG ((LM_INFO,
+                  "\nUsage: export_test <options>\n"
+                  "Test the trader's exporter role, the options are:\n"
+                  "-ORBInitRef <orb_options> E.g. '-ORBInitRef TradingService=iiop://localhost:8901/TradingService'\n"
+                  "-quiet or -q              (optional) Run the tests in quiet mode, don't show the query and list results.\n"
+                  "-federate or -f           (optional) Setup for federated trader tests.\n"
+                  "-iorfile or -i            (optional) Get TradingService reference through IOR instead of resolve.\n"
+                  "-d <done_file>            (optional) Filename for signalling that we are ready for serving dynamic properties (for import_test).\n"
+                  "\n"
+                  "This test needs an external TradingServer running, example:\n"
+                  "   Trading_Service -ORBEndpoint iiop://:8901 -TSdumpior trading.ior\n"
+                  "See also TAO/docs/releasenotes/trader.html.\n\n"));
+      return -1;
+    }
+  else
+    {
+      ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("d:"));
+      for (int opt; (opt = get_opts()) != -1;)
+        {
+          if (opt == 'd')
+            {
+              done_file = get_opts.opt_arg ();
+            }
+        }
+    }
   return 0;
 }
 
@@ -57,9 +57,9 @@ int failure = 0;
 
       // Command line argument parser for use with comlex pearl tests.
       if (parse_args_spec (argc, argv, help) != 0)
-      {
-        return 1;
-      }
+        {
+          return 1;
+        }
 
       // Command line argument parser for the trading tests.
       TT_Parse_Args parse_args (argc, argv);
@@ -74,9 +74,11 @@ int failure = 0;
         orb->string_to_object (ior);
 
       if (CORBA::is_nil (trading_obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT("ERROR, Unable to bootstrap to the Trading Service!\n")),
-                           1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT("ERROR, Unable to bootstrap to the Trading Service!\n")),
+                            1);
+        }
 
       // Narrow the lookup interface.
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT("*** Narrowing the lookup interface.\n")));
@@ -144,11 +146,15 @@ int failure = 0;
           std::unique_ptr<FILE, int (*) (FILE *)> ready_file {
             ACE_OS::fopen (done_file, ACE_TEXT("w")), ACE_OS::fclose};
           if (ready_file != nullptr)
-            ACE_OS::fprintf (ready_file.get (), "The export test is ready\n");
+            {
+              ACE_OS::fprintf (ready_file.get (), "The export test is ready\n");
+            }
           else
-            ACE_DEBUG ((LM_WARNING,
-                        ACE_TEXT("Unable to open %s for output.\n"),
-                        done_file));
+            {
+              ACE_DEBUG ((LM_WARNING,
+                          ACE_TEXT("Unable to open %s for output.\n"),
+                          done_file));
+            }
         }
 
       orb_manager.run ();
