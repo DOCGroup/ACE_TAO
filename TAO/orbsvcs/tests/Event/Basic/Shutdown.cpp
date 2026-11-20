@@ -61,14 +61,18 @@ void
 EC_Shutdown::dump_results ()
 {
   if (this->consumer_disconnects_ != this->n_consumers_)
-    ACE_ERROR ((LM_ERROR,
-                "Unexpected number (%d) of consumers disconnected\n",
-                this->consumer_disconnects_));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Unexpected number (%d) of consumers disconnected\n",
+                  this->consumer_disconnects_));
+    }
 
   if (this->supplier_disconnects_ != this->n_suppliers_)
-    ACE_ERROR ((LM_ERROR,
-                "Unexpected number (%d) of suppliers disconnected\n",
-                this->supplier_disconnects_));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Unexpected number (%d) of suppliers disconnected\n",
+                  this->supplier_disconnects_));
+    }
 }
 
 void

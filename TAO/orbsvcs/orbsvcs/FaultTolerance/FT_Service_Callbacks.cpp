@@ -219,8 +219,10 @@ TAO_FT_Service_Callbacks::is_permanent_forward_condition (CORBA::Object_ptr cons
           : stub->base_profiles();
 
       if (mprofile.profile_count () == 0)
-        // releasing lock
-        return false;
+        {
+          // releasing lock
+          return false;
+        }
 
       // assuming group-attributes are set for all profiles, check
       // only the first profile
@@ -228,8 +230,10 @@ TAO_FT_Service_Callbacks::is_permanent_forward_condition (CORBA::Object_ptr cons
               mprofile.get_profile (0)->tagged_components ();
 
       if (tagged_components.get_component (tc) == 0)
-        // releasing lock
-        return false;
+        {
+          // releasing lock
+          return false;
+        }
 
       return true; /* true */
 
