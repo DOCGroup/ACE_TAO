@@ -1037,7 +1037,9 @@ ACE_OS::swab (const void *src,
       to[ptr  ] = q;
     }
   if (ptr == length) /* I.e., if length is odd, */
-    to[ptr-1] = 0;   /* then pad with a NUL. */
+    {
+      to[ptr-1] = 0;   /* then pad with a NUL. */
+    }
 #elif defined (ACE_HAS_NONCONST_SWAB)
   const char *tmp = static_cast<const char*> (src);
   char *from = const_cast<char *> (tmp);
