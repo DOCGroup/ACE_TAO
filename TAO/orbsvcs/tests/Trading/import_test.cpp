@@ -37,9 +37,11 @@ int failure = 0;
         orb->string_to_object (ior);
 
       if (CORBA::is_nil (trading_obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT("ERROR, Unable to bootstrap to the Trading Service!\n")),
-                           1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT("ERROR, Unable to bootstrap to the Trading Service!\n")),
+                            1);
+        }
 
       // Narrow the lookup interface.
       ACE_DEBUG ((LM_DEBUG, "*** Narrowing the lookup interface.\n"));

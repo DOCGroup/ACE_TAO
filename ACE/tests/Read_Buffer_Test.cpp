@@ -26,7 +26,9 @@ run_main (int, ACE_TCHAR *[])
 
   FILE * const file = std::tmpfile ();
   if (file == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("tmpfile failed\n")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("tmpfile failed\n")), -1);
+    }
 
   if (std::fputs ("read buffer\n", file) < 0 ||
       std::fseek (file, 0, SEEK_SET) != 0)
@@ -41,7 +43,9 @@ run_main (int, ACE_TCHAR *[])
     {
       ACE_Read_Buffer_Unique_Ptr buffer (reader.read (), {reader.alloc ()});
       if (buffer == nullptr)
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Read_Buffer::read failed\n")), -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Read_Buffer::read failed\n")), -1);
+        }
       ACE_TEST_ASSERT (reader.size () == 12);
       ACE_TEST_ASSERT (std::memcmp (buffer.get (), "read buffer", 11) == 0);
       ACE_TEST_ASSERT (buffer.get ()[11] == '\0');

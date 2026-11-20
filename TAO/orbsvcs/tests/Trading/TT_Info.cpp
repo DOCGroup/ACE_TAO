@@ -294,9 +294,11 @@ TT_Parse_Args::TT_Parse_Args (int& argc, ACE_TCHAR** argv)
               close_ior_file = ior_file != nullptr;
 
               if (ior_file == nullptr)
-                ACE_ERROR ((LM_ERROR,
-                            "Unable to open %s for reading: %p\n",
-                            file_name));
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              "Unable to open %s for reading: %p\n",
+                              file_name));
+                }
 
               arg_shifter.consume_arg ();
             }

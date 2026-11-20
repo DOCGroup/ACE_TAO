@@ -83,24 +83,34 @@ PM_Client::process ()
           if (np->get_inactive_count () != 0)
             {
               if (np->get_active_count () != 0)
-                ACE_DEBUG ((LM_DEBUG,
-                            "*(%d)",
-                            np->get_active_count ()));
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "*(%d)",
+                              np->get_active_count ()));
+                }
             }
           else if (np->get_active_count () > 1)
-            ACE_DEBUG ((LM_DEBUG,
-                        "*(%d)",
-                        np->get_active_count ()));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "*(%d)",
+                          np->get_active_count ()));
+            }
           else if (np->get_active_count () == 1)
-            ACE_DEBUG ((LM_DEBUG,
-                        "*"));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "*"));
+            }
 
           np = np->next_;
           if (np == nullptr)
-            break;
+            {
+              break;
+            }
           else
-            ACE_DEBUG ((LM_DEBUG,
-                        " "));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          " "));
+            }
         }
 
       ACE_DEBUG ((LM_DEBUG,
