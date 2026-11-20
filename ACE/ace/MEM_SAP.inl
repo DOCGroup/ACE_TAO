@@ -34,7 +34,9 @@ ACE_MEM_SAP::acquire_buffer (const ssize_t size)
 {
   ACE_TRACE ("ACE_MEM_SAP::acquire_buffer");
   if (this->shm_malloc_ == nullptr)
-    return nullptr; // not initialized.
+    {
+      return nullptr; // not initialized.
+    }
 
   ACE_MEM_SAP_Node *buf {};
 
@@ -51,7 +53,9 @@ ACE_MEM_SAP::release_buffer (ACE_MEM_SAP_Node *buf)
 {
   ACE_TRACE ("ACE_MEM_SAP::release_buffer");
   if (this->shm_malloc_ == nullptr)
-    return -1;                  // not initialized.
+    {
+      return -1;                  // not initialized.
+    }
 
   this->shm_malloc_->free (buf);
   return 0;

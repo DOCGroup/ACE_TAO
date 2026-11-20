@@ -9,7 +9,9 @@ ACE_Intrusive_Auto_Ptr<X>::ACE_Intrusive_Auto_Ptr (X *p, bool addref)
   : rep_ (p)
 {
   if (rep_ != nullptr && addref)
-    X::intrusive_add_ref (rep_);
+    {
+      X::intrusive_add_ref (rep_);
+    }
 }
 
 template <class X> ACE_INLINE
@@ -18,7 +20,9 @@ ACE_Intrusive_Auto_Ptr<X>::ACE_Intrusive_Auto_Ptr (
   : rep_ (r.rep_)
 {
   if (rep_ != nullptr)
-    X::intrusive_add_ref (rep_);
+    {
+      X::intrusive_add_ref (rep_);
+    }
 }
 
 template <class X> ACE_INLINE X *
@@ -45,7 +49,9 @@ ACE_Intrusive_Auto_Ptr<X>::release ()
 {
   X *p = this->rep_;
   if (this->rep_ != nullptr)
-    X::intrusive_remove_ref (this->rep_);
+    {
+      X::intrusive_remove_ref (this->rep_);
+    }
 
   this->rep_ = nullptr;
   return p;
@@ -57,16 +63,22 @@ ACE_Intrusive_Auto_Ptr<X>::reset (X *p)
   // Avoid deleting the underlying auto_ptr if assigning the same actual
   // pointer value.
   if (this->rep_ == p)
-    return;
+    {
+      return;
+    }
 
   X * const old_rep = this->rep_;
   this->rep_ = p;
 
   if (this->rep_ != nullptr)
-    X::intrusive_add_ref (this->rep_);
+    {
+      X::intrusive_add_ref (this->rep_);
+    }
 
   if (old_rep != nullptr)
-    X::intrusive_remove_ref (old_rep);
+    {
+      X::intrusive_remove_ref (old_rep);
+    }
 
   return;
 }
@@ -76,13 +88,17 @@ ACE_Intrusive_Auto_Ptr<X>::operator = (ACE_Intrusive_Auto_Ptr<X> const &rhs)
 {
   // do nothing when aliasing
   if (this->rep_ == rhs.rep_)
-    return;
+    {
+      return;
+    }
 
   // assign a zero
   if (rhs.rep_ == nullptr)
     {
       if (this->rep_ != nullptr)
-        X::intrusive_remove_ref (this->rep_);
+        {
+          X::intrusive_remove_ref (this->rep_);
+        }
       this->rep_ = nullptr;
       return;
     }
@@ -103,7 +119,9 @@ ACE_Intrusive_Auto_Ptr<X>::ACE_Intrusive_Auto_Ptr (
   // compiler warning here
   this->rep_ = rhs.get ();
   if (this->rep_ != nullptr)
-    X::intrusive_add_ref (this->rep_);
+    {
+      X::intrusive_add_ref (this->rep_);
+    }
 }
 
   /// Equality operator that returns @c true if both

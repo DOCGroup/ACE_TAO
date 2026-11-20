@@ -64,7 +64,9 @@ ACE_Handle_Gobbler::consume_handles (size_t n_handles_to_keep_available)
             }
         }
       if (handle >= static_cast<ACE_HANDLE>(FD_SETSIZE))
-        break;
+        {
+          break;
+        }
       this->handle_set_.set_bit (handle);
     }
 
