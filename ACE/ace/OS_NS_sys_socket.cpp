@@ -189,7 +189,9 @@ ACE_OS::sendv_partial_i (ACE_HANDLE handle,
                           0,
                           0);
       if (result != SOCKET_ERROR)
-        break;
+        {
+          break;
+        }
 
       ACE_OS::set_errno_to_wsa_last_error ();
       // if ENOBUFS is received, we apply a divide and
@@ -234,7 +236,9 @@ ACE_OS::send_partial_i (ACE_HANDLE handle,
                                  static_cast<int> (len),
                                  flags);
       if (result != SOCKET_ERROR)
-        break;
+        {
+          break;
+        }
 
       ACE_OS::set_errno_to_wsa_last_error ();
       // if ENOBUFS is received, we apply a divide and
@@ -277,7 +281,9 @@ int ACE_OS::recvmsg_win32_i (ACE_HANDLE handle,
     }
 
   if (!wsaRcvMsg)
-    ACE_NOTSUP_RETURN (-1);
+    {
+      ACE_NOTSUP_RETURN (-1);
+    }
 
   WSAMSG wsaMsg =
   {
