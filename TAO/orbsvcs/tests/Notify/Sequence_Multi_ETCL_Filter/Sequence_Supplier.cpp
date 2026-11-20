@@ -100,22 +100,24 @@ Supplier_Client::parse_args (int argc, ACE_TCHAR *argv[])
   int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-  {
-    case 'e':
-      this->options_.num_batches = ACE_OS::atoi (get_opts.optarg);
-      break;
+    {
+      switch (c)
+        {
+        case 'e':
+          this->options_.num_batches = ACE_OS::atoi (get_opts.optarg);
+          break;
 
-    case 'o':
-      this->options_.ior_output_file = get_opts.optarg;
-      break;
+        case 'o':
+          this->options_.ior_output_file = get_opts.optarg;
+          break;
 
-    default:
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("usage: %s -o <iorfile> -e <# of events>\n"),
-                         argv [0]),
-                        -1);
-  }
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("usage: %s -o <iorfile> -e <# of events>\n"),
+                             argv [0]),
+                            -1);
+        }
+    }
 
   // Indicates successful parsing of the command line
   return 0;
@@ -231,11 +233,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         std::unique_ptr<FILE, int (*) (FILE*)> output_file (
           ACE_OS::fopen (client.options ().ior_output_file, "w"), ACE_OS::fclose);
         if (!output_file)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("Cannot open output file %s for writing IOR: %s"),
-                             client.options ().ior_output_file,
-                             ior.in ()),
-                            1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("Cannot open output file %s for writing IOR: %s"),
+                               client.options ().ior_output_file,
+                               ior.in ()),
+                              1);
+          }
         ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
       }
 

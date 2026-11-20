@@ -55,40 +55,42 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
   int c;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'x':
-        options.do_shutdown = true;
-        break;
+    {
+      switch (c)
+        {
+        case 'x':
+          options.do_shutdown = true;
+          break;
 
-      case 'k':
-        options.ior = get_opts.opt_arg ();
-        break;
+        case 'k':
+          options.ior = get_opts.opt_arg ();
+          break;
 
-      case 'i':
-        options.niterations = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
+        case 'i':
+          options.niterations = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
 
-      case 'd':
-        options.enable_dynamic_scheduling = true;
-        break;
+        case 'd':
+          options.enable_dynamic_scheduling = true;
+          break;
 
-      case 's':
-        options.enable_yield = false;
-        break;
+        case 's':
+          options.enable_yield = false;
+          break;
 
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "-i <niterations> "
-                           "-d (enable dynamic scheduling)"
-                           "-s (disable yield)"
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage:  %s "
+                             "-k <ior> "
+                             "-i <niterations> "
+                             "-d (enable dynamic scheduling)"
+                             "-s (disable yield)"
+                             "\n",
+                             argv [0]),
+                            -1);
+        }
+    }
   // Indicates successful parsing of the command line
   return 0;
 }
@@ -107,11 +109,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   long flags {};
 
   if (sched_policy == ACE_SCHED_RR)
-    flags = THR_NEW_LWP | THR_BOUND | THR_JOINABLE | THR_SCHED_RR;
+    {
+      flags = THR_NEW_LWP | THR_BOUND | THR_JOINABLE | THR_SCHED_RR;
+    }
   else
-  {
-    flags = THR_NEW_LWP | THR_BOUND | THR_JOINABLE | THR_SCHED_FIFO;
-  }
+    {
+      flags = THR_NEW_LWP | THR_BOUND | THR_JOINABLE | THR_SCHED_FIFO;
+    }
 
   ACE_hthread_t main_thr_handle {};
   ACE_Thread::self (main_thr_handle);

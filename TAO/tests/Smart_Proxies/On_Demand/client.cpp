@@ -25,20 +25,22 @@ parse_args (Options &options, int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'i':
-        options.ior = get_opts.opt_arg ();
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-i "
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
+    {
+      switch (c)
+        {
+        case 'i':
+          options.ior = get_opts.opt_arg ();
+          break;
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage:  %s "
+                             "-i "
+                             "\n",
+                             argv [0]),
+                            -1);
+        }
+    }
   return 0;
 }
 
@@ -66,10 +68,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         Test::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Object reference <%s> is nil.\n",
-                           options.ior),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Object reference <%s> is nil.\n",
+                             options.ior),
+                            1);
+        }
 
       server->method (0);
 

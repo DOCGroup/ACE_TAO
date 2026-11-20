@@ -14490,3 +14490,9 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Added Allman braces around policy dispatch, option parsing, POA checks, and output-file failures in ACE HTTP streams and TAO regression tests.
 - Focused clang-tidy reported no remaining brace warnings in the edited files; `git diff --check` passed. No build or runtime tests were run.
 - The broader tracked-source brace audit remains open.
+
+## 2026-11-20 Allman braces in scheduling and Notify tests
+
+- Added Allman braces around argument parsing, scheduling selection, POA checks, and IOR errors in TAO Notify, Kokyu, and collocation test sources.
+- Focused clang-tidy reported no remaining brace warnings in the edited files. The Kokyu MIF source reports a missing generated RTScheduling header in the local compile database; `git diff --check` passed. No build or runtime tests were run.
+- The broader tracked-source brace audit remains open.
