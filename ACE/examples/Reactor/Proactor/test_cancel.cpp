@@ -91,9 +91,11 @@ Receiver::open (ACE_HANDLE handle,
 
   if (this->rs_.read (this->mb_,
                       read_size) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "Receiver::open: Failed to issue the read"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n",
+                  "Receiver::open: Failed to issue the read"));
+    }
 }
 
 void
@@ -132,9 +134,11 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 
       if (this->rs_.read (this->mb_,
                           read_size) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    "%p\n",
-                    "Receiver::handle_read_stream: Failed to issue the read"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%p\n",
+                      "Receiver::handle_read_stream: Failed to issue the read"));
+        }
 
       // Cancel the read.
 
@@ -143,9 +147,11 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 
       int ret_val = this->rs_.cancel ();
       if (ret_val == -1)
-        ACE_ERROR ((LM_ERROR,
-                    "%p\n",
-                    "Receiver::handle_read_stream: Failed to cancel the read"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%p\n",
+                      "Receiver::handle_read_stream: Failed to cancel the read"));
+        }
 
       ACE_DEBUG ((LM_DEBUG, "Asynch IO : Cancel : Result = %d\n",
                   ret_val));
@@ -175,21 +181,23 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opt ()) != EOF)
-    switch (c)
-      {
-      case 'p':
-        port = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      case 's':
-        read_size = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      default:
-        ACE_ERROR ((LM_ERROR, "%p.\n",
-                    "usage :\n"
-                    "-p <port>\n"
-                    "-s <read_size>\n"));
-        return -1;
-      }
+    {
+      switch (c)
+        {
+        case 'p':
+          port = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 's':
+          read_size = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        default:
+          ACE_ERROR ((LM_ERROR, "%p.\n",
+                      "usage :\n"
+                      "-p <port>\n"
+                      "-s <read_size>\n"));
+          return -1;
+        }
+    }
 
   return 0;
 }
@@ -209,15 +217,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (acceptor.open (ACE_INET_Addr (port),
                      read_size,
                      1) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "ACE:acceptor::open failed\n"),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "ACE:acceptor::open failed\n"),
+                        1);
+    }
 
   int success = 1;
 
   while (success > 0  && !done)
-    // dispatch events
-    success = ACE_Proactor::instance ()->handle_events ();
+    {
+      // dispatch events
+      success = ACE_Proactor::instance ()->handle_events ();
+    }
 
   return 0;
 }
