@@ -45,12 +45,14 @@ int send_datagram (ACE_SOCK_Dgram_Bcast &socket, int datagram_no)
     if (socket.send (dgram_buffer,
                      ACE_OS::strlen (dgram_buffer) + 1,
                      dgram_port) < 0 )
+      {
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                            ACE_TEXT ("Cannot broadcast datagram")), -1);
+      }
     else
-    {
-      ACE_DEBUG ((LM_INFO, ACE_TEXT ("%C sent\n"), dgram_buffer));
-    }
+      {
+        ACE_DEBUG ((LM_INFO, ACE_TEXT ("%C sent\n"), dgram_buffer));
+      }
     return 0;
 }
 
@@ -102,17 +104,19 @@ int run_receiver ()
   static char    dgram_buffer[BUFSIZ];
 
   if (socket.open (ACE_INET_Addr (dgram_port)) != -1)
-    if (socket.recv (dgram_buffer, sizeof (dgram_buffer),
-                     remote, 0, &dgram_recv_timeout) > 0)
-      {
-        ACE_DEBUG ((LM_INFO, ACE_TEXT ("%C received\n"), dgram_buffer));
-        return 0;
-      }
-    else
-      {
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("Cannot receive datagrams")), -1);
-      }
+    {
+      if (socket.recv (dgram_buffer, sizeof (dgram_buffer),
+                       remote, 0, &dgram_recv_timeout) > 0)
+        {
+          ACE_DEBUG ((LM_INFO, ACE_TEXT ("%C received\n"), dgram_buffer));
+          return 0;
+        }
+      else
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("Cannot receive datagrams")), -1);
+        }
+    }
   else
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -199,8 +203,10 @@ int run_auto_test (const ACE_TCHAR *prog_name)
                   receiver_exit_code));
     }
   else
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("Cannot open broadcast socket")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("Cannot open broadcast socket")), -1);
+    }
   return (receiver_exit_code);
 }
 
@@ -224,7 +230,8 @@ int run_main (int argc, ACE_TCHAR *argv[])
   int result          = 0;
   ACE_Get_Opt opts (argc, argv, ACE_TEXT ("p:t:n:sra"));
   while ((opt = opts ()) != -1)
-    switch (opt)
+    {
+      switch (opt)
       {
       case 'a':
         auto_test_recv = 1;
@@ -255,6 +262,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
         print_usage ();
         return -1;
       }
+    }
   ACE_START_TEST (ACE_TEXT ("SOCK_Dgram_Bcast_Test"));
 
 #ifndef ACE_LACKS_IOCTL
