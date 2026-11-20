@@ -163,15 +163,21 @@ TAO_EC_Basic_Filter_Builder::
       if (e.header.type == ACE_ES_CONJUNCTION_DESIGNATOR
           || e.header.type == ACE_ES_DISJUNCTION_DESIGNATOR
           || e.header.type == ACE_ES_LOGICAL_AND_DESIGNATOR)
-        // We won't let these be nested by the basic filter builder.
-        // Assume these are the end of the group
-        break;
+        {
+          // We won't let these be nested by the basic filter builder.
+          // Assume these are the end of the group
+          break;
+        }
       else if (e.header.type == ACE_ES_BITMASK_DESIGNATOR)
-        // These take up an extra element
-        ++i;
+        {
+          // These take up an extra element
+          ++i;
+        }
       else if (e.header.type == ACE_ES_MASKED_TYPE_DESIGNATOR)
-        // These take up two extra elements
-        i += 2;
+        {
+          // These take up two extra elements
+          i += 2;
+        }
       else if (e.header.type == ACE_ES_NEGATION_DESIGNATOR) {
         // These enclose another filter.
         // Lets try to figure out how many elements the enclosed
