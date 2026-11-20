@@ -27,9 +27,13 @@ operator<< (std::ostream& os, CORBA::Exception const& e)
     CORBA::TypeCode_var tc = tmp.type ();
     char const *p = tc->name ();
     if  (*p != '\0')
+      {
         os << p;
+      }
     else
+      {
         os << tc->id ();
+      }
     return os;
 }
 #endif
@@ -104,7 +108,9 @@ static void
 set_temp (CCS::Thermostat_ptr tmstat, CCS::TempType new_temp)
 {
   if (CORBA::is_nil (tmstat))  // Don't call via nil reference
-    return;
+    {
+      return;
+    }
 
   CCS::AssetType const anum = tmstat->asset_num ();
   try
