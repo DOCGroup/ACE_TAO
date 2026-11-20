@@ -439,27 +439,35 @@ int Sender::open (const ACE_TCHAR *host, u_short port)
 
   // Open ACE_Asynch_Write_Stream
   if (this->ws_.open (*this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ACE_Asynch_Write_Stream::open"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "ACE_Asynch_Write_Stream::open"),
+                        -1);
+    }
 
   // Open ACE_Asynch_Read_Stream
   if (this->rs_.open (*this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ACE_Asynch_Read_File::open"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "ACE_Asynch_Read_File::open"),
+                        -1);
+    }
 
   // Start an asynchronous transmit file
   if ( this->initiate_write_stream () == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   if ( duplex != 0 )
     {
       // Start an asynchronous read file
       if (this->initiate_read_stream () == -1)
-        return -1;
+        {
+          return -1;
+        }
     }
 
   return 0;
@@ -618,29 +626,31 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opt ()) != EOF)
-    switch (c)
-      {
-      case 'h':
-        host = get_opt.opt_arg ();
-        break;
-      case 'n':
-        nThreads = ACE_OS::atoi (get_opt.opt_arg ()) ;
-        break;
-      case 'p':
-        port = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      case 'd':
-        duplex = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      default:
-        ACE_ERROR ((LM_ERROR, "%p.\n",
-                    "usage :\n"
-                    "-h <host> for Sender mode\n"
-                    "-d <duplex mode 1-on/0-off>\n"
-                    "-p <port to listen/connect>\n"
-                    "-n <number threads for Proactor pool>\n"));
-        return -1;
-      }
+    {
+      switch (c)
+        {
+        case 'h':
+          host = get_opt.opt_arg ();
+          break;
+        case 'n':
+          nThreads = ACE_OS::atoi (get_opt.opt_arg ()) ;
+          break;
+        case 'p':
+          port = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'd':
+          duplex = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        default:
+          ACE_ERROR ((LM_ERROR, "%p.\n",
+                      "usage :\n"
+                      "-h <host> for Sender mode\n"
+                      "-d <duplex mode 1-on/0-off>\n"
+                      "-p <port to listen/connect>\n"
+                      "-n <number threads for Proactor pool>\n"));
+          return -1;
+        }
+    }
 
   return 0;
 }
@@ -651,7 +661,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_UNUSED_ARG (initial_read_size);
 
   if (parse_args (argc, argv) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 
@@ -760,19 +772,22 @@ int PrintSigMask ()
                     "Error:(%P | %t):%p\n",
                     "ACE_OS::pthread_sigmask failed"));
       }
-    else  for (int i = 1 ; i < 1000; ++i)
+    else
       {
-        member = ACE_OS::sigismember (&mask,i);
+        for (int i = 1 ; i < 1000; ++i)
+          {
+            member = ACE_OS::sigismember (&mask,i);
 
-        COUT ( "\nSig " )
-          COUT ( i )
-          COUT ( " is " )
-          COUT (member )
+            COUT ( "\nSig " )
+              COUT ( i )
+              COUT ( " is " )
+              COUT (member )
 
-          if (member == -1)
-            {
-              break ;
-            }
+              if (member == -1)
+                {
+                  break ;
+                }
+          }
       }
 #endif
   return 0;
