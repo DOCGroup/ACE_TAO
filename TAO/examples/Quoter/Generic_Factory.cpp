@@ -60,7 +60,9 @@ Quoter_Generic_Factory_Server::init (int argc,
       ACE_NEW_RETURN (argv_copy, ACE_TCHAR *[argc], -1);
       this->argv_.reset (argv_copy);
       for (int i = 0; i < argc; ++i)
+      {
         this->argv_[i] = argv[i];
+      }
 
       // Activate the POA manager
       exception_message = "While activating the POA manager";
@@ -95,8 +97,10 @@ Quoter_Generic_Factory_Server::init (int argc,
 
       // Register the Quoter GenericFactory with the Naming Service.
       if (this->options_.debug_level >= 2)
+      {
         ACE_DEBUG ((LM_DEBUG,
                     "Generic_Factory: Trying to get a reference to the Naming Service.\n"));
+      }
 
       // Get the Naming Service object reference.
       exception_message = "While getting the Naming Service Reference";
@@ -104,8 +108,10 @@ Quoter_Generic_Factory_Server::init (int argc,
         orb_manager_.orb()->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (namingObj_var.in ()))
+      {
         ACE_ERROR ((LM_ERROR,
                    " (%P|%t) Unable get the Naming Service.\n"));
+      }
 
       // Narrow the object reference to a Naming Context.
       exception_message = "While narrowing the Naming Context";
@@ -113,12 +119,16 @@ Quoter_Generic_Factory_Server::init (int argc,
         CosNaming::NamingContext::_narrow (namingObj_var.in ());
 
       if (CORBA::is_nil (namingContext_var.in ()))
+      {
         ACE_ERROR ((LM_ERROR,
                    " (%P|%t) Unable get the Naming Service.\n"));
+      }
 
       if (this->options_.debug_level >= 2)
+      {
         ACE_DEBUG ((LM_DEBUG,
                     "Generic_Factory: Have a proper reference to the Naming Service.\n"));
+      }
 
       // Get the IDL_Quoter naming context.
       CosNaming::Name quoterContextName (1);  // max = 1
@@ -134,8 +144,10 @@ Quoter_Generic_Factory_Server::init (int argc,
         CosNaming::NamingContext::_narrow (quoterNamingObj_var.in ());
 
       if (this->options_.debug_level >= 2)
+      {
         ACE_DEBUG ((LM_DEBUG,
                     "Generic_Factory: Have a proper reference to the Quoter Naming Context.\n"));
+      }
 
       // Bind the Quoter GenericFactory to the IDL_Quoter naming
       // context.
@@ -151,8 +163,10 @@ Quoter_Generic_Factory_Server::init (int argc,
                                       gf_obj.in ());
 
       if (this->options_.debug_level >= 2)
+      {
         ACE_DEBUG ((LM_DEBUG,
                     "Generic_Factory: Bound the Quoter GenericFactory to the Quoter Naming Context.\n"));
+      }
 
       // now the Quoter GenericFactory is bound to the Naming Context
       // the Generic Factory should try to register itself to the closest
@@ -188,8 +202,10 @@ Quoter_Generic_Factory_Server::init (int argc,
                                                   object_var.in ());
 
         if (this->options_.debug_level >= 2)
+        {
           ACE_DEBUG ((LM_DEBUG,
                       "Generic_Factory: Registered the Quoter GenericFactory to the Life Cycle Service.\n"));
+        }
       }
 
     }
@@ -207,8 +223,10 @@ int
 Quoter_Generic_Factory_Server::run ()
 {
   if (this->options_.debug_level >= 1)
+  {
     ACE_DEBUG ((LM_DEBUG,
                 "\nQuoter Example: Quoter_Generic_Factory_Server is running\n"));
+  }
 
   orb_manager_.orb()->run ();
 
@@ -225,6 +243,7 @@ Quoter_Generic_Factory_Server::parse_args ()
   int exit_code {};
 
   while ((opt = get_opt ()) != EOF)
+  {
     switch (opt)
       {
       case 'd':  // debug flag.
@@ -250,6 +269,7 @@ Quoter_Generic_Factory_Server::parse_args ()
         ACE_OS::exit (exit_code);
         break;
       }
+  }
   return 0;
 }
 
@@ -264,7 +284,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       if (quoter_Generic_Factory_Server.init (argc,
                                               argv) == -1)
+      {
         return 1;
+      }
       else
         {
           quoter_Generic_Factory_Server.run ();
