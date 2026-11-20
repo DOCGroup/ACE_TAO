@@ -81,9 +81,13 @@ extern "C"
     //     mode,file,line);
     //   */
     if (mode & CRYPTO_LOCK)
-      (void) ssl_locks[type].acquire ();
+      {
+        (void) ssl_locks[type].acquire ();
+      }
     else
-      (void) ssl_locks[type].release ();
+      {
+        (void) ssl_locks[type].release ();
+      }
   }
 
   // Return the current thread ID.  OpenSSL uses this on platforms
@@ -442,7 +446,9 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file,
       ca_file = ACE_OS::getenv (ACE_SSL_CERT_FILE_ENV);
 #ifdef ACE_DEFAULT_SSL_CERT_FILE
       if (ca_file == nullptr)
-        ca_file = ACE_DEFAULT_SSL_CERT_FILE;
+        {
+          ca_file = ACE_DEFAULT_SSL_CERT_FILE;
+        }
 #endif
     }
 
@@ -452,7 +458,9 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file,
       ca_dir = ACE_OS::getenv (ACE_SSL_CERT_DIR_ENV);
 #ifdef ACE_DEFAULT_SSL_CERT_DIR
       if (ca_dir == nullptr)
-        ca_dir = ACE_DEFAULT_SSL_CERT_DIR;
+        {
+          ca_dir = ACE_DEFAULT_SSL_CERT_DIR;
+        }
 #endif
     }
 
