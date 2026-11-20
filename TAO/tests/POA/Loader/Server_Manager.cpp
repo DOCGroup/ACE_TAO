@@ -26,21 +26,23 @@ Server_i::parse_args (int argc, ACE_TCHAR *argv[])
   int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'f':
-        ior_output_file_ = get_opts.opt_arg ();
-        break;
+    {
+      switch (c)
+        {
+          case 'f':
+            ior_output_file_ = get_opts.opt_arg ();
+            break;
 
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "[-f ior_output_file] "
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
+          case '?':
+          default:
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "usage:  %s "
+                               "[-f ior_output_file] "
+                               "\n",
+                               argv [0]),
+                              -1);
+        }
+    }
 
   // Indicates successful parsing of command line.
   return 0;
@@ -53,8 +55,10 @@ Server_i::write_iors_to_file (char const *first_ior,
                               char const *second_ior)
 {
   if (ior_output_file_ == nullptr)
-    // No filename was specified; simply return
-    return 0;
+    {
+      // No filename was specified; simply return
+      return 0;
+    }
 
   std::string const ior_output_file_1 = std::string (ACE_TEXT_ALWAYS_CHAR (ior_output_file_)) + "_1";
   std::string const ior_output_file_2 = std::string (ACE_TEXT_ALWAYS_CHAR (ior_output_file_)) + "_2";
@@ -64,33 +68,39 @@ Server_i::write_iors_to_file (char const *first_ior,
   std::unique_ptr<FILE, int (*) (FILE *)> output_file_2 (
     ACE_OS::fopen (ior_output_file_2.c_str (), "w"), ACE_OS::fclose);
   if (!output_file_1 || !output_file_2)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Cannot open output files for writing IORs: %C, %C\n",
-                       ior_output_file_1.c_str (),
-                       ior_output_file_2.c_str ()),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Cannot open output files for writing IORs: %C, %C\n",
+                         ior_output_file_1.c_str (),
+                         ior_output_file_2.c_str ()),
+                        -1);
+    }
 
   int result = ACE_OS::fprintf (output_file_1.get (),
                                 "%s",
                                 first_ior);
   if (result <= 0
       || static_cast<size_t> (result) != std::strlen (first_ior))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "ACE_OS::fprintf failed while writing %C to %C\n",
-                       first_ior,
-                       ior_output_file_1.c_str ()),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "ACE_OS::fprintf failed while writing %C to %C\n",
+                         first_ior,
+                         ior_output_file_1.c_str ()),
+                        -1);
+    }
 
   result = ACE_OS::fprintf (output_file_2.get (),
                             "%s",
                             second_ior);
   if (result <= 0
       || static_cast<size_t> (result) != std::strlen (second_ior))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "ACE_OS::fprintf failed while writing %C to %C\n",
-                       second_ior,
-                       ior_output_file_2.c_str ()),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "ACE_OS::fprintf failed while writing %C to %C\n",
+                         second_ior,
+                         ior_output_file_2.c_str ()),
+                        -1);
+    }
   return 0;
 }
 
