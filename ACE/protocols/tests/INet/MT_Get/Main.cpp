@@ -36,7 +36,9 @@ Get_Task::Get_Task (ACE_Thread_Manager *thr_mgr,
 {
   // Create worker threads.
   if (this->activate (THR_NEW_LWP, n_threads_) == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("activate failed")));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("activate failed")));
+    }
   else
   {
     ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) started %d threads\n"), n_threads_));
@@ -207,7 +209,9 @@ int Get_MultiTask::svc ()
       ACE::HTTP::ClientRequestHandler rh;
       http_url.open (rh);
       if (rh.response_stream ())
+        {
           ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) opened URL %C\n"), http_url.to_string ().c_str ()));
+        }
       else
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) failed to open URL %C\n"), http_url.to_string ().c_str ()));
