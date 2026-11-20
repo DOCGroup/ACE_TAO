@@ -443,17 +443,23 @@ TAO_Literal_Constraint::operator CORBA::ULongLong () const
   CORBA::ULongLong return_value {};
 
   if (this->type_ == TAO_UNSIGNED)
-    return_value = this->op_.uinteger_;
+    {
+      return_value = this->op_.uinteger_;
+    }
   else if (this->type_ == TAO_SIGNED)
-    return_value =
-      (this->op_.integer_ > 0) ?
-        static_cast<CORBA::ULongLong> (this->op_.integer_) : 0;
+    {
+      return_value =
+        (this->op_.integer_ > 0) ?
+          static_cast<CORBA::ULongLong> (this->op_.integer_) : 0;
+    }
   else if (this->type_ == TAO_DOUBLE)
-    return_value =
-      (this->op_.double_ > 0) ?
-      ((this->op_.double_ > static_cast<CORBA::Double>(ACE_UINT64_MAX)) ?
-       ACE_UINT64_MAX :
-       static_cast<CORBA::ULongLong> (this->op_.double_)) : 0;
+    {
+      return_value =
+        (this->op_.double_ > 0) ?
+        ((this->op_.double_ > static_cast<CORBA::Double>(ACE_UINT64_MAX)) ?
+         ACE_UINT64_MAX :
+         static_cast<CORBA::ULongLong> (this->op_.double_)) : 0;
+    }
 
   return return_value;
 }
@@ -463,20 +469,26 @@ TAO_Literal_Constraint::operator CORBA::LongLong () const
   CORBA::LongLong return_value {};
 
   if (this->type_ == TAO_SIGNED)
-    return_value = this->op_.integer_;
+    {
+      return_value = this->op_.integer_;
+    }
   else if (this->type_ == TAO_UNSIGNED)
-    return_value =
-      (this->op_.uinteger_ > static_cast<CORBA::ULongLong> (ACE_INT64_MAX)) ?
-      ACE_INT64_MAX : static_cast<CORBA::LongLong> (this->op_.uinteger_);
+    {
+      return_value =
+        (this->op_.uinteger_ > static_cast<CORBA::ULongLong> (ACE_INT64_MAX)) ?
+        ACE_INT64_MAX : static_cast<CORBA::LongLong> (this->op_.uinteger_);
+    }
   else if (this->type_ == TAO_DOUBLE)
-    return_value  =
-      (this->op_.double_ > 0) ?
-      ((this->op_.double_ > static_cast<CORBA::Double>(ACE_INT64_MAX)) ?
-       ACE_INT64_MAX :
-       static_cast<CORBA::LongLong> (this->op_.double_)) :
-    ((this->op_.double_ < ACE_INT64_MIN) ?
-     ACE_INT64_MIN :
-     static_cast<CORBA::LongLong> (this->op_.double_));
+    {
+      return_value  =
+        (this->op_.double_ > 0) ?
+        ((this->op_.double_ > static_cast<CORBA::Double>(ACE_INT64_MAX)) ?
+         ACE_INT64_MAX :
+         static_cast<CORBA::LongLong> (this->op_.double_)) :
+      ((this->op_.double_ < ACE_INT64_MIN) ?
+       ACE_INT64_MIN :
+       static_cast<CORBA::LongLong> (this->op_.double_));
+    }
 
   return return_value;
 }
@@ -486,11 +498,17 @@ TAO_Literal_Constraint::operator CORBA::Double () const
   CORBA::Double return_value = 0.0;
 
   if (this->type_ == TAO_DOUBLE)
-    return_value = this->op_.double_;
+    {
+      return_value = this->op_.double_;
+    }
   else if (this->type_ == TAO_SIGNED)
-    return_value = static_cast<CORBA::Double> (this->op_.integer_);
+    {
+      return_value = static_cast<CORBA::Double> (this->op_.integer_);
+    }
   else if (this->type_ == TAO_UNSIGNED)
-    return_value = static_cast<CORBA::Double> (this->op_.uinteger_);
+    {
+      return_value = static_cast<CORBA::Double> (this->op_.uinteger_);
+    }
 
   return return_value;
 }
@@ -688,8 +706,10 @@ operator== (const TAO::String_Manager& left,
   bool result {};
 
   if (static_cast<char const*> (right) != nullptr)
-    result = std::strcmp (static_cast<char const*> (left),
-                          static_cast<char const*> (right)) == 0;
+    {
+      result = std::strcmp (static_cast<char const*> (left),
+                            static_cast<char const*> (right)) == 0;
+    }
   return result;
 }
 
@@ -873,7 +893,9 @@ TAO_Literal_Constraint::widest_type (const TAO_Literal_Constraint& left,
   if (right_type != left_type)
     {
       if (right_type > left_type)
-        return_value = right_type;
+        {
+          return_value = right_type;
+        }
       else
       {
         return_value = left_type;
@@ -893,17 +915,29 @@ TAO_Literal_Constraint::copy (const TAO_Literal_Constraint& lit)
 
   this->type_ = lit.type_;
   if (this->type_ == TAO_STRING)
-    this->op_.str_ = CORBA::string_dup (lit.op_.str_);
+    {
+      this->op_.str_ = CORBA::string_dup (lit.op_.str_);
+    }
   else if (this->type_ == TAO_DOUBLE)
-    this->op_.double_ = lit.op_.double_;
+    {
+      this->op_.double_ = lit.op_.double_;
+    }
   else if (this->type_ == TAO_UNSIGNED)
-    this->op_.uinteger_ = lit.op_.uinteger_;
+    {
+      this->op_.uinteger_ = lit.op_.uinteger_;
+    }
   else if (this->type_ == TAO_SIGNED)
-    this->op_.integer_ = lit.op_.integer_;
+    {
+      this->op_.integer_ = lit.op_.integer_;
+    }
   else if (this->type_ == TAO_BOOLEAN)
-    this->op_.bool_ = lit.op_.bool_;
+    {
+      this->op_.bool_ = lit.op_.bool_;
+    }
   else if (this->type_ == TAO_SEQUENCE)
-    this->op_.any_ = lit.op_.any_;
+    {
+      this->op_.any_ = lit.op_.any_;
+    }
   else
   {
     type_ = TAO_UNKNOWN;
