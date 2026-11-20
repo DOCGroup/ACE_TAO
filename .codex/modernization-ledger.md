@@ -13640,3 +13640,9 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Added Allman braces to eleven single-statement bodies in `TAO/examples/Quoter/Generic_Factory.cpp`, including both option loops.
 - Focused clang-tidy reported no remaining brace warnings; `git diff --check` passed. No build or runtime tests were run.
 - The full tracked-source brace audit remains open.
+
+## 2026-11-20 ORB local configuration test brace follow-up
+
+- Added Allman braces to ten single-statement error and initialization checks in `TAO/tests/ORB_Local_Config/Service_Dependency/Test.cpp`.
+- Focused clang-tidy reported no remaining brace warnings; `git diff --check` passed. No build or runtime tests were run.
+- The full tracked-source brace audit remains open.
