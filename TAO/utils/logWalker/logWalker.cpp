@@ -85,7 +85,9 @@ parse_manifest (Session &session, ACE_TCHAR const *filename)
           if (line[1] == 'o')
             {
               if (!manifest_value_available (line, 3))
+              {
                 continue;
+              }
               if (session.has_dir())
                 {
                   ACE_ERROR ((LM_ERROR,
@@ -108,13 +110,17 @@ parse_manifest (Session &session, ACE_TCHAR const *filename)
               if (line.size () > 2 && line[2] == 'd')
                 {
                   if (!manifest_value_available (line, 4))
+                  {
                     continue;
+                  }
                   session.make_dir (line.data () + 4, true);
                 }
               else
                 {
                   if (!manifest_value_available (line, 3))
+                  {
                     continue;
+                  }
                   session.make_dir (line.data () + 3, false);
                 }
               continue;
@@ -122,21 +128,27 @@ parse_manifest (Session &session, ACE_TCHAR const *filename)
           if (line[1] == 't')
             {
               if (!manifest_value_available (line, 3))
+              {
                 continue;
+              }
               Session::set_tao_version (ACE_TEXT_CHAR_TO_TCHAR (line.data () + 3));
               continue;
             }
           if (line[1] == 'a')
             {
               if (!manifest_value_available (line, 3))
+              {
                 continue;
+              }
               session.alternate_address (line.data () + 3);
               continue;
             }
           if (line[1] == 'p')
             {
               if (!manifest_value_available (line, 3))
+              {
                 continue;
+              }
               session.default_service (line.data () + 3);
               continue;
             }
@@ -173,11 +185,15 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
       if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-o")) == 0)
         {
           if (session.has_dir())
+          {
             ACE_ERROR_RETURN ((LM_ERROR,
                                "supply either output file "
                                "or directory but not both\n"), 1);
+          }
           if (i + 1 >= argc)
+          {
             ACE_ERROR_RETURN ((LM_ERROR, "-o requires an output filename\n"), 1);
+          }
           session.outfile(ACE_TEXT_ALWAYS_CHAR(argv[++i]));
           continue;
         }
@@ -185,11 +201,15 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
           ACE_OS::strcasecmp (argv[i], ACE_TEXT("-dd")) == 0)
         {
           if (session.has_outfile())
+          {
             ACE_ERROR_RETURN ((LM_ERROR,
                                "supply either output file "
                                "or directory but not both\n"), 1);
+          }
           if (i + 1 >= argc)
+          {
             ACE_ERROR_RETURN ((LM_ERROR, "-d and -dd require an output directory\n"), 1);
+          }
           bool const split = ACE_OS::strcasecmp (argv[i], ACE_TEXT("-dd")) == 0;
           session.make_dir (ACE_TEXT_ALWAYS_CHAR(argv[++i]), split);
           continue;
@@ -197,31 +217,43 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
       if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-m")) == 0)
         {
           if (i + 1 >= argc)
+          {
             ACE_ERROR_RETURN ((LM_ERROR, "-m requires a manifest filename\n"), 1);
+          }
           parse_manifest (session, argv[++i]);
           continue;
         }
       if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-t")) == 0)
         {
           if (i + 1 >= argc)
+          {
             ACE_ERROR_RETURN ((LM_ERROR, "-t requires a TAO version\n"), 1);
+          }
           if (Session::set_tao_version (argv[++i]))
+          {
             continue;
+          }
           else
+          {
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT("TAO version must be 1.5, 1.6, 1.7, 1.8, 2.0, or 2.2\n")), 1);
+          }
         }
       if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-a")) == 0)
         {
           if (i + 1 >= argc)
+          {
             ACE_ERROR_RETURN ((LM_ERROR, "-a requires an alias and address\n"), 1);
+          }
           session.alternate_address (ACE_TEXT_ALWAYS_CHAR (argv[++i]));
           continue;
         }
       if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-p")) == 0)
         {
           if (i + 1 >= argc)
+          {
             ACE_ERROR_RETURN ((LM_ERROR, "-p requires a service and address\n"), 1);
+          }
           session.default_service (ACE_TEXT_ALWAYS_CHAR (argv[++i]));
           continue;
         }
