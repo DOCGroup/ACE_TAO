@@ -39,7 +39,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Server_Options options;
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
       if (parse_args (argc, argv, options) != 0)
-        return 1;
+        {
+          return 1;
+        }
 
       CORBA::Object_var const object = orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var const poa = PortableServer::POA::_narrow (object.in ());
@@ -50,7 +52,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         std::unique_ptr<FILE, int (*) (FILE *)> file (
           ACE_OS::fopen (options.ready_file.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
         if (!file)
-          return 1;
+          {
+            return 1;
+          }
         ACE_OS::fputs ("ready\n", file.get ());
       }
 

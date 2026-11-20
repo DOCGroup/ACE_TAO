@@ -54,14 +54,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, options) != 0)
-        return 1;
+        {
+          return 1;
+        }
 
       CORBA::Object_var const object = orb->string_to_object (options.ior.c_str ());
       Test::OnewayIdle_var const test = Test::OnewayIdle::_narrow (object.in ());
       if (CORBA::is_nil (test.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) Narrow to Test::OnewayIdle failed\n")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) Narrow to Test::OnewayIdle failed\n")),
+                            1);
+        }
 
       ACE_DEBUG ((LM_INFO,
                   ACE_TEXT ("(%P|%t) Sending oneway ping\n")));
