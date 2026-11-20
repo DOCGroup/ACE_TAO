@@ -44,8 +44,10 @@ test_get_servant_manager (PortableServer::POA_ptr poa)
     }
 
   if (!succeed)
-    ACE_ERROR ((LM_ERROR,
-                "(%t) ERROR, get servant manager failed, should give an exception\n"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%t) ERROR, get servant manager failed, should give an exception\n"));
+    }
 }
 
 void
@@ -67,8 +69,10 @@ test_set_servant_manager (PortableServer::POA_ptr poa)
     }
 
   if (!succeed)
-    ACE_ERROR ((LM_ERROR,
-                "(%t) ERROR, set servant manager failed, should give an exception\n"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%t) ERROR, set servant manager failed, should give an exception\n"));
+    }
 }
 
 void
@@ -93,8 +97,10 @@ test_get_servant_with_no_set (PortableServer::POA_ptr poa)
     }
 
   if (!succeed)
-    ACE_ERROR ((LM_ERROR,
-                "(%t) ERROR, get servant without one set failed\n"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%t) ERROR, get servant without one set failed\n"));
+    }
 }
 
 void
