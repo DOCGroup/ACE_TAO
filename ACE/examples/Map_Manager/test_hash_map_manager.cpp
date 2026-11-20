@@ -17,16 +17,20 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (argc != 4)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("usage: %s tablesize file1 file2\n"),
-                       argv[0]), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("usage: %s tablesize file1 file2\n"),
+                         argv[0]), -1);
+    }
   else
     {
       int const parsed_total = ACE_OS::atoi (argv[1]);
       if (parsed_total <= 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("tablesize must be a positive integer\n")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("tablesize must be a positive integer\n")),
+                            1);
+        }
 
       size_t const total = static_cast<size_t> (parsed_total);
 
@@ -45,9 +49,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           ACE_TString const string (key.data ());
           if (hash.bind (string, string) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("hash bind failed for an input key\n")),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("hash bind failed for an input key\n")),
+                                1);
+            }
         }
 
       MAP_MANAGER::ITERATOR iterator (hash);
@@ -55,9 +61,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       for (MAP_MANAGER::ENTRY *entry {};
            iterator.next (entry) != 0;
            iterator.advance ())
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s %s\n"),
-                    entry->ext_id_.fast_rep (),
-                    entry->int_id_.fast_rep ()));
+        {
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s %s\n"),
+                      entry->ext_id_.fast_rep (),
+                      entry->int_id_.fast_rep ()));
+        }
 
       if (!ACE_OS::freopen (argv[3], ACE_TEXT("r"), stdin))
         {
@@ -70,9 +78,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_TString const name (key.data ());
           ACE_TString value;
           if (hash.find (name, value) == -1 || !(name == value))
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("hash lookup failed for an input key\n")),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("hash lookup failed for an input key\n")),
+                                1);
+            }
         }
 
       if (!ACE_OS::freopen (argv[3], ACE_TEXT("r"), stdin))
@@ -85,15 +95,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           ACE_TString const string (key.data ());
           if (hash.unbind (string) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("hash unbind failed for an input key\n")),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("hash unbind failed for an input key\n")),
+                                1);
+            }
         }
 
       if (hash.current_size () != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("hash map was not empty after unbinding all keys\n")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("hash map was not empty after unbinding all keys\n")),
+                            1);
+        }
 
       ACE_OS::fclose (stdin);
     }
