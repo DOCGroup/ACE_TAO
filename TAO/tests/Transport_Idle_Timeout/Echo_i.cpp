@@ -88,6 +88,8 @@ void
 Echo_i::shutdown ()
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Echo_i::shutdown ()\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Echo_i::shutdown ()\n")));
+    }
   orb_->shutdown (false);
 }

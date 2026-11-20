@@ -74,7 +74,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Client_Options options;
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
       if (parse_args (argc, argv, options) != 0)
-        return 1;
+        {
+          return 1;
+        }
 
       CORBA::Object_var const object = orb->string_to_object (options.ior.c_str ());
       Transport_Idle_Timeout_Long_Request_Test::Test_var const test =
