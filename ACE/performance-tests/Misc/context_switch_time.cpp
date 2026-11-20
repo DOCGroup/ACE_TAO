@@ -458,14 +458,18 @@ Ping_Suspend_Resume_Test::svc ()
   // Resume the thread until thr_continue fails, indicating that it has
   // finished.
   for (ACE_UINT32 i = 0; i < 10000  &&  ! ACE_OS::thr_continue (high_.thread_id ());
-       ++i) /* null */;
+       ++i)
+    {
+    }
 
   // Don't count the one iteration that was used to allow the high-priority
   // thread to terminate.
   if (high_.iterations () < iterations_)
-    ACE_DEBUG ((LM_DEBUG, "Ping_Suspend_Resume_Test: high priority task "
-                "executed only %u iterations!\n",
-                high_.iterations ()));
+    {
+      ACE_DEBUG ((LM_DEBUG, "Ping_Suspend_Resume_Test: high priority task "
+                  "executed only %u iterations!\n",
+                  high_.iterations ()));
+    }
 
 #if ACE_DEBUG_CST > 0
   ACE_DEBUG ((LM_DEBUG, "Ping_Suspend_Resume_Test::svc, finishing\n"));
@@ -1007,7 +1011,9 @@ Synchronized_Suspend_Resume_Test::svc ()
   // Resume the thread until thr_continue fails, indicating that it has
   // finished.
   for (ACE_UINT32 i = 0; i < 10000  &&  ! ACE_OS::thr_continue (high_.thread_id ());
-       ++i) /* null */;
+       ++i)
+    {
+    }
 
 #if ACE_DEBUG_CST > 0
   ACE_DEBUG ((LM_DEBUG, "Synchronized_Suspend_Resume_Test::svc, finishing\n"));
@@ -1074,7 +1080,9 @@ get_options (int argc, ACE_TCHAR *argv[])
     {
       int const parsed_iterations = ACE_OS::atoi (argv[get_opt.opt_ind ()]);
       if (parsed_iterations > 0)
-        num_iterations = static_cast<ACE_UINT32> (parsed_iterations);
+        {
+          num_iterations = static_cast<ACE_UINT32> (parsed_iterations);
+        }
     else
       {
         ACE_DEBUG ((LM_ERROR, "%n: iterations must be > 0\n"));
