@@ -28,19 +28,23 @@ TAO_ECG_Simple_Mcast_EH::open (char const *mcast_addr,
 
   ACE_INET_Addr mcast_group;
   if (mcast_group.set (mcast_addr) != 0)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       "Unable to open mcast handler: "
-                       "error using specified address %s "
-                       "in ACE_INET.set ().\n",
-                       mcast_addr),
-                      -1);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             "Unable to open mcast handler: "
+                             "error using specified address %s "
+                             "in ACE_INET.set ().\n",
+                             mcast_addr),
+                            -1);
+    }
 
   if (this->dgram_.join (mcast_group, 1, net_if) != 0)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                      "Unable to open mcast handler: error "
-                      "joining to %s\n",
-                       mcast_addr),
-                      -1);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             "Unable to open mcast handler: error "
+                             "joining to %s\n",
+                             mcast_addr),
+                            -1);
+    }
 
   (void) dgram_.enable(ACE_NONBLOCK);
 
@@ -74,15 +78,19 @@ TAO_ECG_Simple_Mcast_EH::shutdown ()
                                                  ACE_Event_Handler::READ_MASK);
     }
   if (result != 0)
-    ORBSVCS_ERROR ((LM_ERROR,
-                "Unable to deregister handler from reactor "
-                "on shutdown.\n"));
+    {
+      ORBSVCS_ERROR ((LM_ERROR,
+                      "Unable to deregister handler from reactor "
+                      "on shutdown.\n"));
+    }
 
   result = this->dgram_.close ();
   if (result != 0)
-    ORBSVCS_ERROR ((LM_ERROR,
-                "Unable to close mcast receiving dgram "
-                "on shutdown.\n"));
+    {
+      ORBSVCS_ERROR ((LM_ERROR,
+                      "Unable to close mcast receiving dgram "
+                      "on shutdown.\n"));
+    }
 
   this->receiver_ = nullptr;
 
