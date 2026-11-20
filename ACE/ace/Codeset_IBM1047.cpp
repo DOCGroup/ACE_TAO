@@ -102,7 +102,9 @@ ACE_IBM1047_ISO8859::read_string (ACE_InputCDR& in,
                       0);
 
       if (this->read_char_array (in, x, len))
-        return 1;
+        {
+          return 1;
+        }
 
       delete [] x;
     }
@@ -178,7 +180,9 @@ ACE_IBM1047_ISO8859::write_string (ACE_OutputCDR& out,
                                    const ACE_CDR::Char* x)
 {
   if (out.write_ulong (len + 1))
-    return this->write_char_array (out, x, len + 1);
+    {
+      return this->write_char_array (out, x, len + 1);
+    }
   return 0;
 }
 
@@ -243,7 +247,9 @@ ACE_ISO8859_IBM1047::read_string (ACE_InputCDR &in,
                       0);
 
       if (this->read_char_array (in, x, len))
-        return 1;
+        {
+          return 1;
+        }
 
       delete [] x;
     }
@@ -319,9 +325,13 @@ ACE_ISO8859_IBM1047::write_string (ACE_OutputCDR& out,
                                    const ACE_CDR::Char* x)
 {
   if (out.write_ulong (len + 1))
-    return this->write_char_array (out, x, len + 1);
+    {
+      return this->write_char_array (out, x, len + 1);
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 ACE_CDR::Boolean

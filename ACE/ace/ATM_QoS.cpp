@@ -459,10 +459,12 @@ ACE_ATM_QoS::construct_options (ACE_HANDLE fd,
   buf = (char *) ACE_OS::malloc (info.options);
 
   if (buf == 0)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Unable to allocate %d bytes for options\n"),
-                       info.options),
-                      0);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Unable to allocate %d bytes for options\n"),
+                         info.options),
+                        0);
+    }
 
   popt = (struct t_opthdr *) buf;
 
@@ -544,9 +546,13 @@ ACE_ATM_QoS::construct_options (ACE_HANDLE fd,
       bearer->clipping_susceptibility = T_ATM_NULL;
 
       if (ACE_BIT_ENABLED (flags, OPT_FLAGS_PMP))
-        bearer->connection_configuration = T_ATM_1_TO_MANY;
+        {
+          bearer->connection_configuration = T_ATM_1_TO_MANY;
+        }
       else
-        bearer->connection_configuration = T_ATM_1_TO_1;
+        {
+          bearer->connection_configuration = T_ATM_1_TO_1;
+        }
 
       popt = T_OPT_NEXTHDR (buf, info.options, popt);
 

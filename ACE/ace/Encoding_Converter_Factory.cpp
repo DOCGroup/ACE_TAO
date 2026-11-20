@@ -53,17 +53,23 @@ ACE_Encoding_Converter_Factory::create (
       // convert from UTF-16 to UTF-8.
       converter = ACE_UTF8_Encoding_Converter::encoded (source, source_size);
       if (converter != nullptr)
-        return converter;
+        {
+          return converter;
+        }
 
       // Check for UTF-32
       converter = ACE_UTF32_Encoding_Converter::encoded (source, source_size);
       if (converter != nullptr)
-        return converter;
+        {
+          return converter;
+        }
 
       // Check for UTF-16
       converter = ACE_UTF16_Encoding_Converter::encoded (source, source_size);
       if (converter != nullptr)
-        return converter;
+        {
+          return converter;
+        }
     }
 
   return converter;
