@@ -238,7 +238,9 @@ TAO_Storable_Bindings_Map::shared_bind (char const *id,
       if (this->map_.find (new_name,
                            old_entry) == 0
           && type != old_entry.type_)
+      {
         return -2;
+      }
 
       else
       {
@@ -275,7 +277,9 @@ File_Open_Lock_and_Check::File_Open_Lock_and_Check
     {
       this->init_no_load (method_type);
       if (force_load)
+      {
         this->reload ();
+      }
       else
         {
           if (this->object_obsolete ())
@@ -425,8 +429,10 @@ TAO_Storable_Naming_Context::~TAO_Storable_Naming_Context ()
       if (fl.get())
         {
           if (TAO_debug_level > 5)
+          {
             ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) NameService: removing file %s\n",
                         file_name.c_str ()));
+          }
           fl->remove ();
         }
     }
@@ -655,12 +661,16 @@ TAO_Storable_Naming_Context::rebind (CosNaming::Name const &n,
                                            CosNaming::nobject);
 
       if (result == -1)
+      {
         throw CORBA::INTERNAL ();
+      }
 
       else if (result == -2)
+      {
         throw CosNaming::NamingContext::NotFound (
           CosNaming::NamingContext::not_object,
           n);
+      }
 
       this->Write (flck.peer());
     }
@@ -701,11 +711,15 @@ TAO_Storable_Naming_Context::bind_context (CosNaming::Name const &n,
                                          nc,
                                          CosNaming::ncontext);
       if (result == 1)
+      {
         throw CosNaming::NamingContext::AlreadyBound();
+      }
 
       // Something went wrong with the internal structure
       else if (result == -1)
+      {
         throw CORBA::INTERNAL ();
+      }
 
       this->Write(flck.peer());
     }
@@ -746,11 +760,15 @@ TAO_Storable_Naming_Context::rebind_context (CosNaming::Name const &n,
                                            nc,
                                            CosNaming::ncontext);
       if (result == -1)
+      {
         throw CORBA::INTERNAL ();
+      }
       else if (result == -2)
+      {
         throw CosNaming::NamingContext::NotFound(
           CosNaming::NamingContext::not_context,
           n);
+      }
 
       this->Write(flck.peer());
     }
@@ -816,9 +834,11 @@ TAO_Storable_Naming_Context::unbind (CosNaming::Name const &n)
 
       if (this->context_->unbind (n[0].id,
                                   n[0].kind) == -1)
+      {
         throw CosNaming::NamingContext::NotFound(
           CosNaming::NamingContext::missing_node,
           n);
+      }
 
       this->Write(flck.peer());
     }
@@ -853,9 +873,13 @@ TAO_Storable_Naming_Context::bind (CosNaming::Name const &n,
                                          obj,
                                          CosNaming::nobject);
       if (result == 1)
+      {
         throw CosNaming::NamingContext::AlreadyBound();
+      }
       else if (result == -1)
+      {
         throw CORBA::INTERNAL ();
+      }
 
       this->Write (flck.peer());
     }
@@ -933,14 +957,18 @@ TAO_Storable_Naming_Context::resolve (CosNaming::Name const &n)
           context = CosNaming::NamingContext::_narrow (result.in ());
         }
       else
+      {
         throw CosNaming::NamingContext::NotFound(
           CosNaming::NamingContext::not_context,
           n);
+      }
 
       if (CORBA::is_nil (context.in ()))
+      {
         throw CosNaming::NamingContext::NotFound(
           CosNaming::NamingContext::not_context,
           n);
+      }
       else
         {
           CosNaming::Name rest_of_name
@@ -1005,7 +1033,9 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
 
   // Calculate number of bindings that will go into <bl>.
   if (this->context_->current_size () > how_many)
+  {
     n = how_many;
+  }
   else
   {
     n = static_cast<CORBA::ULong> (this->context_->current_size ());
@@ -1032,7 +1062,9 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
 
   // If we do not need to pass back BindingIterator.
   if (this->context_->current_size () <= how_many)
+  {
     return;
+  }
   else if (redundant_)
     {
       ACE_UNUSED_ARG (bind_iter);
