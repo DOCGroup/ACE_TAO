@@ -23,9 +23,13 @@ ACE_FIFO_Send_Msg::send (const ACE_Str_Buf *data,
                       (strbuf *) cntl,
                       (strbuf *) data,
                       flags) == -1)
-    return-1;
+    {
+      return-1;
+    }
   else
-    return (cntl == 0 ? 0 : cntl->len) + (data == 0 ? 0 : data->len);
+    {
+      return (cntl == 0 ? 0 : cntl->len) + (data == 0 ? 0 : data->len);
+    }
 }
 
 ACE_INLINE ssize_t
@@ -41,9 +45,13 @@ ACE_FIFO_Send_Msg::send (int band,
                        (strbuf *) data,
                        band,
                        flags) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return (cntl == 0 ? 0 : cntl->len) + (data == 0 ? 0 : data->len);
+    {
+      return (cntl == 0 ? 0 : cntl->len) + (data == 0 ? 0 : data->len);
+    }
 }
 #endif /* ACE_HAS_STREAM_PIPES */
 

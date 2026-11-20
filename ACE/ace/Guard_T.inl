@@ -21,7 +21,9 @@ template <class ACE_LOCK> ACE_INLINE int
 ACE_Guard<ACE_LOCK>::release ()
 {
   if (this->owner_ == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       this->owner_ = -1;
@@ -43,9 +45,13 @@ ACE_Guard<ACE_LOCK>::ACE_Guard (ACE_LOCK &l, bool block)
     owner_ (0)
 {
   if (block)
-    this->acquire ();
+    {
+      this->acquire ();
+    }
   else
-    this->tryacquire ();
+    {
+      this->tryacquire ();
+    }
 }
 
 template <class ACE_LOCK> ACE_INLINE
@@ -119,9 +125,13 @@ ACE_Write_Guard<ACE_LOCK>::ACE_Write_Guard (ACE_LOCK &m,
   : ACE_Guard<ACE_LOCK> (std::addressof (m))
 {
   if (block)
-    this->acquire_write ();
+    {
+      this->acquire_write ();
+    }
   else
-    this->tryacquire_write ();
+    {
+      this->tryacquire_write ();
+    }
 }
 
 template <class ACE_LOCK> ACE_INLINE int
@@ -161,9 +171,13 @@ ACE_Read_Guard<ACE_LOCK>::ACE_Read_Guard (ACE_LOCK &m,
   : ACE_Guard<ACE_LOCK> (std::addressof (m))
 {
   if (block)
-    this->acquire_read ();
+    {
+      this->acquire_read ();
+    }
   else
-    this->tryacquire_read ();
+    {
+      this->tryacquire_read ();
+    }
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

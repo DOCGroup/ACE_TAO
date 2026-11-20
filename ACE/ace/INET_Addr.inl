@@ -51,9 +51,13 @@ ACE_INET_Addr::ip_addr_pointer () const
 {
 #if defined (ACE_HAS_IPV6)
   if (this->get_type () == PF_INET)
-    return const_cast<in_addr *> (&this->inet_addr_.in4_.sin_addr);
+    {
+      return const_cast<in_addr *> (&this->inet_addr_.in4_.sin_addr);
+    }
   else
-    return const_cast<in6_addr *> (&this->inet_addr_.in6_.sin6_addr);
+    {
+      return const_cast<in6_addr *> (&this->inet_addr_.in6_.sin6_addr);
+    }
 #else
   return const_cast<in_addr *> (&this->inet_addr_.in4_.sin_addr);
 #endif
@@ -68,9 +72,13 @@ ACE_INET_Addr::ip_addr_size () const
   // within the range of an int anyway.
 #if defined (ACE_HAS_IPV6)
   if (this->get_type () == PF_INET)
-    return static_cast<int> (sizeof this->inet_addr_.in4_.sin_addr);
+    {
+      return static_cast<int> (sizeof this->inet_addr_.in4_.sin_addr);
+    }
   else
-    return static_cast<int> (sizeof this->inet_addr_.in6_.sin6_addr);
+    {
+      return static_cast<int> (sizeof this->inet_addr_.in6_.sin6_addr);
+    }
 #else
   return static_cast<int> (sizeof this->inet_addr_.in4_.sin_addr.s_addr);
 #endif /* ACE_HAS_IPV6 */
@@ -84,9 +92,13 @@ ACE_INET_Addr::get_port_number () const
   ACE_TRACE ("ACE_INET_Addr::get_port_number");
 #if defined (ACE_HAS_IPV6)
   if (this->get_type () == PF_INET)
-    return ACE_NTOHS (this->inet_addr_.in4_.sin_port);
+    {
+      return ACE_NTOHS (this->inet_addr_.in4_.sin_port);
+    }
   else
-    return ACE_NTOHS (this->inet_addr_.in6_.sin6_port);
+    {
+      return ACE_NTOHS (this->inet_addr_.in6_.sin6_port);
+    }
 #else
 # if defined (ACE_VXWORKS) && ACE_VXWORKS >= 0x690
   return static_cast<u_short> (ACE_NTOHS (this->inet_addr_.in4_.sin_port));
@@ -102,9 +114,13 @@ ACE_INET_Addr::get_addr_size () const
   ACE_TRACE ("ACE_INET_Addr::get_addr_size");
 #if defined (ACE_HAS_IPV6)
   if (this->get_type () == PF_INET)
-    return sizeof this->inet_addr_.in4_;
+    {
+      return sizeof this->inet_addr_.in4_;
+    }
   else
-    return sizeof this->inet_addr_.in6_;
+    {
+      return sizeof this->inet_addr_.in6_;
+    }
 #else
   return sizeof this->inet_addr_.in4_;
 #endif /* ACE_HAS_IPV6 */
@@ -186,7 +202,9 @@ ACE_INET_Addr::is_any () const
 {
 #if defined (ACE_HAS_IPV6)
   if (this->get_type () == AF_INET6)
+    {
       return IN6_IS_ADDR_UNSPECIFIED (&this->inet_addr_.in6_.sin6_addr);
+    }
 #endif /* ACE_HAS_IPV6 */
 
   return (this->inet_addr_.in4_.sin_addr.s_addr == INADDR_ANY);
@@ -198,7 +216,9 @@ ACE_INET_Addr::is_loopback () const
 {
 #if defined (ACE_HAS_IPV6)
   if (this->get_type () == AF_INET6)
+    {
       return IN6_IS_ADDR_LOOPBACK (&this->inet_addr_.in6_.sin6_addr);
+    }
 #endif /* ACE_HAS_IPV6 */
 
   // RFC 3330 defines loopback as any address with 127.x.x.x
@@ -211,7 +231,9 @@ ACE_INET_Addr::is_multicast () const
 {
 #if defined (ACE_HAS_IPV6)
   if (this->get_type() == AF_INET6)
-    return this->inet_addr_.in6_.sin6_addr.s6_addr[0] == 0xFF;
+    {
+      return this->inet_addr_.in6_.sin6_addr.s6_addr[0] == 0xFF;
+    }
 #endif /* ACE_HAS_IPV6 */
   return
     (*static_cast<const unsigned char*> (
@@ -224,7 +246,9 @@ ACE_INLINE bool
 ACE_INET_Addr::is_linklocal () const
 {
   if (this->get_type () == AF_INET6)
+    {
       return IN6_IS_ADDR_LINKLOCAL (&this->inet_addr_.in6_.sin6_addr);
+    }
 
   return false;
 }
@@ -234,7 +258,9 @@ ACE_INLINE bool
 ACE_INET_Addr::is_sitelocal () const
 {
   if (this->get_type () == AF_INET6)
+    {
       return IN6_IS_ADDR_SITELOCAL (&this->inet_addr_.in6_.sin6_addr);
+    }
 
   return false;
 }
@@ -244,7 +270,9 @@ ACE_INLINE bool
 ACE_INET_Addr::is_ipv4_mapped_ipv6 () const
 {
   if (this->get_type () == AF_INET6)
+    {
       return IN6_IS_ADDR_V4MAPPED (&this->inet_addr_.in6_.sin6_addr);
+    }
 
   return false;
 }
@@ -254,7 +282,9 @@ ACE_INLINE bool
 ACE_INET_Addr::is_ipv4_compat_ipv6 () const
 {
   if (this->get_type () == AF_INET6)
+    {
       return IN6_IS_ADDR_V4COMPAT (&this->inet_addr_.in6_.sin6_addr);
+    }
 
   return false;
 }
