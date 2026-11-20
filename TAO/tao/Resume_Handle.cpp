@@ -25,8 +25,8 @@ TAO_Resume_Handle::resume_handle ()
       {
         TAOLIB_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - Resume_Handle::resume_handle, "
-                    "resuming handler returned -1 for handle = %@\n",
-                    reinterpret_cast<void *> (this->handle_)));
+                    "resuming handler returned -1 for handle = %H\n",
+                    this->handle_));
       }
     }
 

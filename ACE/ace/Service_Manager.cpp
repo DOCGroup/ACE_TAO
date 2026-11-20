@@ -304,8 +304,8 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
   if (this->debug_)
     {
       ACELIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("client_stream fd = %@\n"),
-                  reinterpret_cast<void *> (this->client_stream_.get_handle ())));
+                  ACE_TEXT ("client_stream fd = %H\n"),
+                  this->client_stream_.get_handle ()));
       ACE_INET_Addr sa;
 
       if (this->client_stream_.get_remote_addr (sa) == -1)

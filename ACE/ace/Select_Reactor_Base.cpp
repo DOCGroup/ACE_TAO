@@ -560,15 +560,15 @@ ACE_Select_Reactor_Handler_Repository::dump () const
 # ifdef ACE_SELECT_REACTOR_BASE_USES_HASH_MAP
     ACELIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT (" (event_handler = %@,")
-                ACE_TEXT (" event_handler->handle_ = %@\n"),
+                ACE_TEXT (" event_handler->handle_ = %H\n"),
                 event_handler,
                 event_handler->get_handle ()));
 # else
     ACELIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT (" (event_handler = %@,")
-                ACE_TEXT (" event_handler->handle_ = %@\n"),
+                ACE_TEXT (" event_handler->handle_ = %H\n"),
                 event_handler,
-                reinterpret_cast<void *> (event_handler->get_handle ())));
+                event_handler->get_handle ()));
 # endif /* ACE_SELECT_REACTOR_BASE_USES_HASH_MAP */
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT (" ]\n")));

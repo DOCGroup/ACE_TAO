@@ -23,8 +23,8 @@ ACE_LSOCK::dump () const
   ACE_TRACE ("ACE_LSOCK::dump");
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("aux_handle_ = %@"),
-                 reinterpret_cast<void *> (this->aux_handle_)));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("aux_handle_ = %H"),
+                 this->aux_handle_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }

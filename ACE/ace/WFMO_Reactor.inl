@@ -75,8 +75,8 @@ ACE_WFMO_Reactor_Handler_Repository::Common_Info::dump () const
               this->event_handler_));
 
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("I/O Handle = %@\n"),
-              reinterpret_cast<void *> (this->io_handle_)));
+              ACE_TEXT ("I/O Handle = %H\n"),
+              this->io_handle_));
 
   ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Network Events = %d\n"),
@@ -212,8 +212,8 @@ ACE_WFMO_Reactor_Handler_Repository::To_Be_Added_Info::dump () const
   Common_Info::dump ();
 
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Event Handle = %@\n"),
-              reinterpret_cast<void *> (this->event_handle_)));
+              ACE_TEXT ("Event Handle = %H\n"),
+              this->event_handle_));
 
   ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Suspend Entry = %d\n"),
@@ -276,8 +276,8 @@ ACE_WFMO_Reactor_Handler_Repository::Suspended_Info::dump () const
   Common_Info::dump ();
 
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Event Handle = %@\n"),
-              reinterpret_cast<void *> (this->event_handle_)));
+              ACE_TEXT ("Event Handle = %H\n"),
+              this->event_handle_));
 
   ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Resume Entry = %d\n"),

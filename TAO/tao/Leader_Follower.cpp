@@ -222,8 +222,8 @@ TAO_Leader_Follower::defer_event (ACE_Event_Handler *eh)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
                      ACE_TEXT ("TAO (%P|%t) - TAO_Leader_Follower::defer_event, ")
-                     ACE_TEXT ("deferring event handler[%@]\n"),
-                     reinterpret_cast<void *> (eh->get_handle ())));
+                     ACE_TEXT ("deferring event handler[%H]\n"),
+                     eh->get_handle ()));
     }
   Deferred_Event *ptr {};
   ACE_NEW_RETURN (ptr,
@@ -250,9 +250,9 @@ TAO_Leader_Follower::resume_events ()
           // we can take when we get here with an error?!
           TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - TAO_Leader_Follower::resume_events, ")
-                      ACE_TEXT ("an event handler[%@] has been resumed, ")
+                      ACE_TEXT ("an event handler[%H] has been resumed, ")
                       ACE_TEXT ("notified the reactor, retval=%d.\n"),
-                      reinterpret_cast<void *> (event->handler ()->get_handle ()),
+                      event->handler ()->get_handle (),
                       retval));
         }
     }

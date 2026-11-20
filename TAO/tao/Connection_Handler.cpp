@@ -255,9 +255,9 @@ TAO_Connection_Handler::handle_input_eh (ACE_HANDLE h, ACE_Event_Handler *eh)
             {
               TAOLIB_ERROR ((LM_ERROR,
                              "TAO (%P|%t) - Connection_Handler[%B]::handle_input_eh, "
-                             "Error deferring upcall handler[%@]\n",
+                             "Error deferring upcall handler[%H]\n",
                              this->transport ()->id (),
-                             reinterpret_cast<void *> (eh->get_handle ())));
+                             eh->get_handle ()));
             }
           return -1;
         }
@@ -294,10 +294,10 @@ TAO_Connection_Handler::handle_input_internal (
       ACE_HANDLE const handle = eh->get_handle();
       TAOLIB_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - Connection_Handler[%B]::handle_input_internal, "
-                  "handle = %@/%@\n",
+                  "handle = %H/%H\n",
                   t_id,
-                  reinterpret_cast<void *> (handle),
-                  reinterpret_cast<void *> (h)));
+                  handle,
+                  h));
     }
 
   TAO_Resume_Handle resume_handle (this->orb_core (), eh->get_handle ());
@@ -324,10 +324,10 @@ TAO_Connection_Handler::handle_input_internal (
       ACE_HANDLE const handle = eh->get_handle ();
       TAOLIB_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - Connection_Handler[%B]::handle_input_internal, "
-                  "handle = %@/%@, retval = %d\n",
+                  "handle = %H/%H, retval = %d\n",
                   t_id,
-                  reinterpret_cast<void *> (handle),
-                  reinterpret_cast<void *> (h),
+                  handle,
+                  h,
                   return_value));
     }
 

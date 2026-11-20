@@ -171,9 +171,9 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::open (void *)
                            -1);
     }
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("connected to %s on fd %@\n"),
+              ACE_TEXT ("connected to %s on fd %H\n"),
               buf,
-              reinterpret_cast<void *> (this->peer_.get_handle ())));
+              this->peer_.get_handle ()));
 #endif /* ACELIB_DEBUGGING */
   if (this->reactor ()
       && this->reactor ()->register_handler

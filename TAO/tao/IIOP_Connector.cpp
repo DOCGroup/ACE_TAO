@@ -620,12 +620,12 @@ TAO_IIOP_Connector::complete_connection (int result,
     {
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::make_connection, ")
-                  ACE_TEXT ("new %s connection to <%C:%d> on handle [%@]\n"),
+                  ACE_TEXT ("new %s connection to <%C:%d> on handle [%H]\n"),
                   transport->is_connected() ?
                   ACE_TEXT("connected") : ACE_TEXT("not connected"),
                   iiop_endpoint->host (),
                   iiop_endpoint->port (),
-                  reinterpret_cast<void *> (svc_handler->peer ().get_handle ())));
+                  svc_handler->peer ().get_handle ()));
     }
 
 #if defined (INDUCE_BUG_2654_C)

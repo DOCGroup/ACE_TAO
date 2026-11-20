@@ -360,9 +360,9 @@ TAO_IIOP_Connection_Handler::open (void*)
 
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - IIOP_Connection_Handler::open, IIOP ")
-                  ACE_TEXT ("connection to peer <%s> on [%@]\n"),
+                  ACE_TEXT ("connection to peer <%s> on [%H]\n"),
                   client_addr,
-                  reinterpret_cast<void *> (this->peer ().get_handle ())));
+                  this->peer ().get_handle ()));
     }
 
   // Set that the transport is now connected, if fails we return -1
@@ -408,8 +408,8 @@ TAO_IIOP_Connection_Handler::close_connection ()
             {
               TAOLIB_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("TAO (%P|%t) Unable to set ")
-                          ACE_TEXT ("SO_LINGER on %@\n"),
-                          reinterpret_cast<void *> (this->peer ().get_handle ())));
+                          ACE_TEXT ("SO_LINGER on %H\n"),
+                          this->peer ().get_handle ()));
             }
         }
     }
@@ -699,8 +699,8 @@ TAO_IIOP_Connection_Handler::abort ()
         {
           TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) Unable to set ")
-                      ACE_TEXT ("SO_LINGER on %@\n"),
-                      reinterpret_cast<void *> (this->peer ().get_handle ())));
+                      ACE_TEXT ("SO_LINGER on %H\n"),
+                      this->peer ().get_handle ()));
         }
     }
 }

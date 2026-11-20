@@ -155,9 +155,9 @@ TAO_SHMIOP_Connection_Handler::open (void*)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - SHMIOP connection from client")
-                  ACE_TEXT ("<%s> on %@\n"),
+                  ACE_TEXT ("<%s> on %H\n"),
                   local_as_string,
-                  reinterpret_cast<void *> (this->peer ().get_handle ())));
+                  this->peer ().get_handle ()));
     }
 
   // Set that the transport is now connected, if fails we return -1

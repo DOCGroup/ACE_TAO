@@ -24,8 +24,8 @@ ACE_IPC_SAP::dump () const
   ACE_TRACE ("ACE_IPC_SAP::dump");
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("handle_ = %@"),
-                 reinterpret_cast<void *> (this->handle_)));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("handle_ = %H"),
+                 this->handle_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }

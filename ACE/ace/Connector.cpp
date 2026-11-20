@@ -770,8 +770,8 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::close ()
       if (handler == nullptr)
         {
           ACELIB_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%t: Connector::close h %@, no handler\n"),
-                      reinterpret_cast<void *> (*handle)));
+                      ACE_TEXT ("%t: Connector::close h %H, no handler\n"),
+                      *handle));
           // Remove handle from the set of non-blocking handles.
           this->non_blocking_handles ().remove (*handle);
           continue;
@@ -783,9 +783,9 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::close ()
       if (nbch == nullptr)
         {
           ACELIB_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%t: Connector::close h %@ handler %@ ")
+                      ACE_TEXT ("%t: Connector::close h %H handler %@ ")
                       ACE_TEXT ("not a legit handler\n"),
-                      reinterpret_cast<void *> (*handle),
+                      *handle,
                       handler));
           // Remove handle from the set of non-blocking handles.
           this->non_blocking_handles ().remove (*handle);

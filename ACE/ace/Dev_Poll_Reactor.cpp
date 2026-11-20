@@ -1335,8 +1335,8 @@ ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
         else
           {
             ACELIB_ERROR ((LM_ERROR,
-                           ACE_TEXT ("(%t) dispatch_io h %@ unknown events 0x%x\n"),
-                           reinterpret_cast<void *> (handle), revents));
+                           ACE_TEXT ("(%t) dispatch_io h %H unknown events 0x%x\n"),
+                           handle, revents));
           }
 
 #ifdef ACE_HAS_DEV_POLL
@@ -2611,7 +2611,7 @@ ACE_Dev_Poll_Reactor::dump () const
   ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("initialized_ = %d"),
               this->initialized_));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("poll_fd_ = %d"), this->poll_fd_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("poll_fd_ = %H"), this->poll_fd_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("size_ = %B"), this->handler_rep_.size ()));
   ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("deactivated_ = %d"),

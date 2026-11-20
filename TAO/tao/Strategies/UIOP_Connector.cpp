@@ -250,10 +250,10 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
     {
       TAOLIB_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - UIOP_Connector::make_connection, "
-                "new %C connection to <%C> on handle [%@]\n",
+                "new %C connection to <%C> on handle [%H]\n",
                 transport->is_connected() ? "connected" : "not connected",
                 uiop_endpoint->rendezvous_point (),
-                reinterpret_cast<void *> (svc_handler->peer ().get_handle ())));
+                svc_handler->peer ().get_handle ()));
     }
 
   // Add the handler to Cache

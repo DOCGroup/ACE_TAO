@@ -218,11 +218,11 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
     {
       TAOLIB_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - SHMIOP_Connector::make_connection, "
-                "new %C connection to <%C:%d> on handle [%@]\n",
+                "new %C connection to <%C:%d> on handle [%H]\n",
                 transport->is_connected() ? "connected" : "not connected",
                 shmiop_endpoint->host (),
                 shmiop_endpoint->port (),
-                reinterpret_cast<void *> (svc_handler->peer ().get_handle ())));
+                svc_handler->peer ().get_handle ()));
     }
 
   // Add the handler to Cache

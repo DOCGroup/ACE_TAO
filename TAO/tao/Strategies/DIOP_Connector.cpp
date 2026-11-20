@@ -168,8 +168,8 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
     {
       TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO (%P|%t) - DIOP_Connector::connect, ")
-                ACE_TEXT ("new connection on HANDLE %@\n"),
-                reinterpret_cast<void *> (svc_handler->peer ().get_handle ())));
+                ACE_TEXT ("new connection on HANDLE %H\n"),
+                svc_handler->peer ().get_handle ()));
     }
 
   TAO_DIOP_Transport *transport =
