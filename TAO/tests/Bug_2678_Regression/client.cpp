@@ -8,21 +8,23 @@ parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior)
   int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'k':
-        ior = get_opts.opt_arg ();
-        break;
+    {
+      switch (c)
+        {
+        case 'k':
+          ior = get_opts.opt_arg ();
+          break;
 
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage:  %s "
+                             "-k <ior> "
+                             "\n",
+                             argv [0]),
+                            -1);
+        }
+    }
   // Indicates successful parsing of the command line
   return 0;
 }
@@ -82,8 +84,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             ACE_ERROR ((LM_ERROR, "ERROR, failed extract\n"));
           }
           else
-            ACE_DEBUG ((LM_DEBUG, "%d %d %d %d %d\n",
-                        inner->value1, inner->value2, inner->value3, inner->value4, inner->value5));
+            {
+              ACE_DEBUG ((LM_DEBUG, "%d %d %d %d %d\n",
+                          inner->value1, inner->value2, inner->value3, inner->value4, inner->value5));
+            }
         }
       }
 

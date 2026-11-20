@@ -19,9 +19,11 @@ Thread_Pool::Thread_Pool (CORBA::ORB_ptr orb,
 {
   if (this->activate (THR_NEW_LWP,
                       n_threads) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "activate failed\n"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n",
+                  "activate failed\n"));
+    }
 }
 
 int
@@ -43,9 +45,11 @@ Thread_Pool::shutdown ()
       mb1->length (0);
 
       if (this->put (mb1) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    "(%t) %p\n",
-                    "put"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%t) %p\n",
+                      "put"));
+        }
 
       // this sleep helps to shutdown correctly -> was an error!
       ACE_OS::sleep (1);

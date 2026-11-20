@@ -11,7 +11,9 @@ NamingTask::NamingTask (char const *orbname, int argc, ACE_TCHAR **argv, unsigne
   std::array<ACE_TCHAR, 128> buf {};
   int my_argc {};
   for (; my_argc < argc; ++my_argc)
-    my_argv[my_argc] = argv[my_argc];
+    {
+      my_argv[my_argc] = argv[my_argc];
+    }
   ACE_OS::snprintf (buf.data (),
                     buf.size (),
                     ACE_TEXT ("iiop://localhost:%hu"),
@@ -28,7 +30,9 @@ NamingTask::waitInit ()
 {
   // Wait for Naming Service initialized.
   while (!this->initialized_.load ())
-    ACE_OS::sleep (ACE_Time_Value (0, 100 * 1000));
+    {
+      ACE_OS::sleep (ACE_Time_Value (0, 100 * 1000));
+    }
 }
 
 void

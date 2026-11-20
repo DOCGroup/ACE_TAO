@@ -10,19 +10,21 @@ parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior)
   int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'k':
-        ior = get_opts.opt_arg ();
-        break;
+    {
+      switch (c)
+        {
+        case 'k':
+          ior = get_opts.opt_arg ();
+          break;
 
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("usage: %s -k <ior>\n"),
-                           argv[0]),
-                          -1);
-      }
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("usage: %s -k <ior>\n"),
+                             argv[0]),
+                            -1);
+        }
+    }
 
   return 0;
 }
@@ -54,9 +56,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       CORBA::String_var message = CORBA::string_dup ("Where can I get TAO?");
       for (int i {}; i < 3; ++i)
-        messenger->send_message ("person@company.com",
-                                 "OCI's Distribution of TAO",
-                                 message.inout ());
+        {
+          messenger->send_message ("person@company.com",
+                                   "OCI's Distribution of TAO",
+                                   message.inout ());
+        }
     }
   catch (CORBA::Exception const &ex)
     {
