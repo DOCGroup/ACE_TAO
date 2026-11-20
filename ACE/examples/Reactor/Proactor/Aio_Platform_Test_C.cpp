@@ -125,8 +125,12 @@ int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
   if (have_asynchio () == 0)
-    printf ("Test successful\n");
+    {
+      printf ("Test successful\n");
+    }
   else
-    printf ("Test not successful\n");
+    {
+      printf ("Test not successful\n");
+    }
   return 0;
 }
