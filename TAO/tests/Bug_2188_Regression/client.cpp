@@ -8,21 +8,23 @@ parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior)
   int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'k':
-        ior = get_opts.opt_arg ();
-        break;
+    {
+      switch (c)
+        {
+        case 'k':
+          ior = get_opts.opt_arg ();
+          break;
 
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage:  %s "
+                             "-k <ior> "
+                             "\n",
+                             argv [0]),
+                            -1);
+        }
+    }
   // Indicates successful parsing of the command line
   return 0;
 }
@@ -60,7 +62,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       CharArray_var char_array = CharArray_alloc ();
       for (int i {}; i < 10; ++i)
-        char_array.inout ()[i] = static_cast<CORBA::Char> ('a' + i);
+        {
+          char_array.inout ()[i] = static_cast<CORBA::Char> ('a' + i);
+        }
       atobj->a_charArray (char_array.in ());
 
       ACE_DEBUG ((LM_DEBUG, "a_charArray worked OK.\n"));

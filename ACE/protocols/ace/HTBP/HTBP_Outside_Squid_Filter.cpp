@@ -42,7 +42,9 @@ ACE::HTBP::Outside_Squid_Filter::recv_data_header (ACE::HTBP::Channel *ch)
   bool is_inbound = false;
   ACE_CString token ("POST ");
   if (std::strncmp (start, token.c_str (), token.length ()) == 0)
-    is_inbound = true;
+    {
+      is_inbound = true;
+    }
   else
     {
       token = "GET ";
@@ -127,10 +129,12 @@ ACE::HTBP::Outside_Squid_Filter::recv_data_header (ACE::HTBP::Channel *ch)
     {
       ACE_NEW_RETURN (session, ACE::HTBP::Session (session_id), 0);
       if (ACE::HTBP::Session::add_session (session) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT("ACE::HTBP::Outside_Squid_Filter::")
-                           ACE_TEXT("recv_data_header %p"),
-                           ACE_TEXT("add_session")),0);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT("ACE::HTBP::Outside_Squid_Filter::")
+                             ACE_TEXT("recv_data_header %p"),
+                             ACE_TEXT("add_session")),0);
+        }
     }
   ch->session(session);
 
