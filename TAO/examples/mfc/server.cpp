@@ -174,7 +174,9 @@ BOOL CServerApp::InitInstance()
 
   // Dispatch commands specified on the command line
   if (!ProcessShellCommand(cmdInfo))
-    return FALSE;
+    {
+      return FALSE;
+    }
 
   // The one and only window has been initialized, so show and update it.
   m_pMainWnd->ShowWindow(SW_SHOW);

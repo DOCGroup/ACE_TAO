@@ -228,15 +228,19 @@ parse_args (int argc, ACE_TCHAR *argv[])
         ior = get_opts.opt_arg ();
         break;
       case 't':
-    {
-      int const tnum = ACE_OS::atoi (get_opts.opt_arg ());
+        {
+          int const tnum = ACE_OS::atoi (get_opts.opt_arg ());
           if (tnum >= 0 && tnum < LAST_TEST)
-            tests_to_run |= (1 << tnum);
+            {
+              tests_to_run |= (1 << tnum);
+            }
           else
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "test %d is out of range\n",
-                             tnum),
-                            -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "test %d is out of range\n",
+                                 tnum),
+                                -1);
+            }
           break;
         }
       case 'v':

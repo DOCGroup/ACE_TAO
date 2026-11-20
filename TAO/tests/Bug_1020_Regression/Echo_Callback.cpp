@@ -13,7 +13,9 @@ Echo_Callback::echo_payload (Test::Payload const &)
   static int n {};
   ++n;
   if (n == 30)
-    ACE_OS::abort();
+    {
+      ACE_OS::abort();
+    }
 
   ACE_Time_Value const tick (0, 20000);
   ACE_OS::sleep (tick);
