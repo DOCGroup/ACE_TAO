@@ -67,7 +67,9 @@ ACE_OS::wcschr_emulation (const wchar_t *string, wchar_t c)
 {
   for (;*string ; ++string)
     if (*string == c)
-      return const_cast<wchar_t *> (string);
+      {
+        return const_cast<wchar_t *> (string);
+      }
 
   return 0;
 }
@@ -80,7 +82,9 @@ ACE_OS::wcscmp_emulation (const ACE_WCHAR_T *string1,
 {
   while (*string1 == *string2++)
     if (*string1++ == 0)
-      return 0;
+      {
+        return 0;
+      }
   return (*string1 - *--string2);
 }
 #endif /* !ACE_HAS_WCHAR || ACE_LACKS_WCSCMP */
@@ -109,7 +113,9 @@ ACE_OS::wcscspn_emulation (const wchar_t *s, const wchar_t *reject)
     {
       for (rej_scan = reject; *rej_scan; ++rej_scan)
         if (*scan == *rej_scan)
-          return count;
+          {
+            return count;
+          }
 
       ++count;
     }
@@ -186,7 +192,9 @@ ACE_OS::wcsncat_emulation (ACE_WCHAR_T *destination,
       do
         {
           if ((*d = *s++) == 0)
-            break;
+            {
+              break;
+            }
 
           ++d;
         } while (--count != 0);
@@ -205,14 +213,20 @@ ACE_OS::wcsncmp_emulation (const ACE_WCHAR_T *s1,
                            size_t len)
 {
   if (len == 0)
-    return 0;
+    {
+      return 0;
+    }
 
   do
     {
       if (*s1 != *s2++)
-        return (*s1 - *--s2);
+        {
+          return (*s1 - *--s2);
+        }
       if (*s1++ == 0)
-        break;
+        {
+          break;
+        }
     } while (--len != 0);
 
   return 0;
@@ -305,7 +319,9 @@ ACE_OS::wcspbrk_emulation (const wchar_t *string,
     {
       for (scanp = charset; (sc = *scanp++) != 0;)
         if (sc == c)
-          return const_cast<wchar_t *> (string - 1);
+          {
+            return const_cast<wchar_t *> (string - 1);
+          }
     }
 
   return 0;
@@ -320,9 +336,13 @@ ACE_OS::wcsrchr_emulation (const wchar_t *s, wint_t c)
 
   while (*p != static_cast<wchar_t> (c))
     if (p == s)
-      return 0;
+      {
+        return 0;
+      }
     else
-      --p;
+      {
+        --p;
+      }
 
   return p;
 }
@@ -334,9 +354,13 @@ ACE_OS::wcsrchr_emulation (wchar_t *s, wint_t c)
 
   while (*p != static_cast<wchar_t> (c))
     if (p == s)
-      return 0;
+      {
+        return 0;
+      }
     else
-      --p;
+      {
+        --p;
+      }
 
   return p;
 }
@@ -356,7 +380,9 @@ cont:
   c = *p++;
   for (spanp = charset; (sc = *spanp++) != 0;)
     if (sc == c)
-      goto cont;
+      {
+        goto cont;
+      }
   return (p - 1 - string);
 }
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSSPN */
@@ -377,7 +403,9 @@ ACE_OS::wcsstr_emulation (const wchar_t *string,
           do
             {
               if ((sc = *string++) == 0)
-                return 0;
+                {
+                  return 0;
+                }
             } while (sc != c);
         } while (ACE_OS::strncmp (string, charset, len) != 0);
       --string;
