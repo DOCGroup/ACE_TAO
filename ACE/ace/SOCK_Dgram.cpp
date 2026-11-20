@@ -433,10 +433,14 @@ ACE_SOCK_Dgram::send (const iovec iov[],
     // The iov_len is unsigned on Linux and when using the ACE iovec struct. If we go
     // ahead and try the if, it will emit a warning.
     if (iov[i].iov_len < 0)
-      return -1;
+      {
+        return -1;
+      }
     else
 #endif
-      length += iov[i].iov_len;
+      {
+        length += iov[i].iov_len;
+      }
 
   char *buf {};
 
@@ -494,10 +498,14 @@ ACE_SOCK_Dgram::recv (iovec iov[],
     // The iov_len is unsigned on Linux and when using the ACE iovec struct. If we go
     // ahead and try the if, it will emit a warning.
     if (iov[i].iov_len < 0)
-      return -1;
+      {
+        return -1;
+      }
     else
 #endif
-      length += iov[i].iov_len;
+      {
+        length += iov[i].iov_len;
+      }
 
   char *buf {};
 

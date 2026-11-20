@@ -118,7 +118,9 @@ ACE_Mutex::ACE_Mutex (int type, const ACE_TCHAR *name,
   if (type == USYNC_PROCESS)
     {
       if (name)
-        this->lockname_ = ACE_OS::strdup (name);
+        {
+          this->lockname_ = ACE_OS::strdup (name);
+        }
       else
         {
           const size_t un_len = (ACE_UNIQUE_NAME_LEN + 1) * sizeof (ACE_TCHAR);

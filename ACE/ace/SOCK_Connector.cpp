@@ -148,10 +148,14 @@ ACE_SOCK_Connector::shared_connect_finish (ACE_SOCK_Stream &new_stream,
                       error = tmp;
                     }
                   else
-                    error = EWOULDBLOCK;
+                    {
+                      error = EWOULDBLOCK;
+                    }
                 }
               else
-                result = 0;
+                {
+                  result = 0;
+                }
 #else  /* ACE_WIN32 */
               error = EWOULDBLOCK;
 #endif /* ACE_WIN32 */
