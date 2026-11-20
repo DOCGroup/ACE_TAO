@@ -191,8 +191,10 @@ ACE::HTBP::Channel::load_buffer ()
       }
     }
   if (nread != -1)
-    nread = this->ace_stream().recv (this->leftovers_.wr_ptr(),
-                                     this->leftovers_.space()-1);
+    {
+      nread = this->ace_stream().recv (this->leftovers_.wr_ptr(),
+                                       this->leftovers_.space()-1);
+    }
   if (nread < 1)
     {
       if (nread == 0 || (errno != EWOULDBLOCK && errno != EAGAIN))
@@ -284,10 +286,12 @@ ACE::HTBP::Channel::consume_error ()
         {
           *this->error_buffer_->wr_ptr() = '\0';
           if (ACE::debug())
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("ACE::HTBP::Channel::consume_error ")
-                        ACE_TEXT("Received entire error buffer: \n%s\n"),
-                        this->error_buffer_->rd_ptr()));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("ACE::HTBP::Channel::consume_error ")
+                          ACE_TEXT("Received entire error buffer: \n%s\n"),
+                          this->error_buffer_->rd_ptr()));
+            }
           delete error_buffer_;
           error_buffer_ = nullptr;
 
@@ -310,9 +314,11 @@ int
 ACE::HTBP::Channel::pre_recv()
 {
   if (ACE::debug())
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P|%t) ACE::HTBP::Channel::pre_recv ")
-                ACE_TEXT ("in initial state = %d\n"),state_));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) ACE::HTBP::Channel::pre_recv ")
+                  ACE_TEXT ("in initial state = %d\n"),state_));
+    }
   if (this->state_ == Init ||
       this->state_ == Detached ||
       this->state_ == Header_Pending ||
@@ -321,21 +327,25 @@ ACE::HTBP::Channel::pre_recv()
       if (this->load_buffer() == -1 && this->leftovers_.length() == 0)
         {
           if (errno != EWOULDBLOCK)
-          {
-            this->state_ = Closed;
-          }
+            {
+              this->state_ = Closed;
+            }
           if (ACE::debug())
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%P|%t) ACE::HTBP::Channel::pre_recv ")
-                        ACE_TEXT ("pre_recv returning -1, state = %d, %p\n"),
-                        state_, ACE_TEXT("load_buffer()")));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) ACE::HTBP::Channel::pre_recv ")
+                          ACE_TEXT ("pre_recv returning -1, state = %d, %p\n"),
+                          state_, ACE_TEXT("load_buffer()")));
+            }
           return -1;
         }
       if (this->filter_->recv_data_header(this) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) ACE::HTBP::Channel::pre_recv ")
-                    ACE_TEXT ("recv_data_header failed, %p\n"),
-                    ACE_TEXT("pre_recv")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) ACE::HTBP::Channel::pre_recv ")
+                      ACE_TEXT ("recv_data_header failed, %p\n"),
+                      ACE_TEXT("pre_recv")));
+        }
     }
   switch (this->state_)
     {
@@ -348,12 +358,14 @@ ACE::HTBP::Channel::pre_recv()
       return -1;
     default:
       if (ACE::debug())
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) ACE::HTBP::Channel::pre_recv ")
-                    ACE_TEXT("channel[%@] state = %d, %p\n"),
-                    reinterpret_cast<void *> (this->get_handle ()),
-                    this->state_,
-                    ACE_TEXT("pre_recv")));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) ACE::HTBP::Channel::pre_recv ")
+                      ACE_TEXT("channel[%@] state = %d, %p\n"),
+                      reinterpret_cast<void *> (this->get_handle ()),
+                      this->state_,
+                      ACE_TEXT("pre_recv")));
+        }
     }
   return -1;
 }
@@ -485,10 +497,12 @@ ACE::HTBP::Channel::recvv (iovec *io_vec,
     return -1;
   }
   if (ACE::debug())
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE::HTBP::Channel::recvv ")
-                ACE_TEXT("recvv, leftover len = %B\n"),
-                this->leftovers_.length()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("ACE::HTBP::Channel::recvv ")
+                  ACE_TEXT("recvv, leftover len = %B\n"),
+                  this->leftovers_.length()));
+    }
   if (this->leftovers_.length())
     {
       io_vec->iov_base = nullptr;
@@ -542,9 +556,11 @@ ACE::HTBP::Channel::send (const void *buf,
 {
   ssize_t result = 0;
   if (this->filter_ == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) ACE::HTBP::Channel::send: filter ")
-                       ACE_TEXT ("is null\n")),-1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) ACE::HTBP::Channel::send: filter ")
+                         ACE_TEXT ("is null\n")),-1);
+    }
   if (this->filter_->send_data_header(n,this) == -1)
   {
     return -1;
@@ -580,24 +596,30 @@ ACE::HTBP::Channel::sendv (const iovec iov[],
     }
 
   if (this->filter_->send_data_header(n,this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) ACE::HTBP::Channel::sendv ")
-                       ACE_TEXT("%p\n"),
-                       ACE_TEXT("send_data_header")),-1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) ACE::HTBP::Channel::sendv ")
+                         ACE_TEXT("%p\n"),
+                         ACE_TEXT("send_data_header")),-1);
+    }
 
   result = this->ace_stream_.sendv (iov,iovcnt,timeout);
 
   if (result == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) ACE::HTBP::Channel::sendv ")
-                       ACE_TEXT("%p\n"),
-                       ACE_TEXT("ace_stream_.sendv")),-1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) ACE::HTBP::Channel::sendv ")
+                         ACE_TEXT("%p\n"),
+                         ACE_TEXT("ace_stream_.sendv")),-1);
+    }
 
   if (this->filter_->send_data_trailer(this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) ACE::HTBP::Channel::sendv ")
-                       ACE_TEXT("%p\n"),
-                       ACE_TEXT("send_data_trailer\n")),-1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) ACE::HTBP::Channel::sendv ")
+                         ACE_TEXT("%p\n"),
+                         ACE_TEXT("send_data_trailer\n")),-1);
+    }
   return result;
 }
 
