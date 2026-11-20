@@ -59,10 +59,11 @@ ACEXML_HttpCharStream::open (ACEXML_Char const *url)
       return -1;
     }
 
-  if (this->url_addr_->string_to_addr (this->url_.get ()) == -1) {
-    this->close();
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "cannot convert URL"), -1);
-  }
+  if (this->url_addr_->string_to_addr (this->url_.get ()) == -1)
+    {
+      this->close();
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "cannot convert URL"), -1);
+    }
 
   this->connector_.reset (new (std::nothrow) Connector (nullptr, ACE_NONBLOCK));
   if (!this->connector_)
@@ -72,29 +73,33 @@ ACEXML_HttpCharStream::open (ACEXML_Char const *url)
       return -1;
     }
 
-  if (this->stream_->open (this->connector_.get (), *this->url_addr_) == -1) {
-    this->close();
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "cannot open backing store"), -1);
-  }
+  if (this->stream_->open (this->connector_.get (), *this->url_addr_) == -1)
+    {
+      this->close();
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "cannot open backing store"), -1);
+    }
 
   int result = this->send_request();
-  if (result == -1) {
-    this->close();
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send_request"), -1);
-  }
+  if (result == -1)
+    {
+      this->close();
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send_request"), -1);
+    }
 
   size_t len {};
   result = this->get_url(len);
-  if (result == -1) {
-    this->close();
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "get_url"), -1);
-  }
-  if (result != 200) {
-    this->close();
-    ACE_ERROR_RETURN ((LM_ERROR, "Server returned status %d : %s\n",
-                       result,
-                       "Refer HTTP/1.0 error code for details"), -1);
-  }
+  if (result == -1)
+    {
+      this->close();
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "get_url"), -1);
+    }
+  if (result != 200)
+    {
+      this->close();
+      ACE_ERROR_RETURN ((LM_ERROR, "Server returned status %d : %s\n",
+                         result,
+                         "Refer HTTP/1.0 error code for details"), -1);
+    }
 
   this->size_ = static_cast<ACE_OFF_T> (len);
   return this->determine_encoding();
