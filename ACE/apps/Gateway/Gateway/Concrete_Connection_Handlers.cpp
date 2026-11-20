@@ -89,18 +89,22 @@ Consumer_Handler::nonblk_put (ACE_Message_Block *event)
       // ACE_Queue in *front* of the list to preserve order.
       if (this->msg_queue ()->enqueue_head
           (event, (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%t) %p\n",
-                           "enqueue_head"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%t) %p\n",
+                             "enqueue_head"),
+                            -1);
+        }
 
       // Tell ACE_Reactor to call us back when we can send again.
       else if (ACE_Reactor::instance ()->schedule_wakeup
                (this, ACE_Event_Handler::WRITE_MASK) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%t) %p\n",
-                           "schedule_wakeup"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%t) %p\n",
+                             "schedule_wakeup"),
+                            -1);
+        }
       return 0;
     }
   else
@@ -121,7 +125,9 @@ Consumer_Handler::send (ACE_Message_Block *event)
   ssize_t n = this->peer ().send (event->rd_ptr (), len);
 
   if (n <= 0)
-    return errno == EWOULDBLOCK ? 0 : n;
+    {
+      return errno == EWOULDBLOCK ? 0 : n;
+    }
   else if (n < len)
     {
       // Re-adjust pointer to skip over the part we did send.
@@ -272,16 +278,20 @@ Consumer_Handler::handle_output (ACE_HANDLE)
 
               if (ACE_Reactor::instance ()->cancel_wakeup
                   (this, ACE_Event_Handler::WRITE_MASK) == -1)
-                ACE_ERROR ((LM_ERROR,
-                            ACE_TEXT ("(%t) %p\n"),
-                            ACE_TEXT ("cancel_wakeup")));
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              ACE_TEXT ("(%t) %p\n"),
+                              ACE_TEXT ("cancel_wakeup")));
+                }
             }
         }
     }
   else
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%t) %p\n"),
-                ACE_TEXT ("dequeue_head - handle_output called by reactor but nothing in Q")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%t) %p\n"),
+                  ACE_TEXT ("dequeue_head - handle_output called by reactor but nothing in Q")));
+    }
 #endif /* ACE_WIN32 */
   return 0;
 }
@@ -293,13 +303,17 @@ Consumer_Handler::put (ACE_Message_Block *event,
                        ACE_Time_Value *)
 {
   if (this->msg_queue ()->is_empty ())
-    // Try to send the event *without* blocking!
-    return this->nonblk_put (event);
+    {
+      // Try to send the event *without* blocking!
+      return this->nonblk_put (event);
+    }
   else
-    // If we have queued up events due to flow control then just
-    // enqueue and return.
-    return this->msg_queue ()->enqueue_tail
-      (event, (ACE_Time_Value *) &ACE_Time_Value::zero);
+    {
+      // If we have queued up events due to flow control then just
+      // enqueue and return.
+      return this->msg_queue ()->enqueue_tail
+        (event, (ACE_Time_Value *) &ACE_Time_Value::zero);
+    }
 }
 
 Supplier_Handler::Supplier_Handler (Connection_Config_Info const &pci)
@@ -324,15 +338,17 @@ int
 Supplier_Handler::recv (ACE_Message_Block *&forward_addr)
 {
   if (this->msg_frag_ == nullptr)
-    // No existing fragment...
-    ACE_NEW_RETURN (this->msg_frag_,
-                    ACE_Message_Block (sizeof (Event),
-                                       ACE_Message_Block::MB_DATA,
-                                       0,
-                                       0,
-                                       0,
-                                       Options::instance ()->locking_strategy ()),
-                    -1);
+    {
+      // No existing fragment...
+      ACE_NEW_RETURN (this->msg_frag_,
+                      ACE_Message_Block (sizeof (Event),
+                                         ACE_Message_Block::MB_DATA,
+                                         0,
+                                         0,
+                                         0,
+                                         Options::instance ()->locking_strategy ()),
+                      -1);
+    }
 
   Event *event = (Event *) this->msg_frag_->rd_ptr ();
   ssize_t header_received = 0;
@@ -411,8 +427,10 @@ Supplier_Handler::recv (ACE_Message_Block *&forward_addr)
     {
     case -1:
       if (errno == EWOULDBLOCK)
-        // This might happen if only the header came through.
-        return -1;
+        {
+          // This might happen if only the header came through.
+          return -1;
+        }
       ACE_FALLTHROUGH;
     case 0: // Premature EOF.
       if (data_bytes_left_to_read)
@@ -468,10 +486,12 @@ Supplier_Handler::recv (ACE_Message_Block *&forward_addr)
                   event->header_.len_,
                   data_received + header_received));
       if (Options::instance ()->enabled (Options::VERBOSE))
-        ACE_DEBUG ((LM_DEBUG,
-                    "data_ = %*C\n",
-                    event->header_.len_ - 2,
-                    event->data_));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "data_ = %*C\n",
+                      event->header_.len_ - 2,
+                      event->data_));
+        }
 
       // Encode before returning so that we can set things out in
       // network byte order.
@@ -502,8 +522,10 @@ Supplier_Handler::handle_input (ACE_HANDLE)
       /* NOTREACHED */
     case -1:
       if (errno == EWOULDBLOCK)
-        // A short-read, we'll come back and finish it up later on!
-        return 0;
+        {
+          // A short-read, we'll come back and finish it up later on!
+          return 0;
+        }
       else // A weird problem occurred, shut down and start again.
         {
           this->state (Connection_Handler::FAILED);
@@ -542,7 +564,9 @@ int
 Thr_Consumer_Handler::handle_close (ACE_HANDLE h, ACE_Reactor_Mask m)
 {
   if (in_thread_)
-    return 0;
+    {
+      return 0;
+    }
   else
   {
     return Consumer_Handler::handle_close (h, m);
@@ -584,26 +608,32 @@ Thr_Consumer_Handler::open (void *)
 {
   // Turn off non-blocking I/O.
   if (this->peer ().disable (ACE_NONBLOCK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%t) %p\n",
-                       "disable"),
-                      -1); // Incorrect info fixed.
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%t) %p\n",
+                         "disable"),
+                        -1); // Incorrect info fixed.
+    }
 
   // Call back to the <Event_Channel> to complete our initialization.
   else if (this->event_channel_->complete_connection_connection (this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%t) %p\n",
-                       "complete_connection_connection"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%t) %p\n",
+                         "complete_connection_connection"),
+                        -1);
+    }
 
   // Register ourselves to receive input events (which indicate that
   // the Consumer has shut down unexpectedly).
   else if (ACE_Reactor::instance ()->register_handler
       (this, ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%t) %p\n",
-                       "register_handler"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%t) %p\n",
+                         "register_handler"),
+                        -1);
+    }
 
   // Reactivate message queue.  If it was active then this is the
   // first time in and we need to spawn a thread, otherwise the queue
@@ -654,10 +684,14 @@ Thr_Consumer_Handler::svc ()
       for (ACE_Message_Block *mb {};
            this->msg_queue ()->dequeue_head (mb) != -1;
            )
-        if (this->send (mb) == -1)
-          ACE_ERROR ((LM_ERROR,
-                      "(%t) %p\n",
-                      "send failed"));
+        {
+          if (this->send (mb) == -1)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "(%t) %p\n",
+                          "send failed"));
+            }
+        }
 
       ACE_ASSERT (errno == ESHUTDOWN);
 
@@ -705,7 +739,9 @@ int
 Thr_Supplier_Handler::handle_close (ACE_HANDLE h, ACE_Reactor_Mask m)
 {
   if (in_thread_)
-    return 0;
+    {
+      return 0;
+    }
   else
   {
     return Supplier_Handler::handle_close (h, m);
@@ -717,17 +753,21 @@ Thr_Supplier_Handler::open (void *)
 {
   // Turn off non-blocking I/O.
   if (this->peer ().disable (ACE_NONBLOCK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%t) %p\n",
-                       "disable"),
-                      -1); // Incorrect info fixed.
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%t) %p\n",
+                         "disable"),
+                        -1); // Incorrect info fixed.
+    }
 
   // Call back to the <Event_Channel> to complete our initialization.
   else if (this->event_channel_->complete_connection_connection (this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%t) %p\n",
-                       "complete_connection_connection"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%t) %p\n",
+                         "complete_connection_connection"),
+                        -1);
+    }
 
   // Reactivate message queue.  If it was active then this is the
   // first time in and we need to spawn a thread, otherwise the queue
@@ -765,7 +805,9 @@ Thr_Supplier_Handler::svc ()
       // input.
 
       while (this->Supplier_Handler::handle_input () != -1)
-        continue;
+        {
+          continue;
+        }
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) shutting down threaded Supplier_Handler %d on handle %@\n",
