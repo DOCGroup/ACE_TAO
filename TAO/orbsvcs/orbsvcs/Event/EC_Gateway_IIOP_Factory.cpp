@@ -61,11 +61,17 @@ TAO_EC_Gateway_IIOP_Factory::init (int argc, ACE_TCHAR* argv[])
             {
               ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("null")) == 0)
-                this->consumer_ec_control_ = 0;
+                {
+                  this->consumer_ec_control_ = 0;
+                }
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("reactive")) == 0)
-                this->consumer_ec_control_ = 1;
+                {
+                  this->consumer_ec_control_ = 1;
+                }
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("reconnect")) == 0)
-                this->consumer_ec_control_ = 2;
+                {
+                  this->consumer_ec_control_ = 2;
+                }
               else
               {
                 this->unsupported_option_value (ACE_TEXT("-ECGIIOPConsumerECControl"), opt);
@@ -165,7 +171,9 @@ TAO_ECG_ConsumerEC_Control*
 TAO_EC_Gateway_IIOP_Factory::create_consumerec_control (TAO_EC_Gateway_IIOP* gateway)
 {
   if (this->consumer_ec_control_ == 0)
-    return new TAO_ECG_ConsumerEC_Control ();
+    {
+      return new TAO_ECG_ConsumerEC_Control ();
+    }
   else if (this->consumer_ec_control_ == 1)
     {
       int argc {};
