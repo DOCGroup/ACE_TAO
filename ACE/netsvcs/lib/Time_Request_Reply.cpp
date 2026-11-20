@@ -180,7 +180,9 @@ ACE_Time_Request::dump () const
     }
 
   if (this->block_forever ())
-    ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("blocking forever\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("blocking forever\n")));
+    }
   else
     {
 #if !defined (ACE_NLOGGING)

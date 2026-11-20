@@ -74,7 +74,9 @@ Log_Message_Receiver_Impl<ACE_SYNCH_USE>::detach (Log_Message_Receiver_Impl<ACE_
   ACE_GUARD (ACE_SYNCH_MUTEX_T, guard, copy_lock_);
 #endif /* ACE_HAS_THREADS */
   if (body->count_-- == 0)
-    delete body;
+    {
+      delete body;
+    }
 }
 
 // Type based log message receiver
