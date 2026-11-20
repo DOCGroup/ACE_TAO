@@ -211,8 +211,10 @@ HostProcess::add_peer(long handle, PeerProcess *peer)
     peer->server_addr() : peer->last_client_addr();
   int result = this->by_addr_.bind (addr,peer);
   if (result < 0)
-    ACE_ERROR ((LM_ERROR,"add_peer, cannot bind to addr %s result = %d,  %p\n",
-                addr.addr_.c_str(), result, "by_addr_.bind"));
+    {
+      ACE_ERROR ((LM_ERROR,"add_peer, cannot bind to addr %s result = %d,  %p\n",
+                  addr.addr_.c_str(), result, "by_addr_.bind"));
+    }
 
   PeerNode *node = new PeerNode (handle,peer);
   this->by_handle_.insert_tail(node);

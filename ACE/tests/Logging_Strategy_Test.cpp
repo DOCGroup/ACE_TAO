@@ -493,10 +493,12 @@ int run_main (int argc, ACE_TCHAR *argv [])
     (ls_argv.get ())[c] = argv[c+1];
 
   if (logging_strategy.init (ls_argc, ls_argv.get ()) == -1)
-     ACE_ERROR_RETURN
-       ((LM_ERROR,
-         "Error initializing the ACE_Logging_Strategy.\n"),
-                       1);
+    {
+      ACE_ERROR_RETURN
+        ((LM_ERROR,
+          "Error initializing the ACE_Logging_Strategy.\n"),
+         1);
+    }
 #endif /* !ACE_AS_STATIC_LIBS && (ACE_WIN32 ACE_HAS_SVR4_DYNAMIC_LINKING) */
 
   // launch a new Thread

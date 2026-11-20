@@ -402,8 +402,10 @@ Log::parse_muxed_tms_i ()
 
   Invocation *inv = pp->new_invocation(req_id, this->thr_);
   if (inv == nullptr)
-    ACE_ERROR ((LM_ERROR,"%B: peer %s already has invocation id %q\n",
-                this->offset_, pp->id(), static_cast<ACE_INT64> (req_id)));
+    {
+      ACE_ERROR ((LM_ERROR,"%B: peer %s already has invocation id %q\n",
+                  this->offset_, pp->id(), static_cast<ACE_INT64> (req_id)));
+    }
   this->thr_->incoming_from (pp);
 }
 
@@ -425,8 +427,10 @@ Log::parse_exclusive_tms_i ()
 
   Invocation *inv = pp->new_invocation(req_id, this->thr_);
   if (inv == nullptr)
-    ACE_ERROR ((LM_ERROR,"%B: peer %s already has invocation id %q\n",
-                this->offset_, pp->id(), static_cast<ACE_INT64> (req_id)));
+    {
+      ACE_ERROR ((LM_ERROR,"%B: peer %s already has invocation id %q\n",
+                  this->offset_, pp->id(), static_cast<ACE_INT64> (req_id)));
+    }
   this->thr_->incoming_from (pp);
 }
 
