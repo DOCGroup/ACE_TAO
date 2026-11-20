@@ -28,11 +28,17 @@ parse_options (int argc, ACE_TCHAR *argv[])
   for (int i {1}; i < argc; ++i)
     {
       if (ACE_OS::strcasecmp (argv[i], ACE_TEXT ("-consumer")) == 0)
-        options.consumer = true;
+        {
+          options.consumer = true;
+        }
       else if (ACE_OS::strcasecmp (argv[i], ACE_TEXT ("-supplier")) == 0)
-        options.supplier = true;
+        {
+          options.supplier = true;
+        }
       else if (ACE_OS::strcasecmp (argv[i], ACE_TEXT ("-hang")) == 0)
-        options.hang = true;
+        {
+          options.hang = true;
+        }
     }
   return options;
 }
