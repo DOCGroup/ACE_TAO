@@ -101,14 +101,18 @@ ACE_OS::ctime (const time_t *t)
   char *narrow_time;
   ACE_OSCALL (::ctime (t), char *, narrow_time);
   if (narrow_time == 0)
-    return 0;
+    {
+      return 0;
+    }
   // ACE_Ascii_To_Wide::convert allocates (via new []) a wchar_t[]. If
   // we've done this before, free the previous one. Yes, this leaves a
   // small memory leak (26 characters) but there's no way around this
   // that I know of. (Steve Huston, 12-Feb-2003).
   static wchar_t *wide_time {};
   if (wide_time != nullptr)
-    delete [] wide_time;
+    {
+      delete [] wide_time;
+    }
   wide_time = ACE_Ascii_To_Wide::convert (narrow_time);
   return wide_time;
 #  else
@@ -150,7 +154,9 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
 #   endif /* ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R */
 
   if (bufp == nullptr)
-    return nullptr;
+    {
+      return nullptr;
+    }
 
 #   if defined (ACE_USES_WCHAR)
   ACE_Ascii_To_Wide wide_buf (bufp);
@@ -188,7 +194,9 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
   ACE_OSCALL (::ctime (t), char *, result);
 #     endif /* ACE_USES_WCHAR */
   if (result != nullptr)
-    ACE_OS::strsncpy (buf, result, buflen);
+    {
+      ACE_OS::strsncpy (buf, result, buflen);
+    }
   return buf;
 #endif /* ACE_HAS_REENTRANT_FUNCTIONS */
 }
@@ -355,7 +363,9 @@ ACE_OS::gmtime_r (const time_t *t, struct tm *res)
   struct tm *result;
   ACE_OSCALL (::gmtime (t), struct tm *, result) ;
   if (result != 0)
-    *res = *result;
+    {
+      *res = *result;
+    }
   return res;
 #endif /* ACE_HAS_REENTRANT_FUNCTIONS */
 }
@@ -432,7 +442,9 @@ ACE_OS::time (time_t *tloc)
 #if defined (ACE_LACKS_TIME)
   time_t const retv = ACE_OS::gettimeofday ().sec ();
   if (tloc)
-    *tloc = retv;
+    {
+      *tloc = retv;
+    }
   return retv;
 #else
   return ::time (tloc);
