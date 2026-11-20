@@ -48,19 +48,23 @@ ACE_OS::mmap (void *addr,
 
 #if defined (ACE_WIN32)
   if (!ACE_BIT_ENABLED (flags, MAP_FIXED))
-    addr = 0;
+    {
+      addr = 0;
+    }
   else if (addr == 0)   // can not map to address 0
-  {
-    errno = EINVAL;
-    return MAP_FAILED;
-  }
+    {
+      errno = EINVAL;
+      return MAP_FAILED;
+    }
 
   int nt_flags = 0;
   ACE_HANDLE local_handle = ACE_INVALID_HANDLE;
 
   // Ensure that file_mapping is non-zero.
   if (file_mapping == 0)
-    file_mapping = &local_handle;
+    {
+      file_mapping = &local_handle;
+    }
 
   if (ACE_BIT_ENABLED (flags, MAP_PRIVATE))
     {
@@ -70,9 +74,13 @@ ACE_OS::mmap (void *addr,
   else if (ACE_BIT_ENABLED (flags, MAP_SHARED))
     {
       if (ACE_BIT_ENABLED (prot, PAGE_READONLY))
-        nt_flags = FILE_MAP_READ;
+        {
+          nt_flags = FILE_MAP_READ;
+        }
       if (ACE_BIT_ENABLED (prot, PAGE_READWRITE))
-        nt_flags = FILE_MAP_WRITE;
+        {
+          nt_flags = FILE_MAP_WRITE;
+        }
     }
 
   // Only create a new handle if we didn't have a valid one passed in.
@@ -101,7 +109,9 @@ ACE_OS::mmap (void *addr,
     }
 
   if (*file_mapping == 0)
-    ACE_FAIL_RETURN (MAP_FAILED);
+    {
+      ACE_FAIL_RETURN (MAP_FAILED);
+    }
 
 #  if defined (ACE_OS_EXTRA_MMAP_FLAGS)
   nt_flags |= ACE_OS_EXTRA_MMAP_FLAGS;
@@ -122,9 +132,13 @@ ACE_OS::mmap (void *addr,
     ::CloseHandle (*file_mapping);
 
   if (addr_mapping == 0)
-    ACE_FAIL_RETURN (MAP_FAILED);
+    {
+      ACE_FAIL_RETURN (MAP_FAILED);
+    }
   else
-    return addr_mapping;
+    {
+      return addr_mapping;
+    }
 #elif !defined (ACE_LACKS_MMAP)
   ACE_UNUSED_ARG (sa);
 

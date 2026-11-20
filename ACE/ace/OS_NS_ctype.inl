@@ -192,9 +192,13 @@ ACE_OS::ace_towlower (wint_t c)
 {
 #if defined (ACE_LACKS_TOWLOWER)
   if (c < 256)
-    return tolower (static_cast<int> (c));
+    {
+      return tolower (static_cast<int> (c));
+    }
   else
-    return c;
+    {
+      return c;
+    }
 #else
   return towlower (c);
 #endif /* ACE_LACKS_TOWLOWER */
