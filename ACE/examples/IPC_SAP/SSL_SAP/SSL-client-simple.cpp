@@ -83,9 +83,13 @@ ssize_t
 Options::read (void *buf, size_t len, size_t &iteration)
 {
   if (this->io_source_ == ACE_STDIN)
-    return ACE_OS::read (ACE_STDIN, buf, len);
+    {
+      return ACE_OS::read (ACE_STDIN, buf, len);
+    }
   else if (iteration >= this->iterations_)
-    return 0;
+    {
+      return 0;
+    }
   else
     {
       std::memcpy (buf, this->message_buf (), len);
@@ -101,8 +105,9 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("2h:i:m:p:q:sT:"), 1);
 
   for (int c; (c = getopt ()) != -1; )
-  //FUZZ: enable check_for_lack_ACE_OS
-    switch (c)
+    {
+      //FUZZ: enable check_for_lack_ACE_OS
+      switch (c)
       {
       case '2': // Disable the oneway client.
         this->oneway_ = 0;
@@ -138,6 +143,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                            ACE_TEXT ("[-s] [-T <sleep_time>]\n")),
                           -1);
       }
+    }
 
   return this->init ();
 }
@@ -176,15 +182,19 @@ Options::shared_client_test (u_short port,
 
   if (con.connect (cli_stream,
                    remote_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) %p\n"),
-                       ACE_TEXT ("connection failed")),
-                      0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) %p\n"),
+                         ACE_TEXT ("connection failed")),
+                        0);
+    }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P|%t) connected to %C at port %d\n"),
-                remote_addr.get_host_name (),
-                remote_addr.get_port_number ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) connected to %C at port %d\n"),
+                  remote_addr.get_host_name (),
+                  remote_addr.get_port_number ()));
+    }
 
   char *buf;
   ACE_NEW_RETURN (buf,
@@ -228,17 +238,21 @@ Options::oneway_client_test ()
        (r_bytes = this->read (request, len, iteration)) > 0;
        // Transmit at the proper rate.
        ACE_OS::sleep (this->sleep_time ()))
-    if (std::memcmp (request,
-                     this->quit_string (),
-                     std::strlen (this->quit_string ())) == 0)
-      break;
-    else if (cli_stream.send_n (request, r_bytes) == -1)
+    {
+      if (std::memcmp (request,
+                       this->quit_string (),
+                       std::strlen (this->quit_string ())) == 0)
+        {
+          break;
+        }
+      else if (cli_stream.send_n (request, r_bytes) == -1)
       {
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) %p\n"),
                     ACE_TEXT ("send_n")));
         break;
       }
+    }
 
   // Close the connection.
   cli_stream.close ();
@@ -256,9 +270,9 @@ Options::twoway_client_test ()
   char *request = this->shared_client_test (this->port (),
                                             cli_stream);
   if (request == nullptr)
-  {
-    return;
-  }
+    {
+      return;
+    }
 
   // This variable is allocated off the stack to obviate the need for
   // locking.
@@ -280,14 +294,17 @@ Options::twoway_client_test ()
        (r_bytes = this->read (request, len, iteration)) > 0;
        // Transmit at the proper rate.
        ACE_OS::sleep (this->sleep_time ()))
-    if (std::memcmp (request,
-                     this->quit_string (),
-                     std::strlen (this->quit_string ())) == 0)
-      break;
+    {
+      if (std::memcmp (request,
+                       this->quit_string (),
+                       std::strlen (this->quit_string ())) == 0)
+        {
+          break;
+        }
 
     // Transmit <request> to the server.
-    else
-      {
+      else
+        {
         // Note that we use the incremental feature of the
         // <ACE_High_Res_Timer> so that we don't get "charged" for the
         // <ACE_OS::sleep> used to control the rate at which requests
@@ -312,7 +329,8 @@ Options::twoway_client_test ()
           }
 
         timer.stop_incr ();
-      }
+        }
+    }
 
   ACE_Time_Value tv;
 
@@ -336,11 +354,13 @@ void
 Options::run ()
 {
   if (this->oneway_ == 0)
-    this->twoway_client_test ();
+    {
+      this->twoway_client_test ();
+    }
   else
-  {
-    this->oneway_client_test ();
-  }
+    {
+      this->oneway_client_test ();
+    }
 }
 
 static int
