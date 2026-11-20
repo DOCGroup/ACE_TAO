@@ -46,20 +46,24 @@ TAO::ServerRequestInfo::request_id ()
   // 64-bit platforms.
 
   if (sizeof (this) == 4)       // 32 bit address
-    id = static_cast <CORBA::ULong> (
-      reinterpret_cast <ptrdiff_t> (
-        std::addressof (this->server_request_)));
-
+    {
+      id = static_cast <CORBA::ULong> (
+        reinterpret_cast <ptrdiff_t> (
+          std::addressof (this->server_request_)));
+    }
   else if (sizeof (this) == 8)  // 64 bit address -- use lower 32 bits
-    id = static_cast <CORBA::ULong> (
-      reinterpret_cast <ptrdiff_t> (
-        std::addressof (this->server_request_)) & 0xFFFFFFFFu);
-
+    {
+      id = static_cast <CORBA::ULong> (
+        reinterpret_cast <ptrdiff_t> (
+          std::addressof (this->server_request_)) & 0xFFFFFFFFu);
+    }
   else
-    // @@ Rather than fallback on the GIOP request ID, we should use
-    //    an atomically incremented variable specific to the ORB, or
-    //    perhaps specific to the process.
-    id = this->server_request_.request_id ();  // Fallback
+    {
+      // @@ Rather than fallback on the GIOP request ID, we should use
+      //    an atomically incremented variable specific to the ORB, or
+      //    perhaps specific to the process.
+      id = this->server_request_.request_id ();  // Fallback
+    }
 
   return id;
 }
