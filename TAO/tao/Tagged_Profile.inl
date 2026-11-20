@@ -11,7 +11,9 @@ ACE_INLINE TAO::ObjectKey &
 TAO_Tagged_Profile::object_key ()
 {
   if (!this->object_key_extracted_)
-    this->object_key_extracted_ = this->extract_object_key (this->profile_);
+    {
+      this->object_key_extracted_ = this->extract_object_key (this->profile_);
+    }
 
   return this->object_key_;
 }

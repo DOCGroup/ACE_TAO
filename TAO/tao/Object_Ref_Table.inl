@@ -14,7 +14,9 @@ TAO_Object_Ref_Table::find_i (char const *id)
     this->table_.find (CORBA::String_var (id));
 
   if (found == this->table_.end ())
-    return CORBA::Object::_nil ();
+    {
+      return CORBA::Object::_nil ();
+    }
 
   return CORBA::Object::_duplicate ((*found).second.in ());
 }

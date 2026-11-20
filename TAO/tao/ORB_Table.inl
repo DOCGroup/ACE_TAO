@@ -55,7 +55,9 @@ ACE_INLINE
 TAO::ORB_Core_Ref_Counter::~ORB_Core_Ref_Counter ()
 {
   if (this->core_)
-    (void) this->core_->_decr_refcnt (); // Should never throw.
+    {
+      (void) this->core_->_decr_refcnt (); // Should never throw.
+    }
 }
 
 ACE_INLINE
@@ -65,7 +67,9 @@ TAO::ORB_Core_Ref_Counter::ORB_Core_Ref_Counter (
 {
   // Claim ownership.
   if (this->core_)
-    (void) this->core_->_incr_refcnt ();
+    {
+      (void) this->core_->_incr_refcnt ();
+    }
 }
 
 ACE_INLINE TAO::ORB_Core_Ref_Counter &

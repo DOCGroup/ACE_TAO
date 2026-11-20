@@ -124,7 +124,9 @@ TAO_Stub::next_profile_i ()
           this->set_profile_in_use_i (this->forward_profiles_->get_next());
         }
       else
-        this->set_profile_in_use_i (pfile_next);
+        {
+          this->set_profile_in_use_i (pfile_next);
+        }
 
       // We may have been forwarded to / from a collocated situation
       // Check for this and apply / remove optimisation if required.
@@ -169,12 +171,18 @@ TAO_Stub::next_profile_i ()
               }
         }
       else
-        pfile_next = this->base_profiles_.get_next ();
+        {
+          pfile_next = this->base_profiles_.get_next ();
+        }
 
       if (pfile_next == nullptr)
-        this->reset_base ();
+        {
+          this->reset_base ();
+        }
       else
-        this->set_profile_in_use_i (pfile_next);
+        {
+          this->set_profile_in_use_i (pfile_next);
+        }
 
       return pfile_next;
    }
@@ -376,7 +384,9 @@ TAO_Stub::transport_queueing_strategy ()
   this->orb_core_->call_sync_scope_hook (this, has_synchronization, scope);
 
   if (has_synchronization == true)
-    return this->orb_core_->get_transport_queueing_strategy  (this, scope);
+    {
+      return this->orb_core_->get_transport_queueing_strategy  (this, scope);
+    }
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
   // No queueing strategy, let the transport use its default
@@ -407,7 +417,9 @@ void
 TAO_Stub::_decr_refcnt ()
 {
   if (--this->refcount_ == 0)
-    delete this;
+    {
+      delete this;
+    }
 }
 
 ACE_INLINE

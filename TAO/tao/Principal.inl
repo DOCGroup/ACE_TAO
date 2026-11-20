@@ -8,7 +8,9 @@ CORBA::Principal::_decr_refcount ()
   unsigned long const new_count = --this->refcount_;
 
   if (new_count == 0)
-    delete this;
+    {
+      delete this;
+    }
 
   return new_count;
 }

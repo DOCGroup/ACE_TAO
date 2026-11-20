@@ -16,7 +16,9 @@ ACE_INLINE
 TAO_Resume_Handle::~TAO_Resume_Handle ()
 {
   if (this->flag_ == TAO_HANDLE_RESUMABLE)
-    this->resume_handle ();
+    {
+      this->resume_handle ();
+    }
 }
 
 ACE_INLINE void

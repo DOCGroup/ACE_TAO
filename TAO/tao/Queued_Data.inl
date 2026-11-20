@@ -13,7 +13,9 @@ TAO_Queued_Data::replace_data_block (ACE_Message_Block &mb)
   ACE_Data_Block *db = mb.data_block ()->clone_nocopy ();
 
   if (db->size (newsize) == -1)
-    return;
+    {
+      return;
+    }
 
   ACE_Message_Block tmp (db);
   ACE_CDR::mb_align (std::addressof (tmp));
