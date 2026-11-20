@@ -122,11 +122,17 @@ ACE_URL_Addr::create_address (const ACE_TCHAR *url)
 
   ACE_URL_Addr *raw_addr {};
   if (ACE_OS::strncasecmp (http, url, http_size) == 0)
-    ACE_NEW_RETURN (raw_addr, ACE_HTTP_Addr (), nullptr);
+    {
+      ACE_NEW_RETURN (raw_addr, ACE_HTTP_Addr (), nullptr);
+    }
   else if (ACE_OS::strncasecmp (ftp, url, ftp_size) == 0)
-    ACE_NEW_RETURN (raw_addr, ACE_FTP_Addr (), nullptr);
+    {
+      ACE_NEW_RETURN (raw_addr, ACE_FTP_Addr (), nullptr);
+    }
   else if (ACE_OS::strncasecmp (mailto, url, mailto_size) == 0)
-    ACE_NEW_RETURN (raw_addr, ACE_Mailto_Addr (), nullptr);
+    {
+      ACE_NEW_RETURN (raw_addr, ACE_Mailto_Addr (), nullptr);
+    }
   else
   {
     ACE_NEW_RETURN (raw_addr, ACE_URL_Addr (), nullptr);
@@ -144,35 +150,65 @@ bool
 ACE_URL_Addr::known_scheme (const ACE_TCHAR *url)
 {
   if (ACE_OS::strncasecmp (http, url, http_size) == 0)
-    return true;
+    {
+      return true;
+    }
   else if (ACE_OS::strncasecmp (ftp, url, ftp_size) == 0)
-    return true;
+    {
+      return true;
+    }
   else if (ACE_OS::strncasecmp (mailto, url, mailto_size) == 0)
-    return true;
+    {
+      return true;
+    }
   else if (ACE_OS::strncasecmp (file, url, file_size) == 0)
-    return true;
+    {
+      return true;
+    }
   else if (ACE_OS::strncasecmp (afs, url, afs_size) == 0)
-    return true;
+    {
+      return true;
+    }
   else if (ACE_OS::strncasecmp (news, url, news_size) == 0)
-    return true;
+    {
+      return true;
+    }
   else if (ACE_OS::strncasecmp (nntp, url, nntp_size) == 0)
-    return true;
+    {
+      return true;
+    }
   else if (ACE_OS::strncasecmp (cid, url, cid_size) == 0)
-    return true;
+    {
+      return true;
+    }
   else if (ACE_OS::strncasecmp (mid, url, mid_size) == 0)
-    return true;
+    {
+      return true;
+    }
   else if (ACE_OS::strncasecmp (wais, url, wais_size) == 0)
-    return true;
+    {
+      return true;
+    }
   else if (ACE_OS::strncasecmp (prospero, url, prospero_size) == 0)
-    return true;
+    {
+      return true;
+    }
   else if (ACE_OS::strncasecmp (telnet, url, telnet_size) == 0)
-    return true;
+    {
+      return true;
+    }
   else if (ACE_OS::strncasecmp (rlogin, url, rlogin_size) == 0)
-    return true;
+    {
+      return true;
+    }
   else if (ACE_OS::strncasecmp (tn3270, url, tn3270_size) == 0)
-    return true;
+    {
+      return true;
+    }
   else if (ACE_OS::strncasecmp (gopher, url, gopher_size) == 0)
-    return true;
+    {
+      return true;
+    }
 
   return false;
 }
