@@ -85,7 +85,10 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
     // test will appear to pass on other compilers, but the MSVC failures should
     // be enough to notice that the bug needs fixing.
     X_var x2 = xseq[0];
-    if (ximpl->RV () < 3) x2._retn (); // avoid a crash
+    if (ximpl->RV () < 3)
+      {
+        x2._retn (); // avoid a crash
+      }
     ASSERT_REFCOUNT (3, "from sequence");
 #endif
   }
