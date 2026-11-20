@@ -170,9 +170,11 @@ Invoker_Task::Invoker_Task (ACE_Thread_Manager *thr_mgr,
                       -1,
                       -1,
                       this) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "activate failed"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n",
+                  "activate failed"));
+    }
 }
 
 // Iterate <n_iterations> time printing off a message and "waiting"
@@ -222,11 +224,15 @@ Invoker_Task::svc ()
   for (task = 0;
        task < this->n_tasks_;
        ++task)
-    if (thr_mgr->set_grp (worker_tasks[task].get (),
-                          1) == -1)
-      ACE_ERROR ((LM_DEBUG,
-                  " (%t) %p\n",
-                  "set_grp"));
+    {
+      if (thr_mgr->set_grp (worker_tasks[task].get (),
+                            1) == -1)
+        {
+          ACE_ERROR ((LM_DEBUG,
+                      " (%t) %p\n",
+                      "set_grp"));
+        }
+    }
 
   size_t n_tasks =
     thr_mgr->num_tasks_in_group (1);
@@ -240,9 +246,11 @@ Invoker_Task::svc ()
               " (%t) suspending group\n"));
 
   if (thr_mgr->suspend_grp (1) == -1)
-    ACE_ERROR ((LM_DEBUG,
-                " (%t) %p\n",
-                "suspend_grp"));
+    {
+      ACE_ERROR ((LM_DEBUG,
+                  " (%t) %p\n",
+                  "suspend_grp"));
+    }
 
   // Wait for 3 more second and then resume every thread in the group.
   ACE_OS::sleep (ACE_Time_Value (2));
@@ -251,9 +259,11 @@ Invoker_Task::svc ()
               " (%t) resuming group\n"));
 
   if (thr_mgr->resume_grp (1) == -1)
-    ACE_ERROR ((LM_DEBUG,
-                " (%t) %p\n",
-                "resume_grp"));
+    {
+      ACE_ERROR ((LM_DEBUG,
+                  " (%t) %p\n",
+                  "resume_grp"));
+    }
 
   // Wait for all the tasks to reach their exit point.
   thr_mgr->wait ();
@@ -289,9 +299,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               " (%t) suspending invoker task\n"));
 
   if (invoker_manager.suspend_task (&invoker) == -1)
-    ACE_ERROR ((LM_DEBUG,
-                " (%t) %p\n",
-                "suspend_task"));
+    {
+      ACE_ERROR ((LM_DEBUG,
+                  " (%t) %p\n",
+                  "suspend_task"));
+    }
 
   // Wait for 3 more second and then resume the invoker task.
   ACE_OS::sleep (ACE_Time_Value (3));
@@ -300,9 +312,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               " (%t) resuming invoker task\n"));
 
   if (invoker_manager.resume_task (&invoker) == -1)
-    ACE_ERROR ((LM_DEBUG,
-                " (%t) %p\n",
-                "resume_task"));
+    {
+      ACE_ERROR ((LM_DEBUG,
+                  " (%t) %p\n",
+                  "resume_task"));
+    }
 
   // Wait for all the threads to reach their exit point.
   invoker_manager.wait ();
