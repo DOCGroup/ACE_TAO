@@ -76,7 +76,9 @@ class ACE_Msg_Log_Cleanup: public ACE_Cleanup_Adapter<ACE_Log_Msg>
 public:
   virtual ~ACE_Msg_Log_Cleanup () {
     if (this == log_msg_cleanup)
-      log_msg_cleanup = 0;
+      {
+        log_msg_cleanup = 0;
+      }
   }
 };
 #endif /* ACE_MT_SAFE */
@@ -393,7 +395,9 @@ ACE_Log_Msg::instance ()
   // ACE_Log_Msg_Manager::get_lock () to initialize the logger
   // callback, so instead we do it here.
   if (ACE_Log_Msg_Manager::init_backend () == -1)
-    return 0;
+    {
+      return 0;
+    }
 
   // Singleton implementation.
 
@@ -1716,12 +1720,14 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   // if %*I was done, wp has the extracted width.
 #if defined (ACE_HAS_TRACE)
                   if (0 == wp)
-                    wp = ACE_Trace::get_nesting_indent ();
+                    {
+                      wp = ACE_Trace::get_nesting_indent ();
+                    }
 #else
                   if (0 == wp)
-                  {
-                    wp = 4;
-                  }
+                    {
+                      wp = 4;
+                    }
 #endif /* ACE_HAS_TRACE */
                   wp *= this->trace_depth_;
                   if (static_cast<size_t> (wp) > bspace)
@@ -2409,7 +2415,9 @@ ACE_Log_Formatter::ACE_Log_Formatter (ACE_Log_Priority prio, const char *fmt)
   this->bp_ = this->logger_->msg_ + ACE_Log_Msg::msg_off_;
   this->bspace_ = ACE_Log_Record::MAXLOGMSGLEN;
   if (ACE_Log_Msg::msg_off_ <= ACE_Log_Record::MAXLOGMSGLEN)
-    this->bspace_ -= static_cast<size_t> (ACE_Log_Msg::msg_off_);
+    {
+      this->bspace_ -= static_cast<size_t> (ACE_Log_Msg::msg_off_);
+    }
 
   if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::VERBOSE)
       && ACE_Log_Msg::program_name_ != 0)
@@ -2648,7 +2656,9 @@ bool ACE_Log_Formatter::process_conversion ()
     case 'D': case 'T':
       ACE_OS::strcpy (this->fp_, "s");
       if (ACE_OS::memchr (this->fmt_out_, '#', this->fp_ - this->fmt_out_))
-        return false;
+        {
+          return false;
+        }
       {
         char day_and_time[27];
         const char *const time =
@@ -2743,9 +2753,13 @@ bool ACE_Log_Formatter::process_conversion ()
       return false;
     case ':':
       if (sizeof (time_t) == 8)
-        ACE_OS::strcpy (this->fp_, ACE_INT64_FORMAT_SPECIFIER + 1); // skip %
+        {
+          ACE_OS::strcpy (this->fp_, ACE_INT64_FORMAT_SPECIFIER + 1); // skip %
+        }
       else
-        ACE_OS::strcpy (this->fp_, "d");
+        {
+          ACE_OS::strcpy (this->fp_, "d");
+        }
       return false;
 
     case 'd': case 'i': case 'o': case 'u': case 'x': case 'X': // <- ints
