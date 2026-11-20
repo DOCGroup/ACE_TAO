@@ -81,100 +81,104 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
   int c {};
 
   while ((c = getopt ()) != -1)
-  //FUZZ: enable check_for_lack_ACE_OS
-    switch (c)
-      {
-      case 'b':
-        this->t_flags (THR_BOUND);
-        break;
-      case 'C':
-        this->consumer_file (std::basic_string<ACE_TCHAR> {getopt.opt_arg ()});
-        break;
-      case 'c':
-        this->consumer_port (std::basic_string<ACE_TCHAR> {getopt.opt_arg ()});
-        break;
-      case 'd':
-        this->debugging_ = true;
-        break;
-      case 'H':
-        this->high_water_mark (ACE_OS::atoi (getopt.opt_arg ()));
-        break;
-      case 'i':
-        this->iterations (ACE_OS::atoi (getopt.opt_arg ()));
-        break;
-      case 'L':
-        this->low_water_mark (ACE_OS::atoi (getopt.opt_arg ()));
-        break;
-      case 'l':
-        this->initial_queue_length (ACE_OS::atoi (getopt.opt_arg ()));
-        break;
-      case 'M':
-        this->message_size (ACE_OS::atoi (getopt.opt_arg ()));
-        break;
-      case 'n':
-        this->t_flags (THR_NEW_LWP);
-        break;
-      case 'S':
-        this->supplier_file (std::basic_string<ACE_TCHAR> {getopt.opt_arg ()});
-        break;
-      case 's':
-        this->supplier_port (std::basic_string<ACE_TCHAR> {getopt.opt_arg ()});
-        break;
-      case 'T':
-        #if defined (ACE_HAS_TRACE)
-        if (ACE_OS::strcasecmp (getopt.opt_arg (), ACE_TEXT ("ON")) == 0)
-        ACE_Trace::start_tracing ();
-        else if (ACE_OS::strcasecmp (getopt.opt_arg (), ACE_TEXT ("OFF")) == 0)
-        ACE_Trace::stop_tracing ();
-        #endif /* ACE_HAS_TRACE */
-        break;
-      case 't':
-        this->thr_count (ACE_OS::atoi (getopt.opt_arg ()));
-        break;
-      case 'v':
-        this->verbosity_ = true;
-        break;
-      default:
-        ACE_OS::fprintf (stderr, "%s\n"
-                              "\t[-b] (THR_BOUND)\n"
-                              "\t[-C consumer file]\n"
-                              "\t[-c consumer port]\n"
-                              "\t[-d] (enable debugging)\n"
-                              "\t[-H high water mark]\n"
-                              "\t[-i number of test iterations]\n"
-                              "\t[-L low water mark]\n"
-                              "\t[-M] message size\n"
-                              "\t[-n] (THR_NEW_LWP)\n"
-                              "\t[-q max queue size]\n"
-                              "\t[-S supplier file]\n"
-                              "\t[-s supplier port]\n"
-                              "\t[-t number of threads]\n"
-                              "\t[-v] (verbose)\n",
-                              ACE_TEXT_ALWAYS_CHAR (argv[0]));
-        ACE_OS::exit (1);
-        /* NOTREACHED */
-        break;
-      }
+    {
+      //FUZZ: enable check_for_lack_ACE_OS
+      switch (c)
+        {
+        case 'b':
+          this->t_flags (THR_BOUND);
+          break;
+        case 'C':
+          this->consumer_file (std::basic_string<ACE_TCHAR> {getopt.opt_arg ()});
+          break;
+        case 'c':
+          this->consumer_port (std::basic_string<ACE_TCHAR> {getopt.opt_arg ()});
+          break;
+        case 'd':
+          this->debugging_ = true;
+          break;
+        case 'H':
+          this->high_water_mark (ACE_OS::atoi (getopt.opt_arg ()));
+          break;
+        case 'i':
+          this->iterations (ACE_OS::atoi (getopt.opt_arg ()));
+          break;
+        case 'L':
+          this->low_water_mark (ACE_OS::atoi (getopt.opt_arg ()));
+          break;
+        case 'l':
+          this->initial_queue_length (ACE_OS::atoi (getopt.opt_arg ()));
+          break;
+        case 'M':
+          this->message_size (ACE_OS::atoi (getopt.opt_arg ()));
+          break;
+        case 'n':
+          this->t_flags (THR_NEW_LWP);
+          break;
+        case 'S':
+          this->supplier_file (std::basic_string<ACE_TCHAR> {getopt.opt_arg ()});
+          break;
+        case 's':
+          this->supplier_port (std::basic_string<ACE_TCHAR> {getopt.opt_arg ()});
+          break;
+        case 'T':
+          #if defined (ACE_HAS_TRACE)
+          if (ACE_OS::strcasecmp (getopt.opt_arg (), ACE_TEXT ("ON")) == 0)
+            ACE_Trace::start_tracing ();
+          else if (ACE_OS::strcasecmp (getopt.opt_arg (), ACE_TEXT ("OFF")) == 0)
+            ACE_Trace::stop_tracing ();
+          #endif /* ACE_HAS_TRACE */
+          break;
+        case 't':
+          this->thr_count (ACE_OS::atoi (getopt.opt_arg ()));
+          break;
+        case 'v':
+          this->verbosity_ = true;
+          break;
+        default:
+          ACE_OS::fprintf (stderr, "%s\n"
+                                "\t[-b] (THR_BOUND)\n"
+                                "\t[-C consumer file]\n"
+                                "\t[-c consumer port]\n"
+                                "\t[-d] (enable debugging)\n"
+                                "\t[-H high water mark]\n"
+                                "\t[-i number of test iterations]\n"
+                                "\t[-L low water mark]\n"
+                                "\t[-M] message size\n"
+                                "\t[-n] (THR_NEW_LWP)\n"
+                                "\t[-q max queue size]\n"
+                                "\t[-S supplier file]\n"
+                                "\t[-s supplier port]\n"
+                                "\t[-t number of threads]\n"
+                                "\t[-v] (verbose)\n",
+                                ACE_TEXT_ALWAYS_CHAR (argv[0]));
+          ACE_OS::exit (1);
+          /* NOTREACHED */
+          break;
+        }
+    }
 
   if (this->verbose ())
-    ACE_OS::printf ("%8d = initial concurrency hint\n"
-                    ACE_SIZE_T_FORMAT_SPECIFIER_ASCII " = total iterations\n"
-                    ACE_SIZE_T_FORMAT_SPECIFIER_ASCII " = thread count\n"
-                    ACE_SIZE_T_FORMAT_SPECIFIER_ASCII " = low water mark\n"
-                    ACE_SIZE_T_FORMAT_SPECIFIER_ASCII " = high water mark\n"
-                    ACE_SIZE_T_FORMAT_SPECIFIER_ASCII " = message_size\n"
-                    ACE_SIZE_T_FORMAT_SPECIFIER_ASCII " = initial queue length\n"
-                    "%8d = THR_BOUND\n"
-                    "%8d = THR_NEW_LWP\n",
-                    ACE_OS::thr_getconcurrency (),
-                    this->iterations (),
-                    this->thr_count (),
-                    this->low_water_mark (),
-                    this->high_water_mark (),
-                    this->message_size (),
-                    this->initial_queue_length (),
-                    (this->t_flags () & THR_BOUND) != 0,
-                    (this->t_flags () & THR_NEW_LWP) != 0);
+    {
+      ACE_OS::printf ("%8d = initial concurrency hint\n"
+                      ACE_SIZE_T_FORMAT_SPECIFIER_ASCII " = total iterations\n"
+                      ACE_SIZE_T_FORMAT_SPECIFIER_ASCII " = thread count\n"
+                      ACE_SIZE_T_FORMAT_SPECIFIER_ASCII " = low water mark\n"
+                      ACE_SIZE_T_FORMAT_SPECIFIER_ASCII " = high water mark\n"
+                      ACE_SIZE_T_FORMAT_SPECIFIER_ASCII " = message_size\n"
+                      ACE_SIZE_T_FORMAT_SPECIFIER_ASCII " = initial queue length\n"
+                      "%8d = THR_BOUND\n"
+                      "%8d = THR_NEW_LWP\n",
+                      ACE_OS::thr_getconcurrency (),
+                      this->iterations (),
+                      this->thr_count (),
+                      this->low_water_mark (),
+                      this->high_water_mark (),
+                      this->message_size (),
+                      this->initial_queue_length (),
+                      (this->t_flags () & THR_BOUND) != 0,
+                      (this->t_flags () & THR_NEW_LWP) != 0);
+    }
 }
 
 #endif /* ACE_HAS_THREADS */
