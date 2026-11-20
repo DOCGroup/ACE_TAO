@@ -42,44 +42,56 @@ parse_args (int argc,
   ACE_TCHAR const *stimeout {};
 
   while ((option = get_opts ()) != -1)
-    switch (option)
-      {
-      case 'v':
-        verbose = true;
-        break;
+    {
+      switch (option)
+        {
+          case 'v':
+            verbose = true;
+            break;
 
-      case 'o':
-        ior_output_file = get_opts.opt_arg ();
-        break;
+          case 'o':
+            ior_output_file = get_opts.opt_arg ();
+            break;
 
-      case 'k':
-        ior = get_opts.opt_arg ();
-        break;
+          case 'k':
+            ior = get_opts.opt_arg ();
+            break;
 
-      case 's':
-        sname = get_opts.opt_arg ();
-        break;
+          case 's':
+            sname = get_opts.opt_arg ();
+            break;
 
-      case 't':
-        stimeout = get_opts.opt_arg ();
-        break;
+          case 't':
+            stimeout = get_opts.opt_arg ();
+            break;
 
-      case '?':
-      default:
-        usage (argv[0], ACE_TEXT ("unknown argument"));
-        return -1;
-      }
+          case '?':
+          default:
+            usage (argv[0], ACE_TEXT ("unknown argument"));
+            return -1;
+        }
+    }
 
   if (ACE_OS::strcmp (sname, ACE_TEXT ("NONE")) == 0)
-    scope = Messaging::SYNC_NONE;
+    {
+      scope = Messaging::SYNC_NONE;
+    }
   else if (ACE_OS::strcmp (sname, ACE_TEXT ("TRANSPORT")) == 0)
-    scope = Messaging::SYNC_WITH_TRANSPORT;
+    {
+      scope = Messaging::SYNC_WITH_TRANSPORT;
+    }
   else if (ACE_OS::strcmp (sname, ACE_TEXT ("SERVER")) == 0)
-    scope = Messaging::SYNC_WITH_SERVER;
+    {
+      scope = Messaging::SYNC_WITH_SERVER;
+    }
   else if (ACE_OS::strcmp (sname, ACE_TEXT ("TARGET")) == 0)
-    scope = Messaging::SYNC_WITH_TARGET;
+    {
+      scope = Messaging::SYNC_WITH_TARGET;
+    }
   else if (ACE_OS::strcmp (sname, ACE_TEXT ("DELAYED")) == 0)
-    scope = TAO::SYNC_DELAYED_BUFFERING;
+    {
+      scope = TAO::SYNC_DELAYED_BUFFERING;
+    }
   else
     {
       usage (argv[0], ACE_TEXT ("Invalid scope value"));
@@ -120,9 +132,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "backend_server(%P|%t) - panic: nil RootPOA\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "backend_server(%P|%t) - panic: nil RootPOA\n"),
+                            1);
+        }
 
       PortableServer::POAManager_var const poa_manager = root_poa->the_POAManager ();
 
@@ -185,11 +199,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
           ACE_OS::fopen (ior_output_file.c_str (), "w"), ACE_OS::fclose);
         if (!output_file)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "middle_server(%P|%t) - Cannot open output file "
-                             "for writing IOR: %s\n",
-                             ior_output_file.c_str ()),
-                            1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "middle_server(%P|%t) - Cannot open output file "
+                               "for writing IOR: %s\n",
+                               ior_output_file.c_str ()),
+                              1);
+          }
         ACE_OS::fprintf (output_file.get (), "%s", ior_string.in ());
       }
 
