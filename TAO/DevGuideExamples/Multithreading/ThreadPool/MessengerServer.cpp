@@ -77,9 +77,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     Options options;
     if (parse_args (argc, argv, options) != 0)
-    {
-      return 1;
-    }
+      {
+        return 1;
+      }
 
     // Create a servant.
     PortableServer::Servant_var<Messenger_i> const messenger_servant = new Messenger_i;
@@ -98,10 +98,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     // 3. Create and activate threads for the thread pool.
     ORB_Task task (orb.in());
     int const retval = task.activate (THR_NEW_LWP | THR_JOINABLE, nthreads);
-    if (retval != 0) {
-      std::cerr << "Failed to activate " << nthreads << " threads." << std::endl;
-      return 1;
-    }
+    if (retval != 0)
+      {
+        std::cerr << "Failed to activate " << nthreads << " threads." << std::endl;
+        return 1;
+      }
 
     // 4. Wait for threads to finish.
     task.wait();
