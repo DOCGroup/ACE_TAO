@@ -34,19 +34,25 @@ Event_Handler::handle_input (ACE_HANDLE handle)
   ssize_t const n = ACE_OS::read (handle, buf, sizeof buf);
 
   if (n == -1)
-    return -1;
+    {
+      return -1;
+    }
   else if (n == 0)
-    ACE_ERROR_RETURN ((LM_DEBUG,
-                       ACE_TEXT ("shutting down on EOF\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_DEBUG,
+                         ACE_TEXT ("shutting down on EOF\n")),
+                        -1);
+    }
   else if (ACE_OS::write (ACE_STDOUT, buf, n) != n)
-    ACE_ERROR_RETURN ((LM_DEBUG,
-                       ACE_TEXT ("%p\n"), ACE_TEXT ("write failed")),
-                       -1);
+    {
+      ACE_ERROR_RETURN ((LM_DEBUG,
+                         ACE_TEXT ("%p\n"), ACE_TEXT ("write failed")),
+                        -1);
+    }
   else
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
 }
 
 int
@@ -68,25 +74,31 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (ACE_Event_Handler::register_stdin_handler (&handler,
                                                  ACE_Reactor::instance (),
                                                  ACE_Thread_Manager::instance ()) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("register_stdin_handler")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("register_stdin_handler")));
+    }
 
   if (loggerd.open (argc,
                     argv,
                     ACE_DEFAULT_LOGGER_KEY,
                     // Don't ignore static services!
                     false) == -1 && errno != ENOENT)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n%a"),
-                ACE_TEXT ("open"),
-                1));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n%a"),
+                  ACE_TEXT ("open"),
+                  1));
+    }
   else if (ACE_Reactor::instance ()->register_handler
     (SIGINT, &shutdown_handler) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n%a"),
-                ACE_TEXT ("register_handler"),
-                1));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n%a"),
+                  ACE_TEXT ("register_handler"),
+                  1));
+    }
 
   // Perform logging service until we receive SIGINT.
 
