@@ -23,29 +23,33 @@ Nestea_Server_i::parse_args ()
   int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'd':  // debug flag.
-        ++TAO_debug_level;
-        break;
-      case 'o':  // output the IOR to a file.
-        this->ior_output_file_.reset (ACE_OS::fopen (get_opts.opt_arg (), "w"));
-        if (!this->ior_output_file_)
+    {
+      switch (c)
+        {
+        case 'd':  // debug flag.
+          ++TAO_debug_level;
+          break;
+        case 'o':  // output the IOR to a file.
+          this->ior_output_file_.reset (ACE_OS::fopen (get_opts.opt_arg (), "w"));
+          if (!this->ior_output_file_)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Unable to open %s for writing: %p\n",
+                                 get_opts.opt_arg ()), -1);
+            }
+          break;
+        case '?':  // display help for use of the server.
+        default:
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to open %s for writing: %p\n",
-                             get_opts.opt_arg ()), -1);
-        break;
-      case '?':  // display help for use of the server.
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s"
-                           " [-d]"
-                           " [-r]"
-                           " [-o] <ior_output_file>"
-                           "\n",
-                           this->argv_ [0]),
-                          1);
-      }
+                             "usage:  %s"
+                             " [-d]"
+                             " [-r]"
+                             " [-o] <ior_output_file>"
+                             "\n",
+                             this->argv_ [0]),
+                            1);
+        }
+    }
 
   // Indicates successful parsing of command line.
   return 0;

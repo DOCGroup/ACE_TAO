@@ -32,10 +32,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   ACE_DEBUG ((LM_INFO, ACE_TEXT ("Listing initial references...\n")));
 
                   for (CORBA::ULong n {}; n < length; ++n)
-                    ACE_DEBUG ((LM_DEBUG,
-                                ACE_TEXT ("  Reference %u: %C\n"),
-                                n,
-                                static_cast<char const *> (list [n])));
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                  ACE_TEXT ("  Reference %u: %C\n"),
+                                  n,
+                                  static_cast<char const *> (list [n])));
+                    }
                 }
               else
                 {
@@ -51,9 +53,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 orb->resolve_initial_references (ACE_TEXT_ALWAYS_CHAR (argv [i])));
 
               if (CORBA::is_nil (objref.in ()))
-                ACE_ERROR_RETURN ((LM_ERROR,
-                                   ACE_TEXT (" (%P|%t) Unable to resolve the given name.\n")),
-                                  -1);
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     ACE_TEXT (" (%P|%t) Unable to resolve the given name.\n")),
+                                    -1);
+                }
 
               INS_var const server (INS::_narrow (objref.in ()));
               CORBA::String_var const iorstr (orb->object_to_string (server.in ()));

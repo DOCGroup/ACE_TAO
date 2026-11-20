@@ -28,43 +28,45 @@ parse_args (int argc, ACE_TCHAR **argv, Options &options)
   int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'a':
-        options.iors[0] = get_opts.opt_arg ();
-        break;
-      case 'b':
-        options.iors[1] = get_opts.opt_arg ();
-        break;
-      case 'c':
-        options.iors[2] = get_opts.opt_arg ();
-        break;
-      case 'd':
-        options.iors[3] = get_opts.opt_arg ();
-        break;
-      case 'e':
-        options.iors[4] = get_opts.opt_arg ();
-        break;
-      case 'f':
-        options.iors[5] = get_opts.opt_arg ();
-        break;
-      case 'i':
-        options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-a IOR 1 "
-                           "-b IOR 2 "
-                           "-c IOR 3 "
-                           "-d IOR 4 "
-                           "-e IOR 5 "
-                           "-f IOR 6 "
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
+    {
+      switch (c)
+        {
+        case 'a':
+          options.iors[0] = get_opts.opt_arg ();
+          break;
+        case 'b':
+          options.iors[1] = get_opts.opt_arg ();
+          break;
+        case 'c':
+          options.iors[2] = get_opts.opt_arg ();
+          break;
+        case 'd':
+          options.iors[3] = get_opts.opt_arg ();
+          break;
+        case 'e':
+          options.iors[4] = get_opts.opt_arg ();
+          break;
+        case 'f':
+          options.iors[5] = get_opts.opt_arg ();
+          break;
+        case 'i':
+          options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage:  %s "
+                             "-a IOR 1 "
+                             "-b IOR 2 "
+                             "-c IOR 3 "
+                             "-d IOR 4 "
+                             "-e IOR 5 "
+                             "-f IOR 6 "
+                             "\n",
+                             argv [0]),
+                            -1);
+        }
+    }
 
   // Indicates successful parsing of command line.
   return 0;
@@ -97,8 +99,10 @@ print_stats (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time,
                   tmp < 0.0 ? 0.0 : tmp));
     }
   else
-    ACE_ERROR ((LM_ERROR,
-                "\tNo time stats printed.  Zero iterations or error occurred.\n"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "\tNo time stats printed.  Zero iterations or error occurred.\n"));
+    }
 }
 
 template <class T, class T_var>
