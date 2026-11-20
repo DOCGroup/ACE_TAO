@@ -1097,9 +1097,13 @@ visit_in (TAO_Binary_Constraint* binary_in)
                              seq_type == CORBA::tk_double);
             }
           else if (this->expr_returns_boolean (left_type))
-            types_match = (seq_type == CORBA::tk_boolean);
+            {
+              types_match = (seq_type == CORBA::tk_boolean);
+            }
           else if (this->expr_returns_string (left_type))
-            types_match = (seq_type == CORBA::tk_string);
+            {
+              types_match = (seq_type == CORBA::tk_string);
+            }
 
           if (types_match)
           {

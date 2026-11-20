@@ -208,7 +208,9 @@ TAO_Log_i::set_max_record_life (CORBA::ULong life)
   this->recordstore_->set_max_record_life (life);
 
   if (life != 0)
-    this->log_compaction_handler_.schedule();
+    {
+      this->log_compaction_handler_.schedule();
+    }
   else
   {
     this->log_compaction_handler_.cancel();
@@ -1144,9 +1146,11 @@ TAO_Log_i::check_capacity_alarm_threshold ()
           else
             {
               if (TAO_debug_level > 0)
-                ORBSVCS_DEBUG ((LM_DEBUG,
-                            "threshold of %d breached\n",
-                            this->thresholds_[this->current_threshold_]));
+                {
+                  ORBSVCS_DEBUG ((LM_DEBUG,
+                                  "threshold of %d breached\n",
+                                  this->thresholds_[this->current_threshold_]));
+                }
             }
 
           ++this->current_threshold_;
@@ -1242,7 +1246,9 @@ TAO_Log_i::reset_log_qos (DsLogAdmin::QoSList const & qos)
   this->qostype_ = qostype;
 
   if (this->qostype_ == DsLogAdmin::QoSFlush)
-    this->log_flush_handler_.schedule ();
+    {
+      this->log_flush_handler_.schedule ();
+    }
   else
   {
     this->log_flush_handler_.cancel ();

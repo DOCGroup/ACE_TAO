@@ -452,8 +452,10 @@ TAO_Hash_LogRecordStore::retrieve (DsLogAdmin::TimeT from_time,
                    from_time);
 
   if (how_many >= 0)
-    std::snprintf (constraint, sizeof (constraint), "time >= %s",
-                   ACE_TEXT_ALWAYS_CHAR (uint64_formating));
+    {
+      std::snprintf (constraint, sizeof (constraint), "time >= %s",
+                     ACE_TEXT_ALWAYS_CHAR (uint64_formating));
+    }
   else
     {
       std::snprintf (constraint, sizeof (constraint), "time < %s",

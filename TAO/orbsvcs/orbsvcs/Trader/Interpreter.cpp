@@ -25,7 +25,9 @@ TAO_Interpreter::build_tree (const char* constraints)
   return_value = ::yyparse ();
 
   if (return_value == 0 && yyval.constraint_ != nullptr)
-    this->root_.reset (yyval.constraint_);
+    {
+      this->root_.reset (yyval.constraint_);
+    }
   else
     {
       while (yylex () > 0)
@@ -55,7 +57,9 @@ TAO_Interpreter::is_empty_string (const char* str)
         }
 
       if (str[i] == '\0')
-        return_value = true;
+        {
+          return_value = true;
+        }
     }
 
   return return_value;

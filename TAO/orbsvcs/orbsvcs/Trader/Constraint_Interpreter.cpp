@@ -168,11 +168,13 @@ order_offer (TAO_Constraint_Evaluator& evaluator,
           if (expr_type == TAO_FIRST
               || (expr_type == TAO_WITH
                   && ! static_cast<CORBA::Boolean> (pref_info.value_)))
-            this->offers_.push_back (pref_info);
+            {
+              this->offers_.push_back (pref_info);
+            }
           else
-          {
-            this->offers_.push_front (pref_info);
-          }
+            {
+              this->offers_.push_front (pref_info);
+            }
 
           if (expr_type == TAO_MIN || expr_type == TAO_MAX)
             {
