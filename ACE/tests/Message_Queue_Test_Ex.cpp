@@ -207,9 +207,11 @@ single_thread_performance_test ()
   int i = 0;
 
   for (i = 0; i < max_messages; ++i)
-    ACE_NEW_RETURN (send_block[i],
-                    User_Class (test_message),
-                    -1);
+    {
+      ACE_NEW_RETURN (send_block[i],
+                      User_Class (test_message),
+                      -1);
+    }
 
   User_Class **receive_block_p {};
   ACE_NEW_RETURN (receive_block_p,
@@ -222,16 +224,20 @@ single_thread_performance_test ()
   for (i = 0; i < max_messages; ++i)
     {
       if (msgq->enqueue_tail (send_block[i]) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("enqueue")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("enqueue")),
+                            -1);
+        }
 
       if (msgq->dequeue_head (receive_block_p[i]) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("dequeue_head")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("dequeue_head")),
+                            -1);
+        }
     }
 
   timer->stop ();
@@ -241,7 +247,9 @@ single_thread_performance_test ()
   delete [] receive_block_p;
 
   for (i = 0; i < max_messages; ++i)
-    delete send_block[i];
+    {
+      delete send_block[i];
+    }
   delete [] send_block;
   delete msgq;
 
@@ -385,11 +393,15 @@ receiver (void *arg)
                   (void *) -1);
 
   for (i = 0; i < max_messages; ++i)
-    if (queue_wrapper->q_->dequeue_head (receive_block_p[i]) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p\n"),
-                         ACE_TEXT ("dequeue_head")),
-                        0);
+    {
+      if (queue_wrapper->q_->dequeue_head (receive_block_p[i]) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("dequeue_head")),
+                            0);
+        }
+    }
   timer->stop ();
 
   delete [] receive_block_p;
@@ -407,12 +419,16 @@ sender (void *arg)
 
   // Send the messages.
   for (i = 0; i < max_messages; ++i)
-    if (queue_wrapper->q_->
-        enqueue_tail (queue_wrapper->send_block_[i]) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p\n"),
-                         ACE_TEXT ("enqueue")),
-                        0);
+    {
+      if (queue_wrapper->q_->
+          enqueue_tail (queue_wrapper->send_block_[i]) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("enqueue")),
+                            0);
+        }
+    }
   return nullptr;
 }
 
@@ -434,9 +450,11 @@ performance_test ()
                   -1);
 
   for (i = 0; i < max_messages; ++i)
-    ACE_NEW_RETURN (send_block[i],
-                    User_Class (test_message),
-                    -1);
+    {
+      ACE_NEW_RETURN (send_block[i],
+                      User_Class (test_message),
+                      -1);
+    }
 
   queue_wrapper.send_block_ = send_block;
 
@@ -447,18 +465,22 @@ performance_test ()
   if (ACE_Thread_Manager::instance ()->spawn ((ACE_THR_FUNC) sender,
                                               &queue_wrapper,
                                               THR_BOUND) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("spawning sender thread")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("spawning sender thread")),
+                        -1);
+    }
 
   if (ACE_Thread_Manager::instance ()->spawn ((ACE_THR_FUNC) receiver,
                                               &queue_wrapper,
                                               THR_BOUND) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("spawning receiver thread")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("spawning receiver thread")),
+                        -1);
+    }
 
   ACE_Thread_Manager::instance ()->wait ();
   print_message (message);
@@ -468,7 +490,9 @@ performance_test ()
   queue_wrapper.q_ = nullptr;
 
   for (i = 0; i < max_messages; ++i)
-    delete send_block[i];
+    {
+      delete send_block[i];
+    }
   delete [] send_block;
 
   return 0;
@@ -493,18 +517,22 @@ MQ_Ex_N_Tester::performance_test ()
   if (ACE_Thread_Manager::instance ()->spawn ((ACE_THR_FUNC) &MQ_Ex_N_Tester::sender,
                                               &tester_wrapper,
                                               THR_BOUND) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("spawning sender thread")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("spawning sender thread")),
+                        -1);
+    }
 
   if (ACE_Thread_Manager::instance ()->spawn ((ACE_THR_FUNC) &MQ_Ex_N_Tester::receiver,
                                               this,
                                               THR_BOUND) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("spawning receiver thread")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("spawning receiver thread")),
+                        -1);
+    }
 
   ACE_Thread_Manager::instance ()->wait ();
 
@@ -819,7 +847,9 @@ int queue_iterator_test (ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>& q)
   }
 
   while (!q.is_empty ())
-    q.dequeue_head (b, nullptr);
+    {
+      q.dequeue_head (b, nullptr);
+    }
 
   if (status == 0)
   {
@@ -889,9 +919,11 @@ run_main (int argc, ACE_TCHAR *argv[])
     }
 
   if (status != 0)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("test failed")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("test failed")));
+    }
   delete timer;
   timer = nullptr;
 
