@@ -67,13 +67,17 @@ Notifier_i::register_callback (char const *stock_name,
   if (this->consumer_map_.find (stock_name, consumers) == 0)
     {
       if (consumers->insert (consumer_data) == -1)
-        throw Callback_Quoter::Invalid_Stock (
-          "Insertion failed! Invalid Stock!\n");
+        {
+          throw Callback_Quoter::Invalid_Stock (
+            "Insertion failed! Invalid Stock!\n");
+        }
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    "Inserted map entry: stockname %s threshold %d",
-                    stock_name,
-                    threshold_value));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Inserted map entry: stockname %s threshold %d",
+                      stock_name,
+                      threshold_value));
+        }
     }
   else
     {
@@ -85,15 +89,19 @@ Notifier_i::register_callback (char const *stock_name,
       // When a new entry is tried to be inserted into the unbounded set and it
       // fails an exception is raised.
       if (consumers->insert (consumer_data) == -1)
-        throw Callback_Quoter::Invalid_Stock (
-          "Insertion failed! Invalid Stock!\n");
+        {
+          throw Callback_Quoter::Invalid_Stock (
+            "Insertion failed! Invalid Stock!\n");
+        }
 
       // The bond between the stockname <hash_key> and the consumers <hash_value>
       // is fused.
       int const bind_result = this->consumer_map_.bind (stock_name, consumers);
       if (bind_result != 0)
-        ACE_ERROR ((LM_ERROR,
-                    "register_callback: Bind failed!\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "register_callback: Bind failed!\n"));
+        }
       else
         {
           consumers_owner.release ();
@@ -148,11 +156,15 @@ Notifier_i::unregister_callback (Callback_Quoter::Consumer_ptr consumer)
        // removed an exception is raised.
 
        if ((*iter).int_id_->remove (consumer_to_remove) == -1)
-         throw Callback_Quoter::Invalid_Handle (
-           "Unregistration failed! Invalid Consumer Handle!\n");
+         {
+           throw Callback_Quoter::Invalid_Handle (
+             "Unregistration failed! Invalid Consumer Handle!\n");
+         }
        else
-         ACE_DEBUG ((LM_DEBUG,
-                     "unregister_callback:consumer removed\n"));
+         {
+           ACE_DEBUG ((LM_DEBUG,
+                       "unregister_callback:consumer removed\n"));
+         }
     }
 }
 
@@ -199,8 +211,10 @@ Notifier_i::market_status (char const *stock_name,
         }
     }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                " Stock Not Present!\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  " Stock Not Present!\n"));
+    }
   // Raising an exception caused problems as they were caught by the Market daemon
   // who exited prematurely.
 }
@@ -209,8 +223,10 @@ void
 Notifier_i::shutdown ()
 {
   if (this->close_consumer_map () != 0)
-    ACE_ERROR ((LM_ERROR,
-                "Consumer_map_close error!\n"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Consumer_map_close error!\n"));
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "The Callback Quoter server is shutting down...\n"));
