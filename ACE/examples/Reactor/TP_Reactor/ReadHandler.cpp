@@ -33,7 +33,7 @@ ReadHandler::ReadHandler() : ACE_Event_Handler(), mStream() {
  * here for convenience to decrease the invocation counter also when returning
  * due to errors.
  */
-#define INVOCATION_RETURN(retval) do { mInvocationCounter--; \
+#define INVOCATION_RETURN(retval) do { --mInvocationCounter; \
                                     return retval; } while(0)
 
 ReadHandler::~ReadHandler() {

@@ -773,7 +773,7 @@ prusage (struct rusage *r0, struct rusage *r1,
       (r1->ru_stime.tv_usec - r0->ru_stime.tv_usec) / 10000;
   ms = (e->tv_sec - b->tv_sec) * 100 + (e->tv_usec - b->tv_usec) / 10000;
 
-#define END(x)  {while(*x) x++;}
+#define END(x)  {while(*x) ++x;}
 #if defined(SYSV)
   cp = "%Uuser %Ssys %Ereal %P";
 #else
