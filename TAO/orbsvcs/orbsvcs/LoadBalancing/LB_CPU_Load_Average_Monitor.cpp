@@ -165,11 +165,13 @@ TAO_LB_CPU_Load_Average_Monitor::loads ()
       ACE_ASSERT (num_processors > 0);
 
       if (num_processors > 0)
-        load = loadavg[0] / num_processors;
+        {
+          load = loadavg[0] / num_processors;
+        }
       else
-      {
-        throw CORBA::TRANSIENT ();  // Correct exception?
-      }
+        {
+          throw CORBA::TRANSIENT ();  // Correct exception?
+        }
     }
   else
   {
