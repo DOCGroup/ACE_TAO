@@ -313,7 +313,9 @@ Catior_i::catior (char const * str)
 
   // No profiles means a NIL objref.
   if (profiles == 0)
-    return TAO::TRAVERSE_CONTINUE;
+    {
+      return TAO::TRAVERSE_CONTINUE;
+    }
   else
     while (profiles-- != 0)
       {
@@ -396,12 +398,14 @@ CORBA::Boolean
 Catior_i::catpoop (char const *string)
 {
   if (!string || !*string)
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 
   if (string [0] != ':' || string [1] != '\\')
-    throw CORBA::DATA_CONVERSION ();
+    {
+      throw CORBA::DATA_CONVERSION ();
+    }
 
   string += 2;
 
@@ -1117,11 +1121,13 @@ Catior_i::cat_octet_seq (char const *object_name,
       char c = objKey[i];
       int tmp = (unsigned char) c; // isprint doesn't work with negative vals.(except EOF)
       if (ACE_OS::ace_isprint (static_cast<ACE_TCHAR> (tmp)))
-        buffer_ += c;
+        {
+          buffer_ += c;
+        }
       else
-      {
-        buffer_ += ".";
-      }
+        {
+          buffer_ += ".";
+        }
     }
 
   buffer_ += "\n";
@@ -1170,7 +1176,9 @@ Catior_i::displayHex (TAO_InputCDR &str)
   ACE_CString theDescr = _find_info (theSetId);
 
   if (theDescr.length () == 0)
-    buffer_ += "Unknown CodeSet\n";
+    {
+      buffer_ += "Unknown CodeSet\n";
+    }
   else
     {
       buffer_ += theDescr.c_str ();
