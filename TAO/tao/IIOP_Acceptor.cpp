@@ -37,10 +37,12 @@ TAO_IIOP_Acceptor::TAO_IIOP_Acceptor ()
 {
 #if defined (ACE_HAS_IPV6) && defined (ACE_USES_IPV4_IPV6_MIGRATION)
   if (ACE::ipv6_enabled())
-    default_address_.set (
-      static_cast<unsigned short> (0),
-      ACE_IPV6_ANY,
-      AF_INET6);
+    {
+      default_address_.set (
+        static_cast<unsigned short> (0),
+        ACE_IPV6_ANY,
+        AF_INET6);
+    }
 #endif /* ACE_HAS_IPV6 && ACE_USES_IPV4_IPV6_MIGRATION */
 }
 
@@ -563,9 +565,11 @@ TAO_IIOP_Acceptor::open_i (ACE_INET_Addr const &addr,
       addr.is_any ())
   {
     if (TAO_debug_level > 5)
-      TAOLIB_DEBUG ((LM_DEBUG,
+      {
+        TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT("TAO (%P|%t) - IIOP_Acceptor::open_i, ")
                   ACE_TEXT("setting IPV6_V6ONLY\n")));
+      }
 
     // Prevent server from accepting connections from IPv4-mapped addresses.
     int on = 1;
@@ -1002,9 +1006,13 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
   if (vres == 0 || vinfo.dwMajorVersion < 6)
     {
       if (this->default_address_.get_type () == AF_INET)
-        ipv4_only = true;
+        {
+          ipv4_only = true;
+        }
       else
-        ipv6_only = true;
+        {
+          ipv6_only = true;
+        }
     }
 #endif /* ACE_WIN32 */
   // If the loopback interface is the only interface then include it

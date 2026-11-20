@@ -150,7 +150,9 @@ TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
   // Write the service context list.
 #if (TAO_HAS_MINIMUM_CORBA == 1)
   if (!(output << reply.service_context_notowned ()))
-    return false;
+    {
+      return false;
+    }
 #else
   if (!reply.is_dsi_)
     {

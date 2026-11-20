@@ -395,7 +395,9 @@ TAO_IIOP_Transport::get_listen_point (
       local_addr.set_port_number (endpoint_addr[index].get_port_number ());
 
       if (local_addr != endpoint_addr[index])
-        continue;
+        {
+          continue;
+        }
 #endif /* TAO_USE_BROKEN_BIDIR */
 
       // Get the local address of the connection

@@ -328,8 +328,10 @@ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream, TAO_Stub *stub, TA
     *(reinterpret_cast <CORBA::ULong *>
                            (buf + TAO_GIOP_MESSAGE_SIZE_OFFSET)) = bodylen;
   else
-    ACE_CDR::swap_4 (reinterpret_cast <char *> (&bodylen),
-                     buf + TAO_GIOP_MESSAGE_SIZE_OFFSET);
+    {
+      ACE_CDR::swap_4 (reinterpret_cast <char *> (&bodylen),
+                       buf + TAO_GIOP_MESSAGE_SIZE_OFFSET);
+    }
 #endif /* ACE_ENABLE_SWAP_ON_WRITE */
 
   if (log_msg)
