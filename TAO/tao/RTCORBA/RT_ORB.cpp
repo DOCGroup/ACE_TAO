@@ -108,7 +108,9 @@ TAO_Named_RT_Mutex_Manager::destroy_mutex (RTCORBA::Mutex_ptr mutex)
         this->map_.unbind (name);
 
       if (result != 0)
-        throw ::CORBA::INTERNAL ();
+        {
+          throw ::CORBA::INTERNAL ();
+        }
     }
 }
 #else /* TAO_HAS_NAMED_RT_MUTEXES == 1 */
@@ -156,7 +158,9 @@ TAO_Named_RT_Mutex_Manager::create_named_mutex (char const *name,
       int const result = this->map_.bind (name, mutex);
 
       if (result != 0)
-        throw ::CORBA::INTERNAL ();
+        {
+          throw ::CORBA::INTERNAL ();
+        }
     }
 
   // Return the one we found or created.
@@ -181,7 +185,9 @@ TAO_Named_RT_Mutex_Manager::open_named_mutex (char const *name)
   // If we find the mutex, simply return it.
   RTCORBA::Mutex_var mutex;
   if (this->map_.find (name, mutex) != 0)
-    throw RTCORBA::RTORB::MutexNotFound ();
+    {
+      throw RTCORBA::RTORB::MutexNotFound ();
+    }
 
   // Return the one we found.
   return mutex._retn ();
