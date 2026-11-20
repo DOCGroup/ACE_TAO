@@ -677,7 +677,9 @@ ACE_CDR::LongDouble&
 ACE_CDR::LongDouble::assign (const ACE_CDR::LongDouble& rhs)
 {
   if (this != std::addressof (rhs))
-    *this = rhs;
+    {
+      *this = rhs;
+    }
   return *this;
 }
 

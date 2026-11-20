@@ -206,7 +206,9 @@ ACE_INLINE size_t
 ACE_CDR::first_size (size_t minsize)
 {
   if (minsize == 0)
-    return ACE_CDR::DEFAULT_BUFSIZE;
+    {
+      return ACE_CDR::DEFAULT_BUFSIZE;
+    }
 
   size_t newsize = ACE_CDR::DEFAULT_BUFSIZE;
   while (newsize < minsize)
@@ -246,7 +248,9 @@ ACE_CDR::next_size (size_t minsize)
         // integer.
         newsize <<= 1;
       else
-        newsize += ACE_CDR::LINEAR_GROWTH_CHUNK;
+        {
+          newsize += ACE_CDR::LINEAR_GROWTH_CHUNK;
+        }
     }
 
   return newsize;
@@ -550,10 +554,16 @@ ACE_INLINE void
 ACE_CDR::Fixed::ltrim ()
 {
   for (int i = this->digits_ - 1; i >= this->scale_ && i > 0; --i)
-    if (this->digit (i) == 0)
-      --this->digits_;
-    else
-      break;
+    {
+      if (this->digit (i) == 0)
+        {
+          --this->digits_;
+        }
+      else
+        {
+          break;
+        }
+    }
 }
 
 ACE_INLINE ACE_CDR::Fixed

@@ -420,7 +420,9 @@ ACE_OutputCDR::write_wchar_array (const ACE_CDR::WChar* x,
                                   ACE_CDR::ULong length)
 {
   if (this->wchar_translator_)
-    return this->wchar_translator_->write_wchar_array (*this, x, length);
+    {
+      return this->wchar_translator_->write_wchar_array (*this, x, length);
+    }
 
   if (ACE_OutputCDR::wchar_maxbytes_ == 0)
     {
@@ -562,7 +564,9 @@ ACE_OutputCDR::adjust (size_t size,
                        char*& buf)
 {
   if (!this->current_is_writable_)
-    return this->grow_and_adjust (size, align, buf);
+    {
+      return this->grow_and_adjust (size, align, buf);
+    }
 
 #if !defined (ACE_LACKS_CDR_ALIGNMENT)
   size_t const offset =
@@ -660,9 +664,13 @@ ACE_INLINE int
 ACE_OutputCDR::byte_order () const
 {
   if (this->do_byte_swap ())
-    return !ACE_CDR_BYTE_ORDER;
+    {
+      return !ACE_CDR_BYTE_ORDER;
+    }
   else
-    return ACE_CDR_BYTE_ORDER;
+    {
+      return ACE_CDR_BYTE_ORDER;
+    }
 }
 
 ACE_INLINE void
@@ -903,9 +911,13 @@ ACE_InputCDR::read_wchar_array (ACE_CDR::WChar* x,
     }
 
   if (this->wchar_translator_ != 0)
-    return this->wchar_translator_->read_wchar_array (*this, x, length);
+    {
+      return this->wchar_translator_->read_wchar_array (*this, x, length);
+    }
   if (ACE_OutputCDR::wchar_maxbytes_ != sizeof (ACE_CDR::WChar))
-    return this->read_wchar_array_i (x, length);
+    {
+      return this->read_wchar_array_i (x, length);
+    }
   return this->read_array (x,
                            sizeof (ACE_CDR::WChar),
                            sizeof (ACE_CDR::WChar) == 2

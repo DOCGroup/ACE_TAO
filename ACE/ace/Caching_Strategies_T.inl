@@ -131,7 +131,9 @@ ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_bind (
   const ATTRIBUTES & /* attr */)
 {
   if (result == 0)
-    ++this->timer_;
+    {
+      ++this->timer_;
+    }
 
   return result;
 }
@@ -172,7 +174,9 @@ ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_rebind (
   const ATTRIBUTES & /* attr */)
 {
   if (result == 0)
-    ++this->timer_;
+    {
+      ++this->timer_;
+    }
 
   return result;
 }
@@ -228,7 +232,9 @@ ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_find (int result,
                                                                     ATTRIBUTES &attr)
 {
   if (result == 0)
-    ++attr;
+    {
+      ++attr;
+    }
 
   return result;
 }
@@ -298,7 +304,9 @@ ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_bind (int result,
   ACE_UNUSED_ARG (attr);
 
   if (result == 0)
-    ++this->order_;
+    {
+      ++this->order_;
+    }
 
   return result;
 }
@@ -337,7 +345,9 @@ ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_rebind (int resul
   ACE_UNUSED_ARG (attr);
 
   if (result == 0)
-    ++this->order_;
+    {
+      ++this->order_;
+    }
 
   return result;
 }

@@ -60,7 +60,9 @@ cancel_timer (ACE_Timer_Queue &,
               int requires_reference_counting)
 {
   if (requires_reference_counting)
-    event_handler->remove_reference ();
+    {
+      event_handler->remove_reference ();
+    }
 
   return 0;
 }

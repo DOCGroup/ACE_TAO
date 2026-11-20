@@ -1344,7 +1344,9 @@ ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
         // release the token.  Otherwise event handlers end up being
         // dispatched multiple times for the same poll.
         if (revents == 0)
-          ++pfds;
+          {
+            ++pfds;
+          }
 #else
         // With epoll, events are registered with oneshot, so the handle is
         // effectively suspended; future calls to epoll_wait() will select

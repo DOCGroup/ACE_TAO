@@ -30,11 +30,15 @@ ACE_Env_Value<T>::fetch_value ()
 #if defined (ACE_WIN32)
   ACE_TCHAR const *env = ACE_OS::getenv (this->varname_);
   if (env != nullptr)
-    ACE_Convert (env, value_);
+    {
+      ACE_Convert (env, value_);
+    }
 #else
   char *nenv = ACE_OS::getenv (ACE_TEXT_ALWAYS_CHAR (this->varname_));
   if (nenv != nullptr)
-    ACE_Convert (ACE_TEXT_CHAR_TO_TCHAR (nenv), this->value_);
+    {
+      ACE_Convert (ACE_TEXT_CHAR_TO_TCHAR (nenv), this->value_);
+    }
 #endif
 }
 
