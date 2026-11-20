@@ -16,7 +16,9 @@ int
 Connection_Handler_Acceptor::accept_svc_handler (Connection_Handler *ch)
 {
   if (this->inherited::accept_svc_handler (ch) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       ch->connection_id (Options::instance ()->connection_id ());

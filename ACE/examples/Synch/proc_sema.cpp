@@ -91,7 +91,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_SYNCH_PROCESS_SEMAPHORE sema (0, options.semaphore_name);
 
   if (options.is_consumer)
-    consumer (sema, options.iterations);
+    {
+      consumer (sema, options.iterations);
+    }
   else
   {
     producer (sema, options.iterations);

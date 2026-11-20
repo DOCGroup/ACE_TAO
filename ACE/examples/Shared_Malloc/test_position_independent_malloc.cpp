@@ -168,10 +168,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (allocator->bind ("foo",
                            data) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
-                           "bind"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "%p\n",
+                             "bind"),
+                            1);
+        }
 
       ACE_DEBUG ((LM_DEBUG,
                   "Run again to see results and release resources.\n"));

@@ -14,7 +14,9 @@ SM_Client::demux (char *packet,
                   int &packet_length)
 {
   if (this->pm_client_->decode (packet, packet_length) < 0)
-    return -1;
+    {
+      return -1;
+    }
   else
   {
     return 1;

@@ -19,7 +19,9 @@ HT_Server::insert (const char *key_name, int max_len)
          this->hash_table[ACE::hash_pjw (key_name) % HASH_TABLE_SIZE]);
        *prpp != nullptr && std::strncmp ((*prpp)->get_login (), key_name, max_len) != 0;
        prpp = std::addressof ((*prpp)->next_))
-    continue;
+    {
+      continue;
+    }
 
   if (*prpp == nullptr)
     {
