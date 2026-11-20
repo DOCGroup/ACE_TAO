@@ -247,7 +247,7 @@ IpAddress::IpAddress( const char *inaddr): Address()
   smival.value.string.len = IPV4LEN;
   smival.value.string.ptr = address_buffer;
 
-  if (std::strlen (inaddr) == 0) {
+  if (inaddr == nullptr || *inaddr == '\0') {
     valid_flag = 0;
     iv_friendly_name_[0] = 0;
     iv_friendly_name_status_ = 0;
