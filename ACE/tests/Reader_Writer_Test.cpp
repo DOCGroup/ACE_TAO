@@ -72,21 +72,23 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opt ()) != -1)
-    switch (c)
     {
-    case 'r':
-      n_readers = ACE_OS::atoi (get_opt.opt_arg ());
-      break;
-    case 'w':
-      n_writers = ACE_OS::atoi (get_opt.opt_arg ());
-      break;
-    case 'n':
-      n_iterations = ACE_OS::atoi (get_opt.opt_arg ());
-      break;
-    default:
-      print_usage_and_die ();
-      break;
-  }
+      switch (c)
+        {
+        case 'r':
+          n_readers = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'w':
+          n_writers = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'n':
+          n_iterations = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        default:
+          print_usage_and_die ();
+          break;
+        }
+    }
 }
 
 // Iterate <n_iterations> each time checking that nobody modifies the data
@@ -120,9 +122,11 @@ reader (void *)
           ACE_Thread::yield ();
 
           if (!ACE_OS::thr_equal (shared_data, data))
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT (" (%t) somebody changed %d to %d\n"),
-                        data, shared_data));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT (" (%t) somebody changed %d to %d\n"),
+                          data, shared_data));
+            }
         }
 
       int result = rw_mutex.tryacquire_write_upgrade ();
@@ -143,10 +147,12 @@ reader (void *)
           for (size_t loop = 1; loop <= n_loops; ++loop)
             {
               if (ACE_OS::thr_equal (shared_data, data) == 0)
-                ACE_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("(%t) upgraded writer error: somebody changed %d to %d\n"),
-                            data,
-                            shared_data));
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("(%t) upgraded writer error: somebody changed %d to %d\n"),
+                              data,
+                              shared_data));
+                }
             }
 
           --current_writers;
@@ -210,12 +216,16 @@ writer (void *)
       ++current_writers;
 
       if (current_writers > 1)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT (" (%t) other writers found!!!\n")));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT (" (%t) other writers found!!!\n")));
+        }
 
       if (current_readers > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT (" (%t) readers found!!!\n")));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT (" (%t) readers found!!!\n")));
+        }
 
       ACE_thread_t self = ACE_Thread::self ();
 
@@ -226,9 +236,11 @@ writer (void *)
           ACE_Thread::yield ();
 
           if (!ACE_OS::thr_equal (shared_data, self))
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT (" (%t) somebody wrote on my data %d\n"),
-                        shared_data));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT (" (%t) somebody wrote on my data %d\n"),
+                          shared_data));
+            }
         }
 
       --current_writers;
@@ -259,16 +271,20 @@ int run_main (int argc, ACE_TCHAR *argv[])
                                                ACE_THR_FUNC (reader),
                                                nullptr,
                                                THR_NEW_LWP) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("spawn_n")), 1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("spawn_n")), 1);
+    }
   else if (ACE_Thread_Manager::instance ()->spawn_n (n_writers,
                                                     ACE_THR_FUNC (writer),
                                                     nullptr,
                                                     THR_NEW_LWP) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("spawn_n")), 1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("spawn_n")), 1);
+    }
 
   ACE_Thread_Manager::instance ()->wait ();
 
