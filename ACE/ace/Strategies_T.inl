@@ -160,9 +160,13 @@ ACE_Schedule_All_Reactive_Strategy<SVC_HANDLER>::ACE_Schedule_All_Reactive_Strat
   ACE_TRACE ("ACE_Schedule_All_Reactive_Strategy<SVC_HANDLER>::ACE_Schedule_All_Reactive_Strategy");
 
   if (scheduler == nullptr || scheduler->reactor () == nullptr)
-    this->reactor_ = ACE_Reactor::instance ();
+    {
+      this->reactor_ = ACE_Reactor::instance ();
+    }
   else
-    this->reactor_ = scheduler->reactor ();
+    {
+      this->reactor_ = scheduler->reactor ();
+    }
 }
 
 template <class SVC_HANDLER> ACE_INLINE
@@ -173,9 +177,13 @@ ACE_Schedule_All_Threaded_Strategy<SVC_HANDLER>::ACE_Schedule_All_Threaded_Strat
   ACE_TRACE ("ACE_Schedule_All_Threaded_Strategy<SVC_HANDLER>::ACE_Schedule_All_Threaded_Strategy");
 
   if (scheduler == nullptr || scheduler->thr_mgr () == nullptr)
-    this->thr_mgr_ = ACE_Thread_Manager::instance ();
+    {
+      this->thr_mgr_ = ACE_Thread_Manager::instance ();
+    }
   else
-    this->thr_mgr_ = scheduler->thr_mgr ();
+    {
+      this->thr_mgr_ = scheduler->thr_mgr ();
+    }
 }
 
 template <class T> ACE_INLINE

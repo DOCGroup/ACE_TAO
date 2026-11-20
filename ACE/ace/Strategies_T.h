@@ -925,7 +925,9 @@ protected:
     void operator() (STRATEGY *strategy) const
     {
       if (this->owned)
-        delete strategy;
+        {
+          delete strategy;
+        }
     }
   };
 

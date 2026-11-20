@@ -21,7 +21,9 @@ ACE_Task_Base::grp_id (int identifier)
   // Thread_Manager, if there is one.
   this->grp_id_ = identifier;
   if (this->thr_mgr ())
-    this->thr_mgr ()->set_grp (this, identifier);
+    {
+      this->thr_mgr ()->set_grp (this, identifier);
+    }
 }
 
 ACE_INLINE ACE_Thread_Manager *

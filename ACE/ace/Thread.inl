@@ -183,12 +183,16 @@ ACE_Thread::enablecancel (struct cancel_state *old_state,
   result = ACE_OS::thr_setcancelstate (THR_CANCEL_ENABLE,
                                        &old_cstate);
   if (result != 0)
-    return result;
+    {
+      return result;
+    }
 
   result = ACE_OS::thr_setcanceltype (flag,
                                       &old_ctype);
   if (result != 0)
-    return result;
+    {
+      return result;
+    }
 
   if (old_state != 0)
     {

@@ -21,7 +21,9 @@ ACE_At_Thread_Exit::was_applied (bool applied)
 {
   was_applied_ = applied;
   if (was_applied_)
-    td_ = 0;
+    {
+      td_ = 0;
+    }
   return was_applied_;
 }
 
@@ -42,7 +44,9 @@ ACE_INLINE void
 ACE_At_Thread_Exit::do_apply ()
 {
   if (!this->was_applied_ && this->is_owner_)
-    td_->at_pop();
+    {
+      td_->at_pop();
+    }
 }
 
 ACE_INLINE
@@ -224,9 +228,13 @@ ACE_Thread_Manager::task ()
   ACE_Thread_Descriptor *td = this->thread_desc_self () ;
 
   if (td == 0)
-    return 0;
+    {
+      return 0;
+    }
   else
-    return td->task ();
+    {
+      return td->task ();
+    }
 }
 
 ACE_INLINE int
@@ -241,9 +249,13 @@ ACE_Thread_Manager::at_exit (ACE_At_Thread_Exit* at)
 {
   ACE_Thread_Descriptor *td = this->thread_desc_self ();
   if (td == 0)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return td->at_exit (at);
+    {
+      return td->at_exit (at);
+    }
 }
 
 ACE_INLINE int
@@ -251,9 +263,13 @@ ACE_Thread_Manager::at_exit (ACE_At_Thread_Exit& at)
 {
   ACE_Thread_Descriptor *td = this->thread_desc_self ();
   if (td == 0)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return td->at_exit (at);
+    {
+      return td->at_exit (at);
+    }
 }
 
 ACE_INLINE int
@@ -263,9 +279,13 @@ ACE_Thread_Manager::at_exit (void *object,
 {
   ACE_Thread_Descriptor *td = this->thread_desc_self ();
   if (td == 0)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return td->at_exit (object, cleanup_hook, param);
+    {
+      return td->at_exit (object, cleanup_hook, param);
+    }
 }
 
 ACE_INLINE void

@@ -183,7 +183,9 @@ ACE_Thread_Adapter::invoke_i ()
 # if defined (ACE_WIN32) && defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
       int using_afx = -1;
       if (thr_desc)
-        using_afx = ACE_BIT_ENABLED (thr_desc->flags (), THR_USE_AFX);
+        {
+          using_afx = ACE_BIT_ENABLED (thr_desc->flags (), THR_USE_AFX);
+        }
 # endif /* ACE_WIN32 && ACE_HAS_MFC && (ACE_HAS_MFC != 0) */
           // Call TSS destructors.
       ACE_OS::cleanup_tss (0 /* not main thread */);
@@ -197,9 +199,13 @@ ACE_Thread_Adapter::invoke_i ()
       if (using_afx != -1)
         {
           if (using_afx)
-            ::AfxEndThread ((DWORD) status);
+            {
+              ::AfxEndThread ((DWORD) status);
+            }
           else
-            ACE_ENDTHREADEX (status);
+            {
+              ACE_ENDTHREADEX (status);
+            }
         }
       else
         {
@@ -210,9 +216,13 @@ ACE_Thread_Adapter::invoke_i ()
           CWinThread *pThread = ::AfxGetThread ();
 
           if (!pThread || pThread->m_nThreadID != ACE_OS::thr_self ())
-            ACE_ENDTHREADEX (status);
+            {
+              ACE_ENDTHREADEX (status);
+            }
           else
-            ::AfxEndThread ((DWORD)status);
+            {
+              ::AfxEndThread ((DWORD)status);
+            }
         }
 #   else
 

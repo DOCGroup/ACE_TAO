@@ -7,9 +7,13 @@ ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::water_marks (ACE_IO_Cntl_Msg::ACE_IO_Cntl_
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::water_marks");
   if (cmd == ACE_IO_Cntl_Msg::SET_LWM)
-    this->msg_queue_->low_water_mark (wm_size);
+    {
+      this->msg_queue_->low_water_mark (wm_size);
+    }
   else /* cmd == ACE_IO_Cntl_Msg::SET_HWM */
-    this->msg_queue_->high_water_mark (wm_size);
+    {
+      this->msg_queue_->high_water_mark (wm_size);
+    }
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> ACE_INLINE int
@@ -38,9 +42,13 @@ ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::flush (u_long f)
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::flush");
   if (ACE_BIT_ENABLED (f, ACE_Task_Flags::ACE_FLUSHALL))
-    return this->msg_queue_ != nullptr && this->msg_queue_->close ();
+    {
+      return this->msg_queue_ != nullptr && this->msg_queue_->close ();
+    }
   else
-    return -1;   // Note, need to be more careful about what we free...
+    {
+      return -1;   // Note, need to be more careful about what we free...
+    }
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> ACE_INLINE void
@@ -67,7 +75,9 @@ ACE_Time_Value_T<TIME_POLICY>
 ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::gettimeofday () const
 {
   if (this->msg_queue_ != nullptr)
-    return this->msg_queue_->gettimeofday ();
+    {
+      return this->msg_queue_->gettimeofday ();
+    }
 
   return ACE_Time_Value_T<TIME_POLICY> (ACE_Time_Value::zero);
 }
@@ -77,7 +87,9 @@ void
 ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::set_time_policy (TIME_POLICY const & rhs)
 {
   if (this->msg_queue_ != nullptr)
-    this->msg_queue_->set_time_policy (rhs);
+    {
+      this->msg_queue_->set_time_policy (rhs);
+    }
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> ACE_INLINE int

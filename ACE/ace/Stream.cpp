@@ -34,7 +34,9 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::dump () const
     {
       ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("module name = %s\n"), mp->name ()));
       if (mp == this->stream_tail_)
-        break;
+        {
+          break;
+        }
     }
 
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("-------- writer links --------\n")));
