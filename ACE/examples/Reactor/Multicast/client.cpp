@@ -36,7 +36,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
   for (int c; (c = getopt ()) != -1; )
   //FUZZ: enable check_for_lack_ACE_OS
-    switch (c)
+    {
+      switch (c)
       {
       case 'm':
         max_message_size = ACE_OS::atoi (getopt.opt_arg ()) * BUFSIZ;
@@ -53,6 +54,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                     1));
         /* NOTREACHED */
       }
+    }
 }
 
 int
@@ -85,9 +87,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       std::memset (buf, 1, max_message_size);
 
       while (iterations--)
-        if (log.log_message (Log_Wrapper::LM_DEBUG, buf) == -1)
         {
-          ACE_ERROR_RETURN ((LM_ERROR, "%p\n" "log"), -1);
+          if (log.log_message (Log_Wrapper::LM_DEBUG, buf) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "%p\n" "log"), -1);
+            }
         }
     }
 
@@ -96,7 +100,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       // If a file has been redirected, don't activate user prompts.
       if (ACE_OS::isatty (0))
-        user_prompt = true;
+        {
+          user_prompt = true;
+        }
       else
       {
         user_prompt = false;
@@ -129,7 +135,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               }
             }
           else // Keep from overrunning the receiver.
-            ACE_OS::sleep (1);
+            {
+              ACE_OS::sleep (1);
+            }
 
           // Send the message to the logger.
           if (log.log_message (Log_Wrapper::LM_DEBUG, buf) == -1)

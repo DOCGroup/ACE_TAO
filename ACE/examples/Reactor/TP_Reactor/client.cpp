@@ -47,9 +47,11 @@ int ACE_TMAIN(int argc, ACE_TCHAR **argv) {
     std::unique_ptr<char[]> someData (new (std::nothrow) char[size]);
 
     if (someData == nullptr)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%N:%l: Failed to allocate ")
-                         ACE_TEXT ("data buffer.\n")), -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%N:%l: Failed to allocate ")
+                           ACE_TEXT ("data buffer.\n")), -1);
+      }
 
     // parse the <count> argument if available
     if ((argc == 3) && (((count = ACE_OS::strtol(argv[2], nullptr, 10)) < 1) ||

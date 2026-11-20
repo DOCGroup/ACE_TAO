@@ -102,7 +102,9 @@ public:
 
     // Write to the pipe; this causes handle_input to get called.
     if (!write_to_pipe_in_main)
-      write_to_pipe (this->pipe_);
+      {
+        write_to_pipe (this->pipe_);
+      }
 
     // Remove for writing
     return -1;
@@ -198,7 +200,9 @@ public:
 
     // Write to the pipe; this causes handle_input to get called.
     if (!write_to_pipe_in_main)
-      write_to_pipe (this->pipe_);
+      {
+        write_to_pipe (this->pipe_);
+      }
 
     return 0;
   }
@@ -259,7 +263,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   for (int c; (c = getopt ()) != -1; )
   //FUZZ: enable check_for_lack_ACE_OS
-    switch (c)
+    {
+      switch (c)
       {
       case 's':
         opt_select_reactor = true;
@@ -274,6 +279,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         cancel_reads = true;
         break;
       }
+    }
 
   // Create pipes
   ACE_Pipe pipe1, pipe2;

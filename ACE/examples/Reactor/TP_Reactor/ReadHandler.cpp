@@ -40,8 +40,10 @@ ReadHandler::~ReadHandler() {
     ACE_TRACE("ReadHandler::~ReadHandler()");
 
     if (mStream.close() == -1)
-      ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to close socket. ")
-                 ACE_TEXT ("(errno = %i: %m)\n"), ACE_ERRNO_GET));
+      {
+        ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to close socket. ")
+                   ACE_TEXT ("(errno = %i: %m)\n"), ACE_ERRNO_GET));
+      }
 }
 
 ACE_SOCK_Stream &ReadHandler::getStream() {
@@ -89,8 +91,10 @@ int ReadHandler::handle_input(ACE_HANDLE) {
         if (mDataSize > 0) {
             mData.reset (new (std::nothrow) char[mDataSize]);
             if (mData == nullptr)
-              ACE_DEBUG((LM_DEBUG, ACE_TEXT("%N:%l: Failed to allocate ")
-                         ACE_TEXT ("data buffer.\n")));
+              {
+                ACE_DEBUG((LM_DEBUG, ACE_TEXT("%N:%l: Failed to allocate ")
+                           ACE_TEXT ("data buffer.\n")));
+              }
             else
             {
               response = 'K';
@@ -106,7 +110,9 @@ int ReadHandler::handle_input(ACE_HANDLE) {
         }
 
         if (response == 'K')
+          {
             INVOCATION_RETURN(0); // get another request from the same client
+          }
         else
         {
           INVOCATION_RETURN(-1); // the client will not send data if response != 'K'

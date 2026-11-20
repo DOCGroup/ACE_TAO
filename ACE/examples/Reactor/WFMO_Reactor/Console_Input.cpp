@@ -35,8 +35,10 @@ Event_Handler::Event_Handler (ACE_Reactor &reactor)
 
   if (this->reactor ()->register_handler (this,
                                           ACE_STDIN) != 0)
-    ACE_ERROR ((LM_ERROR,
-                "Registration with Reactor could not be done\n"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Registration with Reactor could not be done\n"));
+    }
 }
 
 int
@@ -56,7 +58,9 @@ Event_Handler::handle_signal (int, siginfo_t *, ucontext_t *)
   buffer[result] = ACE_TEXT ('\0');
 
   if (ACE_OS::strcmp (ACE_TEXT("quit\r\n"), buffer) == 0)
-    this->reactor ()->close ();
+    {
+      this->reactor ()->close ();
+    }
 
   ACE_DEBUG ((LM_DEBUG, "User input: %s", buffer));
 
@@ -79,7 +83,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   int result = 0;
   while (result != -1)
-    result = reactor.handle_events ();
+    {
+      result = reactor.handle_events ();
+    }
 
   return 0;
 }

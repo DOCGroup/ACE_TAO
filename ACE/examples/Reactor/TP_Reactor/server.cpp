@@ -44,8 +44,10 @@ int ACE_TMAIN(int, ACE_TCHAR **) {
     ACE_NEW_NORETURN (acceptHandler_raw, AcceptHandler(&reactor));
     std::unique_ptr<AcceptHandler> acceptHandler (acceptHandler_raw);
     if (acceptHandler == nullptr)
-      ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT("%N:%l: Failed to allocate ")
-                        ACE_TEXT ("accept handler. (errno = %i: %m)\n"), ACE_ERRNO_GET), -1);
+      {
+        ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT("%N:%l: Failed to allocate ")
+                          ACE_TEXT ("accept handler. (errno = %i: %m)\n"), ACE_ERRNO_GET), -1);
+      }
 
     // open the accept handler
     if (acceptHandler->open() == -1) {

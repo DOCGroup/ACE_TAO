@@ -72,7 +72,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   // Handle events for 12 seconds.
   ACE_Time_Value run_time (12);
   if (ACE_Reactor::run_event_loop (run_time) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p.\n", "main"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p.\n", "main"), -1);
+    }
 
   ACE_Reactor::instance ()->cancel_timer (&handler);
 
