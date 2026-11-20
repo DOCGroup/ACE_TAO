@@ -30,23 +30,27 @@ Peer_Handler<PEER_STREAM>::open (void *)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("please enter input..: ")));
 
   if (this->reactor ())
+    {
 
 #if defined (ACE_WIN32)
-    // On Win32, the stdin HANDLE must be registered directly (and not
-    // as a socket).
-    this->reactor ()->register_handler (this,
-                                        ACE_STDIN);
+      // On Win32, the stdin HANDLE must be registered directly (and not
+      // as a socket).
+      this->reactor ()->register_handler (this,
+                                          ACE_STDIN);
 #else
-    // On non-Win32, the stdin HANDLE must be registered as a normal
-    // handle with the <READ_Mask>.
-    this->reactor ()->register_handler (ACE_STDIN,
-                                        this,
-                                        ACE_Event_Handler::READ_MASK);
+      // On non-Win32, the stdin HANDLE must be registered as a normal
+      // handle with the <READ_Mask>.
+      this->reactor ()->register_handler (ACE_STDIN,
+                                          this,
+                                          ACE_Event_Handler::READ_MASK);
 #endif /* ACE_WIN32 */
+    }
   else
     {
       while (this->connected () != -1)
-        continue;
+        {
+          continue;
+        }
 
       this->handle_close (ACE_INVALID_HANDLE,
                           ACE_Event_Handler::READ_MASK);
@@ -82,16 +86,20 @@ Peer_Handler<PEER_STREAM>::connected ()
   if (n > 0
       && this->peer ().send_n (buf,
                                n) != n)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("write failed")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("write failed")),
+                        -1);
+    }
   else if (n == 0)
     {
       // Explicitly close the connection.
       if (this->peer ().close () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("close")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("close")),
+                            1);
+        }
       return -1;
     }
   else
@@ -116,14 +124,18 @@ Peer_Handler<PEER_STREAM>::stdio ()
       if (ACE_OS::write (ACE_STDOUT,
                          buf,
                          n) != n)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("write")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("write")),
+                            -1);
+        }
       return 0;
     }
   else
-    return -1;
+    {
+      return -1;
+    }
 }
 
 template <typename PEER_STREAM> int
@@ -182,18 +194,20 @@ Peer_Handler<PEER_STREAM>::handle_close (ACE_HANDLE h,
       ACE_OS::rewind (stdin);
 
       if (this->reactor ())
+        {
 #if defined (ACE_WIN32)
-        // On Win32, the std handle must be registered directly (and not
-        // as a socket)
-        return this->reactor ()->register_handler (this,
-                                                   ACE_STDIN);
+          // On Win32, the std handle must be registered directly (and not
+          // as a socket)
+          return this->reactor ()->register_handler (this,
+                                                     ACE_STDIN);
 #else
-        // On non-Win32, the std handle must be registered as a normal
-        // handle with the READ mask
-        return this->reactor ()->register_handler (ACE_STDIN,
-                                                   this,
-                                                   ACE_Event_Handler::READ_MASK);
+          // On non-Win32, the std handle must be registered as a normal
+          // handle with the READ mask
+          return this->reactor ()->register_handler (ACE_STDIN,
+                                                     this,
+                                                     ACE_Event_Handler::READ_MASK);
 #endif /* ACE_WIN32 */
+        }
       else
         {
           // No reactor is responsible for closing this handler.
@@ -208,7 +222,9 @@ template <typename SVC_HANDLER, typename PEER_CONNECTOR> int
 IPC_Client<SVC_HANDLER, PEER_CONNECTOR>::svc ()
 {
   if (this->reactor ())
-    this->reactor ()->run_reactor_event_loop ();
+    {
+      this->reactor ()->run_reactor_event_loop ();
+    }
 
   return 0;
 }
@@ -243,10 +259,12 @@ IPC_Client<SVC_HANDLER, PEER_CONNECTOR>::init (int argc, ACE_TCHAR *argv[])
   if (ACE_Reactor::instance ()->register_handler
       (SIGINT,
        &this->done_handler_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("register_handler")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("register_handler")),
+                        -1);
+    }
   typename PEER_CONNECTOR::PEER_ADDR remote_addr (r_addr);
   this->options_.set (ACE_Synch_Options::USE_REACTOR,
                       timeout);
@@ -262,12 +280,16 @@ IPC_Client<SVC_HANDLER, PEER_CONNECTOR>::init (int argc, ACE_TCHAR *argv[])
                      remote_addr,
                      this->options_) == -1
       && errno != EWOULDBLOCK)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("connect")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("connect")),
+                        -1);
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 #endif /* CPP_CONNECTOR_C */
