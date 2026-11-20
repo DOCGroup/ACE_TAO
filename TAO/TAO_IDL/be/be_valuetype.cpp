@@ -271,7 +271,7 @@ be_valuetype::inherits_obv_copy_value ()
     {
       be_valuetype * const vt =
         dynamic_cast<be_valuetype *> (this->inherits ()[i]);
-      if (vt != nullptr
+      if (vt != nullptr && vt != concrete_base
           && (vt->generates_obv_copy_value ()
               || vt->inherits_obv_copy_value ()))
         {
