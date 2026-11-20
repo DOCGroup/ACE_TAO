@@ -150,8 +150,8 @@ ACE_TS_Clerk_Handler::handle_close (ACE_HANDLE,
   ACE_TRACE ("ACE_TS_Clerk_Handler::handle_close");
   ACE_UNUSED_ARG (mask);
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) shutting down on handle %@\n"),
-              reinterpret_cast<void *> (this->get_handle ())));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) shutting down on handle %H\n"),
+              this->get_handle ()));
 
   return this->reinitiate_connection ();
 }
@@ -584,8 +584,8 @@ ACE_TS_Clerk_Processor::initiate_connection (ACE_TS_Clerk_Handler *handler,
   else
     {
       handler->state (ACE_TS_Clerk_Handler::ESTABLISHED);
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) connected to %s on %@\n"),
-                  buf, reinterpret_cast<void *> (handler->get_handle ())));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) connected to %s on %H\n"),
+                  buf, handler->get_handle ()));
     }
   return 0;
 }

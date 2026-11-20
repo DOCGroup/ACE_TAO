@@ -666,10 +666,10 @@ ACE_Client_Logging_Acceptor::init (int argc, ACE_TCHAR *argv[])
         }
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Client Logging Daemon is connected to Server ")
-                  ACE_TEXT ("Logging Daemon %C on port %d on handle %@\n"),
+                  ACE_TEXT ("Logging Daemon %C on port %d on handle %H\n"),
                   server_addr.get_host_name (),
                   server_addr.get_port_number (),
-                  reinterpret_cast<void *> (stream.get_handle ())));
+                  stream.get_handle ()));
     }
 
   // Create the Singleton <Client_Logging_Handler>.

@@ -240,9 +240,9 @@ TAO::SSLIOP::Connection_Handler::open (void *)
 
       ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) SSLIOP connection accepted from ")
-                  ACE_TEXT ("server <%s> on [%@]\n"),
+                  ACE_TEXT ("server <%s> on [%H]\n"),
                   client,
-                  reinterpret_cast<void *> (this->get_handle ())));
+                  this->get_handle ()));
     }
 
   // Set that the transport is now connected, if fails we return -1

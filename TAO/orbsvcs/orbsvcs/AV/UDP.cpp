@@ -76,8 +76,8 @@ TAO_AV_UDP_Flow_Handler::get_handle () const
 {
   if (TAO_debug_level > 0)
   {
-    ORBSVCS_DEBUG ((LM_DEBUG, "TAO_AV_UDP_Flow_Handler::get_handle:%@\n",
-                    reinterpret_cast<void *> (this->sock_dgram_.get_handle ())));
+    ORBSVCS_DEBUG ((LM_DEBUG, "TAO_AV_UDP_Flow_Handler::get_handle:%H\n",
+                    this->sock_dgram_.get_handle ()));
   }
 
   return this->sock_dgram_.get_handle () ;

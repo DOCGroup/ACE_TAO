@@ -226,12 +226,12 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
       ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - UIPMC_Connector::make_connection, ")
                   ACE_TEXT ("new connection from <%C:%u> to <%C:%u> on ")
-                  ACE_TEXT ("HANDLE %@\n"),
+                  ACE_TEXT ("HANDLE %H\n"),
                   local_hostaddr,
                   local_addr.get_port_number (),
                   remote_hostaddr,
                   remote_address.get_port_number (),
-                  reinterpret_cast<void *> (svc_handler->get_handle ())));
+                  svc_handler->get_handle ()));
     }
 
   TAO_Transport * const transport = svc_handler->transport ();

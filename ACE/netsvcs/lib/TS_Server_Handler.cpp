@@ -255,6 +255,6 @@ ACE_TS_Server_Handler::~ACE_TS_Server_Handler ()
 {
   ACE_TRACE ("ACE_TS_Server_Handler::~ACE_TS_Server_Handler");
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("closing down Handle %@\n"),
-              reinterpret_cast<void *> (this->get_handle ())));
+              ACE_TEXT ("closing down Handle %H\n"),
+              this->get_handle ()));
 }
