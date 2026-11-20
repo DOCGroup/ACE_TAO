@@ -62,31 +62,39 @@ setup_signal_delivery ()
 
   // Get full set.
   if (ACE_OS::sigfillset (&full_set) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error:(%P | %t):%p\n",
-                       "sigfillset failed"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Error:(%P | %t):%p\n",
+                         "sigfillset failed"),
+                        -1);
+    }
 
   // Mask them.
   if (ACE_OS::pthread_sigmask (SIG_SETMASK, &full_set, 0) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error:(%P | %t):%p\n",
-                       "pthread_sigmask failed"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Error:(%P | %t):%p\n",
+                         "pthread_sigmask failed"),
+                        -1);
+    }
 
   // Make a mask with SIGRTMIN only. We use only that signal to
   //   issue <aio_>'s.
 
   if (ACE_OS::sigemptyset (&completion_signal) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "Error: %p\n",
-                       "Couldnt init the RT completion signal set"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "Error: %p\n",
+                         "Couldnt init the RT completion signal set"),
+                        -1);
+    }
 
   if (ACE_OS::sigaddset (&completion_signal,
                          SIGRTMIN) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "Error: %p\n",
-                       "Couldnt init the RT completion signal set"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "Error: %p\n",
+                         "Couldnt init the RT completion signal set"),
+                        -1);
+    }
 
   // Set up signal handler for this signal.
   return setup_signal_handler (SIGRTMIN);
@@ -110,9 +118,11 @@ setup_signal_handler (int signal_number)
                                             &reaction,
                                             0);
   if (sigaction_return == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "Error: %p\n",
-                       "Proactor couldnt do sigaction for the RT SIGNAL"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "Error: %p\n",
+                         "Proactor couldnt do sigaction for the RT SIGNAL"),
+                        -1);
+    }
   return 0;
 }
 
@@ -131,10 +141,12 @@ issue_aio_calls ()
 
   // Fire off the aio read.
   if (aio_read (&aiocb1) == -1)
-    // Queueing failed.
-    ACE_ERROR_RETURN ((LM_ERROR, "Error: %p\n",
-                       "Asynch_Read_Stream: aio_read queueing failed"),
-                      -1);
+    {
+      // Queueing failed.
+      ACE_ERROR_RETURN ((LM_ERROR, "Error: %p\n",
+                         "Asynch_Read_Stream: aio_read queueing failed"),
+                        -1);
+    }
 
   // Setup AIOCB.
   aiocb2.aio_fildes = file_handle;
@@ -148,10 +160,12 @@ issue_aio_calls ()
 
   // Fire off the aio read.
   if (aio_read (&aiocb2) == -1)
-    // Queueing failed.
-    ACE_ERROR_RETURN ((LM_ERROR, "Error: %p\n",
-                       "Asynch_Read_Stream: aio_read queueing failed"),
-                      -1);
+    {
+      // Queueing failed.
+      ACE_ERROR_RETURN ((LM_ERROR, "Error: %p\n",
+                         "Asynch_Read_Stream: aio_read queueing failed"),
+                        -1);
+    }
 
   // Setup sigval.
   aiocb3.aio_fildes = ACE_INVALID_HANDLE;
@@ -166,10 +180,12 @@ issue_aio_calls ()
   value.sival_ptr = reinterpret_cast<void *> (&aiocb3);
   // Queue this one for completion right now.
   if (sigqueue (ACE_OS::getpid (), SIGRTMIN, value) == -1)
-    // Queueing failed.
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error: %p\n", "sigqueue"),
-                      -1);
+    {
+      // Queueing failed.
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Error: %p\n", "sigqueue"),
+                        -1);
+    }
 
   return 0;
 }
@@ -196,17 +212,21 @@ query_aio_completions ()
       // errno appropriately. This is what the WinNT proactor
       // does.
       if (sig_return == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "Error: %p\n",
-                           "Error waiting for RT completion signals"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "Error: %p\n",
+                             "Error waiting for RT completion signals"),
+                            -1);
+        }
 
       //FUZZ: disable check_for_lack_ACE_OS
       // RT completion signals returned.
       if (sig_return != SIGRTMIN)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Unexpected signal (%d) has been received while waiting for RT Completion Signals\n",
-                           sig_return),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unexpected signal (%d) has been received while waiting for RT Completion Signals\n",
+                             sig_return),
+                            -1);
+        }
       //FUZZ: enble check_for_lack_ACE_OS
 
       // @@ Debugging.
@@ -216,10 +236,12 @@ query_aio_completions ()
 
       // Is the signo returned consistent?
       if (sig_info.si_signo != sig_return)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Inconsistent signal number (%d) in the signal info block\n",
-                           sig_info.si_signo),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Inconsistent signal number (%d) in the signal info block\n",
+                             sig_info.si_signo),
+                            -1);
+        }
 
       // @@ Debugging.
       ACE_DEBUG ((LM_DEBUG,
@@ -229,10 +251,12 @@ query_aio_completions ()
       // Is the signal code an aio completion one?
       if ((sig_info.si_code != SI_ASYNCIO) &&
           (sig_info.si_code != SI_QUEUE))
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           "Unexpected signal code (%d) returned on completion querying\n",
-                           sig_info.si_code),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             "Unexpected signal code (%d) returned on completion querying\n",
+                             sig_info.si_code),
+                            -1);
+        }
 
       // Retrive the aiocb.
       aiocb* aiocb_ptr = (aiocb *) sig_info.si_value.sival_ptr;
