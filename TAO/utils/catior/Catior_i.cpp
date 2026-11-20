@@ -679,7 +679,8 @@ Catior_i::cat_tag_policies (TAO_InputCDR& stream) {
                    policies.length());
   buffer_ += buf;
 
-  for (CORBA::ULong iter {}; iter < policies.length (); ++iter) {
+  for (CORBA::ULong iter {}; iter < policies.length (); ++iter)
+  {
     // Create new stream for pvalue contents
     const CORBA::Octet *pmbuf = policies[iter].pvalue.get_buffer ();
 
@@ -695,7 +696,8 @@ Catior_i::cat_tag_policies (TAO_InputCDR& stream) {
 
     stream3.reset_byte_order (static_cast <int> (byte_order));
 
-    if (policies[iter].ptype == RTCORBA::PRIORITY_MODEL_POLICY_TYPE) {
+    if (policies[iter].ptype == RTCORBA::PRIORITY_MODEL_POLICY_TYPE)
+    {
       indent ();
       ACE_OS::snprintf (buf, bufsize,
                         "Policy #" ACE_UINT32_FORMAT_SPECIFIER_ASCII
@@ -717,15 +719,20 @@ Catior_i::cat_tag_policies (TAO_InputCDR& stream) {
       }
 
       indent ();
-      if (priority_model == RTCORBA::CLIENT_PROPAGATED) {
+      if (priority_model == RTCORBA::CLIENT_PROPAGATED)
+      {
         ACE_OS::snprintf (buf, bufsize,
                          "\t Priority Model: %d (CLIENT_PROPAGATED)\n",
                          priority_model);
-      } else if (priority_model == RTCORBA::SERVER_DECLARED) {
+      }
+      else if (priority_model == RTCORBA::SERVER_DECLARED)
+      {
         ACE_OS::snprintf (buf, bufsize,
                           "\t Priority Model: %d (SERVER_DECLARED)\n",
                           priority_model);
-      } else {
+      }
+      else
+      {
         ACE_OS::snprintf (buf, bufsize,
                           "\t Priority Model: %d (UNKNOWN!)\n",
                           priority_model);
@@ -735,7 +742,9 @@ Catior_i::cat_tag_policies (TAO_InputCDR& stream) {
       ACE_OS::snprintf (buf, bufsize,
                        "\t Priority: %d\n", server_priority);
       buffer_ += buf;
-    } else if (policies[iter].ptype == RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE) {
+    }
+    else if (policies[iter].ptype == RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE)
+    {
       indent ();
       ACE_OS::snprintf (buf, bufsize,
                         "Policy #" ACE_UINT32_FORMAT_SPECIFIER_ASCII
@@ -743,7 +752,9 @@ Catior_i::cat_tag_policies (TAO_InputCDR& stream) {
                         " (PRIORITY_BANDED_CONNECTION_POLICY_TYPE)\n",
                         iter + 1, policies[iter].ptype);
       buffer_ += buf;
-    } else if (policies[iter].ptype == Messaging::REBIND_POLICY_TYPE) {
+    }
+    else if (policies[iter].ptype == Messaging::REBIND_POLICY_TYPE)
+    {
       indent ();
       ACE_OS::snprintf (buf, bufsize,
                   "Policy #" ACE_UINT32_FORMAT_SPECIFIER_ASCII
