@@ -61,13 +61,17 @@ My_Handler::handle_input (ACE_HANDLE)
                                     sizeof buf,
                                     from_addr);
   if (n == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("handle_input")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("handle_input")));
+    }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("got buf = %s\n"),
-                buf));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("got buf = %s\n"),
+                  buf));
+    }
 
   throw_exception ();
   return 0;
@@ -107,10 +111,12 @@ worker (void*)
   ACE_Reactor::instance ()->owner (ACE_OS::thr_self ());
 
   for (;;)
-    if (ACE_Reactor::instance ()->handle_events () == -1)
       {
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%t) exception return\n")));
-        break;
+        if (ACE_Reactor::instance ()->handle_events () == -1)
+          {
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%t) exception return\n")));
+            break;
+          }
       }
 
   return nullptr;
@@ -142,10 +148,12 @@ run_main (int argc, ACE_TCHAR *argv[])
     if (ACE_Reactor::instance ()->register_handler
         (&handler,
          ACE_Event_Handler::READ_MASK) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p\n"),
-                         ACE_TEXT ("register_handler")),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("register_handler")),
+                          -1);
+      }
 
 #if defined (ACE_HAS_THREADS)
     thr_mgr->spawn (ACE_THR_FUNC (worker));
@@ -158,9 +166,11 @@ run_main (int argc, ACE_TCHAR *argv[])
     ACE_SOCK_Dgram dgram (ACE_sap_any_cast (ACE_INET_Addr &), PF_INET);
 
     for (size_t i = 0; i < ACE_MAX_ITERATIONS; ++i)
-      dgram.send (ACE_TEXT ("Hello"),
-                  sizeof (ACE_TEXT ("Hello")),
-                  remote_addr);
+      {
+        dgram.send (ACE_TEXT ("Hello"),
+                    sizeof (ACE_TEXT ("Hello")),
+                    remote_addr);
+      }
     // Barrier to wait for the other thread to return.
     thr_mgr->wait ();
 
