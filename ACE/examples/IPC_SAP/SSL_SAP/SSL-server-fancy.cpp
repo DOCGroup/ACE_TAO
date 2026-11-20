@@ -153,23 +153,25 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("p:r:v"), 1);
 
   for (int c; (c = getopt ()) != -1; )
-  //FUZZ: enable check_for_lack_ACE_OS
-    switch (c)
-      {
-      case 'p':
-        this->port_ = ACE_OS::atoi (getopt.opt_arg ());
-        break;
-      case 'r':
-        this->reply_message_len_ = ACE_OS::atoi (getopt.opt_arg ());
-        break;
-      case 'v':
-        this->verbose_ = 1;
-        break;
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) usage: %n [-p <port>] [-v]")),
-                          -1);
-      }
+    {
+      //FUZZ: enable check_for_lack_ACE_OS
+      switch (c)
+        {
+        case 'p':
+          this->port_ = ACE_OS::atoi (getopt.opt_arg ());
+          break;
+        case 'r':
+          this->reply_message_len_ = ACE_OS::atoi (getopt.opt_arg ());
+          break;
+        case 'v':
+          this->verbose_ = 1;
+          break;
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) usage: %n [-p <port>] [-v]")),
+                            -1);
+        }
+    }
 
   return 0;
 }
@@ -192,10 +194,12 @@ Handler::open (void *)
 
   // Make sure we're not in non-blocking mode.
   if (this->ssl_stream_-> disable (ACE_NONBLOCK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("disable")),
-                       0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("disable")),
+                        0);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) client %C connected from %d\n"),
@@ -247,10 +251,12 @@ Handler::parse_header_and_allocate_buffer (char *&request,
       return -1;
     }
   else if (result == -1 || result != sizeof (ACE_INT32))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) %p\n"),
-                       ACE_TEXT ("recv_n failed")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) %p\n"),
+                         ACE_TEXT ("recv_n failed")),
+                        -1);
+    }
   else
     {
       *len = ntohl (*len);
@@ -314,9 +320,11 @@ Twoway_Handler::run ()
                && ACE::write_n (ACE_STDOUT,
                                 request,
                                 r_bytes) != r_bytes)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("%p\n"),
-                    ACE_TEXT ("ACE::write_n")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("ACE::write_n")));
+        }
       else
         {
           ssize_t s_bytes =
@@ -330,9 +338,11 @@ Twoway_Handler::run ()
 
           if (this->ssl_stream_ -> send_n (request,
                                            s_bytes) != s_bytes)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("%p\n"),
-                        ACE_TEXT ("send_n")));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("%p\n"),
+                          ACE_TEXT ("send_n")));
+            }
         }
       this->total_bytes_ += size_t (r_bytes);
       ++this->message_count_;
@@ -412,9 +422,11 @@ Oneway_Handler::run ()
                && ACE::write_n (ACE_STDOUT,
                                 request,
                                 r_bytes) != r_bytes)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("%p\n"),
-                    ACE_TEXT ("ACE::write_n")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("ACE::write_n")));
+        }
 
       this->total_bytes_ += size_t (r_bytes);
       ++this->message_count_;
@@ -453,16 +465,20 @@ Handler_Factory::init_acceptors ()
   // Create acceptors, reuse the address.
   if (this->twoway_acceptor_.open (twoway_server_addr, 1) == -1
       || this->oneway_acceptor_.open (oneway_server_addr, 1) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("open")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("open")),
+                        -1);
+    }
   else if (this->twoway_acceptor_.get_local_addr (twoway_server_addr) == -1
            || this->oneway_acceptor_.get_local_addr (oneway_server_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("get_local_addr")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("get_local_addr")),
+                        -1);
+    }
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) starting twoway server at port %d and oneway server at port %d\n"),
               twoway_server_addr.get_port_number (),
@@ -481,10 +497,12 @@ Handler_Factory::create_handler (
   ACE_NEW_RETURN (new_stream, ACE_SSL_SOCK_Stream, -1);
 
   if (acceptor.accept (*new_stream) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("accept")),
-                       -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("accept")),
+                        -1);
+    }
 
   Handler *handler;
 
@@ -554,24 +572,32 @@ Handler_Factory::handle_events ()
                         0,
                         timeout);
       if (result == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) %p\n"),
-                    ACE_TEXT ("select")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) %p\n"),
+                      ACE_TEXT ("select")));
+        }
       else if (result == 0 && OPTIONS::instance ()->verbose ())
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) select timed out\n")));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) select timed out\n")));
+        }
       else
         {
           if (FD_ISSET (this->twoway_acceptor_.get_handle (),
                         &temp))
-            this->create_handler (this->twoway_acceptor_,
-                                  &Handler_Factory::make_twoway_handler,
-                                  "twoway");
+            {
+              this->create_handler (this->twoway_acceptor_,
+                                    &Handler_Factory::make_twoway_handler,
+                                    "twoway");
+            }
           if (FD_ISSET (this->oneway_acceptor_.get_handle (),
                         &temp))
-            this->create_handler (this->oneway_acceptor_,
-                                  &Handler_Factory::make_oneway_handler,
-                                  "oneway");
+            {
+              this->create_handler (this->oneway_acceptor_,
+                                    &Handler_Factory::make_oneway_handler,
+                                    "oneway");
+            }
         }
     }
 
