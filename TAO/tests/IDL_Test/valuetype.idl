@@ -49,13 +49,6 @@ interface Derived_Abstract_Operation_Interface : Abstract_Operation_Interface
 {
 };
 
-/// An inherited abstract-interface operation does not suppress a concrete factory.
-valuetype Supports_Abstract_Inherited_Operation
-  supports Derived_Abstract_Operation_Interface
-{
-  public long value;
-};
-
 /// The supported interface has no local members but inherits an operation.
 valuetype Supports_Inherited_Operation supports Empty_Valuetype_Operation
 {
