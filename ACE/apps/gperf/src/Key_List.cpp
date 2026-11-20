@@ -62,11 +62,20 @@ string_comparison_expression (bool const case_insensitive,
   std::string expression;
   if (!case_insensitive && compare_length)
     {
-      return "*" + input + " == *" + keyword + " && !std::strncmp ("
+      expression = "*" + input + " == *" + keyword + " && !std::strncmp ("
         + input + " + 1, " + keyword + " + 1, len - 1)";
+      if (!keyword_length_verified)
+        {
+          expression += " && (" + keyword + ")[len] == '\\0'";
+        }
+      return expression;
     }
 
-  if (!case_insensitive)
+  if (case_insensitive)
+    {
+      expression = "charmap[*" + input + "] == charmap[*" + keyword + "] && ";
+    }
+  else
     {
       expression = "*" + input + " == *" + keyword + " && ";
     }
@@ -84,7 +93,7 @@ string_comparison_expression (bool const case_insensitive,
   expression += ")";
   if (compare_length && !keyword_length_verified)
     {
-      expression += " && " + keyword + "[len] == '\\0'";
+      expression += " && (" + keyword + ")[len] == '\\0'";
     }
   return expression;
 }
@@ -727,12 +736,14 @@ Key_List::output_switch (int use_keyword_table)
       std::string const key_name = option.key_name ();
       std::string const keyword = "resword->" + key_name;
       comp_buffer = string_comparison_expression (
-        option[STRCASECMP], option[COMP], "str", keyword, option[LENTABLE]);
+        option[STRCASECMP], option[COMP], "str", keyword,
+        option[LENTABLE] && !option[DUP]);
     }
   else
     {
       comp_buffer = string_comparison_expression (
-        option[STRCASECMP], option[COMP], "str", "resword", option[LENTABLE]);
+        option[STRCASECMP], option[COMP], "str", "resword",
+        option[LENTABLE] && !option[DUP]);
     }
   if (!option[OPTIMIZE])
     {
@@ -1834,8 +1845,9 @@ Key_List::output_lookup_function ()
             }
 
           std::string comparison = string_comparison_expression (
-            option[STRCASECMP], option[COMP], "str", "s", option[LENTABLE]);
-          if (option[LENTABLE])
+            option[STRCASECMP], option[COMP], "str", "s",
+            option[LENTABLE] && !option[DUP]);
+          if (option[LENTABLE] && !option[DUP])
             {
               comparison = "len == lengthtable[key] && " + comparison;
             }
@@ -1896,7 +1908,8 @@ Key_List::output_lookup_function ()
         ? "ptr->" + std::string (option.key_name ())
         : "*ptr";
       std::string const comparison = string_comparison_expression (
-        option[STRCASECMP], option[COMP], "str", keyword);
+        option[STRCASECMP], option[COMP], "str", keyword,
+        option[LENTABLE] && !option[DUP]);
       ACE_OS::printf ("if (%s)\n"
                       "                  {\n"
                       "                    return %sptr;\n"
@@ -1929,8 +1942,9 @@ Key_List::output_lookup_function ()
             }
 
           std::string comparison = string_comparison_expression (
-            option[STRCASECMP], option[COMP], "str", "s", option[LENTABLE]);
-          if (option[LENTABLE])
+            option[STRCASECMP], option[COMP], "str", "s",
+            option[LENTABLE] && !option[DUP]);
+          if (option[LENTABLE] && !option[DUP])
             {
               comparison = "len == lengthtable[key] && " + comparison;
             }

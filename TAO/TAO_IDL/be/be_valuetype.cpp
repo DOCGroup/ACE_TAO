@@ -340,16 +340,14 @@ be_valuetype::have_operation ()
 
   if (! have_operation)
     {
-      // Only concrete supported interfaces contribute operations here.
-      // Abstract-interface operations have generated default implementations
-      // in TAO and do not make the OBV_ class abstract.
+      // Operations of supported interfaces must be implemented by the
+      // valuetype implementation, including abstract-interface operations.
       AST_Type_List const& supports = this->supports ();
       for (size_t i = 0; i < supports.size (); ++i)
         {
           be_interface *intf = dynamic_cast<be_interface*> (supports[i]);
 
-          if (intf != nullptr && !intf->is_abstract ()
-              && be_valuetype::have_supported_op (intf))
+          if (intf != nullptr && be_valuetype::have_supported_op (intf))
             {
               have_operation = true;
               break;
@@ -493,7 +491,7 @@ be_valuetype::have_supported_op (be_interface * node)
           be_interface * intf =
             dynamic_cast<be_interface*> (inherits[i]);
 
-          if (intf != nullptr && !intf->is_abstract ())
+          if (intf != nullptr)
             {
               have_supported_op =
                 be_valuetype::have_supported_op (intf);

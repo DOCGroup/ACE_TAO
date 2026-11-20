@@ -43,5 +43,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 #endif
 
+#if defined (GPERF_DUPLICATE_PREFIX_TEST)
+  char const duplicate_prefix[] = {'a', 'l'};
+  if (Perfect_Hash::in_word_set (duplicate_prefix, sizeof duplicate_prefix) != nullptr)
+    {
+      return 1;
+    }
+#endif
+
   return 0;
 }

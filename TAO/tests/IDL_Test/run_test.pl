@@ -35,6 +35,14 @@ if ($status == 0) {
     }
     my $valuetype_header = $generated_contents{"valuetypeC.h"};
 
+    foreach my $factory_name ("Supports_Abstract_Inherited_Operation_init",
+                              "Supports_Abstract_Operation_init") {
+        if ($valuetype_header =~ /\b\Q$factory_name\E\b/) {
+            print STDERR "ERROR: generated an initializer for operation-bearing valuetype <$factory_name>\n";
+            $status = 1;
+        }
+    }
+
     my $copy_base_body = generated_class_body (
       $valuetype_header, "OBV_Copy_Base");
     if (!defined $copy_base_body) {

@@ -555,13 +555,6 @@ be_visitor_valuetype_ch::gen_supported_ops (be_interface *node,
                                             be_interface *base,
                                             TAO_OutStream *os)
 {
-  // Abstract interfaces provide callable default operations in TAO.
-  // Do not redeclare those operations as pure virtual in the valuetype.
-  if (base->is_abstract ())
-    {
-      return 0;
-    }
-
   AST_Decl *d {};
   be_visitor_context ctx;
   ctx.stream (os);

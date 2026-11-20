@@ -29,6 +29,12 @@ struct Keywords
 struct _Object {
   long long id;
 };
+
+/// This identifier is a prefix of the C++ keyword "continue".
+interface con
+{
+};
+
 typedef sequence<_Object> ObjectSeq;
 struct Objects {
   ObjectSeq objs;

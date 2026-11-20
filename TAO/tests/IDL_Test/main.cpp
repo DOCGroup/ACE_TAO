@@ -21,6 +21,7 @@
 #include "valuetypeC.h"
 #include "valuetype_opt_accessorC.h"
 #include "fixedA.h"
+#include "keywordsS.h"
 
 #include "ace/Log_Msg.h"
 #include "tao/AnyTypeCode/Any.h"
@@ -30,11 +31,10 @@
 
 static_assert (std::is_abstract<OBV_Supports_Inherited_Operation>::value,
                "A valuetype that supports an inherited operation is abstract");
-static_assert (!std::is_abstract<OBV_Supports_Abstract_Inherited_Operation>::value,
-               "An inherited abstract-interface operation keeps a concrete valuetype concrete");
-static_assert (std::is_base_of<CORBA::ValueFactoryBase,
-                               Supports_Abstract_Inherited_Operation_init>::value,
-               "An inherited abstract-interface operation keeps the concrete factory");
+static_assert (std::is_abstract<OBV_Supports_Abstract_Inherited_Operation>::value,
+               "An inherited abstract-interface operation requires an implementation");
+static_assert (std::is_abstract<OBV_Supports_Abstract_Operation>::value,
+               "A directly supported abstract-interface operation requires an implementation");
 static_assert (!std::is_abstract<OBV_Copy_Derived>::value,
                "A concrete derived valuetype gets its own copy implementation");
 static_assert (std::is_abstract<OBV_Copy_Operation_Derived>::value,
@@ -54,6 +54,10 @@ static_assert (std::is_abstract<Accessor_Optimized_Operation_Derived>::value,
                "An optimized derived valuetype must not inherit a sliced copy");
 
 class hello_i : public virtual POA_hello
+{
+};
+
+class con_i : public virtual POA_con
 {
 };
 
