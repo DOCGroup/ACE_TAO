@@ -37,18 +37,20 @@ parse_args (int argc, ACE_TCHAR *argv[])
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("f:r:"));
 
   for (int c; (c = get_opt ()) != -1; )
-    switch (c)
     {
-    case 'f':
-      file_name = get_opt.opt_arg ();
-      break;
-    case 'r':
-      rendezvous = get_opt.opt_arg ();
-      break;
-    default:
-      print_usage_and_die ();
-      break;
-  }
+      switch (c)
+        {
+        case 'f':
+          file_name = get_opt.opt_arg ();
+          break;
+        case 'r':
+          rendezvous = get_opt.opt_arg ();
+          break;
+        default:
+          print_usage_and_die ();
+          break;
+        }
+    }
 }
 
 static int
@@ -90,17 +92,21 @@ do_client_processing (ACE_LSOCK_Stream &sc)
       if (ACE_OS::write (fd_write[1],
                          buf,
                          n) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("write")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("write")),
+                            -1);
+        }
       if ((n = ACE_OS::read (fd_read[0],
                              buf,
                              sizeof buf)) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("read")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("read")),
+                            -1);
+        }
       if (ACE_OS::write (ACE_STDOUT,
                          buf,
                          n) == -1)
@@ -129,22 +135,28 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   if (con.connect (sc,
                    ACE_UNIX_Addr (rendezvous)) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("connect")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("connect")),
+                        -1);
+    }
 
   if (do_client_processing (sc) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("do_client_processing")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("do_client_processing")),
+                        -1);
+    }
 
   if (sc.close () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("close")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("close")),
+                        -1);
+    }
 
   return 0;
 }
