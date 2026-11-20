@@ -340,17 +340,19 @@ be_valuetype::have_operation ()
 
   if (! have_operation)
     {
-      // Operations of supported interfaces must be implemented by the
-      // valuetype implementation, including abstract-interface operations.
-      AST_Type_List const& supports = this->supports ();
-      for (size_t i = 0; i < supports.size (); ++i)
-        {
-          be_interface *intf = dynamic_cast<be_interface*> (supports[i]);
+      // Operations of the concretely supported interface must be
+      // implemented by the valuetype implementation.
+      AST_Type * supported = this->supports_concrete ();
 
-          if (intf != nullptr && be_valuetype::have_supported_op (intf))
+      if (supported != nullptr)
+        {
+          be_interface *intf =
+            dynamic_cast<be_interface*> (supported);
+
+          if (intf != nullptr)
             {
-              have_operation = true;
-              break;
+              have_operation =
+                be_valuetype::have_supported_op (intf);
             }
         }
     }
