@@ -100,9 +100,9 @@ int
 MQX_Filesystem::open (const char *path, int mode)
 {
   if (check_state ())
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   // Convert open mode to fopen mode
   bool r = ACE_BIT_DISABLED (mode, O_RDONLY);
@@ -139,9 +139,9 @@ MQX_Filesystem::open (const char *path, int mode)
   // Set up a new File Entry
   File *file = get_new_file ();
   if (file == 0)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   // Call into MQX
   file->mqx_file = _io_fopen (abspath, cstdlib_mode);
@@ -161,9 +161,9 @@ MQX_Filesystem::close (int fd)
 {
   File *file = get_file (fd);
   if (file == 0)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
   int mqx_error = _io_fclose (file->mqx_file);
   if (mqx_error != MQX_OK)
     {
@@ -178,9 +178,9 @@ MQX_Filesystem::read (int fd, unsigned char *buffer, size_t size)
 {
   File *file = get_file (fd);
   if (file == 0)
-  {
-    return MQX_FILE_ERROR;
-  }
+    {
+      return MQX_FILE_ERROR;
+    }
   int result = _io_read (file->mqx_file, buffer, size);
   if (result == IO_ERROR)
     {
@@ -195,9 +195,9 @@ MQX_Filesystem::write (int fd, const unsigned char *buffer, size_t size)
 {
   File *file = get_file (fd);
   if (file == 0)
-  {
-    return MQX_FILE_ERROR;
-  }
+    {
+      return MQX_FILE_ERROR;
+    }
   int result = _io_write (file->mqx_file, const_cast<unsigned char *> (buffer), size);
   if (result == IO_ERROR)
     {
@@ -227,9 +227,9 @@ MQX_Filesystem::lseek (int fd, long offset, int whence)
     }
   File *file = get_file (fd);
   if (file == 0)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
   return _io_fseek (file->mqx_file, offset, whence) == MQX_OK ? 0 : -1;
 }
 
@@ -237,9 +237,9 @@ char*
 MQX_Filesystem::getcwd (char *buf, size_t size)
 {
   if (check_state ())
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
   if (buf == 0)
     {
       errno = EINVAL;
@@ -267,9 +267,9 @@ MQX_FILE_PTR
 MQX_Filesystem::resolve_fs (const char *path, int *fs_name_len)
 {
   if (check_state ())
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
 
   if (fs_name_len == 0 || path == 0 || path[0] == '\0')
     {
@@ -304,9 +304,9 @@ MQX_Filesystem::mkdir (const char *path)
   int fs_name_len;
   MQX_FILE_PTR fs = resolve_fs (path, &fs_name_len);
   if (fs == 0)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
   int mqx_error = _io_ioctl (
     fs, IO_IOCTL_CREATE_SUBDIR, (uint32_t*) (path + fs_name_len));
   if (mqx_error != MQX_OK)
@@ -323,13 +323,13 @@ MQX_Filesystem::chdir (const char *path)
   int fs_name_len;
   MQX_FILE_PTR fs = resolve_fs (path, &fs_name_len);
   if (fs == 0)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
   if (fs != current_fs_)
-  {
-    update_fs(fs);
-  }
+    {
+      update_fs(fs);
+    }
   int mqx_error = _io_ioctl (fs, IO_IOCTL_CHANGE_CURRENT_DIR,
     (uint32_t*) (path + fs_name_len));
   if (mqx_error != MQX_OK)
@@ -346,9 +346,9 @@ MQX_Filesystem::rmdir (const char *path)
   int fs_name_len;
   MQX_FILE_PTR fs = resolve_fs (path, &fs_name_len);
   if (fs == 0)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
   int mqx_error = _io_ioctl (fs, IO_IOCTL_REMOVE_SUBDIR,
     (uint32_t*) (path + fs_name_len));
   if (mqx_error != MQX_OK)
@@ -365,9 +365,9 @@ MQX_Filesystem::unlink (const char *path)
   int fs_name_len;
   MQX_FILE_PTR fs = resolve_fs (path, &fs_name_len);
   if (fs == 0)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
   int mqx_error = _io_ioctl (fs, IO_IOCTL_DELETE_FILE,
     (uint32_t*) (path + fs_name_len));
   if (mqx_error != MQX_OK)
@@ -387,9 +387,9 @@ MQX_Filesystem::rename (const char *oldpath, const char *newpath)
   int new_fs_name_len;
   MQX_FILE_PTR other_fs = resolve_fs (newpath, &new_fs_name_len);
   if (fs == 0 || other_fs == 0)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
   if (fs != other_fs)
     {
       errno = EXDEV;
@@ -445,9 +445,9 @@ MQX_Filesystem::get_file (int fd)
   for (int i = 0; i < FOPEN_MAX; ++i)
     {
       if (files_[i].fd == fd)
-      {
-        return files_ + i;
-      }
+        {
+          return files_ + i;
+        }
     }
   errno = EBADF;
   return 0;
@@ -471,9 +471,9 @@ MQX_Filesystem::get_new_file ()
             return file;
           }
         if (fd == max_fd_)
-        {
-          fd = 0;
-        }
+          {
+            fd = 0;
+          }
       }
     }
   errno = ENFILE;
@@ -499,9 +499,9 @@ MQX_Filesystem::stat (const char * path, ACE_stat *statbuf)
   int fs_name_len;
   MQX_FILE_PTR fs = resolve_fs (path, &fs_name_len);
   if (fs == 0)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   statbuf->st_size = 0;
   statbuf->st_mtime = 0;
@@ -539,9 +539,9 @@ MQX_Filesystem::fstat (int fd, ACE_stat *statbuf)
 
   File *file = get_file (fd);
   if (file == 0)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   statbuf->st_size = 0;
   statbuf->st_mtime = 0;
