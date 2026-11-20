@@ -170,9 +170,13 @@ LONG WINAPI ACE_UnhandledExceptionFilter (PEXCEPTION_POINTERS pExceptionInfo)
   DWORD const dwExceptionCode = pExceptionInfo->ExceptionRecord->ExceptionCode;
 
   if (dwExceptionCode == EXCEPTION_ACCESS_VIOLATION)
-    ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("\n(%P|%t) ERROR: ACCESS VIOLATION\n")));
+    {
+      ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("\n(%P|%t) ERROR: ACCESS VIOLATION\n")));
+    }
   else
-    ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("\n(%P|%t) ERROR: UNHANDLED EXCEPTION\n")));
+    {
+      ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("\n(%P|%t) ERROR: UNHANDLED EXCEPTION\n")));
+    }
 
   return EXCEPTION_EXECUTE_HANDLER;
 }

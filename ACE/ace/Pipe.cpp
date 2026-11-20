@@ -119,7 +119,9 @@ ACE_Pipe::open (int buffer_size)
   // Close down the acceptor endpoint since we don't need it anymore.
   acceptor.close ();
   if (result == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   this->handles_[0] = reader.get_handle ();
   this->handles_[1] = writer.get_handle ();

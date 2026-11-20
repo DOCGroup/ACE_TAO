@@ -22,9 +22,11 @@ ACE_Registry_Name_Space::open (ACE_Name_Options *name_options)
                                                         HKEY_LOCAL_MACHINE,
                                                         host);
   if (result != 0)
-    ACELIB_ERROR_RETURN ((LM_ERROR,  ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("ACE_Predefined_Naming_Context::connect")),
-                      result);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,  ACE_TEXT ("%p\n"),
+                            ACE_TEXT ("ACE_Predefined_Naming_Context::connect")),
+                           result);
+    }
   else
     {
       // Directory
@@ -38,7 +40,9 @@ ACE_Registry_Name_Space::open (ACE_Name_Options *name_options)
       result = predefined.bind_context (name,
                                         this->context_);
       if (result != 0)
-        ACELIB_ERROR_RETURN ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_Registry::Naming_Context::bind_context")), result);
+        {
+          ACELIB_ERROR_RETURN ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_Registry::Naming_Context::bind_context")), result);
+        }
     }
   return 0;
 }
@@ -124,7 +128,9 @@ ACE_Registry_Name_Space::resolve (const ACE_NS_WString &name,
     this->context_.resolve (name.char_rep (), query_object);
 #endif /* ACE_USES_WCHAR */
   if (result != 0)
-    return result;
+    {
+      return result;
+    }
 
   // Resize the value passed by the user
   // Note: -1 is used because the size includes the null terminator
@@ -141,9 +147,13 @@ ACE_Registry_Name_Space::resolve (const ACE_NS_WString &name,
   result = this->context_.resolve (name.char_rep (), object);
 #endif /* ACE_USES_WCHAR */
   if (object.size () != query_object.size ())
-    return -1;
+    {
+      return -1;
+    }
   if (result != 0)
-    return result;
+    {
+      return result;
+    }
 
   return 0;
 }
@@ -156,7 +166,9 @@ ACE_Registry_Name_Space:: list_names (ACE_WSTRING_SET &set,
   int result = this->list_name_entries (binding_set,
                                         pattern);
   if (result != 0)
-    return result;
+    {
+      return result;
+    }
 
   ACE_BINDING_ITERATOR iterator (binding_set);
 
@@ -177,7 +189,9 @@ ACE_Registry_Name_Space::list_values (ACE_WSTRING_SET &set,
   int result = this->list_name_entries (binding_set,
                                         pattern);
   if (result != 0)
-    return result;
+    {
+      return result;
+    }
 
   ACE_BINDING_ITERATOR iterator (binding_set);
 
@@ -209,7 +223,9 @@ ACE_Registry_Name_Space::list_name_entries (ACE_BINDING_SET &set,
   ACE_Registry::Binding_List list;
   int result = this->context_.list (list);
   if (result != 0)
-    return result;
+    {
+      return result;
+    }
 
   // Iterator through all entries
   for (ACE_Registry::Binding_List::iterator i = list.begin ();
@@ -232,10 +248,12 @@ ACE_Registry_Name_Space::list_name_entries (ACE_BINDING_SET &set,
                                   value,
                                   type);
           if (result != 0)
-            ACELIB_ERROR_RETURN ((LM_ERROR,
-                              ACE_TEXT ("%p\n"),
-                              ACE_TEXT ("ACE_Registry::Naming_Context::resolve")),
-                              result);
+            {
+              ACELIB_ERROR_RETURN ((LM_ERROR,
+                                    ACE_TEXT ("%p\n"),
+                                    ACE_TEXT ("ACE_Registry::Naming_Context::resolve")),
+                                   result);
+            }
 
           // Complete binding
           ACE_Name_Binding binding (key, value, type);
