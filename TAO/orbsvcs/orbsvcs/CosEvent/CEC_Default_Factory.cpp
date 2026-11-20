@@ -65,26 +65,44 @@ TAO_CEC_Default_Factory::parse_collection_arg (ACE_TCHAR const *opt)
        arg = ACE_OS::strtok_r (nullptr, ACE_TEXT(":"), &aux))
     {
       if (ACE_OS::strcasecmp (arg, ACE_TEXT("mt")) == 0)
-        synch_type = 0;
+        {
+          synch_type = 0;
+        }
       else if (ACE_OS::strcasecmp (arg, ACE_TEXT("st")) == 0)
-        synch_type = 1;
+        {
+          synch_type = 1;
+        }
       else if (ACE_OS::strcasecmp (arg, ACE_TEXT("list")) == 0)
-        collection_type = 0;
+        {
+          collection_type = 0;
+        }
       else if (ACE_OS::strcasecmp (arg, ACE_TEXT("rb_tree")) == 0)
-        collection_type = 1;
+        {
+          collection_type = 1;
+        }
       else if (ACE_OS::strcasecmp (arg, ACE_TEXT("immediate")) == 0)
-        iteration_type = 0;
+        {
+          iteration_type = 0;
+        }
       else if (ACE_OS::strcasecmp (arg, ACE_TEXT("copy_on_read")) == 0)
-        iteration_type = 1;
+        {
+          iteration_type = 1;
+        }
       else if (ACE_OS::strcasecmp (arg, ACE_TEXT("copy_on_write")) == 0)
-        iteration_type = 2;
+        {
+          iteration_type = 2;
+        }
       else if (ACE_OS::strcasecmp (arg, ACE_TEXT("delayed")) == 0)
-        iteration_type = 3;
+        {
+          iteration_type = 3;
+        }
       else
-        ORBSVCS_ERROR ((LM_ERROR,
-                    "CEC_Default_Factory - "
-                    "unknown collection modifier <%s>\n",
-                    arg));
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                      "CEC_Default_Factory - "
+                      "unknown collection modifier <%s>\n",
+                      arg));
+        }
     }
   return (synch_type << 8) |(collection_type << 4) | iteration_type;
 }
@@ -450,13 +468,17 @@ TAO_CEC_Dispatching*
 TAO_CEC_Default_Factory::create_dispatching (TAO_CEC_EventChannel *)
 {
   if (!this->dispatching_)
-    return new TAO_CEC_Reactive_Dispatching ();
+    {
+      return new TAO_CEC_Reactive_Dispatching ();
+    }
   else
-    return new TAO_CEC_MT_Dispatching (this->dispatching_threads_,
-                                      this->dispatching_threads_flags_,
-                                      this->dispatching_threads_priority_,
-                                      this->dispatching_threads_force_active_,
-                                      this->wait_for_shutdown_thread_completion_);
+    {
+      return new TAO_CEC_MT_Dispatching (this->dispatching_threads_,
+                                        this->dispatching_threads_flags_,
+                                        this->dispatching_threads_priority_,
+                                        this->dispatching_threads_force_active_,
+                                        this->wait_for_shutdown_thread_completion_);
+    }
   return nullptr;
 }
 
@@ -686,85 +708,117 @@ TAO_CEC_ProxyPushConsumer_Collection*
 TAO_CEC_Default_Factory::create_proxy_push_consumer_collection (TAO_CEC_EventChannel *)
 {
   if (this->consumer_collection_ == 0x000)
-    return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
-      TAO_CEC_PushConsumer_List_Iterator,
-      TAO_SYNCH_MUTEX> ();
+    {
+      return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPushConsumer,
+        TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
+        TAO_CEC_PushConsumer_List_Iterator,
+        TAO_SYNCH_MUTEX> ();
+    }
   else if (this->consumer_collection_ == 0x001)
-    return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPushConsumer,
-      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
-      TAO_CEC_PushConsumer_List_Iterator,
-      TAO_SYNCH_MUTEX> ();
+    {
+      return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPushConsumer,
+        TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
+        TAO_CEC_PushConsumer_List_Iterator,
+        TAO_SYNCH_MUTEX> ();
+    }
   else if (this->consumer_collection_ == 0x002)
-    return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPushConsumer,
-      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
-      TAO_CEC_PushConsumer_List_Iterator,
-      ACE_SYNCH> ();
+    {
+      return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPushConsumer,
+        TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
+        TAO_CEC_PushConsumer_List_Iterator,
+        ACE_SYNCH> ();
+    }
   else if (this->consumer_collection_ == 0x003)
-    return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
-      TAO_CEC_PushConsumer_List_Iterator,
-      ACE_SYNCH> ();
+    {
+      return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
+        TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
+        TAO_CEC_PushConsumer_List_Iterator,
+        ACE_SYNCH> ();
+    }
   else if (this->consumer_collection_ == 0x010)
-    return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
-      TAO_CEC_PushConsumer_RB_Tree_Iterator,
-      TAO_SYNCH_MUTEX> ();
+    {
+      return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPushConsumer,
+        TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
+        TAO_CEC_PushConsumer_RB_Tree_Iterator,
+        TAO_SYNCH_MUTEX> ();
+    }
   else if (this->consumer_collection_ == 0x011)
-    return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPushConsumer,
-      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
-      TAO_CEC_PushConsumer_RB_Tree_Iterator,
-      TAO_SYNCH_MUTEX> ();
+    {
+      return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPushConsumer,
+        TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
+        TAO_CEC_PushConsumer_RB_Tree_Iterator,
+        TAO_SYNCH_MUTEX> ();
+    }
   else if (this->consumer_collection_ == 0x012)
-    return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPushConsumer,
-      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
-      TAO_CEC_PushConsumer_RB_Tree_Iterator,
-      ACE_SYNCH> ();
+    {
+      return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPushConsumer,
+        TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
+        TAO_CEC_PushConsumer_RB_Tree_Iterator,
+        ACE_SYNCH> ();
+    }
   else if (this->consumer_collection_ == 0x013)
-    return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
-      TAO_CEC_PushConsumer_RB_Tree_Iterator,
-      ACE_SYNCH> ();
+    {
+      return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
+        TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
+        TAO_CEC_PushConsumer_RB_Tree_Iterator,
+        ACE_SYNCH> ();
+    }
   else if (this->consumer_collection_ == 0x100)
-    return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
-      TAO_CEC_PushConsumer_List_Iterator,
-      ACE_Null_Mutex> ();
+    {
+      return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPushConsumer,
+        TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
+        TAO_CEC_PushConsumer_List_Iterator,
+        ACE_Null_Mutex> ();
+    }
   else if (this->consumer_collection_ == 0x101)
-    return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPushConsumer,
-      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
-      TAO_CEC_PushConsumer_List_Iterator,
-      ACE_Null_Mutex> ();
+    {
+      return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPushConsumer,
+        TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
+        TAO_CEC_PushConsumer_List_Iterator,
+        ACE_Null_Mutex> ();
+    }
   else if (this->consumer_collection_ == 0x102)
-    return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPushConsumer,
-      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
-      TAO_CEC_PushConsumer_List_Iterator,
-      ACE_NULL_SYNCH> ();
+    {
+      return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPushConsumer,
+        TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
+        TAO_CEC_PushConsumer_List_Iterator,
+        ACE_NULL_SYNCH> ();
+    }
   else if (this->consumer_collection_ == 0x103)
-    return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
-      TAO_CEC_PushConsumer_List_Iterator,
-      ACE_NULL_SYNCH> ();
+    {
+      return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
+        TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>,
+        TAO_CEC_PushConsumer_List_Iterator,
+        ACE_NULL_SYNCH> ();
+    }
   else if (this->consumer_collection_ == 0x110)
-    return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
-      TAO_CEC_PushConsumer_RB_Tree_Iterator,
-      ACE_Null_Mutex> ();
+    {
+      return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPushConsumer,
+        TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
+        TAO_CEC_PushConsumer_RB_Tree_Iterator,
+        ACE_Null_Mutex> ();
+    }
   else if (this->consumer_collection_ == 0x111)
-    return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPushConsumer,
-      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
-      TAO_CEC_PushConsumer_RB_Tree_Iterator,
-      ACE_Null_Mutex> ();
+    {
+      return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPushConsumer,
+        TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
+        TAO_CEC_PushConsumer_RB_Tree_Iterator,
+        ACE_Null_Mutex> ();
+    }
   else if (this->consumer_collection_ == 0x112)
-    return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPushConsumer,
-      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
-      TAO_CEC_PushConsumer_RB_Tree_Iterator,
-      ACE_NULL_SYNCH> ();
+    {
+      return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPushConsumer,
+        TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
+        TAO_CEC_PushConsumer_RB_Tree_Iterator,
+        ACE_NULL_SYNCH> ();
+    }
   else if (this->consumer_collection_ == 0x113)
-    return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
-      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
-      TAO_CEC_PushConsumer_RB_Tree_Iterator,
-      ACE_NULL_SYNCH> ();
+    {
+      return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushConsumer,
+        TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>,
+        TAO_CEC_PushConsumer_RB_Tree_Iterator,
+        ACE_NULL_SYNCH> ();
+    }
 
   return nullptr;
 }
@@ -876,85 +930,117 @@ TAO_CEC_ProxyPullConsumer_Collection*
 TAO_CEC_Default_Factory::create_proxy_pull_consumer_collection (TAO_CEC_EventChannel *)
 {
   if (this->consumer_collection_ == 0x000)
-    return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
-      TAO_CEC_PullConsumer_List_Iterator,
-      TAO_SYNCH_MUTEX> ();
+    {
+      return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPullConsumer,
+        TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
+        TAO_CEC_PullConsumer_List_Iterator,
+        TAO_SYNCH_MUTEX> ();
+    }
   else if (this->consumer_collection_ == 0x001)
-    return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPullConsumer,
-      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
-      TAO_CEC_PullConsumer_List_Iterator,
-      TAO_SYNCH_MUTEX> ();
+    {
+      return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPullConsumer,
+        TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
+        TAO_CEC_PullConsumer_List_Iterator,
+        TAO_SYNCH_MUTEX> ();
+    }
   else if (this->consumer_collection_ == 0x002)
-    return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPullConsumer,
-      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
-      TAO_CEC_PullConsumer_List_Iterator,
-      ACE_SYNCH> ();
+    {
+      return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPullConsumer,
+        TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
+        TAO_CEC_PullConsumer_List_Iterator,
+        ACE_SYNCH> ();
+    }
   else if (this->consumer_collection_ == 0x003)
-    return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
-      TAO_CEC_PullConsumer_List_Iterator,
-      ACE_SYNCH> ();
+    {
+      return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
+        TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
+        TAO_CEC_PullConsumer_List_Iterator,
+        ACE_SYNCH> ();
+    }
   else if (this->consumer_collection_ == 0x010)
-    return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
-      TAO_CEC_PullConsumer_RB_Tree_Iterator,
-      TAO_SYNCH_MUTEX> ();
+    {
+      return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPullConsumer,
+        TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
+        TAO_CEC_PullConsumer_RB_Tree_Iterator,
+        TAO_SYNCH_MUTEX> ();
+    }
   else if (this->consumer_collection_ == 0x011)
-    return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPullConsumer,
-      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
-      TAO_CEC_PullConsumer_RB_Tree_Iterator,
-      TAO_SYNCH_MUTEX> ();
+    {
+      return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPullConsumer,
+        TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
+        TAO_CEC_PullConsumer_RB_Tree_Iterator,
+        TAO_SYNCH_MUTEX> ();
+    }
   else if (this->consumer_collection_ == 0x012)
-    return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPullConsumer,
-      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
-      TAO_CEC_PullConsumer_RB_Tree_Iterator,
-      ACE_SYNCH> ();
+    {
+      return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPullConsumer,
+        TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
+        TAO_CEC_PullConsumer_RB_Tree_Iterator,
+        ACE_SYNCH> ();
+    }
   else if (this->consumer_collection_ == 0x013)
-    return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
-      TAO_CEC_PullConsumer_RB_Tree_Iterator,
-      ACE_SYNCH> ();
+    {
+      return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
+        TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
+        TAO_CEC_PullConsumer_RB_Tree_Iterator,
+        ACE_SYNCH> ();
+    }
   else if (this->consumer_collection_ == 0x100)
-    return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
-      TAO_CEC_PullConsumer_List_Iterator,
-      ACE_Null_Mutex> ();
+    {
+      return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPullConsumer,
+        TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
+        TAO_CEC_PullConsumer_List_Iterator,
+        ACE_Null_Mutex> ();
+    }
   else if (this->consumer_collection_ == 0x101)
-    return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPullConsumer,
-      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
-      TAO_CEC_PullConsumer_List_Iterator,
-      ACE_Null_Mutex> ();
+    {
+      return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPullConsumer,
+        TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
+        TAO_CEC_PullConsumer_List_Iterator,
+        ACE_Null_Mutex> ();
+    }
   else if (this->consumer_collection_ == 0x102)
-    return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPullConsumer,
-      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
-      TAO_CEC_PullConsumer_List_Iterator,
-      ACE_NULL_SYNCH> ();
+    {
+      return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPullConsumer,
+        TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
+        TAO_CEC_PullConsumer_List_Iterator,
+        ACE_NULL_SYNCH> ();
+    }
   else if (this->consumer_collection_ == 0x103)
-    return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
-      TAO_CEC_PullConsumer_List_Iterator,
-      ACE_NULL_SYNCH> ();
+    {
+      return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
+        TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>,
+        TAO_CEC_PullConsumer_List_Iterator,
+        ACE_NULL_SYNCH> ();
+    }
   else if (this->consumer_collection_ == 0x110)
-    return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
-      TAO_CEC_PullConsumer_RB_Tree_Iterator,
-      ACE_Null_Mutex> ();
+    {
+      return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPullConsumer,
+        TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
+        TAO_CEC_PullConsumer_RB_Tree_Iterator,
+        ACE_Null_Mutex> ();
+    }
   else if (this->consumer_collection_ == 0x111)
-    return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPullConsumer,
-      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
-      TAO_CEC_PullConsumer_RB_Tree_Iterator,
-      ACE_Null_Mutex> ();
+    {
+      return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPullConsumer,
+        TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
+        TAO_CEC_PullConsumer_RB_Tree_Iterator,
+        ACE_Null_Mutex> ();
+    }
   else if (this->consumer_collection_ == 0x112)
-    return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPullConsumer,
-      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
-      TAO_CEC_PullConsumer_RB_Tree_Iterator,
-      ACE_NULL_SYNCH> ();
+    {
+      return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPullConsumer,
+        TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
+        TAO_CEC_PullConsumer_RB_Tree_Iterator,
+        ACE_NULL_SYNCH> ();
+    }
   else if (this->consumer_collection_ == 0x113)
-    return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
-      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
-      TAO_CEC_PullConsumer_RB_Tree_Iterator,
-      ACE_NULL_SYNCH> ();
+    {
+      return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullConsumer,
+        TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>,
+        TAO_CEC_PullConsumer_RB_Tree_Iterator,
+        ACE_NULL_SYNCH> ();
+    }
 
   return nullptr;
 }
@@ -969,85 +1055,117 @@ TAO_CEC_ProxyPushSupplier_Collection*
 TAO_CEC_Default_Factory::create_proxy_push_supplier_collection (TAO_CEC_EventChannel *)
 {
   if (this->supplier_collection_ == 0x000)
-    return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
-      TAO_CEC_PushSupplier_List_Iterator,
-      TAO_SYNCH_MUTEX> ();
+    {
+      return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPushSupplier,
+        TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
+        TAO_CEC_PushSupplier_List_Iterator,
+        TAO_SYNCH_MUTEX> ();
+    }
   else if (this->supplier_collection_ == 0x001)
-    return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPushSupplier,
-      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
-      TAO_CEC_PushSupplier_List_Iterator,
-      TAO_SYNCH_MUTEX> ();
+    {
+      return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPushSupplier,
+        TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
+        TAO_CEC_PushSupplier_List_Iterator,
+        TAO_SYNCH_MUTEX> ();
+    }
   else if (this->supplier_collection_ == 0x002)
-    return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPushSupplier,
-      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
-      TAO_CEC_PushSupplier_List_Iterator,
-      ACE_SYNCH> ();
+    {
+      return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPushSupplier,
+        TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
+        TAO_CEC_PushSupplier_List_Iterator,
+        ACE_SYNCH> ();
+    }
   else if (this->supplier_collection_ == 0x003)
-    return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
-      TAO_CEC_PushSupplier_List_Iterator,
-      ACE_SYNCH> ();
+    {
+      return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
+        TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
+        TAO_CEC_PushSupplier_List_Iterator,
+        ACE_SYNCH> ();
+    }
   else if (this->supplier_collection_ == 0x010)
-    return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
-      TAO_CEC_PushSupplier_RB_Tree_Iterator,
-      TAO_SYNCH_MUTEX> ();
+    {
+      return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPushSupplier,
+        TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
+        TAO_CEC_PushSupplier_RB_Tree_Iterator,
+        TAO_SYNCH_MUTEX> ();
+    }
   else if (this->supplier_collection_ == 0x011)
-    return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPushSupplier,
-      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
-      TAO_CEC_PushSupplier_RB_Tree_Iterator,
-      TAO_SYNCH_MUTEX> ();
+    {
+      return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPushSupplier,
+        TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
+        TAO_CEC_PushSupplier_RB_Tree_Iterator,
+        TAO_SYNCH_MUTEX> ();
+    }
   else if (this->supplier_collection_ == 0x012)
-    return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPushSupplier,
-      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
-      TAO_CEC_PushSupplier_RB_Tree_Iterator,
-      ACE_SYNCH> ();
+    {
+      return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPushSupplier,
+        TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
+        TAO_CEC_PushSupplier_RB_Tree_Iterator,
+        ACE_SYNCH> ();
+    }
   else if (this->supplier_collection_ == 0x013)
-    return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
-      TAO_CEC_PushSupplier_RB_Tree_Iterator,
-      ACE_SYNCH> ();
+    {
+      return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
+        TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
+        TAO_CEC_PushSupplier_RB_Tree_Iterator,
+        ACE_SYNCH> ();
+    }
   else if (this->supplier_collection_ == 0x100)
-    return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
-      TAO_CEC_PushSupplier_List_Iterator,
-      ACE_Null_Mutex> ();
+    {
+      return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPushSupplier,
+        TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
+        TAO_CEC_PushSupplier_List_Iterator,
+        ACE_Null_Mutex> ();
+    }
   else if (this->supplier_collection_ == 0x101)
-    return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPushSupplier,
-      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
-      TAO_CEC_PushSupplier_List_Iterator,
-      ACE_Null_Mutex> ();
+    {
+      return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPushSupplier,
+        TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
+        TAO_CEC_PushSupplier_List_Iterator,
+        ACE_Null_Mutex> ();
+    }
   else if (this->supplier_collection_ == 0x102)
-    return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPushSupplier,
-      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
-      TAO_CEC_PushSupplier_List_Iterator,
-      ACE_NULL_SYNCH> ();
+    {
+      return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPushSupplier,
+        TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
+        TAO_CEC_PushSupplier_List_Iterator,
+        ACE_NULL_SYNCH> ();
+    }
   else if (this->supplier_collection_ == 0x103)
-    return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
-      TAO_CEC_PushSupplier_List_Iterator,
-      ACE_NULL_SYNCH> ();
+    {
+      return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
+        TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>,
+        TAO_CEC_PushSupplier_List_Iterator,
+        ACE_NULL_SYNCH> ();
+    }
   else if (this->supplier_collection_ == 0x110)
-    return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
-      TAO_CEC_PushSupplier_RB_Tree_Iterator,
-      ACE_Null_Mutex> ();
+    {
+      return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPushSupplier,
+        TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
+        TAO_CEC_PushSupplier_RB_Tree_Iterator,
+        ACE_Null_Mutex> ();
+    }
   else if (this->supplier_collection_ == 0x111)
-    return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPushSupplier,
-      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
-      TAO_CEC_PushSupplier_RB_Tree_Iterator,
-      ACE_Null_Mutex> ();
+    {
+      return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPushSupplier,
+        TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
+        TAO_CEC_PushSupplier_RB_Tree_Iterator,
+        ACE_Null_Mutex> ();
+    }
   else if (this->supplier_collection_ == 0x112)
-    return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPushSupplier,
-      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
-      TAO_CEC_PushSupplier_RB_Tree_Iterator,
-      ACE_NULL_SYNCH> ();
+    {
+      return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPushSupplier,
+        TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
+        TAO_CEC_PushSupplier_RB_Tree_Iterator,
+        ACE_NULL_SYNCH> ();
+    }
   else if (this->supplier_collection_ == 0x113)
-    return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
-      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
-      TAO_CEC_PushSupplier_RB_Tree_Iterator,
-      ACE_NULL_SYNCH> ();
+    {
+      return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPushSupplier,
+        TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>,
+        TAO_CEC_PushSupplier_RB_Tree_Iterator,
+        ACE_NULL_SYNCH> ();
+    }
 
   return nullptr;
 }
@@ -1151,85 +1269,117 @@ TAO_CEC_ProxyPullSupplier_Collection*
 TAO_CEC_Default_Factory::create_proxy_pull_supplier_collection (TAO_CEC_EventChannel *)
 {
   if (this->supplier_collection_ == 0x000)
-    return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
-      TAO_CEC_PullSupplier_List_Iterator,
-      TAO_SYNCH_MUTEX> ();
+    {
+      return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPullSupplier,
+        TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
+        TAO_CEC_PullSupplier_List_Iterator,
+        TAO_SYNCH_MUTEX> ();
+    }
   else if (this->supplier_collection_ == 0x001)
-    return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPullSupplier,
-      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
-      TAO_CEC_PullSupplier_List_Iterator,
-      TAO_SYNCH_MUTEX> ();
+    {
+      return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPullSupplier,
+        TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
+        TAO_CEC_PullSupplier_List_Iterator,
+        TAO_SYNCH_MUTEX> ();
+    }
   else if (this->supplier_collection_ == 0x002)
-    return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPullSupplier,
-      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
-      TAO_CEC_PullSupplier_List_Iterator,
-      ACE_SYNCH> ();
+    {
+      return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPullSupplier,
+        TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
+        TAO_CEC_PullSupplier_List_Iterator,
+        ACE_SYNCH> ();
+    }
   else if (this->supplier_collection_ == 0x003)
-    return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
-      TAO_CEC_PullSupplier_List_Iterator,
-      ACE_SYNCH> ();
+    {
+      return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
+        TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
+        TAO_CEC_PullSupplier_List_Iterator,
+        ACE_SYNCH> ();
+    }
   else if (this->supplier_collection_ == 0x010)
-    return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
-      TAO_CEC_PullSupplier_RB_Tree_Iterator,
-      TAO_SYNCH_MUTEX> ();
+    {
+      return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPullSupplier,
+        TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
+        TAO_CEC_PullSupplier_RB_Tree_Iterator,
+        TAO_SYNCH_MUTEX> ();
+    }
   else if (this->supplier_collection_ == 0x011)
-    return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPullSupplier,
-      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
-      TAO_CEC_PullSupplier_RB_Tree_Iterator,
-      TAO_SYNCH_MUTEX> ();
+    {
+      return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPullSupplier,
+        TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
+        TAO_CEC_PullSupplier_RB_Tree_Iterator,
+        TAO_SYNCH_MUTEX> ();
+    }
   else if (this->supplier_collection_ == 0x012)
-    return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPullSupplier,
-      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
-      TAO_CEC_PullSupplier_RB_Tree_Iterator,
-      ACE_SYNCH> ();
+    {
+      return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPullSupplier,
+        TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
+        TAO_CEC_PullSupplier_RB_Tree_Iterator,
+        ACE_SYNCH> ();
+    }
   else if (this->supplier_collection_ == 0x013)
-    return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
-      TAO_CEC_PullSupplier_RB_Tree_Iterator,
-      ACE_SYNCH> ();
+    {
+      return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
+        TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
+        TAO_CEC_PullSupplier_RB_Tree_Iterator,
+        ACE_SYNCH> ();
+    }
   else if (this->supplier_collection_ == 0x100)
-    return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
-      TAO_CEC_PullSupplier_List_Iterator,
-      ACE_Null_Mutex> ();
+    {
+      return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPullSupplier,
+        TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
+        TAO_CEC_PullSupplier_List_Iterator,
+        ACE_Null_Mutex> ();
+    }
   else if (this->supplier_collection_ == 0x101)
-    return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPullSupplier,
-      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
-      TAO_CEC_PullSupplier_List_Iterator,
-      ACE_Null_Mutex> ();
+    {
+      return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPullSupplier,
+        TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
+        TAO_CEC_PullSupplier_List_Iterator,
+        ACE_Null_Mutex> ();
+    }
   else if (this->supplier_collection_ == 0x102)
-    return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPullSupplier,
-      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
-      TAO_CEC_PullSupplier_List_Iterator,
-      ACE_NULL_SYNCH> ();
+    {
+      return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPullSupplier,
+        TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
+        TAO_CEC_PullSupplier_List_Iterator,
+        ACE_NULL_SYNCH> ();
+    }
   else if (this->supplier_collection_ == 0x103)
-    return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
-      TAO_CEC_PullSupplier_List_Iterator,
-      ACE_NULL_SYNCH> ();
+    {
+      return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
+        TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>,
+        TAO_CEC_PullSupplier_List_Iterator,
+        ACE_NULL_SYNCH> ();
+    }
   else if (this->supplier_collection_ == 0x110)
-    return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
-      TAO_CEC_PullSupplier_RB_Tree_Iterator,
-      ACE_Null_Mutex> ();
+    {
+      return new TAO_ESF_Immediate_Changes<TAO_CEC_ProxyPullSupplier,
+        TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
+        TAO_CEC_PullSupplier_RB_Tree_Iterator,
+        ACE_Null_Mutex> ();
+    }
   else if (this->supplier_collection_ == 0x111)
-    return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPullSupplier,
-      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
-      TAO_CEC_PullSupplier_RB_Tree_Iterator,
-      ACE_Null_Mutex> ();
+    {
+      return new TAO_ESF_Copy_On_Read<TAO_CEC_ProxyPullSupplier,
+        TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
+        TAO_CEC_PullSupplier_RB_Tree_Iterator,
+        ACE_Null_Mutex> ();
+    }
   else if (this->supplier_collection_ == 0x112)
-    return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPullSupplier,
-      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
-      TAO_CEC_PullSupplier_RB_Tree_Iterator,
-      ACE_NULL_SYNCH> ();
+    {
+      return new TAO_ESF_Copy_On_Write<TAO_CEC_ProxyPullSupplier,
+        TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
+        TAO_CEC_PullSupplier_RB_Tree_Iterator,
+        ACE_NULL_SYNCH> ();
+    }
   else if (this->supplier_collection_ == 0x113)
-    return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
-      TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
-      TAO_CEC_PullSupplier_RB_Tree_Iterator,
-      ACE_NULL_SYNCH> ();
+    {
+      return new TAO_ESF_Delayed_Changes<TAO_CEC_ProxyPullSupplier,
+        TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>,
+        TAO_CEC_PullSupplier_RB_Tree_Iterator,
+        ACE_NULL_SYNCH> ();
+    }
 
   return nullptr;
 }
@@ -1244,11 +1394,17 @@ ACE_Lock*
 TAO_CEC_Default_Factory::create_consumer_lock ()
 {
   if (this->consumer_lock_ == 0)
-    return new ACE_Lock_Adapter<ACE_Null_Mutex>;
+    {
+      return new ACE_Lock_Adapter<ACE_Null_Mutex>;
+    }
   else if (this->consumer_lock_ == 1)
-    return new ACE_Lock_Adapter<TAO_SYNCH_MUTEX> ();
+    {
+      return new ACE_Lock_Adapter<TAO_SYNCH_MUTEX> ();
+    }
   else if (this->consumer_lock_ == 2)
-    return new ACE_Lock_Adapter<TAO_SYNCH_RECURSIVE_MUTEX> ();
+    {
+      return new ACE_Lock_Adapter<TAO_SYNCH_RECURSIVE_MUTEX> ();
+    }
   return nullptr;
 }
 
@@ -1262,11 +1418,17 @@ ACE_Lock*
 TAO_CEC_Default_Factory::create_supplier_lock ()
 {
   if (this->supplier_lock_ == 0)
-    return new ACE_Lock_Adapter<ACE_Null_Mutex>;
+    {
+      return new ACE_Lock_Adapter<ACE_Null_Mutex>;
+    }
   else if (this->supplier_lock_ == 1)
-    return new ACE_Lock_Adapter<TAO_SYNCH_MUTEX> ();
+    {
+      return new ACE_Lock_Adapter<TAO_SYNCH_MUTEX> ();
+    }
   else if (this->supplier_lock_ == 2)
-    return new ACE_Lock_Adapter<TAO_SYNCH_RECURSIVE_MUTEX> ();
+    {
+      return new ACE_Lock_Adapter<TAO_SYNCH_RECURSIVE_MUTEX> ();
+    }
   return nullptr;
 }
 
@@ -1280,7 +1442,9 @@ TAO_CEC_ConsumerControl*
 TAO_CEC_Default_Factory::create_consumer_control (TAO_CEC_EventChannel* ec)
 {
   if (!this->consumer_control_)
-    return new TAO_CEC_ConsumerControl ();
+    {
+      return new TAO_CEC_ConsumerControl ();
+    }
   else
     {
       int argc {};
@@ -1330,7 +1494,9 @@ TAO_CEC_SupplierControl*
 TAO_CEC_Default_Factory::create_supplier_control (TAO_CEC_EventChannel* ec)
 {
   if (!this->supplier_control_)
-    return new TAO_CEC_SupplierControl ();
+    {
+      return new TAO_CEC_SupplierControl ();
+    }
   else
     {
       int argc {};
