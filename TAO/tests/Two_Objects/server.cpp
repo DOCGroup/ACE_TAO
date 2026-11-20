@@ -65,9 +65,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Panic: nil RootPOA\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Panic: nil RootPOA\n"),
+                            1);
+        }
 
       // Get referencee to the POA manager
       PortableServer::POAManager_var const poa_manager =
@@ -113,10 +115,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_OS::fopen (options.ior_output_file.c_str (), ACE_TEXT ("w")),
           ACE_OS::fclose);
         if (!output_file)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("Cannot open output file for writing IOR: %s\n"),
-                             options.ior_output_file.c_str ()),
-                            1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("Cannot open output file for writing IOR: %s\n"),
+                               options.ior_output_file.c_str ()),
+                              1);
+          }
 
         ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
       }
@@ -129,9 +133,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (worker.activate (THR_NEW_LWP | THR_JOINABLE,
                            options.thread_count) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot activate server threads\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot activate server threads\n"),
+                            1);
+        }
 
       // Wait for all threads to get done
       worker.thr_mgr ()->wait ();

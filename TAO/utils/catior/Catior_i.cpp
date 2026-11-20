@@ -1217,10 +1217,12 @@ Catior_i::cat_codeset_info (TAO_InputCDR& cdr)
   CORBA::ULong c_ccslen {};
 
   if (!(stream >> c_ccslen))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to read number of conversion codesets "
-                       "for char.\n"),
-                      false);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Unable to read number of conversion codesets "
+                         "for char.\n"),
+                        false);
+    }
 
   ACE_OS::snprintf (buf, bufsize, "\tNumber of CCS for char: %u\n", c_ccslen);
   buffer_ += buf;
@@ -1249,10 +1251,12 @@ Catior_i::cat_codeset_info (TAO_InputCDR& cdr)
   CORBA::ULong w_ccslen {};
 
   if (!(stream >> w_ccslen))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to read number of conversion codesets "
-                       "for wchar.\n"),
-                      false);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Unable to read number of conversion codesets "
+                         "for wchar.\n"),
+                        false);
+    }
 
   ACE_OS::snprintf (buf, bufsize, "\tNumber of CCS for wchar: %u\n", w_ccslen);
   buffer_ += buf;
@@ -1733,9 +1737,11 @@ Catior_i::cat_sciop_profile (TAO_InputCDR& stream)
   CORBA::ULong addresses {};
 
   if (!(str >> addresses))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to decode number of addresses\n."),
-                      false);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Unable to decode number of addresses\n."),
+                        false);
+    }
 
   indent ();
   ACE_OS::snprintf (buf, bufsize, "Addresses:\t%d\n", addresses);
