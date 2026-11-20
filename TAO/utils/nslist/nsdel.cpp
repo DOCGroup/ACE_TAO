@@ -278,18 +278,24 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           for (; index < the_name.length () - 1u; ++index)
             {
               if (the_name[index].kind && the_name[index].kind[0])
-                ACE_DEBUG ((LM_DEBUG, "Found ID: %C  (Kind: %C)\n",
-                           the_name[index].id.in(),
-                           the_name[index].kind.in()));
+                {
+                  ACE_DEBUG ((LM_DEBUG, "Found ID: %C  (Kind: %C)\n",
+                              the_name[index].id.in(),
+                              the_name[index].kind.in()));
+                }
               else
-                ACE_DEBUG ((LM_DEBUG, "Found ID: %C\n",
-                           the_name[index].id.in()));
+                {
+                  ACE_DEBUG ((LM_DEBUG, "Found ID: %C\n",
+                              the_name[index].id.in()));
+                }
             }
           ACE_DEBUG ((LM_DEBUG, "UnBound ID: %C",
                      the_name[index].id.in()));
           if (the_name[index].kind && the_name[index].kind[0])
-            ACE_DEBUG ((LM_DEBUG, "  (Kind: %C)\n",
-                       the_name[index].kind.in()));
+            {
+              ACE_DEBUG ((LM_DEBUG, "  (Kind: %C)\n",
+                          the_name[index].kind.in()));
+            }
           ACE_DEBUG ((LM_DEBUG, "\n"));
         }
 
@@ -318,7 +324,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 }
             }
           else if (options.destroy && !options.quiet)
-            ACE_DEBUG ((LM_DEBUG,"Can't Destroy object, it is not a naming context!\n"));
+            {
+              ACE_DEBUG ((LM_DEBUG,"Can't Destroy object, it is not a naming context!\n"));
+            }
         }
       catch (const CORBA::OBJECT_NOT_EXIST&)
         {
@@ -364,12 +372,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       for (; index < limit; ++index)
         {
           if (the_name[index].kind && the_name[index].kind[0])
-             ACE_DEBUG ((LM_DEBUG, "ID: %C  (Kind: %C)\n",
-               the_name[index].id.in(),
-               the_name[index].kind.in()));
+            {
+              ACE_DEBUG ((LM_DEBUG, "ID: %C  (Kind: %C)\n",
+                          the_name[index].id.in(),
+                          the_name[index].kind.in()));
+            }
           else
-             ACE_DEBUG ((LM_DEBUG, "ID: %C\n",
-               the_name[index].id.in()));
+            {
+              ACE_DEBUG ((LM_DEBUG, "ID: %C\n",
+                          the_name[index].id.in()));
+            }
         }
       const char *why= "Unknown reason";
       switch (nf.why)
@@ -388,12 +400,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       for (index = 0u; index < nf.rest_of_name.length (); ++index)
         {
           if (nf.rest_of_name[index].kind && nf.rest_of_name[index].kind[0])
-             ACE_DEBUG ((LM_DEBUG, "ID: %C  (Kind: %C)\n",
-               nf.rest_of_name[index].id.in(),
-               nf.rest_of_name[index].kind.in()));
+            {
+              ACE_DEBUG ((LM_DEBUG, "ID: %C  (Kind: %C)\n",
+                          nf.rest_of_name[index].id.in(),
+                          nf.rest_of_name[index].kind.in()));
+            }
           else
-             ACE_DEBUG ((LM_DEBUG, "ID: %C\n",
-               nf.rest_of_name[index].id.in()));
+            {
+              ACE_DEBUG ((LM_DEBUG, "ID: %C\n",
+                          nf.rest_of_name[index].id.in()));
+            }
         }
       ++err;
     }

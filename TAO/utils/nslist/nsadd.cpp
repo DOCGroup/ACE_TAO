@@ -276,12 +276,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               for (; index < the_name.length () - 1u; ++index)
                 {
                   if (the_name[index].kind && the_name[index].kind[0])
-                    ACE_DEBUG ((LM_DEBUG, "Found ID: %C  (Kind: %C)\n",
-                               the_name[index].id.in(),
-                               the_name[index].kind.in()));
+                    {
+                      ACE_DEBUG ((LM_DEBUG, "Found ID: %C  (Kind: %C)\n",
+                                  the_name[index].id.in(),
+                                  the_name[index].kind.in()));
+                    }
                   else
-                    ACE_DEBUG ((LM_DEBUG, "Found ID: %C\n",
-                               the_name[index].id.in()));
+                    {
+                      ACE_DEBUG ((LM_DEBUG, "Found ID: %C\n",
+                                  the_name[index].id.in()));
+                    }
                 }
               if (!options.ior)
                 {
@@ -298,8 +302,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               ACE_DEBUG ((LM_DEBUG, " ID: %C",
                          the_name[index].id.in()));
               if (the_name[index].kind && the_name[index].kind[0])
-                ACE_DEBUG ((LM_DEBUG, "  (Kind: %C)\n",
-                           the_name[index].kind.in()));
+                {
+                  ACE_DEBUG ((LM_DEBUG, "  (Kind: %C)\n",
+                              the_name[index].kind.in()));
+                }
               ACE_DEBUG ((LM_DEBUG, "\n"));
             }
         }
@@ -323,12 +329,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               for (index= 0; index < found; ++index)
                 {
                   if (the_name[index].kind && the_name[index].kind[0])
-                    ACE_DEBUG ((LM_DEBUG, "Found ID: %C  (Kind: %C)\n",
-                               the_name[index].id.in(),
-                               the_name[index].kind.in()));
+                    {
+                      ACE_DEBUG ((LM_DEBUG, "Found ID: %C  (Kind: %C)\n",
+                                  the_name[index].id.in(),
+                                  the_name[index].kind.in()));
+                    }
                   else
-                    ACE_DEBUG ((LM_DEBUG, "Found ID: %C\n",
-                               the_name[index].id.in()));
+                    {
+                      ACE_DEBUG ((LM_DEBUG, "Found ID: %C\n",
+                                  the_name[index].id.in()));
+                    }
                 }
             }
 
@@ -345,12 +355,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               if (!options.quiet)
                 {
                   if (the_name[index].kind && the_name[index].kind[0])
-                    ACE_DEBUG ((LM_DEBUG, "Creating sub-context ID: %C  (Kind: %C)\n",
-                               the_name[index].id.in(),
-                               the_name[index].kind.in()));
+                    {
+                      ACE_DEBUG ((LM_DEBUG, "Creating sub-context ID: %C  (Kind: %C)\n",
+                                  the_name[index].id.in(),
+                                  the_name[index].kind.in()));
+                    }
                   else
-                    ACE_DEBUG ((LM_DEBUG, "Creating sub-context ID: %C\n",
-                               the_name[index].id.in()));
+                    {
+                      ACE_DEBUG ((LM_DEBUG, "Creating sub-context ID: %C\n",
+                                  the_name[index].id.in()));
+                    }
                 }
 
               CosNaming::NamingContext_var this_nc =
@@ -375,8 +389,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   ACE_DEBUG ((LM_DEBUG, "Binding ID: %C",
                              the_name[index].id.in()));
                   if (the_name[index].kind && the_name[index].kind[0])
-                    ACE_DEBUG ((LM_DEBUG, "  (Kind: %C)\n",
-                               the_name[index].kind.in()));
+                    {
+                      ACE_DEBUG ((LM_DEBUG, "  (Kind: %C)\n",
+                                  the_name[index].kind.in()));
+                    }
                   ACE_DEBUG ((LM_DEBUG, "\n"));
                 }
               // Now re-attempt the (re)bind
@@ -413,12 +429,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       for (; index < the_name.length () - nf.rest_of_name.length (); ++index)
         {
           if (the_name[index].kind && the_name[index].kind[0])
-             ACE_DEBUG ((LM_DEBUG, "ID: %C  (Kind: %C)\n",
-               the_name[index].id.in(),
-               the_name[index].kind.in()));
+            {
+              ACE_DEBUG ((LM_DEBUG, "ID: %C  (Kind: %C)\n",
+                          the_name[index].id.in(),
+                          the_name[index].kind.in()));
+            }
           else
-             ACE_DEBUG ((LM_DEBUG, "ID: %C\n",
-               the_name[index].id.in()));
+            {
+              ACE_DEBUG ((LM_DEBUG, "ID: %C\n",
+                          the_name[index].id.in()));
+            }
         }
       const char *why= "Unknown reason";
       switch (nf.why)
@@ -437,12 +457,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       for (index = 0u; index < nf.rest_of_name.length (); ++index)
         {
           if (nf.rest_of_name[index].kind && nf.rest_of_name[index].kind[0])
-             ACE_DEBUG ((LM_DEBUG, "ID: %C  (Kind: %C)\n",
-               nf.rest_of_name[index].id.in(),
-               nf.rest_of_name[index].kind.in()));
+            {
+              ACE_DEBUG ((LM_DEBUG, "ID: %C  (Kind: %C)\n",
+                          nf.rest_of_name[index].id.in(),
+                          nf.rest_of_name[index].kind.in()));
+            }
           else
-             ACE_DEBUG ((LM_DEBUG, "ID: %C\n",
-               nf.rest_of_name[index].id.in()));
+            {
+              ACE_DEBUG ((LM_DEBUG, "ID: %C\n",
+                          nf.rest_of_name[index].id.in()));
+            }
         }
       ++err;
     }
