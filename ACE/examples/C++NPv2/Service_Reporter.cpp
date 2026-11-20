@@ -24,10 +24,13 @@ int Service_Reporter::init (int argc, ACE_TCHAR *argv[]) {
                        ACE_Get_Opt::ARG_REQUIRED);
 
   for (int c; (c = get_opt ()) != -1; )
-    switch (c) {
-    case 'p':
-      local_addr.set_port_number
-        (ACE_OS::atoi (get_opt.opt_arg ()));
+    {
+      switch (c)
+        {
+        case 'p':
+          local_addr.set_port_number
+            (ACE_OS::atoi (get_opt.opt_arg ()));
+        }
     }
 
   acceptor_.open (local_addr);
