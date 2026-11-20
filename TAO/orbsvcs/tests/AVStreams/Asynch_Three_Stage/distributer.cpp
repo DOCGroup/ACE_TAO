@@ -82,7 +82,7 @@ Distributer_Receiver_Callback::handle_destroy ()
               "Distributer_Callback::end_stream\n"));
 
   // We can close down now.
-  DISTRIBUTER::instance ()->done (1);
+  DISTRIBUTER::instance ()->done (true);
 
   return 0;
 }
