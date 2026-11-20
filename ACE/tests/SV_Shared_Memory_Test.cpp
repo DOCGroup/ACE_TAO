@@ -53,7 +53,9 @@ parent (char *shm)
   // This for loop executes in a critical section proteced by
   // <parent_mutex>.
   for (int i = 0; i < SHMSZ; ++i)
-    shm[i] = SHMDATA[i];
+    {
+      shm[i] = SHMDATA[i];
+    }
 
   int result;
   result = parent_mutex->release ();
@@ -101,18 +103,24 @@ child (char *shm)
   // can do non-blocking acquire() calls with the ACE System V
   // semaphore wrappers.
   while ((result = mutex.tryacquire ()) == -1)
-    if (errno == EAGAIN)
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P) spinning in child!\n")));
-    else
       {
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P) child mutex.tryacquire")));
-        ACE_TEST_ASSERT (result != -1);
+        if (errno == EAGAIN)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("(%P) spinning in child!\n")));
+          }
+        else
+          {
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P) child mutex.tryacquire")));
+            ACE_TEST_ASSERT (result != -1);
+          }
       }
 
   for (int i = 0; i < SHMSZ; ++i)
-    ACE_TEST_ASSERT (SHMDATA[i] == shm[i]);
+    {
+      ACE_TEST_ASSERT (SHMDATA[i] == shm[i]);
+    }
 
   result = synch.release ();
   ACE_TEST_ASSERT (result != -1);
