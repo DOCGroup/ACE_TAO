@@ -17,7 +17,9 @@ ACE_MT_MEM_IO::Simple_Queue::init (MQ_Struct *mq,
                                    ACE_MEM_SAP::MALLOC_TYPE *malloc)
 {
   if (this->mq_ != nullptr)
-    return -1;
+    {
+      return -1;
+    }
 
   this->mq_ = mq;
   this->malloc_ = malloc;
@@ -60,14 +62,18 @@ ACE_MEM_IO::fetch_recv_buf (int flag, const ACE_Time_Value *timeout)
   ACE_TRACE ("ACE_MEM_IO::fetch_recv_buf");
 
   if (!this->deliver_strategy_)
-    return -1;
+    {
+      return -1;
+    }
 
   // This method can only be called when <buf_size_> == <cur_offset_>.
   ACE_ASSERT (this->buf_size_ == this->cur_offset_);
 
   // We have done using the previous buffer, return it to malloc.
   if (this->recv_buffer_ != nullptr)
-    this->deliver_strategy_->release_buffer (this->recv_buffer_);
+    {
+      this->deliver_strategy_->release_buffer (this->recv_buffer_);
+    }
 
   this->cur_offset_ = 0;
   ssize_t retv {};
@@ -75,9 +81,13 @@ ACE_MEM_IO::fetch_recv_buf (int flag, const ACE_Time_Value *timeout)
   if ((retv = this->deliver_strategy_->recv_buf (this->recv_buffer_,
                                                  flag,
                                                  timeout)) > 0)
-    this->buf_size_ = retv;
+    {
+      this->buf_size_ = retv;
+    }
   else
-    this->buf_size_ = 0;
+    {
+      this->buf_size_ = 0;
+    }
 
   return retv;
 }

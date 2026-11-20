@@ -188,11 +188,17 @@ ACE_Message_Block::msg_class () const
   ACE_TRACE ("ACE_Message_Block::msg_class");
 
   if (this->msg_type () < ACE_Message_Block::MB_PRIORITY)
-    return ACE_Message_Block::MB_NORMAL;
+    {
+      return ACE_Message_Block::MB_NORMAL;
+    }
   else if (this->msg_type () < ACE_Message_Block::MB_USER)
-    return ACE_Message_Block::MB_PRIORITY;
+    {
+      return ACE_Message_Block::MB_PRIORITY;
+    }
   else
-    return ACE_Message_Block::MB_USER;
+    {
+      return ACE_Message_Block::MB_USER;
+    }
 }
 
 ACE_INLINE bool
