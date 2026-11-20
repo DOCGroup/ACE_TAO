@@ -263,7 +263,7 @@ ACEXML_NamespaceSupport::processName (ACEXML_Char const *qName,
     }
   else
     {
-      prefix.set (qName, len, 1);
+      prefix.set (qName, len, true);
       name = qName + len + 1;
     }
 

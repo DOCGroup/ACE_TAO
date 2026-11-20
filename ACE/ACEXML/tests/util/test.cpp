@@ -64,7 +64,7 @@ static int run_tests (std::array<ACEXML_String, NUM_TEST_STRS> const& test_strin
 
   // Test 3 - Escape the strings using a shared temporary string. This time, we use
   // the alternate form of ACEXML_escape_string() so that our temporary buffer is reused.
-  tmp.clear (1);
+  tmp.clear (true);
   start = ACE_OS::gettimeofday ();
   for (size_t i {}; i < iterations; ++i)
   {

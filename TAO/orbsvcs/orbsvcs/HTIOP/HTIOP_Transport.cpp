@@ -122,7 +122,7 @@ TAO::HTIOP::Transport::register_handler ()
   // Set the flag in the Connection Handler and in the Wait Strategy
   // @@Maybe we should set these flags after registering with the
   // reactor. What if the  registration fails???
-  this->ws_->is_registered (1);
+  this->ws_->is_registered (true);
 
   ACE::HTBP::Session *s = this->connection_handler_->peer().session();
   if (s)

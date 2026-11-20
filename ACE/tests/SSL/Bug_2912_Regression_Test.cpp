@@ -582,7 +582,7 @@ Acceptor::cancel ()
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_, -1);
 
   this->cancel_flag_ = 1;
-  this->reissue_accept (0);
+  this->reissue_accept (false);
 
   ACE_HANDLE h = this->get_handle ();
   if (h != ACE_INVALID_HANDLE)

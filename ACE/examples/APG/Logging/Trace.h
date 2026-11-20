@@ -17,7 +17,7 @@ public:
     if (lm->tracing_enabled ()
         && lm->trace_active () == 0)
       {
-        lm->trace_active (1);
+        lm->trace_active (true);
         ACE_DEBUG
           ((LM_TRACE,
             ACE_TEXT ("%s%*s(%t) calling %s in file `%s'")
@@ -28,7 +28,7 @@ public:
             this->name_,
             this->file_,
             this->line_));
-        lm->trace_active (0);
+        lm->trace_active (false);
       }
   }
 
@@ -48,7 +48,7 @@ public:
     if (lm->tracing_enabled ()
         && lm->trace_active () == 0)
       {
-        lm->trace_active (1);
+        lm->trace_active (true);
         ACE_DEBUG
           ((LM_TRACE,
             ACE_TEXT ("%s%*s(%t) leaving %s in file `%s'")
@@ -59,7 +59,7 @@ public:
             this->name_,
             this->file_,
             this->line_));
-        lm->trace_active (0);
+        lm->trace_active (false);
       }
   }
 
