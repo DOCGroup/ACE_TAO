@@ -50,18 +50,22 @@ public:
 
       // Set the local variable.
       if (timed_event_loop == nullptr)
-        this->time_flag_ = 0;
+        {
+          this->time_flag_ = 0;
+        }
       else
-      {
-        this->time_flag_ = 1;
-      }
+        {
+          this->time_flag_ = 1;
+        }
 
       // Spawn the threads.
       if (this->activate (THR_NEW_LWP, 5) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%N:%l:%p\n",
-                           "My_Task:open: <activate> failed"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "%N:%l:%p\n",
+                             "My_Task:open: <activate> failed"),
+                            -1);
+        }
 
       return 0;
     }
@@ -80,9 +84,11 @@ public:
           ACE_Time_Value run_time (13);
 
           if (ACE_Proactor::instance ()->run_event_loop (run_time) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t):%p.\n",
-                               "<Proactor::run_event_loop> failed"),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t):%p.\n",
+                                 "<Proactor::run_event_loop> failed"),
+                                -1);
+            }
         }
       else
         {
@@ -90,9 +96,11 @@ public:
                       "(%P|%t):Going to do *indefinite* <run_event_loop>\n"));
 
           if (ACE_Proactor::instance ()->run_event_loop () == -1)
-            ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t):%p.\n",
-                               "<Proactor::run_event_loop> failed"),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t):%p.\n",
+                                 "<Proactor::run_event_loop> failed"),
+                                -1);
+            }
         }
       return 0;
     };
@@ -121,24 +129,30 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 
   // Test the indefinite run event loop.
   if (task1.open (nullptr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%N:%l:(%P | %t):Failed to <open> the task\n"),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%N:%l:(%P | %t):Failed to <open> the task\n"),
+                        1);
+    }
 
   // Test the indefinite run event loop. Just pass a non-zero.
   if (task2.open ((void *)&task2) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%N:%l:(%P | %t):Failed to <open> the task\n"),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%N:%l:(%P | %t):Failed to <open> the task\n"),
+                        1);
+    }
 
   // Give a gap.
   ACE_OS::sleep (3);
 
   // End the event loop.
   if (ACE_Proactor::instance ()->end_event_loop () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%N:%l:(%P | %t):Failed to <end_event_loop>\n"),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%N:%l:(%P | %t):Failed to <end_event_loop>\n"),
+                        1);
+    }
 
   ACE_Thread_Manager::instance ()->wait ();
 
