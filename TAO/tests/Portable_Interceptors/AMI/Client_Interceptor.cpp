@@ -108,5 +108,5 @@ void
 Echo_Client_Request_Interceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr)
 {
-  Echo_Client_Request_Interceptor::exception_count++;
+  ++Echo_Client_Request_Interceptor::exception_count;
 }

@@ -32,7 +32,7 @@ public:
                 ACE_TEXT("Main::Test_SIGINT_Handler (%@) - Result %i\n"),
                 static_cast<void *> (this),
                 result));
-    Test_SIGINT_Handler::registration_count_++;
+    ++Test_SIGINT_Handler::registration_count_;
   }
 
   ~Test_SIGINT_Handler() override
@@ -47,7 +47,7 @@ public:
                 ACE_TEXT("Main::Test_SIGINT_Handler (%@) - %C\n"),
                 static_cast<void *> (this),
                 this->message_.c_str()));
-    Test_SIGINT_Handler::handle_signal_count_++;
+    ++Test_SIGINT_Handler::handle_signal_count_;
     return 0;
   }
 

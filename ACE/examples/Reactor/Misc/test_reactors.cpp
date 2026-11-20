@@ -51,7 +51,7 @@ Test_Task::Test_Task ()
 {
   ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon, reclock_);
 
-  Test_Task::task_count_++;
+  ++Test_Task::task_count_;
   ACE_DEBUG ((LM_DEBUG,
               "(%t) TT+ Test_Task::task_count_ = %d\n",
               Test_Task::task_count_));

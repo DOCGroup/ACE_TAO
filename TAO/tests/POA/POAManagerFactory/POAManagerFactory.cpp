@@ -27,7 +27,7 @@ static bool verbose {};
 { \
     if (!(Condition)) \
     { \
-        fail++; \
+        ++fail; \
         if (!verbose) \
           ACE_ERROR ((LM_ERROR, ACE_TEXT("(%P|%t) - Failure at line %l\n"))); \
     } \

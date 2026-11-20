@@ -24,7 +24,7 @@ ReadHandler::ReadHandler() : ACE_Event_Handler(), mStream() {
   do { \
      if (mInvocationCounter > 0) \
        ACE_ERROR((LM_ERROR, ACE_TEXT("Multiple invocations detected.\n"))); \
-     mInvocationCounter++; } \
+     ++mInvocationCounter; } \
   while (0)
 
 /**

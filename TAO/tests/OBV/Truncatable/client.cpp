@@ -19,7 +19,7 @@ bool verbose = false;
 { \
     if (!(Condition)) \
     { \
-        fail++; \
+        ++fail; \
         if (!verbose) \
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) client - Failure at line %l\n"))); \
     } \

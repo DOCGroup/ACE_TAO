@@ -1412,7 +1412,7 @@ int IpxAddress::parse_address( const char *inaddr)
   str1 = ( unsigned char *) temp;
   while( *str1 != separator)
     {
-      str1++;
+      ++str1;
     }
   str2 = str1 + 1;
   *str1 = 0;

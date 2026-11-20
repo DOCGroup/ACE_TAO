@@ -39,7 +39,7 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 { \
     if ((Condition)==0) \
     { \
-        fail++; \
+        ++fail; \
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Failure at line %l\n")); \
     } \
 }
