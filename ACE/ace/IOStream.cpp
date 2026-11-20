@@ -99,7 +99,9 @@ ACE_Streambuf::recv_timeout (ACE_Time_Value *tv)
       recv_timeout_ = std::addressof (recv_timeout_value_);
     }
   else
-    recv_timeout_ = 0;
+    {
+      recv_timeout_ = 0;
+    }
 
   return rval;
 }
@@ -111,7 +113,9 @@ ACE_Streambuf::underflow ()
   // a failure.
 
   if (ACE_BIT_DISABLED (mode_, ios::in))
-    return EOF;
+    {
+      return EOF;
+    }
 
   // If base () is empty then this is the first time any get/put
   // operation has been attempted on the stream.
@@ -158,7 +162,9 @@ ACE_Streambuf::underflow ()
           // data before we request data since the peer will probably
           // need what we're sending before it can respond.
           if (out_waiting () && syncout () == EOF)
-            return EOF;
+            {
+              return EOF;
+            }
 
           if( ! pbase() )
             {
@@ -233,7 +239,9 @@ ACE_Streambuf::overflow (int c)
 {
   // Check to see if output is allowed at all.
   if (! (mode_ & ios::out))
-    return EOF;
+    {
+      return EOF;
+    }
 
   if (!base ())
     {
@@ -291,7 +299,9 @@ ACE_Streambuf::overflow (int c)
       // get here unless this is the case...
 
       if (out_waiting () && EOF == syncout ())
-        return EOF;
+        {
+          return EOF;
+        }
     }
 
   // If we're not putting EOF, then we have to deal with the character
@@ -331,9 +341,13 @@ ACE_Streambuf::syncout ()
   // is how we do it.
 
   if (flushbuf () == EOF)
-    return EOF;
+    {
+      return EOF;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 int
@@ -349,9 +363,13 @@ ACE_Streambuf::sync ()
   // sent...
 
   if (out_waiting ())
-    return syncout ();
+    {
+      return syncout ();
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 // flushbuf
@@ -365,7 +383,9 @@ ACE_Streambuf::flushbuf ()
   // sent to the peer.
 
   if (pptr () <= pbase ())
-    return 0;
+    {
+      return 0;
+    }
 
   // 4/12/97 -- JCEJ
   // Kludge!!!
@@ -404,7 +424,9 @@ ACE_Streambuf::flushbuf ()
   // sent or an error will be returned.
 
   if (this->send (pbase (), pptr () - pbase ()) == -1)
-    return EOF;
+    {
+      return EOF;
+    }
 
   // Now that we've sent everything in the output buffer, we reset the
   // buffer pointers to appear empty.
@@ -427,11 +449,15 @@ ACE_Streambuf::get_one_byte ()
   if (this->recv_n (base (), 1, MSG_PEEK, this->recv_timeout_) != 1)
     {
       if (errno == ETIME)
-        this->timeout_ = 1;
+        {
+          this->timeout_ = 1;
+        }
       return EOF;
     }
   else
-    return 1;
+    {
+      return 1;
+    }
 }
 
 // This will be called when the read (get) buffer has been exhausted
@@ -444,7 +470,9 @@ ACE_Streambuf::fillbuf ()
   // block until something shows up.
 
   if (get_one_byte () == EOF)
-    return EOF;
+    {
+      return EOF;
+    }
 
   // Now, get whatever else may be in the buffer.  This will return if
   // there is nothing in the buffer.
@@ -458,7 +486,9 @@ ACE_Streambuf::fillbuf ()
   if (bc < 0)
     {
       if (errno == ETIME)
-        this->timeout_ = 1;
+        {
+          this->timeout_ = 1;
+        }
       return EOF;
     }
 
@@ -553,13 +583,17 @@ ACE_Streambuf::reset_get_buffer (char *newBuffer,
   if (newBuffer)
     {
       if (streambuf_size_ != _streambuf_size)
-        return 0;
+        {
+          return 0;
+        }
       this->eback_saved_ = newBuffer;
     }
   else
-    ACE_NEW_RETURN (this->eback_saved_,
-                    char[streambuf_size_],
-                    0);
+    {
+      ACE_NEW_RETURN (this->eback_saved_,
+                      char[streambuf_size_],
+                      0);
+    }
 
   this->gptr_saved_ = this->eback_saved_ + _gptr;
   this->egptr_saved_ = this->eback_saved_ + _egptr;
@@ -602,13 +636,17 @@ ACE_Streambuf::reset_put_buffer (char *newBuffer,
   if (newBuffer)
     {
       if (streambuf_size_ != _streambuf_size)
-        return 0;
+        {
+          return 0;
+        }
       this->pbase_saved_ = newBuffer;
     }
   else
-    ACE_NEW_RETURN (this->pbase_saved_,
-                    char[streambuf_size_],
-                    0);
+    {
+      ACE_NEW_RETURN (this->pbase_saved_,
+                      char[streambuf_size_],
+                      0);
+    }
 
   this->pptr_saved_ = this->pbase_saved_ + _pptr;
   this->epptr_saved_ = this->pbase_saved_ + streambuf_size_;
