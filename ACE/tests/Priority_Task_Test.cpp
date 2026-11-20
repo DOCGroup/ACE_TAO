@@ -108,15 +108,19 @@ Priority_Task::open (void *arg)
                           this->priority_) == -1)
         {
           if (ACE_OS::last_error () == EPERM)
-            ACE_ERROR_RETURN ((LM_INFO,
-                               ACE_TEXT ("Insufficient privilege to run this test.\n")),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_INFO,
+                                 ACE_TEXT ("Insufficient privilege to run this test.\n")),
+                                -1);
+            }
           else
-            ACE_DEBUG ((LM_ERROR,
-                        ACE_TEXT ("(%t) task activation at priority %d failed, ")
-                        ACE_TEXT ("exiting!\n%a"),
-                        this->priority_,
-                        -1));
+            {
+              ACE_DEBUG ((LM_ERROR,
+                          ACE_TEXT ("(%t) task activation at priority %d failed, ")
+                          ACE_TEXT ("exiting!\n%a"),
+                          this->priority_,
+                          -1));
+            }
         }
     }
   return 0;
@@ -145,9 +149,11 @@ Priority_Task::svc ()
   }
 
   if (prio == this->priority_)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) actual prio of %d equals desired priority\n"),
-                prio));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) actual prio of %d equals desired priority\n"),
+                  prio));
+    }
   else
     {
       ACE_DEBUG ((LM_ERROR,
@@ -168,24 +174,30 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_START_TEST (ACE_TEXT ("Priority_Task_Test"));
 
   if (argc <= 1)
-    // Disable LM_DEBUG messages.
-    ACE_Log_Msg::instance ()->priority_mask
-      (ACE_Log_Msg::instance ()->priority_mask () &~ LM_DEBUG);
+    {
+      // Disable LM_DEBUG messages.
+      ACE_Log_Msg::instance ()->priority_mask
+        (ACE_Log_Msg::instance ()->priority_mask () &~ LM_DEBUG);
+    }
   else if (argc == 2)
     {
       if (ACE_OS::strcmp (argv[1],
                           ACE_TEXT ("-d")) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           usage,
-                           argv [0]),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             usage,
+                             argv [0]),
+                            -1);
+        }
       // else -d option: don't disable LM_DEBUG messages
     }
   else
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       usage,
-                       argv [0]),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         usage,
+                         argv [0]),
+                        -1);
+    }
 
   int status = 0;
 
@@ -223,11 +235,13 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_Thread_Manager::instance ()->wait ();
 
   for (i = 0; i < ACE_MAX_ITERATIONS; ++i)
-    if (!tasks[i].succeeded ())
-      {
-        ++status;
-        break;
-      }
+    {
+      if (!tasks[i].succeeded ())
+        {
+          ++status;
+          break;
+        }
+    }
 
 #else
   ACE_ERROR ((LM_DEBUG,
