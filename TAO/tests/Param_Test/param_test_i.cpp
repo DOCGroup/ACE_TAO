@@ -757,11 +757,15 @@ Param_Test_i::test_any (const CORBA::Any &a1,
         {
           ACE_DEBUG ((LM_DEBUG, "Received Fixed_Array:"));
           for (CORBA::ULong i = 0; i < Param_Test::DIM1; ++i)
+          {
             ACE_DEBUG ((LM_DEBUG, " %d", array[i]));
+          }
           ACE_DEBUG ((LM_DEBUG, "\n"));
         }
       for (CORBA::ULong i = 0; i < Param_Test::DIM1; ++i)
+      {
         array[i] = i * i;
+      }
       a2 <<= Param_Test::Fixed_Array_forany (array);
       *ret <<= Param_Test::Fixed_Array_forany (array);
     }
@@ -771,12 +775,16 @@ Param_Test_i::test_any (const CORBA::Any &a1,
         {
           ACE_DEBUG ((LM_DEBUG, "Received Unbounded Short_Seq:"));
           for (size_t i = 0; i < ub_short_sequence->length (); ++i)
+          {
             ACE_DEBUG ((LM_DEBUG, " %d", (*ub_short_sequence)[i]));
+          }
           ACE_DEBUG ((LM_DEBUG, "\n"));
         }
       CORBA::ShortSeq newseq (*ub_short_sequence);
       for (size_t i = 0; i < ub_short_sequence->length (); ++i)
+      {
         newseq[i] = (CORBA::Short) (i * i);
+      }
       a2   <<= newseq;
       *ret <<= newseq;
     }
@@ -786,12 +794,16 @@ Param_Test_i::test_any (const CORBA::Any &a1,
         {
           ACE_DEBUG ((LM_DEBUG, "Received Bounded_Short_Seq:"));
           for (size_t i = 0; i < bd_short_sequence->length (); ++i)
+          {
             ACE_DEBUG ((LM_DEBUG, " %d", (*bd_short_sequence)[i]));
+          }
           ACE_DEBUG ((LM_DEBUG, "\n"));
         }
       Param_Test::Bounded_Short_Seq newseq (*bd_short_sequence);
       for (size_t i = 0; i < bd_short_sequence->length (); ++i)
+      {
         newseq[i] = (CORBA::Short) (i * i);
+      }
       a2 <<= newseq;
       *ret <<= newseq;
     }
@@ -818,6 +830,7 @@ Param_Test_i::test_any (const CORBA::Any &a1,
       *ret >>= bu_ret;
 
       if (TAO_debug_level > 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "Received Big Union\n"
                     "  in %d\n"
                     "  inout %d\n"
@@ -827,6 +840,7 @@ Param_Test_i::test_any (const CORBA::Any &a1,
                     bu_inout->the_long (),
                     bu_out->the_long (),
                     bu_ret->the_long () ));
+      }
     }
   else if (a1 >>= small_union)
     {
@@ -844,6 +858,7 @@ Param_Test_i::test_any (const CORBA::Any &a1,
       *ret >>= bu_ret;
 
       if (TAO_debug_level > 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "Received Small Union\n"
                     "  in %d\n"
                     "  inout %d\n"
@@ -853,6 +868,7 @@ Param_Test_i::test_any (const CORBA::Any &a1,
                     bu_inout->the_long (),
                     bu_out->the_long (),
                     bu_ret->the_long () ));
+      }
     }
   else
     {
