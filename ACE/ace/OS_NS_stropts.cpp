@@ -127,7 +127,9 @@ ACE_OS::ioctl (ACE_HANDLE socket,
                        0);
 
     if (result == SOCKET_ERROR)
-      return result;
+      {
+        return result;
+      }
 
     ACE_Flow_Spec sending_flowspec (qos->SendingFlowspec.TokenRate,
                                     qos->SendingFlowspec.TokenBucketSize,
