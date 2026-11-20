@@ -57,11 +57,12 @@ Snmp::Snmp (unsigned short port)
   ACE_TRACE("Snmp::Snmp");
 
   ACE_INET_Addr addr(port); // any port,address is ok
-  if (iv_snmp_session_.open(addr) < 0) {
-     last_transaction_status_ = errno; // open udp/ipv4 socket
-     ACE_DEBUG((LM_DEBUG, "Snmp::snmp::open port %d failed", port));
-     return;
-  }
+  if (iv_snmp_session_.open(addr) < 0)
+    {
+      last_transaction_status_ = errno; // open udp/ipv4 socket
+      ACE_DEBUG((LM_DEBUG, "Snmp::snmp::open port %d failed", port));
+      return;
+    }
 
   // initial request id randomly generated then monotonically incremented
   req_id_ = static_cast<unsigned> (ACE_OS::time (nullptr));
@@ -105,10 +106,11 @@ void Snmp::check_default_port (UdpTarget &target, unsigned short port)
 {
   UdpAddress tmp;
   target.get_address(tmp);
-  if (tmp.get_port() == 0) {
-    tmp.set_port(port);
-    target.set_address(tmp);
-  }
+  if (tmp.get_port() == 0)
+    {
+      tmp.set_port(port);
+      target.set_address(tmp);
+    }
 }
 
 int Snmp::run_transaction (Pdu &pdu, UdpTarget &target)
@@ -274,33 +276,34 @@ int Snmp::trap (Pdu &pdu, UdpTarget &target)
 void Snmp::override_host_name (char const *name)
 {
   if (name != nullptr)
-  {
-    std::strncpy (host_name_, name, MAXHOSTNAMELEN);
-    host_name_[MAXHOSTNAMELEN-1] = 0;
-  }
-  else {
-    host_name_[0] = 0;
-  }
+    {
+      std::strncpy (host_name_, name, MAXHOSTNAMELEN);
+      host_name_[MAXHOSTNAMELEN-1] = 0;
+    }
+  else
+    {
+      host_name_[0] = 0;
+    }
 }
 
 // Returns the current host name in the supplied string.
 void Snmp::get_host_name (char *name, int len)
 {
   if (name != nullptr)
-  {
-    if (std::strlen (host_name_) > 0)
     {
-      std::strncpy (name, host_name_, len);
-      name[len-1] = 0;
+      if (std::strlen (host_name_) > 0)
+        {
+          std::strncpy (name, host_name_, len);
+          name[len-1] = 0;
+        }
+      else
+        {
+          if (ACE_OS::hostname(name, len-1) == -1)
+            {
+              name[0] = 0;
+            }
+        }
     }
-    else
-    {
-      if (ACE_OS::hostname(name, len-1) == -1)
-      {
-        name[0] = 0;
-      }
-    }
-  }
 }
 
 Snmp_Result::~Snmp_Result () = default;
