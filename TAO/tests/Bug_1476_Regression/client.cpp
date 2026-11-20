@@ -23,28 +23,30 @@ parse_args (int argc, ACE_TCHAR *argv[], Options &options)
   int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'k':
-        options.ior = get_opts.opt_arg ();
-        break;
-      case 'n' :
-        options.number_of_oneways = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
-      case 'c' :
-        options.number_of_client_tasks = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior>"
-                           "-n <number of oneways>"
-                           "-c <number of client tasks>"
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
+    {
+      switch (c)
+        {
+        case 'k':
+          options.ior = get_opts.opt_arg ();
+          break;
+        case 'n' :
+          options.number_of_oneways = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
+        case 'c' :
+          options.number_of_client_tasks = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage:  %s "
+                             "-k <ior>"
+                             "-n <number of oneways>"
+                             "-c <number of client tasks>"
+                             "\n",
+                             argv [0]),
+                            -1);
+        }
+    }
   // Indicates successful parsing of the command line
   return 0;
 }
@@ -61,9 +63,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            1);
+        }
 
       PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());

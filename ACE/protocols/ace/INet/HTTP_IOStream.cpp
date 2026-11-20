@@ -33,7 +33,9 @@ namespace ACE
     int StreamBuffer::read_from_stream (char* buffer, std::streamsize length)
       {
         if (this->policy_)
-          return this->policy_->read_from_stream (buffer, length);
+          {
+            return this->policy_->read_from_stream (buffer, length);
+          }
         else
         {
           return this->read_from_stream_i (buffer, length);
@@ -49,7 +51,9 @@ namespace ACE
     int StreamBuffer::write_to_stream (const char* buffer, std::streamsize length)
       {
         if (this->policy_)
-          return this->policy_->write_to_stream (buffer, length);
+          {
+            return this->policy_->write_to_stream (buffer, length);
+          }
         else
         {
           return this->write_to_stream_i (buffer, length);

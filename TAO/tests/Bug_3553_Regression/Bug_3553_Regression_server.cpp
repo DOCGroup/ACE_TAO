@@ -10,11 +10,12 @@ parse_args (int argc, ACE_TCHAR *argv[], int &cache_size)
   int option {};
 
   while ((option = get_opts ()) != -1)
-    switch (option)
-      {
-      case 'c':
-        cache_size = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
+    {
+      switch (option)
+        {
+        case 'c':
+          cache_size = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
 
       case '?':
       default:
@@ -24,7 +25,8 @@ parse_args (int argc, ACE_TCHAR *argv[], int &cache_size)
                            "\n",
                            argv [0]),
                           -1);
-      }
+        }
+    }
   return 0;
 }
 
@@ -49,9 +51,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Panic: nil RootPOA\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Panic: nil RootPOA\n"),
+                            1);
+        }
 
       Hello *hello_impl {};
       ACE_NEW_RETURN (hello_impl,

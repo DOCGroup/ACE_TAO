@@ -25,24 +25,26 @@ parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior_output_file)
   int option {};
 
   while ((option = get_opts ()) != -1)
-    switch (option)
-      {
-      case 'o':
-        ior_output_file = get_opts.opt_arg ();
-        break;
-      case 'd':
-        ++TAO_debug_level;
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "[-oior_output_file]"
-                           "[-d]"
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
+    {
+      switch (option)
+        {
+        case 'o':
+          ior_output_file = get_opts.opt_arg ();
+          break;
+        case 'd':
+          ++TAO_debug_level;
+          break;
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage:  %s "
+                             "[-oior_output_file]"
+                             "[-d]"
+                             "\n",
+                             argv [0]),
+                            -1);
+        }
+    }
 
   // Indicates successful parsing of command line.
   return 0;
@@ -132,10 +134,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         std::unique_ptr<FILE, int (*) (FILE *)> output_file (
           ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
         if (!output_file)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Cannot open output file %s for writing IOR",
-                             ior_output_file),
-                            -1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Cannot open output file %s for writing IOR",
+                               ior_output_file),
+                              -1);
+          }
         ACE_OS::fprintf (output_file.get (), "%s", file_system_ior.in ());
       }
 
