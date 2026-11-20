@@ -45,18 +45,22 @@ MT_Server::read_ior (ACE_TCHAR const *filename)
   ACE_HANDLE const f_handle = ACE_OS::open (filename, 0);
 
   if (f_handle == ACE_INVALID_HANDLE)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to open %s for reading\n",
                        filename),
                       -1);
+  }
 
   ACE_Read_Buffer ior_buffer (f_handle, true);
   ACE_Read_Buffer_Unique_Ptr ior_buffer_data (
     ior_buffer.read (), {ior_buffer.alloc ()});
   if (!ior_buffer_data)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to allocate memory to read ior.\n"),
                        -1);
+  }
 
   this->object_key_.assign (ior_buffer_data.get ());
   return 0;
@@ -69,6 +73,7 @@ MT_Server::parse_args ()
   int c;
 
   while ((c = get_opts ()) != -1)
+  {
     switch (c)
       {
       case 'd':  // debug flag.
@@ -76,10 +81,12 @@ MT_Server::parse_args ()
         break;
       case 'f': // The local server thread uses the first server's IOR.
         if (this->read_ior (get_opts.opt_arg ()) < 0)
+        {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to read ior from %s\n",
                              get_opts.opt_arg ()),
                             -1);
+        }
         break;
       case 'g':
       case 'h':
@@ -104,6 +111,7 @@ MT_Server::parse_args ()
                            this->argv_[0]),
                           -1);
       }
+  }
 
   // Indicates successful parsing of command line.
   return 0;
@@ -118,9 +126,11 @@ MT_Server::init (int argc,
   this->argv_.assign (argv, argv + argc + 1);
   this->orb_manager_ptr_ = orb_manager_ptr;
   if (this->orb_manager_ptr_ == nullptr)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        "MT_Server::init: ORB_Manager is nil!\n"),
                        -1);
+  }
 
   try
     {
@@ -144,9 +154,11 @@ MT_Server::init (int argc,
 
       // retrieve the object reference to the distant mt object
       if (this->object_key_.empty ())
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            "The IOR is nil, not able to get the object.\n"),
                           -1);
+      }
 
       CORBA::ORB_var orb_var = this->orb_manager_ptr_->orb ();
 
@@ -154,9 +166,11 @@ MT_Server::init (int argc,
         orb_var->string_to_object (this->object_key_.c_str ());
 
       if (CORBA::is_nil (object_var.in ()))
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            "No proper object has been returned.\n"),
                           -1);
+      }
 
       this->mT_Object_var_ = MT_Object::_narrow (object_var.in ());
 
@@ -228,7 +242,9 @@ MT_Server::run_ORB_briefly ()
                 MT_Object::_narrow (object_act.in ());
 
               for (unsigned int i = 0; i < this->iterations_; ++i)
+              {
                 this->mT_Object_var_->yadda (0, tmp.in ());
+              }
 
               root_poa->deactivate_object (id.in ());
             }
