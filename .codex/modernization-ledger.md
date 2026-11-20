@@ -13507,3 +13507,9 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Added Allman braces to 90 single-statement bodies in `EC_Default_Factory.cpp`, plus remaining bodies in `ECG_CDR_Message_Receiver.cpp`, `ECG_UDP_EH.cpp`, and `ECG_Simple_Mcast_EH.cpp`.
 - Re-scanned all 71 translation units in `TAO/orbsvcs/orbsvcs/compile_commands.json`, explicitly enabling C++17 for the stale database entries: zero brace warnings and zero parse errors. `git diff --check` passed for each edited file. No build or runtime tests were run.
 - Commits: `88a508db99c`, `611ef84d7db`, `9387219e054`, and `28f8f7defa2`. The scan covers this compile database only; broader ACE/TAO brace auditing remains open.
+
+## 2026-11-20 ACE example brace follow-up
+
+- Added Allman braces to `CPP-connector.cpp`, `CPP-acceptor.cpp`, `test_dll.cpp`, `Logging_Handler.cpp`, and `Service_Reporter.cpp`. The two nonblocking examples include preprocessor-controlled code inside the newly braced branches.
+- Focused clang-tidy checks and `git diff --check` passed for each edited file. A rescan of all 400 translation units in `ACE/examples/compile_commands.json`, with C++17 and the ACE include root supplied, reports 423 remaining brace warnings and zero parse errors (down from 452 warnings). No build or runtime tests were run.
+- Commits: `2e732f1b4b4`, `bbed980d787`, `bbfbed44c3a`, `88251a10a82`, and `53178af02cb`. The full ACE/TAO brace audit remains open.
