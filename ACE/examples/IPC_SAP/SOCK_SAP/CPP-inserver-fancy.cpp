@@ -161,7 +161,8 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 
   for (int c; (c = getopt ()) != -1; )
   //FUZZ: enable check_for_lack_ACE_OS
-    switch (c)
+    {
+      switch (c)
       {
       case 'p':
         this->port_ = ACE_OS::atoi (getopt.opt_arg ());
@@ -177,6 +178,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                            "(%P|%t) usage: %n [-p <port>] [-v]"),
                           -1);
       }
+    }
 
   return 0;
 }
@@ -197,10 +199,12 @@ Handler::open (void *)
 
   // Make sure we're not in non-blocking mode.
   if (this->peer ().disable (ACE_NONBLOCK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "disable"),
-                       0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "disable"),
+                        0);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) client %s connected from %d on handle %@\n",
@@ -249,10 +253,12 @@ Handler::parse_header_and_allocate_buffer (char *&request,
       return -1;
     }
   else if (result == -1 || result != sizeof (ACE_INT32))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) %p\n",
-                       "recv_n failed"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%P|%t) %p\n",
+                         "recv_n failed"),
+                        -1);
+    }
   else
     {
       *len = ntohl (*len);
@@ -288,7 +294,9 @@ Twoway_Handler::run ()
 
       if (parse_header_and_allocate_buffer (request,
                                             &len) == -1)
-        return -1;
+        {
+          return -1;
+        }
 
       // Subtract off the sizeof the length prefix.
       ssize_t r_bytes = this->peer ().recv_n (request,
@@ -311,22 +319,28 @@ Twoway_Handler::run ()
                && ACE::write_n (ACE_STDOUT,
                                 request,
                                 r_bytes) != r_bytes)
-        ACE_ERROR ((LM_ERROR,
-                    "%p\n",
-                    "ACE::write_n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%p\n",
+                      "ACE::write_n"));
+        }
       else
         {
           ssize_t s_bytes = (ssize_t) OPTIONS::instance ()->reply_message_len ();
 
           // Don't try to send more than is in the request buffer!
           if (s_bytes > r_bytes)
-            s_bytes = r_bytes;
+            {
+              s_bytes = r_bytes;
+            }
 
           if (this->peer ().send_n (request,
                                     s_bytes) != s_bytes)
-            ACE_ERROR ((LM_ERROR,
-                        "%p\n",
-                        "send_n"));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "%p\n",
+                          "send_n"));
+            }
         }
       this->total_bytes_ += size_t (r_bytes);
       ++this->message_count_;
@@ -378,7 +392,9 @@ Oneway_Handler::run ()
 
       if (parse_header_and_allocate_buffer (request,
                                             &len) == -1)
-        return -1;
+        {
+          return -1;
+        }
 
       // Subtract off the sizeof the length prefix.
       ssize_t r_bytes = this->peer ().recv_n (request,
@@ -401,9 +417,11 @@ Oneway_Handler::run ()
                && ACE::write_n (ACE_STDOUT,
                                 request,
                                 r_bytes) != r_bytes)
-        ACE_ERROR ((LM_ERROR,
-                    "%p\n",
-                    "ACE::write_n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%p\n",
+                      "ACE::write_n"));
+        }
 
       this->total_bytes_ += size_t (r_bytes);
       ++this->message_count_;
@@ -439,16 +457,20 @@ Handler_Factory::init_acceptors ()
   // Create acceptors, reuse the address.
   if (this->twoway_acceptor_.open (twoway_server_addr, 1) == -1
       || this->oneway_acceptor_.open (oneway_server_addr, 1) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "open"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "open"),
+                        -1);
+    }
   else if (this->twoway_acceptor_.get_local_addr (twoway_server_addr) == -1
            || this->oneway_acceptor_.get_local_addr (oneway_server_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "get_local_addr"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "get_local_addr"),
+                        -1);
+    }
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) starting twoway server at port %d and oneway server at port %d\n",
               twoway_server_addr.get_port_number (),
@@ -464,10 +486,12 @@ Handler_Factory::create_handler (ACE_SOCK_Acceptor &acceptor,
   ACE_SOCK_Stream new_stream;
 
   if (acceptor.accept (new_stream) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "accept"),
-                       -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "accept"),
+                        -1);
+    }
 
   Handler *handler;
 
@@ -480,7 +504,9 @@ Handler_Factory::create_handler (ACE_SOCK_Acceptor &acceptor,
               handler_type));
 
   if (handler->open () == -1)
-    return -1;
+    {
+      return -1;
+    }
 
 #if defined (ACE_MT_SAFE)
   // Spawn a new thread and run the new connection in that thread of
@@ -508,7 +534,9 @@ int
 Handler_Factory::handle_events ()
 {
   if (this->init_acceptors () == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   fd_set handles;
 
@@ -531,24 +559,32 @@ Handler_Factory::handle_events ()
                                    0,
                                    timeout);
       if (result == -1)
-        ACE_ERROR ((LM_ERROR,
-                    "(%P|%t) %p\n",
-                    "select"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%P|%t) %p\n",
+                      "select"));
+        }
       else if (result == 0 && OPTIONS::instance ()->verbose ())
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) select timed out\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%P|%t) select timed out\n"));
+        }
       else
         {
           if (FD_ISSET ((ACE_SOCKET) this->twoway_acceptor_.get_handle (),
                         &temp))
-            this->create_handler (this->twoway_acceptor_,
-                                  &Handler_Factory::make_twoway_handler,
-                                  "twoway");
+            {
+              this->create_handler (this->twoway_acceptor_,
+                                    &Handler_Factory::make_twoway_handler,
+                                    "twoway");
+            }
           if (FD_ISSET ((ACE_SOCKET) this->oneway_acceptor_.get_handle (),
                         &temp))
-            this->create_handler (this->oneway_acceptor_,
-                                  &Handler_Factory::make_oneway_handler,
-                                  "oneway");
+            {
+              this->create_handler (this->oneway_acceptor_,
+                                    &Handler_Factory::make_oneway_handler,
+                                    "oneway");
+            }
         }
     }
 
