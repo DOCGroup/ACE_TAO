@@ -1,5 +1,5 @@
-//
-// Non-recursive types for compile-time testing.
+///
+/// Non-recursive types for compile-time testing.
 
 module Foo
 {

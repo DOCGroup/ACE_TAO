@@ -1,5 +1,5 @@
-// Either of these sets will work, but only the last one
-// demonstrates the original tao_idl problem.
+/// Either of these sets will work, but only the last one
+/// demonstrates the original tao_idl problem.
 
 //#define MyString string
 //typedef MyString ArrayOfString[15];

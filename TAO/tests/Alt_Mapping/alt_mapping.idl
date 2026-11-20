@@ -15,14 +15,13 @@ interface Alt_Mapping
     double d;
   };
 
-
   typedef sequence<Fixed_Struct> StructSeq;
   StructSeq test_struct_sequence (in StructSeq s1,
                                   inout StructSeq s2,
                                   out StructSeq s3);
 
+  /// Shutdown the server: this is useful to check for memory leaks,
+  /// performance results and in general to verify that orderly
+  /// shutdown is possible.
   void shutdown ();
-  // Shutdown the server: this is useful to check for memory leaks,
-  // performance results and in general to verify that orderly
-  // shutdown is possible.
 };

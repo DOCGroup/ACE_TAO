@@ -1,6 +1,5 @@
-//
-// Client interface definition.
-
+///
+/// Client interface definition.
 
 interface client
 {

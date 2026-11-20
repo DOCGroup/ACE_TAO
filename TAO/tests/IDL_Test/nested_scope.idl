@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    nested_scope.idl
  *
@@ -11,11 +10,9 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
  */
-//=============================================================================
 
-
-// Tests all the problem datatypes for repeating a scope
-// name after skipping one nesting level.
+/// Tests all the problem datatypes for repeating a scope
+/// name after skipping one nesting level.
 
 module skip
 {
@@ -134,8 +131,8 @@ module bug_1985_c
   };
 };
 
-// This one caused several problems - in the stub declaration of
-// the operation, and in the skeleton body's allocation of return type.
+/// This one caused several problems - in the stub declaration of
+/// the operation, and in the skeleton body's allocation of return type.
 module Negotiator
 {
   interface UAV_Negotiator {};
@@ -146,8 +143,8 @@ module Negotiator
   };
 };
 
-// Caught some generation of arg helper template parameters not using
-// the qualifying '::' on scoped names.
+/// Caught some generation of arg helper template parameters not using
+/// the qualifying '::' on scoped names.
 
 module bug_2125
 {
@@ -163,20 +160,20 @@ module Wow
   {
     interface MyInterface
     {
-// @@ (JP 06/04/07) I'm commenting out the line below, since
-// according to IDL scoping rules (CORBA 3.0.3, sections
-// 3.20.1 and 3.20.2), the module Wow::bug_2125 hides the
-// global module bug_2125 and so the lookup should fail.
-// Not removing the line completely in case someday we
-// extend IDL_Test to check for rejection of illegal IDL.
+/// @@ (JP 06/04/07) I'm commenting out the line below, since
+/// according to IDL scoping rules (CORBA 3.0.3, sections
+/// 3.20.1 and 3.20.2), the module Wow::bug_2125 hides the
+/// global module bug_2125 and so the lookup should fail.
+/// Not removing the line completely in case someday we
+/// extend IDL_Test to check for rejection of illegal IDL.
 //      void op1 (in bug_2125::Bar::Stuff fbs);
       void op2 (in ::bug_2125::Bar::Stuff fbs);
     };
   };
 };
 
-// This will ensure that we always put the '::'
-// before the 'CORBA' on predefined types.
+/// This will ensure that we always put the '::'
+/// before the 'CORBA' on predefined types.
 module Company
 {
   module CORBA

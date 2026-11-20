@@ -1,4 +1,4 @@
-// -*- IDL -*-
+/// -*- IDL -*-
 
 #ifndef TAO_IMRCLIENT_IMPLREPO_PIDL
 #define TAO_IMRCLIENT_IMPLREPO_PIDL
@@ -8,7 +8,8 @@
 
 module ImplementationRepository
 {
-  // = Exceptions
+  /// @name Exceptions
+  /// @{
 
   /// Object already bound in the Implementation Repository
   exception AlreadyRegistered {};
@@ -28,6 +29,7 @@ module ImplementationRepository
   {
     string reason;
   };
+  /// @}
 
   /// One environment variable/value pair.
   struct EnvironmentVariable

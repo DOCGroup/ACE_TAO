@@ -1,4 +1,4 @@
-// Test Bug 2577
+/// Test Bug 2577
 
 struct DateTime_T
 {
@@ -9,8 +9,8 @@ typedef DateTime_T WhenLastUpdated_T;
 
 valuetype Data_T
 {
-  // Typedef valuetype member was blocking generation of
-  // SArg specialization for the struct.
+  /// Typedef valuetype member was blocking generation of
+  /// SArg specialization for the struct.
   public WhenLastUpdated_T whenLastUpdated;
 };
 

@@ -1,10 +1,8 @@
-// -*- IDL -*-
+/// -*- IDL -*-
 
-//=============================================================================
 /**
  *  @file    PortableGroup.idl
  */
-//=============================================================================
 
 #ifndef _PORTABLEGROUP_IDL_
 #define _PORTABLEGROUP_IDL_
@@ -35,9 +33,10 @@ module PortableGroup
   /// Factories
   const string PG_FACTORIES = "org.omg.PortableGroup.Factories";
 
-  typedef sequence <octet> GroupIIOPProfile; // tag = TAG_GROUP_IIOP
+  /// tag = TAG_GROUP_IIOP
+  typedef sequence <octet> GroupIIOPProfile;
 
-  // Specification of Common Types and Exceptions for Group Management
+  /// Specification of Common Types and Exceptions for Group Management
   interface GenericFactory;
 
   typedef CORBA::RepositoryId _TypeId;
@@ -103,7 +102,7 @@ module PortableGroup
     Criteria unmet_criteria;
   };
 
-  // Specification of PropertyManager Interface
+  /// Specification of PropertyManager Interface
   interface PropertyManager {
 
     void set_default_properties (in Properties props)
@@ -132,8 +131,7 @@ module PortableGroup
       raises (ObjectGroupNotFound);
   }; // endPropertyManager
 
-
-  // Specification of ObjectGroupManager Interface
+  /// Specification of ObjectGroupManager Interface
   interface ObjectGroupManager {
     ObjectGroup create_member (in ObjectGroup object_group,
                                in Location the_location,
@@ -172,15 +170,14 @@ module PortableGroup
                            in Location loc)
       raises (ObjectGroupNotFound, MemberNotFound);
 
-    // TAO-specific extension.
+    /// TAO-specific extension.
     ObjectGroup get_object_group_ref_from_id (
       in ObjectGroupId group_id)
       raises (ObjectGroupNotFound);
 
   }; // end ObjectGroupManager
 
-
-  // Specification of GenericFactory Interface
+  /// Specification of GenericFactory Interface
   interface GenericFactory {
     typedef any FactoryCreationId;
 
@@ -199,9 +196,8 @@ module PortableGroup
   }; // end GenericFactory
 
   ///////////////////////
-  // The following FactoryRegistry interface is not included in the OMG PortableGroup IDL.
-  // It's an extension needed as part of implementing the FT CORBA specification.
-
+  /// The following FactoryRegistry interface is not included in the OMG PortableGroup IDL.
+  /// It's an extension needed as part of implementing the FT CORBA specification.
 
   /**
    * a name for the role the object will play
@@ -283,7 +279,6 @@ module PortableGroup
     FactoryInfos list_factories_by_location(in Location the_location);
 
   }; // end of FactoryRegistry
-
 
   const string TAO_UPDATE_OBJECT_GROUP_METHOD_NAME = "tao_update_object_group";
 

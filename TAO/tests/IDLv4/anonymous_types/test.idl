@@ -21,7 +21,7 @@ struct TestStruct {
   sequence<long, 3> another_bounded_long_sequence;
 };
 
-// Another struct, different lengths
+/// Another struct, different lengths
 struct AnotherTestStruct {
   short short_array[9];
   short another_short_array[9];

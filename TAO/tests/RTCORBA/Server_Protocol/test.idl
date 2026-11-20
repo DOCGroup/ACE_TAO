@@ -1,6 +1,6 @@
 
 interface Test
 {
+  /// Shut down the ORB.
   oneway void shutdown ();
-  // Shut down the ORB.
 };

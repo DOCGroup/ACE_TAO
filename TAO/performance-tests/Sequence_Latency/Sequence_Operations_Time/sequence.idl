@@ -29,4 +29,3 @@ struct Seq_Structs
   BigListSeq seq;
 };
 
-

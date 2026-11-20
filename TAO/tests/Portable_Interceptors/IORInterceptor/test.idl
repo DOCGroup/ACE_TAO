@@ -1,6 +1,5 @@
-// -*- IDL -*-
+/// -*- IDL -*-
 
-//=============================================================================
 /**
  * @file test.idl
  *
@@ -8,8 +7,6 @@
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
-
 
 #include "tao/IOP.pidl"
 
@@ -21,8 +18,8 @@ module FOO
     oneway void shutdown ();
   };
 
-  // @@ Hopefully, this tagged component ID won't be reserved by
-  //    anything, anytime soon.
+  /// @@ Hopefully, this tagged component ID won't be reserved by
+  /// anything, anytime soon.
   const IOP::ComponentId COMPONENT_ID = 3456;
 
 };

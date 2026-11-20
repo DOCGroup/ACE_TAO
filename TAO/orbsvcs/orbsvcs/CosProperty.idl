@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file     CosProperty.idl
  *
@@ -7,8 +6,6 @@
  *
  *  @author  Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_PROPERTY_IDL
 #define TAO_PROPERTY_IDL
@@ -17,18 +14,15 @@
 
 #pragma prefix "omg.org"
 
+/// @brief The CosPropertyService interfaces and data types.
+///
+/// The service supports typed named values dynamically associated with an
+/// object, outside of the type system. This IDL defines the data types and
+/// interfaces for property names, values, modes, and related operations.
 module CosPropertyService
 {
-  // = TITLE
-  //     CosPropertyService : To support properties (that are typed
-  //     named values dynamically associated with an object, outside
-  //     of the type system.
-  //
-  // = DESCRIPTION
-  //     The data types and interfaces to deal with property names,
-  //     property values, property modes etc.
-
-  // = Data Types.
+  /// @name Data Types
+  /// @{
 
   typedef string PropertyName;
 
@@ -66,13 +60,17 @@ module CosPropertyService
   typedef sequence<PropertyMode> PropertyModes;
   typedef sequence<CORBA::TypeCode> PropertyTypes;
 
+  /// @}
+
   interface PropertyNamesIterator;
   interface PropertiesIterator;
   interface PropertySetFactory;
   interface PropertySetDef;
   interface PropertySet;
 
-  // = Exceptions
+  /// @}
+  /// @name Exceptions
+  /// @{
 
   exception ConstraintNotSupported {};
   exception InvalidPropertyName {};
@@ -109,16 +107,14 @@ module CosPropertyService
       PropertyExceptions exceptions;
     };
 
-  // = Interface Definitions.
-
+  /// @}
+  /// @name Interface Definitions
+  /// @{
+  /// @brief Factory class for PropertySet.
+  ///
+  /// Supports creating PropertySets with initial constraints and properties.
   interface PropertySetFactory
     {
-      // = TITLE
-      //     Factory class for PropertySet interface.
-      // = DESCRIPTION
-      //     Support for creating PropertySets with initial
-      //     constraints and properties.
-
       /// The create_propertyset operation returns a new
       /// PropertySet. It is considered an implementation issue as to
       /// whether the PropertySet contains any initial properties or
@@ -137,14 +133,12 @@ module CosPropertyService
         raises (MultipleExceptions);
     };
 
+  /// @brief Factory class for PropertySetDef.
+  ///
+  /// Supports creating PropertySetDefs with initial constraints and
+  /// properties.
   interface PropertySetDefFactory
     {
-      // = TITLE
-      //     Factory class for PropertySetDef interface.
-      // = DESCRIPTION
-      //     Support for creating Propsetdefs with initial constraints
-      //     and properties.
-
       ///  The create_propertysetdef operation returns a new
       ///  PropertySetDef.
       PropertySetDef create_propertysetdef ();
@@ -163,18 +157,12 @@ module CosPropertyService
         raises (MultipleExceptions);
     };
 
+  /// @brief Defines and modifies properties, retrieves properties and names,
+  /// and deletes properties.
   interface PropertySet
     {
-      // = TITLE
-      //     The PropertySet interface provides operations to define
-      //     and modify properties, list and get properties, and
-      //     delete properties.
-      //
-      // = DESCRIPTION
-      //     Provides support for defining and modifying properties,
-      //     getting properties and their names and deleting properties.
-
-      // = Support for defining and modifying properties.
+      /// @name Defining and Modifying Properties
+      /// @{
 
       /// Will modify or add a property to the PropertySet. If the
       /// property already exists, then the property type is checked
@@ -196,7 +184,9 @@ module CosPropertyService
       void define_properties (in Properties nproperties)
         raises (MultipleExceptions);
 
-      // = Support for Getting Properties and their Names.
+      /// @}
+      /// @name Getting Properties and Their Names
+      /// @{
 
       /// Returns the current number of properties associated with this
       /// PropertySet.
@@ -228,7 +218,9 @@ module CosPropertyService
                                out Properties nproperties,
                                out PropertiesIterator rest);
 
-      // = Support for Deleting Properties.
+      /// @}
+      /// @name Deleting Properties
+      /// @{
 
       /// Deletes the specified property if it exists from a
       /// PropertySet.
@@ -246,27 +238,25 @@ module CosPropertyService
       /// Variation of delete_properties. Applies to all properties.
       boolean delete_all_properties ();
 
-      // = Support for Existence Check.
+      /// @}
+      /// @name Checking for Property Existence
+      /// @{
 
       /// The is_property_defined operation returns true if the
       /// property is defined in the PropertySet, and returns false
       /// otherwise.
       boolean is_property_defined (in PropertyName property_name)
         raises (InvalidPropertyName);
+      /// @}
     };
 
+  /// @brief Interface for property modes.
+  ///
+  /// PropertySetDef specializes PropertySet. It provides operations to
+  /// retrieve PropertySet constraints, define and modify properties with
+  /// modes, and get or set property modes.
   interface PropertySetDef:PropertySet
     {
-      // = TITLE
-      //     Interface to deal with the Property Modes.
-      //
-      // = DESCRIPTION
-      //     The PropertySetDef interface is a specialization
-      //     (subclass) of the PropertySet interface. The
-      //     PropertySetDef interface provides operations to retrieve
-      //     PropertySet constraints, define and modify properties
-      //     with modes, and to get or set property modes.
-
       /// Indicates which types of properties are supported by this
       /// PropertySet. If the output sequence is empty, then there is
       /// no restrictions on the any TypeCode portion of the
@@ -311,14 +301,12 @@ module CosPropertyService
       void define_properties_with_modes (in PropertyDefs property_defs)
         raises (MultipleExceptions);
 
-      // = Support for Getting and Setting Property Modes.
-
-      /// Support for Getting and Setting Property Modes.
+      /// @name Getting and Setting Property Modes
+      /// @{
       PropertyModeType get_property_mode (in  PropertyName property_name)
         raises (PropertyNotFound,
                 InvalidPropertyName);
 
-      /// Support for Getting and Setting Property Modes.
       boolean get_property_modes (in PropertyNames property_names,
                                  out PropertyModes property_modes);
 
@@ -334,17 +322,15 @@ module CosPropertyService
       /// MultipleExceptions exception if any set failed.
       void set_property_modes (in PropertyModes property_modes)
         raises (MultipleExceptions);
+      /// @}
     };
 
+  /// @brief Interface for iterating through property names.
+  ///
+  /// A client can iterate through the names using the next_one or next_n
+  /// operations.
   interface PropertyNamesIterator
     {
-      // = TITLE
-      //     Interface for iterating thru the Property Names.
-      //
-      // = DESCRIPTION
-      //     The PropertyNamesIterator interface allows a client to
-      //     iterate through the names using the next_one or next_n operations.
-
       /// The reset operation resets the position in an iterator to the
       /// first property, if one exists.
       void reset ();
@@ -367,15 +353,12 @@ module CosPropertyService
       void destroy ();
     };
 
+  /// @brief Interface for iterating through properties.
+  ///
+  /// A client can iterate through name-value pairs using the next_one or
+  /// next_n operations.
   interface PropertiesIterator
     {
-      // = TITLE
-      //     Interface for iterating thru the Properties.
-      //
-      // = DESCRIPTION
-      //     allows a client to through the name-value pairs using the
-      //     next_one or next_n operations.
-
       /// The reset operation resets the position in an iterator to the
       /// first property, if one exists.
       void reset ();
@@ -397,6 +380,7 @@ module CosPropertyService
       /// The destroy operation destroys the iterator.
       void destroy ();
     };
+  /// @}
 };
 
 #endif /* TAO_PROPERTY_IDL */

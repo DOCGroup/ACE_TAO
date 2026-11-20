@@ -1,4 +1,4 @@
-//
+///
 
 local interface Foo {
 };

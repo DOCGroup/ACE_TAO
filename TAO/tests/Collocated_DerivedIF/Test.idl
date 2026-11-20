@@ -11,7 +11,7 @@ module Test
     oneway void shutdown ();
   };
 
-  // A derived interface
+  /// A derived interface
   interface HelloAgain : Hello
   {
     string get_string_again ();

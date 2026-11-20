@@ -13,9 +13,12 @@ typedef string Var_Array [3];
 typedef string<20> Bounded_String20;
 
 struct TimeOfDay {
-    short   hour;       // 0 - 23
-    short   minute;     // 0 - 59
-    short   second;     // 0 - 59
+    /// 0 - 23
+    short   hour;
+    /// 0 - 59
+    short   minute;
+    /// 0 - 59
+    short   second;
 };
 interface Foo
 {
@@ -62,12 +65,11 @@ interface Foo
   void callback_object (in Callback cb);
 
   /// Operation that invoke remote operation on
-  //  callback object.
+  /// callback object.
   void test_callback () raises (FooException);
 
   /// Client calls this last.  It will shutdown the server.
   void done();
 };
-
 
 #endif

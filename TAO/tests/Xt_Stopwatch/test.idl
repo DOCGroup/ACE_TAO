@@ -1,11 +1,11 @@
 interface Stopwatch
 {
+   /// Start the Stop watch
    void start ();
-   // Start the Stop watch
 
+   /// Stop the watch
    void stop ();
-   // Stop the watch
 
+  /// Shutdown the ORB
   void shutdown ();
-  // Shutdown the ORB
 };

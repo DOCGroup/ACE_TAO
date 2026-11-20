@@ -14,17 +14,20 @@ module Test
     ArvComposition
   };
 
-  // NOTE: the (deprecated) anonymous sequence type in the union
-  //       is intentional; the IDL compiler generated different
-  //       code for this case as compared to using a proper
-  //       forward and typedef.
+  /// NOTE: the (deprecated) anonymous sequence type in the union
+  /// is intentional; the IDL compiler generated different
+  /// code for this case as compared to using a proper
+  /// forward and typedef.
   struct MyAttRef {
     string attRefName;
     string attRefQualifier;
     union MyAttRefValue switch(MyAttRefValEnum) {
-      case ArvAttribute:    string attrValue; //value of a simple attribute
-      case ArvInteger:      long intValue; // just for testing
-      case ArvComposition:  sequence <MyAttRef> compValue; //a composition by specifying a sequence of MyAttRef elements.
+      /// value of a simple attribute
+      case ArvAttribute:    string attrValue;
+      /// just for testing
+      case ArvInteger:      long intValue;
+      /// a composition by specifying a sequence of MyAttRef elements.
+      case ArvComposition:  sequence <MyAttRef> compValue;
     } attRefValue;
   };
   typedef sequence <MyAttRef> MyAttRefSequence;

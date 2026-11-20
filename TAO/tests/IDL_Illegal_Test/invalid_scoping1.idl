@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    invalid_scoping1.idl
  *
@@ -8,20 +7,20 @@
  *  compiler. This test is to make sure the problems
  *  stay fixed.
  */
-//=============================================================================
-
 
 module A {
   typedef long mylong;
   module B {
-    module A { // This is supposed to HIDE outer scope A
+    /// This is supposed to HIDE outer scope A
+    module A {
       typedef short myshort;
     };
     typedef A::myshort CORRECT;
-    typedef A::mylong  INVALID; // Required to use ::A::mylong
-    // Recursive search is not allowable above as the module A
-    // being referenced is NOT the same as the local module A
-    // that is hiding the outer scoped name, they just happen
-    // to share the same short name.
+    /// Required to use ::A::mylong
+    typedef A::mylong  INVALID;
+    /// Recursive search is not allowable above as the module A
+    /// being referenced is NOT the same as the local module A
+    /// that is hiding the outer scoped name, they just happen
+    /// to share the same short name.
   };
 };
