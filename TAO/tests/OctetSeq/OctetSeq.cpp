@@ -101,7 +101,9 @@ test_octet_sequence_copy_move ()
   Test::OctetSeq original (4);
   original.length (4);
   for (CORBA::ULong i = 0; i != original.length (); ++i)
-    original[i] = static_cast<CORBA::Octet> (i + 1);
+    {
+      original[i] = static_cast<CORBA::Octet> (i + 1);
+    }
 
   Test::OctetSeq copied (original);
   Test::OctetSeq copy_assigned (2);
@@ -109,9 +111,11 @@ test_octet_sequence_copy_move ()
   copy_assigned = original;
 
   for (CORBA::ULong i = 0; i != original.length (); ++i)
-    if (copied[i] != original[i] || copy_assigned[i] != original[i])
     {
-      return false;
+      if (copied[i] != original[i] || copy_assigned[i] != original[i])
+        {
+          return false;
+        }
     }
 
   copied[0] = 42;
@@ -135,10 +139,12 @@ test_octet_sequence_copy_move ()
   }
 
   for (CORBA::ULong i = 0; i != moved.length (); ++i)
-    if (moved[i] != i + 1 ||
-        move_assigned[i] != (i == 0 ? 42 : i + 1))
     {
-      return false;
+      if (moved[i] != i + 1 ||
+          move_assigned[i] != (i == 0 ? 42 : i + 1))
+        {
+          return false;
+        }
     }
 
   return true;
@@ -190,10 +196,12 @@ test_message_block_sequence_copy_move ()
     return false;
   }
   for (CORBA::ULong i = 1; i != moved.length (); ++i)
-    if (copied[i] != static_cast<CORBA::Octet> (i + 1) ||
-        moved[i] != static_cast<CORBA::Octet> (i + 1))
     {
-      return false;
+      if (copied[i] != static_cast<CORBA::Octet> (i + 1) ||
+          moved[i] != static_cast<CORBA::Octet> (i + 1))
+        {
+          return false;
+        }
     }
 
   return true;
@@ -338,14 +346,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       }
 
       if (!test_octet_sequence_copy_move ())
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Octet sequence copy/move test failed\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Octet sequence copy/move test failed\n"),
+                            1);
+        }
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
       if (!test_message_block_sequence_copy_move ())
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Message block sequence copy/move test failed\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Message block sequence copy/move test failed\n"),
+                            1);
+        }
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
       ACE_DEBUG ((LM_DEBUG, "Running:\n"
