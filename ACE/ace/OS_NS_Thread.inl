@@ -1687,11 +1687,15 @@ ACE_OS::sema_init (ACE_sema_t *s,
   if (ACE_OS::mkfifo (ACE_TEXT_CHAR_TO_TCHAR (name), mode) < 0)
     {
       if (errno != EEXIST)    /* already exists OK else ERR */
-        return -1;
+        {
+          return -1;
+        }
       // check if this is a real FIFO, not just some other existing file
       ACE_stat fs;
       if (ACE_OS::stat (name, &fs))
-        return -1;
+        {
+          return -1;
+        }
       if (!S_ISFIFO (fs.st_mode))
         {
           // existing file is not a FIFO
@@ -1699,8 +1703,10 @@ ACE_OS::sema_init (ACE_sema_t *s,
           return -1;
         }
     }
-    else
+  else
+    {
       creator = true; // remember we created it for initialization at end
+    }
 
   // for processshared semaphores remember who we are to be able to remove
   // the FIFO when we're done with it
@@ -1710,22 +1716,30 @@ ACE_OS::sema_init (ACE_sema_t *s,
       if (s->name_ == 0)
         {
           if (creator)
-            ACE_OS::unlink (name);
+            {
+              ACE_OS::unlink (name);
+            }
           return -1;
         }
     }
 
   if ((s->fd_[0] = ACE_OS::open (name, O_RDONLY | O_NONBLOCK)) == ACE_INVALID_HANDLE
       || (s->fd_[1] = ACE_OS::open (name, O_WRONLY | O_NONBLOCK)) == ACE_INVALID_HANDLE)
-    return -1;
+    {
+      return -1;
+    }
 
   /* turn off nonblocking for fd_[0] */
   if ((flags = ACE_OS::fcntl (s->fd_[0], F_GETFL, 0)) < 0)
-    return -1;
+    {
+      return -1;
+    }
 
   flags &= ~O_NONBLOCK;
   if (ACE_OS::fcntl (s->fd_[0], F_SETFL, flags) < 0)
-    return -1;
+    {
+      return -1;
+    }
 
   //if (s->name_ && count)
   if (creator && count)
