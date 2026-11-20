@@ -61,9 +61,13 @@ TAO_RT_POA::activate_object_with_priority (PortableServer::Servant servant,
       // may have changed while we are waiting.  Therefore, we need to
       // restart this call.
       if (wait_occurred_restart_call)
-        continue;
+        {
+          continue;
+        }
       else
-        return result;
+        {
+          return result;
+        }
     }
 }
 
@@ -94,9 +98,13 @@ TAO_RT_POA::activate_object_with_id_and_priority (PortableServer::ObjectId const
       // may have changed while we are waiting.  Therefore, we need to
       // restart this call.
       if (wait_occurred_restart_call)
-        continue;
+        {
+          continue;
+        }
       else
-        return;
+        {
+          return;
+        }
     }
 }
 #endif

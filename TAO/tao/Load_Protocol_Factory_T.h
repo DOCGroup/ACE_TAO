@@ -85,7 +85,9 @@ namespace TAO
                       item->protocol_name ().c_str ()));
 
           if (transfer_ownership == false)
-            delete protocol_factory;
+            {
+              delete protocol_factory;
+            }
 
           return -1;
         }

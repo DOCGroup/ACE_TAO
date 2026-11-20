@@ -45,7 +45,9 @@ TAO_ServerRequest::operation (char const *operation,
                               bool release)
 {
   if (this->release_operation_)
-    CORBA::string_free (const_cast <char*> (this->operation_));
+    {
+      CORBA::string_free (const_cast <char*> (this->operation_));
+    }
 
   this->operation_len_ = (length == 0 ? std::strlen (operation) : length);
   this->release_operation_ = release;

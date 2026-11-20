@@ -117,9 +117,10 @@ TAO_SCIOP_Profile::decode_profile (TAO_InputCDR& cdr)
   // We are ignoring it for now since ACE SCTP code fixes at 1 anyway.
 
   CORBA::UShort max_streams;
-  if ((cdr.read_ushort(max_streams)) == 0) {
-    return -1;
-  }
+  if ((cdr.read_ushort(max_streams)) == 0)
+    {
+      return -1;
+    }
 
   if (cdr.good_bit ())
     {
@@ -422,7 +423,9 @@ TAO_SCIOP_Profile::encode_endpoints ()
        ++c)
     {
       if (endpoint->is_encodable_)
-        ++actual_count;
+        {
+          ++actual_count;
+        }
 
       endpoint = endpoint->next_;
     }
