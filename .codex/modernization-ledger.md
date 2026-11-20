@@ -13706,3 +13706,9 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Added Allman braces to nine diagnostic and input-loop bodies in `TAO/utils/catior/catior.cpp`.
 - Focused clang-tidy reported no remaining brace warnings; `git diff --check` passed. No build or runtime tests were run.
 - The full tracked-source brace audit remains open.
+
+## 2026-11-20 SMI Iterator client brace follow-up
+
+- Added Allman braces to eight single-statement control bodies in `TAO/examples/Content_Server/SMI_Iterator/client.cpp`.
+- Focused clang-tidy reported no remaining brace warnings; `git diff --check` passed. No build or runtime tests were run.
+- The full tracked-source brace audit remains open.

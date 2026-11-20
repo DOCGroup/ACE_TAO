@@ -27,9 +27,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
       if (argc < 2)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Usage: client filename\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Usage: client filename\n")),
+                            -1);
+        }
 
       // Initialize the ORB.
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "Mighty ORB");
@@ -199,16 +201,24 @@ int external_viewer (char const *content_type,
   }
 
   if (ACE_OS::strcasecmp (content_type, "text/html") == 0)
-    viewer = "lynx";
+    {
+      viewer = "lynx";
+    }
   else if (ACE_OS::strcasecmp (content_type,
                                "text/plain") == 0)
-    viewer = "more";
+    {
+      viewer = "more";
+    }
   else if (ACE_OS::strcasecmp (content_type,
                                "application/postscript") == 0)
-    viewer = "ghostview";
+    {
+      viewer = "ghostview";
+    }
   else if (ACE_OS::strcasecmp (content_type,
                                "application/pdf") == 0)
-    viewer = "acroread";
+    {
+      viewer = "acroread";
+    }
   else if (ACE_OS::strcasecmp (content_type,
                                "image/jpeg") == 0
            || ACE_OS::strcasecmp (content_type,
@@ -217,12 +227,16 @@ int external_viewer (char const *content_type,
                                   "image/tiff") == 0
            || ACE_OS::strcasecmp (content_type,
                                   "image/png") == 0)
-    viewer = "xv";
+    {
+      viewer = "xv";
+    }
   else
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Unsupported MIME type: <%s>\n"),
-                       content_type),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Unsupported MIME type: <%s>\n"),
+                         content_type),
+                        -1);
+    }
 
   return 0;
 }
@@ -235,10 +249,12 @@ spawn_viewer (char const *content_type,
 
   if (::external_viewer (content_type,
                          viewer) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Problem determining which external ")
-                       ACE_TEXT ("viewer to use.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Problem determining which external ")
+                         ACE_TEXT ("viewer to use.\n")),
+                        -1);
+    }
 
   // Set up the command line that will be used when spawning the
   // external viewer.
