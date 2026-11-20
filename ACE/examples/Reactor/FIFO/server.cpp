@@ -66,7 +66,9 @@ FIFO_Recv_Handler::handle_input (ACE_HANDLE)
   ssize_t const n = this->fifo_reader_.recv (msg);
 
   if (n < 0)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("recv")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("recv")), -1);
+    }
   else
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("msg.len = %d, n = %b\n"), msg.len, n));
