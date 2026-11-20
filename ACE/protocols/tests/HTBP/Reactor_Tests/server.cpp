@@ -187,7 +187,7 @@ Stream_Handler::handle_input (ACE_HANDLE h)
   buffer[n] = 0;
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) Server Stream_Handler::handle_input ")
-              ACE_TEXT (" (%d) read %b:\n%C\n"),
+              ACE_TEXT (" (%H) read %b:\n%C\n"),
               h, n, buffer));
 
   char const * const tok_loc = ACE_OS::strstr (buffer, "goodbye");

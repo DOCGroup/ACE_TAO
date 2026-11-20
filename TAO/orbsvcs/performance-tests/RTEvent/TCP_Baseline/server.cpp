@@ -93,7 +93,7 @@ Svc_Handler::handle_input(ACE_HANDLE h)
       ssize_t n = this->peer().recv(buf, bufsize);
       if (n == 0) {
         ACE_ERROR((LM_ERROR,
-                   "Connection %d closed while reading data\n",
+                   "Connection %H closed while reading data\n",
                    h, ""));
         break;
       } else if (n == -1) {
@@ -103,7 +103,7 @@ Svc_Handler::handle_input(ACE_HANDLE h)
         }
 
         ACE_ERROR((LM_ERROR,
-                   "Error on <%d> while reading %p\n",
+                   "Error on <%H> while reading %p\n",
                    h, ""));
         break;
       }
@@ -111,7 +111,7 @@ Svc_Handler::handle_input(ACE_HANDLE h)
       ssize_t k = this->peer().send(buf, n);
       if(k == 0) {
         ACE_ERROR((LM_ERROR,
-                   "Connection <%d> closed while writing\n",
+                   "Connection <%H> closed while writing\n",
                    h, ""));
         break;
       } else if (k == -1) {
@@ -121,12 +121,12 @@ Svc_Handler::handle_input(ACE_HANDLE h)
         }
 
         ACE_ERROR((LM_ERROR,
-                   "Error on <%d> while writing %p\n",
+                   "Error on <%H> while writing %p\n",
                    h, ""));
         break;
       } else if (k != n) {
         ACE_ERROR((LM_ERROR,
-                   "Short write on <%d>\n",
+                   "Short write on <%H>\n",
                    h, ""));
         break;
       }

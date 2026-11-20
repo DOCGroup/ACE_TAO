@@ -495,7 +495,7 @@ Receiver::handle_input (ACE_HANDLE handle)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("(%t) Receiver::handle input, ")
-                  ACE_TEXT("h = %d, result = %b %p\n"),
+                  ACE_TEXT("h = %H, result = %b %p\n"),
                   handle_, result, ACE_TEXT("ACE::recv_n")));
     }
 
@@ -546,7 +546,7 @@ Receiver::handle_input (ACE_HANDLE handle)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%t) /*** Problem in receiving message %d on handle")
-                      ACE_TEXT (" %@: shutting down receiving thread ***/\n"),
+                      ACE_TEXT (" %H: shutting down receiving thread ***/\n"),
                       this->counter_,
                       handle));
         }
@@ -906,7 +906,7 @@ Invocation_Thread::create_connection ()
 #else
   if (result != 0)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) create_connection h %@, %p\n"),
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) create_connection h %H, %p\n"),
                   client_handle,
                   ACE_TEXT ("register_handler")));
     }
