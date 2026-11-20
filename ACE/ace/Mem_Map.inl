@@ -64,7 +64,9 @@ ACE_Mem_Map::operator () (void *&addr)
   ACE_TRACE ("ACE_Mem_Map::operator");
 
   if (this->base_addr_ == MAP_FAILED)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       addr = this->base_addr_;
@@ -124,7 +126,9 @@ ACE_Mem_Map::unmap (ssize_t len)
       return result;
     }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 // Unmap the region starting at <addr_>.

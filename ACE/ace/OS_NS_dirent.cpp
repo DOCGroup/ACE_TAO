@@ -81,9 +81,13 @@ ACE_OS::opendir_emulation (const ACE_TCHAR *filename)
       if (filename[lastchar-1] != '*')
         {
           if (filename[lastchar-1] != '/' && filename[lastchar-1] != '\\')
-            ACE_OS::strcpy (extra, ACE_TEXT ("/*"));
+            {
+              ACE_OS::strcpy (extra, ACE_TEXT ("/*"));
+            }
           else
-            ACE_OS::strcpy (extra, ACE_TEXT ("*"));
+            {
+              ACE_OS::strcpy (extra, ACE_TEXT ("*"));
+            }
         }
     }
 
@@ -93,7 +97,9 @@ ACE_OS::opendir_emulation (const ACE_TCHAR *filename)
                   0);
   ACE_OS::strcpy (dir->directory_name_, filename);
   if (extra[0])
-    ACE_OS::strcat (dir->directory_name_, extra);
+    {
+      ACE_OS::strcat (dir->directory_name_, extra);
+    }
   dir->current_handle_ = INVALID_HANDLE_VALUE;
   dir->started_reading_ = 0;
   dir->dirent_ = 0;
@@ -151,7 +157,9 @@ ACE_OS::readdir_emulation (ACE_DIR *d)
       return d->dirent_;
     }
   else
-    return 0;
+    {
+      return 0;
+    }
 #else /* ACE_WIN32 */
   ACE_UNUSED_ARG (d);
   ACE_NOTSUP_RETURN (0);

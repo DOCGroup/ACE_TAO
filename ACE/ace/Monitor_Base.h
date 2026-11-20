@@ -142,7 +142,9 @@ namespace ACE
       void operator() (Monitor_Base *monitor) const
       {
         if (monitor != nullptr)
-          monitor->remove_ref ();
+          {
+            monitor->remove_ref ();
+          }
       }
     };
 
