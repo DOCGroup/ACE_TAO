@@ -82,10 +82,12 @@ IOR_corbaname_Client_i::init (int argc, ACE_TCHAR **argv)
       // There must be at least one argument, the file that has to be
       // retrieved
       if (argc < 2)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%s: Address of naming context not specified\n"),
-                           argv[0]),
-                           -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%s: Address of naming context not specified\n"),
+                             argv[0]),
+                            -1);
+        }
       this->name_service_address_ = argv[1];
     }
   catch (CORBA::Exception const &ex)

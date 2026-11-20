@@ -700,9 +700,11 @@ spawn_threads (ACCEPTOR *acceptor,
   if (ACE_Thread_Manager::instance ()->wait (&wait_time) == -1)
     {
       if (errno == ETIME)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("maximum wait time of %Q msec exceeded\n"),
-                               static_cast<ACE_UINT64> (max_wait.msec ())));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("maximum wait time of %Q msec exceeded\n"),
+                      static_cast<ACE_UINT64> (max_wait.msec ())));
+        }
       else
         ACE_OS::perror (ACE_TEXT ("wait"));
 

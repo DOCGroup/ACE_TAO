@@ -390,10 +390,12 @@ Server_Handler::handle_read_stream
   while (b.length () >= test_string_len)
     {
       if (0 != std::strncmp (b.rd_ptr (), test_string, test_string_len))
-        ACE_ERROR_BREAK ((LM_ERROR,
-                          ACE_TEXT ("(%t) Read string: %C; expected: %C\n"),
-                          b.rd_ptr (),
-                          test_string));
+        {
+          ACE_ERROR_BREAK ((LM_ERROR,
+                            ACE_TEXT ("(%t) Read string: %C; expected: %C\n"),
+                            b.rd_ptr (),
+                            test_string));
+        }
       b.rd_ptr (test_string_len);
       // That ran up over the string; can we also consume the nul?
       if (b.length () > 0)

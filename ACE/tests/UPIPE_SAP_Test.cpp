@@ -38,7 +38,9 @@ connector (void *)
   ACE_UPIPE_Connector con;
 
   if (con.connect (c_stream, addr) == -1)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) connector ACE_UPIPE_Connector failed\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) connector ACE_UPIPE_Connector failed\n")));
+    }
 
   ACE_Message_Block *mb {};
 
@@ -47,10 +49,14 @@ connector (void *)
   mb->copy ("hello");
 
   if (c_stream.send (mb) == -1)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) error connector send\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) error connector send\n")));
+    }
 
   if (c_stream.recv (mb) == -1)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) error connector recv\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) error connector recv\n")));
+    }
 
   ACE_TEST_ASSERT (std::strcmp (mb->rd_ptr (), "thanks") == 0);
 
@@ -62,8 +68,10 @@ connector (void *)
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) connector sending text\n")));
   if (c_stream.send (mytext, sizeof (mytext)) == -1)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) buffer send from connector failed\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) buffer send from connector failed\n")));
+    }
 
   char conbuf[BUFSIZ];  // Buffer to receive response.
 
@@ -72,10 +80,14 @@ connector (void *)
   for (char c = ' '; c != '!'; ++i)
     {
       if (c_stream.recv (&c, 1) == -1)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%t) buffer recv from connector failed\n")));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%t) buffer recv from connector failed\n")));
+        }
       else
-        conbuf[i] = c;
+        {
+          conbuf[i] = c;
+        }
     }
 
   conbuf[i] = '\0';
@@ -94,13 +106,17 @@ acceptor (void *args)
   ACE_UPIPE_Stream s_stream;
 
   if (acceptor->accept (s_stream) == -1)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) ACE_UPIPE_Acceptor.accept failed\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) ACE_UPIPE_Acceptor.accept failed\n")));
+    }
 
   ACE_Message_Block *mb {};
 
   if (s_stream.recv (mb) == -1)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) acceptor recv failed\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) acceptor recv failed\n")));
+    }
 
   ACE_TEST_ASSERT (std::strcmp (mb->rd_ptr (), "hello") == 0);
 
@@ -108,22 +124,30 @@ acceptor (void *args)
   mb->copy ("thanks");
 
   if (s_stream.send (mb) == -1)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) acceptor send failed\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) acceptor send failed\n")));
+    }
 
   char s_buf[BUFSIZ];
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) acceptor sleeping on recv\n")));
 
   if (s_stream.recv (s_buf, sizeof (s_buf)) == -1)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) acceptor recv failed\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) acceptor recv failed\n")));
+    }
   else
-    ACE_TEST_ASSERT (std::strcmp (s_buf,
-                                  "This string is sent by connector as a buffer") == 0);
+    {
+      ACE_TEST_ASSERT (std::strcmp (s_buf,
+                                    "This string is sent by connector as a buffer") == 0);
+    }
 
   const char svr_response[] = "this is the acceptor response!";
   ACE_OS::strcpy (s_buf, svr_response);
 
   if (s_stream.send (s_buf, sizeof (svr_response)) == -1)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) acceptor send failed\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) acceptor send failed\n")));
+    }
 
   s_stream.close ();
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) exiting thread\n")));

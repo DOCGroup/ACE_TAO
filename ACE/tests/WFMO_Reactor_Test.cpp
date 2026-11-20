@@ -96,7 +96,9 @@ test ()
   for (size_t i = 0; i < number_of_handlers; ++i)
     {
       if (i % 2 == 0)
-        continue;
+        {
+          continue;
+        }
 
       result = reactor.suspend_handler (event_handlers[i]->pipe_.read_handle ());
       ACE_TEST_ASSERT (result == 0);
