@@ -1248,12 +1248,18 @@ ACE_OS::rw_unlock (ACE_rwlock_t *rw)
 #  endif /* ACE_HAS_PTHREADS_UNIX98_EXT */
 # else /* NT, POSIX, and VxWorks don't support this natively. */
   if (ACE_OS::mutex_lock (&rw->lock_) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   if (rw->ref_count_ > 0) // Releasing a reader.
-    --rw->ref_count_;
+    {
+      --rw->ref_count_;
+    }
   else if (rw->ref_count_ == -1) // Releasing a writer.
-    rw->ref_count_ = 0;
+    {
+      rw->ref_count_ = 0;
+    }
   else
     {
       (void) ACE_OS::mutex_unlock (&rw->lock_);
@@ -1312,7 +1318,9 @@ ACE_OS::rw_wrlock (ACE_rwlock_t *rw)
   int result = 0;
 
   if (ACE_OS::mutex_lock (&rw->lock_) == -1)
-    result = -1; // -1 means didn't get the mutex.
+    {
+      result = -1; // -1 means didn't get the mutex.
+    }
   else
     {
       while (rw->ref_count_ != 0)
@@ -1329,9 +1337,13 @@ ACE_OS::rw_wrlock (ACE_rwlock_t *rw)
         }
     }
   if (result == 0)
-    rw->ref_count_ = -1;
+    {
+      rw->ref_count_ = -1;
+    }
   if (result != -1)
-    ACE_OS::mutex_unlock (&rw->lock_);
+    {
+      ACE_OS::mutex_unlock (&rw->lock_);
+    }
 #   if defined (ACE_HAS_PTHREADS)
   ACE_PTHREAD_CLEANUP_POP (0);
 #   endif /* defined (ACE_HAS_PTHREADS) */
