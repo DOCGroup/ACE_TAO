@@ -232,11 +232,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Contact the name service
       CORBA::Object_var nc_obj;
       if (options.name_service)
-        nc_obj = orb->string_to_object (options.name_service);
+        {
+          nc_obj = orb->string_to_object (options.name_service);
+        }
       else
-      {
-        nc_obj = orb->resolve_initial_references ("NameService");
-      }
+        {
+          nc_obj = orb->resolve_initial_references ("NameService");
+        }
 
       nc_obj = set_rtt(orb.in(), nc_obj.in (), options.relative_roundtrip_timeout);
       CosNaming::NamingContext_var root_nc =

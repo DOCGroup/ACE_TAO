@@ -382,7 +382,9 @@ struct Destroy_Deleter
   void operator () (T *ptr) const
   {
     if (ptr != nullptr)
-      ptr->destroy ();
+      {
+        ptr->destroy ();
+      }
   }
 };
 
