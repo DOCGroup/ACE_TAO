@@ -13501,3 +13501,9 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Continued the hand-written Event Service brace cleanup in `ECG_Complex_Address_Server.cpp`, `ECG_Mcast_Gateway.cpp`, `EC_Gateway_IIOP_Factory.cpp`, `EC_TPC_ProxySupplier.cpp`, `ECG_CDR_Message_Sender.cpp`, `EC_Gateway_IIOP.cpp`, `EC_Timeout_Filter.cpp`, and `EC_MT_Dispatching.cpp`.
 - Focused `clang-tidy -checks=-*,readability-braces-around-statements` reported no remaining brace warnings in each edited file; `git diff --check` passed. No build or runtime tests were run.
 - Commits: `dc45ca9345b`, `46096e53be2`, `33176d8752e`, `b2bd02dd85c`, `f729344b444`, `507cfc9ae7c`, `41b942d34be`, and `cd5256eb21f`. The broader Event Service and repository-wide brace audit remains open.
+
+## 2026-11-20 TAO orbsvcs Event Service brace audit
+
+- Added Allman braces to 90 single-statement bodies in `EC_Default_Factory.cpp`, plus remaining bodies in `ECG_CDR_Message_Receiver.cpp`, `ECG_UDP_EH.cpp`, and `ECG_Simple_Mcast_EH.cpp`.
+- Re-scanned all 71 translation units in `TAO/orbsvcs/orbsvcs/compile_commands.json`, explicitly enabling C++17 for the stale database entries: zero brace warnings and zero parse errors. `git diff --check` passed for each edited file. No build or runtime tests were run.
+- Commits: `88a508db99c`, `611ef84d7db`, `9387219e054`, and `28f8f7defa2`. The scan covers this compile database only; broader ACE/TAO brace auditing remains open.
