@@ -105,7 +105,10 @@ Guard_Test::test_guard (int ni)
 #if defined (ACE_USES_OBSOLETE_GUARD_CLASSES)
 # define ACE_THREAD_GUARD(OBJ,LOCK) \
   ACE_Thread_Mutex_Guard OBJ (LOCK); \
-    if (OBJ.locked () == 0) return;
+    if (OBJ.locked () == 0) \
+      { \
+        return; \
+      }
 
 void
 Guard_Test::test_thread_guard (int ni)

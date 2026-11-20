@@ -142,22 +142,34 @@
 #if !defined (ACE_WRITE_GUARD)
 # define ACE_WRITE_GUARD(MUTEX,OBJ,LOCK) \
   ACE_Write_Guard< MUTEX > OBJ (LOCK); \
-    if (OBJ.locked () == 0) return;
+    if (OBJ.locked () == 0) \
+      { \
+        return; \
+      }
 #endif /* !ACE_WRITE_GUARD */
 #if !defined (ACE_WRITE_GUARD_RETURN)
 # define ACE_WRITE_GUARD_RETURN(MUTEX,OBJ,LOCK,RETURN) \
   ACE_Write_Guard< MUTEX > OBJ (LOCK); \
-    if (OBJ.locked () == 0) return RETURN;
+    if (OBJ.locked () == 0) \
+      { \
+        return RETURN; \
+      }
 #endif /* ACE_WRITE_GUARD_RETURN */
 #if !defined (ACE_READ_GUARD)
 # define ACE_READ_GUARD(MUTEX,OBJ,LOCK) \
   ACE_Read_Guard< MUTEX > OBJ (LOCK); \
-    if (OBJ.locked () == 0) return;
+    if (OBJ.locked () == 0) \
+      { \
+        return; \
+      }
 #endif /* !ACE_READ_GUARD */
 #if !defined (ACE_READ_GUARD_RETURN)
 # define ACE_READ_GUARD_RETURN(MUTEX,OBJ,LOCK,RETURN) \
   ACE_Read_Guard< MUTEX > OBJ (LOCK); \
-    if (OBJ.locked () == 0) return RETURN;
+    if (OBJ.locked () == 0) \
+      { \
+        return RETURN; \
+      }
 #endif /* !ACE_READ_GUARD_RETURN */
 // FUZZ: enable check_for_ACE_Guard
 
