@@ -96,10 +96,12 @@ Svc_Handler::open (void *)
               reinterpret_cast<void *> (this->peer ().get_handle ())));
   // Enable non-blocking I/O.
   if (this->peer ().enable (ACE_NONBLOCK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) %p\n"),
-                       ACE_TEXT ("enable")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) %p\n"),
+                         ACE_TEXT ("enable")),
+                        -1);
+    }
   return 0;
 }
 
@@ -119,10 +121,14 @@ Svc_Handler::send_data ()
   // Send data to server.
 
   for (const char *c = ACE_ALPHABET; *c != '\0'; ++c)
-    if (this->peer ().send_n (c, 1) == -1)
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
-                  ACE_TEXT ("send_n")));
+    {
+      if (this->peer ().send_n (c, 1) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) %p\n"),
+                      ACE_TEXT ("send_n")));
+        }
+    }
 }
 
 void
@@ -147,9 +153,11 @@ Svc_Handler::recv_data ()
       int select_width = int (new_stream.get_handle ()) + 1;
 #endif /* ACE_WIN64 */
       if (ACE_OS::select (select_width, handle_set) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) %p\n"),
-                    ACE_TEXT ("select")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) %p\n"),
+                      ACE_TEXT ("select")));
+        }
       else
         {
           char c;
@@ -162,7 +170,9 @@ Svc_Handler::recv_data ()
               // will send multiple sequences of letters from 'a' ->
               // 'z' through the same connection.
               if (*t == 'z')
-                t = ACE_ALPHABET;
+                {
+                  t = ACE_ALPHABET;
+                }
               else
               {
                 ++t;
@@ -178,20 +188,26 @@ Svc_Handler::recv_data ()
               // since we're going to recycle it for the next
               // iteration).
               if (new_stream.close () == -1)
-                ACE_ERROR ((LM_ERROR,
-                            ACE_TEXT ("(%P|%t) %p\n"),
-                            ACE_TEXT ("close")));
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              ACE_TEXT ("(%P|%t) %p\n"),
+                              ACE_TEXT ("close")));
+                }
               break;
             }
           else if (r_bytes == -1)
             {
               if (errno == EWOULDBLOCK)
-                ACE_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("(%P|%t) no input available, going back to reading\n")));
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("(%P|%t) no input available, going back to reading\n")));
+                }
               else
-                ACE_ERROR ((LM_ERROR,
-                            ACE_TEXT ("(%P|%t) %p\n"),
-                            ACE_TEXT ("recv_n")));
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              ACE_TEXT ("(%P|%t) %p\n"),
+                              ACE_TEXT ("recv_n")));
+                }
             }
         }
     }
@@ -202,9 +218,11 @@ Svc_Handler::close (u_long side)
 {
   // Only run this protocol if we're the write-side (i.e., "1").
   if (side == 1 && this->peer ().close () == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) %p\n"),
-                ACE_TEXT ("close_writer")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("close_writer")));
+    }
   // Trigger the shutdown.
   return this->handle_close ();
 }
@@ -256,9 +274,11 @@ timed_blocking_connect (CONNECTOR &con,
   if (con.connect (svc_handler,
                    server_addr,
                    options) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) %p\n"),
-                ACE_TEXT ("connection failed")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("connection failed")));
+    }
   else
     {
       // Send the data to the server.
@@ -266,9 +286,11 @@ timed_blocking_connect (CONNECTOR &con,
 
       // Close the connection completely.
       if (svc_handler->close (1) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) %p\n"),
-                    ACE_TEXT ("close")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) %p\n"),
+                      ACE_TEXT ("close")));
+        }
     }
 }
 
@@ -283,9 +305,11 @@ blocking_connect (CONNECTOR &con,
   // Perform a blocking connect to the server.
   if (con.connect (svc_handler,
                    server_addr) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) %p\n"),
-                ACE_TEXT ("connection failed")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("connection failed")));
+    }
   else
     {
       // Send the data to the server.
@@ -293,9 +317,11 @@ blocking_connect (CONNECTOR &con,
 
       // Close the connection completely.
       if (svc_handler->close (1) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) %p\n"),
-                    ACE_TEXT ("close")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) %p\n"),
+                      ACE_TEXT ("close")));
+        }
     }
 }
 
@@ -409,10 +435,12 @@ client (void *arg)
        (ACE_THR_FUNC) client_connections,
        (void *) &info,
        THR_NEW_LWP) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) %p\n%a"),
-                ACE_TEXT ("client thread spawn failed"),
-                1));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n%a"),
+                  ACE_TEXT ("client thread spawn failed"),
+                  1));
+    }
 
   // Wait for the threads to exit.
   client_manager.wait ();
@@ -475,10 +503,12 @@ server (void *arg)
               return nullptr;
             }
           else
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("(%P|%t) %p\n"),
-                               ACE_TEXT ("accept failed, shutting down")),
-                              0);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("(%P|%t) %p\n"),
+                                 ACE_TEXT ("accept failed, shutting down")),
+                                0);
+            }
         }
       // Use this rather than get_host_name() to properly adjust to the
       // charset width in use.
@@ -551,11 +581,15 @@ spawn_processes (ACCEPTOR *acceptor,
   client ((void *) server_addr);
 
   for (i = 0; i < n_servers; ++i)
-    // Shutdown the servers.
-    if (ACE_OS::kill (children[i], SIGTERM) == -1)
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p for %d\n"),
-                  ACE_TEXT ("kill"), children[i]));
+    {
+      // Shutdown the servers.
+      if (ACE_OS::kill (children[i], SIGTERM) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) %p for %d\n"),
+                      ACE_TEXT ("kill"), children[i]));
+        }
+    }
 
   pid_t child;
 
@@ -563,9 +597,11 @@ spawn_processes (ACCEPTOR *acceptor,
     {
       child = ACE_OS::waitpid (0, nullptr, 0);
       if (child != -1)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) reaping %d\n"),
-                    child));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) reaping %d\n"),
+                      child));
+        }
     }
   while (child != -1);
 
@@ -697,19 +733,21 @@ run_main (int argc, ACE_TCHAR *argv[])
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("c:i:s:"));
   for (int c; (c = getopt ()) != -1; )
-    //FUZZ: enable check_for_lack_ACE_OS
-    switch (c)
-      {
-      case 'c':
-        n_clients = ACE_OS::atoi (getopt.opt_arg ());
-        break;
-      case 'i':
-        n_client_iterations = ACE_OS::atoi (getopt.opt_arg ());
-        break;
-      case 's':
-        n_servers = ACE_OS::atoi (getopt.opt_arg ());
-        break;
-      }
+    {
+      //FUZZ: enable check_for_lack_ACE_OS
+      switch (c)
+        {
+        case 'c':
+          n_clients = ACE_OS::atoi (getopt.opt_arg ());
+          break;
+        case 'i':
+          n_client_iterations = ACE_OS::atoi (getopt.opt_arg ());
+          break;
+        case 's':
+          n_servers = ACE_OS::atoi (getopt.opt_arg ());
+          break;
+        }
+    }
 
 #ifndef ACE_LACKS_ACCEPT
   // Acceptor
@@ -734,10 +772,12 @@ run_main (int argc, ACE_TCHAR *argv[])
 # if !defined (ACE_LACKS_FORK)
       if (spawn_processes (&acceptor,
                            &server_addr) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) %p\n"),
-                           ACE_TEXT ("spawn_processes")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) %p\n"),
+                             ACE_TEXT ("spawn_processes")),
+                            1);
+        }
 # elif defined (ACE_HAS_THREADS)
       status = spawn_threads (&acceptor, &server_addr);
 # else  /* ACE_LACKS_FORK && ! ACE_HAS_THREADS */
