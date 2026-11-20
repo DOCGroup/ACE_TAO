@@ -132,8 +132,10 @@ STDIN_Token::parse_args (int argc, ACE_TCHAR *argv[])
     }
 
   if (remote_)
-    ACE_Remote_Mutex::set_server_address (ACE_INET_Addr (server_port_,
-                                                         server_host_));
+    {
+      ACE_Remote_Mutex::set_server_address (ACE_INET_Addr (server_port_,
+                                                           server_host_));
+    }
 
   return 0;
 }
@@ -142,18 +144,24 @@ int
 STDIN_Token::open (int argc, ACE_TCHAR *argv[])
 {
   if (this->parse_args (argc, argv) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   // Register for signals.
   if (ACE_Reactor::instance ()->register_handler
       (SIGINT, this) == -1)
-    ACE_DEBUG ((LM_DEBUG, "Can't register signal handler\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG, "Can't register signal handler\n"));
+    }
 
 #if ! defined (ACE_WIN32)
   // Register for STDIN events with Reactor.
   if (ACE_Reactor::instance ()->register_handler
       (ACE_STDIN, this, ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG, "Can't register signal handler\n"), 0);
+    {
+      ACE_ERROR_RETURN ((LM_DEBUG, "Can't register signal handler\n"), 0);
+    }
 #endif /* ACE_WIN32 */
 
   this->display_menu ();
@@ -185,7 +193,9 @@ STDIN_Token::handle_input (ACE_HANDLE fd)
     this->get_proxy (tid, token, type[0]);
 
   if (proxy == nullptr)
-    return -1;
+    {
+      return -1;
+    }
 
   switch (operation[0])
     {
@@ -195,10 +205,14 @@ STDIN_Token::handle_input (ACE_HANDLE fd)
         {
           ACE_OS::printf ("Succeeded.\n");
           if (ACE_TOKEN_INVARIANTS::instance ()->acquired (proxy) == 0)
-            ACE_OS::printf ("Violated invariant.\n");
+            {
+              ACE_OS::printf ("Violated invariant.\n");
+            }
         }
       else
-        ACE_ERROR ((LM_ERROR, "%p.\n", "Acquire failed"));
+        {
+          ACE_ERROR ((LM_ERROR, "%p.\n", "Acquire failed"));
+        }
       break;
     case 'n':
     case 'N':
@@ -207,19 +221,27 @@ STDIN_Token::handle_input (ACE_HANDLE fd)
         {
           ACE_OS::printf ("Succeeded.\n");
           if (ACE_TOKEN_INVARIANTS::instance ()->acquired (proxy) == 0)
-            ACE_OS::printf ("Violated invariant.\n");
+            {
+              ACE_OS::printf ("Violated invariant.\n");
+            }
         }
       else
-        ACE_ERROR ((LM_ERROR, "%p.\n", "Renew failed"));
+        {
+          ACE_ERROR ((LM_ERROR, "%p.\n", "Renew failed"));
+        }
       break;
 
     case 'r':
     case 'R':
       ACE_TOKEN_INVARIANTS::instance ()->releasing (proxy);
       if (proxy->release () == 0)
-        ACE_OS::printf ("Succeeded.\n");
+        {
+          ACE_OS::printf ("Succeeded.\n");
+        }
       else
-        ACE_ERROR ((LM_ERROR, "%p.\n", "Release failed"));
+        {
+          ACE_ERROR ((LM_ERROR, "%p.\n", "Release failed"));
+        }
       break;
 
     case 't':
@@ -228,10 +250,14 @@ STDIN_Token::handle_input (ACE_HANDLE fd)
         {
           ACE_OS::printf ("Succeeded.\n");
           if (ACE_TOKEN_INVARIANTS::instance ()->acquired (proxy) == 0)
-            ACE_OS::printf ("Violated invariant.\n");
+            {
+              ACE_OS::printf ("Violated invariant.\n");
+            }
         }
       else
-        ACE_ERROR ((LM_ERROR, "%p.\n", "Tryacquire failed"));
+        {
+          ACE_ERROR ((LM_ERROR, "%p.\n", "Tryacquire failed"));
+        }
       break;
     }
 
@@ -291,7 +317,9 @@ STDIN_Token::get_proxy (std::string const &client_id,
     {
       std::unique_ptr<ACE_Token_Proxy> new_proxy = this->create_proxy (token, type);
       if (!new_proxy)
-        return nullptr;
+        {
+          return nullptr;
+        }
 
       // Put the new_proxy in this tid's collection.
       if (proxy_collection->insert (*new_proxy) == -1)
@@ -324,23 +352,35 @@ STDIN_Token::create_proxy (std::string const &token, char type)
     case 'm':
     case 'M':
       if (remote_)
-        return std::make_unique<ACE_Remote_Mutex> (token.c_str (), ignore_deadlock_, debug_);
+        {
+          return std::make_unique<ACE_Remote_Mutex> (token.c_str (), ignore_deadlock_, debug_);
+        }
       else
-        return std::make_unique<ACE_Local_Mutex> (token.c_str (), ignore_deadlock_, debug_);
+        {
+          return std::make_unique<ACE_Local_Mutex> (token.c_str (), ignore_deadlock_, debug_);
+        }
 
     case 'r':
     case 'R':
       if (remote_)
-        return std::make_unique<ACE_Remote_RLock> (token.c_str (), ignore_deadlock_, debug_);
+        {
+          return std::make_unique<ACE_Remote_RLock> (token.c_str (), ignore_deadlock_, debug_);
+        }
       else
-        return std::make_unique<ACE_Local_RLock> (token.c_str (), ignore_deadlock_, debug_);
+        {
+          return std::make_unique<ACE_Local_RLock> (token.c_str (), ignore_deadlock_, debug_);
+        }
 
     case 'w':
     case 'W':
       if (remote_)
-        return std::make_unique<ACE_Remote_WLock> (token.c_str (), ignore_deadlock_, debug_);
+        {
+          return std::make_unique<ACE_Remote_WLock> (token.c_str (), ignore_deadlock_, debug_);
+        }
       else
-        return std::make_unique<ACE_Local_WLock> (token.c_str (), ignore_deadlock_, debug_);
+        {
+          return std::make_unique<ACE_Local_WLock> (token.c_str (), ignore_deadlock_, debug_);
+        }
     }
 
   // should never get here, but this avoids a compiler warning . . .
