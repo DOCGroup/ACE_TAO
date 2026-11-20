@@ -29,7 +29,9 @@ TAO_ORB_Core::_decr_refcnt ()
 {
   unsigned long const count = --this->refcount_;
   if (count != 0)
-    return count;
+    {
+      return count;
+    }
 
   this->fini ();
   return 0;
@@ -39,7 +41,9 @@ ACE_INLINE ACE_Lock *
 TAO_ORB_Core::locking_strategy ()
 {
   if (this->resource_factory ()->use_locked_data_blocks ())
-    return std::addressof (this->data_block_lock_);
+    {
+      return std::addressof (this->data_block_lock_);
+    }
 
   return nullptr;
 }
@@ -277,7 +281,9 @@ TAO_ORB_Core::get_tss_resource (size_t slot_id)
     this->get_tss_resources ();
 
   if (slot_id >= tss_resources->ts_objects_.size ())
-    return nullptr;
+    {
+      return nullptr;
+    }
 
   return tss_resources->ts_objects_[slot_id];
 }
@@ -428,7 +434,9 @@ ACE_INLINE TAO_Codeset_Manager *
 TAO_ORB_Core::codeset_manager()
 {
   if (this->orb_params()->negotiate_codesets() == 0)
-    return 0;
+    {
+      return 0;
+    }
   if (this->codeset_manager_ == 0)
     {
       // This causes a factory to be loaded which will call
@@ -436,7 +444,9 @@ TAO_ORB_Core::codeset_manager()
       this->codeset_manager_ =
         this->resource_factory()->codeset_manager();
       if (this->codeset_manager_ == 0)
-        this->orb_params()->negotiate_codesets(false);
+        {
+          this->orb_params()->negotiate_codesets(false);
+        }
     }
   return this->codeset_manager_;
 }
