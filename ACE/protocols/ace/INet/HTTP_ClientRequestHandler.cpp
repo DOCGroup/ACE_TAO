@@ -25,7 +25,9 @@ namespace ACE
         SessionFactory* factory)
       {
         if (factory == nullptr)
+        {
           this->factory_map_.unbind (scheme);
+        }
         else
         {
           this->factory_map_.rebind (scheme, factory);

@@ -1116,7 +1116,9 @@ public:
         ...   // insert dynamically allocated Items...
         Item *p {};
         while ((p = list.delete_head()) != nullptr)
+        {
           delete p;
+        }
       @endcode
    */
   ~ACE_DLList ();
