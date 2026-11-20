@@ -555,9 +555,9 @@ const char * Oid::to_string()
     }
 
   // convert to an output string
-  size_t how_many {};
   if (valid ())
     {
+      size_t how_many {};
       if (OidToStr (&smival.value.oid, n, new_string.get (), how_many) < 0)
         {
           return "ERROR: Oid::OidToStr failed";
