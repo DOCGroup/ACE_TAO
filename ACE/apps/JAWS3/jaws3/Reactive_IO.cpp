@@ -236,9 +236,13 @@ JAWS_IO_Reactive_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
   if (this->completer_)
     {
       if (ACE_BIT_ENABLED (this->mask_, ACE_Event_Handler::WRITE_MASK))
-        this->completer_->output_complete (this->io_result_, this->act_);
+        {
+          this->completer_->output_complete (this->io_result_, this->act_);
+        }
       else if (ACE_BIT_ENABLED (this->mask_, ACE_Event_Handler::READ_MASK))
-        this->completer_->input_complete (this->io_result_, this->act_);
+        {
+          this->completer_->input_complete (this->io_result_, this->act_);
+        }
     }
 
   ACE_Reactor::instance ()
@@ -383,7 +387,9 @@ JAWS_IO_Reactive_Transmit::handle_output (ACE_HANDLE handle)
   this->was_active_ = true;
 
   if (this->header_ && this->header_->length () > 0)
-    return this->handle_output_header (handle);
+    {
+      return this->handle_output_header (handle);
+    }
   else
   {
     this->header_ = nullptr;
@@ -395,7 +401,9 @@ JAWS_IO_Reactive_Transmit::handle_output (ACE_HANDLE handle)
   }
 
   if (this->trailer_ && this->trailer_->length () > 0)
-    return this->handle_output_trailer (handle);
+    {
+      return this->handle_output_trailer (handle);
+    }
   else
   {
     this->trailer_ = nullptr;
@@ -457,7 +465,9 @@ JAWS_IO_Reactive_Transmit::handle_output_source (ACE_HANDLE handle)
           return -1;
         }
       else if (count == 0)
-        this->source_ = ACE_INVALID_HANDLE;
+        {
+          this->source_ = ACE_INVALID_HANDLE;
+        }
       else
       {
         mb->wr_ptr (count);
@@ -477,7 +487,9 @@ JAWS_IO_Reactive_Transmit::handle_output_source (ACE_HANDLE handle)
       this->source_buf_ = nullptr;
     }
   else if (mb == nullptr && this->source_ == ACE_INVALID_HANDLE)
-    this->source_buf_ = nullptr;
+    {
+      this->source_buf_ = nullptr;
+    }
   else
   {
     this->source_buf_->crunch ();
