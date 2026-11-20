@@ -63,12 +63,14 @@ TAO_Leader_Follower_Flushing_Strategy::flush_transport (
               orb_core->orb ()->perform_work (max_wait_time);
             }
 
-          if (max_wait_time != nullptr) {
-            if (*max_wait_time <= ACE_Time_Value::zero) {
-              errno = ETIME;
-              return -1;
+          if (max_wait_time != nullptr)
+            {
+              if (*max_wait_time <= ACE_Time_Value::zero)
+                {
+                  errno = ETIME;
+                  return -1;
+                }
             }
-          }
         }
     }
   catch (const ::CORBA::Exception&)

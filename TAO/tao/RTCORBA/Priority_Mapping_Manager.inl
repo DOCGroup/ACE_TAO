@@ -215,7 +215,9 @@ ACE_INLINE void
 TAO_Priority_Mapping_Manager::mapping (RTCORBA::PriorityMapping *mapping)
 {
   if (mapping != this->mapping_.get ())
-    this->mapping_.reset (mapping);
+    {
+      this->mapping_.reset (mapping);
+    }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

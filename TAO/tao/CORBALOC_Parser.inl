@@ -7,7 +7,9 @@ ACE_INLINE
 TAO_CORBALOC_Parser::parsed_endpoint::~parsed_endpoint ()
 {
   if (this->profile_ != 0)
-    this->profile_->_decr_refcnt();
+    {
+      this->profile_->_decr_refcnt();
+    }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

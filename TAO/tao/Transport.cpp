@@ -1763,12 +1763,14 @@ TAO_Transport::queue_message_i (const ACE_Message_Block *message_block,
                                              nullptr,
                                              true),
                   -1);
-  if (back) {
-    queued_message->push_back (this->head_, this->tail_);
-  }
-  else {
-    queued_message->push_front (this->head_, this->tail_);
-  }
+  if (back)
+    {
+      queued_message->push_back (this->head_, this->tail_);
+    }
+  else
+    {
+      queued_message->push_front (this->head_, this->tail_);
+    }
 
   return 0;
 }

@@ -24,7 +24,9 @@ TAO::CSD::FW_Server_Request_Wrapper::clone()
       TAO_ServerRequest * const cloned_request =
         this->clone (this->request_);
       if (cloned_request == nullptr)
-        throw CORBA::UNKNOWN ();
+        {
+          throw CORBA::UNKNOWN ();
+        }
 
       this->request_ = cloned_request;
       this->is_clone_ = true;
