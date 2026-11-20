@@ -87,10 +87,14 @@ TAO_Linear_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
   for (total = 1; ; ++total)
     {
       if (native_priority == current_priority)
-        native_priority_index = total;
+        {
+          native_priority_index = total;
+        }
 
       if (current_priority == this->max_)
-        break;
+        {
+          break;
+        }
 
       current_priority =
         ACE_Sched_Params::next_priority (this->policy_,
@@ -98,7 +102,9 @@ TAO_Linear_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
     }
 
   if (native_priority_index == 0)
-    return false;
+    {
+      return false;
+    }
 
   int delta = total - 1;
   if (delta != 0)

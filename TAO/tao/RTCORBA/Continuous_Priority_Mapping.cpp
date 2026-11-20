@@ -33,7 +33,9 @@ TAO_Continuous_Priority_Mapping::to_native (RTCORBA::Priority corba_priority,
                                          current_native_priority);
 
       if (next_native_priority == current_native_priority)
-        return false;
+        {
+          return false;
+        }
 
       current_native_priority = next_native_priority;
     }
@@ -89,15 +91,21 @@ TAO_Continuous_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priori
   for (corba_priority = 0; ; ++corba_priority)
     {
       if (current_native_priority == native_priority)
-        return true;
+        {
+          return true;
+        }
 
       else if (current_native_priority == this->max_)
-        return false;
+        {
+          return false;
+        }
 
       else
-        current_native_priority =
-          ACE_Sched_Params::next_priority (this->policy_,
-                                           current_native_priority);
+        {
+          current_native_priority =
+            ACE_Sched_Params::next_priority (this->policy_,
+                                             current_native_priority);
+        }
     }
 
 #else
