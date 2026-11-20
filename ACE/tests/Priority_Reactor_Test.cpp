@@ -74,16 +74,20 @@ int
 Read_Handler::open (void *)
 {
   if (this->peer ().enable (ACE_NONBLOCK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Read_Handler::open, ")
-                       ACE_TEXT ("cannot set non blocking mode")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Read_Handler::open, ")
+                         ACE_TEXT ("cannot set non blocking mode")),
+                        -1);
+    }
 
   if (reactor ()->register_handler (this, READ_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Read_Handler::open, ")
-                       ACE_TEXT ("cannot register handler")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Read_Handler::open, ")
+                         ACE_TEXT ("cannot register handler")),
+                        -1);
+    }
 
   // A number larger than the actual number of priorities, so some
   // clients are misbehaved, hence pusnished.
@@ -119,8 +123,10 @@ Read_Handler::handle_input (ACE_HANDLE h)
       }
 
       if (result != 0)
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) %p\n"),
-                    ACE_TEXT ("Read_Handler::handle_input")));
+        {
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) %p\n"),
+                      ACE_TEXT ("Read_Handler::handle_input")));
+        }
       --waiting_;
 
       if (waiting_ == 0)
@@ -158,9 +164,11 @@ Write_Handler::svc ()
     {
       if (this->peer ().send_n (ACE_ALPHABET,
                                 sizeof (ACE_ALPHABET) - 1) == -1)
+        {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) %p\n"),
                       ACE_TEXT ("send_n")));
+        }
       ACE_OS::sleep (pause);
     }
 
@@ -234,36 +242,38 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("dc:l:m:t:"));
 
   for (int c; (c = getopt ()) != -1; )
-    switch (c)
-      {
-  //FUZZ: enable check_for_lack_ACE_OS
-      case 'd':
-        opt_priority_reactor = 0;
-        break;
-      case 'c':
-        opt_nchildren = ACE_OS::atoi (getopt.opt_arg ());
-        break;
-      case 'l':
-        opt_nloops = ACE_OS::atoi (getopt.opt_arg ());
-        break;
-      case 'm':
-        max_retries = ACE_OS::atoi (getopt.opt_arg ());
-        break;
-      case 't':
-        opt_max_duration = ACE_OS::atoi (getopt.opt_arg ());
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Usage: Priority_Reactor_Test ")
-                           ACE_TEXT ("   [-d] (disable priority reactor)\n")
-                           ACE_TEXT ("   [-c nchildren] (number of threads/processes)\n")
-                           ACE_TEXT ("   [-l loops] (number of loops per child)\n")
-                           ACE_TEXT ("   [-m maxretries] (attempts to connect)\n")
-                           ACE_TEXT ("   [-t max_time] (limits test duration)\n")),
-                          -1);
-        ACE_NOTREACHED (break);
-      }
+    {
+      switch (c)
+        {
+        //FUZZ: enable check_for_lack_ACE_OS
+        case 'd':
+          opt_priority_reactor = 0;
+          break;
+        case 'c':
+          opt_nchildren = ACE_OS::atoi (getopt.opt_arg ());
+          break;
+        case 'l':
+          opt_nloops = ACE_OS::atoi (getopt.opt_arg ());
+          break;
+        case 'm':
+          max_retries = ACE_OS::atoi (getopt.opt_arg ());
+          break;
+        case 't':
+          opt_max_duration = ACE_OS::atoi (getopt.opt_arg ());
+          break;
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Usage: Priority_Reactor_Test ")
+                             ACE_TEXT ("   [-d] (disable priority reactor)\n")
+                             ACE_TEXT ("   [-c nchildren] (number of threads/processes)\n")
+                             ACE_TEXT ("   [-l loops] (number of loops per child)\n")
+                             ACE_TEXT ("   [-m maxretries] (attempts to connect)\n")
+                             ACE_TEXT ("   [-t max_time] (limits test duration)\n")),
+                            -1);
+          ACE_NOTREACHED (break);
+        }
+    }
 
   // Manage Reactor memory automagically.
   // Note:  If opt_priority_reactor is false, the default ACE_Reactor is used
@@ -297,10 +307,12 @@ run_main (int argc, ACE_TCHAR *argv[])
   // Bind acceptor to any port and then find out what the port was.
   if (acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &)) == -1
       || acceptor.acceptor ().get_local_addr (server_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) %p\n"),
-                       ACE_TEXT ("open")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) %p\n"),
+                         ACE_TEXT ("open")),
+                        -1);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) starting server at port %d\n"),
@@ -318,10 +330,12 @@ run_main (int argc, ACE_TCHAR *argv[])
           (ACE_THR_FUNC (client),
            (void *) &connection_addr,
            THR_NEW_LWP | THR_DETACHED) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) %p\n%a"),
-                    ACE_TEXT ("thread create failed"),
-                    1));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) %p\n%a"),
+                      ACE_TEXT ("thread create failed"),
+                      1));
+        }
     }
 #elif !defined (ACE_LACKS_FORK)
   for (i = 0; i < opt_nchildren; ++i)
