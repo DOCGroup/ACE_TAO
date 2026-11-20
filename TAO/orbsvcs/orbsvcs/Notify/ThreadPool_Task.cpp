@@ -81,7 +81,9 @@ TAO_Notify_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params,
         }
 
       if (ACE_OS::last_error () == EPERM)
-        ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Insufficient privilege.\n")));
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Insufficient privilege.\n")));
+        }
       else if (ACE_OS::last_error () == EAGAIN)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
@@ -106,8 +108,10 @@ TAO_Notify_ThreadPool_Task::execute (TAO_Notify_Method_Request& method_request)
           ACE_Message_Block::release (request_copy);
 
           if (TAO_debug_level > 0)
-            ORBSVCS_DEBUG ((LM_DEBUG, "NS_ThreadPool_Task (%P|%t) - "
-                        "failed to enqueue\n"));
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG, "NS_ThreadPool_Task (%P|%t) - "
+                                      "failed to enqueue\n"));
+            }
         }
     }
 }

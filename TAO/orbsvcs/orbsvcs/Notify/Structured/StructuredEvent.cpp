@@ -20,9 +20,13 @@ TAO_Notify_StructuredEvent_No_Copy::TAO_Notify_StructuredEvent_No_Copy (
   for (CORBA::ULong i {}; i < prop_seq.length (); ++i)
     {
       if (std::strcmp (prop_seq[i].name.in (), CosNotification::Priority) == 0)
-        this->priority_.set (prop_seq[i].value);
+        {
+          this->priority_.set (prop_seq[i].value);
+        }
       else if (std::strcmp (prop_seq[i].name.in (), CosNotification::Timeout) == 0)
-        this->timeout_.set (prop_seq[i].value);
+        {
+          this->timeout_.set (prop_seq[i].value);
+        }
     }
 }
 
@@ -67,8 +71,10 @@ CORBA::Boolean
 TAO_Notify_StructuredEvent_No_Copy::do_match (CosNotifyFilter::Filter_ptr filter) const
 {
   if (TAO_debug_level > 0)
-    ORBSVCS_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
-                "TAO_Notify_StructuredEvent::do_match ()\n"));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
+                              "TAO_Notify_StructuredEvent::do_match ()\n"));
+    }
 
   return filter->match_structured (*this->notification_);
 }
@@ -84,9 +90,11 @@ void
 TAO_Notify_StructuredEvent_No_Copy::push (TAO_Notify_Consumer *consumer) const
 {
   if (TAO_debug_level > 0)
-    ORBSVCS_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
-                          "TAO_Notify_StructuredEvent::do_push ("
-                          "CosNotifyComm::StructuredPushConsumer_ptr)\n"));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
+                              "TAO_Notify_StructuredEvent::do_push ("
+                              "CosNotifyComm::StructuredPushConsumer_ptr)\n"));
+    }
 
   consumer->push (*this->notification_);
 }

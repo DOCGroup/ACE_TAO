@@ -54,7 +54,9 @@ TAO_Notify_Supplier::is_alive (bool allow_nil_supplier)
     // check should return true so it will be validated in
     // next period.
     if (allow_nil_supplier)
-      return true;
+      {
+        return true;
+      }
     else
     {
       return status;
@@ -99,11 +101,15 @@ TAO_Notify_Supplier::is_alive (bool allow_nil_supplier)
           : now - last_ping >= TAO_Notify_PROPERTIES::instance()->validate_client_delay ());
       }
       else
-        do_liveliness_check =
-          now - last_ping >= TAO_Notify_PROPERTIES::instance()->validate_client_interval ();
+        {
+          do_liveliness_check =
+            now - last_ping >= TAO_Notify_PROPERTIES::instance()->validate_client_interval ();
+        }
 
       if (CORBA::is_nil (rtt_obj_.in ()))
-        status = false;
+        {
+          status = false;
+        }
       else if (do_liveliness_check || allow_nil_supplier)
       {
         this->proxy_->last_ping (now);

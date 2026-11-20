@@ -53,10 +53,12 @@ Random_File::open (ACE_TCHAR const *filename, size_t const block_size)
 
   if (result)
   {
-    if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("(%P|%t) Opening file %s\n")
-      , filename
-      ));
+    if (DEBUG_LEVEL > 8)
+      {
+        ORBSVCS_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("(%P|%t) Opening file %s\n"),
+                        filename));
+      }
     ACE_HANDLE const handle = ACE_OS::open (filename,
       O_CREAT | O_RDWR | O_BINARY,
       ACE_DEFAULT_FILE_PERMS);
@@ -85,11 +87,13 @@ bool
 Random_File::write (size_t const block_number, void * const buf, bool const atomic)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, false);
-  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
-    ACE_TEXT ("(%P|%t) Write block %B %c\n"),
-    block_number,
-    (atomic ? '*' : ' ')
-    ));
+  if (DEBUG_LEVEL > 8)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) Write block %B %c\n"),
+                      block_number,
+                      (atomic ? '*' : ' ')));
+    }
   bool result = this->seek(block_number);
   if (result)
   {
@@ -120,10 +124,12 @@ bool
 Random_File::read (size_t const block_number, void * const buf)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, false);
-  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
-    ACE_TEXT ("(%P|%t) Read block %B\n"),
-    block_number
-    ));
+  if (DEBUG_LEVEL > 8)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) Read block %B\n"),
+                      block_number));
+    }
   bool result = this->seek(block_number);
   if (result)
   {
