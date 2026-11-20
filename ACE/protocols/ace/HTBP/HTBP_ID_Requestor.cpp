@@ -146,11 +146,13 @@ ACE::HTBP::ID_Requestor::get_HTID ()
       ACE_CString answer ((char *)recv_buf.iov_base,recv_buf.iov_len);
       ACE_CString::size_type start = answer.rfind (ACE_TEXT('\n'));
       if (start == ACE_CString::npos)
-        start = 0;
+        {
+          start = 0;
+        }
       else
-      {
-        ++start;
-      }
+        {
+          ++start;
+        }
       ACE::HTBP::ID_Requestor::htid_ = ACE_TEXT_CHAR_TO_TCHAR(answer.substr (start).c_str());
       htid = ACE::HTBP::ID_Requestor::htid_.rep();
     }

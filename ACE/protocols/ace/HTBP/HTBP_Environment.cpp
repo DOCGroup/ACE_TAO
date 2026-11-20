@@ -15,11 +15,13 @@ ACE::HTBP::Environment::Environment (ACE_Configuration *config,
 ACE::HTBP::Environment::~Environment ()
 {
   if (!own_config_)
-    this->clear();
+    {
+      this->clear();
+    }
   else
-  {
-    delete this->config_;
-  }
+    {
+      delete this->config_;
+    }
 
 }
 
@@ -103,14 +105,18 @@ ACE::HTBP::Environment::open_persistent_config (ACE_TCHAR const* persistent_file
   this->config_ = heap;
   this->own_config_ = true;
   if (persistent_file == nullptr)
-    heap->open();
+    {
+      heap->open();
+    }
   else
     if (heap->open (persistent_file) != 0)
-      ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("(%P|%t) ACE::HTBP::Environment::")
-                          ACE_TEXT ("open_config: %p\n"),
-                          persistent_file),
-                        -1 );
+      {
+        ACE_ERROR_RETURN (( LM_ERROR,
+                            ACE_TEXT ("(%P|%t) ACE::HTBP::Environment::")
+                            ACE_TEXT ("open_config: %p\n"),
+                            persistent_file),
+                          -1 );
+      }
   return 0;
 }
 

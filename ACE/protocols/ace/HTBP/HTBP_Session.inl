@@ -78,7 +78,9 @@ void
 ACE::HTBP::Session::proxy_addr (ACE_INET_Addr *pa, bool destroy)
 {
   if (this->destroy_proxy_addr_)
-    delete this->proxy_addr_;
+    {
+      delete this->proxy_addr_;
+    }
   this->proxy_addr_ = pa;
   this->destroy_proxy_addr_ = destroy;
 }

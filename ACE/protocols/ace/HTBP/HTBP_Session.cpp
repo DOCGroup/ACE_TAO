@@ -215,13 +215,19 @@ void
 ACE::HTBP::Session::detach (ACE::HTBP::Channel *ch)
 {
   if (this->inbound_ == ch)
-    this->inbound_ = nullptr;
+    {
+      this->inbound_ = nullptr;
+    }
   else if (this->outbound_ == ch)
-    this->outbound_ = nullptr;
+    {
+      this->outbound_ = nullptr;
+    }
   else
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT("ACE::HTBP::Session::detach ")
-                ACE_TEXT("called with unknown channel\n")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT("ACE::HTBP::Session::detach ")
+                  ACE_TEXT("called with unknown channel\n")));
+    }
 }
 
 void

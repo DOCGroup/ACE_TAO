@@ -112,7 +112,9 @@ void
 ACE::HTBP::Channel::set_handle (ACE_HANDLE h)
 {
   if (h == 0)
-    return;
+    {
+      return;
+    }
   this->ace_stream_.set_handle (h);
 }
 
