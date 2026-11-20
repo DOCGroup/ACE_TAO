@@ -415,7 +415,13 @@ protected:
  */
 struct TAO_Export TAO_Stub_Decr_Refcnt
 {
-  void operator()(TAO_Stub* stub) const { if (stub) stub->_decr_refcnt(); }
+  void operator()(TAO_Stub* stub) const
+  {
+    if (stub)
+      {
+        stub->_decr_refcnt ();
+      }
+  }
 };
 
 /**

@@ -310,7 +310,9 @@ TAO_ORB_Core::set_tss_resource (size_t slot_id, void *ts_object)
   size_t const new_size = slot_id + 1;
   if (slot_id >= old_size
       && tss_resources->ts_objects_.size (new_size) != 0)
-    return -1;
+    {
+      return -1;
+    }
 
   // Initialize intermediate array elements to nullptr, since they
   // haven't been initialized yet.  This ensures that garbage is not

@@ -169,7 +169,9 @@ namespace TAO
   {
     if (this->transport_property_->is_equivalent (rhs.transport_property_) &&
         this->index_ == rhs.index_)
-      return false;
+      {
+        return false;
+      }
 
     return true;
   }
