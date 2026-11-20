@@ -656,7 +656,7 @@ ACE_Name_Handler::~ACE_Name_Handler ()
 {
   ACE_TRACE ("ACE_Name_Handler::~ACE_Name_Handler");
 #if 0
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("closing down Handle  %d\n"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("closing down Handle  %H\n"),
               this->get_handle ()));
 #endif /* 0 */
 }
