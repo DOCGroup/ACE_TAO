@@ -56,9 +56,13 @@ ACE_OS::uname (ACE_utsname *name)
       // Get information from the two structures
       const char *os {};
       if (vinfo.dwPlatformId == VER_PLATFORM_WIN32_NT)
-        os = "Windows NT %d.%d";
+        {
+          os = "Windows NT %d.%d";
+        }
       else
-        os = "Windows CE %d.%d";
+        {
+          os = "Windows CE %d.%d";
+        }
       ACE_OS::snprintf (name->release, maxnamelen,
                         os,
                         (int) vinfo.dwMajorVersion,
@@ -84,26 +88,44 @@ ACE_OS::uname (ACE_utsname *name)
         case PROCESSOR_ARCHITECTURE_INTEL:
           std::strcpy (processor, "Intel");
           if (sinfo.wProcessorLevel == 3)
-            std::strcpy (subtype, "80386");
+            {
+              std::strcpy (subtype, "80386");
+            }
           else if (sinfo.wProcessorLevel == 4)
-            std::strcpy (subtype, "80486");
+            {
+              std::strcpy (subtype, "80486");
+            }
           else if (sinfo.wProcessorLevel == 5)
-            std::strcpy (subtype, "Pentium");
+            {
+              std::strcpy (subtype, "Pentium");
+            }
           else if (sinfo.wProcessorLevel == 6)
-            std::strcpy (subtype, "Pentium Pro");
+            {
+              std::strcpy (subtype, "Pentium Pro");
+            }
           else if (sinfo.wProcessorLevel == 7)  // I'm guessing here
-            std::strcpy (subtype, "Pentium II");
+            {
+              std::strcpy (subtype, "Pentium II");
+            }
           else
-            ACE_OS::snprintf (subtype, bufsize, "%d", sinfo.wProcessorLevel);
+            {
+              ACE_OS::snprintf (subtype, bufsize, "%d", sinfo.wProcessorLevel);
+            }
           break;
         case PROCESSOR_ARCHITECTURE_MIPS:
           std::strcpy (processor, "MIPS");
           if (sinfo.wProcessorLevel == 3)
-            std::strcpy (subtype, "R3000");
+            {
+              std::strcpy (subtype, "R3000");
+            }
           else if (sinfo.wProcessorLevel == 4)
-            std::strcpy (subtype, "R4000");
+            {
+              std::strcpy (subtype, "R4000");
+            }
           else
-            ACE_OS::snprintf (subtype, bufsize, "%d", sinfo.wProcessorLevel);
+            {
+              ACE_OS::snprintf (subtype, bufsize, "%d", sinfo.wProcessorLevel);
+            }
           break;
         case PROCESSOR_ARCHITECTURE_ALPHA:
           std::strcpy (processor, "Alpha");
@@ -112,17 +134,29 @@ ACE_OS::uname (ACE_utsname *name)
         case PROCESSOR_ARCHITECTURE_PPC:
           std::strcpy (processor, "PPC");
           if (sinfo.wProcessorLevel == 1)
-            std::strcpy (subtype, "601");
+            {
+              std::strcpy (subtype, "601");
+            }
           else if (sinfo.wProcessorLevel == 3)
-            std::strcpy (subtype, "603");
+            {
+              std::strcpy (subtype, "603");
+            }
           else if (sinfo.wProcessorLevel == 4)
-            std::strcpy (subtype, "604");
+            {
+              std::strcpy (subtype, "604");
+            }
           else if (sinfo.wProcessorLevel == 6)
-            std::strcpy (subtype, "603+");
+            {
+              std::strcpy (subtype, "603+");
+            }
           else if (sinfo.wProcessorLevel == 9)
-            std::strcpy (subtype, "804+");
+            {
+              std::strcpy (subtype, "804+");
+            }
           else if (sinfo.wProcessorLevel == 20)
-            std::strcpy (subtype, "620");
+            {
+              std::strcpy (subtype, "620");
+            }
           break;
 #     if defined PROCESSOR_ARCHITECTURE_IA64
         case PROCESSOR_ARCHITECTURE_IA64:
@@ -161,13 +195,17 @@ ACE_OS::uname (ACE_utsname *name)
         {
           std::strcpy (name->release, "Windows 95");
           if (vinfo.szCSDVersion[1] == ACE_TEXT('C'))
-            std::strcat (name->release, " OSR2");
+            {
+              std::strcat (name->release, " OSR2");
+            }
         }
       else if (vinfo.dwMajorVersion == 4 && vinfo.dwMinorVersion == 10)
         {
           std::strcpy (name->release, "Windows 98");
           if (vinfo.szCSDVersion[1] == ACE_TEXT('A'))
-            std::strcat (name->release, " SE");
+            {
+              std::strcat (name->release, " SE");
+            }
         }
       else if (vinfo.dwMajorVersion == 4 && vinfo.dwMinorVersion == 90)
         {
@@ -181,13 +219,21 @@ ACE_OS::uname (ACE_utsname *name)
       ACE_OS::snprintf (name->version, maxnamelen, "%d",
                         LOWORD (vinfo.dwBuildNumber));
       if (sinfo.dwProcessorType == PROCESSOR_INTEL_386)
-        std::strcpy (name->machine, "Intel 80386");
+        {
+          std::strcpy (name->machine, "Intel 80386");
+        }
       else if (sinfo.dwProcessorType == PROCESSOR_INTEL_486)
-        std::strcpy (name->machine, "Intel 80486");
+        {
+          std::strcpy (name->machine, "Intel 80486");
+        }
       else if (sinfo.dwProcessorType == PROCESSOR_INTEL_PENTIUM)
-        std::strcpy (name->machine, "Intel Pentium");
+        {
+          std::strcpy (name->machine, "Intel Pentium");
+        }
       else
-        std::strcpy (name->machine, unknown);
+        {
+          std::strcpy (name->machine, unknown);
+        }
     }
   else
 # endif /* !ACE_HAS_WIN32_GETVERSION */
@@ -225,7 +271,9 @@ ACE_OS::uname (ACE_utsname *name)
     }
 
   if (::gethostname (name->nodename, __SYS_NMLN) != 0)
-    return -1;
+    {
+      return -1;
+    }
 
 # if defined (ACE_INTEGRITY178B)
   std::strcpy (name->sysname, "INTEGRITY-178B");
