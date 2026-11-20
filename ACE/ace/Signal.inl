@@ -14,10 +14,14 @@ ACE_Sig_Set::ACE_Sig_Set (sigset_t *ss)
   ACE_TRACE ("ACE_Sig_Set::ACE_Sig_Set");
 
   if (ss == nullptr)
-    ACE_OS::sigfillset (&this->sigset_);
+    {
+      ACE_OS::sigfillset (&this->sigset_);
+    }
   else
-    // Structure assignment.
-    this->sigset_ = *ss;
+    {
+      // Structure assignment.
+      this->sigset_ = *ss;
+    }
 }
 
 ACE_INLINE
@@ -27,9 +31,13 @@ ACE_Sig_Set::ACE_Sig_Set (bool fill)
   ACE_TRACE ("ACE_Sig_Set::ACE_Sig_Set");
 
   if (fill)
-    ACE_OS::sigfillset (&this->sigset_);
+    {
+      ACE_OS::sigfillset (&this->sigset_);
+    }
   else
-    ACE_OS::sigemptyset (&this->sigset_);
+    {
+      ACE_OS::sigemptyset (&this->sigset_);
+    }
 }
 
 ACE_INLINE
@@ -39,9 +47,13 @@ ACE_Sig_Set::ACE_Sig_Set (ACE_Sig_Set *ss)
   ACE_TRACE ("ACE_Sig_Set::ACE_Sig_Set");
 
   if (ss == nullptr)
-    ACE_OS::sigfillset (&this->sigset_);
+    {
+      ACE_OS::sigfillset (&this->sigset_);
+    }
   else
-    this->sigset_ = ss->sigset_;
+    {
+      this->sigset_ = ss->sigset_;
+    }
 }
 
 ACE_INLINE int
@@ -119,7 +131,9 @@ ACE_Sig_Action::mask (sigset_t *ss)
 {
   ACE_TRACE ("ACE_Sig_Action::mask");
   if (ss != 0)
-    this->sa_.sa_mask = *ss; // Structure assignment
+    {
+      this->sa_.sa_mask = *ss; // Structure assignment
+    }
 }
 
 ACE_INLINE void
@@ -198,7 +212,9 @@ ACE_Sig_Guard::ACE_Sig_Guard (ACE_Sig_Set *mask,
 {
   //ACE_TRACE ("ACE_Sig_Guard::ACE_Sig_Guard");
   if (!this->condition_)
-    return;
+    {
+      return;
+    }
 
 #if defined (ACE_LACKS_UNIX_SIGNALS)
   ACE_UNUSED_ARG (mask);

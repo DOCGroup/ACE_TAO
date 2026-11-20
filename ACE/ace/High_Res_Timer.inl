@@ -49,11 +49,15 @@ ACE_High_Res_Timer::gettimeofday (const ACE_OS::ACE_HRTimer_Op op)
 #if defined (ACE_WIN32)
   // Get the global scale factor if there isn't one yet.
   if (ACE_High_Res_Timer::global_scale_factor_status_ == 0)
-    ACE_High_Res_Timer::global_scale_factor ();
+    {
+      ACE_High_Res_Timer::global_scale_factor ();
+    }
 
   // If there isn't a high-res timer, use gettimeofday ();
   if (ACE_High_Res_Timer::global_scale_factor_status_ == -1)
-    return ACE_OS::gettimeofday ();
+    {
+      return ACE_OS::gettimeofday ();
+    }
 #endif /* ACE_WIN32 */
 
   ACE_Time_Value tv;
@@ -79,7 +83,9 @@ ACE_High_Res_Timer::gettime (const ACE_OS::ACE_HRTimer_Op op)
 #if defined (ACE_WIN32)
   // Get the global scale factor if there isn't one yet.
   if (ACE_High_Res_Timer::global_scale_factor_status_ == 0)
-    ACE_High_Res_Timer::global_scale_factor ();
+    {
+      ACE_High_Res_Timer::global_scale_factor ();
+    }
 
   // If there isn't a high-res timer, use gettimeofday ();
   if (ACE_High_Res_Timer::global_scale_factor_status_ == -1)
@@ -99,7 +105,9 @@ ACE_High_Res_Timer::elapsed_hrtime (const ACE_hrtime_t end,
                                     const ACE_hrtime_t start)
 {
   if (end > start)
-    return end - start;
+    {
+      return end - start;
+    }
   return (~start + 1 + end);     // Wrapped-around counter diff
 }
 
