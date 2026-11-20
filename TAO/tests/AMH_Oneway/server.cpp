@@ -20,20 +20,22 @@ parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
   int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'n':
-        options.num_calls = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
-      case 'o':
-        options.ior_output_file = get_opts.opt_arg ();
-        break;
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("usage: %s [-n <number_of_calls>] [-o <iorfile>]\n"),
-                           argv [0]),
-                          -1);
-      }
+    {
+      switch (c)
+        {
+        case 'n':
+          options.num_calls = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
+        case 'o':
+          options.ior_output_file = get_opts.opt_arg ();
+          break;
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("usage: %s [-n <number_of_calls>] [-o <iorfile>]\n"),
+                             argv [0]),
+                            -1);
+        }
+    }
 
   return 0;
 }
@@ -162,9 +164,11 @@ ST_AMH_Server::start_orb_and_poa ()
         this->orb_->resolve_initial_references ("RootPOA"));
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
+                            1);
+        }
 
       this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ());
 
