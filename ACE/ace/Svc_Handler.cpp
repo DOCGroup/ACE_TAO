@@ -157,15 +157,19 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::open (void *)
   ACE_PEER_STREAM_ADDR client_addr;
 
   if (this->peer_.get_remote_addr (client_addr) == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("get_remote_addr")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("%p\n"),
+                            ACE_TEXT ("get_remote_addr")),
+                           -1);
+    }
   else if (client_addr.addr_to_string (buf, sizeof buf) == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("can't obtain peer's address")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("%p\n"),
+                            ACE_TEXT ("can't obtain peer's address")),
+                           -1);
+    }
   ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("connected to %s on fd %@\n"),
               buf,
@@ -523,10 +527,12 @@ ACE_Buffered_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::dump () const
               "current_buffer_size_ = %B\n",
               this->current_buffer_size_));
   if (this->timeoutp_ != 0)
-    ACELIB_DEBUG ((LM_DEBUG,
-                "next_timeout_.sec = %:, next_timeout_.usec = %q\n",
-                this->next_timeout_.sec (),
-                static_cast<ACE_INT64> (this->next_timeout_.usec ())));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,
+                     "next_timeout_.sec = %:, next_timeout_.usec = %q\n",
+                     this->next_timeout_.sec (),
+                     static_cast<ACE_INT64> (this->next_timeout_.usec ())));
+    }
 #endif /* ACE_HAS_DUMP */
 }
 

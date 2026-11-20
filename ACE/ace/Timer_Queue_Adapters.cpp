@@ -350,9 +350,13 @@ ACE_Thread_Timer_Queue_Adapter<TQ, TYPE>::enqueue_command (ACE_Command_Base *cmd
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->command_mutex_, -1);
 
   if (pos == ACE_Thread_Timer_Queue_Adapter<TQ, TYPE>::TAIL)
-    return command_queue_.enqueue_tail (cmd);
+    {
+      return command_queue_.enqueue_tail (cmd);
+    }
   else
-    return command_queue_.enqueue_head (cmd);
+    {
+      return command_queue_.enqueue_head (cmd);
+    }
 }
 
 // Dispatches all command objects enqueued in the most recent event
