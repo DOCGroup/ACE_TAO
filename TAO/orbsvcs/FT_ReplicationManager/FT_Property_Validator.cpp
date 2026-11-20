@@ -103,7 +103,9 @@ TAO::FT_Property_Validator::validate_property (
         {
           PortableGroup::FactoriesValue const * factories {};
           if (!(property.val >>= factories))
-            throw PortableGroup::InvalidProperty (property.nam, property.val);
+            {
+              throw PortableGroup::InvalidProperty (property.nam, property.val);
+            }
           else
             {
               CORBA::ULong const flen = factories->length ();
@@ -149,7 +151,9 @@ TAO::FT_Property_Validator::validate_criteria (
       CORBA::Long value {};
 
       if (!(property.val >>= value))
-        invalid_criteria[p++] = property;
+        {
+          invalid_criteria[p++] = property;
+        }
       else
       {
        if (property.nam == this->replication_style_)
@@ -202,13 +206,17 @@ TAO::FT_Property_Validator::validate_criteria (
         {
           PortableGroup::FactoriesValue const * factories {};
           if (!(property.val >>= factories))
-            invalid_criteria[p++] = property;
+            {
+              invalid_criteria[p++] = property;
+            }
           else
             {
               CORBA::ULong const flen = factories->length ();
 
               if (flen == 0)
-                invalid_criteria[p++] = property;
+                {
+                  invalid_criteria[p++] = property;
+                }
               else
                 {
                   for (CORBA::ULong j = 0; j < flen; ++j)
