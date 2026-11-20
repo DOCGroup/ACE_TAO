@@ -39,10 +39,14 @@ public:
       ACE_UPIPE_Addr local_addr (l_addr);
 
       if (this->thr_strategy_.open (this->thr_mgr_, THR_DETACHED | THR_NEW_LWP) == -1)
-        return -1;
+        {
+          return -1;
+        }
       else if (this->open (local_addr, this->reactor_,
                            nullptr, nullptr, &this->thr_strategy_) == -1)
-        return -1;
+        {
+          return -1;
+        }
 
       // Give server a chance to register the STREAM pipe.
       std::this_thread::sleep_for (std::chrono::seconds (4));
@@ -106,9 +110,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Establish the connection between Acceptor and Connector.
 
   if (peer_acceptor.init (argc, argv) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("init")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("init")), -1);
+    }
   else if (peer_connector.init (argc, argv) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("init")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("init")), -1);
+    }
 
   // Wait for threads to exit.
   thr_mgr.wait ();
