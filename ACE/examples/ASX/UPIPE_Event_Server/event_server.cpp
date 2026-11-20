@@ -51,11 +51,15 @@ Quit_Handler::Quit_Handler ()
   if (ACE_Event_Handler::register_stdin_handler (this,
                                                  ACE_Reactor::instance (),
                                                  ACE_Thread_Manager::instance ()) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "register_stdin_handler"));
+    {
+      ACE_ERROR ((LM_ERROR, "%p\n", "register_stdin_handler"));
+    }
   // Register to trap the SIGINT signal.
   else if (ACE_Reactor::instance ()->register_handler
            (SIGINT, this) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "register_handler"));
+    {
+      ACE_ERROR ((LM_ERROR, "%p\n", "register_handler"));
+    }
 }
 
 int
@@ -90,7 +94,9 @@ consumer (void *)
   ACE_UPIPE_Connector con;
 
   if (con.connect (c_stream, c_addr) == -1)
-    ACE_DEBUG ((LM_INFO, " (%t) connect failed\n"));
+    {
+      ACE_DEBUG ((LM_INFO, " (%t) connect failed\n"));
+    }
   else
   {
     cout << "consumer :we're connected" << endl;
@@ -273,43 +279,57 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // ACE_Stream owns a module once push starts; it links before opening its tasks.
   MT_Module *supplier_module_ptr = supplier_module.release ();
   if (event_server.push (supplier_module_ptr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("push (Supplier_Router)")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("push (Supplier_Router)")), -1);
+    }
 
   MT_Module *analyzer_module_ptr = analyzer_module.release ();
   if (event_server.push (analyzer_module_ptr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("push (Event_Analyzer)")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("push (Event_Analyzer)")), -1);
+    }
 
   MT_Module *consumer_module_ptr = consumer_module.release ();
   if (event_server.push (consumer_module_ptr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("push (Consumer_Router)")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("push (Consumer_Router)")), -1);
+    }
 
   // Set the high and low water marks appropriately.
 
   int wm = ACE_Utils::truncate_cast<int> (options.low_water_mark ());
 
   if (event_server.control (ACE_IO_Cntl_Msg::SET_LWM, &wm) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("push (setting low watermark)")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("push (setting low watermark)")), -1);
+    }
 
   wm = ACE_Utils::truncate_cast<int> (options.high_water_mark ());
 
   if (event_server.control (ACE_IO_Cntl_Msg::SET_HWM, &wm) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("push (setting high watermark)")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("push (setting high watermark)")), -1);
+    }
 
   // spawn the two threads.
   char supplier_message[] = "hello";
 
   if (ACE_Thread_Manager::instance ()->spawn (consumer, nullptr,
                                              THR_NEW_LWP | THR_DETACHED) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn")), 1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn")), 1);
+    }
 
   else if (ACE_Thread_Manager::instance ()->spawn (supplier, supplier_message,
                                                   THR_NEW_LWP | THR_DETACHED) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn")), 1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn")), 1);
+    }
 
   // Perform the main event loop waiting for the user to type ^C or to
   // enter a line on the ACE_STDIN.
