@@ -183,7 +183,9 @@ CC_LockSet::change_mode (CosConcurrencyControl::lock_mode held_mode,
   CC_LockModeEnum const lm_new = lmconvert (new_mode);
 
   if (!this->lock_held (lm_held)) // This lock is not held
-    throw CosConcurrencyControl::LockNotHeld();
+    {
+      throw CosConcurrencyControl::LockNotHeld();
+    }
   else if (this->change_mode_i (lm_held, lm_new))
     {
       this->unlock (held_mode);

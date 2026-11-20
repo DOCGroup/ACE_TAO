@@ -487,13 +487,17 @@ TAO_CEC_Dispatching*
 TAO_CEC_Default_Factory::create_dispatching (TAO_CEC_TypedEventChannel *)
 {
   if (!this->dispatching_)
-    return new TAO_CEC_Reactive_Dispatching ();
+    {
+      return new TAO_CEC_Reactive_Dispatching ();
+    }
   else
-    return new TAO_CEC_MT_Dispatching (this->dispatching_threads_,
-                                      this->dispatching_threads_flags_,
-                                      this->dispatching_threads_priority_,
-                                      this->dispatching_threads_force_active_,
-                                      this->wait_for_shutdown_thread_completion_);
+    {
+      return new TAO_CEC_MT_Dispatching (this->dispatching_threads_,
+                                         this->dispatching_threads_flags_,
+                                         this->dispatching_threads_priority_,
+                                         this->dispatching_threads_force_active_,
+                                         this->wait_for_shutdown_thread_completion_);
+    }
   return nullptr;
 }
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
@@ -1530,7 +1534,9 @@ TAO_CEC_ConsumerControl*
 TAO_CEC_Default_Factory::create_consumer_control (TAO_CEC_TypedEventChannel* ec)
 {
   if (!this->consumer_control_)
-    return new TAO_CEC_ConsumerControl ();
+    {
+      return new TAO_CEC_ConsumerControl ();
+    }
   else
     {
       int argc {};
@@ -1582,7 +1588,9 @@ TAO_CEC_SupplierControl*
 TAO_CEC_Default_Factory::create_supplier_control (TAO_CEC_TypedEventChannel* ec)
 {
   if (!this->supplier_control_)
-    return new TAO_CEC_SupplierControl ();
+    {
+      return new TAO_CEC_SupplierControl ();
+    }
   else
     {
       int argc {};
