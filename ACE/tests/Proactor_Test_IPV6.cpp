@@ -116,12 +116,16 @@ disable_signal (int sigmin, int sigmax)
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
   sigset_t signal_set;
   if (ACE_OS::sigemptyset (&signal_set) == - 1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Error: (%P|%t):%p\n"),
-                ACE_TEXT ("sigemptyset failed")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Error: (%P|%t):%p\n"),
+                  ACE_TEXT ("sigemptyset failed")));
+    }
 
   for (int i = sigmin; i <= sigmax; ++i)
-    ACE_OS::sigaddset (&signal_set, i);
+    {
+      ACE_OS::sigaddset (&signal_set, i);
+    }
 
   // Put the <signal_set>.
 # if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
@@ -131,10 +135,12 @@ disable_signal (int sigmin, int sigmax)
 # else
   if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, nullptr) != 0)
 # endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Error: (%P|%t): %p\n"),
-                       ACE_TEXT ("SIG_BLOCK failed")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Error: (%P|%t): %p\n"),
+                         ACE_TEXT ("SIG_BLOCK failed")),
+                        -1);
+    }
 #else
   ACE_UNUSED_ARG (sigmin);
   ACE_UNUSED_ARG (sigmax);
@@ -288,16 +294,20 @@ MyTask::start (int num_threads,
                size_t max_op)
 {
   if (this->create_proactor (type_proactor, max_op) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p.\n"),
-                       ACE_TEXT ("unable to create proactor")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p.\n"),
+                         ACE_TEXT ("unable to create proactor")),
+                        -1);
+    }
 
   if (this->activate (THR_NEW_LWP, num_threads) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p.\n"),
-                       ACE_TEXT ("unable to activate thread pool")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p.\n"),
+                         ACE_TEXT ("unable to activate thread pool")),
+                        -1);
+    }
 
   for (; num_threads > 0; --num_threads)
     {
@@ -319,9 +329,11 @@ MyTask::stop ()
     }
 
   if (this->wait () == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p.\n"),
-                ACE_TEXT ("unable to stop thread pool")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p.\n"),
+                  ACE_TEXT ("unable to stop thread pool")));
+    }
 
   return 0;
 }
@@ -383,9 +395,13 @@ TestData::TestData ()
 {
   int i;
   for (i = 0; i < MAX_SERVERS; ++i)
-    this->server_list_[i] = nullptr;
+    {
+      this->server_list_[i] = nullptr;
+    }
   for (i = 0; i < MAX_CLIENTS; ++i)
-    this->client_list_[i] = nullptr;
+    {
+      this->client_list_[i] = nullptr;
+    }
 }
 
 bool
@@ -397,7 +413,9 @@ TestData::testing_done ()
   int clt_dn = this->clients_.sessions_down_.value ();
 
   if (svr_up == 0 && clt_up == 0)      // No connections up yet
-    return false;
+    {
+      return false;
+    }
 
   return (svr_dn >= svr_up && clt_dn >= clt_up);
 }
@@ -467,10 +485,12 @@ TestData::server_done (Server *s)
       if (this->server_list_[i] == s)
         {
           if (s->id () != i)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("Server %d is pos %d in list\n"),
-                        s->id (),
-                        i));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("Server %d is pos %d in list\n"),
+                          s->id (),
+                          i));
+            }
           this->server_list_[i] = nullptr;
           break;
         }
@@ -505,10 +525,12 @@ TestData::client_done (Client *c)
       if (this->client_list_[i] == c)
         {
           if (c->id () != i)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("Client %d is pos %d in list\n"),
-                        c->id (),
-                        i));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("Client %d is pos %d in list\n"),
+                          c->id (),
+                          i));
+            }
           this->client_list_[i] = nullptr;
           break;
         }
@@ -612,8 +634,10 @@ TestData::report ()
       this->clients_.r_cnt_.value () == 0 ||
       this->servers_.w_cnt_.value () == 0 ||
       this->servers_.r_cnt_.value () == 0   )
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("It appears that this test didn't ")
-                ACE_TEXT ("really do anything. Something is very wrong.\n")));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("It appears that this test didn't ")
+                  ACE_TEXT ("really do anything. Something is very wrong.\n")));
+    }
 }
 
 class Acceptor : public ACE_Asynch_Acceptor<Server>
@@ -674,11 +698,13 @@ Server::~Server ()
               this->total_w_, this->total_snd_,
               this->total_r_, this->total_rcv_));
   if (this->io_count_ != 0)
-    ACE_ERROR ((LM_WARNING,
-                ACE_TEXT ("(%t) Server %d deleted with ")
-                ACE_TEXT ("%d I/O outstanding\n"),
-                this->id_,
-                this->io_count_));
+    {
+      ACE_ERROR ((LM_WARNING,
+                  ACE_TEXT ("(%t) Server %d deleted with ")
+                  ACE_TEXT ("%d I/O outstanding\n"),
+                  this->id_,
+                  this->io_count_));
+    }
 
   // This test bounces data back and forth between Clients and Servers.
   // Therefore, if there was significantly more data in one direction, that's
@@ -687,20 +713,30 @@ Server::~Server ()
   if (this->total_snd_ > this->total_rcv_)
     {
       if (this->total_rcv_ == 0)
-        issue_data_warning = 1;
+        {
+          issue_data_warning = 1;
+        }
       else if (this->total_snd_ / this->total_rcv_ > 2)
-        issue_data_warning = 1;
+        {
+          issue_data_warning = 1;
+        }
     }
   else
     {
       if (this->total_snd_ == 0)
-        issue_data_warning = 1;
+        {
+          issue_data_warning = 1;
+        }
       else if (this->total_rcv_ / this->total_snd_ > 2)
-        issue_data_warning = 1;
+        {
+          issue_data_warning = 1;
+        }
     }
   if (issue_data_warning)
-    ACE_DEBUG ((LM_WARNING,
-                ACE_TEXT ("(%t) Above byte counts look odd; need review\n")));
+    {
+      ACE_DEBUG ((LM_WARNING,
+                  ACE_TEXT ("(%t) Above byte counts look odd; need review\n")));
+    }
 
   if (this->tester_ != nullptr)
   {
@@ -732,14 +768,18 @@ Server::addresses (const ACE_INET_Addr& peer, const ACE_INET_Addr&)
 {
   ACE_TCHAR str[256];
   if (0 == peer.addr_to_string (str, sizeof (str) / sizeof (ACE_TCHAR)))
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) Server %d connection from %s\n"),
-                this->id_,
-                str));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) Server %d connection from %s\n"),
+                  this->id_,
+                  str));
+    }
   else
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) Server %d %p\n"),
-                this->id_,
-                ACE_TEXT ("addr_to_string")));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) Server %d %p\n"),
+                  this->id_,
+                  ACE_TEXT ("addr_to_string")));
+    }
   return;
 }
 
@@ -762,13 +802,17 @@ Server::open (ACE_HANDLE handle, ACE_Message_Block &)
     }
 
     if (this->ws_.open (*this, this->handle_) == -1)
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%t) %p\n"),
-                  ACE_TEXT ("Server::ACE_Asynch_Write_Stream::open")));
+      {
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%t) %p\n"),
+                    ACE_TEXT ("Server::ACE_Asynch_Write_Stream::open")));
+      }
     else if (this->rs_.open (*this, this->handle_) == -1)
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%t) %p\n"),
-                  ACE_TEXT ("Server::ACE_Asynch_Read_Stream::open")));
+      {
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%t) %p\n"),
+                    ACE_TEXT ("Server::ACE_Asynch_Read_Stream::open")));
+      }
     else
     {
       this->initiate_read_stream ();
@@ -918,10 +962,14 @@ Server::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
         ACE_Log_Priority prio;
 #if defined (ACE_WIN32)
         if (result.error () == ERROR_OPERATION_ABORTED)
-          prio = LM_DEBUG;
+          {
+            prio = LM_DEBUG;
+          }
 #else
         if (result.error () == ECANCELED)
-          prio = LM_DEBUG;
+          {
+            prio = LM_DEBUG;
+          }
 #endif /* ACE_WIN32 */
         else
         {
@@ -949,7 +997,9 @@ Server::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
                                          result.bytes_transferred ()) == 0)
           {
             if (duplex != 0)  // Initiate new read from the stream.
-              this->initiate_read_stream ();
+              {
+                this->initiate_read_stream ();
+              }
           }
       }
     else
@@ -1024,10 +1074,14 @@ Server::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
         ACE_Log_Priority prio;
 #if defined (ACE_WIN32)
         if (result.error () == ERROR_OPERATION_ABORTED)
-          prio = LM_DEBUG;
+          {
+            prio = LM_DEBUG;
+          }
 #else
         if (result.error () == ECANCELED)
-          prio = LM_DEBUG;
+          {
+            prio = LM_DEBUG;
+          }
 #endif /* ACE_WIN32 */
         else
         {
@@ -1174,10 +1228,12 @@ Client::~Client ()
               this->total_w_, this->total_snd_,
               this->total_r_, this->total_rcv_));
   if (this->io_count_ != 0)
-    ACE_ERROR ((LM_WARNING,
-                ACE_TEXT ("(%t) Client %d deleted with %d I/O outstanding\n"),
-                this->id_,
-                this->io_count_));
+    {
+      ACE_ERROR ((LM_WARNING,
+                  ACE_TEXT ("(%t) Client %d deleted with %d I/O outstanding\n"),
+                  this->id_,
+                  this->io_count_));
+    }
 
   // This test bounces data back and forth between Clients and Servers.
   // Therefore, if there was significantly more data in one direction, that's
@@ -1186,20 +1242,30 @@ Client::~Client ()
   if (this->total_snd_ > this->total_rcv_)
     {
       if (this->total_rcv_ == 0)
-        issue_data_warning = 1;
+        {
+          issue_data_warning = 1;
+        }
       else if (this->total_snd_ / this->total_rcv_ > 2)
-        issue_data_warning = 1;
+        {
+          issue_data_warning = 1;
+        }
     }
   else
     {
       if (this->total_snd_ == 0)
-        issue_data_warning = 1;
+        {
+          issue_data_warning = 1;
+        }
       else if (this->total_rcv_ / this->total_snd_ > 2)
-        issue_data_warning = 1;
+        {
+          issue_data_warning = 1;
+        }
     }
   if (issue_data_warning)
-    ACE_DEBUG ((LM_WARNING,
-                ACE_TEXT ("(%t) Above byte counts look odd; need review\n")));
+    {
+      ACE_DEBUG ((LM_WARNING,
+                  ACE_TEXT ("(%t) Above byte counts look odd; need review\n")));
+    }
 
   if (this->tester_ != nullptr)
   {
@@ -1282,14 +1348,18 @@ Client::addresses (const ACE_INET_Addr& peer, const ACE_INET_Addr& local)
 
   if (0 == local.addr_to_string (local_str,
                                  sizeof (local_str) / sizeof (ACE_TCHAR)))
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) Client %d connected on %s\n"),
-                this->id_,
-                local_str));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) Client %d connected on %s\n"),
+                  this->id_,
+                  local_str));
+    }
   else
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) Client %d %p\n"),
-                this->id_,
-                ACE_TEXT ("addr_to_string")));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) Client %d %p\n"),
+                  this->id_,
+                  ACE_TEXT ("addr_to_string")));
+    }
   return;
 }
 
@@ -1313,20 +1383,26 @@ Client::open (ACE_HANDLE handle, ACE_Message_Block &)
 
     // Open ACE_Asynch_Write_Stream
     if (this->ws_.open (*this, this->handle_) == -1)
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%t) %p\n"),
-                  ACE_TEXT ("Client::ACE_Asynch_Write_Stream::open")));
+      {
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%t) %p\n"),
+                    ACE_TEXT ("Client::ACE_Asynch_Write_Stream::open")));
+      }
 
     // Open ACE_Asynch_Read_Stream
     else if (this->rs_.open (*this, this->handle_) == -1)
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%t) %p\n"),
-                  ACE_TEXT ("Client::ACE_Asynch_Read_Stream::open")));
+      {
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%t) %p\n"),
+                    ACE_TEXT ("Client::ACE_Asynch_Read_Stream::open")));
+      }
 
     else if (this->initiate_write_stream () == 0)
       {
         if (duplex != 0)    // Start an asynchronous read
-          this->initiate_read_stream ();
+          {
+            this->initiate_read_stream ();
+          }
       }
 
     if (this->io_count_ > 0)
@@ -1613,10 +1689,14 @@ Client::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
         ACE_Log_Priority prio;
 #if defined (ACE_WIN32)
         if (result.error () == ERROR_OPERATION_ABORTED)
-          prio = LM_DEBUG;
+          {
+            prio = LM_DEBUG;
+          }
 #else
         if (result.error () == ECANCELED)
-          prio = LM_DEBUG;
+          {
+            prio = LM_DEBUG;
+          }
 #endif /* ACE_WIN32 */
         else
         {
@@ -1651,10 +1731,14 @@ Client::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
         if (duplex != 0)   // full duplex, continue write
           {
             if ((this->total_snd_- this->total_rcv_) < 1024*32 ) //flow control
-              this->initiate_write_stream ();
+              {
+                this->initiate_write_stream ();
+              }
           }
         else  // half-duplex   read reply, after read we will start write
-          this->initiate_read_stream ();
+          {
+            this->initiate_read_stream ();
+          }
       }
 
     --this->io_count_;
@@ -1743,10 +1827,14 @@ Client::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
         ACE_Log_Priority prio;
 #if defined (ACE_WIN32)
         if (result.error () == ERROR_OPERATION_ABORTED)
-          prio = LM_DEBUG;
+          {
+            prio = LM_DEBUG;
+          }
 #else
         if (result.error () == ECANCELED)
-          prio = LM_DEBUG;
+          {
+            prio = LM_DEBUG;
+          }
 #endif /* ACE_WIN32 */
         else
         {
@@ -1773,9 +1861,13 @@ Client::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
         this->total_rcv_ += result.bytes_transferred ();
 
         if (duplex != 0 || this->stop_writing_)  // full duplex, continue read
-          this->initiate_read_stream ();
+          {
+            this->initiate_read_stream ();
+          }
         else  // half-duplex  write, after write we will start read
-          this->initiate_write_stream ();
+          {
+            this->initiate_write_stream ();
+          }
       }
 
     --this->io_count_;
@@ -1878,7 +1970,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
 #endif
 
   if (argc == 1) // no arguments , so one button test
-    return 0;
+    {
+      return 0;
+    }
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("x:t:o:n:p:d:h:c:v:ub"));
   int c;
@@ -1966,18 +2060,26 @@ run_main (int argc, ACE_TCHAR *argv[])
         {
           // Simplify, initial read with zero size
           if (acceptor.open (addr, 0, true) == 0)
-            rc = 1;
+            {
+              rc = 1;
+            }
         }
 
       if (both != 0 || host != nullptr)
         {
           if (host == nullptr)
-            host = ACE_IPV6_LOCALHOST;
+            {
+              host = ACE_IPV6_LOCALHOST;
+            }
 
           if (addr.set (port, host, 1, addr.get_type ()) == -1)
-            ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), host));
+            {
+              ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), host));
+            }
           else
-            rc += connector.start (addr, clients);
+            {
+              rc += connector.start (addr, clients);
+            }
         }
 
       // Wait a few seconds to let things get going, then poll til
@@ -1989,7 +2091,9 @@ run_main (int argc, ACE_TCHAR *argv[])
     }
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Sleeping til sessions run down.\n")));
   while (!test.testing_done ())
-    ACE_OS::sleep (1);
+    {
+      ACE_OS::sleep (1);
+    }
 
   test.stop_all ();
 
