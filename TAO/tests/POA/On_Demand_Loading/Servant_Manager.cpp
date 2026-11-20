@@ -27,7 +27,9 @@ ServantManager_i::~ServantManager_i ()
   for (SERVANT_MAP::iterator iter = this->servant_map_.begin ();
        iter != end;
        ++iter)
-    delete (*iter).int_id_;
+    {
+      delete (*iter).int_id_;
+    }
   this->servant_map_.unbind_all ();
 }
 
@@ -140,10 +142,12 @@ ServantManager_i::parse_string (ACE_TCHAR const *s,
   }
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "the servant dll:%s\n the factory_function:%s\n",
-                dllname.c_str (),
-                create_symbol.c_str ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "the servant dll:%s\n the factory_function:%s\n",
+                  dllname.c_str (),
+                  create_symbol.c_str ()));
+    }
   return true;
 }
 

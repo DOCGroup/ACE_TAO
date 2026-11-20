@@ -227,10 +227,12 @@ TAO_Notify_ETCL_FilterFactory::load_child (ACE_CString const &type,
     {
       TAO_Notify_Object::ID const id = std::atoi (value);
       if (DEBUG_LEVEL)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) reload filter %d\n"),
-                    static_cast<int> (id)
-                    ));
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) reload filter %d\n"),
+                          static_cast<int> (id)
+                          ));
+        }
 
       filter_ids_.set_last_used (id);
 
@@ -285,7 +287,9 @@ TAO_Notify_ETCL_FilterFactory::find_filter (const TAO_Notify_Object::ID& id)
 
   TAO_Notify_ETCL_Filter* filter {};
   if (filters_.find (id, filter) == -1)
-    return CosNotifyFilter::Filter::_nil ();
+    {
+      return CosNotifyFilter::Filter::_nil ();
+    }
   else
   {
     CORBA::Object_var obj =
