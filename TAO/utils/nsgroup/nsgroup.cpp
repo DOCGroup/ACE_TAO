@@ -447,9 +447,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       NSGROUP ns_group (argc, argv);
 
       if (show_help (argc, argv))
-        rc = ns_group.show_usage ();
+        {
+          rc = ns_group.show_usage ();
+        }
       else if (RC_SUCCESS == ns_group.start_orb ())
-        rc = ns_group.run_cmd ();
+        {
+          rc = ns_group.run_cmd ();
+        }
     }
   catch (CORBA::Exception const &)
     {
