@@ -52,22 +52,24 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
     Options options;
 
     if (parse_args (argc, argv, options) != 0)
-    {
-      return 1;
-    }
+      {
+        return 1;
+      }
 
     CORBA::Object_var obj = orb->string_to_object (options.ior);
-    if (CORBA::is_nil (obj.in ())) {
-      std::cerr << "Nil Messenger reference" << std::endl;
-      return 1;
-    }
+    if (CORBA::is_nil (obj.in ()))
+      {
+        std::cerr << "Nil Messenger reference" << std::endl;
+        return 1;
+      }
 
     // Narrow
     Messenger_var messenger = Messenger::_narrow (obj.in ());
-    if (CORBA::is_nil (messenger.in ())) {
-      std::cerr << "Argument is not a Messenger reference" << std::endl;
-      return 1;
-    }
+    if (CORBA::is_nil (messenger.in ()))
+      {
+        std::cerr << "Argument is not a Messenger reference" << std::endl;
+        return 1;
+      }
 
     // Get reference to Root POA.
     obj = orb->resolve_initial_references("RootPOA");
@@ -88,20 +90,23 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
     CORBA::String_var subject = CORBA::string_alloc (81);
     CORBA::String_var message = CORBA::string_alloc (81);
 
-    if (!options.automated) {
-      std::cout << "Enter user name -->";
-      std::cin.getline(user, 81);
+    if (!options.automated)
+      {
+        std::cout << "Enter user name -->";
+        std::cin.getline(user, 81);
 
-      std::cout << "Enter subject -->";
-      std::cin.getline(subject, 81);
+        std::cout << "Enter subject -->";
+        std::cin.getline(subject, 81);
 
-      std::cout << "Enter message -->";
-      std::cin.getline(message, 81);
-    } else {
-      user = CORBA::string_dup ("TestUser");
-      subject = CORBA::string_dup ("TestSubject");
-      message = CORBA::string_dup ("Have a nice day.");
-    }
+        std::cout << "Enter message -->";
+        std::cin.getline(message, 81);
+      }
+    else
+      {
+        user = CORBA::string_dup ("TestUser");
+        subject = CORBA::string_dup ("TestSubject");
+        message = CORBA::string_dup ("Have a nice day.");
+      }
 
     // Record the time the request was made.
     ACE_Time_Value const time_sent = ACE_OS::gettimeofday ();
@@ -110,20 +115,21 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 
     // Do some work to prove that we can send the message asynchronously, do some work,
     // then come back later and retrieve the results.
-    for (int i = 0; i < 10; ++i) {
-      ACE_OS::printf(".");
-      ACE_OS::sleep(ACE_Time_Value(0, 10 * 1000));
-    }
+    for (int i = 0; i < 10; ++i)
+      {
+        ACE_OS::printf(".");
+        ACE_OS::sleep(ACE_Time_Value(0, 10 * 1000));
+      }
 
     // Our simple servant will exit as soon as it receives the results.
     orb->run();
 
     if (servant->message_was_sent ())
-    {
-      // Note : We can't use the
-      ACE_Time_Value const delay = ACE_OS::gettimeofday () - time_sent;
-      std::cout << std::endl << "Reply Delay = " << delay.msec() << "ms" << std::endl;
-    }
+      {
+        // Note : We can't use the
+        ACE_Time_Value const delay = ACE_OS::gettimeofday () - time_sent;
+        std::cout << std::endl << "Reply Delay = " << delay.msec() << "ms" << std::endl;
+      }
 
     orb->destroy();
   }
