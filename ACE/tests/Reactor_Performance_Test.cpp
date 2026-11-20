@@ -58,14 +58,18 @@ int
 Read_Handler::open (void *)
 {
   if (this->peer ().enable (ACE_NONBLOCK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%t) Read_Handler::open, cannot set non blocking mode\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%t) Read_Handler::open, cannot set non blocking mode\n")),
+                        -1);
+    }
 
   if (reactor ()->register_handler (this, READ_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%t) Read_Handler::open, cannot register handler\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%t) Read_Handler::open, cannot register handler\n")),
+                        -1);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) created svc_handler for handle %@\n"),
@@ -97,7 +101,9 @@ Read_Handler::handle_input (ACE_HANDLE handle)
       else if (result < 0)
         {
           if (errno == EWOULDBLOCK)
-            return 0;
+            {
+              return 0;
+            }
           else
             {
               ACE_ERROR ((LM_ERROR, ACE_TEXT ("handle_input: %p (errno: %d)\n"),
@@ -156,10 +162,12 @@ Write_Handler::send_data ()
 
   if (this->peer ().send_n (ACE_ALPHABET,
                             send_size) != send_size)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%t) %p\n"),
-                       ACE_TEXT ("send_n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%t) %p\n"),
+                         ACE_TEXT ("send_n")),
+                        -1);
+    }
   return 0;
 }
 
@@ -216,14 +224,16 @@ client (void *arg)
     {
       // Print out the connections that failed...
       for (i = 0; i < opt_nconnections; ++i)
-        if (failed_svc_handlers.get ()[i])
-          {
-            ACE_INET_Addr failed_addr = addresses.get()[i];
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%t) connection failed to %s, %d\n"),
-                        failed_addr.get_host_name (),
-                        failed_addr.get_port_number ()));
-          }
+        {
+          if (failed_svc_handlers.get ()[i])
+            {
+              ACE_INET_Addr failed_addr = addresses.get()[i];
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%t) connection failed to %s, %d\n"),
+                          failed_addr.get_host_name (),
+                          failed_addr.get_port_number ()));
+            }
+        }
       return nullptr;
     }
 
@@ -231,15 +241,23 @@ client (void *arg)
   // ACE_Svc_handler pointers in each writers[] position.  Iterate to
   // send data
   for (int j = 0; j < opt_nloops; ++j)
-    for (i = 0; i < opt_nconnections; ++i)
-      if (writers[i]->send_data () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%t) %p\n"),
-                           ACE_TEXT ("writer::send_data")),
-                          0);
+    {
+      for (i = 0; i < opt_nconnections; ++i)
+        {
+          if (writers[i]->send_data () == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("(%t) %p\n"),
+                                 ACE_TEXT ("writer::send_data")),
+                                0);
+            }
+        }
+    }
   // Cleanup
   for (i = 0; i < opt_nconnections; ++i)
-    writers[i]->destroy ();
+    {
+      writers[i]->destroy ();
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) finishing client\n")));
@@ -261,8 +279,10 @@ create_reactor ()
 #endif /* ACE_HAS_WINSOCK2 == 1 */
     }
   else if (opt_select_reactor)
-    ACE_NEW (impl,
-             ACE_Select_Reactor);
+    {
+      ACE_NEW (impl,
+               ACE_Select_Reactor);
+    }
 
   ACE_Reactor *reactor {};
   ACE_NEW (reactor,
@@ -278,9 +298,13 @@ print_results (ACE_Profile_Timer::ACE_Elapsed_Time &et)
   const ACE_TCHAR *reactor_type {};
 
   if (opt_wfmo_reactor)
-    reactor_type = ACE_TEXT ("WFMO_Reactor");
+    {
+      reactor_type = ACE_TEXT ("WFMO_Reactor");
+    }
   else if (opt_select_reactor)
-    reactor_type = ACE_TEXT ("Select_Reactor");
+    {
+      reactor_type = ACE_TEXT ("Select_Reactor");
+    }
   else
   {
     reactor_type = ACE_TEXT ("Platform's default Reactor");
@@ -315,9 +339,10 @@ run_main (int argc, ACE_TCHAR *argv[])
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("dswc:l:"), 1);
   for (int c; (c = getopt ()) != -1; )
-  //FUZZ: enble check_for_lack_ACE_OS
-    switch (c)
-      {
+    {
+      //FUZZ: enble check_for_lack_ACE_OS
+      switch (c)
+        {
       case 's':
         opt_select_reactor = 1;
         break;
@@ -333,7 +358,8 @@ run_main (int argc, ACE_TCHAR *argv[])
       case 'd':
         opt_debug = 1;
         break;
-      }
+        }
+    }
 
   // Sets up the correct reactor (based on platform and options).
   create_reactor ();
@@ -360,10 +386,12 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_INET_Addr local_addr (ACE_sap_any_cast (const ACE_INET_Addr &));
   if (acceptor.open (local_addr) == -1
       || acceptor.acceptor ().get_local_addr (server_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%t) %p\n"),
-                       ACE_TEXT ("open")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%t) %p\n"),
+                         ACE_TEXT ("open")),
+                        -1);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) starting server at port %d\n"),
@@ -376,9 +404,11 @@ run_main (int argc, ACE_TCHAR *argv[])
       (ACE_THR_FUNC (client),
        (void *) &connection_addr,
        THR_NEW_LWP | THR_DETACHED) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%t) %p\n"),
-                ACE_TEXT ("thread create failed")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%t) %p\n"),
+                  ACE_TEXT ("thread create failed")));
+    }
 
   ACE_Time_Value run_limit (opt_nloops / 10);
 
