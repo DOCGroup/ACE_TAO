@@ -22,8 +22,10 @@ int
 PMS_Ruser::encode (char *packet, int &packet_length)
 {
   if (Options::get_opt (Options::DEBUGGING) != 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "in PMS_Ruser::encode"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "in PMS_Ruser::encode"));
+    }
 
   char *buf_ptr = packet;
 
@@ -67,9 +69,11 @@ int
 PMS_Ruser::decode (char *packet, int &packet_length)
 {
   if (Options::get_opt (Options::DEBUGGING) != 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "in PMS_Ruser::decode, packet_length = %d\n",
-                packet_length));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "in PMS_Ruser::decode, packet_length = %d\n",
+                  packet_length));
+    }
 
   if (*packet)
   {
@@ -93,7 +97,9 @@ PMS_Ruser::insert_protocol_info (Protocol_Record &protocol_record)
                                          prp->drwho_list_);
 
   if (Options::get_opt (Options::PRINT_LOGIN_NAME))
-    np->set_real_name ("");
+    {
+      np->set_real_name ("");
+    }
   else
     {
       passwd *pwent = ACE_OS::getpwnam (np->get_login_name ());
@@ -109,7 +115,9 @@ PMS_Ruser::insert_protocol_info (Protocol_Record &protocol_record)
     }
 
   if (current_node->get_idle_time () >= MAX_USER_TIMEOUT)
-    ++np->inactive_count_;
+    {
+      ++np->inactive_count_;
+    }
   else
   {
     ++np->active_count_;
