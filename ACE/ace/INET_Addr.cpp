@@ -395,7 +395,9 @@ ACE_INET_Addr::set (u_short port_number,
 
 #if defined ACE_HAS_IPV6 && defined ACE_USES_IPV4_IPV6_MIGRATION
   if (address_family == AF_UNSPEC && !ACE::ipv6_enabled ())
-    address_family = AF_INET;
+    {
+      address_family = AF_INET;
+    }
 #endif /* ACE_HAS_IPV6 && ACE_USES_IPV4_IPV6_MIGRATION */
 
 #ifdef ACE_HAS_IPV6
@@ -1128,7 +1130,9 @@ ACE_INET_Addr::get_host_addr (char *dst, int size) const
       if (ACE_OS::getnameinfo (sa, this->get_size (), dst, size,
                                0, 0,    // Don't want service name
                                NI_NUMERICHOST) == 0)
-        return dst;
+        {
+          return dst;
+        }
       ACE_OS::set_errno_to_wsa_last_error ();
       return 0;
 #  else

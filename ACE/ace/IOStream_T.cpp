@@ -70,7 +70,9 @@ ACE_Streambuf_T<STREAM>::recv (char *buf,
   errno = ESUCCESS;
   ssize_t rval = peer_->recv (buf, len, flags, tv);
   if (errno == ETIME)
-    this->timeout_ = 1;
+    {
+      this->timeout_ = 1;
+    }
   return rval;
 }
 
@@ -84,7 +86,9 @@ ACE_Streambuf_T<STREAM>::recv_n (char *buf,
   errno = ESUCCESS;
   ssize_t rval = peer_->recv_n (buf, len, flags, tv);
   if (errno == ETIME)
-    this->timeout_ = 1;
+    {
+      this->timeout_ = 1;
+    }
   return rval;
 }
 
@@ -197,23 +201,31 @@ operator>> (STREAM &stream,
   char c;
 
   if (!(stream >> c)) // eat space up to the first char
-    // stream.set (ios::eofbit|ios::failbit);
-    return stream;
+    {
+      // stream.set (ios::eofbit|ios::failbit);
+      return stream;
+    }
 
   str = "";     // Initialize the string
 
   // if we don't have a quote, append until we see space
   if (c != '"')
-    for (str = c; stream.get (c) && !isspace (c); str += c)
-      continue;
+    {
+      for (str = c; stream.get (c) && !isspace (c); str += c)
+        continue;
+    }
   else
-    for (; stream.get (c) && c != '"'; str += c)
-      if (c == '\\')
-        {
-          stream.get (c);
-          if (c != '"')
-            str += '\\';
-        }
+    {
+      for (; stream.get (c) && c != '"'; str += c)
+        if (c == '\\')
+          {
+            stream.get (c);
+            if (c != '"')
+              {
+                str += '\\';
+              }
+          }
+    }
 
   return stream;
 }
@@ -227,7 +239,9 @@ operator<< (STREAM &stream,
   for (u_int i = 0; i < str.length (); ++i)
     {
       if (str[i] == '"')
-        stream.put ('\\');
+        {
+          stream.put ('\\');
+        }
       stream.put (str[i]);
     }
 

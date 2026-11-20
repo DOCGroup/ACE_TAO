@@ -33,7 +33,9 @@ ACE::ldfind (const ACE_TCHAR* filename,
                                          expanded_filename,
                                          sizeof expanded_filename
                                          / sizeof (ACE_TCHAR)))
-    filename = expanded_filename;
+    {
+      filename = expanded_filename;
+    }
 #endif /* ACE_WIN32 */
 
   ACE_TCHAR tempcopy[MAXPATHLEN + 1];
@@ -125,12 +127,16 @@ ACE::ldfind (const ACE_TCHAR* filename,
 #if defined (ACE_LD_DECORATOR_STR) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
   size_t const len_searchfilename = ACE_OS::strlen (searchfilename);
   if (!has_suffix)
-    ACE_OS::strcpy (searchfilename + len_searchfilename, decorator);
+    {
+      ACE_OS::strcpy (searchfilename + len_searchfilename, decorator);
+    }
 
   for (int tag = 1; tag >= 0; --tag)
     {
       if (tag == 0)
-        searchfilename [len_searchfilename] = 0;
+        {
+          searchfilename [len_searchfilename] = 0;
+        }
 
 #endif /* ACE_LD_DECORATOR_STR && !ACE_DISABLE_DEBUG_DLL_CHECK */
       // Use absolute pathname if there is one.
@@ -195,7 +201,9 @@ ACE::ldfind (const ACE_TCHAR* filename,
               return -1;
             }
           else if (pathlen > 0)
-            return 0;
+            {
+              return 0;
+            }
 
           // In case not found we should try again with the ACE_DLL_PREFIX
           // prefixed
@@ -214,7 +222,9 @@ ACE::ldfind (const ACE_TCHAR* filename,
               return -1;
             }
           else if (pathlen > 0)
-            return 0;
+            {
+              return 0;
+            }
 #else
           ACE_TCHAR *ld_path {};
 #  if defined ACE_DEFAULT_LD_SEARCH_PATH
@@ -406,7 +416,9 @@ ACE::get_temp_dir (ACE_TCHAR *buffer, size_t buffer_len)
   // Make sure to return -1 if there is an error
   if ((result == 0 && ::GetLastError () != ERROR_SUCCESS)
       || (result > static_cast<int> (buffer_len)))
-    result = -1;
+    {
+      result = -1;
+    }
 
 #else /* ACE_WIN32 */
 
