@@ -86,16 +86,20 @@ client (void *arg)
   ssize_t len;
 
   if (-1 == cli_stream.enable (ACE_NONBLOCK))
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) %p\n"),
-                ACE_TEXT ("Can't enable test 0 nonblocking")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("Can't enable test 0 nonblocking")));
+    }
 
   len = cli_stream.recv (buffer, sizeof (buffer));
   cli_stream.disable (ACE_NONBLOCK);
   if (len == -1)
     {
       if (errno == EWOULDBLOCK)
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Nonblocking recv ok!\n")));
+        {
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Nonblocking recv ok!\n")));
+        }
       else
         {
           ACE_ERROR ((LM_ERROR,
@@ -120,7 +124,9 @@ client (void *arg)
   // The server will verify that this data pattern gets there intact.
 
   for (i = 0; i < sizeof buffer; ++i)
-    buffer[i] = static_cast<u_char> (i);
+    {
+      buffer[i] = static_cast<u_char> (i);
+    }
 
   iovec iov[5];
 
@@ -148,9 +154,11 @@ client (void *arg)
       Test_Result = 1;
     }
   else if (len != 255)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) test 1 recvd %d; should be 255\n"),
-                static_cast<int> (len)));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) test 1 recvd %d; should be 255\n"),
+                  static_cast<int> (len)));
+    }
 
   //*******************   TEST 2   ******************************
   //
@@ -175,13 +183,15 @@ client (void *arg)
     }
 
   for (i = 0; i < 255; ++i)
-    if (buffer2[i] != buffer[i])
-      {
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) Test 2, rcvd byte %B is %d, not %d\n"),
-                    i, buffer2[i], buffer[i]));
-        Test_Result = 1;
-      }
+    {
+      if (buffer2[i] != buffer[i])
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) Test 2, rcvd byte %B is %d, not %d\n"),
+                      i, buffer2[i], buffer[i]));
+          Test_Result = 1;
+        }
+    }
 
   //*******************   TEST 3   ******************************
   //
@@ -193,9 +203,11 @@ client (void *arg)
 
   char buff[Test3_Send_Size];
   if (-1 == cli_stream.enable (ACE_NONBLOCK))
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) %p\n"),
-                ACE_TEXT ("Can't enable test 3 nonblocking")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("Can't enable test 3 nonblocking")));
+    }
   for (i = 0; i < Test3_Loops; ++i)
     {
       errno = 0;
@@ -287,15 +299,17 @@ server (void *arg)
       Test_Result = 1;
     }
   for (i = 0; i < 255; ++i)
-    if (buffer[i] != i)
-      {
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) Test 1, rcvd byte %d is %d, not %d\n"),
-                    i,
-                    buffer[i],
-                    i));
-        Test_Result = 1;
-      }
+    {
+      if (buffer[i] != i)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) Test 1, rcvd byte %d is %d, not %d\n"),
+                      i,
+                      buffer[i],
+                      i));
+          Test_Result = 1;
+        }
+    }
 
   //*******************   TEST 2   ******************************
   //
@@ -381,9 +395,11 @@ spawn ()
   // Bind listener to any port and then find out what the port was.
   if (peer_acceptor.open (ACE_Addr::sap_any) == -1
       || peer_acceptor.get_local_addr (server_addr) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) %p\n"),
-                ACE_TEXT ("open")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("open")));
+    }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
