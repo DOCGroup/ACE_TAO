@@ -37,7 +37,9 @@ ACE_XtReactor::ACE_XtReactor (XtAppContext context,
 ACE_XtReactor::~ACE_XtReactor ()
 {
   if (this->timeout_ != 0)
-    ::XtRemoveTimeOut (this->timeout_);
+    {
+      ::XtRemoveTimeOut (this->timeout_);
+    }
 
   while (this->ids_)
     {
@@ -215,7 +217,9 @@ ACE_XtReactor::register_handler_i (ACE_HANDLE handle,
 #if defined ACE_WIN32
   // Let's handle this special case before we do any real work.
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::EXCEPT_MASK))
-    ACE_NOTSUP_RETURN (-1);
+    {
+      ACE_NOTSUP_RETURN (-1);
+    }
 #endif /* ACE_WIN32 */
 
   if (ACE_Select_Reactor::register_handler_i (handle,
@@ -310,7 +314,9 @@ ACE_XtReactor::synchronize_XtInput (ACE_HANDLE handle)
 
   // Remove existing input handler.
   if (*xt_id)
-    ::XtRemoveInput ((*xt_id)->id_);
+    {
+      ::XtRemoveInput ((*xt_id)->id_);
+    }
 
   int const condition = this->compute_Xt_condition (handle);
 
@@ -368,16 +374,26 @@ ACE_XtReactor::compute_Xt_condition (ACE_HANDLE handle)
 
 #if !defined ACE_WIN32
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::READ_MASK))
-    ACE_SET_BITS (condition, XtInputReadMask);
+    {
+      ACE_SET_BITS (condition, XtInputReadMask);
+    }
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::WRITE_MASK))
-    ACE_SET_BITS (condition, XtInputWriteMask);
+    {
+      ACE_SET_BITS (condition, XtInputWriteMask);
+    }
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::EXCEPT_MASK))
-    ACE_SET_BITS (condition, XtInputExceptMask);
+    {
+      ACE_SET_BITS (condition, XtInputExceptMask);
+    }
 #else
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::READ_MASK))
-    ACE_SET_BITS (condition, XtInputReadWinsock);
+    {
+      ACE_SET_BITS (condition, XtInputReadWinsock);
+    }
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::WRITE_MASK))
-    ACE_SET_BITS (condition, XtInputWriteWinsock);
+    {
+      ACE_SET_BITS (condition, XtInputWriteWinsock);
+    }
   // EXCEPT_MASK is not supported for WIN32. As this was
   // already handled in register_handler_i, no check here.
 #endif /* !ACE_WIN32 */
@@ -395,7 +411,9 @@ ACE_XtReactor::reset_timeout ()
   ACE_ASSERT (this->context_ != nullptr);
 
   if (this->timeout_ != 0)
-    ::XtRemoveTimeOut (this->timeout_);
+    {
+      ::XtRemoveTimeOut (this->timeout_);
+    }
   this->timeout_ = {};
 
   if (ACE_Time_Value const *max_wait_time =
