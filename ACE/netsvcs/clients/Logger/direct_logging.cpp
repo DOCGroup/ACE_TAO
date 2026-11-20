@@ -64,9 +64,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   iov[1].iov_len  = length;
 
   if (logger.sendv_n (iov.data (), iov.size ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"), -1);
+    }
   else if (logger.close () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "close"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "close"), -1);
+    }
 
 #if defined (ACE_WIN32)
   // !!Important, Winsock is broken in that if you don't close

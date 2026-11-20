@@ -148,11 +148,13 @@ namespace TAO_PG
         if ((*cur_iter).item ()->started () == ACE_Time_Value::zero)
           {
             if (TAO_debug_level >= 8)
-              ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("TAO (%P|%t) - MBFCS::cleanup, ")
-                          ACE_TEXT ("cleaning broken %d bytes (hash %d)\n"),
-                          (*cur_iter).item ()->data_length (),
-                          (*cur_iter).key ()));
+              {
+                ORBSVCS_DEBUG ((LM_DEBUG,
+                                ACE_TEXT ("TAO (%P|%t) - MBFCS::cleanup, ")
+                                ACE_TEXT ("cleaning broken %d bytes (hash %d)\n"),
+                                (*cur_iter).item ()->data_length (),
+                                (*cur_iter).key ()));
+              }
 
             std::unique_ptr<TAO_PG::UIPMC_Recv_Packet> guard ((*cur_iter).item ());
             packets.unbind (cur_iter);
@@ -194,11 +196,13 @@ namespace TAO_PG
         }
 
         if (TAO_debug_level >= 8)
-          ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - MBFCS::cleanup, ")
-                      ACE_TEXT ("cleaning %d bytes (hash %d)\n"),
-                      sorted_set[i]->item ()->data_length (),
-                      sorted_set[i]->key ()));
+          {
+            ORBSVCS_DEBUG ((LM_DEBUG,
+                            ACE_TEXT ("TAO (%P|%t) - MBFCS::cleanup, ")
+                            ACE_TEXT ("cleaning %d bytes (hash %d)\n"),
+                            sorted_set[i]->item ()->data_length (),
+                            sorted_set[i]->key ()));
+          }
 
         size -= sorted_set[i]->item ()->data_length ();
         std::unique_ptr<TAO_PG::UIPMC_Recv_Packet> guard (sorted_set[i]->item ());

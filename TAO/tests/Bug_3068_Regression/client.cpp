@@ -14,17 +14,19 @@ parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior)
   int option {};
 
   while ((option = get_opts ()) != -1)
-    switch (option)
-      {
-      case 'k':
-        ior = get_opts.opt_arg ();
-        break;
+    {
+      switch (option)
+        {
+        case 'k':
+          ior = get_opts.opt_arg ();
+          break;
 
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("usage: %s -k <ior>\n"),
-                           argv [0]), -1);
-      }
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("usage: %s -k <ior>\n"),
+                             argv [0]), -1);
+        }
+    }
   // Indicates successful parsing of the command line
   return 0;
 }
@@ -41,9 +43,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            1);
+        }
 
       PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
