@@ -43,7 +43,9 @@ TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::release (ENTRY* entry)
   ACE_WRITE_GUARD (ACE_LOCK, ace_mon, this->lock_);
 
   if (entry->_decr_refcnt () == 0)
-    delete entry;
+    {
+      delete entry;
+    }
 }
 
 template <class PROXY, class ACE_LOCK>  ACE_INLINE  typename TAO_Notify_Event_Map_Entry_T<PROXY>::COLLECTION*
