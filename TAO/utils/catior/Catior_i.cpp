@@ -879,7 +879,11 @@ Catior_i::cat_security_association (CORBA::UShort a) {
   const AssociationOptions CompositeDelegation = 512;
 
 #define CHECK_PRINT(X) \
-  if (a & X) { indent (); buffer_ += "" #X "\n"; }
+  if (a & X) \
+    { \
+      indent (); \
+      buffer_ += "" #X "\n"; \
+    }
 
   CHECK_PRINT(NoProtection);
   CHECK_PRINT(Integrity);
