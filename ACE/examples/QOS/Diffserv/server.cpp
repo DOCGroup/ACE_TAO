@@ -65,9 +65,11 @@ Dgram_Endpoint::handle_input (ACE_HANDLE)
   ssize_t const n = this->endpoint_.recv (buf, sizeof buf - 1, from_addr);
 
   if (n == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "handle_input"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n",
+                  "handle_input"));
+    }
   else
     {
       buf[n] = '\0';
@@ -97,9 +99,11 @@ run_test (u_short localport)
   if (ACE_Reactor::instance ()->register_handler
       (endpoint.get (),
        ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "ACE_Reactor::register_handler"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "ACE_Reactor::register_handler"),
+                        -1);
+    }
   // After registration, handle_close is responsible for deleting the handler.
   endpoint.release ();
 
@@ -117,7 +121,9 @@ run_test (u_short localport)
         }
       /* We have timed out without handling an event, break out of loop */
       if (ret == 0)
-        break;
+        {
+          break;
+        }
     }
 
   return 0;
