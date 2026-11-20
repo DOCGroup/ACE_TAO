@@ -47,8 +47,10 @@ TAO::HTIOP::Acceptor::~Acceptor ()
   this->close ();
 
   if (this->hosts_ != nullptr)
-    for (CORBA::ULong i {}; i < this->endpoint_count_; ++i)
-      CORBA::string_free (this->hosts_[i]);
+    {
+      for (CORBA::ULong i {}; i < this->endpoint_count_; ++i)
+        CORBA::string_free (this->hosts_[i]);
+    }
 }
 
 // TODO =
@@ -69,14 +71,17 @@ TAO::HTIOP::Acceptor::create_profile (const TAO::ObjectKey &object_key,
 
   if (priority == TAO_INVALID_PRIORITY
       /* && this->orb_core_->orb_params()->shared_profile () == 0 */)
-
-    return this->create_new_profile (object_key,
-                                     mprofile,
-                                     priority);
+    {
+      return this->create_new_profile (object_key,
+                                       mprofile,
+                                       priority);
+    }
   else
-    return this->create_shared_profile (object_key,
-                                        mprofile,
-                                        priority);
+    {
+      return this->create_shared_profile (object_key,
+                                          mprofile,
+                                          priority);
+    }
 }
 
 int
@@ -282,12 +287,14 @@ TAO::HTIOP::Acceptor::open (TAO_ORB_Core *orb_core,
 
   int rp = this->ht_env_->get_proxy_port(proxy_port);
   if (rp == 0 && proxy_port != 0)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("TAO (%P|%t) ")
-                       ACE_TEXT ("TAO::HTIOP::Acceptor::open - ")
-                       ACE_TEXT ("explicit endpoint inside proxy, port %d\n"),
-                       proxy_port),
-                      -1);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("TAO (%P|%t) ")
+                             ACE_TEXT ("TAO::HTIOP::Acceptor::open - ")
+                             ACE_TEXT ("explicit endpoint inside proxy, port %d\n"),
+                             proxy_port),
+                            -1);
+    }
 
   if (address == nullptr)
   {
@@ -295,8 +302,10 @@ TAO::HTIOP::Acceptor::open (TAO_ORB_Core *orb_core,
   }
 
   if (major >=0 && minor >= 0)
-    this->version_.set_version (static_cast<CORBA::Octet> (major),
-                                static_cast<CORBA::Octet> (minor));
+    {
+      this->version_.set_version (static_cast<CORBA::Octet> (major),
+                                  static_cast<CORBA::Octet> (minor));
+    }
   // Parse options
   if (this->parse_options (options) == -1)
   {
@@ -344,7 +353,9 @@ TAO::HTIOP::Acceptor::open (TAO_ORB_Core *orb_core,
       if (addr.ACE_INET_Addr::set (addr.get_port_number (),
                                    static_cast<ACE_UINT32> (INADDR_ANY),
                                    1) != 0)
-        return -1;
+        {
+          return -1;
+        }
       else
         {
           return this->open_i (addr, reactor);
@@ -453,8 +464,10 @@ TAO::HTIOP::Acceptor::open_default (TAO_ORB_Core *orb_core,
     }
 
   if (major >=0 && minor >= 0)
-    this->version_.set_version (static_cast<CORBA::Octet> (major),
-                                static_cast<CORBA::Octet> (minor));
+    {
+      this->version_.set_version (static_cast<CORBA::Octet> (major),
+                                  static_cast<CORBA::Octet> (minor));
+    }
 
   // Parse options
   if (this->parse_options (options) == -1)
@@ -541,10 +554,12 @@ TAO::HTIOP::Acceptor::open_i (const ACE::HTBP::Addr& addr,
                                  this->concurrency_strategy_.get ()) == -1)
     {
       if (TAO_debug_level > 0)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) TAO::HTIOP::Acceptor::open_i ")
-                    ACE_TEXT ("- %p"),
-                    ACE_TEXT ("cannot open acceptor")));
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) TAO::HTIOP::Acceptor::open_i ")
+                          ACE_TEXT ("- %p"),
+                          ACE_TEXT ("cannot open acceptor")));
+        }
       return -1;
     }
 
@@ -556,10 +571,12 @@ TAO::HTIOP::Acceptor::open_i (const ACE::HTBP::Addr& addr,
     {
       // @@ Should this be a catastrophic error???
       if (TAO_debug_level > 0)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) TAO::HTIOP::Acceptor::open_i ")
-                    ACE_TEXT ("- %p\n\n"),
-                    ACE_TEXT ("cannot get local addr")));
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) TAO::HTIOP::Acceptor::open_i ")
+                          ACE_TEXT ("- %p\n\n"),
+                          ACE_TEXT ("cannot get local addr")));
+        }
       return -1;
     }
 
@@ -659,11 +676,13 @@ TAO::HTIOP::Acceptor::dotted_decimal_address (ACE_INET_Addr &addr,
   if (tmp == nullptr || result != 0)
     {
       if (TAO_debug_level > 0)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("\n\nTAO (%P|%t) ")
-                    ACE_TEXT ("TAO::HTIOP::Acceptor::dotted_decimal_address ")
-                    ACE_TEXT ("- %p\n\n"),
-                    ACE_TEXT ("cannot determine hostname")));
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("\n\nTAO (%P|%t) ")
+                          ACE_TEXT ("TAO::HTIOP::Acceptor::dotted_decimal_address ")
+                          ACE_TEXT ("- %p\n\n"),
+                          ACE_TEXT ("cannot determine hostname")));
+        }
       return -1;
     }
 
@@ -725,11 +744,13 @@ TAO::HTIOP::Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
   // in the list of interfaces to query for a hostname, otherwise
   // exclude it from the list.
   if (if_cnt == lo_cnt)
-    this->endpoint_count_ = static_cast<CORBA::ULong> (if_cnt);
+    {
+      this->endpoint_count_ = static_cast<CORBA::ULong> (if_cnt);
+    }
   else
-  {
-    this->endpoint_count_ = static_cast<CORBA::ULong> (if_cnt - lo_cnt);
-  }
+    {
+      this->endpoint_count_ = static_cast<CORBA::ULong> (if_cnt - lo_cnt);
+    }
 
   ACE::HTBP::Addr *addrs {};
   ACE_NEW_RETURN (addrs,
@@ -905,16 +926,20 @@ TAO::HTIOP::Acceptor::parse_options (const char *str)
   for (CORBA::ULong j {}; j < option_count; ++j)
     {
       if (j < option_count - 1)
-        end = options.find (option_delimiter, begin);
+        {
+          end = options.find (option_delimiter, begin);
+        }
       else
-      {
-        end = len;
-      }
+        {
+          end = len;
+        }
 
       if (end == begin)
-        ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("TAO (%P|%t) Zero length HTIOP option.\n")),
-                          -1);
+        {
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("TAO (%P|%t) Zero length HTIOP option.\n")),
+                                -1);
+        }
       else if (end != ACE_CString::npos)
         {
           ACE_CString opt = options.substring (begin, end);
@@ -923,29 +948,35 @@ TAO::HTIOP::Acceptor::parse_options (const char *str)
 
           if (slot == len - 1
               || slot == ACE_CString::npos)
-            ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("TAO (%P|%t) HTIOP option <%s> is ")
-                               ACE_TEXT ("missing a value.\n"),
-                               opt.c_str ()),
-                              -1);
+            {
+              ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                     ACE_TEXT ("TAO (%P|%t) HTIOP option <%s> is ")
+                                     ACE_TEXT ("missing a value.\n"),
+                                     opt.c_str ()),
+                                    -1);
+            }
 
           ACE_CString name = opt.substring (0, slot);
           ACE_CString value = opt.substring (slot + 1);
 
           if (name.length () == 0)
-            ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("(%P|%t) Zero length HTIOP ")
-                               ACE_TEXT ("option name.\n")),
-                              -1);
+            {
+              ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                     ACE_TEXT ("(%P|%t) Zero length HTIOP ")
+                                     ACE_TEXT ("option name.\n")),
+                                    -1);
+            }
           else if (name == "hostname_in_ior")
             {
               this->hostname_in_ior_ = value.c_str ();
             }
           else
-            ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("(%P|%t) Invalid HTIOP option: <%s>\n"),
-                               name.c_str ()),
-                              -1);
+            {
+              ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                     ACE_TEXT ("(%P|%t) Invalid HTIOP option: <%s>\n"),
+                                     name.c_str ()),
+                                    -1);
+            }
 
           begin = end + 1;
         }
