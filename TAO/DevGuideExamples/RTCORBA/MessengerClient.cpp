@@ -52,24 +52,27 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     obj = orb->resolve_initial_references ("PolicyCurrent");
     CORBA::PolicyCurrent_var policy_current =
               CORBA::PolicyCurrent::_narrow (obj.in ());
-    if (CORBA::is_nil (policy_current.in ())) {
-      std::cerr << "Unable to narrow the PolicyCurrent" << std::endl;
-      return 1;
-    }
+    if (CORBA::is_nil (policy_current.in ()))
+      {
+        std::cerr << "Unable to narrow the PolicyCurrent" << std::endl;
+        return 1;
+      }
 
     // Destringify ior
     obj = orb->string_to_object (ior_file);
-    if (CORBA::is_nil (obj.in ())) {
-      std::cerr << "Nil Messenger reference" << std::endl;
-      return 1;
-    }
+    if (CORBA::is_nil (obj.in ()))
+      {
+        std::cerr << "Nil Messenger reference" << std::endl;
+        return 1;
+      }
 
     // Narrow
     Messenger_var messenger = Messenger::_narrow (obj.in ());
-    if (CORBA::is_nil (messenger.in ())) {
-      std::cerr << "Argument is not a Messenger reference" << std::endl;
-      return 1;
-    }
+    if (CORBA::is_nil (messenger.in ()))
+      {
+        std::cerr << "Argument is not a Messenger reference" << std::endl;
+        return 1;
+      }
 
     // Set the Private Connection Policy
     CORBA::PolicyList policy_list(1);
@@ -90,10 +93,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     CORBA::PolicyList_var inconsistent_policies;
     CORBA::Boolean status =
          messenger->_validate_connection(inconsistent_policies.out());
-    if (!status) {
-      std::cerr << "Unable to explicitly bind to the server" << std::endl;
-      return 1;
-    }
+    if (!status)
+      {
+        std::cerr << "Unable to explicitly bind to the server" << std::endl;
+        return 1;
+      }
 
     CORBA::Short const increment = get_increment ();
     CORBA::ULong const total_lanes = get_total_lanes ();

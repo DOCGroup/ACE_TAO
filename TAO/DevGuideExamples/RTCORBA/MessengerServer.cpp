@@ -53,10 +53,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     obj = orb->resolve_initial_references ("PolicyCurrent");
     CORBA::PolicyCurrent_var policy_current =
               CORBA::PolicyCurrent::_narrow (obj.in ());
-    if (CORBA::is_nil (policy_current.in ())) {
-      std::cerr << "Unable to narrow the PolicyCurrent" << std::endl;
-      return 1;
-    }
+    if (CORBA::is_nil (policy_current.in ()))
+      {
+        std::cerr << "Unable to narrow the PolicyCurrent" << std::endl;
+        return 1;
+      }
 
     //Get reference to Root POA
     obj = orb->resolve_initial_references ("RootPOA");
