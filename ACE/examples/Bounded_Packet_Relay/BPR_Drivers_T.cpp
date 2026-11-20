@@ -30,9 +30,11 @@ Bounded_Packet_Relay_Driver<TQ>::parse_commands (char const *buf)
   int option;
 
   if (::sscanf (buf, "%d", &option) <= 0)
-    // If there was an error reading the option simply try on the next
-    // line.
-    return 0;
+    {
+      // If there was an error reading the option simply try on the next
+      // line.
+      return 0;
+    }
 
   switch (option)
     {
@@ -43,14 +45,18 @@ Bounded_Packet_Relay_Driver<TQ>::parse_commands (char const *buf)
           // We just reread the option, this simplies parsing (since
           // sscanf can do it for us).
           if (::sscanf (buf, "%d %lu", &option, &count) < 2)
-            // If there was not enough information on the line, ignore
-            // option and try the next line.
-            return 0;
+            {
+              // If there was not enough information on the line, ignore
+              // option and try the next line.
+              return 0;
+            }
           if (packet_count_cmd_->execute (&count) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "%t %p\n",
-                               "set packet count failed"),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "%t %p\n",
+                                 "set packet count failed"),
+                                -1);
+            }
           break;
         }
       case 2:  // Set the arrival period.
@@ -60,14 +66,18 @@ Bounded_Packet_Relay_Driver<TQ>::parse_commands (char const *buf)
           // We just reread the option, this simplies parsing (since
           // sscanf can do it for us).
           if (::sscanf (buf, "%d %lu", &option, &usec) < 2)
-            // If there was not enough information on the line, ignore
-            // option and try the next line.
-            return 0;
+            {
+              // If there was not enough information on the line, ignore
+              // option and try the next line.
+              return 0;
+            }
           if (arrival_period_cmd_->execute (&usec) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "%t %p\n",
-                               "set arrival period failed"),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "%t %p\n",
+                                 "set arrival period failed"),
+                                -1);
+            }
           break;
         }
       case 3:  // Set transmit period.
@@ -77,14 +87,18 @@ Bounded_Packet_Relay_Driver<TQ>::parse_commands (char const *buf)
           // We just reread the option, this simplies parsing (since
           // sscanf can do it for us).
           if (::sscanf (buf, "%d %lu", &option, &usec) < 2)
-            // If there was not enough information on the line, ignore
-            // option and try the next line.
-            return 0;
+            {
+              // If there was not enough information on the line, ignore
+              // option and try the next line.
+              return 0;
+            }
           if (transmit_period_cmd_->execute (&usec) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "%t %p\n",
-                               "set transmit period failed"),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "%t %p\n",
+                                 "set transmit period failed"),
+                                -1);
+            }
           break;
         }
       case 4:  // Set duration limit.
@@ -94,14 +108,18 @@ Bounded_Packet_Relay_Driver<TQ>::parse_commands (char const *buf)
           // We just reread the option, this simplies parsing (since
           // sscanf can do it for us).
           if (::sscanf (buf, "%d %lu", &option, &usec) < 2)
-            // If there was not enough information on the line, ignore
-            // option and try the next line.
-            return 0;
+            {
+              // If there was not enough information on the line, ignore
+              // option and try the next line.
+              return 0;
+            }
           if (duration_limit_cmd_->execute (&usec) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "%t %p\n",
-                               "\nSet duration limit failed."),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "%t %p\n",
+                                 "\nSet duration limit failed."),
+                                -1);
+            }
           break;
         }
       case 5:  // Set logging level.
@@ -119,10 +137,12 @@ Bounded_Packet_Relay_Driver<TQ>::parse_commands (char const *buf)
             }
 
           if (logging_level_cmd_->execute (&level) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "%t %p\n",
-                               "set logging level failed"),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "%t %p\n",
+                                 "set logging level failed"),
+                                -1);
+            }
           break;
         }
       case 6: // Run one transmission.
@@ -156,8 +176,12 @@ Bounded_Packet_Relay_Driver<TQ>::run ()
   // Process all the incoming events.
 
   for (;;)
-    if (this->get_next_request () == -1)
-      return -1;
+    {
+      if (this->get_next_request () == -1)
+        {
+          return -1;
+        }
+    }
 
   ACE_NOTREACHED (return 0);
 }
@@ -173,7 +197,9 @@ Bounded_Packet_Relay_Driver<TQ>::get_next_request ()
 
   // Reads input from the user.
   if (this->read_input (buf, sizeof buf) <= 0)
-    return -1;
+    {
+      return -1;
+    }
 
   // Parse and run the command.
   return this->parse_commands (buf);

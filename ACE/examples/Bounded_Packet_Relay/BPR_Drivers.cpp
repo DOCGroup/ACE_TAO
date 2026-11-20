@@ -154,13 +154,17 @@ int
 Input_Device_Wrapper_Base::send_input_message (ACE_Message_Block *amb)
 {
   if (send_input_msg_cmd_)
-    return send_input_msg_cmd_->execute (amb);
+    {
+      return send_input_msg_cmd_->execute (amb);
+    }
   else
     {
       if (is_active_)
-        ACE_ERROR ((LM_ERROR, "%t %p\n",
-                    "Input_Device_Wrapper_Base::send_input_message: "
-                    "command object not instantiated"));
+        {
+          ACE_ERROR ((LM_ERROR, "%t %p\n",
+                      "Input_Device_Wrapper_Base::send_input_message: "
+                      "command object not instantiated"));
+        }
 
       return -1;
     }
@@ -220,9 +224,11 @@ Bounded_Packet_Relay::send_input ()
   if (output_wrapper_->write_output_message (item) < 0)
     {
       if (is_active_)
-        ACE_ERROR ((LM_ERROR,
-                    "%t %p\n",
-                    "failed to write to output device object"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%t %p\n",
+                      "failed to write to output device object"));
+        }
 
       return -1;
     }
@@ -428,9 +434,11 @@ Bounded_Packet_Relay::receive_input (void * arg)
   if (! arg)
     {
       if (is_active_)
-        ACE_ERROR ((LM_ERROR, "%t %p\n",
-                    "Bounded_Packet_Relay::receive_input: "
-                    "null argument"));
+        {
+          ACE_ERROR ((LM_ERROR, "%t %p\n",
+                      "Bounded_Packet_Relay::receive_input: "
+                      "null argument"));
+        }
 
       return -1;
     }
@@ -438,8 +446,10 @@ Bounded_Packet_Relay::receive_input (void * arg)
   if (queue_.enqueue_tail (message) < 0)
     {
       if (is_active_)
-        ACE_ERROR ((LM_ERROR, "%t %p\n",
-                    "Bounded_Packet_Relay::receive_input failed"));
+        {
+          ACE_ERROR ((LM_ERROR, "%t %p\n",
+                      "Bounded_Packet_Relay::receive_input failed"));
+        }
 
       return -1;
     }

@@ -41,12 +41,16 @@ Text_Input_Device_Wrapper::modify_device_settings (void *logging)
   packet_count_ = 0;
 
   if (logging)
-    logging_ = *static_cast<int *> (logging);
+    {
+      logging_ = *static_cast<int *> (logging);
+    }
   else
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Text_Input_Device_Wrapper::modify_device_settings: "
-                       "null argument"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Text_Input_Device_Wrapper::modify_device_settings: "
+                         "null argument"),
+                        -1);
+    }
   return 0;
 }
 
@@ -111,13 +115,17 @@ Text_Output_Device_Wrapper::write_output_message (ACE_Message_Block *message)
       ++packet_count_;
 
       if (logging_ & Text_Output_Device_Wrapper::LOG_MSGS_RCVD)
-        ACE_DEBUG ((LM_DEBUG, "output message %d received\n",
-                    packet_count_));
+        {
+          ACE_DEBUG ((LM_DEBUG, "output message %d received\n",
+                      packet_count_));
+        }
 
       if (logging_ & Text_Output_Device_Wrapper::PRINT_MSGS_RCVD)
-        ACE_DEBUG ((LM_DEBUG, "output message %d:\n[%s]\n",
-                    packet_count_,
-                    message_block->rd_ptr ()));
+        {
+          ACE_DEBUG ((LM_DEBUG, "output message %d:\n[%s]\n",
+                      packet_count_,
+                      message_block->rd_ptr ()));
+        }
 
       return 0;
     }
@@ -134,12 +142,16 @@ Text_Output_Device_Wrapper::modify_device_settings (void *logging)
   packet_count_ = 0;
 
   if (logging)
-    logging_ = *static_cast<int *> (logging);
+    {
+      logging_ = *static_cast<int *> (logging);
+    }
   else
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Text_Output_Device_Wrapper::modify_device_settings: "
-                       "null argument"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Text_Output_Device_Wrapper::modify_device_settings: "
+                         "null argument"),
+                        -1);
+    }
   return 0;
 }
 
@@ -164,11 +176,13 @@ int
 User_Input_Task::svc ()
 {
   for (;;)
-    // Call back to the driver's implementation of how to read and
-    // parse input.
-    if (this->driver_.get_next_request () == -1)
     {
-      break;
+      // Call back to the driver's implementation of how to read and
+      // parse input.
+      if (this->driver_.get_next_request () == -1)
+        {
+          break;
+        }
     }
 
   // We are done.
@@ -437,7 +451,9 @@ User_Input_Task::clear_all_timers ()
   for (ACE_Timer_Node_T <ACE_Event_Handler *> *node {};
        (node = queue_->timer_queue ()->get_first ()) != nullptr;
        )
-    queue_->timer_queue ()->cancel (node->get_timer_id (), nullptr, 0);
+    {
+      queue_->timer_queue ()->cancel (node->get_timer_id (), nullptr, 0);
+    }
 
   return 0;
 }
@@ -459,7 +475,9 @@ BPR_Handler_Base::clear_all_timers (void *)
   for (ACE_Timer_Node_T <ACE_Event_Handler *> *node {};
        (node = queue_.timer_queue ()->get_first ()) != nullptr;
        )
-    queue_.timer_queue ()->cancel (node->get_timer_id (), nullptr, 0);
+    {
+      queue_.timer_queue ()->cancel (node->get_timer_id (), nullptr, 0);
+    }
   //    queue_.cancel (node->get_timer_id (), 0);
 
   // Invoke the handler's (virtual) destructor
@@ -558,10 +576,12 @@ Send_Handler::reregister (void *)
   if (queue_.schedule (this,
                        nullptr,
                        duration_ + ACE_OS::gettimeofday ()) < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Send_Handler::reregister: "
-                       "failed to reschedule send handler"),
-                       -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Send_Handler::reregister: "
+                         "failed to reschedule send handler"),
+                        -1);
+    }
 
   return 0;
 }
@@ -732,17 +752,23 @@ Thread_Bounded_Packet_Relay_Driver::init ()
       return -1;
     }
   if (this->input_task_.activate () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "cannot activate input task"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "cannot activate input task"),
+                        -1);
+    }
   else if (this->timer_queue_.activate () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "cannot activate timer queue"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "cannot activate timer queue"),
+                        -1);
+    }
   else if (ACE_Thread_Manager::instance ()->wait () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "wait on Thread_Manager failed"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "wait on Thread_Manager failed"),
+                        -1);
+    }
   return 0;
 }
 
