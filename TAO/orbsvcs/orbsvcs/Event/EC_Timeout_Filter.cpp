@@ -68,8 +68,10 @@ TAO_EC_Timeout_Filter::push_to_proxy (RtecEventComm::EventSet const &event,
   qos_info.timer_id_ = this->id_;
 
   if (this->supplier_ != nullptr)
-    this->supplier_->filter (event,
-                             qos_info);
+    {
+      this->supplier_->filter (event,
+                               qos_info);
+    }
 }
 
 int
