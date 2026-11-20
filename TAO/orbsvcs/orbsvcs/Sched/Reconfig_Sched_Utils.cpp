@@ -968,17 +968,8 @@ TAO_MUF_FAIR_Reconfig_Sched_Strategy::total_admission_comp (void const *s,
   // make Sun C++ 4.2 happy.
   TAO_RT_Info_Tuple **first =
     reinterpret_cast<TAO_RT_Info_Tuple **> (const_cast<void *> (s));
-
-  TAO_Reconfig_Scheduler_Entry * first_entry =
-      ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
-                           (*first)->volatile_token);
-
   TAO_RT_Info_Tuple **second =
     reinterpret_cast<TAO_RT_Info_Tuple **> (const_cast<void *> (t));
-
-  TAO_Reconfig_Scheduler_Entry * second_entry =
-      ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
-                           (*second)->volatile_token);
 
   // Check the converted pointers.
   if (first == nullptr || *first == nullptr)
@@ -990,15 +981,23 @@ TAO_MUF_FAIR_Reconfig_Sched_Strategy::total_admission_comp (void const *s,
       return -1;
     }
 
+  TAO_Reconfig_Scheduler_Entry * first_entry =
+    ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
+                         (*first)->volatile_token);
+
+  TAO_Reconfig_Scheduler_Entry * second_entry =
+    ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
+                         (*second)->volatile_token);
+
   // sort disabled tuples to the end
   if ((*first)->enabled_state () == RtecScheduler::RT_INFO_DISABLED)
-  {
-    return ((*second)->enabled_state () == RtecScheduler::RT_INFO_DISABLED) ? 0 : 1;
-  }
+    {
+      return ((*second)->enabled_state () == RtecScheduler::RT_INFO_DISABLED) ? 0 : 1;
+    }
   else if ((*second)->enabled_state () == RtecScheduler::RT_INFO_DISABLED)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   // First, compare according to rate index.
 
@@ -1160,17 +1159,8 @@ TAO_RMS_FAIR_Reconfig_Sched_Strategy::total_admission_comp (void const *s,
   // make Sun C++ 4.2 happy.
   TAO_RT_Info_Tuple **first =
     reinterpret_cast<TAO_RT_Info_Tuple **> (const_cast<void *> (s));
-
-  TAO_Reconfig_Scheduler_Entry * first_entry =
-      ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
-                           (*first)->volatile_token);
-
   TAO_RT_Info_Tuple **second =
     reinterpret_cast<TAO_RT_Info_Tuple **> (const_cast<void *> (t));
-
-  TAO_Reconfig_Scheduler_Entry * second_entry =
-      ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
-                           (*second)->volatile_token);
 
   // Check the converted pointers.
   if (first == nullptr || *first == nullptr)
@@ -1182,15 +1172,23 @@ TAO_RMS_FAIR_Reconfig_Sched_Strategy::total_admission_comp (void const *s,
       return -1;
     }
 
+  TAO_Reconfig_Scheduler_Entry * first_entry =
+    ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
+                         (*first)->volatile_token);
+
+  TAO_Reconfig_Scheduler_Entry * second_entry =
+    ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
+                         (*second)->volatile_token);
+
   // sort disabled tuples to the end
   if ((*first)->enabled_state () == RtecScheduler::RT_INFO_DISABLED)
-  {
-    return ((*second)->enabled_state () == RtecScheduler::RT_INFO_DISABLED) ? 0 : 1;
-  }
+    {
+      return ((*second)->enabled_state () == RtecScheduler::RT_INFO_DISABLED) ? 0 : 1;
+    }
   else if ((*second)->enabled_state () == RtecScheduler::RT_INFO_DISABLED)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   // First, compare by rate index.
 
@@ -1374,17 +1372,8 @@ TAO_RMS_MLF_Reconfig_Sched_Strategy::total_admission_comp (void const *s,
   // make Sun C++ 4.2 happy.
   TAO_RT_Info_Tuple **first =
     reinterpret_cast<TAO_RT_Info_Tuple **> (const_cast<void *> (s));
-
-  TAO_Reconfig_Scheduler_Entry * first_entry =
-    ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
-                         (*first)->volatile_token);
-
   TAO_RT_Info_Tuple **second =
     reinterpret_cast<TAO_RT_Info_Tuple **> (const_cast<void *> (t));
-
-  TAO_Reconfig_Scheduler_Entry * second_entry =
-    ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
-                         (*second)->volatile_token);
 
   // Check the converted pointers.
   if (first == nullptr || *first == nullptr)
@@ -1395,6 +1384,14 @@ TAO_RMS_MLF_Reconfig_Sched_Strategy::total_admission_comp (void const *s,
     {
       return -1;
     }
+
+  TAO_Reconfig_Scheduler_Entry * first_entry =
+    ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
+                         (*first)->volatile_token);
+
+  TAO_Reconfig_Scheduler_Entry * second_entry =
+    ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
+                         (*second)->volatile_token);
 
   // sort disabled tuples to the end
   if ((*first)->enabled_state () == RtecScheduler::RT_INFO_DISABLED)
