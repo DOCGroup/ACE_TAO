@@ -35,7 +35,9 @@ TAO_Notify_FilterAdmin::add_filter (CosNotifyFilter::Filter_ptr new_filter)
     CosNotifyFilter::Filter::_duplicate (new_filter);
 
   if (this->filter_list_.bind (new_id, new_filter_var) == -1)
+  {
       throw CORBA::INTERNAL ();
+  }
   else
   {
     return new_id;

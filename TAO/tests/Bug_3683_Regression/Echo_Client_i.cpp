@@ -15,12 +15,14 @@ Echo_Client_i::parse_args (int argc, ACE_TCHAR *argv[])
   int option {};
 
   while ((option = get_opts ()) != -1)
+  {
     switch (option)
       {
       case 'p':
         this->payload_length_ = ACE_OS::atoi (get_opts.opt_arg ()) * 1000000;
         break;
       }
+  }
   // Indicates successful parsing of the command line
   return 0;
 }

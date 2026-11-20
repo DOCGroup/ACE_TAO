@@ -110,7 +110,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   timer.start ();
 
   for (int i {}; i < iterations; ++i)
+  {
     My_Singleton::instance ()->svc ();
+  }
 
   timer.stop ();
 
@@ -131,7 +133,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   timer.start ();
 
   for (int i {}; i < iterations; ++i)
+  {
     DC_Singleton::instance ()->svc ();
+  }
 
   timer.stop ();
 
@@ -150,7 +154,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   timer.start ();
 
   for (int i {}; i < iterations; ++i)
+  {
     Mutex_Singleton::instance ()->svc ();
+  }
 
   timer.stop ();
 

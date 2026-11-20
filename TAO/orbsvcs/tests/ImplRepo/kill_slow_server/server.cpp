@@ -72,6 +72,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       int c;
 
       while ((c = get_opts ()) != -1)
+      {
         switch (c)
           {
           case 'p':
@@ -86,6 +87,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             return 1;
             break;
           }
+      }
 
       //      ACE_OS::sleep (poa_delay);
       CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");

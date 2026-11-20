@@ -20,6 +20,7 @@ parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
   int c {};
 
   while ((c = get_opts ()) != -1)
+  {
     switch (c)
       {
       case 'o':
@@ -35,6 +36,7 @@ parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
                            argv [0]),
                           -1);
       }
+  }
   // Indicates successful parsing of the command line
   return 0;
 }
@@ -124,16 +126,20 @@ int write_ior (ACE_TCHAR const *filename, char const *ior)
   std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
     ACE_OS::fopen (filename, "w"), ACE_OS::fclose);
   if (!output_file)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Cannot open output file for writing IOR: %s"),
                        filename),
                       -1);
+  }
 
   if (ACE_OS::fprintf (output_file.get (), "%s", ior) < 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Cannot write IOR to output file: %s"),
                        filename),
                       -1);
+  }
 
   return 0;
 }

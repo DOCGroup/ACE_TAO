@@ -127,7 +127,9 @@ Test_Array_Sequence::check_validity ()
   if (this->compare (this->in_, this->inout_.in ()) &&
       this->compare (this->in_, this->out_.in ()) &&
       this->compare (this->in_, this->ret_.in ()))
+  {
     return 1;
+  }
   else
   {
     return 0;
