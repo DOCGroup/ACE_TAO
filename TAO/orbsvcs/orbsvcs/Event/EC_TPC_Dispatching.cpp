@@ -75,9 +75,13 @@ TAO_EC_TPC_Dispatching::add_consumer (RtecEventComm::PushConsumer_ptr consumer)
                                    dtask);
   char const *explanation {};
   if (bindresult == -1)
-    explanation = "general failure";
+    {
+      explanation = "general failure";
+    }
   else if (bindresult == 1)
-    explanation = "entry already exists";
+    {
+      explanation = "entry already exists";
+    }
 
   if (explanation != nullptr)
     {
