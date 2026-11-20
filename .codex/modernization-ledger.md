@@ -13611,3 +13611,8 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Added Allman braces to 14 single-statement bodies across `Two_DLL_ORB/Test.cpp`, `EventTypeSeq.cpp`, `Supplier_Input_Handler.cpp`, and `GettingStarted/MessengerServer.cpp`.
 - Focused clang-tidy checks passed across these four edited files and eight additional current candidates; no remaining brace warnings or parse errors were reported. `git diff --check` passed. No build or runtime tests were run.
 - The repo-wide tracked-source brace audit remains open; candidates with missing generated headers are still excluded from edits.
+
+## 2026-11-20 ACE HTBP ping brace follow-up
+
+- Added Allman braces to six single-statement bodies in `ACE/protocols/tests/HTBP/ping/server.cpp`, keeping the existing ACE log-call formatting intact.
+- `git diff --check` passed. No build or runtime tests were run; the repo-wide tracked-source brace audit remains open.

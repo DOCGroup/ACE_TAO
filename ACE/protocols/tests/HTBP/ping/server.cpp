@@ -26,6 +26,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opts ()) != -1)
+  {
     switch (c)
       {
       case 'o':
@@ -43,6 +44,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
+  }
   // Indicates successful parsing of the command line
   return 0;
 }
@@ -61,10 +63,12 @@ ACE_TMAIN (int argc , ACE_TCHAR *argv[])
 
   ACE_TCHAR host[MAXHOSTNAMELEN+1];
   if (ACE_OS::hostname (host, MAXHOSTNAMELEN) != 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%P|%t) Server failure: %p\n"),
                        ACE_TEXT ("hostname")),
                       1);
+  }
 
   ACE_INET_Addr local (port, host);
   ACE_SOCK_Stream sock[2];
@@ -78,9 +82,11 @@ ACE_TMAIN (int argc , ACE_TCHAR *argv[])
       std::unique_ptr<FILE, int (*) (FILE *)> file (
         ACE_OS::fopen (notifier_file, ACE_TEXT ("w+")), ACE_OS::fclose);
       if (!file)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("Cannot open notifier file '%s'\n"),
                            notifier_file), 1);
+      }
       char const * const msg = "server ready";
       ACE_OS::fwrite (msg, ACE_OS::strlen (msg), 1, file.get ());
     }
@@ -161,9 +167,11 @@ ACE_TMAIN (int argc , ACE_TCHAR *argv[])
       ACE_OS::sprintf (buffer,"I hear you %d",i);
       n = stream.send (buffer,ACE_OS::strlen(buffer)+1);
       if (n == -1)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                            ACE_TEXT ("stream.send")),
                           -1);
+      }
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) Server: Send returned %d\n"), n));
@@ -174,20 +182,24 @@ ACE_TMAIN (int argc , ACE_TCHAR *argv[])
           if (got[0] == -1)
             {
               if ((got[0] = (res =channel1.pre_recv())) == -1)
+              {
                 ACE_DEBUG ((LM_DEBUG,
                             ACE_TEXT ("(%P|%t) Server: ")
                             ACE_TEXT ("res = %d, waiting 1 sec. %p\n"),
                             got[0],
                             ACE_TEXT ("channel1.pre_recv()")));
+              }
             }
           if (got[1] == -1)
             {
               if ((got[1] = (res =channel2.pre_recv())) == -1)
+              {
                 ACE_DEBUG ((LM_DEBUG,
                             ACE_TEXT ("(%P|%t) Server: ")
                             ACE_TEXT ("res = %d, waiting 1 sec. %p\n"),
                             got[1],
                             ACE_TEXT ("channel2.pre_recv()")));
+              }
             }
           if (got[0] == -1 || got[1] == -1)
           {
