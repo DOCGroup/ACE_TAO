@@ -128,14 +128,18 @@ Test_Task::svc ()
                                     &timeout) == -1)
         {
           if (errno == ETIME)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%t) %p\n"),
-                        ACE_TEXT ("notify() timed out")));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%t) %p\n"),
+                          ACE_TEXT ("notify() timed out")));
+            }
           else
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("(%t) %p\n"),
-                               ACE_TEXT ("notify")),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("(%t) %p\n"),
+                                 ACE_TEXT ("notify")),
+                                -1);
+            }
         }
     }
 
@@ -178,7 +182,8 @@ worker (void *args)
   ACE_Time_Value timeout (4);
 
   for (;;)
-    switch (reactor->handle_events (timeout))
+    {
+      switch (reactor->handle_events (timeout))
       {
       case -1:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -190,6 +195,7 @@ worker (void *args)
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Reactor shutdown\n")));
         return nullptr;
       }
+    }
 
   ACE_NOTREACHED (return nullptr);
 }
@@ -226,24 +232,30 @@ run_main (int, ACE_TCHAR *[])
       (ACE_THR_FUNC (worker),
        (void *) ACE_Reactor::instance (),
        THR_BOUND | THR_DETACHED) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("spawn")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("spawn")),
+                        -1);
+    }
 
   else if (ACE_Thread_Manager::instance ()->spawn
       (ACE_THR_FUNC (worker), (void *) &reactor,
        THR_BOUND | THR_DETACHED) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("spawn")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("spawn")),
+                        -1);
+    }
 
   if (ACE_Thread_Manager::instance ()->wait () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("wait")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("wait")),
+                        -1);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) all threads are finished\n")));
