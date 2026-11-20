@@ -200,11 +200,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Contact the name service
       CORBA::Object_var nc_obj;
       if (options.name_service)
-        nc_obj = orb->string_to_object (options.name_service);
+        {
+          nc_obj = orb->string_to_object (options.name_service);
+        }
       else
-      {
-        nc_obj = orb->resolve_initial_references ("NameService");
-      }
+        {
+          nc_obj = orb->resolve_initial_references ("NameService");
+        }
 
       CosNaming::NamingContext_var root_nc =
         CosNaming::NamingContext::_narrow (nc_obj.in ());
@@ -243,25 +245,31 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       try
         {
           if (!options.ior)
-            obj= root_nc->bind_new_context (the_name);
+            {
+              obj= root_nc->bind_new_context (the_name);
+            }
           else if (options.context)
             {
               CosNaming::NamingContext_var this_nc =
                 CosNaming::NamingContext::_narrow (obj.in ());
 
               if (options.rebind)
-                root_nc->rebind_context (the_name, this_nc.in ());
+                {
+                  root_nc->rebind_context (the_name, this_nc.in ());
+                }
               else
-              {
-                root_nc->bind_context (the_name, this_nc.in ());
-              }
+                {
+                  root_nc->bind_context (the_name, this_nc.in ());
+                }
             }
           else if (options.rebind)
-            root_nc->rebind (the_name, obj.in ());
+            {
+              root_nc->rebind (the_name, obj.in ());
+            }
           else
-          {
-            root_nc->bind (the_name, obj.in ());
-          }
+            {
+              root_nc->bind (the_name, obj.in ());
+            }
           if (!options.quiet)
             {
               CORBA::ULong index {};
@@ -276,13 +284,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                the_name[index].id.in()));
                 }
               if (!options.ior)
-                ACE_DEBUG ((LM_DEBUG, "Created sub-context"));
+                {
+                  ACE_DEBUG ((LM_DEBUG, "Created sub-context"));
+                }
               else if (options.rebind)
-                ACE_DEBUG ((LM_DEBUG, "ReBound"));
+                {
+                  ACE_DEBUG ((LM_DEBUG, "ReBound"));
+                }
               else
-              {
-                ACE_DEBUG ((LM_DEBUG, "Bound"));
-              }
+                {
+                  ACE_DEBUG ((LM_DEBUG, "Bound"));
+                }
               ACE_DEBUG ((LM_DEBUG, " ID: %C",
                          the_name[index].id.in()));
               if (the_name[index].kind && the_name[index].kind[0])
@@ -303,7 +315,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           CORBA::ULong found = the_name.length () - nf.rest_of_name.length ();
           CORBA::ULong &limit = found;
           if (options.quiet)
-            index= found;
+            {
+              index= found;
+            }
           else
             {
               for (index= 0; index < found; ++index)
@@ -373,18 +387,22 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 // This is not a naming context, report to outer
 
                   if (options.rebind)
-                    root_nc->rebind_context (the_name, this_nc.in ());
+                    {
+                      root_nc->rebind_context (the_name, this_nc.in ());
+                    }
                   else
-                  {
-                    root_nc->bind_context (the_name, this_nc.in ());
-                  }
+                    {
+                      root_nc->bind_context (the_name, this_nc.in ());
+                    }
                 }
               else if (options.rebind)
-                root_nc->rebind (the_name, obj.in ());
+                {
+                  root_nc->rebind (the_name, obj.in ());
+                }
               else
-              {
-                root_nc->bind (the_name, obj.in ());
-              }
+                {
+                  root_nc->bind (the_name, obj.in ());
+                }
             }
         }
     }
