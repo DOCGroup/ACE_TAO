@@ -88,7 +88,9 @@ namespace ACE
                 // parse path part
                 sos.put (ch);
                 for (ch = sis.get (); ch != '?' && ch != '#' && ch != eof ;ch = sis.get ())
-                  sos.put (ch);
+                  {
+                    sos.put (ch);
+                  }
                 this->set_path (sos.str ());
                 sos.clear ();
               }
@@ -102,7 +104,9 @@ namespace ACE
               {
                 // parse query part
                 for (ch = sis.get (); ch != '#' && ch != eof ;ch = sis.get ())
-                  sos.put (ch);
+                  {
+                    sos.put (ch);
+                  }
                 this->set_query (sos.str ());
                 sos.clear ();
               }
@@ -274,7 +278,9 @@ namespace ACE
                  ch != '/' && ch != ':' && ch != '@' && ch != '?' && ch != '#' && ch != eof ;
 #endif
                  ch = is.get ())
-              sos.put (ch);
+              {
+                sos.put (ch);
+              }
           }
 
 #if defined (ACE_HAS_IPV6)
@@ -310,7 +316,9 @@ namespace ACE
             is >> port; // should stop at '/' or '?' or '#' or eof
             ch = is.get ();
             if (ch == '/' || ch == '?' || ch == '#' || ch == eof)
-              this->set_port (port);
+              {
+                this->set_port (port);
+              }
             else
             {
               this->set_port (0);
@@ -385,7 +393,9 @@ namespace ACE
              ch != '/' && ch != ':' && ch != '@' && ch != '?' && ch != '#' && ch != eof ;
 #endif
              ch = is.get ())
-          sos.put (ch);
+          {
+            sos.put (ch);
+          }
 
         if (ch == '@')
           {
