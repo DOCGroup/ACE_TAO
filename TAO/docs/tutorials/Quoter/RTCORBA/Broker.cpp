@@ -128,7 +128,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // This call MUST come after ORB_init(), which may need to
       // extract -ORB options first.
       if (parse_args (argc, argv) != 0)
-        return 1;
+        {
+          return 1;
+        }
 
       // Get a reference to the RootPOA.
       CORBA::Object_var obj (orb->resolve_initial_references ("RootPOA"));
