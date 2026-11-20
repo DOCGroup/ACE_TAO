@@ -235,7 +235,9 @@ TAO_ECG_CDR_Message_Sender::send_fragment (const ACE_INET_Addr &addr,
                                    addr);
   size_t expected_n = 0;
   for (int i {}; i < iovcnt; ++i)
-    expected_n += iov[i].iov_len;
+    {
+      expected_n += iov[i].iov_len;
+    }
   if (n > 0 && size_t(n) != expected_n)
     {
       ORBSVCS_ERROR ((LM_ERROR, ("Sent only %b out of %B bytes "
