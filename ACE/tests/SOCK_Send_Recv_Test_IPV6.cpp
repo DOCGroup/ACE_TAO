@@ -89,7 +89,9 @@ client (void *arg)
   // The server will verify that this data pattern gets there intact.
 
   for (i = 0; i < sizeof buffer; ++i)
-    buffer[i] = static_cast<u_char> (i);
+    {
+      buffer[i] = static_cast<u_char> (i);
+    }
 
   iovec iov[5];
 
@@ -117,7 +119,9 @@ client (void *arg)
       Test_Result = 1;
     }
   else
-    ACE_TEST_ASSERT (len == 255);
+    {
+      ACE_TEST_ASSERT (len == 255);
+    }
 
   //*******************   TEST 2   ******************************
   //
@@ -142,13 +146,15 @@ client (void *arg)
   ACE_TEST_ASSERT (len == 255);
 
   for (i = 0; i < 255; ++i)
-    if (buffer2[i] != buffer[i])
-      {
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) Test 2, rcvd byte %B is %d, not %d\n"),
-                    i, buffer2[i], buffer[i]));
-        Test_Result = 1;
-      }
+    {
+      if (buffer2[i] != buffer[i])
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) Test 2, rcvd byte %B is %d, not %d\n"),
+                      i, buffer2[i], buffer[i]));
+          Test_Result = 1;
+        }
+    }
 
   //*******************   TEST 3   ******************************
   //
@@ -238,15 +244,17 @@ server (void *arg)
 
   ACE_TEST_ASSERT (len == 255);
   for (i = 0; i < 255; ++i)
-    if (buffer[i] != i)
-      {
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) Test 1, rcvd byte %d is %d, not %d\n"),
-                    i,
-                    buffer[i],
-                    i));
-        Test_Result = 1;
-      }
+    {
+      if (buffer[i] != i)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) Test 1, rcvd byte %d is %d, not %d\n"),
+                      i,
+                      buffer[i],
+                      i));
+          Test_Result = 1;
+        }
+    }
 
   //*******************   TEST 2   ******************************
   //
@@ -276,7 +284,9 @@ server (void *arg)
       errno = 0;
       got = sock_str.recv (buffer, sizeof (buffer));
       if (got < 0)
+        {
           break;
+        }
       total_recv += got;
     }
 
@@ -324,9 +334,11 @@ spawn ()
   // Bind listener to any port and then find out what the port was.
   if (peer_acceptor.open (ACE_Addr::sap_any, 0, AF_INET6) == -1
       || peer_acceptor.get_local_addr (server_addr) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) %p\n"),
-                ACE_TEXT ("open")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("open")));
+    }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
