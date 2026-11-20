@@ -76,7 +76,9 @@ ACE_UTF8_Encoding_Converter::encoded (ACE_Byte const *source,
   for (size_t i = 0; i < source_size; ++i)
     {
       if (source[i] < 0x01 || source[i] > 0x7f)
-        return nullptr;
+        {
+          return nullptr;
+        }
     }
 
   // All characters are "valid" ASCII

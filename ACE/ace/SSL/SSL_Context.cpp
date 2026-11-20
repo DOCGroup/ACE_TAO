@@ -756,9 +756,13 @@ ACE_SSL_Context::egd_file (const char * socket_file)
   // number generator.  The actual value should be greater than 16,
   // i.e. 128 bits.
   if (::RAND_egd (socket_file) > 0)
-    return 0;
+    {
+      return 0;
+    }
   else
-    return -1;
+    {
+      return -1;
+    }
 #endif  /* OPENSSL_VERSION_NUMBER < 0x00905100L */
 }
 
