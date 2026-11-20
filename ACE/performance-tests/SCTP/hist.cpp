@@ -128,11 +128,14 @@ void report_to (std::FILE *strm, hist_t const *hist)
     return;
   }
   ACE_OS::fprintf(strm, "\n\n\t\t\t\tHistogram %s\n", hist->name.c_str ());
-  if (hist->skew) ACE_OS::fprintf(strm, "version: %s\n", HIST_VERSION);
+  if (hist->skew)
+    {
+      ACE_OS::fprintf(strm, "version: %s\n", HIST_VERSION);
+    }
   else
-  {
-    ACE_OS::fprintf(strm, "version: 1.1\n");
-  }
+    {
+      ACE_OS::fprintf(strm, "version: 1.1\n");
+    }
   ACE_OS::fprintf(strm, "minimum: %g\n", hist->min);
   ACE_OS::fprintf(strm, "maximum: %g\n", hist->max);
   ACE_OS::fprintf(strm, "mean: %g\n", mean = hist->sum/hist->num_points);

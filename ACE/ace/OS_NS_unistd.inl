@@ -1037,7 +1037,10 @@ ACE_OS::sysconf (int name)
 {
   ACE_OS_TRACE ("ACE_OS::sysconf");
 #if defined (ACE_INTEGRITY)
-  if (name == _SC_PAGESIZE) return ACE_PAGE_SIZE;
+  if (name == _SC_PAGESIZE)
+    {
+      return ACE_PAGE_SIZE;
+    }
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_LACKS_SYSCONF)
   ACE_UNUSED_ARG (name);
