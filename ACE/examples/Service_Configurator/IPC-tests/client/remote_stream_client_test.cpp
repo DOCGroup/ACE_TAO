@@ -40,7 +40,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("f:h:p:"));
 
   for (int c; (c = get_opt ()) != -1; )
-    switch (c)
+    {
+      switch (c)
       {
       case 'f':
         file_name = get_opt.opt_arg ();
@@ -55,6 +56,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         print_usage_and_die ();
         break;
       }
+    }
 }
 
 int
@@ -68,10 +70,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_SOCK_CODgram dc;
 
   if (dc.open (sa, ACE_Addr::sap_any) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "open"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "open"),
+                        -1);
+    }
 
   // First send the name of the file as a datagram.
 
@@ -84,53 +88,65 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     ACE_Utils::truncate_cast<u_long> (ACE_OS::strlen (file_name));
 
   if (dc.send (iov, 2) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "send"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "send"),
+                        -1);
+    }
 
   ACE_SOCK_Stream sc;
   ACE_SOCK_Connector con;
 
   if (con.connect (sc, sa) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "connect"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "connect"),
+                        -1);
+    }
 
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_Mem_Map mmap (file_name);
 
   if (mmap (cp) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "mmap"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "mmap"),
+                        -1);
+    }
   //FUZZ: enable check_for_lack_ACE_OS
 
   // Next, send the file's contents.
 
   if (sc.send_n (cp, mmap.size ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "send_urg"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "send_urg"),
+                        -1);
+    }
 
   if (sc.close_writer () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "close_writer"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "close_writer"),
+                        -1);
+    }
 
   if ((n = sc.recv_n (buf, sizeof buf)) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "recv"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "recv"),
+                        -1);
+    }
   else
-  {
-    ACE_OS::write (ACE_STDOUT, buf, n);
-  }
+    {
+      ACE_OS::write (ACE_STDOUT, buf, n);
+    }
 
   return 0;
 }
