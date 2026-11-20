@@ -99,7 +99,9 @@ int
 ACE_MT_MEM_IO::Simple_Queue::write (ACE_MEM_SAP_Node *new_node)
 {
   if (this->mq_ == nullptr)
-    return -1;
+    {
+      return -1;
+    }
 
   // Here, we assume we already have acquired the lock necessary.
   // And we are allowed to write.
@@ -122,7 +124,9 @@ ACE_MEM_SAP_Node *
 ACE_MT_MEM_IO::Simple_Queue::read ()
 {
   if (this->mq_ == nullptr)
-    return nullptr;
+    {
+      return nullptr;
+    }
 
   ACE_MEM_SAP_Node *retv {};
 
@@ -138,7 +142,9 @@ ACE_MT_MEM_IO::Simple_Queue::read ()
           this->mq_->tail_ = nullptr;
         }
       else
-        this->mq_->head_ = retv->next_;
+        {
+          this->mq_->head_ = retv->next_;
+        }
     }
   ACE_SEH_EXCEPT (this->malloc_->memory_pool ().seh_selector (GetExceptionInformation ()))
     {
@@ -161,7 +167,9 @@ ACE_MT_MEM_IO::init (ACE_HANDLE handle,
   //    be kept in the shared memory and we are done
   //    with this.
   if (this->create_shm_malloc (name, options) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   ACE_TCHAR server_sema [MAXPATHLEN];
   ACE_TCHAR client_sema [MAXPATHLEN];
@@ -199,10 +207,14 @@ ACE_MT_MEM_IO::init (ACE_HANDLE handle,
       (mymq + 1)->tail_ = nullptr;
       (mymq + 1)->head_ = nullptr;
       if (this->shm_malloc_->bind ("to_server", mymq) == -1)
-        return -1;
+        {
+          return -1;
+        }
 
       if (this->shm_malloc_->bind ("to_client", mymq + 1) == -1)
-        return -1;
+        {
+          return -1;
+        }
 
       this->recv_channel_.queue_.init (mymq, this->shm_malloc_.get ());
       ACE_NEW_RETURN (semaphore,
@@ -256,9 +268,13 @@ ACE_MT_MEM_IO::fini ()
 {
   const int ret = ACE_MEM_SAP::fini ();
   if (this->recv_channel_.lock_ != nullptr)
-    ACE_Process_Mutex::unlink (this->recv_channel_.lock_->name ());
+    {
+      ACE_Process_Mutex::unlink (this->recv_channel_.lock_->name ());
+    }
   if (this->send_channel_.lock_ != nullptr)
-    ACE_Process_Mutex::unlink (this->send_channel_.lock_->name ());
+    {
+      ACE_Process_Mutex::unlink (this->send_channel_.lock_->name ());
+    }
   return ret;
 }
 
