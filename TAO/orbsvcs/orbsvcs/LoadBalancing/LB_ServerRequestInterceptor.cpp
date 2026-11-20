@@ -36,7 +36,9 @@ TAO_LB_ServerRequestInterceptor::receive_request_service_contexts (
       if (std::strcmp (op.in (), "_get_loads") == 0        // LoadMonitor
           || std::strcmp (op.in (), "disable_alert") == 0  // LoadAlert
           || std::strcmp (op.in (), "enable_alert") == 0)  // LoadAlert
-        return;  // Do not redirect.
+        {
+          return;  // Do not redirect.
+        }
 
 #if 0
       try
@@ -141,9 +143,11 @@ TAO_LB_ServerRequestInterceptor::send_other (
         ri->reply_status ();
 
       if (status == PortableInterceptor::LOCATION_FORWARD)
-        ORBSVCS_DEBUG ((LM_INFO,
-                    ACE_TEXT ("TAO_LB_ServerRequestInterceptor -- ")
-                    ACE_TEXT ("LOCATION FORWARDED\n")));
+        {
+          ORBSVCS_DEBUG ((LM_INFO,
+                          ACE_TEXT ("TAO_LB_ServerRequestInterceptor -- ")
+                          ACE_TEXT ("LOCATION FORWARDED\n")));
+        }
     }
 }
 

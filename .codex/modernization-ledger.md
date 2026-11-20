@@ -14478,3 +14478,9 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Added Allman braces to option parsing, nil-POA checks, and output-file error branches in `TAO/tests/Bug_3676_Regression/server.cpp`, `TAO/tests/Bug_3837_Regression/server.cpp`, and `TAO/tests/Crash_On_Write/server.cpp`.
 - Focused clang-tidy reported no remaining brace warnings in the edited files; `git diff --check` passed. No build or runtime tests were run.
 - The broader tracked-source brace audit remains open.
+
+## 2026-11-20 Allman braces in Smart Proxy and CodeSets sources
+
+- Added Allman braces around option parsing, IOR errors, POA validation, interceptor branches, and output diagnostics in Smart Proxies, Portable Interceptors, Load Balancing, and CodeSets.
+- Focused clang-tidy reported no remaining brace warnings in the edited files. Two files report missing generated PI_Server headers in the local compile database; `git diff --check` passed. No build or runtime tests were run.
+- The broader tracked-source brace audit remains open.
