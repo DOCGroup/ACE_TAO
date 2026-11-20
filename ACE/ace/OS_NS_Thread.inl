@@ -1030,7 +1030,9 @@ ACE_OS::rw_rdlock (ACE_rwlock_t *rw)
 #   endif /* ACE_HAS_PTHREADS */
   int result = 0;
   if (ACE_OS::mutex_lock (&rw->lock_) == -1)
-    result = -1; // -1 means didn't get the mutex.
+    {
+      result = -1; // -1 means didn't get the mutex.
+    }
   else
     {
       // Give preference to writers who are waiting.
@@ -1046,9 +1048,13 @@ ACE_OS::rw_rdlock (ACE_rwlock_t *rw)
         }
     }
   if (result == 0)
-    ++rw->ref_count_;
+    {
+      ++rw->ref_count_;
+    }
   if (result != -1)
-    ACE_OS::mutex_unlock (&rw->lock_);
+    {
+      ACE_OS::mutex_unlock (&rw->lock_);
+    }
 #   if defined (ACE_HAS_PTHREADS)
   ACE_PTHREAD_CLEANUP_POP (0);
 #   endif /* defined (ACE_HAS_PTHREADS) */
@@ -1174,12 +1180,14 @@ ACE_OS::rw_trywrlock_upgrade (ACE_rwlock_t *rw)
   ACE_PTHREAD_CLEANUP_PUSH (&rw->lock_);
 #   endif /* defined (ACE_HAS_PTHREADS) */
 
+  // -1 means didn't get the mutex, error
   if (ACE_OS::mutex_lock (&rw->lock_) == -1)
-    return -1;
-    // -1 means didn't get the mutex, error
-  else if (rw->important_writer_)
-    // an other reader upgrades already
     {
+      return -1;
+    }
+  else if (rw->important_writer_)
+    {
+      // an other reader upgrades already
       result = -1;
       errno = EBUSY;
     }
