@@ -19,10 +19,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       std::vector<ACE_TCHAR *> largv (argc + extra_argc + 1);
       for (int i = 0; i < argc; ++i)
-        largv[i] = argv[i];
+        {
+          largv[i] = argv[i];
+        }
 
       for (size_t i = 0; i < extra_argc; ++i)
-        largv[argc + i] = extra[i].data ();
+        {
+          largv[argc + i] = extra[i].data ();
+        }
       largv[argc + extra_argc] = {};
 
       int largc = argc + extra_argc;
@@ -45,9 +49,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       };
       std::vector<ACE_TCHAR *> second_largv (argc + extra_argc + 1);
       for (int i = 0; i < argc; ++i)
-        second_largv[i] = argv[i];
+        {
+          second_largv[i] = argv[i];
+        }
       for (size_t i = 0; i < extra_argc; ++i)
-        second_largv[argc + i] = second_extra[i].data ();
+        {
+          second_largv[argc + i] = second_extra[i].data ();
+        }
       second_largv[argc + extra_argc] = {};
 
       int second_largc = argc + extra_argc;
@@ -71,11 +79,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
   if (result == 0)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Test passed!\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Test passed!\n")));
+    }
   else
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Test failed. Result: %d\n"),
-                result));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Test failed. Result: %d\n"),
+                  result));
+    }
   return result;
 }
