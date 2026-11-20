@@ -12,6 +12,7 @@ parse_args (int argc, ACE_TCHAR *argv[], std::basic_string<ACE_TCHAR> &ior_outpu
   int option {};
 
   while ((option = get_opts ()) != -1)
+  {
     switch (option)
       {
       case 'o':
@@ -25,6 +26,7 @@ parse_args (int argc, ACE_TCHAR *argv[], std::basic_string<ACE_TCHAR> &ior_outpu
                            argv [0]),
                           -1);
       }
+  }
   return 0;
 }
 
@@ -43,9 +45,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Panic: nil RootPOA\n"),
                           1);
+      }
 
       PortableServer::POAManager_var const poa_manager = root_poa->the_POAManager ();
 
@@ -74,10 +78,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
           ACE_OS::fopen (ior_output_file.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
         if (!output_file)
+        {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("Cannot open output file for writing IOR: %s\n"),
                              ior_output_file.c_str ()),
                             1);
+        }
         ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
       }
 

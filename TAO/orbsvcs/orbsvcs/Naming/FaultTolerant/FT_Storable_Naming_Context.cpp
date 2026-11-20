@@ -100,8 +100,10 @@ TAO_FT_Storable_Naming_Context::propagate_update_notification (
                    FT_Naming::ChangeType change_type)
 {
   if (this->replicator_)
+  {
     this->replicator_->send_context_update (this->context_name_,
                                             change_type);
+  }
 }
 
 void
@@ -129,7 +131,9 @@ TAO_FT_Storable_Naming_Context::context_written ()
   FT_Naming::ChangeType change_type;
 
   if (this->destroyed_)
+  {
     change_type = FT_Naming::DELETED;
+  }
   else
   {
     change_type = FT_Naming::UPDATED;

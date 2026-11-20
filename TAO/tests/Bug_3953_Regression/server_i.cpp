@@ -25,9 +25,11 @@ void
 server_i::ping (CORBA::UShort time_to_live)
 {
   if (!this->quiet_)
+  {
     ACE_DEBUG ((LM_DEBUG,
                 "(%t) server_i::ping -> time to live = %d\n",
                 time_to_live));
+  }
 
   try
     {

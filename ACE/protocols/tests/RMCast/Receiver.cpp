@@ -34,7 +34,9 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     Message expected_msg {};
 
     for (unsigned short i = 0; i < payload_size; ++i)
+    {
       expected_msg.payload[i] = i;
+    }
 
     Status_List received (message_count, 0);
     Status_List damaged (message_count, 0);
@@ -96,22 +98,28 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     unsigned long lost_count (0), damaged_count (0), duplicate_count (0);
 
     for (unsigned char const e : received)
+    {
       if (e == 0)
       {
         ++lost_count;
       }
+    }
 
     for (unsigned char const e : damaged)
+    {
       if (e == 1)
       {
         ++damaged_count;
       }
+    }
 
     for (unsigned char const e : duplicate)
+    {
       if (e == 1)
       {
         ++duplicate_count;
       }
+    }
 
     ACE_DEBUG ((LM_DEBUG,
                 "lost      : %Q\n"
@@ -135,7 +143,9 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       for (unsigned char const e : received)
       {
         if (e == 0)
+        {
           ++count;
+        }
         else
         {
           break; // Seen first ok message.

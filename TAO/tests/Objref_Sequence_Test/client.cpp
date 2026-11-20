@@ -14,6 +14,7 @@ parse_args (int argc, ACE_TCHAR *argv[], Options &options)
   int option {};
 
   while ((option = get_opts ()) != -1)
+  {
     switch (option)
       {
       case 'k':
@@ -29,6 +30,7 @@ parse_args (int argc, ACE_TCHAR *argv[], Options &options)
                            argv [0]),
                           -1);
       }
+  }
   return 0;
 }
 
@@ -65,12 +67,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
           vServers->length (size);
           for (CORBA::ULong count {}; count < add_size; ++count)
+          {
             vServers[old_size + count] = Server::_duplicate (vAddition[count]);
+          }
 
           vAddition = nullptr;
 
           if (step * 5 > size)
+          {
             size += step;
+          }
           else
             {
               step *= 10;

@@ -8,6 +8,7 @@ parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior)
   int c {};
 
   while ((c = get_opts ()) != -1)
+  {
     switch (c)
       {
       case 'k':
@@ -23,6 +24,7 @@ parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior)
                            argv [0]),
                           -1);
       }
+  }
   // Indicates successful parsing of the command line
   return 0;
 }

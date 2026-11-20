@@ -13616,3 +13616,9 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 
 - Added Allman braces to six single-statement bodies in `ACE/protocols/tests/HTBP/ping/server.cpp`, keeping the existing ACE log-call formatting intact.
 - `git diff --check` passed. No build or runtime tests were run; the repo-wide tracked-source brace audit remains open.
+
+## 2026-11-20 ACE protocol and TAO test brace follow-up
+
+- Added Allman braces to 77 single-statement bodies across `ACE/protocols/ace/INet/HTTP_Request.cpp`, the RMCast receiver test, and 15 TAO test, performance-test, and service files.
+- Focused clang-tidy checks reported no remaining brace warnings in these 16 files. The compile database still produces unrelated parse errors in TAO CDR overloads and its C++17 feature guard; the brace diagnostics were still available and fixed. `git diff --check` passed. No build or runtime tests were run.
+- The full tracked-source brace audit remains open; gperf, TAO_IDL, and IFR_Service remain excluded from modernization edits.

@@ -82,14 +82,18 @@ namespace ACE
           this->get (AUTHORIZATION, auth);
           ACE_CString::ITERATOR it (auth);
           while (!it.done () && ACE_OS::ace_isspace (*it))
+          {
             ++it;
+          }
           while (!it.done () && !ACE_OS::ace_isspace (*it))
             {
               scheme += *it;
               ++it;
             }
           while (!it.done () && ACE_OS::ace_isspace (*it))
+          {
             ++it;
+          }
           while (!it.done ())
             {
               auth_info += *it;
@@ -167,7 +171,9 @@ namespace ACE
         }
         // skip to eol
         while (ch != '\n' && ch != eof_)
+        {
           ch = str.get ();
+        }
         // get header lines
         if (!Header::read (str))
         {
@@ -176,7 +182,9 @@ namespace ACE
         // skip empty line
         ch = str.get ();
         while (ch != '\n' && ch != eof_)
+        {
           ch = str.get ();
+        }
         this->set_method (method);
         this->set_URI (uri);
         this->set_version(version);
