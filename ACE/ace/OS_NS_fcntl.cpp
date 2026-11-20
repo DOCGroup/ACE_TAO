@@ -22,42 +22,72 @@ ACE_OS::open (const char *filename,
 #if defined (ACE_WIN32)
   DWORD access = GENERIC_READ;
   if (ACE_BIT_ENABLED (mode, O_WRONLY))
-    access = GENERIC_WRITE;
+    {
+      access = GENERIC_WRITE;
+    }
   else if (ACE_BIT_ENABLED (mode, O_RDWR))
-    access = GENERIC_READ | GENERIC_WRITE;
+    {
+      access = GENERIC_READ | GENERIC_WRITE;
+    }
 
   DWORD creation = OPEN_EXISTING;
 
   if ((mode & (_O_CREAT | _O_EXCL)) == (_O_CREAT | _O_EXCL))
-    creation = CREATE_NEW;
+    {
+      creation = CREATE_NEW;
+    }
   else if ((mode & (_O_CREAT | _O_TRUNC)) == (_O_CREAT | _O_TRUNC))
-    creation = CREATE_ALWAYS;
+    {
+      creation = CREATE_ALWAYS;
+    }
   else if (ACE_BIT_ENABLED (mode, _O_CREAT))
-    creation = OPEN_ALWAYS;
+    {
+      creation = OPEN_ALWAYS;
+    }
   else if (ACE_BIT_ENABLED (mode, _O_TRUNC))
-    creation = TRUNCATE_EXISTING;
+    {
+      creation = TRUNCATE_EXISTING;
+    }
 
   DWORD flags = 0;
 
   if (ACE_BIT_ENABLED (mode, _O_TEMPORARY))
-    flags |= FILE_FLAG_DELETE_ON_CLOSE | FILE_ATTRIBUTE_TEMPORARY;
+    {
+      flags |= FILE_FLAG_DELETE_ON_CLOSE | FILE_ATTRIBUTE_TEMPORARY;
+    }
 
   if (ACE_BIT_ENABLED (mode, FILE_FLAG_WRITE_THROUGH))
-    flags |= FILE_FLAG_WRITE_THROUGH;
+    {
+      flags |= FILE_FLAG_WRITE_THROUGH;
+    }
   if (ACE_BIT_ENABLED (mode, FILE_FLAG_OVERLAPPED))
-    flags |= FILE_FLAG_OVERLAPPED;
+    {
+      flags |= FILE_FLAG_OVERLAPPED;
+    }
   if (ACE_BIT_ENABLED (mode, FILE_FLAG_NO_BUFFERING))
-    flags |= FILE_FLAG_NO_BUFFERING;
+    {
+      flags |= FILE_FLAG_NO_BUFFERING;
+    }
   if (ACE_BIT_ENABLED (mode, FILE_FLAG_RANDOM_ACCESS))
-    flags |= FILE_FLAG_RANDOM_ACCESS;
+    {
+      flags |= FILE_FLAG_RANDOM_ACCESS;
+    }
   if (ACE_BIT_ENABLED (mode, FILE_FLAG_SEQUENTIAL_SCAN))
-    flags |= FILE_FLAG_SEQUENTIAL_SCAN;
+    {
+      flags |= FILE_FLAG_SEQUENTIAL_SCAN;
+    }
   if (ACE_BIT_ENABLED (mode, FILE_FLAG_DELETE_ON_CLOSE))
-    flags |= FILE_FLAG_DELETE_ON_CLOSE;
+    {
+      flags |= FILE_FLAG_DELETE_ON_CLOSE;
+    }
   if (ACE_BIT_ENABLED (mode, FILE_FLAG_BACKUP_SEMANTICS))
-    flags |= FILE_FLAG_BACKUP_SEMANTICS;
+    {
+      flags |= FILE_FLAG_BACKUP_SEMANTICS;
+    }
   if (ACE_BIT_ENABLED (mode, FILE_FLAG_POSIX_SEMANTICS))
-    flags |= FILE_FLAG_POSIX_SEMANTICS;
+    {
+      flags |= FILE_FLAG_POSIX_SEMANTICS;
+    }
 
   ACE_MT (ACE_thread_mutex_t *ace_os_monitor_lock {};)
 
@@ -103,9 +133,13 @@ ACE_OS::open (const char *filename,
     }
 
   if (h == ACE_INVALID_HANDLE)
-    ACE_FAIL_RETURN (h);
+    {
+      ACE_FAIL_RETURN (h);
+    }
   else
-    return h;
+    {
+      return h;
+    }
 #elif defined (ACE_LACKS_OPEN)
   ACE_UNUSED_ARG (filename);
   ACE_UNUSED_ARG (mode);
@@ -145,42 +179,72 @@ ACE_OS::open (const wchar_t *filename,
 
   DWORD access = GENERIC_READ;
   if (ACE_BIT_ENABLED (mode, O_WRONLY))
-    access = GENERIC_WRITE;
+    {
+      access = GENERIC_WRITE;
+    }
   else if (ACE_BIT_ENABLED (mode, O_RDWR))
-    access = GENERIC_READ | GENERIC_WRITE;
+    {
+      access = GENERIC_READ | GENERIC_WRITE;
+    }
 
   DWORD creation = OPEN_EXISTING;
 
   if ((mode & (_O_CREAT | _O_EXCL)) == (_O_CREAT | _O_EXCL))
-    creation = CREATE_NEW;
+    {
+      creation = CREATE_NEW;
+    }
   else if ((mode & (_O_CREAT | _O_TRUNC)) == (_O_CREAT | _O_TRUNC))
-    creation = CREATE_ALWAYS;
+    {
+      creation = CREATE_ALWAYS;
+    }
   else if (ACE_BIT_ENABLED (mode, _O_CREAT))
-    creation = OPEN_ALWAYS;
+    {
+      creation = OPEN_ALWAYS;
+    }
   else if (ACE_BIT_ENABLED (mode, _O_TRUNC))
-    creation = TRUNCATE_EXISTING;
+    {
+      creation = TRUNCATE_EXISTING;
+    }
 
   DWORD flags = 0;
 
   if (ACE_BIT_ENABLED (mode, _O_TEMPORARY))
-    flags |= FILE_FLAG_DELETE_ON_CLOSE | FILE_ATTRIBUTE_TEMPORARY;
+    {
+      flags |= FILE_FLAG_DELETE_ON_CLOSE | FILE_ATTRIBUTE_TEMPORARY;
+    }
 
   if (ACE_BIT_ENABLED (mode, FILE_FLAG_WRITE_THROUGH))
-    flags |= FILE_FLAG_WRITE_THROUGH;
+    {
+      flags |= FILE_FLAG_WRITE_THROUGH;
+    }
   if (ACE_BIT_ENABLED (mode, FILE_FLAG_OVERLAPPED))
-    flags |= FILE_FLAG_OVERLAPPED;
+    {
+      flags |= FILE_FLAG_OVERLAPPED;
+    }
   if (ACE_BIT_ENABLED (mode, FILE_FLAG_NO_BUFFERING))
-    flags |= FILE_FLAG_NO_BUFFERING;
+    {
+      flags |= FILE_FLAG_NO_BUFFERING;
+    }
   if (ACE_BIT_ENABLED (mode, FILE_FLAG_RANDOM_ACCESS))
-    flags |= FILE_FLAG_RANDOM_ACCESS;
+    {
+      flags |= FILE_FLAG_RANDOM_ACCESS;
+    }
   if (ACE_BIT_ENABLED (mode, FILE_FLAG_SEQUENTIAL_SCAN))
-    flags |= FILE_FLAG_SEQUENTIAL_SCAN;
+    {
+      flags |= FILE_FLAG_SEQUENTIAL_SCAN;
+    }
   if (ACE_BIT_ENABLED (mode, FILE_FLAG_DELETE_ON_CLOSE))
-    flags |= FILE_FLAG_DELETE_ON_CLOSE;
+    {
+      flags |= FILE_FLAG_DELETE_ON_CLOSE;
+    }
   if (ACE_BIT_ENABLED (mode, FILE_FLAG_BACKUP_SEMANTICS))
-    flags |= FILE_FLAG_BACKUP_SEMANTICS;
+    {
+      flags |= FILE_FLAG_BACKUP_SEMANTICS;
+    }
   if (ACE_BIT_ENABLED (mode, FILE_FLAG_POSIX_SEMANTICS))
-    flags |= FILE_FLAG_POSIX_SEMANTICS;
+    {
+      flags |= FILE_FLAG_POSIX_SEMANTICS;
+    }
 
   ACE_MT (ACE_thread_mutex_t *ace_os_monitor_lock {};)
 
@@ -226,9 +290,13 @@ ACE_OS::open (const wchar_t *filename,
     }
 
   if (h == ACE_INVALID_HANDLE)
-    ACE_FAIL_RETURN (h);
+    {
+      ACE_FAIL_RETURN (h);
+    }
   else
-    return h;
+    {
+      return h;
+    }
 #else /* ACE_WIN32 */
   // Just emulate with ascii version
   return ACE_OS::open (ACE_Wide_To_Ascii (filename).char_rep (),
