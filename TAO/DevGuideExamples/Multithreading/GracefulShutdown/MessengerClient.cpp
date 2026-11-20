@@ -52,17 +52,19 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     // Read and destringify the Messenger object's IOR.
     CORBA::Object_var const obj = orb->string_to_object (options.ior);
-    if (CORBA::is_nil (obj.in ())) {
-      std::cerr << "Could not get Messenger IOR." << std::endl;
-      return 1;
-    }
+    if (CORBA::is_nil (obj.in ()))
+      {
+        std::cerr << "Could not get Messenger IOR." << std::endl;
+        return 1;
+      }
 
     // Narrow the IOR to a Messenger object reference.
     Messenger_var const messenger = Messenger::_narrow (obj.in ());
-    if (CORBA::is_nil (messenger.in ())) {
-      std::cerr << "IOR was not a Messenger object reference." << std::endl;
-      return 1;
-    }
+    if (CORBA::is_nil (messenger.in ()))
+      {
+        std::cerr << "IOR was not a Messenger object reference." << std::endl;
+        return 1;
+      }
 
     // Send a message the the Messenger object.
     CORBA::String_var message = CORBA::string_dup ("Hello!");
