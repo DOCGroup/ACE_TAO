@@ -945,7 +945,9 @@ ACE_OS::setsockopt (ACE_HANDLE handle,
 #else
   if (result == -1)
 #endif /* WSAEOPNOTSUPP */
-    errno = ENOTSUP;
+    {
+      errno = ENOTSUP;
+    }
   return result;
 #endif
 }

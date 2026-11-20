@@ -306,9 +306,13 @@ ACE_OS::cond_init (ACE_cond_t *cv,
 #     endif
 
   if (ACE_ADAPT_RETVAL (pthread_cond_init (cv, &attributes), result) == 0)
-     result = 0;
+    {
+      result = 0;
+    }
   else
-     result = -1;       // ACE_ADAPT_RETVAL used it for intermediate status
+    {
+      result = -1;       // ACE_ADAPT_RETVAL used it for intermediate status
+    }
 
   return result;
 #   elif defined (ACE_HAS_WTHREADS) && defined (ACE_HAS_WTHREADS_CONDITION_VARIABLE)
@@ -395,7 +399,9 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   timespec_t ts;
 
   if (timeout != 0)
-    ts = *timeout; // Calls ACE_Time_Value::operator timespec_t().
+    {
+      ts = *timeout; // Calls ACE_Time_Value::operator timespec_t().
+    }
 
 #   if defined (ACE_HAS_PTHREADS)
 
@@ -409,7 +415,9 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   // values consistent.  EAGAIN is from Pthreads DRAFT4
   if (result == -1 &&
       (errno == ETIMEDOUT || errno == EAGAIN))
-    errno = ETIME;
+    {
+      errno = ETIME;
+    }
 
 #   elif defined (ACE_HAS_WTHREADS) && defined (ACE_HAS_WTHREADS_CONDITION_VARIABLE)
   int msec_timeout = 0;
@@ -429,7 +437,9 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   return result;
 #   endif /* ACE_HAS_PTHREADS */
   if (timeout != 0)
-    timeout->set (ts); // Update the time value before returning.
+    {
+      timeout->set (ts); // Update the time value before returning.
+    }
 
   return result;
 # else
@@ -1392,7 +1402,9 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
   if (s->name_)
     {
       if (!s->avoid_unlink_)
-        ACE_OS::sema_unlink (s->name_);
+        {
+          ACE_OS::sema_unlink (s->name_);
+        }
 #if defined (ACE_HAS_ALLOC_HOOKS)
       ACE_Allocator::instance()->free ((void *) s->name_);
 #else
@@ -1577,9 +1589,13 @@ ACE_OS::sema_init (ACE_sema_t *s,
                              ACE_DEFAULT_FILE_PERMS,
                              count);
       if (s->sema_ == (sem_t *) SEM_FAILED)
-        return -1;
+        {
+          return -1;
+        }
       else
-        return 0;
+        {
+          return 0;
+        }
     }
 #  endif /* ACE_LACKS_NAMED_POSIX_SEM */
   else
@@ -1918,7 +1934,9 @@ ACE_OS::sema_post (ACE_sema_t *s, u_int release_count)
   // our semaphore simulation?
   for (size_t i = 0; i < release_count; ++i)
     if (ACE_OS::sema_post (s) == -1)
-      return -1;
+      {
+        return -1;
+      }
 
   return 0;
 #endif /* ACE_WIN32 */
@@ -2085,7 +2103,9 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
   ts = tv; // Calls ACE_Time_Value::operator timespec_t().
   ACE_OSCALL (::sem_timedwait (s->sema_, &ts), int, rc);
   if (rc == -1 && errno == ETIMEDOUT)
-    errno = ETIME;  /* POSIX returns ETIMEDOUT but we need ETIME */
+    {
+      errno = ETIME;  /* POSIX returns ETIMEDOUT but we need ETIME */
+    }
   return rc;
 #   elif !defined (ACE_DISABLE_POSIX_SEM_TIMEOUT_EMULATION)
   int result = 0;
@@ -2361,7 +2381,9 @@ ACE_OS::sigwait (sigset_t *sset, int *sig)
   ACE_OS_TRACE ("ACE_OS::sigwait");
   int local_sig;
   if (sig == 0)
-    sig = &local_sig;
+    {
+      sig = &local_sig;
+    }
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_WTHREADS) || defined (ACE_LACKS_SIGWAIT)
     ACE_UNUSED_ARG (sset);
@@ -2905,7 +2927,9 @@ ACE_OS::thr_setcancelstate (int new_state, int *old_state)
                                 result),
               int, result);
   if (result == -1)
-    return -1;
+    {
+      return -1;
+    }
   switch (local_old)
     {
     case PTHREAD_CANCEL_ENABLE:
@@ -2957,7 +2981,9 @@ ACE_OS::thr_setcanceltype (int new_type, int *old_type)
                                 result),
               int, result);
   if (result == -1)
-    return -1;
+    {
+      return -1;
+    }
   switch (local_old)
     {
     case PTHREAD_CANCEL_DEFERRED:
@@ -3018,7 +3044,9 @@ ACE_OS::thr_setprio (ACE_hthread_t ht_id, int priority, int policy)
     {
       ACE_OSCALL (ACE_ADAPT_RETVAL (pthread_getschedparam (ht_id, &policy, &param), result), int, result);
       if (result == -1)
-        return result;
+        {
+          return result;
+        }
     }
 
   param.sched_priority = priority;
@@ -3417,7 +3445,9 @@ int
 ACE_OS_Thread_Mutex_Guard::release ()
 {
   if (owner_ == -1)
-    return 0;
+    {
+      return 0;
+    }
   else
     {
       owner_ = -1;
@@ -3430,7 +3460,9 @@ ACE_OS_Thread_Mutex_Guard::ACE_OS_Thread_Mutex_Guard (ACE_thread_mutex_t &m)
   : lock_ (m), owner_ (-1)
 {
   if (!ACE_OS_Object_Manager::starting_up ())
-    acquire ();
+    {
+      acquire ();
+    }
 }
 
 ACE_INLINE
@@ -3453,7 +3485,9 @@ int
 ACE_OS_Recursive_Thread_Mutex_Guard::release ()
 {
   if (owner_ == -1)
-    return 0;
+    {
+      return 0;
+    }
   else
     {
       owner_ = -1;
@@ -3468,7 +3502,9 @@ ACE_OS_Recursive_Thread_Mutex_Guard::ACE_OS_Recursive_Thread_Mutex_Guard (
      owner_ (-1)
 {
   if (!ACE_OS_Object_Manager::starting_up ())
-    acquire ();
+    {
+      acquire ();
+    }
 }
 
 ACE_INLINE
