@@ -62,25 +62,25 @@ DT_Test::check_supported_priorities ()
 
   if (thr_sched_policy_ == THR_SCHED_RR)
     {
-      //if (TAO_debug_level > 0)
-      ACE_DEBUG ((LM_DEBUG, "Sched policy = THR_SCHED_RR\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "Sched policy = THR_SCHED_RR\n"));
 
       sched_policy_ = ACE_SCHED_RR;
     }
-  else
-  if (thr_sched_policy_ == THR_SCHED_FIFO)
+  else if (thr_sched_policy_ == THR_SCHED_FIFO)
     {
-      // if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Sched policy = THR_SCHED_FIFO\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "Sched policy = THR_SCHED_FIFO\n"));
 
       sched_policy_ = ACE_SCHED_FIFO;
     }
   else
     {
       if (TAO_debug_level > 0)
-      {
-        ACE_DEBUG ((LM_DEBUG, "Sched policy = THR_SCHED_OTHER\n"));
-      }
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Sched policy = THR_SCHED_OTHER\n"));
+        }
 
       sched_policy_ = ACE_SCHED_OTHER;
     }
@@ -159,14 +159,14 @@ DT_Test::init (int argc, ACE_TCHAR *argv [])
 void
 DT_Test::run (int argc, ACE_TCHAR* argv [])
 {
-  init (argc,argv);
+  init (argc, argv);
 
   TestShutdown killer (this->orb_.in ());
 
   if (this->dt_creator_->resolve_naming_service () == -1)
-  {
-    return;
-  }
+    {
+      return;
+    }
 
   //TASK_STATS::instance ()->init (this->dt_creator_->dt_count () * 100);
 
