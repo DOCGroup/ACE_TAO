@@ -13537,3 +13537,9 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Added Allman braces to the single-statement bodies reported in `Peer_Router.cpp`, `event_server.cpp`, and `Options.cpp` under `ACE/examples/ASX/UPIPE_Event_Server`.
 - Focused clang-tidy brace checks and `git diff --check` passed for all three edited files. No build or runtime test was run.
 - Commits: `80427407e0f`, `07602b4fe08`, and `66a9ea9045d`. The full ACE/TAO brace audit remains open.
+
+## 2026-11-20 ACE SSL example brace follow-up
+
+- Added Allman braces to single-statement bodies in `SSL-client.cpp`, `SSL-client-simple.cpp`, and `SSL-server-poll.cpp` under `ACE/examples/IPC_SAP/SSL_SAP`.
+- Focused clang-tidy brace checks and `git diff --check` passed for each edited file. No build or runtime test was run.
+- Commits: `bfd38c006d4`, `6a27db2a7d1`, and `43811dc32ee`. The full ACE/TAO brace audit remains open.
