@@ -355,37 +355,45 @@ TAO_Codeset_Manager_i::open(TAO_ORB_Core& core)
     ACE_Dynamic_Service<TAO_Codeset_Translator_Factory>::
     instance ("UTF8_Latin1_Factory");
   if (fact == nullptr)
-    ACE_Service_Config::process_directive
-      (ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE ("UTF8_Latin1_Factory",
+    {
+      ACE_Service_Config::process_directive
+        (ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE ("UTF8_Latin1_Factory",
                                       "TAO_Codeset",
                                       TAO_VERSION,
                                       "_make_TAO_UTF8_Latin1_Factory",
                                       ""));
+    }
   else
     {
       if (TAO_debug_level > 2)
-        TAOLIB_DEBUG ((LM_DEBUG,
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT("TAO (%P|%t) - Codeset_Manager_i::open skipping ")
                     ACE_TEXT("redundant load of UTF8_Latin1_Factory\n")
                     ));
+        }
     }
 
   fact = ACE_Dynamic_Service<TAO_Codeset_Translator_Factory>::
     instance ("UTF16_BOM_Factory");
   if (fact == nullptr)
-    ACE_Service_Config::process_directive
-      (ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE ("UTF16_BOM_Factory",
+    {
+      ACE_Service_Config::process_directive
+        (ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE ("UTF16_BOM_Factory",
                                       "TAO_Codeset",
                                       TAO_VERSION,
                                       "_make_TAO_UTF16_BOM_Factory",
                                       ""));
+    }
   else
     {
       if (TAO_debug_level > 2)
-        TAOLIB_DEBUG ((LM_DEBUG,
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT("TAO (%P|%t) - Codeset_Manager_i::open skipping ")
                     ACE_TEXT("redundant load of UTF16_BOM_Factory\n")
                     ));
+        }
     }
 #endif
   //

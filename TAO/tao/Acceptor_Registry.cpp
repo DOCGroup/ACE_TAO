@@ -343,14 +343,20 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
           if (!(*i)->factory ()->requires_explicit_endpoint ())
             {
               if ((*i)->factory ()->tag () == IOP::TAG_INTERNET_IOP)
-                acceptor_count += 2; // IPv4 AND IPv6 endpoints
+                {
+                  acceptor_count += 2; // IPv4 AND IPv6 endpoints
+                }
               else
-                acceptor_count += 1;
+                {
+                  acceptor_count += 1;
+                }
             }
         }
 
       if (!this->reserve_acceptors (acceptor_count))
-        return -1;
+        {
+          return -1;
+        }
 
       // Loop through all the loaded protocols...
       for (TAO_ProtocolFactorySetItor i = pfs->begin (); i != end; ++i)
@@ -390,7 +396,9 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
                     dynamic_cast<TAO_IIOP_Acceptor *> (acceptor.get ());
 
                   if (!iiop_acceptor)
-                    return -1;
+                    {
+                      return -1;
+                    }
 
                   iiop_acceptor->set_default_address (addr);
 
@@ -434,7 +442,9 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
                         dynamic_cast<TAO_IIOP_Acceptor *> (acceptor.get ());
 
                       if (!iiop_acceptor)
-                        return -1;
+                        {
+                          return -1;
+                        }
 
                       iiop_acceptor->set_default_address (addr);
 
@@ -713,7 +723,9 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
                     dynamic_cast<TAO_IIOP_Acceptor *> (acceptor.get ());
 
                   if (!iiop_acceptor)
-                    return -1;
+                    {
+                      return -1;
+                    }
 
                   iiop_acceptor->set_default_address (addr);
 
@@ -754,7 +766,9 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
 
                       iiop_acceptor = dynamic_cast<TAO_IIOP_Acceptor *> (acceptor.get ());
                       if (!iiop_acceptor)
-                        return -1;
+                        {
+                          return -1;
+                        }
 
                       iiop_acceptor->set_default_address (addr);
 

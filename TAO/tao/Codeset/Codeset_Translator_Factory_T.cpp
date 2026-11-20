@@ -34,7 +34,9 @@ TAO_Codeset_Translator_Factory_T<NCS_TO_TCS>::init (int argc, ACE_TCHAR* argv[])
       return -1;
     }
   if (TAO_debug_level > 0)
-    TAOLIB_DEBUG ((LM_DEBUG, "TAO_Codeset_Translator_Factory_T<NCS_TO_TCS>::init() entered\n"));
+    {
+      TAOLIB_DEBUG ((LM_DEBUG, "TAO_Codeset_Translator_Factory_T<NCS_TO_TCS>::init() entered\n"));
+    }
   return 0;
 }
 
