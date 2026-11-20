@@ -23,10 +23,14 @@ public:
     if (flags != -1
         && ACE_OS::fcntl (ACE_STDOUT,
                           F_SETFL, flags | O_NONBLOCK) != -1)
-      return;
+      {
+        return;
+      }
     else
-      ACE_DEBUG ((LM_DEBUG,
-                  "Unable to set stdout to non-block."));
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    "Unable to set stdout to non-block."));
+      }
   }
 
   ACE_HANDLE get_handle () const override { return ACE_STDOUT; }
@@ -55,7 +59,9 @@ public:
   void put (char c)
   {
     if (msg_.length () == 0)
-      this->reactor_.register_handler (this, ACE_Event_Handler::WRITE_MASK);
+      {
+        this->reactor_.register_handler (this, ACE_Event_Handler::WRITE_MASK);
+      }
 
     if (msg_.wr_ptr () < msg_.end ())
       {
@@ -63,8 +69,10 @@ public:
         msg_.wr_ptr (1);
       }
     else
-      ACE_DEBUG ((LM_DEBUG,
-                  "Oops... data falling off the end of the buffer!\n"));
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    "Oops... data falling off the end of the buffer!\n"));
+      }
   }
 
 private:
@@ -90,7 +98,9 @@ public:
     char c;
 
     if (ACE_OS::read (ACE_STDIN, &c, 1) == 1)
-      this->out_.put (c);
+      {
+        this->out_.put (c);
+      }
 
     return 0;
   }
@@ -157,10 +167,12 @@ ACE_TMAIN (int argc, ACE_TCHAR**argv)
   if (reactor.schedule_timer (&stdin_handler, nullptr,
                               ACE_Time_Value (10),
                               ACE_Time_Value (10)) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "schedule_timer"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "schedule_timer"),
+                        -1);
+    }
 
   // Show the top_level widget.
   XtRealizeWidget (top_level);

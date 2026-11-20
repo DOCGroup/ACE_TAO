@@ -19,9 +19,11 @@ public:
   {
     char c;
     if (ACE_OS::read (ACE_STDIN, &c, 1) == 1)
-      ACE_DEBUG ((LM_DEBUG,
-                  "Got input '%d'\n",
-                  static_cast<int> (c)));
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    "Got input '%d'\n",
+                    static_cast<int> (c)));
+      }
     return 0;
   }
 
@@ -84,9 +86,11 @@ ACE_TMAIN (int argc, ACE_TCHAR**argv)
   if (reactor.schedule_timer (&stdin_handler, nullptr,
                               ACE_Time_Value (10),
                               ACE_Time_Value (10)) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "schedule_timer"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "schedule_timer"), -1);
+    }
 
   // Show the top_level widget
   XtRealizeWidget (top_level);
