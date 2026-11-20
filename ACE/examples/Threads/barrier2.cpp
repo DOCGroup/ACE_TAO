@@ -88,10 +88,14 @@ Worker_Task<BARRIER>::Worker_Task (ACE_Thread_Manager *thr_mgr,
   // service in the context of the caller thread.
 
   if (nt_ > 0 && inp_serialize == 1)
-    if (this->activate (THR_NEW_LWP, n_threads) == -1)
-      ACE_ERROR ((LM_ERROR,
-                  "%p\n",
-                  "activate failed"));
+    {
+      if (this->activate (THR_NEW_LWP, n_threads) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%p\n",
+                      "activate failed"));
+        }
+    }
 }
 
 // Simply enqueue the Message_Block into the end of the queue.
@@ -103,15 +107,19 @@ Worker_Task<BARRIER>::put (ACE_Message_Block *mb,
   int result {};
 
   if (this->inp_serialize_)
-    result = this->putq (mb, tv);
+    {
+      result = this->putq (mb, tv);
+    }
   else
     {
       static int iter = 0;
       result = this->service (mb, iter++);
 
       if (this->output (mb) < 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%t) output not connected!\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%t) output not connected!\n"));
+        }
 
       mb->release ();
     }
@@ -280,9 +288,11 @@ Worker_Task<BARRIER>::input (ACE_Message_Block_Unique_Ptr &message_block)
           mb1->length (0);
 
           if (this->put_owned (mb1) == -1)
-            ACE_ERROR ((LM_ERROR,
-                        "(%t) %p\n",
-                        "put"));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "(%t) %p\n",
+                          "put"));
+            }
 #if defined (delay_put)
           // this sleep helps to shutdown correctly -> was an error!
           ACE_OS::sleep (1);
@@ -297,9 +307,11 @@ Worker_Task<BARRIER>::input (ACE_Message_Block_Unique_Ptr &message_block)
       mb->wr_ptr (n);
 
       if (this->put_owned (message_block) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    "(%t) %p\n",
-                    "put"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%t) %p\n",
+                      "put"));
+        }
     }
   return 0;
 }
