@@ -52,10 +52,14 @@ client (void *arg)
       ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);
 
       if (con.complete (cli_stream, &server_addr, &tv) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("connection failed")), 0);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("connection failed")), 0);
+        }
       else
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) connected to %C\n"),
-                    server_addr.get_host_name ()));
+        {
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) connected to %C\n"),
+                      server_addr.get_host_name ()));
+        }
     }
 
   if (cli_stream.disable (ACE_NONBLOCK) == -1)
@@ -78,9 +82,11 @@ client (void *arg)
 
   // Send data to server (correctly handles "incomplete writes").
   for (const char *c = ACE_ALPHABET; *c != '\0'; ++c)
-    if (cli_stream.send_n (c, 1) == -1)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("send_n")));
+      if (cli_stream.send_n (c, 1) == -1)
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("send_n")));
+        }
     }
 
   // Explicitly close the writer-side of the connection.
@@ -184,7 +190,9 @@ server (void *arg)
           else if (r_bytes == -1)
             {
               if (errno == EAGAIN || errno == EWOULDBLOCK)
-                ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) no input available, going back to reading\n")));
+                {
+                  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) no input available, going back to reading\n")));
+                }
               else
               {
                 ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("recv_n")), 0);
@@ -196,7 +204,9 @@ server (void *arg)
   if (result == -1)
     {
       if (errno == EWOULDBLOCK)
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) no connections available, shutting down\n")));
+        {
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) no connections available, shutting down\n")));
+        }
       else
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("accept")));
@@ -218,7 +228,9 @@ spawn ()
   // Bind listener to any port and then find out what the port was.
   if (peer_acceptor.open (ACE_Addr::sap_any) == -1
       || peer_acceptor.get_local_addr (server_addr) == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("open")));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("open")));
+    }
   else
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) starting server at port %d\n"),
