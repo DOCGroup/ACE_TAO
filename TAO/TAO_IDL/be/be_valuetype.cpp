@@ -258,6 +258,15 @@ be_valuetype::generates_obv_copy_value ()
 bool
 be_valuetype::inherits_obv_copy_value ()
 {
+  be_valuetype * const concrete_base =
+    dynamic_cast<be_valuetype *> (this->inherits_concrete ());
+  if (concrete_base != nullptr
+      && (concrete_base->generates_obv_copy_value ()
+          || concrete_base->inherits_obv_copy_value ()))
+    {
+      return true;
+    }
+
   for (int i = 0; i < this->n_inherits (); ++i)
     {
       be_valuetype * const vt =
@@ -456,6 +465,11 @@ bool
 be_valuetype::have_supported_op (be_interface * node)
 {
   bool have_supported_op {};
+
+  if (node->nmembers () == 0)
+    {
+      return false;
+    }
 
   // Initialize an iterator for supported interface elements
   for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);

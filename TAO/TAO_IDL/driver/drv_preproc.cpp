@@ -1136,11 +1136,11 @@ DRV_pre_proc (std::string const& myfile)
       ti_file.reset (ACE_OS::fdopen (ti_fd, ACE_TEXT ("w")));
       if (!ti_file)
         {
-          ACE_OS::close (ti_fd);
           ACE_ERROR ((LM_ERROR,
                       "%C: cannot open temp file \"%C\" for writing: %m\n",
                       idl_global->prog_name ().c_str (),
                       tmp_ifile.c_str ()));
+          ACE_OS::close (ti_fd);
           throw Bailout ();
         }
 

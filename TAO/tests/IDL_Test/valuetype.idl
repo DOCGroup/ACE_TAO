@@ -36,35 +36,20 @@ interface Valuetype_Operation_Base
   void inherited_operation ();
 };
 
-interface Empty_Valuetype_Operation : Valuetype_Operation_Base
-{
-};
-
 abstract interface Abstract_Operation_Interface
 {
   void ping ();
 };
 
-interface Derived_Abstract_Operation_Interface : Abstract_Operation_Interface
-{
-};
-
-/// An inherited abstract-interface operation requires an application implementation.
-valuetype Supports_Abstract_Inherited_Operation
-  supports Derived_Abstract_Operation_Interface
-{
-  public long value;
-};
-
-/// A directly supported abstract-interface operation also requires an application implementation.
+/// A directly supported abstract-interface operation uses TAO's generated default.
 valuetype Supports_Abstract_Operation
   supports Abstract_Operation_Interface
 {
   public long value;
 };
 
-/// The supported interface has no local members but inherits an operation.
-valuetype Supports_Inherited_Operation supports Empty_Valuetype_Operation
+/// A valuetype that supports an operation-bearing interface is abstract.
+valuetype Supports_Inherited_Operation supports Valuetype_Operation_Base
 {
   public long value;
 };

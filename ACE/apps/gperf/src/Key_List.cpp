@@ -62,18 +62,19 @@ string_comparison_expression (bool const case_insensitive,
   std::string expression;
   if (!case_insensitive && compare_length)
     {
-      expression = "*" + input + " == *" + keyword + " && !std::strncmp ("
-        + input + " + 1, " + keyword + " + 1, len - 1)";
       if (!keyword_length_verified)
         {
-          expression += " && (" + keyword + ")[len] == '\\0'";
+          expression = "len == std::strlen (" + keyword + ") && ";
         }
+      expression += "*" + input + " == *" + keyword + " && !std::strncmp ("
+        + input + " + 1, " + keyword + " + 1, len - 1)";
       return expression;
     }
 
   if (case_insensitive)
     {
-      expression = "charmap[*" + input + "] == charmap[*" + keyword + "] && ";
+      expression = "charmap[static_cast<unsigned char> (*" + input
+        + ")] == charmap[static_cast<unsigned char> (*" + keyword + ")] && ";
     }
   else
     {
@@ -93,7 +94,7 @@ string_comparison_expression (bool const case_insensitive,
   expression += ")";
   if (compare_length && !keyword_length_verified)
     {
-      expression += " && (" + keyword + ")[len] == '\\0'";
+      expression = "len == std::strlen (" + keyword + ") && " + expression;
     }
   return expression;
 }
@@ -467,6 +468,11 @@ Key_List::read_keys ()
       // we can't continue.
       if (total_duplicates)
         {
+          if (option[ALLCHARS])
+            {
+              option.keysig_size (max_key_len);
+            }
+
           if (option[DUP])
             {
               if (!option[MUTE])
@@ -1160,7 +1166,10 @@ Key_List::output_binary_search_function ()
     {
       ACE_OS::printf ("#include \"ace/OS_NS_strings.h\"\n");
     }
-
+  if (option[STRCASECMP] && option[SWITCH])
+    {
+      output_charmap ();
+    }
   // Output type declaration now, reference it later on....
   if (option[TYPE] && !option[NOTYPE])
     ACE_OS::printf ("%s;\n",
@@ -1277,7 +1286,10 @@ Key_List::output_linear_search_function ()
     {
       ACE_OS::printf ("#include \"ace/OS_NS_strings.h\"\n");
     }
-
+  if (option[STRCASECMP] && option[SWITCH])
+    {
+      output_charmap ();
+    }
   // Output type declaration now, reference it later on....
   if (option[TYPE] && !option[NOTYPE])
     ACE_OS::printf ("%s;\n",
@@ -1918,7 +1930,7 @@ Key_List::output_lookup_function ()
                       "            }\n        }\n    %s\n}\n",
               comparison.c_str (),
               this->array_type_ == Key_List::default_array_type ? "*" : "",
-              option[OPTIMIZE] ? "" : generated_null_return ());
+              option[OPTIMIZE] ? "return nullptr;" : generated_null_return ());
     }
   else
     {
