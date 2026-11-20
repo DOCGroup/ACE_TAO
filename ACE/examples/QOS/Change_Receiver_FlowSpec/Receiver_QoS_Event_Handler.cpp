@@ -59,7 +59,9 @@ Receiver_QoS_Event_Handler::handle_input (ACE_HANDLE)
       return 0;
     }
   else
-    return -1;
+    {
+      return -1;
+    }
 }
 
 // Called when there is a QoS Event.
@@ -79,12 +81,16 @@ Receiver_QoS_Event_Handler::handle_qos (ACE_HANDLE fd)
   // Win2K example.
 
   if (this->qos_session_->update_qos () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error in updating QoS\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Error in updating QoS\n"),
+                        -1);
+    }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                " Updating QOS succeeds.\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  " Updating QOS succeeds.\n"));
+    }
 
   // Now proactively query the QoS object for QoS.
   ACE_QoS const ace_get_qos = this->qos_session_->qos ();
@@ -140,9 +146,11 @@ Receiver_QoS_Event_Handler::handle_qos (ACE_HANDLE fd)
                                          368,
                                          25,
                                          1)) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to update the flow spec\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Unable to update the flow spec\n"),
+                        -1);
+    }
 
   //
   // set up the new qos
@@ -150,12 +158,16 @@ Receiver_QoS_Event_Handler::handle_qos (ACE_HANDLE fd)
   ACE_QoS another_qos_receiver;
   if (this->flow_spec_list_.fill_simplex_receiver_qos (another_qos_receiver,
                                                        flow_id) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to fill handler-simplex receiver qos\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Unable to fill handler-simplex receiver qos\n"),
+                        -1);
+    }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                "Successfully built a new flowspec in handle_qos!\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Successfully built a new flowspec in handle_qos!\n"));
+    }
 
   //
   // change the qos for the current session
@@ -170,12 +182,16 @@ Receiver_QoS_Event_Handler::handle_qos (ACE_HANDLE fd)
   if (this->qos_session_->qos (&this->dgram_mcast_qos_,
                                &qos_manager,
                                another_qos_receiver) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to set QoS\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Unable to set QoS\n"),
+                        -1);
+    }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                "Setting QOS succeeds.\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Setting QOS succeeds.\n"));
+    }
 
   return 0;
 }
