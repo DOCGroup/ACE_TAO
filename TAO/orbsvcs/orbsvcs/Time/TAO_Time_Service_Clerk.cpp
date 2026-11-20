@@ -23,9 +23,11 @@ TAO_Time_Service_Clerk::TAO_Time_Service_Clerk (int timer_value,
        nullptr,
        ACE_Time_Value::zero,
        ACE_Time_Value (timer_value, timer_value_usecs)) == -1)
-    ORBSVCS_ERROR ((LM_ERROR,
-                "%p\n",
-                "schedule_timer ()"));
+    {
+      ORBSVCS_ERROR ((LM_ERROR,
+                      "%p\n",
+                      "schedule_timer ()"));
+    }
 }
 
 /// Returns the global time and an estimate of inaccuracy in a UTO.

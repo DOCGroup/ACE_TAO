@@ -24,7 +24,9 @@ TAO::SSLIOP_Credentials::SSLIOP_Credentials (::X509 *cert, ::EVP_PKEY *evp)
       // credentials Id.
       BIGNUM * bn = ASN1_INTEGER_to_BN (::X509_get_serialNumber (x), nullptr);
       if (BN_is_zero (bn))
-        this->id_ = CORBA::string_dup ("X509: 00");
+        {
+          this->id_ = CORBA::string_dup ("X509: 00");
+        }
       else
         {
           char * id = BN_bn2hex (bn);
@@ -113,7 +115,9 @@ TAO::SSLIOP_Credentials::creds_state ()
           throw CORBA::BAD_PARAM ();
         }
       else if (after_status > 0)     // Certificate has expired.
-        this->creds_state_ = SecurityLevel3::CS_Expired;
+        {
+          this->creds_state_ = SecurityLevel3::CS_Expired;
+        }
     }
   else if (this->creds_state_ == SecurityLevel3::CS_Invalid)
     {
@@ -128,7 +132,9 @@ TAO::SSLIOP_Credentials::creds_state ()
           throw CORBA::BAD_PARAM ();
         }
       else if (before_status < 0)     // Certificate is now valid.
-        this->creds_state_ = SecurityLevel3::CS_Valid;
+        {
+          this->creds_state_ = SecurityLevel3::CS_Valid;
+        }
     }
 
   return this->creds_state_;

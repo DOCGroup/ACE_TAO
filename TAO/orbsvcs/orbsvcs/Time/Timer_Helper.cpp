@@ -37,16 +37,18 @@ Timer_Helper::handle_timeout (ACE_Time_Value const &,
             server->universal_time ();
 
           if (TAO_debug_level > 0)
-            ORBSVCS_DEBUG ((LM_DEBUG,
-                        "\nTime = %Q\nInaccuracy = %Q\nTimeDiff = %d\nstruct.time = %Q\n"
-                        "struct.inacclo = %d\nstruct.inacchi = %d\nstruct.Tdf = %d\n",
-                        UTO_server->time (),
-                        UTO_server->inaccuracy (),
-                        UTO_server->tdf (),
-                        (UTO_server->utc_time ()).time,
-                        (UTO_server->utc_time ()).inacclo,
-                        (UTO_server->utc_time ()).inacchi,
-                        (UTO_server->utc_time ()).tdf));
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                              "\nTime = %Q\nInaccuracy = %Q\nTimeDiff = %d\nstruct.time = %Q\n"
+                              "struct.inacclo = %d\nstruct.inacchi = %d\nstruct.Tdf = %d\n",
+                              UTO_server->time (),
+                              UTO_server->inaccuracy (),
+                              UTO_server->tdf (),
+                              (UTO_server->utc_time ()).time,
+                              (UTO_server->utc_time ()).inacclo,
+                              (UTO_server->utc_time ()).inacchi,
+                              (UTO_server->utc_time ()).tdf));
+            }
 
           CORBA::ULongLong const curr_server_time =
             UTO_server->time ();
@@ -69,9 +71,11 @@ Timer_Helper::handle_timeout (ACE_Time_Value const &,
         }
 
       if (TAO_debug_level > 0)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    "\nUpdated time from %B servers in the network",
-                    no_of_servers));
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          "\nUpdated time from %B servers in the network",
+                          no_of_servers));
+        }
 
       // Return the average of the times retrieved from the various
       // servers.

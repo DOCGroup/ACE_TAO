@@ -27,8 +27,10 @@ TAO_Time_Service_Server::universal_time ()
   PortableServer::ServantBase_var xfer = uto;
 
   if (TAO_debug_level > 0)
-    ORBSVCS_DEBUG ((LM_DEBUG,
-                "Returning a UTO\n"));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      "Returning a UTO\n"));
+    }
 
   return uto->_this ();
 }
