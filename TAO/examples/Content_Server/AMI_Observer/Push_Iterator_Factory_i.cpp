@@ -16,10 +16,14 @@ Push_Iterator_Factory_i::register_callback
    Web_Server::Callback_ptr client_callback)
 {
   if (CORBA::is_nil (client_callback))  // @@ Will it ever be nil?
-    throw CORBA::BAD_PARAM ();
+    {
+      throw CORBA::BAD_PARAM ();
+    }
 
   if (pathname == nullptr)
-    throw Web_Server::Error_Result (500);
+    {
+      throw Web_Server::Error_Result (500);
+    }
 
   // What goes on in this method is a bit strange at first glance
   // since the client can potentially receive all of the data before
@@ -35,8 +39,10 @@ Push_Iterator_Factory_i::register_callback
   std::string const filename (pathname);
   ACE_stat file_status {};
   if (ACE_OS::stat (filename.c_str (), &file_status) == -1)
-    // HTTP 1.1 "Internal Server Error".
-    throw Web_Server::Error_Result (500);
+    {
+      // HTTP 1.1 "Internal Server Error".
+      throw Web_Server::Error_Result (500);
+    }
 
   Web_Server::Metadata_Type *metadata_ptr {};
   ACE_NEW_THROW_EX (metadata_ptr,
@@ -46,13 +52,17 @@ Push_Iterator_Factory_i::register_callback
 
   if (this->modification_date (file_status,
                                *metadata) != 0)
-    // HTTP 1.1 "Internal Server Error.
-    throw Web_Server::Error_Result (500);
+    {
+      // HTTP 1.1 "Internal Server Error.
+      throw Web_Server::Error_Result (500);
+    }
 
   if (this->content_type (filename,
                           *metadata) != 0)
-    // HTTP 1.1 "Internal Server Error.
-    throw Web_Server::Error_Result (500);
+    {
+      // HTTP 1.1 "Internal Server Error.
+      throw Web_Server::Error_Result (500);
+    }
 
   // Start pushing data asynchronously so the server can handle other requests.
   Callback_Handler *handler {};
@@ -107,31 +117,47 @@ Push_Iterator_Factory_i::content_type (std::string const& filename,
 
   if (ACE_OS::strcasecmp (extension.c_str (), "htm") == 0
       || ACE_OS::strcasecmp (extension.c_str (), "html") == 0)
-    metadata.content_type = CORBA::string_dup ("text/html");
+    {
+      metadata.content_type = CORBA::string_dup ("text/html");
+    }
   else if (ACE_OS::strcasecmp (extension.c_str (),
                                "txt") == 0)
-    metadata.content_type = CORBA::string_dup ("text/plain");
+    {
+      metadata.content_type = CORBA::string_dup ("text/plain");
+    }
   else if (ACE_OS::strcasecmp (extension.c_str (),
                                "ps") == 0)
-    metadata.content_type =
-      CORBA::string_dup ("application/postscript");
+    {
+      metadata.content_type =
+        CORBA::string_dup ("application/postscript");
+    }
   else if (ACE_OS::strcasecmp (extension.c_str (),
                                "pdf") == 0)
-    metadata.content_type = CORBA::string_dup ("application/pdf");
+    {
+      metadata.content_type = CORBA::string_dup ("application/pdf");
+    }
   else if (ACE_OS::strcasecmp (extension.c_str (),
                                "jpeg") == 0
            || ACE_OS::strcasecmp (extension.c_str (),
                                   "jpg") == 0)
-    metadata.content_type = CORBA::string_dup ("image/jpeg");
+    {
+      metadata.content_type = CORBA::string_dup ("image/jpeg");
+    }
   else if (ACE_OS::strcasecmp (extension.c_str (),
                                "tiff") == 0)
-    metadata.content_type = CORBA::string_dup ("image/tiff");
+    {
+      metadata.content_type = CORBA::string_dup ("image/tiff");
+    }
   else if (ACE_OS::strcasecmp (extension.c_str (),
                                "gif") == 0)
-    metadata.content_type = CORBA::string_dup ("image/gif");
+    {
+      metadata.content_type = CORBA::string_dup ("image/gif");
+    }
   else if (ACE_OS::strcasecmp (extension.c_str (),
                                "png") == 0)
-    metadata.content_type = CORBA::string_dup ("image/png");
+    {
+      metadata.content_type = CORBA::string_dup ("image/png");
+    }
   else
     {
       metadata.content_type = CORBA::string_dup ("text/html");
