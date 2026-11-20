@@ -24,18 +24,22 @@ Initiator_Server::read_ior (ACE_TCHAR const *filename, std::string &ior_key)
   ACE_HANDLE const f_handle = ACE_OS::open (filename, 0);
 
   if (f_handle == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to open %s for reading: %p\n",
-                       filename),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Unable to open %s for reading: %p\n",
+                         filename),
+                        -1);
+    }
   ACE_Read_Buffer ior_buffer (f_handle, true);
   ACE_Read_Buffer_Unique_Ptr const buffer (
     ior_buffer.read (), {ior_buffer.alloc ()});
 
   if (!buffer)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to allocate memory to read ior\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Unable to allocate memory to read ior\n"),
+                        -1);
+    }
 
   ior_key = buffer.get ();
   return 0;
@@ -48,24 +52,29 @@ Initiator_Server::parse_args ()
   int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
+    {
+      switch (c)
+        {
       case 'd':  // debug flag.
         ++TAO_debug_level;
         break;
       case 'f': // read the IOR from the file.
         if (this->read_ior (get_opts.opt_arg (), this->object_A_key_) < 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to read ior from %s : %p\n",
-                             get_opts.opt_arg ()),
-                            -1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Unable to read ior from %s : %p\n",
+                               get_opts.opt_arg ()),
+                              -1);
+          }
         break;
       case 'g': // read the IOR from the file.
         if (this->read_ior (get_opts.opt_arg (), this->object_B_key_) < 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to read ior from %s : %p\n",
-                             get_opts.opt_arg ()),
-                            -1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Unable to read ior from %s : %p\n",
+                               get_opts.opt_arg ()),
+                              -1);
+          }
         break;
       case '?':
       default:
@@ -77,7 +86,8 @@ Initiator_Server::parse_args ()
                            "\n",
                            argv_ [0]),
                           1);
-      }
+        }
+    }
 
   // Indicates successful parsing of command line.
   return 0;
@@ -102,10 +112,12 @@ Initiator_Server::init (int argc,
   }
 
   if (this->object_A_key_.empty () || this->object_B_key_.empty ())
-    ACE_ERROR_RETURN ((LM_ERROR,
-                      "%s: The two objects A and B are missing\n",
-                      this->argv_[0]),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%s: The two objects A and B are missing\n",
+                         this->argv_[0]),
+                        -1);
+    }
 
   try
     {
@@ -118,10 +130,12 @@ Initiator_Server::init (int argc,
       this->object_A_var_ = Object_A::_narrow (object_A_obj_var.in ());
 
       if (CORBA::is_nil (this->object_A_var_.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "invalid object A key <%s>\n",
-                           this->object_A_key_.c_str ()),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "invalid object A key <%s>\n",
+                             this->object_A_key_.c_str ()),
+                            -1);
+        }
 
 #if 0
       ACE_DEBUG ((LM_DEBUG,
@@ -139,10 +153,12 @@ Initiator_Server::init (int argc,
       this->object_B_var_ = Object_B::_narrow (object_B_obj_var.in ());
 
       if (CORBA::is_nil (this->object_B_var_.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "invalid object b key <%s>\n",
-                           this->object_B_key_.c_str ()),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "invalid object b key <%s>\n",
+                             this->object_B_key_.c_str ()),
+                            -1);
+        }
 
 #if 0
       ACE_DEBUG ((LM_DEBUG,
