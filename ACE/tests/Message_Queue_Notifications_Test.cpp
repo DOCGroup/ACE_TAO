@@ -236,7 +236,7 @@ Watermark_Test::producer ()
 
   this->print_producer_debug_message ();
 
-  for (i--; i >= 0 ; --i)
+  for (--i; i >= 0 ; --i)
     {
       this->put_message ();
       this->print_producer_debug_message ();

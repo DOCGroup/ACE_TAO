@@ -45,9 +45,9 @@ ACE::HTBP::Inside_Squid_Filter::make_request_header (ACE::HTBP::Channel *ch,
   ACE_UINT32 tempId = session->session_id().id_;
   size_t sid_size = 1;
   size_t rid_size = 1;
-  while (tempId /= 10) sid_size++;
+  while (tempId /= 10) ++sid_size;
   tempId = ch->request_count();
-  while (tempId /= 10) rid_size++;
+  while (tempId /= 10) ++rid_size;
 
   // This test was originally get_host_name() == -1, but this is
   // problematic if the address doesn't resolve to a name. I think
