@@ -1614,7 +1614,9 @@ ACE_OS::vsnprintf_emulation (char *buf, size_t max, const char *fmt, va_list ap)
       // Check if positional args are used (%1$d)
       const int posn = snprintf_positional (fmt);
       if (posn && !pos_arg.scanned_)
-        pos_arg.scan (posn, fmt, ap); // POSIX extension
+        {
+          pos_arg.scan (posn, fmt, ap); // POSIX extension
+        }
 
       // Parse flags (+- #'0)
       Snprintf_Flags flags (fmt);
@@ -1668,26 +1670,44 @@ ACE_OS::vsnprintf_emulation (char *buf, size_t max, const char *fmt, va_list ap)
 #else
 # define GET_UNSIGNED_INTMAX                                    \
       else if (flags.has (SNPRINTF_INTMAX))                     \
-        val = va_arg (ap, uintmax_t);
+        {                                                         \
+          val = va_arg (ap, uintmax_t);                          \
+        }
 #endif
 #define GET_UNSIGNED_VA                                         \
       if (posn)                                                 \
-        val = pos_arg[posn].ui64;                               \
+        {                                                       \
+          val = pos_arg[posn].ui64;                             \
+        }                                                       \
       else if (flags.has (SNPRINTF_LONGLONG))                   \
-        val = va_arg (ap, unsigned long long);                  \
+        {                                                       \
+          val = va_arg (ap, unsigned long long);                \
+        }                                                       \
       else if (flags.has (SNPRINTF_LONG))                       \
-        val = va_arg (ap, unsigned long);                       \
+        {                                                       \
+          val = va_arg (ap, unsigned long);                     \
+        }                                                       \
       GET_UNSIGNED_INTMAX                                       \
       else if (flags.has (SNPRINTF_SIZET))                      \
-        val = va_arg (ap, size_t);                              \
+        {                                                       \
+          val = va_arg (ap, size_t);                            \
+        }                                                       \
       else if (flags.has (SNPRINTF_PTRDIFF))                    \
-        val = static_cast<uintptr_t> (va_arg (ap, ptrdiff_t));  \
+        {                                                       \
+          val = static_cast<uintptr_t> (va_arg (ap, ptrdiff_t));\
+        }                                                       \
       else                                                      \
-        val = va_arg (ap, unsigned int);                        \
+        {                                                       \
+          val = va_arg (ap, unsigned int);                      \
+        }                                                       \
       if (flags.has (SNPRINTF_SHORT))                           \
-        val = static_cast<unsigned short> (val);                \
+        {                                                       \
+          val = static_cast<unsigned short> (val);              \
+        }                                                       \
       else if (flags.has (SNPRINTF_CHAR))                       \
-        val = static_cast<unsigned char> (val)
+        {                                                       \
+          val = static_cast<unsigned char> (val);               \
+        }
 
 #define GET_ARG(MEMBER, TYPE) \
       (posn ? static_cast<TYPE> (pos_arg[posn].MEMBER) : va_arg (ap, TYPE))
@@ -1709,19 +1729,31 @@ ACE_OS::vsnprintf_emulation (char *buf, size_t max, const char *fmt, va_list ap)
                 ? pos_arg[posn].i64 : pos_arg[posn].i;
             }
           else if (flags.has (SNPRINTF_LONGLONG))
-            sval = va_arg (ap, long long);
+            {
+              sval = va_arg (ap, long long);
+            }
           else if (flags.has (SNPRINTF_LONG))
-            sval = va_arg (ap, long);
+            {
+              sval = va_arg (ap, long);
+            }
 #ifndef ACE_LACKS_STDINT_H
           else if (flags.has (SNPRINTF_INTMAX))
-            sval = va_arg (ap, intmax_t);
+            {
+              sval = va_arg (ap, intmax_t);
+            }
 #endif
           else if (flags.has (SNPRINTF_SIZET))
-            sval = va_arg (ap, ssize_t);
+            {
+              sval = va_arg (ap, ssize_t);
+            }
           else if (flags.has (SNPRINTF_PTRDIFF))
-            sval = va_arg (ap, ptrdiff_t);
+            {
+              sval = va_arg (ap, ptrdiff_t);
+            }
           else
-            sval = va_arg (ap, int);
+            {
+              sval = va_arg (ap, int);
+            }
 
           if (flags.has (SNPRINTF_SHORT))
             {
@@ -1787,15 +1819,21 @@ ACE_OS::vsnprintf_emulation (char *buf, size_t max, const char *fmt, va_list ap)
               sb.conv_str (tmp_wstr, flags, width, precision);
             }
           else
-            sb.conv_char (static_cast<unsigned char> (GET_ARG (i, int)),
-                          flags, width);
+            {
+              sb.conv_char (static_cast<unsigned char> (GET_ARG (i, int)),
+                            flags, width);
+            }
           break;
 
         case 's':
           if (flags.has (SNPRINTF_LONG))
-            sb.conv_str (GET_ARG (p, const wchar_t *), flags, width, precision);
+            {
+              sb.conv_str (GET_ARG (p, const wchar_t *), flags, width, precision);
+            }
           else
-            sb.conv_str (GET_ARG (p, const char *), flags, width, precision);
+            {
+              sb.conv_str (GET_ARG (p, const char *), flags, width, precision);
+            }
           break;
 
         case 'p':
@@ -1805,24 +1843,40 @@ ACE_OS::vsnprintf_emulation (char *buf, size_t max, const char *fmt, va_list ap)
 
         case 'n':
           if (flags.has (SNPRINTF_LONGLONG))
-            *GET_ARG (p, long long *) = sb.written_;
+            {
+              *GET_ARG (p, long long *) = sb.written_;
+            }
           else if (flags.has (SNPRINTF_LONG))
-            *GET_ARG (p, long *) = static_cast<long> (sb.written_);
+            {
+              *GET_ARG (p, long *) = static_cast<long> (sb.written_);
+            }
 #ifndef ACE_LACKS_STDINT_H
           else if (flags.has (SNPRINTF_INTMAX))
-            *GET_ARG (p, intmax_t *) = sb.written_;
+            {
+              *GET_ARG (p, intmax_t *) = sb.written_;
+            }
 #endif
           else if (flags.has (SNPRINTF_SIZET))
-            *GET_ARG (p, ssize_t *) = sb.written_;
+            {
+              *GET_ARG (p, ssize_t *) = sb.written_;
+            }
           else if (flags.has (SNPRINTF_PTRDIFF))
-            *GET_ARG (p, ptrdiff_t *) = sb.written_;
+            {
+              *GET_ARG (p, ptrdiff_t *) = sb.written_;
+            }
           else if (flags.has (SNPRINTF_SHORT))
-            *GET_ARG (p, short *) = static_cast<short> (sb.written_);
+            {
+              *GET_ARG (p, short *) = static_cast<short> (sb.written_);
+            }
           else if (flags.has (SNPRINTF_CHAR))
-            *GET_ARG (p, signed char *) =
-              static_cast<signed char> (sb.written_);
+            {
+              *GET_ARG (p, signed char *) =
+                static_cast<signed char> (sb.written_);
+            }
           else
-            *GET_ARG (p, int *) = static_cast<int> (sb.written_);
+            {
+              *GET_ARG (p, int *) = static_cast<int> (sb.written_);
+            }
           break;
 
         default:
