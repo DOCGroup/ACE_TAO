@@ -168,9 +168,13 @@ ACE_Token_Handler::try_acquire (ACE_Token_Proxy *proxy)
 
   // @@ add notify in token request reply
   if (proxy->tryacquire () == -1)
-    return this->send_reply (errno);
+    {
+      return this->send_reply (errno);
+    }
   else
-    return this->send_reply (0);
+    {
+      return this->send_reply (0);
+    }
 }
 
 // Release the token and allow the next client that is waiting to
@@ -305,14 +309,18 @@ ACE_Token_Handler::get_proxy ()
 
       // Put the new_proxy in this client_id's collection.
       if (collection_.insert (*proxy) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("insert failed\n")), 0);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("insert failed\n")), 0);
+        }
 
       // Delete our copy (one was created in the collection).
       delete proxy;
       proxy = collection_.is_member (token_request_.token_name ());
 
       if (proxy == 0)
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("is_member failed\n")), 0);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("is_member failed\n")), 0);
+        }
 
       // Set the client_id (it was set to 1 since we're
       // single-threaded.
@@ -354,7 +362,9 @@ ACE_Token_Handler::create_proxy ()
 
   // Check for failed new.
   if (proxy == 0)
-    errno = ENOMEM;
+    {
+      errno = ENOMEM;
+    }
 
   return proxy;
 }
@@ -366,7 +376,9 @@ ACE_Token_Handler::dispatch ()
   ACE_Token_Proxy *proxy = this->get_proxy ();
 
   if (proxy == 0)
-    return -1;
+    {
+      return -1;
+    }
 
   // Dispatch the appropriate request.
   switch (this->token_request_.operation_type ())
@@ -470,9 +482,13 @@ ACE_Token_Handler::handle_input (ACE_HANDLE)
 #endif /* 0 */
 
   if (this->recv_request () == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return this->dispatch ();
+    {
+      return this->dispatch ();
+    }
 }
 
 void
@@ -513,9 +529,13 @@ ACE_Token_Handler::abandon (int send_error)
   collection_.release ();
 
   if (send_error)
-    return this->send_reply (EIO);
+    {
+      return this->send_reply (EIO);
+    }
   else
-    return -1;
+    {
+      return -1;
+    }
 }
 
 // ************************************************************
