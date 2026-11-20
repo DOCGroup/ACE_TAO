@@ -142,21 +142,23 @@ parse_args (int argc, ACE_TCHAR *argv[])
   mutex_name.set (ACE_TEXT ("RW_Process_Mutex_Test.lock"));    // Default name
   int c;
   while ((c = get_opt ()) != -1)
-    switch (c)
     {
-    case 'c':
-      child_nr = ACE_OS::atoi (get_opt.opt_arg ());
-      break;
-    case 'n':
-      mutex_name.set (get_opt.opt_arg ());
-      break;
-    case 'p':
-      reporting_port = (u_short)ACE_OS::atoi (get_opt.opt_arg ());
-      break;
-    default:
-      print_usage_and_die ();
-      break;
-  }
+      switch (c)
+        {
+        case 'c':
+          child_nr = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'n':
+          mutex_name.set (get_opt.opt_arg ());
+          break;
+        case 'p':
+          reporting_port = (u_short)ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        default:
+          print_usage_and_die ();
+          break;
+        }
+    }
 
   // Now that the mutex name is known, set up the checker file name.
   ACE_OS::strncpy (mutex_check, mutex_name.c_str (), MAXPATHLEN);
@@ -242,10 +244,12 @@ reader (int num)
   ACE_OS::sleep (num);
   // Grab the lock
   if (-1 == mutex.acquire_read ())
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Reader %d %p\n"),
-                num,
-                ACE_TEXT ("first acquire_read")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Reader %d %p\n"),
+                  num,
+                  ACE_TEXT ("first acquire_read")));
+    }
   else
     {
       start = ACE_OS::gettimeofday ();
@@ -261,14 +265,16 @@ reader (int num)
   // the file.
   stop = ACE_OS::gettimeofday ();
   if (-1 == mutex.release ())
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Reader %d %p\n"),
-                num,
-                ACE_TEXT ("first release")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Reader %d %p\n"),
+                  num,
+                  ACE_TEXT ("first release")));
+    }
   else
-  {
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Reader %d released first time\n"), num));
-  }
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Reader %d released first time\n"), num));
+    }
   report.range_.set (start, stop);
   ssize_t bytes = sock.send (&report, sizeof (report), parent);
   ACE_DEBUG ((LM_DEBUG,
@@ -279,10 +285,12 @@ reader (int num)
   ACE_OS::sleep (4 - num);
   start = stop = ACE_Time_Value::zero;
   if (-1 == mutex.acquire_read ())
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Reader %d %p\n"),
-                num,
-                ACE_TEXT ("second acquire_read")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Reader %d %p\n"),
+                  num,
+                  ACE_TEXT ("second acquire_read")));
+    }
   else
     {
       start = ACE_OS::gettimeofday ();
@@ -295,14 +303,18 @@ reader (int num)
   ACE_OS::sleep (1);
   stop = ACE_OS::gettimeofday ();
   if (-1 == mutex.release ())
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Reader %d %p\n"),
-                num,
-                ACE_TEXT ("second release")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Reader %d %p\n"),
+                  num,
+                  ACE_TEXT ("second release")));
+    }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Reader %d released second time; done\n"),
-                num));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Reader %d released second time; done\n"),
+                  num));
+    }
   report.range_.set (start, stop);
   bytes = sock.send (&report, sizeof (report), parent);
   ACE_DEBUG ((LM_DEBUG,
@@ -345,9 +357,11 @@ writer ()
 
   // Grab the lock
   if (-1 == mutex.acquire_write ())
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Writer first %p\n"),
-                ACE_TEXT ("acquire_write")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Writer first %p\n"),
+                  ACE_TEXT ("acquire_write")));
+    }
   else
     {
       start = ACE_OS::gettimeofday ();
@@ -359,12 +373,16 @@ writer ()
   ACE_OS::sleep (2);
   stop = ACE_OS::gettimeofday ();
   if (-1 == mutex.release ())
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Writer %p\n"),
-                ACE_TEXT ("first release")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Writer %p\n"),
+                  ACE_TEXT ("first release")));
+    }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Writer released first time\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Writer released first time\n")));
+    }
 
   report.range_.set (start, stop);
   ssize_t bytes = sock.send (&report, sizeof (report), parent);
@@ -375,9 +393,11 @@ writer ()
   start = stop = ACE_Time_Value::zero;
 
   if (-1 == mutex.acquire_write ())
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Writer second %p\n"),
-                ACE_TEXT ("acquire_write")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Writer second %p\n"),
+                  ACE_TEXT ("acquire_write")));
+    }
   else
     {
       start = ACE_OS::gettimeofday ();
@@ -387,12 +407,16 @@ writer ()
   ACE_OS::sleep (2);
   stop = ACE_OS::gettimeofday ();
   if (-1 == mutex.release ())
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Writer %p\n"),
-                ACE_TEXT ("second release")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Writer %p\n"),
+                  ACE_TEXT ("second release")));
+    }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Writer released second time\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Writer released second time\n")));
+    }
   report.range_.set (start, stop);
   bytes = sock.send (&report, sizeof (report), parent);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Writer sent %b byte report\n"), bytes));
@@ -414,11 +438,13 @@ run_main (int argc, ACE_TCHAR *argv[])
                         ACE_TEXT ("RW_Process_Mutex_Test-child-%d"), mypid);
       ACE_START_TEST (lognm);
       if (child_nr == 0)
-        writer ();
+        {
+          writer ();
+        }
       else
-      {
-        reader (child_nr);
-      }
+        {
+          reader (child_nr);
+        }
       ACE_END_LOG;
     }
   else
@@ -445,10 +471,12 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_INET_Addr me;
       ACE_SOCK_Dgram sock;
       if (sock.open (ACE_Addr::sap_any, PF_INET) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Socket %p\n"),
-                           ACE_TEXT ("open")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Socket %p\n"),
+                             ACE_TEXT ("open")),
+                            -1);
+        }
       sock.get_local_addr (me);
       ACE_TCHAR me_str[80];
       me.addr_to_string (me_str, 80);
@@ -495,7 +523,9 @@ run_main (int argc, ACE_TCHAR *argv[])
       int processes = Nr_Processes;
       Child *children[Nr_Processes];
       for (i = 0; i < Nr_Processes; ++i)
-        children[i] = (i == 0 ? &writer : &readers[i-1]);
+        {
+          children[i] = (i == 0 ? &writer : &readers[i-1]);
+        }
 
       Range_Report report;
       ACE_Time_Value poll (0);
@@ -511,50 +541,64 @@ run_main (int argc, ACE_TCHAR *argv[])
                           ACE_TEXT ("Report from child %d; %b bytes\n"),
                           report.child_, bytes));
               if (report.child_ == 0)
-                writer.add_range (report.range_);
+                {
+                  writer.add_range (report.range_);
+                }
               else
                 {
                   if (report.child_ >= 1 && report.child_ < Nr_Processes)
-                    readers[report.child_ - 1].add_range (report.range_);
+                    {
+                      readers[report.child_ - 1].add_range (report.range_);
+                    }
                   else
-                    ACE_ERROR ((LM_ERROR,
-                                ACE_TEXT ("Report from out-of-range child #%d\n"),
-                                report.child_));
+                    {
+                      ACE_ERROR ((LM_ERROR,
+                                  ACE_TEXT ("Report from out-of-range child #%d\n"),
+                                  report.child_));
+                    }
                 }
             }
           else
             {
               if (errno == ETIME)
-                ACE_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("UDP time out; check child exits\n")));
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("UDP time out; check child exits\n")));
+                }
               else
-              {
-                ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("UDP recv")));
-              }
+                {
+                  ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("UDP recv")));
+                }
             }
 
           for (i = 0; i < Nr_Processes; ++i)
             {
               if (children[i] == nullptr)
-              {
-                continue;
-              }
+                {
+                  continue;
+                }
               ACE_exitcode child_status;
               // See if the child has exited.
               int wait_result = children[i]->wait (poll, &child_status);
               if (wait_result == -1)
-                ACE_ERROR ((LM_ERROR, ACE_TEXT ("Wait for child %d, %p\n"),
-                            i, ACE_TEXT ("error")));
+                {
+                  ACE_ERROR ((LM_ERROR, ACE_TEXT ("Wait for child %d, %p\n"),
+                              i, ACE_TEXT ("error")));
+                }
               else if (wait_result != 0)
                 {
                   if (child_status == 0)
-                    ACE_DEBUG ((LM_DEBUG,
-                                ACE_TEXT ("Child %d finished ok\n"),
-                                (int)(children[i]->getpid ())));
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                  ACE_TEXT ("Child %d finished ok\n"),
+                                  (int)(children[i]->getpid ())));
+                    }
                   else
-                    ACE_ERROR ((LM_ERROR,
-                                ACE_TEXT ("Child %d finished with status %d\n"),
-                                (int)(children[i]->getpid ()), child_status));
+                    {
+                      ACE_ERROR ((LM_ERROR,
+                                  ACE_TEXT ("Child %d finished with status %d\n"),
+                                  (int)(children[i]->getpid ()), child_status));
+                    }
                   children[i] = nullptr;
                   --processes;
                 }
@@ -582,8 +626,10 @@ run_main (int argc, ACE_TCHAR *argv[])
             }
         }
       if (!writer_overlap)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Writer does not overlap with readers; Ok\n")));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Writer does not overlap with readers; Ok\n")));
+        }
 
       // And there should be some overlap between readers.
       bool reader_overlap = false;
