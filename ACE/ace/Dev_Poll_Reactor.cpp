@@ -182,7 +182,9 @@ ACE_Dev_Poll_Reactor_Notify::notify (ACE_Event_Handler *eh,
                          sizeof buffer,
                          timeout);
   if (n == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   eh_guard.release ();
 
@@ -286,7 +288,9 @@ ACE_Dev_Poll_Reactor_Notify::read_notify_pipe (ACE_HANDLE handle,
           // won't be aligned correctly.  I'm not sure quite what to
           // do at this point.  It's probably best just to return -1.
           if (ACE::recv (handle, read_p + n, remainder) <= 0)
-            return -1;
+            {
+              return -1;
+            }
         }
 
       return 1;
@@ -294,7 +298,9 @@ ACE_Dev_Poll_Reactor_Notify::read_notify_pipe (ACE_HANDLE handle,
 
   // Return -1 if things have gone seriously wrong.
   if (n <= 0 && (errno != EWOULDBLOCK && errno != EAGAIN))
-    return -1;
+    {
+      return -1;
+    }
 
   return 0;
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
@@ -809,7 +815,9 @@ ACE_Dev_Poll_Reactor::open (size_t size,
   // Open the `/dev/poll' character device.
   this->poll_fd_ = ACE_OS::open ("/dev/poll", O_RDWR);
   if (this->poll_fd_ == ACE_INVALID_HANDLE)
-    result = -1;
+    {
+      result = -1;
+    }
 
 #endif  /* ACE_HAS_EVENT_POLL */
 
@@ -1046,7 +1054,9 @@ ACE_Dev_Poll_Reactor::work_pending_i (ACE_Time_Value * max_wait_time)
   // no work pending.  If nfds > 0 then there is work pending.
   // Otherwise an error occurred.
   if (nfds > -1)
-    this->end_pfds_ = this->start_pfds_ + nfds;
+    {
+      this->end_pfds_ = this->start_pfds_ + nfds;
+    }
 #endif  /* ACE_HAS_EVENT_POLL */
 
   // If timers are pending, override any timeout from the poll.
@@ -1190,9 +1200,13 @@ ACE_Dev_Poll_Reactor::dispatch_notification_handlers (
                                                    dispatch_set.rd_mask_);
 
   if (n == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    number_of_handlers_dispatched += n;
+    {
+      number_of_handlers_dispatched += n;
+    }
 
   return /* this->state_changed_ ? -1 : */ 0;
 }
@@ -1934,7 +1948,9 @@ ACE_Dev_Poll_Reactor::suspend_handler_i (ACE_HANDLE handle)
   pfd[0].revents = 0;
 
   if (ACE_OS::write (this->poll_fd_, pfd, sizeof (pfd)) != sizeof (pfd))
-    return -1;
+    {
+      return -1;
+    }
 
 #endif  /* ACE_HAS_EVENT_POLL */
 
@@ -2067,7 +2083,9 @@ ACE_Dev_Poll_Reactor::resume_handler_i (ACE_HANDLE handle)
   pfd[0].revents = 0;
 
   if (ACE_OS::write (this->poll_fd_, pfd, sizeof (pfd)) != sizeof (pfd))
-    return -1;
+    {
+      return -1;
+    }
 
 #endif  /* ACE_HAS_EVENT_POLL */
 
@@ -2545,7 +2563,9 @@ ACE_Dev_Poll_Reactor::mask_ops_i (ACE_HANDLE handle,
       if (ACE_OS::write (this->poll_fd_,
                          pfd,
                          sizeof (pfd)) != sizeof (pfd))
-        return -1;
+        {
+          return -1;
+        }
 #endif /*ACE_HAS_EVENT_POLL  */
     }
 
