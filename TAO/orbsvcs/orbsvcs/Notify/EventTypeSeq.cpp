@@ -116,7 +116,9 @@ TAO_Notify_EventTypeSeq::populate (CosNotification::EventTypeSeq& event_type_seq
 
   CORBA::ULong i {};
   for (TAO_Notify_EventType const & event_type : this->event_types_)
+  {
     event_type_seq[i++] = event_type.native ();
+  }
 }
 
 void
@@ -138,7 +140,9 @@ TAO_Notify_EventTypeSeq::populate_no_special (CosNotification::EventTypeSeq& eve
   for (TAO_Notify_EventType const & event_type : this->event_types_)
     {
       if (event_type.is_special () == 0) // if its not the special event type.
+      {
         event_type_seq[i++] = event_type.native ();
+      }
     }
 }
 
@@ -170,7 +174,9 @@ void
 TAO_Notify_EventTypeSeq::insert_seq (const TAO_Notify_EventTypeSeq& event_type_seq)
 {
   for (TAO_Notify_EventType const & event_type : event_type_seq)
+  {
     this->add (event_type);
+  }
 }
 
 void
@@ -183,7 +189,9 @@ TAO_Notify_EventTypeSeq::remove_seq (const TAO_Notify_EventTypeSeq& event_type_s
     }
 
   for (TAO_Notify_EventType const & event_type : event_type_seq)
+  {
     this->erase (event_type);
+  }
 }
 
 void
@@ -294,9 +302,15 @@ TAO_Notify_EventTypeSeq::intersection (const TAO_Notify_EventTypeSeq& rhs, const
 {
   // linear search.
   for (TAO_Notify_EventType const & rhs_event_type : rhs)
+  {
     for (TAO_Notify_EventType const & lhs_event_type : lhs)
+    {
       if (rhs_event_type == lhs_event_type) // if both are same add to this object.
+      {
         this->add (rhs_event_type);
+      }
+    }
+  }
 }
 
 void
@@ -344,9 +358,12 @@ TAO_Notify_EventTypeSeq::load_child (ACE_CString const & type, CORBA::Long id,
 
   if ((type == "subscription") && et.init(attrs))
   {
-    if (DEBUG_LEVEL) ORBSVCS_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("(%P|%t) Event_Type reload subscription\n")
-      ));
+    if (DEBUG_LEVEL)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) Event_Type reload subscription\n")
+                      ));
+    }
     this->add (et);
   }
   return result;

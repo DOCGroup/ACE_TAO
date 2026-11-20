@@ -13605,3 +13605,9 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Added Allman braces to 12 single-statement bodies across eight tracked files in TAO tests, the ValueTypes bank example, Notify/Naming services, and an ACE performance test.
 - Focused clang-tidy `readability-braces-around-statements` checks passed for all eight edited files; `git diff --check` passed. No build or runtime tests were run.
 - Two reviewed candidates were left untouched because their compile database entries fail on missing generated headers. The full tracked-source audit remains open.
+
+## 2026-11-20 TAO Notify, Event_Comm, and test brace follow-up
+
+- Added Allman braces to 14 single-statement bodies across `Two_DLL_ORB/Test.cpp`, `EventTypeSeq.cpp`, `Supplier_Input_Handler.cpp`, and `GettingStarted/MessengerServer.cpp`.
+- Focused clang-tidy checks passed across these four edited files and eight additional current candidates; no remaining brace warnings or parse errors were reported. `git diff --check` passed. No build or runtime tests were run.
+- The repo-wide tracked-source brace audit remains open; candidates with missing generated headers are still excluded from edits.

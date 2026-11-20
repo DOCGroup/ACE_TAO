@@ -22,9 +22,11 @@ Supplier_Input_Handler::close ()
       (
        TAO_ORB_Core_instance ()->reactor (),
        TAO_ORB_Core_instance ()->thr_mgr ()) == -1)
+  {
      ACE_ERROR ((LM_ERROR,
                  "%p\n",
                  "remove_stdin_handler"));
+  }
    return 0;
 }
 
@@ -39,10 +41,12 @@ Supplier_Input_Handler::initialize (Notifier_Handler *notifier)
       (this,
        TAO_ORB_Core_instance ()->reactor (),
        TAO_ORB_Core_instance ()->thr_mgr ()) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "register_stdin_handler"),
                       -1);
+  }
 
   return 0;
 }
@@ -70,7 +74,9 @@ Supplier_Input_Handler::handle_input (ACE_HANDLE)
 
       // Null terminate the buffer, replacing the '\n' with '\0'.
       if (buf[n - 1] == '\n')
+      {
         buf[n - 1] = '\0';
+      }
       else
       {
         buf[n] = '\0';
@@ -81,8 +87,10 @@ Supplier_Input_Handler::handle_input (ACE_HANDLE)
     }
 
   if (std::strncmp (buf, "quit", 4) == 0)
+  {
     // Tell the main event loop to shutdown.
     this->notifier_->shutdown ();
+  }
   else
     {
       Event_Comm::Notifier *notifier = this->notifier_->notifier ();
