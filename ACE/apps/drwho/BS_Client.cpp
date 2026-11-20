@@ -13,9 +13,11 @@ BS_Client::BS_Client ()
   this->count_ = FILE_MANAGER::instance ()->open_file (Options::friend_file);
 
   if (this->count_ < 0)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                Options::program_name));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n",
+                  Options::program_name));
+    }
   else
     {
       Protocol_Record *protocol_records {};
@@ -67,9 +69,13 @@ BS_Client::insert (char const *key_name, int)
       int cmp = std::strcmp (key_name,
                              prp->get_login ());
       if (cmp == 0)
-        return prp;
+        {
+          return prp;
+        }
       else if (cmp < 0)
-        hi = mid - 1;
+        {
+          hi = mid - 1;
+        }
       else
       {
         lo = mid + 1;
@@ -85,9 +91,11 @@ BS_Client::get_each_entry ()
   for (Protocol_Record *prp = Binary_Search::get_each_entry ();
        prp != nullptr;
        prp = Binary_Search::get_each_entry ())
-    if (prp->get_drwho_list () != nullptr)
     {
-      return prp;
+      if (prp->get_drwho_list () != nullptr)
+        {
+          return prp;
+        }
     }
 
   return nullptr;
