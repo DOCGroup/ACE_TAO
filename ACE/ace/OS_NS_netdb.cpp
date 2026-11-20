@@ -266,7 +266,9 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
       ptr += sizeof(ifr->ifr_name);
 
       if(sizeof(ifr->ifr_addr) > ifr->ifr_addr.sa_len)
-        ptr += sizeof(ifr->ifr_addr);
+        {
+          ptr += sizeof(ifr->ifr_addr);
+        }
       else
         ptr += ifr->ifr_addr.sa_len;
     }
@@ -407,7 +409,9 @@ ACE_OS::getaddrinfo_emulation (const char *name, addrinfo **result)
       std::memcpy (std::addressof (addr_storage[i].sin_addr), host->h_addr_list[i],
                    (std::min) (size_t (host->h_length), sizeof (in_addr)));
       if (i < n - 1)
-        (*result)[i].ai_next = (*result) + i + 1;
+        {
+          (*result)[i].ai_next = (*result) + i + 1;
+        }
     }
 
   return 0;
