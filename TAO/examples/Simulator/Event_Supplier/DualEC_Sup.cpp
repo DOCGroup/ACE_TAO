@@ -163,9 +163,11 @@ DualEC_Supplier::init ()
       TAO_ORB_Core_instance()->orb()->resolve_initial_references("RootPOA");
 
     if (CORBA::is_nil (poaObject_var.in ()))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                        " (%P|%t) Unable to initialize the POA.\n"),
-                        1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                          " (%P|%t) Unable to initialize the POA.\n"),
+                          1);
+      }
 
     this->root_POA_var_ =
       PortableServer::POA::_narrow (poaObject_var.in ());
@@ -181,9 +183,11 @@ DualEC_Supplier::init ()
           "NameService");
 
     if (CORBA::is_nil (namingObj_var.in ()))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                        " (%P|%t) Unable to get the Naming Service.\n"),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                          " (%P|%t) Unable to get the Naming Service.\n"),
+                          -1);
+      }
 
     this->naming_context_ =
       CosNaming::NamingContext::_narrow (namingObj_var.in ());
@@ -335,11 +339,15 @@ DualEC_Supplier::run_nav_thread (void *arg)
           }
 
         if (total_sent < 5)
-          ACE_DEBUG ((LM_DEBUG,
-                      "Pushing event data.\n"));
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "Pushing event data.\n"));
+          }
         else if (total_sent == 5)
-          ACE_DEBUG ((LM_DEBUG,
-                      "Everything is running. Going to be mute.\n"));
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "Everything is running. Going to be mute.\n"));
+          }
 
         if (++nav_index == sup->navigation_data_.size ())
         {
@@ -399,11 +407,15 @@ DualEC_Supplier::run_weap_thread (void *arg)
           }
 
         if (total_sent < 5)
-          ACE_DEBUG ((LM_DEBUG,
-                      "Pushing event data.\n"));
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "Pushing event data.\n"));
+          }
         else if (total_sent == 5)
-          ACE_DEBUG ((LM_DEBUG,
-                      "Everything is running. Going to be mute.\n"));
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "Everything is running. Going to be mute.\n"));
+          }
 
         if (++weap_index == sup->weapons_data_.size ())
         {
@@ -680,11 +692,15 @@ DualEC_Supplier::start_generating_events ()
 
       // Clean up the navigation data.
       for (Navigation * const nav : this->navigation_data_)
-        delete nav;
+        {
+          delete nav;
+        }
 
       // Clean up the weapons data.
       for (Weapons * const weap : this->weapons_data_)
-        delete weap;
+        {
+          delete weap;
+        }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -725,7 +741,9 @@ DualEC_Supplier::load_schedule_data ()
               // Run through leading whitespace.
               char *temp = input_buf;
               while (*temp && ACE_OS::ace_isspace (*temp))
-                ++temp;
+                {
+                  ++temp;
+                }
 
               // If there is anything besides whitespace in the line
               // read, scan its fields into the scheduling data
@@ -852,7 +870,9 @@ DualEC_Supplier::get_options (int argc, ACE_TCHAR *argv [])
           this->input_file_name_ = get_opt.opt_arg ();
 
           if (!this->input_file_name_ || std::strlen (this->input_file_name_) > 0)
-            ACE_DEBUG ((LM_DEBUG,"Reading file!\n"));
+            {
+              ACE_DEBUG ((LM_DEBUG,"Reading file!\n"));
+            }
           else
             {
               this->input_file_name_ = nullptr;
@@ -873,10 +893,12 @@ DualEC_Supplier::get_options (int argc, ACE_TCHAR *argv [])
                            this->total_messages_));
             }
           else
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "%s: message count must be > 0",
-                               argv[0]),
-                               1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "%s: message count must be > 0",
+                                 argv[0]),
+                                 1);
+            }
           break;
 
         case 'b':
@@ -889,10 +911,12 @@ DualEC_Supplier::get_options (int argc, ACE_TCHAR *argv [])
                            this->break_count_));
             }
           else
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "%s: break count must be > 0",
-                               argv[0]),
-                               1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "%s: break count must be > 0",
+                                 argv[0]),
+                                 1);
+            }
           break;
 
         case 'n':
@@ -906,10 +930,12 @@ DualEC_Supplier::get_options (int argc, ACE_TCHAR *argv [])
                           temp));
             }
           else
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "%s: navigation pause must be >= 0",
-                               argv[0]),
-                               1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "%s: navigation pause must be >= 0",
+                                 argv[0]),
+                                 1);
+            }
           break;
 
         case 'w':
@@ -923,10 +949,12 @@ DualEC_Supplier::get_options (int argc, ACE_TCHAR *argv [])
                           temp));
             }
           else
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "%s: weapons pause must be >= 0",
-                               argv[0]),
-                               1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "%s: weapons pause must be >= 0",
+                                 argv[0]),
+                                 1);
+            }
           break;
 
         case 'd':
@@ -957,13 +985,15 @@ DualEC_Supplier::get_options (int argc, ACE_TCHAR *argv [])
     }
 
   if (argc != get_opt.opt_ind ())
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%s: too many arguments\n"
-                       "Usage: %s %s\n",
-                       argv[0],
-                       argv[0],
-                       usage),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%s: too many arguments\n"
+                         "Usage: %s %s\n",
+                         argv[0],
+                         argv[0],
+                         usage),
+                        1);
+    }
 
   return 0;
 }
@@ -983,12 +1013,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                               ACE_SCOPE_PROCESS)) != 0)
     {
       if (ACE_OS::last_error () == EPERM)
+        {
           ACE_DEBUG ((LM_DEBUG,
-                      "%s: user is not superuser, "
-                      "so remain in time-sharing class\n", argv[0]));
+                        "%s: user is not superuser, "
+                        "so remain in time-sharing class\n", argv[0]));
+        }
       else
+        {
           ACE_ERROR ((LM_ERROR,
-                      "%s: ACE_OS::sched_params failed\n", argv[0]));
+                        "%s: ACE_OS::sched_params failed\n", argv[0]));
+        }
     }
 
   try
