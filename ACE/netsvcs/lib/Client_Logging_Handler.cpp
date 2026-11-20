@@ -98,7 +98,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
 {
 #if 0
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("in ACE_Client_Logging_Handler::handle_input, handle = %u\n"),
+              ACE_TEXT ("in ACE_Client_Logging_Handler::handle_input, handle = %H\n"),
               handle));
 #endif /* 0 */
 
