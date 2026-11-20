@@ -11,21 +11,23 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'o':
-        ior_output_file = get_opts.opt_arg ();
-        break;
+    {
+      switch (c)
+        {
+        case 'o':
+          ior_output_file = get_opts.opt_arg ();
+          break;
 
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage:  %s "
+                             "-o <iorfile>"
+                             "\n",
+                             argv [0]),
+                            -1);
+        }
+    }
   // Indicates successful parsing of the command line
   return 0;
 }
@@ -45,9 +47,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Panic: nil RootPOA\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Panic: nil RootPOA\n"),
+                            1);
+        }
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
@@ -77,10 +81,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Output the IOR to the <ior_output_file>
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
       if (output_file == nullptr)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
-                           ior_output_file),
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file for writing IOR: %s",
+                             ior_output_file),
                               1);
+        }
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
 
