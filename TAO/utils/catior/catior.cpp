@@ -235,7 +235,9 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                       {
                         ch = ACE_OS::fgetc (ifstr.get ());
                         if (ch == EOF || ch == '\n' || ch == '\r')
-                          break;
+                          {
+                            break;
+                          }
                         aString += static_cast<char> (ch);
                         have_some_input = true;
                       }
@@ -358,7 +360,9 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                       {
                         ch = ACE_OS::fgetc (ifstr);
                         if (ch == EOF || ch == '\n' || ch == '\r')
-                          break;
+                          {
+                            break;
+                          }
                         aString += static_cast<char> (ch);
                         have_some_input = true;
                       }

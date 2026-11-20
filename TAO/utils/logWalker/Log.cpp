@@ -109,9 +109,13 @@ Log::get_preamble ()
 
   long tid {};
   if ( *t == '|' )
-    tid = std::strtol(t + 1, nullptr, 10);
+    {
+      tid = std::strtol(t + 1, nullptr, 10);
+    }
   else if ( *t != ')')
-    return; // not either (pid) or (pid|tid)
+    {
+      return; // not either (pid) or (pid|tid)
+    }
 
   this->info_ = std::strstr (p, ")") + 1;
   this->hostproc_ = nullptr;
