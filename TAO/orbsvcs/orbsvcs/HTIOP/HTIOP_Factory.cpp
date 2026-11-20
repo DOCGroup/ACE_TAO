@@ -57,17 +57,21 @@ TAO::HTIOP::Protocol_Factory::init (int argc,
       if (ACE_OS::strcasecmp(argv[i], ACE_TEXT("-config")) == 0)
         {
           if (++i < argc)
-            if (ACE_OS::stat (argv[i],&statbuf) != -1)
             {
-              config_file = argv[i];
+              if (ACE_OS::stat (argv[i],&statbuf) != -1)
+                {
+                  config_file = argv[i];
+                }
             }
         }
       else if (ACE_OS::strcasecmp(argv[i], ACE_TEXT("-env_persist")) == 0)
         {
           if (++i < argc)
-            if (ACE_OS::stat (argv[i],&statbuf) != -1)
             {
-              persist_file = argv[i];
+              if (ACE_OS::stat (argv[i],&statbuf) != -1)
+                {
+                  persist_file = argv[i];
+                }
             }
         }
       else if (ACE_OS::strcasecmp(argv[i], ACE_TEXT("-win32_reg")) == 0)
@@ -77,22 +81,26 @@ TAO::HTIOP::Protocol_Factory::init (int argc,
       else if (ACE_OS::strcasecmp(argv[i], ACE_TEXT("-inside")) == 0)
         {
           if (++i < argc)
-          {
-            this->inside_ = ACE_OS::atoi (argv[i]);
-          }
+            {
+              this->inside_ = ACE_OS::atoi (argv[i]);
+            }
         }
       else if (ACE_OS::strcasecmp(argv[i], ACE_TEXT("-proxy_port")) == 0)
         {
           if (++i < argc)
-            proxy_port = static_cast<unsigned>
-              (ACE_OS::atoi (argv[i]));
+            {
+              proxy_port = static_cast<unsigned>
+                (ACE_OS::atoi (argv[i]));
+            }
         }
       else if (ACE_OS::strcasecmp(argv[i], ACE_TEXT("-proxy_host")) == 0)
         {
           if (++i < argc)
-            if (ACE_OS::stat (argv[i],&statbuf) != -1)
             {
-              proxy_host = argv[i];
+              if (ACE_OS::stat (argv[i],&statbuf) != -1)
+                {
+                  proxy_host = argv[i];
+                }
             }
         }
     }
@@ -106,7 +114,9 @@ TAO::HTIOP::Protocol_Factory::init (int argc,
   this->ht_env_.reset (ht_env);
 
   if (config_file != nullptr)
-    this->ht_env_->import_config (config_file);
+    {
+      this->ht_env_->import_config (config_file);
+    }
   else
     {
       if (proxy_port != 0)
