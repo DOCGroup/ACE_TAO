@@ -69,20 +69,24 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
        "hello",
        period,
        period) == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG,
-                       "%p\n",
-                       "schedule_timer"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_DEBUG,
+                         "%p\n",
+                         "schedule_timer"),
+                        -1);
+    }
 
   // Set up an ACE signal handler.
 
   if (ACE_Reactor::instance ()->register_handler
       (SIGINT,
        &my_handler) == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG,
-                       "%p\n",
-                       "register_handler"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_DEBUG,
+                         "%p\n",
+                         "register_handler"),
+                        -1);
+    }
 
   // Set up a non-ACE signal handler.  When this goes off, the Reactor
   // should return from its <run_event_loop> method.
@@ -102,9 +106,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Make sure to remove my_handler before exiting main() since
   // otherwise weird things can happen...
   if (ACE_Reactor::instance ()->cancel_timer (&my_handler) == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG,
-                       "%p\n",
-                       "cancel_timer"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_DEBUG,
+                         "%p\n",
+                         "cancel_timer"),
+                        -1);
+    }
   return 0;
 }

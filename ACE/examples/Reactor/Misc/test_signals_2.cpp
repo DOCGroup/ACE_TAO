@@ -115,9 +115,11 @@ public:
       reactor.register_handler (SIGINT, this);
 
     if (this->quit_sigkey_ == -1 || this->int_sigkey_ == -1)
-      ACE_ERROR ((LM_ERROR,
-                  "%p\n",
-                  "register_handler"));
+      {
+        ACE_ERROR ((LM_ERROR,
+                    "%p\n",
+                    "register_handler"));
+      }
   }
 
   Sig_Handler_1 (Sig_Handler_1 const &) = delete;
@@ -144,15 +146,19 @@ public:
                                            nullptr,
                                            nullptr,
                                            this->quit_sigkey_) == -1)
-          ACE_ERROR ((LM_ERROR,
-                      "\n%p",
-                      "remove_handler"));
+          {
+            ACE_ERROR ((LM_ERROR,
+                        "\n%p",
+                        "remove_handler"));
+          }
         else
-          ACE_DEBUG ((LM_DEBUG,
-                      "\nshutting down SIGQUIT in Sig_Handler_1 (%s, %d, %d)",
-                      this->msg_,
-                      this->int_sigkey_,
-                      this->quit_sigkey_));
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "\nshutting down SIGQUIT in Sig_Handler_1 (%s, %d, %d)",
+                        this->msg_,
+                        this->int_sigkey_,
+                        this->quit_sigkey_));
+          }
       }
     else if (this->count_ != 2 && signum == SIGINT)
       {
@@ -160,15 +166,19 @@ public:
                                            nullptr,
                                            nullptr,
                                            this->int_sigkey_) == -1)
-          ACE_ERROR ((LM_ERROR,
-                      "\n%p",
-                      "remove_handler"));
+          {
+            ACE_ERROR ((LM_ERROR,
+                        "\n%p",
+                        "remove_handler"));
+          }
         else
-          ACE_DEBUG ((LM_DEBUG,
-                      "\nshutting down SIGINT in Sig_Handler_1 (%s, %d, %d)",
-                      this->msg_,
-                      this->int_sigkey_,
-                      this->quit_sigkey_));
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "\nshutting down SIGINT in Sig_Handler_1 (%s, %d, %d)",
+                        this->msg_,
+                        this->int_sigkey_,
+                        this->quit_sigkey_));
+          }
       }
     return 0;
   }
@@ -202,15 +212,19 @@ public:
     if (this->count_ != 0 && signum == SIGQUIT)
       {
         if (this->reactor_.remove_handler (SIGQUIT, nullptr, nullptr, this->quit_sigkey_) == -1)
-          ACE_ERROR ((LM_ERROR,
-                      "\n%p",
-                      "remove_handler"));
+          {
+            ACE_ERROR ((LM_ERROR,
+                        "\n%p",
+                        "remove_handler"));
+          }
           else
-            ACE_DEBUG ((LM_DEBUG,
-                        "\nshutting down SIGQUIT in Sig_Handler_2 (%s, %d, %d)",
-                        this->msg_,
-                        this->int_sigkey_,
-                        this->quit_sigkey_));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "\nshutting down SIGQUIT in Sig_Handler_2 (%s, %d, %d)",
+                          this->msg_,
+                          this->int_sigkey_,
+                          this->quit_sigkey_));
+            }
       }
     return 0;
   }
@@ -267,9 +281,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *[])
                   "\nwaiting for SIGINT or SIGQUIT\n"));
 
       if (reactor.handle_events () == -1)
-        ACE_ERROR ((LM_ERROR,
-                    "%p\n",
-                    "handle_events"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%p\n",
+                      "handle_events"));
+        }
     }
 
   ACE_NOTREACHED (return 0);
