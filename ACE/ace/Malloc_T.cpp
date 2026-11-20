@@ -392,7 +392,9 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::dump () const
   this->cb_ptr_->dump ();
 #if defined (ACE_HAS_MALLOC_STATS)
   if (this->cb_ptr_ != 0)
-    this->cb_ptr_->malloc_stats_.dump ();
+    {
+      this->cb_ptr_->malloc_stats_.dump ();
+    }
 #endif /* ACE_HAS_MALLOC_STATS */
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
@@ -407,7 +409,9 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::print_stats () const
   ACE_GUARD (ACE_LOCK, ace_mon, *this->lock_);
 
   if (this->cb_ptr_ == 0)
-    return;
+    {
+      return;
+    }
   this->cb_ptr_->malloc_stats_.dump ();
   ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) contents of freelist:\n")));
@@ -422,7 +426,9 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::print_stats () const
                   currp->size_,
                   currp->size_ * sizeof (MALLOC_HEADER)));
       if (currp == this->cb_ptr_->freep_)
-        break;
+        {
+          break;
+        }
     }
 }
 #endif /* ACE_HAS_MALLOC_STATS */

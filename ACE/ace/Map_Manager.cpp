@@ -125,7 +125,9 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::next_free (ACE_UINT32 &free_slot)
 
   // If we do find a free slot, return successfully.
   if (free_slot != this->free_list_id ())
-    return 0;
+    {
+      return 0;
+    }
 
 #endif /* ACE_HAS_LAZY_MAP_MANAGER */
 
@@ -400,7 +402,9 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find_and_return_index (const EXT_ID &
     {
 #if defined (ACE_HAS_LAZY_MAP_MANAGER)
       if (this->search_structure_[i].free_)
-        continue;
+        {
+          continue;
+        }
 #endif /* ACE_HAS_LAZY_MAP_MANAGER */
 
       if (this->equal (this->search_structure_[i].ext_id_,
@@ -443,7 +447,9 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_all ()
 
 #if defined (ACE_HAS_LAZY_MAP_MANAGER)
       if (current_slot.free_)
-        continue;
+        {
+          continue;
+        }
 #endif /* ACE_HAS_LAZY_MAP_MANAGER */
 
       this->unbind_slot (position_of_current_slot);

@@ -123,7 +123,9 @@ ACE_LSOCK::recv_handle (ACE_HANDLE &handle, char *pbuf, ssize_t *len) const
   if (nbytes != ACE_INVALID_HANDLE)
     {
       if (len != 0)
-        *len = nbytes;
+        {
+          *len = nbytes;
+        }
 
       if (nbytes == sizeof a
           && ((u_char *) iov.iov_base)[0] == 0xab
@@ -136,7 +138,9 @@ ACE_LSOCK::recv_handle (ACE_HANDLE &handle, char *pbuf, ssize_t *len) const
           return 1;
         }
       else
-        return 0;
+        {
+          return 0;
+        }
     }
 #else
   ssize_t nbytes = ACE_OS::recvmsg (this->get_handle (),
