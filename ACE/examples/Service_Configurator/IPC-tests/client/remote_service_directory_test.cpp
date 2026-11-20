@@ -32,21 +32,23 @@ parse_args (int argc, ACE_TCHAR *argv[])
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("p:h:r"));
 
   for (int c; (c = get_opt ()) != -1; )
-    switch (c)
     {
-    case 'h':
-      host_name = get_opt.opt_arg ();
-      break;
-    case 'p':
-      port_number = ACE_OS::atoi (get_opt.opt_arg ());
-      break;
-    case 'r':
-      remote_reconfigure = true;
-      break;
-    default:
-      print_usage_and_die ();
-      break;
-  }
+      switch (c)
+        {
+        case 'h':
+          host_name = get_opt.opt_arg ();
+          break;
+        case 'p':
+          port_number = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'r':
+          remote_reconfigure = true;
+          break;
+        default:
+          print_usage_and_die ();
+          break;
+        }
+    }
 }
 
 int
@@ -65,39 +67,49 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (con.connect (sc,
                    ACE_INET_Addr (port_number,
                                   host_name)) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n%a",
-                       "connect",
-                       1),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n%a",
+                         "connect",
+                         1),
+                        -1);
+    }
 
   // Send the command.
 
   if (sc.send_n (command.c_str (), command.size () + 1) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n%a",
-                       "send",
-                       1), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n%a",
+                         "send",
+                         1), -1);
+    }
 
   // Next, read the response.
 
   while ((n = sc.recv (response,
                        sizeof response)) > 0)
-    if (ACE_OS::write (ACE_STDOUT,
-                       response,
-                       n) != n)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "%p\n%a",
-                         "write",
-                         1),
-                        -1);
+    {
+      if (ACE_OS::write (ACE_STDOUT,
+                         response,
+                         n) != n)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "%p\n%a",
+                             "write",
+                             1),
+                            -1);
+        }
+    }
 
   if (sc.close () == -1)
+    {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p\n%a",
                          "close",
                          1),
                         -1);
+    }
 
   return 0;
 }
