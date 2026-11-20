@@ -594,7 +594,9 @@ ACE_OS::recursive_mutex_cond_unlock (ACE_recursive_thread_mutex_t *m,
       // does fail, it'll be on the first try, so don't worry about resetting
       // the state.
       if (ACE_OS::recursive_mutex_unlock (m) == -1)
-        return -1;
+        {
+          return -1;
+        }
       ++state.relock_count_;
     }
 #    else /* not ACE_WIN32 */
@@ -615,7 +617,9 @@ ACE_OS::recursive_mutex_cond_unlock (ACE_recursive_thread_mutex_t *m,
   // and can either set the mutex internals directly or get in line for
   // the mutex... this part is handled in recursive_mutex_cond_relock().
   if (ACE_OS::thread_mutex_lock (&m->nesting_mutex_) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
 #    if !defined (ACE_NDEBUG)
   if (m->nesting_level_ == 0
@@ -717,7 +721,9 @@ ACE_OS::recursive_mutex_destroy (ACE_recursive_thread_mutex_t *m)
 #else
   if (ACE_OS::cond_destroy (&m->lock_available_) == -1
       || ACE_OS::thread_mutex_destroy (&m->nesting_mutex_) == -1)
-    return -1;
+    {
+      return -1;
+    }
   return 0;
 #endif /* ACE_HAS_RECURSIVE_MUTEXES */
 #else
@@ -742,12 +748,16 @@ ACE_OS::recursive_mutex_init (ACE_recursive_thread_mutex_t *m,
 #    endif /* ACE_HAS_PTHREADS_UNIX98_EXT */
 #  else
   if (ACE_OS::thread_mutex_init (&m->nesting_mutex_, 0, name, arg) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else if (ACE_OS::cond_init (&m->lock_available_,
                               (short) USYNC_THREAD,
                               name,
                               0) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       m->nesting_level_ = 0;
@@ -775,31 +785,35 @@ ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m)
 
   // Acquire the guard.
   if (ACE_OS::thread_mutex_lock (&m->nesting_mutex_) == -1)
-    result = -1;
+    {
+      result = -1;
+    }
   else
-  {
-    // If there's no contention, just grab the lock immediately
-    // (since this is the common case we'll optimize for it).
-    if (m->nesting_level_ == 0)
-      m->owner_id_ = t_id;
+    {
+      // If there's no contention, just grab the lock immediately
+      // (since this is the common case we'll optimize for it).
+      if (m->nesting_level_ == 0)
+        {
+          m->owner_id_ = t_id;
+        }
       // If we already own the lock, then increment the nesting level
       // and return.
-    else if (!ACE_OS::thr_equal (t_id, m->owner_id_))
-    {
+      else if (!ACE_OS::thr_equal (t_id, m->owner_id_))
+        {
           // Wait until the nesting level has dropped to zero, at
           // which point we can acquire the lock.
-      while (m->nesting_level_ > 0)
-        ACE_OS::cond_wait (&m->lock_available_,
-                            &m->nesting_mutex_);
+          while (m->nesting_level_ > 0)
+            ACE_OS::cond_wait (&m->lock_available_,
+                                &m->nesting_mutex_);
 
           // At this point the nesting_mutex_ is held...
-      m->owner_id_ = t_id;
-    }
+          m->owner_id_ = t_id;
+        }
 
-    // At this point, we can safely increment the nesting_level_ no
-    // matter how we got here!
-    ++m->nesting_level_;
-  }
+      // At this point, we can safely increment the nesting_level_ no
+      // matter how we got here!
+      ++m->nesting_level_;
+    }
 
   {
     // Save/restore errno.
@@ -827,13 +841,17 @@ ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m,
 
   // Try to acquire the guard.
   if (ACE_OS::thread_mutex_lock (&m->nesting_mutex_, timeout) == -1)
-    result = -1;
+    {
+      result = -1;
+    }
   else
     {
       // If there's no contention, just grab the lock immediately
       // (since this is the common case we'll optimize for it).
       if (m->nesting_level_ == 0)
-        m->owner_id_ = t_id;
+        {
+          m->owner_id_ = t_id;
+        }
       // If we already own the lock, then increment the nesting level
       // and return.
       else if (!ACE_OS::thr_equal (t_id, m->owner_id_))
@@ -900,25 +918,29 @@ ACE_OS::recursive_mutex_trylock (ACE_recursive_thread_mutex_t *m)
 
   // Acquire the guard.
   if (ACE_OS::thread_mutex_lock (&m->nesting_mutex_) == -1)
-    result = -1;
-  else
-  {
-      // If there's no contention, just grab the lock immediately.
-    if (m->nesting_level_ == 0)
     {
-      m->owner_id_ = t_id;
-      m->nesting_level_ = 1;
-    }
-      // If we already own the lock, then increment the nesting level
-      // and proceed.
-    else if (ACE_OS::thr_equal (t_id, m->owner_id_))
-      ++m->nesting_level_;
-    else
-    {
-      errno = EBUSY;
       result = -1;
     }
-  }
+  else
+    {
+      // If there's no contention, just grab the lock immediately.
+      if (m->nesting_level_ == 0)
+        {
+          m->owner_id_ = t_id;
+          m->nesting_level_ = 1;
+        }
+      // If we already own the lock, then increment the nesting level
+      // and proceed.
+      else if (ACE_OS::thr_equal (t_id, m->owner_id_))
+        {
+          ++m->nesting_level_;
+        }
+      else
+        {
+          errno = EBUSY;
+          result = -1;
+        }
+    }
 
   {
     // Save/restore errno.
