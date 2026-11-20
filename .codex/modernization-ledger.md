@@ -13898,3 +13898,9 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Added Allman braces to four single-statement control bodies in `ACE/protocols/ace/INet/HeaderBase.cpp`.
 - Focused clang-tidy reported no remaining brace warnings; `git diff --check` passed. No build or runtime tests were run.
 - The full tracked-source brace audit remains open.
+
+## 2026-11-20 drwho client brace follow-up
+
+- Added Allman braces to four single-statement control bodies in `ACE/apps/drwho/client.cpp`.
+- Focused clang-tidy reported no remaining brace warnings; `git diff --check` passed. No build or runtime tests were run.
+- The full tracked-source brace audit remains open.
