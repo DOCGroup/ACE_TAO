@@ -104,8 +104,10 @@ ACE_TS_Clerk_Handler::open (void *)
   // reconnections.
 #if !defined (ACE_WIN32)
   if (ACE_Reactor::instance ()->register_handler (SIGPIPE, this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%n: %p\n"),
-                       ACE_TEXT ("register_handler (SIGPIPE)")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%n: %p\n"),
+                         ACE_TEXT ("register_handler (SIGPIPE)")), -1);
+    }
 #endif /* ACE_WIN32 */
 
   // Register ourselves with the reactor to receive input
@@ -113,14 +115,18 @@ ACE_TS_Clerk_Handler::open (void *)
                                                   this,
                                                         ACE_Event_Handler::READ_MASK |
                                                         ACE_Event_Handler::EXCEPT_MASK) == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%n: %p\n"),
-                ACE_TEXT ("register_handler (this)")));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%n: %p\n"),
+                  ACE_TEXT ("register_handler (this)")));
+    }
 
   // Figure out what remote port we're really bound to.
   else if (this->peer ().get_remote_addr (server_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("get_remote_addr")),
-                       -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("get_remote_addr")),
+                        -1);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("TS Clerk Daemon connected to port %d on handle %@\n"),
@@ -168,8 +174,10 @@ ACE_TS_Clerk_Handler::reinitiate_connection ()
       ACE_Time_Value const timeout (this->timeout ());
       if (ACE_Reactor::instance ()->schedule_timer (this, 0,
                                                     timeout) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
-                           ACE_TEXT ("schedule_timer")), -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                             ACE_TEXT ("schedule_timer")), -1);
+        }
     }
   return 0;
 }
@@ -182,7 +190,9 @@ ACE_TS_Clerk_Handler::handle_input (ACE_HANDLE)
   // We're getting a time update message from a server
   ACE_Time_Request reply;
   if (this->recv_reply (reply) != 0)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       // Get current local time
@@ -262,8 +272,10 @@ ACE_TS_Clerk_Handler::recv_reply (ACE_Time_Request &reply)
         }
     }
   else if (reply.decode () == -1)       // Decode the request into host byte order.
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("decode failed")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("decode failed")), -1);
+    }
   return 0;
 }
 
@@ -285,8 +297,10 @@ ACE_TS_Clerk_Handler::send_request (ACE_UINT32 sequence_num, ACE_Time_Info &time
   ACE_Time_Request request (ACE_Time_Request::TIME_UPDATE, 0, 0);
 
   if ((length = request.encode (buffer)) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("encode failed")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("encode failed")), -1);
+    }
 
   // Compute start time of sending request (needed to compute
   // roundtrip delay)
@@ -294,9 +308,11 @@ ACE_TS_Clerk_Handler::send_request (ACE_UINT32 sequence_num, ACE_Time_Info &time
 
   // Send the request
   if (this->peer ().send_n (buffer, length) != length)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("send_n failed")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("send_n failed")),
+                        -1);
+    }
 
   return 0;
 }
@@ -387,7 +403,9 @@ ACE_TS_Clerk_Processor::update_time ()
       if ((*handler)->state () == ACE_TS_Clerk_Handler::ESTABLISHED)
         {
           if ((*handler)->send_request (this->cur_sequence_num_, time_info) == -1)
-            return -1;
+            {
+              return -1;
+            }
           // Check if sequence numbers match; otherwise discard
           else if (expected_sequence_num != 0 &&
                    time_info.sequence_num_ == expected_sequence_num)
@@ -445,8 +463,10 @@ ACE_TS_Clerk_Processor::fini ()
        set_iterator.advance ())
     {
       if ((*handler)->state () != ACE_TS_Clerk_Handler::IDLE)
-        // Mark state as DISCONNECTING so we don't try to reconnect...
-        (*handler)->state (ACE_TS_Clerk_Handler::DISCONNECTING);
+        {
+          // Mark state as DISCONNECTING so we don't try to reconnect...
+          (*handler)->state (ACE_TS_Clerk_Handler::DISCONNECTING);
+        }
 
       // Deallocate resources.
       (*handler)->destroy (); // Will trigger a delete
@@ -516,8 +536,10 @@ ACE_TS_Clerk_Processor::initiate_connection (ACE_TS_Clerk_Handler *handler,
   handler->state (ACE_TS_Clerk_Handler::IDLE);
 
   if (handler->remote_addr ().addr_to_string (buf, MAXHOSTNAMELEN) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
-                      ACE_TEXT ("can't obtain peer's address")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                        ACE_TEXT ("can't obtain peer's address")), -1);
+    }
 
   // Establish connection with the server.
   if (this->connect (handler,
@@ -537,13 +559,17 @@ ACE_TS_Clerk_Processor::initiate_connection (ACE_TS_Clerk_Handler *handler,
               if (ACE_Reactor::instance ()->schedule_timer (handler,
                                                             0,
                                                             handler_timeout) == -1)
-                ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
-                                   ACE_TEXT ("schedule_timer")), -1);
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                                     ACE_TEXT ("schedule_timer")), -1);
+                }
             }
           else
-            // Failures on synchronous connects are reported as errors
-            // so that the caller can decide how to proceed.
-            return -1;
+            {
+              // Failures on synchronous connects are reported as errors
+              // so that the caller can decide how to proceed.
+              return -1;
+            }
         }
       else
         {
