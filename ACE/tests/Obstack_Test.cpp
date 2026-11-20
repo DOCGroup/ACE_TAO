@@ -25,7 +25,9 @@ int run_main (int, ACE_TCHAR *[])
   ACE_Obstack_T<ACE_TCHAR> stack (sizeof (str1) + 1);
 
   for (size_t i = 0; i < ACE_OS::strlen (str1); ++i)
-    stack.grow_fast (str1[i]);
+    {
+      stack.grow_fast (str1[i]);
+    }
 
   ACE_TCHAR *str = stack.freeze ();
 
@@ -43,7 +45,9 @@ int run_main (int, ACE_TCHAR *[])
     }
 
   for (size_t j = 0; j < ACE_OS::strlen (str2); ++j)
-    stack.grow (str2[j]);
+    {
+      stack.grow (str2[j]);
+    }
 
   ACE_TCHAR* temp = stack.freeze();
 
@@ -61,7 +65,9 @@ int run_main (int, ACE_TCHAR *[])
     }
 
   for (size_t k = 0; k < ACE_OS::strlen (str1); ++k)
-    stack.grow (str1[k]);
+    {
+      stack.grow (str1[k]);
+    }
 
   ACE_TCHAR* tmp = stack.freeze ();
   if (tmp == nullptr)
@@ -80,7 +86,9 @@ int run_main (int, ACE_TCHAR *[])
   stack.unwind (temp);
 
   for (size_t l = 0; l < ACE_OS::strlen (str2); ++l)
-    stack.grow (str2[l]);
+    {
+      stack.grow (str2[l]);
+    }
 
   temp = stack.freeze();
 
