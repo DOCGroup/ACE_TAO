@@ -418,7 +418,9 @@ ACE_OS::getcwd (wchar_t *buf, size_t size)
   std::unique_ptr<char[]> narrow_buf (new char[size]);
   char *result {ACE_OS::getcwd (narrow_buf.get (), size)};
   if (result == nullptr)
-    return nullptr;
+    {
+      return nullptr;
+    }
   ACE_Ascii_To_Wide wide_buf (result);
   ACE_OS::strsncpy (buf, wide_buf.wchar_rep (), size);
   return buf;
@@ -726,9 +728,13 @@ ACE_OS::read (ACE_HANDLE handle, void *buf, size_t len)
 #if defined (ACE_WIN32)
   DWORD ok_len;
   if (::ReadFile (handle, buf, static_cast<DWORD> (len), &ok_len, 0))
-    return (ssize_t) ok_len;
+    {
+      return (ssize_t) ok_len;
+    }
   else
-    ACE_FAIL_RETURN (-1);
+    {
+      ACE_FAIL_RETURN (-1);
+    }
 
 #elif defined (ACE_LACKS_READ)
   ACE_UNUSED_ARG (handle);
@@ -777,9 +783,13 @@ ACE_OS::read (ACE_HANDLE handle, void *buf, size_t len,
   DWORD ok_len;
   DWORD short_len = static_cast<DWORD> (len);
   if (::ReadFile (handle, buf, short_len, &ok_len, overlapped))
-    return (ssize_t) ok_len;
+    {
+      return (ssize_t) ok_len;
+    }
   else
-    ACE_FAIL_RETURN (-1);
+    {
+      ACE_FAIL_RETURN (-1);
+    }
 #else
   ACE_UNUSED_ARG (overlapped);
   return ACE_OS::read (handle, buf, len);
@@ -1194,9 +1204,13 @@ ACE_OS::write (ACE_HANDLE handle, const void *buf, size_t nbyte)
   // than a DWORD length can hold.
   DWORD short_nbyte = static_cast<DWORD> (nbyte);
   if (::WriteFile (handle, buf, short_nbyte, &bytes_written, 0))
-    return (ssize_t) bytes_written;
+    {
+      return (ssize_t) bytes_written;
+    }
   else
-    ACE_FAIL_RETURN (-1);
+    {
+      ACE_FAIL_RETURN (-1);
+    }
 #elif defined (ACE_MQX)
   return MQX_Filesystem::inst ().write (handle, reinterpret_cast<const unsigned char *> (buf), nbyte);
 #elif defined (ACE_LACKS_WRITE)
@@ -1225,9 +1239,13 @@ ACE_OS::write (ACE_HANDLE handle,
 
   DWORD short_nbyte = static_cast<DWORD> (nbyte);
   if (::WriteFile (handle, buf, short_nbyte, &bytes_written, overlapped))
-    return (ssize_t) bytes_written;
+    {
+      return (ssize_t) bytes_written;
+    }
   else
-    ACE_FAIL_RETURN (-1);
+    {
+      ACE_FAIL_RETURN (-1);
+    }
 #else
   ACE_UNUSED_ARG (overlapped);
   return ACE_OS::write (handle, buf, nbyte);
