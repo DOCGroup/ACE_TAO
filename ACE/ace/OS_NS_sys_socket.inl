@@ -63,7 +63,9 @@ ACE_OS::accept (ACE_HANDLE handle,
    int fake_addrlen;
 
    if (addrlen == 0)
-     addrlen = &fake_addrlen;
+     {
+       addrlen = &fake_addrlen;
+     }
 
    if (addr == 0)
      {
@@ -115,9 +117,13 @@ ACE_OS::bind (ACE_HANDLE handle, struct sockaddr *addr, int addrlen)
                         addr,
                         (ACE_SOCKET_LEN) addrlen), int, -1, result);
   if (result == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return ACE_OS::getsockname (handle, addr, &addrlen);
+    {
+      return ACE_OS::getsockname (handle, addr, &addrlen);
+    }
 #else
   ACE_SOCKCALL_RETURN (::bind ((ACE_SOCKET) handle,
                                addr,
@@ -578,12 +584,16 @@ ACE_OS::send (ACE_HANDLE handle, const char *buf, size_t len, int flags)
     {
       ACE_OS::set_errno_to_wsa_last_error();
       if (errno != ENOBUFS)
-        return -1;
+        {
+          return -1;
+        }
 
       ACE_SOCKCALL_RETURN(send_partial_i(handle, buf, len, flags), ssize_t, -1);
     }
   else
-    return result;
+    {
+      return result;
+    }
 
 #else
 # if defined (ACE_MQX)
@@ -754,7 +764,9 @@ ACE_OS::sendto (ACE_HANDLE handle,
                                 addr,
                                 addrlen);
        if (result == -1)
-         break;
+         {
+           break;
+         }
        number_of_bytes_sent += static_cast<size_t> (result);
     }
 
@@ -813,7 +825,9 @@ ACE_OS::sendv (ACE_HANDLE handle,
           // This gives the caller an opportunity to keep track of
           // bytes that have already been sent.
           if (bytes_sent > 0)
-            break;
+            {
+              break;
+            }
           else
             {
               ACE_OS::set_errno_to_wsa_last_error ();
@@ -827,7 +841,9 @@ ACE_OS::sendv (ACE_HANDLE handle,
 
           // If the transfer isn't complete just drop out of the loop.
           if (result < (int)buffers[i].iov_len)
-            break;
+            {
+              break;
+            }
         }
     }
 # endif /* ACE_HAS_WINSOCK2 != 0 */
@@ -849,7 +865,9 @@ ACE_OS::sendv (ACE_HANDLE handle,
           // This gives the caller an opportunity to keep track of
           // bytes that have already been sent.
           if (bytes_sent > 0)
-            break;
+            {
+              break;
+            }
           else
             {
               // errno should already be set from the ACE_OS::send call.
@@ -863,7 +881,9 @@ ACE_OS::sendv (ACE_HANDLE handle,
 
           // If the transfer isn't complete just drop out of the loop.
           if (result < buffers[i].iov_len)
-            break;
+            {
+              break;
+            }
         }
     }
 
