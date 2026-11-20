@@ -73,7 +73,9 @@ client (void *arg)
   // The server will verify that this data pattern gets there intact.
 
   for (i = 0; i < sizeof buffer; ++i)
-    buffer[i] = static_cast<u_char> (i);
+    {
+      buffer[i] = static_cast<u_char> (i);
+    }
 
   const ACE_TCHAR file[] = ACE_TEXT ("Sendfile_Test_File");
   static const size_t file_sz = sizeof (file) / sizeof (file[0]);
@@ -112,9 +114,11 @@ client (void *arg)
       goto cleanup;
     }
   else if (len != 255)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) sendfile len %b; should be 255\n"),
-                len));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) sendfile len %b; should be 255\n"),
+                  len));
+    }
 
   //*******************   TEST 2   ******************************
   //
@@ -140,13 +144,15 @@ client (void *arg)
     }
 
   for (i = 0; i < static_cast<size_t>(len); ++i)
-    if (buffer2[i] != buffer[i])
+    {
+      if (buffer2[i] != buffer[i])
       {
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) Test 2, rcvd byte %B is %d, not %d\n"),
                     i, buffer2[i], buffer[i]));
         Test_Result = 1;
       }
+    }
 
 cleanup:
   cli_stream.close ();
@@ -211,7 +217,8 @@ server (void *arg)
     }
 
   for (i = 0; i < static_cast<int>(len); ++i)
-    if (buffer[i] != i)
+    {
+      if (buffer[i] != i)
       {
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) Test 1, rcvd byte %B is %d, not %B\n"),
@@ -220,6 +227,7 @@ server (void *arg)
                     i));
         Test_Result = 1;
       }
+    }
 
   //*******************   TEST 2   ******************************
   //
@@ -261,8 +269,10 @@ spawn ()
   // Bind listener to any port and then find out what the port was.
   if (peer_acceptor.open (ACE_Addr::sap_any) == -1
       || peer_acceptor.get_local_addr (server_addr) == -1)
-    ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) open: %p\n")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) open: %p\n")));
+    }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
