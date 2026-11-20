@@ -139,8 +139,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE::HTBP::Channel channel1(sock_stream[0]);
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT("(%P) Got sock[0], handle = %@\n"),
-              reinterpret_cast<void *> (sock_stream[0].get_handle())));
+              ACE_TEXT("(%P) Got sock[0], handle = %H\n"),
+              sock_stream[0].get_handle()));
 
   if (peer_acceptor.accept(sock_stream[1],&cli_addr,0) == -1)
     {
@@ -151,8 +151,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE::HTBP::Channel channel2(sock_stream[1]);
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT("(%P) Got sock_stream[1], handle = %@\n"),
-              reinterpret_cast<void *> (sock_stream[1].get_handle())));
+              ACE_TEXT("(%P) Got sock_stream[1], handle = %H\n"),
+              sock_stream[1].get_handle()));
   int res {};
   while ((res = channel1.pre_recv()) != 0)
     {

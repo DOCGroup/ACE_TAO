@@ -24,8 +24,8 @@ Peer_Handler::Peer_Handler (int iterations)
 int
 Peer_Handler::open (void *)
 {
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("activating %@\n"),
-              reinterpret_cast<void *> (this->get_handle ())));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("activating %H\n"),
+              this->get_handle ()));
 
   // If iterations_ has not been set, read from stdin.
   if (this->iterations_ == 0)

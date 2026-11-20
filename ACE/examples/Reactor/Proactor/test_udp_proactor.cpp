@@ -176,7 +176,7 @@ Receiver::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
 
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
   ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_to_read", result.bytes_to_read ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "handle", reinterpret_cast<void *> (result.handle ())));
+  ACE_DEBUG ((LM_DEBUG, "%s = %H\n", "handle", result.handle ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_transfered", result.bytes_transferred ()));
   ACE_INET_Addr peerAddr;
   result.remote_address (peerAddr);
@@ -352,7 +352,7 @@ Sender::handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result)
 
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
   ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_to_write", result.bytes_to_write ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "handle", reinterpret_cast<void *> (result.handle ())));
+  ACE_DEBUG ((LM_DEBUG, "%s = %H\n", "handle", result.handle ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_transfered", result.bytes_transferred ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "flags", result.flags ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "act", const_cast<void *> (result.act ())));

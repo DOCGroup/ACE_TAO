@@ -94,14 +94,14 @@ ACE_TMAIN (int argc , ACE_TCHAR *argv[])
   ACE::HTBP::Channel channel1(sock[0]);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) Server: ")
-              ACE_TEXT ("Got sock[0], handle = %@\n"),
-              reinterpret_cast<void *> (sock[0].get_handle())));
+              ACE_TEXT ("Got sock[0], handle = %H\n"),
+              sock[0].get_handle ()));
   acc.accept (sock[1]);
   ACE::HTBP::Channel channel2 (sock[1]);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) Server: ")
-              ACE_TEXT ("Got sock[1], handle = %@\n"),
-              reinterpret_cast<void *> (sock[1].get_handle())));
+              ACE_TEXT ("Got sock[1], handle = %H\n"),
+              sock[1].get_handle ()));
   int res {};
   while ((res = channel1.pre_recv ()) != 0)
     {

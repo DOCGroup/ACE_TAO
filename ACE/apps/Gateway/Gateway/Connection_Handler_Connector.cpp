@@ -44,9 +44,9 @@ Connection_Handler_Connector::initiate_connection (Connection_Handler *connectio
   else
     {
       connection_handler->state (Connection_Handler::ESTABLISHED);
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) connected to %s on %@\n"),
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) connected to %s on %H\n"),
                   addr_buf,
-                  reinterpret_cast<void *> (connection_handler->get_handle ())));
+                  connection_handler->get_handle ()));
     }
   return 0;
 }

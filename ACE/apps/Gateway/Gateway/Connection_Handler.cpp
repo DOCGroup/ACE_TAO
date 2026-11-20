@@ -147,10 +147,10 @@ int
 Connection_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) shutting down %C Connection_Handler %d on handle %@\n",
+              "(%t) shutting down %C Connection_Handler %d on handle %H\n",
               this->connection_role () == 'C' ? "Consumer" : "Supplier",
               this->connection_id (),
-              reinterpret_cast<void *> (this->get_handle ())));
+              this->get_handle ()));
 
   // Restart the connection, if possible.
   return this->event_channel_->reinitiate_connection_connection (this);
@@ -178,9 +178,9 @@ Connection_Handler::state () const
 int
 Connection_Handler::open (void *)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) %C Connection_Handler's handle = %@\n",
+  ACE_DEBUG ((LM_DEBUG, "(%t) %C Connection_Handler's handle = %H\n",
               this->connection_role () == 'C' ? "Consumer" : "Supplier",
-              reinterpret_cast<void *> (this->peer ().get_handle ())));
+              this->peer ().get_handle ()));
 
   // Call back to the <Event_Channel> to complete our initialization.
   if (this->event_channel_->complete_connection_connection (this) == -1)

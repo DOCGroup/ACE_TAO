@@ -264,7 +264,7 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
   ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_to_read", result.bytes_to_read
               ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "handle", reinterpret_cast<void *> (result.handle ())));
+  ACE_DEBUG ((LM_DEBUG, "%s = %H\n", "handle", result.handle ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_transfered",
               result.bytes_transferred ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "act", const_cast<void *> (result.act ())));
@@ -315,7 +315,7 @@ Receiver::handle_write_stream (const ACE_Asynch_Write_Stream::Result
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
   ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_to_write",
               result.bytes_to_write ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "handle", reinterpret_cast<void *> (result.handle ())));
+  ACE_DEBUG ((LM_DEBUG, "%s = %H\n", "handle", result.handle ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_transfered",
               result.bytes_transferred ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "act", const_cast<void *> (result.act ())));
@@ -537,7 +537,7 @@ void Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
   ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_to_write",
               result.bytes_to_write ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "handle", reinterpret_cast<void *> (result.handle ())));
+  ACE_DEBUG ((LM_DEBUG, "%s = %H\n", "handle", result.handle ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_transfered",
               result.bytes_transferred ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "act", const_cast<void *> (result.act ())));
@@ -581,7 +581,7 @@ Sender::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
   ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_to_read", result.bytes_to_read
               ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "handle", reinterpret_cast<void *> (result.handle ())));
+  ACE_DEBUG ((LM_DEBUG, "%s = %H\n", "handle", result.handle ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_transfered",
               result.bytes_transferred ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "act", const_cast<void *> (result.act ())));

@@ -142,16 +142,16 @@ Accept_Handler::handle_input (ACE_HANDLE h)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) Server Accept_Handler::handle_input ")
-                      ACE_TEXT ("Creating new stream handler for %@\n"),
-                      reinterpret_cast<void *> (stream->get_handle ())));
+                      ACE_TEXT ("Creating new stream handler for %H\n"),
+                      stream->get_handle ()));
           Stream_Handler *sh = new Stream_Handler(*stream);
           session->handler (sh);
         }
       else
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) Server Accept_Handler::handle_input ")
-                    ACE_TEXT ("There is already a handler for %@\n"),
-                    reinterpret_cast<void *> (stream->get_handle ())));
+                    ACE_TEXT ("There is already a handler for %H\n"),
+                    stream->get_handle ()));
 
       if ((*ch)->state() == ACE::HTBP::Channel::Data_Queued)
         {

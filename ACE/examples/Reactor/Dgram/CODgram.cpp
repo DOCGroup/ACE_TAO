@@ -100,8 +100,8 @@ Dgram_Endpoint::handle_input (ACE_HANDLE)
   char buf[BUFSIZ];
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) activity occurred on handle %@!\n",
-              reinterpret_cast<void *> (this->endpoint_.get_handle ())));
+              "(%P|%t) activity occurred on handle %H!\n",
+              this->endpoint_.get_handle ()));
 
   ssize_t const n = this->endpoint_.recv (buf, sizeof buf);
 

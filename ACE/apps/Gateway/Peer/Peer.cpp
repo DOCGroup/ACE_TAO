@@ -22,8 +22,8 @@ int
 Peer_Handler::open (void *a)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("handle = %@\n"),
-              reinterpret_cast<void *> (this->peer ().get_handle ())));
+              ACE_TEXT ("handle = %H\n"),
+              this->peer ().get_handle ()));
 
   // Call down to the base class to activate and register this handler
   // with an <ACE_Reactor>.
@@ -199,8 +199,8 @@ Peer_Handler::nonblk_put (ACE_Message_Block *mb)
     {
       // We didn't manage to send everything, so requeue.
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("queueing activated on handle %@ to connection id %d\n"),
-                  reinterpret_cast<void *> (this->get_handle ()),
+                  ACE_TEXT ("queueing activated on handle %H to connection id %d\n"),
+                  this->get_handle (),
                   this->connection_id_));
 
       // Re-queue in *front* of the list to preserve order.
@@ -265,8 +265,8 @@ Peer_Handler::handle_output (ACE_HANDLE)
           if (this->msg_queue ()->is_empty ())
             {
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("queue now empty on handle %@ to connection id %d\n"),
-                          reinterpret_cast<void *> (this->get_handle ()),
+                          ACE_TEXT ("queue now empty on handle %H to connection id %d\n"),
+                          this->get_handle (),
                           this->connection_id_));
 
               if (ACE_Reactor::instance ()->cancel_wakeup
@@ -491,8 +491,8 @@ int
 Peer_Handler::handle_input (ACE_HANDLE sd)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("in handle_input, sd = %@\n"),
-              reinterpret_cast<void *> (sd)));
+              ACE_TEXT ("in handle_input, sd = %H\n"),
+              sd));
   if (sd == ACE_STDIN) // Handle event from stdin.
     {
       return this->transmit_stdin ();
@@ -521,9 +521,9 @@ Peer_Handler::await_connection_id ()
       else
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("%p, bytes received on handle %@ = %b\n"),
+                             ACE_TEXT ("%p, bytes received on handle %H = %b\n"),
                              ACE_TEXT ("recv"),
-                             reinterpret_cast<void *> (this->get_handle ()),
+                             this->get_handle (),
                              n),
                             -1);
         }
@@ -674,8 +674,8 @@ Peer_Handler::handle_close (ACE_HANDLE,
   if (this->get_handle () != ACE_INVALID_HANDLE)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("shutting down Peer on handle %@\n"),
-                  reinterpret_cast<void *> (this->get_handle ())));
+                  ACE_TEXT ("shutting down Peer on handle %H\n"),
+                  this->get_handle ()));
 
       ACE_Reactor_Mask const mask =
         ACE_Event_Handler::DONT_CALL | ACE_Event_Handler::READ_MASK;
@@ -692,8 +692,8 @@ Peer_Handler::handle_close (ACE_HANDLE,
           (this, mask) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("handle = %@: %p\n"),
-                             reinterpret_cast<void *> (this->get_handle ()),
+                             ACE_TEXT ("handle = %H: %p\n"),
+                             this->get_handle (),
                              ACE_TEXT ("remove_handler")),
                             -1);
         }

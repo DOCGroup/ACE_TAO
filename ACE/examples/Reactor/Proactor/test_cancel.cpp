@@ -59,8 +59,8 @@ Receiver::Receiver ()
 Receiver::~Receiver ()
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Receiver: Closing down Remote connection:%@\n",
-              reinterpret_cast<void *> (this->handle_)));
+              "Receiver: Closing down Remote connection:%H\n",
+              this->handle_));
 
   ACE_OS::closesocket (this->handle_);
 }
@@ -108,7 +108,7 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
   ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_to_read", result.bytes_to_read ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "handle", reinterpret_cast<void *> (result.handle ())));
+  ACE_DEBUG ((LM_DEBUG, "%s = %H\n", "handle", result.handle ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_transfered", result.bytes_transferred ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "act", const_cast<void *> (result.act ())));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "success", result.success ()));

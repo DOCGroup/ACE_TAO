@@ -53,9 +53,9 @@ Svc_Handler<PEER_STREAM>::open (void *)
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("client addr %s on handle %@\n"),
+                  ACE_TEXT ("client addr %s on handle %H\n"),
                   buf,
-                  reinterpret_cast<void *> (this->peer ().get_handle ())));
+                  this->peer ().get_handle ()));
     }
 
   // Process the connection immediately since we are an interative
@@ -215,9 +215,9 @@ IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::svc ()
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("starting server addr %s on handle %@\n"),
+                  ACE_TEXT ("starting server addr %s on handle %H\n"),
                   buf,
-                  reinterpret_cast<void *> (this->get_handle ())));
+                  this->get_handle ()));
     }
 
   // Performs the iterative server activities.
@@ -245,9 +245,9 @@ IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::svc ()
             {
               // We've probably timed out...
               ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("%p on handle %@\n"),
+                          ACE_TEXT ("%p on handle %H\n"),
                           ACE_TEXT ("accept"),
-                          reinterpret_cast<void *> (this->acceptor ().get_handle ())));
+                          this->acceptor ().get_handle ()));
             }
         }
 

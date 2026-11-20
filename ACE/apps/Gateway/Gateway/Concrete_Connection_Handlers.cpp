@@ -82,8 +82,8 @@ Consumer_Handler::nonblk_put (ACE_Message_Block *event)
       // things up.
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t) queueing activated on handle %@ to routing id %d\n",
-                  reinterpret_cast<void *> (this->get_handle ()),
+                  "(%t) queueing activated on handle %H to routing id %d\n",
+                  this->get_handle (),
                   this->connection_id ()));
 
       // ACE_Queue in *front* of the list to preserve order.
@@ -154,8 +154,8 @@ Consumer_Handler::handle_output (ACE_HANDLE)
   ACE_Message_Block *event {};
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT("(%t) Receiver signalled 'resume transmission' %@\n"),
-              reinterpret_cast<void *> (this->get_handle ())));
+              ACE_TEXT("(%t) Receiver signalled 'resume transmission' %H\n"),
+              this->get_handle ()));
 
   // WIN32 Notes: When the receiver blocked, we started adding to the
   // consumer handler's message Q. At this time, we registered a
@@ -231,8 +231,8 @@ Consumer_Handler::handle_output (ACE_HANDLE)
               ACE_TEXT ("%D Sent all messages from consumers message Q\n")));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) queueing deactivated on handle %@ to routing id %d\n"),
-              reinterpret_cast<void *> (this->get_handle ()),
+              ACE_TEXT ("(%t) queueing deactivated on handle %H to routing id %d\n"),
+              this->get_handle (),
               this->connection_id ()));
 #else /* !defined (ACE_WIN32) */
   // The list had better not be empty, otherwise there's a bug!
@@ -272,8 +272,8 @@ Consumer_Handler::handle_output (ACE_HANDLE)
           if (this->msg_queue ()->is_empty ())
             {
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%t) queueing deactivated on handle %@ to routing id %d\n"),
-                          reinterpret_cast<void *> (this->get_handle ()),
+                          ACE_TEXT ("(%t) queueing deactivated on handle %H to routing id %d\n"),
+                          this->get_handle (),
                           this->connection_id ()));
 
               if (ACE_Reactor::instance ()->cancel_wakeup
@@ -675,8 +675,8 @@ Thr_Consumer_Handler::svc ()
   for (in_thread_ = true;;)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t) Thr_Consumer_Handler's handle = %@\n",
-                  reinterpret_cast<void *> (this->peer ().get_handle ())));
+                  "(%t) Thr_Consumer_Handler's handle = %H\n",
+                  this->peer ().get_handle ()));
 
       // Since this method runs in its own thread it is OK to block on
       // output.
@@ -696,9 +696,9 @@ Thr_Consumer_Handler::svc ()
       ACE_ASSERT (errno == ESHUTDOWN);
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t) shutting down threaded Consumer_Handler %d on handle %@\n",
+                  "(%t) shutting down threaded Consumer_Handler %d on handle %H\n",
                   this->connection_id (),
-                  reinterpret_cast<void *> (this->get_handle ())));
+                  this->get_handle ()));
 
       this->peer ().close ();
 
@@ -796,8 +796,8 @@ Thr_Supplier_Handler::svc ()
   for (in_thread_ = true;;)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t) Thr_Supplier_Handler's handle = %@\n",
-                 reinterpret_cast<void *> (this->peer ().get_handle ())));
+                  "(%t) Thr_Supplier_Handler's handle = %H\n",
+                 this->peer ().get_handle ()));
 
       // Since this method runs in its own thread and processes events
       // for one connection it is OK to call down to the
@@ -810,9 +810,9 @@ Thr_Supplier_Handler::svc ()
         }
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t) shutting down threaded Supplier_Handler %d on handle %@\n",
+                  "(%t) shutting down threaded Supplier_Handler %d on handle %H\n",
                   this->connection_id (),
-                  reinterpret_cast<void *> (this->get_handle ())));
+                  this->get_handle ()));
 
       this->peer ().close ();
 

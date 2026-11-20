@@ -229,9 +229,9 @@ Peer_Handler::open (void *)
                                                         sizeof buf) != -1)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t) creating handler for %s, handle = %@\n"),
+                  ACE_TEXT ("(%t) creating handler for %s, handle = %H\n"),
                   buf,
-                  reinterpret_cast<void *> (this->get_handle ())));
+                  this->get_handle ()));
     }
   else
     {

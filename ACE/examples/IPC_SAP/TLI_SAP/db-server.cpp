@@ -46,8 +46,8 @@ lookup_name (ACE_HANDLE handle)
   char sendline[MAXLINE];
 
   ACE_DEBUG ((LM_DEBUG,
-              "stream handle = %@, thread id = %t\n",
-              reinterpret_cast<void *> (handle)));
+              "stream handle = %H, thread id = %t\n",
+              handle));
   stream.set_handle (handle);
 
   ssize_t n = stream.recv (recvline, MAXLINE, &flags);

@@ -82,8 +82,8 @@ Simple_Handler::handle_signal (int, siginfo_t *s, ucontext_t *)
 int
 Simple_Handler::handle_close (ACE_HANDLE handle, ACE_Reactor_Mask)
 {
-  ACE_DEBUG ((LM_DEBUG, "Simple_Handler::handle_close handle = %@\n",
-              reinterpret_cast<void *> (handle)));
+  ACE_DEBUG ((LM_DEBUG, "Simple_Handler::handle_close handle = %H\n",
+              handle));
   ++this->handle_close_count_;
 
   if (this->handle_close_count_ == 1)
@@ -103,27 +103,27 @@ worker (void *)
   ACE_DEBUG ((LM_DEBUG, "(%t) Thread creation\n"));
   ACE_DEBUG ((LM_DEBUG, "(%t) Thread sleeping\n"));
   ACE_OS::sleep (1);
-  ACE_DEBUG ((LM_DEBUG, "(%t) Thread signaling %@\n",
-              reinterpret_cast<void *> (simple_handler.event1_.handle())));
+  ACE_DEBUG ((LM_DEBUG, "(%t) Thread signaling %H\n",
+              simple_handler.event1_.handle()));
   simple_handler.event1_.signal ();
   ACE_DEBUG ((LM_DEBUG, "(%t) Thread sleeping\n"));
   ACE_OS::sleep (1);
-  ACE_DEBUG ((LM_DEBUG, "(%t) Thread signaling %@\n",
-              reinterpret_cast<void *> (simple_handler.event1_.handle())));
+  ACE_DEBUG ((LM_DEBUG, "(%t) Thread signaling %H\n",
+              simple_handler.event1_.handle()));
   ACE_DEBUG ((LM_DEBUG, "Note: This signal should be \"lost\" because of the suspended handler\n"));
   simple_handler.event1_.signal ();
   ACE_DEBUG ((LM_DEBUG, "(%t) Thread sleeping\n"));
   ACE_OS::sleep (1);
-  ACE_DEBUG ((LM_DEBUG, "(%t) Thread resetting %@\n",
-              reinterpret_cast<void *> (simple_handler.event1_.handle())));
+  ACE_DEBUG ((LM_DEBUG, "(%t) Thread resetting %H\n",
+              simple_handler.event1_.handle()));
   simple_handler.event1_.reset ();
-  ACE_DEBUG ((LM_DEBUG, "(%t) Thread signaling %@\n",
-              reinterpret_cast<void *> (simple_handler.event2_.handle())));
+  ACE_DEBUG ((LM_DEBUG, "(%t) Thread signaling %H\n",
+              simple_handler.event2_.handle()));
   simple_handler.event2_.signal ();
   ACE_DEBUG ((LM_DEBUG, "(%t) Thread sleeping\n"));
   ACE_OS::sleep (1);
-  ACE_DEBUG ((LM_DEBUG, "(%t) Thread signaling %@\n",
-              reinterpret_cast<void *> (simple_handler.event1_.handle())));
+  ACE_DEBUG ((LM_DEBUG, "(%t) Thread signaling %H\n",
+              simple_handler.event1_.handle()));
   simple_handler.event1_.signal ();
   ACE_DEBUG ((LM_DEBUG, "(%t) Thread death\n"));
   return 0;

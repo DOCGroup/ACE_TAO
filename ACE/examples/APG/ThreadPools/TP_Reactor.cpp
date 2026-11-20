@@ -196,8 +196,8 @@ private:
           for (size_t j = 0; j < cli_req_no; ++j)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("Sending work to server on handle %@, req %B\n"),
-                          reinterpret_cast<void *> (stream.get_handle ()),
+                          ACE_TEXT ("Sending work to server on handle %H, req %B\n"),
+                          stream.get_handle (),
                           j + 1));
               if (stream.send_n (arg,
                                  (len + 1) * sizeof (ACE_TCHAR)) == -1)
@@ -230,8 +230,8 @@ private:
       ACE_TCHAR const *const sbuf = ACE_TEXT ("\011shutdown");
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("shutdown stream handle = %@\n"),
-                  reinterpret_cast<void *> (stream.get_handle ())));
+                  ACE_TEXT ("shutdown stream handle = %H\n"),
+                  stream.get_handle ()));
 
       if (stream.send_n (sbuf, (ACE_OS::strlen (sbuf) + 1) * sizeof (ACE_TCHAR)) == -1)
         {

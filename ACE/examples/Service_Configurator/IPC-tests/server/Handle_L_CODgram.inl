@@ -90,8 +90,8 @@ Handle_L_CODgram::handle_input (ACE_HANDLE)
   if (this->recv_handle (handle) == -1)
     return -1;
   else
-    ACE_DEBUG ((LM_INFO, ACE_TEXT ("received handle (%@)\n"),
-                reinterpret_cast<void *> (handle)));
+    ACE_DEBUG ((LM_INFO, ACE_TEXT ("received handle (%H)\n"),
+                handle));
 
   ACE_OS::puts ("----------------------------------------");
 

@@ -155,8 +155,8 @@ Task_Handler::handle_signal (int, siginfo_t *siginfo, ucontext_t *)
   // This will force Reactor to update its internal handle tables
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) calls handle_signal for handle %@\n",
-              reinterpret_cast<void *> (siginfo->si_handle_)));
+              "(%t) calls handle_signal for handle %H\n",
+              siginfo->si_handle_));
 
   if (ACE_Reactor::instance ()->remove_handler (siginfo->si_handle_,
                                                 ACE_Event_Handler::DONT_CALL) == -1)
@@ -180,8 +180,8 @@ int
 Task_Handler::handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) handle_close() called: handle value = %@\n",
-              reinterpret_cast<void *> (handle)));
+  ACE_DEBUG ((LM_DEBUG, "(%t) handle_close() called: handle value = %H\n",
+              handle));
   return 0;
 }
 

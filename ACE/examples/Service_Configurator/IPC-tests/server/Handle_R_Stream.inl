@@ -124,8 +124,8 @@ Handle_R_Stream::handle_input (ACE_HANDLE)
                     ) == -1)
     return -1;
   else
-    ACE_DEBUG ((LM_INFO, "new_remote_stream fd = %@\n",
-                reinterpret_cast<void *> (this->new_remote_stream.get_handle ())));
+    ACE_DEBUG ((LM_INFO, "new_remote_stream fd = %H\n",
+                this->new_remote_stream.get_handle ()));
 
   ACE_INET_Addr sa;
 

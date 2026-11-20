@@ -138,8 +138,8 @@ Peer_Handler<ROUTER, KEY>::open (void *a)
   if (this->router_task_->info (&p, sizeof buf) != -1)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t) creating handler for %s, fd = %@, this = %@\n"),
-                  buf, reinterpret_cast<void *> (this->get_handle ()), a));
+                  ACE_TEXT ("(%t) creating handler for %s, fd = %H, this = %@\n"),
+                  buf, this->get_handle (), a));
     }
   else
     {
@@ -263,9 +263,9 @@ Peer_Router<PH, PK>::init (int argc, ACE_TCHAR *argv[])
       if (pa.get_local_addr (addr) != -1)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%t) initializing %s, file = %s, fd = %@, this = %@\n"),
+                      ACE_TEXT ("(%t) initializing %s, file = %s, fd = %H, this = %@\n"),
                       this->name (), addr.get_path_name (),
-                      reinterpret_cast<void *> (pa.get_handle ()),
+                      pa.get_handle (),
                       static_cast<void *> (this)));
         }
       else

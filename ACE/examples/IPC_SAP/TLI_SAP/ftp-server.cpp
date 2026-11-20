@@ -20,16 +20,16 @@ read_file (void *fd)
   // as a long on all current ACE platforms.
   stream.set_handle ((int) (long) fd);
 
-  ACE_DEBUG ((LM_DEBUG, "start (tid = %t, fd = %@)\n",
-              reinterpret_cast<void *> (stream.get_handle ())));
+  ACE_DEBUG ((LM_DEBUG, "start (tid = %t, fd = %H)\n",
+              stream.get_handle ()));
 
   while ((n = stream.recv (buf, sizeof buf, &flags)) > 0)
     continue;
 
   ACE_UNUSED_ARG (n);
 
-  ACE_DEBUG ((LM_DEBUG, "finish (tid = %t, fd = %@)\n",
-              reinterpret_cast<void *> (stream.get_handle ())));
+  ACE_DEBUG ((LM_DEBUG, "finish (tid = %t, fd = %H)\n",
+              stream.get_handle ()));
 
   if (stream.close () == -1)
     ACE_OS::t_error ("stream.close error");
