@@ -166,30 +166,40 @@ test_put (TAO_OutputCDR &cdr, CDR_Test_Types const &test_types, int const n)
   for (int i = 0; i < n; ++i)
     {
       if (cdr.write_octet (test_types.o) == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "write_octet[%d] failed\n",
-                           i),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "write_octet[%d] failed\n",
+                             i),
+                            1);
+        }
       if (cdr.write_short (test_types.s) == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "write_short[%d] failed\n",
-                           i),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "write_short[%d] failed\n",
+                             i),
+                            1);
+        }
       if (cdr.write_octet (test_types.o) == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "write_octet-2[%d] failed\n",
-                           i),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "write_octet-2[%d] failed\n",
+                             i),
+                            1);
+        }
       if (cdr.write_long (test_types.l) == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "write_long[%d] failed\n",
-                           i),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "write_long[%d] failed\n",
+                             i),
+                            1);
+        }
       if (cdr.write_long (test_types.l) == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "write_long-2[%d] failed\n",
-                           i),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "write_long-2[%d] failed\n",
+                             i),
+                            1);
+        }
 #if 0
       if (cdr.write_string (test_types.str) == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -198,10 +208,12 @@ test_put (TAO_OutputCDR &cdr, CDR_Test_Types const &test_types, int const n)
                           1);
 #endif
       if (!(cdr << test_types.any))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "encode Any [%d] failed\n",
-                           i),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "encode Any [%d] failed\n",
+                             i),
+                            1);
+        }
     }
 
   return 0;
@@ -218,54 +230,74 @@ test_get (TAO_InputCDR &cdr, CDR_Test_Types const &test_types, int const n)
   for (int i = 0; i < n; ++i)
     {
       if (cdr.read_octet (xo) == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "read_octet[%d] failed\n",
-                           i),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "read_octet[%d] failed\n",
+                             i),
+                            1);
+        }
       if (xo != test_types.o)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "octet[%d] differs\n",
-                           i),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "octet[%d] differs\n",
+                             i),
+                            1);
+        }
       if (cdr.read_short (xs) == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "read_short[%d] failed\n",
-                           i), 1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "read_short[%d] failed\n",
+                             i), 1);
+        }
       if (xs != test_types.s)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "short[%d] differs\n",
-                           i),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "short[%d] differs\n",
+                             i),
+                            1);
+        }
       if (cdr.read_octet (xo) == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "read_octet-2[%d] failed\n",
-                           i),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "read_octet-2[%d] failed\n",
+                             i),
+                            1);
+        }
       if (xo != test_types.o)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "octet-2[%d] differs\n",
-                           i),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "octet-2[%d] differs\n",
+                             i),
+                            1);
+        }
       if (cdr.read_long (xl) == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "read_long[%d] failed\n",
-                           i),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "read_long[%d] failed\n",
+                             i),
+                            1);
+        }
       if (xl != test_types.l)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "long[%d] differs\n",
-                           i),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "long[%d] differs\n",
+                             i),
+                            1);
+        }
       if (cdr.read_long (xl) == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "read_long-2[%d] failed\n",
-                           i),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "read_long-2[%d] failed\n",
+                             i),
+                            1);
+        }
       if (xl != test_types.l)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "long-2[%d] differs\n",
-                           i),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "long-2[%d] differs\n",
+                             i),
+                            1);
+        }
 #if 0
       CORBA::String xstr;
       if (cdr.read_string (xstr) == 0)
@@ -286,24 +318,30 @@ test_get (TAO_InputCDR &cdr, CDR_Test_Types const &test_types, int const n)
           if (any >>= s)
             {
               if (test_types.s != s)
-                ACE_ERROR_RETURN ((LM_ERROR,
-                                   "Any short mismatch [%d != %d in loop %d]\n",
-                                   test_types.s,
-                                   s,
-                                   i),
-                                  1);
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     "Any short mismatch [%d != %d in loop %d]\n",
+                                     test_types.s,
+                                     s,
+                                     i),
+                                    1);
+                }
             }
           else
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Any did not receive a short [%d]\n",
-                               i),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Any did not receive a short [%d]\n",
+                                 i),
+                                1);
+            }
         }
       else
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Any decode failed [%d]\n",
-                           i),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Any decode failed [%d]\n",
+                             i),
+                            1);
+        }
     }
 
   return 0;
