@@ -59,7 +59,9 @@ ACE_Time_Value::set (time_t sec, suseconds_t usec)
   if ((__builtin_constant_p(sec) &
        __builtin_constant_p(usec)) &&
       (sec >= 0 && usec >= 0 && usec < ACE_ONE_SECOND_IN_USECS))
-    return;
+    {
+      return;
+    }
 #endif
   this->normalize ();
 }
