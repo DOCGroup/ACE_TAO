@@ -17,13 +17,17 @@ ACEXML_INLINE ACEXML_Char const *
 ACEXML_Entity_Manager::resolve_entity (ACEXML_Char const *ref)
 {
   if (this->entities_ == nullptr)
-    return nullptr;
+    {
+      return nullptr;
+    }
 
   ACEXML_ENTITY_ENTRY *entry {};
 
   if (this->entities_->find (ACEXML_String (ref, nullptr, false),
                             entry) == 0)
-    return entry->int_id_.c_str();
+    {
+      return entry->int_id_.c_str();
+    }
   return nullptr;
 }
 
@@ -33,7 +37,9 @@ ACEXML_Entity_Manager::resolve_entity (ACEXML_Char const *ref,
                                        ACEXML_Char*& publicId)
 {
   if (this->entities_ == nullptr)
-    return 0;
+    {
+      return 0;
+    }
 
   publicId = systemId = nullptr;
   ACEXML_ENTITY_ENTRY_ITERATOR iter (*this->entities_, ref);
@@ -44,7 +50,9 @@ ACEXML_Entity_Manager::resolve_entity (ACEXML_Char const *ref,
       systemId = const_cast<ACEXML_Char*> ((*iter).int_id_.c_str());
       ++iter;
       if (iter != end)
-        publicId = const_cast<ACEXML_Char*> ((*iter).int_id_.c_str());
+        {
+          publicId = const_cast<ACEXML_Char*> ((*iter).int_id_.c_str());
+        }
       return 0;
     }
   return -1;
@@ -61,6 +69,8 @@ ACEXML_INLINE size_t
 ACEXML_Entity_Manager::size () const
 {
   if (this->entities_ == nullptr)
-    return 0;
+    {
+      return 0;
+    }
   return this->entities_->current_size();
 }

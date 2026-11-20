@@ -520,7 +520,9 @@ ACEXML_HttpCharStream::peek_i ()
   for (; i < 2 && (input[i] = this->stream_->peek_char (i)) > 0; ++i)
     ;
   if (i < 2)
-    return -1;
+    {
+      return -1;
+    }
   return (BE ? input[0] << 8 | input[1] : input[1] << 8 | input[0]);
 }
 #endif /* ACE_USES_WCHAR */

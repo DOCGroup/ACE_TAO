@@ -258,7 +258,9 @@ ACEXML_FileCharStream::peek_i ()
   // If somebody had already called peek() and not consumed it, return the
   // value held in this->peek_.
   if (this->peek_ != 0)
-    return this->peek_;
+    {
+      return this->peek_;
+    }
 
   // Peek into the stream. This reads two characters off the stream, keeps
   // it in peek_.

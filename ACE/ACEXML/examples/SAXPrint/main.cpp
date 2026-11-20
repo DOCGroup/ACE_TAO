@@ -96,10 +96,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           zstm = std::make_unique<ACEXML_ZipCharStream> ();
           if (zstm->open (filename) != 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Failed to open XML file: %s\n"),
-                               filename),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Failed to open XML file: %s\n"),
+                                 filename),
+                                -1);
+            }
           stm = std::move (zstm);
         }
       else

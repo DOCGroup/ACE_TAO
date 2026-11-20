@@ -194,7 +194,9 @@ ACEXML_INLINE int
 ACEXML_Parser::skip_equal ()
 {
   if (this->skip_whitespace() != '=')
-    return -1;
+    {
+      return -1;
+    }
   while (this->is_whitespace (this->peek()))
     this->get();
   return 0;
@@ -214,7 +216,9 @@ ACEXML_Parser::get ()
       if (ch == '\x0D')
         {
           if (instream->peek() == 0x0A)
-            instream->get (ch);
+            {
+              instream->get (ch);
+            }
           ch = '\x0A';
         }
       if (ch == '\x0A')
@@ -244,12 +248,18 @@ ACEXML_INLINE int
 ACEXML_Parser::parse_token (ACEXML_Char const *keyword)
 {
   if (keyword == nullptr)
-    return -1;
+    {
+      return -1;
+    }
   ACEXML_Char const *ptr = keyword;
   for (; *ptr != 0 && (this->get() == *ptr); ++ptr)
     ;
   if (*ptr == 0)
-  return 0;
+    {
+      return 0;
+    }
   else
-    return -1;
+    {
+      return -1;
+    }
 }

@@ -20,9 +20,11 @@ ACE_INLINE void
 ACEXML_URL_Addr::operator= (const ACEXML_URL_Addr &addr)
 {
   if (this->set (addr) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACEXML_URL_Addr::ACEXML_URL_Addr")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("ACEXML_URL_Addr::ACEXML_URL_Addr")));
+    }
 }
 
 ACE_INLINE u_long

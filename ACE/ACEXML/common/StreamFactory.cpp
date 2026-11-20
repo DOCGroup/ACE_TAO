@@ -64,7 +64,9 @@ ACEXML_StreamFactory::create_stream (ACEXML_Char const *uri)
               return nullptr;
             }
           if (zstream->open (uri) != -1)
-            return zstream.release ();
+            {
+              return zstream.release ();
+            }
         }
 #endif /* USE_ZZIP */
     }

@@ -1927,7 +1927,9 @@ ACEXML_Parser::parse_char_reference (ACEXML_Char *buf, size_t& len)
 #if defined (ACE_USES_WCHAR)
 #  if (ACE_SIZEOF_WCHAR == 2)    // UTF-16
   if ((clen = ACEXML_Transcoder::ucs42utf16 (sum, buf, len)) < 0)
-    return -1;
+    {
+      return -1;
+    }
 #  elif (ACE_SIZEOF_WCHAR == 4)  // UCS 4
   buf [0] = sum;
   buf [1] = 0;
