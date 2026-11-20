@@ -396,8 +396,11 @@ Server_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
 
           return;
         }
-      else TAOLIB_DEBUG ((LM_DEBUG,
-                       "Thread Not Cancelled\n"));
+      else
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
+                         "Thread Not Cancelled\n"));
+        }
 
       // Inform scheduler that upcall is complete.
       RTScheduling::Scheduler_var const scheduler = current->scheduler ();
@@ -415,8 +418,11 @@ Server_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
       // Reset the previous current pointer.
       tss->rtscheduler_previous_current_impl_ = nullptr;
     }
-  else TAOLIB_DEBUG ((LM_DEBUG,
-                   "Send Reply Current is 0\n"));
+  else
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                     "Send Reply Current is 0\n"));
+    }
 }
 
 void
