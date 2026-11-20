@@ -20,16 +20,20 @@ testCompatibility (int, ACE_TCHAR *[])
 
   // Use the "old" interface
   if (ACE_Service_Config::process_directive (ace_svc_desc_TAO_CORBANAME_Parser) != 0)
-    ACE_ERROR_RETURN ((LM_DEBUG,
-                       ACE_TEXT ("Failed to process %s\n"),
-                       ace_svc_desc_TAO_CORBANAME_Parser),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_DEBUG,
+                         ACE_TEXT ("Failed to process %s\n"),
+                         ace_svc_desc_TAO_CORBANAME_Parser),
+                        -1);
+    }
 
   if (ACE_Service_Config::process_directive (ace_svc_desc_TAO_CORBALOC_Parser) != 0)
-    ACE_ERROR_RETURN ((LM_DEBUG,
-                       ACE_TEXT ("Failed to process %s\n"),
-                       ace_svc_desc_TAO_CORBALOC_Parser),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_DEBUG,
+                         ACE_TEXT ("Failed to process %s\n"),
+                         ace_svc_desc_TAO_CORBALOC_Parser),
+                        -1);
+    }
 
   {
     ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt_Test> const one {
@@ -40,38 +44,46 @@ testCompatibility (int, ACE_TCHAR *[])
     ACE_Service_Object * const corbaname_service =
       ACE_Dynamic_Service<ACE_Service_Object>::instance (one.get (), corbaname);
     if (corbaname_service == nullptr)
-      ACE_ERROR_RETURN ((LM_DEBUG,
-                         ACE_TEXT ("Expected %s in the global repository\n"),
-                         corbaname),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_DEBUG,
+                           ACE_TEXT ("Expected %s in the global repository\n"),
+                           corbaname),
+                          -1);
+      }
 
     ACE_TCHAR const * const corbaloc = ACE_TEXT ("CORBALOC_Parser");
     ACE_Service_Object * const corbaloc_service =
       ACE_Dynamic_Service<ACE_Service_Object>::instance (one.get (), corbaloc);
     if (corbaloc_service == nullptr)
-      ACE_ERROR_RETURN ((LM_DEBUG,
-                         ACE_TEXT ("Expected %s in the global repository\n"),
-                         corbaloc),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_DEBUG,
+                           ACE_TEXT ("Expected %s in the global repository\n"),
+                           corbaloc),
+                          -1);
+      }
   }
 
   ACE_TCHAR const * const corbaname = ACE_TEXT ("CORBANAME_Parser");
   ACE_Service_Object * const p20 =
     ACE_Dynamic_Service<ACE_Service_Object>::instance (isolated.get (), corbaname, true);
   if (p20 != nullptr)
-    ACE_ERROR_RETURN ((LM_DEBUG,
-                       ACE_TEXT ("Expected %s to be absent from the isolated gestalt\n"),
-                       corbaname),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_DEBUG,
+                         ACE_TEXT ("Expected %s to be absent from the isolated gestalt\n"),
+                         corbaname),
+                        -1);
+    }
 
   ACE_TCHAR const * const corbaloc = ACE_TEXT ("CORBALOC_Parser");
   ACE_Service_Object * const p21 =
     ACE_Dynamic_Service<ACE_Service_Object>::instance (isolated.get (), corbaloc, true);
   if (p21 != nullptr)
-    ACE_ERROR_RETURN ((LM_DEBUG,
-                       ACE_TEXT ("Expected %s to be absent from the isolated gestalt\n"),
-                       corbaloc),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_DEBUG,
+                         ACE_TEXT ("Expected %s to be absent from the isolated gestalt\n"),
+                         corbaloc),
+                        -1);
+    }
 
   return 0;
 }
@@ -105,11 +117,13 @@ testCommandLineDirectives (int, ACE_TCHAR *[])
               g.command_line_directives_count ()));
 
   if (g.command_line_directives_count () != 2)
-    ACE_ERROR_RETURN ((LM_DEBUG,
-                       ACE_TEXT ("Expected %d, but found %d command line directives\n"),
-                       2,
-                       g.command_line_directives_count ()),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_DEBUG,
+                         ACE_TEXT ("Expected %d, but found %d command line directives\n"),
+                         2,
+                         g.command_line_directives_count ()),
+                        -1);
+    }
 
   return 0;
 }
