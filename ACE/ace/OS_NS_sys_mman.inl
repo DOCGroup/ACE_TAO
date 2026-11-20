@@ -129,7 +129,9 @@ ACE_OS::mmap (void *addr,
 
   // Only close this down if we used the temporary.
   if (file_mapping == std::addressof (local_handle))
-    ::CloseHandle (*file_mapping);
+    {
+      ::CloseHandle (*file_mapping);
+    }
 
   if (addr_mapping == 0)
     {

@@ -37,7 +37,9 @@ ACE_OS::ace_isascii (ACE_TCHAR c)
   return isascii ((unsigned char) c);
 #  endif /* ACE_LACKS_ISASCII */
   else
-    return c;
+    {
+      return c;
+    }
 # else
   return iswascii (c);
 # endif
