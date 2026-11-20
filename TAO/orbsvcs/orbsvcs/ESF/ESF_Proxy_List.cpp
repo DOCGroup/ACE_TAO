@@ -14,7 +14,9 @@ TAO_ESF_Proxy_List<PROXY>::connected (PROXY *proxy)
 {
   int const r = this->impl_.insert (proxy);
   if (r == 0)
-    return;
+    {
+      return;
+    }
 
   if (r == 1)
     {
@@ -34,7 +36,9 @@ TAO_ESF_Proxy_List<PROXY>::reconnected (PROXY *proxy)
 {
   int const r = this->impl_.insert (proxy);
   if (r == 0)
-    return;
+    {
+      return;
+    }
 
   if (r == 1)
     {

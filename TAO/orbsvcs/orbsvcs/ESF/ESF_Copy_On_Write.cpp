@@ -24,7 +24,9 @@ TAO_ESF_Copy_On_Write_Collection<COLLECTION,ITERATOR>::_decr_refcnt ()
   {
     --this->refcount_;
     if (this->refcount_ != 0)
-      return this->refcount_;
+      {
+        return this->refcount_;
+      }
   }
 
   ITERATOR const end = this->collection.end ();

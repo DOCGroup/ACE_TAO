@@ -41,11 +41,13 @@ IOGR_Maker::merge_iors (TAO_IOP::TAO_IOR_Manipulation::IORList const &list)
 {
   CORBA::Object_var obj;
   if (list.length() != 1)
-    obj = iorm_->merge_iors(list);
+    {
+      obj = iorm_->merge_iors(list);
+    }
   else
-  {
-    obj = CORBA::Object::_duplicate(list[0]);
-  }
+    {
+      obj = CORBA::Object::_duplicate(list[0]);
+    }
   return obj._retn();
 }
 

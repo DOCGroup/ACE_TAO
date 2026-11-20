@@ -27,15 +27,21 @@ TAO_EC_Event_Channel_Base::factory (TAO_EC_Factory* factory,
   if (this->factory_ == factory)
     {
       if (own_factory != 0 && this->owned_factory_.get () != factory)
-        this->owned_factory_.reset (factory);
+        {
+          this->owned_factory_.reset (factory);
+        }
       else if (own_factory == 0 && this->owned_factory_.get () == factory)
-        this->owned_factory_.release ();
+        {
+          this->owned_factory_.release ();
+        }
       return;
     }
 
   this->owned_factory_.reset ();
   if (own_factory != 0)
-    this->owned_factory_.reset (factory);
+    {
+      this->owned_factory_.reset (factory);
+    }
   this->factory_ = factory;
 }
 

@@ -64,7 +64,9 @@ TAO_ESF_Copy_On_Read<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::
       for (PROXY **j = proxies; j != proxies + size; ++j)
         {
           if (*j != nullptr)
-            (*j)->_decr_refcnt ();
+            {
+              (*j)->_decr_refcnt ();
+            }
         }
       delete[] proxies;
 

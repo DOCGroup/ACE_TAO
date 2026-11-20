@@ -37,17 +37,20 @@ void setup_object_group(TAO_FTEC_Event_Channel* es,
       member_list[0].ior = FTRT::ObjectGroupManager::_duplicate(ec);
 
       if (membership == TAO_FTEC_Event_Channel::PRIMARY)
-        es->create_group(member_list, 0);
+        {
+          es->create_group(member_list, 0);
+        }
 
-      else { // BACKUP
-        FtRtecEventChannelAdmin::EventChannel_var primary =
-          resolve<FtRtecEventChannelAdmin::EventChannel>(naming_context,
-            FTRTEC::Identification_Service::instance()->name());
+      else // BACKUP
+        {
+          FtRtecEventChannelAdmin::EventChannel_var primary =
+            resolve<FtRtecEventChannelAdmin::EventChannel>(naming_context,
+              FTRTEC::Identification_Service::instance()->name());
 
-        ORBSVCS_DEBUG((LM_DEBUG, "Got Primary address from Naming Service\n"));
+          ORBSVCS_DEBUG((LM_DEBUG, "Got Primary address from Naming Service\n"));
 
-        primary->join_group(member_list[0]);
-      }
+          primary->join_group(member_list[0]);
+        }
     }
 }
 
