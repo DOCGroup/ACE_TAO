@@ -13574,3 +13574,10 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Focused clang-tidy brace checks and `git diff --check` passed for both edited files. No build or runtime test was run.
 - Re-scanned all 400 translation units in `ACE/examples/compile_commands.json`: 216 brace warnings remain, down from 253. Five translation units still report the unrelated clang `-Wnon-pod-varargs` error at `APG/Naming/Thermometer.h:41`.
 - Commits: `99504d19580` and `c65ab9ab236`. The full ACE/TAO brace audit remains open.
+
+## 2026-11-20 ACE IPC service directory brace follow-up
+
+- Added Allman braces to single-statement bodies in `remote_service_directory_test.cpp`, `Handle_L_Pipe.cpp`, `Handle_Thr_Stream.cpp`, and `server_test.cpp` under `ACE/examples/Service_Configurator/IPC-tests`.
+- Focused clang-tidy brace checks and `git diff --check` passed for each edited file. No build or runtime test was run.
+- Re-scanned all 400 translation units in `ACE/examples/compile_commands.json`: 199 brace warnings remain, down from 216. Five translation units still report the unrelated clang `-Wnon-pod-varargs` error at `APG/Naming/Thermometer.h:41`.
+- Commits: `a73716069cf`, `08cc76f9413`, `346bddbfd31`, and `dc695191b7c`. The full ACE/TAO brace audit remains open.
