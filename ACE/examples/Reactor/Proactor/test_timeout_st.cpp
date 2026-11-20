@@ -61,7 +61,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                                                  (void *) "Foo",
                                                  ACE_Time_Value::zero,
                                                  foo_tv) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
+    }
 
   // Register a 3 second timer.
   ACE_Time_Value bar_tv (3);
@@ -69,7 +71,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                                                  (void *) "Bar",
                                                  ACE_Time_Value::zero,
                                                  bar_tv) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
+    }
 
   // Handle events for 13 seconds.
   ACE_Time_Value run_time (13);
@@ -78,9 +82,11 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   // Run the event loop.
   if (ACE_Proactor::run_event_loop(run_time) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%t):%p.\n", "Worker::svc"),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%t):%p.\n", "Worker::svc"),
+                        1);
+    }
 
   ACE_DEBUG ((LM_DEBUG, "Ending event loop\n"));
 
