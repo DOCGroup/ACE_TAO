@@ -205,7 +205,9 @@ namespace ACE_Utils
     {
       // Prevent wrap-around when casting to unsigned.
       if (lhs < 0)
-        return false;  // since rhs is always positive
+        {
+          return false;  // since rhs is always positive
+        }
       else
         {
           // Implicit promotion of unsigned LEFT and RIGHT types here.
@@ -222,7 +224,9 @@ namespace ACE_Utils
     {
       // Prevent wrap-around when casting to unsigned.
       if (rhs < 0)
-        return true;  // since lhs is always positive
+        {
+          return true;  // since lhs is always positive
+        }
       else
         {
           // Implicit promotion of unsigned LEFT and RIGHT types here.
