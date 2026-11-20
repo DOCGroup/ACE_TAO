@@ -19,7 +19,9 @@ ACE_Bound_Ptr_Counter<ACE_LOCK>::create_strong ()
   // Set initial object reference count to 1.
   ACE_Bound_Ptr_Counter<ACE_LOCK> *temp = internal_create (1);
   if (!temp)
-    throw std::bad_alloc ();
+    {
+      throw std::bad_alloc ();
+    }
   return temp;
 }
 
@@ -30,7 +32,9 @@ ACE_Bound_Ptr_Counter<ACE_LOCK>::attach_strong (ACE_Bound_Ptr_Counter<ACE_LOCK>*
 
   // Can't attach a strong pointer to an object that has already been deleted.
   if (counter->obj_ref_count_ == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   long const new_obj_ref_count = ++counter->obj_ref_count_;
   ++counter->self_ref_count_;
@@ -74,7 +78,9 @@ ACE_Bound_Ptr_Counter<ACE_LOCK>::create_weak ()
 
   ACE_Bound_Ptr_Counter<ACE_LOCK> *temp = internal_create (0);
   if (!temp)
-    throw std::bad_alloc ();
+    {
+      throw std::bad_alloc ();
+    }
   return temp;
 }
 
@@ -156,7 +162,9 @@ template <class X, class ACE_LOCK> inline
 ACE_Strong_Bound_Ptr<X, ACE_LOCK>::~ACE_Strong_Bound_Ptr ()
 {
   if (COUNTER::detach_strong (this->counter_) == 0)
-    delete this->ptr_;
+    {
+      delete this->ptr_;
+    }
 }
 
 template <class X, class ACE_LOCK> inline void
@@ -165,13 +173,17 @@ ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator = (const ACE_Strong_Bound_Ptr<X, ACE
   // This will work if &r == this, by first increasing the ref count, but
   // why go through all that?
   if (std::addressof (rhs) == this)
-    return;
+    {
+      return;
+    }
 
   COUNTER *new_counter = rhs.counter_;
   X *new_ptr = rhs.ptr_;
   COUNTER::attach_strong (new_counter);
   if (COUNTER::detach_strong (this->counter_) == 0)
-    delete this->ptr_;
+    {
+      delete this->ptr_;
+    }
   this->counter_ = new_counter;
   this->ptr_ = new_ptr;
 }
@@ -182,7 +194,9 @@ ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator = (const ACE_Weak_Bound_Ptr<X, ACE_L
   // This will work if &r == this, by first increasing the ref count, but
   // why go through all that?
   if (std::addressof (rhs) == this)
-    return;
+    {
+      return;
+    }
 
   COUNTER *new_counter = rhs.counter_;
   X *new_ptr = rhs.ptr_;
@@ -198,7 +212,9 @@ ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator = (const ACE_Weak_Bound_Ptr<X, ACE_L
     }
 
   if (COUNTER::detach_strong (this->counter_) == 0)
-    delete this->ptr_;
+    {
+      delete this->ptr_;
+    }
   this->counter_ = new_counter;
   this->ptr_ = new_ptr;
 }
@@ -273,7 +289,9 @@ ACE_Strong_Bound_Ptr<X, ACE_LOCK>::reset (X *p)
   this->counter_ = COUNTER::create_strong ();
   this->ptr_ = p;
   if (COUNTER::detach_strong (old_counter) == 0)
-    delete old_ptr;
+    {
+      delete old_ptr;
+    }
 }
 
 template <class X, class ACE_LOCK> inline
@@ -333,7 +351,9 @@ ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator== (const ACE_Weak_Bound_Ptr<X, ACE_LOC
   // A weak pointer must behave as though it is automatically set to null
   // if the underlying object has been deleted.
   if (COUNTER::object_was_deleted (this->counter_))
-    return r.ptr_ == nullptr;
+    {
+      return r.ptr_ == nullptr;
+    }
 
   return this->ptr_ == r.ptr_;
 }
@@ -344,7 +364,9 @@ ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator== (const ACE_Strong_Bound_Ptr<X, ACE_L
   // A weak pointer must behave as though it is automatically set to null
   // if the underlying object has been deleted.
   if (COUNTER::object_was_deleted (this->counter_))
-    return r.ptr_ == nullptr;
+    {
+      return r.ptr_ == nullptr;
+    }
 
   return this->ptr_ == r.ptr_;
 }
@@ -355,7 +377,9 @@ ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator== (X *p) const
   // A weak pointer must behave as though it is automatically set to null
   // if the underlying object has been deleted.
   if (COUNTER::object_was_deleted (this->counter_))
-    return p == nullptr;
+    {
+      return p == nullptr;
+    }
 
   return this->ptr_ == p;
 }
@@ -366,7 +390,9 @@ ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator!= (const ACE_Weak_Bound_Ptr<X, ACE_LOC
   // A weak pointer must behave as though it is automatically set to null
   // if the underlying object has been deleted.
   if (COUNTER::object_was_deleted (this->counter_))
-    return r.ptr_ != nullptr;
+    {
+      return r.ptr_ != nullptr;
+    }
 
   return this->ptr_ != r.ptr_;
 }
@@ -377,7 +403,9 @@ ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator!= (const ACE_Strong_Bound_Ptr<X, ACE_L
   // A weak pointer must behave as though it is automatically set to null
   // if the underlying object has been deleted.
   if (COUNTER::object_was_deleted (this->counter_))
-    return r.ptr_ != nullptr;
+    {
+      return r.ptr_ != nullptr;
+    }
 
   return this->ptr_ != r.ptr_;
 }
@@ -388,7 +416,9 @@ ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator!= (X *p) const
   // A weak pointer must behave as though it is automatically set to null
   // if the underlying object has been deleted.
   if (COUNTER::object_was_deleted (this->counter_))
-    return p != nullptr;
+    {
+      return p != nullptr;
+    }
 
   return this->ptr_ != p;
 }
@@ -419,7 +449,9 @@ ACE_Weak_Bound_Ptr<X, ACE_LOCK>::null () const
   // A weak pointer must behave as though it is automatically set to null
   // if the underlying object has been deleted.
   if (COUNTER::object_was_deleted (this->counter_))
-    return true;
+    {
+      return true;
+    }
 
   return this->ptr_ == nullptr;
 }

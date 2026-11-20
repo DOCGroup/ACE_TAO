@@ -51,11 +51,15 @@ ACE_ARGV_T<CHAR_TYPE>::argv ()
   if (this->argv_ == nullptr)
     {
       if (this->iterative_ && this->buf_ == nullptr)
-        this->create_buf_from_queue ();
+        {
+          this->create_buf_from_queue ();
+        }
 
       // Convert buf_ to argv_
       if (this->string_to_argv () == -1)
-        return nullptr;
+        {
+          return nullptr;
+        }
     }
 
   return this->argv_;

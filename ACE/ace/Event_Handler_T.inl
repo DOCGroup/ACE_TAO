@@ -8,7 +8,9 @@ ACE_Event_Handler_T<T>::op_handler (T *op)
 {
   ACE_TRACE ("ACE_Event_Handler_T<T>::op_handler");
   if (this->op_handler_.get () != op)
-    this->op_handler_.reset (op);
+    {
+      this->op_handler_.reset (op);
+    }
 }
 
 template<class T> ACE_INLINE T *

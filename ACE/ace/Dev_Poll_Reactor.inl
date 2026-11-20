@@ -43,21 +43,27 @@ ACE_Dev_Poll_Handler_Guard::ACE_Dev_Poll_Handler_Guard
     refcounted_ (false)
 {
   if (eh == nullptr)
-    return;
+    {
+      return;
+    }
 
   this->refcounted_ =
     eh->reference_counting_policy ().value () ==
     ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
 
   if (do_incr && this->refcounted_)
-    eh->add_reference ();
+    {
+      eh->add_reference ();
+    }
 }
 
 ACE_INLINE
 ACE_Dev_Poll_Handler_Guard::~ACE_Dev_Poll_Handler_Guard ()
 {
   if (this->refcounted_ && this->eh_ != nullptr)
-    this->eh_->remove_reference ();
+    {
+      this->eh_->remove_reference ();
+    }
 }
 
 ACE_INLINE void

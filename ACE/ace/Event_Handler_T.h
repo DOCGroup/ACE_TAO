@@ -159,7 +159,9 @@ private:
     void operator() (T *op_handler) const
     {
       if (this->delete_handler)
-        delete op_handler;
+        {
+          delete op_handler;
+        }
     }
   };
 
