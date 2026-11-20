@@ -1,5 +1,7 @@
 #include "ace/ATM_Acceptor.h"
 
+#include <cstring>
+
 #if defined (ACE_HAS_ATM)
 
 #if defined (ACE_HAS_LINUX_ATM)
@@ -54,7 +56,7 @@ ACE_ATM_Acceptor::get_local_addr (ACE_ATM_Addr &local_addr)
   }
 
   laddr = (struct sockaddr_atm *)local_addr.get_addr ();
-  ACE_OS::memcpy ((void *)& (laddr -> satm_number), (void *)&addr, ATM_ADDR_SIZE - 1);
+  std::memcpy (&laddr->satm_number, &addr, ATM_ADDR_SIZE - 1);
 
   return 0;
 #elif defined (ACE_HAS_FORE_ATM_XTI)
