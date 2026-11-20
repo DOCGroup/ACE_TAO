@@ -38,15 +38,19 @@ TAO_PG_Default_Property_Validator::validate_property (
         {
           PortableGroup::FactoriesValue const * factories;
           if (!(property.val >>= factories))
-            throw PortableGroup::InvalidProperty (property.nam, property.val);
+            {
+              throw PortableGroup::InvalidProperty (property.nam, property.val);
+            }
           else
             {
               CORBA::ULong const flen = factories->length ();
 
               if (flen == 0)
-                throw PortableGroup::InvalidProperty (
-                  property.nam,
-                  property.val);
+                {
+                  throw PortableGroup::InvalidProperty (
+                    property.nam,
+                    property.val);
+                }
 
               for (CORBA::ULong j {}; j < flen; ++j)
                 {
@@ -55,9 +59,11 @@ TAO_PG_Default_Property_Validator::validate_property (
 
                   if (CORBA::is_nil (factory_info.the_factory.in ())
                       || factory_info.the_location.length () == 0)
-                    throw PortableGroup::InvalidProperty (
-                      property.nam,
-                      property.val);
+                    {
+                      throw PortableGroup::InvalidProperty (
+                        property.nam,
+                        property.val);
+                    }
                 }
             }
         }
@@ -96,13 +102,17 @@ TAO_PG_Default_Property_Validator::validate_criteria (
         {
   PortableGroup::FactoriesValue const* factories {};
           if (!(property.val >>= factories))
-            invalid_criteria[p++] = property;
+            {
+              invalid_criteria[p++] = property;
+            }
           else
             {
               CORBA::ULong const flen = factories->length ();
 
               if (flen == 0)
-                invalid_criteria[p++] = property;
+                {
+                  invalid_criteria[p++] = property;
+                }
               else
                 {
                   for (CORBA::ULong j {}; j < flen; ++j)

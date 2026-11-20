@@ -114,11 +114,13 @@ TAO_PG_ObjectGroupManager::_tao_add_member (
   catch (PortableGroup::MemberAlreadyPresent const &)
     {
       if (propagate_member_already_present)
-        throw;
+        {
+          throw;
+        }
       else
-      {
-        throw CORBA::INTERNAL ();
-      }
+        {
+          throw CORBA::INTERNAL ();
+        }
     }
   catch (PortableGroup::ObjectNotAdded const &)
     {
@@ -590,12 +592,14 @@ TAO_PG_ObjectGroupManager::object_group (PortableServer::ObjectId const & oid)
 
   TAO_PG_ObjectGroup_Map_Entry * group_entry {};
   if (this->object_group_map_.find (oid, group_entry) == 0)
-    return
-      PortableGroup::ObjectGroup::_duplicate (group_entry->object_group.in ());
+    {
+      return
+        PortableGroup::ObjectGroup::_duplicate (group_entry->object_group.in ());
+    }
   else
-  {
-    return PortableGroup::ObjectGroup::_nil ();
-  }
+    {
+      return PortableGroup::ObjectGroup::_nil ();
+    }
 }
 
 CORBA::ULong
@@ -819,11 +823,13 @@ TAO_PG_ObjectGroupManager::remove_group_from_location_map (
         int to_be_removed = this->get_object_group_position (*groups,
                                                              group_entry);
         if (TAO_debug_level > 8)
-          ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) TAO_PG_ObjectGroupManager::")
-                      ACE_TEXT ("remove_group_from_location_map -")
-                      ACE_TEXT ("Found group at location: %s, position %i, size = %i\n"),
-                      loc[0].id.in (), to_be_removed, groups->size ()));
+          {
+            ORBSVCS_DEBUG ((LM_DEBUG,
+                            ACE_TEXT ("(%P|%t) TAO_PG_ObjectGroupManager::")
+                            ACE_TEXT ("remove_group_from_location_map -")
+                            ACE_TEXT ("Found group at location: %s, position %i, size = %i\n"),
+                            loc[0].id.in (), to_be_removed, groups->size ()));
+          }
         // Dont need to destroy the entry. Just need to remove it from the
         // Groups Array.
         this->remove_entry_from_groups (to_be_removed, groups);
@@ -846,10 +852,12 @@ TAO_PG_ObjectGroupManager::remove_entry_from_groups (int to_be_removed,
                                                      TAO_PG_ObjectGroup_Array * groups)
 {
   if (TAO_debug_level > 8)
-    ORBSVCS_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P|%t) TAO_PG_ObjectGroupManager::remove_entry_from_groups -")
-                ACE_TEXT ("Found group at position %i, size = %B\n"),
-                to_be_removed, groups->size ()));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) TAO_PG_ObjectGroupManager::remove_entry_from_groups -")
+                      ACE_TEXT ("Found group at position %i, size = %B\n"),
+                      to_be_removed, groups->size ()));
+    }
   groups->erase (groups->begin () + to_be_removed);
   return groups->size ();
 }
@@ -978,8 +986,10 @@ TAO_PG_ObjectGroupManager::validate_members (CORBA::ORB_ptr orb,
                                              TimeBase::TimeT const & timeout)
 {
   if (TAO_debug_level > 0)
-    ORBSVCS_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("(%P|%t)TAO_PG_ObjectGroupManager::validate_members start\n")));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t)TAO_PG_ObjectGroupManager::validate_members start\n")));
+    }
 
   /// Get list of active member info.
   TAO_PG_MemberInfo_Set active_members = this->get_members (true);
@@ -1026,8 +1036,10 @@ TAO_PG_ObjectGroupManager::validate_members (CORBA::ORB_ptr orb,
   }
 
   if (TAO_debug_level > 0)
-    ORBSVCS_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("(%P|%t)TAO_PG_ObjectGroupManager::validate_members end\n")));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t)TAO_PG_ObjectGroupManager::validate_members end\n")));
+    }
 }
 
 bool

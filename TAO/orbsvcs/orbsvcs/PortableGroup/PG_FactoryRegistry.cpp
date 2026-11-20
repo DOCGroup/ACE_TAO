@@ -172,9 +172,11 @@ int TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb)
     this->orb_->resolve_initial_references (TAO_OBJID_ROOTPOA);
 
   if (CORBA::is_nil (poa_object.in ()))
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
-                      -1);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
+                            -1);
+    }
 
   // Get the POA object.
   this->poa_ =

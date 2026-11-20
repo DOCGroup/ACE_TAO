@@ -96,9 +96,11 @@ TAO::PG_Object_Group::PG_Object_Group (
 TAO::PG_Object_Group::~PG_Object_Group ()
 {
   if (TAO_debug_level > 3)
-    ORBSVCS_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("%T %n (%P|%t) - Destroying object group: %s"),
-                this->group_name_ ? this->group_name_->c_str () : nullptr));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("%T %n (%P|%t) - Destroying object group: %s"),
+                      this->group_name_ ? this->group_name_->c_str () : nullptr));
+    }
 
   this->clear_members_map ();
 }
@@ -896,11 +898,13 @@ void
 TAO::PG_Object_Group::set_name (char const * group_name)
 {
   if (group_name == nullptr)
-    this->group_name_.reset ();
+    {
+      this->group_name_.reset ();
+    }
   else
-  {
-    this->group_name_ = group_name;
-  }
+    {
+      this->group_name_ = group_name;
+    }
 }
 
 char const *
