@@ -110,24 +110,30 @@ TAO_LB_ObjectReferenceFactory::make_object (
           catch (PortableGroup::ObjectGroupNotFound const & ex)
             {
               if (TAO_debug_level > 0)
-                ex._tao_print_exception (
-                  "TAO_LB_ObjectReferenceFactory::""make_object");
+                {
+                  ex._tao_print_exception (
+                    "TAO_LB_ObjectReferenceFactory::""make_object");
+                }
 
               throw CORBA::BAD_PARAM ();
             }
           catch (PortableGroup::MemberAlreadyPresent const & ex)
             {
               if (TAO_debug_level > 0)
-                ex._tao_print_exception (
-                  "TAO_LB_ObjectReferenceFactory::""make_object");
+                {
+                  ex._tao_print_exception (
+                    "TAO_LB_ObjectReferenceFactory::""make_object");
+                }
 
               throw CORBA::BAD_INV_ORDER ();
             }
           catch (PortableGroup::ObjectNotAdded const & ex)
             {
               if (TAO_debug_level > 0)
-                ex._tao_print_exception (
-                  "TAO_LB_ObjectReferenceFactory::""make_object");
+                {
+                  ex._tao_print_exception (
+                    "TAO_LB_ObjectReferenceFactory::""make_object");
+                }
 
               throw CORBA::UNKNOWN ();
             }
@@ -198,10 +204,12 @@ TAO_LB_ObjectReferenceFactory::find_object_group (
       if (this->table_.bind (repository_id, group) != 0)
         {
           if (TAO_debug_level > 0)
-            ORBSVCS_ERROR ((LM_ERROR,
-                        "TAO_LB_ObjectReferenceFactory::"
-                        "find_object_group - "
-                        "Couldn't bind object group reference.\n"));
+            {
+              ORBSVCS_ERROR ((LM_ERROR,
+                              "TAO_LB_ObjectReferenceFactory::"
+                              "find_object_group - "
+                              "Couldn't bind object group reference.\n"));
+            }
 
           throw CORBA::INTERNAL ();
         }
