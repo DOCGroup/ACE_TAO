@@ -48,15 +48,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
     Options options;
 
     if (parse_args (argc, argv, options) != 0)
-    {
-      return 1;
-    }
+      {
+        return 1;
+      }
 
     CORBA::Object_var obj = orb->string_to_object (options.ior.c_str ());
-    if (CORBA::is_nil (obj.in ())) {
-      std::cerr << "Nil Messenger reference" << std::endl;
-      return 1;
-    }
+    if (CORBA::is_nil (obj.in ()))
+      {
+        std::cerr << "Nil Messenger reference" << std::endl;
+        return 1;
+      }
     Messenger_var messenger = Messenger::_narrow (obj.in ());
     ACE_ASSERT (!CORBA::is_nil (messenger.in ()));
 
@@ -68,10 +69,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
     ACE_ASSERT (!CORBA::is_nil (policy_current.in ()));
 
     // TimeT is in 10ths of a microsecond (10000 == 1.0e-3 * 1.0e7).
-    if (options.roundtrip_timeout_msecs <= 0) {
-      std::cout << "Enter relative roundtrip timeout in milliseconds -->";
-      std::cin >> options.roundtrip_timeout_msecs;
-    }
+    if (options.roundtrip_timeout_msecs <= 0)
+      {
+        std::cout << "Enter relative roundtrip timeout in milliseconds -->";
+        std::cin >> options.roundtrip_timeout_msecs;
+      }
     TimeBase::TimeT const relative_rt_timeout = options.roundtrip_timeout_msecs * 10000;
 
     CORBA::Any relative_rt_timeout_as_any;
