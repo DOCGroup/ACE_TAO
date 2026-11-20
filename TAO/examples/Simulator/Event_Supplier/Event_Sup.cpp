@@ -83,17 +83,23 @@ Event_Supplier::start_generating_events ()
     dOVE_Supplier_.notify (any);
 
     if (total_sent < 5)
-      ACE_DEBUG ((LM_DEBUG,
-                  "Pushing event data.\n"));
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    "Pushing event data.\n"));
+      }
     else if (total_sent == 5)
-      ACE_DEBUG ((LM_DEBUG,
-                  "Everything is running. Going to be mute.\n"));
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    "Everything is running. Going to be mute.\n"));
+      }
   }
   while (++total_sent < this->total_messages_);
 
   // clean up the scheduling data
   for (Schedule_Viewer_Data * const data : schedule_data)
-    delete data;
+    {
+      delete data;
+    }
 }
 
 void
@@ -120,7 +126,9 @@ Event_Supplier::load_schedule_data
               // Run through leading whitespace.
               char *temp = input_buf;
               while (*temp && ACE_OS::ace_isspace (*temp))
-                ++temp;
+                {
+                  ++temp;
+                }
 
               // If there is anything besides whitespace in the line
               // read, scan its fields into the scheduling data
@@ -335,9 +343,11 @@ Event_Supplier::insert_event_data (CORBA::Any &data,
       }
     }
     else
-      ACE_ERROR ((LM_ERROR,
-                  "Event_Supplier::insert_event_data:"
-                  "Could Not access scheduling data"));
+      {
+        ACE_ERROR ((LM_ERROR,
+                    "Event_Supplier::insert_event_data:"
+                    "Could Not access scheduling data"));
+      }
 
     if (++schedule_index == schedule_data.size ())
     {
@@ -374,16 +384,20 @@ Event_Supplier::get_options (int argc, ACE_TCHAR *argv [])
                            this->total_messages_));
             }
           else
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "%s: count must be > 0",
-                               argv[0]),
-                               1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "%s: count must be > 0",
+                                 argv[0]),
+                                1);
+            }
           break;
         case 'f':
           this->input_file_name_ = get_opt.opt_arg ();
 
           if (!this->input_file_name_ || std::strlen (this->input_file_name_) > 0)
-            ACE_DEBUG ((LM_DEBUG,"Reading file!\n"));
+            {
+              ACE_DEBUG ((LM_DEBUG,"Reading file!\n"));
+            }
           else
             {
               this->input_file_name_ = nullptr;
@@ -404,13 +418,15 @@ Event_Supplier::get_options (int argc, ACE_TCHAR *argv [])
     }
 
   if (argc != get_opt.opt_ind ())
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%s: too many arguments\n"
-                       "Usage: %s %s\n",
-                       argv[0],
-                       argv[0],
-                       usage),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%s: too many arguments\n"
+                         "Usage: %s %s\n",
+                         argv[0],
+                         argv[0],
+                         usage),
+                        1);
+    }
 
   return 0;
 }
