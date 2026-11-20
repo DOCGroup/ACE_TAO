@@ -66,15 +66,19 @@ Event_Server::Event_Server ()
   if (ACE_Event_Handler::register_stdin_handler (this,
                                                  ACE_Reactor::instance (),
                                                  ACE_Thread_Manager::instance ()) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("register_stdin_handler")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("register_stdin_handler")));
+    }
   // Register to trap the SIGINT signal.
   else if (ACE_Reactor::instance ()->register_handler
            (SIGINT, this) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("register_handler")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("register_handler")));
+    }
 }
 
 int
@@ -154,20 +158,26 @@ Event_Server::configure_stream ()
   // push() links each module before opening its tasks, so the stream owns
   // the module even if push() reports an open error.
   if (this->event_server_.push (srm) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("push (Supplier_Router)")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("push (Supplier_Router)")),
+                        -1);
+    }
   else if (this->event_server_.push (eam) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("push (Event_Analyzer)")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("push (Event_Analyzer)")),
+                        -1);
+    }
   else if (this->event_server_.push (crm) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("push (Consumer_Router)")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("push (Consumer_Router)")),
+                        -1);
+    }
   return 0;
 }
 
@@ -181,16 +191,20 @@ Event_Server::set_watermarks ()
 
   if (this->event_server_.control (ACE_IO_Cntl_Msg::SET_LWM,
                                    &low_water_mark) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("push (setting low watermark)")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("push (setting low watermark)")),
+                        -1);
+    }
 
   size_t high_water_mark = Options::instance ().high_water_mark ();
   if (this->event_server_.control (ACE_IO_Cntl_Msg::SET_HWM,
                                    &high_water_mark) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("push (setting high watermark)")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("push (setting high watermark)")),
+                        -1);
+    }
   return 0;
 }
 
@@ -218,15 +232,21 @@ int
 Event_Server::svc ()
 {
   if (this->configure_stream () == -1)
-    return -1;
+    {
+      return -1;
+    }
   else if (this->set_watermarks () == -1)
-    return -1;
+    {
+      return -1;
+    }
   else if (this->run_event_loop () == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
 }
 
 int
