@@ -136,7 +136,9 @@ Test_Aio::do_aio ()
   // Fire off the aio write. If it doesnt get queued, carry on to get
   // the completion for the first one.
   if (aio_read (this->aiocb_read_) < 0)
-    perror ("aio_read");
+    {
+      perror ("aio_read");
+    }
 
   // Wait for the completion on aio_suspend.
   struct aiocb *list_aiocb[2];
@@ -172,7 +174,9 @@ Test_Aio::do_aio ()
                 }
             }
           else
-            cout << "AIO write in progress" << endl;
+            {
+              cout << "AIO write in progress" << endl;
+            }
         }
 
       if (list_aiocb[1] != 0)
@@ -195,12 +199,16 @@ Test_Aio::do_aio ()
                 }
             }
           else
-            cout << "AIO read in progress" << endl;
+            {
+              cout << "AIO read in progress" << endl;
+            }
         }
 
       // Is it done?
       if ((list_aiocb [0] == 0) && (list_aiocb [1] == 0))
-        done = 1;
+        {
+          done = 1;
+        }
     }
 
   cout << "Both the AIO operations done." << endl;
