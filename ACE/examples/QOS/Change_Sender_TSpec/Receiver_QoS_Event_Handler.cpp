@@ -54,7 +54,9 @@ Receiver_QoS_Event_Handler::handle_input (ACE_HANDLE)
       return 0;
     }
   else
-    return -1;
+    {
+      return -1;
+    }
 }
 
 // Called when there is a QoS Event.
@@ -74,12 +76,16 @@ Receiver_QoS_Event_Handler::handle_qos (ACE_HANDLE fd)
   // Win2K example.
 
   if (this->qos_session_->update_qos () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error in updating QoS\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Error in updating QoS\n"),
+                        -1);
+    }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                " Updating QOS succeeds.\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  " Updating QOS succeeds.\n"));
+    }
 
   // Now proactively query the QoS object for QoS.
   ACE_QoS const ace_get_qos = this->qos_session_->qos ();
