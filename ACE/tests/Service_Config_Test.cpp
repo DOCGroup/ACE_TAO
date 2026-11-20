@@ -167,8 +167,10 @@ testFailedServiceInit (int, ACE_TCHAR *[])
       }
     }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Repo reports no Refuses_Svc; correct.\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Repo reports no Refuses_Svc; correct.\n")));
+    }
 }
 
 void
@@ -270,7 +272,9 @@ testLoadingServiceConfFileAndProcessNo (int argc, ACE_TCHAR *argv[])
   ACE_Thread_Manager::instance ()->wait ();
 
   if (error == error0)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT("testLoadingServiceConfFileAndProcessNo completed successfully\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT("testLoadingServiceConfFileAndProcessNo completed successfully\n")));
+    }
   else
   {
     ACE_ERROR ((LM_ERROR, ACE_TEXT("testLoadingServiceConfFileAndProcessNo test failed\n")));
@@ -327,13 +331,17 @@ testLoadingServiceConfFile (int argc, ACE_TCHAR *argv[])
   if (daemon.open (new_argv.argc (), new_argv.argv ()) == -1)
     {
       if (errno == ENOENT)
-        ACE_DEBUG ((LM_WARNING,
-                    ACE_TEXT ("ACE_Service_Config::open: %p\n"),
-                    svc_conf));
+        {
+          ACE_DEBUG ((LM_WARNING,
+                      ACE_TEXT ("ACE_Service_Config::open: %p\n"),
+                      svc_conf));
+        }
       else
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("ACE_Service_Config::open: %p\n"),
-                    ACE_TEXT ("error")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("ACE_Service_Config::open: %p\n"),
+                      ACE_TEXT ("error")));
+        }
     }
 
   ACE_Time_Value tv (argc > 1 ? ACE_OS::atoi (argv[1]) : 2);
@@ -487,7 +495,9 @@ testLimits (int , ACE_TCHAR *[])
     }
 
   if (error == error0)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Limits test completed successfully\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Limits test completed successfully\n")));
+    }
   else
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Limits test failed\n")));
@@ -623,9 +633,11 @@ nonacethreadentry (void *args)
       ++error;
     }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("In thr %t, located Test_Object_1_Thr ")
-                ACE_TEXT ("via ACE_Service_Config\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("In thr %t, located Test_Object_1_Thr ")
+                  ACE_TEXT ("via ACE_Service_Config\n")));
+    }
 
   if (0 != ACE_Service_Repository::instance()->find
       (ACE_TEXT("Test_Object_1_Thr")))
@@ -636,9 +648,11 @@ nonacethreadentry (void *args)
       ++error;
     }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("In thr %t, located Test_Object_1_Thr ")
-                ACE_TEXT ("via ACE_Service_Repository\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("In thr %t, located Test_Object_1_Thr ")
+                  ACE_TEXT ("via ACE_Service_Repository\n")));
+    }
 
   return ACE_THR_FUNC_RETURN_NULL;
 }
@@ -724,8 +738,10 @@ testNonACEThread ()
           ++error;
         }
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Main thr %t DOES find Test_Object_1_Thr\n")));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Main thr %t DOES find Test_Object_1_Thr\n")));
+        }
     }
 
   if (-1 == ACE_Service_Config::process_directive (svc_remove))
