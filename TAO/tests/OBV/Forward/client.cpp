@@ -40,7 +40,7 @@ dump_node (BaseNode *const bn, int const indent)
 
   // This is ugly I know
   int i = indent;
-  for (; i != 0; i--) ACE_DEBUG ((LM_DEBUG, "  "));
+  for (; i != 0; --i) ACE_DEBUG ((LM_DEBUG, "  "));
 
   StringNode *sn = StringNode::_downcast (bn);
   if (sn != nullptr)

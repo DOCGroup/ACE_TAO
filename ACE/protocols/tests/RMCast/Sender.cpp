@@ -34,7 +34,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       msg.payload[i] = i;
     }
 
-    for (; msg.sn < message_count; msg.sn++)
+    for (; msg.sn < message_count; ++msg.sn)
     {
       socket.send (&msg, sizeof (msg));
     }

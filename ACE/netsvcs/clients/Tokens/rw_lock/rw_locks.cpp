@@ -94,7 +94,7 @@ run_thread (void *argument)
 
       READ_DEADLOCK:
 
-      for (; y > 0; y--)
+      for (; y > 0; ++y)
         {
           ACE_TOKEN_INVARIANTS::instance ()->releasing (options->read_lock);
           if (options->read_lock->release () == 0)

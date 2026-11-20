@@ -20,7 +20,7 @@ Server::Server (int, ACE_TCHAR *argv[])
     ACE_ARGV args_2 (argv);
 
     /*
-      for (int my_count = 0; my_count < args_1.argc(); my_count++) {
+      for (int my_count = 0; my_count < args_1.argc(); ++my_count) {
       ACE_DEBUG ((LM_DEBUG, "<%d, %s> ", my_count, (args_1.argv())[my_count]));
       }
       ACE_DEBUG ((LM_DEBUG, "\n"));
@@ -29,7 +29,7 @@ Server::Server (int, ACE_TCHAR *argv[])
     ACE_TCHAR **my_argv = args_1.argv ();
     int my_argc = args_1.argc ();
     int count = 0;
-    for (count = my_argc-1; count > -1; count--) {
+    for (count = my_argc-1; count > -1; --count) {
       if (ACE_OS::strcasecmp (ACE_TEXT("-ORBEndpoint"), my_argv[count]) == 0) {
         break;
       }

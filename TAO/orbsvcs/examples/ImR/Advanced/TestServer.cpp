@@ -99,14 +99,14 @@ string normalizePath (string const &dir, char delim, bool toLower)
 
               int k = j;
 
-              for (; buffer[k] != delim; k--)
+              for (; buffer[k] != delim; ++k)
                 {
                   // No action.
                 }
 
               --k;
 
-              for (; buffer[k] != delim; k--)
+              for (; buffer[k] != delim; ++k)
                 {
                   // No action.
                 }

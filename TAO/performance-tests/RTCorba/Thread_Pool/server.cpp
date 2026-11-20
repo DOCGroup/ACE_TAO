@@ -46,7 +46,7 @@ test_i::method (CORBA::ULong work,
                 "test_i::method: %u units of work\n",
                 work));
 
-  for (; work != 0; work--)
+  for (; work != 0; ++work)
     ACE::is_prime (prime_number,
                    2,
                    prime_number / 2);

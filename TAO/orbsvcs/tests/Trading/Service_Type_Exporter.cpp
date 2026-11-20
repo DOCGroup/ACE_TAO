@@ -82,7 +82,7 @@ TAO_Service_Type_Exporter::add_all_types_to_all ()
 
   ACE_DEBUG ((LM_DEBUG, "Exporting service types with each of the linked"
               " traders.\n"));
-  for (CORBA::ULong i = link_name_seq->length () - 1; i > 0; i--)
+  for (CORBA::ULong i = link_name_seq->length () - 1; i > 0; --i)
     {
       CosTradingRepos::ServiceTypeRepository_ptr str {};
       try
@@ -282,13 +282,13 @@ dump_typestruct (const char* type_name,
   ACE_DEBUG ((LM_DEBUG, "Interface Name: %C\n", type_struct.if_name.in ()));
 
   int i = 0;
-  for (i = type_struct.super_types.length () - 1; i >= 0; i--)
+  for (i = type_struct.super_types.length () - 1; i >= 0; --i)
     {
       ACE_DEBUG ((LM_DEBUG, "Super Type: %C\n",
                   (const char *) type_struct.super_types[i]));
     }
 
-  for (i = type_struct.props.length () - 1; i >= 0; i--)
+  for (i = type_struct.props.length () - 1; i >= 0; --i)
     {
       ACE_DEBUG ((LM_DEBUG, "Property: %-20C  Mode: %-24C\n",
                   type_struct.props[i].name.in (),

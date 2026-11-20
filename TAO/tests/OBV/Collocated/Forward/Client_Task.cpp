@@ -225,7 +225,7 @@ Client_Task::dump_node (BaseNode *bn, int indent)
 
   // This is ugly I know
   int i = indent;
-  for (; i != 0; i--) ACE_DEBUG ((LM_DEBUG, "  "));
+  for (; i != 0; --i) ACE_DEBUG ((LM_DEBUG, "  "));
 
   StringNode * const sn = StringNode::_downcast (bn);
   if (sn != nullptr)

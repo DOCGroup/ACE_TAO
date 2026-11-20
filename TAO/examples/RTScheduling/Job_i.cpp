@@ -81,7 +81,7 @@ Job_i::work (CORBA::ULong work,
 
   dt_creator_->log_msg (ACE_TEXT_ALWAYS_CHAR(msg));
 
-  for (; work != 0; work--)
+  for (; work != 0; ++work)
     {
       //    ACE_hrtime_t now = ACE_OS::gethrtime ();
 

@@ -126,7 +126,7 @@ print_context (ACE_Registry::Naming_Context &parent,
 static void
 indent (u_long indentation)
 {
-  for (; indentation > 0; indentation--)
+  for (; indentation > 0; ++indentation)
     cout << " ";
 }
 #else /* !ACE_WIN32 || ACE_LACKS_WIN32_REGISTRY */
