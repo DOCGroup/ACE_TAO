@@ -120,7 +120,9 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::open (ACE_Allocator *alloc)
   // otherwise use the default instance.
 
   if (alloc == 0)
-    alloc = ACE_Allocator::instance ();
+    {
+      alloc = ACE_Allocator::instance ();
+    }
 
   this->allocator_ = alloc;
 

@@ -38,8 +38,10 @@ ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::create (X *p)
   // Yes set ref count to zero.
   ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *temp = internal_create (p);
   if (!temp)
-    throw std::bad_alloc ();
-   return temp;
+    {
+      throw std::bad_alloc ();
+    }
+  return temp;
 }
 
 template <class X, class ACE_LOCK> inline ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *
@@ -47,7 +49,9 @@ ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::attach (
   ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *rep)
 {
   if (rep == nullptr)
-    return nullptr;
+    {
+      return nullptr;
+    }
 
   ++rep->ref_count_;
 
@@ -59,10 +63,14 @@ ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::detach (
   ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *&rep)
 {
   if (rep == nullptr)
-    return;
+    {
+      return;
+    }
 
   if (rep->ref_count_-- == 0)
-    delete rep;
+    {
+      delete rep;
+    }
 }
 
 template <class X, class ACE_LOCK> inline
@@ -155,13 +163,19 @@ ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::reset (X *p)
   // Avoid deleting the underlying auto_ptr if assigning the same actual
   // pointer value.
   if (this->get () == p)
-    return;
+    {
+      return;
+    }
 
   AUTO_REFCOUNTED_PTR_REP *old_rep = this->rep_;
   if ((this->rep_ = AUTO_REFCOUNTED_PTR_REP::create (p)) != nullptr)
-    AUTO_REFCOUNTED_PTR_REP::detach (old_rep);
+    {
+      AUTO_REFCOUNTED_PTR_REP::detach (old_rep);
+    }
   else
-    this->rep_ = old_rep;
+    {
+      this->rep_ = old_rep;
+    }
   return;
 }
 
@@ -175,7 +189,9 @@ ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::operator = (
     {
       this->rep_ = AUTO_REFCOUNTED_PTR_REP::attach (rhs.rep_);
       if (this->rep_ != nullptr)
-        AUTO_REFCOUNTED_PTR_REP::detach (old_rep);
+        {
+          AUTO_REFCOUNTED_PTR_REP::detach (old_rep);
+        }
     }
   else    // Assign a null rep to this
     {

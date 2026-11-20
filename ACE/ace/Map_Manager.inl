@@ -38,7 +38,9 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Manager (size_t size,
     cur_size_ (0)
 {
   if (this->open (size, alloc) == -1)
-    ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("ACE_Map_Manager\n")));
+    {
+      ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("ACE_Map_Manager\n")));
+    }
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE
@@ -49,7 +51,9 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Manager (ACE_Allocator *alloc
     cur_size_ (0)
 {
   if (this->open (ACE_DEFAULT_MAP_SIZE, alloc) == -1)
-    ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("ACE_Map_Manager\n")));
+    {
+      ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("ACE_Map_Manager\n")));
+    }
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int
@@ -276,7 +280,9 @@ ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::next (ACE_Map_Entry<EXT_ID, INT
       return 1;
     }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int
@@ -298,7 +304,9 @@ ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::forward_i ()
 
       // Stop if we reach the end.
       if (this->done ())
-        break;
+        {
+          break;
+        }
 
       // Break if we find a non-free slot.
       if (!this->map_man_->search_structure_[this->next_].free_)
@@ -329,7 +337,9 @@ ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::reverse_i ()
 
       // Stop if we reach the end.
       if (this->done ())
-        break;
+        {
+          break;
+        }
 
       // Break if we find a non-free slot.
       if (!this->map_man_->search_structure_[this->next_].free_)
@@ -383,7 +393,9 @@ ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::next (ACE_Map_Entry<EXT_I
       return 1;
     }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int
@@ -405,7 +417,9 @@ ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::forward_i ()
 
       // Stop if we reach the end.
       if (this->done ())
-        break;
+        {
+          break;
+        }
 
       // Break if we find a non-free slot.
       if (!this->map_man_->search_structure_[this->next_].free_)
@@ -436,7 +450,9 @@ ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::reverse_i ()
 
       // Stop if we reach the end.
       if (this->done ())
-        break;
+        {
+          break;
+        }
 
       // Break if we find a non-free slot.
       if (!this->map_man_->search_structure_[this->next_].free_)
@@ -491,7 +507,9 @@ ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Iterator (ACE_Map_Manager<EX
         {
           // Stop if we reach the end.
           if (this->done ())
-            break;
+            {
+              break;
+            }
 
           // Break if we find a non-free slot.
           if (!this->map_man_->search_structure_[this->next_].free_)
@@ -569,7 +587,9 @@ ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Const_Iterator (const 
         {
           // Stop if we reach the end.
           if (this->done ())
-            break;
+            {
+              break;
+            }
 
           // Break if we find a non-free slot.
           if (!this->map_man_->search_structure_[this->next_].free_)
@@ -647,7 +667,9 @@ ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Reverse_Iterator (AC
         {
           // Stop if we reach the end.
           if (this->done ())
-            break;
+            {
+              break;
+            }
 
           // Break if we find a non-free slot.
           if (!this->map_man_->search_structure_[this->next_].free_)
