@@ -325,8 +325,10 @@ ACE_Future<const ACE_TCHAR *>
 Prime_Scheduler::name ()
 {
   if (this->scheduler_)
-    // Delegate to the Prime_Scheduler.
-    return this->scheduler_->name ();
+    {
+      // Delegate to the Prime_Scheduler.
+      return this->scheduler_->name ();
+    }
   else
     {
       ACE_Future<const ACE_TCHAR*> new_future;
@@ -445,24 +447,34 @@ run_main (int, ACE_TCHAR *[])
   // See if the result is available...
 
   if (!fseta.is_empty ())
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) wow.. set a is not empty.....\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) wow.. set a is not empty.....\n")));
+    }
 
   if (!fsetb.is_empty ())
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) wow.. set b is not empty.....\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) wow.. set b is not empty.....\n")));
+    }
 
   if (!fsetc.is_empty ())
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) wow.. set c is not empty.....\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) wow.. set c is not empty.....\n")));
+    }
 
   if (!fsetd.is_empty ())
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) wow.. set d is not empty.....\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) wow.. set d is not empty.....\n")));
+    }
 
   if (!fsetname.is_empty ())
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) wow.. set name is not empty.....\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) wow.. set name is not empty.....\n")));
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) non-blocking calls done... now blocking...\n")));
@@ -531,24 +543,34 @@ run_main (int, ACE_TCHAR *[])
     }
 
   if (fseta.is_empty ())
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) wow.. set a is empty.....\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) wow.. set a is empty.....\n")));
+    }
 
   if (fsetb.is_empty ())
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) wow.. set b is empty.....\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) wow.. set b is empty.....\n")));
+    }
 
   if (fsetc.is_empty ())
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) wow.. set c is empty.....\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) wow.. set c is empty.....\n")));
+    }
 
   if (fsetd.is_empty ())
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) wow.. set d is empty.....\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) wow.. set d is empty.....\n")));
+    }
 
   if (fsetname.is_empty ())
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) wow.. set name is empty.....\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) wow.. set name is empty.....\n")));
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) task_count %d\n"),
