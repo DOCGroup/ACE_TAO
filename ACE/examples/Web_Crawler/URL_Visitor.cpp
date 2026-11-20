@@ -37,9 +37,11 @@ URL_Download_Strategy::execute ()
   // Extract all the contents of the Stream and print them to the
   // file.
   while (this->iterator_.next (buffer) != 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "%s",
-                buffer.c_str ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "%s",
+                  buffer.c_str ()));
+    }
 
   return 0;
 }
@@ -55,9 +57,11 @@ HTTP_Header_Processing_Strategy::execute ()
 {
   // Set the get() position.Necessary since later a peek is done.
   if (this->url_.stream ().get_char () == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n","Header Not Found"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n","Header Not Found"),
+                        -1);
+    }
   char line_buf[BUFSIZ + 1];
   ACE_CString line (line_buf);
   // Get the lines in the header iteratively and check for status info.
@@ -321,9 +325,11 @@ URL_Validation_Visitor::make_visitation_strategy_factory (URL &url)
                   "send_request"));
       if (this->url_cache_.bind (url.url_addr (),
                                  URL_Status (URL_Status::STATUS_SERVICE_UNAVAILABLE)) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    "%p\n",
-                    "bind"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%p\n",
+                      "bind"));
+        }
       return nullptr;
     }
   // @@ Here's where we could check to see if the <url> was HTTP or
@@ -357,27 +363,35 @@ URL_Validation_Visitor::visit (HTTP_URL &http_url)
       Destroyable_Unique_Ptr <URL_Visitation_Strategy_Factory> vs (this->make_visitation_strategy_factory (http_url));
 
       if (!vs)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
-                           "make_visitation_strategy_factory"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "%p\n",
+                             "make_visitation_strategy_factory"),
+                            -1);
+        }
 
       Destroyable_Unique_Ptr <URL_Iterator> ihs (vs->make_header_iterator ());
       if (!ihs)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
-                           "make_header_iterator"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "%p\n",
+                             "make_header_iterator"),
+                            -1);
+        }
       Destroyable_Unique_Ptr <URL_Processing_Strategy> phs (vs->make_header_strategy (*ihs));
       if (!phs)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
-                           "make_header_strategy"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "%p\n",
+                             "make_header_strategy"),
+                            -1);
+        }
       int phs_result = phs->execute ();
       if (phs_result == -1)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Invalid "));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Invalid "));
+        }
 
       ACE_DEBUG ((LM_DEBUG,
                   "URL with status %d %s\n",
@@ -387,9 +401,11 @@ URL_Validation_Visitor::visit (HTTP_URL &http_url)
       // Store the http url in the cache.
       if (this->url_cache ().bind (http_url.url_addr (),
                                    http_url.reply_status ()) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n","url_cache.bind"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "%p\n", "url_cache.bind"),
+                            -1);
+        }
 
       // Since it is invalid dont go further.
       if (phs_result == -1)
@@ -405,23 +421,29 @@ URL_Validation_Visitor::visit (HTTP_URL &http_url)
 
       Destroyable_Unique_Ptr <URL_Iterator> is (vs->make_body_iterator ());
       if (!is)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
-                           "make_body_iterator"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "%p\n",
+                             "make_body_iterator"),
+                            -1);
+        }
 
       Destroyable_Unique_Ptr <URL_Processing_Strategy> ps (vs->make_body_strategy (*is));
       if (!ps)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
-                           "make_body_strategy"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "%p\n",
+                             "make_body_strategy"),
+                            -1);
+        }
 
       if (ps->execute () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
-                           "body execute"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "%p\n",
+                             "body execute"),
+                            -1);
+        }
     }
   return 0;
 }
@@ -528,29 +550,37 @@ URL_Download_Visitor::visit (HTTP_URL &http_url)
   Destroyable_Unique_Ptr <URL_Visitation_Strategy_Factory> vs (this->make_visitation_strategy_factory (http_url));
 
   if (!vs)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "make_visitation_strategy_factory"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "make_visitation_strategy_factory"),
+                        -1);
+    }
 
   Destroyable_Unique_Ptr <URL_Iterator> is (vs->make_body_iterator ());
   if (!is)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "make_body_iterator"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "make_body_iterator"),
+                        -1);
+    }
 
   Destroyable_Unique_Ptr <URL_Processing_Strategy> ps (vs->make_body_strategy (*is));
   if (!ps)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "make_body_strategy"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "make_body_strategy"),
+                        -1);
+    }
 
   if (ps->execute () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "body execute"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "body execute"),
+                        -1);
+    }
   return 0;
 }
