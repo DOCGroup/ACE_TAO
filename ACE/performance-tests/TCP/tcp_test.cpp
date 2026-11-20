@@ -147,8 +147,10 @@ Client::Client (ACE_INET_Addr const &remote_addr)
     {
       if (ACE_Reactor::instance ()->register_handler
           (this, ACE_Event_Handler::READ_MASK) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    "ACE_Reactor::register_handler: Client\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "ACE_Reactor::register_handler: Client\n"));
+        }
     }
 }
 
@@ -171,15 +173,19 @@ Client::handle_input (ACE_HANDLE)
   ssize_t const n {this->endpoint_.recv (buf.data (), buf.size ())};
 
   if (n == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "handle_input"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n",
+                  "handle_input"));
+    }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) buf of size %d = %*s\n",
-                static_cast<int> (n),
-                static_cast<int> (n),
-                buf.data ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) buf of size %d = %*s\n",
+                  static_cast<int> (n),
+                  static_cast<int> (n),
+                  buf.data ()));
+    }
 
   return 0;
 }
@@ -286,9 +292,11 @@ Client::shutdown ()
     {
       if (ACE_Reactor::instance ()->remove_handler
           (this, ACE_Event_Handler::READ_MASK) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "ACE_Reactor::remove_handler: Client\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "ACE_Reactor::remove_handler: Client\n"),
+                            -1);
+        }
     }
 
   return n;
@@ -333,16 +341,20 @@ Server::Server (ACE_INET_Addr const &addr)
               addr.get_host_name (),
               addr.get_port_number ()));
   if (acceptor.accept (this->endpoint_) == -1)
-    ACE_ERROR ((LM_ERROR, "Server::Server %p\n",
-                "accept failed"));
+    {
+      ACE_ERROR ((LM_ERROR, "Server::Server %p\n",
+                  "accept failed"));
+    }
 
   if (use_reactor != Reactor_Type::NONE)
     {
       if (ACE_Reactor::instance ()->register_handler
           (this,
            ACE_Event_Handler::READ_MASK) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    "ACE_Reactor::register_handler: Server\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "ACE_Reactor::register_handler: Server\n"));
+        }
     }
 
 #if !defined (ACE_LACKS_SO_SNDBUF)
@@ -374,8 +386,10 @@ Server::Server (ACE_INET_Addr const &addr)
     }
 #endif /* !ACE_LACKS_SO_RCVBUF */
   if (acceptor.close () == -1)
-    ACE_ERROR ((LM_ERROR, "Server::Server %p\n",
-                "close failed"));
+    {
+      ACE_ERROR ((LM_ERROR, "Server::Server %p\n",
+                  "close failed"));
+    }
 }
 
 Server::~Server ()
@@ -397,10 +411,12 @@ Server::handle_input (ACE_HANDLE)
   ssize_t const n {this->endpoint_.recv (buf.data (), bufsz)};
 
   if (n == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "handle_input: recv"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "handle_input: recv"),
+                        -1);
+    }
 
   // Send the message back as the response.
   if (this->endpoint_.send (buf.data (), n) == n)
@@ -415,9 +431,11 @@ Server::handle_input (ACE_HANDLE)
 
           if (ACE_Reactor::instance ()->remove_handler
               (this, ACE_Event_Handler::READ_MASK) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "ACE_Reactor::remove_handler: server\n"),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "ACE_Reactor::remove_handler: server\n"),
+                                -1);
+            }
 
           ACE_Reactor::end_event_loop ();
         }
@@ -448,9 +466,11 @@ thread_pool_worker (void *)
   while (!ACE_Reactor::event_loop_done ())
     {
       if (ACE_Reactor::instance ()->handle_events () == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%t) %p\n"),
-                    ACE_TEXT ("Error handling events")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%t) %p\n"),
+                      ACE_TEXT ("Error handling events")));
+        }
     }
 
   return 0;
@@ -494,7 +514,9 @@ run_server (ACE_INET_Addr const &addr)
       // Handle input in the current thread.
       // This is actually equivalent to thread-per-connection model.
       while (server.handle_input (0) != 1)
-        continue;
+        {
+          continue;
+        }
     }
   else
     {
@@ -541,8 +563,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       "test runs in time-shared class\n"));
         }
       else
-        ACE_ERROR ((LM_ERROR,
-                    "server (%P|%t): sched_params failed\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "server (%P|%t): sched_params failed\n"));
+        }
     }
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("hxwvb:I:p:sci:m:at:"));
@@ -563,22 +587,28 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           bufsz = ACE_OS::atoi (get_opt.opt_arg ());
 
           if (bufsz <= 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "\nMessage size must be greater than 0!\n\n"),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "\nMessage size must be greater than 0!\n\n"),
+                                1);
+            }
           else if (bufsz > BUFSIZ)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "\nbufsz must be <= %d\n",
-                               BUFSIZ),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "\nbufsz must be <= %d\n",
+                                 BUFSIZ),
+                                1);
+            }
           break;
 
         case 'i':
           nsamples = ACE_OS::atoi (get_opt.opt_arg ());
           if (nsamples <= 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "\nIterations must be greater than 0!\n\n"),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "\nIterations must be greater than 0!\n\n"),
+                                1);
+            }
           break;
 
         case 'a':
@@ -601,9 +631,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           so_bufsz = ACE_OS::atoi (get_opt.opt_arg ());
 
           if (so_bufsz <= 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "\nInvalid socket buffer size!\n\n"),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "\nInvalid socket buffer size!\n\n"),
+                                1);
+            }
           break;
 
         case 'I':
@@ -623,17 +655,21 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         case 'p':
           dstport = ACE_OS::atoi (get_opt.opt_arg ());
           if (dstport <= 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "\nInvalid port number!\n\n"),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "\nInvalid port number!\n\n"),
+                                1);
+            }
           break;
         case 't':
           svr_thrno = ACE_OS::atoi (get_opt.opt_arg ());
 
           if (svr_thrno <= 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "\nInvalid server thread number!\n\n"),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "\nInvalid server thread number!\n\n"),
+                                1);
+            }
           break;
 
         case 'c':
@@ -680,18 +716,22 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_OS::inet_addr (
             ACE_TEXT_ALWAYS_CHAR (argv[get_opt.opt_ind ()])))};
       if (remote_addr.set (ACE_HTONS (dstport), ip_address, 0) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "invalid IP address: %s\n",
-                           argv[get_opt.opt_ind ()]),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "invalid IP address: %s\n",
+                             argv[get_opt.opt_ind ()]),
+                            1);
+        }
     }
   else
     {
       if (remote_addr.set (dstport, argv[get_opt.opt_ind ()]) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "invalid IP address: %s\n",
-                           argv[get_opt.opt_ind ()]),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "invalid IP address: %s\n",
+                             argv[get_opt.opt_ind ()]),
+                            1);
+        }
     }
   ++get_opt.opt_ind ();
 
