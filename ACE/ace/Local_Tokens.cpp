@@ -94,7 +94,9 @@ ACE_TPQ_Entry::ACE_TPQ_Entry (const ACE_Token_Proxy *new_proxy,
   ACE_TRACE ("ACE_TPQ_Entry::ACE_TPQ_Entry");
 
   if (client_id != nullptr)
-    this->client_id (client_id);
+    {
+      this->client_id (client_id);
+    }
   else
     {
       // Just make sure we have enough space.
@@ -142,7 +144,9 @@ ACE_TPQ_Entry::operator= (const ACE_TPQ_Entry& rhs)
 {
   ACE_TRACE ("ACE_TPQ_Entry::operator=");
   if (std::addressof (rhs) == this)
-    return;
+    {
+      return;
+    }
   this->proxy_ = rhs.proxy ();
   this->nesting_level_ = rhs.nesting_level ();
   this->client_id (rhs.client_id ());
@@ -155,7 +159,9 @@ ACE_TPQ_Entry::client_id (const ACE_TCHAR *id)
   ACE_TRACE ("ACE_TPQ_Entry::client_id");
 
   if (id == nullptr)
-    return;
+    {
+      return;
+    }
 
   ACE_OS::strsncpy (this->client_id_,
                     (ACE_TCHAR *) id,
@@ -243,7 +249,9 @@ ACE_TPQ_Iterator::advance ()
   ACE_TRACE ("ACE_TPQ_Iterator::advance");
 
   if (current_ != nullptr)
-    this->current_ = this->current_->next_;
+    {
+      this->current_ = this->current_->next_;
+    }
 }
 
 void
@@ -271,7 +279,9 @@ ACE_Token_Proxy_Queue::dump () const
                         size_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("head_ and tail_\n")));
   if (this->head_ != nullptr)
-    this->head_->dump ();
+    {
+      this->head_->dump ();
+    }
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE_Token_Proxy_Queue::dump end.\n")));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
@@ -327,10 +337,14 @@ ACE_Token_Proxy_Queue::enqueue (ACE_TPQ_Entry *tpq,
     {
       // end of queue?
       if (temp->next_ == nullptr)
-        break;
+        {
+          break;
+        }
       // advance pointer
       else
-        temp = temp->next_;
+        {
+          temp = temp->next_;
+        }
     }
 
   // insert new tpq after temp
@@ -344,7 +358,9 @@ ACE_Token_Proxy_Queue::dequeue ()
   ACE_TRACE ("ACE_Token_Proxy_Queue::dequeue");
 
   if (head_ == nullptr)
-    return;
+    {
+      return;
+    }
 
   ACE_TPQ_Entry *temp = this->head_;
 
@@ -384,14 +400,18 @@ ACE_Token_Proxy_Queue::remove (const ACE_TPQ_Entry *remove_me)
   ACE_TRACE ("ACE_Token_Proxy_Queue::remove");
   // sanity
   if ((remove_me == nullptr) || (this->head_ == nullptr))
-    return;
+    {
+      return;
+    }
 
   // is it the head?
   if (this->head_ == remove_me) // pointer comparison.
     {
       this->head_ = this->head_->next_;
       if (this->head_ == nullptr)
-        this->tail_ = nullptr;
+        {
+          this->tail_ = nullptr;
+        }
 
       --this->size_;
       return;
@@ -410,7 +430,9 @@ ACE_Token_Proxy_Queue::remove (const ACE_TPQ_Entry *remove_me)
           previous->next_ = temp->next_;
           // is it the tail?
           if (this->tail_ == temp)
-            this->tail_ = previous;
+            {
+              this->tail_ = previous;
+            }
 
           --this->size_;
           return;
@@ -497,7 +519,9 @@ ACE_Mutex_Token::acquire (ACE_TPQ_Entry *caller,
   this->waiters_.enqueue (caller, -1);
 
   if (notify)
-    this->owner ()->call_sleep_hook ();
+    {
+      this->owner ()->call_sleep_hook ();
+    }
 
   errno = EWOULDBLOCK;
   ACE_RETURN (-1);
@@ -558,7 +582,9 @@ ACE_Mutex_Token::renew (ACE_TPQ_Entry *caller,
   // waiters.  If not, we just keep the token.  == 1 means that there
   // is only the owner.
   if (this->waiters_.size () == 1 || requeue_position == 0)
-    return 0;
+    {
+      return 0;
+    }
 
   // Requeue the caller.
   this->waiters_.dequeue ();
@@ -567,7 +593,9 @@ ACE_Mutex_Token::renew (ACE_TPQ_Entry *caller,
 
   // Notify new owner.
   if (this->owner () != nullptr)
-    this->owner ()->proxy ()->token_acquired (this->owner ());
+    {
+      this->owner ()->proxy ()->token_acquired (this->owner ());
+    }
 
   // Tell the caller that the operation would block.
   errno = EWOULDBLOCK;
@@ -597,17 +625,23 @@ ACE_Mutex_Token::release (ACE_TPQ_Entry *caller)
     {
       // Check the nesting level.
       if (caller->nesting_level () > 0)
-        caller->nesting_level (-1);
+        {
+          caller->nesting_level (-1);
+        }
       else
         {
           this->waiters_.dequeue ();
           // Notify new owner.
           if (this->owner () != nullptr)
-            this->owner ()->proxy ()->token_acquired (this->owner ());
+            {
+              this->owner ()->proxy ()->token_acquired (this->owner ());
+            }
         }
     }
   else
-    this->remove (caller);
+    {
+      this->remove (caller);
+    }
 
   return 0;
 }
@@ -623,7 +657,9 @@ ACE_Mutex_Token::owners (OWNER_STACK &stack,
       // If an <id> is specified, return whether it is the owner being
       // returned.
       if (id != nullptr)
-        return this->owner ()->equal_client_id (id);
+        {
+          return this->owner ()->equal_client_id (id);
+        }
     }
 
   return 0;
@@ -635,7 +671,9 @@ ACE_Mutex_Token::is_waiting_for (const ACE_TCHAR *id)
   ACE_TRACE ("ACE_Mutex_Token::is_waiting_for");
   // If there is no owner, or <id> is the owner, return false.
   if ((this->owner () == nullptr) || this->is_owner (id))
-    return false;
+    {
+      return false;
+    }
 
   // Step through each waiter looking for <id>.
   ACE_TPQ_Iterator iterator (waiters_);
@@ -645,7 +683,9 @@ ACE_Mutex_Token::is_waiting_for (const ACE_TCHAR *id)
        iterator.advance ())
     {
       if (temp->equal_client_id (id))
-        return true;
+        {
+          return true;
+        }
     }
 
   return false;
@@ -660,7 +700,9 @@ ACE_Mutex_Token::is_owner (const ACE_TCHAR *id)
       this->owner ()->equal_client_id (id))
     return true;
   else
-    return false;
+    {
+      return false;
+    }
 }
 
 int
@@ -726,7 +768,9 @@ ACE_RW_Token::acquire (ACE_TPQ_Entry *caller,
   ACE_GUARD_RETURN (ACE_TOKEN_CONST::MUTEX, ace_mon2, ACE_Token_Manager::instance ()->mutex (), -1);
 
   if (caller->proxy ()->type () == ACE_RW_Token::WRITER)
-    ++this->num_writers_;
+    {
+      ++this->num_writers_;
+    }
 
   // Does _anyone_ own the token?
   if (this->owner () == nullptr)
@@ -763,7 +807,9 @@ ACE_RW_Token::acquire (ACE_TPQ_Entry *caller,
       ACE_Token_Manager::instance ()->check_deadlock (caller->proxy ()) == 1)
     {
       if (caller->proxy ()->type () == ACE_RW_Token::WRITER)
-        --this->num_writers_;
+        {
+          --this->num_writers_;
+        }
       errno = EDEADLK;
       ACE_RETURN (-1);
     }
@@ -775,7 +821,9 @@ ACE_RW_Token::acquire (ACE_TPQ_Entry *caller,
     {
       // If it's a writer, just notify it.
       if (this->owner ()->proxy ()->type () == ACE_RW_Token::WRITER)
-        this->owner ()->call_sleep_hook ();
+        {
+          this->owner ()->call_sleep_hook ();
+        }
       else
         {
           // Call back all reader owners.
@@ -869,7 +917,9 @@ ACE_RW_Token::renew (ACE_TPQ_Entry *caller,
   // The caller is the owner, so check to see if there are any
   // waiters.  If not, we just keep the token.
   if (this->waiters_.size () == 1 || requeue_position == 0)
-    return 0;
+    {
+      return 0;
+    }
 
   // There are waiters, so remove the caller.
   this->remove (caller);
@@ -882,7 +932,9 @@ ACE_RW_Token::renew (ACE_TPQ_Entry *caller,
       // If the caller got queued before any writers, the caller is
       // still the owner.
       if (this->is_owner (caller->client_id ()))
-        return 0; // success
+        {
+          return 0; // success
+        }
       // else fallthrough and return would block.
     }
   // Writers will always have to block since waiters_.size () == 1 or
@@ -913,7 +965,9 @@ ACE_RW_Token::release (ACE_TPQ_Entry *caller)
     }
 
   if (caller->proxy ()->type () == ACE_RW_Token::WRITER)
-    --num_writers_;
+    {
+      --num_writers_;
+    }
 
   // Recursive release.
   if (caller->nesting_level () > 0)
@@ -935,13 +989,17 @@ ACE_RW_Token::notify_new_owner (ACE_TPQ_Entry *old_owner)
   ACE_TRACE ("ACE_RW_Token::notify_new_owner");
 
   if (this->owner () == nullptr)
-    return;
+    {
+      return;
+    }
 
   if (this->owner ()->proxy ()->type () == ACE_RW_Token::READER)
     {
       if (old_owner->proxy ()->type () == ACE_RW_Token::READER)
-        // the owners already know that they're owners
-        return;
+        {
+          // the owners already know that they're owners
+          return;
+        }
 
       // The current owner is a reader and the previous owner was a
       // writer, so notify all waiting readers up to the first writer.
@@ -952,14 +1010,18 @@ ACE_RW_Token::notify_new_owner (ACE_TPQ_Entry *old_owner)
            iterator.advance ())
         {
           if (temp->proxy ()->type () == WRITER)
-            // We've gone through all the readers.
-            break;
+            {
+              // We've gone through all the readers.
+              break;
+            }
 
           temp->proxy ()->token_acquired (temp);
         }
     }
   else // writer
-    this->owner ()->proxy ()->token_acquired (this->owner ());
+    {
+      this->owner ()->proxy ()->token_acquired (this->owner ());
+    }
 }
 
 int
@@ -969,7 +1031,9 @@ ACE_RW_Token::owners (OWNER_STACK &stack,
   ACE_TRACE ("ACE_RW_Token::owners");
 
   if (this->owner () == nullptr)
-    return 0;
+    {
+      return 0;
+    }
 
   int id_is_owner = 0;
 
@@ -1024,7 +1088,9 @@ ACE_RW_Token::is_waiting_for (const ACE_TCHAR *id)
        iterator.advance ())
     {
       if (temp->equal_client_id (id))
-        return true;
+        {
+          return true;
+        }
     }
 
   return false;
@@ -1036,11 +1102,15 @@ ACE_RW_Token::is_owner (const ACE_TCHAR *id)
   ACE_TRACE ("ACE_RW_Token::is_owner");
   // If there is no owner, return false.
   if (this->owner () == nullptr)
-    return false;
+    {
+      return false;
+    }
 
   // A writer owns us.
   if (this->owner ()->proxy ()->type () == ACE_RW_Token::WRITER)
-    return this->owner ()->equal_client_id (id);
+    {
+      return this->owner ()->equal_client_id (id);
+    }
 
   // Readers own us.
   // Step through each owning reader looking for <id>.
@@ -1050,10 +1120,14 @@ ACE_RW_Token::is_owner (const ACE_TCHAR *id)
        iterator.advance ())
     {
       if (temp->proxy ()->type () != ACE_RW_Token::READER)
-        break;
+        {
+          break;
+        }
 
       if (temp->equal_client_id (id))
-        return true;
+        {
+          return true;
+        }
     }
 
   return false;
@@ -1073,7 +1147,9 @@ ACE_Token_Proxy::dump () const
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("mutex_, and waiter_\n")));
 
   if (this->token_ != nullptr)
-    this->token_->dump ();
+    {
+      this->token_->dump ();
+    }
 
   this->waiter_.dump ();
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE_Token_Proxy::dump end.\n")));
@@ -1090,9 +1166,13 @@ ACE_Token_Proxy::client_id () const
   const ACE_TCHAR *id = temp->client_id ();
 
   if (id == nullptr)
-    return ACE_TEXT ("ERROR NO CLIENT ID");
+    {
+      return ACE_TEXT ("ERROR NO CLIENT ID");
+    }
   else
-    return id;
+    {
+      return id;
+    }
 }
 
 void
@@ -1147,9 +1227,11 @@ ACE_Token_Proxy::~ACE_Token_Proxy ()
   ACE_TRACE ("ACE_Token_Proxy::~ACE_Token_Proxy");
 
   if (token_ != nullptr)
-    // notify token manager that we are done with it so it can
-    // free it if necessary
-    ACE_Token_Manager::instance ()->release_token (token_);
+    {
+      // notify token manager that we are done with it so it can
+      // free it if necessary
+      ACE_Token_Manager::instance ()->release_token (token_);
+    }
 }
 
 int
@@ -1227,21 +1309,27 @@ ACE_Token_Proxy::acquire (int notify,
 
         case EWOULDBLOCK :
           if (this->debug_)
-            ACELIB_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%t) waiting for %s, owner is %s, ")
-                        ACE_TEXT ("total waiters == %d\n"),
-                        this->name (),
-                        this->token_->owner_id (),
-                        token_->no_of_waiters ()));
+            {
+              ACELIB_DEBUG ((LM_DEBUG,
+                            ACE_TEXT ("(%t) waiting for %s, owner is %s, ")
+                            ACE_TEXT ("total waiters == %d\n"),
+                            this->name (),
+                            this->token_->owner_id (),
+                            token_->no_of_waiters ()));
+            }
 
           // no error, but would block, if error, return error (-1),
           // otherwise, return whether we called the holder or not.
           int return_value;
           if (this->handle_options (options,
                                     waiter_->cond_var_) == -1)
-            return_value = -1;
+            {
+              return_value = -1;
+            }
           else
-            return_value = notify == 1;
+            {
+              return_value = notify == 1;
+            }
 
           errno = EWOULDBLOCK;
           ACE_RETURN (return_value);
@@ -1258,9 +1346,11 @@ ACE_Token_Proxy::acquire (int notify,
     // we have the token
     {
       if (debug_)
-        ACELIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%t) acquired %s\n"),
-                    this->name ()));
+        {
+          ACELIB_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("(%t) acquired %s\n"),
+                        this->name ()));
+        }
       waiter_->cond_var_.mutex ().release ();
     }
 
@@ -1305,13 +1395,17 @@ ACE_Token_Proxy::renew (int requeue_position,
     {
       // check for error
       if (errno != EWOULDBLOCK)
-        ACELIB_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p renew failed\n"), ACE_TEXT ("ACE_Token_Proxy")), -1);
+        {
+          ACELIB_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("%p renew failed\n"), ACE_TEXT ("ACE_Token_Proxy")), -1);
+        }
 
       if (this->debug_)
-        ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) renew blocking for %s, owner is %s\n"),
-                    this->name (),
-                    token_->owner_id ()));
+        {
+          ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) renew blocking for %s, owner is %s\n"),
+                        this->name (),
+                        token_->owner_id ()));
+        }
 
       // no error, but would block, so block or return
       return this->handle_options (options, waiter_->cond_var_);
@@ -1320,8 +1414,10 @@ ACE_Token_Proxy::renew (int requeue_position,
     // we have the token
     {
       if (this->debug_)
-        ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) renewed %s\n"),
-                    this->name ()));
+        {
+          ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) renewed %s\n"),
+                        this->name ()));
+        }
       waiter_->cond_var_.mutex ().release ();
       return 0;
     }
@@ -1351,7 +1447,9 @@ ACE_Token_Proxy::handle_options (ACE_Synch_Options &options,
           // Note, this should obey whatever thread-specific
           // interrupt policy is currently in place...
           if (errno == EINTR)
-            continue;
+            {
+              continue;
+            }
           // We come here if a timeout occurs or some serious
           // ACE_Condition object error.
           cv.mutex ().release ();
@@ -1360,8 +1458,10 @@ ACE_Token_Proxy::handle_options (ACE_Synch_Options &options,
         }
 
       if (this->debug_)
-        ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) unblocking %s.\n"),
-                    this->client_id ()));
+        {
+          ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) unblocking %s.\n"),
+                        this->client_id ()));
+        }
       cv.mutex ().release ();
       return 0;       // operation succeeded
     }
@@ -1376,7 +1476,9 @@ ACE_Token_Proxy::release (ACE_Synch_Options &)
     {
       errno = ENOENT;
       if (debug_)
-        ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("Must open before releasing.\n")));
+        {
+          ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("Must open before releasing.\n")));
+        }
       ACE_RETURN (-1);
     }
 
@@ -1385,7 +1487,9 @@ ACE_Token_Proxy::release (ACE_Synch_Options &)
       // Release failed.
       this->token_->remove (this->waiter_);
       if (debug_)
-        ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) %p.\n"), ACE_TEXT ("release failed")));
+        {
+          ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) %p.\n"), ACE_TEXT ("release failed")));
+        }
       return -1;
     }
   else
