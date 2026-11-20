@@ -85,9 +85,13 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
             {
               ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("reactive")) == 0)
+              {
                 this->dispatching_ = 0;
+              }
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("mt")) == 0)
+              {
                 this->dispatching_ = 1;
+              }
               else
               {
                 this->unsupported_option_value (ACE_TEXT("-ECDispatching"), opt);
@@ -148,11 +152,17 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
             {
               ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("null")) == 0)
+              {
                 this->filtering_ = 0;
+              }
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("basic")) == 0)
+              {
                 this->filtering_ = 1;
+              }
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("prefix")) == 0)
+              {
                 this->filtering_ = 2;
+              }
               else
               {
                 this->unsupported_option_value (ACE_TEXT("-ECFiltering"), opt);
@@ -171,9 +181,13 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
             {
               ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("null")) == 0)
+              {
                 this->supplier_filtering_ = 0;
+              }
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("per-supplier")) == 0)
+              {
                 this->supplier_filtering_ = 1;
+              }
               else
               {
                 this->unsupported_option_value (ACE_TEXT("-ECSupplierFilter"), opt);
@@ -190,7 +204,9 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
             {
               ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("reactive")) == 0)
+              {
                 this->timeout_ = 0;
+              }
               else
               {
                 this->unsupported_option_value (ACE_TEXT("-ECTimeout"), opt);
@@ -207,11 +223,17 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
             {
               ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("null")) == 0)
+              {
                 this->observer_ = 0;
+              }
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("basic")) == 0)
+              {
                 this->observer_ = 1;
+              }
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("reactive")) == 0)
+              {
                 this->observer_ = 2;
+              }
               else
               {
                 this->unsupported_option_value (ACE_TEXT("-ECObserver"), opt);
@@ -228,9 +250,13 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
             {
               ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("null")) == 0)
+              {
                 this->scheduling_ = 0;
+              }
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("group")) == 0)
+              {
                 this->scheduling_ = 1;
+              }
               else
               {
                 this->unsupported_option_value (ACE_TEXT("-ECScheduling"), opt);
@@ -257,25 +283,43 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
                    arg = ACE_OS::strtok_r (nullptr, ACE_TEXT(":"), &aux))
                 {
                   if (ACE_OS::strcasecmp (arg, ACE_TEXT("mt")) == 0)
+                  {
                     synch_type = 0;
+                  }
                   else if (ACE_OS::strcasecmp (arg, ACE_TEXT("st")) == 0)
+                  {
                     synch_type = 1;
+                  }
                   else if (ACE_OS::strcasecmp (arg, ACE_TEXT("list")) == 0)
+                  {
                     collection_type = 0;
+                  }
                   else if (ACE_OS::strcasecmp (arg, ACE_TEXT("rb_tree")) == 0)
+                  {
                     collection_type = 1;
+                  }
                   else if (ACE_OS::strcasecmp (arg, ACE_TEXT("immediate")) == 0)
+                  {
                     iteration_type = 0;
+                  }
                   else if (ACE_OS::strcasecmp (arg, ACE_TEXT("copy_on_read")) == 0)
+                  {
                     iteration_type = 1;
+                  }
                   else if (ACE_OS::strcasecmp (arg, ACE_TEXT("copy_on_write")) == 0)
+                  {
                     iteration_type = 2;
+                  }
                   else if (ACE_OS::strcasecmp (arg, ACE_TEXT("delayed")) == 0)
+                  {
                     iteration_type = 3;
+                  }
                   else
+                  {
                     ORBSVCS_ERROR ((LM_ERROR,
                                 "EC_Default_Factory - "
                                 "Unknown consumer collection modifier <%s>.\n", arg));
+                  }
                 }
               this->consumer_collection_ =
                  (synch_type << 8) |(collection_type << 4) | iteration_type;
@@ -301,25 +345,43 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
                    arg = ACE_OS::strtok_r (nullptr, ACE_TEXT(":"), &aux))
                 {
                   if (ACE_OS::strcasecmp (arg, ACE_TEXT("mt")) == 0)
+                  {
                     synch_type = 0;
+                  }
                   else if (ACE_OS::strcasecmp (arg, ACE_TEXT("st")) == 0)
+                  {
                     synch_type = 1;
+                  }
                   else if (ACE_OS::strcasecmp (arg, ACE_TEXT("list")) == 0)
+                  {
                     collection_type = 0;
+                  }
                   else if (ACE_OS::strcasecmp (arg, ACE_TEXT("rb_tree")) == 0)
+                  {
                     collection_type = 1;
+                  }
                   else if (ACE_OS::strcasecmp (arg, ACE_TEXT("immediate")) == 0)
+                  {
                     iteration_type = 0;
+                  }
                   else if (ACE_OS::strcasecmp (arg, ACE_TEXT("copy_on_read")) == 0)
+                  {
                     iteration_type = 1;
+                  }
                   else if (ACE_OS::strcasecmp (arg, ACE_TEXT("copy_on_write")) == 0)
+                  {
                     iteration_type = 2;
+                  }
                   else if (ACE_OS::strcasecmp (arg, ACE_TEXT("delayed")) == 0)
+                  {
                     iteration_type = 3;
+                  }
                   else
+                  {
                     ORBSVCS_ERROR ((LM_ERROR,
                                 "EC_Default_Factory - "
                                 "Unknown supplier collection modifier <%s>.\n", arg));
+                  }
                 }
               this->supplier_collection_ =
                 (synch_type << 8) | (collection_type << 4) | iteration_type;
@@ -335,11 +397,17 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
             {
               ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("null")) == 0)
+              {
                 this->consumer_lock_ = 0;
+              }
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("thread")) == 0)
+              {
                 this->consumer_lock_ = 1;
+              }
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("recursive")) == 0)
+              {
                 this->consumer_lock_ = 2;
+              }
               else
               {
                 this->unsupported_option_value (ACE_TEXT("-ECProxyConsumerLock"), opt);
@@ -356,11 +424,17 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
             {
               ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("null")) == 0)
+              {
                 this->supplier_lock_ = 0;
+              }
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("thread")) == 0)
+              {
                 this->supplier_lock_ = 1;
+              }
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("recursive")) == 0)
+              {
                 this->supplier_lock_ = 2;
+              }
               else
               {
                 this->unsupported_option_value (ACE_TEXT("-ECProxySupplierLock"), opt);
@@ -389,9 +463,13 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
             {
               ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("null")) == 0)
+              {
                 this->consumer_control_ = 0;
+              }
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("reactive")) == 0)
+              {
                 this->consumer_control_ = 1;
+              }
               else
               {
                 this->unsupported_option_value (ACE_TEXT("-ECConsumerControl"), opt);
@@ -408,9 +486,13 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
             {
               ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("null")) == 0)
+              {
                 this->supplier_control_ = 0;
+              }
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("reactive")) == 0)
+              {
                 this->supplier_control_ = 1;
+              }
               else
               {
                 this->unsupported_option_value (ACE_TEXT("-ECSupplierControl"), opt);
@@ -557,7 +639,9 @@ TAO_EC_Dispatching*
 TAO_EC_Default_Factory::create_dispatching (TAO_EC_Event_Channel_Base *)
 {
   if (this->dispatching_ == 0)
+  {
     return new TAO_EC_Reactive_Dispatching ();
+  }
   else if (this->dispatching_ == 1)
     {
       TAO_EC_Queue_Full_Service_Object* so =
@@ -582,11 +666,17 @@ TAO_EC_Filter_Builder*
 TAO_EC_Default_Factory::create_filter_builder (TAO_EC_Event_Channel_Base *ec)
 {
   if (this->filtering_ == 0)
+  {
     return new TAO_EC_Null_Filter_Builder ();
+  }
   else if (this->filtering_ == 1)
+  {
     return new TAO_EC_Basic_Filter_Builder (ec);
+  }
   else if (this->filtering_ == 2)
+  {
     return new TAO_EC_Prefix_Filter_Builder (ec);
+  }
   return nullptr;
 }
 
@@ -600,9 +690,13 @@ TAO_EC_Supplier_Filter_Builder*
 TAO_EC_Default_Factory::create_supplier_filter_builder (TAO_EC_Event_Channel_Base *ec)
 {
   if (this->supplier_filtering_ == 0)
+  {
     return new TAO_EC_Trivial_Supplier_Filter_Builder (ec);
+  }
   else if (this->supplier_filtering_ == 1)
+  {
     return new TAO_EC_Per_Supplier_Filter_Builder (ec);
+  }
   return nullptr;
 }
 
@@ -691,7 +785,9 @@ TAO_EC_ObserverStrategy*
 TAO_EC_Default_Factory::create_observer_strategy (TAO_EC_Event_Channel_Base *ec)
 {
   if (this->observer_ == 0)
+  {
     return new TAO_EC_Null_ObserverStrategy;
+  }
   else if (this->observer_ == 1)
     {
       // @@ The lock should also be under control of the user...
@@ -719,9 +815,13 @@ TAO_EC_Scheduling_Strategy*
 TAO_EC_Default_Factory::create_scheduling_strategy (TAO_EC_Event_Channel_Base*)
 {
   if (this->scheduling_ == 0)
+  {
     return new TAO_EC_Null_Scheduling;
+  }
   else if (this->scheduling_ == 1)
+  {
     return new TAO_EC_Group_Scheduling;
+  }
   return nullptr;
 }
 
@@ -745,85 +845,117 @@ TAO_EC_ProxyPushConsumer_Collection*
 TAO_EC_Default_Factory::create_proxy_push_consumer_collection (TAO_EC_Event_Channel_Base *)
 {
   if (this->consumer_collection_ == 0x000)
+  {
     return new TAO_ESF_Immediate_Changes<TAO_EC_ProxyPushConsumer,
       TAO_ESF_Proxy_List<TAO_EC_ProxyPushConsumer>,
       TAO_EC_Consumer_List_Iterator,
       TAO_SYNCH_MUTEX> ();
+  }
   else if (this->consumer_collection_ == 0x001)
+  {
     return new TAO_ESF_Copy_On_Read<TAO_EC_ProxyPushConsumer,
       TAO_ESF_Proxy_List<TAO_EC_ProxyPushConsumer>,
       TAO_EC_Consumer_List_Iterator,
       TAO_SYNCH_MUTEX> ();
+  }
   else if (this->consumer_collection_ == 0x002)
+  {
     return new TAO_ESF_Copy_On_Write<TAO_EC_ProxyPushConsumer,
       TAO_ESF_Proxy_List<TAO_EC_ProxyPushConsumer>,
       TAO_EC_Consumer_List_Iterator,
       ACE_SYNCH> ();
+  }
   else if (this->consumer_collection_ == 0x003)
+  {
     return new TAO_ESF_Delayed_Changes<TAO_EC_ProxyPushConsumer,
       TAO_ESF_Proxy_List<TAO_EC_ProxyPushConsumer>,
       TAO_EC_Consumer_List_Iterator,
       ACE_SYNCH> ();
+  }
   else if (this->consumer_collection_ == 0x010)
+  {
     return new TAO_ESF_Immediate_Changes<TAO_EC_ProxyPushConsumer,
       TAO_ESF_Proxy_RB_Tree<TAO_EC_ProxyPushConsumer>,
       TAO_EC_Consumer_RB_Tree_Iterator,
       TAO_SYNCH_MUTEX> ();
+  }
   else if (this->consumer_collection_ == 0x011)
+  {
     return new TAO_ESF_Copy_On_Read<TAO_EC_ProxyPushConsumer,
       TAO_ESF_Proxy_RB_Tree<TAO_EC_ProxyPushConsumer>,
       TAO_EC_Consumer_RB_Tree_Iterator,
       TAO_SYNCH_MUTEX> ();
+  }
   else if (this->consumer_collection_ == 0x012)
+  {
     return new TAO_ESF_Copy_On_Write<TAO_EC_ProxyPushConsumer,
       TAO_ESF_Proxy_RB_Tree<TAO_EC_ProxyPushConsumer>,
       TAO_EC_Consumer_RB_Tree_Iterator,
       ACE_SYNCH> ();
+  }
   else if (this->consumer_collection_ == 0x013)
+  {
     return new TAO_ESF_Delayed_Changes<TAO_EC_ProxyPushConsumer,
       TAO_ESF_Proxy_RB_Tree<TAO_EC_ProxyPushConsumer>,
       TAO_EC_Consumer_RB_Tree_Iterator,
       ACE_SYNCH> ();
+  }
   else if (this->consumer_collection_ == 0x100)
+  {
     return new TAO_ESF_Immediate_Changes<TAO_EC_ProxyPushConsumer,
       TAO_ESF_Proxy_List<TAO_EC_ProxyPushConsumer>,
       TAO_EC_Consumer_List_Iterator,
       ACE_Null_Mutex> ();
+  }
   else if (this->consumer_collection_ == 0x101)
+  {
     return new TAO_ESF_Copy_On_Read<TAO_EC_ProxyPushConsumer,
       TAO_ESF_Proxy_List<TAO_EC_ProxyPushConsumer>,
       TAO_EC_Consumer_List_Iterator,
       ACE_Null_Mutex> ();
+  }
   else if (this->consumer_collection_ == 0x102)
+  {
     return new TAO_ESF_Copy_On_Write<TAO_EC_ProxyPushConsumer,
       TAO_ESF_Proxy_List<TAO_EC_ProxyPushConsumer>,
       TAO_EC_Consumer_List_Iterator,
       ACE_NULL_SYNCH> ();
+  }
   else if (this->consumer_collection_ == 0x103)
+  {
     return new TAO_ESF_Delayed_Changes<TAO_EC_ProxyPushConsumer,
       TAO_ESF_Proxy_List<TAO_EC_ProxyPushConsumer>,
       TAO_EC_Consumer_List_Iterator,
       ACE_NULL_SYNCH> ();
+  }
   else if (this->consumer_collection_ == 0x110)
+  {
     return new TAO_ESF_Immediate_Changes<TAO_EC_ProxyPushConsumer,
       TAO_ESF_Proxy_RB_Tree<TAO_EC_ProxyPushConsumer>,
       TAO_EC_Consumer_RB_Tree_Iterator,
       ACE_Null_Mutex> ();
+  }
   else if (this->consumer_collection_ == 0x111)
+  {
     return new TAO_ESF_Copy_On_Read<TAO_EC_ProxyPushConsumer,
       TAO_ESF_Proxy_RB_Tree<TAO_EC_ProxyPushConsumer>,
       TAO_EC_Consumer_RB_Tree_Iterator,
       ACE_Null_Mutex> ();
+  }
   else if (this->consumer_collection_ == 0x112)
+  {
     return new TAO_ESF_Copy_On_Write<TAO_EC_ProxyPushConsumer,
       TAO_ESF_Proxy_RB_Tree<TAO_EC_ProxyPushConsumer>,
       TAO_EC_Consumer_RB_Tree_Iterator,
       ACE_NULL_SYNCH> ();
+  }
   else if (this->consumer_collection_ == 0x113)
+  {
     return new TAO_ESF_Delayed_Changes<TAO_EC_ProxyPushConsumer,
       TAO_ESF_Proxy_RB_Tree<TAO_EC_ProxyPushConsumer>,
       TAO_EC_Consumer_RB_Tree_Iterator,
       ACE_NULL_SYNCH> ();
+  }
 
   return nullptr;
 }
@@ -838,85 +970,117 @@ TAO_EC_ProxyPushSupplier_Collection*
 TAO_EC_Default_Factory::create_proxy_push_supplier_collection (TAO_EC_Event_Channel_Base *)
 {
   if (this->supplier_collection_ == 0x000)
+  {
     return new TAO_ESF_Immediate_Changes<TAO_EC_ProxyPushSupplier,
       TAO_ESF_Proxy_List<TAO_EC_ProxyPushSupplier>,
       TAO_EC_Supplier_List_Iterator,
       TAO_SYNCH_MUTEX> ();
+  }
   else if (this->supplier_collection_ == 0x001)
+  {
     return new TAO_ESF_Copy_On_Read<TAO_EC_ProxyPushSupplier,
       TAO_ESF_Proxy_List<TAO_EC_ProxyPushSupplier>,
       TAO_EC_Supplier_List_Iterator,
       TAO_SYNCH_MUTEX> ();
+  }
   else if (this->supplier_collection_ == 0x002)
+  {
     return new TAO_ESF_Copy_On_Write<TAO_EC_ProxyPushSupplier,
       TAO_ESF_Proxy_List<TAO_EC_ProxyPushSupplier>,
       TAO_EC_Supplier_List_Iterator,
       ACE_SYNCH> ();
+  }
   else if (this->supplier_collection_ == 0x003)
+  {
     return new TAO_ESF_Delayed_Changes<TAO_EC_ProxyPushSupplier,
       TAO_ESF_Proxy_List<TAO_EC_ProxyPushSupplier>,
       TAO_EC_Supplier_List_Iterator,
       ACE_SYNCH> ();
+  }
   else if (this->supplier_collection_ == 0x010)
+  {
     return new TAO_ESF_Immediate_Changes<TAO_EC_ProxyPushSupplier,
       TAO_ESF_Proxy_RB_Tree<TAO_EC_ProxyPushSupplier>,
       TAO_EC_Supplier_RB_Tree_Iterator,
       TAO_SYNCH_MUTEX> ();
+  }
   else if (this->supplier_collection_ == 0x011)
+  {
     return new TAO_ESF_Copy_On_Read<TAO_EC_ProxyPushSupplier,
       TAO_ESF_Proxy_RB_Tree<TAO_EC_ProxyPushSupplier>,
       TAO_EC_Supplier_RB_Tree_Iterator,
       TAO_SYNCH_MUTEX> ();
+  }
   else if (this->supplier_collection_ == 0x012)
+  {
     return new TAO_ESF_Copy_On_Write<TAO_EC_ProxyPushSupplier,
       TAO_ESF_Proxy_RB_Tree<TAO_EC_ProxyPushSupplier>,
       TAO_EC_Supplier_RB_Tree_Iterator,
       ACE_SYNCH> ();
+  }
   else if (this->supplier_collection_ == 0x013)
+  {
     return new TAO_ESF_Delayed_Changes<TAO_EC_ProxyPushSupplier,
       TAO_ESF_Proxy_RB_Tree<TAO_EC_ProxyPushSupplier>,
       TAO_EC_Supplier_RB_Tree_Iterator,
       ACE_SYNCH> ();
+  }
   else if (this->supplier_collection_ == 0x100)
+  {
     return new TAO_ESF_Immediate_Changes<TAO_EC_ProxyPushSupplier,
       TAO_ESF_Proxy_List<TAO_EC_ProxyPushSupplier>,
       TAO_EC_Supplier_List_Iterator,
       ACE_Null_Mutex> ();
+  }
   else if (this->supplier_collection_ == 0x101)
+  {
     return new TAO_ESF_Copy_On_Read<TAO_EC_ProxyPushSupplier,
       TAO_ESF_Proxy_List<TAO_EC_ProxyPushSupplier>,
       TAO_EC_Supplier_List_Iterator,
       ACE_Null_Mutex> ();
+  }
   else if (this->supplier_collection_ == 0x102)
+  {
     return new TAO_ESF_Copy_On_Write<TAO_EC_ProxyPushSupplier,
       TAO_ESF_Proxy_List<TAO_EC_ProxyPushSupplier>,
       TAO_EC_Supplier_List_Iterator,
       ACE_NULL_SYNCH> ();
+  }
   else if (this->supplier_collection_ == 0x103)
+  {
     return new TAO_ESF_Delayed_Changes<TAO_EC_ProxyPushSupplier,
       TAO_ESF_Proxy_List<TAO_EC_ProxyPushSupplier>,
       TAO_EC_Supplier_List_Iterator,
       ACE_NULL_SYNCH> ();
+  }
   else if (this->supplier_collection_ == 0x110)
+  {
     return new TAO_ESF_Immediate_Changes<TAO_EC_ProxyPushSupplier,
       TAO_ESF_Proxy_RB_Tree<TAO_EC_ProxyPushSupplier>,
       TAO_EC_Supplier_RB_Tree_Iterator,
       ACE_Null_Mutex> ();
+  }
   else if (this->supplier_collection_ == 0x111)
+  {
     return new TAO_ESF_Copy_On_Read<TAO_EC_ProxyPushSupplier,
       TAO_ESF_Proxy_RB_Tree<TAO_EC_ProxyPushSupplier>,
       TAO_EC_Supplier_RB_Tree_Iterator,
       ACE_Null_Mutex> ();
+  }
   else if (this->supplier_collection_ == 0x112)
+  {
     return new TAO_ESF_Copy_On_Write<TAO_EC_ProxyPushSupplier,
       TAO_ESF_Proxy_RB_Tree<TAO_EC_ProxyPushSupplier>,
       TAO_EC_Supplier_RB_Tree_Iterator,
       ACE_NULL_SYNCH> ();
+  }
   else if (this->supplier_collection_ == 0x113)
+  {
     return new TAO_ESF_Delayed_Changes<TAO_EC_ProxyPushSupplier,
       TAO_ESF_Proxy_RB_Tree<TAO_EC_ProxyPushSupplier>,
       TAO_EC_Supplier_RB_Tree_Iterator,
       ACE_NULL_SYNCH> ();
+  }
 
   return nullptr;
 }
@@ -931,11 +1095,17 @@ ACE_Lock*
 TAO_EC_Default_Factory::create_consumer_lock ()
 {
   if (this->consumer_lock_ == 0)
+  {
     return new ACE_Lock_Adapter<ACE_Null_Mutex>;
+  }
   else if (this->consumer_lock_ == 1)
+  {
     return new ACE_Lock_Adapter<TAO_SYNCH_MUTEX> ();
+  }
   else if (this->consumer_lock_ == 2)
+  {
     return new ACE_Lock_Adapter<TAO_SYNCH_RECURSIVE_MUTEX> ();
+  }
   return nullptr;
 }
 
@@ -949,11 +1119,17 @@ ACE_Lock*
 TAO_EC_Default_Factory::create_supplier_lock ()
 {
   if (this->supplier_lock_ == 0)
+  {
     return new ACE_Lock_Adapter<ACE_Null_Mutex>;
+  }
   else if (this->supplier_lock_ == 1)
+  {
     return new ACE_Lock_Adapter<TAO_SYNCH_MUTEX> ();
+  }
   else if (this->supplier_lock_ == 2)
+  {
     return new ACE_Lock_Adapter<TAO_SYNCH_RECURSIVE_MUTEX> ();
+  }
   return nullptr;
 }
 
@@ -967,7 +1143,9 @@ TAO_EC_ConsumerControl*
 TAO_EC_Default_Factory::create_consumer_control (TAO_EC_Event_Channel_Base* ec)
 {
   if (this->consumer_control_ == 0)
+  {
     return new TAO_EC_ConsumerControl ();
+  }
   else if (this->consumer_control_ == 1)
     {
       int argc {};
@@ -991,7 +1169,9 @@ TAO_EC_SupplierControl*
 TAO_EC_Default_Factory::create_supplier_control (TAO_EC_Event_Channel_Base* ec)
 {
   if (this->supplier_control_ == 0)
+  {
     return new TAO_EC_SupplierControl ();
+  }
   else if (this->supplier_control_ == 1)
     {
       int argc {};
