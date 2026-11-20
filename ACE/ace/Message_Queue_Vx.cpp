@@ -66,7 +66,9 @@ ACE_Message_Queue_Vx::ACE_Message_Queue_Vx (size_t max_messages,
   ACE_TRACE ("ACE_Message_Queue_Vx::ACE_Message_Queue_Vx");
 
   if (this->open (max_messages_, max_message_length_, ns) == -1)
-    ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("open")));
+    {
+      ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("open")));
+    }
 }
 
 ACE_Message_Queue_Vx::~ACE_Message_Queue_Vx ()
@@ -74,7 +76,9 @@ ACE_Message_Queue_Vx::~ACE_Message_Queue_Vx ()
   ACE_TRACE ("ACE_Message_Queue_Vx::~ACE_Message_Queue_Vx");
 
   if (this->tail_ != 0  &&  this->close () == -1)
-    ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("close")));
+    {
+      ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("close")));
+    }
 }
 
 // Don't bother locking since if someone calls this function more than
@@ -229,7 +233,9 @@ ACE_Message_Queue_Vx::enqueue_tail_i (ACE_Message_Block *new_item)
   ACE_TRACE ("ACE_Message_Queue_Vx::enqueue_tail_i");
 
   if (new_item == 0)
-    return -1;
+    {
+      return -1;
+    }
 
   // Don't try to send a composite message!!!!  Only the first
   // block will be sent.
@@ -242,9 +248,13 @@ ACE_Message_Queue_Vx::enqueue_tail_i (ACE_Message_Block *new_item)
                   new_item->size (),
                   WAIT_FOREVER,
                   MSG_PRI_NORMAL) == OK)
-    return ::msgQNumMsgs (msgq ());
+    {
+      return ::msgQNumMsgs (msgq ());
+    }
   else
-    return -1;
+    {
+      return -1;
+    }
 }
 
 int
@@ -262,13 +272,19 @@ ACE_Message_Queue_Vx::enqueue_i (ACE_Message_Block *new_item)
   ACE_TRACE ("ACE_Message_Queue_Vx::enqueue_i");
 
   if (new_item == 0)
-    return -1;
+    {
+      return -1;
+    }
 
   if (this->head_ == 0)
-    // Should always take this branch.
-    return this->enqueue_head_i (new_item);
+    {
+      // Should always take this branch.
+      return this->enqueue_head_i (new_item);
+    }
   else
-    ACE_NOTSUP_RETURN (-1);
+    {
+      ACE_NOTSUP_RETURN (-1);
+    }
 }
 
 int
@@ -293,15 +309,21 @@ ACE_Message_Queue_Vx::dequeue_head_i (ACE_Message_Block *&first_item)
   // it, and must ensure that it is big enough (without chaining).
 
   if (first_item == 0  ||  first_item->wr_ptr () == 0)
-    return -1;
+    {
+      return -1;
+    }
 
   if (::msgQReceive (msgq (),
                      first_item->wr_ptr (),
                      first_item->size (),
                      WAIT_FOREVER) == ERROR)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return ::msgQNumMsgs (msgq ());
+    {
+      return ::msgQNumMsgs (msgq ());
+    }
 }
 
 int
