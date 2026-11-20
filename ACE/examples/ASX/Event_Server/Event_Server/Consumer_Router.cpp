@@ -32,10 +32,11 @@ Consumer_Router::open (void *)
       return this->activate (Options::instance ().t_flags ());
     }
   else // if (this->is_reader ())
-
-    // Nothing to do since this side is primarily used to transmit to
-    // Consumers, rather than receive.
-    return 0;
+    {
+      // Nothing to do since this side is primarily used to transmit to
+      // Consumers, rather than receive.
+      return 0;
+    }
 }
 
 int
@@ -45,8 +46,10 @@ Consumer_Router::close (u_long)
               this->is_reader () ? ACE_TEXT ("reader") : ACE_TEXT ("writer")));
 
   if (this->is_writer ())
-    // Inform the thread to shut down.
-    this->msg_queue ()->deactivate ();
+    {
+      // Inform the thread to shut down.
+      this->msg_queue ()->deactivate ();
+    }
 
   // Both writer and reader call <release>, so the context knows when
   // to clean itself up.
@@ -74,10 +77,12 @@ Consumer_Router::svc ()
 
       // Pass this message down to the next Module's writer Task.
       if (this->put_next (mb) == -1)
-        ACE_ERROR_RETURN
-          ((LM_ERROR,
-            ACE_TEXT ("(%t) send_peers failed in Consumer_Router\n")),
-           -1);
+        {
+          ACE_ERROR_RETURN
+            ((LM_ERROR,
+              ACE_TEXT ("(%t) send_peers failed in Consumer_Router\n")),
+             -1);
+        }
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -107,21 +112,25 @@ Consumer_Router::put (ACE_Message_Block *mb,
   else if (this->is_reader ())
     {
       if (this->context ()->send_peers (mb) == -1)
-        ACE_ERROR_RETURN
-          ((LM_ERROR,
-            ACE_TEXT ("(%t) send_peers failed in Consumer_Router\n")),
-           -1);
+        {
+          ACE_ERROR_RETURN
+            ((LM_ERROR,
+              ACE_TEXT ("(%t) send_peers failed in Consumer_Router\n")),
+             -1);
+        }
       else
-      {
-        return 0;
-      }
+        {
+          return 0;
+        }
     }
   else // if (this->is_writer ())
-    // Queue up the message to processed by <Consumer_Router::svc>
-    // Since we don't expect to be getting many of these messages, we
-    // queue them up and run them in a separate thread to avoid taxing
-    // the main thread.
-    return this->putq (mb);
+    {
+      // Queue up the message to processed by <Consumer_Router::svc>
+      // Since we don't expect to be getting many of these messages, we
+      // queue them up and run them in a separate thread to avoid taxing
+      // the main thread.
+      return this->putq (mb);
+    }
 }
 
 // Return information about the <Consumer_Router>.
@@ -150,11 +159,13 @@ Consumer_Router::info (ACE_TCHAR **strp, size_t length) const
                    ACE_TEXT ("# consumer router"),
                    this->is_reader () ? ACE_TEXT ("reader") : ACE_TEXT ("writer"));
   if (*strp == nullptr && (*strp = ACE_OS::strdup (module_name)) == nullptr)
-    return -1;
+    {
+      return -1;
+    }
   else
-  {
-    ACE_OS::strncpy (*strp, module_name, length);
-  }
+    {
+      ACE_OS::strncpy (*strp, module_name, length);
+    }
 
   return ACE_Utils::truncate_cast<int> (ACE_OS::strlen (module_name));
 }
