@@ -23,9 +23,11 @@ run_server (ACE_THR_FUNC server,
   if (ACE_Thread_Manager::instance ()->spawn (server,
                                               (void *) new_stream,
                                               THR_DETACHED) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "(%P|%t) %p\n",
-                "spawn"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%P|%t) %p\n",
+                  "spawn"));
+    }
 #else
   (*server) ((void *) new_stream);
 #endif /* ACE_HAS_THREADS */
@@ -40,15 +42,19 @@ twoway_server (void *arg)
 
   // Make sure we're not in non-blocking mode.
   if (new_stream->disable (ACE_NONBLOCK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "disable"),
-                       0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "disable"),
+                        0);
+    }
   else if (new_stream->get_remote_addr (cli_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "get_remote_addr"),
-                       0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "get_remote_addr"),
+                        0);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) client %s connected from %d\n",
@@ -117,14 +123,18 @@ twoway_server (void *arg)
                && ACE::write_n (ACE_STDOUT,
                                 request,
                                 r_bytes) != r_bytes)
-        ACE_ERROR ((LM_ERROR,
-                    "%p\n",
-                    "ACE::write_n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%p\n",
+                      "ACE::write_n"));
+        }
       else if (new_stream->send_n (request,
                                   r_bytes) != r_bytes)
-        ACE_ERROR ((LM_ERROR,
-                    "%p\n",
-                    "send_n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%p\n",
+                      "send_n"));
+        }
 
       total_bytes += size_t (r_bytes);
       ++message_count;
@@ -153,15 +163,19 @@ oneway_server (void *arg)
 
   // Make sure we're not in non-blocking mode.
   if (new_stream->disable (ACE_NONBLOCK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "disable"),
-                       0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "disable"),
+                        0);
+    }
   else if (new_stream->get_remote_addr (cli_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "get_remote_addr"),
-                       0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "get_remote_addr"),
+                        0);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) client %s connected from %d\n",
@@ -232,9 +246,11 @@ oneway_server (void *arg)
         }
       else if (verbose
                && ACE::write_n (ACE_STDOUT, request, r_bytes) != r_bytes)
-        ACE_ERROR ((LM_ERROR,
-                    "%p\n",
-                    "ACE::write_n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%p\n",
+                      "ACE::write_n"));
+        }
 
       total_bytes += size_t (r_bytes);
       ++message_count;
@@ -297,16 +313,20 @@ run_event_loop (u_short port)
   // Create acceptors, reuse the address.
   if (twoway_acceptor.open (twoway_server_addr, 1) == -1
       || oneway_acceptor.open (oneway_server_addr, 1) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "open"),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "open"),
+                        1);
+    }
   else if (twoway_acceptor.get_local_addr (twoway_server_addr) == -1
            || oneway_acceptor.get_local_addr (oneway_server_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "get_local_addr"),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "get_local_addr"),
+                        1);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) starting twoway server at port %d and oneway server at port %d\n",
@@ -334,12 +354,16 @@ run_event_loop (u_short port)
 #endif /* ACE_WIN32 */
       int const result = ACE_OS::select (select_width, (fd_set *) temp, nullptr, nullptr, timeout);
       if (result == -1)
-        ACE_ERROR ((LM_ERROR,
-                    "(%P|%t) %p\n",
-                    "select"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%P|%t) %p\n",
+                      "select"));
+        }
       else if (result == 0 && verbose)
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) select timed out\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%P|%t) select timed out\n"));
+        }
       else
         {
           // A new ACE_SSL_SOCK_Stream must be initialized for each
@@ -373,8 +397,10 @@ run_event_loop (u_short port)
                   continue;
                 }
               else
-                ACE_DEBUG ((LM_DEBUG,
-                            "(%P|%t) spawning twoway server\n"));
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "(%P|%t) spawning twoway server\n"));
+                }
 
               // Run the twoway server.
               run_server (twoway_server,
@@ -395,8 +421,10 @@ run_event_loop (u_short port)
                   continue;
                 }
               else
-                ACE_DEBUG ((LM_DEBUG,
-                            "(%P|%t) spawning oneway server\n"));
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "(%P|%t) spawning oneway server\n"));
+                }
 
               // Run the oneway server.
               run_server (oneway_server,
