@@ -233,6 +233,7 @@ ACE_Sig_Guard::ACE_Sig_Guard (ACE_Sig_Set *mask,
 #  endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
     }
   else
+    {
 #  if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
     ACE_OS::sigprocmask (SIG_BLOCK,
                          (sigset_t *) *mask,
@@ -244,6 +245,7 @@ ACE_Sig_Guard::ACE_Sig_Guard (ACE_Sig_Set *mask,
                             (sigset_t *)
                             this->omask_);
 #  endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
+    }
 #endif /* ACE_LACKS_UNIX_SIGNALS */
 }
 

@@ -14,11 +14,13 @@ ACE_INLINE
 ACE_Log_Record::~ACE_Log_Record ()
 {
   if (this->msg_data_)
+    {
 #if defined (ACE_HAS_ALLOC_HOOKS)
-    ACE_Allocator::instance()->free(this->msg_data_);
+      ACE_Allocator::instance()->free(this->msg_data_);
 #else
-    delete [] this->msg_data_;
+      delete [] this->msg_data_;
 #endif /* ACE_HAS_ALLOC_HOOKS */
+    }
 }
 
 ACE_INLINE ACE_UINT32

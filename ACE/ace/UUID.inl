@@ -172,7 +172,9 @@ namespace ACE_Utils
   {
     for (size_t i = 0; i < NODE_ID_SIZE; ++i)
       if (node_ID_ [i] != rt.node_ID_ [i])
-        return false;
+        {
+          return false;
+        }
 
     return true;
   }

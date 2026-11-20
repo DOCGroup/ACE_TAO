@@ -11,12 +11,18 @@ template<class TQ, class TYPE> ACE_INLINE int
 ACE_Thread_Timer_Queue_Adapter<TQ, TYPE>::timer_queue (TQ *tq)
 {
   if (tq == this->timer_queue_)
-    return 0;
+    {
+      return 0;
+    }
 
   if (this->owned_timer_queue_)
-    this->owned_timer_queue_.reset ();
+    {
+      this->owned_timer_queue_.reset ();
+    }
   else if (this->timer_queue_ != nullptr)
-    this->timer_queue_->close ();
+    {
+      this->timer_queue_->close ();
+    }
   this->timer_queue_ = tq;
   return 0;
 }

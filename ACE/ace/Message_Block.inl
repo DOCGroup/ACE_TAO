@@ -434,9 +434,11 @@ ACE_Message_Block::reset_allocators (ACE_Allocator *allocator_strategy,
     message_block_allocator;
 
   if (this->cont () != nullptr)
-    this->cont ()->reset_allocators (allocator_strategy,
-                                     data_block_allocator,
-                                     message_block_allocator);
+    {
+      this->cont ()->reset_allocators (allocator_strategy,
+                                       data_block_allocator,
+                                       message_block_allocator);
+    }
 }
 
 ACE_INLINE void

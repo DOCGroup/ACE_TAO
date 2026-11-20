@@ -16,10 +16,12 @@ ACE_FILE_Connector::ACE_FILE_Connector (ACE_FILE_IO &new_io,
   if (this->connect (new_io, remote_sap, timeout, local_sap,
                      reuse_addr, flags, perms) == ACE_IO_SAP::INVALID_HANDLE
       && timeout != 0 && !(errno == EWOULDBLOCK || errno == ETIME))
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("address %s, %p\n"),
-                remote_sap.get_path_name (),
-                ACE_TEXT ("ACE_FILE_IO")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("address %s, %p\n"),
+                     remote_sap.get_path_name (),
+                     ACE_TEXT ("ACE_FILE_IO")));
+    }
 }
 
 ACE_INLINE bool

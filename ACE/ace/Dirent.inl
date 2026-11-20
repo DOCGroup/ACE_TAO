@@ -30,9 +30,11 @@ ACE_INLINE
 ACE_Dirent::ACE_Dirent (const ACE_TCHAR *dirname)
 {
   if (this->open (dirname) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Dirent::ACE_Dirent")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_Dirent::ACE_Dirent")));
+    }
 }
 
 ACE_INLINE

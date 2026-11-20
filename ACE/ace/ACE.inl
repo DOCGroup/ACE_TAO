@@ -42,18 +42,22 @@ ACE::recv_n (ACE_HANDLE handle,
              size_t *bytes_transferred)
 {
   if (timeout == 0)
-    return ACE::recv_n_i (handle,
-                          buf,
-                          len,
-                          flags,
-                          bytes_transferred);
+    {
+      return ACE::recv_n_i (handle,
+                            buf,
+                            len,
+                            flags,
+                            bytes_transferred);
+    }
   else
-    return ACE::recv_n_i (handle,
-                          buf,
-                          len,
-                          flags,
-                          timeout,
-                          bytes_transferred);
+    {
+      return ACE::recv_n_i (handle,
+                            buf,
+                            len,
+                            flags,
+                            timeout,
+                            bytes_transferred);
+    }
 }
 
 #if defined (ACE_HAS_TLI)
@@ -91,16 +95,20 @@ ACE::recv_n (ACE_HANDLE handle,
              size_t *bytes_transferred)
 {
   if (timeout == 0)
-    return ACE::recv_n_i (handle,
-                          buf,
-                          len,
-                          bytes_transferred);
+    {
+      return ACE::recv_n_i (handle,
+                            buf,
+                            len,
+                            bytes_transferred);
+    }
   else
-    return ACE::recv_n_i (handle,
-                          buf,
-                          len,
-                          timeout,
-                          bytes_transferred);
+    {
+      return ACE::recv_n_i (handle,
+                            buf,
+                            len,
+                            timeout,
+                            bytes_transferred);
+    }
 }
 
 ACE_INLINE ssize_t
@@ -111,16 +119,20 @@ ACE::recvv_n (ACE_HANDLE handle,
               size_t *bytes_transferred)
 {
   if (timeout == 0)
-    return ACE::recvv_n_i (handle,
-                           iov,
-                           iovcnt,
-                           bytes_transferred);
+    {
+      return ACE::recvv_n_i (handle,
+                             iov,
+                             iovcnt,
+                             bytes_transferred);
+    }
   else
-    return ACE::recvv_n_i (handle,
-                           iov,
-                           iovcnt,
-                           timeout,
-                           bytes_transferred);
+    {
+      return ACE::recvv_n_i (handle,
+                             iov,
+                             iovcnt,
+                             timeout,
+                             bytes_transferred);
+    }
 }
 
 ACE_INLINE ssize_t
@@ -132,18 +144,22 @@ ACE::send_n (ACE_HANDLE handle,
              size_t *bytes_transferred)
 {
   if (timeout == 0)
-    return ACE::send_n_i (handle,
-                          buf,
-                          len,
-                          flags,
-                          bytes_transferred);
+    {
+      return ACE::send_n_i (handle,
+                            buf,
+                            len,
+                            flags,
+                            bytes_transferred);
+    }
   else
-    return ACE::send_n_i (handle,
-                          buf,
-                          len,
-                          flags,
-                          timeout,
-                          bytes_transferred);
+    {
+      return ACE::send_n_i (handle,
+                            buf,
+                            len,
+                            flags,
+                            timeout,
+                            bytes_transferred);
+    }
 }
 
 #if defined (ACE_HAS_TLI)
@@ -181,16 +197,20 @@ ACE::send_n (ACE_HANDLE handle,
              size_t *bytes_transferred)
 {
   if (timeout == 0)
-    return ACE::send_n_i (handle,
-                          buf,
-                          len,
-                          bytes_transferred);
+    {
+      return ACE::send_n_i (handle,
+                            buf,
+                            len,
+                            bytes_transferred);
+    }
   else
-    return ACE::send_n_i (handle,
-                          buf,
-                          len,
-                          timeout,
-                          bytes_transferred);
+    {
+      return ACE::send_n_i (handle,
+                            buf,
+                            len,
+                            timeout,
+                            bytes_transferred);
+    }
 }
 
 ACE_INLINE ssize_t
@@ -201,16 +221,20 @@ ACE::sendv_n (ACE_HANDLE handle,
               size_t *bytes_transferred)
 {
   if (timeout == 0)
-    return ACE::sendv_n_i (handle,
-                           iov,
-                           iovcnt,
-                           bytes_transferred);
+    {
+      return ACE::sendv_n_i (handle,
+                             iov,
+                             iovcnt,
+                             bytes_transferred);
+    }
   else
-    return ACE::sendv_n_i (handle,
-                           iov,
-                           iovcnt,
-                           timeout,
-                           bytes_transferred);
+    {
+      return ACE::sendv_n_i (handle,
+                             iov,
+                             iovcnt,
+                             timeout,
+                             bytes_transferred);
+    }
 }
 
 ACE_INLINE ssize_t

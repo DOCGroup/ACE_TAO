@@ -16,8 +16,10 @@ ACE_LSOCK_Connector::connect (ACE_LSOCK_Stream &new_stream,
                                             timeout, local_sap,
                                             reuse_addr, flags, perms);
   if (result != -1)
-    // This is necessary due to the weird inheritance relationships of ACE_LSOCK_Stream.
-    new_stream.set_handle (new_stream.get_handle ());
+    {
+      // This is necessary due to the weird inheritance relationships of ACE_LSOCK_Stream.
+      new_stream.set_handle (new_stream.get_handle ());
+    }
   return result;
 }
 

@@ -95,8 +95,10 @@ ACE_Vector_Iterator<T, DEFAULT_SIZE>::advance ()
       return 1;
     }
   else
-    // Already finished iterating.
-    return 0;
+    {
+      // Already finished iterating.
+      return 0;
+    }
 }
 
 template <class T, size_t DEFAULT_SIZE> ACE_INLINE int

@@ -37,7 +37,9 @@ ACE_EH_Dispatch_Info::set (ACE_HANDLE handle,
          ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
     }
   else
-    this->dispatch_ = false;
+    {
+      this->dispatch_ = false;
+    }
 }
 
 ACE_INLINE bool

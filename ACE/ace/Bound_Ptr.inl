@@ -52,17 +52,21 @@ ACE_Bound_Ptr_Counter<ACE_LOCK>::detach_strong (ACE_Bound_Ptr_Counter<ACE_LOCK>*
     ACE_GUARD_RETURN (ACE_LOCK, guard, counter->lock_, -1);
 
     if ((new_obj_ref_count = --counter->obj_ref_count_) == 0)
-      // Change the object reference count to -1 to indicate that the
-      // object has been deleted, as opposed to a weak pointer that
-      // simply hasn't had any strong pointers created from it yet.
-      counter->obj_ref_count_ = -1;
+      {
+        // Change the object reference count to -1 to indicate that the
+        // object has been deleted, as opposed to a weak pointer that
+        // simply hasn't had any strong pointers created from it yet.
+        counter->obj_ref_count_ = -1;
+      }
 
     if (--counter->self_ref_count_ == 0)
-      // Since counter contains the lock held by the guard, the
-      // guard needs to be released before freeing the memory holding
-      // the lock. So save the pointer to free, then release, then
-      // free.
-      counter_del = counter;
+      {
+        // Since counter contains the lock held by the guard, the
+        // guard needs to be released before freeing the memory holding
+        // the lock. So save the pointer to free, then release, then
+        // free.
+        counter_del = counter;
+      }
 
   }  // Release the lock
 
@@ -101,11 +105,13 @@ ACE_Bound_Ptr_Counter<ACE_LOCK>::detach_weak (ACE_Bound_Ptr_Counter<ACE_LOCK>* c
     ACE_GUARD (ACE_LOCK, guard, counter->lock_);
 
     if (--counter->self_ref_count_ == 0)
-      // Since counter contains the lock held by the guard, the
-      // guard needs to be released before freeing the memory holding
-      // the lock. So save the pointer to free, then release, then
-      // free.
-      counter_del = counter;
+      {
+        // Since counter contains the lock held by the guard, the
+        // guard needs to be released before freeing the memory holding
+        // the lock. So save the pointer to free, then release, then
+        // free.
+        counter_del = counter;
+      }
 
   }  // Release the lock
 

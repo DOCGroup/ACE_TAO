@@ -214,7 +214,9 @@ ACE_Thread::setcancelstate (struct cancel_state &new_state,
   if (new_state.cancelstate != 0
       && ACE_OS::thr_setcancelstate (new_state.cancelstate,
                                      &old_cstate) != 0)
-    return -1;
+    {
+      return -1;
+    }
 
   if (new_state.canceltype != 0
       && ACE_OS::thr_setcanceltype (new_state.canceltype,

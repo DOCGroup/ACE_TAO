@@ -243,10 +243,12 @@ ACE_CDR::next_size (size_t minsize)
     {
       // If necessary increment the size
       if (newsize < ACE_CDR::EXP_GROWTH_MAX)
-        // Quickly multiply by two using a bit shift.  This is
-        // guaranteed to work since the variable is an unsigned
-        // integer.
-        newsize <<= 1;
+        {
+          // Quickly multiply by two using a bit shift.  This is
+          // guaranteed to work since the variable is an unsigned
+          // integer.
+          newsize <<= 1;
+        }
       else
         {
           newsize += ACE_CDR::LINEAR_GROWTH_CHUNK;

@@ -18,7 +18,9 @@ ACE_Service_Config::open (const ACE_TCHAR program_name[],
                            ignore_static_svcs,
                            ignore_default_svc_conf,
                            ignore_debug_flag) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   return current()->open (program_name,
                           logger_key,
@@ -47,7 +49,9 @@ ACE_Service_Config::open (int argc,
                            ignore_static_svcs,
                            ignore_default_svc_conf,
                            ignore_debug_flag) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   return current()->open (argc,
                           argv,

@@ -199,12 +199,14 @@ ACE_SizeCDR::write_wchar_array (const ACE_CDR::WChar* x,
       return (this->good_bit_ = false);
     }
   if (ACE_OutputCDR::wchar_maxbytes () == sizeof (ACE_CDR::WChar))
-    return this->write_array (x,
-                              sizeof (ACE_CDR::WChar),
-                              sizeof (ACE_CDR::WChar) == 2
-                              ? ACE_CDR::SHORT_ALIGN
-                              : ACE_CDR::LONG_ALIGN,
-                              length);
+    {
+      return this->write_array (x,
+                                sizeof (ACE_CDR::WChar),
+                                sizeof (ACE_CDR::WChar) == 2
+                                ? ACE_CDR::SHORT_ALIGN
+                                : ACE_CDR::LONG_ALIGN,
+                                length);
+    }
   return this->write_wchar_array_i (x,length);
 }
 

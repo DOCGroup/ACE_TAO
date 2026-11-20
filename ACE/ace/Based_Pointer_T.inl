@@ -27,11 +27,15 @@ ACE_Based_Pointer_Basic<CONCRETE>::operator= (CONCRETE *rhs)
 {
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::operator=");
   if (rhs == 0)
-    // Store a value of <target_> that indicate "NULL" pointer.
-    this->target_ = -1;
+    {
+      // Store a value of <target_> that indicate "NULL" pointer.
+      this->target_ = -1;
+    }
   else
-    this->target_ = ((char *) rhs
-                     - ((char *) this - this->base_offset_));
+    {
+      this->target_ = ((char *) rhs
+                       - ((char *) this - this->base_offset_));
+    }
 }
 
 template <class CONCRETE> ACE_INLINE void
@@ -39,11 +43,15 @@ ACE_Based_Pointer<CONCRETE>::operator= (CONCRETE *rhs)
 {
   ACE_TRACE ("ACE_Based_Pointer<CONCRETE>::operator=");
   if (rhs == 0)
-    // Store a value of <target_> that indicate "NULL" pointer.
-    this->target_ = -1;
+    {
+      // Store a value of <target_> that indicate "NULL" pointer.
+      this->target_ = -1;
+    }
   else
-    this->target_ = ((char *) rhs
-                     - ((char *) this - this->base_offset_));
+    {
+      this->target_ = ((char *) rhs
+                       - ((char *) this - this->base_offset_));
+    }
 }
 
 template <class CONCRETE> ACE_INLINE CONCRETE

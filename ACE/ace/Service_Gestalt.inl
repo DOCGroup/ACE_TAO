@@ -39,7 +39,9 @@ ACE_Service_Gestalt::open (int argc,
   if (this->parse_args_i (argc,
                           argv,
                           ignore_default_svc_conf) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   return this->open_i (argv == 0 ? 0 : argv[0],
                        logger_key,
