@@ -14292,3 +14292,9 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
   Boolean-argument findings; only two pre-existing `while (1)` condition
   warnings remain, outside this call-site task. `git diff --check` passed. No
   builds or tests were run.
+
+## 2026-11-20 TAO regression server brace follow-up
+
+- Added Allman braces to single-statement control bodies in `TAO/tests/Bug_3384_Regression/server.cpp`, `TAO/tests/IPV6/server.cpp`, and `TAO/tests/Server_Port_Zero/server.cpp`.
+- Focused clang-tidy reported no remaining brace warnings in the edited files; `git diff --check` passed. No build or runtime tests were run.
+- The broader tracked-source brace audit remains open.

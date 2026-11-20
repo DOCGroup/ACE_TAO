@@ -15,21 +15,23 @@ parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior_output_file)
   int option {};
 
   while ((option = get_opts ()) != -1)
-    switch (option)
-      {
-      case 'o':
-        ior_output_file = get_opts.opt_arg ();
-        break;
+    {
+      switch (option)
+        {
+        case 'o':
+          ior_output_file = get_opts.opt_arg ();
+          break;
 
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage:  %s "
+                             "-o <iorfile>"
+                             "\n",
+                             argv [0]),
+                            -1);
+        }
+    }
   return 0;
 }
 
@@ -42,9 +44,9 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, ior_output_file) != 0)
-      {
-        return 1;
-      }
+        {
+          return 1;
+        }
 
       CORBA::Object_var const object =
         orb->resolve_initial_references ("PolicyCurrent");
@@ -77,9 +79,11 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Panic: nil RootPOA\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Panic: nil RootPOA\n"),
+                            1);
+        }
 
       PortableServer::POAManager_var const poa_manager = root_poa->the_POAManager ();
 
@@ -104,10 +108,12 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
         std::unique_ptr<FILE, int (*) (FILE *)> output_file (
           ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
         if (!output_file)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Cannot open output file for writing IOR: %s\n",
-                             ior_output_file),
-                            1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Cannot open output file for writing IOR: %s\n",
+                               ior_output_file),
+                              1);
+          }
         ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
       }
 
