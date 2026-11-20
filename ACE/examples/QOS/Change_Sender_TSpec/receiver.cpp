@@ -37,9 +37,11 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
   QoS_Util qos_util(argc, argv);
 
   if (qos_util.parse_args () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error in parsing args\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Error in parsing args\n"),
+                        -1);
+    }
 
   // This is a multicast application.
   if (qos_util.multicast_flag ())
@@ -63,9 +65,11 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
                                               368,
                                               25,
                                               1)) != 0)
-         ACE_ERROR_RETURN ((LM_ERROR,
-                            "Unable to bind the new flow spec\n"),
-                           -1);
+         {
+           ACE_ERROR_RETURN ((LM_ERROR,
+                              "Unable to bind the new flow spec\n"),
+                             -1);
+         }
 
        ACE_DEBUG ((LM_DEBUG,
                    "g_711 Flow Spec bound successfully\n"));
@@ -74,12 +78,16 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
        ACE_QoS ace_qos_receiver;
        if (fill_ace_qos.fill_simplex_receiver_qos (ace_qos_receiver,
                                                    g_711) != 0)
-         ACE_ERROR_RETURN ((LM_ERROR,
-                            "Unable to fill simplex receiver qos\n"),
-                           -1);
+         {
+           ACE_ERROR_RETURN ((LM_ERROR,
+                              "Unable to fill simplex receiver qos\n"),
+                             -1);
+         }
        else
-         ACE_DEBUG ((LM_DEBUG,
-                     "Filled up the Receiver QoS parameters\n"));
+         {
+           ACE_DEBUG ((LM_DEBUG,
+                       "Filled up the Receiver QoS parameters\n"));
+         }
 
       // Opening a new Multicast Datagram.
       ACE_SOCK_Dgram_Mcast_QoS dgram_mcast_qos;
@@ -107,20 +115,26 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
         session_factory.create_session (),
         QoS_Session_Deleter (session_factory));
       if (qos_session == nullptr)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Unable to create the QoS session\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to create the QoS session\n"),
+                            -1);
+        }
 
       // A QoS session is defined by the 3-tuple [DestAddr, DestPort,
       // Protocol]. Initialize the QoS session.
       if (qos_session->open (mult_addr,
                              IPPROTO_UDP) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Error in opening the QoS session\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Error in opening the QoS session\n"),
+                            -1);
+        }
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    "QoS session opened successfully\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "QoS session opened successfully\n"));
+        }
 
       // The following call opens the Dgram_Mcast and calls the
       // <ACE_OS::join_leaf> with the qos_params supplied here. Note
@@ -150,12 +164,16 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
                                      | ACE_FLAG_MULTIPOINT_C_LEAF
                                      | ACE_FLAG_MULTIPOINT_D_LEAF,
                                      qos_session.get ()) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Error in subscribe\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Error in subscribe\n"),
+                            -1);
+        }
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    "Dgram_Mcast subscribe succeeds\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Dgram_Mcast subscribe succeeds\n"));
+        }
 
       int nIP_TTL = 25;
       char achInBuf [BUFSIZ] {};
@@ -172,11 +190,15 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
                          &dwBytes, // bytes returned.
                          nullptr, // Overlapped.
                          nullptr) == -1) // Func.
-        ACE_ERROR ((LM_ERROR,
-                    "Error in Multicast scope ACE_OS::ioctl()\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "Error in Multicast scope ACE_OS::ioctl()\n"));
+        }
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    "Setting TTL with Multicast scope ACE_OS::ioctl call succeeds\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Setting TTL with Multicast scope ACE_OS::ioctl call succeeds\n"));
+        }
 
       int bFlag {};
 
@@ -191,11 +213,15 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
                          &dwBytes, // bytes returned.
                          nullptr, // Overlapped.
                          nullptr) == -1) // Func.
-        ACE_ERROR ((LM_ERROR,
-                    "Error in Loopback ACE_OS::ioctl()\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "Error in Loopback ACE_OS::ioctl()\n"));
+        }
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    "Disable Loopback with ACE_OS::ioctl call succeeds\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Disable Loopback with ACE_OS::ioctl call succeeds\n"));
+        }
 
       // This is a receiver.
       qos_session->flags (ACE_QoS_Session::ACE_QOS_RECEIVER);
@@ -207,12 +233,16 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
       if (qos_session->qos (&dgram_mcast_qos,
                             &qos_manager,
                             ace_qos_receiver) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Unable to set QoS\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to set QoS\n"),
+                            -1);
+        }
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    "Setting QOS succeeds.\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Setting QOS succeeds.\n"));
+        }
 
       // Register a signal handler that helps to gracefully close the
       // open QoS sessions.
@@ -223,9 +253,11 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
       // shutdown.
       if (ACE_Reactor::instance ()->register_handler
           (SIGINT, &qos_signal_handler) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Error in registering the Signal Handler.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Error in registering the Signal Handler.\n"),
+                            -1);
+        }
 
       // Handler to process QoS and Data events for the reciever.
       Receiver_QoS_Event_Handler qos_event_handler (dgram_mcast_qos,
@@ -237,17 +269,21 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 
       // Initialize the Decorator.
       if (qos_decorator.init () != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "QoS Decorator init () failed.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "QoS Decorator init () failed.\n"),
+                            -1);
+        }
 
       // Register the decorated Event Handler with the Reactor.
       if (ACE_Reactor::instance ()->register_handler (&qos_decorator,
                                                       ACE_Event_Handler::QOS_MASK |
                                                       ACE_Event_Handler::READ_MASK) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Error in registering the Decorator with the Reactor\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Error in registering the Decorator with the Reactor\n"),
+                            -1);
+        }
 
       // Start the event loop.
       ACE_DEBUG ((LM_DEBUG,
@@ -259,7 +295,9 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
                   "(%P|%t) shutting down server logging daemon\n"));
     }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                "Specify a -m option for multicast application\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Specify a -m option for multicast application\n"));
+    }
   return 0;
 }
