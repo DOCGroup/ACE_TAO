@@ -54,8 +54,8 @@ My_Handler::handle_input (ACE_HANDLE)
   ACE_INET_Addr from_addr;
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Activity occurred on handle %@!\n"),
-              reinterpret_cast<void *> (ACE_SOCK_Dgram::get_handle ())));
+              ACE_TEXT ("Activity occurred on handle %H!\n"),
+              ACE_SOCK_Dgram::get_handle ()));
 
   ssize_t n = ACE_SOCK_Dgram::recv (buf,
                                     sizeof buf,

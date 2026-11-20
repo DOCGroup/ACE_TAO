@@ -207,10 +207,10 @@ Handler::open (void *)
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) client %s connected from %d on handle %@\n",
+              "(%P|%t) client %s connected from %d on handle %H\n",
               cli_addr.get_host_name (),
               cli_addr.get_port_number (),
-              reinterpret_cast<void *> (this->peer ().get_handle ())));
+              this->peer ().get_handle ()));
   return 0;
 }
 

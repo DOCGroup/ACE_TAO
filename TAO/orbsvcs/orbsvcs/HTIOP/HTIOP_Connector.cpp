@@ -259,9 +259,9 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *,
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT("(%P|%t) - TAO::HTIOP::Connector::make_connection, ")
-                      ACE_TEXT("new connection to <%s:%d> on handle %@\n"),
+                      ACE_TEXT("new connection to <%s:%d> on handle %H\n"),
                       htiop_endpoint->host (), htiop_endpoint->port (),
-                      reinterpret_cast<void *> (svc_handler->peer ().get_handle ())));
+                      svc_handler->peer ().get_handle ()));
     }
 
   TAO_Transport *transport = svc_handler->transport ();

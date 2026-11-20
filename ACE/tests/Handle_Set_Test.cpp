@@ -152,8 +152,8 @@ test_boundaries ()
        )
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("obtained handle %@\n"),
-                  reinterpret_cast<void *> (handle)));
+                  ACE_TEXT ("obtained handle %H\n"),
+                  handle));
       int const done = set.remove (handle);
       ACE_TEST_ASSERT (done == 0);
       ++count;

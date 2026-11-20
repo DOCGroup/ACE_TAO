@@ -59,8 +59,8 @@ Purging_Handler::handle_close (ACE_HANDLE h,
 {
   if (purged_handles % 10 == 0)
     ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) purging handle [%@]\n",
-                reinterpret_cast<void *> (h)));
+                "(%P|%t) purging handle [%H]\n",
+                h));
 
   ++purged_handles;
 

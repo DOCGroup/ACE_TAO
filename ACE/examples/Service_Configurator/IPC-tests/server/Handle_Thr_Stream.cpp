@@ -130,8 +130,8 @@ CLI_Stream<PR_ST_2>::open (void *)
   ACE_INET_Addr sa;
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) client handle = %@\n"),
-              reinterpret_cast<void *> (this->peer ().get_handle ())));
+              ACE_TEXT ("(%t) client handle = %H\n"),
+              this->peer ().get_handle ()));
 
   if (this->peer ().get_remote_addr (sa) == -1)
   {

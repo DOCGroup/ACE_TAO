@@ -109,9 +109,9 @@ Reference_Counted_Event_Handler::handle_close (ACE_HANDLE handle,
   if (debug)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Reference_Counted_Event_Handler::handle_close() called with handle = %@ and masks = %Q. "
+                  "Reference_Counted_Event_Handler::handle_close() called with handle = %H and masks = %Q. "
                   "Reference count is %q\n",
-                  reinterpret_cast<void *> (handle),
+                  handle,
                   static_cast<ACE_UINT64> (masks),
                   static_cast<ACE_INT64> (this->reference_count_.load ())));
     }
@@ -414,8 +414,8 @@ Simple_Event_Handler::handle_close (ACE_HANDLE handle,
   if (debug)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Simple_Event_Handler::handle_close() called with handle = %@ and masks = %Q.\n",
-                  reinterpret_cast<void *> (handle),
+                  "Simple_Event_Handler::handle_close() called with handle = %H and masks = %Q.\n",
+                  handle,
                   static_cast<ACE_UINT64> (masks)));
     }
 

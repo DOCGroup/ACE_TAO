@@ -129,9 +129,9 @@ ACE_TS_Clerk_Handler::open (void *)
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("TS Clerk Daemon connected to port %d on handle %@\n"),
+              ACE_TEXT ("TS Clerk Daemon connected to port %d on handle %H\n"),
               server_addr.get_port_number (),
-              reinterpret_cast<void *> (this->peer ().get_handle ())));
+              this->peer ().get_handle ()));
 
   return 0;
 }

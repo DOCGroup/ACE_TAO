@@ -47,8 +47,8 @@ ACE_Handle_Set::dump () const
 
 #if defined (ACE_HANDLE_SET_USES_FD_ARRAY)
   for (size_t i {}; i < (size_t) this->mask_.fd_count + 1; ++i)
-    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT (" %@ "),
-                   reinterpret_cast<void *> (this->mask_.fd_array[i])));
+    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT (" %H "),
+                   this->mask_.fd_array[i]));
 #else /* !ACE_HANDLE_SET_USES_FD_ARRAY */
   for (ACE_HANDLE i {}; i < this->max_handle_ + 1; ++i)
     if (this->is_set (i))

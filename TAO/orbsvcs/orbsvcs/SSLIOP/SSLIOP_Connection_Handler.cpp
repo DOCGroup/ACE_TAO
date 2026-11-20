@@ -227,9 +227,9 @@ TAO::SSLIOP::Connection_Handler::open (void *)
 
       ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) SSLIOP connection from ")
-                  ACE_TEXT ("client <%s> on [%@]\n"),
+                  ACE_TEXT ("client <%s> on [%H]\n"),
                   client,
-                  reinterpret_cast<void *> (this->peer ().get_handle ())));
+                  this->peer ().get_handle ()));
 
       // Verify that we can resolve our hostname.
       if (local_addr.addr_to_string (client,

@@ -89,8 +89,8 @@ int
 Svc_Handler::close (u_long)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "%t close connection on handle %@.\n",
-              reinterpret_cast<void *> (this->get_handle ())));
+              "%t close connection on handle %H.\n",
+              this->get_handle ()));
   return 0;
 }
 
@@ -111,8 +111,8 @@ Concurrency_Strategy<SVC_HANDLER>::
   if (++count % 4 == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%t connection on handle %@ has artificially failed.\n",
-                  reinterpret_cast<void *> (svc_handler->get_handle ())));
+                  "%t connection on handle %H has artificially failed.\n",
+                  svc_handler->get_handle ()));
       return -1;
     }
   else
@@ -220,9 +220,9 @@ Connect_Thread::svc ()
                                            ACE_Event_Handler::READ_MASK);
 
           ACE_DEBUG ((LM_DEBUG,
-                      "%t connection for %s completed on handle %@.\n",
+                      "%t connection for %s completed on handle %H.\n",
                       hosts[i],
-                      reinterpret_cast<void *> (svc_handler->get_handle ())));
+                      svc_handler->get_handle ()));
           // We are connected successfully. Close the connection.
           this->reactor_.remove_handler (svc_handler->get_handle (),
                                          ACE_Event_Handler::ALL_EVENTS_MASK |

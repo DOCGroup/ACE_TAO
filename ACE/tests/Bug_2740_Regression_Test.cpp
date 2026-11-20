@@ -95,8 +95,8 @@ int
 ClientSvcHandler::open (void* factory)
 {
   ++iter_;
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%t: client h %@, open for iteration %B\n"),
-              reinterpret_cast<void *> (this->peer ().get_handle ()), this->iter_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%t: client h %H, open for iteration %B\n"),
+              this->peer ().get_handle (), this->iter_));
 
   if (ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::open (factory) == 0)
     {
@@ -108,8 +108,8 @@ ClientSvcHandler::open (void* factory)
       if (-1 == this->peer().send_n (ClientSvcHandler::send_str, send_len))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("%t: client h %@, %p\n"),
-                             reinterpret_cast<void *> (this->peer ().get_handle ()),
+                             ACE_TEXT ("%t: client h %H, %p\n"),
+                             this->peer ().get_handle (),
                              ACE_TEXT ("send")),
                             -1);
         }
@@ -130,8 +130,8 @@ ClientSvcHandler::handle_input (ACE_HANDLE handle)
     ssize_t bc;
     bc = this->peer ().recv (buffer, sizeof (buffer));
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("%t: client h %@ recv %b bytes\n"),
-                reinterpret_cast<void *> (handle),
+                ACE_TEXT ("%t: client h %H recv %b bytes\n"),
+                handle,
                 bc));
     if (bc > 0)
       {
@@ -148,8 +148,8 @@ ClientSvcHandler::handle_input (ACE_HANDLE handle)
         if (this->echo_cnt_ == 0)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("%t: client h %@ end of echo\n"),
-                        reinterpret_cast<void *> (handle)));
+                        ACE_TEXT ("%t: client h %H end of echo\n"),
+                        handle));
             return -1;
           }
 
@@ -166,22 +166,22 @@ ClientSvcHandler::handle_input (ACE_HANDLE handle)
     else if (bc == 0) // Socket was closed by server
       {
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%t: client h %@: closed by server\n"),
-                           reinterpret_cast<void *> (handle)),
+                           ACE_TEXT ("%t: client h %H: closed by server\n"),
+                           handle),
                           -1);
       }
     else if (errno == EWOULDBLOCK) // no data ready on socket
       {
         ACE_ERROR_RETURN ((LM_DEBUG,
-                           ACE_TEXT ("%t: client h %@: recv no data\n"),
-                           reinterpret_cast<void *> (handle)),
+                           ACE_TEXT ("%t: client h %H: recv no data\n"),
+                           handle),
                           0);
       }
     else
       {
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%t: client h %@: %p\n"),
-                           reinterpret_cast<void *> (handle),
+                           ACE_TEXT ("%t: client h %H: %p\n"),
+                           handle,
                            ACE_TEXT ("send")),
                           -1);
       }
@@ -193,8 +193,8 @@ int
 ClientSvcHandler::handle_timeout (const ACE_Time_Value &, const void*)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("%t: client h %@: timeout\n"),
-              reinterpret_cast<void *> (this->peer ().get_handle ())));
+              ACE_TEXT ("%t: client h %H: timeout\n"),
+              this->peer ().get_handle ()));
   reactor()->remove_handler (this, ACE_Event_Handler::ALL_EVENTS_MASK);
   return 0;
 }
@@ -203,8 +203,8 @@ int
 ClientSvcHandler::handle_close (ACE_HANDLE handle, ACE_Reactor_Mask mask)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("%t: client h %@ handle_close\n"),
-              reinterpret_cast<void *> (handle)));
+              ACE_TEXT ("%t: client h %H handle_close\n"),
+              handle));
 
   // If not done iterating, just close the socket and reopen the connection.
   // Else shut down and delete.
@@ -224,8 +224,8 @@ ClientSvcHandler::handle_close (ACE_HANDLE handle, ACE_Reactor_Mask mask)
 int
 ServerSvcHandler::open (void* factory)
 {
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%t: server h %@ open\n"),
-              reinterpret_cast<void *> (this->peer ().get_handle ())));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%t: server h %H open\n"),
+              this->peer ().get_handle ()));
 
   return ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::open (factory);
 }
@@ -233,8 +233,8 @@ ServerSvcHandler::open (void* factory)
 int
 ServerSvcHandler::handle_input (ACE_HANDLE handle)
 {
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%t: server h %@ input\n"),
-              reinterpret_cast<void *> (handle)));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%t: server h %H input\n"),
+              handle));
 
   // Receive whatever is here and send it back.
   char buffer[ACE_DEFAULT_MAX_SOCKET_BUFSIZ];
@@ -243,22 +243,22 @@ ServerSvcHandler::handle_input (ACE_HANDLE handle)
   if (bc > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("%t: server h %@ recv %b bytes\n"),
-                  reinterpret_cast<void *> (handle),
+                  ACE_TEXT ("%t: server h %H recv %b bytes\n"),
+                  handle,
                   bc));
       if (-1 == this->peer ().send_n (buffer, bc))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("%t: server h %@: send failed %p\n"),
-                             reinterpret_cast<void *> (handle)),
+                             ACE_TEXT ("%t: server h %H: send failed %p\n"),
+                             handle),
                             -1);
         }
     }
   else if (bc == 0 || errno == ECONNRESET) // Socket was closed by client
     {
       ACE_ERROR_RETURN ((LM_DEBUG,
-                         ACE_TEXT ("%t: server h %@: closed by client\n"),
-                         reinterpret_cast<void *> (handle)),
+                         ACE_TEXT ("%t: server h %H: closed by client\n"),
+                         handle),
                         -1);
     }
   else if (errno == EWOULDBLOCK) // no data ready on socket
@@ -266,14 +266,14 @@ ServerSvcHandler::handle_input (ACE_HANDLE handle)
       // The reactor shouldn't call back for input if there's no data, so
       // log an error, but keep running.
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%t: server h %@: recv no data\n"),
-                         reinterpret_cast<void *> (handle)),
+                         ACE_TEXT ("%t: server h %H: recv no data\n"),
+                         handle),
                         0);
     }
   else
     {
-      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%t: server h %@: recv failed %p\n"),
-                         reinterpret_cast<void *> (handle)),
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%t: server h %H: recv failed %p\n"),
+                         handle),
                         -1);
     }
 
@@ -283,8 +283,8 @@ ServerSvcHandler::handle_input (ACE_HANDLE handle)
 int
 ServerSvcHandler::handle_close(ACE_HANDLE handle, ACE_Reactor_Mask mask)
 {
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%t: server h %@: handle_close\n"),
-              reinterpret_cast<void *> (handle)));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%t: server h %H: handle_close\n"),
+              handle));
   return ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::handle_close (handle,
                                                                          mask);
 }

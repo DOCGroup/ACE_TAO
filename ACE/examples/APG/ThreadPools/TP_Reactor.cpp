@@ -63,8 +63,8 @@ Request_Handler::handle_input (ACE_HANDLE fd)
       ++this->nr_msgs_rcvd_;
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t) svr input; fd: %@; input: %s\n"),
-                  reinterpret_cast<void *> (fd),
+                  ACE_TEXT ("(%t) svr input; fd: %H; input: %s\n"),
+                  fd,
                   buffer.data ()));
       if (ACE_OS::strcmp (buffer.data (), ACE_TEXT ("shutdown")) == 0)
       {
@@ -75,8 +75,8 @@ Request_Handler::handle_input (ACE_HANDLE fd)
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t) Request_Handler: %@ peer closed (%@)\n"),
-                  this, reinterpret_cast<void *> (fd)));
+                  ACE_TEXT ("(%t) Request_Handler: %@ peer closed (%H)\n"),
+                  this, fd));
     }
   return -1;
 }
@@ -85,8 +85,8 @@ int
 Request_Handler::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) svr close; fd: %@, rcvd %B msgs\n"),
-              reinterpret_cast<void *> (fd),
+              ACE_TEXT ("(%t) svr close; fd: %H, rcvd %B msgs\n"),
+              fd,
               this->nr_msgs_rcvd_));
 
   if (this->nr_msgs_rcvd_ != cli_req_no)

@@ -177,9 +177,9 @@ Reference_Counted_Event_Handler::handle_close (ACE_HANDLE handle,
                                                ACE_Reactor_Mask masks)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Reference_Counted_Event_Handler::handle_close() called with handle = %@ and masks = %Q. "
+              "Reference_Counted_Event_Handler::handle_close() called with handle = %H and masks = %Q. "
               "Reference count is %q\n",
-              reinterpret_cast<void *> (handle),
+              handle,
               static_cast<ACE_UINT64> (masks),
               static_cast<ACE_INT64> (this->reference_count_.load ())));
 
@@ -650,8 +650,8 @@ Simple_Event_Handler::handle_close (ACE_HANDLE handle,
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Simple_Event_Handler::handle_close() called with ")
-              ACE_TEXT ("handle = %@ and masks = %Q with close count = %d.\n"),
-              reinterpret_cast<void *> (handle),
+              ACE_TEXT ("handle = %H and masks = %Q with close count = %d.\n"),
+              handle,
               static_cast<ACE_UINT64> (masks),
               --this->close_count_));
 
@@ -954,9 +954,9 @@ Closed_In_Upcall_Event_Handler::handle_close (ACE_HANDLE handle,
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Closed_In_Upcall_Event_Handler::handle_close() ")
-              ACE_TEXT ("called with handle = %@ and masks = %Q. ")
+              ACE_TEXT ("called with handle = %H and masks = %Q. ")
               ACE_TEXT ("Reference count is %q\n"),
-              reinterpret_cast<void *> (handle),
+              handle,
               static_cast<ACE_UINT64> (masks),
               static_cast<ACE_INT64> (this->reference_count_.load ())));
 

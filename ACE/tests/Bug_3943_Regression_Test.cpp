@@ -272,9 +272,9 @@ int
 Svc_Handler::open (void *)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) opening Svc_Handler %@ with handle %@\n"),
+              ACE_TEXT ("(%P|%t) opening Svc_Handler %@ with handle %H\n"),
               static_cast<void *> (this),
-              reinterpret_cast<void *> (this->peer ().get_handle ())));
+              this->peer ().get_handle ()));
   // Enable non-blocking I/O.
   if (this->peer ().enable (ACE_NONBLOCK) == -1)
     {

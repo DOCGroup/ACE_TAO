@@ -76,8 +76,8 @@ ACE_Client_Logging_Handler::open (void *)
                         -1);
     }
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Connected to client on handle %@\n"),
-              reinterpret_cast<void *> (this->peer ().get_handle ())));
+              ACE_TEXT ("Connected to client on handle %H\n"),
+              this->peer ().get_handle ()));
   return 0;
 }
 
@@ -613,9 +613,9 @@ ACE_Client_Logging_Acceptor::init (int argc, ACE_TCHAR *argv[])
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Starting up Client Logging Daemon, ")
-              ACE_TEXT ("bounded to STREAM addr %s on handle %@\n"),
+              ACE_TEXT ("bounded to STREAM addr %s on handle %H\n"),
               lserver_addr.get_path_name (),
-              reinterpret_cast<void *> (this->acceptor ().get_handle ())));
+              this->acceptor ().get_handle ()));
 #else
   ACE_INET_Addr lserver_addr;
 
@@ -630,9 +630,9 @@ ACE_Client_Logging_Acceptor::init (int argc, ACE_TCHAR *argv[])
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Starting up Client Logging Daemon, ")
-              ACE_TEXT ("bounded to local port %d on handle %@\n"),
+              ACE_TEXT ("bounded to local port %d on handle %H\n"),
               lserver_addr.get_port_number (),
-              reinterpret_cast<void *> (this->acceptor ().get_handle ())));
+              this->acceptor ().get_handle ()));
 #endif /* ACE_HAS_STREAM_LOG_MSG_IPC == 1 */
 
   if (con.connect (stream,

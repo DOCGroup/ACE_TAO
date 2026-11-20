@@ -36,8 +36,8 @@ Peer_Router_Context::send_peers (ACE_Message_Block *mb)
       if (Options::instance ().debug ())
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%t) sending to peer via handle %@\n"),
-                      reinterpret_cast<void *> (ss->ext_id_)));
+                      ACE_TEXT ("(%t) sending to peer via handle %H\n"),
+                      ss->ext_id_));
         }
 
       ++iterations;
@@ -110,11 +110,11 @@ Peer_Router_Context::Peer_Router_Context (u_short port)
       if (this->acceptor ().get_local_addr (addr) != -1)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%t) initializing %C on port = %d, handle = %@, this = %@\n"),
+                      ACE_TEXT ("(%t) initializing %C on port = %d, handle = %H, this = %@\n"),
                       addr.get_port_number () == Options::instance ().supplier_port ()
                         ? "Supplier_Handler" : "Consumer_Handler",
                       addr.get_port_number (),
-                      reinterpret_cast<void *> (this->acceptor ().get_handle ()),
+                      this->acceptor ().get_handle (),
                       static_cast<void *> (this)));
         }
       else
@@ -147,8 +147,8 @@ Peer_Router_Context::~Peer_Router_Context ()
       if (Options::instance ().debug ())
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%t) closing down peer on handle %@\n"),
-                      reinterpret_cast<void *> (ss->ext_id_)));
+                      ACE_TEXT ("(%t) closing down peer on handle %H\n"),
+                      ss->ext_id_));
         }
 
       if (ACE_Reactor::instance ()->remove_handler (ss->ext_id_,
@@ -284,8 +284,8 @@ int
 Peer_Handler::handle_input (ACE_HANDLE h)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) input arrived on handle %@\n"),
-              reinterpret_cast<void *> (h)));
+              ACE_TEXT ("(%t) input arrived on handle %H\n"),
+              h));
 
   ACE_Message_Block *db {};
 
@@ -322,8 +322,8 @@ Peer_Handler::handle_input (ACE_HANDLE h)
         }
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t) shutting down handle %@\n"),
-                  reinterpret_cast<void *> (h)));
+                  ACE_TEXT ("(%t) shutting down handle %H\n"),
+                  h));
       // Instruct the <ACE_Reactor> to deregister us by returning -1.
       return -1;
     }

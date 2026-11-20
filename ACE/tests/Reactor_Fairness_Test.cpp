@@ -78,8 +78,8 @@ namespace {
            ++iter)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("   handle %@: %u\n"),
-                      reinterpret_cast<void *> ((*iter).first), (*iter).second));
+                      ACE_TEXT ("   handle %H: %u\n"),
+                      (*iter).first, (*iter).second));
           if ((*iter).second > max_chunks)
           {
             max_chunks = (*iter).second;
@@ -112,8 +112,8 @@ Read_Handler::handle_input (ACE_HANDLE h)
   if (opt_debug)
     {
       ACE_DEBUG((LM_DEBUG,
-                 ACE_TEXT ("(%t) Read_Handler::handle_input h %@, result %b\n"),
-                 reinterpret_cast<void *> (h), result));
+                 ACE_TEXT ("(%t) Read_Handler::handle_input h %H, result %b\n"),
+                 h, result));
     }
   if (result > 0)
     {
@@ -121,8 +121,8 @@ Read_Handler::handle_input (ACE_HANDLE h)
         {
           buf[result] = 0;
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%t) Read_Handler::handle_input: h %@: %C\n"),
-                      reinterpret_cast<void *> (h),
+                      ACE_TEXT ("(%t) Read_Handler::handle_input: h %H: %C\n"),
+                      h,
                       buf));
         }
       ++this->chunks_in;
@@ -136,8 +136,8 @@ Read_Handler::handle_input (ACE_HANDLE h)
       else
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("handle_input: h %@: recv failed %p (errno: %d)\n"),
-                      reinterpret_cast<void *> (h), ACE_ERRNO_GET));
+                      ACE_TEXT ("handle_input: h %H: recv failed %p (errno: %d)\n"),
+                      h, ACE_ERRNO_GET));
 
           // This will cause handle_close to get called.
           return -1;
@@ -147,8 +147,8 @@ Read_Handler::handle_input (ACE_HANDLE h)
     {
       if (opt_debug)
       {
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Handle %@ closing\n"),
-                    reinterpret_cast<void *> (h)));
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Handle %H closing\n"),
+                    h));
       }
       // This will cause handle_close to get called.
       return -1;
@@ -164,8 +164,8 @@ Read_Handler::handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask /*close_mask*/)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Read_Handler handle %@ close; %u chunks\n"),
-              reinterpret_cast<void *> (handle), chunks_in));
+              ACE_TEXT ("(%t) Read_Handler handle %H close; %u chunks\n"),
+              handle, chunks_in));
   results.report (handle, this->chunks_in);
 
   // Shutdown
@@ -238,8 +238,8 @@ sender (void *arg)
           if (opt_debug)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%t) h %@ sent %b\n"),
-                          reinterpret_cast<void *> (socks[i].get_handle ()),
+                          ACE_TEXT ("(%t) h %H sent %b\n"),
+                          socks[i].get_handle (),
                           cnt));
             }
           if (cnt > 0)

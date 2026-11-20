@@ -270,9 +270,9 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::op
 #endif /* ! __GNUG__ */
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) accepted connection from host %C on fd %@\n"),
+              ACE_TEXT ("(%t) accepted connection from host %C on fd %H\n"),
               client_addr.get_host_name (),
-              reinterpret_cast<void *> (this->peer ().get_handle ())));
+              this->peer ().get_handle ()));
 
   return 0;
 }
@@ -334,9 +334,9 @@ ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::init (int argc, ACE_TCHAR *argv[])
                        ACE_TEXT ("get_local_addr")),
                       -1);
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("starting up Logging Server at port %d on handle %@\n"),
+              ACE_TEXT ("starting up Logging Server at port %d on handle %H\n"),
               server_addr.get_port_number (),
-              reinterpret_cast<void *> (this->acceptor ().get_handle ())));
+              this->acceptor ().get_handle ()));
   return 0;
 }
 

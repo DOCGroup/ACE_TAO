@@ -215,9 +215,9 @@ TAO::IIOP_SSL_Connector::make_connection (
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - IIOP_SSL_Connector::make_connection, "
-                "new connection to <%s:%d> on handle %@\n",
+                "new connection to <%s:%d> on handle %H\n",
                 iiop_endpoint->host (), iiop_endpoint->port (),
-                reinterpret_cast<void *> (svc_handler->peer ().get_handle ())));
+                svc_handler->peer ().get_handle ()));
     }
 
   // Add the handler to Cache

@@ -23,8 +23,8 @@ template <typename PEER_STREAM> int
 Peer_Handler<PEER_STREAM>::open (void *)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("activating %@\n"),
-              reinterpret_cast<void *> (this->peer ().get_handle ())));
+              ACE_TEXT ("activating %H\n"),
+              this->peer ().get_handle ()));
   this->action_ = &Peer_Handler<PEER_STREAM>::connected;
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("please enter input..: ")));
@@ -177,8 +177,8 @@ Peer_Handler<PEER_STREAM>::handle_close (ACE_HANDLE h,
                                      ACE_Reactor_Mask mask)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("closing down handle %@ with mask %Q\n"),
-              reinterpret_cast<void *> (h),
+              ACE_TEXT ("closing down handle %H with mask %Q\n"),
+              h,
               static_cast<ACE_UINT64> (mask)));
 
   if (this->action_ == &Peer_Handler<PEER_STREAM>::stdio)

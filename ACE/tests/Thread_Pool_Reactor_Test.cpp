@@ -139,8 +139,8 @@ Request_Handler::handle_input (ACE_HANDLE fd)
       ++this->nr_msgs_rcvd_;
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t) svr input; fd: %@; input: %s\n",
-                  reinterpret_cast<void *> (fd),
+                  "(%t) svr input; fd: %H; input: %s\n",
+                  fd,
                   buffer));
       if (ACE_OS::strcmp (buffer, ACE_TEXT ("shutdown")) == 0)
         {
@@ -151,8 +151,8 @@ Request_Handler::handle_input (ACE_HANDLE fd)
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t) Request_Handler: %@ peer closed (%@)\n",
-                  static_cast<void *> (this), reinterpret_cast<void *> (fd)));
+                  "(%t) Request_Handler: %@ peer closed (%H)\n",
+                  static_cast<void *> (this), fd));
     }
   return -1;
 }
@@ -161,8 +161,8 @@ int
 Request_Handler::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) svr close; fd: %@, rcvd %B msgs\n",
-              reinterpret_cast<void *> (fd),
+              "(%t) svr close; fd: %H, rcvd %B msgs\n",
+              fd,
               this->nr_msgs_rcvd_));
   if (this->nr_msgs_rcvd_ != cli_req_no)
     {
@@ -227,8 +227,8 @@ cli_worker (void *arg)
       for (size_t j = 0; j < cli_req_no; ++j)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%t) conn_worker handle %@, req %B\n",
-                      reinterpret_cast<void *> (stream.get_handle ()),
+                      "(%t) conn_worker handle %H, req %B\n",
+                      stream.get_handle (),
                       j + 1));
           if (stream.send_n (arg,
                              (len + 1) * sizeof (ACE_TCHAR)) == -1)
@@ -281,8 +281,8 @@ worker (void *)
   const ACE_TCHAR *sbuf = ACE_TEXT ("\011shutdown");
 
   ACE_DEBUG ((LM_DEBUG,
-              "shutdown stream handle = %@\n",
-              reinterpret_cast<void *> (stream.get_handle ())));
+              "shutdown stream handle = %H\n",
+              stream.get_handle ()));
 
   if (stream.send_n (sbuf, (ACE_OS::strlen (sbuf) + 1) * sizeof (ACE_TCHAR)) == -1)
     {

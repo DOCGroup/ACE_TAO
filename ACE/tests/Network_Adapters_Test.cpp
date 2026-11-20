@@ -422,8 +422,8 @@ Echo_Handler::handle_input (ACE_HANDLE)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) Echo_Handler::handle_input - ")
-              ACE_TEXT ("activity occurred on handle %@!\n"),
-              reinterpret_cast<void *> (this->ping_socket ().get_handle ())));
+              ACE_TEXT ("activity occurred on handle %H!\n"),
+              this->ping_socket ().get_handle ()));
 
   ACE_TCHAR buf[BUFSIZ];
   ACE_OS::memset (buf, 0, sizeof buf);
@@ -452,8 +452,8 @@ Echo_Handler::handle_input (ACE_HANDLE)
       // Complain and leave
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("(%P|%t) Echo_Handler::handle_input - ")
-                         ACE_TEXT ("closing daemon (fd = %@)\n"),
-                         reinterpret_cast<void *> (this->get_handle ())),
+                         ACE_TEXT ("closing daemon (fd = %H)\n"),
+                         this->get_handle ()),
                         0);
       // NOTREACHED
 
@@ -504,8 +504,8 @@ Echo_Handler::handle_timeout (ACE_Time_Value const &,
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) Echo_Handler::handle_timeout - ")
-              ACE_TEXT ("timer for ping_socket_ with handle %@.\n"),
-              reinterpret_cast<void *> (this->ping_socket ().get_handle ())));
+              ACE_TEXT ("timer for ping_socket_ with handle %H.\n"),
+              this->ping_socket ().get_handle ()));
 
   int need_to_proceed = 0;
 
@@ -535,8 +535,8 @@ Echo_Handler::handle_timeout (ACE_Time_Value const &,
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) Echo_Handler::handle_timeout - ")
-                  ACE_TEXT ("completed ECHO-checks for handle (%@).\n"),
-                  reinterpret_cast<void *> (this->ping_socket ().get_handle ())));
+                  ACE_TEXT ("completed ECHO-checks for handle (%H).\n"),
+                  this->ping_socket ().get_handle ()));
       return -1; // to de-register from Reactor and make clean-up
                  // in handle-close
     }

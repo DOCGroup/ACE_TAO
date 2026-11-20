@@ -343,8 +343,8 @@ Sender::handle_input (ACE_HANDLE)
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Event loop thread calling Sender::close() ")
-              ACE_TEXT ("for handle %@\n"),
-              reinterpret_cast<void *> (this->handle_)));
+              ACE_TEXT ("for handle %H\n"),
+              this->handle_));
 
   this->close ();
 
@@ -461,8 +461,8 @@ Receiver::svc ()
 
   int result = 0;
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT("(%t) Receiver::svc commencing, handle = %@\n"),
-              reinterpret_cast<void *> (this->handle_)));
+              ACE_TEXT("(%t) Receiver::svc commencing, handle = %H\n"),
+              this->handle_));
 
   disable_signal (SIGPIPE, SIGPIPE);
 
@@ -472,8 +472,8 @@ Receiver::svc ()
         this->handle_input (this->handle_);
     }
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT("(%t) Receiver::svc terminating, handle = %@\n"),
-              reinterpret_cast<void *> (this->handle_)));
+              ACE_TEXT("(%t) Receiver::svc terminating, handle = %H\n"),
+              this->handle_));
   return 0;
 }
 
@@ -509,9 +509,9 @@ Receiver::handle_input (ACE_HANDLE handle)
       if (debug)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%t) Message %d received on handle %@\n"),
+                      ACE_TEXT ("(%t) Message %d received on handle %H\n"),
                       this->counter_++,
-                      reinterpret_cast<void *> (handle)));
+                      handle));
         }
 
       if (this->thr_count () == 0 &&
@@ -548,7 +548,7 @@ Receiver::handle_input (ACE_HANDLE handle)
                       ACE_TEXT ("(%t) /*** Problem in receiving message %d on handle")
                       ACE_TEXT (" %@: shutting down receiving thread ***/\n"),
                       this->counter_,
-                      reinterpret_cast<void *> (handle)));
+                      handle));
         }
 
       return -1;
@@ -668,10 +668,10 @@ Connector::connect (ACE_HANDLE &client_handle,
   if (debug)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t) New connection: client handle = %@, ")
-                  ACE_TEXT ("server handle = %@\n"),
-                  reinterpret_cast<void *> (client_handle),
-                  reinterpret_cast<void *> (server_handle)));
+                  ACE_TEXT ("(%t) New connection: client handle = %H, ")
+                  ACE_TEXT ("server handle = %H\n"),
+                  client_handle,
+                  server_handle));
     }
 
   return 0;
@@ -907,7 +907,7 @@ Invocation_Thread::create_connection ()
   if (result != 0)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) create_connection h %@, %p\n"),
-                  reinterpret_cast<void *> (client_handle),
+                  client_handle,
                   ACE_TEXT ("register_handler")));
     }
 #endif
@@ -979,10 +979,10 @@ Invocation_Thread::svc ()
               if (debug)
                 {
                   ACE_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("(%t) Message %d:%d delivered on handle %@\n"),
+                              ACE_TEXT ("(%t) Message %d:%d delivered on handle %H\n"),
                               connection_counter,
                               message_counter,
-                              reinterpret_cast<void *> (sender->handle_)));
+                              sender->handle_));
                 }
 
               this->connection_cache_.release_connection (sender);
@@ -994,17 +994,17 @@ Invocation_Thread::svc ()
                 {
                   ACE_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("(%t) /*** Problem in delivering message ")
-                              ACE_TEXT ("%d:%d on handle %@: shutting down ")
+                              ACE_TEXT ("%d:%d on handle %H: shutting down ")
                               ACE_TEXT ("invocation thread ***/\n"),
                               connection_counter,
                               message_counter,
-                              reinterpret_cast<void *> (sender->handle_)));
+                              sender->handle_));
                 }
 
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%t) Invocation thread calling ")
-                          ACE_TEXT ("Sender::close() for handle %@\n"),
-                          reinterpret_cast<void *> (sender->handle_)));
+                          ACE_TEXT ("Sender::close() for handle %H\n"),
+                          sender->handle_));
 
               sender->close ();
             }
@@ -1112,8 +1112,8 @@ Close_Socket_Thread::svc ()
             {
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%t) Close socket thread closing client ")
-                          ACE_TEXT ("handle %@\n"),
-                          reinterpret_cast<void *> (client_handle)));
+                          ACE_TEXT ("handle %H\n"),
+                          client_handle));
             }
 
           ACE_OS::shutdown (client_handle, ACE_SHUTDOWN_BOTH);
@@ -1126,8 +1126,8 @@ Close_Socket_Thread::svc ()
             {
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%t) Close socket thread closing server ")
-                          ACE_TEXT ("handle %@\n"),
-                          reinterpret_cast<void *> (server_handle)));
+                          ACE_TEXT ("handle %H\n"),
+                          server_handle));
             }
           ACE_OS::shutdown (server_handle, ACE_SHUTDOWN_BOTH);
           ACE_OS::closesocket (server_handle);
@@ -1217,8 +1217,8 @@ Purger_Thread::svc ()
           // Actively close the connection.
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%t) Purger thread calling Sender::close() ")
-                      ACE_TEXT ("for handle %@\n"),
-                      reinterpret_cast<void *> (sender->handle_)));
+                      ACE_TEXT ("for handle %H\n"),
+                      sender->handle_));
 
           sender->close ();
         }

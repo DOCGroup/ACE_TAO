@@ -68,9 +68,9 @@ init_buffer (size_t index)
     {
       len = ntohl (len);
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) reading messages of size %d from handle %@\n",
+                  "(%P|%t) reading messages of size %d from handle %H\n",
                   len,
-                  reinterpret_cast<void *> (poll_array[index].fd)));
+                  poll_array[index].fd));
 
       ACE_ALLOCATOR_RETURN (buffer_array[index].buf_,
                             ACE_OS::malloc (len),
@@ -116,8 +116,8 @@ handle_data (size_t &n_handles)
           else if (n == 0)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "(%P|%t) closing oneway server at handle %@\n",
-                          reinterpret_cast<void *> (poll_array[index].fd)));
+                          "(%P|%t) closing oneway server at handle %H\n",
+                          poll_array[index].fd));
 
               // Handle client connection shutdown.
               ACE_OS::close (poll_array[index].fd);

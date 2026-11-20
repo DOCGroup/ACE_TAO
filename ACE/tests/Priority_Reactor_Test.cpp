@@ -97,9 +97,9 @@ Read_Handler::open (void *)
   ++started_;
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) created svc_handler for handle %@ ")
+              ACE_TEXT ("(%P|%t) created svc_handler for handle %H ")
               ACE_TEXT ("with priority %d\n"),
-              reinterpret_cast<void *> (get_handle ()),
+              get_handle (),
               priority ()));
   return 0;
 }

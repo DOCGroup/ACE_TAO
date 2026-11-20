@@ -124,9 +124,9 @@ Client::handle_output (ACE_HANDLE handle)
   ssize_t bytes_sent = this->peer ().send (buffer.data (), buffer.size ());
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Client::handle_output; handle = %@")
+              ACE_TEXT ("(%t) Client::handle_output; handle = %H")
               ACE_TEXT (" bytes sent %b\n"),
-              reinterpret_cast<void *> (handle),
+              handle,
               bytes_sent));
 
   if (bytes_sent == -1)
@@ -139,8 +139,8 @@ Client::handle_output (ACE_HANDLE handle)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%t) Client::handle_output; server ")
-                      ACE_TEXT ("closed handle %@\n"),
-                      reinterpret_cast<void *> (this->peer ().get_handle ())));
+                      ACE_TEXT ("closed handle %H\n"),
+                      this->peer ().get_handle ()));
           return -1;
         }
       else
@@ -171,8 +171,8 @@ Client::handle_input (ACE_HANDLE handle)
       char buffer[BUFSIZ];
       ssize_t bytes_read = this->peer ().recv (buffer, BUFSIZ);
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t) Client::handle_input handle = %@ bytes_read = %b\n"),
-                  reinterpret_cast<void *> (handle), bytes_read));
+                  ACE_TEXT ("(%t) Client::handle_input handle = %H bytes_read = %b\n"),
+                  handle, bytes_read));
 
       if (bytes_read == -1 && errno == EWOULDBLOCK)
         {
@@ -235,8 +235,8 @@ Client::handle_close (ACE_HANDLE handle,
                       ACE_Reactor_Mask mask)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Client::handle_close handle = %@ mask = %Q\n"),
-              reinterpret_cast<void *> (handle),
+              ACE_TEXT ("(%t) Client::handle_close handle = %H mask = %Q\n"),
+              handle,
               static_cast<ACE_UINT64> (mask)));
   return 0;
   //return SVC_HANDLER::handle_close (handle, mask);
@@ -257,22 +257,22 @@ Server::handle_input (ACE_HANDLE handle)
       char buffer[BUFSIZ];
       ssize_t bytes_read = this->peer ().recv (buffer, BUFSIZ);
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t) Server::handle_input handle = %@ bytes_read = %b\n"),
-                  reinterpret_cast<void *> (handle), bytes_read));
+                  ACE_TEXT ("(%t) Server::handle_input handle = %H bytes_read = %b\n"),
+                  handle, bytes_read));
 
       if (bytes_read == -1 && errno == EWOULDBLOCK)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%t) Server::handle_input handle = %@ EWOULDBLOCK\n"),
-                      reinterpret_cast<void *> (handle)));
+                      ACE_TEXT ("(%t) Server::handle_input handle = %H EWOULDBLOCK\n"),
+                      handle));
           return 0;
         }
       else if (bytes_read == 0)
         {
           // Closed.
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%t) Server::handle_input handle = %@ CLOSED\n"),
-                      reinterpret_cast<void *> (handle)));
+                      ACE_TEXT ("(%t) Server::handle_input handle = %H CLOSED\n"),
+                      handle));
           return -1;
         }
       else
@@ -320,9 +320,9 @@ Server::handle_output (ACE_HANDLE handle)
       ssize_t bytes_sent = this->peer ().send (buffer_list_.front ()->data () + offset_, bytes_to_send);
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t) Server::handle_output; handle = %@")
+                  ACE_TEXT ("(%t) Server::handle_output; handle = %H")
                   ACE_TEXT (" bytes sent %b\n"),
-                  reinterpret_cast<void *> (handle), bytes_sent));
+                  handle, bytes_sent));
 
       if (bytes_sent == -1)
         {
@@ -334,8 +334,8 @@ Server::handle_output (ACE_HANDLE handle)
             {
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%t) Client::handle_output; server ")
-                          ACE_TEXT ("closed handle %@\n"),
-                          reinterpret_cast<void *> (this->peer ().get_handle ())));
+                          ACE_TEXT ("closed handle %H\n"),
+                          this->peer ().get_handle ()));
               return -1;
             }
           else
@@ -373,8 +373,8 @@ Server::handle_close (ACE_HANDLE handle,
                       ACE_Reactor_Mask mask)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Server::handle_close handle = %@ mask = %Q\n"),
-              reinterpret_cast<void *> (handle),
+              ACE_TEXT ("(%t) Server::handle_close handle = %H mask = %Q\n"),
+              handle,
               static_cast<ACE_UINT64> (mask)));
   return 0;
   //return SVC_HANDLER::handle_close (handle, mask);
@@ -408,8 +408,8 @@ public:
 
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%t) Accepted connection.  ")
-                ACE_TEXT ("Stream handle: <%@>\n"),
-                reinterpret_cast<void *> (handler->get_handle ())));
+                ACE_TEXT ("Stream handle: <%H>\n"),
+                handler->get_handle ()));
 
     return result;
   }

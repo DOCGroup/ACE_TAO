@@ -72,8 +72,8 @@ Read_Handler::open (void *)
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) created svc_handler for handle %@\n"),
-              reinterpret_cast<void *> (get_handle ())));
+              ACE_TEXT ("(%t) created svc_handler for handle %H\n"),
+              get_handle ()));
   return 0;
 }
 

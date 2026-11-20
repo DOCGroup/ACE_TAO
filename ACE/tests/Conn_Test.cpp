@@ -91,9 +91,9 @@ int
 Svc_Handler::open (void *)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) opening Svc_Handler %@ with handle %@\n"),
+              ACE_TEXT ("(%P|%t) opening Svc_Handler %@ with handle %H\n"),
               static_cast<void *> (this),
-              reinterpret_cast<void *> (this->peer ().get_handle ())));
+              this->peer ().get_handle ()));
   // Enable non-blocking I/O.
   if (this->peer ().enable (ACE_NONBLOCK) == -1)
     {
@@ -109,9 +109,9 @@ int
 Svc_Handler::recycle (void *)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) recycling Svc_Handler %@ with handle %@\n"),
+              ACE_TEXT ("(%P|%t) recycling Svc_Handler %@ with handle %H\n"),
               static_cast<void *> (this),
-              reinterpret_cast<void *> (this->peer ().get_handle ())));
+              this->peer ().get_handle ()));
   return 0;
 }
 
@@ -231,9 +231,9 @@ int
 Svc_Handler::idle (u_long flags)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) idling Svc_Handler %@ with handle %@\n"),
+              ACE_TEXT ("(%P|%t) idling Svc_Handler %@ with handle %H\n"),
               static_cast<void *> (this),
-              reinterpret_cast<void *> (this->peer ().get_handle ())));
+              this->peer ().get_handle ()));
   return ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::idle (flags);
 }
 

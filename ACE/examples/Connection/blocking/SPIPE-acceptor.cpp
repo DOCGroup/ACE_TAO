@@ -21,8 +21,8 @@ int
 Svc_Handler::open (void *)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("client connected on handle %@\n"),
-              reinterpret_cast<void *> (this->peer ().get_handle ())));
+              ACE_TEXT ("client connected on handle %H\n"),
+              this->peer ().get_handle ()));
   if (this->ar_.open (*this,
                       this->peer ().get_handle ()) == -1)
   {

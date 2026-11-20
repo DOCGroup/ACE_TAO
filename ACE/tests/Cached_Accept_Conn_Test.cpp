@@ -123,8 +123,8 @@ Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler (SVC_HANDL
       if (debug)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("Accept succeeded with handle %@\n"),
-                      reinterpret_cast<void *> (svc_handler->get_handle ())));
+                      ACE_TEXT ("Accept succeeded with handle %H\n"),
+                      svc_handler->get_handle ()));
         }
       return result;
     }
@@ -173,9 +173,9 @@ Client_Svc_Handler::open (void *)
   if (debug)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("opening Client_Svc_Handler %@ with handle %@\n"),
+                  ACE_TEXT ("opening Client_Svc_Handler %@ with handle %H\n"),
                   static_cast<void *> (this),
-                  reinterpret_cast<void *> (this->peer ().get_handle ())));
+                  this->peer ().get_handle ()));
     }
   return 0;
 }
@@ -184,9 +184,9 @@ int
 Client_Svc_Handler::close (u_long flags)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Closing Client_Svc_Handler %@ with handle %@\n"),
+              ACE_TEXT ("Closing Client_Svc_Handler %@ with handle %H\n"),
               static_cast<void *> (this),
-              reinterpret_cast<void *> (this->peer ().get_handle ())));
+              this->peer ().get_handle ()));
   return ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::close (flags);
 }
 
@@ -201,9 +201,9 @@ Server_Svc_Handler::open (void *)
   if (debug)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("opening Server_Svc_Handler %@ with handle %@\n"),
+                  ACE_TEXT ("opening Server_Svc_Handler %@ with handle %H\n"),
                   static_cast<void *> (this),
-                  reinterpret_cast<void *> (this->peer ().get_handle ())));
+                  this->peer ().get_handle ()));
     }
 
   return this->close ();

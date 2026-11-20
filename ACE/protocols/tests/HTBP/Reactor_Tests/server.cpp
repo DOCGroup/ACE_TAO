@@ -121,8 +121,8 @@ Accept_Handler::handle_input (ACE_HANDLE h)
   if (ch == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%P|%t) Server Accept_Handler::handle_input, ")
-                       ACE_TEXT ("unknown handle %@\n"),
-                       reinterpret_cast<void *> (h)),
+                       ACE_TEXT ("unknown handle %H\n"),
+                       h),
                       -1);
   int result = (*ch)->pre_recv();
   if (result == 0)
@@ -201,8 +201,8 @@ Stream_Handler::handle_input (ACE_HANDLE h)
       if (ch != nullptr)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) Server Stream_Handler::handle_input ")
-                    ACE_TEXT ("Sending reply on %@\n"),
-                    reinterpret_cast<void *> (ch->ace_stream().get_handle())));
+                    ACE_TEXT ("Sending reply on %H\n"),
+                    ch->ace_stream().get_handle()));
       else
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) Server Stream_Handler::handle_input ")

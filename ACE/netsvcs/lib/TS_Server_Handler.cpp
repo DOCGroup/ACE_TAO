@@ -70,9 +70,9 @@ ACE_TS_Server_Acceptor::init (int argc, ACE_TCHAR *argv[])
                       -1);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("starting up Time Server at port %d on handle %@\n"),
+              ACE_TEXT ("starting up Time Server at port %d on handle %H\n"),
               server_addr.get_port_number (),
-              reinterpret_cast<void *> (this->acceptor ().get_handle ())));
+              this->acceptor ().get_handle ()));
   return 0;
 }
 
@@ -105,9 +105,9 @@ ACE_TS_Server_Handler::open (void *)
                       -1);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) accepted connection from host %C on fd %@\n"),
+              ACE_TEXT ("(%t) accepted connection from host %C on fd %H\n"),
               client_addr.get_host_name (),
-              reinterpret_cast<void *> (this->peer ().get_handle ())));
+              this->peer ().get_handle ()));
 
   // Call down to our parent to register ourselves with the Reactor.
   if (ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::open (0) == -1)

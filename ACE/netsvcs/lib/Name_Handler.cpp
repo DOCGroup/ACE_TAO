@@ -81,9 +81,9 @@ ACE_Name_Acceptor::init (int argc, ACE_TCHAR *argv[])
                       -1);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("starting up Name Server at port %d on handle %@\n"),
+              ACE_TEXT ("starting up Name Server at port %d on handle %H\n"),
               server_addr.get_port_number (),
-              reinterpret_cast<void *> (this->acceptor ().get_handle ())));
+              this->acceptor ().get_handle ()));
   return 0;
 }
 

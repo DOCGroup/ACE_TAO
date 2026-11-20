@@ -146,8 +146,8 @@ ACE_WFMO_Reactor_Handler_Repository::Current_Info::dump (ACE_HANDLE event_handle
   Common_Info::dump ();
 
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Event Handle = %@\n"),
-              reinterpret_cast<void *> (event_handle)));
+              ACE_TEXT ("Event Handle = %H\n"),
+              event_handle));
 
   ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Suspend Entry = %d\n"),

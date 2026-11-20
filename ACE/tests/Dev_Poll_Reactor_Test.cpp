@@ -125,8 +125,8 @@ Client::handle_output (ACE_HANDLE)
             {
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%t) Client::handle_output; server ")
-                          ACE_TEXT ("closed handle %@\n"),
-                          reinterpret_cast<void *> (this->peer ().get_handle ())));
+                          ACE_TEXT ("closed handle %H\n"),
+                          this->peer ().get_handle ()));
               return -1;
             }
           else
@@ -186,8 +186,8 @@ Client::handle_close (ACE_HANDLE handle,
 {
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("(%t) Client Svc_Handler closed ")
-              ACE_TEXT ("handle <%@> with reactor mask <%Q>.\n"),
-              reinterpret_cast<void *> (handle),
+              ACE_TEXT ("handle <%H> with reactor mask <%Q>.\n"),
+              handle,
               static_cast<ACE_UINT64> (mask)));
 
   // There is no point in running reactor after this client is closed.
@@ -319,9 +319,9 @@ Server::handle_close (ACE_HANDLE handle,
     {
       ACE_DEBUG ((LM_INFO,
                   ACE_TEXT ("(%t) Server Svc_Handler closing ")
-                  ACE_TEXT ("handle <%@,%@> with reactor mask <%Q>.\n"),
-                  reinterpret_cast<void *> (handle),
-                  reinterpret_cast<void *> (this->get_handle ()),
+                  ACE_TEXT ("handle <%H,%H> with reactor mask <%Q>.\n"),
+                  handle,
+                  this->get_handle (),
                   static_cast<ACE_UINT64> (mask)));
     }
 
@@ -356,8 +356,8 @@ public:
 
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%t) Accepted connection.  ")
-                ACE_TEXT ("Stream handle: <%@>\n"),
-                reinterpret_cast<void *> (handler->get_handle ())));
+                ACE_TEXT ("Stream handle: <%H>\n"),
+                handler->get_handle ()));
 
 //     if (handler->handle_input (handler->get_handle ()) == -1
 //         && errno != EWOULDBLOCK)

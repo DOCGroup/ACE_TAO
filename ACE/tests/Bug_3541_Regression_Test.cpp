@@ -43,8 +43,8 @@ run_main (int, ACE_TCHAR *[])
     ret = -1;
 
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("ACE_Event(%s) failed - handle %@ lastError %d\n"),
-                eventName, reinterpret_cast<void *> (eventHandle), lastError));
+                ACE_TEXT ("ACE_Event(%s) failed - handle %H lastError %d\n"),
+                eventName, eventHandle, lastError));
   }
   else
   {
@@ -63,8 +63,8 @@ run_main (int, ACE_TCHAR *[])
       ret = -1;
 
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("ACE_Event(%s) failed - handle %@ lastError %d\n"),
-                  eventName, reinterpret_cast<void *> (eventHandle), lastError));
+                  ACE_TEXT ("ACE_Event(%s) failed - handle %H lastError %d\n"),
+                  eventName, eventHandle, lastError));
     }
   }
 
