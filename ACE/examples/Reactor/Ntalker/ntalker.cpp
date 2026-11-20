@@ -67,17 +67,21 @@ Handler::handle_input (ACE_HANDLE const h)
       if (result > 0)
         {
           if (this->mcast_.send (buf, result) != result)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "%p\n",
-                               "send error"),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "%p\n",
+                                 "send error"),
+                                -1);
+            }
           return 0;
         }
       else if (result == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
-                           "can't read from STDIN"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "%p\n",
+                             "can't read from STDIN"),
+                            -1);
+        }
       else // result == 0
         {
           ACE_Reactor::end_event_loop ();
@@ -122,23 +126,29 @@ Handler::handle_close (ACE_HANDLE const h, ACE_Reactor_Mask)
                   "STDIN_Events handle removed from reactor.\n"));
       if (ACE_Reactor::instance ()->remove_handler
           (this, ACE_Event_Handler::READ_MASK) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
-                           "remove_handler"),
-                           -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "%p\n",
+                             "remove_handler"),
+                            -1);
+        }
     }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                "Mcast_Events handle removed from reactor.\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Mcast_Events handle removed from reactor.\n"));
+    }
   return 0;
 }
 
 Handler::~Handler ()
 {
   if (this->mcast_.leave (sockmc_addr_) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "leave fails"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n",
+                  "leave fails"));
+    }
 }
 
 Handler::Handler (u_short const udp_port,
@@ -153,25 +163,31 @@ Handler::Handler (u_short const udp_port,
   // subscribe to multicast group.
 
   if (this->mcast_.join (sockmc_addr_, 1, a_interface) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "can't subscribe to multicast group"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n",
+                  "can't subscribe to multicast group"));
+    }
 
   // Disable loopbacks.
   // Register callbacks with the ACE_Reactor.
   else if (reactor.register_handler (this->mcast_.get_handle (),
                                      this,
                                      ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "can't register with Reactor\n"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n",
+                  "can't register with Reactor\n"));
+    }
   // Register the STDIN handler.
   else if (ACE_Event_Handler::register_stdin_handler (this,
                                                       ACE_Reactor::instance (),
                                                       ACE_Thread_Manager::instance ()) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "register_stdin_handler"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n",
+                  "register_stdin_handler"));
+    }
 }
 
 static void
@@ -182,20 +198,22 @@ parse_args (int const argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opt ()) != -1)
-    switch (c)
-      {
-      case 'i':
-        INTERFACE = get_opt.opt_arg ();
-        break;
-      case 'u':
-        // usage same as unknown.
-        ACE_FALLTHROUGH;
-      default:
-        ACE_DEBUG ((LM_DEBUG,
-                    "%s -i interface\n",
-                    argv[0]));
-        ACE_OS::exit (1);
-      }
+    {
+      switch (c)
+        {
+        case 'i':
+          INTERFACE = get_opt.opt_arg ();
+          break;
+        case 'u':
+          // usage same as unknown.
+          ACE_FALLTHROUGH;
+        default:
+          ACE_DEBUG ((LM_DEBUG,
+                      "%s -i interface\n",
+                      argv[0]));
+          ACE_OS::exit (1);
+        }
+    }
 }
 
 int
