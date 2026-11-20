@@ -63,11 +63,13 @@ dirent_selector_test ()
   // Pass in functions that'll specify the selection criteria.
   int status = sds.open (test_dir, selector, comparator);
   if (status == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%s, %p\n"),
-                       test_dir,
-                       ACE_TEXT ("open")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%s, %p\n"),
+                         test_dir,
+                         ACE_TEXT ("open")),
+                        -1);
+    }
 
   // We should only have located ourselves!
   if (sds.length () != 1)
@@ -158,9 +160,11 @@ dirent_test ()
 {
   ACE_Dirent dir;
 
-   if (dir.open (TestDir.c_str ()) == -1)
+  if (dir.open (TestDir.c_str ()) == -1)
+    {
       ACE_ERROR_RETURN
         ((LM_ERROR, ACE_TEXT ("open of dir %s failed\n"), TestDir.c_str()), -1);
+    }
 
   for (ACE_DIRENT *directory {};
        (directory = dir.read ()) != nullptr;
@@ -207,18 +211,22 @@ dirent_count (const ACE_TCHAR *dir_path,
 {
 #if !defined (ACE_LACKS_CHDIR)
   if (ACE_OS::chdir (dir_path) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("chdir: %p\n"),
-                       dir_path),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("chdir: %p\n"),
+                         dir_path),
+                        -1);
+    }
 #else
   ACE_UNUSED_ARG (dir_path);
 #endif /* !ACE_LACKS_CHDIR */
 
   ACE_Dirent dir;
-   if (dir.open (ACE_TEXT (".")) == -1)
+  if (dir.open (ACE_TEXT (".")) == -1)
+    {
       ACE_ERROR_RETURN
         ((LM_ERROR, ACE_TEXT ("open of dir . failed\n")), -1);
+    }
 
   // Since the dir struct d_name type changes depending on the setting
   // of ACE_LACKS_STRUCT_DIR, copy each name into a neutral format
@@ -249,10 +257,12 @@ dirent_count (const ACE_TCHAR *dir_path,
       int local_dir_count = 0;
       ACE_stat stat_buf;
       if (ACE_OS::lstat (directory->d_name, &stat_buf) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           tname),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             tname),
+                            -1);
+        }
 
       switch (stat_buf.st_mode & S_IFMT)
         {
@@ -262,14 +272,18 @@ dirent_count (const ACE_TCHAR *dir_path,
 
         case S_IFLNK: // Either a file or directory link, so let's find out.
           if (ACE_OS::stat (directory->d_name, &stat_buf) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("%p\n"),
-                               tname),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("%p\n"),
+                                 tname),
+                                -1);
+            }
 
           if ((stat_buf.st_mode & S_IFMT) == S_IFDIR)
-            // Don't recurse through symbolic directory links!
-            ++dir_count;
+            {
+              // Don't recurse through symbolic directory links!
+              ++dir_count;
+            }
           else
           {
             ++file_count;
@@ -299,10 +313,12 @@ dirent_count (const ACE_TCHAR *dir_path,
 #if !defined (ACE_LACKS_CHDIR)
               // Move back up a level.
               if (ACE_OS::chdir (ACE_TEXT ("..")) == -1)
-                ACE_ERROR_RETURN ((LM_ERROR,
-                                   ACE_TEXT ("chdir: %p\n"),
-                                   dir_path),
-                                  -1);
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     ACE_TEXT ("chdir: %p\n"),
+                                     dir_path),
+                                    -1);
+                }
 #endif /* !ACE_LACKS_CHDIR */
             }
           break;
@@ -331,10 +347,12 @@ dirent_recurse_test ()
                     total_dirs,
                     total_files,
                     1) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Directory recursion test failed for %s\n"),
-                       test_dir),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Directory recursion test failed for %s\n"),
+                         test_dir),
+                        -1);
+    }
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Directory recursion test succeeded for %s, read %d files %d dirs\n"),
               test_dir,
