@@ -62,8 +62,10 @@ template<typename S,
 CORBA::Boolean
 TAO::Out_Var_Size_SArgument_T<S,Insert_Policy>::marshal (TAO_OutputCDR &cdr)
 {
-  if (nullptr == this->x_.ptr())
-    throw ::CORBA::BAD_PARAM(0, CORBA::COMPLETED_MAYBE);
+  if (nullptr == this->x_.ptr ())
+    {
+      throw ::CORBA::BAD_PARAM (0, CORBA::COMPLETED_MAYBE);
+    }
 
   return cdr << this->x_.in ();
 }

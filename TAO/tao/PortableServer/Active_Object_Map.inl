@@ -57,9 +57,11 @@ TAO_Active_Object_Map::bind_using_system_id_returning_user_id (
 
   int const result = this->id_assignment_strategy_->bind_using_system_id (servant, priority, entry);
   if (result == 0)
-    ACE_NEW_RETURN (user_id,
-                    PortableServer::ObjectId (entry->user_id_),
-                    -1);
+    {
+      ACE_NEW_RETURN (user_id,
+                      PortableServer::ObjectId (entry->user_id_),
+                      -1);
+    }
   return result;
 }
 
