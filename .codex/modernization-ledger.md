@@ -13760,3 +13760,9 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Added Allman braces to eight single-statement error paths in `TAO/tests/ORB_Local_Config/Separation/Test.cpp`.
 - Focused clang-tidy reported no remaining brace warnings; `git diff --check` passed. No build or runtime tests were run.
 - The full tracked-source brace audit remains open.
+
+## 2026-11-20 IOR Multicast brace follow-up
+
+- Added Allman braces to eight single-statement control bodies in `TAO/orbsvcs/orbsvcs/IOR_Multicast.cpp`.
+- Focused clang-tidy reported no remaining brace warnings; `git diff --check` passed. No build or runtime tests were run.
+- The full tracked-source brace audit remains open.

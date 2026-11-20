@@ -27,9 +27,11 @@ TAO_IOR_Multicast::TAO_IOR_Multicast (char const *ior,
                   port,
                   mcast_addr,
                   service_id) == -1)
-    ORBSVCS_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("TAO_IOR_Multicast")));
+    {
+      ORBSVCS_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("TAO_IOR_Multicast")));
+    }
 }
 
 TAO_IOR_Multicast::~TAO_IOR_Multicast ()
@@ -88,10 +90,12 @@ TAO_IOR_Multicast::init (char const *ior,
     }
 
   if (this->mcast_addr_.set (actual_mcast_addr.in ()) == -1)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "set"),
-                      -1);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             "%p\n",
+                             "set"),
+                            -1);
+    }
 
   return this->common_init (ior, service_id);
 }
@@ -104,10 +108,12 @@ TAO_IOR_Multicast::common_init (char const *ior,
   this->ior_ = ior;
 
   if (this->response_addr_.set (static_cast<u_short> (0)) == -1)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-    "TAO_IOR_Multicast::common_init() %p\n",
-                       "set"),
-                      -1);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             "TAO_IOR_Multicast::common_init() %p\n",
+                             "set"),
+                            -1);
+    }
   else if (this->response_.open (this->response_addr_) == -1)
     {
       ORBSVCS_ERROR_RETURN ((LM_ERROR,
@@ -129,10 +135,12 @@ TAO_IOR_Multicast::common_init (char const *ior,
   else
     {
       if (this->mcast_dgram_.join (this->mcast_addr_) == -1)
-        ORBSVCS_ERROR_RETURN ((LM_ERROR,
-      "TAO_IOR_Multicast::common_init() %p\n",
-                           "subscribe"),
-                          -1);
+        {
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                 "TAO_IOR_Multicast::common_init() %p\n",
+                                 "subscribe"),
+                                -1);
+        }
     }
   return 0;
 }
@@ -168,14 +176,18 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
                                        remote_addr,
                                        MSG_PEEK);
   if (n <= 0)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       "TAO_IOR_Multicast::handle_input - peek %d\n",
-                       n),
-                      0);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             "TAO_IOR_Multicast::handle_input - peek %d\n",
+                             n),
+                            0);
+    }
   else if (ACE_NTOHS (header) <= 0)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-    "TAO_IOR_Multicast::handle_input() Header value < 1\n"),
-                      0);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             "TAO_IOR_Multicast::handle_input() Header value < 1\n"),
+                            0);
+    }
 
   // Receive full client multicast request.
   constexpr int iovcnt { 3 };
@@ -193,10 +205,12 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
                                iovcnt,
                                remote_addr);
   if (n <= 0)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       "TAO_IOR_Multicast::handle_input recv = %d\n",
-                       n),
-                      0);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             "TAO_IOR_Multicast::handle_input recv = %d\n",
+                             n),
+                            0);
+    }
 
   if (TAO_debug_level > 0)
     {
@@ -305,14 +319,16 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
   }
 
   if (TAO_debug_level > 0)
-    ORBSVCS_DEBUG ((LM_DEBUG,
-    "(%P|%t) TAO_IOR_Multicast::handle_input() ior_: <%s>\n"
-                "sent to %s:%u.\n"
-                "result from send = %b\n",
-                this->ior_.c_str (),
-                peer_addr.get_host_name (),
-                peer_addr.get_port_number (),
-                result));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      "(%P|%t) TAO_IOR_Multicast::handle_input() ior_: <%s>\n"
+                      "sent to %s:%u.\n"
+                      "result from send = %b\n",
+                      this->ior_.c_str (),
+                      peer_addr.get_host_name (),
+                      peer_addr.get_port_number (),
+                      result));
+    }
   return 0;
 }
 
