@@ -168,18 +168,22 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
           if (request->should_retry ())
           {
             if (DEBUG_LEVEL > 0)
-              ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Consumer %d: Will retry %d\n"),
-                          static_cast <int> (this->proxy ()->id ()),
-                          request->sequence ()));
+              {
+                ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Consumer %d: Will retry %d\n"),
+                                static_cast <int> (this->proxy ()->id ()),
+                                request->sequence ()));
+              }
             requests.enqueue_head (request);
             result = false;
           }
           else
           {
             if (DEBUG_LEVEL > 0)
-              ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Consumer %d: Discarding %d\n"),
-                          static_cast<int> (this->proxy ()->id ()),
-                          request->sequence ()));
+              {
+                ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Consumer %d: Discarding %d\n"),
+                                static_cast<int> (this->proxy ()->id ()),
+                                request->sequence ()));
+              }
             request->complete ();
             request->release ();
           }
@@ -189,18 +193,22 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
           if (request->should_retry ())
           {
             if (DEBUG_LEVEL > 0)
-              ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Consumer %d: Will retry %d\n"),
-                          static_cast<int> (this->proxy ()->id ()),
-                          request->sequence ()));
+              {
+                ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Consumer %d: Will retry %d\n"),
+                                static_cast<int> (this->proxy ()->id ()),
+                                request->sequence ()));
+              }
             requests.enqueue_head (request);
             result = false;
           }
           else
           {
             if (DEBUG_LEVEL > 0)
-              ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Consumer %d: Discarding %d\n"),
-                          static_cast<int> (this->proxy ()->id ()),
-                          request->sequence ()));
+              {
+                ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Consumer %d: Discarding %d\n"),
+                                static_cast<int> (this->proxy ()->id ()),
+                                request->sequence ()));
+              }
             request->complete ();
             request->release ();
           }
@@ -227,18 +235,22 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
           if (request->should_retry ())
           {
             if (DEBUG_LEVEL > 0)
-              ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Consumer %d: Will retry %d\n"),
-                          static_cast<int> (this->proxy ()->id ()),
-                          request->sequence ()));
+              {
+                ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Consumer %d: Will retry %d\n"),
+                                static_cast<int> (this->proxy ()->id ()),
+                                request->sequence ()));
+              }
             requests.enqueue_head (request);
             result = false;
           }
           else
           {
             if (DEBUG_LEVEL > 0)
-              ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Consumer %d: Discarding %d\n"),
-                          static_cast<int> (this->proxy ()->id ()),
-                          request->sequence ()));
+              {
+                ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Consumer %d: Discarding %d\n"),
+                                static_cast<int> (this->proxy ()->id ()),
+                                request->sequence ()));
+              }
             request->complete ();
             request->release ();
           }
