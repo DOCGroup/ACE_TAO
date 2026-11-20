@@ -584,6 +584,13 @@ class Log_Spec_Verify : public ACE_Log_Msg_Callback
 public:
   Log_Spec_Verify (bool be_recursive = true) : fail_ (0), tests_ (0), recursive_ (be_recursive) {};
 
+  void expected_handles (const ACE_TCHAR *handle,
+                         const ACE_TCHAR *invalid_handle)
+  {
+    this->expected_handle_ = handle;
+    this->expected_invalid_handle_ = invalid_handle;
+  }
+
   /// Logging callback
   void log (ACE_Log_Record &log_record) override;
 
@@ -597,6 +604,9 @@ private:
   int tests_;
 
   bool recursive_;
+
+  const ACE_TCHAR *expected_handle_ {};
+  const ACE_TCHAR *expected_invalid_handle_ {};
 };
 
 void
@@ -681,6 +691,16 @@ Log_Spec_Verify::log (ACE_Log_Record &log_record)
             ++this->fail_;
           }
       }
+      else if (ACE_OS::strncmp (b, ACE_TEXT ("l7:"), 3) == 0)
+        {
+          expect = this->expected_handle_;
+          b += 3;
+        }
+      else if (ACE_OS::strncmp (b, ACE_TEXT ("l8:"), 3) == 0)
+        {
+          expect = this->expected_invalid_handle_;
+          b += 3;
+        }
       else
         {
           ACE_ERROR ((LM_ERROR,
@@ -711,12 +731,12 @@ Log_Spec_Verify::result ()
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%d logging specifier tests failed!\n"),
                 this->fail_));
 
-  if (this->tests_ != 19)
-  {
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Expected number of tests run is %d, not 19!\n"),
-                this->tests_));
-    ++this->fail_;
-  }
+  if (this->tests_ != 21)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Expected number of tests run is %d, not 21!\n"),
+                  this->tests_));
+      ++this->fail_;
+    }
   return this->fail_;
 }
 
@@ -796,6 +816,24 @@ test_format_specs ()
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l6:%T\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l6:%#T\n"), &tv));
+
+  ACE_TCHAR expected_handle[64];
+  ACE_TCHAR expected_invalid_handle[64];
+#if defined (ACE_WIN32)
+  int handle_storage {};
+  ACE_HANDLE const handle = &handle_storage;
+  ACE_OS::sprintf (expected_handle, ACE_TEXT ("%p"), handle);
+  ACE_OS::sprintf (expected_invalid_handle, ACE_TEXT ("%p"),
+                   ACE_INVALID_HANDLE);
+#else
+  ACE_HANDLE const handle = 42;
+  ACE_OS::sprintf (expected_handle, ACE_TEXT ("%d"), handle);
+  ACE_OS::sprintf (expected_invalid_handle, ACE_TEXT ("%d"),
+                   ACE_INVALID_HANDLE);
+#endif
+  verifier.expected_handles (expected_handle, expected_invalid_handle);
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l7:%H"), handle));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l8:%H"), ACE_INVALID_HANDLE));
 
   ACE_LOG_MSG->msg_ostream (ace_file_stream::instance ()->output_file ());
   ACE_LOG_MSG->msg_callback (nullptr);
