@@ -763,7 +763,9 @@ Catior_i::cat_tag_policies (TAO_InputCDR& stream) {
                   iter + 1, policies[iter].ptype);
       buffer_ += buf;
 #if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
-    } else if (policies[iter].ptype == Messaging::SYNC_SCOPE_POLICY_TYPE) {
+    }
+    else if (policies[iter].ptype == Messaging::SYNC_SCOPE_POLICY_TYPE)
+    {
       indent ();
       ACE_OS::snprintf (buf, bufsize,
                         "Policy #" ACE_UINT32_FORMAT_SPECIFIER_ASCII
@@ -772,7 +774,9 @@ Catior_i::cat_tag_policies (TAO_InputCDR& stream) {
                         iter + 1, policies[iter].ptype);
       buffer_ += buf;
 #endif
-    } else if (policies[iter].ptype == Messaging::REQUEST_PRIORITY_POLICY_TYPE) {
+    }
+    else if (policies[iter].ptype == Messaging::REQUEST_PRIORITY_POLICY_TYPE)
+    {
       indent ();
       ACE_OS::snprintf (buf, bufsize,
                         "Policy #" ACE_UINT32_FORMAT_SPECIFIER_ASCII
@@ -780,7 +784,9 @@ Catior_i::cat_tag_policies (TAO_InputCDR& stream) {
                         " (REQUEST_PRIORITY_POLICY_TYPE)\n",
                         iter + 1, policies[iter].ptype);
       buffer_ += buf;
-    } else if (policies[iter].ptype == Messaging::REPLY_PRIORITY_POLICY_TYPE) {
+    }
+    else if (policies[iter].ptype == Messaging::REPLY_PRIORITY_POLICY_TYPE)
+    {
       indent ();
       ACE_OS::snprintf (buf, bufsize,
                         "Policy #" ACE_UINT32_FORMAT_SPECIFIER_ASCII
@@ -788,7 +794,9 @@ Catior_i::cat_tag_policies (TAO_InputCDR& stream) {
                         " (REPLY_PRIORITY_POLICY_TYPE)\n",
                         iter + 1, policies[iter].ptype);
       buffer_ += buf;
-    } else if (policies[iter].ptype == Messaging::REQUEST_START_TIME_POLICY_TYPE) {
+    }
+    else if (policies[iter].ptype == Messaging::REQUEST_START_TIME_POLICY_TYPE)
+    {
       indent ();
       ACE_OS::snprintf (buf, bufsize,
                         "Policy #" ACE_UINT32_FORMAT_SPECIFIER_ASCII
@@ -796,7 +804,9 @@ Catior_i::cat_tag_policies (TAO_InputCDR& stream) {
                         " (REQUEST_START_TIME_POLICY_TYPE)\n",
                         iter + 1, policies[iter].ptype);
       buffer_ += buf;
-    } else if (policies[iter].ptype == Messaging::REQUEST_END_TIME_POLICY_TYPE) {
+    }
+    else if (policies[iter].ptype == Messaging::REQUEST_END_TIME_POLICY_TYPE)
+    {
       indent ();
       ACE_OS::snprintf (buf, bufsize,
                         "Policy #" ACE_UINT32_FORMAT_SPECIFIER_ASCII
@@ -804,7 +814,9 @@ Catior_i::cat_tag_policies (TAO_InputCDR& stream) {
                         " (REQUEST_END_TIME_POLICY_TYPE)\n",
                         iter + 1, policies[iter].ptype);
       buffer_ += buf;
-    } else if (policies[iter].ptype == Messaging::REPLY_START_TIME_POLICY_TYPE) {
+    }
+    else if (policies[iter].ptype == Messaging::REPLY_START_TIME_POLICY_TYPE)
+    {
       indent ();
       ACE_OS::snprintf (buf, bufsize,
                         "Policy #" ACE_UINT32_FORMAT_SPECIFIER_ASCII
@@ -812,7 +824,9 @@ Catior_i::cat_tag_policies (TAO_InputCDR& stream) {
                         " (REPLY_START_TIME_POLICY_TYPE)\n",
                         iter + 1, policies[iter].ptype);
       buffer_ += buf;
-    } else if (policies[iter].ptype == Messaging::REPLY_END_TIME_POLICY_TYPE) {
+    }
+    else if (policies[iter].ptype == Messaging::REPLY_END_TIME_POLICY_TYPE)
+    {
       indent ();
       ACE_OS::snprintf (buf, bufsize,
                         "Policy #" ACE_UINT32_FORMAT_SPECIFIER_ASCII
@@ -820,7 +834,9 @@ Catior_i::cat_tag_policies (TAO_InputCDR& stream) {
                         " (REPLY_END_TIME_POLICY_TYPE)\n",
                         iter + 1, policies[iter].ptype);
       buffer_ += buf;
-    } else if (policies[iter].ptype == Messaging::RELATIVE_REQ_TIMEOUT_POLICY_TYPE) {
+    }
+    else if (policies[iter].ptype == Messaging::RELATIVE_REQ_TIMEOUT_POLICY_TYPE)
+    {
       indent ();
       ACE_OS::snprintf (buf, bufsize,
                         "Policy #" ACE_UINT32_FORMAT_SPECIFIER_ASCII
@@ -828,7 +844,9 @@ Catior_i::cat_tag_policies (TAO_InputCDR& stream) {
                         " (RELATIVE_REQ_TIMEOUT_POLICY_TYPE)\n",
                         iter + 1, policies[iter].ptype);
       buffer_ += buf;
-    } else if (policies[iter].ptype == Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE) {
+    }
+    else if (policies[iter].ptype == Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE)
+    {
       indent ();
       ACE_OS::snprintf (buf, bufsize,
                         "Policy #" ACE_UINT32_FORMAT_SPECIFIER_ASCII
@@ -836,7 +854,9 @@ Catior_i::cat_tag_policies (TAO_InputCDR& stream) {
                         " (RELATIVE_RT_TIMEOUT_POLICY_TYPE)\n",
                         iter + 1, policies[iter].ptype);
       buffer_ += buf;
-    } else if (policies[iter].ptype == Messaging::ROUTING_POLICY_TYPE) {
+    }
+    else if (policies[iter].ptype == Messaging::ROUTING_POLICY_TYPE)
+    {
       indent ();
       ACE_OS::snprintf (buf, bufsize,
                         "Policy #" ACE_UINT32_FORMAT_SPECIFIER_ASCII
@@ -844,7 +864,9 @@ Catior_i::cat_tag_policies (TAO_InputCDR& stream) {
                         " (ROUTING_POLICY_TYPE)\n",
                         iter + 1, policies[iter].ptype);
       buffer_ += buf;
-    } else if (policies[iter].ptype == Messaging::MAX_HOPS_POLICY_TYPE) {
+    }
+    else if (policies[iter].ptype == Messaging::MAX_HOPS_POLICY_TYPE)
+    {
       indent ();
       ACE_OS::snprintf (buf, bufsize,
                         "Policy #" ACE_UINT32_FORMAT_SPECIFIER_ASCII
@@ -852,7 +874,9 @@ Catior_i::cat_tag_policies (TAO_InputCDR& stream) {
                         " (MAX_HOPS_POLICY_TYPE)\n",
                         iter + 1, policies[iter].ptype);
       buffer_ += buf;
-    } else if (policies[iter].ptype == Messaging::QUEUE_ORDER_POLICY_TYPE) {
+    }
+    else if (policies[iter].ptype == Messaging::QUEUE_ORDER_POLICY_TYPE)
+    {
       indent ();
       ACE_OS::snprintf (buf, bufsize,
                         "Policy #" ACE_UINT32_FORMAT_SPECIFIER_ASCII
@@ -860,7 +884,9 @@ Catior_i::cat_tag_policies (TAO_InputCDR& stream) {
                         " (QUEUE_ORDER_POLICY_TYPE)\n",
                         iter + 1, policies[iter].ptype);
       buffer_ += buf;
-    } else if (policies[iter].ptype == ZIOP::COMPRESSOR_ID_LEVEL_LIST_POLICY_ID) {
+    }
+    else if (policies[iter].ptype == ZIOP::COMPRESSOR_ID_LEVEL_LIST_POLICY_ID)
+    {
       indent ();
       ACE_OS::snprintf (buf, bufsize,
                         "Policy #" ACE_UINT32_FORMAT_SPECIFIER_ASCII
@@ -881,7 +907,9 @@ Catior_i::cat_tag_policies (TAO_InputCDR& stream) {
                             idlist[index].compressor_id, idlist[index].compression_level);
           buffer_ += buf;
         }
-    } else if (policies[iter].ptype == ZIOP::COMPRESSION_ENABLING_POLICY_ID) {
+    }
+    else if (policies[iter].ptype == ZIOP::COMPRESSION_ENABLING_POLICY_ID)
+    {
       indent ();
       ACE_OS::snprintf (buf, bufsize,
                         "Policy #" ACE_UINT32_FORMAT_SPECIFIER_ASCII
@@ -897,7 +925,9 @@ Catior_i::cat_tag_policies (TAO_InputCDR& stream) {
       indent ();
       ACE_OS::snprintf (buf, bufsize, "\t Enabled: %d\n", status);
       buffer_ += buf;
-    } else {
+    }
+    else
+    {
       indent ();
       ACE_OS::snprintf (buf, bufsize,
                         "Policy #" ACE_UINT32_FORMAT_SPECIFIER_ASCII
