@@ -17,16 +17,20 @@ RWho_DB_Manager::RWho_DB_Manager ()
     rwho_dir_name (RWHODIR)
 {
   if (ACE_OS::getcwd (this->original_pathname, MAXPATHLEN + 1) == nullptr)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n%a",
-                Options::program_name,
-                1));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n%a",
+                  Options::program_name,
+                  1));
+    }
 
   if (ACE_OS::chdir (this->rwho_dir_name) < 0)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n%a",
-                this->rwho_dir_name,
-                1));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n%a",
+                  this->rwho_dir_name,
+                  1));
+    }
 
   this->rwho_dir.open (this->rwho_dir_name);
 
@@ -42,14 +46,18 @@ RWho_DB_Manager::RWho_DB_Manager ()
 RWho_DB_Manager::~RWho_DB_Manager ()
 {
   if (ACE_OS::chdir (this->original_pathname) < 0)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n%a",
-                Options::program_name,
-                1));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n%a",
+                  Options::program_name,
+                  1));
+    }
 
   if (Options::get_opt (Options::DEBUGGING))
-    ACE_DEBUG ((LM_DEBUG,
-                "disposing the RWho_DB_Manager\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "disposing the RWho_DB_Manager\n"));
+    }
 }
 
 /// Finds the next valid user file in the rwhod directory.
