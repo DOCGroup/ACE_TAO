@@ -141,7 +141,9 @@ ACE_QtReactor::read_event (ACE_QT_HANDLE_TYPE p_handle)
   // disable socket notifier to clear pending events
   QSocketNotifier *qsock_notifier {};
   if (this->read_notifier_.find (handle, qsock_notifier) != -1)
-    qsock_notifier->setEnabled (false);
+    {
+      qsock_notifier->setEnabled (false);
+    }
 #endif /* ACE_QTREACTOR_CLEAR_PENDING_EVENTS  */
 
   // The core of read event handling
@@ -155,7 +157,9 @@ ACE_QtReactor::read_event (ACE_QT_HANDLE_TYPE p_handle)
   int const mask =
     this->mask_ops (handle, ACE_Reactor_Mask {}, ACE_Reactor::GET_MASK);
   if (mask != -1)
-    this->set_enable_flag_by_mask (1, handle, mask);
+    {
+      this->set_enable_flag_by_mask (1, handle, mask);
+    }
 #endif /* ACE_QTREACTOR_CLEAR_PENDING_EVENTS  */
 }
 
@@ -175,7 +179,9 @@ ACE_QtReactor::write_event (ACE_QT_HANDLE_TYPE p_handle)
   // disable socket notifier to clear pending events
   QSocketNotifier *qsock_notifier {};
   if (this->write_notifier_.find (handle, qsock_notifier) != -1)
-    qsock_notifier->setEnabled (false);
+    {
+      qsock_notifier->setEnabled (false);
+    }
 #endif /* ACE_QTREACTOR_CLEAR_PENDING_EVENTS  */
 
   // The core of write event handling
@@ -189,7 +195,9 @@ ACE_QtReactor::write_event (ACE_QT_HANDLE_TYPE p_handle)
   int const mask =
     this->mask_ops (handle, ACE_Reactor_Mask {}, ACE_Reactor::GET_MASK);
   if (mask != -1)
-    this->set_enable_flag_by_mask (1, handle, mask);
+    {
+      this->set_enable_flag_by_mask (1, handle, mask);
+    }
 #endif /* ACE_QTREACTOR_CLEAR_PENDING_EVENTS  */
 }
 
@@ -209,7 +217,9 @@ ACE_QtReactor::exception_event (ACE_QT_HANDLE_TYPE p_handle)
   // disable socket notifier to clear pending events
   QSocketNotifier *qsock_notifier {};
   if (this->exception_notifier_.find (handle, qsock_notifier) != -1)
-    qsock_notifier->setEnabled (false);
+    {
+      qsock_notifier->setEnabled (false);
+    }
 #endif /* ACE_QTREACTOR_CLEAR_PENDING_EVENTS  */
 
   // The core of exception event handling
@@ -223,7 +233,9 @@ ACE_QtReactor::exception_event (ACE_QT_HANDLE_TYPE p_handle)
   int const mask =
     this->mask_ops (handle, ACE_Reactor_Mask {}, ACE_Reactor::GET_MASK);
   if (mask != -1)
-    this->set_enable_flag_by_mask (1, handle, mask);
+    {
+      this->set_enable_flag_by_mask (1, handle, mask);
+    }
 #endif /* ACE_QTREACTOR_CLEAR_PENDING_EVENTS  */
 }
 
