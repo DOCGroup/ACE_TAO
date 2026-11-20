@@ -151,11 +151,15 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                   }
 
                 if (b)
+                {
                   ACE_DEBUG ((LM_DEBUG,
                               "catior returned true\n"));
+                }
                 else
+                {
                   ACE_DEBUG ((LM_DEBUG,
                               "catior returned false\n"));
+                }
                 break;
               }
             case 'f':
@@ -196,7 +200,9 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                         char ch {};
                         ifstr.get (ch);
                         if (ifstr.eof () || ch == '\n' || ch == '\r')
+                        {
                           break;
+                        }
                         aString += ch;
                         have_some_input = true;
                       }
@@ -269,11 +275,15 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                     ACE_DEBUG ((LM_DEBUG, "%s", str.c_str()));
                   }
                 if (b)
+                {
                   ACE_DEBUG ((LM_DEBUG,
                               "catior returned true\n"));
+                }
                 else
+                {
                   ACE_DEBUG ((LM_DEBUG,
                               "catior returned false\n"));
+                }
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
                 ifstr.close ();
 #endif /* !defined (ACE_LACKS_IOSTREAM_TOTALLY) */
@@ -312,7 +322,9 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                         char ch {};
                         cin.get (ch);
                         if (cin.eof () || ch == '\n' || ch == '\r')
+                        {
                           break;
+                        }
                         aString += ch;
                         have_some_input = true;
                       }
@@ -382,11 +394,15 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                     ACE_DEBUG ((LM_DEBUG, "%s", str.c_str()));
                   }
                 if (b)
+                {
                   ACE_DEBUG ((LM_DEBUG,
                               "catior returned true\n"));
+                }
                 else
+                {
                   ACE_DEBUG ((LM_DEBUG,
                               "catior returned false\n"));
+                }
               }
               break;
             case '?':
@@ -407,6 +423,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 
         // check that some relevant arguments have been supplied
         if (!have_argument)
+        {
               ACE_ERROR_RETURN ((LM_ERROR,
                                 "Usage: %s "
                                 "-f filename "
@@ -417,6 +434,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                                 "\n",
                                 argvw[0]),
                                 1);
+        }
     }
   catch (const CORBA::Exception& ex)
     {
