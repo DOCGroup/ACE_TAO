@@ -42,8 +42,10 @@ TAO_EC_MT_Dispatching::activate ()
                       "EC (%P|%t) activating dispatching queue at"
                       " default priority\n"));
           if (this->task_.activate (THR_BOUND, this->nthreads_) == -1)
-            ORBSVCS_ERROR ((LM_ERROR,
-                        "EC (%P|%t) cannot activate dispatching queue.\n"));
+            {
+              ORBSVCS_ERROR ((LM_ERROR,
+                              "EC (%P|%t) cannot activate dispatching queue.\n"));
+            }
         }
     }
 }
