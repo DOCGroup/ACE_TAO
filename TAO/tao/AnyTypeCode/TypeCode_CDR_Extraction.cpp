@@ -558,9 +558,10 @@ TAO::TypeCodeFactory::tc_struct_factory (CORBA::TCKind kind,
     }
 
   CORBA::TypeCode_ptr dup_tc = CORBA::TypeCode::_duplicate(tc);
-  if (!add_to_tc_info_list(dup_tc, direct_infos)) {
-    return false;
-  }
+  if (!add_to_tc_info_list(dup_tc, direct_infos))
+    {
+      return false;
+    }
 
   return true;
 }
@@ -869,9 +870,10 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
     }
 
   CORBA::TypeCode_ptr dup_tc = CORBA::TypeCode::_duplicate(tc);
-  if (!add_to_tc_info_list(dup_tc, direct_infos)) {
-    return false;
-  }
+  if (!add_to_tc_info_list(dup_tc, direct_infos))
+    {
+      return false;
+    }
 
   return true;
 }
@@ -1276,9 +1278,10 @@ TAO::TypeCodeFactory::tc_value_factory (CORBA::TCKind kind,
     }
 
   CORBA::TypeCode_ptr dup_tc = CORBA::TypeCode::_duplicate(tc);
-  if (!add_to_tc_info_list(dup_tc, direct_infos)) {
-    return false;
-  }
+  if (!add_to_tc_info_list(dup_tc, direct_infos))
+    {
+      return false;
+    }
   return true;
 }
 
@@ -1374,9 +1377,10 @@ namespace
       return false;
     }
 
-    if (kind == TYPECODE_INDIRECTION) {
-      return tc_demarshal_indirection (cdr, tc, indirect_infos, direct_infos);
-    }
+    if (kind == TYPECODE_INDIRECTION)
+      {
+        return tc_demarshal_indirection (cdr, tc, indirect_infos, direct_infos);
+      }
 
     using namespace TAO::TypeCodeFactory;
 
@@ -1580,15 +1584,17 @@ operator>> (TAO_InputCDR & cdr, CORBA::TypeCode_ptr & tc)
   TAO::TypeCodeFactory::TC_Info_List indirect_infos;
   TAO::TypeCodeFactory::TC_Info_List direct_infos;
 
-  if (!tc_demarshal (cdr, tc, indirect_infos, direct_infos)) {
-    cleanup_tc_info_list(direct_infos);
-    return false;
-  }
+  if (!tc_demarshal (cdr, tc, indirect_infos, direct_infos))
+    {
+      cleanup_tc_info_list(direct_infos);
+      return false;
+    }
 
-  if (indirect_infos.size () == 0) {
-    cleanup_tc_info_list(direct_infos);
-    return true;
-  }
+  if (indirect_infos.size () == 0)
+    {
+      cleanup_tc_info_list(direct_infos);
+      return true;
+    }
 
   for (size_t i {}; i < direct_infos.size(); ++i) {
     CORBA::TypeCode_ptr& tc_direct = direct_infos[i].type;
