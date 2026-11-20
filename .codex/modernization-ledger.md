@@ -13587,3 +13587,9 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Added Allman braces to the 171 single-statement bodies reported across 59 files in `ACE/examples`. Also recorded the immediately preceding focused edits in `test_hash_map_manager.cpp`, `SC_Server.cpp`, `Connection_Handler.cpp`, `test_upipe.cpp`, and `bounded_buffer.cpp`.
 - Re-scanned all 400 translation units in `ACE/examples/compile_commands.json` with C++17 and the ACE include root: zero brace warnings remain. The scan still reports the pre-existing `Thermometer.h:41` `-Wnon-pod-varargs` error in five translation units; it is unrelated to these brace edits. `git diff --check` passed. No build or runtime tests were run.
 - Commits: `86e53df860d`, `a54c40acea1`, `4391b09f518`, `0425002d452`, `6bf64db4806`, and the current brace batch. The full ACE/TAO brace audit remains open.
+
+## 2026-11-20 TAO tests and orbsvcs brace follow-up
+
+- Added Allman braces to 26 single-statement bodies across 11 tracked files: `TAO/tests/File_IO/client.cpp`, `TAO/tests/Bug_3430_Regression/server.cpp`, `TAO/tests/POA/Loader/Servant_Locator.cpp`, and selected Notify, HTIOP, CosEvent, ImplRepo, and Security files under `TAO/orbsvcs`.
+- Focused clang-tidy `readability-braces-around-statements` checks passed for all 11 edited files; `git diff --check` passed. No build or runtime tests were run.
+- The full tracked-source brace audit remains open; gperf, TAO_IDL, and IFR_Service remain excluded from modernization edits.

@@ -42,6 +42,7 @@ parse_args (int argc, ACE_TCHAR **argv, Client_Options &options)
   int c {};
 
   while ((c = get_opts ()) != -1)
+  {
     switch (c)
       {
       case 'd':
@@ -72,6 +73,7 @@ parse_args (int argc, ACE_TCHAR **argv, Client_Options &options)
                            argv [0]),
                           -1);
       }
+  }
 
   // Indicates successful parsing of command line.
   return 0;
@@ -154,17 +156,21 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Read the file, and get the IOR
       ACE_HANDLE const input_file = ACE_OS::open (options.ior_file.c_str (), 0);
       if (input_file == ACE_INVALID_HANDLE)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("Cannot open input file for reading IOR: %s\n"),
                            options.ior_file.c_str ()),
                           -1);
+      }
       ACE_Read_Buffer ior_buffer (input_file, true);
       ACE_Read_Buffer_Unique_Ptr data (
         ior_buffer.read (), {ior_buffer.alloc ()});
       if (!data)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Unable to read ior\n"),
                           -1);
+      }
 
       Client_Context context {orb, data.get (), options.file_name, options.iterations};
 

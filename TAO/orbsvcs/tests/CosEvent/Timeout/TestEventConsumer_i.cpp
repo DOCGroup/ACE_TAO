@@ -56,10 +56,14 @@ TestEventConsumer_i::push (CORBA::Any const &data)
             ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mtx_);
             wait_for_shutdown = ++this->count_ == 10;
             if (wait_for_shutdown)
+            {
               ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TestEventConsumer_i::push(): ")
                                     ACE_TEXT ("Simulating hung consumer\n")));
+            }
             while (wait_for_shutdown && !this->shutdown_)
+            {
               this->cond_.wait ();
+            }
           }
           if (wait_for_shutdown)
           {

@@ -66,9 +66,11 @@ TAO_Notify_Constraint_Expr::load_child (
 
     CORBA::ULong len = this->constr_expr.event_types.length ();
     if (DEBUG_LEVEL)
+    {
       ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) reload EventType %d \n"),
                   len + 1));
+    }
 
     this->constr_expr.event_types.length (len + 1);
     this->constr_expr.event_types[len].domain_name = CORBA::string_dup (domain);
@@ -145,8 +147,10 @@ TAO_Notify_ETCL_Filter::add_constraint_i (CosNotifyFilter::ConstraintID cnstr_id
   std::unique_ptr <TAO_Notify_Constraint_Expr> auto_expr (notify_constr_expr);
 
   if (TAO_debug_level > 1)
+  {
     ORBSVCS_DEBUG ((LM_DEBUG,
                 ACE_TEXT("Added an empty constraint to filter\n")));
+  }
 
   if (this->constraint_expr_list_.bind (cnstr_id, notify_constr_expr) == -1)
   {
@@ -180,18 +184,22 @@ TAO_Notify_ETCL_Filter::add_constraint_i
   if (cnstr_id == 0)
   {
     if (TAO_debug_level > 1)
+    {
       ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Added constraint %C to filter %d\n"),
                   expr.constraint_expr.in (), this->id_));
+    }
 
     cnstr_id = ++constraint_expr_ids_;
   }
   else
   {
     if (TAO_debug_level > 1)
+    {
       ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Loaded constraint %C to filter %d\n"),
                   expr.constraint_expr.in (), this->id_));
+    }
   }
 
   if (this->constraint_expr_list_.bind (cnstr_id, notify_constr_expr) == -1)
@@ -212,9 +220,11 @@ TAO_Notify_ETCL_Filter::add_constraints (
   CORBA::ULong const constraint_length = constraint_list.length ();
 
   if (TAO_debug_level > 0)
+  {
       ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("constraint_length = %u\n"),
                   constraint_length));
+  }
 
   // Create the list that goes out.
   CosNotifyFilter::ConstraintInfoSeq* infoseq_ptr;
@@ -583,9 +593,11 @@ TAO_Notify_ETCL_Filter::load_child (ACE_CString const &type,
       constraint_expr_ids_ = id;
 
       if (DEBUG_LEVEL)
+      {
         ORBSVCS_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) reload filter %d constraint %d\n"),
                     static_cast<int> (this->id_), static_cast<int> (id)));
+      }
 
       TAO_Notify_Constraint_Expr* expr
         = this->add_constraint_i (id);

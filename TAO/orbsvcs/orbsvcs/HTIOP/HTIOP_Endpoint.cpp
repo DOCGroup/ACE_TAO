@@ -97,11 +97,13 @@ TAO::HTIOP::Endpoint::set (const ACE::HTBP::Addr &addr,
       if (tmp == nullptr)
         {
           if (TAO_debug_level > 0)
+          {
             ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("\n\nTAO (%P|%t) ")
                         ACE_TEXT ("TAO::HTIOP::Endpoint::set ")
                         ACE_TEXT ("- %p\n\n"),
                         ACE_TEXT ("cannot determine hostname")));
+          }
           return -1;
         }
       else
@@ -214,8 +216,10 @@ TAO::HTIOP::Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
   }
 
   if (this->htid_.in() && std::strlen (this->htid_.in ()))
+  {
     return (endpoint->htid() &&
             std::strcmp (this->htid_.in (), endpoint->htid ()) == 0);
+  }
 
   return (this->port_ == endpoint->port_
           && (std::strcmp (this->host (), endpoint->host ()) == 0));

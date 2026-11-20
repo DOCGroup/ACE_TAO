@@ -25,9 +25,11 @@ ServantLocator::ServantLocator (CORBA::ORB_ptr orb,
 {
   // The dll is opened using the dllname passed.
   if (this->dll_.open (dllname) == -1)
+  {
     ACE_ERROR ((LM_ERROR,
                 "%p",
                 this->dll_.error ()));
+  }
 
   // Obtain the symbol for the function that will get the servant
   // object.
