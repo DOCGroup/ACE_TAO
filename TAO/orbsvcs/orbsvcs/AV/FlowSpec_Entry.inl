@@ -14,9 +14,13 @@ TAO_FlowSpec_Entry::set_direction (char const *direction)
       return -1;
     }
   if (ACE_OS::strcasecmp (direction,"in") == 0)
-    this->direction_ = TAO_AV_DIR_IN;
+    {
+      this->direction_ = TAO_AV_DIR_IN;
+    }
   else if (ACE_OS::strcasecmp (direction,"out") == 0)
-    this->direction_ = TAO_AV_DIR_OUT;
+    {
+      this->direction_ = TAO_AV_DIR_OUT;
+    }
   return 0;
 }
 
@@ -25,10 +29,14 @@ int
 TAO_FlowSpec_Entry::parse_flow_protocol_string (char const *flow_string)
 {
   if (flow_string == nullptr)
-    return 0;
+    {
+      return 0;
+    }
 
   if (flow_string[0] == '\0')
-    return 0;
+    {
+      return 0;
+    }
 
   this->use_flow_protocol_ = true;
   // do some flow protocol processing.
@@ -91,7 +99,9 @@ void
 TAO_FlowSpec_Entry::address (ACE_Addr *addr, bool cleanup)
 {
   if (this->owned_address_.get () != addr)
-    this->owned_address_.reset (cleanup ? addr : nullptr);
+    {
+      this->owned_address_.reset (cleanup ? addr : nullptr);
+    }
   this->address_ = addr;
 }
 
@@ -107,7 +117,9 @@ void
 TAO_FlowSpec_Entry::control_address (ACE_Addr *addr)
 {
   if (this->owned_control_address_.get () != addr)
-    this->owned_control_address_.reset ();
+    {
+      this->owned_control_address_.reset ();
+    }
   this->control_address_ = addr;
 }
 
@@ -137,11 +149,15 @@ int
 TAO_FlowSpec_Entry::set_peer_addr (ACE_Addr *peer_addr)
 {
   if (this->owned_peer_addr_.get () != peer_addr)
-    this->owned_peer_addr_.reset ();
+    {
+      this->owned_peer_addr_.reset ();
+    }
   this->peer_addr_ = peer_addr;
 
   if (this->handler_ != nullptr)
-    this->handler_->set_remote_address (peer_addr);
+    {
+      this->handler_->set_remote_address (peer_addr);
+    }
   return 0;
 }
 
@@ -165,7 +181,9 @@ int
 TAO_FlowSpec_Entry::set_local_control_addr (ACE_Addr *local_addr)
 {
   if (this->local_control_addr_.get () != local_addr)
-    this->local_control_addr_.reset (local_addr);
+    {
+      this->local_control_addr_.reset (local_addr);
+    }
   return 0;
 }
 
