@@ -1291,6 +1291,7 @@ Catior_i::cat_tagged_components (TAO_InputCDR& stream)
 
   return true;
 }
+
 CORBA::Boolean
 Catior_i::cat_profile_helper (TAO_InputCDR& stream,
                               char const *protocol)
