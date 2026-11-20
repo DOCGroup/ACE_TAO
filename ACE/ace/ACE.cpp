@@ -238,7 +238,9 @@ ACE::terminate_process (pid_t pid)
 
   if (process_handle == ACE_INVALID_HANDLE
       || process_handle == 0)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       // Kill the process associated with process_handle.
@@ -274,7 +276,9 @@ ACE::process_active (pid_t pid)
   ACE_HANDLE process_handle =
     ::OpenProcess (PROCESS_QUERY_INFORMATION, FALSE, pid);
   if (process_handle == ACE_INVALID_HANDLE || process_handle == 0)
-    return 0;
+    {
+      return 0;
+    }
   else
     {
       DWORD status;
@@ -282,7 +286,9 @@ ACE::process_active (pid_t pid)
       if (::GetExitCodeProcess (process_handle,
                                 &status) == 0
           || status != STILL_ACTIVE)
-        result = 0;
+        {
+          result = 0;
+        }
 
       ::CloseHandle (process_handle);
       return result;
@@ -493,12 +499,16 @@ ACE::t_rcv (ACE_HANDLE handle,
             const ACE_Time_Value *timeout)
 {
   if (timeout == 0)
-    return ACE_OS::t_rcv (handle, (char *) buf, len, flags);
+    {
+      return ACE_OS::t_rcv (handle, (char *) buf, len, flags);
+    }
   else
     {
       int val = 0;
       if (ACE::enter_recv_timedwait (handle, timeout, val) ==-1)
-        return -1;
+        {
+          return -1;
+        }
       else
         {
           ssize_t bytes_transferred =
@@ -739,7 +749,9 @@ ACE::t_rcv_n_i (ACE_HANDLE handle,
                          flags);
       // Check EOF.
       if (n == 0)
-        return 0;
+        {
+          return 0;
+        }
 
       // Check for other errors.
       if (n == -1)
@@ -828,9 +840,13 @@ ACE::t_rcv_n_i (ACE_HANDLE handle,
   ACE::restore_non_blocking_mode (handle, val);
 
   if (error)
-    return result;
+    {
+      return result;
+    }
   else
-    return bytes_transferred;
+    {
+      return bytes_transferred;
+    }
 }
 
 #endif /* ACE_HAS_TLI */
@@ -1304,12 +1320,16 @@ ACE::t_snd (ACE_HANDLE handle,
             const ACE_Time_Value *timeout)
 {
   if (timeout == 0)
-    return ACE_OS::t_snd (handle, (const char *) buf, n, flags);
+    {
+      return ACE_OS::t_snd (handle, (const char *) buf, n, flags);
+    }
   else
     {
       int val = 0;
       if (ACE::enter_send_timedwait (handle, timeout, val) == -1)
-        return -1;
+        {
+          return -1;
+        }
       else
         {
           ssize_t const bytes_transferred =
@@ -1554,7 +1574,9 @@ ACE::t_snd_n_i (ACE_HANDLE handle,
                          flags);
       // Check EOF.
       if (n == 0)
-        return 0;
+        {
+          return 0;
+        }
 
       // Check for other errors.
       if (n == -1)
@@ -1643,9 +1665,13 @@ ACE::t_snd_n_i (ACE_HANDLE handle,
   ACE::restore_non_blocking_mode (handle, val);
 
   if (error)
-    return result;
+    {
+      return result;
+    }
   else
-    return bytes_transferred;
+    {
+      return bytes_transferred;
+    }
 }
 
 #endif /* ACE_HAS_TLI */
@@ -2622,17 +2648,21 @@ ACE::handle_timed_complete (ACE_HANDLE h,
 # else
   int n = 0;
   if (is_tli)
-    n = ACE_OS::select (int (h) + 1,
-                        rd_handles,
-                        wr_handles,
-                        0,
-                        timeout);
+    {
+      n = ACE_OS::select (int (h) + 1,
+                          rd_handles,
+                          wr_handles,
+                          0,
+                          timeout);
+    }
   else
-    n = ACE_OS::select (int (h) + 1,
-                        0,
-                        wr_handles,
-                        0,
-                        timeout);
+    {
+      n = ACE_OS::select (int (h) + 1,
+                          0,
+                          wr_handles,
+                          0,
+                          timeout);
+    }
 # endif /* ACE_HAS_POLL */
 #endif /* ACE_WIN32 */
 
@@ -2728,7 +2758,9 @@ ACE::handle_timed_complete (ACE_HANDLE h,
               h = ACE_INVALID_HANDLE;
             }
           else if (errno != EWOULDBLOCK && errno != EAGAIN)
-            h = ACE_INVALID_HANDLE;
+            {
+              h = ACE_INVALID_HANDLE;
+            }
         }
 #endif
     }
@@ -2967,7 +2999,9 @@ ACE::max_handles ()
   int const r = ACE_OS::getrlimit (RLIMIT_NOFILE, &rl);
 # if !defined (RLIM_INFINITY)
   if (r == 0)
-    return rl.rlim_cur;
+    {
+      return rl.rlim_cur;
+    }
 # else
   if (r == 0 && rl.rlim_cur != RLIM_INFINITY)
   {

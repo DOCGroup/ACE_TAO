@@ -346,7 +346,9 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
       && result.error () != ECANCELED
 #endif
       )
-    this->accept (this->bytes_to_read_, result.act ());
+    {
+      this->accept (this->bytes_to_read_, result.act ());
+    }
 }
 
 template <class HANDLER> int
@@ -403,7 +405,9 @@ ACE_Asynch_Acceptor<HANDLER>::parse_address (const
   size_t addr_size = sizeof (sockaddr_in) + 16;
 #if defined (ACE_HAS_IPV6)
   if (this->addr_family_ == PF_INET6)
-    addr_size = sizeof (sockaddr_in6) + 16;
+    {
+      addr_size = sizeof (sockaddr_in6) + 16;
+    }
 #endif /* ACE_HAS_IPV6 */
 
   ::GetAcceptExSockaddrs (message_block.rd_ptr (),

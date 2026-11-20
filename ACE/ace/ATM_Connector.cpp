@@ -69,8 +69,10 @@ ACE_ATM_Connector::connect (ACE_ATM_Stream &new_stream,
                                 qos_params);
 
   if ( result != 0 )
-    ACE_OS::printf( "ATM_Connector(connect): connection failed, %d\n",
-                    ::WSAGetLastError());
+    {
+      ACE_OS::printf( "ATM_Connector(connect): connection failed, %d\n",
+                      ::WSAGetLastError());
+    }
 
   return result;
 #elif defined (ACE_HAS_LINUX_ATM)
@@ -108,9 +110,11 @@ ACE_ATM_Connector::connect (ACE_ATM_Stream &new_stream,
                                sizeof( remote_addr->sockaddratmsvc));
 
   if ( result != 0 )
-    ACELIB_DEBUG(LM_DEBUG,
-              ACE_TEXT ("ATM_Connector(connect): connection failed, %d\n"),
-              errno);
+    {
+      ACELIB_DEBUG(LM_DEBUG,
+                   ACE_TEXT ("ATM_Connector(connect): connection failed, %d\n"),
+                   errno);
+    }
 
   return result;
 #else

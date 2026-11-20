@@ -56,7 +56,9 @@ ACE_Argv_Type_Converter::~ACE_Argv_Type_Converter ()
     {
       // if original type is wchar_t
       if (this->char_passed_)
-        this->align_wchar_with_char ();
+        {
+          this->align_wchar_with_char ();
+        }
 
       for (int i {}; i < this->before_pass_argc_; ++i)
         ACE_OS::free (this->char_argv_[i]);
@@ -67,7 +69,9 @@ ACE_Argv_Type_Converter::~ACE_Argv_Type_Converter ()
     {
       // if original type is char
       if (this->wchar_passed_)
-        this->align_char_with_wchar ();
+        {
+          this->align_char_with_wchar ();
+        }
 
       for (int i {}; i < this->before_pass_argc_; ++i)
         ACE_OS::free (this->wchar_argv_[i]);

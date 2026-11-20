@@ -374,9 +374,13 @@ ACE_ATM_Addr::addr_to_string (ACE_TCHAR addr[],
   size_t total_len = ACE_OS::strlen (buffer) + sizeof ('\0');
 
   if (addrlen < total_len)
-    return -1;
+    {
+      return -1;
+    }
   else
-    ACE_OS::strcpy (addr, buffer);
+    {
+      ACE_OS::strcpy (addr, buffer);
+    }
 
   return 0;
 #elif defined (ACE_HAS_FORE_ATM_WS2)
@@ -384,7 +388,9 @@ ACE_ATM_Addr::addr_to_string (ACE_TCHAR addr[],
   int i;
 
   if (addrlen < ATM_ADDR_SIZE + 1)
-          return -1;
+    {
+      return -1;
+    }
 
   for (i = 0; i < ATM_ADDR_SIZE; ++i) {
     buffer[ i * 3 ] = '\0';
@@ -408,10 +414,14 @@ ACE_ATM_Addr::addr_to_string (ACE_TCHAR addr[],
     return -1;
   }
   if (addrlen < (size_t)total_len)
-    return -1;
+    {
+      return -1;
+    }
   else
-    ACE_OS::strcpy (addr,
-                   buffer);
+    {
+      ACE_OS::strcpy (addr,
+                      buffer);
+    }
 
   return 0;
 #else
@@ -429,7 +439,9 @@ ACE_ATM_Addr::addr_to_string () const
   static ACE_TCHAR addr[MAXHOSTNAMELEN + 1];
   if (this->addr_to_string (addr,
                             MAXHOSTNAMELEN + 1) < 0)
-    return 0;
+    {
+      return 0;
+    }
 
   return addr;
 }
