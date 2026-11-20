@@ -36,16 +36,20 @@ vc_check (foo_ptr ff, bool const active = true)
   catch (CORBA::INV_POLICY const &)
     {
       if (!active)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) unexpect inlaid policies\n"),
-                          2);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) unexpect inlaid policies\n"),
+                            2);
+        }
     }
   catch (CORBA::OBJECT_NOT_EXIST const &)
     {
       if (active)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) unexpect object not exists\n"),
-                          3);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) unexpect object not exists\n"),
+                            3);
+        }
     }
   catch (CORBA::Exception const &)
     {

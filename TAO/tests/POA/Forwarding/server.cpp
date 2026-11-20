@@ -30,30 +30,34 @@ parse_args (int argc, ACE_TCHAR **argv, Server_Options &options)
   int option {};
 
   while ((option = get_opts ()) != -1)
-    switch (option)
-      {
-      case 'f':
-        options.forward_to_ior = get_opts.opt_arg ();
-        break;
+    {
+      switch (option)
+        {
+        case 'f':
+          options.forward_to_ior = get_opts.opt_arg ();
+          break;
 
-      case 'o':
-        options.ior_output_file = get_opts.opt_arg ();
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "\nusage:  %s\n"
-                           "-f forward to IOR\n"
-                           "-o output file for IOR\n"
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
+        case 'o':
+          options.ior_output_file = get_opts.opt_arg ();
+          break;
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "\nusage:  %s\n"
+                             "-f forward to IOR\n"
+                             "-o output file for IOR\n"
+                             "\n",
+                             argv [0]),
+                            -1);
+        }
+    }
 
   if (options.ior_output_file == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "output IOR file not specified\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "output IOR file not specified\n"),
+                        -1);
+    }
 
   // Indicates successful parsing of command line.
   return 0;

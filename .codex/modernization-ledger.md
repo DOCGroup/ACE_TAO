@@ -14311,6 +14311,12 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Focused clang-tidy reported no remaining brace warnings in the edited files; `git diff --check` passed. No build or runtime tests were run.
 - The broader tracked-source brace audit remains open.
 
+## 2026-11-20 Allman braces in TAO regressions
+
+- Added Allman braces around argument parsing, error paths, and short loop branches in POA, collocation, security, naming, and regression-test sources.
+- Focused clang-tidy reported no remaining brace warnings in the edited files; `git diff --check` passed. No build or runtime tests were run.
+- The broader tracked-source brace audit remains open.
+
 ## 2026-11-20 TAO timeout and typedef test server braces
 
 - Added Allman braces to option parsing and error branches in `TAO/tests/Typedef_String_Array/server.cpp`, `TAO/tests/MT_Timeout/server.cpp`, and `TAO/tests/Timeout/server.cpp`.

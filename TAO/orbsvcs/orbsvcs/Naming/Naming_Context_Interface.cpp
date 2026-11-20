@@ -101,7 +101,9 @@ to_string_helper_length (CORBA::ULong &len, char const *&src)
     {
       ++len;
       if (*j == '.' || *j == '\\' || *j == '/')
-        ++len;
+        {
+          ++len;
+        }
     }
   ++len; // '.' seperator or '/' seperator
 
@@ -315,8 +317,10 @@ TAO_Naming_Context::to_name (char const *sn)
       ++count;
 
       // End
-       if (*k == '\0')
-         break;
+      if (*k == '\0')
+        {
+          break;
+        }
       ++k;
     }
 
