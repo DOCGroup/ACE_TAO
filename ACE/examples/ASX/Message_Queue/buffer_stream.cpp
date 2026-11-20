@@ -115,10 +115,12 @@ int
 Common_Task::open (void *)
 {
   if (this->activate (THR_NEW_LWP | THR_DETACHED) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("spawn")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("spawn")),
+                        -1);
+    }
   return 0;
 }
 
@@ -168,13 +170,15 @@ Producer::svc ()
 
           int const result = this->put_next (mb);
           if (result == -1)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%t) %p\n"),
-                        ACE_TEXT ("put_next")));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%t) %p\n"),
+                          ACE_TEXT ("put_next")));
+            }
           else
-          {
-            message.release ();
-          }
+            {
+              message.release ();
+            }
           break;
         }
 
@@ -187,13 +191,15 @@ Producer::svc ()
           mb->rd_ptr ()[n] = '\0';
 
           if (this->put_next (mb) == -1)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%t) %p\n"),
-                        ACE_TEXT ("put_next")));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%t) %p\n"),
+                          ACE_TEXT ("put_next")));
+            }
           else
-          {
-            message.release ();
-          }
+            {
+              message.release ();
+            }
         }
     }
 
@@ -240,9 +246,11 @@ Consumer::svc ()
       int const length = ACE_Utils::truncate_cast<int> (mb->length ());
 
       if (length > 0)
-        ACE_OS::write (ACE_STDOUT,
-                       mb->rd_ptr (),
-                       std::strlen (mb->rd_ptr ()));
+        {
+          ACE_OS::write (ACE_STDOUT,
+                         mb->rd_ptr (),
+                         std::strlen (mb->rd_ptr ()));
+        }
 
       if (length == 0)
       {
@@ -251,10 +259,12 @@ Consumer::svc ()
     }
 
   if (result == -1 && errno == EWOULDBLOCK)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%t) %p\n%a"),
-                ACE_TEXT ("timed out waiting for message"),
-                1));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%t) %p\n%a"),
+                  ACE_TEXT ("timed out waiting for message"),
+                  1));
+    }
   return 0;
 }
 
@@ -263,7 +273,9 @@ Filter::put (ACE_Message_Block *mb,
              ACE_Time_Value *tv)
 {
   if (mb->length () == 0)
-    return this->put_next (mb, tv);
+    {
+      return this->put_next (mb, tv);
+    }
   else
     {
       char buf[BUFSIZ + 1] {};
@@ -336,24 +348,30 @@ ACE_TMAIN (int, ACE_TCHAR *argv[])
   // push() links the module before opening its task, even when it returns an error.
   consumer_module.release ();
   if (consumer_push_result == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("push")),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("push")),
+                        1);
+    }
   int const filter_push_result = stream.push (filter_module.get ());
   filter_module.release ();
   if (filter_push_result == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("push")),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("push")),
+                        1);
+    }
   int const producer_push_result = stream.push (producer_module.get ());
   producer_module.release ();
   if (producer_push_result == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("push")),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("push")),
+                        1);
+    }
   // Barrier synchronization: wait for the threads to exit, then exit
   // ourselves.
   ACE_Thread_Manager::instance ()->wait ();
