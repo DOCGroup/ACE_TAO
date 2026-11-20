@@ -63,10 +63,12 @@ Sig_Handler::Sig_Handler ()
   // this.
   ACE_Reactor_Mask mask = ACE_Event_Handler::NULL_MASK;
   if (ACE_Reactor::instance ()->register_handler (this, mask) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n%a",
-                "register_handler",
-                1));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n%a",
+                  "register_handler",
+                  1));
+    }
 
   // Create a sigset_t corresponding to the signals we want to catch.
   ACE_Sig_Set sig_set;
@@ -78,10 +80,12 @@ Sig_Handler::Sig_Handler ()
   // Register the signal handler object to catch the signals.
   if (ACE_Reactor::instance ()->register_handler
       (sig_set, this) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n%a",
-                "register_handler",
-                1));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n%a",
+                  "register_handler",
+                  1));
+    }
 }
 
 // Called by the ACE_Reactor to extract the handle.
@@ -180,9 +184,11 @@ STDIN_Handler::STDIN_Handler ()
   if (ACE_Event_Handler::register_stdin_handler (this,
                                                  ACE_Reactor::instance (),
                                                  ACE_Thread_Manager::instance ()) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "register_stdin_handler"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n",
+                  "register_stdin_handler"));
+    }
 
   // Register the <STDIN_Handler> to be dispatched once every
   // <timeout> seconds starting in <timeout> seconds.  This example
@@ -193,25 +199,31 @@ STDIN_Handler::STDIN_Handler ()
             nullptr,
             ACE_Time_Value (timeout),
             ACE_Time_Value (timeout)) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n%a",
-                "schedule_timer",
-                1));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n%a",
+                  "schedule_timer",
+                  1));
+    }
 }
 
 STDIN_Handler::~STDIN_Handler ()
 {
   if (ACE_Event_Handler::remove_stdin_handler (ACE_Reactor::instance (),
                                                ACE_Thread_Manager::instance ()) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "remove_stdin_handler"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n",
+                  "remove_stdin_handler"));
+    }
   else if (ACE_Reactor::instance ()->cancel_timer
            (this) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n%a",
-                "cancel_timer",
-                1));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n%a",
+                  "cancel_timer",
+                  1));
+    }
 }
 
 int
@@ -236,12 +248,16 @@ STDIN_Handler::handle_input (ACE_HANDLE handle)
     {
     case -1:
       if (errno == EINTR)
-        return 0;
+        {
+          return 0;
+        }
         /* NOTREACHED */
       else
-        ACE_ERROR ((LM_ERROR,
-                    "%p\n",
-                    "read"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%p\n",
+                      "read"));
+        }
       ACE_FALLTHROUGH;
     case 0:
       ACE_Reactor::end_event_loop ();
@@ -251,10 +267,12 @@ STDIN_Handler::handle_input (ACE_HANDLE handle)
         ssize_t result = ACE::write_n (ACE_STDOUT, buf, n);
 
         if (result != n)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "%p\n",
-                             "write"),
-                            result == -1 && errno == EINTR ? 0 : -1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "%p\n",
+                               "write"),
+                              result == -1 && errno == EINTR ? 0 : -1);
+          }
       }
     }
   return 0;
@@ -292,9 +310,11 @@ Message_Handler::Message_Handler ()
   this->msg_queue ()->notification_strategy (&this->notification_strategy_);
 
   if (this->activate ())
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "activate"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n",
+                  "activate"));
+    }
 }
 
 int
@@ -316,13 +336,17 @@ Message_Handler::svc ()
       if (this->putq (mb.get ()) == -1)
         {
           if (errno == ESHUTDOWN)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "(%t) queue is deactivated"), 0);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%t) queue is deactivated"), 0);
+            }
           else
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "(%t) %p\n",
-                               "putq"),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%t) %p\n",
+                                 "putq"),
+                                -1);
+            }
         }
       mb.release ();
     }
@@ -339,9 +363,11 @@ Message_Handler::handle_input (ACE_HANDLE)
   ACE_Message_Block *mb {};
 
   if (this->getq (mb, (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "(%t) %p\n",
-                "dequeue_head"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%t) %p\n",
+                  "dequeue_head"));
+    }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -377,7 +403,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Loop handling signals and I/O events until SIGQUIT occurs.
 
   while (ACE_Reactor::instance ()->event_loop_done () == 0)
-    ACE_Reactor::instance ()->run_reactor_event_loop ();
+    {
+      ACE_Reactor::instance ()->run_reactor_event_loop ();
+    }
 
   // Deactivate the message queue.
   mh.msg_queue ()->deactivate ();
