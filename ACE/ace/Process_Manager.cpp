@@ -352,7 +352,9 @@ ACE_Process_Manager::handle_signal (int, siginfo_t *si, ucontext_t *)
 
             ssize_t const i = this->find_proc (proc);
             if (i == -1)
-              return -1;
+              {
+                return -1;
+              }
 #if 0
             pid_t pid = i != -1
               ? process_table_[i].process_->getpid ()
@@ -537,7 +539,9 @@ ACE_Process_Manager::append_proc (ACE_Process *proc,
   // Reactor we're interested in <handling_input> on it.
   ACE_Reactor * const r = this->reactor ();
   if (r != nullptr)
-    r->register_handler (this, proc->gethandle ());
+    {
+      r->register_handler (this, proc->gethandle ());
+    }
 #endif /* ACE_WIN32 */
 
   ++this->current_count_;
@@ -869,9 +873,13 @@ ACE_Process_Manager::wait (pid_t pid,
                                                ? INFINITE
                                                : timeout.msec ());
       if (result == WAIT_FAILED)
-        pid = ACE_INVALID_PID;
+        {
+          pid = ACE_INVALID_PID;
+        }
       else if (result == WAIT_TIMEOUT)
-        pid = 0;
+        {
+          pid = 0;
+        }
       else
         {
           // Green Hills produces a warning that result >=
@@ -925,13 +933,17 @@ ACE_Process_Manager::wait (pid_t pid,
           pid = 0;
           ACE_Time_Value sleeptm (1);    // 1 msec
           if (sleeptm > timeout)         // if sleeptime > waittime
-            sleeptm = timeout;
+            {
+              sleeptm = timeout;
+            }
           ACE_Time_Value tmo (timeout);  // Need one we can change
           for (ACE_Countdown_Time time_left (&tmo); tmo > ACE_Time_Value::zero ; time_left.update ())
             {
               pid = ACE_OS::waitpid (-1, status, WNOHANG);
               if (pid > 0 || pid == ACE_INVALID_PID)
-                break;          // Got a child or an error - all done
+                {
+                  break;          // Got a child or an error - all done
+                }
 
               // pid 0, nothing is ready yet, so wait.
               // Do a (very) short sleep (only this thread sleeps).
