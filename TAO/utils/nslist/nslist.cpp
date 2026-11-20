@@ -111,17 +111,29 @@ namespace
   get_tag_name (CORBA::ULong tag, ACE_CString& tag_string)
   {
     if (tag == IOP::TAG_INTERNET_IOP)
-      tag_string = "IIOP";
+      {
+        tag_string = "IIOP";
+      }
     else if (tag == TAO_TAG_UIOP_PROFILE)
-      tag_string = "UIOP";
+      {
+        tag_string = "UIOP";
+      }
     else if (tag == TAO_TAG_SHMEM_PROFILE)
-      tag_string = "SHMEM";
+      {
+        tag_string = "SHMEM";
+      }
     else if (tag == TAO_TAG_DIOP_PROFILE)
-      tag_string = "DIOP";
+      {
+        tag_string = "DIOP";
+      }
     else if (tag == TAO_TAG_COIOP_PROFILE)
-      tag_string = "COIOP";
+      {
+        tag_string = "COIOP";
+      }
     else if (tag == TAO_TAG_SCIOP_PROFILE)
-      tag_string = "SCIOP";
+      {
+        tag_string = "SCIOP";
+      }
     else
       {
         char buffer[32]= {'\0'};
@@ -164,17 +176,25 @@ namespace
 
     ACE_DEBUG ((LM_DEBUG, "\n"));
     for (size_t count {}; count < level; ++count)
-      ACE_DEBUG ((LM_DEBUG, "%C ", options.tree));
+      {
+        ACE_DEBUG ((LM_DEBUG, "%C ", options.tree));
+      }
     for (size_t count {}; count < options.node_size; ++count)
-      ACE_DEBUG ((LM_DEBUG, " "));
+      {
+        ACE_DEBUG ((LM_DEBUG, " "));
+      }
     ACE_DEBUG ((LM_DEBUG, " Protocol: %C\n",
                tag_name.c_str()));
 
     // Display Endpoint
     for (size_t count {}; count < level; ++count)
-      ACE_DEBUG ((LM_DEBUG, "%C ", options.tree));
+      {
+        ACE_DEBUG ((LM_DEBUG, "%C ", options.tree));
+      }
     for (size_t count {}; count < options.node_size; ++count)
-      ACE_DEBUG ((LM_DEBUG, " "));
+      {
+        ACE_DEBUG ((LM_DEBUG, " "));
+      }
     char buf[256] {};
     if (endpoint->addr_to_string (buf, sizeof(buf)-1u) < 0)
     {
@@ -196,14 +216,18 @@ namespace
          ++i)
       {
         for (size_t count {}; count < level-1; ++count)
-          ACE_DEBUG ((LM_DEBUG, "%C ", options.tree));
+          {
+            ACE_DEBUG ((LM_DEBUG, "%C ", options.tree));
+          }
         ACE_DEBUG ((LM_DEBUG, "%C %C", options.node,
                    bl[i].binding_name[0].id.in ()));
 
         if (bl[i].binding_name[0].kind[0])
-          ACE_DEBUG ((LM_DEBUG,
-                     " (Kind: %C)",
-                     bl[i].binding_name[0].kind.in ()));
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                       " (Kind: %C)",
+                       bl[i].binding_name[0].kind.in ()));
+          }
 
         CosNaming::Name Name;
         Name.length (1);
@@ -249,13 +273,21 @@ namespace
                   {
                     size_t count_binding {};
                     for (; count_binding < (level - backwards); ++count_binding)
-                      ACE_DEBUG ((LM_DEBUG, "%C ", options.tree));
+                      {
+                        ACE_DEBUG ((LM_DEBUG, "%C ", options.tree));
+                      }
                     ACE_DEBUG ((LM_DEBUG, "^"));
                     while (++count_binding < level)
-                      for (size_t chars {}; chars <= options.tree_size; ++chars)
-                        ACE_DEBUG ((LM_DEBUG, "-"));
+                      {
+                        for (size_t chars {}; chars <= options.tree_size; ++chars)
+                          {
+                            ACE_DEBUG ((LM_DEBUG, "-"));
+                          }
+                      }
                     for (size_t chars {}; chars < options.node_size; ++chars)
-                      ACE_DEBUG ((LM_DEBUG, "-"));
+                      {
+                        ACE_DEBUG ((LM_DEBUG, "-"));
+                      }
                     ACE_DEBUG ((LM_DEBUG, "^\n"));
                   }
               }
@@ -298,7 +330,9 @@ namespace
                 ACE_DEBUG ((LM_DEBUG, ": %C\n", str.in ()));
               }
             else if (CORBA::is_nil (obj.in ()))
-              ACE_DEBUG ((LM_DEBUG, "\n"));
+              {
+                ACE_DEBUG ((LM_DEBUG, "\n"));
+              }
             else
             {
               display_endpoint_info (obj.in (), level, options);
@@ -719,7 +753,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Contact the name service
       CORBA::Object_var obj;
       if (options.name_service)
-        obj = orb->string_to_object (options.name_service);
+        {
+          obj = orb->string_to_object (options.name_service);
+        }
       else
       {
         obj = orb->resolve_initial_references ("NameService");
