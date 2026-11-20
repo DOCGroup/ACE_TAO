@@ -70,9 +70,11 @@ Thread_Pool::Thread_Pool (ACE_Thread_Manager *thr_mgr,
   // Create the pool of worker threads.
   if (this->activate (THR_NEW_LWP,
                       n_threads) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "activate failed"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n",
+                  "activate failed"));
+    }
 }
 
 Thread_Pool::~Thread_Pool () = default;
@@ -121,12 +123,14 @@ Thread_Pool::svc ()
       size_t length = mb->length ();
 
       if (length > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%t) in iteration %d, length = %B, text = \"%*s\"\n",
-                    count,
-                    length,
-                    static_cast<int> (length - 1),
-                    mb->rd_ptr ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%t) in iteration %d, length = %B, text = \"%*s\"\n",
+                      count,
+                      length,
+                      static_cast<int> (length - 1),
+                      mb->rd_ptr ()));
+        }
 
       if (length == 0)
         {
@@ -176,7 +180,9 @@ producer (Thread_Pool &thread_pool)
           n = ACE_Utils::truncate_cast<int> (std::strlen (mb->rd_ptr ()));
 
           if (count == n_iterations)
-            n = 1; // Indicate that we need to shut down.
+            {
+              n = 1; // Indicate that we need to shut down.
+            }
           else
           {
             ++count;
@@ -196,7 +202,9 @@ producer (Thread_Pool &thread_pool)
 
           // Pass the message to the Thread_Pool.
           if (thread_pool.put (mb) == -1)
-            ACE_ERROR ((LM_ERROR, " (%t) %p\n", "put"));
+            {
+              ACE_ERROR ((LM_ERROR, " (%t) %p\n", "put"));
+            }
           else
           {
             message_block.release ();
@@ -224,7 +232,9 @@ producer (Thread_Pool &thread_pool)
                        ACE_Message_Block);
               ACE_Message_Block_Unique_Ptr message_block {mb};
               if (thread_pool.put (mb) == -1)
-                ACE_ERROR ((LM_ERROR, " (%t) %p\n", "put"));
+                {
+                  ACE_ERROR ((LM_ERROR, " (%t) %p\n", "put"));
+                }
               else
               {
                 message_block.release ();
@@ -262,10 +272,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               "(%t) waiting for threads to exit in Thread_Pool destructor...\n"));
   // Wait for all the threads to reach their exit point.
   if (thread_pool.wait () == -1)
-    //FUZZ: disable check_for_lack_ACE_OS
-    ACE_ERROR_RETURN ((LM_ERROR, "(%t) wait() failed\n"),
-                      1);
-    //FUZZ: enable check_for_lack_ACE_OS
+    {
+      //FUZZ: disable check_for_lack_ACE_OS
+      ACE_ERROR_RETURN ((LM_ERROR, "(%t) wait() failed\n"),
+                        1);
+      //FUZZ: enable check_for_lack_ACE_OS
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "(%t) destroying worker tasks and exiting...\n"));
