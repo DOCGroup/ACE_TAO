@@ -282,7 +282,9 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 
   size_t result_sz = 0u;
   if (sysctl (name, name_elts, 0, &result_sz, 0, 0u) != 0)
-    return -1;
+    {
+      return -1;
+    }
 
 # ifdef ACE_HAS_ALLOC_HOOKS
   char *const result =
@@ -318,7 +320,9 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
           ifa_msghdr *const ifa =
             reinterpret_cast<ifa_msghdr *> (result + pos + n);
           if (ifa->ifam_type != RTM_NEWADDR)
-            break;
+            {
+              break;
+            }
           n += ifa->ifam_msglen;
         }
     }
@@ -429,7 +433,9 @@ ACE_OS::getnameinfo_emulation (const sockaddr *saddr, ACE_SOCKET_LEN saddr_len,
                                char *host, ACE_SOCKET_LEN host_len)
 {
   if (saddr_len != sizeof (sockaddr_in) || saddr->sa_family != AF_INET)
-    return EAI_FAMILY; // IPv6 support requries actual OS-provided getnameinfo
+    {
+      return EAI_FAMILY; // IPv6 support requries actual OS-provided getnameinfo
+    }
 
   const void *addr = &((const sockaddr_in *) saddr)->sin_addr;
   int h_error;
@@ -445,7 +451,9 @@ ACE_OS::getnameinfo_emulation (const sockaddr *saddr, ACE_SOCKET_LEN saddr_len,
                              AF_INET, &hentry, buf, &h_error);
 
   if (hp == 0 || hp->h_name == 0)
-    return EAI_NONAME;
+    {
+      return EAI_NONAME;
+    }
 
   if (std::strlen (hp->h_name) >= size_t (host_len))
     {
