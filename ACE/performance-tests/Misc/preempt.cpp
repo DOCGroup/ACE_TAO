@@ -240,9 +240,11 @@ Low_Priority_Task::open (void *)
 
       // Become an active object.
       if (this->activate (flags, 1, 0, this->priority_) == -1)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) task activation failed, exiting!\n"),
                           -1);
+      }
       return 0;
     }
 }
@@ -310,7 +312,9 @@ get_options (int argc, ACE_TCHAR *argv[])
           {
             int const value = ACE_OS::atoi (get_opt.opt_arg ());
             if (value >= 2)
+            {
               high_iterations = static_cast<u_int> (value);
+            }
             else
             {
               ACE_ERROR_RETURN ((LM_ERROR, "%n: high iterations must be >= 2\n"), -1);
@@ -321,7 +325,9 @@ get_options (int argc, ACE_TCHAR *argv[])
           {
             int const value = ACE_OS::atoi (get_opt.opt_arg ());
             if (value >= 2)
+            {
               low_iterations = static_cast<u_int> (value);
+            }
             else
             {
               ACE_ERROR_RETURN ((LM_ERROR, "%n: low iterations must be >= 2\n"), -1);
@@ -332,7 +338,9 @@ get_options (int argc, ACE_TCHAR *argv[])
           {
             int const value = ACE_OS::atoi (get_opt.opt_arg ());
             if (value >= 1)
+            {
               high_priority_tasks = static_cast<u_int> (value);
+            }
             else
             {
               ACE_ERROR_RETURN ((LM_ERROR, "%n: number of high priority threads must be >= 1\n"), -1);
@@ -343,7 +351,9 @@ get_options (int argc, ACE_TCHAR *argv[])
           {
             int const value = ACE_OS::atoi (get_opt.opt_arg ());
             if (value > 0)
+            {
               read_period = static_cast<u_long> (value);
+            }
             else
             {
               ACE_ERROR_RETURN ((LM_ERROR, "%n: read period must be > 0\n"), -1);
@@ -407,11 +417,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_SCOPE_PROCESS)) != 0)
     {
       if (ACE_OS::last_error () == EPERM)
+      {
         ACE_DEBUG ((LM_MAX, "preempt: user is not superuser, "
                     "so remain in time-sharing class\n"));
+      }
       else
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "%n: ACE_OS::sched_params failed\n%a"),
                           -1);
+      }
     }
 
   std::unique_ptr<High_Priority_Task[]> high_priority_task (
@@ -423,10 +437,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
   for (u_int task_index {}; task_index < high_priority_tasks; ++task_index)
+  {
     if (!high_priority_task[task_index].valid ())
     {
       ACE_ERROR_RETURN ((LM_ERROR, "Unable to allocate high-priority task timing data\n"), 1);
     }
+  }
 
   Low_Priority_Task low_priority_task (high_priority_task[0]);
 
