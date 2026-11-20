@@ -445,7 +445,9 @@ static constexpr int ACE_DEFAULT_BUFSIZE = 256;
 static const ACE_TCHAR *temp_name (const ACE_TCHAR *name)
 {
   if (name && *name == ACE_Configuration::NULL_String_)
+  {
     return nullptr;
+  }
   return name;
 }
 
@@ -492,11 +494,15 @@ ACE_Configuration_Win32Registry::open_section (const ACE_Configuration_Section_K
                                                ACE_Configuration_Section_Key& result)
 {
   if (validate_name (sub_section, 1))
+  {
     return -1;
+  }
 
   HKEY base_key;
   if (load_key (base, base_key))
+  {
     return -1;
+  }
 
   int errnum;
   HKEY result_key;
@@ -541,21 +547,29 @@ ACE_Configuration_Win32Registry::remove_section (const ACE_Configuration_Section
                                                  bool recursive)
 {
   if (validate_name (sub_section))
+  {
     return -1;
+  }
 
   HKEY base_key;
   if (load_key (key, base_key))
+  {
     return -1;
+  }
 
   if (recursive)
     {
       ACE_Configuration_Section_Key section;
       if (open_section (key, sub_section, false, section))
+      {
         return -1;
+      }
 
       HKEY sub_key;
       if (load_key (section, sub_key))
+      {
         return -1;
+      }
 
       ACE_TCHAR name_buffer[ACE_DEFAULT_BUFSIZE];
       DWORD buffer_size = ACE_DEFAULT_BUFSIZE;
@@ -595,7 +609,9 @@ ACE_Configuration_Win32Registry::enumerate_values (const ACE_Configuration_Secti
 {
   HKEY base_key;
   if (load_key (key, base_key))
+  {
     return -1;
+  }
 
   ACE_TCHAR name_buffer[ACE_DEFAULT_BUFSIZE];
   DWORD buffer_size = ACE_DEFAULT_BUFSIZE;
@@ -610,7 +626,9 @@ ACE_Configuration_Win32Registry::enumerate_values (const ACE_Configuration_Secti
                                         0,
                                         0);
   if (rc == ERROR_NO_MORE_ITEMS)
+  {
     return 1;
+  }
   else if (rc != ERROR_SUCCESS)
     {
       errno = rc;
@@ -644,7 +662,9 @@ ACE_Configuration_Win32Registry::enumerate_sections (const ACE_Configuration_Sec
 {
   HKEY base_key;
   if (load_key (key, base_key))
+  {
     return -1;
+  }
 
   ACE_TCHAR name_buffer[ACE_DEFAULT_BUFSIZE];
   DWORD buffer_size = ACE_DEFAULT_BUFSIZE;
@@ -657,7 +677,9 @@ ACE_Configuration_Win32Registry::enumerate_sections (const ACE_Configuration_Sec
                                   0,
                                   0);
   if (rc == ERROR_NO_MORE_ITEMS)
+  {
     return 1;
+  }
   else if (rc != ERROR_MORE_DATA && rc != ERROR_SUCCESS)
     {
       errno = rc;
@@ -676,11 +698,15 @@ ACE_Configuration_Win32Registry::set_string_value (const ACE_Configuration_Secti
 {
   const ACE_TCHAR *t_name = temp_name (name);
   if (validate_value_name (t_name))
+  {
     return -1;
+  }
 
   HKEY base_key;
   if (load_key (key, base_key))
+  {
     return -1;
+  }
 
   int errnum;
   DWORD len = static_cast<DWORD> (value.length () + 1);
@@ -707,11 +733,15 @@ ACE_Configuration_Win32Registry::set_integer_value (const ACE_Configuration_Sect
 {
   const ACE_TCHAR *t_name = temp_name (name);
   if (validate_value_name (t_name))
+  {
     return -1;
+  }
 
   HKEY base_key;
   if (load_key (key, base_key))
+  {
     return -1;
+  }
 
   int errnum;
   if ((errnum = ACE_TEXT_RegSetValueEx (base_key,
@@ -736,11 +766,15 @@ ACE_Configuration_Win32Registry::set_binary_value (const ACE_Configuration_Secti
 {
   const ACE_TCHAR *t_name = temp_name (name);
   if (validate_value_name (t_name))
+  {
     return -1;
+  }
 
   HKEY base_key;
   if (load_key (key, base_key))
+  {
     return -1;
+  }
 
   int errnum;
   if ((errnum = ACE_TEXT_RegSetValueEx (base_key,
@@ -765,11 +799,15 @@ ACE_Configuration_Win32Registry::get_string_value (const ACE_Configuration_Secti
 {
   const ACE_TCHAR *t_name = temp_name (name);
   if (validate_value_name (t_name))
+  {
     return -1;
+  }
 
   HKEY base_key;
   if (load_key (key, base_key))
+  {
     return -1;
+  }
 
   // Get the size of the binary data from windows
   int errnum;
@@ -821,11 +859,15 @@ ACE_Configuration_Win32Registry::get_integer_value (const ACE_Configuration_Sect
 {
   const ACE_TCHAR *t_name = temp_name (name);
   if (validate_value_name (t_name))
+  {
     return -1;
+  }
 
   HKEY base_key;
   if (load_key (key, base_key))
+  {
     return -1;
+  }
 
   int errnum;
   DWORD length = sizeof (value);
@@ -859,11 +901,15 @@ ACE_Configuration_Win32Registry::get_binary_value (
 {
   const ACE_TCHAR *t_name = temp_name (name);
   if (validate_value_name (t_name))
+  {
     return -1;
+  }
 
   HKEY base_key;
   if (load_key (key, base_key))
+  {
     return -1;
+  }
 
   // Get the size of the binary data from windows
   int errnum;
@@ -916,11 +962,15 @@ ACE_Configuration_Win32Registry::find_value (const ACE_Configuration_Section_Key
 {
   const ACE_TCHAR *t_name = temp_name (name);
   if (validate_value_name (t_name))
+  {
     return -1;
+  }
 
   HKEY base_key;
   if (load_key (key, base_key))
+  {
     return -1;
+  }
 
   DWORD buffer_length=0;
   DWORD type;
@@ -960,11 +1010,15 @@ ACE_Configuration_Win32Registry::remove_value (const ACE_Configuration_Section_K
 {
   const ACE_TCHAR *t_name = temp_name (name);
   if (validate_value_name (t_name))
+  {
     return -1;
+  }
 
   HKEY base_key;
   if (load_key (key, base_key))
+  {
     return -1;
+  }
 
   int errnum;
   if ((errnum = ACE_TEXT_RegDeleteValue (base_key, t_name)) != ERROR_SUCCESS)
@@ -982,7 +1036,9 @@ ACE_Configuration_Win32Registry::load_key (const ACE_Configuration_Section_Key& 
 {
   ACE_Section_Key_Win32* pKey = dynamic_cast<ACE_Section_Key_Win32*> (get_internal_key (key));
   if (!pKey)
+  {
     return -1;
+  }
 
   hKey = pKey->hKey_;
   return 0;
