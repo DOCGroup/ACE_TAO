@@ -77,10 +77,12 @@ TAO_EC_Gateway_IIOP::init_i (RtecEventChannelAdmin::EventChannel_ptr supplier_ec
       return 0;
     }
   else
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       "TAO_EC_Gateway_IIOP - init_i "
-                       "Supplier and consumer event channel reference "
-                       "should be nil.\n"), -1);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             "TAO_EC_Gateway_IIOP - init_i "
+                             "Supplier and consumer event channel reference "
+                             "should be nil.\n"), -1);
+    }
 }
 
 void
