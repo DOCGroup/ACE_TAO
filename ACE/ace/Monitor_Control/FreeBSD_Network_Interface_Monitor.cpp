@@ -92,13 +92,21 @@ namespace ACE
           struct if_data *const ifi = &ifmd.ifmd_data;
 
           if (this->lookup_str_ == "ibytes")
-            count += ifi->ifi_ibytes;
+            {
+              count += ifi->ifi_ibytes;
+            }
           else if (this->lookup_str_ == "ipackets")
-            count += ifi->ifi_ipackets;
+            {
+              count += ifi->ifi_ipackets;
+            }
           else if (this->lookup_str_ == "obytes")
-            count += ifi->ifi_obytes;
+            {
+              count += ifi->ifi_obytes;
+            }
           else if (this->lookup_str_ == "opackets")
-            count += ifi->ifi_opackets;
+            {
+              count += ifi->ifi_opackets;
+            }
 
         }
 

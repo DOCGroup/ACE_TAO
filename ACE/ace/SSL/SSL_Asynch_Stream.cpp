@@ -694,7 +694,9 @@ ACE_SSL_Asynch_Stream::notify_close ()
   ACE_WIN32_Proactor * const proactor =
     dynamic_cast<ACE_WIN32_Proactor *> (this->proactor_->implementation ());
   if (proactor == nullptr)
-    return 2;
+    {
+      return 2;
+    }
 
   retval = proactor->post_completion (close_result);
   // Win32 post_completion consumes the result on success and failure.
@@ -737,7 +739,9 @@ ACE_SSL_Asynch_Stream::notify_read (int bytes_transferred,
   ACE_WIN32_Proactor * const proactor =
     dynamic_cast<ACE_WIN32_Proactor *> (this->proactor_->implementation ());
   if (proactor == nullptr)
-    return 2;
+    {
+      return 2;
+    }
 
   retval = proactor->post_completion (this->ext_read_result_);
   // Win32 post_completion consumes the result on success and failure.
@@ -779,7 +783,9 @@ ACE_SSL_Asynch_Stream::notify_write (int bytes_transferred,
   ACE_WIN32_Proactor * const proactor =
     dynamic_cast<ACE_WIN32_Proactor *> (this->proactor_->implementation ());
   if (proactor == nullptr)
-    return 2;
+    {
+      return 2;
+    }
 
   retval = proactor->post_completion (this->ext_write_result_);
   // Win32 post_completion consumes the result on success and failure.
