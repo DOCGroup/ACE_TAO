@@ -33,64 +33,67 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
        (c = getopt ()) != EOF;
        )
   //FUZZ: enable check_for_lack_ACE_OS
-    switch (c)
-      {
-      case ACE_TEXT ('d'):
-        this->debug_ = true;
-        break;
-      case ACE_TEXT ('f'):
-        this->url_filter_ = getopt.opt_arg ();
-        break;
-      case ACE_TEXT ('h'):
-        this->hostname_ = getopt.opt_arg ();
-        break;
-      case ACE_TEXT ('i'):
-        this->uri_ = getopt.opt_arg ();
-        break;
-      case ACE_TEXT ('l'):
-        this->handle_limit_ = ACE_OS::atoi (getopt.opt_arg ());
-        break;
-      case ACE_TEXT ('r'):
-        this->recurse_ = true;
-        break;
-      case ACE_TEXT ('t'):
-        this->timeout_.sec (ACE_OS::atoi (getopt.opt_arg ()));
-        break;
-      case ACE_TEXT ('u'):
+    {
+      switch (c)
         {
+        case ACE_TEXT ('d'):
+          this->debug_ = true;
+          break;
+        case ACE_TEXT ('f'):
+          this->url_filter_ = getopt.opt_arg ();
+          break;
+        case ACE_TEXT ('h'):
           this->hostname_ = getopt.opt_arg ();
-          ACE_TCHAR *s = ACE_OS::strchr (getopt.opt_arg (), ACE_TEXT ('/'));
-          if (s != nullptr)
-            {
-              this->uri_ = s + 1;
-              *s = ACE_TEXT ('\0');
-            }
-          else
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("invalid URL %s\n"),
-                        getopt.opt_arg ()));
+          break;
+        case ACE_TEXT ('i'):
+          this->uri_ = getopt.opt_arg ();
+          break;
+        case ACE_TEXT ('l'):
+          this->handle_limit_ = ACE_OS::atoi (getopt.opt_arg ());
+          break;
+        case ACE_TEXT ('r'):
+          this->recurse_ = true;
+          break;
+        case ACE_TEXT ('t'):
+          this->timeout_.sec (ACE_OS::atoi (getopt.opt_arg ()));
+          break;
+        case ACE_TEXT ('u'):
+          {
+            this->hostname_ = getopt.opt_arg ();
+            ACE_TCHAR *s = ACE_OS::strchr (getopt.opt_arg (), ACE_TEXT ('/'));
+            if (s != nullptr)
+              {
+                this->uri_ = s + 1;
+                *s = ACE_TEXT ('\0');
+              }
+            else
+              {
+                ACE_ERROR ((LM_ERROR,
+                            ACE_TEXT ("invalid URL %s\n"),
+                            getopt.opt_arg ()));
+              }
+          }
+          break;
+        case ACE_TEXT ('v'):
+          this->verbose_ = true;
+          break;
+        case ACE_TEXT ('o'):
+          {
+            this->order_ = getopt.opt_arg ();
+          }
+          break;
+        case ACE_TEXT ('p'):
+          this->port_no_ = ACE_OS::atoi (getopt.opt_arg ());
+          break;
+        default:
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("usage: %n [-d] [-f filter] [-h hostname]")
+                      ACE_TEXT (" [-l handle-limit] [-r] [-t timeout] [-u URI]")
+                      ACE_TEXT (" [-v]\n%a"),
+                      1));
+          /* NOTREACHED */
         }
-        break;
-      case ACE_TEXT ('v'):
-        this->verbose_ = true;
-        break;
-      case ACE_TEXT ('o'):
-        {
-        this->order_ = getopt.opt_arg ();
-        }
-        break;
-      case ACE_TEXT ('p'):
-        this->port_no_ = ACE_OS::atoi (getopt.opt_arg ());
-        break;
-      default:
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("usage: %n [-d] [-f filter] [-h hostname]")
-                    ACE_TEXT (" [-l handle-limit] [-r] [-t timeout] [-u URI]")
-                    ACE_TEXT (" [-v]\n%a"),
-                    1));
-
-        /* NOTREACHED */
-      }
+    }
 
   return 0;
 }

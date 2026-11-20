@@ -28,7 +28,9 @@ ACE_URL_Addr::addr_to_string (ACE_TCHAR *s,
     + sizeof ('\0'); // For trailing '\0'.
 
   if (size < total_len)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       ACE_OS::sprintf (s, ACE_TEXT ("%s:%d/%s"),

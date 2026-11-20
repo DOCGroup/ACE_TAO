@@ -29,12 +29,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   Web_Crawler crawler;
 
   if (crawler.open (argc, argv) == -1)
-    return 1;
+    {
+      return 1;
+    }
   else if (crawler.run () == -1)
-    return 1;
+    {
+      return 1;
+    }
   else
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
 }
 

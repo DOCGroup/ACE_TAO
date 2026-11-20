@@ -15,7 +15,9 @@ int
 Web_Crawler::open (int argc, ACE_TCHAR *argv[])
 {
   if (OPTIONS::instance ()->parse_args (argc, argv) == -1)
-    return -1;
+    {
+      return -1;
+    }
   // @@ Put the ACE_Service_Config::open() stuff here somewhere...
   else
     {
@@ -36,19 +38,23 @@ Web_Crawler::run ()
   Destroyable_Unique_Ptr<URL_Visitor> visitor (this->url_visitor_factory_->make_visitor ());
 
   if (!visitor)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "make_visitor"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "make_visitor"),
+                        -1);
+    }
 
   // Make the appropriate <Command_Processor>.
   Destroyable_Unique_Ptr<Command_Processor> cp (this->url_visitor_factory_->make_command_processor ());
 
   if (!cp)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "make_command_processor"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "make_command_processor"),
+                        -1);
+    }
 
   // Set the <Command_Processor> in the <Options> to make it visible.
   OPTIONS::instance ()->command_processor (cp.get ());
@@ -79,15 +85,19 @@ Web_Crawler::run ()
   Destroyable_Unique_Ptr<URL_Command> url_command_ptr (url_command);
 
   if (cp->insert (url_command) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n", "insert"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n", "insert"),
+                        -1);
+    }
   url_command_ptr.release ();
 
- if (cp->execute () != 0)
-   ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n", "execute"),
-                      -1);
+  if (cp->execute () != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n", "execute"),
+                        -1);
+    }
   return 0;
 }
 

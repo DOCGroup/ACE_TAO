@@ -91,7 +91,9 @@ int
 HTTP_Header_Iterator::next (ACE_CString &line)
 {
   if (this->end_of_header_)
-    return 0;
+    {
+      return 0;
+    }
   else
     {
       for (char c;
@@ -114,8 +116,10 @@ HTTP_Header_Iterator::next (ACE_CString &line)
                   this->url_.stream ().seek (3);
                 }
               else
-                // We're at the end of the line.
-                this->url_.stream ().seek (1);
+                {
+                  // We're at the end of the line.
+                  this->url_.stream ().seek (1);
+                }
 
               return 1;
             }
@@ -156,7 +160,9 @@ URL_Download_Iterator::next (ACE_CString &buffer)
   const char *buf = this->url_.stream ().recv (len);
 
   if (buf == nullptr)
-    return 0;
+    {
+      return 0;
+    }
   else
     {
       buffer.set (buf, len, 1);
