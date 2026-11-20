@@ -50,17 +50,19 @@ int ACE_TMAIN(int argc, ACE_TCHAR * argv[])
 
     // Convert the contents of the Messenger.ior file to an object reference.
     CORBA::Object_var const obj = orb->string_to_object (ior);
-    if (CORBA::is_nil (obj.in ())) {
-      std::cerr << "Nil Messenger reference" << std::endl;
-      return 1;
-    }
+    if (CORBA::is_nil (obj.in ()))
+      {
+        std::cerr << "Nil Messenger reference" << std::endl;
+        return 1;
+      }
 
     // Narrow the object reference to a Messenger object reference.
     Messenger_var const messenger = Messenger::_narrow (obj.in ());
-    if (CORBA::is_nil (messenger.in ())) {
-      std::cerr << "Not a Messenger object reference" << std::endl;
-      return 1;
-    }
+    if (CORBA::is_nil (messenger.in ()))
+      {
+        std::cerr << "Not a Messenger object reference" << std::endl;
+        return 1;
+      }
 
     // Create a message and send it to the Messenger.
     CORBA::String_var message = CORBA::string_dup("Hello!");
