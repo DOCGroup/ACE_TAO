@@ -80,9 +80,13 @@ ACE_Token_Proxy_Queue::head ()
 {
   ACE_TRACE ("ACE_Token_Proxy_Queue::head");
   if (this->head_ == 0)
-    return 0;
+    {
+      return 0;
+    }
   else
-    return this->head_;
+    {
+      return this->head_;
+    }
 }
 
 // **************************************************
@@ -113,9 +117,13 @@ ACE_Tokens::owner_id ()
 {
   ACE_TRACE ("ACE_Tokens::owner_id");
   if (this->owner () == 0)
-    return ACE_TEXT ("no owner");
+    {
+      return ACE_TEXT ("no owner");
+    }
   else
-    return this->owner ()->client_id ();
+    {
+      return this->owner ()->client_id ();
+    }
 }
 
 ACE_INLINE const ACE_TCHAR*
@@ -162,10 +170,14 @@ ACE_TPQ_Entry::call_sleep_hook ()
 
   // if a function has been registered, call it.
   if (this->sleep_hook () != 0)
-    this->sleep_hook () ((void *) this->proxy ());
+    {
+      this->sleep_hook () ((void *) this->proxy ());
+    }
   else
-    // otherwise, call back the sleep_hook method
-    this->proxy ()->sleep_hook ();
+    {
+      // otherwise, call back the sleep_hook method
+      this->proxy ()->sleep_hook ();
+    }
 }
 
 ACE_INLINE int
@@ -192,12 +204,16 @@ ACE_Token_Name::name (const ACE_TCHAR *new_name)
   ACE_TRACE ("ACE_Token_Name::name");
 
   if (new_name == nullptr)
-    new_name = ACE_TEXT ("no name");
+    {
+      new_name = ACE_TEXT ("no name");
+    }
 
   size_t n = ACE_OS::strlen (new_name) + 1;
 
   if (n >= ACE_MAXTOKENNAMELEN)
-    n = ACE_MAXTOKENNAMELEN - 1;
+    {
+      n = ACE_MAXTOKENNAMELEN - 1;
+    }
 
   ACE_OS::strsncpy (this->token_name_, (ACE_TCHAR *) new_name, n);
 }
