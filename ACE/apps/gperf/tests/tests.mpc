@@ -277,6 +277,31 @@ project(hash_prefix_duplicate_inset): gperf_test {
   }
 }
 
+project(allchars_duplicate_inset): gperf_test {
+  exename = allchars_duplicate_out
+
+  verbatim(gnuace, bottom) {
+    all: runtests
+
+    runtests: allchars_duplicate_out$(EXEEXT)
+    "	@echo Testing duplicate signatures with all key positions"
+    "	./allchars_duplicate_out -v < allchars_duplicates.in > allchars_duplicates.out"
+    "	diff -b allchars_duplicates.exp allchars_duplicates.out"
+
+    endif # CROSS-COMPILE
+  }
+
+  GPERF_Files {
+    gendir = allchars_duplicate_gen
+    commandflags += -D -k'*'
+    allchars_duplicates.gperf
+  }
+
+  Source_Files {
+    allchars_duplicate_gen/allchars_duplicates.cpp
+  }
+}
+
 project(switch_ci_comp_lentable_dup_inset): gperf_test {
   exename = switch_ci_comp_lentable_dup_out
 
