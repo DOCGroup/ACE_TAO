@@ -79,7 +79,9 @@ TAO_EC_Type_Filter::can_match (
   if (this->header_.source == 0)
     {
       if (this->header_.type == 0 || header.type == 0)
-        return 1;
+        {
+          return 1;
+        }
       else
       {
         return this->header_.type == header.type;
@@ -89,7 +91,9 @@ TAO_EC_Type_Filter::can_match (
   if (this->header_.type == 0)
     {
       if (header.source == 0)
-        return 1;
+        {
+          return 1;
+        }
       else
       {
         return this->header_.source == header.source;
