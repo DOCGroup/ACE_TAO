@@ -247,8 +247,10 @@ EC_Driver::move_to_rt_class ()
           this->thr_create_flags_ = THR_NEW_LWP;
         }
       else
-        ACE_ERROR ((LM_ERROR,
-                    "EC_Driver (%P|%t): sched_params failed\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "EC_Driver (%P|%t): sched_params failed\n"));
+        }
     }
 
   if (ACE_OS::thr_setprio (priority) == -1)
@@ -360,8 +362,10 @@ EC_Driver::allocate_consumers ()
                   EC_Consumer*[this->n_consumers_],
                   -1);
   for (int i = 0; i < this->n_consumers_; ++i)
-    this->consumers_[i] =
-      this->allocate_consumer (i);
+    {
+      this->consumers_[i] =
+        this->allocate_consumer (i);
+    }
   return 0;
 }
 
@@ -372,8 +376,10 @@ EC_Driver::allocate_suppliers ()
                   EC_Supplier*[this->n_suppliers_],
                   -1);
   for (int i = 0; i < this->n_suppliers_; ++i)
-    this->suppliers_[i] =
-      this->allocate_supplier (i);
+    {
+      this->suppliers_[i] =
+        this->allocate_supplier (i);
+    }
   return 0;
 }
 
@@ -464,7 +470,9 @@ EC_Driver::build_consumer_qos (
   qos_factory.insert_type (shutdown_event_type, rt_info);
 
   for (int j = 0; j != this->consumer_type_count_; ++j)
-    qos_factory.insert_type (type_start + j, rt_info);
+    {
+      qos_factory.insert_type (type_start + j, rt_info);
+    }
 
   qos = qos_factory.get_ConsumerQOS ();
 }
@@ -514,9 +522,11 @@ EC_Driver::build_supplier_qos (
 
   ACE_SupplierQOS_Factory qos_factory;
   for (int j = 0; j != this->supplier_type_count_; ++j)
-    qos_factory.insert (supplier_id,
-                        type_start + j,
-                        rt_info, 1);
+    {
+      qos_factory.insert (supplier_id,
+                          type_start + j,
+                          rt_info, 1);
+    }
 
   qos_factory.insert (supplier_id,
                       shutdown_event_type,
@@ -565,8 +575,10 @@ EC_Driver::allocate_tasks ()
                   -1);
 
   for (int i = 0; i < this->n_suppliers_; ++i)
-    this->tasks_[i] =
-      this->allocate_task (i);
+    {
+      this->tasks_[i] =
+        this->allocate_task (i);
+    }
   return 0;
 }
 
