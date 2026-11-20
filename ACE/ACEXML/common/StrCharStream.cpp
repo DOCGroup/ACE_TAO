@@ -64,9 +64,9 @@ ACEXML_StrCharStream::determine_encoding ()
     return -1;
   }
   char input[4] = {0,0,0,0};
-  char* sptr  = (char*)this->start_.get ();
+  char const * sptr = reinterpret_cast<char const *> (this->start_.get ());
   int i = 0;
-  for ( ; i < 4 && sptr != (char*)this->end_; ++sptr, ++i)
+  for ( ; i < 4 && sptr != reinterpret_cast<char const *> (this->end_); ++sptr, ++i)
     {
       input[i] = *sptr;
     }

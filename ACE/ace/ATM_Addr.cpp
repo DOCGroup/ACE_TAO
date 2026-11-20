@@ -258,7 +258,7 @@ ACE_ATM_Addr::string_to_addr (const ACE_TCHAR sap[])
       errno = EINVAL;
       return -1;
     }
-  else if ((entry = gethostbyname_atmnsap ((ACE_TCHAR *)sap)) != nullptr)
+  else if ((entry = gethostbyname_atmnsap (const_cast<ACE_TCHAR *> (sap))) != nullptr)
     {
       ACE_OS::memcpy (atm_addr_.sap.t_atm_sap_addr.address,
                       entry->h_addr_list[0],
