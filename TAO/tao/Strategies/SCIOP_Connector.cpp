@@ -42,7 +42,9 @@ TAO_SCIOP_Connector::open (TAO_ORB_Core *orb_core)
 
   // Create our connect strategy
   if (this->create_connect_strategy () == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   /// Our connect creation strategy
   TAO_SCIOP_CONNECT_CREATION_STRATEGY *connect_creation_strategy {};
@@ -88,7 +90,9 @@ TAO_SCIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
     this->remote_endpoint (endpoint);
 
   if (sciop_endpoint == nullptr)
-    return -1;
+    {
+      return -1;
+    }
 
    const ACE_INET_Addr &remote_address =
      sciop_endpoint->object_addr ();
@@ -154,12 +158,14 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
     sciop_endpoint->object_addr ();
 
   if (TAO_debug_level > 2)
+    {
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT("TAO (%P|%t) - SCIOP_Connector::make_connection_i, ")
                   ACE_TEXT("to <%C:%d> which should %s\n"),
                   sciop_endpoint->host(),
                   sciop_endpoint->port(),
                   r->blocked_connect () ? ACE_TEXT("block") : ACE_TEXT("nonblock")));
+    }
 
   // Get the right synch options
   ACE_Synch_Options synch_options;
@@ -176,7 +182,9 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
   ACE_Multihomed_INET_Addr multihomed;
   if (multihomed.set(remote_address.get_port_number(),
                      remote_address.get_ip_address()))
-    return 0;
+    {
+      return 0;
+    }
 
   ACE_Multihomed_INET_Addr local_address;
 
@@ -184,8 +192,10 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
     sciop_endpoint->is_preferred_network ();
 
   if (pn)
-    local_address.set ((u_short) 0,
-                       sciop_endpoint->preferred_network ());
+    {
+      local_address.set ((u_short) 0,
+                         sciop_endpoint->preferred_network ());
+    }
 
   int result =
     this->base_connector_.connect (svc_handler,
@@ -212,9 +222,11 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
                                                      timeout))
             {
               if (TAO_debug_level > 2)
-                TAOLIB_ERROR ((LM_ERROR, "TAO (%P|%t) - SCIOP_Connector::"
+                {
+                  TAOLIB_ERROR ((LM_ERROR, "TAO (%P|%t) - SCIOP_Connector::"
                                       "make_connection_i, "
                                       "wait for completion failed\n"));
+                }
             }
          }
        else
@@ -256,12 +268,14 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
   // At this point, the connection has be successfully connected.
   // #REFCOUNT# is one.
   if (TAO_debug_level > 2)
-    TAOLIB_DEBUG ((LM_DEBUG,
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - SCIOP_Connector::make_connection_i, "
                 "new %C connection to <%C:%d> on handle [%@]\n",
                 transport->is_connected() ? "connected" : "not connected",
                 sciop_endpoint->host (), sciop_endpoint->port (),
                 reinterpret_cast<void *> (svc_handler->peer ().get_handle ())));
+    }
 
   // Add the handler to Cache
   int retval =
@@ -304,11 +318,13 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
       (void) transport->close_connection ();
 
       if (TAO_debug_level > 0)
-        TAOLIB_ERROR ((LM_ERROR,
+        {
+          TAOLIB_ERROR ((LM_ERROR,
                     "TAO (%P|%t) - SCIOP_Connector [%B]::make_connection_i, "
                     "could not register the transport "
                     "in the reactor.\n",
                     transport->id ()));
+        }
 
       return 0;
     }
@@ -360,7 +376,9 @@ TAO_SCIOP_Connector::check_prefix (const char *endpoint)
 {
   // Check for a valid string
   if (!endpoint || !*endpoint)
-    return -1;  // Failure
+    {
+      return -1;  // Failure
+    }
 
   const char *protocol[] = { "sciop", "scioploc" };
 
@@ -372,10 +390,14 @@ TAO_SCIOP_Connector::check_prefix (const char *endpoint)
   // isn't in the IOR then it is not an IOR we can use.
   if (slot == len0
       && ACE_OS::strncasecmp (endpoint, protocol[0], len0) == 0)
-    return 0;
+    {
+      return 0;
+    }
   else if (slot == len1
            && ACE_OS::strncasecmp (endpoint, protocol[1], len1) == 0)
-    return 0;
+    {
+      return 0;
+    }
 
   return -1;
   // Failure: not an SCIOP IOR
@@ -392,12 +414,16 @@ TAO_SCIOP_Endpoint *
 TAO_SCIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
 {
   if (endpoint->tag () != TAO_TAG_SCIOP_PROFILE)
-    return 0;
+    {
+      return 0;
+    }
 
   TAO_SCIOP_Endpoint *sciop_endpoint =
     dynamic_cast<TAO_SCIOP_Endpoint *> (endpoint );
   if (sciop_endpoint == nullptr)
-    return 0;
+    {
+      return 0;
+    }
 
   return sciop_endpoint;
 }
@@ -410,8 +436,10 @@ TAO_SCIOP_Connector::cancel_svc_handler (
     dynamic_cast<TAO_SCIOP_Connection_Handler*>(svc_handler);
 
   if (handler)
-    // Cancel from the connector
-    return this->base_connector_.cancel (handler);
+    {
+      // Cancel from the connector
+      return this->base_connector_.cancel (handler);
+    }
 
   return -1;
 }

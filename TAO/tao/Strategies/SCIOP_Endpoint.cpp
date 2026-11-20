@@ -89,18 +89,24 @@ TAO_SCIOP_Endpoint::set (const ACE_INET_Addr &addr,
       if (tmp == nullptr)
         {
           if (TAO_debug_level > 0)
-            TAOLIB_DEBUG ((LM_DEBUG,
+            {
+              TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("\n\nTAO (%P|%t) ")
                         ACE_TEXT ("SCIOP_Endpoint::set ")
                         ACE_TEXT ("- %p\n\n"),
                         ACE_TEXT ("cannot determine hostname")));
+            }
           return -1;
         }
       else
-        this->host_ = tmp;
+        {
+          this->host_ = tmp;
+        }
     }
   else
-    this->host_ = CORBA::string_dup (tmp_host);
+    {
+      this->host_ = CORBA::string_dup (tmp_host);
+    }
 
   this->port_ = addr.get_port_number();
 
@@ -117,7 +123,9 @@ TAO_SCIOP_Endpoint::addr_to_string (char *buffer, size_t length)
     + sizeof ('\0');
 
   if (length < actual_len)
-    return -1;
+    {
+      return -1;
+    }
 
   std::sprintf (buffer, "%s:%d",
                    this->host_.in (), this->port_);
@@ -161,7 +169,9 @@ TAO_SCIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
   TAO_SCIOP_Endpoint *endpoint =
     dynamic_cast<TAO_SCIOP_Endpoint *> (endpt);
   if (endpoint == nullptr)
-    return 0;
+    {
+      return 0;
+    }
 
   return (this->port_ == endpoint->port_
           && (std::strcmp(this->host(), endpoint->host()) == 0));
@@ -171,7 +181,9 @@ CORBA::ULong
 TAO_SCIOP_Endpoint::hash ()
 {
   if (this->hash_val_ != 0)
-    return this->hash_val_;
+    {
+      return this->hash_val_;
+    }
 
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
@@ -180,7 +192,9 @@ TAO_SCIOP_Endpoint::hash ()
                       this->hash_val_);
     // .. DCL
     if (this->hash_val_ != 0)
-      return this->hash_val_;
+      {
+        return this->hash_val_;
+      }
 
     // A few comments about this optimization. The call below will
     // deadlock if the object_addr_set is false. If you don't belive
@@ -268,9 +282,13 @@ TAO_SCIOP_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
       ACE_CString::size_type length {};
 
       if (new_pos == ACE_CString::npos)
-        length = tmp.length () - pos;
+        {
+          length = tmp.length () - pos;
+        }
       else
-        length = new_pos - pos;
+        {
+          length = new_pos - pos;
+        }
 
       ACE_CString rem_tmp = tmp.substr (pos, length);
 
@@ -290,10 +308,12 @@ TAO_SCIOP_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
         CORBA::string_dup (path.c_str ());
 
       if (TAO_debug_level > 3)
-        TAOLIB_DEBUG ((LM_DEBUG,
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
                     "(%P|%t) Adding path [%C] "
                     " as preferred path for [%C]\n",
                     path.c_str (), this->host_.in ()));
+        }
 
       pos = tmp.find (latest->host_.in (),
                       pos + length);
