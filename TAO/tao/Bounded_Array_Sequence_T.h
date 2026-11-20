@@ -134,15 +134,17 @@ namespace TAO
     using fixed_array = TAO_FixedArray_Var_T<T_array, T_slice, T_tag>;
     using array_traits = TAO::Array_Traits<forany>;
     ::CORBA::ULong const length = source.length ();
-    if (length > source.maximum () || !(strm << length)) {
-      return false;
-    }
+    if (length > source.maximum () || !(strm << length))
+      {
+        return false;
+      }
     for(CORBA::ULong i {}; i < length; ++i) {
       fixed_array tmp_array = array_traits::dup (source[i]);
       forany tmp (tmp_array.inout ());
-      if (!(strm << tmp)) {
-        return false;
-      }
+      if (!(strm << tmp))
+        {
+          return false;
+        }
     }
     return true;
   }
