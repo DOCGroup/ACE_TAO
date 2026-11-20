@@ -14,6 +14,7 @@ parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior)
   int c {};
 
   while ((c = get_opts ()) != -1)
+  {
     switch (c)
       {
       case 'k':
@@ -29,6 +30,7 @@ parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior)
                            argv [0]),
                           -1);
       }
+  }
   // Indicates successful parsing of the command line
   return 0;
 }
@@ -162,28 +164,36 @@ ACE_TMAIN (
     rFU= foo->TestNonVarUnion( aFU.in(), bFU.out(), cFU.inout());
     ACE_DEBUG( (LM_INFO, "a is "));
     if (static_cast<CORBA::Short>(1) != aFU->_d())
+    {
        ACE_DEBUG( (LM_INFO, "?"));
+    }
     else
     {
       ACE_DEBUG( (LM_INFO, "%d", aFU->valLong()));
     }
     ACE_DEBUG( (LM_INFO, ", b is "));
     if (static_cast<CORBA::Short>(1) != bFU->_d())
+    {
        ACE_DEBUG( (LM_INFO, "?"));
+    }
     else
     {
       ACE_DEBUG( (LM_INFO, "%d", bFU->valLong()));
     }
     ACE_DEBUG( (LM_INFO, ", c is "));
     if (static_cast<CORBA::Short>(1) != cFU->_d())
+    {
        ACE_DEBUG( (LM_INFO, "?"));
+    }
     else
     {
       ACE_DEBUG( (LM_INFO, "%d", cFU->valLong()));
     }
     ACE_DEBUG( (LM_INFO, ", r is "));
     if (static_cast<CORBA::Short>(1) != rFU->_d())
+    {
        ACE_DEBUG( (LM_INFO, "?"));
+    }
     else
     {
       ACE_DEBUG( (LM_INFO, "%d", rFU->valLong()));
@@ -214,28 +224,36 @@ ACE_TMAIN (
     rVU= foo->TestVarUnion( aVU.in(), bVU.out(), cVU.inout());
     ACE_DEBUG( (LM_INFO, "a is "));
     if (static_cast<CORBA::Short>(1) != aVU->_d())
+    {
        ACE_DEBUG( (LM_INFO, "?"));
+    }
     else
     {
       ACE_DEBUG( (LM_INFO, "%d", aVU->valLong()));
     }
     ACE_DEBUG( (LM_INFO, ", b is "));
     if (static_cast<CORBA::Short>(1) != bVU->_d())
+    {
        ACE_DEBUG( (LM_INFO, "?"));
+    }
     else
     {
       ACE_DEBUG( (LM_INFO, "%d", bVU->valLong()));
     }
     ACE_DEBUG( (LM_INFO, ", c is "));
     if (static_cast<CORBA::Short>(1) != cVU->_d())
+    {
        ACE_DEBUG( (LM_INFO, "?"));
+    }
     else
     {
       ACE_DEBUG( (LM_INFO, "%d", cVU->valLong()));
     }
     ACE_DEBUG( (LM_INFO, ", r is "));
     if (static_cast<CORBA::Short>(1) != rVU->_d())
+    {
        ACE_DEBUG( (LM_INFO, "?"));
+    }
     else
     {
       ACE_DEBUG( (LM_INFO, "%d", rVU->valLong()));
@@ -268,28 +286,36 @@ ACE_TMAIN (
     rSL= foo->TestSeqOfLong( aSL.in(), bSL.out(), cSL.inout());
     ACE_DEBUG( (LM_INFO, "a is "));
     if (1u != aSL->length())
+    {
        ACE_DEBUG( (LM_INFO, "?"));
+    }
     else
     {
       ACE_DEBUG( (LM_INFO, "%d", aSL[0]));
     }
     ACE_DEBUG( (LM_INFO, ", b is "));
     if (1u != bSL->length())
+    {
        ACE_DEBUG( (LM_INFO, "?"));
+    }
     else
     {
       ACE_DEBUG( (LM_INFO, "%d", bSL[0]));
     }
     ACE_DEBUG( (LM_INFO, ", c is "));
     if (1u != cSL->length())
+    {
        ACE_DEBUG( (LM_INFO, "?"));
+    }
     else
     {
       ACE_DEBUG( (LM_INFO, "%d", cSL[0]));
     }
     ACE_DEBUG( (LM_INFO, ", r is "));
     if (1u != rSL->length())
+    {
        ACE_DEBUG( (LM_INFO, "?"));
+    }
     else
     {
       ACE_DEBUG( (LM_INFO, "%d", rSL[0]));
@@ -325,28 +351,36 @@ ACE_TMAIN (
        rB {};
     ACE_DEBUG( (LM_INFO, "a is "));
     if (0 != (aB= (aA>>= aL)))
+    {
        ACE_DEBUG( (LM_INFO, "%d", aL));
+    }
     else
     {
       ACE_DEBUG( (LM_INFO, "?"));
     }
     ACE_DEBUG( (LM_INFO, ", b is "));
     if (0 != (bB= (bA>>= bL)))
+    {
        ACE_DEBUG( (LM_INFO, "%d", bL));
+    }
     else
     {
       ACE_DEBUG( (LM_INFO, "?"));
     }
     ACE_DEBUG( (LM_INFO, ", c is "));
     if (0 != (cB= (cA>>= cL)))
+    {
        ACE_DEBUG( (LM_INFO, "%d", cL));
+    }
     else
     {
       ACE_DEBUG( (LM_INFO, "?"));
     }
     ACE_DEBUG( (LM_INFO, ", r is "));
     if (0 != (rB= (rA>>= rL)))
+    {
        ACE_DEBUG( (LM_INFO, "%d", rL));
+    }
     else
     {
       ACE_DEBUG( (LM_INFO, "?"));
@@ -447,7 +481,9 @@ ACE_TMAIN (
 
   ACE_DEBUG( (LM_INFO, "Regression test for Bug 2234 "));
   if (testFailed)
+  {
     ACE_DEBUG( (LM_ERROR, "Failed\n"));
+  }
   else
   {
     ACE_DEBUG( (LM_INFO, "Passed\n"));
