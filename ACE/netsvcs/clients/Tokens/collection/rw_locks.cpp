@@ -43,7 +43,9 @@ run_thread (void *argument)
             {
               int const error = ACE_Log_Msg::instance ()->errnum ();
               if (error == EDEADLK)
-                ACE_DEBUG ((LM_DEBUG, "rlock deadlock detected\n"));
+                {
+                  ACE_DEBUG ((LM_DEBUG, "rlock deadlock detected\n"));
+                }
               else
                 {
                   ACE_ERROR ((LM_ERROR, "(%t) rlock acquire failed\n"));
@@ -66,18 +68,26 @@ run_thread (void *argument)
           ACE_DEBUG ((LM_DEBUG, "(%t) r-released.\n"));
         }
       if (read_error)
-        return ACE_THR_FUNC_RETURN_NULL;
+        {
+          return ACE_THR_FUNC_RETURN_NULL;
+        }
 
       if (options->write_lock->acquire () == -1)
         {
           if (ACE_Log_Msg::instance ()->errnum () == EDEADLK)
-            ACE_DEBUG ((LM_DEBUG, "wlock deadlock detected\n"));
+            {
+              ACE_DEBUG ((LM_DEBUG, "wlock deadlock detected\n"));
+            }
           else
-            ACE_ERROR ((LM_ERROR, "(%t) wlock acquire failed\n"));
+            {
+              ACE_ERROR ((LM_ERROR, "(%t) wlock acquire failed\n"));
+            }
           continue;
         }
       if (options->write_sleep)
-        ACE_OS::sleep (1);
+        {
+          ACE_OS::sleep (1);
+        }
       ACE_DEBUG ((LM_DEBUG, "\t\t(%t) wlock acquired.\n"));
       if (options->write_lock->release () == -1)
         {
@@ -148,9 +158,11 @@ parse_args (int argc, ACE_TCHAR *argv[], Options &options)
     }
 
   if (options.threads <= 0 || options.iterations < 0 || options.reads < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "threads must be positive; iterations and reads cannot be negative\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "threads must be positive; iterations and reads cannot be negative\n"),
+                        -1);
+    }
   return 0;
 }
 
@@ -159,7 +171,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Options options;
   if (parse_args (argc, argv, options) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   std::unique_ptr<ACE_Token_Proxy> read_lock;
   std::unique_ptr<ACE_Token_Proxy> write_lock;
@@ -197,10 +211,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (mgr.spawn_n (options.threads, run_thread,
                    &thread_options,
                    THR_BOUND | THR_SUSPENDED) == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "spawn failed"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "spawn failed"), -1);
+    }
 
   if (mgr.resume_all () == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "resume failed"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "resume failed"), -1);
+    }
 
   mgr.wait ();
 
