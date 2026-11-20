@@ -20,10 +20,14 @@ JAWS_THYBRID_Concurrency::JAWS_THYBRID_Concurrency ()
 
   value = JAWS_Options::instance ()->getenv ("JAWS_MIN_THYBRID_THREADS");
   if (value != nullptr)
-    this->min_number_of_threads_ = std::atoi (value);
+    {
+      this->min_number_of_threads_ = std::atoi (value);
+    }
   else
-    this->min_number_of_threads_ =
-      std::atoi (JAWS_DEFAULT_MIN_THYBRID_THREADS);
+    {
+      this->min_number_of_threads_ =
+        std::atoi (JAWS_DEFAULT_MIN_THYBRID_THREADS);
+    }
 
   if (this->min_number_of_threads_ <= 0)
   {
@@ -32,15 +36,23 @@ JAWS_THYBRID_Concurrency::JAWS_THYBRID_Concurrency ()
 
   value = JAWS_Options::instance ()->getenv ("JAWS_MAX_THYBRID_THREADS");
   if (value != nullptr)
-    this->max_number_of_threads_ = std::atoi (value);
+    {
+      this->max_number_of_threads_ = std::atoi (value);
+    }
   else
-    this->max_number_of_threads_ =
-      std::atoi (JAWS_DEFAULT_MAX_THYBRID_THREADS);
+    {
+      this->max_number_of_threads_ =
+        std::atoi (JAWS_DEFAULT_MAX_THYBRID_THREADS);
+    }
 
   if (this->max_number_of_threads_ <= 0)
-    this->max_number_of_threads_ = -1;
+    {
+      this->max_number_of_threads_ = -1;
+    }
   else if (this->max_number_of_threads_ < this->min_number_of_threads_)
-    this->max_number_of_threads_ = this->min_number_of_threads_;
+    {
+      this->max_number_of_threads_ = this->min_number_of_threads_;
+    }
 
   int const r = this->activate (THR_BOUND | THR_JOINABLE,
                                 this->min_number_of_threads_);
