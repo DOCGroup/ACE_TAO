@@ -54,9 +54,9 @@ static Widget create_box(Widget parent, const char *name)
 {
   Arg al[10];
   int ac = 0;
-  XtSetArg (al[ac], XmNnumColumns, 3); ac++;
-  XtSetArg (al[ac], XmNpacking, XmPACK_COLUMN); ac++;
-  XtSetArg (al[ac], XmNentryAlignment, XmALIGNMENT_CENTER); ac++;
+  XtSetArg (al[ac], XmNnumColumns, 3); ++ac;
+  XtSetArg (al[ac], XmNpacking, XmPACK_COLUMN); ++ac;
+  XtSetArg (al[ac], XmNentryAlignment, XmALIGNMENT_CENTER); ++ac;
   return XmCreateRowColumn (parent, (char *) name, al, ac);
 }
 
