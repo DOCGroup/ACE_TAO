@@ -41,7 +41,9 @@ ACE_INLINE TAO::ObjectKey const *
 TAO_Target_Specification::object_key () const
 {
   if (this->specifier_ == TAO_Target_Specification::Key_Addr)
-    return this->u_.object_key_;
+    {
+      return this->u_.object_key_;
+    }
 
   return nullptr;
 }
@@ -50,7 +52,9 @@ ACE_INLINE IOP::TaggedProfile const *
 TAO_Target_Specification::profile () const
 {
   if (this->specifier_ == TAO_Target_Specification::Profile_Addr)
-    return this->u_.profile_;
+    {
+      return this->u_.profile_;
+    }
 
   return nullptr;
 }

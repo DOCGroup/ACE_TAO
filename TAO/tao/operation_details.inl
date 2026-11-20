@@ -166,11 +166,17 @@ ACE_INLINE void
 TAO_Operation_Details::addressing_mode (CORBA::Short mode)
 {
   if (mode == 0)
-    this->addressing_mode_ = TAO_Target_Specification::Key_Addr;
+    {
+      this->addressing_mode_ = TAO_Target_Specification::Key_Addr;
+    }
   else if (mode == 1)
-    this->addressing_mode_ = TAO_Target_Specification::Profile_Addr;
+    {
+      this->addressing_mode_ = TAO_Target_Specification::Profile_Addr;
+    }
   else if (mode == 2)
-    this->addressing_mode_ = TAO_Target_Specification::Reference_Addr;
+    {
+      this->addressing_mode_ = TAO_Target_Specification::Reference_Addr;
+    }
 }
 
 ACE_INLINE TAO::Argument **
