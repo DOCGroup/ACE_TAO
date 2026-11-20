@@ -72,12 +72,16 @@ Logger::log (ACE_Log_Record &log_record)
   if (!this->verbose_logging_)
     {
       if (use_log_msg)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Logger::log->%s",
-                    log_record.msg_data ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Logger::log->%s",
+                      log_record.msg_data ()));
+        }
       else
-        std::printf ("Recursive Logger callback = %s",
-                     ACE_TEXT_ALWAYS_CHAR (log_record.msg_data ()));
+        {
+          std::printf ("Recursive Logger callback = %s",
+                       ACE_TEXT_ALWAYS_CHAR (log_record.msg_data ()));
+        }
     }
   else
     {
@@ -89,12 +93,16 @@ Logger::log (ACE_Log_Record &log_record)
       if (result == 0)
         {
           if (use_log_msg)
-            ACE_DEBUG ((LM_DEBUG,
-                        "Logger::log->%s",
-                        verbose_msg));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "Logger::log->%s",
+                          verbose_msg));
+            }
           else
-            std::printf ("Recursive Logger callback = %s",
-                         ACE_TEXT_ALWAYS_CHAR (verbose_msg));
+            {
+              std::printf ("Recursive Logger callback = %s",
+                           ACE_TEXT_ALWAYS_CHAR (verbose_msg));
+            }
         }
     }
 
