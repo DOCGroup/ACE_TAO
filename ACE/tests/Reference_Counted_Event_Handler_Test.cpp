@@ -108,10 +108,12 @@ Reference_Counted_Event_Handler::handle_input (ACE_HANDLE)
                  sizeof buf - 1);
 
   if (result != message_size)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("recv_n expected %d bytes; got %b\n"),
-                message_size,
-                result));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("recv_n expected %d bytes; got %b\n"),
+                  message_size,
+                  result));
+    }
 
   buf[message_size] = '\0';
 
@@ -137,10 +139,12 @@ Reference_Counted_Event_Handler::handle_output (ACE_HANDLE)
                  message_size);
 
   if (result != message_size)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("send_n sent %b bytes; should be %d\n"),
-                result,
-                message_size));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("send_n sent %b bytes; should be %d\n"),
+                  result,
+                  message_size));
+    }
 
   // No longer interested in output.
   return -1;
@@ -224,24 +228,28 @@ reference_counted_event_handler_test_1 (ACE_Reactor *reactor)
       if (-1 == reactor->register_handler (handler->pipe_.read_handle (),
                                            handler,
                                            ACE_Event_Handler::READ_MASK))
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("line %l %p\n"),
-                    ACE_TEXT ("register pipe read")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("line %l %p\n"),
+                      ACE_TEXT ("register pipe read")));
+        }
       else
-      {
-        ++events;
-      }
+        {
+          ++events;
+        }
 
       if (-1 == reactor->register_handler (handler->pipe_.write_handle (),
                                            handler,
                                            ACE_Event_Handler::WRITE_MASK))
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("line %l %p\n"),
-                    ACE_TEXT ("register pipe write")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("line %l %p\n"),
+                      ACE_TEXT ("register pipe write")));
+        }
       else
-      {
-        ++events;
-      }
+        {
+          ++events;
+        }
     }
 
   if (test_timers)
@@ -253,14 +261,20 @@ reference_counted_event_handler_test_1 (ACE_Reactor *reactor)
                                  one_second,
                                  one_second);
       if (timer_id == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("line %l %p\n"),
-                    ACE_TEXT ("schedule_timer")));
-      else
-        if ((result = reactor->cancel_timer (timer_id, nullptr, 0)) != 1)
+        {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("cancel_timer returned %d; should be 1\n"),
-                      result));
+                      ACE_TEXT ("line %l %p\n"),
+                      ACE_TEXT ("schedule_timer")));
+        }
+      else
+        {
+          if ((result = reactor->cancel_timer (timer_id, nullptr, 0)) != 1)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("cancel_timer returned %d; should be 1\n"),
+                          result));
+            }
+        }
 
       timer_id =
         reactor->schedule_timer (handler,
@@ -268,13 +282,15 @@ reference_counted_event_handler_test_1 (ACE_Reactor *reactor)
                                  one_second,
                                  one_second);
       if (timer_id == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("line %l %p\n"),
-                    ACE_TEXT ("schedule_timer")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("line %l %p\n"),
+                      ACE_TEXT ("schedule_timer")));
+        }
       else
-      {
-        events += 2;  // Wait for the scheduled and one repeating
-      }
+        {
+          events += 2;  // Wait for the scheduled and one repeating
+        }
 
       ACE_Time_Value const two_second (2);
       timer_id =
@@ -282,13 +298,15 @@ reference_counted_event_handler_test_1 (ACE_Reactor *reactor)
                                  two_second_timeout,
                                  two_second);
       if (timer_id == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("line %l %p\n"),
-                    ACE_TEXT ("schedule_timer")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("line %l %p\n"),
+                      ACE_TEXT ("schedule_timer")));
+        }
       else
-      {
-        ++events;
-      }
+        {
+          ++events;
+        }
     }
 
   while (events > 0)
@@ -317,9 +335,11 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
                                    handler,
                                    ACE_Event_Handler::READ_MASK);
       if (result != 0)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("line %l %p\n"),
-                    ACE_TEXT ("register pipe handler read")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("line %l %p\n"),
+                      ACE_TEXT ("register pipe handler read")));
+        }
       else
       {
         ACE_Event_Handler *result_handler {};
@@ -331,14 +351,18 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
         ACE_Event_Handler_var safe_result_handler (result_handler);
 
         if (result != 0)
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%p\n"),
-                      ACE_TEXT ("Looking up pipe read handler")));
+          {
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("%p\n"),
+                        ACE_TEXT ("Looking up pipe read handler")));
+          }
         else
           if (result_handler != handler)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("Mismatch: result_handler %@ should be %@\n"),
-                        static_cast<void *> (result_handler), static_cast<void *> (handler)));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("Mismatch: result_handler %@ should be %@\n"),
+                          static_cast<void *> (result_handler), static_cast<void *> (handler)));
+            }
       }
 
       {
@@ -351,8 +375,10 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
         ACE_Event_Handler_var safe_result_handler (result_handler);
 
         if (result == 0)
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("Pipe write handler succeeded but shouldn't")));
+          {
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("Pipe write handler succeeded but shouldn't")));
+          }
       }
 
       {
@@ -360,9 +386,11 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
           reactor->find_handler (handler->pipe_.read_handle ());
 
         if (result_handler.handler () != handler)
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("Mismatch 2: result_handler %@ should be %@\n"),
-                      static_cast<void *> (result_handler.handler ()), static_cast<void *> (handler)));
+          {
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("Mismatch 2: result_handler %@ should be %@\n"),
+                        static_cast<void *> (result_handler.handler ()), static_cast<void *> (handler)));
+          }
       }
     }
 
@@ -376,47 +404,28 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
       if (-1 == reactor->register_handler (handler->pipe_.read_handle (),
                                            handler,
                                            ACE_Event_Handler::READ_MASK))
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("line %l %p\n"),
-                    ACE_TEXT ("register pipe read")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("line %l %p\n"),
+                      ACE_TEXT ("register pipe read")));
+        }
       else
-      {
-        ++events;
-      }
+        {
+          ++events;
+        }
 
       if (-1 == reactor->register_handler (handler->pipe_.write_handle (),
                                            handler,
                                            ACE_Event_Handler::WRITE_MASK))
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("line %l %p\n"),
-                    ACE_TEXT ("register pipe write")));
-      else
-      {
-        ++events;
-      }
-    }
-
-  if (test_timers)
-    {
-      Reference_Counted_Event_Handler *handler =
-        new Reference_Counted_Event_Handler (events);
-
-      ACE_Event_Handler_var safe_handler (handler);
-
-      long timer_id =
-        reactor->schedule_timer (handler,
-                                 one_second_timeout,
-                                 one_second,
-                                 one_second);
-      if (timer_id == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("line %l %p\n"),
-                    ACE_TEXT ("schedule_timer")));
-      else
-        if ((result = reactor->cancel_timer (timer_id, nullptr, 0)) != 1)
+        {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("cancel_timer returned %d; should be 1\n"),
-                      result));
+                      ACE_TEXT ("line %l %p\n"),
+                      ACE_TEXT ("register pipe write")));
+        }
+      else
+        {
+          ++events;
+        }
     }
 
   if (test_timers)
@@ -432,13 +441,44 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
                                  one_second,
                                  one_second);
       if (timer_id == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("line %l %p\n"),
-                    ACE_TEXT ("schedule_timer")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("line %l %p\n"),
+                      ACE_TEXT ("schedule_timer")));
+        }
       else
-      {
-        events += 2;  // Wait for the scheduled and one repeating
-      }
+        {
+          if ((result = reactor->cancel_timer (timer_id, nullptr, 0)) != 1)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("cancel_timer returned %d; should be 1\n"),
+                          result));
+            }
+        }
+    }
+
+  if (test_timers)
+    {
+      Reference_Counted_Event_Handler *handler =
+        new Reference_Counted_Event_Handler (events);
+
+      ACE_Event_Handler_var safe_handler (handler);
+
+      long timer_id =
+        reactor->schedule_timer (handler,
+                                 one_second_timeout,
+                                 one_second,
+                                 one_second);
+      if (timer_id == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("line %l %p\n"),
+                      ACE_TEXT ("schedule_timer")));
+        }
+      else
+        {
+          events += 2;  // Wait for the scheduled and one repeating
+        }
 
       ACE_Time_Value const two_second (2);
       timer_id =
@@ -446,13 +486,15 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
                                  two_second_timeout,
                                  two_second);
       if (timer_id == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("line %l %p\n"),
-                    ACE_TEXT ("schedule_timer")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("line %l %p\n"),
+                      ACE_TEXT ("schedule_timer")));
+        }
       else
-      {
-        ++events;
-      }
+        {
+          ++events;
+        }
     }
 
   while (events > 0)
@@ -516,9 +558,11 @@ Simple_Event_Handler::Simple_Event_Handler (int &events,
     close_count_ (close_count)
 {
   if (-1 == this->pipe_.open ())
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("Simple_Event_Handler pipe open")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("Simple_Event_Handler pipe open")));
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Simple_Event_Handler()\n")));
 }
@@ -544,8 +588,10 @@ Simple_Event_Handler::handle_input (ACE_HANDLE)
                  buf,
                  sizeof buf - 1);
   if (result != message_size)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("line %l recv_n got %b; should be %d\n"),
-                result, message_size));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("line %l recv_n got %b; should be %d\n"),
+                  result, message_size));
+    }
   buf[message_size] = '\0';
 
   ACE_DEBUG ((LM_DEBUG,
@@ -567,9 +613,11 @@ Simple_Event_Handler::handle_output (ACE_HANDLE)
                  message,
                  message_size);
   if (result != message_size)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("line %l send_n sent %b; should be %d\n"),
-                result, message_size));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("line %l send_n sent %b; should be %d\n"),
+                  result, message_size));
+    }
 
   // No longer interested in output.
   return -1;
@@ -632,9 +680,11 @@ simple_event_handler (ACE_Reactor *reactor)
                                    &handler,
                                    ACE_Event_Handler::READ_MASK);
       if (result != 0)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("line %l %p\n"),
-                    ACE_TEXT ("register pipe handler read")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("line %l %p\n"),
+                      ACE_TEXT ("register pipe handler read")));
+        }
       else
       {
         ACE_Event_Handler *result_handler {};
@@ -645,15 +695,19 @@ simple_event_handler (ACE_Reactor *reactor)
                             &result_handler);
         ACE_Event_Handler_var safe_result_handler (result_handler);
         if (result != 0)
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%p\n"),
-                      ACE_TEXT ("Looking up pipe read handler")));
+          {
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("%p\n"),
+                        ACE_TEXT ("Looking up pipe read handler")));
+          }
         else
           if (result_handler != std::addressof (handler))
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("Mismatch: result_handler %@ should be %@\n"),
-                      static_cast<void *> (result_handler),
-                      static_cast<void *> (std::addressof (handler))));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("Mismatch: result_handler %@ should be %@\n"),
+                          static_cast<void *> (result_handler),
+                          static_cast<void *> (std::addressof (handler))));
+            }
       }
 
       {
@@ -665,28 +719,34 @@ simple_event_handler (ACE_Reactor *reactor)
                             &result_handler);
         ACE_Event_Handler_var safe_result_handler (result_handler);
         if (result != -1)
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("line %l handler() suceeded but shouldn't\n")));
+          {
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("line %l handler() suceeded but shouldn't\n")));
+          }
       }
 
       {
         ACE_Event_Handler_var result_handler =
           reactor->find_handler (handler.pipe_.read_handle ());
         if (result_handler.handler () != std::addressof (handler))
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("Mismatch: line %l: result_handler.handler %@ ")
-                      ACE_TEXT ("should be %@\n"),
-                      static_cast<void *> (result_handler.handler ()),
-                      static_cast<void *> (std::addressof (handler))));
+          {
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("Mismatch: line %l: result_handler.handler %@ ")
+                        ACE_TEXT ("should be %@\n"),
+                        static_cast<void *> (result_handler.handler ()),
+                        static_cast<void *> (std::addressof (handler))));
+          }
       }
 
       result =
         reactor->remove_handler (handler.pipe_.read_handle (),
                                  ACE_Event_Handler::ALL_EVENTS_MASK | ACE_Event_Handler::DONT_CALL);
       if (result != 0)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("line %l: %p\n"),
-                    ACE_TEXT ("remove_handler")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("line %l: %p\n"),
+                      ACE_TEXT ("remove_handler")));
+        }
     }
 
   if (test_io)
@@ -698,46 +758,28 @@ simple_event_handler (ACE_Reactor *reactor)
       if (-1 == reactor->register_handler (handler->pipe_.read_handle (),
                                            handler,
                                            ACE_Event_Handler::READ_MASK))
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("line %l %p\n"),
-                    ACE_TEXT ("register pipe read")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("line %l %p\n"),
+                      ACE_TEXT ("register pipe read")));
+        }
       else
-      {
-        ++events;
-      }
+        {
+          ++events;
+        }
 
       if (-1 == reactor->register_handler (handler->pipe_.write_handle (),
                                            handler,
                                            ACE_Event_Handler::WRITE_MASK))
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("line %l %p\n"),
-                    ACE_TEXT ("register pipe write")));
-      else
-      {
-        ++events;
-      }
-    }
-
-  if (test_timers)
-    {
-      Simple_Event_Handler *handler =
-        new Simple_Event_Handler (events,
-                                  1);
-
-      long timer_id =
-        reactor->schedule_timer (handler,
-                                 one_second_timeout,
-                                 one_second,
-                                 one_second);
-      if (timer_id == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("line %l %p\n"),
-                    ACE_TEXT ("schedule_timer")));
-      else
-        if ((result = reactor->cancel_timer (timer_id, nullptr, 0)) != 1)
+        {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("cancel_timer returned %d; should be 1\n"),
-                      result));
+                      ACE_TEXT ("line %l %p\n"),
+                      ACE_TEXT ("register pipe write")));
+        }
+      else
+        {
+          ++events;
+        }
     }
 
   if (test_timers)
@@ -752,13 +794,43 @@ simple_event_handler (ACE_Reactor *reactor)
                                  one_second,
                                  one_second);
       if (timer_id == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("line %l %p\n"),
-                    ACE_TEXT ("schedule_timer")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("line %l %p\n"),
+                      ACE_TEXT ("schedule_timer")));
+        }
       else
-      {
-        events += 2;  // Wait for the scheduled and one repeating
-      }
+        {
+          if ((result = reactor->cancel_timer (timer_id, nullptr, 0)) != 1)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("cancel_timer returned %d; should be 1\n"),
+                          result));
+            }
+        }
+    }
+
+  if (test_timers)
+    {
+      Simple_Event_Handler *handler =
+        new Simple_Event_Handler (events,
+                                  1);
+
+      long timer_id =
+        reactor->schedule_timer (handler,
+                                 one_second_timeout,
+                                 one_second,
+                                 one_second);
+      if (timer_id == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("line %l %p\n"),
+                      ACE_TEXT ("schedule_timer")));
+        }
+      else
+        {
+          events += 2;  // Wait for the scheduled and one repeating
+        }
 
       ACE_Time_Value const two_second (2);
       timer_id =
@@ -766,13 +838,15 @@ simple_event_handler (ACE_Reactor *reactor)
                                  two_second_timeout,
                                  two_second);
       if (timer_id == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("line %l %p\n"),
-                    ACE_TEXT ("schedule_timer")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("line %l %p\n"),
+                      ACE_TEXT ("schedule_timer")));
+        }
       else
-      {
-        ++events;
-      }
+        {
+          ++events;
+        }
     }
 
   while (events > 0)
@@ -817,9 +891,11 @@ Closed_In_Upcall_Event_Handler::Closed_In_Upcall_Event_Handler (int &events)
   : events_ (events)
 {
   if (-1 == this->pipe_.open ())
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("Closed_In_Upcall_Event_Handler pipe open")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("Closed_In_Upcall_Event_Handler pipe open")));
+    }
 
   this->reference_counting_policy ().value
     (ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
@@ -844,9 +920,11 @@ Closed_In_Upcall_Event_Handler::handle_input (ACE_HANDLE)
 
   if (0 != this->reactor ()->remove_handler (this->pipe_.read_handle (),
                                              ACE_Event_Handler::ALL_EVENTS_MASK))
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("line %l %p\n"),
-                ACE_TEXT ("remove_handler")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("line %l %p\n"),
+                  ACE_TEXT ("remove_handler")));
+    }
 
   char buf[message_size + 1];
 
@@ -856,8 +934,10 @@ Closed_In_Upcall_Event_Handler::handle_input (ACE_HANDLE)
                  sizeof buf - 1);
 
   if (recv_result != message_size)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("line %l recv_n got %b; should be %d\n"),
-                recv_result, message_size));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("line %l recv_n got %b; should be %d\n"),
+                  recv_result, message_size));
+    }
 
   buf[message_size] = '\0';
 
@@ -927,16 +1007,20 @@ closed_in_upcall_event_handler (ACE_Reactor *reactor)
                      message_size);
 
       if (send_n_result != message_size)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("line %l send_n sent %b; should be %d\n"),
-                    send_n_result, message_size));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("line %l send_n sent %b; should be %d\n"),
+                      send_n_result, message_size));
+        }
 
       if (-1 == reactor->register_handler (handler->pipe_.read_handle (),
                                            handler,
                                            ACE_Event_Handler::READ_MASK))
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("line %l %p\n"),
-                    ACE_TEXT ("register_handler")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("line %l %p\n"),
+                      ACE_TEXT ("register_handler")));
+        }
       else
       {
         events += 1;
