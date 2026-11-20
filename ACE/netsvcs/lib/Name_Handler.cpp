@@ -335,11 +335,13 @@ ACE_Name_Handler::handle_input (ACE_HANDLE)
   ACE_TRACE ("ACE_Name_Handler::handle_input");
 
   if (this->recv_request () == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-  {
-    return this->dispatch ();
-  }
+    {
+      return this->dispatch ();
+    }
 }
 
 int
@@ -386,16 +388,18 @@ ACE_Name_Handler::shared_bind (int rebind)
                                                     a_value,
                                                     this->name_request_.type ());
       if (result == 1)
-      {
-        result = 0;
-      }
+        {
+          result = 0;
+        }
     }
   if (result == 0)
-    return this->send_reply (0);
+    {
+      return this->send_reply (0);
+    }
   else
-  {
-    return this->send_reply (-1);
-  }
+    {
+      return this->send_reply (-1);
+    }
 }
 
 int
@@ -442,11 +446,13 @@ ACE_Name_Handler::unbind ()
                          this->name_request_.name_len () / sizeof (ACE_WCHAR_T));
 
   if (this->naming_context ()->unbind (a_name) == 0)
-    return this->send_reply (0);
+    {
+      return this->send_reply (0);
+    }
   else
-  {
-    return this->send_reply (-1);
-  }
+    {
+      return this->send_reply (-1);
+    }
 }
 
 ACE_Name_Request
