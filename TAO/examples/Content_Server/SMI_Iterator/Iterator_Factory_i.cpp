@@ -41,7 +41,9 @@ Iterator_Factory_i::get_iterator (char const *pathname,
   if (iterator_servant->init () != 0)
     {
       if (errno == EACCES)
+      {
         throw Web_Server::Error_Result (403);
+      }
       else
       {
         throw Web_Server::Error_Result (500);
@@ -117,30 +119,46 @@ Iterator_Factory_i::content_type (std::string const& filename,
 
   if (ACE_OS::strcasecmp (extension.c_str (), "htm") == 0
       || ACE_OS::strcasecmp (extension.c_str (), "html") == 0)
+  {
     metadata.content_type = CORBA::string_dup ("text/html");
+  }
   else if (ACE_OS::strcasecmp (extension.c_str (),
                                "txt") == 0)
+  {
     metadata.content_type = CORBA::string_dup ("text/plain");
+  }
   else if (ACE_OS::strcasecmp (extension.c_str (),
                                "ps") == 0)
+  {
     metadata.content_type = CORBA::string_dup ("application/postscript");
+  }
   else if (ACE_OS::strcasecmp (extension.c_str (),
                                "pdf") == 0)
+  {
     metadata.content_type = CORBA::string_dup ("application/pdf");
+  }
   else if (ACE_OS::strcasecmp (extension.c_str (),
                                "jpeg") == 0
            || ACE_OS::strcasecmp (extension.c_str (),
                                   "jpg") == 0)
+  {
     metadata.content_type = CORBA::string_dup ("image/jpeg");
+  }
   else if (ACE_OS::strcasecmp (extension.c_str (),
                                "tiff") == 0)
+  {
     metadata.content_type = CORBA::string_dup ("image/tiff");
+  }
   else if (ACE_OS::strcasecmp (extension.c_str (),
                                "gif") == 0)
+  {
     metadata.content_type = CORBA::string_dup ("image/gif");
+  }
   else if (ACE_OS::strcasecmp (extension.c_str (),
                                "png") == 0)
+  {
     metadata.content_type = CORBA::string_dup ("image/png");
+  }
   else
     {
       metadata.content_type = CORBA::string_dup ("text/html");
