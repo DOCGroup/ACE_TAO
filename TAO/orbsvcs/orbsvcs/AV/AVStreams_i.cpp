@@ -251,16 +251,18 @@ TAO_Basic_StreamCtrl::get_flow_connection (char const *flow_name)
   ACE_CString flow_name_key (flow_name);
   AVStreams::FlowConnection_var flow_connection_entry;
 
-  if (this->flow_connection_map_.find (flow_name_key, flow_connection_entry) == 0){
-    return flow_connection_entry._retn();
-  }
-  else{
-    if (TAO_debug_level > 0)
+  if (this->flow_connection_map_.find (flow_name_key, flow_connection_entry) == 0)
     {
-      ORBSVCS_DEBUG ((LM_DEBUG, "(%N,%l) Cannot find flow: %s\n", flow_name ));
+      return flow_connection_entry._retn();
     }
-    throw AVStreams::noSuchFlow ();
-  }
+  else
+    {
+      if (TAO_debug_level > 0)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG, "(%N,%l) Cannot find flow: %s\n", flow_name ));
+        }
+      throw AVStreams::noSuchFlow ();
+    }
 }
 
 // Sets the flow connection.
