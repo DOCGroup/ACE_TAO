@@ -310,22 +310,23 @@ ACEXML_Parser::parse_external_dtd ()
       if (ip)
         {
           if (this->switch_input (ip, (uri ? uri.get () : systemId), publicId) != 0)
-          {
-            return -1;
-          }
+            {
+              return -1;
+            }
         }
       else
         {
           ACEXML_StreamFactory factory;
           ACEXML_CharStream* cstream = factory.create_stream (uri ?
                                                               uri.get () : systemId);
-          if (!cstream) {
-            this->fatal_error (ACE_TEXT ("Invalid input source"));
-          }
+          if (!cstream)
+            {
+              this->fatal_error (ACE_TEXT ("Invalid input source"));
+            }
           if (this->switch_input (cstream, systemId, publicId) != 0)
-          {
-            return -1;
-          }
+            {
+              return -1;
+            }
         }
       this->parse_external_subset ();
     }
@@ -2058,9 +2059,10 @@ ACEXML_Parser::parse_entity_reference ()
     }
 
   //  [WFC: Parsed Entity]
-  if (this->unparsed_entities_.resolve_entity (replace)) {
-    this->fatal_error (ACE_TEXT ("EntityRef refers to unparsed entity"));
-  }
+  if (this->unparsed_entities_.resolve_entity (replace))
+    {
+      this->fatal_error (ACE_TEXT ("EntityRef refers to unparsed entity"));
+    }
   // Look in the internal general entities set first.
   ACEXML_Char const *entity = this->internal_GE_.resolve_entity(replace);
 
@@ -2167,9 +2169,10 @@ ACEXML_Parser::parse_entity_reference ()
         }
       ACEXML_StreamFactory factory;
       ACEXML_CharStream* cstream = factory.create_stream (uri ? uri.get () : systemId);
-      if (!cstream) {
-        this->fatal_error (ACE_TEXT ("Invalid input source"));
-      }
+      if (!cstream)
+        {
+          this->fatal_error (ACE_TEXT ("Invalid input source"));
+        }
       if (this->switch_input (cstream, systemId, publicId) != 0)
         {
           this->fatal_error (ACE_TEXT ("Internal Parser Error"));
@@ -2263,9 +2266,10 @@ ACEXML_Parser::parse_PE_reference ()
         {
           ACEXML_StreamFactory factory;
           ACEXML_CharStream* cstream = factory.create_stream (uri ? uri.get () : systemId);
-          if (!cstream) {
-            this->fatal_error (ACE_TEXT ("Invalid input source"));
-          }
+          if (!cstream)
+            {
+              this->fatal_error (ACE_TEXT ("Invalid input source"));
+            }
           if (this->switch_input (cstream, systemId, publicId) != 0)
             {
               this->fatal_error (ACE_TEXT ("Error in switching InputSource"));
@@ -2592,9 +2596,10 @@ ACEXML_Parser::prefix_mapping (ACEXML_Char const *prefix,
   if (this->namespaces_)
     {
       ACEXML_Char const * const temp = (prefix == nullptr) ? empty_string : prefix;
-      if (start) {
-        this->content_handler_->startPrefixMapping (temp, uri);
-      }
+      if (start)
+        {
+          this->content_handler_->startPrefixMapping (temp, uri);
+        }
       else
         {
           this->content_handler_->endPrefixMapping(temp);
