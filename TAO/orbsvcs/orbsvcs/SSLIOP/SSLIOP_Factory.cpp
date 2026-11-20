@@ -163,10 +163,12 @@ TAO::SSLIOP::Protocol_Factory::pem_passwd_cb (char *buf, int size, int , void *t
           if (file == nullptr)
             {
               if (TAO_debug_level > 0)
-                ORBSVCS_DEBUG ((LM_DEBUG,
-                                ACE_TEXT ("TAO (%P|%t) - SSLIOP_Factory::pem_passwd_cb ")
-                                ACE_TEXT ("cannot open file: %C\n"),
-                                fname));
+                {
+                  ORBSVCS_DEBUG ((LM_DEBUG,
+                                  ACE_TEXT ("TAO (%P|%t) - SSLIOP_Factory::pem_passwd_cb ")
+                                  ACE_TEXT ("cannot open file: %C\n"),
+                                  fname));
+                }
               pem_passwd_ = "";
             }
           else
@@ -181,10 +183,12 @@ TAO::SSLIOP::Protocol_Factory::pem_passwd_cb (char *buf, int size, int , void *t
               else
                 {
                   if (TAO_debug_level > 0)
-                    ORBSVCS_DEBUG ((LM_DEBUG,
-                                    ACE_TEXT ("TAO (%P|%t) - SSLIOP_Factory::pem_passwd_cb ")
-                                    ACE_TEXT ("cannot read file: %C\n"),
-                                    fname));
+                    {
+                      ORBSVCS_DEBUG ((LM_DEBUG,
+                                      ACE_TEXT ("TAO (%P|%t) - SSLIOP_Factory::pem_passwd_cb ")
+                                      ACE_TEXT ("cannot read file: %C\n"),
+                                      fname));
+                    }
                   pem_passwd_ = "";
                 }
             }
@@ -203,10 +207,12 @@ TAO::SSLIOP::Protocol_Factory::pem_passwd_cb (char *buf, int size, int , void *t
           else
             {
               if (TAO_debug_level > 0)
-                ORBSVCS_DEBUG ((LM_DEBUG,
-                                ACE_TEXT ("TAO (%P|%t) - SSLIOP_Factory::pem_passwd_cb ")
-                                ACE_TEXT ("invalid env: %C\n"),
-                                env));
+                {
+                  ORBSVCS_DEBUG ((LM_DEBUG,
+                                  ACE_TEXT ("TAO (%P|%t) - SSLIOP_Factory::pem_passwd_cb ")
+                                  ACE_TEXT ("invalid env: %C\n"),
+                                  env));
+                }
               pem_passwd_ = "";
             }
         }
@@ -215,10 +221,12 @@ TAO::SSLIOP::Protocol_Factory::pem_passwd_cb (char *buf, int size, int , void *t
       if (len >= size)
         {
           if (TAO_debug_level > 0)
-            ORBSVCS_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("TAO (%P|%t) - SSLIOP_Factory::pem_passwd_cb truncating ")
-                            ACE_TEXT ("supplied password from len %d to %d\n"),
-                            len, size - 1));
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("TAO (%P|%t) - SSLIOP_Factory::pem_passwd_cb truncating ")
+                              ACE_TEXT ("supplied password from len %d to %d\n"),
+                              len, size - 1));
+            }
           len = size - 1;
           pem_passwd_ = pem_passwd_.substr(0,len);
         }
@@ -343,9 +351,11 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
                                              static_cast<unsigned int> (session_id_len)))
   {
     if (TAO_debug_level > 0)
-      ORBSVCS_ERROR ((LM_ERROR,
-                  ACE_TEXT ("TAO (%P|%t) - Unable to set the session id ")
-                  ACE_TEXT ("context to \'%C\'\n"), session_id_context_));
+      {
+        ORBSVCS_ERROR ((LM_ERROR,
+                        ACE_TEXT ("TAO (%P|%t) - Unable to set the session id ")
+                        ACE_TEXT ("context to \'%C\'\n"), session_id_context_));
+      }
 
     return -1;
   }
@@ -447,15 +457,17 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
 
               if (sscanf (ACE_TEXT_ALWAYS_CHAR(argv[curarg]), "%f", &timeout) != 1
                   || timeout < 0)
-                ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                                   "ERROR: Invalid -SSLAcceptTimeout "
-                                   "value: %s.\n",
-                                   argv[curarg]),
-                                  -1);
+                {
+                  ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                         "ERROR: Invalid -SSLAcceptTimeout "
+                                         "value: %s.\n",
+                                         argv[curarg]),
+                                        -1);
+                }
               else
-              {
-                this->timeout_.set (timeout);
-              }
+                {
+                  this->timeout_.set (timeout);
+                }
             }
         }
 
@@ -587,9 +599,11 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
       else
       {
         if (TAO_debug_level > 0)
-          ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - Loaded ")
-                      ACE_TEXT ("more entropy from <%s>\n"), path));
+          {
+            ORBSVCS_DEBUG ((LM_DEBUG,
+                            ACE_TEXT ("TAO (%P|%t) - Loaded ")
+                            ACE_TEXT ("more entropy from <%s>\n"), path));
+          }
       }
 
       path = ACE_OS::strtok_r (nullptr, TAO_PATH_SEPARATOR_STRING, &file_name);
@@ -624,17 +638,19 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
       else
         {
           if (TAO_debug_level > 0)
-            ORBSVCS_DEBUG ((LM_INFO,
-                            ACE_TEXT ("TAO (%P|%t) - SSLIOP loaded ")
-                            ACE_TEXT ("Trusted Certificates from %C%C%C\n"),
-                            ((ca_file.in () != nullptr) ? ca_file.in () : "a file pointed to by "
-                             ACE_SSL_CERT_FILE_ENV
-                             " env var (if any)"),
-                            ACE_TEXT (" and "),
-                            ((ca_dir.in () != nullptr) ?
-                             ca_dir.in () : "a directory pointed to by "
-                             ACE_SSL_CERT_DIR_ENV
-                             " env var (if any)")));
+            {
+              ORBSVCS_DEBUG ((LM_INFO,
+                              ACE_TEXT ("TAO (%P|%t) - SSLIOP loaded ")
+                              ACE_TEXT ("Trusted Certificates from %C%C%C\n"),
+                              ((ca_file.in () != nullptr) ? ca_file.in () : "a file pointed to by "
+                               ACE_SSL_CERT_FILE_ENV
+                               " env var (if any)"),
+                              ACE_TEXT (" and "),
+                              ((ca_dir.in () != nullptr) ?
+                               ca_dir.in () : "a directory pointed to by "
+                               ACE_SSL_CERT_DIR_ENV
+                               " env var (if any)")));
+            }
         }
     }
 
@@ -671,23 +687,27 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
           else
             {
               if (TAO_debug_level > 0)
-                ORBSVCS_DEBUG ((LM_INFO,
-                                ACE_TEXT ("TAO (%P|%t) - SSLIOP_Factory: ")
-                                ACE_TEXT ("No DH parameters found in ")
-                                ACE_TEXT ("certificate <%C>; either none ")
-                                ACE_TEXT ("are needed (RSA) or problems ")
-                                ACE_TEXT ("will ensue later.\n"),
-                                dhparams_path.in ()));
+                {
+                  ORBSVCS_DEBUG ((LM_INFO,
+                                  ACE_TEXT ("TAO (%P|%t) - SSLIOP_Factory: ")
+                                  ACE_TEXT ("No DH parameters found in ")
+                                  ACE_TEXT ("certificate <%C>; either none ")
+                                  ACE_TEXT ("are needed (RSA) or problems ")
+                                  ACE_TEXT ("will ensue later.\n"),
+                                  dhparams_path.in ()));
+                }
             }
         }
       else
         {
           if (TAO_debug_level > 0)
-            ORBSVCS_DEBUG ((LM_INFO,
-                            ACE_TEXT ("TAO (%P|%t) - SSLIOP loaded ")
-                            ACE_TEXT ("Diffie-Hellman params ")
-                            ACE_TEXT ("from %C\n"),
-                            dhparams_path.in ()));
+            {
+              ORBSVCS_DEBUG ((LM_INFO,
+                              ACE_TEXT ("TAO (%P|%t) - SSLIOP loaded ")
+                              ACE_TEXT ("Diffie-Hellman params ")
+                              ACE_TEXT ("from %C\n"),
+                              dhparams_path.in ()));
+            }
         }
     }
 
@@ -710,11 +730,13 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
       else
         {
           if (TAO_debug_level > 0)
-            ORBSVCS_DEBUG ((LM_INFO,
-                            ACE_TEXT ("TAO (%P|%t) - SSLIOP loaded ")
-                            ACE_TEXT ("SSL certificate ")
-                            ACE_TEXT ("from %C\n"),
-                            certificate_path.in()));
+            {
+              ORBSVCS_DEBUG ((LM_INFO,
+                              ACE_TEXT ("TAO (%P|%t) - SSLIOP loaded ")
+                              ACE_TEXT ("SSL certificate ")
+                              ACE_TEXT ("from %C\n"),
+                              certificate_path.in()));
+            }
         }
     }
 
@@ -733,11 +755,13 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
       else
         {
           if (TAO_debug_level > 0)
-            ORBSVCS_DEBUG ((LM_INFO,
-                            ACE_TEXT ("TAO (%P|%t) - SSLIOP loaded ")
-                            ACE_TEXT ("Private Key ")
-                            ACE_TEXT ("from <%C>\n"),
-                            private_key_path.in ()));
+            {
+              ORBSVCS_DEBUG ((LM_INFO,
+                              ACE_TEXT ("TAO (%P|%t) - SSLIOP loaded ")
+                              ACE_TEXT ("Private Key ")
+                              ACE_TEXT ("from <%C>\n"),
+                              private_key_path.in ()));
+            }
         }
     }
 
