@@ -55,12 +55,16 @@ sigaction (int signum, const ACE_SIGACTION *nsa, ACE_SIGACTION *osa)
 {
   ACE_OS_TRACE ("ACE_OS::sigaction");
   if (signum == 0)
-    return 0;
+    {
+      return 0;
+    }
 #if defined (ACE_WIN32)
   struct sigaction sa;
 
   if (osa == 0)
-    osa = &sa;
+    {
+      osa = &sa;
+    }
 
   if (nsa == 0)
     {
@@ -68,7 +72,9 @@ sigaction (int signum, const ACE_SIGACTION *nsa, ACE_SIGACTION *osa)
       ::signal (signum, osa->sa_handler);
     }
   else
-    osa->sa_handler = ::signal (signum, nsa->sa_handler);
+    {
+      osa->sa_handler = ::signal (signum, nsa->sa_handler);
+    }
   return osa->sa_handler == SIG_ERR ? -1 : 0;
 #elif defined (ACE_LACKS_SIGACTION) || (defined (ACE_INTEGRITY) && defined (ACE_LACKS_POSIX))
   // INTEGRITY has the sigaction struct but the sigaction call may still be unavailable.
@@ -206,7 +212,9 @@ ACE_INLINE ACE_SignalHandler
 signal (int signum, ACE_SignalHandler func)
 {
   if (signum == 0)
-    return 0;
+    {
+      return 0;
+    }
   else
     {
 #if (defined ACE_WIN32) || \

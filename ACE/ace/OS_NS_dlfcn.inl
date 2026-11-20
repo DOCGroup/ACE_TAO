@@ -33,7 +33,9 @@ ACE_OS::dlclose (ACE_SHLIB_HANDLE handle)
   ACE_OSCALL (::dlsym (handle, ACE_TEXT ("_fini")), void *, ptr);
 
   if (ptr != 0)
-    (*((int (*)(void)) ptr)) (); // Call _fini hook explicitly.
+    {
+      (*((int (*)(void)) ptr)) (); // Call _fini hook explicitly.
+    }
 # endif /* ACE_HAS_AUTOMATIC_INIT_FINI */
   return ::dlclose (handle);
 #elif defined (ACE_WIN32)
@@ -52,7 +54,9 @@ ACE_OS::dlerror ()
   const char *err {};
   ACE_OSCALL (::dlerror (), const char *, err);
   if (err == 0)
-    return 0;
+    {
+      return 0;
+    }
 #   if defined (ACE_USES_WCHAR)
   const size_t BufLen = 256;
   static wchar_t buf[BufLen];
@@ -130,7 +134,9 @@ ACE_OS::dlopen (const ACE_TCHAR *fname,
         {
           // ouch something went wrong most likely unresolved externals
           if (handle)
-            ::unldByModuleId ( handle, 0 );
+            {
+              ::unldByModuleId ( handle, 0 );
+            }
           handle = 0;
         }
     }
@@ -155,7 +161,9 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
 
   // Check if the handle is valid before making any calls using it.
   if (handle == ACE_SHLIB_INVALID_HANDLE)
-    return nullptr;
+    {
+      return nullptr;
+    }
 
   // Get the correct OS type.
 #if defined (ACE_USES_WCHAR)

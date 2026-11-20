@@ -17,9 +17,13 @@ ACE_Dirent::open (const ACE_TCHAR *dirname)
   this->dirp_ = ACE_OS::opendir (dirname);
 
   if (!this->dirp_)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 ACE_INLINE
@@ -35,7 +39,9 @@ ACE_INLINE
 ACE_Dirent::~ACE_Dirent ()
 {
   if (this->dirp_)
-    ACE_OS::closedir (this->dirp_);
+    {
+      ACE_OS::closedir (this->dirp_);
+    }
 }
 
 ACE_INLINE ACE_DIRENT *
@@ -60,14 +66,18 @@ ACE_INLINE void
 ACE_Dirent::rewind ()
 {
   if (this->dirp_)
-    ACE_OS::rewinddir (this->dirp_);
+    {
+      ACE_OS::rewinddir (this->dirp_);
+    }
 }
 
 ACE_INLINE void
 ACE_Dirent::seek (long loc)
 {
   if (this->dirp_)
-    ACE_OS::seekdir (this->dirp_, loc);
+    {
+      ACE_OS::seekdir (this->dirp_, loc);
+    }
 }
 
 ACE_INLINE long
