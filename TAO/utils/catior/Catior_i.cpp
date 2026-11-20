@@ -456,7 +456,8 @@ Catior_i::catpoop (char const *string)
 }
 
 CORBA::Boolean
-Catior_i::cat_tag_orb_type (TAO_InputCDR& stream) {
+Catior_i::cat_tag_orb_type (TAO_InputCDR& stream)
+{
   CORBA::ULong length {};
   if (!stream.read_ulong (length))
   {
@@ -540,7 +541,8 @@ Catior_i::cat_tag_orb_type (TAO_InputCDR& stream) {
 }
 
 CORBA::Boolean
-Catior_i::cat_ibm_partner_version (TAO_InputCDR& stream) {
+Catior_i::cat_ibm_partner_version (TAO_InputCDR& stream)
+{
   /*
    * IBM Partner version looks like:
    * 49424d0a 00000008 00000000 1400 0005
@@ -599,7 +601,8 @@ Catior_i::cat_tao_tag_endpoints (TAO_InputCDR& stream)
 
   constexpr size_t bufsize {512};
   char buf[bufsize];
-  for (unsigned int iter {}; iter < epseq.length (); ++iter) {
+  for (unsigned int iter {}; iter < epseq.length (); ++iter)
+  {
     const char *host = epseq[iter].host;
     CORBA::UShort port = epseq[iter].port;
     indent ();
@@ -624,7 +627,8 @@ Catior_i::cat_tao_tag_endpoints (TAO_InputCDR& stream)
 }
 
 CORBA::Boolean
-Catior_i::cat_tag_alternate_endpoints (TAO_InputCDR& stream) {
+Catior_i::cat_tag_alternate_endpoints (TAO_InputCDR& stream)
+{
   CORBA::ULong length {};
   if (!stream.read_ulong (length))
   {
@@ -655,7 +659,8 @@ Catior_i::cat_tag_alternate_endpoints (TAO_InputCDR& stream) {
 }
 
 CORBA::Boolean
-Catior_i::cat_tag_policies (TAO_InputCDR& stream) {
+Catior_i::cat_tag_policies (TAO_InputCDR& stream)
+{
   CORBA::ULong length {};
   if (!stream.read_ulong (length))
   {
@@ -942,7 +947,8 @@ Catior_i::cat_tag_policies (TAO_InputCDR& stream) {
 }
 
 CORBA::Boolean
-Catior_i::cat_security_association (CORBA::UShort a) {
+Catior_i::cat_security_association (CORBA::UShort a)
+{
   // Copied from Security.idl
   using AssociationOptions = CORBA::UShort;
   const AssociationOptions NoProtection = 1;
@@ -978,7 +984,8 @@ Catior_i::cat_security_association (CORBA::UShort a) {
 }
 
 CORBA::Boolean
-Catior_i::cat_tag_ssl_sec_trans (TAO_InputCDR& cdr) {
+Catior_i::cat_tag_ssl_sec_trans (TAO_InputCDR& cdr)
+{
   /*
     Decode the following from the stream (copied from SSLIOP.idl)
 
