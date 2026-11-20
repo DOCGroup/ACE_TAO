@@ -19,40 +19,44 @@ parse_args (int argc, ACE_TCHAR **argv, Options &options)
   int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'k':
-        options.ior = get_opts.opt_arg ();
-        break;
+    {
+      switch (c)
+        {
+        case 'k':
+          options.ior = get_opts.opt_arg ();
+          break;
 
-      case 'i':
-        options.event_loop_iterations = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
+        case 'i':
+          options.event_loop_iterations = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
 
-      case 'd':
-        options.event_loop_depth = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
+        case 'd':
+          options.event_loop_depth = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
 
-      case 'x':
-        options.shutdown_server = true;
-        break;
+        case 'x':
+          options.shutdown_server = true;
+          break;
 
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k IOR "
-                           "-i event loop iterations "
-                           "-d event loop depth "
-                           "-x shutdown server "
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage:  %s "
+                             "-k IOR "
+                             "-i event loop iterations "
+                             "-d event loop depth "
+                             "-x shutdown server "
+                             "\n",
+                             argv [0]),
+                            -1);
+        }
+    }
 
   if (options.ior == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Please specify the IOR for the servant\n"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Please specify the IOR for the servant\n"), -1);
+    }
 
   // Indicates successful parsing of command line.
   return 0;

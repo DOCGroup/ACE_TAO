@@ -27,10 +27,12 @@ parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const*& ifr_ior_file)
     }
 
   if (ifr_ior_file == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("usage: %s -i <ifr_ior>\n"),
-                       argv [0]),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("usage: %s -i <ifr_ior>\n"),
+                         argv [0]),
+                        -1);
+    }
 
   return 0;
 }
@@ -71,9 +73,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nLook up c2\n")));
       CORBA::Contained_var const c2 = repository->lookup_id ("IDL:m1/c2:1.0");
       if (CORBA::is_nil (c2.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Can't look up the const m1/c2\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Can't look up the const m1/c2\n")),
+                            -1);
+        }
 
       CORBA::ConstantDef_var const c2_def = CORBA::ConstantDef::_narrow (c2.in ());
       CORBA::String_var const c2_name = c2_def->absolute_name ();
