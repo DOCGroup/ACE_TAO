@@ -133,24 +133,30 @@ Echo_Handler::open (ACE_Reactor * const    reactor,
                     int                    connect_to_remote)
 {
   if (this->reactor ())
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Echo_Handler::open - failed: ")
-                       ACE_TEXT ("reactor is already set.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Echo_Handler::open - failed: ")
+                         ACE_TEXT ("reactor is already set.\n")),
+                        -1);
+    }
   if (!reactor)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Echo_Handler::open - failed : ")
-                       ACE_TEXT ("NULL pointer to reactor provided.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Echo_Handler::open - failed : ")
+                         ACE_TEXT ("NULL pointer to reactor provided.\n")),
+                        -1);
+    }
 
   this->reactor (reactor);
   this->reply_wait_ = reply_wait;
 
   if (this->remote_addrs_)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Echo_Handler::open - failed: ")
-                       ACE_TEXT ("remote_addrs_ already initialized.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Echo_Handler::open - failed: ")
+                         ACE_TEXT ("remote_addrs_ already initialized.\n")),
+                        -1);
+    }
 
   ACE_NEW_RETURN (this->remote_addrs_, ACE_INET_Addr, -1);
 
@@ -158,10 +164,12 @@ Echo_Handler::open (ACE_Reactor * const    reactor,
   this->remote_addrs_[0] = remote_addr;
   this->number_remotes_ = 1;
   if (this->success_status_)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Echo_Handler::open - failed: ")
-                       ACE_TEXT ("success_status_ already initialized.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Echo_Handler::open - failed: ")
+                         ACE_TEXT ("success_status_ already initialized.\n")),
+                        -1);
+    }
 
   if (! success_status)
     {
@@ -180,20 +188,24 @@ Echo_Handler::open (ACE_Reactor * const    reactor,
   this->current_attempt_ = this->max_attempts_num_;
 
   if (this->ping_socket ().open (local_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Echo_Handler::open: %p\n"),
-                       ACE_TEXT ("ping_socket_")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Echo_Handler::open: %p\n"),
+                         ACE_TEXT ("ping_socket_")),
+                        -1);
+    }
 
   this->connect_to_remote_ = connect_to_remote;
 
   // Register with the reactor for input.
   if (this->reactor ()->register_handler (this,
                                           ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Echo_Handler::open: %p\n"),
-                       ACE_TEXT ("register_handler for input")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Echo_Handler::open: %p\n"),
+                         ACE_TEXT ("register_handler for input")),
+                        -1);
+    }
   return 0;
 }
 
@@ -207,39 +219,49 @@ Echo_Handler::open (ACE_Reactor * const reactor,
                     ACE_Addr const & local_addr)
 {
   if (this->reactor ())
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Echo_Handler::open - failed: ")
-                       ACE_TEXT ("reactor is already set.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Echo_Handler::open - failed: ")
+                         ACE_TEXT ("reactor is already set.\n")),
+                        -1);
+    }
 
   if (!reactor)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Echo_Handler::open - failed: nullptr ")
-                       ACE_TEXT ("pointer to reactor provided.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Echo_Handler::open - failed: nullptr ")
+                         ACE_TEXT ("pointer to reactor provided.\n")),
+                        -1);
+    }
 
   this->reactor (reactor);
   this->reply_wait_ = reply_wait;
 
   if (!remote_addrs)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Echo_Handler::open - failed: ")
-                       ACE_TEXT ("NULL remote_addr pointer provided.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Echo_Handler::open - failed: ")
+                         ACE_TEXT ("NULL remote_addr pointer provided.\n")),
+                        -1);
+    }
 
   if (!number_remotes)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Echo_Handler::open - failed: ")
-                       ACE_TEXT ("size of remote_addrs array is 0.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Echo_Handler::open - failed: ")
+                         ACE_TEXT ("size of remote_addrs array is 0.\n")),
+                        -1);
+    }
 
   this->number_remotes_ = number_remotes;
 
   if (this->remote_addrs_)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Echo_Handler::open - failed: ")
-                       ACE_TEXT ("remote_addrs_ already initialized.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Echo_Handler::open - failed: ")
+                         ACE_TEXT ("remote_addrs_ already initialized.\n")),
+                        -1);
+    }
 
   ACE_NEW_RETURN (this->remote_addrs_,
                   ACE_INET_Addr[this->number_remotes_],
@@ -252,10 +274,12 @@ Echo_Handler::open (ACE_Reactor * const reactor,
     }
 
   if (this->success_status_)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Echo_Handler::open - failed: ")
-                       ACE_TEXT ("success_status_ already initialized.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Echo_Handler::open - failed: ")
+                         ACE_TEXT ("success_status_ already initialized.\n")),
+                        -1);
+    }
 
   if (! success_status)
     {
@@ -283,25 +307,31 @@ Echo_Handler::open (ACE_Reactor * const reactor,
   if (this->ping_socket ().open (local_addr) == -1)
     {
       if (errno == EPERM || errno == EACCES)
-        ACE_ERROR_RETURN ((LM_WARNING,
-                           ACE_TEXT ("(%P|%t) Echo_Handler::open: ")
-                           ACE_TEXT ("ping_socket_: insufficient privs to ")
-                           ACE_TEXT ("run this test\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_WARNING,
+                             ACE_TEXT ("(%P|%t) Echo_Handler::open: ")
+                             ACE_TEXT ("ping_socket_: insufficient privs to ")
+                             ACE_TEXT ("run this test\n")),
+                            -1);
+        }
       else
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) Echo_Handler::open: %p\n"),
-                           ACE_TEXT ("ping_socket_")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) Echo_Handler::open: %p\n"),
+                             ACE_TEXT ("ping_socket_")),
+                            -1);
+        }
     }
 
   // register with the reactor for input
   if (this->reactor ()->register_handler (this,
                                           ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Echo_Handler::open: %p\n"),
-                       ACE_TEXT ("register_handler for input")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Echo_Handler::open: %p\n"),
+                         ACE_TEXT ("register_handler for input")),
+                        -1);
+    }
   return 0;
 }
 
@@ -332,11 +362,13 @@ Echo_Handler::dispatch_echo_checks (int first_call)
           if (this->ping_socket ().send_echo_check (
                 this->remote_addrs_[i],
                 this->connect_to_remote_) == -1)
-            ACE_ERROR
-              ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) Echo_Handler::dispatch_echo_checks - ")
-                ACE_TEXT ("failed for this->remote_addrs_[%B].\n"),
-                i));
+              {
+                ACE_ERROR
+                  ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) Echo_Handler::dispatch_echo_checks - ")
+                    ACE_TEXT ("failed for this->remote_addrs_[%B].\n"),
+                    i));
+              }
         }
     }
 
@@ -346,11 +378,13 @@ Echo_Handler::dispatch_echo_checks (int first_call)
                                            nullptr,
                                            ACE_Time_Value (1),
                                            this->reply_wait_)) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Echo_Handler::dispatch_echo_checks:")
-                       ACE_TEXT (" %p\n"),
-                       ACE_TEXT ("schedule_timer")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Echo_Handler::dispatch_echo_checks:")
+                         ACE_TEXT (" %p\n"),
+                         ACE_TEXT ("schedule_timer")),
+                        -1);
+    }
   return 0;
 }
 
@@ -554,28 +588,34 @@ Stop_Handler::open ()
   // Register the signal handler object to catch the signals.
 #if (SIGINT != 0)
   if (this->reactor ()->register_handler (SIGINT, this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Stop_Handler::open: %p <%d>\n"),
-                       ACE_TEXT ("register_handler for SIGINT"), SIGINT),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Stop_Handler::open: %p <%d>\n"),
+                         ACE_TEXT ("register_handler for SIGINT"), SIGINT),
+                        -1);
+    }
   this->registered_signals_.sig_add (SIGINT);
 #endif /* SIGINT != 0 */
 
 #if (SIGTERM != 0)
   if (this->reactor ()->register_handler (SIGTERM, this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Stop_Handler::open: %p <%d>\n"),
-                       ACE_TEXT ("register_handler for SIGTERM"), SIGTERM),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Stop_Handler::open: %p <%d>\n"),
+                         ACE_TEXT ("register_handler for SIGTERM"), SIGTERM),
+                        -1);
+    }
   this->registered_signals_.sig_add (SIGTERM);
 #endif /* SIGTERM != 0 */
 
 #if (SIGQUIT != 0)
   if (this->reactor ()->register_handler (SIGQUIT, this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Stop_Handler::open: %p <%d>\n"),
-                       ACE_TEXT ("register_handler for SIGQUIT"), SIGQUIT),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Stop_Handler::open: %p <%d>\n"),
+                         ACE_TEXT ("register_handler for SIGQUIT"), SIGQUIT),
+                        -1);
+    }
   this->registered_signals_.sig_add (SIGQUIT);
 #endif /* SIGQUIT != 0 */
   return 0;
@@ -652,18 +692,20 @@ Stop_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask m)
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("(%P|%t) Stop_Handler::handle_close - entered.\n")));
   if (m == ACE_Event_Handler::SIGNAL_MASK)
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
   this->reactor ()->remove_handler (this,
                                     ACE_Event_Handler::SIGNAL_MASK |
                                     ACE_Event_Handler::DONT_CALL);
 
   if (reactor ()->end_reactor_event_loop () == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG,
-                       ACE_TEXT ("Stop_Handler::handle_close: %p\n"),
-                       ACE_TEXT ("end_reactor_event_loop")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_DEBUG,
+                         ACE_TEXT ("Stop_Handler::handle_close: %p\n"),
+                         ACE_TEXT ("end_reactor_event_loop")),
+                        -1);
+    }
   return 0;
 }
 
@@ -679,10 +721,12 @@ int
 Stop_Handler::register_handler (ACE_Event_Handler *handler)
 {
   if (!handler)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Stop_Handler::register_handler - ")
-                       ACE_TEXT ("error, handler is a null pointer.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Stop_Handler::register_handler - ")
+                         ACE_TEXT ("error, handler is a null pointer.\n")),
+                        -1);
+    }
 
   size_t index = 0;
 
@@ -690,7 +734,8 @@ Stop_Handler::register_handler (ACE_Event_Handler *handler)
        (index < HANDLERS_TO_STOP_TABLE_SIZE &&
         this->handlers_to_stop_[index]);
        ++index)
-    ;
+    {
+    }
 
   if (index == HANDLERS_TO_STOP_TABLE_SIZE)
     {
@@ -711,10 +756,12 @@ int
 Stop_Handler::unregister_handler (ACE_Event_Handler *handler)
 {
   if (!handler)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Stop_Handler::unregister_handler - ")
-                       ACE_TEXT ("error, handler is a null pointer.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Stop_Handler::unregister_handler - ")
+                         ACE_TEXT ("error, handler is a null pointer.\n")),
+                        -1);
+    }
 
   size_t index = 0;
 
@@ -722,15 +769,18 @@ Stop_Handler::unregister_handler (ACE_Event_Handler *handler)
        (index < HANDLERS_TO_STOP_TABLE_SIZE &&
         handler != this->handlers_to_stop_[index]);
        ++index)
-    ;
+    {
+    }
 
   size_t entrance = 0;
   if (index == HANDLERS_TO_STOP_TABLE_SIZE)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Stop_Handler::unregister_")
-                       ACE_TEXT ("handler - error, the handler was not ")
-                       ACE_TEXT ("found among registered handlers.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Stop_Handler::unregister_")
+                         ACE_TEXT ("handler - error, the handler was not ")
+                         ACE_TEXT ("found among registered handlers.\n")),
+                        -1);
+    }
 
   entrance = index;
   // null the entrance. Nulled entrances cannot be destroyed
@@ -758,18 +808,22 @@ Repeats_Handler::open (Echo_Handler * check_handler,
                        unsigned int seconds_timer)
 {
   if (!check_handler)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Repeats_Handler::open - error: ")
-                       ACE_TEXT ("NULL check_handler.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Repeats_Handler::open - error: ")
+                         ACE_TEXT ("NULL check_handler.\n")),
+                        -1);
+    }
 
   this->check_handler_ = check_handler;
 
   if (!reactor)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Stop_Handler::open - error: ")
-                       ACE_TEXT ("NULL reactor.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Stop_Handler::open - error: ")
+                         ACE_TEXT ("NULL reactor.\n")),
+                        -1);
+    }
 
   this->reactor (reactor);
   this->seconds_timer_ = seconds_timer;
@@ -779,10 +833,12 @@ Repeats_Handler::open (Echo_Handler * check_handler,
         nullptr,
         ACE_Time_Value (1),
         ACE_Time_Value (this->seconds_timer_)) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Repeats_Handler::open: %p\n"),
-                       ACE_TEXT ("schedule_timer")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Repeats_Handler::open: %p\n"),
+                         ACE_TEXT ("schedule_timer")),
+                        -1);
+    }
   return 0;
 }
 
@@ -873,17 +929,21 @@ is_ip_address_local (char const * const ip_to_bind)
   int rc = ACE::get_ip_interfaces (how_many, the_addr_array);
 
   if (rc != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("is_ip_address_local: %p\n"),
-                       ACE_TEXT ("ACE::get_ip_interfaces")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("is_ip_address_local: %p\n"),
+                         ACE_TEXT ("ACE::get_ip_interfaces")),
+                        -1);
+    }
 
   if (how_many == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("is_ip_address_local: "),
-                       ACE_TEXT ("No interfaces presently configured ")
-                       ACE_TEXT ("in the kernel\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("is_ip_address_local: "),
+                         ACE_TEXT ("No interfaces presently configured ")
+                         ACE_TEXT ("in the kernel\n")),
+                        -1);
+    }
 
   // debugging messages
   ACE_DEBUG ((LM_DEBUG,
@@ -969,12 +1029,14 @@ parse_args (int argc, ACE_TCHAR *argv[])
                token = ACE_OS::strtok (nullptr, ACE_TEXT (":")))
             {
               if (ping_points_addrs[counter].set ((u_short)0, token) != 0)
-                ACE_ERROR_RETURN
-                  ((LM_ERROR,
-                    ACE_TEXT ("Error: the address \"%s\" is not ")
-                    ACE_TEXT ("a valid IPv4 address.\n"),
-                    token),
-                   -1);
+                {
+                  ACE_ERROR_RETURN
+                    ((LM_ERROR,
+                      ACE_TEXT ("Error: the address \"%s\" is not ")
+                      ACE_TEXT ("a valid IPv4 address.\n"),
+                      token),
+                     -1);
+                }
               ++number_of_ping_points;
               ++counter;
             }
