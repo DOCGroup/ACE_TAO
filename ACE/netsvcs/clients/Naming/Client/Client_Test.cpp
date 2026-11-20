@@ -53,10 +53,12 @@ Client_Test::open ()
   if (ACE_Event_Handler::register_stdin_handler (this,
                                                  ACE_Reactor::instance (),
                                                  ACE_Thread_Manager::instance ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "register_stdin_handler"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "register_stdin_handler"),
+                        -1);
+    }
   return 0;
 }
 
@@ -74,10 +76,12 @@ Client_Test::handle_input (ACE_HANDLE)
 {
   std::string command_line;
   if (!std::getline (std::cin, command_line))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p Try again!\n",
-                       "Client_Test::handle_input"),
-                      0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p Try again!\n",
+                         "Client_Test::handle_input"),
+                        0);
+    }
 
   std::istringstream input (command_line);
   std::string option;
@@ -121,8 +125,10 @@ Client_Test::handle_input (ACE_HANDLE)
             result = this->bind (key, value, type);
           }
         else
-          ACE_ERROR ((LM_ERROR,
-                      "Bind Failed! Key and value not entered.\n"));
+          {
+            ACE_ERROR ((LM_ERROR,
+                        "Bind Failed! Key and value not entered.\n"));
+          }
         break;
       }
     case 'u':
@@ -146,8 +152,10 @@ Client_Test::handle_input (ACE_HANDLE)
             result = this->rebind (key, value, type);
           }
         else
-          ACE_ERROR ((LM_ERROR,
-                      "Rebind Failed! Key and value not entered.\n"));
+          {
+            ACE_ERROR ((LM_ERROR,
+                        "Rebind Failed! Key and value not entered.\n"));
+          }
         break;
       }
     case 'f':
@@ -198,7 +206,9 @@ Client_Test::handle_input (ACE_HANDLE)
     }
 
   if (result == -1)
-    ACE_Reactor::instance ()->end_reactor_event_loop ();
+    {
+      ACE_Reactor::instance ()->end_reactor_event_loop ();
+    }
   else
   {
     this->display_menu ();
@@ -300,11 +310,13 @@ Client_Test::bind (std::string const &key,
                    std::string const &type)
 {
   if (NAMING_CONTEXT ()->bind (key.c_str (), value.c_str (), type.c_str ()) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p Bind failed! Key %s exists\n",
-                       "Client_Test::bind",
-                       key.c_str ()),
-                      0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p Bind failed! Key %s exists\n",
+                         "Client_Test::bind",
+                         key.c_str ()),
+                        0);
+    }
   return 0;
 }
 
@@ -312,11 +324,13 @@ int
 Client_Test::unbind (std::string const &key)
 {
   if (NAMING_CONTEXT ()->unbind (key.c_str ()) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p Unbind failed! Key %s not found\n",
-                       "Client_Test::unbind",
-                       key.c_str ()),
-                      0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p Unbind failed! Key %s not found\n",
+                         "Client_Test::unbind",
+                         key.c_str ()),
+                        0);
+    }
   return 0;
 }
 
@@ -337,10 +351,12 @@ Client_Test::list_names (std::string const &pattern)
   ACE_PWSTRING_SET set;
 
   if (NAMING_CONTEXT ()->list_names (set, pattern.c_str ()) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p Pattern matching failed!\n",
-                       "Client_Test::list_names"),
-                      0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p Pattern matching failed!\n",
+                         "Client_Test::list_names"),
+                        0);
+    }
   else
     {
       ACE_PWSTRING_ITERATOR set_iterator (set);
@@ -364,10 +380,12 @@ Client_Test::list_values (std::string const &pattern)
   ACE_PWSTRING_SET set;
 
   if (NAMING_CONTEXT ()->list_values (set, pattern.c_str ()) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p Pattern matching failed!\n",
-                       "Client_Test::list_values"),
-                      0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p Pattern matching failed!\n",
+                         "Client_Test::list_values"),
+                        0);
+    }
   else
     {
       ACE_PWSTRING_ITERATOR set_iterator (set);
@@ -391,10 +409,12 @@ Client_Test::list_types (std::string const &pattern)
   ACE_PWSTRING_SET set;
 
   if (NAMING_CONTEXT ()->list_types (set, pattern.c_str ()) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p Pattern matching failed!\n",
-                       "Client_Test::list_types"),
-                      0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p Pattern matching failed!\n",
+                         "Client_Test::list_types"),
+                        0);
+    }
   else
     {
       ACE_PWSTRING_ITERATOR set_iterator (set);
@@ -418,10 +438,12 @@ Client_Test::list_name_entries (std::string const &pattern)
   ACE_BINDING_SET set;
 
   if (NAMING_CONTEXT ()->list_name_entries (set, pattern.c_str ()) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p Pattern matching failed!\n",
-                       "Client_Test::list_names"),
-                      0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p Pattern matching failed!\n",
+                         "Client_Test::list_names"),
+                        0);
+    }
   else
     {
       ACE_BINDING_ITERATOR set_iterator (set);
@@ -452,10 +474,12 @@ Client_Test::list_value_entries (std::string const &pattern)
   ACE_BINDING_SET set;
 
   if (NAMING_CONTEXT ()->list_value_entries (set, pattern.c_str ()) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p Pattern matching failed!\n",
-                       "Client_Test::list_values"),
-                      0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p Pattern matching failed!\n",
+                         "Client_Test::list_values"),
+                        0);
+    }
   else
     {
       ACE_BINDING_ITERATOR set_iterator (set);
@@ -485,10 +509,12 @@ Client_Test::list_type_entries (std::string const &pattern)
   ACE_BINDING_SET set;
 
   if (NAMING_CONTEXT ()->list_type_entries (set, pattern.c_str ()) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p Pattern matching failed!\n",
-                       "Client_Test::list_types"),
-                      0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p Pattern matching failed!\n",
+                         "Client_Test::list_types"),
+                        0);
+    }
   else
     {
       ACE_BINDING_ITERATOR set_iterator (set);
@@ -524,11 +550,13 @@ Client_Test::find (std::string const &key)
   Naming_Context_String type_owner {type, free_naming_context_result};
 
   if (result != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p Find failed! Key %s not found\n",
-                       "Client_Test::list_find",
-                       key.c_str ()),
-                      0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p Find failed! Key %s not found\n",
+                         "Client_Test::list_find",
+                         key.c_str ()),
+                        0);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "Binding for %s : value = %s\ttype = %s\n",
