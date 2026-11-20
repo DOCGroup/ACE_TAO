@@ -11,22 +11,24 @@ parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior)
   int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'k':
-        ior = get_opts.opt_arg ();
-        break;
+    {
+      switch (c)
+        {
+        case 'k':
+          ior = get_opts.opt_arg ();
+          break;
 
-      case '?':
-      case 'h':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
+        case '?':
+        case 'h':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage:  %s "
+                             "-k <ior> "
+                             "\n",
+                             argv [0]),
+                            -1);
+        }
+    }
 
   // Successful command line parsing.
   return 0;
@@ -167,7 +169,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Caller<test_func> c (orb.in (), hello.in ());
       for (test_func const test : tests)
-        c (test);
+        {
+          c (test);
+        }
 
       if (!c.success)
       {
