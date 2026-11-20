@@ -1476,7 +1476,9 @@ ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::enqueue_deadline_i (ACE_Message_B
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::enqueue_deadline_i");
 
   if (new_item == nullptr)
-    return -1;
+    {
+      return -1;
+    }
 
   // Since this method uses enqueue_head_i() and enqueue_tail_i() for
   // special situations, and this method doesn't support enqueueing
@@ -1485,9 +1487,11 @@ ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::enqueue_deadline_i (ACE_Message_B
   new_item->next (nullptr);
 
   if (this->head_ == nullptr)
-    // Check for simple case of an empty queue, where all we need to
-    // do is insert <new_item> into the head.
-    return this->enqueue_head_i (new_item);
+    {
+      // Check for simple case of an empty queue, where all we need to
+      // do is insert <new_item> into the head.
+      return this->enqueue_head_i (new_item);
+    }
   else
     {
       ACE_Message_Block *temp {};
@@ -1500,15 +1504,19 @@ ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::enqueue_deadline_i (ACE_Message_B
            temp != nullptr;
            temp = temp->next ())
         if (new_item->msg_deadline_time () < temp->msg_deadline_time ())
-          // Break out when we've located an item that has
-          // greater or equal priority.
-          break;
+          {
+            // Break out when we've located an item that has
+            // greater or equal priority.
+            break;
+          }
 
       if (temp == nullptr || temp->next () == nullptr)
-        // Check for simple case of inserting at the tail of the queue,
-        // where all we need to do is insert <new_item> after the
-        // current tail.
-        return this->enqueue_tail_i (new_item);
+        {
+          // Check for simple case of inserting at the tail of the queue,
+          // where all we need to do is insert <new_item> after the
+          // current tail.
+          return this->enqueue_tail_i (new_item);
+        }
       else
         {
           // Insert the new message behind the message of
@@ -1528,9 +1536,13 @@ ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::enqueue_deadline_i (ACE_Message_B
   ++this->cur_count_;
 
   if (this->signal_dequeue_waiters () == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return this->cur_count_;
+    {
+      return this->cur_count_;
+    }
 #else
   return this->enqueue_tail_i (new_item);
 #endif /* ACE_HAS_TIMED_MESSAGE_BLOCKS */
@@ -1758,9 +1770,11 @@ ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dequeue_deadline_i (ACE_Message_B
 {
 #if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
   if (this->head_ == nullptr)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Attempting to dequeue from empty queue")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Attempting to dequeue from empty queue")),
+                          -1);
+    }
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dequeue_deadline_i");
 
   // Find the last message enqueued with the lowest deadline time
@@ -1776,19 +1790,29 @@ ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dequeue_deadline_i (ACE_Message_B
   // If every message block is the same deadline time,
   // pass back the first one
   if (chosen == nullptr)
-    chosen = this->head_;
+    {
+      chosen = this->head_;
+    }
 
   // Patch up the queue.  If we don't have a previous
   // then we are at the head of the queue.
   if (chosen->prev () == nullptr)
-    this->head_ = chosen->next ();
+    {
+      this->head_ = chosen->next ();
+    }
   else
-    chosen->prev ()->next (chosen->next ());
+    {
+      chosen->prev ()->next (chosen->next ());
+    }
 
   if (chosen->next () == nullptr)
-    this->tail_ = chosen->prev ();
+    {
+      this->tail_ = chosen->prev ();
+    }
   else
-    chosen->next ()->prev (chosen->prev ());
+    {
+      chosen->next ()->prev (chosen->prev ());
+    }
 
   // Pass back the chosen block
   dequeued = chosen;
@@ -1803,7 +1827,9 @@ ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dequeue_deadline_i (ACE_Message_B
   --this->cur_count_;
 
   if (this->cur_count_ == 0 && this->head_ == this->tail_)
-    this->head_ = this->tail_ = nullptr;
+    {
+      this->head_ = this->tail_ = nullptr;
+    }
 
   // Make sure that the prev and next fields are 0!
   dequeued->prev (nullptr);
@@ -1813,9 +1839,13 @@ ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dequeue_deadline_i (ACE_Message_B
   // water mark.
   if (this->cur_bytes_ <= this->low_water_mark_
       && this->signal_enqueue_waiters () == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return this->cur_count_;
+    {
+      return this->cur_count_;
+    }
 #else
   return this->dequeue_head_i (dequeued);
 #endif /* ACE_HAS_TIMED_MESSAGE_BLOCKS */

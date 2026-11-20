@@ -33,7 +33,9 @@ ACE_Message_Queue_NT::open (DWORD max_threads)
                                                      ACE_Message_Queue_Base::ACTIVATED,
                                                      max_threads);
   if (this->completion_port_ == 0)
-    this->state_ = ACE_Message_Queue_Base::DEACTIVATED;
+    {
+      this->state_ = ACE_Message_Queue_Base::DEACTIVATED;
+    }
   return (this->completion_port_ == 0 ? -1 : 0);
 }
 
@@ -78,7 +80,9 @@ ACE_Message_Queue_NT::enqueue (ACE_Message_Block *new_item,
         }
     }
   else
-    errno = ESHUTDOWN;
+    {
+      errno = ESHUTDOWN;
+    }
 
   // Fail to enqueue the message.
   return -1;
@@ -100,7 +104,9 @@ ACE_Message_Queue_NT::dequeue (ACE_Message_Block *&first_item,
         return -1;
       }
     else
-      ++this->cur_thrs_;        // Increase the waiting thread count.
+      {
+        ++this->cur_thrs_;      // Increase the waiting thread count.
+      }
   }
 
   ULONG_PTR queue_state;
@@ -124,7 +130,9 @@ ACE_Message_Queue_NT::dequeue (ACE_Message_Block *&first_item,
             return ACE_Utils::truncate_cast<int> (this->cur_count_);
           }
         else                    // Woken up by deactivate () or pulse ().
+          {
             errno = ESHUTDOWN;
+          }
       }
   }
   return -1;
