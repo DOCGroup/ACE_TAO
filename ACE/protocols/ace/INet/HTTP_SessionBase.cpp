@@ -104,11 +104,13 @@ namespace ACE
         if (!request.has_host ())
           {
             if (this->port_ == URL::HTTP_PORT)
-              request.set_host (this->host_);
+              {
+                request.set_host (this->host_);
+              }
             else
-            {
-              request.set_host (this->host_, this->port_);
-            }
+              {
+                request.set_host (this->host_, this->port_);
+              }
           }
 
         this->expects_response_body_ = request.get_method() != Request::HTTP_HEAD;
@@ -178,11 +180,13 @@ namespace ACE
     std::ostream& SessionBase::request_stream ()
       {
         if (this->out_stream_)
-          return *this->out_stream_;
+          {
+            return *this->out_stream_;
+          }
         else
-        {
-          return ACE::IOS::Null::out_stream_;
-        }
+          {
+            return ACE::IOS::Null::out_stream_;
+          }
       }
 
     std::ostream& SessionBase::request_stream (
@@ -287,11 +291,13 @@ namespace ACE
     std::istream& SessionBase::response_stream ()
       {
         if (this->in_stream_)
-          return *this->in_stream_;
+          {
+            return *this->in_stream_;
+          }
         else
-        {
-          return ACE::IOS::Null::in_stream_;
-        }
+          {
+            return ACE::IOS::Null::in_stream_;
+          }
       }
 
     std::istream& SessionBase::response_stream (

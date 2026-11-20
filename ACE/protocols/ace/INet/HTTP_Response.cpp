@@ -94,9 +94,13 @@ namespace ACE
         // get reason
         ch = this->read_field (str, reason, MAX_REASON_LENGTH, '\r');
         if (ch == '\r')
-          ch = str.get (); // get lf
+          {
+            ch = str.get (); // get lf
+          }
         if (ch != '\n')
-          return false; // HTTP reason string too long
+          {
+            return false; // HTTP reason string too long
+          }
 
         INET_DEBUG (6, (LM_DEBUG, DLINFO
                         ACE_TEXT ("ACE_INet_HTTP: <-- %C %C %C\n"),
