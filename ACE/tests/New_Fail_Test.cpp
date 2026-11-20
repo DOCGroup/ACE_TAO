@@ -92,21 +92,27 @@ run_main (int, ACE_TCHAR *[])
         {
           ACE_TEST_ASSERT (blocks[i] == nullptr);
           if (errno == ENOMEM)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("ACE_NEW failed properly at block %d\n"),
-                        i));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("ACE_NEW failed properly at block %d\n"),
+                          i));
+            }
           else
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("ACE_NEW failed at block %d, but ")
-                        ACE_TEXT ("expected ENOMEM, %p (%d)\n"),
-                        i,
-                        ACE_TEXT ("got"),
-                        ACE_ERRNO_GET));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("ACE_NEW failed at block %d, but ")
+                          ACE_TEXT ("expected ENOMEM, %p (%d)\n"),
+                          i,
+                          ACE_TEXT ("got"),
+                          ACE_ERRNO_GET));
+            }
         }
 
       // Free the memory to try ACE_NEW_RETURN
       while (i >= 0)
-        delete [] blocks[i--];
+        {
+          delete [] blocks[i--];
+        }
 
       // Second part: test ACE_NEW_RETURN
       for (i = 0; i < MAX_ALLOCS_IN_TEST; ++i)
@@ -129,19 +135,25 @@ run_main (int, ACE_TCHAR *[])
         {
           ACE_TEST_ASSERT (blocks[i] == nullptr);
           if (errno == ENOMEM)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("ACE_NEW_RETURN failed properly at block %d\n"),
-                        i));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("ACE_NEW_RETURN failed properly at block %d\n"),
+                          i));
+            }
           else
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("ACE_NEW_RETURN failed at block %d, but ")
-                        ACE_TEXT ("expected ENOMEM, %p (%d)\n"),
-                        i,
-                        ACE_TEXT ("got"),
-                        ACE_ERRNO_GET));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("ACE_NEW_RETURN failed at block %d, but ")
+                          ACE_TEXT ("expected ENOMEM, %p (%d)\n"),
+                          i,
+                          ACE_TEXT ("got"),
+                          ACE_ERRNO_GET));
+            }
         }
       while (i >= 0)
-        delete [] blocks[i--];
+        {
+          delete [] blocks[i--];
+        }
 
       // Third part: test ACE_NEW_NORETURN
       for (i = 0; i < MAX_ALLOCS_IN_TEST; ++i)
@@ -164,19 +176,25 @@ run_main (int, ACE_TCHAR *[])
         {
           ACE_TEST_ASSERT (blocks[i] == nullptr);
           if (errno == ENOMEM)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("ACE_NEW_NORETURN failed properly at block %d\n"),
-                        i));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("ACE_NEW_NORETURN failed properly at block %d\n"),
+                          i));
+            }
           else
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("ACE_NEW_NORETURN failed at block %d, but ")
-                        ACE_TEXT ("expected ENOMEM, %p (%d)\n"),
-                        i,
-                        ACE_TEXT ("got"),
-                        ACE_ERRNO_GET));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("ACE_NEW_NORETURN failed at block %d, but ")
+                          ACE_TEXT ("expected ENOMEM, %p (%d)\n"),
+                          i,
+                          ACE_TEXT ("got"),
+                          ACE_ERRNO_GET));
+            }
         }
       while (i >= 0)
-        delete [] blocks[i--];
+        {
+          delete [] blocks[i--];
+        }
     }
   catch (...)
     {
