@@ -40,21 +40,23 @@ parse_args (int argc, ACE_TCHAR *argv[])
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("c:f:r:"));
 
   for (int c; (c = get_opt ()) != -1; )
-    switch (c)
     {
-    case 'f':
-      file_name = get_opt.opt_arg ();
-      break;
-    case 'r':
-      rendezvous_dgram = get_opt.opt_arg ();
-      break;
-    case 'c':
-      rendezvous_codgram = get_opt.opt_arg ();
-      break;
-    default:
-      print_usage_and_die ();
-      break;
-  }
+      switch (c)
+        {
+        case 'f':
+          file_name = get_opt.opt_arg ();
+          break;
+        case 'r':
+          rendezvous_dgram = get_opt.opt_arg ();
+          break;
+        case 'c':
+          rendezvous_codgram = get_opt.opt_arg ();
+          break;
+        default:
+          print_usage_and_die ();
+          break;
+        }
+    }
 }
 
 int
@@ -67,32 +69,42 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   std::unique_ptr<char, decltype (&ACE_OS::free)> sock_client (
     ACE_OS::tempnam (), &ACE_OS::free);
   if (!sock_client)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("tempnam")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("tempnam")),
+                        -1);
+    }
 
   ACE_LSOCK_Dgram sd (ACE_UNIX_Addr (sock_client.get ()));
   if (ACE_OS::unlink (sock_client.get ()))
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("unlink")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("unlink")),
+                        -1);
+    }
 
   ACE_LSOCK_CODgram sc;
 
   if (sc.open (ACE_UNIX_Addr (rendezvous_codgram),
                ACE_Addr::sap_any) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")),
+                        -1);
+    }
 
   ACE_HANDLE const handle = ACE_OS::open (file_name, O_RDONLY);
 
   if (handle == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")),
+                        -1);
+    }
 
   // Send the open file descriptor to the server!
 
   if (sc.send_handle (handle) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("send")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("send")),
+                        -1);
+    }
 
   char name[ACE_MAX_USERID] {};
 #if !defined (ACE_LACKS_CUSERID)
@@ -104,12 +116,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (sd.send (name,
                std::strlen (name) + 1,
                ACE_UNIX_Addr (rendezvous_dgram)) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("send")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("send")),
+                        -1);
+    }
 
   if (ACE_OS::close (handle) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("close")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("close")),
+                        -1);
+    }
   return 0;
 }
 #else
