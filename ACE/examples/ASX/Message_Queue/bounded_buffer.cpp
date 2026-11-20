@@ -38,13 +38,15 @@ producer (void *arg)
           // Send a shutdown message to the other thread and exit.
           mb->length (0);
           if (msg_queue->enqueue_tail (mb) == -1)
-            ACE_ERROR ((LM_ERROR,
-                        "(%t) %p\n",
-                        "put_next"));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "(%t) %p\n",
+                          "put_next"));
+            }
           else
-          {
-            message.release ();
-          }
+            {
+              message.release ();
+            }
           break;
         }
       // Send the message to the other thread.
@@ -53,13 +55,15 @@ producer (void *arg)
           mb->msg_priority (n);
           mb->wr_ptr (n);
           if (msg_queue->enqueue_tail (mb) == -1)
-            ACE_ERROR ((LM_ERROR,
-                        "(%t) %p\n",
-                        "put_next"));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "(%t) %p\n",
+                          "put_next"));
+            }
           else
-          {
-            message.release ();
-          }
+            {
+              message.release ();
+            }
         }
     }
 
@@ -109,10 +113,12 @@ consumer (void *arg)
     }
 
   if (result == -1 && errno == EWOULDBLOCK)
-    ACE_ERROR ((LM_ERROR,
-                "(%t) %p\n%a",
-                "timed out waiting for message",
-                1));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%t) %p\n%a",
+                  "timed out waiting for message",
+                  1));
+    }
   return ACE_THR_FUNC_RETURN_NULL;
 }
 
@@ -128,18 +134,22 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       (producer,
        static_cast<void *> (&msg_queue),
        THR_NEW_LWP | THR_DETACHED) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "spawn"),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "spawn"),
+                        1);
+    }
   else if (ACE_Thread_Manager::instance ()->spawn
            (consumer,
             static_cast<void *> (&msg_queue),
             THR_NEW_LWP | THR_DETACHED) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "spawn"),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "spawn"),
+                        1);
+    }
 
   // Wait for producer and consumer threads to exit.
   ACE_Thread_Manager::instance ()->wait ();
