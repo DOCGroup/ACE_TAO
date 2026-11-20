@@ -16,9 +16,11 @@ void
 TAO_EC_TPC_ProxyPushSupplier:: disconnect_push_supplier ()
 {
   if (TAO_EC_TPC_debug_level > 0)
-    ORBSVCS_DEBUG ((LM_DEBUG, "EC (%P|%t): enter EC_TPC_ProxySupplier::disconnect_push_supplier (%@): consumer=%@\n",
-                this,
-                this->consumer_.in()));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG, "EC (%P|%t): enter EC_TPC_ProxySupplier::disconnect_push_supplier (%@): consumer=%@\n",
+                      this,
+                      this->consumer_.in()));
+    }
 
   if (this->is_connected_i ())
     {
@@ -48,8 +50,10 @@ TAO_EC_TPC_ProxyPushSupplier::connect_push_consumer (
   BASECLASS::connect_push_consumer (push_consumer, qos);
 
   if (TAO_EC_TPC_debug_level > 0)
-    ORBSVCS_DEBUG ((LM_DEBUG, "EC (%P|%t): EC_ProxySupplier(%@): consumer=%@\n",
-              this, this->consumer_.in()));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG, "EC (%P|%t): EC_ProxySupplier(%@): consumer=%@\n",
+                      this, this->consumer_.in()));
+    }
 
   TAO_EC_TPC_Dispatching* tpcdispatcher = this->tpc_dispatching ();
 
