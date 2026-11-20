@@ -52,7 +52,9 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   timer.schedule (&cb, &arg, initial, repeat);
 
   while (true)   // Don't let the main thread exit.
-    ACE_OS::sleep (2);
+    {
+      ACE_OS::sleep (2);
+    }
   ACE_NOTREACHED (return 0);     // Not reached.
 }
 // Listing 2
