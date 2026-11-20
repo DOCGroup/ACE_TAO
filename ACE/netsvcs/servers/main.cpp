@@ -31,15 +31,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (ACE_Service_Config::open (argc, argv, ACE_DEFAULT_LOGGER_KEY, true, false, true) == -1)
     {
       if (errno != ENOENT)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("open")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("open")),
+                            1);
+        }
       else // Use static linking.
         {
           if (ACE::debug () == 0)
-            ACE_LOG_MSG->priority_mask (~LM_DEBUG,
-                                        ACE_Log_Msg::PROCESS);
+            {
+              ACE_LOG_MSG->priority_mask (~LM_DEBUG,
+                                          ACE_Log_Msg::PROCESS);
+            }
 
           // Create each statically linked service under scoped ownership;
           // ACE_Service_Object_Ptr calls fini() and deletes it on scope exit.
@@ -53,10 +57,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_Service_Object_Ptr sp_1 (ACE_SVC_INVOKE (ACE_Name_Acceptor));
 
           if (sp_1->init (1, l_argv.data ()) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("%p\n"),
-                               ACE_TEXT ("Name Service")),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("%p\n"),
+                                 ACE_TEXT ("Name Service")),
+                                1);
+            }
 
           ACE_TCHAR time_port[] =
             ACE_TEXT ("-p ") ACE_TEXT (ACE_DEFAULT_TIME_SERVER_PORT_STR);
@@ -65,10 +71,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_Service_Object_Ptr sp_2 (ACE_SVC_INVOKE (ACE_TS_Server_Acceptor));
 
           if (sp_2->init (1, l_argv.data ()) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("%p\n"),
-                               ACE_TEXT ("TS Server Acceptor")),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("%p\n"),
+                                 ACE_TEXT ("TS Server Acceptor")),
+                                1);
+            }
 
           ACE_TCHAR clerk_port[] = ACE_TEXT ("-p 10011");
           l_argv[0] = argv[0];
@@ -77,10 +85,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_Service_Object_Ptr sp_3 (ACE_SVC_INVOKE (ACE_TS_Clerk_Processor));
 
           if (sp_3->init (2, l_argv.data ()) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("%p\n"),
-                               ACE_TEXT ("TS Clerk Processor")),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("%p\n"),
+                                 ACE_TEXT ("TS Clerk Processor")),
+                                1);
+            }
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
           ACE_TCHAR token_port[] =
@@ -104,10 +114,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             ACE_SVC_INVOKE (ACE_Thr_Server_Logging_Acceptor));
 
           if (sp_5->init (1, l_argv.data ()) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("%p\n"),
-                               ACE_TEXT ("Threaded Logging Server")),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("%p\n"),
+                                 ACE_TEXT ("Threaded Logging Server")),
+                                1);
+            }
 
           ACE_TCHAR logging_port[] =
             ACE_TEXT ("-p ") ACE_TEXT (ACE_DEFAULT_LOGGING_SERVER_PORT_STR);
@@ -117,10 +129,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             ACE_SVC_INVOKE (ACE_Server_Logging_Acceptor));
 
           if (sp_6->init (1, l_argv.data ()) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("%p\n"),
-                               ACE_TEXT ("Logging Server")),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("%p\n"),
+                                 ACE_TEXT ("Logging Server")),
+                                1);
+            }
 
           l_argv[0] = logging_port;
           l_argv[1] = nullptr;
@@ -128,10 +142,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             ACE_SVC_INVOKE (ACE_Client_Logging_Acceptor));
 
           if (sp_7->init (1, l_argv.data ()) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("%p\n"),
-                               ACE_TEXT ("Logging Client")),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("%p\n"),
+                                 ACE_TEXT ("Logging Client")),
+                                1);
+            }
 
           // Run forever, performing the configured services until we
           // are shut down by a SIGINT/SIGQUIT signal.
