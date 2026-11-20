@@ -9,19 +9,21 @@ parse_args (int argc, ACE_TCHAR *argv[], std::basic_string<ACE_TCHAR> &ior)
   int option {};
 
   while ((option = get_opts ()) != -1)
-    switch (option)
-      {
-      case 'k':
-        ior = get_opts.opt_arg ();
-        break;
+    {
+      switch (option)
+        {
+        case 'k':
+          ior = get_opts.opt_arg ();
+          break;
 
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("usage:  %s -k <ior>\n"),
-                           argv[0]),
-                          -1);
-      }
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("usage:  %s -k <ior>\n"),
+                             argv[0]),
+                            -1);
+        }
+    }
   // Indicates successful parsing of the command line
   return 0;
 }
@@ -70,8 +72,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       if (encountered_failures == 0)
-        ACE_ERROR ((LM_ERROR,
-                    "ERROR: No expected exceptions occurred.\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: No expected exceptions occurred.\n"));
+        }
 
       // By this time the server should accept the connection and
       // must handle shutdown gracefully.
