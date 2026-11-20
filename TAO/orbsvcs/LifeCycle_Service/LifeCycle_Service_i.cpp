@@ -54,9 +54,11 @@ Life_Cycle_Service_i::create_object (CosLifeCycle::Key const & factory_key,
       std::string const filter = criteria_evaluator.getFilter ();
 
       if (this->debug_level_ >= 2)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                        "Life_Cycle_Service_i:create_object: query(%s) will be called.\n",
-                        filter.c_str ()));
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          "Life_Cycle_Service_i:create_object: query(%s) will be called.\n",
+                          filter.c_str ()));
+        }
 
       CORBA::Object_var generic_factory = this->factory_trader_ptr_->query (filter);
 
@@ -66,9 +68,11 @@ Life_Cycle_Service_i::create_object (CosLifeCycle::Key const & factory_key,
       }
 
       if (CORBA::is_nil (generic_factory.in ()))
-        ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                           "Life_Cycle_Service_i::create_object: Factory is nil!\n"),
-                          0);
+        {
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                 "Life_Cycle_Service_i::create_object: Factory is nil!\n"),
+                                0);
+        }
       else // everyting is ok
         if (this->debug_level_ >= 2)
         {
@@ -80,7 +84,9 @@ Life_Cycle_Service_i::create_object (CosLifeCycle::Key const & factory_key,
 
       // Check if it is a valid Generic Factory reference
       if (CORBA::is_nil (generic_factory.in ()))
-        throw CosLifeCycle::NoFactory (factory_key);
+        {
+          throw CosLifeCycle::NoFactory (factory_key);
+        }
       else
         {
           CosLifeCycle::GenericFactory_var genericFactory_var;
@@ -97,9 +103,11 @@ Life_Cycle_Service_i::create_object (CosLifeCycle::Key const & factory_key,
             }
 
           if (CORBA::is_nil (genericFactory_var.in()))
-            ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                               "Life_Cycle_Service_i::create_object: Invalid Generic Factory.\n"),
-                              0);
+            {
+              ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                     "Life_Cycle_Service_i::create_object: Invalid Generic Factory.\n"),
+                                    0);
+            }
 
           if (this->debug_level_ >= 2)
           {
@@ -111,17 +119,23 @@ Life_Cycle_Service_i::create_object (CosLifeCycle::Key const & factory_key,
                                                                             the_criteria);
 
           if (this->debug_level_ >= 2)
-            ORBSVCS_DEBUG ((LM_DEBUG,
-                        "Life_Cycle_Service_i::create_object: Forwarded request.\n"));
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                              "Life_Cycle_Service_i::create_object: Forwarded request.\n"));
+            }
 
           if (CORBA::is_nil (object_var.in()))
-            ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                               "Life_Cycle_Service_i::create_object: Null object refeference returned by factory.\n"),
-                              0);
+            {
+              ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                     "Life_Cycle_Service_i::create_object: Null object refeference returned by factory.\n"),
+                                    0);
+            }
 
           if (this->debug_level_ >= 2)
-            ORBSVCS_DEBUG ((LM_DEBUG,
-                       "Life_Cycle_Service_i::create_object: Return a object reference to a new object.\n"));
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                              "Life_Cycle_Service_i::create_object: Return a object reference to a new object.\n"));
+            }
 
           return CORBA::Object::_duplicate (object_var.in());
         }
@@ -149,8 +163,10 @@ Life_Cycle_Service_i::register_factory (char const * name,
   this->factory_trader_ptr_->_cxx_export (name, location, description, object);
 
   if (this->debug_level_ >= 1)
-    ORBSVCS_DEBUG ((LM_DEBUG, "LifeCycle Server: Registered %s\n"
-                          "                  Location: %s\n"
-                          "                  Description: %s\n",
-                name, location, description));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG, "LifeCycle Server: Registered %s\n"
+                               "                  Location: %s\n"
+                               "                  Description: %s\n",
+                      name, location, description));
+    }
 }
