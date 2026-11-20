@@ -30,9 +30,11 @@ FP_Task::activate_task (RTScheduling::Current_ptr current,
                         ACE_Time_Value* base_time)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "FP_Task::activate %d\n",
-                importance_));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "FP_Task::activate %d\n",
+                  importance_));
+    }
 
   char msg [BUFSIZ];
   ACE_OS::sprintf (msg, "FP_Task::activate task\n");
@@ -52,9 +54,11 @@ FP_Task::activate_task (RTScheduling::Current_ptr current,
                       this->importance_) == -1)
     {
       if (ACE_OS::last_error () == EPERM)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Insufficient privilege to run this test.\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Insufficient privilege to run this test.\n")),
+                            -1);
+        }
     }
 
   return 0;
@@ -73,13 +77,17 @@ FP_Task::pre_activate ()
 
   CORBA::Short native_priority;
   if (pm->to_native (this->importance_, native_priority) == 0)
-    ACE_ERROR ((LM_ERROR,
-                "Cannot convert native priority %d to corba priority\n",
-                native_priority));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Cannot convert native priority %d to corba priority\n",
+                  native_priority));
+    }
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "Native Priority = %d\n",
-                 native_priority));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Native Priority = %d\n",
+                   native_priority));
+    }
   char msg [BUFSIZ];
   ACE_OS::sprintf (msg, "Native Priority %d\n",
                    native_priority);
@@ -112,9 +120,11 @@ FP_Task::perform_task ()
     }
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "%d\n",
-                count_));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "%d\n",
+                  count_));
+    }
 
   if (this->dist_)
     {
@@ -131,8 +141,10 @@ FP_Task::perform_task ()
           while (count_down_time > ACE_Time_Value::zero)
             {
               if (TAO_debug_level > 0)
-                ACE_DEBUG ((LM_DEBUG,
-                            "Waiting on count down\n"));
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "Waiting on count down\n"));
+                }
 
               ACE::is_prime (prime_number,
                              2,
@@ -142,14 +154,16 @@ FP_Task::perform_task ()
         }
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "%d\n",
-                    count_));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "%d\n",
+                      count_));
+        }
     }
 
   if (dist_)
-  {
-    job_->shutdown ();
-  }
+    {
+      job_->shutdown ();
+    }
   return 0;
 }

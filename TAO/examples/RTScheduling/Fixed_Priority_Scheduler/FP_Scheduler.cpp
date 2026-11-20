@@ -181,9 +181,11 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
       ACE_OS::memcpy (guid->get_buffer (), &gu_id, sizeof(size_t));
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Receive request The Guid is %B\n",
-                    gu_id));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Receive request The Guid is %B\n",
+                      gu_id));
+        }
 
       guid_out.ptr () = guid;
     }
