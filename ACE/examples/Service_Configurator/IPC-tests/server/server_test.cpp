@@ -20,10 +20,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                 argv,
                                 ACE_DEFAULT_LOGGER_KEY,
                                 0) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("ACE_Service_Config::open")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("ACE_Service_Config::open")),
+                        -1);
+    }
 
   // Create an adapter to end the event loop.
   ACE_Sig_Adapter sa (end_event_loop_handler);
@@ -36,9 +38,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // gracefully.
   if (ACE_Reactor::instance ()->register_handler (sig_set,
                                                   &sa) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"), ACE_TEXT ("register_handler")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"), ACE_TEXT ("register_handler")),
+                        -1);
+    }
 
   // This makes the README demo even easier (for sighup).
   ACE_DEBUG ((LM_DEBUG,
