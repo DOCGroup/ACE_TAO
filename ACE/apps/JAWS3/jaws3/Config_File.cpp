@@ -23,7 +23,9 @@ public:
   {
     ACE_TCHAR *p {};
     while (this->queue_.dequeue_head (p) != -1)
-      ACE_OS::free (p);
+      {
+        ACE_OS::free (p);
+      }
   }
 
   ACE_TCHAR const * duplicate (ACE_TCHAR const *s)
@@ -138,7 +140,9 @@ JAWS_Config_File_Impl::parse_file ()
               while (p != buffer.wr_ptr ())
                 {
                   if (*p == '\n')
-                    break;
+                    {
+                      break;
+                    }
                   ++p;
                 }
 
@@ -167,7 +171,9 @@ JAWS_Config_File_Impl::parse_file ()
         {
           end_of_current_line = buffer.rd_ptr ();
           while (*end_of_current_line != '\n')
-            ++end_of_current_line;
+            {
+              ++end_of_current_line;
+            }
         }
 
       // If buffer is not pointing to a continuation line, or there is
@@ -188,7 +194,9 @@ JAWS_Config_File_Impl::parse_file ()
                 {
                   line.rd_ptr (p + 1);
                   while (p != name && (p[-1] == ' ' || p[-1] == '\t'))
-                    --p;
+                    {
+                      --p;
+                    }
                   *p = '\0';
                 }
             }
@@ -197,10 +205,14 @@ JAWS_Config_File_Impl::parse_file ()
             {
               value = line.rd_ptr ();
               while (*value == ' ' || *value == '\t')
-                ++value;
+                {
+                  ++value;
+                }
               p = line.wr_ptr ();
               while (p != value && (p[-1] == ' ' || p[-1] == '\t'))
-                --p;
+                {
+                  --p;
+                }
               *p = '\0';
 
               sym_name = this->strings_->duplicate (name);
@@ -233,7 +245,9 @@ JAWS_Config_File_Impl::parse_file ()
                  end_of_current_line - buffer.rd_ptr ());
       p = line.wr_ptr ();
       while (p != line.rd_ptr () && (p[-1] == ' ' || p[-1] == '\t'))
-        --p;
+        {
+          --p;
+        }
       line.wr_ptr (p);
       line.wr_ptr ()[0] = '\0';
       buffer.rd_ptr (end_of_current_line + 1);
