@@ -149,8 +149,6 @@ public:
     // of being accepted by broken compilers.
     //
 
-    // This will work if &r == this, by first increasing the ref count
-
     COUNTER *new_counter = r.counter_;
     X* new_ptr = dynamic_cast<X*> (r.ptr_);
     COUNTER::attach_strong (new_counter);

@@ -21,25 +21,25 @@ ACE_Token_Request::length (ACE_UINT32 l)
 ACE_INLINE int
 ACE_Token_Request::token_type () const
 {
-  return (int) ntohl (this->transfer_.token_type_);
+  return static_cast<int> (ntohl (this->transfer_.token_type_));
 }
 
 ACE_INLINE void
 ACE_Token_Request::token_type (int t)
 {
-  this->transfer_.token_type_ = htonl ((ACE_UINT32) t);
+  this->transfer_.token_type_ = htonl (static_cast<ACE_UINT32> (t));
 }
 
 ACE_INLINE int
 ACE_Token_Request::proxy_type () const
 {
-  return (int) ntohl (this->transfer_.proxy_type_);
+  return static_cast<int> (ntohl (this->transfer_.proxy_type_));
 }
 
 ACE_INLINE void
 ACE_Token_Request::proxy_type (int t)
 {
-  this->transfer_.proxy_type_ = htonl ((ACE_UINT32) t);
+  this->transfer_.proxy_type_ = htonl (static_cast<ACE_UINT32> (t));
 }
 
 ACE_INLINE ACE_UINT32
@@ -81,23 +81,20 @@ ACE_Token_Request::notify (ACE_UINT32 rq)
 ACE_INLINE ACE_Synch_Options &
 ACE_Token_Request::options () const
 {
-  return (ACE_Synch_Options &) options_;
+  return const_cast<ACE_Synch_Options &> (options_);
 }
 
 ACE_INLINE void
 ACE_Token_Request::options (const ACE_Synch_Options &opt)
 {
-  // fight the friggin const from hell
-  ACE_Synch_Options *options = (ACE_Synch_Options *) &opt;
-
-  transfer_.use_timeout_ = options->operator[](ACE_Synch_Options::USE_TIMEOUT);
+  transfer_.use_timeout_ = opt[ACE_Synch_Options::USE_TIMEOUT];
   if (transfer_.use_timeout_ == 1)
     {
-      transfer_.usec_ = options->timeout ().usec ();
-      if (options->timeout ().sec () > (time_t) ACE_UINT32_MAX)
+      transfer_.usec_ = opt.timeout ().usec ();
+      if (opt.timeout ().sec () > static_cast<time_t> (ACE_UINT32_MAX))
         transfer_.sec_ = ACE_UINT32_MAX;
       else
-        transfer_.sec_ = static_cast<ACE_UINT32> (options->timeout ().sec ());
+        transfer_.sec_ = static_cast<ACE_UINT32> (opt.timeout ().sec ());
     }
   else
     {

@@ -76,7 +76,7 @@ ACE_Future_Rep<T>::create ()
  }
 
 template <class T> ACE_Future_Rep<T> *
-ACE_Future_Rep<T>::attach (ACE_Future_Rep<T>*& rep)
+ACE_Future_Rep<T>::attach (ACE_Future_Rep<T> *rep)
 {
   ACE_ASSERT (rep != nullptr);
   // Use value_ready_mutex_ for both condition and ref count management
@@ -285,7 +285,7 @@ ACE_Future<T>::ACE_Future ()
 
 template <class T>
 ACE_Future<T>::ACE_Future (const ACE_Future<T> &r)
-  : future_rep_ (FUTURE_REP::attach (((ACE_Future<T> &) r).future_rep_))
+  : future_rep_ (FUTURE_REP::attach (r.future_rep_))
 {
 }
 
@@ -389,10 +389,10 @@ ACE_Future<T>::operator = (const ACE_Future<T> &rhs)
   //
   //  bind <this> to the same <ACE_Future_Rep> as <r>.
 
-  // This will work if &r == this, by first increasing the ref count
-  ACE_Future<T> &r = (ACE_Future<T> &) rhs;
+  // Attach the shared representation before releasing the current one so
+  // self-assignment remains safe.
   FUTURE_REP::assign (this->future_rep_,
-                      FUTURE_REP::attach (r.future_rep_));
+                      FUTURE_REP::attach (rhs.future_rep_));
 }
 
 template <class T> void

@@ -176,8 +176,7 @@ ACE_Strong_Bound_Ptr<X, ACE_LOCK>::~ACE_Strong_Bound_Ptr ()
 template <class X, class ACE_LOCK> inline void
 ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator = (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &rhs)
 {
-  // This will work if &r == this, by first increasing the ref count, but
-  // why go through all that?
+  // Avoid refcount changes on self-assignment.
   if (std::addressof (rhs) == this)
     {
       return;
@@ -197,13 +196,6 @@ ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator = (const ACE_Strong_Bound_Ptr<X, ACE
 template <class X, class ACE_LOCK> inline void
 ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator = (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &rhs)
 {
-  // This will work if &r == this, by first increasing the ref count, but
-  // why go through all that?
-  if (std::addressof (rhs) == this)
-    {
-      return;
-    }
-
   COUNTER *new_counter = rhs.counter_;
   X *new_ptr = rhs.ptr_;
 
@@ -332,7 +324,7 @@ ACE_Weak_Bound_Ptr<X, ACE_LOCK>::~ACE_Weak_Bound_Ptr ()
 template <class X, class ACE_LOCK> inline void
 ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator = (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &rhs)
 {
-  // This will work if &rhs == this, by first increasing the ref count
+  // Retain the shared counter before releasing the current reference.
   COUNTER *new_counter = rhs.counter_;
   COUNTER::attach_weak (new_counter);
   COUNTER::detach_weak (this->counter_);
@@ -343,7 +335,7 @@ ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator = (const ACE_Weak_Bound_Ptr<X, ACE_LOC
 template <class X, class ACE_LOCK> inline void
 ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator = (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &rhs)
 {
-  // This will work if &rhs == this, by first increasing the ref count
+  // Retain the shared counter before releasing the current reference.
   COUNTER *new_counter = rhs.counter_;
   COUNTER::attach_weak (new_counter);
   COUNTER::detach_weak (this->counter_);

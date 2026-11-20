@@ -50,16 +50,17 @@ public:
   inline ACE_Quoted_String (const ACE_IOStream_String &s) { *this = s; }
   inline ACE_Quoted_String &operator= (const ACE_IOStream_String& s)
   {
-    return (ACE_Quoted_String &) ACE_IOStream_String::operator= (s);
+    return static_cast<ACE_Quoted_String &> (ACE_IOStream_String::operator= (s));
   }
   inline ACE_Quoted_String &operator = (const char c) {
-    return (ACE_Quoted_String &) ACE_IOStream_String::operator= (c);
+    return static_cast<ACE_Quoted_String &> (ACE_IOStream_String::operator= (c));
   }
   inline ACE_Quoted_String &operator = (const char *c) {
-    return (ACE_Quoted_String &) ACE_IOStream_String::operator= (c);
+    return static_cast<ACE_Quoted_String &> (ACE_IOStream_String::operator= (c));
   }
   inline bool operator < (const ACE_Quoted_String &s) const {
-    return *(ACE_IOStream_String *) this < (ACE_IOStream_String) s;
+    return static_cast<ACE_IOStream_String const &> (*this)
+      < static_cast<ACE_IOStream_String const &> (s);
   }
 #    if defined (ACE_WIN32) && defined (_MSC_VER)
   inline int length () { return this->GetLength (); }

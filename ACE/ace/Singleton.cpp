@@ -82,19 +82,23 @@ ACE_Singleton<TYPE, ACE_LOCK>::instance ()
           if (ACE_Object_Manager::get_singleton_lock (lock) != 0)
             {
               // Failed to acquire the lock!
-              return 0;
+              return nullptr;
             }
 
-          ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *lock, 0);
+          ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *lock, nullptr);
 
-          if (singleton == 0)
+          if (singleton == nullptr)
             {
 #endif /* ACE_MT_SAFE */
-              ACE_NEW_RETURN (singleton, (ACE_Singleton<TYPE, ACE_LOCK>), 0);
+              ACE_NEW_RETURN (singleton,
+                              (ACE_Singleton<TYPE, ACE_LOCK>),
+                              nullptr);
 
               // Register for destruction with ACE_Object_Manager.
 #if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE == 0)
-              ACE_Object_Manager::at_exit (singleton, 0, typeid (TYPE).name ());
+              ACE_Object_Manager::at_exit (singleton,
+                                           nullptr,
+                                           typeid (TYPE).name ());
 #else
               ACE_Object_Manager::at_exit (singleton, &lock,
                                            typeid (TYPE).name ());
@@ -111,12 +115,12 @@ ACE_Singleton<TYPE, ACE_LOCK>::cleanup (void *param)
 {
   ACE_Object_Manager::remove_at_exit (this);
   delete this;
-  ACE_Singleton<TYPE, ACE_LOCK>::instance_i () = 0;
+  ACE_Singleton<TYPE, ACE_LOCK>::instance_i () = nullptr;
 
 #if !defined ACE_MT_SAFE || ACE_MT_SAFE == 0 || defined ACE_FACE_SAFETY_BASE
   ACE_UNUSED_ARG (param);
 #else
-  if (param)
+  if (param != nullptr)
     {
       ACE_LOCK **lock = static_cast<ACE_LOCK **> (param);
       *lock = nullptr;
@@ -130,19 +134,19 @@ ACE_Singleton<TYPE, ACE_LOCK>::close ()
   ACE_Singleton<TYPE, ACE_LOCK> *&singleton =
     ACE_Singleton<TYPE, ACE_LOCK>::instance_i ();
 
-  if (singleton)
+  if (singleton != nullptr)
     {
       singleton->cleanup ();
-      ACE_Singleton<TYPE, ACE_LOCK>::instance_i () = 0;
+      ACE_Singleton<TYPE, ACE_LOCK>::instance_i () = nullptr;
     }
 }
 
 // Pointer to the Singleton instance.
 template <class TYPE, class ACE_LOCK> ACE_Singleton<TYPE, ACE_LOCK> *
-ACE_Singleton<TYPE, ACE_LOCK>::singleton_ = 0;
+ACE_Singleton<TYPE, ACE_LOCK>::singleton_ = nullptr;
 
 template <class TYPE, class ACE_LOCK> ACE_Unmanaged_Singleton<TYPE, ACE_LOCK> *
-ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::singleton_ = 0;
+ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::singleton_ = nullptr;
 
 template <class TYPE, class ACE_LOCK> void
 ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::dump ()
@@ -194,24 +198,24 @@ ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::instance ()
           // ACE_Unmanaged_Singleton instantiation.
 #if defined(ACE_FACE_SAFETY_BASE)
           static ACE_LOCK the_lock;
-          static ACE_LOCK *lock = &the_lock;
+          static ACE_LOCK *lock = std::addressof (the_lock);
 #else /* ACE_FACE_SAFETY_BASE */
           static ACE_LOCK *lock {};
 #endif /* ACE_FACE_SAFETY_BASE */
           if (ACE_Object_Manager::get_singleton_lock (lock) != 0)
             {
               // Failed to acquire the lock!
-              return 0;
+              return nullptr;
             }
 
-          ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *lock, 0);
+          ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *lock, nullptr);
 #endif /* ACE_MT_SAFE */
 
-          if (singleton == 0)
+          if (singleton == nullptr)
             {
               ACE_NEW_RETURN (singleton,
                               (ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>),
-                              0);
+                              nullptr);
             }
         }
     }
@@ -225,10 +229,10 @@ ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::close ()
   ACE_Unmanaged_Singleton<TYPE, ACE_LOCK> *&singleton =
     ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::instance_i ();
 
-  if (singleton)
+  if (singleton != nullptr)
     {
       singleton->cleanup ();
-      ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::instance_i () = 0;
+      ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::instance_i () = nullptr;
     }
 }
 
@@ -280,26 +284,28 @@ ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance ()
           // is static, so we only obtain one per ACE_Singleton instantiation.
 #if defined(ACE_FACE_SAFETY_BASE)
           static ACE_LOCK the_lock;
-          static ACE_LOCK *lock = &the_lock;
+          static ACE_LOCK *lock = std::addressof (the_lock);
 #else /* ACE_FACE_SAFETY_BASE */
           static ACE_LOCK *lock {};
 #endif /* ACE_FACE_SAFETY_BASE */
           if (ACE_Object_Manager::get_singleton_lock (lock) != 0)
             {
               // Failed to acquire the lock!
-              return 0;
+              return nullptr;
             }
 
-          ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *lock, 0);
+          ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *lock, nullptr);
 
-          if (singleton == 0)
+          if (singleton == nullptr)
             {
 #endif /* ACE_MT_SAFE */
               ACE_NEW_RETURN (singleton, (ACE_TSS_Singleton<TYPE, ACE_LOCK>),
-                              0);
+                              nullptr);
 
               // Register for destruction with ACE_Object_Manager.
-              ACE_Object_Manager::at_exit (singleton, 0, typeid (TYPE).name ());
+              ACE_Object_Manager::at_exit (singleton,
+                                           nullptr,
+                                           typeid (TYPE).name ());
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
             }
 #endif /* ACE_MT_SAFE */
@@ -313,7 +319,7 @@ template <class TYPE, class ACE_LOCK> void
 ACE_TSS_Singleton<TYPE, ACE_LOCK>::cleanup (void *)
 {
   delete this;
-  ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance_i () = 0;
+  ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance_i () = nullptr;
 }
 
 template <class TYPE, class ACE_LOCK> void
@@ -367,24 +373,24 @@ ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::instance ()
           // ACE_Unmanaged_Singleton instantiation.
 #if defined(ACE_FACE_SAFETY_BASE)
           static ACE_LOCK the_lock;
-          static ACE_LOCK *lock = &the_lock;
+          static ACE_LOCK *lock = std::addressof (the_lock);
 #else /* ACE_FACE_SAFETY_BASE */
           static ACE_LOCK *lock {};
 #endif /* ACE_FACE_SAFETY_BASE */
           if (ACE_Object_Manager::get_singleton_lock (lock) != 0)
             {
               // Failed to acquire the lock!
-              return 0;
+              return nullptr;
             }
 
-          ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *lock, 0);
+          ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *lock, nullptr);
 #endif /* ACE_MT_SAFE */
 
-          if (singleton == 0)
+          if (singleton == nullptr)
             {
               ACE_NEW_RETURN (singleton,
                               (ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>),
-                              0);
+                              nullptr);
             }
         }
     }
@@ -406,17 +412,17 @@ ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::close ()
 
 // Pointer to the Singleton instance.
 template <class TYPE, class ACE_LOCK> ACE_TSS_Singleton <TYPE, ACE_LOCK> *
-ACE_TSS_Singleton<TYPE, ACE_LOCK>::singleton_ = 0;
+ACE_TSS_Singleton<TYPE, ACE_LOCK>::singleton_ = nullptr;
 
 template <class TYPE, class ACE_LOCK>
 ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK> *
-ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::singleton_ = 0;
+ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::singleton_ = nullptr;
 
 /*************************************************************************/
 
 // Pointer to the Singleton instance.
 template <class TYPE, class ACE_LOCK> ACE_DLL_Singleton_T<TYPE, ACE_LOCK> *
-ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::singleton_ = 0;
+ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::singleton_ = nullptr;
 
 template <class TYPE, class ACE_LOCK> void
 ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::dump ()
@@ -470,24 +476,24 @@ ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::instance ()
           // ACE_Unmanaged_Singleton instantiation.
 #if defined(ACE_FACE_SAFETY_BASE)
           static ACE_LOCK the_lock;
-          static ACE_LOCK *lock = &the_lock;
+          static ACE_LOCK *lock = std::addressof (the_lock);
 #else /* ACE_FACE_SAFETY_BASE */
           static ACE_LOCK *lock {};
 #endif /* ACE_FACE_SAFETY_BASE */
           if (ACE_Object_Manager::get_singleton_lock (lock) != 0)
             {
               // Failed to acquire the lock!
-              return 0;
+              return nullptr;
             }
 
-          ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *lock, 0);
+          ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *lock, nullptr);
 #endif /* ACE_MT_SAFE */
 
-          if (singleton == 0)
+          if (singleton == nullptr)
             {
               ACE_NEW_RETURN (singleton,
                               (ACE_DLL_Singleton_T<TYPE, ACE_LOCK>),
-                              0);
+                              nullptr);
             }
         }
       //ACE_REGISTER_FRAMEWORK_COMPONENT(ACE_DLL_Singleton<TYPE,ACE_LOCK>, singleton);
@@ -507,7 +513,7 @@ ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::close ()
     ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::instance_i ();
 
   delete singleton;
-  singleton = 0;
+  singleton = nullptr;
 }
 
 template <class TYPE, class ACE_LOCK> void

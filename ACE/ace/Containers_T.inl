@@ -324,7 +324,7 @@ ACE_Array<T>::operator!= (const ACE_Array<T> &s) const
 template <class T> ACE_INLINE void
 ACE_DLList<T>::operator= (const ACE_DLList<T> &l)
 {
-  *(ACE_DLList_Base *) this = l;
+  ACE_DLList_Base::operator= (l);
 }
 
 template <class T> ACE_INLINE int
@@ -334,7 +334,7 @@ ACE_DLList<T>::get (T *&item, size_t index)
   int result = ACE_DLList_Base::get (node, index);
   if (result != -1)
     {
-      item = (T *) node->item_;
+      item = static_cast<T *> (node->item_);
     }
   return result;
 }
@@ -365,7 +365,7 @@ ACE_DLList<T>::ACE_DLList (ACE_Allocator *alloc)
 
 template <class T> ACE_INLINE
 ACE_DLList<T>::ACE_DLList (const ACE_DLList<T> &l)
-  : ACE_DLList_Base ((ACE_DLList<T> &) l)
+  : ACE_DLList_Base (l)
 {
 }
 
@@ -385,7 +385,7 @@ ACE_DLList_Iterator<T>::remove ()
 
 template <class T> ACE_INLINE
 ACE_DLList_Iterator<T>::ACE_DLList_Iterator (ACE_DLList<T> &l)
-  : ACE_Double_Linked_List_Iterator <ACE_DLList_Node> ((ACE_DLList_Base &)l),
+  : ACE_Double_Linked_List_Iterator <ACE_DLList_Node> (l),
     list_ (std::addressof (l))
 {
 }
@@ -394,7 +394,7 @@ template <class T> ACE_INLINE void
 ACE_DLList_Iterator<T>::reset (ACE_DLList<T> &l)
 {
   list_ = std::addressof (l);
-  this->ACE_Double_Linked_List_Iterator <ACE_DLList_Node>::reset ((ACE_DLList_Base &)l);
+  this->ACE_Double_Linked_List_Iterator <ACE_DLList_Node>::reset (l);
 }
 
 template <class T> ACE_INLINE int
@@ -404,7 +404,7 @@ ACE_DLList_Iterator<T>::next (T *&ptr)
     ACE_Double_Linked_List_Iterator <ACE_DLList_Node>::next ();
   if (temp)
     {
-      ptr = (T *) temp->item_;
+      ptr = static_cast<T *> (temp->item_);
     }
   return temp ? 1 : 0;
 }
@@ -413,7 +413,7 @@ template <class T> ACE_INLINE T *
 ACE_DLList_Iterator<T>::next () const
 {
   ACE_DLList_Node *temp = ACE_Double_Linked_List_Iterator <ACE_DLList_Node>::next ();
-  return (T *) (temp ? temp->item_ : 0);
+  return temp != nullptr ? static_cast<T *> (temp->item_) : nullptr;
 }
 
 template <class T> ACE_INLINE int
@@ -440,7 +440,7 @@ ACE_DLList_Reverse_Iterator<T>::remove ()
 
 template <class T> ACE_INLINE
 ACE_DLList_Reverse_Iterator<T>::ACE_DLList_Reverse_Iterator (ACE_DLList<T> &l)
-  : ACE_Double_Linked_List_Reverse_Iterator <ACE_DLList_Node> ((ACE_DLList_Base &)l),
+  : ACE_Double_Linked_List_Reverse_Iterator <ACE_DLList_Node> (l),
     list_ (std::addressof (l))
 {
 }
@@ -449,7 +449,7 @@ template <class T> ACE_INLINE void
 ACE_DLList_Reverse_Iterator<T>::reset (ACE_DLList<T> &l)
 {
   list_ = std::addressof (l);
-  this->ACE_Double_Linked_List_Reverse_Iterator <ACE_DLList_Node>::reset ((ACE_DLList_Base &)l);
+  this->ACE_Double_Linked_List_Reverse_Iterator <ACE_DLList_Node>::reset (l);
 }
 
 template <class T> ACE_INLINE int
@@ -467,7 +467,7 @@ ACE_DLList_Reverse_Iterator<T>::next (T *&ptr)
     {
       return 0;
     }
-  ptr = (T *) temp->item_;
+  ptr = static_cast<T *> (temp->item_);
   return 1;
 }
 
@@ -475,7 +475,7 @@ template <class T> ACE_INLINE T *
 ACE_DLList_Reverse_Iterator<T>::next () const
 {
   ACE_DLList_Node *temp = ACE_Double_Linked_List_Reverse_Iterator <ACE_DLList_Node>::next ();
-  return (T *) (temp ? temp->item_ : 0);
+  return temp != nullptr ? static_cast<T *> (temp->item_) : nullptr;
 }
 
 template <class T> ACE_INLINE void

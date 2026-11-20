@@ -86,8 +86,8 @@ ACE_TPQ_Entry::ACE_TPQ_Entry (const ACE_Token_Proxy *new_proxy,
                               const ACE_TCHAR *client_id)
   : cond_var_ (lock_),
     next_ (nullptr),
-    // This const typecast is safe.
-    proxy_ ((ACE_Token_Proxy *) new_proxy),
+    // The proxy is logically mutable while the entry is active.
+    proxy_ (const_cast<ACE_Token_Proxy *> (new_proxy)),
     nesting_level_ (0),
     sleep_hook_ (nullptr)
 {
@@ -164,7 +164,7 @@ ACE_TPQ_Entry::client_id (const ACE_TCHAR *id)
     }
 
   ACE_OS::strsncpy (this->client_id_,
-                    (ACE_TCHAR *) id,
+                    id,
                     ACE_MAXCLIENTIDLEN);
 }
 
@@ -207,15 +207,15 @@ ACE_TSS_TPQ_Entry::make_TSS_TYPE () const
 ACE_TSS_TPQ_Entry::operator ACE_TPQ_Entry * ()
 {
 #if !defined (ACE_NO_TSS_TOKENS)
-  return  (ACE_TPQ_Entry *) (*((ACE_TSS<ACE_TPQ_Entry> *) this));
+  return *static_cast<ACE_TSS<ACE_TPQ_Entry> *> (this);
 #else
   // Not sure this is the right thing to do, but it seems to work.
   // The base class ALSO has a proxy_ and client_id_ members (weird?)
   // which don't get initialised.  The following two lines make this
   // the same as the subclass, so that the slicing works .
-  ACE_TPQ_ENTRY::proxy ((ACE_Token_Proxy *)(this->proxy_));
+  ACE_TPQ_ENTRY::proxy (const_cast<ACE_Token_Proxy *> (this->proxy_));
   ACE_TPQ_ENTRY::client_id (this->client_id_);
-  return  (ACE_TPQ_Entry *) this;
+  return this;
 #endif /* !ACE_NO_TSS_TOKENS */
 }
 
@@ -1442,7 +1442,7 @@ ACE_Token_Proxy::handle_options (ACE_Synch_Options &options,
     // Synchronous.
     {
       // Block on condition variable.
-      while (cv.wait ((ACE_Time_Value *) options.time_value ()) == -1)
+      while (cv.wait (options.time_value ()) == -1)
         {
           // Note, this should obey whatever thread-specific
           // interrupt policy is currently in place...

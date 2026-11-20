@@ -1359,14 +1359,14 @@ template <typename SVC_HANDLER, typename PEER_ACCEPTOR> PEER_ACCEPTOR &
 ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::acceptor () const
 {
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::acceptor");
-  return (PEER_ACCEPTOR &) this->peer_acceptor_;
+  return const_cast<PEER_ACCEPTOR &> (this->peer_acceptor_);
 }
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR>
 ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::operator PEER_ACCEPTOR & () const
 {
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::operator PEER_ACCEPTOR &");
-  return (PEER_ACCEPTOR &) this->peer_acceptor_;
+  return const_cast<PEER_ACCEPTOR &> (this->peer_acceptor_);
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -173,7 +173,7 @@ private:
    *
    * Precondition (rep != 0).
    */
-  static ACE_Future_Rep<T> *attach (ACE_Future_Rep<T> *&rep);
+  static ACE_Future_Rep<T> *attach (ACE_Future_Rep<T> *rep);
 
   /**
    * Decreases the reference count and deletes rep if there are no

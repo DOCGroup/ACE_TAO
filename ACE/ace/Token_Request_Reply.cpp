@@ -35,7 +35,7 @@ ACE_Token_Request::ACE_Token_Request (int token_type,
 int
 ACE_Token_Request::encode (void *&buf)
 {
-  buf = (void *) &this->transfer_;
+  buf = &this->transfer_;
   return this->length ();
 }
 
@@ -49,7 +49,7 @@ ACE_Token_Request::decode ()
 
   options_.set (transfer_.use_timeout_ == 1 ? ACE_Synch_Options::USE_TIMEOUT : 0,
                 ACE_Time_Value (transfer_.sec_, transfer_.usec_),
-                (void *) transfer_.arg_);
+                reinterpret_cast<void *> (transfer_.arg_));
 
   // Decode the variable-sized portion.
   size_t token_len = ACE_OS::strlen (this->token_name_);
@@ -156,7 +156,7 @@ ACE_Token_Reply::ACE_Token_Reply () // Type of reply.
 int
 ACE_Token_Reply::encode (void *&buf)
 {
-  buf = (void *) &this->transfer_;
+  buf = &this->transfer_;
   return this->length ();
 }
 

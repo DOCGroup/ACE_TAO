@@ -109,7 +109,7 @@ ACE_INLINE ACE_TPQ_Entry *
 ACE_Tokens::owner ()
 {
   ACE_TRACE ("ACE_Tokens::owner");
-  return (ACE_TPQ_Entry *) this->waiters_.head ();
+  return const_cast<ACE_TPQ_Entry *> (this->waiters_.head ());
 }
 
 ACE_INLINE const ACE_TCHAR*
@@ -169,9 +169,9 @@ ACE_TPQ_Entry::call_sleep_hook ()
   ACE_TRACE ("ACE_TPQ_Entry::call_sleep_hook");
 
   // if a function has been registered, call it.
-  if (this->sleep_hook () != 0)
+  if (this->sleep_hook () != nullptr)
     {
-      this->sleep_hook () ((void *) this->proxy ());
+      this->sleep_hook () (static_cast<void *> (this->proxy ()));
     }
   else
     {
@@ -215,7 +215,7 @@ ACE_Token_Name::name (const ACE_TCHAR *new_name)
       n = ACE_MAXTOKENNAMELEN - 1;
     }
 
-  ACE_OS::strsncpy (this->token_name_, (ACE_TCHAR *) new_name, n);
+  ACE_OS::strsncpy (this->token_name_, new_name, n);
 }
 
 ACE_INLINE const ACE_TCHAR*
