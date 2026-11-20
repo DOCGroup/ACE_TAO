@@ -13525,3 +13525,9 @@ Review note: `TAO/TAO_IDL`'s `std::optional<UTL_StrList>` state in `IDL_GlobalDa
 - Added Allman braces to single-statement bodies in `CPP-inclient.cpp`, `CPP-unclient.cpp`, `CPP-unserver.cpp`, and `C-inserver.cpp` under `ACE/examples/IPC_SAP/SOCK_SAP`.
 - Focused clang-tidy brace checks and `git diff --check` passed for each edited file. `CPP-inserver.cpp` was checked and had no brace diagnostics. No build or runtime test was run.
 - Commits: `537f174891c`, `d6b1d100ebc`, `94933a02185`, and `5774291a40c`. The full ACE/TAO brace audit remains open.
+
+## 2026-11-20 ACE examples brace rescan
+
+- Re-scanned all 400 translation units in `ACE/examples/compile_commands.json` with C++17 and the ACE include root. The scan found 364 remaining brace warnings before the subsequent `Peer_Router.cpp` cleanup; five translation units reported an unrelated clang error in `APG/Naming/Thermometer.h:41` for passing `std::string` through ACE's variadic logging API.
+- Added Allman braces to the 13 reported single-statement bodies in `ACE/examples/ASX/Event_Server/Event_Server/Peer_Router.cpp`; the focused clang-tidy brace check and `git diff --check` passed.
+- Commit: `ec93d24849d`. The full ACE/TAO brace audit remains open.
