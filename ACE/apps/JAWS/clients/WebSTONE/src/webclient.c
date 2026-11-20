@@ -1095,7 +1095,10 @@ void ClientThread(void *dummy)
         ran_number -= load_file_list[page_index].load_num;
       }
 
-    if (page_index >= number_of_pages) { page_index--; }
+    if (page_index >= number_of_pages)
+      {
+        --page_index;
+      }
 
     D_PRINTF( "Final page index %d\n", page_index );
     filecnt = makeload(load_file_list[page_index].num_of_files,
