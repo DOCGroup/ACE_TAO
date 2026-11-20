@@ -128,9 +128,11 @@ TAO::IIOP_SSL_Connector::make_connection (
     iiop_endpoint->object_addr ();
 
   if (TAO_debug_level > 4)
-    ORBSVCS_DEBUG ((LM_DEBUG,
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%P|%t) IIOP_SSL_Connector::connect ")
                 ACE_TEXT ("making a new connection\n")));
+    }
 
   // Get the right synch options
   ACE_Synch_Options synch_options;
@@ -172,9 +174,11 @@ TAO::IIOP_SSL_Connector::make_connection (
                                                      max_wait_time))
             {
               if (TAO_debug_level > 2)
-                ORBSVCS_ERROR ((LM_ERROR, "TAO (%P|%t) - IIOP_SSL_Connector::"
+                {
+                  ORBSVCS_ERROR ((LM_ERROR, "TAO (%P|%t) - IIOP_SSL_Connector::"
                                       "make_connection, "
                                       "wait for completion failed\n"));
+                }
             }
         }
       else
@@ -208,11 +212,13 @@ TAO::IIOP_SSL_Connector::make_connection (
   // At this point, the connection has be successfully connected.
   // #REFCOUNT# is one.
   if (TAO_debug_level > 2)
-    ORBSVCS_DEBUG ((LM_DEBUG,
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - IIOP_SSL_Connector::make_connection, "
                 "new connection to <%s:%d> on handle %@\n",
                 iiop_endpoint->host (), iiop_endpoint->port (),
                 reinterpret_cast<void *> (svc_handler->peer ().get_handle ())));
+    }
 
   // Add the handler to Cache
   int retval =
@@ -249,11 +255,13 @@ TAO::IIOP_SSL_Connector::make_connection (
       (void) transport->close_connection ();
 
       if (TAO_debug_level > 0)
-        ORBSVCS_ERROR ((LM_ERROR,
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
                     "TAO (%P|%t) - IIOP_SSL_Connector [%B]::make_connection, "
                     "could not register the transport "
                     "in the reactor.\n",
                     transport->id ()));
+        }
 
       return nullptr;
     }
@@ -270,8 +278,10 @@ TAO::IIOP_SSL_Connector::cancel_svc_handler (
     dynamic_cast<IIOP_SSL_Connection_Handler*> (svc_handler);
 
   if (handler)
-    // Cancel from the connector
-    return this->base_connector_.cancel (handler);
+    {
+      // Cancel from the connector
+      return this->base_connector_.cancel (handler);
+    }
 
   return -1;
 }

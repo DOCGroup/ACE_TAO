@@ -51,8 +51,10 @@ TAO::SSLIOP::Acceptor::Acceptor (::Security::QOP qop,
   // @@ This should go away once we support setting security
   //    association options through policies.
   if (qop == ::Security::SecQOPNoProtection)
-    ACE_SET_BITS (this->ssl_component_.target_supports,
-                  ::Security::NoProtection);
+    {
+      ACE_SET_BITS (this->ssl_component_.target_supports,
+                    ::Security::NoProtection);
+    }
 
   // --- CSIv2 ---
 
@@ -77,8 +79,10 @@ TAO::SSLIOP::Acceptor::Acceptor (::Security::QOP qop,
   // @@ This should go away once we support setting security
   //    association options through policies.
   if (qop == CSIIOP::NoProtection)
-    ACE_SET_BITS (this->csiv2_component_.target_supports,
-                  CSIIOP::NoProtection);
+    {
+      ACE_SET_BITS (this->csiv2_component_.target_supports,
+                    CSIIOP::NoProtection);
+    }
 }
 
 TAO::SSLIOP::Acceptor::~Acceptor ()
@@ -102,13 +106,17 @@ TAO::SSLIOP::Acceptor::create_profile (TAO::ObjectKey const &object_key,
   // Check if multiple endpoints should be put in one profile or
   // if they should be spread across multiple profiles.
   if (priority == TAO_INVALID_PRIORITY)
-    return this->create_new_profile (object_key,
-                                     mprofile,
-                                     priority);
+    {
+      return this->create_new_profile (object_key,
+                                       mprofile,
+                                       priority);
+    }
   else
-    return this->create_shared_profile (object_key,
-                                        mprofile,
-                                        priority);
+    {
+      return this->create_shared_profile (object_key,
+                                          mprofile,
+                                          priority);
+    }
 }
 
 int
@@ -505,10 +513,12 @@ TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
                                     this->reuse_addr_) == -1)
         {
           if (TAO_debug_level > 0)
-            ORBSVCS_DEBUG ((LM_DEBUG,
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("\n\nTAO (%P|%t) ")
                         ACE_TEXT ("SSLIOP_Acceptor::open_i - %p\n\n"),
                         ACE_TEXT ("cannot open acceptor")));
+            }
           return -1;
         }
     }
@@ -522,9 +532,11 @@ TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
       for (ACE_UINT32 p = requested_port; p <= last_port; ++p)
         {
           if (TAO_debug_level > 5)
-            ORBSVCS_DEBUG ((LM_DEBUG,
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) IIOP_Acceptor::open_i() ")
                         ACE_TEXT ("trying to listen on port %d\n"), p));
+            }
 
           // Now try to actually open on that port
           a.set_port_number ((u_short)p);
@@ -545,10 +557,12 @@ TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
       if (! found_a_port)
         {
           if (TAO_debug_level > 0)
-            ORBSVCS_DEBUG ((LM_DEBUG,
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("\n\nTAO (%P|%t) ")
                         ACE_TEXT ("SSLIOP_Acceptor::open_i - %p\n\n"),
                         ACE_TEXT ("cannot open acceptor")));
+            }
           return -1;
         }
     }
@@ -561,10 +575,12 @@ TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
     {
       // @@ Should this be a catastrophic error???
       if (TAO_debug_level > 0)
-        ORBSVCS_DEBUG ((LM_DEBUG,
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("\n\nTAO (%P|%t) ")
                     ACE_TEXT ("SSLIOP_Acceptor::open_i - %p\n\n"),
                     ACE_TEXT ("cannot get local addr")));
+        }
       return -1;
     }
 
@@ -635,14 +651,18 @@ TAO::SSLIOP::Acceptor::parse_options_i (int &argc, ACE_CString ** argv)
           int ssl_port = ACE_OS::atoi (value.c_str ());
 
           if (ssl_port >= 0 && ssl_port < 65536)
-            this->ssl_component_.port = static_cast<CORBA::UShort> (ssl_port);
+            {
+              this->ssl_component_.port = static_cast<CORBA::UShort> (ssl_port);
+            }
           else
-            ORBSVCS_ERROR_RETURN ((LM_ERROR,
+            {
+              ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) Invalid ")
                                ACE_TEXT ("IIOP/SSL endpoint ")
                                ACE_TEXT ("port: <%s>\n"),
                                value.c_str ()),
                               -1);
+            }
         }
       else
         {
@@ -696,13 +716,15 @@ TAO::SSLIOP::Acceptor::verify_secure_configuration (TAO_ORB_Core *orb_core,
                            ::Security::NoProtection))
     {
       if (TAO_debug_level > 0)
-        ORBSVCS_ERROR ((LM_ERROR,
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) Cannot support secure ")
                     ACE_TEXT ("IIOP over SSL connection if\n")
                     ACE_TEXT ("(%P|%t) standard profile ")
                     ACE_TEXT ("components are disabled\n")
                     ACE_TEXT ("(%P|%t) or IIOP 1.0 endpoint is ")
                     ACE_TEXT ("used.\n")));
+        }
 
       errno = EINVAL;
       return -1;
