@@ -132,7 +132,9 @@ Client::handle_output (ACE_HANDLE handle)
   if (bytes_sent == -1)
     {
       if (errno == EWOULDBLOCK)
-        return 0;  // Flow control kicked in.
+        {
+          return 0;  // Flow control kicked in.
+        }
       else if (errno == EPIPE || errno == ECONNRESET)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -142,17 +144,21 @@ Client::handle_output (ACE_HANDLE handle)
           return -1;
         }
       else
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%t) %p\n"),
-                           ACE_TEXT ("Client::handle_output")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%t) %p\n"),
+                             ACE_TEXT ("Client::handle_output")),
+                            -1);
+        }
     }
   else if (bytes_sent == 0)
-    return -1;
+    {
+      return -1;
+    }
   else
-  {
-    this->sent.append (buffer.substr (0, bytes_sent));
-  }
+    {
+      this->sent.append (buffer.substr (0, bytes_sent));
+    }
 
   return -1;
 }
@@ -208,12 +214,16 @@ Client::handle_timeout (const ACE_Time_Value &, const void *)
     {
       // Shutdown.
       if (this->reactor ()->end_reactor_event_loop () == 0)
-        ACE_DEBUG ((LM_INFO,
-                    ACE_TEXT ("(%t) Successful client reactor shutdown.\n")));
+        {
+          ACE_DEBUG ((LM_INFO,
+                      ACE_TEXT ("(%t) Successful client reactor shutdown.\n")));
+        }
       else
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%t) %p\n"),
-                    ACE_TEXT ("Failed client reactor shutdown")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%t) %p\n"),
+                      ACE_TEXT ("Failed client reactor shutdown")));
+        }
 
       // Force this service handler to be closed in either case.
       return -1;
@@ -317,7 +327,9 @@ Server::handle_output (ACE_HANDLE handle)
       if (bytes_sent == -1)
         {
           if (errno == EWOULDBLOCK)
-            return 0;
+            {
+              return 0;
+            }
           else if (errno == EPIPE || errno == ECONNRESET)
             {
               ACE_DEBUG ((LM_DEBUG,
@@ -327,13 +339,17 @@ Server::handle_output (ACE_HANDLE handle)
               return -1;
             }
           else
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("(%t) %p\n"),
-                               ACE_TEXT ("Client::handle_output")),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("(%t) %p\n"),
+                                 ACE_TEXT ("Client::handle_output")),
+                                -1);
+            }
         }
       else if (bytes_sent == 0)
-        return -1;
+        {
+          return -1;
+        }
       else
         {
           if (bytes_sent == static_cast<ssize_t> (bytes_to_send))
@@ -381,9 +397,11 @@ public:
     if (result != 0)
       {
         if (errno != EWOULDBLOCK)
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%t) %p\n"),
-                      ACE_TEXT ("Unable to accept connection")));
+          {
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%t) %p\n"),
+                        ACE_TEXT ("Unable to accept connection")));
+          }
 
         return result;
       }
@@ -466,12 +484,16 @@ disable_signal (int sigmin, int sigmax)
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
   sigset_t signal_set;
   if (ACE_OS::sigemptyset (&signal_set) == - 1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Error: (%P|%t):%p\n"),
-                ACE_TEXT ("sigemptyset failed")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Error: (%P|%t):%p\n"),
+                  ACE_TEXT ("sigemptyset failed")));
+    }
 
   for (int i = sigmin; i <= sigmax; ++i)
-    ACE_OS::sigaddset (&signal_set, i);
+    {
+      ACE_OS::sigaddset (&signal_set, i);
+    }
 
   // Put the <signal_set>.
 # if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
@@ -481,10 +503,12 @@ disable_signal (int sigmin, int sigmax)
 # else
   if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, nullptr) != 0)
 # endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Error: (%P|%t): %p\n"),
-                       ACE_TEXT ("SIG_BLOCK failed")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Error: (%P|%t): %p\n"),
+                         ACE_TEXT ("SIG_BLOCK failed")),
+                        -1);
+    }
 #else
   ACE_UNUSED_ARG (sigmin);
   ACE_UNUSED_ARG (sigmax);
@@ -514,43 +538,53 @@ run_main (int, ACE_TCHAR *[])
                                        // Svc_Handlers.
 
   if (client.open (&reactor, flags) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%t) %p\n"),
-                       ACE_TEXT ("Unable to open client service handler")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%t) %p\n"),
+                         ACE_TEXT ("Unable to open client service handler")),
+                        -1);
+    }
 
   unsigned short port = 54678;
 
   ACE_INET_Addr addr;
 
   if (addr.set (port, INADDR_LOOPBACK) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%t) %p\n"),
-                       ACE_TEXT ("server_worker - ACE_INET_Addr::set")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%t) %p\n"),
+                         ACE_TEXT ("server_worker - ACE_INET_Addr::set")),
+                        -1);
+    }
 
   TestAcceptor server;
 
   if (server.open (addr, &reactor, flags) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%t) %p\n"),
-                       ACE_TEXT ("Unable to open server service handler")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%t) %p\n"),
+                         ACE_TEXT ("Unable to open server service handler")),
+                        -1);
+    }
 
   Client *client_handler {};
 
   if (client.connect (client_handler, addr) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%t) %p\n"),
-                       ACE_TEXT ("Unable to connect to server")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%t) %p\n"),
+                         ACE_TEXT ("Unable to connect to server")),
+                        -1);
+    }
 
   if (reactor.run_reactor_event_loop () != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%t) %p\n"),
-                       ACE_TEXT ("Error when running client ")
-                       ACE_TEXT ("reactor event loop")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%t) %p\n"),
+                         ACE_TEXT ("Error when running client ")
+                         ACE_TEXT ("reactor event loop")),
+                        -1);
+    }
 
   ACE_DEBUG((LM_DEBUG, "sent: %C\n", client_handler->sent.c_str ()));
   ACE_DEBUG((LM_DEBUG, "received: %C\n", client_handler->received.c_str ()));
