@@ -85,7 +85,9 @@ void
 Progress_Window::sent_request (CORBA::Long id)
 {
   if (id < 0 || id >= this->n_peers_)
-    return;
+    {
+      return;
+    }
   Fl_Slider *obj =
     dynamic_cast<Fl_Slider*> (this->request_progress_[id]);
   obj->value (obj->value () + 1);
@@ -93,14 +95,18 @@ Progress_Window::sent_request (CORBA::Long id)
 
   int const i = static_cast<int> (obj->value ());
   if (i % 100 == 0)
-    ACE_DEBUG ((LM_DEBUG, "Progress (%t) - recv reply %d\n", i));
+    {
+      ACE_DEBUG ((LM_DEBUG, "Progress (%t) - recv reply %d\n", i));
+    }
 }
 
 void
 Progress_Window::recv_reply (CORBA::Long id)
 {
   if (id < 0 || id >= this->n_peers_)
-    return;
+    {
+      return;
+    }
   Fl_Slider *obj =
     dynamic_cast<Fl_Slider*> (this->reply_progress_[id]);
   obj->value (obj->value () + 1);
@@ -108,7 +114,9 @@ Progress_Window::recv_reply (CORBA::Long id)
 
   int const i = static_cast<int> (obj->value ());
   if (i % 100 == 0)
-    ACE_DEBUG ((LM_DEBUG, "Progress (%t) - recv reply %d\n", i));
+    {
+      ACE_DEBUG ((LM_DEBUG, "Progress (%t) - recv reply %d\n", i));
+    }
 }
 
 CORBA::Long
@@ -133,7 +141,9 @@ void
 Progress_Window::start ()
 {
   if (this->peers_.length () < static_cast<CORBA::ULong> (this->n_peers_))
-    return;
+    {
+      return;
+    }
 
   for (CORBA::ULong i = 0; i != this->peers_.length (); ++i)
     {
