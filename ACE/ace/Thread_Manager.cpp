@@ -1000,7 +1000,9 @@ ACE_Thread_Manager::remove_thr (ACE_Thread_Descriptor *td,
 
 #if defined (ACE_WIN32)
   if (close_handler != 0)
-    ::CloseHandle (td->thr_handle_);
+    {
+      ::CloseHandle (td->thr_handle_);
+    }
 #else
   ACE_UNUSED_ARG (close_handler);
 #endif /* ACE_WIN32 */
@@ -1033,15 +1035,19 @@ ACE_Thread_Manager::remove_thr_all ()
 // Factor out some common behavior to simplify the following methods.
 #define ACE_THR_OP(OP,STATE) \
   int result = OP (td->thr_handle_); \
-  if (result == -1) { \
-    if (errno != ENOTSUP) \
-      this->thr_to_be_removed_.enqueue_tail (td); \
-    return -1; \
-  } \
-  else { \
-    ACE_SET_BITS (td->thr_state_, STATE); \
-    return 0; \
-  }
+  if (result == -1) \
+    { \
+      if (errno != ENOTSUP) \
+        { \
+          this->thr_to_be_removed_.enqueue_tail (td); \
+        } \
+      return -1; \
+    } \
+  else \
+    { \
+      ACE_SET_BITS (td->thr_state_, STATE); \
+      return 0; \
+    }
 
 int
 ACE_Thread_Manager::join_thr (ACE_Thread_Descriptor *td, int)
@@ -1055,7 +1061,9 @@ ACE_Thread_Manager::join_thr (ACE_Thread_Descriptor *td, int)
       || ACE_BIT_ENABLED (td->flags_, THR_JOINABLE))
     {
       if (td->terminated_)
-        return 0;
+        {
+          return 0;
+        }
       ACE_SET_BITS (td->thr_state_, ACE_THR_JOINING);
     }
   else
@@ -1069,15 +1077,21 @@ ACE_Thread_Manager::join_thr (ACE_Thread_Descriptor *td, int)
   while (true)
     {
       if (this->join_cond_.wait () == -1)
-        return -1;
+        {
+          return -1;
+        }
 
       bool found = false;
       for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
            !iter.done () && !found; iter.advance ())
         if (ACE_OS::thr_equal (iter.next ()->thr_id_, waiting_id))
-          found = true;
+          {
+            found = true;
+          }
       if (!found)
-        break;
+        {
+          break;
+        }
     }
 
 #else
@@ -1102,17 +1116,19 @@ ACE_Thread_Manager::suspend_thr (ACE_Thread_Descriptor *td, int)
   ACE_TRACE ("ACE_Thread_Manager::suspend_thr");
 
   int const result = ACE_Thread::suspend (td->thr_handle_);
-  if (result == -1) {
-    if (errno != ENOTSUP)
+  if (result == -1)
     {
-      this->thr_to_be_removed_.enqueue_tail (td);
+      if (errno != ENOTSUP)
+        {
+          this->thr_to_be_removed_.enqueue_tail (td);
+        }
+      return -1;
     }
-    return -1;
-  }
-  else {
-    ACE_SET_BITS (td->thr_state_, ACE_THR_SUSPENDED);
-    return 0;
-  }
+  else
+    {
+      ACE_SET_BITS (td->thr_state_, ACE_THR_SUSPENDED);
+      return 0;
+    }
 }
 
 int
@@ -1121,17 +1137,19 @@ ACE_Thread_Manager::resume_thr (ACE_Thread_Descriptor *td, int)
   ACE_TRACE ("ACE_Thread_Manager::resume_thr");
 
   int const result = ACE_Thread::resume (td->thr_handle_);
-  if (result == -1) {
-    if (errno != ENOTSUP)
+  if (result == -1)
     {
-      this->thr_to_be_removed_.enqueue_tail (td);
+      if (errno != ENOTSUP)
+        {
+          this->thr_to_be_removed_.enqueue_tail (td);
+        }
+      return -1;
     }
-    return -1;
-  }
-  else {
-    ACE_CLR_BITS (td->thr_state_, ACE_THR_SUSPENDED);
-    return 0;
-  }
+  else
+    {
+      ACE_CLR_BITS (td->thr_state_, ACE_THR_SUSPENDED);
+      return 0;
+    }
 }
 
 int
@@ -1603,14 +1621,18 @@ ACE_Thread_Manager::join (ACE_thread_t tid, ACE_THR_FUNC_RETURN *status)
     while (found)
       {
         if (this->join_cond_.wait () == -1)
-          return -1;
+          {
+            return -1;
+          }
 
         found = false;
         for (iter_t iter (this->thr_list_); !iter.done () && !found; iter.advance ())
           if (ACE_OS::thr_equal (iter.next ()->thr_id_, tid) &&
               (ACE_BIT_DISABLED (iter.next ()->flags_, THR_DETACHED | THR_DAEMON)
                || ACE_BIT_ENABLED (iter.next ()->flags_, THR_JOINABLE)))
-            found = true;
+            {
+              found = true;
+            }
       }
 
 #endif // ACE_HAS_THREADS && ACE_LACKS_PTHREAD_JOIN
