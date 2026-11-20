@@ -376,7 +376,9 @@ ACE_OS::rand_r (unsigned int *seed)
   long temp = new_seed / 127773;
   new_seed = 16807 * (new_seed - temp * 127773) - 2836 * temp;
   if (new_seed < 0)
-    new_seed += 2147483647;
+    {
+      new_seed += 2147483647;
+    }
   *seed = (unsigned int)new_seed;
   return (int) (new_seed & RAND_MAX);
 #else
