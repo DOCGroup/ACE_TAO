@@ -19,7 +19,9 @@ TAO_Persistent_Context_Index::unbind (char const *poa_id)
   TAO_Persistent_Index_ExtId name (poa_id);
   TAO_Persistent_Index_IntId entry;
   if (this->index_->unbind (name, entry, this->allocator_.get ()) != 0)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       // Free up the memory we allocated in bind().
@@ -41,7 +43,9 @@ TAO_Persistent_Context_Index::bind (char const *poa_id,
   char *ptr = (char *) this->allocator_->malloc (poa_id_len + counter_len);
 
   if (ptr == nullptr)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       // Populate memory with data.
@@ -67,13 +71,17 @@ TAO_Persistent_Context_Index::bind (char const *poa_id,
         }
 
       if (result == -1)
-        // Free our dynamically allocated memory.
-        this->allocator_->free ((void *) ptr);
+        {
+          // Free our dynamically allocated memory.
+          this->allocator_->free ((void *) ptr);
+        }
       else
-        // If bind() succeed, it will automatically sync
-        // up the map manager entry.  However, we must sync up our
-        // name/value memory.
-        this->allocator_->sync (ptr, poa_id_len + counter_len);
+        {
+          // If bind() succeed, it will automatically sync
+          // up the map manager entry.  However, we must sync up our
+          // name/value memory.
+          this->allocator_->sync (ptr, poa_id_len + counter_len);
+        }
 
       return result;
     }
@@ -151,8 +159,10 @@ TAO_Persistent_Context_Index::init (size_t context_size)
     }
 
   else
-    // CASE 2:Recreate all Naming Contexts.
-    status = recreate_all ();
+    {
+      // CASE 2:Recreate all Naming Contexts.
+      status = recreate_all ();
+    }
 
   return status;
 }
@@ -264,9 +274,11 @@ TAO_Persistent_Context_Index::create_index ()
 #if !defined (ACE_LACKS_ACCESS)
   // Now check if the backing store has been created successfully.
   if (ACE_OS::access (this->index_file_, F_OK) != 0)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       "create_index\n"),
-                      -1);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             "create_index\n"),
+                            -1);
+    }
 #endif /* ACE_LACKS_ACCESS */
 
   void *context_index {};
@@ -274,7 +286,9 @@ TAO_Persistent_Context_Index::create_index ()
   // This is the easy case since if we find hash table in the
   // memory-mapped file we know it's already initialized.
   if (this->allocator_->find (TAO_NAMING_CONTEXT_INDEX, context_index) == 0)
-    this->index_ = (CONTEXT_INDEX *) context_index;
+    {
+      this->index_ = (CONTEXT_INDEX *) context_index;
+    }
 
   // Create a new <index_> (because we've just created a new
   // memory-mapped file).
