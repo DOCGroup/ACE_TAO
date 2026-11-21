@@ -729,7 +729,7 @@ protected:
 
   /// This flag is used to keep track of whether we are actively handling
   /// events or not.
-  sig_atomic_t deactivated_;
+  sig_atomic_t deactivated_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

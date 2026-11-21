@@ -496,7 +496,6 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ACE_Select_Reactor_T
     : ACE_Select_Reactor_Impl (mask_signals)
     , token_ (s_queue)
     , lock_adapter_ (token_)
-    , deactivated_ (0)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::ACE_Select_Reactor_T");
 
@@ -554,7 +553,6 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ACE_Select_Reactor_T
     : ACE_Select_Reactor_Impl (mask_signals)
     , token_ (s_queue)
     , lock_adapter_ (token_)
-    , deactivated_ (0)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::ACE_Select_Reactor_T");
 
