@@ -1000,7 +1000,7 @@ protected:
   T *head_;
 
   /// Size of this list.
-  size_t size_;
+  size_t size_ {};
 
   /// Allocation Strategy of the queue.
   ACE_Allocator *allocator_;

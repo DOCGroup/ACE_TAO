@@ -680,7 +680,7 @@ ACE_ALLOC_HOOK_DEFINE_Tc(ACE_Double_Linked_List)
 
   template <class T>
 ACE_Double_Linked_List<T>:: ACE_Double_Linked_List (ACE_Allocator *alloc)
-  : size_ (0), allocator_ (alloc)
+  : allocator_ (alloc)
 {
   if (this->allocator_ == 0)
     {
