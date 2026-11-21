@@ -461,9 +461,9 @@ public:
 
       protected:
         /// Pointer to parent iterator
-        Binding_Iterator *parent_;
+        Binding_Iterator *parent_ {};
 
-        u_long index_;
+        u_long index_ {};
       };
 
   private:
