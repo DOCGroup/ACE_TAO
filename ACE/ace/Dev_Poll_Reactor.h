@@ -378,17 +378,17 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
 
   private:
     /// Current number of handles.
-    int size_;
+    int size_ {};
 
     /// Maximum number of handles.
-    int max_size_;
+    int max_size_ {};
 
     /// The underlying array of event handlers.
     /**
      * The array of event handlers is directly indexed directly using
      * an @c ACE_HANDLE value.  This is Unix-specific.
      */
-    Event_Tuple *handlers_;
+    Event_Tuple *handlers_ {};
   };
 
 public:

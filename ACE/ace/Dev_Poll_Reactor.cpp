@@ -441,9 +441,6 @@ ACE_Dev_Poll_Reactor_Notify::dequeue_one (ACE_Notification_Buffer &nb)
 // -----------------------------------------------------------------
 
 ACE_Dev_Poll_Reactor::Handler_Repository::Handler_Repository ()
-  : size_ (0),
-    max_size_ (0),
-    handlers_ (nullptr)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::Handler_Repository::Handler_Repository");
 }
