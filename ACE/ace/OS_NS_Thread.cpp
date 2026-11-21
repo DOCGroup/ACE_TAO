@@ -2583,8 +2583,10 @@ namespace {
         }
       }
 
-    return init_mutex ? ACE_OS::mutex_init (&evtdata->lock_, type, name,
-                                            (ACE_mutexattr_t *) arg) : 0;
+    return init_mutex ?
+      ACE_OS::mutex_init (&evtdata->lock_, type, name,
+                          static_cast<ACE_mutexattr_t *> (arg)) :
+      0;
   }
 
   template <size_t N, size_t M>
