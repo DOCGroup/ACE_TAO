@@ -119,12 +119,9 @@ timeval_to_text(const struct timeval *the_timeval) {
    */
   THREAD static char timeval_as_text[SIZEOF_TIMEVALTEXT+1];
   int seconds, microseconds;
-  int returnval = 0;
-
   seconds = the_timeval->tv_sec;
   microseconds = the_timeval->tv_usec;
-  returnval = sprintf(timeval_as_text,
-                      "%10d.%6.6d\t", seconds, microseconds);
+  sprintf(timeval_as_text, "%10d.%6.6d\t", seconds, microseconds);
   return timeval_as_text;
 }
 
@@ -135,21 +132,17 @@ double_to_text(const double the_double) {
    * given a double, return text
    */
   THREAD static char double_as_text[SIZEOF_DOUBLETEXT + 1];
-  int returnval = 0;
-
-  returnval = sprintf(double_as_text, "%17.01f\t", the_double);
+  sprintf(double_as_text, "%17.01f\t", the_double);
   return(double_as_text);
 }
 
 struct timeval
 text_to_timeval(char *timeval_as_text) {
-  int returnval = 0;
   long int seconds, microseconds;
   struct timeval the_timeval;
 
   D_PRINTF("T/%d %s\n", (int)timeval_as_text, timeval_as_text);
-  returnval = sscanf(timeval_as_text, "%ld.%ld",
-                     &seconds, &microseconds);
+  sscanf(timeval_as_text, "%ld.%ld", &seconds, &microseconds);
   the_timeval.tv_sec = seconds;
   the_timeval.tv_usec = microseconds;
   return the_timeval;
@@ -158,10 +151,9 @@ text_to_timeval(char *timeval_as_text) {
 double
 text_to_double(char *double_as_text) {
   double the_double = 0;
-  int returnval = 0;
 
   D_PRINTF("D/%d %s\n", (int)double_as_text, double_as_text);
-  returnval = sscanf(double_as_text, "%lf", &the_double);
+  sscanf(double_as_text, "%lf", &the_double);
   return(the_double);
 }
 

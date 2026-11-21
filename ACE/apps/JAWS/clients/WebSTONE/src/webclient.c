@@ -583,7 +583,6 @@ char  connectstr[MAXHOSTNAMELEN+10];
 void
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-    int   file_count=0;
     int   getoptch;
     int   currarg;
     extern char *optarg;

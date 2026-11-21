@@ -290,7 +290,6 @@ static IDENT PassOutput()
 
 static void PassOutputThread(SOCKET sIO)
 {
-    RETVAL retval = 0;
     int count;
     char buf[4096];
 
@@ -299,7 +298,6 @@ static void PassOutputThread(SOCKET sIO)
             fprintf(stderr,
                     "Error writing to standard output: error = %lu.\n",
                     GetLastError());
-            retval = 1;
             break;
         }
     }
@@ -321,7 +319,6 @@ static IDENT PassError()
 
 static void PassErrorThread(SOCKET sErr)
 {
-    RETVAL retval = 0;
     int count;
     char buf[4096];
 
@@ -330,7 +327,6 @@ static void PassErrorThread(SOCKET sErr)
             fprintf(stderr,
                     "Error writing to standard error: error = %lu.\n",
             GetLastError());
-            retval = 1;
             break;
         }
     }
