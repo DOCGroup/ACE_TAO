@@ -159,7 +159,8 @@ ClientSvcHandler::handle_input (ACE_HANDLE handle)
         const size_t send_len = ACE_OS::strlen (ClientSvcHandler::send_str);
         if (-1 == this->peer().send_n (ClientSvcHandler::send_str, send_len))
           {
-            ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%t: client h %d: %p\n"),
+            ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%t: client h %H: %p\n"),
+                               handle,
                                ACE_TEXT ("resending")),
                               -1);
           }
