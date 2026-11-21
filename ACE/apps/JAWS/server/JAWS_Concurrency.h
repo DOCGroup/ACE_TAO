@@ -76,9 +76,9 @@ private:
 class JAWS_Thread_Pool_Task : public JAWS_Concurrency_Base
 {
 public:
-  JAWS_Thread_Pool_Task (long flags = THR_NEW_LWP,
-                         int nthreads = 5,
-                         int maxthreads = 20);
+  explicit JAWS_Thread_Pool_Task (long flags = THR_NEW_LWP,
+                                  int nthreads = 5,
+                                  int maxthreads = 20);
 
 private:
   int nthreads_;
@@ -93,7 +93,8 @@ private:
 class JAWS_Thread_Per_Task : public JAWS_Concurrency_Base
 {
 public:
-  JAWS_Thread_Per_Task (long flags = THR_NEW_LWP, int maxthreads = 20);
+  explicit JAWS_Thread_Per_Task (long flags = THR_NEW_LWP,
+                                 int maxthreads = 20);
 
   int put (ACE_Message_Block *mb, ACE_Time_Value *tv = nullptr) override;
 
