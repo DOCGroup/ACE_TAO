@@ -18,9 +18,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 sig_atomic_t ACE_DLL_Handle::open_called_ = 0;
 
 ACE_DLL_Handle::ACE_DLL_Handle ()
-  : refcount_ (0),
-    dll_name_ (nullptr),
-    handle_ (ACE_SHLIB_INVALID_HANDLE)
+  : handle_ (ACE_SHLIB_INVALID_HANDLE)
 {
   ACE_TRACE ("ACE_DLL_Handle::ACE_DLL_Handle");
 }

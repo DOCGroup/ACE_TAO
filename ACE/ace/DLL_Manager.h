@@ -176,10 +176,10 @@ private:
 private:
   /// Keep track of how many ACE_DLL objects have a reference to this
   /// dll.
-  sig_atomic_t refcount_;
+  sig_atomic_t refcount_ {};
 
   /// Name of the shared library.
-  ACE_TCHAR *dll_name_;
+  ACE_TCHAR *dll_name_ {};
 
   /// Handle to the actual library loaded by the OS.
   ACE_SHLIB_HANDLE handle_;
