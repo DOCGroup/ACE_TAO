@@ -319,7 +319,8 @@ Thread_Handler::handle_timeout (ACE_Time_Value const &time, void const *)
               static_cast<ACE_INT64> (time.usec ()),
               this->iterations_));
 
-  if (--this->iterations_ <= 0
+  if (this->iterations_ == 0
+      || --this->iterations_ == 0
       || Thread_Handler::interval_.sec () == 0)
   {
     ACE_Reactor::end_event_loop ();
