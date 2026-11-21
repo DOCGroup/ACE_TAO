@@ -243,7 +243,7 @@ ACE_Name_Request::encode (void *&buf)
         static_cast<ACE_WCHAR_T> (ACE_HTONS (this->transfer_.data_[i]));
     }
 
-  buf = (void *) &this->transfer_;
+  buf = &this->transfer_;
   this->transfer_.block_forever_ = ACE_HTONL (this->transfer_.block_forever_);
   this->transfer_.usec_timeout_  = ACE_HTONL (this->transfer_.usec_timeout_);
 #if defined (ACE_LITTLE_ENDIAN)
@@ -495,7 +495,7 @@ ACE_Name_Reply::encode (void *&buf)
   this->transfer_.length_ = ACE_HTONL (this->transfer_.length_);
   this->transfer_.type_ = ACE_HTONL (this->transfer_.type_);
   this->transfer_.errno_ = ACE_HTONL (this->transfer_.errno_);
-  buf = (void *) &this->transfer_;
+  buf = &this->transfer_;
   return len;
 }
 

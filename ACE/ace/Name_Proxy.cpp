@@ -143,7 +143,7 @@ ACE_Name_Proxy::recv_reply (ACE_Name_Request &reply)
   // Read the first 4 bytes to get the length of the message This
   // implementation assumes that the first 4 bytes are the length of
   // the message.
-  ssize_t n = this->peer_.recv ((void *) &reply, sizeof (ACE_UINT32));
+  ssize_t n = this->peer_.recv (&reply, sizeof (ACE_UINT32));
   if (n != sizeof (ACE_UINT32))
     {
       // Not the correct number of bytes. Sort out just what kind of fail,
@@ -171,7 +171,7 @@ ACE_Name_Proxy::recv_reply (ACE_Name_Request &reply)
 
   // Receive the rest of the request message.
   // @@ beware of blocking read!!!.
-  n = this->peer_.recv ((void *) (((char *) &reply) + sizeof (ACE_UINT32)),
+  n = this->peer_.recv (reinterpret_cast<char *> (&reply) + sizeof (ACE_UINT32),
                         length - sizeof (ACE_UINT32));
 
   // Subtract off the size of the part we skipped over...
