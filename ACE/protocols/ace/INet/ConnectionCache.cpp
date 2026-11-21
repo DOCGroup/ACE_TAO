@@ -22,7 +22,7 @@ namespace ACE
     ConnectionCacheKey::ConnectionCacheKey () = default;
 
     ConnectionCacheKey::ConnectionCacheKey (ConnectionKey const& key)
-      : key_ (&key)
+      : key_ (std::addressof (key))
       {
       }
 
