@@ -66,7 +66,7 @@ public:
   /// Dump the state of this object.
   void dump () const;
 
-  // Declare the dynamic allocation hooks.
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
   /// Pointer to the argument.
@@ -237,7 +237,7 @@ public:
   /// Dump the state of this object.
   void dump () const;
 
-  // Declare the dynamic allocation hooks.
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
   /**
