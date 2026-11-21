@@ -41,7 +41,7 @@ public:
   /// construct HP SNMP++ objects from raw buffer via CMU SNMP datatypes
   wpdu (Pdu const &pdu, UdpTarget const &target);
   wpdu (iovec const &buffer);
-  wpdu(); // same as using iovec?
+  wpdu ();
   wpdu (wpdu const &) = delete;
   wpdu &operator= (wpdu const &) = delete;
   wpdu (wpdu &&) = delete;
