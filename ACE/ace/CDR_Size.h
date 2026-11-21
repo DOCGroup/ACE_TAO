@@ -161,10 +161,10 @@ private:
 
 private:
   /// Set to false when an error occurs.
-  bool good_bit_;
+  bool good_bit_ {true};
 
   /// Current size.
-  size_t size_;
+  size_t size_ {};
 
 protected:
   /// GIOP version information

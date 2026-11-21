@@ -8,9 +8,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE
 ACE_SizeCDR::ACE_SizeCDR (ACE_CDR::Octet major_version,
                           ACE_CDR::Octet minor_version)
-    : good_bit_ (true),
-      size_ (0),
-      major_version_ (major_version),
+    : major_version_ (major_version),
       minor_version_ (minor_version)
 {
 }
