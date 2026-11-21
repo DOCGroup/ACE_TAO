@@ -3,15 +3,18 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/TLI_Acceptor.h"
 #include "ace/Thread_Manager.h"
+#include <cstdint>
 
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_TLI)
 
 // Global thread manager.
 ACE_Thread_Manager thr_mgr;
 
-void *
-lookup_name (ACE_HANDLE handle)
+ACE_THR_FUNC_RETURN
+lookup_name (void *arg)
 {
+  ACE_HANDLE const handle = static_cast<ACE_HANDLE> (
+    reinterpret_cast<std::intptr_t> (arg));
   enum
   {
     MAXLINE = 255,
@@ -78,7 +81,7 @@ lookup_name (ACE_HANDLE handle)
   if (stream.close () == -1)
     ACE_OS::t_error ("stream.close error");
 
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 int
@@ -98,7 +101,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ACE_OS::t_error ("server.accept error");
 
       if (thr_mgr.spawn (lookup_name,
-                         (void *) new_stream.get_handle (),
+                         reinterpret_cast<void *> (
+                           static_cast<std::intptr_t> (new_stream.get_handle ())),
                          THR_DETACHED) == -1)
         ACE_DEBUG ((LM_ERROR,
                     "server: can't create worker thread %d\n"));

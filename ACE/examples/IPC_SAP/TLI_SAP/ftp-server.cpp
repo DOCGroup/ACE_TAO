@@ -3,12 +3,13 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/Thread_Manager.h"
 #include "ace/TLI_Acceptor.h"
+#include <cstdint>
 
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_TLI)
 
 ACE_Thread_Manager thr_mgr;
 
-void *
+ACE_THR_FUNC_RETURN
 read_file (void *fd)
 {
   ACE_TLI_Stream stream;
@@ -16,9 +17,9 @@ read_file (void *fd)
   int flags = 0;
   ssize_t n;
 
-  // Cast the arg to a long, first, because a pointer is the same size
-  // as a long on all current ACE platforms.
-  stream.set_handle ((int) (long) fd);
+  ACE_HANDLE const handle = static_cast<ACE_HANDLE> (
+    reinterpret_cast<std::intptr_t> (fd));
+  stream.set_handle (handle);
 
   ACE_DEBUG ((LM_DEBUG, "start (tid = %t, fd = %H)\n",
               stream.get_handle ()));
@@ -35,7 +36,7 @@ read_file (void *fd)
   if (stream.close () == -1)
     ACE_OS::t_error ("stream.close error");
 
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 int
@@ -62,7 +63,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ACE_OS::t_error ("server.accept error");
 
       else if (thr_mgr.spawn (read_file,
-                              (void *) new_stream.get_handle (),
+                              reinterpret_cast<void *> (
+                                static_cast<std::intptr_t> (
+                                  new_stream.get_handle ())),
                               THR_DETACHED | THR_BOUND) == -1)
         ACE_OS::perror ("can't create worker thread\n");
     }
