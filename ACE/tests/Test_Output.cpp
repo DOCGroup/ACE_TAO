@@ -21,6 +21,8 @@
 #include "ace/Guard_T.h"
 #include "ace/Object_Manager.h"
 
+#include <memory>
+
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
@@ -46,7 +48,7 @@ ACE_Test_Output::ACE_Test_Output ()
 ACE_Test_Output::~ACE_Test_Output ()
 {
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-  ACE_LOG_MSG->msg_ostream (&cerr, false);
+  ACE_LOG_MSG->msg_ostream (std::addressof (cerr), false);
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::OSTREAM);

@@ -1,13 +1,15 @@
 #include "ace/Log_Msg.h"
 #include "Callback.h"
 
+#include <memory>
+
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   Callback callback;
 
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::MSG_CALLBACK);
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR);
-  ACE_LOG_MSG->msg_callback (&callback);
+  ACE_LOG_MSG->msg_callback (std::addressof (callback));
 
   {
     ACE_TRACE ("main");

@@ -18,6 +18,8 @@
 
 #include "ace/config-all.h"
 
+#include <memory>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -158,7 +160,7 @@ inline ACE_Test_Output::ACE_Test_Output ()
 inline ACE_Test_Output::~ACE_Test_Output ()
 {
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-  ACE_LOG_MSG->msg_ostream (&cerr);
+  ACE_LOG_MSG->msg_ostream (std::addressof (cerr));
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::OSTREAM);

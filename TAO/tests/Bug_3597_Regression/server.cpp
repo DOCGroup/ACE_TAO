@@ -3,6 +3,7 @@
 #include "ace/Log_Msg_Backend.h"
 #include "ace/Log_Record.h"
 #include <array>
+#include <memory>
 #include <string>
 
 ACE_TCHAR const mykey[] = ACE_TEXT ("KEY");
@@ -67,7 +68,7 @@ Backend::ok () const
 int ACE_TMAIN (int, ACE_TCHAR *argv[])
 {
   Backend b {};
-  ACE_Log_Msg_Backend *const old_backend = ACE_Log_Msg::msg_backend (&b);
+  ACE_Log_Msg_Backend *const old_backend = ACE_Log_Msg::msg_backend (std::addressof (b));
 
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::CUSTOM);
 
