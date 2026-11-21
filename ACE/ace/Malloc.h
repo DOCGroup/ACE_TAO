@@ -264,7 +264,7 @@ public:
     ACE_Malloc_Header ();
 
     /// Points to next block if on free list.
-    ACE_Malloc_Header *next_block_;
+    ACE_Malloc_Header *next_block_ {};
 
     /// Initialize a malloc header pointer.
     static void init_ptr (ACE_Malloc_Header **ptr,
@@ -272,7 +272,7 @@ public:
                           void *base_addr);
 
     /// Size of this header control block.
-    size_t size_;
+    size_t size_ {};
 
 # if !defined (ACE_MALLOC_PADDING_SIZE)
 #   define ACE_MALLOC_PADDING_SIZE ACE_MALLOC_ROUNDUP (ACE_MALLOC_HEADER_SIZE + sizeof (ACE_Malloc_Header*) + sizeof (size_t), ACE_MALLOC_ALIGN) - (sizeof (ACE_Malloc_Header*) + sizeof (size_t))

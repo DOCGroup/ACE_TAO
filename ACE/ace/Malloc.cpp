@@ -121,8 +121,6 @@ ACE_Control_Block::ACE_Name_Node::name () const
 }
 
 ACE_Control_Block::ACE_Malloc_Header::ACE_Malloc_Header ()
-  : next_block_ (nullptr),
-    size_ (0)
 {
 }
 
