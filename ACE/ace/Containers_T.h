@@ -168,7 +168,7 @@ private:
   size_t size_;
 
   /// Keeps track of the current top of stack.
-  size_t top_;
+  size_t top_ {};
 
   /// Holds the stack's contents.
   T *stack_;
@@ -298,7 +298,7 @@ private:
   size_t size_;
 
   /// Keeps track of the current top of stack.
-  size_t top_;
+  size_t top_ {};
 
   /// Holds the stack's contents.
   T stack_[ACE_SIZE];

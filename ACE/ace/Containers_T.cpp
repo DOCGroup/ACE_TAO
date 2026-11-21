@@ -30,8 +30,7 @@ ACE_Bounded_Stack<T>::dump () const
 
 template<class T>
 ACE_Bounded_Stack<T>::ACE_Bounded_Stack (size_t size)
-  : size_ (size),
-    top_ (0)
+  : size_ (size)
 {
   ACE_NEW (this->stack_,
            T[size]);
@@ -98,8 +97,7 @@ ACE_Fixed_Stack<T, ACE_SIZE>::dump () const
 
 template<class T, size_t ACE_SIZE>
 ACE_Fixed_Stack<T, ACE_SIZE>::ACE_Fixed_Stack ()
-  : size_ (ACE_SIZE),
-    top_ (0)
+  : size_ (ACE_SIZE)
 {
   ACE_TRACE ("ACE_Fixed_Stack<T, ACE_SIZE>::ACE_Fixed_Stack");
 }
