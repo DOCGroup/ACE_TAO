@@ -320,7 +320,7 @@ main (int argc, char *argv[])
   total_msg_len = sizeof (long) + data_buf_len;
 
   // allocate the buffer
-  message_buf = (Data_Control_Message *) malloc (total_msg_len);
+  message_buf = static_cast<Data_Control_Message *> (malloc (total_msg_len));
   if (message_buf == 0)
     err ("malloc");
 
