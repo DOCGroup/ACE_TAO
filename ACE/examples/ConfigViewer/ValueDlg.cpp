@@ -13,10 +13,10 @@ ValueDlg::ValueDlg(wxWindow* pParent, bool String)
 }
 
 ValueDlg::ValueDlg(wxWindow* pParent, wxString const &Name, wxString& Value)
-: wxDialog(pParent, -1, "Edit String", wxDefaultPosition, wxSize(300,140))
+: wxDialog(pParent, -1, "Edit String", wxDefaultPosition, wxSize(300,140)),
+  m_Name (Name),
+  m_Value (Value)
 {
-  m_Name = Name;
-  m_Value = Value;
   m_pName= new wxStaticText(this, -1, "Name:", wxPoint(20, 20));
   m_pNameText = new wxTextCtrl(this, -1, "", wxPoint(60, 20), wxDefaultSize, 0, wxTextValidator(wxFILTER_NONE, &m_Name));
   m_pNameText->SetEditable(false);
@@ -27,9 +27,9 @@ ValueDlg::ValueDlg(wxWindow* pParent, wxString const &Name, wxString& Value)
 }
 
 ValueDlg::ValueDlg(wxWindow* pParent, wxString const &Name, u_int Value)
-: wxDialog(pParent, -1, "Edit String", wxDefaultPosition, wxSize(300,140))
+: wxDialog(pParent, -1, "Edit String", wxDefaultPosition, wxSize(300,140)),
+  m_Name (Name)
 {
-  m_Name = Name;
   m_Value.sprintf("%d", Value);
   m_pName= new wxStaticText(this, -1, "Name:", wxPoint(20, 20));
   m_pNameText = new wxTextCtrl(this, -1, "", wxPoint(60, 20), wxDefaultSize, 0, wxTextValidator(wxFILTER_NONE, &m_Name));
