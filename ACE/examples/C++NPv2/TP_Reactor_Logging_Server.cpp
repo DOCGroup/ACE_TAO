@@ -24,7 +24,7 @@ using Server_Logging_Daemon = Reactor_Logging_Server<Logging_Acceptor_Ex>;
 
 class Quit_Handler : public ACE_Event_Handler {
 public:
-  Quit_Handler (ACE_Reactor *r) : ACE_Event_Handler (r) {}
+  explicit Quit_Handler (ACE_Reactor *r) : ACE_Event_Handler (r) {}
 
   int handle_exception (ACE_HANDLE) override {
     reactor ()->end_reactor_event_loop ();

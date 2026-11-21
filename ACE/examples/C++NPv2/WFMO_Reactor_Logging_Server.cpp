@@ -21,7 +21,7 @@ private:
   ACE_Manual_Event quit_seen_;
 
 public:
-  Quit_Handler (ACE_Reactor *r) : ACE_Event_Handler (r) {
+  explicit Quit_Handler (ACE_Reactor *r) : ACE_Event_Handler (r) {
     SetConsoleMode (ACE_STDIN, ENABLE_LINE_INPUT
                                | ENABLE_ECHO_INPUT
                                | ENABLE_PROCESSED_INPUT);
