@@ -324,10 +324,10 @@ private:
 private:
   /// Thread_Descriptor is the ownership of ACE_Log_Msg if log_msg_!=0
   /// This can occur because ACE_TSS_cleanup was executed before terminate.
-  ACE_Log_Msg *log_msg_;
+  ACE_Log_Msg *log_msg_ {};
 
   /// The AT_Thread_Exit list
-  ACE_At_Thread_Exit *at_exit_list_;
+  ACE_At_Thread_Exit *at_exit_list_ {};
 
 #if 0
 /// Currently not used
@@ -340,13 +340,13 @@ private:
 
   /// Pointer to an ACE_Thread_Manager or NULL if there's no
   /// ACE_Thread_Manager
-  ACE_Thread_Manager* tm_;
+  ACE_Thread_Manager* tm_ {};
 
   /// Registration lock to prevent premature removal of thread descriptor.
   ACE_DEFAULT_THREAD_MANAGER_LOCK *sync_;
 
   /// Keep track of termination status.
-  bool terminated_;
+  bool terminated_ {};
 };
 
 // Forward declaration.

@@ -274,10 +274,6 @@ ACE_Thread_Descriptor::dump () const
 }
 
 ACE_Thread_Descriptor::ACE_Thread_Descriptor ()
-  : log_msg_ (nullptr),
-    at_exit_list_ (nullptr),
-    tm_ (nullptr),
-    terminated_ (false)
 {
   ACE_TRACE ("ACE_Thread_Descriptor::ACE_Thread_Descriptor");
   ACE_NEW (this->sync_,
