@@ -24,6 +24,8 @@
 
 #include <cstring>
 
+#include <memory>
+
 int number_of_event_loop_threads = 3;
 int number_of_messages = 10;
 int sleep_time_in_msec = 100;
@@ -369,7 +371,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing TP Reactor\n")));
 
   ACE_TP_Reactor tp_reactor_impl;
-  ACE_Reactor tp_reactor (&tp_reactor_impl);
+  ACE_Reactor tp_reactor (std::addressof (tp_reactor_impl));
 
   test_reactor_upcall (tp_reactor);
 
@@ -379,7 +381,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   ACE_Dev_Poll_Reactor dev_poll_reactor_impl;
   dev_poll_reactor_impl.restart (true);
-  ACE_Reactor dev_poll_reactor (&dev_poll_reactor_impl);
+  ACE_Reactor dev_poll_reactor (std::addressof (dev_poll_reactor_impl));
 
   test_reactor_upcall (dev_poll_reactor);
 
@@ -391,7 +393,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing WFMO Reactor\n")));
 
   ACE_WFMO_Reactor wfmo_reactor_impl;
-  ACE_Reactor wfmo_reactor (&wfmo_reactor_impl);
+  ACE_Reactor wfmo_reactor (std::addressof (wfmo_reactor_impl));
 
   test_reactor_upcall (wfmo_reactor);
 

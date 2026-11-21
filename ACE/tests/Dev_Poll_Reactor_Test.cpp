@@ -35,6 +35,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_netdb.h"
 
+#include <memory>
+
 using SVC_HANDLER = ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH>;
 
 // ----------------------------------------------------
@@ -523,7 +525,7 @@ server_worker (void *p)
 
   ACE_Dev_Poll_Reactor dp_reactor;
   dp_reactor.restart (true);     // Restart on EINTR
-  ACE_Reactor reactor (&dp_reactor);
+  ACE_Reactor reactor (std::addressof (dp_reactor));
 
   TestAcceptor server;
 
@@ -578,7 +580,7 @@ run_main (int, ACE_TCHAR *[])
 
   ACE_Dev_Poll_Reactor dp_reactor;
   dp_reactor.restart (true);          // Restart on EINTR
-  ACE_Reactor reactor (&dp_reactor);
+  ACE_Reactor reactor (std::addressof (dp_reactor));
 
   TestConnector client;
 

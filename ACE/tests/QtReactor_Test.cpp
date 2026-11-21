@@ -35,6 +35,7 @@
 #include "test_config.h"
 
 #include <assert.h>
+#include <memory>
 #include <QtCore/qtimer.h>
 
 #include "ace/OS_NS_time.h"
@@ -889,9 +890,9 @@ void testQtReactor (int argc, ACE_TCHAR *argv[])
   ACE_Argv_Type_Converter ct (argc, argv);
   QTestApplication app (argc, ct.get_ASCII_argv ());
 
-  ACE_QtReactor    qtReactor (&app);
-  ACE_Reactor      reactor (&qtReactor);
-  HandlersRegister handlersRegister (&reactor);
+  ACE_QtReactor    qtReactor (std::addressof (app));
+  ACE_Reactor      reactor (std::addressof (qtReactor));
+  HandlersRegister handlersRegister (std::addressof (reactor));
   ACE_Time_Value   testTime (TotalTestTime / 1000, (TotalTestTime % 1000) * 1000);
 
   if (0 <= handlersRegister.scheduleTimers (testTime)  &&

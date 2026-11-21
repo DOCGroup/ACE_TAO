@@ -21,6 +21,8 @@
 #include "ace/Task.h"
 #include "ace/Get_Opt.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_THREADS)
 
 static int test_select_reactor = 1;
@@ -287,7 +289,7 @@ test<REACTOR_IMPLEMENTATION>::test (int extra_iterations_needed)
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n\nTesting empty notifies...\n\n")));
 
       REACTOR_IMPLEMENTATION impl;
-      ACE_Reactor reactor (&impl, 0);
+      ACE_Reactor reactor (std::addressof (impl), 0);
 
       notify (reactor,
               nullptr,
@@ -299,7 +301,7 @@ test<REACTOR_IMPLEMENTATION>::test (int extra_iterations_needed)
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n\nTesting simple notifies...\n\n")));
 
       REACTOR_IMPLEMENTATION impl;
-      ACE_Reactor reactor (&impl, 0);
+      ACE_Reactor reactor (std::addressof (impl), 0);
 
       Simple_Event_Handler *simple_event_handler =
         new Simple_Event_Handler (iterations);
@@ -315,7 +317,7 @@ test<REACTOR_IMPLEMENTATION>::test (int extra_iterations_needed)
                   ACE_TEXT ("\n\nTesting reference counted notifies...\n\n")));
 
       REACTOR_IMPLEMENTATION impl;
-      ACE_Reactor reactor (&impl, 0);
+      ACE_Reactor reactor (std::addressof (impl), 0);
 
       Reference_Counted_Event_Handler *reference_counted_event_handler =
         new Reference_Counted_Event_Handler;

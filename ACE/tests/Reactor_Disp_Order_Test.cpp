@@ -18,6 +18,8 @@
 #include "ace/Pipe.h"
 #include "ace/ACE.h"
 
+#include <memory>
+
 #include <cstring>
 
 static const char *message = "Hello there! Hope you get this message";
@@ -284,7 +286,7 @@ run_main (int, ACE_TCHAR *[])
 
   int result = 0;
   ACE_Select_Reactor select_reactor_impl;
-  ACE_Reactor select_reactor (&select_reactor_impl);
+  ACE_Reactor select_reactor (std::addressof (select_reactor_impl));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing ACE_Select_Reactor\n")));
   if (!test_reactor_dispatch_order (select_reactor))
     {
@@ -296,7 +298,7 @@ run_main (int, ACE_TCHAR *[])
     (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
 
   ACE_WFMO_Reactor wfmo_reactor_impl;
-  ACE_Reactor wfmo_reactor (&wfmo_reactor_impl);
+  ACE_Reactor wfmo_reactor (std::addressof (wfmo_reactor_impl));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing ACE_WFMO_Reactor\n")));
   if (!test_reactor_dispatch_order (wfmo_reactor))
     ++result;

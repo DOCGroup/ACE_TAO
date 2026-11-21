@@ -18,6 +18,8 @@
 #include "ace/Pipe.h"
 #include "ace/ACE.h"
 
+#include <memory>
+
 #include <cstring>
 
 #if defined (ACE_HAS_DEV_POLL) || defined (ACE_HAS_EVENT_POLL)
@@ -264,7 +266,7 @@ run_main (int, ACE_TCHAR *[])
 
 #if defined (ACE_HAS_DEV_POLL) || defined (ACE_HAS_EVENT_POLL)
   ACE_Dev_Poll_Reactor dev_poll_reactor_impl;
-  ACE_Reactor dev_poll_reactor (&dev_poll_reactor_impl);
+  ACE_Reactor dev_poll_reactor (std::addressof (dev_poll_reactor_impl));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing Dev Poll Reactor\n")));
   if (!test_reactor_dispatch_order (dev_poll_reactor))
     {
