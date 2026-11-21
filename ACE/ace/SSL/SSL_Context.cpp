@@ -150,7 +150,7 @@ ACE_SSL_Context::ssl_library_init ()
 #if defined(ACE_HAS_THREADS) && (OPENSSL_VERSION_NUMBER < 0x10100000L)
       int const num_locks = ::CRYPTO_num_locks ();
 
-      ssl_locks.reset (new lock_type[num_locks]);
+      ssl_locks = std::make_unique<lock_type[]> (num_locks);
 
 # if !defined (WIN32)
       // This call isn't necessary on some platforms.  See the CRYPTO

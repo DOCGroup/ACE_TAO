@@ -3,6 +3,7 @@
 
 #include <cstdlib>
 #include <cstring>
+#include <memory>
 #include <utility>
 
 static const char *size_leadin_1_5 = "GIOP v1."; //"x msg, ";
@@ -207,7 +208,7 @@ GIOP_Buffer::init_buf (const char *text, size_t offset)
       this->buffer_size_ = std::strtol (size_str, nullptr, 10);
     }
   this->cdr_.reset ();
-  this->octets_.reset (new char [this->buffer_size_]);
+  this->octets_ = std::make_unique<char[]> (this->buffer_size_);
   std::memset (this->octets_.get (), 0, this->buffer_size_);
   this->wr_pos_ = this->octets_.get ();
 }

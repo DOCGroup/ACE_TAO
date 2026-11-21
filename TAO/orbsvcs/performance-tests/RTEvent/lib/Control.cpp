@@ -111,14 +111,16 @@ Control::join (Federated_Test::Peer_ptr peer)
                 this->peers_[j]->setup_loopback (experiment_id,
                                                  base_event_type);
 
-              disconnects[lcount].reset (new Loopback_Disconnect (loopbacks[lcount].in ()));
+              disconnects[lcount] =
+                std::make_unique<Loopback_Disconnect> (loopbacks[lcount].in ());
               ++lcount;
 
               loopbacks[lcount] =
                 this->peers_[j]->setup_loopback (experiment_id,
                                                  base_event_type + 2);
 
-              disconnects[lcount].reset (new Loopback_Disconnect (loopbacks[lcount].in ()));
+              disconnects[lcount] =
+                std::make_unique<Loopback_Disconnect> (loopbacks[lcount].in ());
               ++lcount;
             }
         }

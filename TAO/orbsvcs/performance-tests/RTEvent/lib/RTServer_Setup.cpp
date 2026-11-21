@@ -10,6 +10,8 @@
 
 #include "ace/Log_Msg.h"
 
+#include <memory>
+
 #if !defined(__ACE_INLINE__)
 #include "RTServer_Setup.inl"
 #endif /* __ACE_INLINE__ */
@@ -25,7 +27,7 @@ RTServer_Setup::RTServer_Setup (int use_rt_corba,
 {
   if (use_rt_corba)
     {
-      this->rtpoa_setup_.reset (new RTPOA_Setup (orb, *this->rtcorba_setup ()));
+      this->rtpoa_setup_ = std::make_unique<RTPOA_Setup> (orb, *this->rtcorba_setup ());
 
       this->poa_ = this->rtpoa_setup_->poa ();
     }

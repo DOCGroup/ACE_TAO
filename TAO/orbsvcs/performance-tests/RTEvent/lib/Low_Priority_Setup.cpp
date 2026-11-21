@@ -12,6 +12,8 @@
 #include "ace/Basic_Stats.h"
 #include "ace/Sample_History.h"
 
+#include <memory>
+
 template<class Client_Type> Low_Priority_Setup<Client_Type>::
 Low_Priority_Setup (int consumer_count,
                     int iterations,
@@ -75,7 +77,9 @@ Low_Priority_Setup (int consumer_count,
                             this->clients_[j].supplier (),
                             barrier);
       this->tasks_[j].thr_mgr (&this->thr_mgr_);
-      this->stoppers_[j].reset (new Send_Task_Stopper (thread_priority, thread_sched_class, &this->tasks_[j]));
+      this->stoppers_[j] = std::make_unique<Send_Task_Stopper> (thread_priority,
+                                                               thread_sched_class,
+                                                               &this->tasks_[j]);
     }
 }
 
