@@ -29,6 +29,7 @@ Thread_Task::activate_task (CORBA::ORB_ptr orb)
     }
 
   long flags = THR_NEW_LWP | THR_JOINABLE;
+  active_thread_count_ = 4;
   if (this->ACE_Task <ACE_SYNCH>::activate (flags,
                                             4) == -1)
     {
@@ -39,8 +40,6 @@ Thread_Task::activate_task (CORBA::ORB_ptr orb)
                             -1);
         }
     }
-  active_thread_count_ = 4;
-
   return 0;
 }
 

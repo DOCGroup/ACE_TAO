@@ -27,7 +27,7 @@ class Thread_Task : public ACE_Task <ACE_SYNCH>
   RTScheduling::Current_var current_;
   RTScheduling::Current::IdType guid_ [4];
   TAO_SYNCH_MUTEX mutex_;
-  int active_thread_count_;
+  int active_thread_count_ {};
 };
 
 #endif /* THREAD_TASK_H */
