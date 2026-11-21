@@ -34,7 +34,8 @@ int CB::handle_timeout (ACE_Time_Value const &,
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Canceling %d\n"),
                   timerID_));
-      ACE_ASSERT ((Timer::instance ()->cancel (this)) != 0);
+      int const cancel_result = Timer::instance ()->cancel (this);
+      ACE_ASSERT (cancel_result != 0);
     }
 
   return 0;

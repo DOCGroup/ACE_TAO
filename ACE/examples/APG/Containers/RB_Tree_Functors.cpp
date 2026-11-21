@@ -73,7 +73,8 @@ int Tree_Example::run ()
   this->iterate_reverse ();
 
   // Remove all elements from the tree.
-  ACE_ASSERT (this->remove_all ()!= -1);
+  int const remove_result = this->remove_all ();
+  ACE_ASSERT (remove_result != -1);
 
   // Iterate through once again.
   this->iterate_forward ();

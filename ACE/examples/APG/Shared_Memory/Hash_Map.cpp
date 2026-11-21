@@ -250,11 +250,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (argc == 1) // parent
     {
-      ACE_ASSERT (handle_parent (argv[0]) == 0);
+      int const parent_result = handle_parent (argv[0]);
+      ACE_ASSERT (parent_result == 0);
     }
   else
   {
-    ACE_ASSERT (handle_child () == 0);
+    int const child_result = handle_child ();
+    ACE_ASSERT (child_result == 0);
   }
 
   ACE_UNUSED_ARG (argv);

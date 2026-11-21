@@ -22,7 +22,8 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_SOCK_Connector connector;
   ACE_SOCK_Stream peer;
 
-  ACE_ASSERT (connector.connect (peer, srvr) != -1);
+  int const connect_result = connector.connect (peer, srvr);
+  ACE_ASSERT (connect_result != -1);
 
   ssize_t bc {};
 
