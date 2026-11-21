@@ -17,14 +17,17 @@ public:
   WxNamingObject( CORBA::Object_ptr pObject);
   ~WxNamingObject();
 
+  /// Returns a duplicated naming context pointer if this is a context, or nil otherwise.
   CosNaming::NamingContext_ptr NamingContext();
-  // Returns a duplicated naming context ptr if this is a context or nil if its not
+
+  /// Returns a non-duplicated object reference.
   CORBA::Object_ptr Object();
-  // returns a non duplicated object reference
+
+  /// Returns the name of the object.
   CosNaming::Name& Name();
-  // returns the name of the object
+
+  /// Returns whether this object is a naming context.
   bool IsContext() {return m_Context;};
-  // Returns true if this is a context
 
 private:
   CORBA::Object_var     m_Object;

@@ -13,23 +13,6 @@
 class Invocation;
 class Thread;
 
-// Invocation holds the buffer contents for a request/response pair.
-// This could be originating in this process, or in the peer process.
-//
-// The trigger for finding a new outgoing invocation is "Muxed_TMS[%d]"
-// following that the process/thread will perform a dump_msg.
-//
-// The trigger for finding a new incoming invocation is
-// "Transport[%d]::process_parsed_messages, entering (missing data == 0)"
-// which could indicate a new request or reply, depending on the context
-// in which the peer connection is made.
-//
-// It is possible that two or more threads may call dump_msg
-// concurrently and thus have the preamble and body printed out of
-// order. The HEXDUMP always reports a buffer size including the 12
-// byte GIOP header. Also, the first line of the text contains header
-// data which can be compared to the expected request ID.
-
 class GIOP_Buffer
 {
 public:
@@ -99,11 +82,12 @@ private:
   size_t expected_size_;
   char   expected_type_;
   size_t buffer_size_;
-  char * wr_pos_; // Non-owning cursor into octets_.
+  /// Non-owning cursor into octets_.
+  char * wr_pos_;
   Invocation *owner_;
   bool buffer_lost_;
   bool sending_;
-  // Non-owning pointers into octets_ / cdr_.
+  /// Non-owning pointers into octets_ and cdr_.
   char * oid_;
   size_t oid_len_;
   char * opname_;

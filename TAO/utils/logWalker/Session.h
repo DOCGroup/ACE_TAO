@@ -42,7 +42,7 @@ public:
 
   private:
     std::unique_ptr<std::ostream> owned_;
-    // When owned_ is empty, stream_ refers to a borrowed stream such as stdout.
+    /// When owned_ is empty, stream_ refers to a borrowed stream such as stdout.
     std::ostream *stream_ {};
   };
 
@@ -77,7 +77,7 @@ public:
 private:
   HostProcess *find_host_i (const Endpoint &endpoint, bool server);
 
-  // processes_ owns its HostProcess pointers; procs_by_name_ is a non-owning index.
+  /// Processes owns HostProcess pointers; procs_by_name_ is a non-owning index.
   Processes processes_;
   Procs_By_Name procs_by_name_;
   ACE_CString base_dir_;

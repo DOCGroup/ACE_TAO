@@ -16,12 +16,9 @@
 class Session;
 class Thread;
 
-/*
- * Peer node is an element of the connection list which associates peer
- * processes to the host process by handle. The peer node does not own
- * the reference to the peer process, and the specific peer process may
- * change over time.
- */
+/// A peer node associates a peer process with the host process by handle.
+/// It does not own the peer process reference, and the referenced process
+/// may change over time.
 struct PeerNode
 {
   PeerNode (long h, PeerProcess *p);
@@ -34,11 +31,8 @@ using PeerArray = ACE_DLList<PeerNode>;
 using AddrList = ACE_DLList<Endpoint>;
 using PeerProcs = ACE_RB_Tree<Endpoint, PeerProcess *, ACE_Less_Than<Endpoint>, ACE_Null_Mutex>;
 
-/*
- * HostProcess encapsulates the state related a specific process instance
- * described by a log file. There may be more than one HostProcess in a
- * log file.
- */
+/// Encapsulates the state of a process instance described by a log file.
+/// A log file may describe more than one process.
 
 class HostProcess
 {
@@ -46,55 +40,49 @@ public:
   HostProcess (const ACE_CString &src, long pid);
   ~HostProcess ();
 
-  // set/get the name of the process. This is only provided by
-  // an alias supplied to the logWalker command line or manifest file.
+  /// Sets or returns the process name. This is only provided by an alias
+  /// supplied to the logWalker command line or manifest file.
   void proc_name (const ACE_CString &name);
   const ACE_CString &proc_name () const;
 
-  // Returns a thread instance based on thread id. Will create an instance
-  // as needed.
+  /// Returns the thread for an ID, creating it if needed.
   Thread * find_thread (long tid, size_t offset);
 
-  // Returns a thread that has a pending peer with the supplied address
+  /// Returns a thread that has a pending peer with the supplied address.
   Thread * find_thread_for_peer (const ACE_CString& addr);
 
-  // Returns a thread that had previously worked with handle h. May return
-  // a null pointer.
+  /// Returns a thread that previously worked with handle h, or null.
   Thread * find_thread_for_handle (long h);
 
-  // Returns the process id.
+  /// Returns the process ID.
   long pid () const;
 
   const ACE_Time_Value &start_time () const;
   void start_time (const ACE_Time_Value &);
 
-  // Return true if the supplied endpoint has been visited before. This
-  // may be either a listen endpoint or a client endpoint used to connect
-  // to another peer.
+  /// Returns whether the endpoint has been visited before. It may be a
+  /// listen endpoint or a client endpoint used to connect to another peer.
   bool has_endpoint (const Endpoint& addr, bool listen);
 
-  // adds a new endpoint to the list of listen endpoints. Client endpoints
-  // are added as part of the process to add a new peer process
+  /// Adds a client endpoint to the endpoint list.
   void add_client_endpoint (const Endpoint& addr);
 
-  // adds a new endpoint to the list of listen endpoints. Client endpoints
-  // are added as part of the process to add a new peer process
+  /// Adds a listen endpoint to the endpoint list.
   void add_listen_endpoint (const Endpoint& addr);
 
-  // add a peer to the connection list. If the peer is not in the
-  // by_addr_ table, it will be added there too.
+  /// Adds a peer to the connection list and, if needed, the by_addr_ table.
   void add_peer (long handle, PeerProcess *peer);
 
-  // locate a peer process by handle or address
+  /// Finds a peer process by handle or address.
   PeerProcess *find_peer (const ACE_CString& addr);
   PeerProcess *find_peer (long handle);
 
   void remove_peer (long handle);
 
-  // remove a peer by handle, noting the line.
+  /// Closes a peer by handle and records the line offset.
   void close_peer (long handle, size_t offset);
 
-  // various output methods
+  /// Various output methods.
   void dump_ident (ostream &strm, const char *extra);
   void dump_summary (ostream &strm);
   void dump_thread_summary (ostream &strm);
@@ -105,8 +93,8 @@ public:
   void split_peer_invocations (Session *session);
   void dump_invocation_detail (ostream &strm);
 
-  // reconcile_peers gives an opportunity to resolve peer process names
-  // by matching the peer processes to other host processes in the session.
+  /// Resolves peer process names by matching them to other host processes
+  /// in the session.
   void reconcile_peers (Session *session);
 
 private:

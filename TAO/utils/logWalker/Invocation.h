@@ -16,22 +16,18 @@ class GIOP_Buffer;
 
 using NotifyIncidents = std::vector<ACE_CString>;
 
-// Invocation holds the buffer contents for a request/response pair.
-// This could be originating in this process, or in the peer process.
-//
-// The trigger for finding a new outgoing invocation is "Muxed_TMS[%d]"
-// following that the process/thread will perform a dump_msg.
-//
-// The trigger for finding a new incoming invocation is
-// "Transport[%d]::process_parsed_messages, entering (missing data == 0)"
-// which could indicate a new request or reply, depending on the context
-// in which the peer connection is made.
-//
-// It is possible that two or more threads may call dump_msg
-// concurrently and thus have the preamble and body printed out of
-// order. The HEXDUMP always reports a buffer size including the 12
-// byte GIOP header. Also, the first line of the text contains header
-// data which can be compared to the expected request ID.
+/// Holds the buffer contents for a request/response pair. It may originate
+/// in this process or in a peer process.
+///
+/// An outgoing invocation is detected when Muxed_TMS[%d] is followed by
+/// the process or thread performing dump_msg. An incoming invocation is
+/// detected when Transport[%d]::process_parsed_messages reports that no
+/// data is missing. Depending on the connection context, this may indicate
+/// a request or a reply.
+///
+/// Concurrent dump_msg calls can print the preamble and body out of order.
+/// The hexdump size includes the 12-byte GIOP header. Its first line contains
+/// header data that can be compared with the expected request ID.
 
 class Invocation
 {
@@ -42,27 +38,26 @@ public:
     Dump_Both
   };
 
-  // initialize a new instance, with the initial request text line and offeset
+  /// Initializes an instance with the initial request text line and offset.
   Invocation (PeerProcess *peer, Thread *thr, size_t req_id = 0);
   bool init ( const char * text, size_t offset, Thread *thr);
   ~Invocation ();
 
-  // return true if the invocation was a oneway
+  /// Returns whether the invocation was a oneway call.
   bool is_oneway() const;
 
-  // return true if the request is a oneway and has all its octets, or
-  // if it also has all its reply octets. The side-effect of this call
-  // is to obtain the target reference from the request buffer and associate
-  // it with the peer process.
+  /// Returns whether the request is a oneway and has all its octets, or
+  /// whether it also has all its reply octets. This obtains the target
+  /// reference from the request buffer and associates it with the peer process.
   bool message_complete ();
 
   size_t request_id () const;
 
-  // returns true if this request was sent by the host process.
+  /// Returns whether this request was sent by the host process.
   bool sent_request () const;
 
-  // returns the size parsed from either the request or reply preamble
-  // which can be used to match a HEXDUMP b
+  /// Returns the size parsed from either the request or reply preamble,
+  /// which can be used to match a HEXDUMP buffer.
   size_t expected_size () const;
 
   size_t request_bytes () const;

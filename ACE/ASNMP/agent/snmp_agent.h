@@ -32,14 +32,14 @@ public:
   snmp_agent &operator= (snmp_agent const &) = delete;
   snmp_agent &operator= (snmp_agent &&) = delete;
 
+  /// Returns whether construction succeeded.
   bool valid () const;
-  // did object construct ok
 
+  /// Sets runtime arguments such as the community strings and port.
   int set_args (int argc, char *argv[]);
-  // runtime arguments such as community strings, port to use
 
+  /// Begins processing requests.
   int run ();
-  // begin processing requests
 
 private:
   std::unique_ptr<agent_impl> agent_;
