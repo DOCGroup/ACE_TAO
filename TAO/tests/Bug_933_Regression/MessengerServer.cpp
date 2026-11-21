@@ -57,7 +57,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Messenger_i messenger_servant (orb.in ());
 
       // Register the servant, stringify its reference, and write it to a file.
-      PortableServer::ObjectId_var const oid = poa->activate_object (&messenger_servant);
+      PortableServer::ObjectId_var const oid = poa->activate_object (std::addressof (messenger_servant));
       CORBA::Object_var const messenger_obj = poa->id_to_reference (oid.in ());
       CORBA::String_var const str = orb->object_to_string (messenger_obj.in ());
       {
