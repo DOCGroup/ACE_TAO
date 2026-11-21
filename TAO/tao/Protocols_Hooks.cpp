@@ -3,48 +3,15 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_IIOP_Protocol_Properties::TAO_IIOP_Protocol_Properties ()
-  : send_buffer_size_ (0),
-    recv_buffer_size_ (0),
-    keep_alive_ (0),
-    dont_route_ (0),
-    no_delay_ (0),
-    hop_limit_ (-1)
-{
-}
+TAO_IIOP_Protocol_Properties::TAO_IIOP_Protocol_Properties () = default;
 
-TAO_UIOP_Protocol_Properties::TAO_UIOP_Protocol_Properties ()
-  : send_buffer_size_ (0),
-    recv_buffer_size_ (0)
-{
-}
+TAO_UIOP_Protocol_Properties::TAO_UIOP_Protocol_Properties () = default;
 
-TAO_SHMIOP_Protocol_Properties::TAO_SHMIOP_Protocol_Properties ()
-  : send_buffer_size_ (0),
-    recv_buffer_size_ (0),
-    keep_alive_ (0),
-    dont_route_ (0),
-    no_delay_ (0),
-    preallocate_buffer_size_ (0)
-{
-}
+TAO_SHMIOP_Protocol_Properties::TAO_SHMIOP_Protocol_Properties () = default;
 
-TAO_DIOP_Protocol_Properties::TAO_DIOP_Protocol_Properties ()
-  : send_buffer_size_ (0),
-    recv_buffer_size_ (0),
-    hop_limit_ (-1)
-{
-}
+TAO_DIOP_Protocol_Properties::TAO_DIOP_Protocol_Properties () = default;
 
-TAO_SCIOP_Protocol_Properties::TAO_SCIOP_Protocol_Properties ()
-  : send_buffer_size_ (0),
-    recv_buffer_size_ (0),
-    keep_alive_ (0),
-    dont_route_ (0),
-    no_delay_ (0),
-    hop_limit_ (-1)
-{
-}
+TAO_SCIOP_Protocol_Properties::TAO_SCIOP_Protocol_Properties () = default;
 
 TAO_Protocols_Hooks::~TAO_Protocols_Hooks () = default;
 
