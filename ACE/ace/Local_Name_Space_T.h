@@ -59,7 +59,7 @@ template <class ALLOCATOR>
 class ACE_Name_Space_Map : public MAP_MANAGER
 {
 public:
-  ACE_Name_Space_Map (ALLOCATOR *alloc);
+  explicit ACE_Name_Space_Map (ALLOCATOR *alloc);
 
   /** @name Map operation proxies
    * These methods acquire the lock, set the allocator for this process, and

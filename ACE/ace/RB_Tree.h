@@ -195,7 +195,7 @@ public:
   using reverse_iterator = ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>;
   /// @}
 
-  ACE_RB_Tree (ACE_Allocator *alloc = nullptr);
+  explicit ACE_RB_Tree (ACE_Allocator *alloc = nullptr);
 
   ACE_RB_Tree (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &rbt);
 

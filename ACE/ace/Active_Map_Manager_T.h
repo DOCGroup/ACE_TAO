@@ -58,7 +58,7 @@ public:
   /// @}
 
   /// Initialize a Active_Map_Manager with the ACE_DEFAULT_MAP_SIZE.
-  ACE_Active_Map_Manager (ACE_Allocator *alloc = nullptr);
+  explicit ACE_Active_Map_Manager (ACE_Allocator *alloc = nullptr);
 
   /// Initialize a Active_Map_Manager with @a size entries.
   ACE_Active_Map_Manager (size_t size,
