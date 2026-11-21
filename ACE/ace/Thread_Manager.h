@@ -1237,11 +1237,11 @@ protected:
   ACE_Unbounded_Queue<ACE_Thread_Descriptor*> thr_to_be_removed_;
 
   /// Keeps track of the next group id to assign.
-  int grp_id_;
+  int grp_id_ {1};
 
   /// Set if we want the Thread_Manager to wait on all threads before
   /// being closed, reset otherwise.
-  int automatic_wait_;
+  int automatic_wait_ {1};
 
   /// @name Termination synchronization
   /// @{

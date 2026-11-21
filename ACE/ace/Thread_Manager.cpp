@@ -378,13 +378,13 @@ ACE_Thread_Manager::ACE_Thread_Manager (size_t prealloc,
                                         size_t lwm,
                                         size_t inc,
                                         size_t hwm)
-  : grp_id_ (1),
-    automatic_wait_ (1)
 #if defined (ACE_HAS_THREADS)
-    , zero_cond_ (lock_)
+  : zero_cond_ (lock_),
+#else
+  :
 #endif /* ACE_HAS_THREADS */
-    , thread_desc_freelist_ (ACE_FREE_LIST_WITH_POOL,
-                             prealloc, lwm, hwm, inc)
+    thread_desc_freelist_ (ACE_FREE_LIST_WITH_POOL,
+                           prealloc, lwm, hwm, inc)
 #if defined (ACE_HAS_THREADS) && defined (ACE_LACKS_PTHREAD_JOIN)
     , join_cond_ (this->lock_)
 #endif
@@ -397,13 +397,13 @@ ACE_Thread_Manager::ACE_Thread_Manager (const ACE_Condition_Attributes &attribut
                                         size_t lwm,
                                         size_t inc,
                                         size_t hwm)
-  : grp_id_ (1),
-    automatic_wait_ (1)
 #if defined (ACE_HAS_THREADS)
-    , zero_cond_ (lock_, attributes)
+  : zero_cond_ (lock_, attributes),
+#else
+  :
 #endif /* ACE_HAS_THREADS */
-    , thread_desc_freelist_ (ACE_FREE_LIST_WITH_POOL,
-                             prealloc, lwm, hwm, inc)
+    thread_desc_freelist_ (ACE_FREE_LIST_WITH_POOL,
+                           prealloc, lwm, hwm, inc)
 #if defined (ACE_HAS_THREADS) && defined (ACE_LACKS_PTHREAD_JOIN)
     , join_cond_ (this->lock_)
 #endif
