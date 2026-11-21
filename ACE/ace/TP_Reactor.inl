@@ -104,12 +104,22 @@ ACE_TP_Reactor::clear_handle_read_set (ACE_HANDLE handle)
 }
 
 ACE_INLINE void
-ACE_TP_Reactor::clear_dispatch_mask (ACE_HANDLE ,
-                                     ACE_Reactor_Mask )
+ACE_TP_Reactor::clear_dispatch_mask (ACE_HANDLE handle,
+                                     ACE_Reactor_Mask mask)
 {
-  this->ready_set_.rd_mask_.reset ();
-  this->ready_set_.wr_mask_.reset ();
-  this->ready_set_.ex_mask_.reset ();
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::READ_MASK) ||
+      ACE_BIT_ENABLED (mask, ACE_Event_Handler::ACCEPT_MASK))
+    {
+      this->ready_set_.rd_mask_.clr_bit (handle);
+    }
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::WRITE_MASK))
+    {
+      this->ready_set_.wr_mask_.clr_bit (handle);
+    }
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::EXCEPT_MASK))
+    {
+      this->ready_set_.ex_mask_.clr_bit (handle);
+    }
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
