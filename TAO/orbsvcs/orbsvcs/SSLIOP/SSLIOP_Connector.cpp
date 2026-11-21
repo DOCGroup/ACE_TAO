@@ -337,8 +337,8 @@ TAO::SSLIOP::Connector::check_prefix (char const *endpoint)
 
   size_t first_slot = std::strchr (endpoint, ':') - endpoint;
 
-  size_t len0 = std::strlen (protocol[0]);
-  size_t len1 = std::strlen (protocol[1]);
+  const size_t len0 = std::strlen (protocol[0]);
+  const size_t len1 = std::strlen (protocol[1]);
 
   // Check for the proper prefix in the IOR.  If the proper prefix
   // isn't in the IOR then it is not an IOR we can use.

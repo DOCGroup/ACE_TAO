@@ -1473,7 +1473,7 @@ TAO_MCastConfigIf::set_dev_params (char const *flowName,
 int
 TAO_MCastConfigIf::in_flowSpec (AVStreams::flowSpec const &flow_spec, char const *flow_name)
 {
-  size_t len = std::strlen (flow_name);
+  const size_t len = std::strlen (flow_name);
   for (CORBA::ULong i{}; i < flow_spec.length (); ++i)
     {
       if (std::strncmp (flow_spec[i], flow_name, len) == 0)
