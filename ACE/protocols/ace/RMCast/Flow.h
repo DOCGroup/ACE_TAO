@@ -13,7 +13,7 @@ namespace ACE_RMCast
   class Flow : public Element
   {
   public:
-    Flow (Parameters const& );
+    explicit Flow (Parameters const& );
 
   public:
     void send (Message_ptr m) override;

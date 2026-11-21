@@ -15,7 +15,7 @@ namespace ACE_RMCast
   class Reassemble : public Element
   {
   public:
-    Reassemble (Parameters const& );
+    explicit Reassemble (Parameters const& );
 
   public:
     void recv (Message_ptr m) override;

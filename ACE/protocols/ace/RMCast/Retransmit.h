@@ -15,7 +15,7 @@ namespace ACE_RMCast
   class Retransmit : public Element
   {
   public:
-    Retransmit (Parameters const& params);
+    explicit Retransmit (Parameters const& params);
 
     void out_start (Out_Element* out) override;
 

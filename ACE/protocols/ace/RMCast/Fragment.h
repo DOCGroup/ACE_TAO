@@ -13,7 +13,7 @@ namespace ACE_RMCast
   class Fragment : public Element
   {
   public:
-    Fragment (Parameters const& params);
+    explicit Fragment (Parameters const& params);
 
   public:
     void send (Message_ptr m) override;

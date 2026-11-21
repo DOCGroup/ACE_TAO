@@ -24,7 +24,7 @@ namespace ACE_RMCast
   class Acknowledge : public Element
   {
   public:
-    Acknowledge (Parameters const& params);
+    explicit Acknowledge (Parameters const& params);
 
     void in_start (In_Element* in) override;
 
