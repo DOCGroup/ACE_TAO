@@ -429,8 +429,8 @@ TAO_SCIOP_Connection_Handler::set_tos (int tos)
     {
       int const result = this->peer ().set_option (IPPROTO_IP,
                                                    IP_TOS,
-                                                   (int *) &tos ,
-                                                   (int) sizeof (tos));
+                                                   &tos,
+                                                   static_cast<int> (sizeof (tos)));
 
       if (TAO_debug_level)
         {

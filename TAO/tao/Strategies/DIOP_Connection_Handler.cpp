@@ -384,8 +384,8 @@ TAO_DIOP_Connection_Handler::set_tos (int tos)
         {
           result = this->peer ().set_option (IPPROTO_IPV6,
                                              IPV6_TCLASS,
-                                             (int *) &tos ,
-                                             (int) sizeof (tos));
+                                             &tos,
+                                             static_cast<int> (sizeof (tos)));
         }
       else
 # endif /* IPV6_TCLASS */
@@ -393,8 +393,8 @@ TAO_DIOP_Connection_Handler::set_tos (int tos)
         {
           result = this->peer ().set_option (IPPROTO_IP,
                                              IP_TOS,
-                                             (int *) &tos ,
-                                             (int) sizeof (tos));
+                                             &tos,
+                                             static_cast<int> (sizeof (tos)));
         }
 
       if (TAO_debug_level)

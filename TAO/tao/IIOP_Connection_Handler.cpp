@@ -620,22 +620,22 @@ TAO_IIOP_Connection_Handler::set_tos (int tos)
 # else /* !IPV6_TCLASS */
           result = this->peer ().set_option (IPPROTO_IPV6,
                                              IPV6_TCLASS,
-                                             (int *) &tos ,
-                                             (int) sizeof (tos));
+                                             &tos,
+                                             static_cast<int> (sizeof (tos)));
 # endif /* IPV6_TCLASS */
         }
       else
         {
           result = this->peer ().set_option (IPPROTO_IP,
                                              IP_TOS,
-                                             (int *) &tos ,
-                                             (int) sizeof (tos));
+                                             &tos,
+                                             static_cast<int> (sizeof (tos)));
         }
 #else
       result = this->peer ().set_option (IPPROTO_IP,
                                          IP_TOS,
-                                         (int *) &tos ,
-                                         (int) sizeof (tos));
+                                         &tos,
+                                         static_cast<int> (sizeof (tos)));
 #endif /* ACE_HAS_IPV6 */
 
       if (TAO_debug_level)
