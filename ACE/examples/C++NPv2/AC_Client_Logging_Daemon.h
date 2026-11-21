@@ -24,19 +24,19 @@ public:
   /// Initialization hook method.
   int open (void *) override;
 
-  // Entry point into the <AC_Output_Handler>.
+  /// Entry point into the <AC_Output_Handler>.
   int put (ACE_Message_Block *, ACE_Time_Value * = nullptr) override;
 
 protected:
   AC_CLD_Connector *connector_;
 
-  // Handle disconnects from the logging server.
+  /// Handle disconnects from the logging server.
   int handle_input (ACE_HANDLE handle) override;
 
-  // Hook method forwards log records to server logging daemon.
+  /// Hook method forwards log records to server logging daemon.
   int svc () override;
 
-  // Send the buffered log records using a gather-write operation.
+  /// Send the buffered log records using a gather-write operation.
   virtual int send (
     std::array<ACE_Message_Block_Unique_Ptr, ACE_IOV_MAX> &chunk,
     size_t &count);
@@ -53,15 +53,15 @@ public:
   int close (u_long = 0) override;
 
 protected:
-  // Reactor hook methods.
+  /// Reactor hook methods.
   int handle_input (ACE_HANDLE handle) override;
   int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
                     ACE_Reactor_Mask = 0) override;
 
-  // Pointer to the output handler.
+  /// Pointer to the output handler.
   AC_Output_Handler *output_handler_;
 
-  // Keep track of connected client handles.
+  /// Keep track of connected client handles.
   ACE_Handle_Set connected_clients_;
 };
 

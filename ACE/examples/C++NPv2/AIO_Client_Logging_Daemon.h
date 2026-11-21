@@ -44,7 +44,7 @@ protected:
   /// Asynchronous read factory.
   ACE_Asynch_Read_Stream reader_;
 
-  // Handle input from logging clients.
+  /// Handle input from logging clients.
   void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
 };
 
@@ -61,15 +61,15 @@ public:
 
   ~AIO_Output_Handler () override;
 
-  // Entry point into the <AIO_Output_Handler>.
+  /// Entry point into the <AIO_Output_Handler>.
   int put (ACE_Message_Block *, ACE_Time_Value * = nullptr) override;
 
-  // Hook method called when server connection is established.
+  /// Hook method called when server connection is established.
   void open (ACE_HANDLE new_handle,
              ACE_Message_Block &message_block) override;
 
-  // A trivial implementation that is needed to suppress compile
-  // warnings/errors.
+  /// A trivial implementation that is needed to suppress compile
+  /// warnings/errors.
   int open (void *args) override
   {
     return ACE_Task<ACE_NULL_SYNCH>::open (args);
@@ -83,13 +83,13 @@ protected:
   /// Safe to begin sending a log record?
   bool can_write_;
 
-  // Initiate the send of a log record
+  /// Initiate the send of a log record
   void start_write (ACE_Message_Block *mblk = nullptr);
 
-  // Handle disconnects from the logging server.
+  /// Handle disconnects from the logging server.
   void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
 
-  // Handle completed write to logging server.
+  /// Handle completed write to logging server.
   void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result) override;
 };
 

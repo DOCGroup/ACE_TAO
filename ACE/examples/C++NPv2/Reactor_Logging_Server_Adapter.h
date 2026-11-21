@@ -18,7 +18,7 @@ public:
   Reactor_Logging_Server_Adapter &operator= (const Reactor_Logging_Server_Adapter &) = delete;
   Reactor_Logging_Server_Adapter &operator= (Reactor_Logging_Server_Adapter &&) = delete;
 
-  // Hook methods inherited from <ACE_Service_Object>.
+  /// Hook methods inherited from <ACE_Service_Object>.
   int init (int argc, ACE_TCHAR *argv[]) override;
   int fini () override;
   int info (ACE_TCHAR **, size_t) const override;
