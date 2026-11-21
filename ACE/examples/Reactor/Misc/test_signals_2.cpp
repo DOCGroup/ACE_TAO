@@ -100,6 +100,8 @@
 #include "ace/Log_Msg.h"
 #include "ace/Signal.h"
 
+#include <memory>
+
 class Sig_Handler_1 : public ACE_Event_Handler
 {
 public:
@@ -254,7 +256,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *[])
                                    ? &multi_handlers
                                    : nullptr);
 #endif /* ACE_WIN32 */
-  ACE_Reactor reactor (&reactor_impl);
+  ACE_Reactor reactor (std::addressof (reactor_impl));
 
   if (argc > 1)
     {

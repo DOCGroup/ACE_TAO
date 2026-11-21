@@ -37,7 +37,7 @@ ACE_THR_FUNC_RETURN threadFunc(void *arg) {
 int ACE_TMAIN(int, ACE_TCHAR **) {
     // create a reactor from a TP reactor
     ACE_TP_Reactor tpReactor;
-    ACE_Reactor reactor(&tpReactor);
+    ACE_Reactor reactor (std::addressof (tpReactor));
 
     // create a new accept handler using that reactor
     AcceptHandler *acceptHandler_raw {};

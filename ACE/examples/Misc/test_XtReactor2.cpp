@@ -8,6 +8,8 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <memory>
+
 #include <Xm/PushB.h>
 
 class Stdin : public ACE_Event_Handler
@@ -75,7 +77,7 @@ ACE_TMAIN (int argc, ACE_TCHAR**argv)
 
   // A reactor beastie.
   ACE_XtReactor xreactor (XtWidgetToApplicationContext (top_level));
-  ACE_Reactor reactor (&xreactor);
+  ACE_Reactor reactor (std::addressof (xreactor));
 
   // Print a message when data is recv'd on stdin...
   Stdin stdin_handler;

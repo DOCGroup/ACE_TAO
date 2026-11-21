@@ -562,9 +562,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Create specific proactor
   ACE_WIN32_Proactor win32_proactor (1, true);
   // Get the interface proactor
-  ACE_Proactor proactor (&win32_proactor);
+  ACE_Proactor proactor (std::addressof (win32_proactor));
   // Put it as the instance.
-  ACE_Proactor::instance (&proactor);
+  ACE_Proactor::instance (std::addressof (proactor));
 
   // Open handler for remote peer communications this will run from
   // the main thread.
