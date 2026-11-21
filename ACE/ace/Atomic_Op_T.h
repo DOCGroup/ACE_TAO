@@ -237,7 +237,7 @@ private:
   ACE_LOCK & mutex_;
 
   /// Current object decorated by the atomic op.
-  TYPE value_;
+  TYPE value_ {};
 };
 
 /**
