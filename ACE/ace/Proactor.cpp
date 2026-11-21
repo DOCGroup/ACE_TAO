@@ -180,7 +180,6 @@ ACE_Proactor_Timer_Handler::svc ()
 // *********************************************************************
 
 ACE_Proactor_Handle_Timeout_Upcall::ACE_Proactor_Handle_Timeout_Upcall ()
-  : proactor_ (nullptr)
 {
 }
 

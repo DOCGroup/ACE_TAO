@@ -112,7 +112,7 @@ protected:
 
   /// Handle to the proactor. This is needed for posting a timer result
   /// to the Proactor's completion queue.
-  ACE_Proactor *proactor_;
+  ACE_Proactor *proactor_ {};
 };
 
 /**
