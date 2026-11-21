@@ -282,7 +282,7 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::activate_svc_handler (SVC_HANDLER *s
     }
 
   // We are connected now, so try to open things up.
-  if (error || svc_handler->open ((void *) this) == -1)
+  if (error || svc_handler->open (this) == -1)
     {
       // Make sure to close down the <svc_handler> to avoid descriptor
       // leaks.
