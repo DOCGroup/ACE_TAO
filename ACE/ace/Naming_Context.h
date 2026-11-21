@@ -252,19 +252,19 @@ public:
 
 private:
   /// Keep track of the options such as database name etc per Naming Context
-  ACE_Name_Options *name_options_;
+  ACE_Name_Options *name_options_ {};
 
   /// Name space (can be either local or remote) dynamically bound.
-  ACE_Name_Space *name_space_;
+  ACE_Name_Space *name_space_ {};
 
   /// Holds the local hostname.
   ACE_TCHAR hostname_[MAXHOSTNAMELEN + 1];
 
   /// Holds name of net name server.
-  const ACE_TCHAR *netnameserver_host_;
+  const ACE_TCHAR *netnameserver_host_ {};
 
   /// Holds port number of the net name server.
-  int netnameserver_port_;
+  int netnameserver_port_ {};
 
   /// 1 if we're on the same local machine as the name server, else 0.
   int local ();

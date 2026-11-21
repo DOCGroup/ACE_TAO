@@ -148,10 +148,6 @@ ACE_Naming_Context::close ()
 }
 
 ACE_Naming_Context::ACE_Naming_Context ()
-  : name_options_ (nullptr),
-    name_space_ (nullptr),
-    netnameserver_host_ (nullptr),
-    netnameserver_port_ (0)
 {
   ACE_TRACE ("ACE_Naming_Context::ACE_Naming_Context");
 
@@ -161,9 +157,6 @@ ACE_Naming_Context::ACE_Naming_Context ()
 
 ACE_Naming_Context::ACE_Naming_Context (Context_Scope_Type scope_in,
                                         int lite)
-  : name_options_ (nullptr),
-    name_space_ (nullptr),
-    netnameserver_host_ (nullptr)
 {
   ACE_TRACE ("ACE_Naming_Context::ACE_Naming_Context");
 
