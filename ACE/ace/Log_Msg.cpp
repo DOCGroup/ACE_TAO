@@ -654,20 +654,6 @@ ACE_Log_Msg::release ()
 }
 
 ACE_Log_Msg::ACE_Log_Msg ()
-  : status_ (0),
-    errnum_ (0),
-    linenum_ (0),
-    msg_ (nullptr),
-    restart_ (true),  // Restart by default...
-    ostream_ (nullptr),
-    ostream_refcount_ (nullptr),
-    msg_callback_ (nullptr),
-    trace_depth_ (0),
-    trace_active_ (false),
-    tracing_enabled_ (true), // On by default?
-    thr_desc_ (nullptr),
-    priority_mask_ (default_priority_mask_),
-    timestamp_ (0)
 {
   // ACE_TRACE ("ACE_Log_Msg::ACE_Log_Msg");
 

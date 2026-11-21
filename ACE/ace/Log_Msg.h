@@ -637,13 +637,13 @@ private:
   void cleanup_ostream ();
 
   /// Status of operation (-1 means failure, >= 0 means success).
-  int status_;
+  int status_ {};
 
   /// Type of error that occurred (see <sys/errno.h>).
-  int errnum_;
+  int errnum_ {};
 
   /// Line number where the error occurred.
-  int linenum_;
+  int linenum_ {};
 
   /// File where the error occurred.
   char file_[MAXPATHLEN + 1];
@@ -651,14 +651,14 @@ private:
   /// The log message, which resides in thread-specific storage.  Note
   /// that only the current log message is stored here -- it will be
   /// overwritten by the subsequent call to log().
-  ACE_TCHAR* msg_; // Add one for NUL-terminator.
+  ACE_TCHAR* msg_ {}; // Add one for NUL-terminator.
 
   /// Indicates whether we should restart system calls that are
   /// interrupted.
-  bool restart_;
+  bool restart_ {true};
 
   /// The ostream where logging messages can be written.
-  ACE_OSTREAM_TYPE *ostream_;
+  ACE_OSTREAM_TYPE *ostream_ {};
 
   /// This pointer is 0 if we are not reference counting (the user has not
   /// passed "true" for the delete_ostream argument to msg_ostream).
@@ -667,19 +667,19 @@ private:
   /// ownership neither std::unique_ptr nor ACE_Strong_Bound_Ptr have the right
   /// semantics.
   using Ostream_Refcount = std::atomic<unsigned long>;
-  Ostream_Refcount *ostream_refcount_;
+  Ostream_Refcount *ostream_refcount_ {};
 
   /// The callback object.
-  ACE_Log_Msg_Callback *msg_callback_;
+  ACE_Log_Msg_Callback *msg_callback_ {};
 
   /// Depth of the nesting for printing traces.
-  int trace_depth_;
+  int trace_depth_ {};
 
   /// Are we already within an ACE_Trace constructor call?
-  bool trace_active_;
+  bool trace_active_ {};
 
   /// Are we allowing tracing in this thread?
-  bool tracing_enabled_;
+  bool tracing_enabled_ {true};
 
   /**
    * If we're running in the context of an ACE_Thread_Manager this
@@ -687,17 +687,17 @@ private:
    * thread descriptor of the thread.  This can be used to rapidly
    * access all thread data kept in ACE_Thread_Descriptor.
    */
-  ACE_Thread_Descriptor *thr_desc_;
+  ACE_Thread_Descriptor *thr_desc_ {};
 
   /**
    * Keeps track of all the per-thread ACE_Log_Priority values that
    * are currently enabled.  Default is for all logging priorities to
    * be disabled.
    */
-  u_long priority_mask_;
+  u_long priority_mask_ {default_priority_mask_};
 
   /// Always timestamp?
-  int timestamp_;
+  int timestamp_ {};
 
   /// @name Process-wide state
   /// These fields are not kept in thread-specific storage.
