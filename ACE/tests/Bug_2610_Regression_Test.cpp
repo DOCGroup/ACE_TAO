@@ -18,6 +18,8 @@
 #include "ace/Trace.h"
 #include "ace/Thread_Semaphore.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_THREADS)
 
 # define TEST_TRACE(X) ACE_Trace ____ (ACE_TEXT (X), __LINE__, ACE_TEXT (__FILE__))
@@ -133,7 +135,7 @@ run_main (int, ACE_TCHAR *[])
   My_Acceptor acceptor;
   Timer_Handler timer_handler;
   ACE_Reactor::instance()->schedule_timer(
-    &timer_handler, nullptr, ACE_Time_Value(0));
+    std::addressof (timer_handler), nullptr, ACE_Time_Value(0));
 
   My_Task task;
   int activated = task.activate();

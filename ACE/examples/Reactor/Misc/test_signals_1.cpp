@@ -67,7 +67,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // Set up the periodic interval timer.
   if (ACE_Reactor::instance ()->schedule_timer
-      (&my_handler,
+      (std::addressof (my_handler),
        "hello",
        period,
        period) == -1)

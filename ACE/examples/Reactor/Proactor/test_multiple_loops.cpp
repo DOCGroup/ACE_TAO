@@ -103,7 +103,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   // Register a 3 second timer.
   ACE_Time_Value bar_tv (3);
-  if (ACE_Reactor::instance ()->schedule_timer (&handler,
+  if (ACE_Reactor::instance ()->schedule_timer (std::addressof (handler),
                                                 (void *) "Reactor",
                                                 ACE_Time_Value::zero,
                                                 bar_tv) == -1)

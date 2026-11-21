@@ -17,6 +17,8 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Thread_Semaphore.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_THREADS) && !defined ACE_LACKS_ACCEPT
 
 # define TEST_TRACE(X) ACE_Trace ____ (ACE_TEXT (X), __LINE__, ACE_TEXT (__FILE__))
@@ -132,7 +134,7 @@ run_main (int, ACE_TCHAR *[])
                               listen_addr.get_type ());
 
   Timer_Handler timer_handler;
-  ACE_Reactor::instance()->schedule_timer (&timer_handler,
+  ACE_Reactor::instance()->schedule_timer (std::addressof (timer_handler),
                                            nullptr,
                                            ACE_Time_Value(0));
 

@@ -4,6 +4,7 @@
 #include "ace/Reactor.h"
 #include "ace/Event_Handler.h"
 
+#include <memory>
 #include <string>
 
 int
@@ -140,7 +141,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       PeriodicTask periodic_task (orb.in (), ior, iterations);
 
-      orb->orb_core ()->reactor ()->schedule_timer (&periodic_task,
+      orb->orb_core ()->reactor ()->schedule_timer (std::addressof (periodic_task),
                                                     nullptr,
                                                     ACE_Time_Value::zero,
                                                     ACE_Time_Value (timeout));

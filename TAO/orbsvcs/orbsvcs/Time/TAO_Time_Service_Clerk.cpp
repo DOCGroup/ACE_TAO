@@ -7,6 +7,8 @@
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_sys_time.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Time_Service_Clerk::TAO_Time_Service_Clerk (int timer_value,
@@ -19,7 +21,7 @@ TAO_Time_Service_Clerk::TAO_Time_Service_Clerk (int timer_value,
   // periodically.
 
   if (TAO_ORB_Core_instance ()->reactor ()->schedule_timer
-      (&helper_,
+      (std::addressof (helper_),
        nullptr,
        ACE_Time_Value::zero,
        ACE_Time_Value (timer_value, timer_value_usecs)) == -1)

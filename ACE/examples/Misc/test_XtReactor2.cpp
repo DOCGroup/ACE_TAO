@@ -85,7 +85,7 @@ ACE_TMAIN (int argc, ACE_TCHAR**argv)
                             ACE_Event_Handler::READ_MASK);
 
   // Print a message every 10 seconds
-  if (reactor.schedule_timer (&stdin_handler, nullptr,
+  if (reactor.schedule_timer (std::addressof (stdin_handler), nullptr,
                               ACE_Time_Value (10),
                               ACE_Time_Value (10)) == -1)
     {

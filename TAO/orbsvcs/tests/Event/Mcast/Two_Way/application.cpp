@@ -19,6 +19,7 @@
 #include <array>
 #include <cstddef>
 #include <cstring>
+#include <memory>
 
 // Indicates whether this application is responsible for destroying
 // the Event Channel it's using upon exit.
@@ -271,7 +272,7 @@ Heartbeat_Application::register_for_timeouts ()
   ACE_Time_Value const timeout_interval (0, 500000);
   ACE_Reactor * const reactor = this->orb_->orb_core ()->reactor ();
   if (!reactor
-      || reactor->schedule_timer (&this->timeout_handler_, 0,
+      || reactor->schedule_timer (std::addressof (this->timeout_handler_), 0,
                                   timeout_interval,
                                   timeout_interval) == -1)
     {

@@ -140,7 +140,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Sleeper sleeper (orb.in ());
       ACE_Time_Value const interval (0, 500000);
       ACE_Reactor *const reactor = orb->orb_core ()->reactor ();
-      reactor->schedule_timer (&sleeper, 0, interval, interval);
+      reactor->schedule_timer (std::addressof (sleeper), 0, interval, interval);
       orb->run ();
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
       root_poa->destroy (true, true);

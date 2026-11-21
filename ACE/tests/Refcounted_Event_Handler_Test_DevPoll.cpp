@@ -200,7 +200,7 @@ test_reactor_dispatch_order (ACE_Reactor &reactor)
     }
 
   // This should trigger a call to <handle_timeout>.
-  if (-1 == reactor.schedule_timer (&handler,
+  if (-1 == reactor.schedule_timer (std::addressof (handler),
                                     nullptr,
                                     ACE_Time_Value (0)))
     {
@@ -223,7 +223,7 @@ test_reactor_dispatch_order (ACE_Reactor &reactor)
 
   // Reset the dispatch_order_ count and schedule another timer
   handler.dispatch_order_ = 1;
-  if (-1 == reactor.schedule_timer (&handler,
+  if (-1 == reactor.schedule_timer (std::addressof (handler),
                                     nullptr,
                                     ACE_Time_Value (0)))
     {

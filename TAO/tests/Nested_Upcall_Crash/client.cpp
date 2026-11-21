@@ -119,7 +119,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Timer timer (local_peer.in (), peer.in ());
       ACE_Time_Value interval (0, 50 * Clock_Ticks::get_usecs_per_tick ());
       ACE_Reactor *const reactor = orb->orb_core ()->reactor ();
-      reactor->schedule_timer (&timer, 0, interval, interval);
+      reactor->schedule_timer (std::addressof (timer), 0, interval, interval);
       ACE_Time_Value run_time (120, 0);
       orb->run (run_time);
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - event loop finished\n"));

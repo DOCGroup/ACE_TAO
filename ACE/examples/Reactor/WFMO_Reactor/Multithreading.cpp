@@ -222,7 +222,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
       ACE_DEBUG ((LM_DEBUG, "********************************************************\n"));
 
       // Setup a timer for the task
-      if (ACE_Reactor::instance ()->schedule_timer (&task,
+      if (ACE_Reactor::instance ()->schedule_timer (std::addressof (task),
                                                     (void *)((size_t)i),
                                                     ACE_Time_Value::zero) == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);

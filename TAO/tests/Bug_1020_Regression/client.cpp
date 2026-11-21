@@ -6,6 +6,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/Reactor.h"
 
+#include <memory>
+
 int
 parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior);
 
@@ -117,7 +119,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Crash after 15 seconds
       ACE_Time_Value const interval (15, 0);
       ACE_Reactor * const reactor = orb->orb_core ()->reactor ();
-      reactor->schedule_timer (&crasher, nullptr, interval, interval);
+      reactor->schedule_timer (std::addressof (crasher), nullptr, interval, interval);
 
       ORB_Task task (orb.in ());
       task.activate (THR_NEW_LWP | THR_JOINABLE, 4, true);

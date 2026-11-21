@@ -14,6 +14,8 @@
 
 #include "ace/Reactor.h"
 
+#include <memory>
+
 #if ! defined (__ACE_INLINE__)
 #include "orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.inl"
 #endif /* __ACE_INLINE__ */
@@ -86,7 +88,7 @@ void
 TAO_CEC_Reactive_Pulling_Strategy::activate ()
 {
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
-  timer_id_ = this->reactor_->schedule_timer (&this->adapter_,
+  timer_id_ = this->reactor_->schedule_timer (std::addressof (this->adapter_),
                                             nullptr,
                                             this->rate_,
                                             this->rate_);

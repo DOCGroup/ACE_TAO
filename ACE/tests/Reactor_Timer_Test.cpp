@@ -231,7 +231,7 @@ test_resetting_timer_intervals ()
 
   t_id =
     ACE_Reactor::instance ()->schedule_timer
-    (&rt,
+    (std::addressof (rt),
      (const void *) -1,
      ACE_Time_Value (1),
      // Start off by making this an interval timer.

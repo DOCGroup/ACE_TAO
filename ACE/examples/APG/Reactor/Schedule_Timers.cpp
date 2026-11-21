@@ -8,6 +8,8 @@
 #include "ace/Event_Handler.h"
 #include "ace/Signal.h"
 
+#include <memory>
+
 // Listing 1 code/ch07
 class MyTimerHandler : public ACE_Event_Handler
 {
@@ -62,7 +64,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_Time_Value const initialDelay {3};
   ACE_Time_Value const interval {5};
   long const timer_id = ACE_Reactor::instance ()->schedule_timer (
-    &timer, nullptr, initialDelay, interval);
+    std::addressof (timer), nullptr, initialDelay, interval);
   // Listing 2
 
   // Exclude 1

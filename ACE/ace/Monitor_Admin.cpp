@@ -5,6 +5,8 @@
 #include "ace/Reactor.h"
 #include "ace/Monitor_Point_Registry.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
@@ -68,7 +70,7 @@ namespace ACE
         }
       else if (time != ACE_Time_Value::zero)
         {
-          this->reactor_->schedule_timer (&this->auto_updater_,
+          this->reactor_->schedule_timer (std::addressof (this->auto_updater_),
                                           monitor_point,
                                           ACE_Time_Value::zero,
                                           time);
