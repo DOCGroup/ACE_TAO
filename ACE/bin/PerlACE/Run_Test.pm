@@ -48,6 +48,11 @@ if ($PerlACE::Android_Test) {
     require PerlACE::ProcessAndroid;
 }
 
+$PerlACE::NodeJS_Test = $config->check_config("NODEJS");
+if ($PerlACE::NodeJS_Test) {
+    require PerlACE::ProcessNodeJS;
+}
+
 # Figure out the svc.conf extension
 $svcconf_ext = $ENV{'ACE_RUNTEST_SVCCONF_EXT'};
 if (!defined $svcconf_ext) {
