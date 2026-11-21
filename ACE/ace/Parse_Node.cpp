@@ -178,15 +178,13 @@ ACE_Stream_Node::~ACE_Stream_Node ()
 }
 
 ACE_Parse_Node::ACE_Parse_Node ()
-  : name_ (nullptr),
-    next_ (nullptr)
+  : name_ (nullptr)
 {
   ACE_TRACE ("ACE_Parse_Node::ACE_Parse_Node");
 }
 
 ACE_Parse_Node::ACE_Parse_Node (const ACE_TCHAR *nm)
-  : name_ (ACE::strnew (nm)),
-    next_ (nullptr)
+  : name_ (ACE::strnew (nm))
 {
   ACE_TRACE ("ACE_Parse_Node::ACE_Parse_Node");
 }

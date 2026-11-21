@@ -66,7 +66,7 @@ public:
 
 private:
   const ACE_TCHAR *name_;
-  ACE_Parse_Node *next_;
+  ACE_Parse_Node *next_ {};
 
 private:
   ACE_Parse_Node (ACE_Parse_Node const &) = delete;
