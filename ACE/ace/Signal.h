@@ -45,15 +45,15 @@ class ACE_Export ACE_Sig_Set
 public:
   /// Initialize sigset_ with @a sigset.  If @a sigset == 0 then fill
   /// the set.
-  ACE_Sig_Set (sigset_t *sigset);
+  explicit ACE_Sig_Set (sigset_t *sigset);
 
   /// Initialize sigset_ with @a sigset.  If @a sigset == 0 then fill
   /// the set.
-  ACE_Sig_Set (ACE_Sig_Set *sigset);
+  explicit ACE_Sig_Set (ACE_Sig_Set *sigset);
 
   /// If @a fill == false then initialize the sigset_ to be empty, else
   /// full.
-  ACE_Sig_Set (bool fill = false);
+  explicit ACE_Sig_Set (bool fill = false);
 
   ~ACE_Sig_Set ();
 
