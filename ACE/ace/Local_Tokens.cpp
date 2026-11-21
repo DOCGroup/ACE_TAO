@@ -31,8 +31,6 @@ ACE_Tokens::dump () const
 }
 
 ACE_Tokens::ACE_Tokens ()
-  : visited_ (0),
-    reference_count_ (0)
 {
   ACE_TRACE ("ACE_Tokens::ACE_Tokens");
 }
@@ -85,11 +83,8 @@ ACE_TPQ_Entry::dump () const
 ACE_TPQ_Entry::ACE_TPQ_Entry (const ACE_Token_Proxy *new_proxy,
                               const ACE_TCHAR *client_id)
   : cond_var_ (lock_),
-    next_ (nullptr),
     // The proxy is logically mutable while the entry is active.
-    proxy_ (const_cast<ACE_Token_Proxy *> (new_proxy)),
-    nesting_level_ (0),
-    sleep_hook_ (nullptr)
+    proxy_ (const_cast<ACE_Token_Proxy *> (new_proxy))
 {
   ACE_TRACE ("ACE_TPQ_Entry::ACE_TPQ_Entry");
 
@@ -119,10 +114,7 @@ ACE_TPQ_Entry::ACE_TPQ_Entry (const ACE_Token_Proxy *new_proxy,
 }
 
 ACE_TPQ_Entry::ACE_TPQ_Entry ()
-  : cond_var_ (lock_),
-    proxy_ (nullptr),
-    nesting_level_ (0),
-    sleep_hook_ (nullptr)
+  : cond_var_ (lock_)
 {
   ACE_TRACE ("ACE_TPQ_Entry::ACE_TPQ_Entry null const.");
 }

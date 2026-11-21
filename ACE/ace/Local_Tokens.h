@@ -164,7 +164,7 @@ public:
   ACE_TOKEN_CONST::MUTEX lock_;
 
   /// Pointer to next in list.
-  ACE_TPQ_Entry *next_;
+  ACE_TPQ_Entry *next_ {};
 
   /// Get whether this client is blocked waiting for a token.
   int waiting () const;
@@ -177,10 +177,10 @@ private:
   int waiting_;
 
   /// Proxy.
-  ACE_Token_Proxy *proxy_;
+  ACE_Token_Proxy *proxy_ {};
 
   /// Nesting level.
-  int nesting_level_;
+  int nesting_level_ {};
 
   /// Arg.
   void *arg_;
@@ -189,7 +189,7 @@ private:
   ACE_TCHAR client_id_[ACE_MAXCLIENTIDLEN];
 
   /// Sleep hook.
-  void (*sleep_hook_)(void *);
+  void (*sleep_hook_)(void *) {};
 };
 
 // b..
@@ -459,10 +459,10 @@ public:
 
 protected:
   /// For the deadlock detection algorithm.
-  int visited_;
+  int visited_ {};
 
   /// Reference count.
-  int reference_count_;
+  int reference_count_ {};
 
   /// List of client's owning and waiting the token.
   ACE_Token_Proxy_Queue waiters_;
