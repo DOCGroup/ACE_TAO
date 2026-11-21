@@ -145,6 +145,14 @@ project(Aio Platform Test) : acetest {
   }
 }
 
+project(Allocator Cascaded Test) : acetest {
+  avoids += ace_for_tao
+  exename = Allocator_Cascaded_Test
+  Source_Files {
+    Allocator_Cascaded_Test.cpp
+  }
+}
+
 project(Arg Shifter Test) : acetest {
   exename = Arg_Shifter_Test
   Source_Files {
