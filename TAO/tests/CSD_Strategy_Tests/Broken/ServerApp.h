@@ -24,7 +24,7 @@ class ServerApp : public TestAppBase
     ServerApp & operator= (ServerApp &&) = delete;
 
   private:
-    // These are all called, in order, by the run_i() method.
+    /// These are all called, in order, by the run_i() method.
     int init(int argc, ACE_TCHAR* argv[]);
     void poa_setup();
     void csd_setup();
@@ -36,7 +36,7 @@ class ServerApp : public TestAppBase
     bool check_validity ();
     void cleanup();
 
-    // Helper methods used by the methods above.
+    /// Helper methods used by the methods above.
     int parse_args(int argc, ACE_TCHAR* argv[]);
 
     int set_arg(unsigned&   value,

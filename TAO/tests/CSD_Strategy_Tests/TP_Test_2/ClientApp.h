@@ -21,13 +21,13 @@ class ClientApp : public TestAppBase
     ClientApp & operator= (ClientApp &&) = delete;
 
   private:
-    // These are all called, in order, by the run_i() method.
+    /// These are all called, in order, by the run_i() method.
     int init(int argc, ACE_TCHAR* argv[]);
     void client_setup();
     int  run_engine();
     void cleanup();
 
-    // Helper methods used by the methods above.
+    /// Helper methods used by the methods above.
     int parse_args(int argc, ACE_TCHAR* argv[]);
 
     int set_arg(unsigned&   value,
