@@ -61,7 +61,7 @@ ACE_SV_Message_Queue::recv (ACE_SV_Message &mb,
                             int mflags)
 {
   ACE_TRACE ("ACE_SV_Message_Queue::recv");
-  return ACE_OS::msgrcv (this->internal_id_, (void *) &mb,
+  return ACE_OS::msgrcv (this->internal_id_, &mb,
                          length, type, mflags);
 }
 
@@ -71,7 +71,7 @@ ACE_SV_Message_Queue::send (const ACE_SV_Message &mb,
                             int mflags)
 {
   ACE_TRACE ("ACE_SV_Message_Queue::send");
-  return ACE_OS::msgsnd (this->internal_id_, (void *) &mb,
+  return ACE_OS::msgsnd (this->internal_id_, &mb,
                          length, mflags);
 }
 

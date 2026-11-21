@@ -3091,7 +3091,7 @@ ACE_OS::thr_setprio (ACE_hthread_t ht_id, int priority, int policy)
 
   int result;
   struct sched_param param;
-  std::memset ((void *) &param, 0, sizeof param);
+  std::memset (&param, 0, sizeof param);
 
   // If <policy> is -1, we don't want to use it for
   // pthread_setschedparam().  Instead, obtain policy from

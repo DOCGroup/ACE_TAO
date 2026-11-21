@@ -321,7 +321,7 @@ ACE_OS::fork_exec (ACE_TCHAR *argv[])
     {
       PROCESS_INFORMATION process_info;
       ACE_TEXT_STARTUPINFO startup_info;
-      ACE_OS::memset ((void *) &startup_info,
+      ACE_OS::memset (&startup_info,
                       0,
                       sizeof startup_info);
       startup_info.cb = sizeof startup_info;

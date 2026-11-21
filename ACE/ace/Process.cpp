@@ -46,7 +46,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_Process::ACE_Process ()
 {
 #if defined (ACE_WIN32)
-  ACE_OS::memset ((void *) &this->process_info_,
+  ACE_OS::memset (&this->process_info_,
                   0,
                   sizeof this->process_info_);
 #endif /* ACE_WIN32 */
@@ -868,7 +868,7 @@ ACE_Process_Options::ACE_Process_Options (bool inherit_environment,
   environment_buf_[0] = '\0';
   environment_argv_[0] = nullptr;
 #if defined (ACE_WIN32)
-  ACE_OS::memset ((void *) &this->startup_info_,
+  ACE_OS::memset (&this->startup_info_,
                   0,
                   sizeof this->startup_info_);
   this->startup_info_.cb = sizeof this->startup_info_;
