@@ -37,7 +37,6 @@ const char ACE_Stack_Trace::UNSUPPORTED[] = "<stack traces unsupported platform>
 const char ACE_Stack_Trace::UNABLE_TO_GET_TRACE[] = "<unable to get trace>";
 
 ACE_Stack_Trace::ACE_Stack_Trace (ssize_t starting_frame_offset, size_t num_frames)
-  : buflen_(0)
 {
   // cannot initialize arrays, so we must assign.
   this->buf_[0] = '\0';

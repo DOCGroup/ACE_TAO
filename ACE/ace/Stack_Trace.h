@@ -93,7 +93,7 @@ public:
 
 private:
   char buf_[SYMBUFSIZ];
-  size_t buflen_;
+  size_t buflen_ {};
 
   static const char UNSUPPORTED[];
   static const char UNABLE_TO_GET_TRACE[];
